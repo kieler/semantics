@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.sim.ptolemy/src"
+    modelPluginID="de.cau.cs.kieler.sim.ptolemy" modelName="Moml" importerID="org.eclipse.xsd.ecore.importer"
+    complianceLevel="5.0" copyrightFields="false">
+  <foreignModel>moml.xsd</foreignModel>
+  <genPackages prefix="Moml" resource="XML" disposableProviderFactory="true" ecorePackage="Moml.ecore#/">
+    <genClasses ecoreClass="Moml.ecore#//Any">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Moml.ecore#//Any/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//Any/any"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//ClassType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Moml.ecore#//ClassType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/class"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/configure"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/deleteEntity"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/deletePort"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/deleteRelation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/director"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/doc"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/entity"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/group1"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/import"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/input"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/link"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/port"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/property"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/relation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/rename"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/rendition"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ClassType/unlink"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//ClassType/extends"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//ClassType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//ClassType/source"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//ConfigureType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Moml.ecore#//ConfigureType/mixed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//ConfigureType/source"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//DeleteEntityType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//DeleteEntityType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//DeletePortType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//DeletePortType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//DeletePropertyType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//DeletePropertyType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//DeleteRelationType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//DeleteRelationType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//DirectorType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Moml.ecore#//DirectorType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//DirectorType/configure"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//DirectorType/doc"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//DirectorType/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//DirectorType/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//DirectorType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//DocType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Moml.ecore#//DocType/mixed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//DocType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/class"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/configure"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/deleteEntity"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/deletePort"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/deleteProperty"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/deleteRelation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/director"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/doc"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/entity"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/group"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/import"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/input"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/link"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/location"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/model"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/port"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/property"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/relation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/rename"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/rendition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/unlink"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Moml.ecore#//DocumentRoot/vertex"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//EntityType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Moml.ecore#//EntityType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/class"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/configure"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/deleteEntity"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/deletePort"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/deleteRelation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/director"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/doc"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/entity"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/group1"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/import"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/input"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/link"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/port"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/property"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/relation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/rename"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/rendition"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//EntityType/unlink"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//EntityType/class1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//EntityType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//EntityType/source"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//GroupType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//GroupType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//ImportType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//ImportType/base"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//ImportType/source"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//InputType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//InputType/base"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//InputType/source"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//LinkType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//LinkType/insertAt"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//LinkType/insertInsideAt"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//LinkType/port"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//LinkType/relation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//LinkType/relation1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//LinkType/relation2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//LinkType/vertex"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//LocationType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//LocationType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//ModelType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Moml.ecore#//ModelType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/class"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/configure"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/deleteEntity"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/deletePort"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/deleteRelation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/director"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/doc"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/entity"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/group1"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/import"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/input"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/link"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/property"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/relation"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/rename"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/rendition"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//ModelType/unlink"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//ModelType/class1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//ModelType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//PortType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Moml.ecore#//PortType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//PortType/configure"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//PortType/doc"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//PortType/property"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//PortType/rename"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//PortType/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//PortType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//PropertyType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Moml.ecore#//PropertyType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//PropertyType/configure"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//PropertyType/doc"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//PropertyType/property"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//PropertyType/rename"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//PropertyType/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//PropertyType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//PropertyType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//RelationType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Moml.ecore#//RelationType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//RelationType/configure"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//RelationType/doc"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//RelationType/property"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//RelationType/rename"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//RelationType/vertex"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//RelationType/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//RelationType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//RenameType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//RenameType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//RenditionType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Moml.ecore#//RenditionType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//RenditionType/configure"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//RenditionType/location"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//RenditionType/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//RenditionType/class"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//UnlinkType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//UnlinkType/index"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//UnlinkType/insideIndex"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//UnlinkType/port"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//UnlinkType/relation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//UnlinkType/relation1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//UnlinkType/relation2"/>
+    </genClasses>
+    <genClasses ecoreClass="Moml.ecore#//VertexType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Moml.ecore#//VertexType/group"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//VertexType/configure"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//VertexType/doc"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//VertexType/location"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//VertexType/property"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Moml.ecore#//VertexType/rename"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//VertexType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//VertexType/pathTo"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Moml.ecore#//VertexType/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
