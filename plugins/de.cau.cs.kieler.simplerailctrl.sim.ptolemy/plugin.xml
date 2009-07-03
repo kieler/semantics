@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler.commands.category"
+            defaultHandler="de.cau.cs.kieler.simplerailctrl.sim.ptolemy.handlers.ModelTransformationHandler"
+            description="%Generate Kieler Model Railway Ptolemy Model"
+            id="de.cau.cs.kieler.simplerailctrl.sim.ptolemy.modelTransformationAction"
+            name="%TransformModel">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?before=viewGroup">
+         <separator
+               name="de.cau.cs.kieler.simplerailctrl.separator"
+               visible="true">
+         </separator>
+         <command
+               commandId="de.cau.cs.kieler.simplerailctrl.sim.ptolemy.modelTransformationAction"
+               icon="icons/modeltrans.gif"
+               label="Generate Ptolemy Model"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.simplerailctrl.sim.ptolemy.isCurrentEditor">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:file?before=additions">
+         <separator
+               name="de.cau.cs.kieler.simplerailctrl.separator"
+               visible="true">
+         </separator>
+         <command
+               commandId="de.cau.cs.kieler.simplerailctrl.sim.ptolemy.modelTransformationAction"
+               icon="icons/modeltrans.gif"
+               label="Generate Ptolemy Model"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.simplerailctrl.sim.ptolemy.isCurrentEditor">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="de.cau.cs.kieler.simplerailctrl.codegen.c.codegentoolbar">
+            <separator
+                  name="de.cau.cs.kieler.simplerailctrl.separator"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.cau.cs.kieler.simplerailctrl.sim.ptolemy.modelTransformationAction"
+                  icon="icons/modeltrans.gif"
+                  label="Generate Ptolemy Model"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="de.cau.cs.kieler.simplerailctrl.sim.ptolemy.isCurrentEditor">
+                  </reference>
+               </visibleWhen>
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="de.cau.cs.kieler.simplerailctrl.sim.ptolemy.isCurrentEditor">
+         <iterate>
+            <or>
+               <instanceof
+                     value="de.cau.cs.kieler.simplerailctrl.diagram.edit.parts.RailControllerEditPart">
+               </instanceof>
+               <instanceof
+                     value="de.cau.cs.kieler.simplerailctrl.diagram.edit.parts.SetPointEditPart">
+               </instanceof>
+               <instanceof
+                     value="de.cau.cs.kieler.simplerailctrl.diagram.edit.parts.SetSignalEditPart">
+               </instanceof>
+               <instanceof
+                     value="de.cau.cs.kieler.simplerailctrl.diagram.edit.parts.SetSpeedEditPart">
+               </instanceof>
+            </or>
+         </iterate>
+      </definition>
+   </extension>
+
+
+</plugin>

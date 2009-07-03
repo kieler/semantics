@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Kieler Model Railway Ptolemy Simulation Plug-in
+Bundle-SymbolicName: de.cau.cs.kieler.simplerailctrl.sim.ptolemy;singleton:=true
+Bundle-Version: 0.1.0
+Bundle-Activator: de.cau.cs.kieler.simplerailctrl.sim.ptolemy.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.expressions,
+ org.openarchitectureware.dependencies;bundle-version="4.3.1"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: de.cau.cs.kieler.simplerailctrl.provider,
+ org.eclipse.emf.common.ui,
+ org.eclipse.emf.common.util,
+ org.eclipse.ui.part,
+ org.openarchitectureware.workflow

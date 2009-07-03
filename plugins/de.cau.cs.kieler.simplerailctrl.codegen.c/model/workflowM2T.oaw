@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<workflow>
+	<property name="metamodel" value="platform:/resource/de.cau.cs.kieler.simplerailctrl.codegen.c/model/simplerailctrl.ecore" />
+	<!--  <property name="model2" value="platform:/resource/de.cau.cs.kieler.simplerailctrl.codegen.c/default.simplerailctrl" />  -->
+	<property name="model" value="file:/X:/dop_eclipse/testspace/de.cau.cs.kieler.simplerailctrl.diagram/example/default.simplerailctrl" />
+	<property name="src-gen" value="src-gen" />
+	
+	<!-- set up EMF for standalone execution -->
+	<bean class="org.eclipse.mwe.emf.StandaloneSetup" >
+		<platformUri value=".."/>
+	</bean>
+
+	<!-- load model and store it in slot 'model' -->
+	<component class="org.eclipse.mwe.emf.Reader">
+        <!--   <uri value="platform:/resource/${model}" />   -->  
+    	<uri value="${model}" /> 
+		<!-- <uri value="platform:/resource/${model}" />  -->
+		<modelSlot value="model" />
+	</component>
+
+	<!--  generate code <metaModelFile value="${metamodel}" /> -->
+	<component class="org.openarchitectureware.xpand2.Generator">
+	
+	<metaModel class="oaw.type.emf.EmfMetaModel">
+		<metaModelFile value="${metamodel}" />
+	</metaModel>
+    <metaModel id='mm' class='org.eclipse.m2t.type.emf.EmfRegistryMetaModel' />  
+		 <expand
+			value="template::main FOR model" />
+		<outlet path="${src-gen}" />
+        
+	</component>
+</workflow>

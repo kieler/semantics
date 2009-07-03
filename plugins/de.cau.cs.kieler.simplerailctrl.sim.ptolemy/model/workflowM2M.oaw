@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<workflow>
+	<property name="emfmetamodel" value="platform:/resource/de.cau.cs.kieler.simplerailctrl.sim.ptolemy/model/simplerailctrl.ecore" />
+	<property name="ptometamodel" value="platform:/resource/de.cau.cs.kieler.simplerailctrl.sim.ptolemy/model/moml.ecore" />
+	
+	<property name="emfmodel" value="platform:/resource/de.cau.cs.kieler.simplerailctrl.sim.ptolemy/dual.simplerailctrl" />
+	<property name="momlmodel" value="src-gen/generated.moml" />
+
+	<!-- set up EMF for standalone execution -->
+	<bean class="org.eclipse.mwe.emf.StandaloneSetup" >
+		<registerGeneratedEPackage value="Moml.MomlPackage" />
+		<platformUri value=".."/>
+	</bean>
+	
+	<!-- load model and store it in slot 'emfmodel' -->
+	<component class="org.eclipse.mwe.emf.Reader">
+	    <uri value="${emfmodel}" />
+		<!-- <uri value="platform:/resource/${model}" />  -->
+		<modelSlot value="emfmodel" />
+	</component>
+	
+	
+	<!-- load emfmetamodel, load ptometamodel -->
+	<!-- perform transformation -->
+	<component class="oaw.xtend.XtendComponent">
+		<metaModel id="emfmm" class="oaw.type.emf.EmfMetaModel">
+			<metaModelPackage value="simplerailctrl.SimplerailctrlPackage"/>
+			<!-- <metaModelFile value="${emfmetamodel}" /> -->
+		</metaModel>
+		<metaModel id="ptomm" class="oaw.type.emf.EmfMetaModel">
+			<metaModelPackage value="Moml.MomlPackage" /> 
+			<!-- <metaModelPackage value="Moml.MomlPackage" />  -->
+			<!-- <metaModelFile value="${ptometamodel}" /> -->
+		</metaModel>
+		<!--<metaModel id="javamm" class="org.openarchitectureware.type.impl.java.JavaMetaModel">
+		</metaModel>  -->
+		<invoke value="simplerailctrl2moml::transform(emfmodel)" />
+		<outputSlot value="ptomodel"/>
+	</component>
+
+
+	<!-- store model -->
+	<component class="de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.EmfMomlWriter">
+		<uri value="${momlmodel}" />
+		<modelSlot value="ptomodel"/>
+	</component>
+
+	<!-- store model 
+	<component class="org.eclipse.mwe.emf.Writer">
+		<uri value="railcontroller.moml" />
+		<modelSlot value="ptomodel"/>
+		<useSingleGlobalResourceSet value="false"/>     
+		<cloneSlotContents value="true"/>
+	</component>
+	 -->		
+
+</workflow>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.simplerailctrl/src"
+    modelPluginID="de.cau.cs.kieler.simplerailctrl" modelName="Simplerailctrl" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false">
+  <foreignModel>simplerailctrl.ecore</foreignModel>
+  <genPackages prefix="Simplerailctrl" disposableProviderFactory="true" ecorePackage="simplerailctrl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="simplerailctrl.ecore#//TRACK">
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_JCT_0"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_LN_0"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_LN_1"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_LN_2"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_LN_3"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_LN_4"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_LN_5"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_ST_0"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_ST_1"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_ST_2"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_ST_3"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_ST_4"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IO_LN_0"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IO_LN_1"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IO_LN_2"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_LN_0"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_LN_1"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_LN_2"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_LN_3"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_LN_4"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_LN_5"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_LN_6"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_LN_7"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_LN_8"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_ST_0"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_ST_1"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_ST_2"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_ST_3"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_ST_4"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_ST_5"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KH_ST_6"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KIO_LN_0"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/KIO_LN_1"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OC_JCT_0"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OC_LN_0"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OC_LN_1"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OC_LN_2"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OC_LN_3"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OC_LN_4"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OC_LN_5"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OC_ST_0"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OC_ST_1"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OC_ST_2"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OC_ST_3"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OC_ST_4"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OI_LN_0"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OI_LN_1"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/OI_LN_2"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="simplerailctrl.ecore#//POINT">
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_0"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_1"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_2"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_3"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_4"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_5"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_6"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_7"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_8"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_9"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_10"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_11"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_12"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_13"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_14"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_15"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_16"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_17"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_18"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_19"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_20"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_21"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_22"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_23"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_24"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_25"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_26"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_27"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_28"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POINT/POINT_29"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="simplerailctrl.ecore#//POSITION">
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POSITION/FIRST"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//POSITION/SECOND"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="simplerailctrl.ecore#//DIRECTION">
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//DIRECTION/STRAIGHT"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//DIRECTION/BRANCH"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="simplerailctrl.ecore#//SIGNALCOLOR">
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//SIGNALCOLOR/RED"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//SIGNALCOLOR/GREEN"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//SIGNALCOLOR/YELLOWGREEN"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//SIGNALCOLOR/OFF"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="simplerailctrl.ecore#//MOTORDIR">
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//MOTORDIR/FWD"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//MOTORDIR/REV"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//MOTORDIR/BRAKE"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//MOTORDIR/OFF"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="simplerailctrl.ecore#//CONDITION">
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//CONDITION/IF"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//CONDITION/IF_NOT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="simplerailctrl.ecore#//CONJUNCTION">
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//CONJUNCTION/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//CONJUNCTION/OR"/>
+    </genEnums>
+    <genClasses ecoreClass="simplerailctrl.ecore#//EventWait">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//EventWait/seconds"/>
+    </genClasses>
+    <genClasses ecoreClass="simplerailctrl.ecore#//Node">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplerailctrl.ecore#//Node/outTransitions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//Node/initial"/>
+    </genClasses>
+    <genClasses ecoreClass="simplerailctrl.ecore#//Transition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference simplerailctrl.ecore#//Transition/destination"/>
+    </genClasses>
+    <genClasses ecoreClass="simplerailctrl.ecore#//EventContact">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//EventContact/track"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//EventContact/position"/>
+    </genClasses>
+    <genClasses ecoreClass="simplerailctrl.ecore#//SetSpeed">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//SetSpeed/track"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//SetSpeed/speed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//SetSpeed/direction"/>
+    </genClasses>
+    <genClasses ecoreClass="simplerailctrl.ecore#//SetPoint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//SetPoint/point"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//SetPoint/direction"/>
+    </genClasses>
+    <genClasses ecoreClass="simplerailctrl.ecore#//RailController">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplerailctrl.ecore#//RailController/nodes"/>
+    </genClasses>
+    <genClasses ecoreClass="simplerailctrl.ecore#//SetSignal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//SetSignal/track"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//SetSignal/position"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//SetSignal/color"/>
+    </genClasses>
+    <genClasses ecoreClass="simplerailctrl.ecore#//EventOccupied">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//EventOccupied/track"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//EventOccupied/condition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplerailctrl.ecore#//EventOccupied/conjunction"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

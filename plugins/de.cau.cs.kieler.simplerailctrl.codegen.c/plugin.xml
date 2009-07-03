@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler.commands.category"
+            defaultHandler="de.cau.cs.kieler.simplerailctrl.codegen.c.handlers.CodeGenerationHandler"
+            description="%Generates C-Code for Kieler Model Railway"
+            id="de.cau.cs.kieler.simplerailctrl.codegen.c.codeGenerationAction"
+            name="%GenerateCode">
+      </command>
+   </extension>
+
+   <extension
+         id="de.cau.cs.kieler.menu"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?before=viewGroup">
+         <separator
+               name="de.cau.cs.kieler.simplerailctrl.separator"
+               visible="true">
+         </separator>
+         <command
+               commandId="de.cau.cs.kieler.simplerailctrl.codegen.c.codeGenerationAction"
+               icon="icons/codegen.gif"
+               label="Generate C-Code"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.isCurrentEditor">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:file?before=additions">
+         <separator
+               name="de.cau.cs.kieler.simplerailctrl.separator"
+               visible="true">
+         </separator>
+         <command
+               commandId="de.cau.cs.kieler.simplerailctrl.codegen.c.codeGenerationAction"
+               icon="icons/codegen.gif"
+               label="Generate C-Code"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.isCurrentEditor">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="de.cau.cs.kieler.simplerailctrl.codegen.c.codegentoolbar">
+            <separator
+                  name="de.cau.cs.kieler.simplerailctrl.separator"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="de.cau.cs.kieler.simplerailctrl.codegen.c.codeGenerationAction"
+                  icon="icons/codegen.gif"
+                  label="Generate C-Code"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.isCurrentEditor">
+                  </reference>
+               </visibleWhen>
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="de.cau.cs.kieler.simplerailctrl.codegen.c.isCurrentEditor">
+         <iterate>
+            <or>
+               <instanceof
+                     value="de.cau.cs.kieler.simplerailctrl.diagram.edit.parts.RailControllerEditPart">
+               </instanceof>
+               <instanceof
+                     value="de.cau.cs.kieler.simplerailctrl.diagram.edit.parts.SetPointEditPart">
+               </instanceof>
+               <instanceof
+                     value="de.cau.cs.kieler.simplerailctrl.diagram.edit.parts.SetSignalEditPart">
+               </instanceof>
+               <instanceof
+                     value="de.cau.cs.kieler.simplerailctrl.diagram.edit.parts.SetSpeedEditPart">
+               </instanceof>
+            </or>
+         </iterate>
+      </definition>
+   </extension>
+
+</plugin>

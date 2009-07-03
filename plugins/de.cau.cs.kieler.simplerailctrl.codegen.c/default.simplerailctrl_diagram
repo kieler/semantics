@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmlns:simplerailctrl="http://simplerailctrl/1.0" xmi:id="_oyf7IF5OEd6afb09cAPREQ" type="Simplerailctrl" name="default.simplerailctrl_diagram" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_pkuCQF5OEd6afb09cAPREQ" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_pkuCQ15OEd6afb09cAPREQ" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_pkuCRF5OEd6afb09cAPREQ" type="4002"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_pkuCQV5OEd6afb09cAPREQ"/>
+    <element xmi:type="simplerailctrl:SetSpeed" href="default.simplerailctrl#//@nodes.0"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pkuCQl5OEd6afb09cAPREQ" x="348" y="24"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_sa0FoF5OEd6afb09cAPREQ" type="1003">
+    <children xmi:type="notation:Node" xmi:id="_sa0FoV5OEd6afb09cAPREQ" type="4006"/>
+    <children xmi:type="notation:Node" xmi:id="_sa0Fol5OEd6afb09cAPREQ" type="4007"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_sa0Fo15OEd6afb09cAPREQ"/>
+    <element xmi:type="simplerailctrl:SetPoint" href="default.simplerailctrl#//@nodes.1"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_sa0FpF5OEd6afb09cAPREQ" x="48" y="24"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_vHEQgF5OEd6afb09cAPREQ" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_vHEQg15OEd6afb09cAPREQ" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_vHEQhF5OEd6afb09cAPREQ" type="4002"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_vHEQgV5OEd6afb09cAPREQ"/>
+    <element xmi:type="simplerailctrl:SetSpeed" href="default.simplerailctrl#//@nodes.2"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_vHEQgl5OEd6afb09cAPREQ" x="360" y="240"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_1d8BEF5QEd66WPCmQh3Ivg" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_1eFLAF5QEd66WPCmQh3Ivg" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_1eFLAV5QEd66WPCmQh3Ivg" type="4002"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_1d8BEV5QEd66WPCmQh3Ivg"/>
+    <element xmi:type="simplerailctrl:SetSpeed" href="default.simplerailctrl#//@nodes.3"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1d8BEl5QEd66WPCmQh3Ivg" x="130" y="169"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_oyf7IV5OEd6afb09cAPREQ"/>
+  <element xmi:type="simplerailctrl:RailController" href="default.simplerailctrl#/"/>
+  <edges xmi:type="notation:Edge" xmi:id="_uJ0lIF5OEd6afb09cAPREQ" type="3001" source="_sa0FoF5OEd6afb09cAPREQ" target="_pkuCQF5OEd6afb09cAPREQ">
+    <children xmi:type="notation:Node" xmi:id="_uJ-WI15OEd6afb09cAPREQ" type="4008">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_uJ-WJF5OEd6afb09cAPREQ" x="-18" y="-16"/>
+    </children>
+    <styles xmi:type="notation:RoutingStyle" xmi:id="_uJ-WIF5OEd6afb09cAPREQ"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_uJ-WIV5OEd6afb09cAPREQ"/>
+    <element xmi:type="simplerailctrl:EventWait" href="default.simplerailctrl#//@nodes.1/@outTransitions.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_uJ-WIl5OEd6afb09cAPREQ" points="[13, -1, -226, 3]$[227, -5, -12, -1]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_uK3uAF5OEd6afb09cAPREQ" id="(0.8909091,0.55)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_uK3uAV5OEd6afb09cAPREQ" id="(0.10909091,0.45)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_vns4YF5OEd6afb09cAPREQ" type="3002" source="_pkuCQF5OEd6afb09cAPREQ" target="_vHEQgF5OEd6afb09cAPREQ">
+    <children xmi:type="notation:Node" xmi:id="_vns4ZF5OEd6afb09cAPREQ" type="4009">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_vns4ZV5OEd6afb09cAPREQ" x="10" y="-82"/>
+    </children>
+    <styles xmi:type="notation:RoutingStyle" xmi:id="_vns4YV5OEd6afb09cAPREQ"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_vns4Yl5OEd6afb09cAPREQ"/>
+    <element xmi:type="simplerailctrl:EventContact" href="default.simplerailctrl#//@nodes.0/@outTransitions.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_vns4Y15OEd6afb09cAPREQ" points="[-1, 8, 25, -141]$[29, 141, 55, -8]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_vn_zUF5OEd6afb09cAPREQ" id="(0.3909091,0.825)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_21ZjQF5QEd66WPCmQh3Ivg" type="3002" source="_vHEQgF5OEd6afb09cAPREQ" target="_1d8BEF5QEd66WPCmQh3Ivg">
+    <children xmi:type="notation:Node" xmi:id="_21jUQF5QEd66WPCmQh3Ivg" type="4009">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_21jUQV5QEd66WPCmQh3Ivg" x="42" y="-41"/>
+    </children>
+    <styles xmi:type="notation:RoutingStyle" xmi:id="_21ZjQV5QEd66WPCmQh3Ivg"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_21ZjQl5QEd66WPCmQh3Ivg"/>
+    <element xmi:type="simplerailctrl:EventContact" href="default.simplerailctrl#//@nodes.2/@outTransitions.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_21ZjQ15QEd66WPCmQh3Ivg" points="[-1, -1, 114, 36]$[-109, -37, 6, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_21jUQl5QEd66WPCmQh3Ivg" id="(0.018181818,0.675)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_21jUQ15QEd66WPCmQh3Ivg" id="(0.94545454,0.625)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_4ol_MF5QEd66WPCmQh3Ivg" type="3001" source="_1d8BEF5QEd66WPCmQh3Ivg" target="_pkuCQF5OEd6afb09cAPREQ">
+    <children xmi:type="notation:Node" xmi:id="_4ol_NF5QEd66WPCmQh3Ivg" type="4008">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_4ol_NV5QEd66WPCmQh3Ivg" x="-51" y="-34"/>
+    </children>
+    <styles xmi:type="notation:RoutingStyle" xmi:id="_4ol_MV5QEd66WPCmQh3Ivg"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_4ol_Ml5QEd66WPCmQh3Ivg"/>
+    <element xmi:type="simplerailctrl:EventWait" href="default.simplerailctrl#//@nodes.3/@outTransitions.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_4ol_M15QEd66WPCmQh3Ivg" points="[4, -2, -166, 97]$[166, -98, -4, 1]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4ol_Nl5QEd66WPCmQh3Ivg" id="(0.48181817,0.05)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4ol_N15QEd66WPCmQh3Ivg" id="(0.036363635,0.9)"/>
+  </edges>
+</notation:Diagram>

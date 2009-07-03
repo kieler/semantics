@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+
+   <extension
+         id="SimpleRailCtrl"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="SimpleRailCtrl.diagram.SimpleRailCtrlApplication"
+            name="SimpleRailCtrl">
+         <property
+               name="appName"
+               value="SimpleRailCtrl">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/TRAIN16px.png,icons/TRAIN32px.png,icons/TRAIN48px.png,icons/TRAIN64px.png,icons/TRAIN128px.png">
+         </property>
+      </product>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="de.cau.cs.kieler.simplerailctrl.diagram.SimpleRailCtrlApplication"
+            name="KIELER SimpleRailCtrl">
+         <property
+               name="windowImages"
+               value="platform:/plugin/SimpleRailCtrl/icons/TRAIN16px.png,platform:/plugin/SimpleRailCtrl/icons/TRAIN32px.png,platform:/plugin/SimpleRailCtrl/icons/TRAIN48px.png,platform:/plugin/SimpleRailCtrl/icons/TRAIN64px.png,platform:/plugin/SimpleRailCtrl/icons/TRAIN128px.png">
+         </property>
+         <property
+               name="appName"
+               value="KIELER SimpleRailCtrl">
+         </property>
+      </product>
+   </extension>
+
+</plugin>

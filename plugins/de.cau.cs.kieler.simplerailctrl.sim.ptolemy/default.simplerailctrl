@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simplerailctrl:RailController xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simplerailctrl="http://simplerailctrl/1.0">
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="100">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.2" track="IC_ST_3"/>
+    <track>IC_JCT_0</track>
+    <track>IC_LN_0</track>
+    <track>IC_LN_1</track>
+    <track>IC_LN_2</track>
+    <track>IC_LN_3</track>
+    <track>IC_LN_4</track>
+    <track>IC_LN_5</track>
+    <track>IC_ST_0</track>
+    <track>IC_ST_3</track>
+    <track>IC_ST_4</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetPoint" initial="true" direction="BRANCH">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.0" seconds="2"/>
+    <point>POINT_20</point>
+    <point>POINT_24</point>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed" speed="30">
+    <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.3" track="IC_ST_3" position="SECOND"/>
+    <track>IC_ST_0</track>
+    <track>IC_ST_3</track>
+  </nodes>
+  <nodes xsi:type="simplerailctrl:SetSpeed">
+    <outTransitions xsi:type="simplerailctrl:EventWait" destination="//@nodes.0" seconds="10"/>
+    <track>IC_ST_3</track>
+  </nodes>
+</simplerailctrl:RailController>
