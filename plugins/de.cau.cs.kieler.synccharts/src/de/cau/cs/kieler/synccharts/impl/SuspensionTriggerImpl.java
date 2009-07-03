@@ -40,354 +40,354 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class SuspensionTriggerImpl extends EObjectImpl implements SuspensionTrigger {
 	/**
-	 * The default value of the '{@link #isImmediate() <em>Immediate</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #isImmediate() <em>Immediate</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isImmediate()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #isImmediate()
+     * @generated
+     * @ordered
+     */
 	protected static final boolean IMMEDIATE_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isImmediate() <em>Immediate</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #isImmediate() <em>Immediate</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isImmediate()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #isImmediate()
+     * @generated
+     * @ordered
+     */
 	protected boolean immediate = IMMEDIATE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getTrigger() <em>Trigger</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getTrigger() <em>Trigger</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTrigger()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getTrigger()
+     * @generated
+     * @ordered
+     */
 	protected static final String TRIGGER_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getTrigger() <em>Trigger</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getTrigger() <em>Trigger</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTrigger()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getTrigger()
+     * @generated
+     * @ordered
+     */
 	protected String trigger = TRIGGER_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getExpression()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getExpression()
+     * @generated
+     * @ordered
+     */
 	protected Expression expression;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected SuspensionTriggerImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return SyncchartsPackage.Literals.SUSPENSION_TRIGGER;
-	}
+        return SyncchartsPackage.Literals.SUSPENSION_TRIGGER;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public State getParentState() {
-		if (eContainerFeatureID != SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE) return null;
-		return (State)eContainer();
-	}
+        if (eContainerFeatureID() != SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE) return null;
+        return (State)eContainer();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public NotificationChain basicSetParentState(State newParentState, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newParentState, SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE, msgs);
-		return msgs;
-	}
+        msgs = eBasicSetContainer((InternalEObject)newParentState, SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE, msgs);
+        return msgs;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setParentState(State newParentState) {
-		if (newParentState != eInternalContainer() || (eContainerFeatureID != SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE && newParentState != null)) {
-			if (EcoreUtil.isAncestor(this, newParentState))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newParentState != null)
-				msgs = ((InternalEObject)newParentState).eInverseAdd(this, SyncchartsPackage.STATE__SUSPENSION_TRIGGER, State.class, msgs);
-			msgs = basicSetParentState(newParentState, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE, newParentState, newParentState));
-	}
+        if (newParentState != eInternalContainer() || (eContainerFeatureID() != SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE && newParentState != null)) {
+            if (EcoreUtil.isAncestor(this, newParentState))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newParentState != null)
+                msgs = ((InternalEObject)newParentState).eInverseAdd(this, SyncchartsPackage.STATE__SUSPENSION_TRIGGER, State.class, msgs);
+            msgs = basicSetParentState(newParentState, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE, newParentState, newParentState));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public boolean isImmediate() {
-		return immediate;
-	}
+        return immediate;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setImmediate(boolean newImmediate) {
-		boolean oldImmediate = immediate;
-		immediate = newImmediate;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUSPENSION_TRIGGER__IMMEDIATE, oldImmediate, immediate));
-	}
+        boolean oldImmediate = immediate;
+        immediate = newImmediate;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUSPENSION_TRIGGER__IMMEDIATE, oldImmediate, immediate));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public String getTrigger() {
-		return trigger;
-	}
+        return trigger;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setTrigger(String newTrigger) {
-		String oldTrigger = trigger;
-		trigger = newTrigger;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUSPENSION_TRIGGER__TRIGGER, oldTrigger, trigger));
-	}
+        String oldTrigger = trigger;
+        trigger = newTrigger;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUSPENSION_TRIGGER__TRIGGER, oldTrigger, trigger));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Expression getExpression() {
-		return expression;
-	}
+        return expression;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
-		Expression oldExpression = expression;
-		expression = newExpression;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION, oldExpression, newExpression);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
+        Expression oldExpression = expression;
+        expression = newExpression;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION, oldExpression, newExpression);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setExpression(Expression newExpression) {
-		if (newExpression != expression) {
-			NotificationChain msgs = null;
-			if (expression != null)
-				msgs = ((InternalEObject)expression).eInverseRemove(this, SyncchartsPackage.EXPRESSION__PARENT_SUSPENSION_TRIGGER, Expression.class, msgs);
-			if (newExpression != null)
-				msgs = ((InternalEObject)newExpression).eInverseAdd(this, SyncchartsPackage.EXPRESSION__PARENT_SUSPENSION_TRIGGER, Expression.class, msgs);
-			msgs = basicSetExpression(newExpression, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION, newExpression, newExpression));
-	}
+        if (newExpression != expression) {
+            NotificationChain msgs = null;
+            if (expression != null)
+                msgs = ((InternalEObject)expression).eInverseRemove(this, SyncchartsPackage.EXPRESSION__PARENT_SUSPENSION_TRIGGER, Expression.class, msgs);
+            if (newExpression != null)
+                msgs = ((InternalEObject)newExpression).eInverseAdd(this, SyncchartsPackage.EXPRESSION__PARENT_SUSPENSION_TRIGGER, Expression.class, msgs);
+            msgs = basicSetExpression(newExpression, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION, newExpression, newExpression));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetParentState((State)otherEnd, msgs);
-			case SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION:
-				if (expression != null)
-					msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION, null, msgs);
-				return basicSetExpression((Expression)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetParentState((State)otherEnd, msgs);
+            case SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION:
+                if (expression != null)
+                    msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION, null, msgs);
+                return basicSetExpression((Expression)otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
-				return basicSetParentState(null, msgs);
-			case SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION:
-				return basicSetExpression(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
+                return basicSetParentState(null, msgs);
+            case SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION:
+                return basicSetExpression(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
-			case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
-				return eInternalContainer().eInverseRemove(this, SyncchartsPackage.STATE__SUSPENSION_TRIGGER, State.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
-	}
+        switch (eContainerFeatureID()) {
+            case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
+                return eInternalContainer().eInverseRemove(this, SyncchartsPackage.STATE__SUSPENSION_TRIGGER, State.class, msgs);
+        }
+        return super.eBasicRemoveFromContainerFeature(msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
-				return getParentState();
-			case SyncchartsPackage.SUSPENSION_TRIGGER__IMMEDIATE:
-				return isImmediate() ? Boolean.TRUE : Boolean.FALSE;
-			case SyncchartsPackage.SUSPENSION_TRIGGER__TRIGGER:
-				return getTrigger();
-			case SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION:
-				return getExpression();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
+                return getParentState();
+            case SyncchartsPackage.SUSPENSION_TRIGGER__IMMEDIATE:
+                return isImmediate();
+            case SyncchartsPackage.SUSPENSION_TRIGGER__TRIGGER:
+                return getTrigger();
+            case SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION:
+                return getExpression();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
-				setParentState((State)newValue);
-				return;
-			case SyncchartsPackage.SUSPENSION_TRIGGER__IMMEDIATE:
-				setImmediate(((Boolean)newValue).booleanValue());
-				return;
-			case SyncchartsPackage.SUSPENSION_TRIGGER__TRIGGER:
-				setTrigger((String)newValue);
-				return;
-			case SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION:
-				setExpression((Expression)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
+                setParentState((State)newValue);
+                return;
+            case SyncchartsPackage.SUSPENSION_TRIGGER__IMMEDIATE:
+                setImmediate((Boolean)newValue);
+                return;
+            case SyncchartsPackage.SUSPENSION_TRIGGER__TRIGGER:
+                setTrigger((String)newValue);
+                return;
+            case SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION:
+                setExpression((Expression)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
-				setParentState((State)null);
-				return;
-			case SyncchartsPackage.SUSPENSION_TRIGGER__IMMEDIATE:
-				setImmediate(IMMEDIATE_EDEFAULT);
-				return;
-			case SyncchartsPackage.SUSPENSION_TRIGGER__TRIGGER:
-				setTrigger(TRIGGER_EDEFAULT);
-				return;
-			case SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION:
-				setExpression((Expression)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
+                setParentState((State)null);
+                return;
+            case SyncchartsPackage.SUSPENSION_TRIGGER__IMMEDIATE:
+                setImmediate(IMMEDIATE_EDEFAULT);
+                return;
+            case SyncchartsPackage.SUSPENSION_TRIGGER__TRIGGER:
+                setTrigger(TRIGGER_EDEFAULT);
+                return;
+            case SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION:
+                setExpression((Expression)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
-				return getParentState() != null;
-			case SyncchartsPackage.SUSPENSION_TRIGGER__IMMEDIATE:
-				return immediate != IMMEDIATE_EDEFAULT;
-			case SyncchartsPackage.SUSPENSION_TRIGGER__TRIGGER:
-				return TRIGGER_EDEFAULT == null ? trigger != null : !TRIGGER_EDEFAULT.equals(trigger);
-			case SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION:
-				return expression != null;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SUSPENSION_TRIGGER__PARENT_STATE:
+                return getParentState() != null;
+            case SyncchartsPackage.SUSPENSION_TRIGGER__IMMEDIATE:
+                return immediate != IMMEDIATE_EDEFAULT;
+            case SyncchartsPackage.SUSPENSION_TRIGGER__TRIGGER:
+                return TRIGGER_EDEFAULT == null ? trigger != null : !TRIGGER_EDEFAULT.equals(trigger);
+            case SyncchartsPackage.SUSPENSION_TRIGGER__EXPRESSION:
+                return expression != null;
+        }
+        return super.eIsSet(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (immediate: ");
-		result.append(immediate);
-		result.append(", trigger: ");
-		result.append(trigger);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (immediate: ");
+        result.append(immediate);
+        result.append(", trigger: ");
+        result.append(trigger);
+        result.append(')');
+        return result.toString();
+    }
 
 } //SuspensionTriggerImpl

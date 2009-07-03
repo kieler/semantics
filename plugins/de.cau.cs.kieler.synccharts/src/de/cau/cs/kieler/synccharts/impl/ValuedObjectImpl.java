@@ -34,243 +34,243 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public class ValuedObjectImpl extends EObjectImpl implements ValuedObject {
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
 	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
 	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
 	protected static final ValueType TYPE_EDEFAULT = ValueType.PURE;
 
 	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
 	protected ValueType type = TYPE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getInitialValue()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getInitialValue()
+     * @generated
+     * @ordered
+     */
 	protected static final String INITIAL_VALUE_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getInitialValue()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getInitialValue()
+     * @generated
+     * @ordered
+     */
 	protected String initialValue = INITIAL_VALUE_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected ValuedObjectImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return SyncchartsPackage.Literals.VALUED_OBJECT;
-	}
+        return SyncchartsPackage.Literals.VALUED_OBJECT;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public String getName() {
-		return name;
-	}
+        return name;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.VALUED_OBJECT__NAME, oldName, name));
-	}
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.VALUED_OBJECT__NAME, oldName, name));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ValueType getType() {
-		return type;
-	}
+        return type;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setType(ValueType newType) {
-		ValueType oldType = type;
-		type = newType == null ? TYPE_EDEFAULT : newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.VALUED_OBJECT__TYPE, oldType, type));
-	}
+        ValueType oldType = type;
+        type = newType == null ? TYPE_EDEFAULT : newType;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.VALUED_OBJECT__TYPE, oldType, type));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public String getInitialValue() {
-		return initialValue;
-	}
+        return initialValue;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setInitialValue(String newInitialValue) {
-		String oldInitialValue = initialValue;
-		initialValue = newInitialValue;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE, oldInitialValue, initialValue));
-	}
+        String oldInitialValue = initialValue;
+        initialValue = newInitialValue;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE, oldInitialValue, initialValue));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SyncchartsPackage.VALUED_OBJECT__NAME:
-				return getName();
-			case SyncchartsPackage.VALUED_OBJECT__TYPE:
-				return getType();
-			case SyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
-				return getInitialValue();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.VALUED_OBJECT__NAME:
+                return getName();
+            case SyncchartsPackage.VALUED_OBJECT__TYPE:
+                return getType();
+            case SyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
+                return getInitialValue();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SyncchartsPackage.VALUED_OBJECT__NAME:
-				setName((String)newValue);
-				return;
-			case SyncchartsPackage.VALUED_OBJECT__TYPE:
-				setType((ValueType)newValue);
-				return;
-			case SyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
-				setInitialValue((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.VALUED_OBJECT__NAME:
+                setName((String)newValue);
+                return;
+            case SyncchartsPackage.VALUED_OBJECT__TYPE:
+                setType((ValueType)newValue);
+                return;
+            case SyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
+                setInitialValue((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case SyncchartsPackage.VALUED_OBJECT__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case SyncchartsPackage.VALUED_OBJECT__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
-			case SyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
-				setInitialValue(INITIAL_VALUE_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.VALUED_OBJECT__NAME:
+                setName(NAME_EDEFAULT);
+                return;
+            case SyncchartsPackage.VALUED_OBJECT__TYPE:
+                setType(TYPE_EDEFAULT);
+                return;
+            case SyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
+                setInitialValue(INITIAL_VALUE_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SyncchartsPackage.VALUED_OBJECT__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case SyncchartsPackage.VALUED_OBJECT__TYPE:
-				return type != TYPE_EDEFAULT;
-			case SyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
-				return INITIAL_VALUE_EDEFAULT == null ? initialValue != null : !INITIAL_VALUE_EDEFAULT.equals(initialValue);
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.VALUED_OBJECT__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case SyncchartsPackage.VALUED_OBJECT__TYPE:
+                return type != TYPE_EDEFAULT;
+            case SyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
+                return INITIAL_VALUE_EDEFAULT == null ? initialValue != null : !INITIAL_VALUE_EDEFAULT.equals(initialValue);
+        }
+        return super.eIsSet(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(", type: ");
-		result.append(type);
-		result.append(", initialValue: ");
-		result.append(initialValue);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (name: ");
+        result.append(name);
+        result.append(", type: ");
+        result.append(type);
+        result.append(", initialValue: ");
+        result.append(initialValue);
+        result.append(')');
+        return result.toString();
+    }
 
 } //ValuedObjectImpl

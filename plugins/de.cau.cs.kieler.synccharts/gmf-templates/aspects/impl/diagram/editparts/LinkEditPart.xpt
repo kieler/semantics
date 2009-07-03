@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2006, 2007 Borland Software Corporation
+ï»¿/*
+ * Copyright (c) 2006, 2009 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,104 +11,135 @@
  *    Alexander Shatalin (Borland) - initial API and implementation
  */
 
-«IMPORT "http://www.eclipse.org/gmf/2008/GenModel"»
+Â«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'Â»
 
-«DEFINE constructor FOR gmfgen::GenLink-»
-	«EXPAND xpt::Common::generatedMemberComment»
-	public «editPartClassName»(org.eclipse.gmf.runtime.notation.View view) {
+Â«DEFINE _constructor FOR gmfgen::GenLink-Â»
+	Â«EXPAND xpt::Common::generatedMemberCommentÂ»
+	public Â«editPartClassNameÂ»(org.eclipse.gmf.runtime.notation.View view) {
 		super(view);
 	}
-«ENDDEFINE»
+Â«ENDDEFINEÂ»
 
-«DEFINE createDefaultEditPoliciesBody FOR gmfgen::GenLink-»
+Â«DEFINE createDefaultEditPoliciesBody FOR gmfgen::GenLink-Â»
 	super.createDefaultEditPolicies();
-	«IF null == modelFacet-»
+	Â«IF null = modelFacet-Â»
 		installEditPolicy(org.eclipse.gef.EditPolicy.COMPONENT_ROLE, new org.eclipse.gmf.runtime.diagram.ui.editpolicies.ViewComponentEditPolicy());
-	«ENDIF-»
-	«EXPAND xpt::diagram::editparts::Common::installSemanticEditPolicy-»
-	«EXPAND xpt::diagram::editparts::Common::behaviour FOR this-»
-«ENDDEFINE»
+	Â«ENDIF-Â»
+	Â«EXPAND xpt::diagram::editparts::Common::installSemanticEditPolicy-Â»
+	Â«EXPAND xpt::diagram::editparts::Common::behaviour FOR self-Â»
+Â«ENDDEFINEÂ»
 
-«DEFINE addFixedChild FOR gmfgen::GenLink-»
-	«IF labels.size() > 0-»
-
-		«EXPAND xpt::Common::generatedMemberComment»
+Â«DEFINE addFixedChild FOR gmfgen::GenLink-Â»
+	Â«IF labels->size() > 0-Â»
+		Â«EXPAND xpt::Common::generatedMemberCommentÂ»
 		protected boolean addFixedChild(org.eclipse.gef.EditPart childEditPart) {
-			«FOREACH labels AS label-»
-				«EXPAND addLabel(label) FOR label.viewmap-»
-			«ENDFOREACH-»
+			Â«FOREACH labels->asSequence() AS label-Â»
+				Â«EXPAND addLabel(label) FOR label.viewmap-Â»
+			Â«ENDFOREACH-Â»
 			return false;
 		}
-	«ENDIF»
-«ENDDEFINE»
+	Â«ENDIFÂ»
+Â«ENDDEFINEÂ»
 
-«DEFINE addLabel(gmfgen::GenLinkLabel label) FOR gmfgen::Viewmap-»
-«ENDDEFINE»
+Â«DEFINE addLabel(label : gmfgen::GenLinkLabel) FOR gmfgen::Viewmap-Â»
+Â«ENDDEFINEÂ»
 
-«DEFINE addLabel(gmfgen::GenLinkLabel label) FOR gmfgen::ParentAssignedViewmap-»
-	if (childEditPart instanceof «label.getEditPartQualifiedClassName()») {
-		((«label.getEditPartQualifiedClassName()») childEditPart).«EXPAND impl::diagram::editparts::TextAware::labelSetterName»(
-				getPrimaryShape().«getterName»());
+Â«DEFINE addLabel(label : gmfgen::GenLinkLabel) FOR gmfgen::ParentAssignedViewmap-Â»
+	if (childEditPart instanceof Â«label.getEditPartQualifiedClassName()Â») {
+		((Â«label.getEditPartQualifiedClassName()Â») childEditPart).Â«EXPAND impl::diagram::editparts::TextAware::labelSetterNameÂ»(
+				getPrimaryShape().Â«getterNameÂ»());
 		return true;
 	}
-«ENDDEFINE»
+Â«ENDDEFINEÂ»
 
-«DEFINE addChildVisual FOR gmfgen::GenLink-»
-	«IF labels.size() > 0-»
+Â«DEFINE removeFixedChild FOR gmfgen::GenLink-Â»
+	Â«IF labels->size() > 0-Â»
+		Â«EXPAND xpt::Common::generatedMemberCommentÂ»
+		protected boolean removeFixedChild(org.eclipse.gef.EditPart childEditPart) {
+			Â«FOREACH labels->asSequence() AS label-Â»
+				Â«EXPAND removeLabel(label) FOR label.viewmap-Â»
+			Â«ENDFOREACH-Â»
+			return false;
+		}
+	Â«ENDIFÂ»
+Â«ENDDEFINEÂ»
 
-		«EXPAND xpt::Common::generatedMemberComment»
+Â«DEFINE removeLabel(label : gmfgen::GenLinkLabel) FOR gmfgen::Viewmap-Â»
+Â«ENDDEFINEÂ»
+
+Â«DEFINE removeLabel(label : gmfgen::GenLinkLabel) FOR gmfgen::ParentAssignedViewmap-Â»
+	if (childEditPart instanceof Â«label.getEditPartQualifiedClassName()Â») {
+		return true;
+	}
+Â«ENDDEFINEÂ»
+
+Â«DEFINE addChildVisual FOR gmfgen::GenLink-Â»
+	Â«IF labels->size() > 0-Â»
+		Â«EXPAND xpt::Common::generatedMemberCommentÂ»
 		protected void addChildVisual(org.eclipse.gef.EditPart childEditPart, int index) {
 			if (addFixedChild(childEditPart)) {
 				return;
 			}
 			super.addChildVisual(childEditPart, -1);
 		}
-	«ENDIF»
-«ENDDEFINE»
+	Â«ENDIFÂ»
+Â«ENDDEFINEÂ»
 
-«DEFINE createLinkFigure FOR gmfgen::GenLink-»
-	«EXPAND xpt::Common::generatedMemberComment(
-		"Creates figure for this edit part.\n" +
-		"\n" +
-		"Body of this method does not depend on settings in generation model\n" +
-		"so you may safely remove <i>generated</i> tag and modify it.\n" 
-	)»
-	«EXPAND createLinkFigure(this) FOR viewmap-»
-«ENDDEFINE»
+Â«DEFINE removeChildVisual FOR gmfgen::GenLink-Â»
+	Â«IF labels->size() > 0-Â»
+		Â«EXPAND xpt::Common::generatedMemberCommentÂ»
+		protected void removeChildVisual(org.eclipse.gef.EditPart childEditPart) {
+			if (removeFixedChild(childEditPart)) {
+				return;
+			}
+			super.removeChildVisual(childEditPart);
+		}
+	Â«ENDIFÂ»
+Â«ENDDEFINEÂ»
 
-«DEFINE createLinkFigure(gmfgen::GenLink link) FOR gmfgen::Viewmap-»
-	«ERROR "Unknown viewmap: " + this-»
-«ENDDEFINE»
+Â«DEFINE createLinkFigure FOR gmfgen::GenLink-Â»
+	Â«EXPAND xpt::Common::generatedMemberComment(
+		'Creates figure for this edit part.\n' + 
+		'\n' + 
+		'Body of this method does not depend on settings in generation model\n' + 
+		'so you may safely remove <i>generated</i> tag and modify it.\n'
+	)Â»
+	Â«EXPAND createLinkFigure(self) FOR viewmap-Â»
+Â«ENDDEFINEÂ»
 
-«DEFINE createLinkFigure(gmfgen::GenLink link) FOR gmfgen::FigureViewmap-»
-	«LET figureQualifiedClassName == null ? "org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx" : figureQualifiedClassName AS fqn-»
+Â«DEFINE createLinkFigure(link : gmfgen::GenLink) FOR gmfgen::Viewmap-Â»
+	Â«ERROR 'Unknown viewmap: ' + self.repr()-Â»
+Â«ENDDEFINEÂ»
+
+Â«DEFINE createLinkFigure(link : gmfgen::GenLink) FOR gmfgen::FigureViewmap-Â»
+	Â«LET (if figureQualifiedClassName = null then 'org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx' else figureQualifiedClassName endif) AS fqn-Â»
 		protected org.eclipse.draw2d.Connection createConnectionFigure() {
-			return new «fqn»();
+			return new Â«fqnÂ»();
 		}
 
-		«EXPAND xpt::Common::generatedMemberComment»
-		public «fqn» getPrimaryShape() {
-			return («fqn») getFigure();
+		Â«EXPAND xpt::Common::generatedMemberCommentÂ»
+		public Â«fqnÂ» getPrimaryShape() {
+			return (Â«fqnÂ») getFigure();
 		}
-	«ENDLET-»
-«ENDDEFINE»
+	Â«ENDLET-Â»
+Â«ENDDEFINEÂ»
 
-«DEFINE createLinkFigure(gmfgen::GenLink link) FOR gmfgen::SnippetViewmap»
+Â«DEFINE createLinkFigure(link : gmfgen::GenLink) FOR gmfgen::SnippetViewmapÂ»
 	protected org.eclipse.draw2d.Connection createConnectionFigure() {
-		return «body»;
+		return Â«bodyÂ»;
 	}
-«ENDDEFINE»
+Â«ENDDEFINEÂ»
 
-«DEFINE createLinkFigure(gmfgen::GenLink link) FOR gmfgen::InnerClassViewmap»
+Â«DEFINE createLinkFigure(link : gmfgen::GenLink) FOR gmfgen::InnerClassViewmapÂ»
 	protected org.eclipse.draw2d.Connection createConnectionFigure() {
-		«REM» Added "this" to let edit part pass itself to the figure «ENDREM»
-		return new «className»(this);
+		Â«REMÂ» Added "this" to let edit part pass itself to the figure Â«ENDREMÂ»
+		return new Â«classNameÂ»(this);
 	}
 
-	«EXPAND xpt::Common::generatedMemberComment»
-	public «className» getPrimaryShape() {
-		return («className») getFigure();
+	Â«EXPAND xpt::Common::generatedMemberCommentÂ»
+	public Â«classNameÂ» getPrimaryShape() {
+		return (Â«classNameÂ») getFigure();
 	}
 
-	«classBody»
-«ENDDEFINE»
+	Â«classBodyÂ»
+Â«ENDDEFINEÂ»

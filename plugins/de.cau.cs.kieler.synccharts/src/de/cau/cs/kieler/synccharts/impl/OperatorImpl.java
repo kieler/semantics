@@ -38,232 +38,232 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class OperatorImpl extends EObjectImpl implements Operator {
 	/**
-	 * The default value of the '{@link #getOperatorKind() <em>Operator Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getOperatorKind() <em>Operator Kind</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOperatorKind()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getOperatorKind()
+     * @generated
+     * @ordered
+     */
 	protected static final OperatorKind OPERATOR_KIND_EDEFAULT = OperatorKind.NOT;
 
 	/**
-	 * The cached value of the '{@link #getOperatorKind() <em>Operator Kind</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getOperatorKind() <em>Operator Kind</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOperatorKind()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getOperatorKind()
+     * @generated
+     * @ordered
+     */
 	protected OperatorKind operatorKind = OPERATOR_KIND_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected OperatorImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return SyncchartsPackage.Literals.OPERATOR;
-	}
+        return SyncchartsPackage.Literals.OPERATOR;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public OperatorKind getOperatorKind() {
-		return operatorKind;
-	}
+        return operatorKind;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setOperatorKind(OperatorKind newOperatorKind) {
-		OperatorKind oldOperatorKind = operatorKind;
-		operatorKind = newOperatorKind == null ? OPERATOR_KIND_EDEFAULT : newOperatorKind;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.OPERATOR__OPERATOR_KIND, oldOperatorKind, operatorKind));
-	}
+        OperatorKind oldOperatorKind = operatorKind;
+        operatorKind = newOperatorKind == null ? OPERATOR_KIND_EDEFAULT : newOperatorKind;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.OPERATOR__OPERATOR_KIND, oldOperatorKind, operatorKind));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ComplexExpression getParentExpression() {
-		if (eContainerFeatureID != SyncchartsPackage.OPERATOR__PARENT_EXPRESSION) return null;
-		return (ComplexExpression)eContainer();
-	}
+        if (eContainerFeatureID() != SyncchartsPackage.OPERATOR__PARENT_EXPRESSION) return null;
+        return (ComplexExpression)eContainer();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public NotificationChain basicSetParentExpression(ComplexExpression newParentExpression, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newParentExpression, SyncchartsPackage.OPERATOR__PARENT_EXPRESSION, msgs);
-		return msgs;
-	}
+        msgs = eBasicSetContainer((InternalEObject)newParentExpression, SyncchartsPackage.OPERATOR__PARENT_EXPRESSION, msgs);
+        return msgs;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setParentExpression(ComplexExpression newParentExpression) {
-		if (newParentExpression != eInternalContainer() || (eContainerFeatureID != SyncchartsPackage.OPERATOR__PARENT_EXPRESSION && newParentExpression != null)) {
-			if (EcoreUtil.isAncestor(this, newParentExpression))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newParentExpression != null)
-				msgs = ((InternalEObject)newParentExpression).eInverseAdd(this, SyncchartsPackage.COMPLEX_EXPRESSION__OPERATOR, ComplexExpression.class, msgs);
-			msgs = basicSetParentExpression(newParentExpression, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.OPERATOR__PARENT_EXPRESSION, newParentExpression, newParentExpression));
-	}
+        if (newParentExpression != eInternalContainer() || (eContainerFeatureID() != SyncchartsPackage.OPERATOR__PARENT_EXPRESSION && newParentExpression != null)) {
+            if (EcoreUtil.isAncestor(this, newParentExpression))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newParentExpression != null)
+                msgs = ((InternalEObject)newParentExpression).eInverseAdd(this, SyncchartsPackage.COMPLEX_EXPRESSION__OPERATOR, ComplexExpression.class, msgs);
+            msgs = basicSetParentExpression(newParentExpression, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.OPERATOR__PARENT_EXPRESSION, newParentExpression, newParentExpression));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetParentExpression((ComplexExpression)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetParentExpression((ComplexExpression)otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
-				return basicSetParentExpression(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
+                return basicSetParentExpression(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
-			case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
-				return eInternalContainer().eInverseRemove(this, SyncchartsPackage.COMPLEX_EXPRESSION__OPERATOR, ComplexExpression.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
-	}
+        switch (eContainerFeatureID()) {
+            case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
+                return eInternalContainer().eInverseRemove(this, SyncchartsPackage.COMPLEX_EXPRESSION__OPERATOR, ComplexExpression.class, msgs);
+        }
+        return super.eBasicRemoveFromContainerFeature(msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SyncchartsPackage.OPERATOR__OPERATOR_KIND:
-				return getOperatorKind();
-			case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
-				return getParentExpression();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.OPERATOR__OPERATOR_KIND:
+                return getOperatorKind();
+            case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
+                return getParentExpression();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SyncchartsPackage.OPERATOR__OPERATOR_KIND:
-				setOperatorKind((OperatorKind)newValue);
-				return;
-			case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
-				setParentExpression((ComplexExpression)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.OPERATOR__OPERATOR_KIND:
+                setOperatorKind((OperatorKind)newValue);
+                return;
+            case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
+                setParentExpression((ComplexExpression)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case SyncchartsPackage.OPERATOR__OPERATOR_KIND:
-				setOperatorKind(OPERATOR_KIND_EDEFAULT);
-				return;
-			case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
-				setParentExpression((ComplexExpression)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.OPERATOR__OPERATOR_KIND:
+                setOperatorKind(OPERATOR_KIND_EDEFAULT);
+                return;
+            case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
+                setParentExpression((ComplexExpression)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SyncchartsPackage.OPERATOR__OPERATOR_KIND:
-				return operatorKind != OPERATOR_KIND_EDEFAULT;
-			case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
-				return getParentExpression() != null;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.OPERATOR__OPERATOR_KIND:
+                return operatorKind != OPERATOR_KIND_EDEFAULT;
+            case SyncchartsPackage.OPERATOR__PARENT_EXPRESSION:
+                return getParentExpression() != null;
+        }
+        return super.eIsSet(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (operatorKind: ");
-		result.append(operatorKind);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (operatorKind: ");
+        result.append(operatorKind);
+        result.append(')');
+        return result.toString();
+    }
 
 } //OperatorImpl

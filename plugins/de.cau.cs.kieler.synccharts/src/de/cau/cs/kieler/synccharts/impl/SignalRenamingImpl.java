@@ -39,283 +39,283 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class SignalRenamingImpl extends EObjectImpl implements SignalRenaming {
 	/**
-	 * The cached value of the '{@link #getOldSignal() <em>Old Signal</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getOldSignal() <em>Old Signal</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOldSignal()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getOldSignal()
+     * @generated
+     * @ordered
+     */
 	protected Signal oldSignal;
 
 	/**
-	 * The cached value of the '{@link #getNewSignal() <em>New Signal</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getNewSignal() <em>New Signal</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getNewSignal()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getNewSignal()
+     * @generated
+     * @ordered
+     */
 	protected Signal newSignal;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected SignalRenamingImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return SyncchartsPackage.Literals.SIGNAL_RENAMING;
-	}
+        return SyncchartsPackage.Literals.SIGNAL_RENAMING;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Signal getOldSignal() {
-		if (oldSignal != null && oldSignal.eIsProxy()) {
-			InternalEObject oldOldSignal = (InternalEObject)oldSignal;
-			oldSignal = (Signal)eResolveProxy(oldOldSignal);
-			if (oldSignal != oldOldSignal) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SyncchartsPackage.SIGNAL_RENAMING__OLD_SIGNAL, oldOldSignal, oldSignal));
-			}
-		}
-		return oldSignal;
-	}
+        if (oldSignal != null && oldSignal.eIsProxy()) {
+            InternalEObject oldOldSignal = (InternalEObject)oldSignal;
+            oldSignal = (Signal)eResolveProxy(oldOldSignal);
+            if (oldSignal != oldOldSignal) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SyncchartsPackage.SIGNAL_RENAMING__OLD_SIGNAL, oldOldSignal, oldSignal));
+            }
+        }
+        return oldSignal;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Signal basicGetOldSignal() {
-		return oldSignal;
-	}
+        return oldSignal;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setOldSignal(Signal newOldSignal) {
-		Signal oldOldSignal = oldSignal;
-		oldSignal = newOldSignal;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SIGNAL_RENAMING__OLD_SIGNAL, oldOldSignal, oldSignal));
-	}
+        Signal oldOldSignal = oldSignal;
+        oldSignal = newOldSignal;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SIGNAL_RENAMING__OLD_SIGNAL, oldOldSignal, oldSignal));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Signal getNewSignal() {
-		if (newSignal != null && newSignal.eIsProxy()) {
-			InternalEObject oldNewSignal = (InternalEObject)newSignal;
-			newSignal = (Signal)eResolveProxy(oldNewSignal);
-			if (newSignal != oldNewSignal) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SyncchartsPackage.SIGNAL_RENAMING__NEW_SIGNAL, oldNewSignal, newSignal));
-			}
-		}
-		return newSignal;
-	}
+        if (newSignal != null && newSignal.eIsProxy()) {
+            InternalEObject oldNewSignal = (InternalEObject)newSignal;
+            newSignal = (Signal)eResolveProxy(oldNewSignal);
+            if (newSignal != oldNewSignal) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SyncchartsPackage.SIGNAL_RENAMING__NEW_SIGNAL, oldNewSignal, newSignal));
+            }
+        }
+        return newSignal;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Signal basicGetNewSignal() {
-		return newSignal;
-	}
+        return newSignal;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setNewSignal(Signal newNewSignal) {
-		Signal oldNewSignal = newSignal;
-		newSignal = newNewSignal;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SIGNAL_RENAMING__NEW_SIGNAL, oldNewSignal, newSignal));
-	}
+        Signal oldNewSignal = newSignal;
+        newSignal = newNewSignal;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SIGNAL_RENAMING__NEW_SIGNAL, oldNewSignal, newSignal));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public State getParentState() {
-		if (eContainerFeatureID != SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE) return null;
-		return (State)eContainer();
-	}
+        if (eContainerFeatureID() != SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE) return null;
+        return (State)eContainer();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public NotificationChain basicSetParentState(State newParentState, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newParentState, SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE, msgs);
-		return msgs;
-	}
+        msgs = eBasicSetContainer((InternalEObject)newParentState, SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE, msgs);
+        return msgs;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setParentState(State newParentState) {
-		if (newParentState != eInternalContainer() || (eContainerFeatureID != SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE && newParentState != null)) {
-			if (EcoreUtil.isAncestor(this, newParentState))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newParentState != null)
-				msgs = ((InternalEObject)newParentState).eInverseAdd(this, SyncchartsPackage.STATE__SIGNAL_RENAMINGS, State.class, msgs);
-			msgs = basicSetParentState(newParentState, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE, newParentState, newParentState));
-	}
+        if (newParentState != eInternalContainer() || (eContainerFeatureID() != SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE && newParentState != null)) {
+            if (EcoreUtil.isAncestor(this, newParentState))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newParentState != null)
+                msgs = ((InternalEObject)newParentState).eInverseAdd(this, SyncchartsPackage.STATE__SIGNAL_RENAMINGS, State.class, msgs);
+            msgs = basicSetParentState(newParentState, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE, newParentState, newParentState));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetParentState((State)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetParentState((State)otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
-				return basicSetParentState(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
+                return basicSetParentState(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID) {
-			case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
-				return eInternalContainer().eInverseRemove(this, SyncchartsPackage.STATE__SIGNAL_RENAMINGS, State.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
-	}
+        switch (eContainerFeatureID()) {
+            case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
+                return eInternalContainer().eInverseRemove(this, SyncchartsPackage.STATE__SIGNAL_RENAMINGS, State.class, msgs);
+        }
+        return super.eBasicRemoveFromContainerFeature(msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SyncchartsPackage.SIGNAL_RENAMING__OLD_SIGNAL:
-				if (resolve) return getOldSignal();
-				return basicGetOldSignal();
-			case SyncchartsPackage.SIGNAL_RENAMING__NEW_SIGNAL:
-				if (resolve) return getNewSignal();
-				return basicGetNewSignal();
-			case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
-				return getParentState();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SIGNAL_RENAMING__OLD_SIGNAL:
+                if (resolve) return getOldSignal();
+                return basicGetOldSignal();
+            case SyncchartsPackage.SIGNAL_RENAMING__NEW_SIGNAL:
+                if (resolve) return getNewSignal();
+                return basicGetNewSignal();
+            case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
+                return getParentState();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SyncchartsPackage.SIGNAL_RENAMING__OLD_SIGNAL:
-				setOldSignal((Signal)newValue);
-				return;
-			case SyncchartsPackage.SIGNAL_RENAMING__NEW_SIGNAL:
-				setNewSignal((Signal)newValue);
-				return;
-			case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
-				setParentState((State)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SIGNAL_RENAMING__OLD_SIGNAL:
+                setOldSignal((Signal)newValue);
+                return;
+            case SyncchartsPackage.SIGNAL_RENAMING__NEW_SIGNAL:
+                setNewSignal((Signal)newValue);
+                return;
+            case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
+                setParentState((State)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case SyncchartsPackage.SIGNAL_RENAMING__OLD_SIGNAL:
-				setOldSignal((Signal)null);
-				return;
-			case SyncchartsPackage.SIGNAL_RENAMING__NEW_SIGNAL:
-				setNewSignal((Signal)null);
-				return;
-			case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
-				setParentState((State)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SIGNAL_RENAMING__OLD_SIGNAL:
+                setOldSignal((Signal)null);
+                return;
+            case SyncchartsPackage.SIGNAL_RENAMING__NEW_SIGNAL:
+                setNewSignal((Signal)null);
+                return;
+            case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
+                setParentState((State)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SyncchartsPackage.SIGNAL_RENAMING__OLD_SIGNAL:
-				return oldSignal != null;
-			case SyncchartsPackage.SIGNAL_RENAMING__NEW_SIGNAL:
-				return newSignal != null;
-			case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
-				return getParentState() != null;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SyncchartsPackage.SIGNAL_RENAMING__OLD_SIGNAL:
+                return oldSignal != null;
+            case SyncchartsPackage.SIGNAL_RENAMING__NEW_SIGNAL:
+                return newSignal != null;
+            case SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE:
+                return getParentState() != null;
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //SignalRenamingImpl

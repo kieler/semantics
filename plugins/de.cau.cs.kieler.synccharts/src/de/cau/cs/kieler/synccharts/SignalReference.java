@@ -25,29 +25,29 @@ package de.cau.cs.kieler.synccharts;
  */
 public interface SignalReference extends Expression {
 	/**
-	 * Returns the value of the '<em><b>Signal</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Signal</b></em>' reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Signal</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Signal</em>' reference.
-	 * @see #setSignal(Signal)
-	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getSignalReference_Signal()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Signal</em>' reference.
+     * @see #setSignal(Signal)
+     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getSignalReference_Signal()
+     * @model required="true"
+     * @generated
+     */
 	Signal getSignal();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.SignalReference#getSignal <em>Signal</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.SignalReference#getSignal <em>Signal</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Signal</em>' reference.
-	 * @see #getSignal()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Signal</em>' reference.
+     * @see #getSignal()
+     * @generated
+     */
 	void setSignal(Signal value);
 
 } // SignalReference
