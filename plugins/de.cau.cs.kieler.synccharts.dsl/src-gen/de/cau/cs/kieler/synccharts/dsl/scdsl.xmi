@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.openarchitectureware.xtext:XtextFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.openarchitectureware.xtext="http://www.openarchitectureware.org/xtext" name="scdsl" nsURI="de.cau.cs.kieler.synccharts.dsl">
+  <mmImports location="http://www.informatik.uni-kiel.de/rtsys/synccharts" alias="synccharts"/>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="Action">
+    <type alias="synccharts" name="Action"/>
+    <content xsi:type="org.openarchitectureware.xtext:Group">
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" cardinality="OPTIONAL" feature="trigger" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Expression"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="OPTIONAL">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="/"/>
+        <children xsi:type="org.openarchitectureware.xtext:Alternatives" cardinality="ANY">
+          <alternatives xsi:type="org.openarchitectureware.xtext:Assignment" feature="emissions" operator="ADD">
+            <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Emission"/>
+          </alternatives>
+          <alternatives xsi:type="org.openarchitectureware.xtext:Assignment" feature="assignments" operator="ADD">
+            <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Assignment"/>
+          </alternatives>
+        </children>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="Expression">
+    <type alias="synccharts" name="Expression"/>
+    <content xsi:type="org.openarchitectureware.xtext:Alternatives">
+      <alternatives xsi:type="org.openarchitectureware.xtext:RuleName" name="SignalReference"/>
+      <alternatives xsi:type="org.openarchitectureware.xtext:RuleName" name="VariableReference"/>
+      <alternatives xsi:type="org.openarchitectureware.xtext:RuleName" name="ComplexExpression"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="ComplexExpression">
+    <type alias="synccharts" name="ComplexExpression"/>
+    <content xsi:type="org.openarchitectureware.xtext:Group">
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="("/>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" cardinality="OPTIONAL" feature="subExpressions" operator="ADD">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Expression"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="operator" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Operator"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="subExpressions" operator="ADD">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Expression"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value=")"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="Emission">
+    <type alias="synccharts" name="Emission"/>
+    <content xsi:type="org.openarchitectureware.xtext:Group">
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="signal" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Signal"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="OPTIONAL">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="("/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="newValue" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Expression"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value=")"/>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="Assignment">
+    <type alias="synccharts" name="Assignment"/>
+    <content xsi:type="org.openarchitectureware.xtext:Group">
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="variable" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Variable"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="expression" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Expression"/>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="SignalReference">
+    <type alias="synccharts" name="SignalReference"/>
+    <content xsi:type="org.openarchitectureware.xtext:Assignment" feature="signal" operator="ASSIGN">
+      <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Signal"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="VariableReference">
+    <type alias="synccharts" name="VariableReference"/>
+    <content xsi:type="org.openarchitectureware.xtext:Assignment" feature="variable" operator="ASSIGN">
+      <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Variable"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="Signal">
+    <type alias="synccharts" name="Signal"/>
+    <content xsi:type="org.openarchitectureware.xtext:Assignment" feature="name" operator="ASSIGN">
+      <token xsi:type="org.openarchitectureware.xtext:RuleName" name="ID"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="Variable">
+    <type alias="synccharts" name="Variable"/>
+    <content xsi:type="org.openarchitectureware.xtext:Alternatives">
+      <alternatives xsi:type="org.openarchitectureware.xtext:Assignment" feature="name" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="ID"/>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Assignment" feature="value" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="INT"/>
+      </alternatives>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="Operator">
+    <type alias="synccharts" name="Operator"/>
+    <content xsi:type="org.openarchitectureware.xtext:Assignment" feature="operatorKind" operator="ASSIGN">
+      <token xsi:type="org.openarchitectureware.xtext:RuleName" name="OperatorKind"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:EnumRule" name="OperatorKind">
+    <type alias="synccharts" name="OperatorKind"/>
+    <literals keyword="not" name="NOT"/>
+    <literals keyword="=" name="EQ"/>
+    <literals keyword="&lt;" name="LT"/>
+    <literals keyword="&lt;=" name="LEQ"/>
+    <literals keyword="and" name="AND"/>
+    <literals keyword="or" name="OR"/>
+    <literals keyword="+" name="ADD"/>
+    <literals keyword="-" name="SUB"/>
+    <literals keyword="*" name="MULT"/>
+    <literals keyword="/" name="DIV"/>
+    <literals keyword="?" name="VAL"/>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:NativeLexerRule" name="ID"/>
+  <rules xsi:type="org.openarchitectureware.xtext:NativeLexerRule" name="STRING"/>
+  <rules xsi:type="org.openarchitectureware.xtext:NativeLexerRule" name="INT"/>
+  <rules xsi:type="org.openarchitectureware.xtext:NativeLexerRule" name="WS"/>
+  <rules xsi:type="org.openarchitectureware.xtext:NativeLexerRule" name="ML_COMMENT"/>
+  <rules xsi:type="org.openarchitectureware.xtext:NativeLexerRule" name="SL_COMMENT"/>
+</org.openarchitectureware.xtext:XtextFile>

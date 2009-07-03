@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: scdsl Plug-in
+Bundle-SymbolicName: de.cau.cs.kieler.synccharts.dsl;singleton:=true
+Bundle-Version: 0.1.0
+Require-Bundle: org.openarchitectureware.dependencies;visibility:=reexport,
+ org.antlr;visibility:=reexport,
+ org.openarchitectureware.xtext.core.base;visibility:=reexport,
+ org.openarchitectureware.xtext.generator,
+ de.cau.cs.kieler.synccharts;bundle-version="0.1.0"
+Eclipse-LazyStart: true
+Export-Package: de.cau.cs.kieler.synccharts.dsl,
+                de.cau.cs.kieler.synccharts.dsl.parser
+

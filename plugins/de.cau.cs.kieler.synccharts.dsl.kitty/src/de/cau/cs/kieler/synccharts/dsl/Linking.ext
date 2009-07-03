@@ -1,0 +1,9 @@
+import kitty;
+
+extension de::cau::cs::kieler::synccharts::dsl::Extensions;
+extension de::cau::cs::kieler::synccharts::dsl::GenLinking reexport;
+
+/*
+ * If you need more sophisticated linking semantic just overwrite the linking extensions here and add your own logic.
+ * Have a look at the generated de::cau::cs::kieler::synccharts::dsl::GenLinking (typically located in src-gen)
+ */

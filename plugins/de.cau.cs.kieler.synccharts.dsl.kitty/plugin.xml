@@ -1,0 +1,12 @@
+<plugin>
+   
+   
+   
+   <extension
+         point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            class="de.cau.cs.kieler.synccharts.dsl.resource.kittyResourceFactory"
+            type="kitty">
+      </parser>
+   </extension>
+</plugin>

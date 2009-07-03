@@ -1,0 +1,114 @@
+/*
+ * Copyright (c) 2006, 2007 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Dmitry Stadnik (Borland) - initial API and implementation
+ *    Alexander Shatalin (Borland) - initial API and implementation
+ */
+
+«IMPORT "http://www.eclipse.org/gmf/2008/GenModel"»
+
+«DEFINE constructor FOR gmfgen::GenLink-»
+	«EXPAND xpt::Common::generatedMemberComment»
+	public «editPartClassName»(org.eclipse.gmf.runtime.notation.View view) {
+		super(view);
+	}
+«ENDDEFINE»
+
+«DEFINE createDefaultEditPoliciesBody FOR gmfgen::GenLink-»
+	super.createDefaultEditPolicies();
+	«IF null == modelFacet-»
+		installEditPolicy(org.eclipse.gef.EditPolicy.COMPONENT_ROLE, new org.eclipse.gmf.runtime.diagram.ui.editpolicies.ViewComponentEditPolicy());
+	«ENDIF-»
+	«EXPAND xpt::diagram::editparts::Common::installSemanticEditPolicy-»
+	«EXPAND xpt::diagram::editparts::Common::behaviour FOR this-»
+«ENDDEFINE»
+
+«DEFINE addFixedChild FOR gmfgen::GenLink-»
+	«IF labels.size() > 0-»
+
+		«EXPAND xpt::Common::generatedMemberComment»
+		protected boolean addFixedChild(org.eclipse.gef.EditPart childEditPart) {
+			«FOREACH labels AS label-»
+				«EXPAND addLabel(label) FOR label.viewmap-»
+			«ENDFOREACH-»
+			return false;
+		}
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE addLabel(gmfgen::GenLinkLabel label) FOR gmfgen::Viewmap-»
+«ENDDEFINE»
+
+«DEFINE addLabel(gmfgen::GenLinkLabel label) FOR gmfgen::ParentAssignedViewmap-»
+	if (childEditPart instanceof «label.getEditPartQualifiedClassName()») {
+		((«label.getEditPartQualifiedClassName()») childEditPart).«EXPAND impl::diagram::editparts::TextAware::labelSetterName»(
+				getPrimaryShape().«getterName»());
+		return true;
+	}
+«ENDDEFINE»
+
+«DEFINE addChildVisual FOR gmfgen::GenLink-»
+	«IF labels.size() > 0-»
+
+		«EXPAND xpt::Common::generatedMemberComment»
+		protected void addChildVisual(org.eclipse.gef.EditPart childEditPart, int index) {
+			if (addFixedChild(childEditPart)) {
+				return;
+			}
+			super.addChildVisual(childEditPart, -1);
+		}
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE createLinkFigure FOR gmfgen::GenLink-»
+	«EXPAND xpt::Common::generatedMemberComment(
+		"Creates figure for this edit part.\n" +
+		"\n" +
+		"Body of this method does not depend on settings in generation model\n" +
+		"so you may safely remove <i>generated</i> tag and modify it.\n" 
+	)»
+	«EXPAND createLinkFigure(this) FOR viewmap-»
+«ENDDEFINE»
+
+«DEFINE createLinkFigure(gmfgen::GenLink link) FOR gmfgen::Viewmap-»
+	«ERROR "Unknown viewmap: " + this-»
+«ENDDEFINE»
+
+«DEFINE createLinkFigure(gmfgen::GenLink link) FOR gmfgen::FigureViewmap-»
+	«LET figureQualifiedClassName == null ? "org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx" : figureQualifiedClassName AS fqn-»
+		protected org.eclipse.draw2d.Connection createConnectionFigure() {
+			return new «fqn»();
+		}
+
+		«EXPAND xpt::Common::generatedMemberComment»
+		public «fqn» getPrimaryShape() {
+			return («fqn») getFigure();
+		}
+	«ENDLET-»
+«ENDDEFINE»
+
+«DEFINE createLinkFigure(gmfgen::GenLink link) FOR gmfgen::SnippetViewmap»
+	protected org.eclipse.draw2d.Connection createConnectionFigure() {
+		return «body»;
+	}
+«ENDDEFINE»
+
+«DEFINE createLinkFigure(gmfgen::GenLink link) FOR gmfgen::InnerClassViewmap»
+	protected org.eclipse.draw2d.Connection createConnectionFigure() {
+		«REM» Added "this" to let edit part pass itself to the figure «ENDREM»
+		return new «className»(this);
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public «className» getPrimaryShape() {
+		return («className») getFigure();
+	}
+
+	«classBody»
+«ENDDEFINE»

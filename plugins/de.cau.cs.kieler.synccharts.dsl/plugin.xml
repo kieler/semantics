@@ -1,0 +1,12 @@
+<plugin>
+   
+   
+   
+   <extension
+         point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            class="de.cau.cs.kieler.synccharts.dsl.resource.scdslResourceFactory"
+            type="scdsl">
+      </parser>
+   </extension>
+</plugin>
