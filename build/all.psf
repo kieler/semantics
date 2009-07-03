@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.eclipse.team.svn.core.svnnature">
+<project reference="1.0.1,http://rtsys.informatik.uni-kiel.de/svn/kieler/trunk/plugins/de.cau.cs.kieler.kivik,de.cau.cs.kieler.kivik,f0d05c3ff2df001d1ca4af41849b1213;http://rtsys.informatik.uni-kiel.de/svn/kieler;http://rtsys.informatik.uni-kiel.de/svn/kieler;branches;tags;trunk;true;6debc4e9-3993-48f0-b640-80cb21cd30b6;http://rtsys.informatik.uni-kiel.de/svn/kieler;;false;;;22"/>
+</provider>
+</psf>
