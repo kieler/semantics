@@ -6,13 +6,23 @@ Bundle-Name: KIELER SimpleRailCtrl Codegen Plug-in
 Bundle-SymbolicName: de.cau.cs.kieler.simplerailctrl.codegen.c;singleton:=true
 Bundle-Version: 0.1.0
 Require-Bundle: org.eclipse.ui,
+ org.eclipse.emf.ecore.xmi;bundle-version="2.5.0",
+ org.eclipse.emf.mwe.core;bundle-version="0.7.0",
+ org.eclipse.emf.mwe.utils;bundle-version="0.7.0",
+ org.eclipse.xpand;bundle-version="0.7.0",
+ org.eclipse.xtend;bundle-version="0.7.0",
+ org.eclipse.xtend.typesystem.emf;bundle-version="0.7.0",
+ com.ibm.icu;bundle-version="4.0.1",
+ org.antlr.runtime;bundle-version="3.0.0",
  org.eclipse.core.runtime,
  org.eclipse.core.expressions,
  de.cau.cs.kieler.core.ui;bundle-version="0.1.0",
- org.eclipse.core.commands;bundle-version="3.4.0",
- org.openarchitectureware.dependencies;bundle-version="4.3.1"
+ org.eclipse.core.commands;bundle-version="3.4.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.eclipse.emf.common.ui,
+Import-Package: de.cau.cs.kieler.simplerailctrl,
+ org.eclipse.core.internal.propertytester,
+ org.eclipse.core.resources,
+ org.eclipse.emf.common.ui,
  org.eclipse.emf.common.util,
  org.eclipse.ui.part

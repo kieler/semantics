@@ -16,7 +16,7 @@
          id="de.cau.cs.kieler.menu"
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?before=viewGroup">
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
          <separator
                name="de.cau.cs.kieler.simplerailctrl.separator"
                visible="true">
@@ -29,7 +29,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.isCurrentEditor">
+                     definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.projectexlorer">
                </reference>
             </visibleWhen>
          </command>
@@ -48,7 +48,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.isCurrentEditor">
+                     definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.projectexlorer">
                </reference>
             </visibleWhen>
          </command>
@@ -69,7 +69,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <reference
-                        definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.isCurrentEditor">
+                        definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.projectexlorer">
                   </reference>
                </visibleWhen>
             </command>
@@ -79,24 +79,29 @@
    <extension
          point="org.eclipse.core.expressions.definitions">
       <definition
-            id="de.cau.cs.kieler.simplerailctrl.codegen.c.isCurrentEditor">
+            id="de.cau.cs.kieler.simplerailctrl.codegen.c.projectexlorer">
          <iterate>
-            <or>
+            <and>
                <instanceof
-                     value="de.cau.cs.kieler.simplerailctrl.diagram.edit.parts.RailControllerEditPart">
+                     value="org.eclipse.core.resources.IFile">
                </instanceof>
-               <instanceof
-                     value="de.cau.cs.kieler.simplerailctrl.diagram.edit.parts.SetPointEditPart">
-               </instanceof>
-               <instanceof
-                     value="de.cau.cs.kieler.simplerailctrl.diagram.edit.parts.SetSignalEditPart">
-               </instanceof>
-               <instanceof
-                     value="de.cau.cs.kieler.simplerailctrl.diagram.edit.parts.SetSpeedEditPart">
-               </instanceof>
-            </or>
+               <test
+                     property="org.eclipse.core.resources.extension"
+                     value="simplerailctrl">
+               </test>
+            </and>
          </iterate>
       </definition>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.eclipse.core.internal.propertytester.ResourcePropertyTester"
+            id="org.eclipse.core.resources.resourcePropertyTester"
+            namespace="org.eclipse.core.resources"
+            properties="name,path,extension,readOnly,projectNature,persistentProperty,projectPersistentProperty,sessionProperty,projectSessionProperty"
+            type="org.eclipse.core.resources.IResource">
+      </propertyTester>
    </extension>
 
 </plugin>
