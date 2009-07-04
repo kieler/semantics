@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmftool:ToolRegistry xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:gmftool="http://www.eclipse.org/gmf/2005/ToolDefinition">
+  <palette
+      title="simplerailctrlPalette"
+      description="">
+    <tools
+        xsi:type="gmftool:ToolGroup"
+        title="Nodes"
+        collapsible="true">
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Set Speed"
+          description="Create new SetSpeed">
+        <smallIcon
+            xsi:type="gmftool:BundleImage"
+            path="/customIcons/SetSpeed.gif"
+            bundle="de.cau.cs.kieler.simplerailctrl"/>
+      </tools>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Set Point"
+          description="Create new SetPoint">
+        <smallIcon
+            xsi:type="gmftool:BundleImage"
+            path="/customIcons/SetPoint.gif"
+            bundle="de.cau.cs.kieler.simplerailctrl"/>
+      </tools>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Set Signal"
+          description="Create new SetSignal">
+        <smallIcon
+            xsi:type="gmftool:BundleImage"
+            path="/customIcons/SetSignal.gif"
+            bundle="de.cau.cs.kieler.simplerailctrl"/>
+      </tools>
+    </tools>
+    <tools
+        xsi:type="gmftool:ToolGroup"
+        title="Transitions"
+        collapsible="true">
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Event Wait"
+          description="Create new EventWait">
+        <smallIcon
+            xsi:type="gmftool:BundleImage"
+            path="/customIcons/EventWait.gif"
+            bundle="de.cau.cs.kieler.simplerailctrl"/>
+      </tools>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Event Contact"
+          description="Create new EventContact">
+        <smallIcon
+            xsi:type="gmftool:BundleImage"
+            path="/customIcons/EventContact.gif"
+            bundle="de.cau.cs.kieler.simplerailctrl"/>
+      </tools>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="Event Occupied"
+          description="Create new EventOccupied">
+        <smallIcon
+            xsi:type="gmftool:BundleImage"
+            path="/customIcons/EventOccupied.gif"
+            bundle="de.cau.cs.kieler.simplerailctrl"/>
+      </tools>
+    </tools>
+  </palette>
+</gmftool:ToolRegistry>
