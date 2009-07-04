@@ -3,7 +3,7 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.simplerailctrl.sim.ptolemy/src"
     modelPluginID="de.cau.cs.kieler.simplerailctrl.sim.ptolemy" modelName="Moml" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" copyrightFields="false">
+    complianceLevel="6.0" copyrightFields="false">
   <foreignModel>moml.ecore</foreignModel>
   <genPackages prefix="Moml" resource="XML" disposableProviderFactory="true" ecorePackage="moml.ecore#/">
     <genClasses ecoreClass="moml.ecore#//Any">

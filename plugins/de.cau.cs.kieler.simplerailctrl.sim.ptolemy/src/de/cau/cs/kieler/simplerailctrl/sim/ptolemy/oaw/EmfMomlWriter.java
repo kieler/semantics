@@ -14,19 +14,19 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openarchitectureware.workflow.WorkflowContext;
-import org.openarchitectureware.workflow.issues.Issues;
-import org.openarchitectureware.workflow.monitor.ProgressMonitor;
+//import org.openarchitectureware.workflow.WorkflowContext;
+//import org.openarchitectureware.workflow.issues.Issues;
+//import org.openarchitectureware.workflow.monitor.ProgressMonitor;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.mwe.emf.AbstractEmfWorkflowComponent;
-import org.openarchitectureware.workflow.WorkflowInterruptedException;
+//import org.eclipse.mwe.emf.AbstractEmfWorkflowComponent;
+//import org.openarchitectureware.workflow.WorkflowInterruptedException;
 
-
+/*
 public class EmfMomlWriter extends AbstractEmfWorkflowComponent {
 
 	private static final Log LOG = LogFactory.getLog(EmfMomlWriter.class);
@@ -174,3 +174,4 @@ public class EmfMomlWriter extends AbstractEmfWorkflowComponent {
 		return COMPONENT_NAME;
 	}
 }
+*/

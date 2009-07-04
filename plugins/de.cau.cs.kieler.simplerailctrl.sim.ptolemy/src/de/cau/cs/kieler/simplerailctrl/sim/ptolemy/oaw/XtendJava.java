@@ -3,17 +3,16 @@ package de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw;
 import java.util.Collection;
 import java.util.Hashtable;
 
-import simplerailctrl.*;
-import simplerailctrl.util.SimplerailctrlAdapterFactory;
-import org.openarchitectureware.*;
-import org.openarchitectureware.emf.*;
+import de.cau.cs.kieler.simplerailctrl.*;
+import de.cau.cs.kieler.simplerailctrl.util.SimplerailctrlAdapterFactory;
+//import org.openarchitectureware.*;
+//import org.openarchitectureware.emf.*;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.*;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreAdapterFactory;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import de.cau.cs.kieler.simplerailctrl.provider.*;
-import simplerailctrl.*;
 
 public class XtendJava {
 	public final static void dump(String aString) {

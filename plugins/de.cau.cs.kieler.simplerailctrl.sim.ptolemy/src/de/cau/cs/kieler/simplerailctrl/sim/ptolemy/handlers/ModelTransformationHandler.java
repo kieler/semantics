@@ -13,7 +13,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
-import org.openarchitectureware.workflow.WorkflowRunner;
 import org.eclipse.ui.part.FileEditorInput;
 
 public class ModelTransformationHandler extends AbstractHandler {
@@ -69,14 +68,14 @@ public class ModelTransformationHandler extends AbstractHandler {
         
 		System.out.println("M2M transformation - starting...");
 		
-        if (new WorkflowRunner().run(WorkflowFile , 
+/*        if (new WorkflowRunner().run(WorkflowFile , 
         		null, properties, slotContents)) {
         	System.out.println("M2M transformation - completed.");
         }
         else {
         	System.out.println("M2M transformation - failed.");
         }
-		
+*/
 	    return null;
 	}
 

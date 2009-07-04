@@ -16,7 +16,7 @@
          id="de.cau.cs.kieler.menu"
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?before=additions">
          <separator
                name="de.cau.cs.kieler.simplerailctrl.separator"
                visible="true">
@@ -29,7 +29,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.projectexlorer">
+                     definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.fileType">
                </reference>
             </visibleWhen>
          </command>
@@ -48,7 +48,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.projectexlorer">
+                     definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.fileType">
                </reference>
             </visibleWhen>
          </command>
@@ -69,7 +69,7 @@
                <visibleWhen
                      checkEnabled="false">
                   <reference
-                        definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.projectexlorer">
+                        definitionId="de.cau.cs.kieler.simplerailctrl.codegen.c.fileType">
                   </reference>
                </visibleWhen>
             </command>
@@ -79,7 +79,7 @@
    <extension
          point="org.eclipse.core.expressions.definitions">
       <definition
-            id="de.cau.cs.kieler.simplerailctrl.codegen.c.projectexlorer">
+            id="de.cau.cs.kieler.simplerailctrl.codegen.c.fileType">
          <iterate>
             <and>
                <instanceof
