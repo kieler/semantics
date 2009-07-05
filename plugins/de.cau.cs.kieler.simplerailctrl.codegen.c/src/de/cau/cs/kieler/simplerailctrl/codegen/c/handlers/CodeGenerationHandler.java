@@ -80,8 +80,8 @@ public class CodeGenerationHandler extends AbstractHandler {
 
         //Outlet
         Outlet outlet = new Outlet();
-        outlet.setPath("\\src-gen");
         outlet.setOverwrite(true);
+        outlet.setPath(getPluginFolder() + "src-gen/");
         
         //Generator
         Generator generator = new Generator();
