@@ -1,93 +1,99 @@
 package de.cau.cs.kieler.simplerailctrl.sim.ptolemy.handlers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.emf.common.ui.URIEditorInput;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.xtend.XtendComponent;
+import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
+
+import org.eclipse.emf.mwe.core.WorkflowContext;
+import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
+import org.eclipse.emf.mwe.core.issues.Issues;
+import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
+import org.eclipse.emf.mwe.internal.core.Workflow;
+import org.eclipse.emf.mwe.utils.Reader;
+import org.eclipse.emf.mwe.utils.Writer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+
+import de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.MomlWriter;
+
 
 public class ModelTransformationHandler extends AbstractHandler {
 	
-	private static String _pluginFolder;
+	
+	IResource extractSelection(ISelection sel) {
+	      if (!(sel instanceof IStructuredSelection))
+	         return null;
+	      IStructuredSelection ss = (IStructuredSelection) sel;
+	      Object element = ss.getFirstElement();
+	      if (element instanceof IResource)
+	         return (IResource) element;
+	      if (!(element instanceof IAdaptable))
+	         return null;
+	      IAdaptable adaptable = (IAdaptable)element;
+	      Object adapter = adaptable.getAdapter(IResource.class);
+	      return (IResource) adapter;
+	}	
+
 	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow activeWorkbenchWindow = HandlerUtil
 				.getActiveWorkbenchWindow(event);
-
-		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
-		if (page == null) {
-			return null;
-		}
-
-		IEditorPart editor = page.getActiveEditor();
-		if (editor == null) {
-			return null;
-		}
 		
-		IWorkbenchWindow window = activeWorkbenchWindow;
-		IEditorPart Editor = window.getActivePage().getActiveEditor();
-
-        String ModelFile = "";
-		if (Editor.getEditorInput() instanceof URIEditorInput) {
-			URIEditorInput EditorInput = (URIEditorInput)Editor.getEditorInput();
-	        URI EditorURI = EditorInput.getURI();
-	        ModelFile = EditorURI.toString();
-		}
-		else {
-			FileEditorInput EditorInput = (FileEditorInput)Editor.getEditorInput();
-			ModelFile = EditorInput.getURI().toString();
-		}
-		
-        //delete "_diagram"-extension
-		ModelFile = ModelFile.replace("_diagram", "");
-		//ModelFile = ModelFile.replace("reference:", "");
-		ModelFile = ModelFile.replace("file:/", "");
-		ModelFile = ModelFile.replace("file:\\", "");
-		String PluginRoot = ModelTransformationHandler.getPluginFolder();
-		String PtolemyModel = "file:/" + PluginRoot + "src-gen/generated.moml";
-
-		// M2M transformation here //
-        Map<String,String> properties = new HashMap<String,String>();
-        Map<String, Object> slotContents = new HashMap<String, Object>();
+		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+	    
+        ISelection selection = window.getWorkbench().getActiveWorkbenchWindow().getSelectionService().getSelection();
+        String inputModel = extractSelection(selection).getFullPath().toString();
         
-        String WorkflowFile = "model/workflowM2M.oaw";
-		properties.put("emfmodel", "file:"+ModelFile);
-		properties.put("emfmetamodel", "simplerailctrl.ecore");
-		properties.put("ptometamodel", "moml.ecore");
-		properties.put("momlmodel", PtolemyModel); //"src-gen/generated.moml") ;
+        System.out.println(inputModel);
+        String outputModel = "/example/generated.moml";
 		
+        //Workflow
+        Workflow workflow = new Workflow();
         
-		System.out.println("M2M transformation - starting...");
+        //EMF reader
+        Reader emfReader = new Reader();
+        emfReader.setUri(inputModel);
+        emfReader.setModelSlot("emfmodel");
+
+        //MOML writer
+        MomlWriter momlWriter = new MomlWriter();
+        momlWriter.setUri(outputModel);
+        momlWriter.setModelSlot("momlmodel");
+        
+        //Meta models
+        EmfMetaModel metaModel1 = new EmfMetaModel(de.cau.cs.kieler.simplerailctrl.SimplerailctrlPackage.eINSTANCE);
+        EmfMetaModel metaModel2 = new EmfMetaModel(Moml.MomlPackage.eINSTANCE);
 		
-/*        if (new WorkflowRunner().run(WorkflowFile , 
-        		null, properties, slotContents)) {
-        	System.out.println("M2M transformation - completed.");
-        }
-        else {
-        	System.out.println("M2M transformation - failed.");
-        }
-*/
+        //XtendComponent
+        XtendComponent xtendComponent = new XtendComponent();
+        xtendComponent.addMetaModel(metaModel1);
+        xtendComponent.addMetaModel(metaModel2);
+        xtendComponent.setInvoke("simplerailctrl2moml::transform(emfmodel)");
+        xtendComponent.setOutputSlot("momlmodel");
+        
+        //workflow
+        WorkflowContext wfx = new WorkflowContextDefaultImpl();
+        Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
+        NullProgressMonitor monitor = new NullProgressMonitor();
+        
+        workflow.addComponent(emfReader);
+        workflow.addComponent(xtendComponent);
+        workflow.addComponent(momlWriter);
+        workflow.invoke(wfx, monitor, issues);
+        
+        System.out.print(xtendComponent.getLogMessage());
+        System.out.print(issues.getInfos());
+        System.out.print(issues.getIssues());
+        System.out.print(issues.getWarnings());
+        System.out.print(issues.getErrors().toString());
+        
 	    return null;
 	}
 
-	
-	 public static String getPluginFolder() {
-	        if(_pluginFolder == null) {
-	            _pluginFolder = Platform.getBundle("de.cau.cs.kieler.simplerailctrl.sim.ptolemy").getLocation();// .toFile();// .resolve(url);
-	            _pluginFolder = _pluginFolder.replace("initial@reference:", "");
-	            _pluginFolder = _pluginFolder.replace("reference:", "");
-	            _pluginFolder = _pluginFolder.replace("file:/", "");
-	            _pluginFolder = _pluginFolder.replace("file:\\", "");
-	        }
-	        return _pluginFolder;
-	 }
 }

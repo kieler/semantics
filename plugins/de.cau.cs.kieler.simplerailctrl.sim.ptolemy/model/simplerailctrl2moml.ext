@@ -284,12 +284,12 @@ Void dump(String s) :
 //get hash value of an object to identify it 
 String hash(simplerailctrl::Node node) :
 	JAVA de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.XtendJava.
-			hash(simplerailctrl.Node)
+			hash(de.cau.cs.kieler.simplerailctrl.Node)
 ;
 //get hash value of an object to identify it 
 String hash(simplerailctrl::Transition transition) :
 	JAVA de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.XtendJava.
-			hash(simplerailctrl.Transition)
+			hash(de.cau.cs.kieler.simplerailctrl.Transition)
 ;
 //get hash value of a string 
 String hash(String s) :
@@ -300,13 +300,13 @@ String hash(String s) :
 //mark the node as visited (we do not want to create him twice) 
 Void markState(simplerailctrl::Node node) :
 	JAVA de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.XtendJava.
-			markState(simplerailctrl.Node)
+			markState(de.cau.cs.kieler.simplerailctrl.Node)
 ;
 
 //lookup if the node was already visited (and hence created in the new model) 
 boolean isMarked(simplerailctrl::Node node) :
 	JAVA de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.XtendJava.
-			isMarked(simplerailctrl.Node)
+			isMarked(de.cau.cs.kieler.simplerailctrl.Node)
 ;
 
 //-------------------------------------------------------------------------
@@ -314,12 +314,12 @@ boolean isMarked(simplerailctrl::Node node) :
 //compute trigger in java 
 String buildTrigger(simplerailctrl::Transition transition) :
 	JAVA de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.XtendJava.
-			buildTrigger(simplerailctrl.Transition)
+			buildTrigger(de.cau.cs.kieler.simplerailctrl.Transition)
 ;
 //compute emission in java 
 String buildEmission(simplerailctrl::Node node) :
 	JAVA de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.XtendJava.
-			buildEmission(simplerailctrl.Node)
+			buildEmission(de.cau.cs.kieler.simplerailctrl.Node)
 ;
 
 //-------------------------------------------------------------------------
