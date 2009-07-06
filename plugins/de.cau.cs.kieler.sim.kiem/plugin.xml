@@ -10,7 +10,7 @@
             name="KIELER">
       </category>
       <view
-            category="de.cau.cs.kieler"
+            category="de.cau.cs.kieler.views.category"
             class="de.cau.cs.kieler.sim.kiem.views.KiemView"
             icon="icons/KiemIcon.gif"
             id="de.cau.cs.kieler.sim.kiem.view"

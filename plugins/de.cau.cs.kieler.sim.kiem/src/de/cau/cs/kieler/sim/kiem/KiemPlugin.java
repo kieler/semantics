@@ -38,6 +38,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 	// contains the current model to execute or null initially/after stop
 	private String currentModelFile;
 	
+	// indicates the inital state or a state after the user pressed stop
+	private boolean stopped;
+	
 	/**
 	 * The constructor
 	 */
@@ -99,6 +102,13 @@ public class KiemPlugin extends AbstractUIPlugin {
 		currentModelFile = null;
 	}
 	
+	public boolean isStopped() {
+		return this.stopped;
+	}
+	public void setStopped(boolean stopped) {
+		this.stopped = stopped;
+	}
+	
 	public IResource extractSelection(ISelection sel) {
 	      if (!(sel instanceof IStructuredSelection))
 	         return null;
@@ -125,7 +135,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 											    (producerElements.length
 											    +consumerElements.length);
 		System.out.println("Found Controllers for "+Messages.extensionPointIDproducer+": "+producerElements.length);
-		System.out.println("Found Controllers for "+Messages.extensionPointIDconsumer+": "+consumerElements.length);
 		for (int i = 0; i < producerElements.length; i++) {
 			try{
 				DataProducer dataProducer = (DataProducer)producerElements[i].createExecutableExtension("class");
@@ -133,6 +142,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 				System.out.println(dataProducer.getName());
 			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data producer interface plugin",e);} 
 		}
+		System.out.println("Found Controllers for "+Messages.extensionPointIDconsumer+": "+consumerElements.length);
 		for (int i = 0; i < consumerElements.length; i++) {
 			try{
 				DataConsumer dataConsumer = (DataConsumer)consumerElements[i].createExecutableExtension("class");
