@@ -224,6 +224,17 @@
   <links>
     <domainMetaElement
         href="synccharts.ecore#//Transition"/>
+    <domainInitializer
+        xsi:type="gmfmap:FeatureSeqInitializer">
+      <initializers
+          xsi:type="gmfmap:FeatureValueSpec">
+        <feature
+            xsi:type="ecore:EAttribute"
+            href="synccharts.ecore#//Transition/delay"/>
+        <value
+            body="1"/>
+      </initializers>
+    </domainInitializer>
     <labelMappings
         xsi:type="gmfmap:FeatureLabelMapping">
       <diagramLabel
