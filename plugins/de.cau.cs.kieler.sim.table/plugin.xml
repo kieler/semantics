@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="KIELER"
+            id="de.cau.cs.kieler.views.category">
+      </category>
+      <view
+            name="KIEM Table Data Consumer"
+            icon="icons/sample.gif"
+            category="de.cau.cs.kieler.views.category"
+            class="de.cau.cs.kieler.sim.table.views.KiemTable"
+            id="de.cau.cs.kieler.sim.table.views.KiemTable">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.TaskList"
+               relationship="right"
+               id="de.cau.cs.kieler.sim.table.views.KiemTable">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.dataconsumer">
+      <content
+            class="de.cau.cs.kieler.sim.table.DataConsumer"
+            id="de.cau.cs.kieler.sim.table.dataconsumer"
+            name="KIEM - Table Data Consumer">
+      </content>
+   </extension>
+
+</plugin>
