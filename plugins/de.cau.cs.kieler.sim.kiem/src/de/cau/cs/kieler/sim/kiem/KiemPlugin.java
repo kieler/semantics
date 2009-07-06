@@ -17,6 +17,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.core.runtime.IAdaptable;
 
+import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.DataProducer;
 import de.cau.cs.kieler.sim.kiem.extension.DataConsumer;
 import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
@@ -26,20 +27,22 @@ import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
  */
 public class KiemPlugin extends AbstractUIPlugin {
 
-	// The plug-in ID
+	//The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem";
 
-	// The shared instance
+	//The shared instance
 	private static KiemPlugin plugin;
 	
-	// List of available dataProducers and dataConsumers
+	//List of available dataProducers and dataConsumers
 	List<DataProducerConsumer> dataProducerConsumerList;
 	
-	// contains the current model to execute or null initially/after stop
+	//Contains the current model to execute or null initially/after stop
 	private String currentModelFile;
 	
-	// indicates the inital state or a state after the user pressed stop
-	private boolean stopped;
+	//Execution object and thread
+	public Execution execution;
+	public Thread executionThread;
+	private int delay;
 	
 	/**
 	 * The constructor
@@ -47,6 +50,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 	public KiemPlugin() {
 		dataProducerConsumerList = this.getDataProducerConsumerList();
 		currentModelFile = null;
+		execution = null;
 	}
 
 	/*
@@ -94,19 +98,22 @@ public class KiemPlugin extends AbstractUIPlugin {
         this.currentModelFile = extractSelection(selection).getFullPath().toString();
 	}
 	
+	public int getDelay() {
+		return this.delay;
+	}
+	public void setDelay(int delay){
+		this.delay = delay;
+		//if executing, also update current delay
+		if (execution != null)
+			this.execution.setDelay(delay);
+	}
+	
 	public String getCurrentModelFile() {
 		return this.currentModelFile;
 	}
 	
 	public void resetCurrentModelFile() {
 		currentModelFile = null;
-	}
-	
-	public boolean isStopped() {
-		return this.stopped;
-	}
-	public void setStopped(boolean stopped) {
-		this.stopped = stopped;
 	}
 	
 	public IResource extractSelection(ISelection sel) {

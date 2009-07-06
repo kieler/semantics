@@ -20,12 +20,14 @@ import org.eclipse.swt.widgets.Menu;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.Messages;
+import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.*;
 import de.cau.cs.kieler.sim.kiem.Tools;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.part.FileEditorInput;
+import de.cau.cs.kieler.sim.actions.DelayTextField;
 
 /**
  * This sample class demonstrates how to plug-in a new
@@ -56,7 +58,8 @@ public class KiemView extends ViewPart {
 	private Action action6;
 	private Action action7;
 	private Action doubleClickAction;
-	
+	private DelayTextField delayTextField;
+
 	private KiemPlugin KIEM;
 	
 	public static final String ID = "de.cau.cs.kieler.sim.kiem.views.KiemView";
@@ -230,6 +233,8 @@ public class KiemView extends ViewPart {
 		manager.add(action2);
 		manager.add(action3);
 		manager.add(new Separator());
+		manager.add(delayTextField);
+		manager.add(new Separator());
 		manager.add(action4);
 		manager.add(action5);
 		manager.add(action6);
@@ -261,7 +266,7 @@ public class KiemView extends ViewPart {
 	}
 	
 	private boolean initDataProducerConsumer() {
-		if (!KIEM.isStopped()) return true;
+		if (KIEM.execution != null) return true;
 
 		try {
 			//update model file
@@ -277,6 +282,37 @@ public class KiemView extends ViewPart {
 
 		int countEnabledProducer = 0;
 		int countEnabledConsumer = 0;
+
+		//count all (enabled) data producer and consumer
+		for (int c = 0; c < KIEM.getDataProducerConsumerList().size(); c++) {
+			DataProducerConsumer dataProducerConsumer = KIEM.getDataProducerConsumerList().get(c);
+			dataProducerConsumer.setModelFile(KIEM.getCurrentModelFile());
+			if (dataProducerConsumer.isEnabled()) {
+				if (dataProducerConsumer.isProducer()) {
+					countEnabledProducer++;
+				}
+				else if (dataProducerConsumer.isConsumer()) {
+					countEnabledConsumer++;
+				}
+			}//end if enabled
+		}//next c
+
+		if (countEnabledProducer < 1) {
+			showMessage("Please enable at least one DataProducer!");
+			KIEM.resetCurrentModelFile();
+			KIEM.execution.stopExecution();
+			KIEM.execution = null;
+			return false;
+		}
+		else if (countEnabledConsumer < 1) {
+			showMessage("Please enable at least one DataConsumer!");
+			KIEM.resetCurrentModelFile();
+			KIEM.execution.stopExecution();
+			KIEM.execution = null;
+			return false;
+		}
+		
+		setActionsEnabled(false);
 		
 		//initialize all (enabled) data producer and consumer
 		for (int c = 0; c < KIEM.getDataProducerConsumerList().size(); c++) {
@@ -285,64 +321,66 @@ public class KiemView extends ViewPart {
 			if (dataProducerConsumer.isEnabled()) {
 				if (dataProducerConsumer.isProducer()) {
 					((DataProducer)dataProducerConsumer).ExecutionInitialize();
-					countEnabledProducer++;
 				}
 				else if (dataProducerConsumer.isConsumer()) {
 					((DataConsumer)dataProducerConsumer).ExecutionInitialize();
-					countEnabledConsumer++;
 				}
 			}//end if enabled
 		}//next c
 		
-		if (countEnabledProducer < 1) {
-			showMessage("Please enable at least one DataProducer!");
-			KIEM.resetCurrentModelFile();
-			KIEM.setStopped(true);
-			return false;
-		}
-		else if (countEnabledConsumer < 1) {
-			showMessage("Please enable at least one DataConsumer!");
-			KIEM.resetCurrentModelFile();
-			KIEM.setStopped(true);
-			return false;
-		}
+		//now create and run the execution thread
+		KIEM.execution = new Execution(KIEM.getDataProducerConsumerList());
+		//take the last set delay
+		KIEM.execution.setDelay(KIEM.getDelay());
+		KIEM.executionThread = new Thread(KIEM.execution);
+		KIEM.executionThread.start();
+
+		setActionsEnabled(true);
 		
-		KIEM.setStopped(false);
 		return true;
+	}
+	
+	private void setActionsEnabled(boolean enabled) {
+		action0.setEnabled(enabled);
+		action1.setEnabled(enabled);
+		action2.setEnabled(enabled);
+		action3.setEnabled(enabled);
+		action4.setEnabled(enabled);
+		action5.setEnabled(enabled);
+		action6.setEnabled(enabled);
+		action7.setEnabled(enabled);
+		delayTextField.setEnabled(enabled);
 	}
 	
 
 	private void makeActions() {
+		delayTextField = new DelayTextField(KIEM);
+		
 		action0 = new Action() {
 			public void run() {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				dataProducerConsumer.setEnabled(true);
-				//System.out.println("Setting "+dataProducerConsumer.getName()+" to "+dataProducerConsumer.isEnabled());
 				viewer.refresh();
 			}
 		};
 		action0.setText("Enable");
-		action0.setToolTipText("");
-		//action0.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/UpIcon.gif"));
+		action0.setToolTipText("Enable DataProducer/DataConsumer");
 
 		action1 = new Action() {
 			public void run() {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				dataProducerConsumer.setEnabled(false);
-				//System.out.println("Setting "+dataProducerConsumer.getName()+" to "+dataProducerConsumer.isEnabled());
 				viewer.refresh();
 			}
 		};
 		action1.setText("Disable");
-		action1.setToolTipText("");
-		//action0.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/UpIcon.gif"));
+		action1.setToolTipText("Disable DataProducer/DataConsumer");
 		
 		
 		action2 = new Action() {
 			public void run() {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				int listIndex = KIEM.getDataProducerConsumerList().indexOf(dataProducerConsumer);
-				System.out.println(listIndex);
 				if (listIndex > 0) {
 				    KIEM.getDataProducerConsumerList().remove(listIndex);
 					KIEM.getDataProducerConsumerList().add(listIndex-1, dataProducerConsumer);
@@ -351,7 +389,7 @@ public class KiemView extends ViewPart {
 			}
 		};
 		action2.setText("Up");
-		action2.setToolTipText("");
+		action2.setToolTipText("Schedule before");
 		action2.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/UpIcon.gif"));
 
 		
@@ -359,7 +397,6 @@ public class KiemView extends ViewPart {
 			public void run() {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				int listIndex = KIEM.getDataProducerConsumerList().indexOf(dataProducerConsumer);
-				System.out.println(listIndex);
 				if (listIndex < KIEM.getDataProducerConsumerList().size()-1) {
 					KIEM.getDataProducerConsumerList().remove(listIndex);
 					KIEM.getDataProducerConsumerList().add(listIndex+1, dataProducerConsumer);
@@ -368,61 +405,55 @@ public class KiemView extends ViewPart {
 			}
 		};
 		action3.setText("Down");
-		action3.setToolTipText("Make a step");
+		action3.setToolTipText("Schedule behind");
 		action3.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/DownIcon.gif"));
 
 		
 		action4 = new Action() {
 			public void run() {
-				//DataProducer dataProducer = initDataProducer();
-				//dataProducer.ExecutionStep();
+				if (initDataProducerConsumer()) {
+					KIEM.execution.stepExecution();
+				}
 			}
 		};
 		action4.setText("Step");
-		action4.setToolTipText("Make a step");
+		action4.setToolTipText("Step execution");
 		action4.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/StepIcon.gif"));
 
 		action5 = new Action() {
 			public void run() {
 				if (initDataProducerConsumer()) {
-					//
+					KIEM.execution.runExecution();
 				}
-				//DataProducer dataProducer = initDataProducer();
-				//dataProducer.ExecutionPlay();
 			}
 		};
-		action5.setText("Play");
-		action5.setToolTipText("Make several steps");
+		action5.setText("Run");
+		action5.setToolTipText("Run execution");
 		action5.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/PlayIcon.gif"));
 		
 		
 		action6 = new Action() {
 			public void run() {
 				if (initDataProducerConsumer()) {
-					//
+					KIEM.execution.pauseExecution();
 				}
-				//DataProducer dataProducer = initDataProducer();
-				//dataProducer.ExecutionPause();
 			}
 		};
 		action6.setText("Pause");
-		action6.setToolTipText("Pause simulation");
+		action6.setToolTipText("Pause execution");
 		action6.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/PauseIcon.gif"));
 
 		action7 = new Action() {
 			public void run() {
-				if (initDataProducerConsumer()) {
-					//
+				if (KIEM.execution != null) {
+					KIEM.execution.stopExecution();
 				}
-				//DataProducer dataProducer = initDataProducer();
-				//dataProducer.ExecutionStop();
-				//reset currentmodelfile - next time new init
 				KIEM.resetCurrentModelFile();
-				KIEM.setStopped(true);
+				KIEM.execution = null;
 			}
 		};
 		action7.setText("Stop");
-		action7.setToolTipText("Stop simulation");
+		action7.setToolTipText("Stop execution");
 		action7.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/StopIcon.gif"));
 		
 		doubleClickAction = new Action() {
