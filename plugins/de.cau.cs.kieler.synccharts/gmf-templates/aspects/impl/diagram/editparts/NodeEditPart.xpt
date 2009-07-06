@@ -185,7 +185,8 @@ new org.eclipse.gmf.runtime.diagram.ui.editpolicies.BorderItemSelectionEditPolic
 	«LET (if figureQualifiedClassName = null then 'org.eclipse.draw2d.RectangleFigure' else figureQualifiedClassName endif) AS fqn-»
 		«EXPAND xpt::Common::generatedMemberComment»
 		protected org.eclipse.draw2d.IFigure createNodeShape() {
-			return primaryShape = new «fqn»()«IF node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT»{
+		«REM» Added "this" «ENDREM»
+			return primaryShape = new «fqn»(this)«IF node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT»{
 				protected boolean useLocalCoordinates() {
 					return true;
 				}
