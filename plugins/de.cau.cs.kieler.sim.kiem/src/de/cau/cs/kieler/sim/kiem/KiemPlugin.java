@@ -3,13 +3,23 @@ package de.cau.cs.kieler.sim.kiem;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.core.runtime.IAdaptable;
+
 import de.cau.cs.kieler.sim.kiem.extension.DataProducer;
+import de.cau.cs.kieler.sim.kiem.extension.DataConsumer;
+import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -22,18 +32,18 @@ public class KiemPlugin extends AbstractUIPlugin {
 	// The shared instance
 	private static KiemPlugin plugin;
 	
-	// List of available dataProducers
-	List<DataProducer> dataProducerList;
+	// List of available dataProducers and dataConsumers
+	List<DataProducerConsumer> dataProducerConsumerList;
 	
-	// this is the selected+initialized DataProducer
-	public DataProducer currentDataProducer;
-
+	// contains the current model to execute or null initially/after stop
+	private String currentModelFile;
+	
 	/**
 	 * The constructor
 	 */
 	public KiemPlugin() {
-		dataProducerList = this.getDataProducerList();
-		currentDataProducer = null;
+		dataProducerConsumerList = this.getDataProducerConsumerList();
+		currentModelFile = null;
 	}
 
 	/*
@@ -74,23 +84,64 @@ public class KiemPlugin extends AbstractUIPlugin {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 	
-	public List<DataProducer> getDataProducerList(){
-		if(dataProducerList != null)
-			return dataProducerList;
-				
-		// get the available interfaces and initialize them
-		IConfigurationElement[] configElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointID);
-		dataProducerList = new ArrayList<DataProducer>(configElements.length);
-		System.out.println("Found Controllers for "+Messages.extensionPointID+": "+configElements.length);
-		for (int i = 0; i < configElements.length; i++) {
-			try{
-				DataProducer dataProducer = (DataProducer)configElements[i].createExecutableExtension("class");
-				dataProducerList.add(dataProducer);
-				System.out.println(dataProducer.getName());
-			}catch(Exception e){Tools.showDialog("Error at loading a KEV data interface plugin",e);} 
-		}
-		
-		return dataProducerList;
+	public void updateCurrentModelFile() {
+		//get the selected model from the project explorer
+		ISelection selection = this.getWorkbench().getActiveWorkbenchWindow().getSelectionService().getSelection("org.eclipse.ui.navigator.ProjectExplorer");
+		//update currentModelFile property
+        this.currentModelFile = extractSelection(selection).getFullPath().toString();
 	}
 	
+	public String getCurrentModelFile() {
+		return this.currentModelFile;
+	}
+	
+	public void resetCurrentModelFile() {
+		currentModelFile = null;
+	}
+	
+	public IResource extractSelection(ISelection sel) {
+	      if (!(sel instanceof IStructuredSelection))
+	         return null;
+	      IStructuredSelection ss = (IStructuredSelection) sel;
+	      Object element = ss.getFirstElement();
+	      if (element instanceof IResource)
+	         return (IResource) element;
+	      if (!(element instanceof IAdaptable))
+	         return null;
+	      IAdaptable adaptable = (IAdaptable)element;
+	      Object adapter = adaptable.getAdapter(IResource.class);
+	      return (IResource) adapter;
+	}
+	
+	
+	public List<DataProducerConsumer> getDataProducerConsumerList(){
+		if(dataProducerConsumerList != null)
+			return dataProducerConsumerList;
+				
+		// get the available interfaces and initialize them
+		IConfigurationElement[] producerElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDproducer);
+		IConfigurationElement[] consumerElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDconsumer);
+		dataProducerConsumerList = new ArrayList<DataProducerConsumer>
+											    (producerElements.length
+											    +consumerElements.length);
+		System.out.println("Found Controllers for "+Messages.extensionPointIDproducer+": "+producerElements.length);
+		System.out.println("Found Controllers for "+Messages.extensionPointIDconsumer+": "+consumerElements.length);
+		for (int i = 0; i < producerElements.length; i++) {
+			try{
+				DataProducer dataProducer = (DataProducer)producerElements[i].createExecutableExtension("class");
+				dataProducerConsumerList.add(dataProducer);
+				System.out.println(dataProducer.getName());
+			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data producer interface plugin",e);} 
+		}
+		for (int i = 0; i < consumerElements.length; i++) {
+			try{
+				DataConsumer dataConsumer = (DataConsumer)consumerElements[i].createExecutableExtension("class");
+				dataProducerConsumerList.add(dataConsumer);
+				System.out.println(dataConsumer.getName());
+			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data consumer interface plugin",e);} 
+		}
+		
+		return dataProducerConsumerList;
+	}
+
 }

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Execution Manager Plug-in
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kiem;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.1.0
 Bundle-Activator: de.cau.cs.kieler.sim.kiem.KiemPlugin
 Bundle-Vendor: Christian-Albrechts University of Kiel
 Require-Bundle: org.eclipse.ui,
@@ -10,7 +10,10 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.extension;uses:="org.eclipse.core.runtime",
+ de.cau.cs.kieler.sim.kiem.json,
  de.cau.cs.kieler.sim.kiem.ui,
  de.cau.cs.kieler.sim.kiem.views
-Import-Package: org.eclipse.emf.common.ui,
+Import-Package: de.cau.cs.kieler.sim.kiem.json,
+ org.eclipse.core.resources,
+ org.eclipse.emf.common.ui,
  org.eclipse.ui.part

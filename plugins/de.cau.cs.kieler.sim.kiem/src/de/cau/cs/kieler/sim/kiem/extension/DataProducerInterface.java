@@ -2,7 +2,7 @@ package de.cau.cs.kieler.sim.kiem.extension;
 
 public interface DataProducerInterface  {
 	
-	public void ExecutionInitialize(String ModelFile);
+	public void ExecutionInitialize();
 
 	public void ExecutionStep();
 
