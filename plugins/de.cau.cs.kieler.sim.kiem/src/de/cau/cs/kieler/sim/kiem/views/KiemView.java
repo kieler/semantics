@@ -1,16 +1,24 @@
 package de.cau.cs.kieler.sim.kiem.views;
 
 
+//import org.eclipse.swt.graphics.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Device;
+//import org.eclipse.swt.graphics.
+import org.eclipse.swt.graphics.RGB;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.part.*;
+import org.eclipse.jface.resource.ColorDescriptor;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.action.*;
@@ -361,6 +369,9 @@ public class KiemView extends ViewPart {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				dataProducerConsumer.setEnabled(true);
 				viewer.refresh();
+				Color color = new Color(null, new RGB(0,0,0));
+				viewer.getTable().getItem(viewer.getTable().getSelectionIndex()).setForeground(color);
+				viewer.setSelection(null);
 			}
 		};
 		action0.setText("Enable");
@@ -371,6 +382,9 @@ public class KiemView extends ViewPart {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				dataProducerConsumer.setEnabled(false);
 				viewer.refresh();
+				Color color = new Color(null, new RGB(150,150,150));
+				viewer.getTable().getItem(viewer.getTable().getSelectionIndex()).setForeground(color);
+				viewer.setSelection(null);
 			}
 		};
 		action1.setText("Disable");
@@ -464,8 +478,13 @@ public class KiemView extends ViewPart {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)obj;
 				//toggle enabledness
 				dataProducerConsumer.setEnabled(!dataProducerConsumer.isEnabled());
-				//System.out.println("Setting "+dataProducerConsumer.getName()+" to "+dataProducerConsumer.isEnabled());
 				viewer.refresh();
+				//change the text color (black or gray)
+				Color color = new Color(null, new RGB(150,150,150));
+				if (dataProducerConsumer.isEnabled())
+					color = new Color(null, new RGB(0,0,0));
+				viewer.getTable().getItem(viewer.getTable().getSelectionIndex()).setForeground(color);
+				viewer.setSelection(null);
 			}
 		};
 	}
