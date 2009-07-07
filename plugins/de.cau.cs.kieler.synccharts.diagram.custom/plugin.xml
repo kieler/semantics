@@ -343,6 +343,54 @@
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart"
             type="de.cau.cs.kieler.layout.info.types.boxes">
       </binding>
+      <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionsCompartmentEditPart"
+            type="de.cau.cs.kieler.layout.info.types.nolayout">
+      </binding>
+      <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionsCompartment2EditPart"
+            type="de.cau.cs.kieler.layout.info.types.nolayout">
+      </binding>
+      <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionsCompartmentEditPart"
+            type="de.cau.cs.kieler.layout.info.types.nolayout">
+      </binding>
+      <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionsCompartment2EditPart"
+            type="de.cau.cs.kieler.layout.info.types.nolayout">
+      </binding>
+      <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionsCompartmentEditPart"
+            type="de.cau.cs.kieler.layout.info.types.nolayout">
+      </binding>
+      <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionsCompartment2EditPart"
+            type="de.cau.cs.kieler.layout.info.types.nolayout">
+      </binding>
+      <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartmentEditPart"
+            type="de.cau.cs.kieler.layout.info.types.nolayout">
+      </binding>
+      <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartment2EditPart"
+            type="de.cau.cs.kieler.layout.info.types.nolayout">
+      </binding>
+      <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartmentEditPart"
+            type="de.cau.cs.kieler.layout.info.types.nolayout">
+      </binding>
+      <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartment2EditPart"
+            type="de.cau.cs.kieler.layout.info.types.nolayout">
+      </binding>
+      <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateVariableCompartmentEditPart"
+            type="de.cau.cs.kieler.layout.info.types.nolayout">
+      </binding>
+      <binding
+            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateVariableCompartment2EditPart"
+            type="de.cau.cs.kieler.layout.info.types.nolayout">
+      </binding>
    </extension>
 
 </plugin>
