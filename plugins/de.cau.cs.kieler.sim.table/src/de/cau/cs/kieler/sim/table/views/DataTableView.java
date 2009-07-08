@@ -5,10 +5,11 @@ import java.util.Arrays;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.Text;
 
 import org.eclipse.ui.part.*;
 import org.eclipse.jface.viewers.*;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -25,6 +26,7 @@ import org.eclipse.swt.widgets.Table;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
+import de.cau.cs.kieler.sim.table.DataTableViewer;
 import de.cau.cs.kieler.sim.table.TableData;
 import de.cau.cs.kieler.sim.table.TableDataContentProvider;
 import de.cau.cs.kieler.sim.table.TableDataEditing;
@@ -40,13 +42,13 @@ public class DataTableView extends ViewPart {
 	 */
 	public static final String ID = "de.cau.cs.kieler.sim.table.views.KiemTable";
 
-	private TableViewer viewer;
+	private DataTableViewer viewer;
 	private Action doubleClickAction;
 	private TableDataList tableDataList;
 	private Table table;
-
-	private Action action0; //new
-	private Action action1;	//delete
+	
+	private Action actionNew; //new
+	private Action actionDelete;	//delete
 	/**
 	 * The constructor.
 	 */
@@ -70,13 +72,14 @@ public class DataTableView extends ViewPart {
 	public void createPartControl(Composite parent) {
 		createViewer(parent);
 		viewer.setInput(TableDataList.getInstance());
-		hookDoubleClickAction();
+		hookSideEffectActions();
 		hookContextMenu();
 		contributeToActionBars();
+		updateEnabled();			
 	}
 
 	private void createViewer(Composite parent) {
-		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL
+		viewer = new DataTableViewer(parent, SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.FULL_SELECTION);
 		createColumns(viewer);
 		viewer.setContentProvider(new TableDataContentProvider());
@@ -106,70 +109,98 @@ public class DataTableView extends ViewPart {
 	
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
-		menuMgr.add( getAction0());
-		menuMgr.add( getAction1());
+		menuMgr.add( getActionNew());
+		menuMgr.add( getActionDelete());
 		menuMgr.setRemoveAllWhenShown(true);
 	}
 	
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
 		IMenuManager manager0 = bars.getMenuManager();
-		manager0.add(getAction0());
-		manager0.add(getAction1());
+		manager0.add(getActionNew());
+		manager0.add(getActionDelete());
 		IToolBarManager manager1 = bars.getToolBarManager();
-		manager1.add(getAction0());
-		manager1.add(getAction1());
+		manager1.add(getActionNew());
+		manager1.add(getActionDelete());
 	}
 	
-	private Action getAction0() {
-		if (action0 != null) return action0;
-		action0 = new Action() {
+	private Action getActionNew() {
+		if (actionNew != null) return actionNew;
+		actionNew = new Action() {
 			public void run() {
-				TableDataList.getInstance().add(new TableData(tableDataList));
+				TableDataList.getInstance().add(new TableData(TableDataList.getInstance()));
 				viewer.refresh();
+				updateEnabled();
 			}
 		};
-		action0.setText("Add");
-		action0.setToolTipText("Add Entry");
-		action0.setImageDescriptor(TablePlugin.getImageDescriptor("icons/add.png"));
-		return action0;
+		actionNew.setText("Add");
+		actionNew.setToolTipText("Add Entry");
+		actionNew.setImageDescriptor(TablePlugin.getImageDescriptor("icons/add.png"));
+		return actionNew;
 	}
 	
-	private Action getAction1() {
-		if (action1 != null) return action1;
-		action1 = new Action() {
+	private Action getActionDelete() {
+		if (actionDelete != null) return actionDelete;
+		actionDelete = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Delete "+obj.toString());
-				TableDataList.getInstance().remove("");
+				if (obj != null) {
+					TableDataList.getInstance().remove(((TableData)obj).getKey());
+				}
 				viewer.refresh();
+				updateEnabled();			
 			}
 		};
-		action1.setText("Delete");
-		action1.setToolTipText("Delete Entry");
-		action1.setImageDescriptor(TablePlugin.getImageDescriptor("icons/delete.png"));
-		return action1;
+		actionDelete.setText("Delete");
+		actionDelete.setToolTipText("Delete Entry");
+		actionDelete.setImageDescriptor(TablePlugin.getImageDescriptor("icons/delete.png"));
+		return actionDelete;
 	}
 
 
-	private void makeActions() {
-		doubleClickAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				//Object obj = ((IStructuredSelection)selection).getFirstElement();
-				//showMessage("Double-click detected on "+obj.toString());
-			}
-		};
-	}
-
-	private void hookDoubleClickAction() {
+	private void hookSideEffectActions() {
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
+			@Override
 			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
+				ISelection selection = viewer.getSelection();
+				if (selection != null) {
+					Object obj = ((IStructuredSelection)selection).getFirstElement();
+					if (obj != null) {
+						//showMessage("Double-click detected on "+obj.toString());
+						TableData tableData = (TableData)obj;
+						//toggle present/absent
+						tableData.setPresent(!tableData.isPresent());
+						viewer.refresh();
+						updateEnabled();
+					}
+				}
+			}
+		});
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				updateEnabled();
 			}
 		});
 	}
+	
+	  //---------------------------------------------------------------------------	
+	
+	private void updateEnabled() {
+		if (((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement() == null) {
+			//no object selected
+			getActionDelete().setEnabled(false);
+		}
+		else {
+			//object selected
+			getActionDelete().setEnabled(true);
+		}
+		
+	}
+	
+  //---------------------------------------------------------------------------	
+	
 	private void showMessage(String message) {
 		MessageDialog.openInformation(
 			viewer.getControl().getShell(),
@@ -183,4 +214,5 @@ public class DataTableView extends ViewPart {
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
+
 }

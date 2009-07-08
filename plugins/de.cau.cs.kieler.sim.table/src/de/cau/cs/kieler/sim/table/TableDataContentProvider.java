@@ -3,8 +3,10 @@ package de.cau.cs.kieler.sim.table;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 
-public class TableDataContentProvider implements IStructuredContentProvider {
+public class TableDataContentProvider implements IStructuredContentProvider  {
 
 	@Override
 	public Object[] getElements(Object inputElement) {
