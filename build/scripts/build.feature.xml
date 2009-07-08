@@ -1,16 +1,21 @@
-<project name="Build All Elements" default="call.antRunner" basedir=".">
-	<property file="build.general.properties" />
+<project name="Build All Elements" default="call.antRunner">
+
+        <!-- basedir has to be set at ant call! -->
+
+        <property name="scriptFolder" value="../../ImportBuildFiles/workspace/scripts"/>
+	<property file="${scriptFolder}/build.general.properties" />
 	
 	<!-- target calls the eclipse antRunner processing THIS build file on target 'main' -->
 	<target name="call.antRunner">
-	  <!-- mkdir dir="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseHome"/ -->
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
+			<arg value="-configuration" />
+			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseHome" />
 			<arg value="-application" />
 			<arg value="org.eclipse.ant.core.antRunner" />
 			<arg value="-buildfile" />
-			<arg value="build.feature.xml" />
+			<arg value="${scriptFolder}/build.feature.xml" />
 			<arg value="main" />
-			<arg value="-Declipse.home=/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseHome"/>
+			<arg value="-Dbasedir=${jobdir}" />
 			<classpath>
 				<pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
