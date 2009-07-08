@@ -598,13 +598,16 @@ public class KiemView extends ViewPart {
 				if (selection != null) {
 					Object obj = ((IStructuredSelection)selection).getFirstElement();
 					if (obj != null) {
-						//showMessage("Double-click detected on "+obj.toString());
-						DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)obj;
-						//toggle enabledness
-						dataProducerConsumer.setEnabled(!dataProducerConsumer.isEnabled());
-						viewer.refresh();
-						refreshEnabledDisabledTextColors();
-						viewer.setSelection(null);
+						//only if execution is stopped
+						if (KIEM.execution == null) {
+							//showMessage("Double-click detected on "+obj.toString());
+							DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)obj;
+							//toggle enabledness
+							dataProducerConsumer.setEnabled(!dataProducerConsumer.isEnabled());
+							viewer.refresh();
+							refreshEnabledDisabledTextColors();
+							viewer.setSelection(null);
+						}
 					}// end if - selected
 				}// end if - selected
 				updateEnabled();
