@@ -7,6 +7,12 @@
 	
 	<!-- target calls the eclipse antRunner processing THIS build file on target 'main' -->
 	<target name="call.antRunner">
+	        <property name="jobdir" location="${basedir}"/>
+	        <property name="script" location="${scriptFolder}/build.general.properties"/>
+		<echo message="${jobdir}"/>
+		<echo message="${script}"/>
+		<echo message="${baseLocation}"/>
+		<echo message="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar"/>
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg value="-configuration" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseHome" />
