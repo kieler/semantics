@@ -30,12 +30,12 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.*;
+import de.cau.cs.kieler.sim.kiem.ui.DelayTextField;
 import de.cau.cs.kieler.sim.kiem.Tools;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.part.FileEditorInput;
-import de.cau.cs.kieler.sim.actions.DelayTextField;
 
 /**
  * This sample class demonstrates how to plug-in a new
@@ -473,19 +473,23 @@ public class KiemView extends ViewPart {
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				//showMessage("Double-click detected on "+obj.toString());
-				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)obj;
-				//toggle enabledness
-				dataProducerConsumer.setEnabled(!dataProducerConsumer.isEnabled());
-				viewer.refresh();
-				//change the text color (black or gray)
-				Color color = new Color(null, new RGB(150,150,150));
-				if (dataProducerConsumer.isEnabled())
-					color = new Color(null, new RGB(0,0,0));
-				viewer.getTable().getItem(viewer.getTable().getSelectionIndex()).setForeground(color);
-				viewer.setSelection(null);
-			}
+				if (selection != null) {
+					Object obj = ((IStructuredSelection)selection).getFirstElement();
+					if (obj != null) {
+						//showMessage("Double-click detected on "+obj.toString());
+						DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)obj;
+						//toggle enabledness
+						dataProducerConsumer.setEnabled(!dataProducerConsumer.isEnabled());
+						viewer.refresh();
+						//change the text color (black or gray)
+						Color color = new Color(null, new RGB(150,150,150));
+						if (dataProducerConsumer.isEnabled())
+							color = new Color(null, new RGB(0,0,0));
+						viewer.getTable().getItem(viewer.getTable().getSelectionIndex()).setForeground(color);
+						viewer.setSelection(null);
+					}// end if - selected
+				}// end if - selected
+			}//end run
 		};
 	}
 

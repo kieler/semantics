@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.sim.actions;
+package de.cau.cs.kieler.sim.kiem.ui;
 
 import java.awt.Color;
 
