@@ -126,21 +126,21 @@ public class KiemView extends ViewPart {
 			if (dataProducerConsumer.isProducer()) {
 				if (dataProducerConsumer.isEnabled()) {
 					return 
-					KiemPlugin.getImageDescriptor("icons/ProducerEnabled.gif").createImage();
+					KiemPlugin.getImageDescriptor("icons/producer.png").createImage();
 				}
 				else {
 					return 
-					KiemPlugin.getImageDescriptor("icons/ProducerDisabled.gif").createImage();
+					KiemPlugin.getImageDescriptor("icons/producerDisabled.png").createImage();
 				}
 			}
 			else if (dataProducerConsumer.isConsumer()) {
 				if (dataProducerConsumer.isEnabled()) {
 					return 
-					KiemPlugin.getImageDescriptor("icons/ConsumerEnabled.gif").createImage();
+					KiemPlugin.getImageDescriptor("icons/consumer.png").createImage();
 				}
 				else {
 					return 
-					KiemPlugin.getImageDescriptor("icons/ConsumerDisabled.gif").createImage();
+					KiemPlugin.getImageDescriptor("icons/consumerDisabled.png").createImage();
 				}
 			}
 			return null;
