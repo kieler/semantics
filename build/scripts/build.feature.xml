@@ -10,7 +10,7 @@
 			<arg value="-buildfile" />
 			<arg value="build.feature.xml" />
 			<arg value="main" />
-			<arg value="-Declipse.home=/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace"/>
+			<arg value="-Declipse.home=/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseHome"/>
 			<classpath>
 				<pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
