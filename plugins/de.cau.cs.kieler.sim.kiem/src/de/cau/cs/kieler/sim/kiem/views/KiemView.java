@@ -145,6 +145,21 @@ public class KiemView extends ViewPart {
 		this.window = window;
 	}
 	
+	public void refreshEnabledDisabledTextColors() {
+		//change the text color (black or gray)
+		Color colorEnabled  = new Color(null, new RGB(0,0,0));
+		Color colorDisabled = new Color(null, new RGB(150,150,150));
+		for (int c = 0; c < KIEM.getDataProducerConsumerList().size(); c++) {
+			DataProducerConsumer dataProducerConsumer = 
+				KIEM.getDataProducerConsumerList().get(c);
+			if (dataProducerConsumer.isEnabled())
+				viewer.getTable().getItem(c).setForeground(colorEnabled);
+			else
+				viewer.getTable().getItem(c).setForeground(colorDisabled);
+		}
+	}
+	
+	
 	/**
 	 * This is a callback that will allow us
 	 * to create the viewer and initialize it.
@@ -434,8 +449,7 @@ public class KiemView extends ViewPart {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				dataProducerConsumer.setEnabled(true);
 				viewer.refresh();
-				Color color = new Color(null, new RGB(0,0,0));
-				viewer.getTable().getItem(viewer.getTable().getSelectionIndex()).setForeground(color);
+				refreshEnabledDisabledTextColors();
 				viewer.setSelection(null);
 				updateEnabled();
 			}
@@ -452,8 +466,7 @@ public class KiemView extends ViewPart {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				dataProducerConsumer.setEnabled(false);
 				viewer.refresh();
-				Color color = new Color(null, new RGB(150,150,150));
-				viewer.getTable().getItem(viewer.getTable().getSelectionIndex()).setForeground(color);
+				refreshEnabledDisabledTextColors();
 				viewer.setSelection(null);
 				updateEnabled();
 			}
@@ -473,6 +486,7 @@ public class KiemView extends ViewPart {
 				    KIEM.getDataProducerConsumerList().remove(listIndex);
 					KIEM.getDataProducerConsumerList().add(listIndex-1, dataProducerConsumer);
 					viewer.refresh();
+					refreshEnabledDisabledTextColors();
 				}
 				updateEnabled();
 			}
@@ -494,6 +508,7 @@ public class KiemView extends ViewPart {
 					KIEM.getDataProducerConsumerList().remove(listIndex);
 					KIEM.getDataProducerConsumerList().add(listIndex+1, dataProducerConsumer);
 					viewer.refresh();
+					refreshEnabledDisabledTextColors();
 				}
 				updateEnabled();
 			}
@@ -588,11 +603,7 @@ public class KiemView extends ViewPart {
 						//toggle enabledness
 						dataProducerConsumer.setEnabled(!dataProducerConsumer.isEnabled());
 						viewer.refresh();
-						//change the text color (black or gray)
-						Color color = new Color(null, new RGB(150,150,150));
-						if (dataProducerConsumer.isEnabled())
-							color = new Color(null, new RGB(0,0,0));
-						viewer.getTable().getItem(viewer.getTable().getSelectionIndex()).setForeground(color);
+						refreshEnabledDisabledTextColors();
 						viewer.setSelection(null);
 					}// end if - selected
 				}// end if - selected
