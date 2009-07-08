@@ -128,8 +128,10 @@ public class DataTableView extends ViewPart {
 		if (actionNew != null) return actionNew;
 		actionNew = new Action() {
 			public void run() {
-				TableDataList.getInstance().add(new TableData(TableDataList.getInstance()));
+				TableData newElement = new TableData(TableDataList.getInstance());
+				TableDataList.getInstance().add(newElement);
 				viewer.refresh();
+				viewer.setSelection((new StructuredSelection(newElement)));
 				updateEnabled();
 			}
 		};
