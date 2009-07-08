@@ -9,11 +9,11 @@
             id="de.cau.cs.kieler.views.category">
       </category>
       <view
-            name="KIEM Table Data Consumer"
-            icon="icons/sample.gif"
             category="de.cau.cs.kieler.views.category"
-            class="de.cau.cs.kieler.sim.table.views.KiemTable"
-            id="de.cau.cs.kieler.sim.table.views.KiemTable">
+            class="de.cau.cs.kieler.sim.table.views.DataTableView"
+            icon="icons/TableIcon.gif"
+            id="de.cau.cs.kieler.sim.table.views.KiemTable"
+            name="Raw Table">
       </view>
    </extension>
    <extension
@@ -39,7 +39,15 @@
       <content
             class="de.cau.cs.kieler.sim.table.DataConsumer"
             id="de.cau.cs.kieler.sim.table.dataconsumer"
-            name="KIEM - Table Data Consumer">
+            name="Raw Table">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.dataproducer">
+      <content
+            class="de.cau.cs.kieler.sim.table.DataProducer"
+            id="de.cau.cs.kieler.sim.table.dataproducer"
+            name="Raw Table">
       </content>
    </extension>
 
