@@ -191,10 +191,10 @@ public class KiemView extends ViewPart {
 
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "de.cau.cs.kieler.sim.viewer");
-		makeActions();
+		
 		hookContextMenu();
 		hookDoubleClickAction();
-		contributeToActionBars();
+		buildLocalToolBar();
 	}
 
 	private void hookContextMenu() {
@@ -202,7 +202,7 @@ public class KiemView extends ViewPart {
 		menuMgr.setRemoveAllWhenShown(true);
 		menuMgr.addMenuListener(new IMenuListener() {
 			public void menuAboutToShow(IMenuManager manager) {
-				KiemView.this.fillContextMenu(manager);
+				buildContextMenu(manager);
 			}
 		});
 		Menu menu = menuMgr.createContextMenu(viewer.getControl());
@@ -210,43 +210,34 @@ public class KiemView extends ViewPart {
 		getSite().registerContextMenu(menuMgr, viewer);
 	}
 
-	private void contributeToActionBars() {
-		IActionBars bars = getViewSite().getActionBars();
-		fillLocalPullDown(bars.getMenuManager());
-		fillLocalToolBar(bars.getToolBarManager());
-	}
-
-	private void fillLocalPullDown(IMenuManager manager) {
-		//manager.add(action1);
-		//manager.add(new Separator());
-		//manager.add(action2);
-	}
-
-	private void fillContextMenu(IMenuManager manager) {
-		manager.add(action0);
-		manager.add(action1);
+	private void buildContextMenu(IMenuManager manager) {
+		manager.add(getAction0());
+		manager.add(getAction1());
 		manager.add(new Separator());
-		manager.add(action2);
-		manager.add(action3);
+		manager.add(getAction2());
+		manager.add(getAction3());
 		manager.add(new Separator());
-		manager.add(action4);
-		manager.add(action5);
-		manager.add(action6);
-		manager.add(action7);
+		manager.add(getAction4());
+		manager.add(getAction5());
+		manager.add(getAction6());
+		manager.add(getAction7());
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
 	
-	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(action2);
-		manager.add(action3);
+	
+	private void buildLocalToolBar() {
+		IActionBars bars = getViewSite().getActionBars();
+		IToolBarManager manager = bars.getToolBarManager();
+		manager.add(getAction2());
+		manager.add(getAction3());
 		manager.add(new Separator());
-		manager.add(delayTextField);
+		manager.add(getDelayTextField());
 		manager.add(new Separator());
-		manager.add(action4);
-		manager.add(action5);
-		manager.add(action6);
-		manager.add(action7);
+		manager.add(getAction4());
+		manager.add(getAction5());
+		manager.add(getAction6());
+		manager.add(getAction7());
 	}
 	
 	private DataProducer getDataProducer(String DataProducerName) {
@@ -360,10 +351,9 @@ public class KiemView extends ViewPart {
 		delayTextField.setEnabled(enabled);
 	}
 	
-
-	private void makeActions() {
-		delayTextField = new DelayTextField(KIEM);
-		
+	
+	private Action getAction0() {
+		if (action0 != null) return action0;
 		action0 = new Action() {
 			public void run() {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
@@ -376,7 +366,10 @@ public class KiemView extends ViewPart {
 		};
 		action0.setText("Enable");
 		action0.setToolTipText("Enable DataProducer/DataConsumer");
-
+		return action0;
+	}
+	private Action getAction1() {
+		if (action1 != null) return action1;
 		action1 = new Action() {
 			public void run() {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
@@ -389,8 +382,10 @@ public class KiemView extends ViewPart {
 		};
 		action1.setText("Disable");
 		action1.setToolTipText("Disable DataProducer/DataConsumer");
-		
-		
+		return action1;
+	}
+	private Action getAction2() {
+		if (action2 != null) return action2;
 		action2 = new Action() {
 			public void run() {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
@@ -404,9 +399,12 @@ public class KiemView extends ViewPart {
 		};
 		action2.setText("Up");
 		action2.setToolTipText("Schedule before");
-		action2.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/UpIcon.gif"));
-
-		
+		action2.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/upIcon.png"));
+		action2.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/UpIconDisabled.png"));
+		return action2;
+	}
+	private Action getAction3() {
+		if (action3 != null) return action3;
 		action3 = new Action() {
 			public void run() {
 				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
@@ -420,9 +418,12 @@ public class KiemView extends ViewPart {
 		};
 		action3.setText("Down");
 		action3.setToolTipText("Schedule behind");
-		action3.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/DownIcon.gif"));
-
-		
+		action3.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/DownIcon.png"));
+		action3.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/downIconDisabled.png"));
+		return action3;
+	}
+	private Action getAction4() {
+		if (action4 != null) return action4;
 		action4 = new Action() {
 			public void run() {
 				if (initDataProducerConsumer()) {
@@ -432,8 +433,12 @@ public class KiemView extends ViewPart {
 		};
 		action4.setText("Step");
 		action4.setToolTipText("Step execution");
-		action4.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/StepIcon.gif"));
-
+		action4.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/StepIcon.png"));
+		action4.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/stepIconDisabled.png"));
+		return action4;
+	}
+	private Action getAction5() {
+		if (action5 != null) return action5;
 		action5 = new Action() {
 			public void run() {
 				if (initDataProducerConsumer()) {
@@ -443,9 +448,12 @@ public class KiemView extends ViewPart {
 		};
 		action5.setText("Run");
 		action5.setToolTipText("Run execution");
-		action5.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/PlayIcon.gif"));
-		
-		
+		action5.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/PlayIcon.png"));
+		action5.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/playIconDisabled.png"));
+		return action5;
+	}
+	private Action getAction6() {
+		if (action6 != null) return action6;
 		action6 = new Action() {
 			public void run() {
 				if (initDataProducerConsumer()) {
@@ -455,8 +463,12 @@ public class KiemView extends ViewPart {
 		};
 		action6.setText("Pause");
 		action6.setToolTipText("Pause execution");
-		action6.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/PauseIcon.gif"));
-
+		action6.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/PauseIcon.png"));
+		action6.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/pauseIconDisabled.png"));
+		return action6;
+	}
+	private Action getAction7() {
+		if (action7 != null) return action7;
 		action7 = new Action() {
 			public void run() {
 				if (KIEM.execution != null) {
@@ -468,8 +480,14 @@ public class KiemView extends ViewPart {
 		};
 		action7.setText("Stop");
 		action7.setToolTipText("Stop execution");
-		action7.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/StopIcon.gif"));
-		
+		action7.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/StopIcon.png"));
+		action7.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/stopIconDisabled.png"));
+		return action7;
+	}
+	
+	
+	private Action getDoubleClickAction() {
+		if (doubleClickAction != null) return doubleClickAction;
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
@@ -491,7 +509,16 @@ public class KiemView extends ViewPart {
 				}// end if - selected
 			}//end run
 		};
+		return doubleClickAction;
 	}
+
+	private DelayTextField getDelayTextField() {
+		if (delayTextField != null) return delayTextField;
+		delayTextField = new DelayTextField(KIEM);
+		return delayTextField;
+	}
+
+	
 
 	private void hookDoubleClickAction() {
 		viewer.addDoubleClickListener(new IDoubleClickListener() {

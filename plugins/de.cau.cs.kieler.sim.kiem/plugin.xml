@@ -12,7 +12,7 @@
       <view
             category="de.cau.cs.kieler.views.category"
             class="de.cau.cs.kieler.sim.kiem.views.KiemView"
-            icon="icons/KiemIcon.gif"
+            icon="icons/kiemIcon.png"
             id="de.cau.cs.kieler.sim.kiem.view"
             name="Execution Manager"
             restorable="true">
