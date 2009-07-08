@@ -11,28 +11,10 @@
       <view
             category="de.cau.cs.kieler.views.category"
             class="de.cau.cs.kieler.sim.table.views.DataTableView"
-            icon="icons/TableIcon.gif"
+            icon="icons/tableIcon.png"
             id="de.cau.cs.kieler.sim.table.views.KiemTable"
             name="Raw Table">
       </view>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="org.eclipse.jdt.ui.JavaPerspective">
-         <view
-               ratio="0.5"
-               relative="org.eclipse.ui.views.TaskList"
-               relationship="right"
-               id="de.cau.cs.kieler.sim.table.views.KiemTable">
-         </view>
-      </perspectiveExtension>
-   </extension>
-   <extension
-         point="org.eclipse.help.contexts">
-      <contexts
-            file="contexts.xml">
-      </contexts>
    </extension>
    <extension
          point="de.cau.cs.kieler.sim.kiem.dataconsumer">

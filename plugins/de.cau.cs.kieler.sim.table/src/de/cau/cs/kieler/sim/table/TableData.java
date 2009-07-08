@@ -2,21 +2,38 @@ package de.cau.cs.kieler.sim.table;
 
 public class TableData {
 
+	private TableDataList tableDataList;
+	
 	private boolean present;
 	private String  key;
 	private String 	value;
 	
-	public TableData(String key) {
+	public TableData(TableDataList parentTableDataList) {
+		this.tableDataList = parentTableDataList;
+		this.present = true;
+		this.key = "";
+		this.value = "";
+	}
+	public TableData(TableDataList parentTableDataList, 
+					 String key) {
+		this.tableDataList = parentTableDataList;
 		this.present = true;
 		this.key = key;
 		this.value = "";
 	}
-	public TableData(String key, String value) {
+	public TableData(TableDataList parentTableDataList, 
+			         String key, 
+			         String value) {
+		this.tableDataList = parentTableDataList;
 		this.present = true;
 		this.key = key;
 		this.value = value;
 	}
-	public TableData(boolean present, String key, String value) {
+	public TableData(TableDataList parentTableDataList, 
+					 boolean present, 
+					 String key, 
+					 String value) {
+		this.tableDataList = parentTableDataList;
 		this.present = present;
 		this.key = key;
 		this.value = value;
@@ -35,7 +52,10 @@ public class TableData {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public void setKey(String key) {
+	public void setKey(String key) throws Exception {
+		//only set the key if unique
+		if (this.tableDataList.containsOther(key, this))
+			throw new Exception("The key '"+key+"' already exists!");
 		this.key = key;
 	}
 	public void setPresent(boolean present) {

@@ -12,10 +12,10 @@ public class TableDataList {
 
 	public TableDataList() {
 		tableDataList = new ArrayList<TableData>();
-		this.add(new TableData("A","0"));
-		this.add(new TableData("B","0"));
-		this.add(new TableData("R","0"));
-		this.add(new TableData("O","0"));
+		this.add(new TableData(this, "A", "0"));
+		this.add(new TableData(this, "B", "0"));
+		this.add(new TableData(this, "R", "0"));
+		this.add(new TableData(this, "O", "0"));
 	}
 	
 	public void add(TableData tableData) {
@@ -36,7 +36,17 @@ public class TableDataList {
 	public boolean contains(String key) {
 		return (get(key) != null);
 	}
-	
+
+	public boolean containsOther(String key, 
+								 TableData tableData) {
+		for (int c = 0; c < tableDataList.size(); c++) {
+			if ((tableDataList.get(c).getKey().equals(key))
+				&&(tableData != tableDataList.get(c)))
+				return true;
+		}
+		return false;
+	}
+
 	public void remove(String key) {
 		for (int c = 0; c < tableDataList.size(); c++) {
 			if (tableDataList.get(c).getKey().equals(key)) {

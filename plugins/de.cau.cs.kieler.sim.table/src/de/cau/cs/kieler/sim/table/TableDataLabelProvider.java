@@ -10,10 +10,10 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 	// define icons
 	private static final Image CHECKED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.table",
-					"icons/checked.gif").createImage();
+					"icons/checked.png").createImage();
 	private static final Image UNCHECKED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.table",
-					"icons/unchecked.gif").createImage();
+					"icons/unchecked.png").createImage();
 
 
 	@Override

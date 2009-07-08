@@ -4,8 +4,6 @@ import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckboxCellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
-import org.eclipse.jface.viewers.ComboBoxCellEditor;
-import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
@@ -54,7 +52,7 @@ public class TableDataEditing extends EditingSupport {
 		case 1:
 			return tableData.getKey();
 		case 2:
-			return tableData.getKey();
+			return tableData.getValue();
 		default:
 			break;
 		}
@@ -70,7 +68,13 @@ public class TableDataEditing extends EditingSupport {
 			tableData.setPresent((Boolean)value);
 			break;
 		case 1:
-			tableData.setKey(String.valueOf(value));
+			try {
+				tableData.setKey(String.valueOf(value));
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				//do not set the key//
+			}
 			break;
 		case 2:
 			tableData.setValue(String.valueOf(value));

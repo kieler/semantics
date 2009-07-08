@@ -11,7 +11,9 @@ import org.eclipse.ui.part.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.jface.action.*;
@@ -21,11 +23,14 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
 
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
 import de.cau.cs.kieler.sim.table.TableData;
 import de.cau.cs.kieler.sim.table.TableDataContentProvider;
 import de.cau.cs.kieler.sim.table.TableDataEditing;
 import de.cau.cs.kieler.sim.table.TableDataLabelProvider;
 import de.cau.cs.kieler.sim.table.TableDataList;
+import de.cau.cs.kieler.sim.table.TablePlugin;
 
 
 public class DataTableView extends ViewPart {
@@ -40,29 +45,14 @@ public class DataTableView extends ViewPart {
 	private TableDataList tableDataList;
 	private Table table;
 
+	private Action action0; //new
+	private Action action1;	//delete
 	/**
 	 * The constructor.
 	 */
 	public DataTableView() {
 	}
 
-	/**
-	 * Return the ExampleTaskList
-	 */
-	public TableDataList getTableDataList() {
-		return tableDataList;	
-	}
-	
-	public void refreshTable() {
-		viewer.refresh();
-	}
-
-	/**
-	 * Return the parent composite
-	 */
-	//public Control getControl() {
-	//	return table.getParent();
-	//}
 	
 	public String[] getColumnNames() {
 		String[] columnNames = {"Present","Key","Value"};
@@ -81,6 +71,8 @@ public class DataTableView extends ViewPart {
 		createViewer(parent);
 		viewer.setInput(TableDataList.getInstance());
 		hookDoubleClickAction();
+		hookContextMenu();
+		contributeToActionBars();
 	}
 
 	private void createViewer(Composite parent) {
@@ -114,7 +106,50 @@ public class DataTableView extends ViewPart {
 	
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
+		menuMgr.add( getAction0());
+		menuMgr.add( getAction1());
 		menuMgr.setRemoveAllWhenShown(true);
+	}
+	
+	private void contributeToActionBars() {
+		IActionBars bars = getViewSite().getActionBars();
+		IMenuManager manager0 = bars.getMenuManager();
+		manager0.add(getAction0());
+		manager0.add(getAction1());
+		IToolBarManager manager1 = bars.getToolBarManager();
+		manager1.add(getAction0());
+		manager1.add(getAction1());
+	}
+	
+	private Action getAction0() {
+		if (action0 != null) return action0;
+		action0 = new Action() {
+			public void run() {
+				TableDataList.getInstance().add(new TableData(tableDataList));
+				viewer.refresh();
+			}
+		};
+		action0.setText("Add");
+		action0.setToolTipText("Add Entry");
+		action0.setImageDescriptor(TablePlugin.getImageDescriptor("icons/add.png"));
+		return action0;
+	}
+	
+	private Action getAction1() {
+		if (action1 != null) return action1;
+		action1 = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				Object obj = ((IStructuredSelection)selection).getFirstElement();
+				showMessage("Delete "+obj.toString());
+				TableDataList.getInstance().remove("");
+				viewer.refresh();
+			}
+		};
+		action1.setText("Delete");
+		action1.setToolTipText("Delete Entry");
+		action1.setImageDescriptor(TablePlugin.getImageDescriptor("icons/delete.png"));
+		return action1;
 	}
 
 
@@ -122,8 +157,8 @@ public class DataTableView extends ViewPart {
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
+				//Object obj = ((IStructuredSelection)selection).getFirstElement();
+				//showMessage("Double-click detected on "+obj.toString());
 			}
 		};
 	}

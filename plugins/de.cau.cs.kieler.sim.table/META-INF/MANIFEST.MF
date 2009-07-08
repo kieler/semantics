@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Table
 Bundle-SymbolicName: de.cau.cs.kieler.sim.table; singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.sim.table.Activator
+Bundle-Activator: de.cau.cs.kieler.sim.table.TablePlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0"
