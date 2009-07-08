@@ -2,15 +2,11 @@
 
         <!-- basedir has to be set at ant call! -->
 
-        <property name="scriptFolder" value="../../ImportBuildFiles/workspace/scripts"/>
-	<property file="${scriptFolder}/build.general.properties" />
+	<property file="build.general.properties" />
 	
 	<!-- target calls the eclipse antRunner processing THIS build file on target 'main' -->
 	<target name="call.antRunner">
-	        <property name="jobdir" location="${basedir}"/>
-	        <property name="script" location="${scriptFolder}/build.general.properties"/>
-		<echo message="${jobdir}"/>
-		<echo message="${script}"/>
+	        <echo message="${jobdir}"/>
 		<echo message="${baseLocation}"/>
 		<echo message="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar"/>
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
@@ -19,9 +15,9 @@
 			<arg value="-application" />
 			<arg value="org.eclipse.ant.core.antRunner" />
 			<arg value="-buildfile" />
-			<arg value="${scriptFolder}/build.feature.xml" />
+			<arg value="build.feature.xml" />
 			<arg value="main" />
-			<arg value="-Dbasedir=${jobdir}" />
+			<arg value="-Djobdir=${jobdir}" />
 			<classpath>
 				<pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
