@@ -27,6 +27,9 @@ import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
  */
 public class KiemPlugin extends AbstractUIPlugin {
 
+	
+	public static final int DEFAULT_DELAY = 500;
+	
 	//The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem";
 
@@ -51,6 +54,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 		dataProducerConsumerList = this.getDataProducerConsumerList();
 		currentModelFile = null;
 		execution = null;
+		delay = DEFAULT_DELAY;
 	}
 
 	/*

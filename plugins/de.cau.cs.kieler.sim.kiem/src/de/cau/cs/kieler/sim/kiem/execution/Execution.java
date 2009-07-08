@@ -39,6 +39,10 @@ public class Execution implements Runnable {
 	public boolean isPaused() {
 		return (steps == 0);
 	}
+
+	public boolean isRunning() {
+		return (steps == -1);
+	}
 	
 	public void stopExecution() {
 		this.stop = true;

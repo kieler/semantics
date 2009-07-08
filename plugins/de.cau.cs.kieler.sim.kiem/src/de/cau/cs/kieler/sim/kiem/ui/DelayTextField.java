@@ -33,17 +33,18 @@ public class DelayTextField extends ControlContribution implements KeyListener,
 	}
 	
 	public void setEnabled(boolean enabled) {
+		if (textfield == null) return;
 		this.textfield.setEnabled(enabled);
 	}
 	
 	@Override
 	protected Control createControl(Composite parent) {
+		this.updateDelay();
 		textfield = new Text(parent,SWT.BORDER);
 		textfield.setToolTipText("Delay of steps in run mode (ms)");
-		textfield.setText("500    ");
+		textfield.setText(KIEM.DEFAULT_DELAY+"    ");
 		textfield.addKeyListener(this);
 		textfield.addFocusListener(this);
-		this.updateDelay();
 		return textfield;
 	}
 
@@ -61,6 +62,7 @@ public class DelayTextField extends ControlContribution implements KeyListener,
 	}
 	
 	private void updateDelay(){
+		if (textfield == null) return;
 		try{
 			int delay = Integer.parseInt(textfield.getText().trim());
 			if (delay < 10) throw(new NumberFormatException("Delay must be >= 10ms!"));
