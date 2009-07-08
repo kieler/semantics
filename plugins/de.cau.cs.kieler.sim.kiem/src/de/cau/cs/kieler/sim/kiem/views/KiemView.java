@@ -161,10 +161,18 @@ public class KiemView extends ViewPart {
 		
 		buildLocalToolBar();
 		hookContextMenu();
+		hookSelectionChangedAction();
 		hookDoubleClickAction();
 		updateEnabled();
 	}
 
+	private void hookSelectionChangedAction() {
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				updateEnabled();
+			}
+		});
+	}
 	private void hookDoubleClickAction() {
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
@@ -349,10 +357,42 @@ public class KiemView extends ViewPart {
 		if (allDisabled) return;
 		if (KIEM.execution == null) {
 			//execution is stopped
-			getActionEnable().setEnabled(true);
-			getActionDisable().setEnabled(true);
-			getActionUp().setEnabled(true);
-			getActionDown().setEnabled(true);
+			if (((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement() == null) {
+				//no object selected
+				getActionEnable().setEnabled(false);
+				getActionDisable().setEnabled(false);
+				getActionUp().setEnabled(false);
+				getActionDown().setEnabled(false);
+			}
+			else {
+				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
+				if (dataProducerConsumer.isEnabled()) {
+					//currently enabled
+					getActionEnable().setEnabled(false);
+					getActionDisable().setEnabled(true);
+				}
+				else {
+					//currently disabled
+					getActionEnable().setEnabled(true);
+					getActionDisable().setEnabled(false);
+				}
+				int listIndex = KIEM.getDataProducerConsumerList().indexOf(dataProducerConsumer);
+				if (listIndex <= 0) {
+					//currently top
+					getActionUp().setEnabled(false);
+					getActionDown().setEnabled(true);
+				}
+				else if (listIndex >= KIEM.getDataProducerConsumerList().size()-1) {
+					//currently bottom
+					getActionUp().setEnabled(true);
+					getActionDown().setEnabled(false);
+				}
+				else {
+					//currently in the middel
+					getActionUp().setEnabled(true);
+					getActionDown().setEnabled(true);
+				}
+			}
 			getActionStep().setEnabled(true);
 			getActionRun().setEnabled(true);
 			getActionPause().setEnabled(true);
