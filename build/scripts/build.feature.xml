@@ -12,6 +12,7 @@
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg value="-configuration" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseHome" />
+			<arg value="-debug" />
 			<arg value="-application" />
 			<arg value="org.eclipse.ant.core.antRunner" />
 			<arg value="-buildfile" />
