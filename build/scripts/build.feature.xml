@@ -1,0 +1,53 @@
+<project name="Build All Elements" default="call.antRunner">
+	<property file="build.general.properties" />
+<!--	<property name="pdeBuildPluginVersion" value="3.4.1.R34x_v20081217" />
+	<property name="equinoxLauncherPluginVersion" value="1.0.101.R34x_v20081125" />
+	<property name="eclipseLocation" value="${baseLocation}" />
+	<property name="elementPath" value="${buildDirectory}/${topLevelElementType}s/${topLevelElementId}" />
+-->
+	<target name="call.antRunner">
+		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
+			<arg value="-application" />
+			<arg value="org.eclipse.ant.core.antRunner" />
+			<arg value="-buildfile" />
+			<arg value="build.feature.xml" />
+			<arg value="main" />
+			<arg value="-DtopLevelElementType=feature" />
+			<arg value="-DtopLevelElementId=de.cau.cs.kieler.core.feature" />
+			<arg value="-Dtimestamp=${timestamp}" />
+			<classpath>
+				<pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="main">
+	  <ant antfile="/${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
+	       <target name="generate"/>
+	  </ant>
+	  <ant antfile="build.xml" dir="${elementPath}">
+	      <property name="feature.destination" value="${buildDirectory}/update-site/features"/>
+	      <property name="plugin.destination" value="${buildDirectory}/update-site/plugins"/>
+	      <!-- property name="target" value="build.update.jar"/ -->
+	      <!-- property name="include.children" value="true"/ -->
+	      <target name="build.jars"/>
+	      <!-- target name="all.plugins"/ -->
+	      <target name="build.update.jar"/>
+	  </ant>
+
+<!--	      <mkdir dir="${buildDirectory}/update-site"/>
+	      <mkdir dir="${buildDirectory}/update-site/features"/>
+	      <copy todir="${buildDirectory}/update-site/features">
+		  <fileset dir="${buildDirectory}/features">
+		      <include name="*.jar"/>
+		  </fileset>
+	      </copy>
+	      <mkdir dir="${buildDirectory}/update-site/plugins"/>
+	      <copy todir="${buildDirectory}/update-site/plugins">
+		  <fileset dir="${buildDirectory}/plugins">
+		      <include name="*.jar"/>
+		  </fileset>
+	      </copy>
+-->
+	</target>
+</project>
