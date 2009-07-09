@@ -3,7 +3,7 @@ package de.cau.cs.kieler.sim.kiem.extension;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
-
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 public abstract class DataProducerConsumer implements IExecutableExtension {
 	
@@ -12,7 +12,9 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 	private boolean enabled;
 	private boolean producer;
 	private boolean consumer;
-	
+	KiemPlugin KIEM;                   //only contains accesss to execution
+									   //thread iff this DataProducerConsumer
+									   //is a master
 	
 	public DataProducerConsumer() {
 		super();
@@ -62,5 +64,101 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 		this.ModelFile = ModelFile;
 		return;
 	}
+	
+	//-------------------------------------------------------------------------
+	//           at most ONE DataProducerConsumer can be a Master! 
+	//-------------------------------------------------------------------------
+	//override isMaster, if this DataProducerConsumer is a master
+	//should return false to true
+	//then
+	// 1. ExecutionManager ensures that no other
+	//	  master is present
+	// 2. Calling stepExecution initializes a tick
+	public boolean isMaster() {
+		return false;
+	}
+	//if this is a master it can initiate the execution
+	public void masterStepExecution() {
+		if (this.isMaster()) {
+			if (KIEM != null) {
+				KIEM.execution.stepExecution();
+				return;
+			}
+		}
+		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+	}
+	//if this is a master it can stop the execution
+	public void masterStopExecution() {
+		if (this.isMaster()) {
+			if (KIEM != null) {
+				KIEM.execution.stopExecution();
+				return;
+			}
+		}
+		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+	}
+	//if this is a master it can pause the execution
+	public void masterPauseExecution() {
+		if (this.isMaster()) {
+			if (KIEM != null) {
+				KIEM.execution.stopExecution();
+				return;
+			}
+		}
+		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+	}
+	//if this is a master it can pause the execution
+	public void masterSetDelay(int delay) {
+		if (this.isMaster()) {
+			if (KIEM != null) {
+				KIEM.execution.setDelay(delay);
+				return;
+			}
+		}
+		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+	}
+	//if this is a master it can pause the execution
+	public int masterGetDelay() {
+		if (this.isMaster()) {
+			if (KIEM != null) {
+				return KIEM.execution.getDelay();
+			}
+		}
+		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+	}
+	//if this is a master it can pause the execution
+	public void masterRunExecution() {
+		if (this.isMaster()) {
+			if (KIEM != null) {
+				KIEM.execution.runExecution();
+				return;
+			}
+		}
+		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+	}
+	//if this is a master it can pause the execution
+	public boolean masterIsPaused() {
+		if (this.isMaster()) {
+			if (KIEM != null) {
+				return KIEM.execution.isPaused();
+			}
+		}
+		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+	}
+	//if this is a master it can pause the execution
+	public boolean masterIsRunning() {
+		if (this.isMaster()) {
+			if (KIEM != null) {
+				return KIEM.execution.isRunning();
+			}
+		}
+		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+	}
+	//is called from the ExecutionManager only iff isMaster() returns true
+	public void masterSetKIEM(KiemPlugin KIEM) {
+		this.KIEM = KIEM;
+	}
+	//-------------------------------------------------------------------------
+	
 	
 }
