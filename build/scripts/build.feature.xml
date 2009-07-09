@@ -25,7 +25,7 @@
 			<arg value="main" />
 			<arg value="-Dbasedir=${jobdir}" />
 			<arg value="-Dscriptdir=${scriptdir}" />
-			<arg value="-DpluginPath=${jobdir}" />
+			<arg value="-DpluginPath=${pluginPath}" />
 			<arg value="-DtopLevelElementType=feature" />
 			<arg value="-DtopLevelElementId=${part}" />
 			<classpath>
