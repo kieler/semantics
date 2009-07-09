@@ -35,6 +35,9 @@ public class KiemDataEditing extends EditingSupport {
 
 	@Override
 	protected boolean canEdit(Object element) {
+		//do not allow to modify enabled/disabled status during execution
+		if (parent.KIEM.execution != null) 
+			return false;
 		return true;
 	}
 

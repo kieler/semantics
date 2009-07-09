@@ -1,5 +1,7 @@
 package de.cau.cs.kieler.sim.abro;
 
+import java.util.Random;
+
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
@@ -14,6 +16,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 	@Override
 	public JSONObject step(JSONObject JSONobject) {
 		// TODO Auto-generated method stub
+		try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
 		return null;
 	}
 
@@ -26,13 +29,13 @@ public class DataComponent extends JSONObjectDataComponent implements
 	@Override
 	public boolean isConsumer() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isProducer() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
-
+	
 }

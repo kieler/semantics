@@ -1,5 +1,7 @@
 package de.cau.cs.kieler.sim.table;
 
+import java.util.Random;
+
 import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
@@ -14,6 +16,7 @@ public class DataConsumer extends JSONStringDataComponent implements
 	@Override
 	public String step(String JSONString) {
 		// TODO Auto-generated method stub
+		try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
 		return null;
 	}
 

@@ -41,7 +41,7 @@ public class KiemView extends ViewPart {
 	private Action doubleClickAction;
 	private DelayTextField delayTextField;
 
-	private KiemPlugin KIEM;
+	public KiemPlugin KIEM;
 	
 	public static final String ID = "de.cau.cs.kieler.sim.kiem.views.KiemView";
 
@@ -306,7 +306,7 @@ public class KiemView extends ViewPart {
 	
 
 	public void updateEnabledEnabledDisabledUpDown() {
-		if (KIEM.execution != null &&KIEM.execution.isRunning()) {
+		if (KIEM.execution != null) {
 			//execution is running
 			getActionEnable().setEnabled(false);
 			getActionDisable().setEnabled(false);

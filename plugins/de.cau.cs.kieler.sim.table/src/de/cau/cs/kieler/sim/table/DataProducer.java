@@ -4,6 +4,8 @@ import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
+import java.util.Random;
+
 public class DataProducer extends JSONStringDataComponent implements
 		IJSONStringDataComponent {
 
@@ -14,6 +16,8 @@ public class DataProducer extends JSONStringDataComponent implements
 	@Override
 	public String step(String JSONString) {
 		// TODO Auto-generated method stub
+		
+		try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
 		return null;
 	}
 
@@ -35,9 +39,5 @@ public class DataProducer extends JSONStringDataComponent implements
 		return true;
 	}
 	
-	public boolean isMaster() {
-		return true;
-	}
-
 	
 }
