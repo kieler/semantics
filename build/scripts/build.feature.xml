@@ -24,7 +24,7 @@
 			<arg value="build.feature.xml" />
 			<arg value="main" />
 			<arg value="-Dbasedir=${jobdir}" />
-			<arg value="-Dscriptdir=${scriptdir}" / -->
+			<arg value="-Dscriptdir=${scriptdir}" />
 			<arg value="-DtopLevelElementType=feature" />
 			<arg value="-DtopLevelElementId=${part}" />
 			<classpath>
