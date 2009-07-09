@@ -28,7 +28,9 @@ import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 public class KiemPlugin extends AbstractUIPlugin {
 
 	
-	public static final int DEFAULT_DELAY = 500;
+	public static final int DELAY_DEFAULT = 500;
+	public static final int DELAY_MIN = 1;
+	public static final int DELAY_MAX = 5000;
 	
 	//The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem";
@@ -55,7 +57,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 		dataComponentList = this.getDataComponentList();
 		currentModelFile = null;
 		execution = null;
-		delay = DEFAULT_DELAY;
+		delay = DELAY_DEFAULT;
 		masterDataComponent = null;
 	}
 

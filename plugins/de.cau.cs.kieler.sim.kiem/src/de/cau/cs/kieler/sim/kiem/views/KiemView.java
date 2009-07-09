@@ -229,7 +229,7 @@ public class KiemView extends ViewPart {
 				if (dataComponent.isProducer()) {
 					countEnabledProducer++;
 				}
-				else if (dataComponent.isConsumer()) {
+				if (dataComponent.isConsumer()) {
 					countEnabledConsumer++;
 				}
 			}//end if enabled

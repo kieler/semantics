@@ -48,6 +48,12 @@ public abstract class DataComponent implements IDataComponent,
 	public boolean isProducerConsumer() {
 		return (this.isProducer() && this.isConsumer());
 	}
+	public boolean isPureProducer() {
+		return (this.isProducer() && !this.isConsumer());
+	}
+	public boolean isPureConsumer() {
+		return (!this.isProducer() && this.isConsumer());
+	}
 		
 	protected String getModelFile() {
 		return modelFile;
