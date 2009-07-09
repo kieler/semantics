@@ -1,13 +1,14 @@
 <project name="Build All Elements" default="call.antRunner">
 
-        <!-- basedir has to be set at ant call! -->
-
-	<property file="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/scripts/build.general.properties" />
+	<property name="scriptdir" location="."/>
+	<property file="${scriptdir}/build.general.properties" />
+	<!-- property file="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/scripts/build.general.properties" / -->
 	
 	<!-- target calls the eclipse antRunner processing THIS build file on target 'main' -->
 	<target name="call.antRunner">
-	        <property name="jobdirabs" location="${jobdir}"/>
-	        <echo message="${jobdirabs}"/>
+	        <!--  property name="jobdirabs" location="${jobdir}"/ -->
+	        <property name="jobdir" location="../../../${job}/workspace"/>
+	        <echo message="${jobdir}"/>
 		<echo message="${baseLocation}"/>
 		<echo message="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar"/>
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
@@ -22,8 +23,8 @@
 			<arg value="-buildfile" />
 			<arg value="build.feature.xml" />
 			<arg value="main" />
-			<arg value="-Dbasedir=${jobdirabs}" />
-			<arg value="-Djobdirabs=${jobdirabs}" />
+			<arg value="-Dbasedir=${jobdir}" />
+			<arg value="-Dscriptdir=${scriptdir}" / -->
 			<arg value="-DtopLevelElementType=feature" />
 			<arg value="-DtopLevelElementId=${part}" />
 			<classpath>
@@ -34,8 +35,9 @@
 
 	<target name="main">
 		<echo message="BaseDir ${basedir}"/>
-		<echo message="JobDirAbs ${jobdirabs}"/>
+		<echo message="ScriptDir ${scriptdir}"/>
 		<echo message="BuildDir ${buildDirectory}"/>
+	  <mkdir dir="${buildDirectory}/update-site" />
 	  <ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
 	       <target name="generate"/>
 	  </ant>
