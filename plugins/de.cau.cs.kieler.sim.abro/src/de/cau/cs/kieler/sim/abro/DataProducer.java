@@ -18,11 +18,6 @@ public class DataProducer extends JSONObjectDataProducer implements
 		System.out.println("ABRO DataProducer initialze");
 	}
 
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public JSONObject step() {

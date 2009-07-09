@@ -17,12 +17,6 @@ public class DataProducer extends JSONStringDataProducer implements
 	}
 
 	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public String step() {
 		// TODO Auto-generated method stub
 		return null;

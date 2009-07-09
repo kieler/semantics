@@ -17,12 +17,6 @@ public class DataConsumer extends JSONStringDataConsumer implements
 	}
 
 	@Override
-	public boolean isDeltaListener() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void updateData(String JSONstring) {
 		// TODO Auto-generated method stub
 
