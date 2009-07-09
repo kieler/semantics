@@ -59,10 +59,12 @@
 	
 	<target name="copy"> <!-- if="jarDa"-->
 		<echo message="copying"/>
-		<!-- unjar src="${pluginPath}" dest="${buildDirectory}/plugins/de.cau.cs.kieler.core_0.1.1/"/ -->
 		<copy todir="${buildDirectory}">
 			<fileset dir="${buildDirectory}/../../KIELER_core/workspace/update-site/plugins"/>
 		</copy>
+		<unjar src="${buildDirectory}/../../KIELER_core/workspace/update-site/plugins/de.cau.cs.kieler.core_0.1.1.jar" dest="${buildDirectory}/de.cau.cs.kieler.core_0.1.1/"/>
+		<unjar src="${buildDirectory}/../../KIELER_core/workspace/update-site/plugins/de.cau.cs.kieler.core.kgraph_0.1.0.jar" dest="${buildDirectory}/de.cau.cs.kieler.kgraph_0.1.0/"/>
+		<unjar src="${buildDirectory}/../../KIELER_core/workspace/update-site/plugins/de.cau.cs.kieler.core.ui_0.1.0.jar" dest="${buildDirectory}/de.cau.cs.kieler.core.ui_0.1.0/"/>
 	</target>
 	
 <!--	      <mkdir dir="${buildDirectory}/update-site"/>
