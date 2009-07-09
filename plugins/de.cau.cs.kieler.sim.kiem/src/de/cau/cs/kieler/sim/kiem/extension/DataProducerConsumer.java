@@ -8,12 +8,12 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 public abstract class DataProducerConsumer implements IExecutableExtension {
 	
 	private String name;
-	private String ModelFile;
+	private String modelFile;
 	private boolean enabled;
 	private boolean producer;
 	private boolean consumer;
 	private boolean json;
-	KiemPlugin KIEM;                   //only contains accesss to execution
+	KiemPlugin KIEM;                   //only contains access to execution
 									   //thread iff this DataProducerConsumer
 									   //is a master
 	
@@ -37,7 +37,6 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 	public boolean isEnabled() {
 		return enabled;
 	}
-
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
@@ -45,7 +44,6 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 	public boolean isProducer() {
 		return producer;
 	}
-
 	protected void setProducer(boolean producer) {
 		this.producer = producer;
 	}
@@ -53,26 +51,32 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 	public boolean isConsumer() {
 		return consumer;
 	}
-
 	protected void setConsumer(boolean consumer) {
 		this.consumer = consumer;
 	}
 	
-	public String getModelFile() {
-		return ModelFile;
-	}
-	
-	public void setModelFile(String ModelFile) {
-		this.ModelFile = ModelFile;
-		return;
-	}
-
 	public boolean isJSON() {
 		return this.json;
 	}
 	protected void setJSON(boolean json) {
 		this.json = json;
 	}
+	
+	
+	public String getModelFile() {
+		return modelFile;
+	}
+	public void setModelFile(String modelFile) {
+		this.modelFile = modelFile;
+		return;
+	}
+	//if this producer/consumer needs the model file override this
+	//and return true
+	//the ExecutionManager will then check for it
+	public boolean needModelFile() {
+		return false;
+	}
+	
 	
 	//-------------------------------------------------------------------------
 	//           at most ONE DataProducerConsumer can be a Master! 

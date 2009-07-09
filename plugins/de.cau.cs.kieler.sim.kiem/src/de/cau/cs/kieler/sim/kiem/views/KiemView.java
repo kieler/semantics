@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.sim.kiem.views;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Color;
@@ -7,6 +8,7 @@ import org.eclipse.swt.graphics.RGB;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Table;
 
 import org.eclipse.ui.part.*;
 import org.eclipse.jface.viewers.*;
@@ -48,71 +50,71 @@ public class KiemView extends ViewPart {
  
   //---------------------------------------------------------------------------
 	
-	class ViewContentProvider implements IStructuredContentProvider {
-		List<DataProducerConsumer> dataProducerConsumerList;
-		
-		public ViewContentProvider(List<DataProducerConsumer> dataProducerConsumerList) {
-			super();
-			this.dataProducerConsumerList = dataProducerConsumerList;
-		}
-		
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-		}
-		public void dispose() {
-		}
-		
-		public DataProducerConsumer[] getElements(Object parent) {
-			DataProducerConsumer[] returnList = new DataProducerConsumer[dataProducerConsumerList.size()];
-			for (int i = 0; i < dataProducerConsumerList.size(); i++) {
-				DataProducerConsumer dataProducerConsumer = dataProducerConsumerList.get(i);
-				if (dataProducerConsumer.getClass().getName().equals("de.cau.cs.kieler.sim.abro.DataProducer")) {
-					returnList[i] = dataProducerConsumer;
-				}
-				else {
-					returnList[i] = dataProducerConsumer; 
-				}
-			}
-			return returnList;
-		}
-	}
+//	class ViewContentProvider implements IStructuredContentProvider {
+//		List<DataProducerConsumer> dataProducerConsumerList;
+//		
+//		public ViewContentProvider(List<DataProducerConsumer> dataProducerConsumerList) {
+//			super();
+//			this.dataProducerConsumerList = dataProducerConsumerList;
+//		}
+//		
+//		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
+//		}
+//		public void dispose() {
+//		}
+//		
+//		public DataProducerConsumer[] getElements(Object parent) {
+//			DataProducerConsumer[] returnList = new DataProducerConsumer[dataProducerConsumerList.size()];
+//			for (int i = 0; i < dataProducerConsumerList.size(); i++) {
+//				DataProducerConsumer dataProducerConsumer = dataProducerConsumerList.get(i);
+//				if (dataProducerConsumer.getClass().getName().equals("de.cau.cs.kieler.sim.abro.DataProducer")) {
+//					returnList[i] = dataProducerConsumer;
+//				}
+//				else {
+//					returnList[i] = dataProducerConsumer; 
+//				}
+//			}
+//			return returnList;
+//		}
+//	}
 	
   //---------------------------------------------------------------------------
 	
-	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
-		public String getColumnText(Object obj, int index) {
-			String producerConsumerType = "DataProducer";
-			if (((DataProducerConsumer)obj).isConsumer())
-				producerConsumerType = "DataConsumer";
-			return getText(((DataProducerConsumer)obj).getName() + " - " + producerConsumerType);
-		}
-		public Image getColumnImage(Object obj, int index) {
-			return getImage(obj);
-		}
-		public Image getImage(Object obj) {
-			DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)obj;
-			if (dataProducerConsumer.isProducer()) {
-				if (dataProducerConsumer.isEnabled()) {
-					return 
-					KiemPlugin.getImageDescriptor("icons/producer.png").createImage();
-				}
-				else {
-					return 
-					KiemPlugin.getImageDescriptor("icons/producerDisabled.png").createImage();
-				}
-			}
-			else if (dataProducerConsumer.isConsumer()) {
-				if (dataProducerConsumer.isEnabled()) {
-					return 
-					KiemPlugin.getImageDescriptor("icons/consumer.png").createImage();
-				}
-				else {
-					return 
-					KiemPlugin.getImageDescriptor("icons/consumerDisabled.png").createImage();
-				}
-			}
-			return null;
-		}
-	}
+//	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
+//		public String getColumnText(Object obj, int index) {
+//			String producerConsumerType = "DataProducer";
+//			if (((DataProducerConsumer)obj).isConsumer())
+//				producerConsumerType = "DataConsumer";
+//			return getText(((DataProducerConsumer)obj).getName() + " - " + producerConsumerType);
+//		}
+//		public Image getColumnImage(Object obj, int index) {
+//			return getImage(obj);
+//		}
+//		public Image getImage(Object obj) {
+//			DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)obj;
+//			if (dataProducerConsumer.isProducer()) {
+//				if (dataProducerConsumer.isEnabled()) {
+//					return 
+//					KiemPlugin.getImageDescriptor("icons/producer.png").createImage();
+//				}
+//				else {
+//					return 
+//					KiemPlugin.getImageDescriptor("icons/producerDisabled.png").createImage();
+//				}
+//			}
+//			else if (dataProducerConsumer.isConsumer()) {
+//				if (dataProducerConsumer.isEnabled()) {
+//					return 
+//					KiemPlugin.getImageDescriptor("icons/consumer.png").createImage();
+//				}
+//				else {
+//					return 
+//					KiemPlugin.getImageDescriptor("icons/consumerDisabled.png").createImage();
+//				}
+//			}
+//			return null;
+//		}
+//	}
 	
   //---------------------------------------------------------------------------	
 
@@ -160,26 +162,56 @@ public class KiemView extends ViewPart {
 	}
 	
 	
+	
 	/**
 	 * This is a callback that will allow us
 	 * to create the viewer and initialize it.
 	 */
 	public void createPartControl(Composite parent) {
-		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		viewer.setContentProvider(new ViewContentProvider(KIEM.getDataProducerConsumerList()));
-		viewer.setLabelProvider(new ViewLabelProvider());
-		//viewer.setSorter(new NameSorter());
-		viewer.setInput(getViewSite());
+		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL
+				| SWT.V_SCROLL | SWT.FULL_SELECTION);
+		createColumns(viewer);
+		viewer.setContentProvider(new KiemContentProvider());
+		viewer.setLabelProvider(new KiemLabelProvider());
+		viewer.setInput(KIEM.getDataProducerConsumerList());
 
-		// Create the help context id for the viewer's control
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "de.cau.cs.kieler.sim.viewer");
-		
 		buildLocalToolBar();
 		hookContextMenu();
 		hookSelectionChangedAction();
 		hookDoubleClickAction();
 		updateEnabled();
 	}
+	
+	// This will create the columns for the table
+	private void createColumns(TableViewer viewer) {
+		String[] titles = { "", 
+							"Component", 
+							"Type", 
+							"JSON", 
+							"Master", 
+							"Model" };
+		String[] toolTip = { "Enabled/Disabled", 
+							 "Name of Producer/Consumer", 
+				 			 "Producer or Consumer", 
+				 			 "JSONObject (JSONString otherwise)", 
+				 			 "Is a Master that leads execution", 
+				 			 "Needs selected model file" };
+		int[] bounds = { 22, 150, 90, 45, 45, 45};
+
+		for (int i = 0; i < titles.length; i++) {
+			TableViewerColumn column = new TableViewerColumn(viewer, SWT.NONE);
+			column.getColumn().setText(titles[i]);
+			column.getColumn().setWidth(bounds[i]);
+			column.getColumn().setToolTipText(toolTip[i]);
+			column.getColumn().setResizable(true);
+			column.getColumn().setMoveable(true);
+			//column.setEditingSupport(new TableDataEditing(viewer, i));
+		}
+		Table table = viewer.getTable();
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+	}
+	
 
 	private void hookSelectionChangedAction() {
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
