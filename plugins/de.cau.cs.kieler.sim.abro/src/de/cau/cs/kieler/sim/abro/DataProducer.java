@@ -1,39 +1,33 @@
 package de.cau.cs.kieler.sim.abro;
 
-import de.cau.cs.kieler.sim.kiem.extension.DataProducerInterface;
+import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataProducer;
+import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataProducerInterface;
+import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
-public class DataProducer extends
-		de.cau.cs.kieler.sim.kiem.extension.DataProducer implements
-		DataProducerInterface {
+public class DataProducer extends JSONObjectDataProducer implements
+		JSONObjectDataProducerInterface {
 
-	@Override
-	public void ExecutionInitialize() {
-		// TODO Auto-generated method stub
-		System.out.println("ABRO initialze");
+	public DataProducer() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void ExecutionPause() {
+	public void executionInitialize() {
 		// TODO Auto-generated method stub
-		
+		try{Thread.sleep(2000);}catch(Exception e){}
+		System.out.println("ABRO DataProducer initialze");
 	}
 
 	@Override
-	public void ExecutionPlay() {
+	public void executionReset() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void ExecutionStep() {
+	public JSONObject executionStep() {
 		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void ExecutionStop() {
-		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }

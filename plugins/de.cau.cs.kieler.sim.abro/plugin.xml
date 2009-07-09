@@ -2,11 +2,19 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="de.cau.cs.kieler.sim.kiem.dataproducer">
+         point="de.cau.cs.kieler.sim.kiem.json.dataproducer">
       <content
             class="de.cau.cs.kieler.sim.abro.DataProducer"
-            id="de.cau.cs.kieler.sim.abro.dataproducer"
-            name="KlePto - ABRO KIELER Data Producer">
+            id="de.cau.cs.kieler.sim.abro.DataProducer"
+            name="ABRO in Java">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.dataconsumer">
+      <content
+            class="de.cau.cs.kieler.sim.abro.DataConsumer"
+            id="de.cau.cs.kieler.sim.abro.DataConsumer"
+            name="ABRO in Java">
       </content>
    </extension>
 

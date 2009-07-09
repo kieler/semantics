@@ -1,45 +1,31 @@
 package de.cau.cs.kieler.sim.table;
 
-import de.cau.cs.kieler.sim.kiem.extension.DataConsumerInterface;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataConsumer;
+import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataConsumerInterface;
 
-public class DataConsumer extends
-		de.cau.cs.kieler.sim.kiem.extension.DataConsumer implements
-		DataConsumerInterface {
+public class DataConsumer extends JSONStringDataConsumer implements
+		JSONStringDataConsumerInterface {
 
 	public DataConsumer() {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void ExecutionInitialize() {
+	public void executionInitialize() {
 		// TODO Auto-generated method stub
-		System.out.println("Table initialze");
+		System.out.println("Raw Table DataConsomer initialize");
 	}
 
 	@Override
-	public void UpdateAllData(JSONObject object) {
+	public boolean isDeltaListener() {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 	@Override
-	public void UpdateAllData(String string) {
+	public void updateData(String JSONstring) {
 		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void UpdateDeltaData(JSONObject object) {
-		// TODO Auto-generated method stub
-		
 	}
-
-	@Override
-	public void UpdateDeltaData(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }

@@ -17,7 +17,7 @@
       </view>
    </extension>
    <extension
-         point="de.cau.cs.kieler.sim.kiem.dataconsumer">
+         point="de.cau.cs.kieler.sim.kiem.string.dataconsumer">
       <content
             class="de.cau.cs.kieler.sim.table.DataConsumer"
             id="de.cau.cs.kieler.sim.table.dataconsumer"
@@ -25,7 +25,7 @@
       </content>
    </extension>
    <extension
-         point="de.cau.cs.kieler.sim.kiem.dataproducer">
+         point="de.cau.cs.kieler.sim.kiem.string.dataproducer">
       <content
             class="de.cau.cs.kieler.sim.table.DataProducer"
             id="de.cau.cs.kieler.sim.table.dataproducer"
