@@ -19,6 +19,8 @@
 			<arg value="build.feature.xml" />
 			<arg value="main" />
 			<arg value="-Djobdir=${jobdir}" />
+			<arg value="-DtopLevelElementType=feature" />
+			<arg value="-DtopLevelElementId=${part}" />
 			<classpath>
 				<pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
