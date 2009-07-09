@@ -47,75 +47,7 @@ public class KiemView extends ViewPart {
 
 	private IWorkbenchWindow window;
 
- 
-  //---------------------------------------------------------------------------
-	
-//	class ViewContentProvider implements IStructuredContentProvider {
-//		List<DataProducerConsumer> dataProducerConsumerList;
-//		
-//		public ViewContentProvider(List<DataProducerConsumer> dataProducerConsumerList) {
-//			super();
-//			this.dataProducerConsumerList = dataProducerConsumerList;
-//		}
-//		
-//		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-//		}
-//		public void dispose() {
-//		}
-//		
-//		public DataProducerConsumer[] getElements(Object parent) {
-//			DataProducerConsumer[] returnList = new DataProducerConsumer[dataProducerConsumerList.size()];
-//			for (int i = 0; i < dataProducerConsumerList.size(); i++) {
-//				DataProducerConsumer dataProducerConsumer = dataProducerConsumerList.get(i);
-//				if (dataProducerConsumer.getClass().getName().equals("de.cau.cs.kieler.sim.abro.DataProducer")) {
-//					returnList[i] = dataProducerConsumer;
-//				}
-//				else {
-//					returnList[i] = dataProducerConsumer; 
-//				}
-//			}
-//			return returnList;
-//		}
-//	}
-	
-  //---------------------------------------------------------------------------
-	
-//	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
-//		public String getColumnText(Object obj, int index) {
-//			String producerConsumerType = "DataProducer";
-//			if (((DataProducerConsumer)obj).isConsumer())
-//				producerConsumerType = "DataConsumer";
-//			return getText(((DataProducerConsumer)obj).getName() + " - " + producerConsumerType);
-//		}
-//		public Image getColumnImage(Object obj, int index) {
-//			return getImage(obj);
-//		}
-//		public Image getImage(Object obj) {
-//			DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)obj;
-//			if (dataProducerConsumer.isProducer()) {
-//				if (dataProducerConsumer.isEnabled()) {
-//					return 
-//					KiemPlugin.getImageDescriptor("icons/producer.png").createImage();
-//				}
-//				else {
-//					return 
-//					KiemPlugin.getImageDescriptor("icons/producerDisabled.png").createImage();
-//				}
-//			}
-//			else if (dataProducerConsumer.isConsumer()) {
-//				if (dataProducerConsumer.isEnabled()) {
-//					return 
-//					KiemPlugin.getImageDescriptor("icons/consumer.png").createImage();
-//				}
-//				else {
-//					return 
-//					KiemPlugin.getImageDescriptor("icons/consumerDisabled.png").createImage();
-//				}
-//			}
-//			return null;
-//		}
-//	}
-	
+ 	
   //---------------------------------------------------------------------------	
 
 	/**
@@ -123,18 +55,6 @@ public class KiemView extends ViewPart {
 	 */
 	public KiemView() {
 		KIEM = KiemPlugin.getDefault();
-	}
-	
-	public String getModelFile() {
-		IWorkbenchWindow window = this.getViewSite().getWorkbenchWindow();
-		//get model instance file
-		IEditorPart Editor = window.getActivePage().getActiveEditor();
-		FileEditorInput uri = (FileEditorInput)Editor.getEditorInput();
-		String ModelFile = uri.getURI().getRawPath();// .getPath().makeAbsolute().toString();// .lastSegment().toString();// .toFile().toURI().getRawPath(); // .toString();// .toString();// .getURI() .toFileString();
-		//delete "_diagram"-extension
-		ModelFile = ModelFile.replace("_diagram", "");
-		//ModelFile = ModelFile.substring(0,ModelFile.length()-8);
-		return ModelFile;
 	}
 	
 	
@@ -163,10 +83,8 @@ public class KiemView extends ViewPart {
 	
 	
 	
-	/**
-	 * This is a callback that will allow us
-	 * to create the viewer and initialize it.
-	 */
+  //---------------------------------------------------------------------------	
+	
 	public void createPartControl(Composite parent) {
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.FULL_SELECTION);
@@ -205,13 +123,15 @@ public class KiemView extends ViewPart {
 			column.getColumn().setToolTipText(toolTip[i]);
 			column.getColumn().setResizable(true);
 			column.getColumn().setMoveable(true);
-			//column.setEditingSupport(new TableDataEditing(viewer, i));
+			if (i == 0)
+				column.setEditingSupport(new KiemDataEditing(this, viewer, i));
 		}
 		Table table = viewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 	}
 	
+  //---------------------------------------------------------------------------	
 
 	private void hookSelectionChangedAction() {
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -385,7 +305,7 @@ public class KiemView extends ViewPart {
 	}
 	
 	
-	private void updateEnabled() {
+	public void updateEnabled() {
 		if (allDisabled) return;
 		if (KIEM.execution == null) {
 			//execution is stopped

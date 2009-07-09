@@ -15,4 +15,9 @@ public abstract class JSONObjectDataConsumer extends DataProducerConsumer implem
 		return null;
 	}
 	
+	
+	public boolean isDeltaListener() {
+		return false;
+	}
+	
 }

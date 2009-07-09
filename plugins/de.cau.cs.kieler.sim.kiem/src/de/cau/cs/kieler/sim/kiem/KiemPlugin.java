@@ -40,6 +40,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 	
 	//List of available dataProducers and dataConsumers
 	List<DataProducerConsumer> dataProducerConsumerList;
+	DataProducerConsumer masterDataProducerConsumer;
 	
 	//Contains the current model to execute or null initially/after stop
 	private String currentModelFile;
@@ -57,6 +58,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 		currentModelFile = null;
 		execution = null;
 		delay = DEFAULT_DELAY;
+		masterDataProducerConsumer = null;
 	}
 
 	/*
@@ -186,5 +188,23 @@ public class KiemPlugin extends AbstractUIPlugin {
 		
 		return dataProducerConsumerList;
 	}
-
+	
+	void checkForSingleMaster() {
+		this.masterDataProducerConsumer = null;
+		for (int c = 0; c < this.dataProducerConsumerList.size(); c++) {
+			DataProducerConsumer dataProducerConsumer = 
+				dataProducerConsumerList.get(c);
+			if (dataProducerConsumer.isMaster()) {
+				if (this.masterDataProducerConsumer == null) {
+					this.masterDataProducerConsumer = dataProducerConsumer;
+				} else {
+					Tools.showDialog("At most one master is allowed\n '"+dataProducerConsumer.getName()+"' will be disabled.");
+					//disable it//
+					dataProducerConsumer.setEnabled(false);
+				}
+			}
+		}
+		
+	}
+	
 }

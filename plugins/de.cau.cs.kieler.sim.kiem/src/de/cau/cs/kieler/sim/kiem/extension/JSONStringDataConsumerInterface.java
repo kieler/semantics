@@ -4,7 +4,5 @@ public interface JSONStringDataConsumerInterface  {
 	
 	public void initialize();
 	
-	public boolean isDeltaListener();
-
 	public void updateData(String JSONstring);
 }

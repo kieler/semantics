@@ -6,6 +6,4 @@ public interface JSONStringDataProducerInterface  {
 
 	public String step();
 
-	public void reset();
-
 }

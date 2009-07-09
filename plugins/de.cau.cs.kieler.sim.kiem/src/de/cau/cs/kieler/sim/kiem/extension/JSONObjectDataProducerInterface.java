@@ -8,6 +8,4 @@ public interface JSONObjectDataProducerInterface  {
 
 	public JSONObject step();
 
-	public void reset();
-
 }

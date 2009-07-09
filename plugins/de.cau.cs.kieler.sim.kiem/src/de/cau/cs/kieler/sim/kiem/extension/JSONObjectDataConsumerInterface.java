@@ -6,8 +6,6 @@ public interface JSONObjectDataConsumerInterface  {
 	
 	public void initialize();
 	
-	public boolean isDeltaListener();
-
 	public void updateData(JSONObject JSONobject);
 
 }
