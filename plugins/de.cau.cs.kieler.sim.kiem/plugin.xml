@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-   <extension-point id="de.cau.cs.kieler.sim.kiem.string.dataproducer" name="de.cau.cs.kieler.sim.kiem.string.dataproducer" schema="schema/de.cau.cs.kieler.sim.kiem.string.dataproducer.exsd"/>
-   <extension-point id="de.cau.cs.kieler.sim.kiem.string.dataconsumer" name="de.cau.cs.kieler.sim.kiem.string.dataconsumer" schema="schema/de.cau.cs.kieler.sim.kiem.string.dataconsumer.exsd"/>
-   <extension-point id="de.cau.cs.kieler.sim.kiem.json.dataproducer" name="de.cau.cs.kieler.sim.kiem.json.dataproducer" schema="schema/de.cau.cs.kieler.sim.kiem.json.dataproducer.exsd"/>
-   <extension-point id="de.cau.cs.kieler.sim.kiem.json.dataconsumer" name="de.cau.cs.kieler.sim.kiem.json.dataconsumer" schema="schema/de.cau.cs.kieler.sim.kiem.json.dataconsumer.exsd"/>
+   <extension-point id="de.cau.cs.kieler.sim.kiem.string.datacomponent" name="de.cau.cs.kieler.sim.kiem.string.datacomponent" schema="schema/de.cau.cs.kieler.sim.kiem.string.datacomponent.exsd"/>
+   <extension-point id="de.cau.cs.kieler.sim.kiem.json.datacomponent" name="de.cau.cs.kieler.sim.kiem.json.datacomponent" schema="schema/de.cau.cs.kieler.sim.kiem.json.datacomponent.exsd"/>
    <extension
          point="org.eclipse.ui.views">
       <category

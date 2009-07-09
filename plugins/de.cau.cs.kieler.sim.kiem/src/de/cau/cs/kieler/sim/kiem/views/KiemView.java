@@ -71,10 +71,10 @@ public class KiemView extends ViewPart {
 		//change the text color (black or gray)
 		Color colorEnabled  = new Color(null, new RGB(0,0,0));
 		Color colorDisabled = new Color(null, new RGB(150,150,150));
-		for (int c = 0; c < KIEM.getDataProducerConsumerList().size(); c++) {
-			DataProducerConsumer dataProducerConsumer = 
-				KIEM.getDataProducerConsumerList().get(c);
-			if (dataProducerConsumer.isEnabled())
+		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
+			DataComponent dataComponent = 
+				KIEM.getDataComponentList().get(c);
+			if (dataComponent.isEnabled())
 				viewer.getTable().getItem(c).setForeground(colorEnabled);
 			else
 				viewer.getTable().getItem(c).setForeground(colorDisabled);
@@ -91,7 +91,7 @@ public class KiemView extends ViewPart {
 		createColumns(viewer);
 		viewer.setContentProvider(new KiemContentProvider());
 		viewer.setLabelProvider(new KiemLabelProvider());
-		viewer.setInput(KIEM.getDataProducerConsumerList());
+		viewer.setInput(KIEM.getDataComponentList());
 
 		buildLocalToolBar();
 		hookContextMenu();
@@ -203,7 +203,7 @@ public class KiemView extends ViewPart {
   //---------------------------------------------------------------------------	
   //---------------------------------------------------------------------------
 	
-	private boolean initDataProducerConsumer() {
+	private boolean initDataComponent() {
 		if (KIEM.execution != null) return true;
 
 		try {
@@ -222,14 +222,14 @@ public class KiemView extends ViewPart {
 		int countEnabledConsumer = 0;
 
 		//count all (enabled) data producer and consumer
-		for (int c = 0; c < KIEM.getDataProducerConsumerList().size(); c++) {
-			DataProducerConsumer dataProducerConsumer = KIEM.getDataProducerConsumerList().get(c);
-			dataProducerConsumer.setModelFile(KIEM.getCurrentModelFile());
-			if (dataProducerConsumer.isEnabled()) {
-				if (dataProducerConsumer.isProducer()) {
+		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
+			DataComponent dataComponent = KIEM.getDataComponentList().get(c);
+			dataComponent.setModelFile(KIEM.getCurrentModelFile());
+			if (dataComponent.isEnabled()) {
+				if (dataComponent.isProducer()) {
 					countEnabledProducer++;
 				}
-				else if (dataProducerConsumer.isConsumer()) {
+				else if (dataComponent.isConsumer()) {
 					countEnabledConsumer++;
 				}
 			}//end if enabled
@@ -253,31 +253,16 @@ public class KiemView extends ViewPart {
 		this.setAllEnabled(false);
 		
 		//initialize all (enabled) data producer and consumer
-		for (int c = 0; c < KIEM.getDataProducerConsumerList().size(); c++) {
-			DataProducerConsumer dataProducerConsumer = KIEM.getDataProducerConsumerList().get(c);
-			dataProducerConsumer.setModelFile(KIEM.getCurrentModelFile());
-			if (dataProducerConsumer.isEnabled()) {
-				if (dataProducerConsumer.isProducer()) {
-					if (dataProducerConsumer.isJSON()) {
-						((JSONObjectDataProducer)dataProducerConsumer).initialize();
-					}
-					else {
-						((JSONStringDataProducer)dataProducerConsumer).initialize();
-					}
-				}
-				else if (dataProducerConsumer.isConsumer()) {
-					if (dataProducerConsumer.isJSON()) {
-						((JSONObjectDataConsumer)dataProducerConsumer).initialize();
-					}
-					else {
-						((JSONStringDataConsumer)dataProducerConsumer).initialize();
-					}
-				}
+		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
+			DataComponent dataComponent = KIEM.getDataComponentList().get(c);
+			dataComponent.setModelFile(KIEM.getCurrentModelFile());
+			if (dataComponent.isEnabled()) {
+				dataComponent.initialize();
 			}//end if enabled
 		}//next c
 		
 		//now create and run the execution thread
-		KIEM.execution = new Execution(KIEM.getDataProducerConsumerList());
+		KIEM.execution = new Execution(KIEM.getDataComponentList());
 		//take the last set delay
 		KIEM.execution.setDelay(KIEM.getDelay());
 		KIEM.executionThread = new Thread(KIEM.execution);
@@ -317,8 +302,8 @@ public class KiemView extends ViewPart {
 				getActionDown().setEnabled(false);
 			}
 			else {
-				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
-				if (dataProducerConsumer.isEnabled()) {
+				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
+				if (dataComponent.isEnabled()) {
 					//currently enabled
 					getActionEnable().setEnabled(false);
 					getActionDisable().setEnabled(true);
@@ -328,13 +313,13 @@ public class KiemView extends ViewPart {
 					getActionEnable().setEnabled(true);
 					getActionDisable().setEnabled(false);
 				}
-				int listIndex = KIEM.getDataProducerConsumerList().indexOf(dataProducerConsumer);
+				int listIndex = KIEM.getDataComponentList().indexOf(dataComponent);
 				if (listIndex <= 0) {
 					//currently top
 					getActionUp().setEnabled(false);
 					getActionDown().setEnabled(true);
 				}
-				else if (listIndex >= KIEM.getDataProducerConsumerList().size()-1) {
+				else if (listIndex >= KIEM.getDataComponentList().size()-1) {
 					//currently bottom
 					getActionUp().setEnabled(true);
 					getActionDown().setEnabled(false);
@@ -383,8 +368,8 @@ public class KiemView extends ViewPart {
 		if (actionEnable != null) return actionEnable;
 		actionEnable = new Action() {
 			public void run() {
-				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
-				dataProducerConsumer.setEnabled(true);
+				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
+				dataComponent.setEnabled(true);
 				viewer.refresh();
 				refreshEnabledDisabledTextColors();
 				viewer.setSelection(null);
@@ -400,8 +385,8 @@ public class KiemView extends ViewPart {
 		if (actionDisable != null) return actionDisable;
 		actionDisable = new Action() {
 			public void run() {
-				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
-				dataProducerConsumer.setEnabled(false);
+				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
+				dataComponent.setEnabled(false);
 				viewer.refresh();
 				refreshEnabledDisabledTextColors();
 				viewer.setSelection(null);
@@ -417,11 +402,11 @@ public class KiemView extends ViewPart {
 		if (actionUp != null) return actionUp;
 		actionUp = new Action() {
 			public void run() {
-				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
-				int listIndex = KIEM.getDataProducerConsumerList().indexOf(dataProducerConsumer);
+				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
+				int listIndex = KIEM.getDataComponentList().indexOf(dataComponent);
 				if (listIndex > 0) {
-				    KIEM.getDataProducerConsumerList().remove(listIndex);
-					KIEM.getDataProducerConsumerList().add(listIndex-1, dataProducerConsumer);
+				    KIEM.getDataComponentList().remove(listIndex);
+					KIEM.getDataComponentList().add(listIndex-1, dataComponent);
 					viewer.refresh();
 					refreshEnabledDisabledTextColors();
 				}
@@ -439,11 +424,11 @@ public class KiemView extends ViewPart {
 		if (actionDown != null) return actionDown;
 		actionDown = new Action() {
 			public void run() {
-				DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
-				int listIndex = KIEM.getDataProducerConsumerList().indexOf(dataProducerConsumer);
-				if (listIndex < KIEM.getDataProducerConsumerList().size()-1) {
-					KIEM.getDataProducerConsumerList().remove(listIndex);
-					KIEM.getDataProducerConsumerList().add(listIndex+1, dataProducerConsumer);
+				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
+				int listIndex = KIEM.getDataComponentList().indexOf(dataComponent);
+				if (listIndex < KIEM.getDataComponentList().size()-1) {
+					KIEM.getDataComponentList().remove(listIndex);
+					KIEM.getDataComponentList().add(listIndex+1, dataComponent);
 					viewer.refresh();
 					refreshEnabledDisabledTextColors();
 				}
@@ -461,7 +446,7 @@ public class KiemView extends ViewPart {
 		if (actionStep != null) return actionStep;
 		actionStep = new Action() {
 			public void run() {
-				if (initDataProducerConsumer()) {
+				if (initDataComponent()) {
 					KIEM.execution.stepExecution();
 				}
 				updateEnabled();
@@ -478,7 +463,7 @@ public class KiemView extends ViewPart {
 		if (actionRun != null) return actionRun;
 		actionRun = new Action() {
 			public void run() {
-				if (initDataProducerConsumer()) {
+				if (initDataComponent()) {
 					KIEM.execution.runExecution();
 				}
 				updateEnabled();
@@ -495,7 +480,7 @@ public class KiemView extends ViewPart {
 		if (actionPause != null) return actionPause;
 		actionPause = new Action() {
 			public void run() {
-				if (initDataProducerConsumer()) {
+				if (initDataComponent()) {
 					KIEM.execution.pauseExecution();
 				}
 				updateEnabled();
@@ -538,9 +523,9 @@ public class KiemView extends ViewPart {
 						//only if execution is stopped
 						if (KIEM.execution == null) {
 							//showMessage("Double-click detected on "+obj.toString());
-							DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)obj;
+							DataComponent dataComponent = (DataComponent)obj;
 							//toggle enabledness
-							dataProducerConsumer.setEnabled(!dataProducerConsumer.isEnabled());
+							dataComponent.setEnabled(!dataComponent.isEnabled());
 							viewer.refresh();
 							refreshEnabledDisabledTextColors();
 							viewer.setSelection(null);

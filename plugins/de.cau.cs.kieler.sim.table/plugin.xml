@@ -17,18 +17,18 @@
       </view>
    </extension>
    <extension
-         point="de.cau.cs.kieler.sim.kiem.string.dataconsumer">
+         point="de.cau.cs.kieler.sim.kiem.string.datacomponent">
       <content
-            class="de.cau.cs.kieler.sim.table.DataConsumer"
-            id="de.cau.cs.kieler.sim.table.dataconsumer"
+            class="de.cau.cs.kieler.sim.table.DataProducer"
+            id="de.cau.cs.kieler.sim.table.dataproducer"
             name="Raw Table">
       </content>
    </extension>
    <extension
-         point="de.cau.cs.kieler.sim.kiem.string.dataproducer">
+         point="de.cau.cs.kieler.sim.kiem.string.datacomponent">
       <content
-            class="de.cau.cs.kieler.sim.table.DataProducer"
-            id="de.cau.cs.kieler.sim.table.dataproducer"
+            class="de.cau.cs.kieler.sim.table.DataConsumer"
+            id="de.cau.cs.kieler.sim.table.dataconsumer"
             name="Raw Table">
       </content>
    </extension>

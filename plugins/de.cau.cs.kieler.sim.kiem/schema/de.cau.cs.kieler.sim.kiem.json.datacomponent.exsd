@@ -3,7 +3,7 @@
 <schema targetNamespace="de.cau.cs.kieler.sim.kiem" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="de.cau.cs.kieler.sim.kiem" id="de.cau.cs.kieler.sim.kiem.string.dataconsumer" name="de.cau.cs.kieler.sim.kiem.string.dataconsumer"/>
+         <meta.schema plugin="de.cau.cs.kieler.sim.kiem" id="de.cau.cs.kieler.sim.kiem.json.datacomponent" name="de.cau.cs.kieler.sim.kiem.json.datacomponent"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -69,7 +69,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.sim.kiem.extension.JSONStringDataConsumer:de.cau.cs.kieler.sim.kiem.extension.JSONStringDataConsumerInterface"/>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent:de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent"/>
                </appInfo>
             </annotation>
          </attribute>

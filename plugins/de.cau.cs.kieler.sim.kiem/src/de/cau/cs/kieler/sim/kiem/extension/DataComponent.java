@@ -5,22 +5,19 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
-public abstract class DataProducerConsumer implements IExecutableExtension {
+public abstract class DataComponent implements IDataComponent,
+											   IExecutableExtension {
 	
 	private String name;
 	private String modelFile;
 	private boolean enabled;
-	private boolean producer;
-	private boolean consumer;
 	private boolean json;
 	KiemPlugin KIEM;                   //only contains access to execution
-									   //thread iff this DataProducerConsumer
+									   //thread iff this DataComponent
 									   //is a master
 	
-	public DataProducerConsumer() {
+	public DataComponent() {
 		super();
-		producer = false;
-		consumer = false;
 		enabled = true;
 		json = false;
 	}
@@ -41,20 +38,6 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 		this.enabled = enabled;
 	}
 	
-	public boolean isProducer() {
-		return producer;
-	}
-	protected void setProducer(boolean producer) {
-		this.producer = producer;
-	}
-
-	public boolean isConsumer() {
-		return consumer;
-	}
-	protected void setConsumer(boolean consumer) {
-		this.consumer = consumer;
-	}
-	
 	public boolean isJSON() {
 		return this.json;
 	}
@@ -62,8 +45,11 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 		this.json = json;
 	}
 	
-	
-	public String getModelFile() {
+	public boolean isProducerConsumer() {
+		return (this.isProducer() && this.isConsumer());
+	}
+		
+	protected String getModelFile() {
 		return modelFile;
 	}
 	public void setModelFile(String modelFile) {
@@ -76,12 +62,11 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 	public boolean needModelFile() {
 		return false;
 	}
-	
-	
+		
 	//-------------------------------------------------------------------------
-	//           at most ONE DataProducerConsumer can be a Master! 
+	//           at most ONE DataComponent can be a Master! 
 	//-------------------------------------------------------------------------
-	//override isMaster, if this DataProducerConsumer is a master
+	//override isMaster, if this DataComponent is a master
 	//should return false to true
 	//then
 	// 1. ExecutionManager ensures that no other

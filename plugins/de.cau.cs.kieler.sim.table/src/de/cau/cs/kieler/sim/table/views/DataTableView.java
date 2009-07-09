@@ -25,7 +25,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
+import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.table.DataTableViewer;
 import de.cau.cs.kieler.sim.table.TableData;
 import de.cau.cs.kieler.sim.table.TableDataContentProvider;

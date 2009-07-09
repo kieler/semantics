@@ -13,16 +13,14 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.core.runtime.IAdaptable;
+//import org.eclipse.jface.viewers.ISelection;
+//import org.eclipse.jface.viewers.IStructuredSelection;
+//import org.eclipse.core.runtime.IAdaptable;
 
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataConsumer;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataProducer;
-import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataProducer;
-import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataConsumer;
-import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
+import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -39,8 +37,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 	private static KiemPlugin plugin;
 	
 	//List of available dataProducers and dataConsumers
-	List<DataProducerConsumer> dataProducerConsumerList;
-	DataProducerConsumer masterDataProducerConsumer;
+	List<DataComponent> dataComponentList;
+	DataComponent masterDataComponent;
 	
 	//Contains the current model to execute or null initially/after stop
 	private String currentModelFile;
@@ -54,11 +52,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 	 * The constructor
 	 */
 	public KiemPlugin() {
-		dataProducerConsumerList = this.getDataProducerConsumerList();
+		dataComponentList = this.getDataComponentList();
 		currentModelFile = null;
 		execution = null;
 		delay = DEFAULT_DELAY;
-		masterDataProducerConsumer = null;
+		masterDataComponent = null;
 	}
 
 	/*
@@ -139,68 +137,48 @@ public class KiemPlugin extends AbstractUIPlugin {
 	}
 	
 	
-	public List<DataProducerConsumer> getDataProducerConsumerList(){
-		if(dataProducerConsumerList != null)
-			return dataProducerConsumerList;
+	public List<DataComponent> getDataComponentList(){
+		if(dataComponentList != null)
+			return dataComponentList;
 				
 		// get the available interfaces and initialize them
-		IConfigurationElement[] jsonproducerElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDjsonproducer);
-		IConfigurationElement[] jsonconsumerElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDjsonconsumer);
-		IConfigurationElement[] stringproducerElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDstringproducer);
-		IConfigurationElement[] stringconsumerElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDstringconsumer);
-		dataProducerConsumerList = new ArrayList<DataProducerConsumer>
-											    (jsonproducerElements.length
-											    +stringproducerElements.length
-											    +jsonconsumerElements.length
-											    +stringconsumerElements.length);
-		System.out.println("Found Controllers for "+Messages.extensionPointIDjsonproducer+": "+jsonproducerElements.length);
-		for (int i = 0; i < jsonproducerElements.length; i++) {
+		IConfigurationElement[] jsonComponents = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDjsoncomponent);
+		IConfigurationElement[] stringComponents = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDstringcomponent);
+		dataComponentList = new ArrayList<DataComponent>
+											    (jsonComponents.length
+											    +stringComponents.length);
+		System.out.println("Found Controllers for "+Messages.extensionPointIDjsoncomponent+": "+jsonComponents.length);
+		for (int i = 0; i < jsonComponents.length; i++) {
 			try{
-				JSONObjectDataProducer dataProducer = (JSONObjectDataProducer)jsonproducerElements[i].createExecutableExtension("class");
-				dataProducerConsumerList.add(dataProducer);
-				System.out.println(dataProducer.getName());
+				JSONObjectDataComponent dataComponent = (JSONObjectDataComponent) jsonComponents[i].createExecutableExtension("class");
+				dataComponentList.add(dataComponent);
+				System.out.println(dataComponent.getName());
 			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data producer interface plugin",e);} 
 		}
-		System.out.println("Found Controllers for "+Messages.extensionPointIDstringproducer+": "+stringproducerElements.length);
-		for (int i = 0; i < stringproducerElements.length; i++) {
+		System.out.println("Found Controllers for "+Messages.extensionPointIDstringcomponent+": "+stringComponents.length);
+		for (int i = 0; i < stringComponents.length; i++) {
 			try{
-				JSONStringDataProducer dataProducer = (JSONStringDataProducer)stringproducerElements[i].createExecutableExtension("class");
-				dataProducerConsumerList.add(dataProducer);
-				System.out.println(dataProducer.getName());
+				JSONStringDataComponent dataComponent = (JSONStringDataComponent)stringComponents[i].createExecutableExtension("class");
+				dataComponentList.add(dataComponent);
+				System.out.println(dataComponent.getName());
 			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data producer interface plugin",e);} 
-		}
-		System.out.println("Found Controllers for "+Messages.extensionPointIDjsonconsumer+": "+jsonconsumerElements.length);
-		for (int i = 0; i < jsonconsumerElements.length; i++) {
-			try{
-				JSONObjectDataConsumer dataConsumer = (JSONObjectDataConsumer)jsonconsumerElements[i].createExecutableExtension("class");
-				dataProducerConsumerList.add(dataConsumer);
-				System.out.println(dataConsumer.getName());
-			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data consumer interface plugin",e);} 
-		}
-		System.out.println("Found Controllers for "+Messages.extensionPointIDstringconsumer+": "+stringconsumerElements.length);
-		for (int i = 0; i < stringconsumerElements.length; i++) {
-			try{
-				JSONStringDataConsumer dataConsumer = (JSONStringDataConsumer)stringconsumerElements[i].createExecutableExtension("class");
-				dataProducerConsumerList.add(dataConsumer);
-				System.out.println(dataConsumer.getName());
-			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data consumer interface plugin",e);} 
 		}
 		
-		return dataProducerConsumerList;
+		return dataComponentList;
 	}
 	
 	void checkForSingleMaster() {
-		this.masterDataProducerConsumer = null;
-		for (int c = 0; c < this.dataProducerConsumerList.size(); c++) {
-			DataProducerConsumer dataProducerConsumer = 
-				dataProducerConsumerList.get(c);
-			if (dataProducerConsumer.isMaster()) {
-				if (this.masterDataProducerConsumer == null) {
-					this.masterDataProducerConsumer = dataProducerConsumer;
+		this.masterDataComponent = null;
+		for (int c = 0; c < this.dataComponentList.size(); c++) {
+			DataComponent dataComponent = 
+				dataComponentList.get(c);
+			if (dataComponent.isMaster()) {
+				if (this.masterDataComponent == null) {
+					this.masterDataComponent = dataComponent;
 				} else {
-					Tools.showDialog("At most one master is allowed\n '"+dataProducerConsumer.getName()+"' will be disabled.");
+					Tools.showDialog("At most one master is allowed\n '"+dataComponent.getName()+"' will be disabled.");
 					//disable it//
-					dataProducerConsumer.setEnabled(false);
+					dataComponent.setEnabled(false);
 				}
 			}
 		}

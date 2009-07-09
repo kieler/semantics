@@ -5,7 +5,7 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
+import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 
 public class KiemLabelProvider implements ITableLabelProvider {
 
@@ -22,6 +22,20 @@ public class KiemLabelProvider implements ITableLabelProvider {
 	private static final Image CONSUMER_DISABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/consumerDisabled.png").createImage();
+	private static final Image PRODUCERCONSUMER_ENABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+					"icons/producerConsumer.png").createImage();
+	private static final Image PRODUCERCONSUMER_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+					"icons/producerConsumerDisabled.png").createImage();
+	private static final Image INITCOMPONENT_ENABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+					"icons/initComponent.png").createImage();
+private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+					"icons/initComponentDisabled.png").createImage();
+
+	
 	private static final Image CHECKED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/checked.png").createImage();
@@ -34,9 +48,9 @@ public class KiemLabelProvider implements ITableLabelProvider {
 
 
 	public Image getColumnImage(Object element, int columnIndex) {
-		DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)element;
+		DataComponent dataComponent = (DataComponent)element;
 		if (columnIndex == 0) {
-			if (dataProducerConsumer.isEnabled()) {
+			if (dataComponent.isEnabled()) {
 				//enabled
 				return CHECKED;
 			}
@@ -46,9 +60,20 @@ public class KiemLabelProvider implements ITableLabelProvider {
 			}
 		}
 		else if (columnIndex == 1) {
-			if (dataProducerConsumer.isProducer()) {
+			if (dataComponent.isProducerConsumer()) {
 				//producer
-				if (dataProducerConsumer.isEnabled()) {
+				if (dataComponent.isEnabled()) {
+					//enabled
+					return PRODUCERCONSUMER_ENABLED;
+				}
+				else {
+					//disabled
+					return PRODUCERCONSUMER_DISABLED;
+				}
+			}
+			else if (dataComponent.isProducer()) {
+				//producer
+				if (dataComponent.isEnabled()) {
 					//enabled
 					return PRODUCER_ENABLED;
 				}
@@ -57,9 +82,9 @@ public class KiemLabelProvider implements ITableLabelProvider {
 					return PRODUCER_DISABLED;
 				}
 			}
-			else {
+			else if (dataComponent.isConsumer()) {
 				//consumer
-				if (dataProducerConsumer.isEnabled()) {
+				if (dataComponent.isEnabled()) {
 					//enabled
 					return CONSUMER_ENABLED;
 				}
@@ -68,9 +93,20 @@ public class KiemLabelProvider implements ITableLabelProvider {
 					return CONSUMER_DISABLED;
 				}
 			}
+			else {
+				//consumer
+				if (dataComponent.isEnabled()) {
+					//enabled
+					return INITCOMPONENT_ENABLED;
+				}
+				else {
+					//disabled
+					return INITCOMPONENT_DISABLED;
+				}
+			}
 		}
 		else if (columnIndex == 3) {
-			if (dataProducerConsumer.isJSON()) {
+			if (dataComponent.isJSON()) {
 				//enabled
 				return CHECKEDPLAIN;
 			}
@@ -80,7 +116,7 @@ public class KiemLabelProvider implements ITableLabelProvider {
 			}
 		}
 		else if (columnIndex == 4) {
-			if (dataProducerConsumer.isMaster()) {
+			if (dataComponent.isMaster()) {
 				//enabled
 				return CHECKEDPLAIN;
 			}
@@ -90,7 +126,7 @@ public class KiemLabelProvider implements ITableLabelProvider {
 			}
 		}
 		else if (columnIndex == 5) {
-			if (dataProducerConsumer.needModelFile()) {
+			if (dataComponent.needModelFile()) {
 				//enabled
 				return CHECKEDPLAIN;
 			}
@@ -103,16 +139,22 @@ public class KiemLabelProvider implements ITableLabelProvider {
 	}
 
 	public String getColumnText(Object element, int columnIndex) {
-		DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)element;
+		DataComponent dataComponent = (DataComponent)element;
 		switch (columnIndex) {
 		case 0 :  // ENABLED_COLUMN
 			return ""; 
 		case 1 : // NAME_COLUMN
-			return dataProducerConsumer.getName();
+			return dataComponent.getName();
 		case 2 : // TYPE_COLUMN
-			String type = "Producer";
-			if (dataProducerConsumer.isConsumer())
+			String type = "";
+			if (dataComponent.isProducerConsumer())
+				type = "Producer/Consumer";
+			else if (dataComponent.isProducer())
+				type = "Producer";
+			else if (dataComponent.isConsumer())
 				type = "Consumer";
+			else
+				type = "Init";
 			return type;
 		case 3 : // JSON_COLUMN 
 			return "";

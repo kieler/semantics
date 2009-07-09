@@ -8,7 +8,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 
-import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
+import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 
 public class KiemDataEditing extends EditingSupport {
 	private CellEditor editor;
@@ -45,11 +45,11 @@ public class KiemDataEditing extends EditingSupport {
 
 	@Override
 	protected Object getValue(Object element) {
-		DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)element;
+		DataComponent dataComponent = (DataComponent)element;
 
 		switch (this.columnIndex) {
 		case 0:
-			return dataProducerConsumer.isEnabled();
+			return dataComponent.isEnabled();
 		default:
 			break;
 		}
@@ -58,11 +58,11 @@ public class KiemDataEditing extends EditingSupport {
 
 	@Override
 	protected void setValue(Object element, Object value) {
-		DataProducerConsumer dataProducerConsumer = (DataProducerConsumer)element;
+		DataComponent dataComponent = (DataComponent)element;
 
 		switch (this.columnIndex) {
 		case 0:
-			dataProducerConsumer.setEnabled((Boolean)value);
+			dataComponent.setEnabled((Boolean)value);
 			break;
 		default:
 			break;

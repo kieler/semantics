@@ -10,8 +10,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataProducer;
-
 
 public class AbortErrorDialog extends ErrorDialog implements SelectionListener{
 

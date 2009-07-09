@@ -1,25 +1,38 @@
 package de.cau.cs.kieler.sim.table;
 
-import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataProducer;
-import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataProducerInterface;
+import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
-public class DataProducer extends JSONStringDataProducer implements
-		JSONStringDataProducerInterface {
+public class DataProducer extends JSONStringDataComponent implements
+		IJSONStringDataComponent {
 
 	public DataProducer() {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void initialize() {
+	public String step(String JSONString) {
 		// TODO Auto-generated method stub
-		System.out.println("Raw Table DataProducer initialize");
+		return null;
 	}
 
 	@Override
-	public String step() {
+	public void initialize() {
 		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Raw Table Producer initialize");
+	}
+
+	@Override
+	public boolean isConsumer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isProducer() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

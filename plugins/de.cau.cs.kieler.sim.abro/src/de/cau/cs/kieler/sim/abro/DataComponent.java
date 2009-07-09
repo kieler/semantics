@@ -1,18 +1,18 @@
-package de.cau.cs.kieler.sim.table;
+package de.cau.cs.kieler.sim.abro;
 
-import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
-public class DataConsumer extends JSONStringDataComponent implements
-		IJSONStringDataComponent {
+public class DataComponent extends JSONObjectDataComponent implements
+		IJSONObjectDataComponent {
 
-	public DataConsumer() {
+	public DataComponent() {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public String step(String JSONString) {
+	public JSONObject step(JSONObject JSONobject) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -20,13 +20,13 @@ public class DataConsumer extends JSONStringDataComponent implements
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
-		System.out.println("Raw Table Consumer initialize");
+		System.out.println("ABRO DataConsumerProducer initialize");
 	}
 
 	@Override
 	public boolean isConsumer() {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
 	@Override
