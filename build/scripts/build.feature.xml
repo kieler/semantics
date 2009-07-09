@@ -42,7 +42,7 @@
 		<!--available file="${pluginPath}" property="jarDa" value="gefunden"/ -->
 		<!-- property name="jarDa" value="nicht gefunden"/ -->
 		<!-- echo message="core....jar ${jarDa}"/ -->
-		<antcall target="copy"/>
+		<!-- antcall target="copy"/ -->
 		
 	  <mkdir dir="${buildDirectory}/update-site/features" />
 	  <mkdir dir="${buildDirectory}/update-site/plugins" />
