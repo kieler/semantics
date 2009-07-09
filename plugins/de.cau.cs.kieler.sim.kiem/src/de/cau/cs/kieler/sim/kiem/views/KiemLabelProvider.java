@@ -105,17 +105,17 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 				}
 			}
 		}
+//		else if (columnIndex == 3) {
+//			if (dataComponent.isJSON()) {
+//				//enabled
+//				return CHECKEDPLAIN;
+//			}
+//			else {
+//				//disabled
+//				return null;
+//			}
+//		}
 		else if (columnIndex == 3) {
-			if (dataComponent.isJSON()) {
-				//enabled
-				return CHECKEDPLAIN;
-			}
-			else {
-				//disabled
-				return null;
-			}
-		}
-		else if (columnIndex == 4) {
 			if (dataComponent.isMaster()) {
 				//enabled
 				return CHECKEDPLAIN;
@@ -125,7 +125,7 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 				return null;
 			}
 		}
-		else if (columnIndex == 5) {
+		else if (columnIndex == 4) {
 			if (dataComponent.needModelFile()) {
 				//enabled
 				return CHECKEDPLAIN;
@@ -156,11 +156,11 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 			else
 				type = "Initializer";
 			return type;
-		case 3 : // JSON_COLUMN 
+		//case 3 : // JSON_COLUMN 
+		//	return "";
+		case 3 : // MASTER_COLUMN
 			return "";
-		case 4 : // MASTER_COLUMN
-			return "";
-		case 5 : // NEEDMODEL_COLUMN
+		case 4 : // NEEDMODEL_COLUMN
 			return "";
 		default :
 			throw new RuntimeException("columnIndex out of bounds (6)");

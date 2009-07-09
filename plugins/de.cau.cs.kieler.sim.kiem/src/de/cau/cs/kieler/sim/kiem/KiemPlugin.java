@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -124,6 +125,13 @@ public class KiemPlugin extends AbstractUIPlugin {
 		currentModelFile = null;
 	}
 	
+	public DataComponent getMaster() {
+		return masterDataComponent;
+	}
+	public void setMaster(DataComponent masterDataComponent) {
+		this.masterDataComponent = masterDataComponent;
+	}
+	
 	public IResource extractSelection(ISelection sel) {
 	      if (!(sel instanceof IStructuredSelection))
 	         return null;
@@ -155,7 +163,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 				JSONObjectDataComponent dataComponent = (JSONObjectDataComponent) jsonComponents[i].createExecutableExtension("class");
 				dataComponentList.add(dataComponent);
 				System.out.println(dataComponent.getName());
-			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data producer interface plugin",e);} 
+			}catch(Exception e){
+				throw new RuntimeException("Error at loading a KIEM data component plugin");
+			} 
 		}
 		System.out.println("Found Controllers for "+Messages.extensionPointIDstringcomponent+": "+stringComponents.length);
 		for (int i = 0; i < stringComponents.length; i++) {
@@ -163,28 +173,13 @@ public class KiemPlugin extends AbstractUIPlugin {
 				JSONStringDataComponent dataComponent = (JSONStringDataComponent)stringComponents[i].createExecutableExtension("class");
 				dataComponentList.add(dataComponent);
 				System.out.println(dataComponent.getName());
-			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data producer interface plugin",e);} 
+			}catch(Exception e){
+				throw new RuntimeException("Error at loading a KIEM data component plugin");
+			} 
 		}
 		
 		return dataComponentList;
 	}
 	
-	void checkForSingleMaster() {
-		this.masterDataComponent = null;
-		for (int c = 0; c < this.dataComponentList.size(); c++) {
-			DataComponent dataComponent = 
-				dataComponentList.get(c);
-			if (dataComponent.isMaster()) {
-				if (this.masterDataComponent == null) {
-					this.masterDataComponent = dataComponent;
-				} else {
-					Tools.showDialog("At most one master is allowed\n '"+dataComponent.getName()+"' will be disabled.");
-					//disable it//
-					dataComponent.setEnabled(false);
-				}
-			}
-		}
-		
-	}
 	
 }

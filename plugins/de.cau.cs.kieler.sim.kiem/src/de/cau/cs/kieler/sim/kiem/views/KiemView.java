@@ -97,24 +97,25 @@ public class KiemView extends ViewPart {
 		hookContextMenu();
 		hookSelectionChangedAction();
 		hookDoubleClickAction();
-		updateEnabled();
+		checkForSingleEnabledMaster(true);
+		updateEnabled(true);
 	}
 	
 	// This will create the columns for the table
 	private void createColumns(TableViewer viewer) {
 		String[] titles = { "", 
-							"Component", 
+							"Component Name", 
 							"Type", 
-							"JSON", 
+							//"JSON", 
 							"Master", 
 							"Model" };
 		String[] toolTip = { "Enabled/Disabled", 
-							 "Name of Producer/Consumer", 
+							 "Name of Data Producer/Consumer", 
 				 			 "Producer or Consumer", 
-				 			 "JSONObject (JSONString otherwise)", 
+				 			 //"JSONObject (JSONString otherwise)", 
 				 			 "Is a Master that leads execution", 
 				 			 "Needs selected model file" };
-		int[] bounds = { 22, 160, 110, 45, 45, 45};
+		int[] bounds = { 22, 180, 110, 45, 45};
 
 		for (int i = 0; i < titles.length; i++) {
 			TableViewerColumn column = new TableViewerColumn(viewer, SWT.NONE);
@@ -193,13 +194,27 @@ public class KiemView extends ViewPart {
 	
   //---------------------------------------------------------------------------
 	
-	private void showMessage(String message) {
+	public void showMessage(String message) {
 		MessageDialog.openInformation(
 			viewer.getControl().getShell(),
 			"KIELER Execution Manager",
 			message);
 	}
 
+	public void showWarning(String message) {
+		MessageDialog.openWarning(
+			viewer.getControl().getShell(),
+			"KIELER Execution Manager",
+			message);
+	}
+	
+	public void showError(String message) {
+		MessageDialog.openError(
+			viewer.getControl().getShell(),
+			"KIELER Execution Manager",
+			message);
+	}
+	
   //---------------------------------------------------------------------------	
   //---------------------------------------------------------------------------
 	
@@ -289,47 +304,70 @@ public class KiemView extends ViewPart {
 		getDelayTextField().setEnabled(enabled);
 	}
 	
-	
-	public void updateEnabled() {
-		if (allDisabled) return;
-		if (KIEM.execution == null) {
-			//execution is stopped
-			if (((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement() == null) {
-				//no object selected
+
+	public void updateEnabledEnabledDisabledUpDown() {
+		if (KIEM.execution != null &&KIEM.execution.isRunning()) {
+			//execution is running
+			getActionEnable().setEnabled(false);
+			getActionDisable().setEnabled(false);
+			getActionUp().setEnabled(false);
+			getActionDown().setEnabled(false);
+			return;
+		}
+		if (((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement() == null) {
+			//no object selected
+			getActionEnable().setEnabled(false);
+			getActionDisable().setEnabled(false);
+			getActionUp().setEnabled(false);
+			getActionDown().setEnabled(false);
+		}
+		else {
+			DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
+			if (dataComponent.isEnabled()) {
+				//currently enabled
 				getActionEnable().setEnabled(false);
+				getActionDisable().setEnabled(true);
+			}
+			else {
+				//currently disabled
+				getActionEnable().setEnabled(true);
 				getActionDisable().setEnabled(false);
+			}
+			int listIndex = KIEM.getDataComponentList().indexOf(dataComponent);
+			if (listIndex <= 0) {
+				//currently top
 				getActionUp().setEnabled(false);
+				getActionDown().setEnabled(true);
+			}
+			else if (listIndex >= KIEM.getDataComponentList().size()-1) {
+				//currently bottom
+				getActionUp().setEnabled(true);
 				getActionDown().setEnabled(false);
 			}
 			else {
-				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
-				if (dataComponent.isEnabled()) {
-					//currently enabled
-					getActionEnable().setEnabled(false);
-					getActionDisable().setEnabled(true);
-				}
-				else {
-					//currently disabled
-					getActionEnable().setEnabled(true);
-					getActionDisable().setEnabled(false);
-				}
-				int listIndex = KIEM.getDataComponentList().indexOf(dataComponent);
-				if (listIndex <= 0) {
-					//currently top
-					getActionUp().setEnabled(false);
-					getActionDown().setEnabled(true);
-				}
-				else if (listIndex >= KIEM.getDataComponentList().size()-1) {
-					//currently bottom
-					getActionUp().setEnabled(true);
-					getActionDown().setEnabled(false);
-				}
-				else {
-					//currently in the middel
-					getActionUp().setEnabled(true);
-					getActionDown().setEnabled(true);
-				}
+				//currently in the middel
+				getActionUp().setEnabled(true);
+				getActionDown().setEnabled(true);
 			}
+		}
+	}
+	
+	public void updateEnabled() {
+		updateEnabled(false);
+	}
+	public void updateEnabled(boolean silent) {
+		updateEnabledEnabledDisabledUpDown();
+		if (KIEM.getMaster() != null) {
+			getActionStep().setEnabled(false);
+			getActionRun().setEnabled(false);
+			getActionPause().setEnabled(false);
+			getActionStop().setEnabled(false);
+			getDelayTextField().setEnabled(false);
+			return;
+		}
+		if (allDisabled) return;
+		if (KIEM.execution == null) {
+			//execution is stopped
 			getActionStep().setEnabled(true);
 			getActionRun().setEnabled(true);
 			getActionPause().setEnabled(true);
@@ -338,10 +376,6 @@ public class KiemView extends ViewPart {
 		}
 		else if (KIEM.execution.isRunning()) {
 			//execution is running
-			getActionEnable().setEnabled(false);
-			getActionDisable().setEnabled(false);
-			getActionUp().setEnabled(false);
-			getActionDown().setEnabled(false);
 			getActionStep().setEnabled(false);
 			getActionRun().setEnabled(false);
 			getActionPause().setEnabled(true);
@@ -350,10 +384,6 @@ public class KiemView extends ViewPart {
 		}
 		else {
 			//execution is paused
-			getActionEnable().setEnabled(false);
-			getActionDisable().setEnabled(false);
-			getActionUp().setEnabled(false);
-			getActionDown().setEnabled(false);
 			getActionStep().setEnabled(true);
 			getActionRun().setEnabled(true);
 			getActionPause().setEnabled(false);
@@ -370,6 +400,7 @@ public class KiemView extends ViewPart {
 			public void run() {
 				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				dataComponent.setEnabled(true);
+				checkForSingleEnabledMaster(false,dataComponent);
 				viewer.refresh();
 				refreshEnabledDisabledTextColors();
 				viewer.setSelection(null);
@@ -526,6 +557,8 @@ public class KiemView extends ViewPart {
 							DataComponent dataComponent = (DataComponent)obj;
 							//toggle enabledness
 							dataComponent.setEnabled(!dataComponent.isEnabled());
+							if (dataComponent.isEnabled())
+								checkForSingleEnabledMaster(false,dataComponent);
 							viewer.refresh();
 							refreshEnabledDisabledTextColors();
 							viewer.setSelection(null);
@@ -552,7 +585,43 @@ public class KiemView extends ViewPart {
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
+
+  //---------------------------------------------------------------------------	
 	
+	public void checkForSingleEnabledMaster(boolean silent) {
+		checkForSingleEnabledMaster(silent,null); 
+	}
+	public void checkForSingleEnabledMaster(boolean silent,
+											DataComponent dataComponent) {
+		KIEM.setMaster(null);
+		if (dataComponent != null &&
+			dataComponent.isMaster() &&
+			dataComponent.isEnabled()) {
+			//preset NEW selection
+			KIEM.setMaster(dataComponent); 
+		}
+		
+		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
+			DataComponent dataComponentTemp = 
+				KIEM.getDataComponentList().get(c);
+			if (dataComponentTemp.isMaster() &&
+				dataComponentTemp.isEnabled() &&
+				dataComponentTemp != KIEM.getMaster()) {
+				if (KIEM.getMaster() == null) {
+					KIEM.setMaster(dataComponentTemp);
+				} else {
+					if (!silent)
+						showWarning("At most one master data component is allowed!\n'"+dataComponentTemp.getName()+"' will be disabled.");
+					//disable it//
+					dataComponentTemp.setEnabled(false);
+					this.viewer.refresh();
+					this.refreshEnabledDisabledTextColors();
+				}
+			}
+		}
+		
+	}
 	
+  //---------------------------------------------------------------------------	
 
 }

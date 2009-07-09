@@ -99,22 +99,33 @@ public class DataTableView extends ViewPart {
 	
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
-		menuMgr.add( getActionNew());
-		menuMgr.add( getActionDelete());
 		menuMgr.setRemoveAllWhenShown(true);
+		menuMgr.addMenuListener(new IMenuListener() {
+			public void menuAboutToShow(IMenuManager manager) {
+				buildContextMenu(manager);
+			}
+		});
+		Menu menu = menuMgr.createContextMenu(viewer.getControl());
+		viewer.getControl().setMenu(menu);
+		getSite().registerContextMenu(menuMgr, viewer);
+	}
+
+	
+	private void buildContextMenu(IMenuManager manager) {
+		manager.add(getActionAdd());
+		manager.add(getActionDelete());
+		// Other plug-ins can contribute there actions here
+		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
 	
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
-		IMenuManager manager0 = bars.getMenuManager();
-		manager0.add(getActionNew());
-		manager0.add(getActionDelete());
 		IToolBarManager manager1 = bars.getToolBarManager();
-		manager1.add(getActionNew());
+		manager1.add(getActionAdd());
 		manager1.add(getActionDelete());
 	}
 	
-	private Action getActionNew() {
+	private Action getActionAdd() {
 		if (actionNew != null) return actionNew;
 		actionNew = new Action() {
 			public void run() {
@@ -125,7 +136,7 @@ public class DataTableView extends ViewPart {
 				updateEnabled();
 			}
 		};
-		actionNew.setText("Add");
+		actionNew.setText("Add Entry");
 		actionNew.setToolTipText("Add Entry");
 		actionNew.setImageDescriptor(TablePlugin.getImageDescriptor("icons/add.png"));
 		return actionNew;
@@ -144,7 +155,7 @@ public class DataTableView extends ViewPart {
 				updateEnabled();			
 			}
 		};
-		actionDelete.setText("Delete");
+		actionDelete.setText("Delete Entry");
 		actionDelete.setToolTipText("Delete Entry");
 		actionDelete.setImageDescriptor(TablePlugin.getImageDescriptor("icons/delete.png"));
 		return actionDelete;

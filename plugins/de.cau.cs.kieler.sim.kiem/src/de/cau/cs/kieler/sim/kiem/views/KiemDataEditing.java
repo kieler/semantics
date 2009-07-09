@@ -71,7 +71,7 @@ public class KiemDataEditing extends EditingSupport {
 		getViewer().update(element, null);
 		parent.refreshEnabledDisabledTextColors();
 		getViewer().setSelection(null);
-		parent.updateEnabled();		
+		parent.checkForSingleEnabledMaster(false,dataComponent);
 	}
 
 }

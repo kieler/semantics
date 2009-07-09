@@ -34,5 +34,10 @@ public class DataProducer extends JSONStringDataComponent implements
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	public boolean isMaster() {
+		return true;
+	}
 
+	
 }
