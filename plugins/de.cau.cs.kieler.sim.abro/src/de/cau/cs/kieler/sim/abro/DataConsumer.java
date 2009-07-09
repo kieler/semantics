@@ -12,7 +12,7 @@ public class DataConsumer extends JSONObjectDataConsumer implements
 	}
 
 	@Override
-	public void executionInitialize() {
+	public void initialize() {
 		// TODO Auto-generated method stub
 		System.out.println("ABRO DataConsumer initialze");
 	}

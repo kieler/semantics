@@ -11,19 +11,19 @@ public class DataProducer extends JSONStringDataProducer implements
 	}
 
 	@Override
-	public void executionInitialize() {
+	public void initialize() {
 		// TODO Auto-generated method stub
 		System.out.println("Raw Table DataProducer initialize");
 	}
 
 	@Override
-	public void executionReset() {
+	public void reset() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public String executionStep() {
+	public String step() {
 		// TODO Auto-generated method stub
 		return null;
 	}

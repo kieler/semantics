@@ -12,20 +12,20 @@ public class DataProducer extends JSONObjectDataProducer implements
 	}
 
 	@Override
-	public void executionInitialize() {
+	public void initialize() {
 		// TODO Auto-generated method stub
 		try{Thread.sleep(2000);}catch(Exception e){}
 		System.out.println("ABRO DataProducer initialze");
 	}
 
 	@Override
-	public void executionReset() {
+	public void reset() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public JSONObject executionStep() {
+	public JSONObject step() {
 		// TODO Auto-generated method stub
 		return null;
 	}

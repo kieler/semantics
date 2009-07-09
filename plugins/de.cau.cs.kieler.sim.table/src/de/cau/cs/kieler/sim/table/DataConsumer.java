@@ -11,7 +11,7 @@ public class DataConsumer extends JSONStringDataConsumer implements
 	}
 
 	@Override
-	public void executionInitialize() {
+	public void initialize() {
 		// TODO Auto-generated method stub
 		System.out.println("Raw Table DataConsomer initialize");
 	}
