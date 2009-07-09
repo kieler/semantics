@@ -18,8 +18,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.core.runtime.IAdaptable;
 
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
-import de.cau.cs.kieler.sim.kiem.extension.DataProducer;
-import de.cau.cs.kieler.sim.kiem.extension.DataConsumer;
+import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataProducer;
+import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataConsumer;
 import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
 
 /**
@@ -148,7 +148,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 		System.out.println("Found Controllers for "+Messages.extensionPointIDproducer+": "+producerElements.length);
 		for (int i = 0; i < producerElements.length; i++) {
 			try{
-				DataProducer dataProducer = (DataProducer)producerElements[i].createExecutableExtension("class");
+				JSONStringDataProducer dataProducer = (JSONStringDataProducer)producerElements[i].createExecutableExtension("class");
 				dataProducerConsumerList.add(dataProducer);
 				System.out.println(dataProducer.getName());
 			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data producer interface plugin",e);} 
@@ -156,7 +156,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 		System.out.println("Found Controllers for "+Messages.extensionPointIDconsumer+": "+consumerElements.length);
 		for (int i = 0; i < consumerElements.length; i++) {
 			try{
-				DataConsumer dataConsumer = (DataConsumer)consumerElements[i].createExecutableExtension("class");
+				JSONStringDataConsumer dataConsumer = (JSONStringDataConsumer)consumerElements[i].createExecutableExtension("class");
 				dataProducerConsumerList.add(dataConsumer);
 				System.out.println(dataConsumer.getName());
 			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data consumer interface plugin",e);} 

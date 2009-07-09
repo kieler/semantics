@@ -250,25 +250,25 @@ public class KiemView extends ViewPart {
 
   //---------------------------------------------------------------------------	
 	
-	private DataProducer getDataProducer(String DataProducerName) {
+	private JSONStringDataProducer getDataProducer(String DataProducerName) {
 		for (int c = 0; c < KIEM.getDataProducerConsumerList().size(); c++) {
 			Object dataProducerConsumer = KIEM.getDataProducerConsumerList().get(c);
 			if (dataProducerConsumer.getClass().getName().equals("de.cau.cs.kieler.sim.abro.DataProducer")) {
-				String vglSelection = ((DataProducer)dataProducerConsumer).getName();
+				String vglSelection = ((JSONStringDataProducer)dataProducerConsumer).getName();
 			if (vglSelection.equals(DataProducerName))  
-				return (DataProducer)dataProducerConsumer;
+				return (JSONStringDataProducer)dataProducerConsumer;
 			}
 		}
 		return null;
 	}
 
-	private DataConsumer getDataConsumer(String DataConsumerName) {
+	private JSONStringDataConsumer getDataConsumer(String DataConsumerName) {
 		for (int c = 0; c < KIEM.getDataProducerConsumerList().size(); c++) {
 			Object dataProducerConsumer = KIEM.getDataProducerConsumerList().get(c);
 			if (dataProducerConsumer.getClass().getName().equals("de.cau.cs.kieler.sim.abro.DataConsumer")) {
-				String vglSelection = ((DataConsumer)dataProducerConsumer).getName();
+				String vglSelection = ((JSONStringDataConsumer)dataProducerConsumer).getName();
 			if (vglSelection.equals(DataConsumerName))  
-				return (DataConsumer)dataProducerConsumer;
+				return (JSONStringDataConsumer)dataProducerConsumer;
 			}
 		}
 		return null;
@@ -331,10 +331,10 @@ public class KiemView extends ViewPart {
 			dataProducerConsumer.setModelFile(KIEM.getCurrentModelFile());
 			if (dataProducerConsumer.isEnabled()) {
 				if (dataProducerConsumer.isProducer()) {
-					((DataProducer)dataProducerConsumer).ExecutionInitialize();
+					((JSONStringDataProducer)dataProducerConsumer).ExecutionInitialize();
 				}
 				else if (dataProducerConsumer.isConsumer()) {
-					((DataConsumer)dataProducerConsumer).ExecutionInitialize();
+					((JSONStringDataConsumer)dataProducerConsumer).ExecutionInitialize();
 				}
 			}//end if enabled
 		}//next c

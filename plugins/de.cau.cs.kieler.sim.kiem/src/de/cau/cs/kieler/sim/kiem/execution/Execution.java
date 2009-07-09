@@ -2,9 +2,10 @@ package de.cau.cs.kieler.sim.kiem.execution;
 
 import java.util.List;
 
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
-import de.cau.cs.kieler.sim.kiem.extension.DataProducer;
-import de.cau.cs.kieler.sim.kiem.extension.DataConsumer;
+import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataProducer;
+import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataConsumer;
 
 public class Execution implements Runnable {
 	
@@ -14,7 +15,7 @@ public class Execution implements Runnable {
 	private int steps;
 	
 	public Execution(List<DataProducerConsumer> dataProducerConsumerList) {
-		this.delay = 500;
+		this.delay = KiemPlugin.DEFAULT_DELAY;
 		this.stop = false; 
 		this.steps = 0; // == paused
 		this.dataProducerConsumerList = dataProducerConsumerList;
@@ -66,7 +67,7 @@ public class Execution implements Runnable {
 						DataProducerConsumer dataProducerConsumer = 
 							dataProducerConsumerList.get(c);
 						if (dataProducerConsumer.isProducer()) {
-							((DataProducer)dataProducerConsumer).ExecutionStep();
+							((JSONStringDataProducer)dataProducerConsumer).ExecutionStep();
 						}
 						if (dataProducerConsumer.isConsumer()) {
 							//((DataConsumer)dataProducerConsumer).
