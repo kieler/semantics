@@ -21,7 +21,7 @@
 			<arg value="-application" />
 			<arg value="org.eclipse.ant.core.antRunner" />
 			<arg value="-buildfile" />
-			<arg value="build.feature.xml" />
+			<arg value="${scriptdir}/build.feature.xml" />
 			<arg value="main" />
 			<arg value="-Dbasedir=${jobdir}" />
 			<arg value="-Dscriptdir=${scriptdir}" />
