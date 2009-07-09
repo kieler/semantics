@@ -2,7 +2,7 @@
 
         <!-- basedir has to be set at ant call! -->
 
-	<property file="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/script/build.general.properties" />
+	<property file="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/scripts/build.general.properties" />
 	
 	<!-- target calls the eclipse antRunner processing THIS build file on target 'main' -->
 	<target name="call.antRunner">
