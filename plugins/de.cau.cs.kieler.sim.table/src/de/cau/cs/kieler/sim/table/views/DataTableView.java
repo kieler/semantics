@@ -55,16 +55,6 @@ public class DataTableView extends ViewPart {
 	public DataTableView() {
 	}
 
-	
-	public String[] getColumnNames() {
-		String[] columnNames = {"Present","Key","Value"};
-		return columnNames;
-	}
-	public java.util.List getColumnNamesList() {
-		return Arrays.asList(getColumnNames());
-	}
-	
-		
 	/**
 	 * This is a callback that will allow us
 	 * to create the viewer and initialize it.
