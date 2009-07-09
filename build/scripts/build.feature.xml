@@ -39,10 +39,10 @@
 		<echo message="ScriptDir ${scriptdir}"/>
 		<echo message="BuildDir ${buildDirectory}"/>
 		<echo message="PluginPath ${pluginPath}"/>
-		<available file="${pluginPath}" property="jarDa" value="gefunden"/>
+		<!--available file="${pluginPath}" property="jarDa" value="gefunden"/ -->
 		<!-- property name="jarDa" value="nicht gefunden"/ -->
-		<echo message="core....jar ${jarDa}"/>
-		<antcall target="unjar"/>
+		<!-- echo message="core....jar ${jarDa}"/ -->
+		<antcall target="copy"/>
 		
 	  <mkdir dir="${buildDirectory}/update-site/features" />
 	  <mkdir dir="${buildDirectory}/update-site/plugins" />
@@ -57,10 +57,10 @@
 	  </ant>
 	</target>
 	
-	<target name="unjar" if="jarDa">
-		<echo message="unjaring"/>
+	<target name="copy"> <!-- if="jarDa"-->
+		<echo message="copying"/>
 		<!-- unjar src="${pluginPath}" dest="${buildDirectory}/plugins/de.cau.cs.kieler.core_0.1.1/"/ -->
-		<copy todir="${buildDirectory}/plugins/">
+		<copy todir="${buildDirectory}/">
 			<fileset dir="${buildDirectory}/../../KIELER_core/workspace/update-site/plugins"/>
 		</copy>
 	</target>
