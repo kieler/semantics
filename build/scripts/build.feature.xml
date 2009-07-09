@@ -23,7 +23,7 @@
 			<arg value="build.feature.xml" />
 			<arg value="main" />
 			<arg value="-Dbasedir=${jobdirabs}" />
-			<arg value="-Djobdir=${jobdir}" />
+			<arg value="-Djobdirabs=${jobdirabs}" />
 			<arg value="-DtopLevelElementType=feature" />
 			<arg value="-DtopLevelElementId=${part}" />
 			<classpath>
@@ -33,6 +33,9 @@
 	</target>
 
 	<target name="main">
+		<echo message="BaseDir ${basedir}"/>
+		<echo message="JobDirAbs ${jobdirabs}"/>
+		<echo message="BuildDir ${buildDirectory}"/>
 	  <ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
 	       <target name="generate"/>
 	  </ant>
