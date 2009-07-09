@@ -37,7 +37,8 @@
 		<echo message="BaseDir ${basedir}"/>
 		<echo message="ScriptDir ${scriptdir}"/>
 		<echo message="BuildDir ${buildDirectory}"/>
-	  <mkdir dir="${buildDirectory}/update-site" />
+	  <mkdir dir="${buildDirectory}/update-site/features" />
+	  <mkdir dir="${buildDirectory}/update-site/plugins" />
 	  <ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
 	       <target name="generate"/>
 	  </ant>
