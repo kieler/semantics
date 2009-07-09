@@ -59,7 +59,7 @@
 	
 	<target name="unjar" if="jarDa">
 		<echo message="unjaring"/>
-		<unjar src="${pluginPath}" dest="${buildDirectory}/plugins"/>
+		<unjar src="${pluginPath}" dest="${buildDirectory}/plugins/de.cau.cs.kieler.core_0.1.1/"/>
 	</target>
 	
 <!--	      <mkdir dir="${buildDirectory}/update-site"/>
