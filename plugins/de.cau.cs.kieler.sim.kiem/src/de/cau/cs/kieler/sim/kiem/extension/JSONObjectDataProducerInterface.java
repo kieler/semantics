@@ -4,10 +4,10 @@ import de.cau.cs.kieler.sim.kiem.json.*;
 
 public interface JSONObjectDataProducerInterface  {
 	
-	public void executionInitialize();
+	public void initialize();
 
-	public JSONObject executionStep();
+	public JSONObject step();
 
-	public void executionReset();
+	public void reset();
 
 }

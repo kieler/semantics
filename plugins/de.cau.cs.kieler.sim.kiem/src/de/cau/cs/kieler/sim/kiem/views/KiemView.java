@@ -331,10 +331,10 @@ public class KiemView extends ViewPart {
 			dataProducerConsumer.setModelFile(KIEM.getCurrentModelFile());
 			if (dataProducerConsumer.isEnabled()) {
 				if (dataProducerConsumer.isProducer()) {
-					((JSONStringDataProducer)dataProducerConsumer).ExecutionInitialize();
+					((JSONStringDataProducer)dataProducerConsumer).initialize();
 				}
 				else if (dataProducerConsumer.isConsumer()) {
-					((JSONStringDataConsumer)dataProducerConsumer).ExecutionInitialize();
+					((JSONStringDataConsumer)dataProducerConsumer).initialize();
 				}
 			}//end if enabled
 		}//next c

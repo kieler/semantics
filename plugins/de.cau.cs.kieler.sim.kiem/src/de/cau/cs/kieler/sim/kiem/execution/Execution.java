@@ -67,7 +67,7 @@ public class Execution implements Runnable {
 						DataProducerConsumer dataProducerConsumer = 
 							dataProducerConsumerList.get(c);
 						if (dataProducerConsumer.isProducer()) {
-							((JSONStringDataProducer)dataProducerConsumer).ExecutionStep();
+							((JSONStringDataProducer)dataProducerConsumer).step();
 						}
 						if (dataProducerConsumer.isConsumer()) {
 							//((DataConsumer)dataProducerConsumer).

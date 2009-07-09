@@ -2,10 +2,10 @@ package de.cau.cs.kieler.sim.kiem.extension;
 
 public interface JSONStringDataProducerInterface  {
 	
-	public void executionInitialize();
+	public void initialize();
 
-	public String executionStep();
+	public String step();
 
-	public void executionReset();
+	public void reset();
 
 }

@@ -4,7 +4,7 @@ import de.cau.cs.kieler.sim.kiem.json.*;
 
 public interface JSONObjectDataConsumerInterface  {
 	
-	public void executionInitialize();
+	public void initialize();
 	
 	public boolean isDeltaListener();
 
