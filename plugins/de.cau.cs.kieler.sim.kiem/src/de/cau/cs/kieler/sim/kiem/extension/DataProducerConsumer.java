@@ -12,6 +12,7 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 	private boolean enabled;
 	private boolean producer;
 	private boolean consumer;
+	private boolean json;
 	KiemPlugin KIEM;                   //only contains accesss to execution
 									   //thread iff this DataProducerConsumer
 									   //is a master
@@ -21,6 +22,7 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 		producer = false;
 		consumer = false;
 		enabled = true;
+		json = false;
 	}
 	
 	public void setInitializationData(IConfigurationElement config,
@@ -44,7 +46,7 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 		return producer;
 	}
 
-	public void setProducer(boolean producer) {
+	protected void setProducer(boolean producer) {
 		this.producer = producer;
 	}
 
@@ -52,7 +54,7 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 		return consumer;
 	}
 
-	public void setConsumer(boolean consumer) {
+	protected void setConsumer(boolean consumer) {
 		this.consumer = consumer;
 	}
 	
@@ -63,6 +65,13 @@ public abstract class DataProducerConsumer implements IExecutableExtension {
 	public void setModelFile(String ModelFile) {
 		this.ModelFile = ModelFile;
 		return;
+	}
+
+	public boolean isJSON() {
+		return this.json;
+	}
+	protected void setJSON(boolean json) {
+		this.json = json;
 	}
 	
 	//-------------------------------------------------------------------------

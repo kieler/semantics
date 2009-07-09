@@ -4,8 +4,11 @@ import java.util.List;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
+import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataConsumer;
+import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataProducer;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataProducer;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataConsumer;
+import de.cau.cs.kieler.sim.kiem.json.*;
 
 public class Execution implements Runnable {
 	
@@ -67,10 +70,20 @@ public class Execution implements Runnable {
 						DataProducerConsumer dataProducerConsumer = 
 							dataProducerConsumerList.get(c);
 						if (dataProducerConsumer.isProducer()) {
-							((JSONStringDataProducer)dataProducerConsumer).step();
+							if (dataProducerConsumer.isJSON()) {
+								((JSONObjectDataProducer)dataProducerConsumer).step();
+							}
+							else {
+								((JSONStringDataProducer)dataProducerConsumer).step();
+							}
 						}
 						if (dataProducerConsumer.isConsumer()) {
-							//((DataConsumer)dataProducerConsumer).
+							if (dataProducerConsumer.isJSON()) {
+								((JSONObjectDataConsumer)dataProducerConsumer).updateData(new JSONObject());
+							}
+							else {
+								((JSONStringDataConsumer)dataProducerConsumer).updateData("JSONstring");
+							}
 						}
 					}//next producer/consumer
 				}

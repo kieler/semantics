@@ -6,6 +6,8 @@ public abstract class JSONObjectDataConsumer extends DataProducerConsumer implem
 	public JSONObjectDataConsumer() {
 		super();
 		this.setConsumer(true);
+		this.setProducer(false);
+		this.setJSON(true);
 	}
 	
 	//provide some key's of interest 

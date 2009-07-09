@@ -18,6 +18,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.core.runtime.IAdaptable;
 
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
+import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataConsumer;
+import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataProducer;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataProducer;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataConsumer;
 import de.cau.cs.kieler.sim.kiem.extension.DataProducerConsumer;
@@ -140,23 +142,43 @@ public class KiemPlugin extends AbstractUIPlugin {
 			return dataProducerConsumerList;
 				
 		// get the available interfaces and initialize them
-		IConfigurationElement[] producerElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDproducer);
-		IConfigurationElement[] consumerElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDconsumer);
+		IConfigurationElement[] jsonproducerElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDjsonproducer);
+		IConfigurationElement[] jsonconsumerElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDjsonconsumer);
+		IConfigurationElement[] stringproducerElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDstringproducer);
+		IConfigurationElement[] stringconsumerElements = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDstringconsumer);
 		dataProducerConsumerList = new ArrayList<DataProducerConsumer>
-											    (producerElements.length
-											    +consumerElements.length);
-		System.out.println("Found Controllers for "+Messages.extensionPointIDproducer+": "+producerElements.length);
-		for (int i = 0; i < producerElements.length; i++) {
+											    (jsonproducerElements.length
+											    +stringproducerElements.length
+											    +jsonconsumerElements.length
+											    +stringconsumerElements.length);
+		System.out.println("Found Controllers for "+Messages.extensionPointIDjsonproducer+": "+jsonproducerElements.length);
+		for (int i = 0; i < jsonproducerElements.length; i++) {
 			try{
-				JSONStringDataProducer dataProducer = (JSONStringDataProducer)producerElements[i].createExecutableExtension("class");
+				JSONObjectDataProducer dataProducer = (JSONObjectDataProducer)jsonproducerElements[i].createExecutableExtension("class");
 				dataProducerConsumerList.add(dataProducer);
 				System.out.println(dataProducer.getName());
 			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data producer interface plugin",e);} 
 		}
-		System.out.println("Found Controllers for "+Messages.extensionPointIDconsumer+": "+consumerElements.length);
-		for (int i = 0; i < consumerElements.length; i++) {
+		System.out.println("Found Controllers for "+Messages.extensionPointIDstringproducer+": "+stringproducerElements.length);
+		for (int i = 0; i < stringproducerElements.length; i++) {
 			try{
-				JSONStringDataConsumer dataConsumer = (JSONStringDataConsumer)consumerElements[i].createExecutableExtension("class");
+				JSONStringDataProducer dataProducer = (JSONStringDataProducer)stringproducerElements[i].createExecutableExtension("class");
+				dataProducerConsumerList.add(dataProducer);
+				System.out.println(dataProducer.getName());
+			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data producer interface plugin",e);} 
+		}
+		System.out.println("Found Controllers for "+Messages.extensionPointIDjsonconsumer+": "+jsonconsumerElements.length);
+		for (int i = 0; i < jsonconsumerElements.length; i++) {
+			try{
+				JSONObjectDataConsumer dataConsumer = (JSONObjectDataConsumer)jsonconsumerElements[i].createExecutableExtension("class");
+				dataProducerConsumerList.add(dataConsumer);
+				System.out.println(dataConsumer.getName());
+			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data consumer interface plugin",e);} 
+		}
+		System.out.println("Found Controllers for "+Messages.extensionPointIDstringconsumer+": "+stringconsumerElements.length);
+		for (int i = 0; i < stringconsumerElements.length; i++) {
+			try{
+				JSONStringDataConsumer dataConsumer = (JSONStringDataConsumer)stringconsumerElements[i].createExecutableExtension("class");
 				dataProducerConsumerList.add(dataConsumer);
 				System.out.println(dataConsumer.getName());
 			}catch(Exception e){Tools.showDialog("Error at loading a KIEM data consumer interface plugin",e);} 

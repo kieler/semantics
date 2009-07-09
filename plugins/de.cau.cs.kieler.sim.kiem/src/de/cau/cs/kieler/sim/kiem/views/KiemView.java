@@ -249,31 +249,6 @@ public class KiemView extends ViewPart {
 	}
 
   //---------------------------------------------------------------------------	
-	
-	private JSONStringDataProducer getDataProducer(String DataProducerName) {
-		for (int c = 0; c < KIEM.getDataProducerConsumerList().size(); c++) {
-			Object dataProducerConsumer = KIEM.getDataProducerConsumerList().get(c);
-			if (dataProducerConsumer.getClass().getName().equals("de.cau.cs.kieler.sim.abro.DataProducer")) {
-				String vglSelection = ((JSONStringDataProducer)dataProducerConsumer).getName();
-			if (vglSelection.equals(DataProducerName))  
-				return (JSONStringDataProducer)dataProducerConsumer;
-			}
-		}
-		return null;
-	}
-
-	private JSONStringDataConsumer getDataConsumer(String DataConsumerName) {
-		for (int c = 0; c < KIEM.getDataProducerConsumerList().size(); c++) {
-			Object dataProducerConsumer = KIEM.getDataProducerConsumerList().get(c);
-			if (dataProducerConsumer.getClass().getName().equals("de.cau.cs.kieler.sim.abro.DataConsumer")) {
-				String vglSelection = ((JSONStringDataConsumer)dataProducerConsumer).getName();
-			if (vglSelection.equals(DataConsumerName))  
-				return (JSONStringDataConsumer)dataProducerConsumer;
-			}
-		}
-		return null;
-	}
-	
   //---------------------------------------------------------------------------
 	
 	private boolean initDataProducerConsumer() {
@@ -331,10 +306,20 @@ public class KiemView extends ViewPart {
 			dataProducerConsumer.setModelFile(KIEM.getCurrentModelFile());
 			if (dataProducerConsumer.isEnabled()) {
 				if (dataProducerConsumer.isProducer()) {
-					((JSONStringDataProducer)dataProducerConsumer).initialize();
+					if (dataProducerConsumer.isJSON()) {
+						((JSONObjectDataProducer)dataProducerConsumer).initialize();
+					}
+					else {
+						((JSONStringDataProducer)dataProducerConsumer).initialize();
+					}
 				}
 				else if (dataProducerConsumer.isConsumer()) {
-					((JSONStringDataConsumer)dataProducerConsumer).initialize();
+					if (dataProducerConsumer.isJSON()) {
+						((JSONObjectDataConsumer)dataProducerConsumer).initialize();
+					}
+					else {
+						((JSONStringDataConsumer)dataProducerConsumer).initialize();
+					}
 				}
 			}//end if enabled
 		}//next c
@@ -491,7 +476,7 @@ public class KiemView extends ViewPart {
 				updateEnabled();
 			}
 		};
-		actionUp.setText("Up");
+		actionUp.setText("Schedule before");
 		actionUp.setToolTipText("Schedule before");
 		actionUp.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/upIcon.png"));
 		actionUp.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/UpIconDisabled.png"));
@@ -513,7 +498,7 @@ public class KiemView extends ViewPart {
 				updateEnabled();
 			}
 		};
-		actionDown.setText("Down");
+		actionDown.setText("Schedule behind");
 		actionDown.setToolTipText("Schedule behind");
 		actionDown.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/DownIcon.png"));
 		actionDown.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/downIconDisabled.png"));
