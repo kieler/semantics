@@ -148,13 +148,13 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 		case 2 : // TYPE_COLUMN
 			String type = "";
 			if (dataComponent.isProducerConsumer())
-				type = "Producer/Consumer";
+				type = "Consumer/Producer";
 			else if (dataComponent.isProducer())
 				type = "Producer";
 			else if (dataComponent.isConsumer())
 				type = "Consumer";
 			else
-				type = "Init";
+				type = "Initializer";
 			return type;
 		case 3 : // JSON_COLUMN 
 			return "";
