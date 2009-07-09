@@ -61,7 +61,7 @@
 		<echo message="unjaring"/>
 		<!-- unjar src="${pluginPath}" dest="${buildDirectory}/plugins/de.cau.cs.kieler.core_0.1.1/"/ -->
 		<copy todir="${buildDirectory}/plugins/">
-			<fileset dir="${buildDirectory}/../../KIELER_core/workspace/plugins"/>
+			<fileset dir="${buildDirectory}/../../KIELER_core/workspace/update-site/plugins"/>
 		</copy>
 	</target>
 	
