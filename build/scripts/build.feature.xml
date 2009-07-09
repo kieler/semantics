@@ -40,7 +40,7 @@
 		<echo message="BuildDir ${buildDirectory}"/>
 		<echo message="PluginPath ${pluginPath}"/>
 		<available file="${pluginPath}" property="jarDa" value="gefunden"/>
-		<property name="jarDa" value"nicht gefunden"/>
+		<property name="jarDa" value="nicht gefunden"/>
 		<echo message="core....jar ${jarda}"/>
 	  <mkdir dir="${buildDirectory}/update-site/features" />
 	  <mkdir dir="${buildDirectory}/update-site/plugins" />
