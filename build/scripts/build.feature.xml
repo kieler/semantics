@@ -39,6 +39,9 @@
 		<echo message="ScriptDir ${scriptdir}"/>
 		<echo message="BuildDir ${buildDirectory}"/>
 		<echo message="PluginPath ${pluginPath}"/>
+		<available file="${pluginPath}" property="jarDa" value="gefunden"/>
+		<property name="jarDa" value"nicht gefunden"/>
+		<echo message="core....jar ${jarda}"/>
 	  <mkdir dir="${buildDirectory}/update-site/features" />
 	  <mkdir dir="${buildDirectory}/update-site/plugins" />
 	  <ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
