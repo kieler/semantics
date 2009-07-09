@@ -2,11 +2,12 @@
 
         <!-- basedir has to be set at ant call! -->
 
-	<property file="build.general.properties" />
+	<property file="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/script/build.general.properties" />
 	
 	<!-- target calls the eclipse antRunner processing THIS build file on target 'main' -->
 	<target name="call.antRunner">
-	        <echo message="${jobdir}"/>
+	        <property name="jobdirabs" location="${jobdir}"/>
+	        <echo message="${jobdirabs}"/>
 		<echo message="${baseLocation}"/>
 		<echo message="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar"/>
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
@@ -21,6 +22,7 @@
 			<arg value="-buildfile" />
 			<arg value="build.feature.xml" />
 			<arg value="main" />
+			<arg value="-Dbasedir=${jobdirabs}" />
 			<arg value="-Djobdir=${jobdir}" />
 			<arg value="-DtopLevelElementType=feature" />
 			<arg value="-DtopLevelElementId=${part}" />
@@ -31,7 +33,7 @@
 	</target>
 
 	<target name="main">
-	  <ant antfile="/${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
+	  <ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
 	       <target name="generate"/>
 	  </ant>
 	  <ant antfile="build.xml" dir="${elementPath}">
