@@ -40,8 +40,10 @@
 		<echo message="BuildDir ${buildDirectory}"/>
 		<echo message="PluginPath ${pluginPath}"/>
 		<available file="${pluginPath}" property="jarDa" value="gefunden"/>
-		<property name="jarDa" value="nicht gefunden"/>
+		<!-- property name="jarDa" value="nicht gefunden"/ -->
 		<echo message="core....jar ${jarDa}"/>
+		<antcall target="unjar">
+		
 	  <mkdir dir="${buildDirectory}/update-site/features" />
 	  <mkdir dir="${buildDirectory}/update-site/plugins" />
 	  <ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
@@ -53,7 +55,13 @@
 	      <target name="build.jars"/>
 	      <target name="build.update.jar"/>
 	  </ant>
-
+	</target>
+	
+	<target name="unjar" if="jarDa">
+		<echo message="unjaring"/>
+		<unjar src="${pluginPath}" dest="${buildDirectory}/plugins"/>
+	</target>
+	
 <!--	      <mkdir dir="${buildDirectory}/update-site"/>
 	      <mkdir dir="${buildDirectory}/update-site/features"/>
 	      <copy todir="${buildDirectory}/update-site/features">
@@ -68,5 +76,5 @@
 		  </fileset>
 	      </copy>
 -->
-	</target>
+	
 </project>
