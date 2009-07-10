@@ -82,11 +82,12 @@ public abstract class DataComponent implements IDataComponent,
 		return false;
 	}
 	//if this is a master it can initiate the execution
-	public void masterStepExecution() {
+	//this method returns -1 if the previous step did not completed yet
+	//otherwise it will return the last execution time of the full step
+	public int masterStepExecution() {
 		if (this.isMaster()) {
 			if (KIEM != null) {
-				KIEM.execution.stepExecution();
-				return;
+				return KIEM.execution.stepExecution();
 			}
 		}
 		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");

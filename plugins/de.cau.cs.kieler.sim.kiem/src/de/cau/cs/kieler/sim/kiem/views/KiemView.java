@@ -277,7 +277,7 @@ public class KiemView extends ViewPart {
 		}//next c
 		
 		//now create and run the execution thread
-		KIEM.execution = new Execution(KIEM.getDataComponentList());
+		KIEM.execution = new Execution(KIEM.getDataComponentList(), this);
 		//take the last set delay
 		KIEM.execution.setDelay(KIEM.getDelay());
 		KIEM.executionThread = new Thread(KIEM.execution);
@@ -532,6 +532,9 @@ public class KiemView extends ViewPart {
 			public void run() {
 				if (KIEM.execution != null) {
 					KIEM.execution.stopExecution();
+				}
+				if (KIEM.execution.getMinimumStepLength() < KIEM.getDelay()) {
+					getDelayTextField().setDelay(KIEM.execution.getMinimumStepLength());
 				}
 				KIEM.resetCurrentModelFile();
 				KIEM.execution = null;

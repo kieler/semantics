@@ -7,6 +7,7 @@ import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.*;
+import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
 public class Execution implements Runnable {
 	
@@ -14,10 +15,14 @@ public class Execution implements Runnable {
 	private boolean stop;
 	private List<DataComponent> dataComponentList;
 	private int steps;
+	private int minimumStepLength;
 	private ConsumerExecution[] consumerExecutionArray;
 	private ProducerExecution[] producerExecutionArray;
+	private KiemView parent; //for errors
 	
-	public Execution(List<DataComponent> dataComponentList) {
+	public Execution(List<DataComponent> dataComponentList,
+					 KiemView parent) {
+		this.parent = parent;
 		this.delay = KiemPlugin.DELAY_DEFAULT;
 		this.stop = false; 
 		this.steps = 0; // == paused
@@ -46,6 +51,10 @@ public class Execution implements Runnable {
 		
 	}
 	
+	public int getMinimumStepLength() {
+		return minimumStepLength;
+	}	
+	
 	public void setDelay(int delay) {
 		this.delay = delay;
 	}
@@ -54,11 +63,21 @@ public class Execution implements Runnable {
 		return this.delay;
 	}
 	
-	public void pauseExecution() {
+	public synchronized int stepExecution() {
+		if (this.steps > 0) {
+			return -1;
+		}
+		else {
+			this.steps = 1;
+			return minimumStepLength;
+		}
+	}
+	
+	public synchronized void pauseExecution() {
 		this.steps = 0;
 	}
 	
-	public void runExecution() {
+	public synchronized void runExecution() {
 		this.steps = -1;
 	}
 	
@@ -71,25 +90,29 @@ public class Execution implements Runnable {
 	}
 	
 	public void stopExecution() {
+		//not synchonized to stop immediately w/o queuing
 		this.stop = true;
 		this.steps = 0;
 		
-		//stop all child execution threads
-		for (int c = 0; c < this.dataComponentList.size(); c++) {
-			if (this.consumerExecutionArray[c] != null)
-				this.consumerExecutionArray[c].stopExecution();
-			if (this.producerExecutionArray[c] != null)
-				this.producerExecutionArray[c].stopExecution();
+		synchronized(this) {
+			//for safety reasons do this agaion
+			this.stop = true;
+			this.steps = 0;
+			//stop all child execution threads
+			for (int c = 0; c < this.dataComponentList.size(); c++) {
+				if (this.consumerExecutionArray[c] != null)
+					this.consumerExecutionArray[c].stopExecution();
+				if (this.producerExecutionArray[c] != null)
+					this.producerExecutionArray[c].stopExecution();
+			}
 		}
 		
 	}
 	
-	public synchronized void stepExecution() {
-		this.steps++;
-	}
-	
 	public void run() {
 		while (!this.stop) {
+			
+			long starttime = System.currentTimeMillis();
 			
 			synchronized(this) {
 				if ((steps == -1)||(steps > 0)) {
@@ -147,6 +170,7 @@ public class Execution implements Runnable {
 								//pure Producer
 								//get blocking result
 								while (!producerExecutionArray[c].isDone()) {
+									if (this.stop == true) return;
 									Thread.yield();
 								}
 								System.out.println(c + ") " +dataComponent.getName() + " (Pure Producer) done");
@@ -157,9 +181,14 @@ public class Execution implements Runnable {
 				}
 			}//end synchronized
 
-			//delay once if run
-			if (steps == -1) 
-				try{Thread.sleep(this.delay);}catch(Exception e){}
+			//delay if time of step is left
+			if (steps == -1) {
+				long endtime = System.currentTimeMillis();
+				this.minimumStepLength = (int)(endtime - starttime);
+				int timeToDelay = this.delay - this.minimumStepLength;
+				if (timeToDelay > 0)
+					try{Thread.sleep(timeToDelay);}catch(Exception e){}
+			}	
 			//delay while paused
 			while (steps == 0) {
 				try{Thread.sleep(50);}catch(Exception e){}

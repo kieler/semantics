@@ -61,6 +61,24 @@ public class DelayTextField extends ControlContribution implements KeyListener,
 		updateDelay();
 	}
 	
+	public int getDelay() {
+		int delay = Integer.parseInt(textfield.getText().trim());
+		if (delay < KIEM.DELAY_MIN) throw(new NumberFormatException("Delay must be >= "+KIEM.DELAY_MIN+"ms!"));
+		if (delay > KIEM.DELAY_MAX) throw(new NumberFormatException("Delay must be <= "+KIEM.DELAY_MAX+"ms!"));
+		return delay;
+	}
+	public void setDelay(int delay) {
+		try{
+			if (delay < KIEM.DELAY_MIN) throw(new NumberFormatException("Delay must be >= "+KIEM.DELAY_MIN+"ms!"));
+			if (delay > KIEM.DELAY_MAX) throw(new NumberFormatException("Delay must be <= "+KIEM.DELAY_MAX+"ms!"));
+			KIEM.setDelay(delay);
+		}catch(NumberFormatException exc){
+			textfield.setText(""+KIEM.getDelay());
+			//Status s = new Status(0,"Error","Please enter only integer numbers!",exc);
+			//ErrorDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),"Error",exc.getMessage(),s,IStatus.ERROR);	
+		}
+	}
+	
 	private void updateDelay(){
 		if (textfield == null) return;
 		try{
