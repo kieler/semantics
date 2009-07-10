@@ -90,7 +90,7 @@ public class KiemView extends ViewPart {
 				| SWT.V_SCROLL | SWT.FULL_SELECTION);
 		createColumns(viewer);
 		viewer.setContentProvider(new KiemContentProvider());
-		viewer.setLabelProvider(new KiemLabelProvider());
+		viewer.setLabelProvider(new KiemLabelProvider(this));
 		viewer.setInput(KIEM.getDataComponentList());
 
 		buildLocalToolBar();
@@ -352,6 +352,14 @@ public class KiemView extends ViewPart {
 		}
 	}
 	
+	public void updateView() {
+		viewer.refresh();
+		refreshEnabledDisabledTextColors();
+		viewer.setSelection(null);
+		updateEnabled();
+
+	}
+	
 	public void updateEnabled() {
 		updateEnabled(false);
 	}
@@ -401,10 +409,7 @@ public class KiemView extends ViewPart {
 				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				dataComponent.setEnabled(true);
 				checkForSingleEnabledMaster(false,dataComponent);
-				viewer.refresh();
-				refreshEnabledDisabledTextColors();
-				viewer.setSelection(null);
-				updateEnabled();
+				updateView();
 			}
 		};
 		actionEnable.setText("Enable");
@@ -418,10 +423,7 @@ public class KiemView extends ViewPart {
 			public void run() {
 				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				dataComponent.setEnabled(false);
-				viewer.refresh();
-				refreshEnabledDisabledTextColors();
-				viewer.setSelection(null);
-				updateEnabled();
+				updateView();
 			}
 		};
 		actionDisable.setText("Disable");
@@ -441,7 +443,7 @@ public class KiemView extends ViewPart {
 					viewer.refresh();
 					refreshEnabledDisabledTextColors();
 				}
-				updateEnabled();
+				updateView();
 			}
 		};
 		actionUp.setText("Schedule before");
@@ -463,7 +465,7 @@ public class KiemView extends ViewPart {
 					viewer.refresh();
 					refreshEnabledDisabledTextColors();
 				}
-				updateEnabled();
+				updateView();
 			}
 		};
 		actionDown.setText("Schedule behind");
@@ -480,7 +482,7 @@ public class KiemView extends ViewPart {
 				if (initDataComponent()) {
 					KIEM.execution.stepExecution();
 				}
-				updateEnabled();
+				updateView();
 			}
 		};
 		actionStep.setText("Step");
@@ -497,7 +499,7 @@ public class KiemView extends ViewPart {
 				if (initDataComponent()) {
 					KIEM.execution.runExecution();
 				}
-				updateEnabled();
+				updateView();
 			}
 		};
 		actionRun.setText("Run");
@@ -514,7 +516,7 @@ public class KiemView extends ViewPart {
 				if (initDataComponent()) {
 					KIEM.execution.pauseExecution();
 				}
-				updateEnabled();
+				updateView();
 			}
 		};
 		actionPause.setText("Pause");
@@ -533,7 +535,7 @@ public class KiemView extends ViewPart {
 				}
 				KIEM.resetCurrentModelFile();
 				KIEM.execution = null;
-				updateEnabled();
+				updateView();
 			}
 		};
 		actionStop.setText("Stop");
@@ -559,9 +561,7 @@ public class KiemView extends ViewPart {
 							dataComponent.setEnabled(!dataComponent.isEnabled());
 							if (dataComponent.isEnabled())
 								checkForSingleEnabledMaster(false,dataComponent);
-							viewer.refresh();
-							refreshEnabledDisabledTextColors();
-							viewer.setSelection(null);
+							updateView();
 						}
 					}// end if - selected
 				}// end if - selected

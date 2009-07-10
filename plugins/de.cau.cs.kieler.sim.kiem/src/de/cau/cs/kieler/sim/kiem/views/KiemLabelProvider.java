@@ -39,24 +39,42 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 	private static final Image CHECKED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/checked.png").createImage();
+	private static final Image CHECKED_DISABLED = AbstractUIPlugin
+				.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+					"icons/checkedDisabled.png").createImage();
 	private static final Image UNCHECKED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/unchecked.png").createImage();
+	private static final Image UNCHECKED_DISABLED = AbstractUIPlugin
+				.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+					"icons/uncheckedDisabled.png").createImage();
 	private static final Image CHECKEDPLAIN = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/checkedplain.png").createImage();
 
+	private KiemView parent;
+	
+	public KiemLabelProvider(KiemView parent) {
+		super();
+		this.parent = parent;
+	}
 
 	public Image getColumnImage(Object element, int columnIndex) {
 		DataComponent dataComponent = (DataComponent)element;
 		if (columnIndex == 0) {
 			if (dataComponent.isEnabled()) {
 				//enabled
-				return CHECKED;
+				if (parent.KIEM.execution == null)
+					return CHECKED;
+				else
+					return CHECKED_DISABLED;
 			}
 			else {
 				//disabled
-				return UNCHECKED;
+				if (parent.KIEM.execution == null)
+					return UNCHECKED;
+				else
+					return UNCHECKED_DISABLED;
 			}
 		}
 		else if (columnIndex == 1) {
