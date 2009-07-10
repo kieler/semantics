@@ -54,6 +54,18 @@ public class ProducerExecution implements Runnable {
 	
 	public void run() {
 		while (!this.stop) {
+			//go to sleep
+			try {
+				synchronized(this){
+					this.wait();
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				this.error = true;
+				this.stop = true;
+				this.data = null;
+				this.done = true;
+			}
 
 			//caller must ensure that done == false (before)
 			if (!done) {
@@ -88,19 +100,6 @@ public class ProducerExecution implements Runnable {
 			
 			System.out.println("  "+dataComponent.getName() + " (Pure Producer) calc end");
 			
-			//go to sleep
-			try {
-				synchronized(this){
-					this.wait();
-				}
-			}catch(Exception e){
-				e.printStackTrace();
-				this.error = true;
-				this.stop = true;
-				this.data = null;
-				this.done = true;
-			}
-
 		}//next while not stop
 	}
 

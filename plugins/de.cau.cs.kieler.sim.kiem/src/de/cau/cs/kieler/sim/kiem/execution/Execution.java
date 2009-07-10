@@ -30,15 +30,17 @@ public class Execution implements Runnable {
 		//for each pure producer ... create ProducerExecution Thread
 		for (int c = 0; c < dataComponentList.size(); c++) {
 			DataComponent dataComponent = dataComponentList.get(c);
-			if(dataComponent.isPureConsumer()) {
-				//pure Consumer
-				consumerExecutionArray[c] = new ConsumerExecution(dataComponent);
-				(new Thread(consumerExecutionArray[c])).start();
-			}
-			else if(dataComponent.isPureProducer()) {
-				//pure Producer
-				producerExecutionArray[c] = new ProducerExecution(dataComponent);
-				(new Thread(producerExecutionArray[c])).start();
+			if (dataComponent.isEnabled()) {
+				if(dataComponent.isPureConsumer()) {
+					//pure Consumer
+					consumerExecutionArray[c] = new ConsumerExecution(dataComponent);
+					(new Thread(consumerExecutionArray[c])).start();
+				}
+				else if(dataComponent.isPureProducer()) {
+					//pure Producer
+					producerExecutionArray[c] = new ProducerExecution(dataComponent);
+					(new Thread(producerExecutionArray[c])).start();
+				}
 			}
 		}
 		
@@ -100,10 +102,11 @@ public class Execution implements Runnable {
 					for(int c = 0; c < this.dataComponentList.size(); c++) {
 						DataComponent dataComponent = 
 							dataComponentList.get(c);
-						if (dataComponent.isPureProducer()) {
-							System.out.println(c + ") " + dataComponent.getName() + " (Pure Producer) call");
-							producerExecutionArray[c].setDone(false);
-							producerExecutionArray[c].step();
+						if (dataComponent.isEnabled() && 
+							dataComponent.isPureProducer()) {
+								System.out.println(c + ") " + dataComponent.getName() + " (Pure Producer) call");
+								producerExecutionArray[c].setDone(false);
+								producerExecutionArray[c].step();
 						}
 					}//next producer/consumer
 					
@@ -111,6 +114,7 @@ public class Execution implements Runnable {
 					for(int c = 0; c < this.dataComponentList.size(); c++) {
 						DataComponent dataComponent = 
 							dataComponentList.get(c);
+						if (!dataComponent.isEnabled()) continue;
 						
 						if (dataComponent.isProducerConsumer()) {
 							System.out.println(c + ") " +dataComponent.getName() + " (Norm Producer) call");
@@ -132,7 +136,11 @@ public class Execution implements Runnable {
 								//TODO: reasonable data
 								consumerExecutionArray[c].setData(null);
 								//call async method
-								consumerExecutionArray[c].step();
+								//if (consumerExecutionArray[c].isDone())
+									consumerExecutionArray[c].step();
+								//else
+								//	System.out.println("  SKIPPED - NOT READY YET");
+									
 						}
 						else if(dataComponent.isPureProducer()) {
 								System.out.println(c + ") " +dataComponent.getName() + " (Pure Producer) wait");

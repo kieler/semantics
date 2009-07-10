@@ -12,40 +12,49 @@ public class ConsumerExecution implements Runnable {
 	private boolean error;
 	private DataComponent dataComponent;
 	private JSONObject data;
-	private int skipCounter;
-	private int skipInit;
+	//private int skipCounter;
+	//private int skipInit;
 	
 	public ConsumerExecution(DataComponent dataComponent) {
 		this.stop = false; 
-		this.done = false; 
+		this.done = true; 
 		this.error = false;
 		this.data = null;
 		this.dataComponent = dataComponent;
 		//by default, do not skip anything
-		this.skipInit = 0;
-		this.skipCounter = 0;
+		//this.skipInit = 0;
+		//this.skipCounter = 0;
 	}
 	
-	public synchronized void step() {
-		if (this.skipCounter > 0) {
+	//public boolean isDone() {
+	//	return done;
+	//}
+	
+	public void step() {
+		//if (this.skipCounter > 0) {
 			//we need to skip
-			this.skipCounter--;
-		}
-		else {
+		//	this.skipCounter--;
+		//	System.out.println("  SKIPPED ("+this.skipCounter+")");
+		//}
+		//else {
 			//we now call asynchronously
-			this.skipCounter = this.skipInit;
+			//this.skipCounter = this.skipInit;
 			//check if we allready done
 			if (!done) {
 				//deadline missed, count up skipInit
-				this.skipInit++;
+				System.out.println("  SKIPPED - NOT READY YET");
+				//this.skipInit++;
 			}
 			else {
+				System.out.println("  START - READY");
 				//deadline met 
 				this.done = false;
 				//awake this thread
-				this.notify();
+				synchronized(this){
+					this.notify();
+				}
 			}
-		}
+		//}
 	}
 
 	public JSONObject getData() {
@@ -65,6 +74,19 @@ public class ConsumerExecution implements Runnable {
 	
 	public void run() {
 		while (!this.stop) {
+			//go to sleep
+			try {
+				synchronized(this){
+					this.wait();
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				this.error = true;
+				this.stop = true;
+				this.data = null;
+				this.done = true;
+			}
+			
 			try {
 				System.out.println("  "+dataComponent.getName() + " (Pure Consumer) calc start");
 				//do asynchronous call
@@ -97,18 +119,6 @@ public class ConsumerExecution implements Runnable {
 			}
 			System.out.println("  "+dataComponent.getName() + " (Pure Consumer) calc end");
 			
-			//go to sleep
-			try {
-				synchronized(this){
-					this.wait();
-				}
-			}catch(Exception e){
-				e.printStackTrace();
-				this.error = true;
-				this.stop = true;
-				this.data = null;
-				this.done = true;
-			}
 
 		}//next while not stop
 	}
