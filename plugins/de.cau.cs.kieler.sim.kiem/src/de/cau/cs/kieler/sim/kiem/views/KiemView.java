@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Menu;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.*;
-import de.cau.cs.kieler.sim.kiem.ui.DelayTextField;
+import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -39,7 +39,7 @@ public class KiemView extends ViewPart {
 	private Action actionPause;
 	private Action actionStop;
 	private Action doubleClickAction;
-	private DelayTextField delayTextField;
+	private AimedStepDurationTextField delayTextField;
 
 	public KiemPlugin KIEM;
 	
@@ -287,7 +287,7 @@ public class KiemView extends ViewPart {
 		//now create and run the execution thread
 		KIEM.execution = new Execution(KIEM.getDataComponentList(), this);
 		//take the last set delay
-		KIEM.execution.setDelay(KIEM.getDelay());
+		KIEM.execution.setAimedStepDuration(KIEM.getAimedStepDuration());
 		KIEM.executionThread = new Thread(KIEM.execution);
 		KIEM.executionThread.start();
 
@@ -542,14 +542,17 @@ public class KiemView extends ViewPart {
 				if (KIEM.execution != null) {
 					KIEM.execution.stopExecution();
 				}
-				if (KIEM.execution.getStepLength() < KIEM.getDelay()) {
-					getDelayTextField().setDelay(KIEM.execution.getStepLength());
+				if (KIEM.execution.getStepDuration() < KIEM.getAimedStepDuration()) {
+					getDelayTextField().setStepDuration(KIEM.execution.getStepDuration());
 				}
 				//get results
 				long executionTime = KIEM.execution.getExecutionDurantion();
-				long minStepLength = KIEM.execution.getMinimumStepLength();
-				long aveStepLength = KIEM.execution.getAverageStepLength();
-				long maxStepLength = KIEM.execution.getMaximumStepLength();
+				long minStepDuration = KIEM.execution.getMinimumStepDuration();
+				long wavStepDuration = KIEM.execution.getWeightedAverageStepDuration();
+				long aveStepDuration = KIEM.execution.getAverageStepDuration();
+				long maxStepDuration = KIEM.execution.getMaximumStepDuration();
+				long steps         = KIEM.execution.getSteps();
+				long aimedStepDuration = KIEM.execution.getAimedStepDuration();
 				
 				KIEM.resetCurrentModelFile();
 				KIEM.execution = null;
@@ -557,10 +560,13 @@ public class KiemView extends ViewPart {
 
 				//show execution results
 				showMessage("Execution Timing Results",
+							"          Number of Steps : "+steps+"\n"+
 							"Overall Execution Time : "+executionTime+" ms\n\n"+
-						    "Minimum Step Length  : "+minStepLength+ " ms\n"+
-						    "Average Step Length  : "+aveStepLength+ " ms\n"+
-						    "Maximum Step Length : "+maxStepLength+ " ms");
+						    "                   Aimed Step Duration : "+aimedStepDuration+ " ms\n"+
+						    "                 Minimum Step Duration : "+minStepDuration+ " ms\n"+
+						    "Weighted Average Step Duration : "+wavStepDuration+ " ms\n"+
+						    "                 Average Step Duration : "+aveStepDuration+ " ms\n"+
+						    "                Maximum Step Duration : "+maxStepDuration+ " ms");
 				
 			}
 		};
@@ -596,9 +602,9 @@ public class KiemView extends ViewPart {
 		return doubleClickAction;
 	}
 
-	private DelayTextField getDelayTextField() {
+	private AimedStepDurationTextField getDelayTextField() {
 		if (delayTextField != null) return delayTextField;
-		delayTextField = new DelayTextField(KIEM);
+		delayTextField = new AimedStepDurationTextField(KIEM);
 		return delayTextField;
 	}
  

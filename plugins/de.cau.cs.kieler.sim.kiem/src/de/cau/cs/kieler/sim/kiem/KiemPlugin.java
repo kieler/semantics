@@ -29,9 +29,9 @@ import de.cau.cs.kieler.sim.kiem.views.KiemView;
 public class KiemPlugin extends AbstractUIPlugin {
 
 	
-	public static final int DELAY_DEFAULT = 500;
-	public static final int DELAY_MIN = 1;
-	public static final int DELAY_MAX = 5000;
+	public static final int AIMED_STEP_DURATION_DEFAULT = 500;
+	public static final int AIMED_STEP_DURATION_MIN = 1;
+	public static final int AIMED_STEP_DURATION_MAX = 5000;
 	
 	//The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem";
@@ -49,7 +49,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 	//Execution object and thread
 	public Execution execution;
 	public Thread executionThread;
-	private int delay;
+	private int aimedStepDuration;
 	
 	/**
 	 * The constructor
@@ -58,7 +58,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 		dataComponentList = this.getDataComponentList();
 		currentModelFile = null;
 		execution = null;
-		delay = DELAY_DEFAULT;
+		aimedStepDuration = AIMED_STEP_DURATION_DEFAULT;
 		masterDataComponent = null;
 	}
 
@@ -107,14 +107,14 @@ public class KiemPlugin extends AbstractUIPlugin {
         this.currentModelFile = extractSelection(selection).getFullPath().toString();
 	}
 	
-	public int getDelay() {
-		return this.delay;
+	public int getAimedStepDuration() {
+		return this.aimedStepDuration;
 	}
-	public void setDelay(int delay){
-		this.delay = delay;
+	public void setAimedStepDuration(int aimedStepDuration){
+		this.aimedStepDuration = aimedStepDuration;
 		//if executing, also update current delay
 		if (execution != null)
-			this.execution.setDelay(delay);
+			this.execution.setAimedStepDuration(aimedStepDuration);
 	}
 	
 	public String getCurrentModelFile() {

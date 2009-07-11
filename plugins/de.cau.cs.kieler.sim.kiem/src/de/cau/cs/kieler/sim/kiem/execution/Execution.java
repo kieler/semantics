@@ -11,24 +11,28 @@ import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
 public class Execution implements Runnable {
 	
-	private int delay;
+	private int aimedStepDuration;
 	private boolean stop;
 	private List<DataComponent> dataComponentList;
-	private int steps;
-	private int stepLength;
-	private int maximumStepLength;
-	private int minimumStepLength;
-	private int averageStepLength;
+	private long steps;
+	private int stepDuration;
+	private int maximumStepDuration;
+	private int minimumStepDuration;
+	private int weightedAverageStepDuration;
+	private long accumulatedStepDurations;
+	private long executionPlauseDuration;
 	private long executionStartTime;
-	private long tick;
+	private long stepCounter;
 	private ConsumerExecution[] consumerExecutionArray;
 	private ProducerExecution[] producerExecutionArray;
 	private KiemView parent; //for errors
 	
+	private static final int PAUSE_DEYLAY = 50; //in ms
+	
 	public Execution(List<DataComponent> dataComponentList,
 					 KiemView parent) {
 		this.parent = parent;
-		this.delay = KiemPlugin.DELAY_DEFAULT;
+		this.stepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
 		this.stop = false; 
 		this.steps = 0; // == paused
 		this.dataComponentList = dataComponentList;
@@ -56,31 +60,37 @@ public class Execution implements Runnable {
 		
 	}
 	
-	public int getStepLength() {
-		return stepLength;
+	public int getStepDuration() {
+		return stepDuration;
 	}	
-	public int getMaximumStepLength() {
-		return maximumStepLength;
+	public int getMaximumStepDuration() {
+		return maximumStepDuration;
 	}	
-	public int getMinimumStepLength() {
-		return minimumStepLength;
+	public int getMinimumStepDuration() {
+		return minimumStepDuration;
 	}	
-	public int getAverageStepLength() {
-		return averageStepLength;
+	public int getWeightedAverageStepDuration() {
+		return weightedAverageStepDuration;
+	}	
+	public int getAverageStepDuration() {
+		return (int)(this.accumulatedStepDurations/this.stepCounter);
 	}	
 	public long getExecutionStartTime() {
 		return executionStartTime;
 	}	
 	public long getExecutionDurantion() {
-		return 	System.currentTimeMillis() - executionStartTime;
-	}	
-	
-	public void setDelay(int delay) {
-		this.delay = delay;
+		return 	System.currentTimeMillis() - executionStartTime - executionPlauseDuration;
+	}
+	public long getSteps() {
+		return this.stepCounter;
 	}
 	
-	public int getDelay() {
-		return this.delay;
+	public void setAimedStepDuration(int aimedStepDuration) {
+		this.aimedStepDuration = aimedStepDuration;
+	}
+	
+	public int getAimedStepDuration() {
+		return this.aimedStepDuration;
 	}
 	
 	public synchronized int stepExecution() {
@@ -89,7 +99,7 @@ public class Execution implements Runnable {
 		}
 		else {
 			this.steps = 1;
-			return stepLength;
+			return stepDuration;
 		}
 	}
 	
@@ -97,13 +107,19 @@ public class Execution implements Runnable {
 		this.steps = 0;
 	}
 	
-	public synchronized void runExecution() {
+	private void resetTimingVariables() {
 		this.executionStartTime = System.currentTimeMillis();
-		this.maximumStepLength = 0; 
-		this.minimumStepLength = -1; //infinity
-		this.averageStepLength = 0;
-		this.steps = -1;
-		this.tick = 0;
+		this.maximumStepDuration = 0; 
+		this.minimumStepDuration = -1; //infinity
+		this.weightedAverageStepDuration = 0;
+		this.accumulatedStepDurations = 0;
+		this.stepCounter = 0;
+		this.executionPlauseDuration = 0;
+	}
+	
+	public synchronized void runExecution() {
+		resetTimingVariables();
+		this.steps = -1; //indicates run mode
 	}
 	
 	public boolean isPaused() {
@@ -135,14 +151,19 @@ public class Execution implements Runnable {
 	}
 	
 	public void run() {
+		synchronized(this) {
+			resetTimingVariables();
+		}
+		
 		while (!this.stop) {
 			
 			long starttime = System.currentTimeMillis();
 			
 			synchronized(this) {
+				//test if we have to make a step (1) or if we are in running mode (-1)
 				if ((steps == -1)||(steps > 0)) {
 					//make a tick
-					this.tick++;
+					this.stepCounter++;
 					
 					//reduce number of steps
 					if (steps > -1) steps--;
@@ -205,36 +226,41 @@ public class Execution implements Runnable {
 								producerExecutionArray[c].getData();
 						}
 					}//next producer/consumer
-				}
+					//calculate execution timings (and current step Duration)
+					long endtime = System.currentTimeMillis();
+					this.stepDuration = (int)(endtime - starttime);
+					System.out.println("Step Duration: "+this.stepDuration);
+					if (this.maximumStepDuration < this.stepDuration) {
+						this.maximumStepDuration = this.stepDuration;
+					}
+					if ((this.minimumStepDuration > this.stepDuration)||
+						(this.minimumStepDuration == -1)){
+							this.minimumStepDuration = this.stepDuration;
+					}
+					if (this.weightedAverageStepDuration == 0) {
+						//frist tick
+						this.weightedAverageStepDuration = this.stepDuration;
+					}
+					else {
+						//other ticks
+						this.weightedAverageStepDuration = (this.weightedAverageStepDuration + this.stepDuration)/2;
+					}
+					this.accumulatedStepDurations += this.stepDuration;
+				}//end if - make a step
 			}//end synchronized
 
-			//delay if time of step is left
+			//delay if time of step is left (in run mode only)
 			if (steps == -1) {
-				long endtime = System.currentTimeMillis();
-				this.stepLength = (int)(endtime - starttime);
-				if (this.maximumStepLength < this.stepLength) {
-					this.maximumStepLength = this.stepLength;
-				}
-				if ((this.minimumStepLength > this.stepLength)||
-					(this.minimumStepLength == -1)){
-					this.minimumStepLength = this.stepLength;
-				}
-				if (this.averageStepLength == 0) {
-					//frist tick
-					this.averageStepLength = this.stepLength;
-				}
-				else {
-					//other ticks
-					this.averageStepLength = (this.averageStepLength + this.stepLength)/2;
-				}
-				int timeToDelay = this.delay - this.stepLength;
+				int timeToDelay = this.aimedStepDuration - this.stepDuration;
 				if (timeToDelay > 0)
 					try{Thread.sleep(timeToDelay);}catch(Exception e){}
 			}	
+			
 			//delay while paused
 			while (steps == 0) {
+				executionPlauseDuration += PAUSE_DEYLAY;
 				System.out.println(">>PAUSED<<");
-				try{Thread.sleep(50);}catch(Exception e){}
+				try{Thread.sleep(PAUSE_DEYLAY);}catch(Exception e){}
 				//if stop is requested, jump out
 				if (this.stop) return;
 			}

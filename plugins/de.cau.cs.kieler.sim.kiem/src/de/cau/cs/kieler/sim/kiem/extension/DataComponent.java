@@ -132,13 +132,13 @@ public abstract class DataComponent implements IDataComponent,
 		throw new Exception("This instance is not a master! Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
-	public void masterSetDelay(int delay) throws Exception {
+	public void masterSetAimedStepDuration(int aimedStepDuration) throws Exception {
 		if (this.isMaster()) {
 			if (KIEMViewInstance != null) {
 				KIEMViewInstance.initDataComponent();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
-				KIEMInstance.execution.setDelay(delay);
+				KIEMInstance.execution.setAimedStepDuration(aimedStepDuration);
 				KIEMViewInstance.updateView();
 				return;
 			}
@@ -146,13 +146,13 @@ public abstract class DataComponent implements IDataComponent,
 		throw new Exception("This instance is not a master! Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
-	public int masterGetDelay() throws Exception {
+	public int masterGetAimedStepDuration() throws Exception {
 		if (this.isMaster()) {
 			if (KIEMViewInstance != null) {
 				KIEMViewInstance.initDataComponent();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
-				return KIEMInstance.execution.getDelay();
+				return KIEMInstance.execution.getAimedStepDuration();
 			}
 		}
 		throw new Exception("This instance is not a master! Override isMaster() to return true!");

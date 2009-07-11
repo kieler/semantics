@@ -20,15 +20,15 @@ import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
-public class DelayTextField extends ControlContribution implements KeyListener,
+public class AimedStepDurationTextField extends ControlContribution implements KeyListener,
 																   FocusListener{
 
 	Text textfield;
 	private KiemPlugin KIEM;
 
 		
-	public DelayTextField(KiemPlugin KIEM) {
-		super("KIEM Delay Text Field");
+	public AimedStepDurationTextField(KiemPlugin KIEM) {
+		super("Aimed Step Duration Text Field");
 		this.KIEM = KIEM;
 	}
 	
@@ -41,8 +41,8 @@ public class DelayTextField extends ControlContribution implements KeyListener,
 	protected Control createControl(Composite parent) {
 		this.updateDelay();
 		textfield = new Text(parent,SWT.BORDER);
-		textfield.setToolTipText("Delay of steps in run mode (ms)");
-		textfield.setText(KIEM.DELAY_DEFAULT+"    ");
+		textfield.setToolTipText("Aimed Duration of Steps in Run Mode (ms)");
+		textfield.setText(KIEM.AIMED_STEP_DURATION_DEFAULT+"    ");
 		textfield.addKeyListener(this);
 		textfield.addFocusListener(this);
 		return textfield;
@@ -61,19 +61,19 @@ public class DelayTextField extends ControlContribution implements KeyListener,
 		updateDelay();
 	}
 	
-	public int getDelay() {
-		int delay = Integer.parseInt(textfield.getText().trim());
-		if (delay < KIEM.DELAY_MIN) throw(new NumberFormatException("Delay must be >= "+KIEM.DELAY_MIN+"ms!"));
-		if (delay > KIEM.DELAY_MAX) throw(new NumberFormatException("Delay must be <= "+KIEM.DELAY_MAX+"ms!"));
-		return delay;
+	public int getAimedStepDuration() {
+		int aimedStepDuration = Integer.parseInt(textfield.getText().trim());
+		if (aimedStepDuration < KIEM.AIMED_STEP_DURATION_MIN) throw(new NumberFormatException("Duration must be >= "+KIEM.AIMED_STEP_DURATION_MIN+"ms!"));
+		if (aimedStepDuration > KIEM.AIMED_STEP_DURATION_MAX) throw(new NumberFormatException("Duration must be <= "+KIEM.AIMED_STEP_DURATION_MAX+"ms!"));
+		return aimedStepDuration;
 	}
-	public void setDelay(int delay) {
+	public void setStepDuration(int aimedStepDuration) {
 		try{
-			if (delay < KIEM.DELAY_MIN) throw(new NumberFormatException("Delay must be >= "+KIEM.DELAY_MIN+"ms!"));
-			if (delay > KIEM.DELAY_MAX) throw(new NumberFormatException("Delay must be <= "+KIEM.DELAY_MAX+"ms!"));
-			KIEM.setDelay(delay);
+			if (aimedStepDuration < KIEM.AIMED_STEP_DURATION_MIN) throw(new NumberFormatException("Delay must be >= "+KIEM.AIMED_STEP_DURATION_MIN+"ms!"));
+			if (aimedStepDuration > KIEM.AIMED_STEP_DURATION_MAX) throw(new NumberFormatException("Delay must be <= "+KIEM.AIMED_STEP_DURATION_MAX+"ms!"));
+			KIEM.setAimedStepDuration(aimedStepDuration);
 		}catch(NumberFormatException exc){
-			textfield.setText(""+KIEM.getDelay());
+			textfield.setText(""+KIEM.getAimedStepDuration());
 			//Status s = new Status(0,"Error","Please enter only integer numbers!",exc);
 			//ErrorDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),"Error",exc.getMessage(),s,IStatus.ERROR);	
 		}
@@ -82,18 +82,18 @@ public class DelayTextField extends ControlContribution implements KeyListener,
 	private void updateDelay(){
 		if (textfield == null) return;
 		try{
-			int delay = Integer.parseInt(textfield.getText().trim());
-			if (delay < KIEM.DELAY_MIN) throw(new NumberFormatException("Delay must be >= "+KIEM.DELAY_MIN+"ms!"));
-			if (delay > KIEM.DELAY_MAX) throw(new NumberFormatException("Delay must be <= "+KIEM.DELAY_MAX+"ms!"));
-			KIEM.setDelay(delay);
+			int aimedStepDuration = Integer.parseInt(textfield.getText().trim());
+			if (aimedStepDuration < KIEM.AIMED_STEP_DURATION_MIN) throw(new NumberFormatException("Delay must be >= "+KIEM.AIMED_STEP_DURATION_MIN+"ms!"));
+			if (aimedStepDuration > KIEM.AIMED_STEP_DURATION_MAX) throw(new NumberFormatException("Delay must be <= "+KIEM.AIMED_STEP_DURATION_MAX+"ms!"));
+			KIEM.setAimedStepDuration(aimedStepDuration);
 		}catch(NumberFormatException exc){
-			textfield.setText(""+KIEM.getDelay());
+			textfield.setText(""+KIEM.getAimedStepDuration());
 			//Status s = new Status(0,"Error","Please enter only integer numbers!",exc);
 			//ErrorDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),"Error",exc.getMessage(),s,IStatus.ERROR);	
 		}
 	}
 
 	public void focusGained(FocusEvent e) {
-		textfield.setText(""+KIEM.getDelay());
+		textfield.setText(""+KIEM.getAimedStepDuration());
 	}
 }
