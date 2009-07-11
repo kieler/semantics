@@ -24,8 +24,6 @@ public abstract class DataComponent implements IDataComponent,
 		json = false;
 	}
 	
-
-	
 	public void setInitializationData(IConfigurationElement config,
 			String propertyName, Object data) throws CoreException {
 		this.name = config.getAttribute("name");
@@ -73,6 +71,18 @@ public abstract class DataComponent implements IDataComponent,
 		return false;
 	}
 		
+	//if this DataComponent implements a consumer, 
+	//provide some key's of interest 
+	public String[] getFilterKeys() {
+		return null;
+	}
+	
+	//if this DataComponent implements a consumer, 
+	//it only wants delta values since tick number (default 0 = all)
+	public int getDelta() {
+		return 0;
+	}
+	
 	//-------------------------------------------------------------------------
 	//           at most ONE DataComponent can be a Master! 
 	//-------------------------------------------------------------------------

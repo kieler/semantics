@@ -10,16 +10,5 @@ public abstract class JSONObjectDataComponent
 		this.setJSON(true);
 	}
 	
-	//if this DataComponent implements a consumer, 
-	//provide some key's of interest 
-	public String[] getFilterKeys() {
-		return null;
-	}
-	
-	//if this DataComponent implements a consumer, 
-	//it only wants delta values since tick number (default 0 = all)
-	public int getDelta() {
-		return 0;
-	}
-	
+
 }

@@ -26,6 +26,7 @@ public class Execution implements Runnable {
 	private ConsumerExecution[] consumerExecutionArray;
 	private ProducerExecution[] producerExecutionArray;
 	private KiemView parent; //for errors
+	private JSONDataPool dataPool;
 	
 	private static final int PAUSE_DEYLAY = 50; //in ms
 	
@@ -36,6 +37,8 @@ public class Execution implements Runnable {
 		this.stop = false; 
 		this.steps = 0; // == paused
 		this.dataComponentList = dataComponentList;
+		
+		this.dataPool = new JSONDataPool();
 		
 		consumerExecutionArray = new ConsumerExecution[this.dataComponentList.size()];
 		producerExecutionArray = new ProducerExecution[this.dataComponentList.size()];
@@ -195,11 +198,25 @@ public class Execution implements Runnable {
 							//Consumer AND Producer => blocking
 							if (dataComponent.isJSON()) {
 								//TODO: reasonable data
-								((JSONObjectDataComponent)dataComponent).step(null);
+								try {
+									String[] filterKeys = dataComponent.getFilterKeys();
+									JSONObject newData = ((JSONObjectDataComponent)dataComponent).step(this.dataPool.getData(filterKeys));
+									if (newData != null)
+										this.dataPool.putData(newData);
+								}catch(Exception e){
+									e.printStackTrace();
+								}
 							}
 							else {
 								//TODO: reasonable data
-								((JSONStringDataComponent)dataComponent).step(null);
+								try {
+									String[] filterKeys = dataComponent.getFilterKeys();
+									String newData = ((JSONStringDataComponent)dataComponent).step(this.dataPool.getData(filterKeys).toString());
+									if (newData != null && newData != "") 
+										this.dataPool.putData(new JSONObject(newData));
+								}catch(Exception e){
+									e.printStackTrace();
+								}
 							}
 							System.out.println(dataComponent.getName() + " (Norm Producer) return");
 						}
@@ -208,7 +225,12 @@ public class Execution implements Runnable {
 								//pure Consumer
 								//set current data
 								//TODO: reasonable data
-								consumerExecutionArray[c].setData(null);
+								try {
+									String[] filterKeys = dataComponent.getFilterKeys();
+									consumerExecutionArray[c].setData(this.dataPool.getData(filterKeys));
+								}catch(Exception e){
+									e.printStackTrace();
+								}
 								//call async method
 								//if (consumerExecutionArray[c].isDone())
 									consumerExecutionArray[c].step();
@@ -226,13 +248,19 @@ public class Execution implements Runnable {
 								}
 								System.out.println(c + ") " +dataComponent.getName() + " (Pure Producer) done");
 								//TODO: reasonable data
-								producerExecutionArray[c].getData();
+								try {
+									JSONObject newData = producerExecutionArray[c].getData();
+									if (newData != null) 
+										this.dataPool.putData(newData);
+								}catch(Exception e){
+									e.printStackTrace();
+								}
+								
 						}
 					}//next producer/consumer
 					//calculate execution timings (and current step Duration)
 					endtime = System.currentTimeMillis();
 					this.stepDuration = (int)(endtime - starttime);
-					System.out.println("Step Duration: "+this.stepDuration);
 					if (this.maximumStepDuration < this.stepDuration) {
 						this.maximumStepDuration = this.stepDuration;
 					}
