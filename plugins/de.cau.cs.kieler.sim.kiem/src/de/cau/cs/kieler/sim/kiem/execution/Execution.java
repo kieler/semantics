@@ -252,12 +252,18 @@ public class Execution implements Runnable {
 				}//end if - make a step
 			}//end synchronized
 
+			//escape if stopped
+			if (this.stop == true) return;
+
 			//delay if time of step is left (in run mode only)
 			if (steps == -1) {
 				int timeToDelay = this.aimedStepDuration - this.stepDuration;
 				if (timeToDelay > 0)
 					try{Thread.sleep(timeToDelay);}catch(Exception e){}
 			}	
+			
+			//escape if stopped
+			if (this.stop == true) return;
 			
 			//delay while paused
 			while (steps == 0) {
