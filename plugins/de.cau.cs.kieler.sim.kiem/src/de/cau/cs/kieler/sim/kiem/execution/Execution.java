@@ -146,6 +146,8 @@ public class Execution implements Runnable {
 			this.steps = 0;
 			//stop all child execution threads
 			for (int c = 0; c < this.dataComponentList.size(); c++) {
+				//reset delta index
+				this.dataComponentList.get(c).deltaIndex = 0;
 				if (this.consumerExecutionArray[c] != null)
 					this.consumerExecutionArray[c].stopExecution();
 				if (this.producerExecutionArray[c] != null)

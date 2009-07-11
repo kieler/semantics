@@ -31,7 +31,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 	
 	public static final int AIMED_STEP_DURATION_DEFAULT = 500;
 	public static final int AIMED_STEP_DURATION_MIN = 1;
-	public static final int AIMED_STEP_DURATION_MAX = 5000;
+	public static final int AIMED_STEP_DURATION_MAX = 3600000;
 	
 	//The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem";
