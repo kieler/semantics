@@ -88,6 +88,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 	public void initialize() {
 		// TODO Auto-generated method stub
 		System.out.println("ABRO DataConsumerProducer initialize");
+		resetABO();
 	}
 
 	@Override
