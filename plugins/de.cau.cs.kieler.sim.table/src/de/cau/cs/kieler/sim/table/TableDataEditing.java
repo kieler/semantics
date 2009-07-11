@@ -65,11 +65,16 @@ public class TableDataEditing extends EditingSupport {
 
 		switch (this.columnIndex) {
 		case 0:
+			if (tableData.isPresent() != (Boolean)value)
+				tableData.setModified(true);
 			tableData.setPresent((Boolean)value);
 			break;
 		case 1:
 			try {
-				tableData.setKey(String.valueOf(value));
+				String newValue = String.valueOf(value);
+				if (!tableData.getKey().equals(newValue))
+					tableData.setModified(true);
+				tableData.setKey(newValue);
 			}
 			catch(Exception e) {
 				e.printStackTrace();
@@ -77,7 +82,10 @@ public class TableDataEditing extends EditingSupport {
 			}
 			break;
 		case 2:
-			tableData.setValue(String.valueOf(value));
+			String newValue = String.valueOf(value);
+			if (!tableData.getValue().equals(newValue))
+				tableData.setModified(true);
+			tableData.setValue(newValue);
 			break;
 		default:
 			break;

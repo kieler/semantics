@@ -16,8 +16,6 @@ public class DataProducer extends JSONStringDataComponent implements
 
 	@Override
 	public String step(String JSONString) {
-		// TODO Auto-generated method stub
-		
 		try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
 		
 		String returnString = "";
@@ -26,13 +24,18 @@ public class DataProducer extends JSONStringDataComponent implements
 		for (int c = 0; c < tableDataList.size(); c++) {
 			TableData tableData = tableDataList.get(c);
 			if (tableData.isPresent()) {
-				if (!returnString.equals(""))
-					returnString += ",";
-				String key = tableData.getKey();
-				String value = tableData.getValue();
-				returnString += "\""+key+"\":\""+value+"\"";		
+				if (tableData.isModified()) {
+					if (!returnString.equals(""))
+						returnString += ",";
+					String key = tableData.getKey();
+					String value = tableData.getValue();
+					returnString += "\""+key+"\":\""+value+"\"";
+				}
 			}
 		}
+		
+		//we have sent all modified values => reset
+		TableDataList.getInstance().resetModified();
 		
 		returnString = "{" + returnString + "}";
 		

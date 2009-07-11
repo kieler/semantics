@@ -3,19 +3,39 @@ package de.cau.cs.kieler.sim.table;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.widgets.Display;
+
+import de.cau.cs.kieler.sim.kiem.views.KiemView;
+import de.cau.cs.kieler.sim.table.views.DataTableView;
 
 public class TableDataList {
 	
 	private List<TableData> tableDataList;
 	private static TableDataList content;
+	private TableViewer viewer;
 
-	public TableDataList() {
+	public TableDataList(TableViewer viewer) {
+		this.viewer = viewer;
 		tableDataList = new ArrayList<TableData>();
-		this.add(new TableData(this, "A", "0"));
-		this.add(new TableData(this, "B", "0"));
-		this.add(new TableData(this, "R", "0"));
-		this.add(new TableData(this, "O", "0"));
+		content = this;
+	}
+	
+	public void resetModified() {
+		for (int c = 0; c < tableDataList.size(); c++) {
+			tableDataList.get(c).setModified(false);
+		}
+	}
+	
+	public void updateView() {
+		//asynchronously update the table
+		Display.getDefault().syncExec(
+				  new Runnable() {
+				    public void run(){
+						viewer.refresh();
+				    }
+		});
 	}
 	
 	public void add(TableData tableData) {
@@ -59,8 +79,7 @@ public class TableDataList {
 		if (content != null) {
 			return content;
 		}
-		content = new TableDataList();
-		return content;
+		return null;
 	}
 	
 	public int size() {

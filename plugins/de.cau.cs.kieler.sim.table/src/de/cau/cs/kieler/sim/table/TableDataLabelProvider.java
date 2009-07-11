@@ -37,7 +37,10 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 		case 0 :  // PRESENT_COLUMN
 			return ""; 
 		case 1 : // KEY_COLUMN
-			return tableData.getKey();
+			if (tableData.isModified())
+				return "*"+tableData.getKey();
+			else
+				return tableData.getKey();
 		case 2 : // VALUE_COLUMN 
 			return tableData.getValue();
 		default :

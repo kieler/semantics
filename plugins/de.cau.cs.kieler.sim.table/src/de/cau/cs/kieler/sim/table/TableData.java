@@ -7,12 +7,14 @@ public class TableData {
 	private boolean present;
 	private String  key;
 	private String 	value;
+	private boolean modified;
 	
 	public TableData(TableDataList parentTableDataList) {
 		this.tableDataList = parentTableDataList;
 		this.present = true;
 		this.key = "";
 		this.value = "";
+		this.modified = false;
 	}
 	public TableData(TableDataList parentTableDataList, 
 					 String key) {
@@ -60,6 +62,13 @@ public class TableData {
 	}
 	public void setPresent(boolean present) {
 		this.present = present;
+	}
+	
+	public void setModified(boolean modified) {
+		this.modified = modified;
+	}
+	public boolean isModified() {
+		return this.modified;
 	}
 	
 }

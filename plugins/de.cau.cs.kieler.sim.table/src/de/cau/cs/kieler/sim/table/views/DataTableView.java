@@ -63,6 +63,10 @@ public class DataTableView extends ViewPart {
 	public TableDataList getTableDataList() {
 		return tableDataList;
 	}
+	public void refreshViewer() {
+		viewer.refresh();
+		return;
+	}
 
 	/**
 	 * This is a callback that will allow us
@@ -70,7 +74,7 @@ public class DataTableView extends ViewPart {
 	 */
 	public void createPartControl(Composite parent) {
 		createViewer(parent);
-		viewer.setInput(TableDataList.getInstance());
+		viewer.setInput(new TableDataList(viewer));
 		hookSideEffectActions();
 		hookContextMenu();
 		contributeToActionBars();
@@ -180,11 +184,11 @@ public class DataTableView extends ViewPart {
 					Object obj = ((IStructuredSelection)selection).getFirstElement();
 					if (obj != null) {
 						//showMessage("Double-click detected on "+obj.toString());
-						TableData tableData = (TableData)obj;
+						//TableData tableData = (TableData)obj;
 						//toggle present/absent
-						tableData.setPresent(!tableData.isPresent());
-						viewer.refresh();
-						updateEnabled();
+						//tableData.setPresent(!tableData.isPresent());
+						//viewer.refresh();
+						//updateEnabled();
 					}
 				}
 			}
