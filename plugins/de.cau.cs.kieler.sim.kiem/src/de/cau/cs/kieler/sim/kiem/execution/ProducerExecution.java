@@ -13,8 +13,11 @@ public class ProducerExecution implements Runnable {
 	private boolean error;
 	private DataComponent dataComponent;
 	private JSONObject data;
+	private Execution parent;
 	
-	public ProducerExecution(DataComponent dataComponent) {
+	public ProducerExecution(DataComponent dataComponent,
+						     Execution parent) {
+		this.parent = parent;
 		this.stop = false; 
 		this.done = false; 
 		this.doneInternal = true;
@@ -35,6 +38,9 @@ public class ProducerExecution implements Runnable {
 	}
 	public synchronized void setDone(boolean done) {
 		this.done = done;
+		synchronized(parent) {
+			parent.notify();
+		}
 	}
 	
 	public JSONObject getData() {
@@ -59,6 +65,9 @@ public class ProducerExecution implements Runnable {
 				    //now we got the result and are done
 					this.doneInternal = true;
 					this.done = true;
+					synchronized(parent) {
+						parent.notify();
+					}
 					//go to sleep
 					this.wait();
 				}

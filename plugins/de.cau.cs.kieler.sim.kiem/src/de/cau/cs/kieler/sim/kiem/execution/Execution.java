@@ -55,7 +55,7 @@ public class Execution implements Runnable {
 				}
 				else if(dataComponent.isPureProducer()) {
 					//pure Producer
-					producerExecutionArray[c] = new ProducerExecution(dataComponent);
+					producerExecutionArray[c] = new ProducerExecution(dataComponent, this);
 					(new Thread(producerExecutionArray[c])).start();
 				}
 			}
@@ -258,8 +258,13 @@ public class Execution implements Runnable {
 								//pure Producer
 								//get blocking result
 								while (!producerExecutionArray[c].isDone()) {
+									try {
+										this.wait();
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
 									if (this.stop == true) return;
-									Thread.yield();
 								}
 								System.out.println(c + ") " +dataComponent.getName() + " (Pure Producer) done");
 								//TODO: reasonable data
