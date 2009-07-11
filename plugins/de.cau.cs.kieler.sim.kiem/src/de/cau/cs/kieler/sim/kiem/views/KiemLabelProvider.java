@@ -52,8 +52,11 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/checkedplain.png").createImage();
 	private static final Image CHECKEDPLAIN_DISABLED = AbstractUIPlugin
-	.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-			"icons/checkedplainDisabled.png").createImage();
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+					"icons/checkedplainDisabled.png").createImage();
+	private static final Image CHECKEDPLAIN_MASTER = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+					"icons/checkedplainMaster.png").createImage();
 
 	private KiemView parent;
 	
@@ -126,21 +129,11 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 				}
 			}
 		}
-//		else if (columnIndex == 3) {
-//			if (dataComponent.isJSON()) {
-//				//enabled
-//				return CHECKEDPLAIN;
-//			}
-//			else {
-//				//disabled
-//				return null;
-//			}
-//		}
 		else if (columnIndex == 3) {
 			if (dataComponent.isMaster()) {
 				//enabled
 				if (dataComponent.isEnabled())
-					return CHECKEDPLAIN;
+					return CHECKEDPLAIN_MASTER;
 				else
 					return CHECKEDPLAIN_DISABLED;					
 			}
@@ -152,8 +145,12 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 		else if (columnIndex == 4) {
 			if (dataComponent.needModelFile()) {
 				//enabled
-				if (dataComponent.isEnabled())
-					return CHECKEDPLAIN;
+				if (dataComponent.isEnabled()) {
+					if (dataComponent.isMaster())
+						return CHECKEDPLAIN_MASTER;
+					else
+						return CHECKEDPLAIN;
+				}
 				else
 					return CHECKEDPLAIN_DISABLED;					
 			}

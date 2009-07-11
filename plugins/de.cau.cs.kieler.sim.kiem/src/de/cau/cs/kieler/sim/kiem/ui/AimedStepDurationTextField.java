@@ -25,6 +25,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 
 	Text textfield;
 	private KiemPlugin KIEM;
+	boolean enabled;
 
 		
 	public AimedStepDurationTextField(KiemPlugin KIEM) {
@@ -33,6 +34,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	}
 	
 	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 		if (textfield == null) return;
 		this.textfield.setEnabled(enabled);
 	}
@@ -41,6 +43,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	protected Control createControl(Composite parent) {
 		this.updateDelay();
 		textfield = new Text(parent,SWT.BORDER);
+		this.textfield.setEnabled(this.enabled);
 		textfield.setToolTipText("Aimed Duration of Steps in Run Mode (ms)");
 		textfield.setText(KIEM.AIMED_STEP_DURATION_DEFAULT+"    ");
 		textfield.addKeyListener(this);

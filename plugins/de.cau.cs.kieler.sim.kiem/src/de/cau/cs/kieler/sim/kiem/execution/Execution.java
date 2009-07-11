@@ -20,7 +20,7 @@ public class Execution implements Runnable {
 	private int minimumStepDuration;
 	private int weightedAverageStepDuration;
 	private long accumulatedStepDurations;
-	private long executionPlauseDuration;
+	private long accumulatedPlauseDurations;
 	private long executionStartTime;
 	private long stepCounter;
 	private ConsumerExecution[] consumerExecutionArray;
@@ -79,7 +79,9 @@ public class Execution implements Runnable {
 		return executionStartTime;
 	}	
 	public long getExecutionDurantion() {
-		return 	System.currentTimeMillis() - executionStartTime - executionPlauseDuration;
+		return 	System.currentTimeMillis() 
+				- executionStartTime 
+				- accumulatedPlauseDurations;
 	}
 	public long getSteps() {
 		return this.stepCounter;
@@ -113,12 +115,12 @@ public class Execution implements Runnable {
 		this.minimumStepDuration = -1; //infinity
 		this.weightedAverageStepDuration = 0;
 		this.accumulatedStepDurations = 0;
+		this.accumulatedPlauseDurations = 0;
 		this.stepCounter = 0;
-		this.executionPlauseDuration = 0;
+		this.stepDuration = 0;
 	}
 	
 	public synchronized void runExecution() {
-		resetTimingVariables();
 		this.steps = -1; //indicates run mode
 	}
 	
@@ -131,12 +133,12 @@ public class Execution implements Runnable {
 	}
 	
 	public void stopExecution() {
-		//not synchonized to stop immediately w/o queuing
+		//not synchronized to stop immediately w/o queuing
 		this.stop = true;
 		this.steps = 0;
 		
 		synchronized(this) {
-			//for safety reasons do this agaion
+			//for safety reasons do this synchronized again
 			this.stop = true;
 			this.steps = 0;
 			//stop all child execution threads
@@ -158,6 +160,7 @@ public class Execution implements Runnable {
 		while (!this.stop) {
 			
 			long starttime = System.currentTimeMillis();
+			long endtime   = System.currentTimeMillis();
 			
 			synchronized(this) {
 				//test if we have to make a step (1) or if we are in running mode (-1)
@@ -227,7 +230,7 @@ public class Execution implements Runnable {
 						}
 					}//next producer/consumer
 					//calculate execution timings (and current step Duration)
-					long endtime = System.currentTimeMillis();
+					endtime = System.currentTimeMillis();
 					this.stepDuration = (int)(endtime - starttime);
 					System.out.println("Step Duration: "+this.stepDuration);
 					if (this.maximumStepDuration < this.stepDuration) {
@@ -258,11 +261,13 @@ public class Execution implements Runnable {
 			
 			//delay while paused
 			while (steps == 0) {
-				executionPlauseDuration += PAUSE_DEYLAY;
+				starttime = System.currentTimeMillis();
 				System.out.println(">>PAUSED<<");
 				try{Thread.sleep(PAUSE_DEYLAY);}catch(Exception e){}
 				//if stop is requested, jump out
 				if (this.stop) return;
+				endtime = System.currentTimeMillis();
+				accumulatedPlauseDurations += endtime - starttime;
 			}
 			
 		}//next while not stop

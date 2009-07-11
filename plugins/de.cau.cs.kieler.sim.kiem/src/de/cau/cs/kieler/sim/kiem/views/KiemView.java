@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.RGB;
 
 import org.eclipse.swt.SWT;
@@ -71,11 +72,16 @@ public class KiemView extends ViewPart {
 		//change the text color (black or gray)
 		Color colorEnabled  = new Color(null, new RGB(0,0,0));
 		Color colorDisabled = new Color(null, new RGB(150,150,150));
+		Color colorMaster   = new Color(null, new RGB(0,0,255));
 		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
 			DataComponent dataComponent = 
 				KIEM.getDataComponentList().get(c);
-			if (dataComponent.isEnabled())
+			if (dataComponent.isEnabled()) {
 				viewer.getTable().getItem(c).setForeground(colorEnabled);
+				if (dataComponent.isMaster()) {
+					viewer.getTable().getItem(c).setForeground(colorMaster);
+				}
+			}
 			else
 				viewer.getTable().getItem(c).setForeground(colorDisabled);
 		}
@@ -98,7 +104,7 @@ public class KiemView extends ViewPart {
 		hookSelectionChangedAction();
 		hookDoubleClickAction();
 		checkForSingleEnabledMaster(true);
-		updateEnabled(true);
+		updateView();
 	}
 	
 	// This will create the columns for the table
@@ -233,10 +239,19 @@ public class KiemView extends ViewPart {
 		}
 		catch(Exception e) {
 			//not all producer may require a selected model
-			//let the producer show its own error message
-			//showMessage("Please select a model to execute in the Project Explorer!");
+			//only those which have overridden the needModelFile() method
+			//and also are enabled are beeing tested here
+			for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
+				DataComponent dataComponent = KIEM.getDataComponentList().get(c);
+				if (dataComponent.isEnabled() &&
+					dataComponent.needModelFile()) {
+					showWarning("Component '"+dataComponent.getName()+"' needs an input model file."+
+							    "\nPlease select one in the Project Explorer!");
+					KIEM.resetCurrentModelFile();
+					return false;
+				}
+			}
 			KIEM.resetCurrentModelFile();
-			//return false;
 		}
 
 		int countEnabledProducer = 0;
@@ -542,9 +557,6 @@ public class KiemView extends ViewPart {
 				if (KIEM.execution != null) {
 					KIEM.execution.stopExecution();
 				}
-				if (KIEM.execution.getStepDuration() < KIEM.getAimedStepDuration()) {
-					getDelayTextField().setStepDuration(KIEM.execution.getStepDuration());
-				}
 				//get results
 				long executionTime = KIEM.execution.getExecutionDurantion();
 				long minStepDuration = KIEM.execution.getMinimumStepDuration();
@@ -559,10 +571,10 @@ public class KiemView extends ViewPart {
 				updateView();
 
 				//show execution results
-				showMessage("Execution Timing Results",
-							"          Number of Steps : "+steps+"\n"+
-							"Overall Execution Time : "+executionTime+" ms\n\n"+
-						    "                   Aimed Step Duration : "+aimedStepDuration+ " ms\n"+
+				showMessage("KIELER Execution Manager - Execution Timing Results",
+							"                          Number of Steps : "+steps+"\n"+
+							"                Overall Execution Time : "+executionTime+" ms\n\n"+
+						    "                    Aimed Step Duration : "+aimedStepDuration+ " ms\n"+
 						    "                 Minimum Step Duration : "+minStepDuration+ " ms\n"+
 						    "Weighted Average Step Duration : "+wavStepDuration+ " ms\n"+
 						    "                 Average Step Duration : "+aveStepDuration+ " ms\n"+
