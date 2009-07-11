@@ -195,12 +195,15 @@ public class KiemView extends ViewPart {
   //---------------------------------------------------------------------------
 	
 	public void showMessage(String message) {
+		showMessage("KIELER Execution Manager",message);
+	}
+	public void showMessage(String title, String message) {
 		MessageDialog.openInformation(
 			viewer.getControl().getShell(),
-			"KIELER Execution Manager",
+			title,
 			message);
 	}
-
+	
 	public void showWarning(String message) {
 		MessageDialog.openWarning(
 			viewer.getControl().getShell(),
@@ -217,8 +220,11 @@ public class KiemView extends ViewPart {
 	
   //---------------------------------------------------------------------------	
   //---------------------------------------------------------------------------
+	public boolean initDataComponent() {
+		return initDataComponent(true);
+	}
 	
-	private boolean initDataComponent() {
+	private boolean initDataComponent(boolean silent) {
 		if (KIEM.execution != null) return true;
 
 		try {
@@ -251,14 +257,16 @@ public class KiemView extends ViewPart {
 		}//next c
 
 		if (countEnabledProducer < 1) {
-			showMessage("Please enable at least one DataProducer!");
+			if (!silent)
+				showWarning("Please enable at least one Data Producer!");
 			KIEM.resetCurrentModelFile();
 			KIEM.execution.stopExecution();
 			KIEM.execution = null;
 			return false;
 		}
 		else if (countEnabledConsumer < 1) {
-			showMessage("Please enable at least one DataConsumer!");
+			if (!silent)
+				showWarning("Please enable at least one Data Consumer!");
 			KIEM.resetCurrentModelFile();
 			KIEM.execution.stopExecution();
 			KIEM.execution = null;
@@ -423,6 +431,7 @@ public class KiemView extends ViewPart {
 			public void run() {
 				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				dataComponent.setEnabled(false);
+				checkForSingleEnabledMaster(false,dataComponent);
 				updateView();
 			}
 		};
@@ -479,7 +488,7 @@ public class KiemView extends ViewPart {
 		if (actionStep != null) return actionStep;
 		actionStep = new Action() {
 			public void run() {
-				if (initDataComponent()) {
+				if (initDataComponent(false)) {
 					KIEM.execution.stepExecution();
 				}
 				updateView();
@@ -496,7 +505,7 @@ public class KiemView extends ViewPart {
 		if (actionRun != null) return actionRun;
 		actionRun = new Action() {
 			public void run() {
-				if (initDataComponent()) {
+				if (initDataComponent(false)) {
 					KIEM.execution.runExecution();
 				}
 				updateView();
@@ -513,7 +522,7 @@ public class KiemView extends ViewPart {
 		if (actionPause != null) return actionPause;
 		actionPause = new Action() {
 			public void run() {
-				if (initDataComponent()) {
+				if (initDataComponent(false)) {
 					KIEM.execution.pauseExecution();
 				}
 				updateView();
@@ -533,12 +542,26 @@ public class KiemView extends ViewPart {
 				if (KIEM.execution != null) {
 					KIEM.execution.stopExecution();
 				}
-				if (KIEM.execution.getMinimumStepLength() < KIEM.getDelay()) {
-					getDelayTextField().setDelay(KIEM.execution.getMinimumStepLength());
+				if (KIEM.execution.getStepLength() < KIEM.getDelay()) {
+					getDelayTextField().setDelay(KIEM.execution.getStepLength());
 				}
+				//get results
+				long executionTime = KIEM.execution.getExecutionDurantion();
+				long minStepLength = KIEM.execution.getMinimumStepLength();
+				long aveStepLength = KIEM.execution.getAverageStepLength();
+				long maxStepLength = KIEM.execution.getMaximumStepLength();
+				
 				KIEM.resetCurrentModelFile();
 				KIEM.execution = null;
 				updateView();
+
+				//show execution results
+				showMessage("Execution Timing Results",
+							"Overall Execution Time : "+executionTime+" ms\n\n"+
+						    "Minimum Step Length  : "+minStepLength+ " ms\n"+
+						    "Average Step Length  : "+aveStepLength+ " ms\n"+
+						    "Maximum Step Length : "+maxStepLength+ " ms");
+				
 			}
 		};
 		actionStop.setText("Stop");
@@ -562,8 +585,7 @@ public class KiemView extends ViewPart {
 							DataComponent dataComponent = (DataComponent)obj;
 							//toggle enabledness
 							dataComponent.setEnabled(!dataComponent.isEnabled());
-							if (dataComponent.isEnabled())
-								checkForSingleEnabledMaster(false,dataComponent);
+							checkForSingleEnabledMaster(false,dataComponent);
 							updateView();
 						}
 					}// end if - selected
@@ -607,6 +629,7 @@ public class KiemView extends ViewPart {
 		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
 			DataComponent dataComponentTemp = 
 				KIEM.getDataComponentList().get(c);
+			dataComponentTemp.masterSetKIEMInstances(null, null);
 			if (dataComponentTemp.isMaster() &&
 				dataComponentTemp.isEnabled() &&
 				dataComponentTemp != KIEM.getMaster()) {
@@ -621,6 +644,9 @@ public class KiemView extends ViewPart {
 					this.refreshEnabledDisabledTextColors();
 				}
 			}
+		}
+		if (KIEM.getMaster() != null) {
+			KIEM.getMaster().masterSetKIEMInstances(KIEM, this);
 		}
 		
 	}

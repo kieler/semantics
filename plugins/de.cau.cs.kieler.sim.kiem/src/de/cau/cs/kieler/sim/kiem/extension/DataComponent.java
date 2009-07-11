@@ -4,6 +4,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
 public abstract class DataComponent implements IDataComponent,
 											   IExecutableExtension {
@@ -12,15 +13,18 @@ public abstract class DataComponent implements IDataComponent,
 	private String modelFile;
 	private boolean enabled;
 	private boolean json;
-	KiemPlugin KIEM;                   //only contains access to execution
-									   //thread iff this DataComponent
+	private KiemPlugin KIEMInstance;   //only contains access to execution
+	private KiemView KIEMViewInstance; //thread iff this DataComponent
 									   //is a master
+	
 	
 	public DataComponent() {
 		super();
 		enabled = true;
 		json = false;
 	}
+	
+
 	
 	public void setInitializationData(IConfigurationElement config,
 			String propertyName, Object data) throws CoreException {
@@ -84,84 +88,118 @@ public abstract class DataComponent implements IDataComponent,
 	//if this is a master it can initiate the execution
 	//this method returns -1 if the previous step did not completed yet
 	//otherwise it will return the last execution time of the full step
-	public int masterStepExecution() {
+	public int masterStepExecution() throws Exception {
 		if (this.isMaster()) {
-			if (KIEM != null) {
-				return KIEM.execution.stepExecution();
+			if ((KIEMViewInstance != null)) {
+				KIEMViewInstance.initDataComponent();
+			}
+			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
+				int returnValue = KIEMInstance.execution.stepExecution();
+				KIEMViewInstance.updateView();
+				return returnValue;
 			}
 		}
-		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master! Override isMaster() to return true!");
 	}
 	//if this is a master it can stop the execution
-	public void masterStopExecution() {
+	public void masterStopExecution() throws Exception {
 		if (this.isMaster()) {
-			if (KIEM != null) {
-				KIEM.execution.stopExecution();
+			if (KIEMViewInstance != null) {
+				KIEMViewInstance.initDataComponent();
+			}
+			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
+				KIEMInstance.execution.stopExecution();
+				KIEMInstance.resetCurrentModelFile();
+				KIEMInstance.execution = null;
+				KIEMViewInstance.updateView();
 				return;
 			}
 		}
-		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master! Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
-	public void masterPauseExecution() {
+	public void masterPauseExecution() throws Exception {
 		if (this.isMaster()) {
-			if (KIEM != null) {
-				KIEM.execution.stopExecution();
+			if ((KIEMViewInstance != null)) {
+				KIEMViewInstance.initDataComponent();
+			}
+			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
+				KIEMInstance.execution.pauseExecution();
+				KIEMViewInstance.updateView();
 				return;
 			}
 		}
-		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master! Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
-	public void masterSetDelay(int delay) {
+	public void masterSetDelay(int delay) throws Exception {
 		if (this.isMaster()) {
-			if (KIEM != null) {
-				KIEM.execution.setDelay(delay);
+			if (KIEMViewInstance != null) {
+				KIEMViewInstance.initDataComponent();
+			}
+			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
+				KIEMInstance.execution.setDelay(delay);
+				KIEMViewInstance.updateView();
 				return;
 			}
 		}
-		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master! Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
-	public int masterGetDelay() {
+	public int masterGetDelay() throws Exception {
 		if (this.isMaster()) {
-			if (KIEM != null) {
-				return KIEM.execution.getDelay();
+			if (KIEMViewInstance != null) {
+				KIEMViewInstance.initDataComponent();
+			}
+			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
+				return KIEMInstance.execution.getDelay();
 			}
 		}
-		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master! Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
-	public void masterRunExecution() {
+	public void masterRunExecution() throws Exception {
 		if (this.isMaster()) {
-			if (KIEM != null) {
-				KIEM.execution.runExecution();
+			if ((KIEMViewInstance != null)) {
+				KIEMViewInstance.initDataComponent();
+			}
+			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
+				KIEMInstance.execution.runExecution();
+				KIEMViewInstance.updateView();
 				return;
 			}
 		}
-		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master! Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
-	public boolean masterIsPaused() {
+	public boolean masterIsPaused() throws Exception {
 		if (this.isMaster()) {
-			if (KIEM != null) {
-				return KIEM.execution.isPaused();
+			if (KIEMViewInstance != null) {
+				KIEMViewInstance.initDataComponent();
+			}
+			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
+				return KIEMInstance.execution.isPaused();
 			}
 		}
-		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master! Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
-	public boolean masterIsRunning() {
+	public boolean masterIsRunning() throws Exception {
 		if (this.isMaster()) {
-			if (KIEM != null) {
-				return KIEM.execution.isRunning();
+			if (KIEMViewInstance != null) {
+				KIEMViewInstance.initDataComponent();
+			}
+			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
+				return KIEMInstance.execution.isRunning();
 			}
 		}
-		throw new RuntimeException("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master! Override isMaster() to return true!");
 	}
 	//is called from the ExecutionManager only iff isMaster() returns true
-	public void masterSetKIEM(KiemPlugin KIEM) {
-		this.KIEM = KIEM;
+	public void masterSetKIEMInstances(KiemPlugin KIEMInstance, 
+							  		   KiemView KIEMViewInstance) {
+		this.KIEMInstance = KIEMInstance;
+		this.KIEMViewInstance = KIEMViewInstance;
 	}
 	//-------------------------------------------------------------------------
 	

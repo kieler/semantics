@@ -12,8 +12,6 @@ public class ConsumerExecution implements Runnable {
 	private boolean error;
 	private DataComponent dataComponent;
 	private JSONObject data;
-	//private int skipCounter;
-	//private int skipInit;
 	
 	public ConsumerExecution(DataComponent dataComponent) {
 		this.stop = false; 
@@ -21,40 +19,23 @@ public class ConsumerExecution implements Runnable {
 		this.error = false;
 		this.data = null;
 		this.dataComponent = dataComponent;
-		//by default, do not skip anything
-		//this.skipInit = 0;
-		//this.skipCounter = 0;
 	}
 	
-	//public boolean isDone() {
-	//	return done;
-	//}
 	
-	public void step() {
-		//if (this.skipCounter > 0) {
-			//we need to skip
-		//	this.skipCounter--;
-		//	System.out.println("  SKIPPED ("+this.skipCounter+")");
-		//}
-		//else {
-			//we now call asynchronously
-			//this.skipCounter = this.skipInit;
-			//check if we allready done
-			if (!done) {
-				//deadline missed, count up skipInit
-				System.out.println("  SKIPPED - NOT READY YET");
-				//this.skipInit++;
-			}
-			else {
-				System.out.println("  START - READY");
-				//deadline met 
-				this.done = false;
-				//awake this thread
-				synchronized(this){
-					this.notify();
-				}
-			}
-		//}
+	public synchronized void step() {
+		//check if we allready done
+		if (!done) {
+			//deadline missed, count up skipInit
+			System.out.println("  SKIPPED - NOT READY YET");
+			//this.skipInit++;
+		}
+		else {
+			System.out.println("  START - READY");
+			//deadline met 
+			this.done = false;
+			//awake this thread
+			this.notify();
+		}
 	}
 
 	public JSONObject getData() {
@@ -77,6 +58,9 @@ public class ConsumerExecution implements Runnable {
 			//go to sleep
 			try {
 				synchronized(this){
+					//now we got the result and are done
+					this.done = true;
+					System.out.println("  "+dataComponent.getName() + " (Pure Consumer) calc end");
 					this.wait();
 				}
 			}catch(Exception e){
@@ -113,13 +97,6 @@ public class ConsumerExecution implements Runnable {
 				this.done = true;
 			}
 			
-			//now we got the result and are done
-			synchronized(this) {
-				this.done = true;
-			}
-			System.out.println("  "+dataComponent.getName() + " (Pure Consumer) calc end");
-			
-
 		}//next while not stop
 	}
 

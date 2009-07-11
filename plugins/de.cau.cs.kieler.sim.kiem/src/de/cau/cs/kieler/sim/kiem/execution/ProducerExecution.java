@@ -54,9 +54,12 @@ public class ProducerExecution implements Runnable {
 	
 	public void run() {
 		while (!this.stop) {
-			//go to sleep
 			try {
-				synchronized(this){
+				synchronized(this) {
+				    //now we got the result and are done
+					this.doneInternal = true;
+					this.done = true;
+					//go to sleep
 					this.wait();
 				}
 			}catch(Exception e){
@@ -90,11 +93,6 @@ public class ProducerExecution implements Runnable {
 							this.error = true;
 						}
 					}//not null
-				}
-				//now we got the result and are done
-				synchronized(this) {
-					this.doneInternal = true;
-					this.done = true;
 				}
 			}//end if not done
 			

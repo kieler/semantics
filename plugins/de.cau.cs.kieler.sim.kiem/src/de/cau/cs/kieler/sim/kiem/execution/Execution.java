@@ -15,7 +15,12 @@ public class Execution implements Runnable {
 	private boolean stop;
 	private List<DataComponent> dataComponentList;
 	private int steps;
+	private int stepLength;
+	private int maximumStepLength;
 	private int minimumStepLength;
+	private int averageStepLength;
+	private long executionStartTime;
+	private long tick;
 	private ConsumerExecution[] consumerExecutionArray;
 	private ProducerExecution[] producerExecutionArray;
 	private KiemView parent; //for errors
@@ -51,8 +56,23 @@ public class Execution implements Runnable {
 		
 	}
 	
+	public int getStepLength() {
+		return stepLength;
+	}	
+	public int getMaximumStepLength() {
+		return maximumStepLength;
+	}	
 	public int getMinimumStepLength() {
 		return minimumStepLength;
+	}	
+	public int getAverageStepLength() {
+		return averageStepLength;
+	}	
+	public long getExecutionStartTime() {
+		return executionStartTime;
+	}	
+	public long getExecutionDurantion() {
+		return 	System.currentTimeMillis() - executionStartTime;
 	}	
 	
 	public void setDelay(int delay) {
@@ -69,7 +89,7 @@ public class Execution implements Runnable {
 		}
 		else {
 			this.steps = 1;
-			return minimumStepLength;
+			return stepLength;
 		}
 	}
 	
@@ -78,7 +98,12 @@ public class Execution implements Runnable {
 	}
 	
 	public synchronized void runExecution() {
+		this.executionStartTime = System.currentTimeMillis();
+		this.maximumStepLength = 0; 
+		this.minimumStepLength = -1; //infinity
+		this.averageStepLength = 0;
 		this.steps = -1;
+		this.tick = 0;
 	}
 	
 	public boolean isPaused() {
@@ -116,6 +141,8 @@ public class Execution implements Runnable {
 			
 			synchronized(this) {
 				if ((steps == -1)||(steps > 0)) {
+					//make a tick
+					this.tick++;
 					
 					//reduce number of steps
 					if (steps > -1) steps--;
@@ -184,13 +211,29 @@ public class Execution implements Runnable {
 			//delay if time of step is left
 			if (steps == -1) {
 				long endtime = System.currentTimeMillis();
-				this.minimumStepLength = (int)(endtime - starttime);
-				int timeToDelay = this.delay - this.minimumStepLength;
+				this.stepLength = (int)(endtime - starttime);
+				if (this.maximumStepLength < this.stepLength) {
+					this.maximumStepLength = this.stepLength;
+				}
+				if ((this.minimumStepLength > this.stepLength)||
+					(this.minimumStepLength == -1)){
+					this.minimumStepLength = this.stepLength;
+				}
+				if (this.averageStepLength == 0) {
+					//frist tick
+					this.averageStepLength = this.stepLength;
+				}
+				else {
+					//other ticks
+					this.averageStepLength = (this.averageStepLength + this.stepLength)/2;
+				}
+				int timeToDelay = this.delay - this.stepLength;
 				if (timeToDelay > 0)
 					try{Thread.sleep(timeToDelay);}catch(Exception e){}
 			}	
 			//delay while paused
 			while (steps == 0) {
+				System.out.println(">>PAUSED<<");
 				try{Thread.sleep(50);}catch(Exception e){}
 				//if stop is requested, jump out
 				if (this.stop) return;

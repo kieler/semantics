@@ -51,6 +51,9 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 	private static final Image CHECKEDPLAIN = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/checkedplain.png").createImage();
+	private static final Image CHECKEDPLAIN_DISABLED = AbstractUIPlugin
+	.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+			"icons/checkedplainDisabled.png").createImage();
 
 	private KiemView parent;
 	
@@ -136,7 +139,10 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 		else if (columnIndex == 3) {
 			if (dataComponent.isMaster()) {
 				//enabled
-				return CHECKEDPLAIN;
+				if (dataComponent.isEnabled())
+					return CHECKEDPLAIN;
+				else
+					return CHECKEDPLAIN_DISABLED;					
 			}
 			else {
 				//disabled
@@ -146,7 +152,10 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 		else if (columnIndex == 4) {
 			if (dataComponent.needModelFile()) {
 				//enabled
-				return CHECKEDPLAIN;
+				if (dataComponent.isEnabled())
+					return CHECKEDPLAIN;
+				else
+					return CHECKEDPLAIN_DISABLED;					
 			}
 			else {
 				//disabled
