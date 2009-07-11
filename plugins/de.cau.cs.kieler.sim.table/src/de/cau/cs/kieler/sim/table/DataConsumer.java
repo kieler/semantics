@@ -6,6 +6,7 @@ import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONArray;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import de.cau.cs.kieler.sim.table.views.DataTableView;
 
 public class DataConsumer extends JSONStringDataComponent implements
 		IJSONStringDataComponent {
@@ -70,7 +71,9 @@ public class DataConsumer extends JSONStringDataComponent implements
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		TableDataList.getInstance().updateView();
+		//update only if not currently edited
+		if (!DataTableView.getInstance().isCurrentlyEdited())
+			TableDataList.getInstance().updateView();
 		try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
 		System.out.println("    CONSUMER DONE");
 		return null;

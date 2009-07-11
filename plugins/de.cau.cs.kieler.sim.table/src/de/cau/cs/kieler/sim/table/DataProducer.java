@@ -36,6 +36,10 @@ public class DataProducer extends JSONStringDataComponent implements
 		
 		//we have sent all modified values => reset
 		TableDataList.getInstance().resetModified();
+
+		//update only if not currently edited
+		if (!DataTableView.getInstance().isCurrentlyEdited())
+			TableDataList.getInstance().updateView();
 		
 		returnString = "{" + returnString + "}";
 		

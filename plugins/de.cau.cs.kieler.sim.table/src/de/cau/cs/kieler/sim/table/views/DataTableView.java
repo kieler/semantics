@@ -67,6 +67,10 @@ public class DataTableView extends ViewPart {
 		viewer.refresh();
 		return;
 	}
+	public boolean isCurrentlyEdited() {
+		return (viewer.isCellEditorActive()
+				|| viewer.isBusy());
+	}
 
 	/**
 	 * This is a callback that will allow us
@@ -142,7 +146,7 @@ public class DataTableView extends ViewPart {
 		if (actionNew != null) return actionNew;
 		actionNew = new Action() {
 			public void run() {
-				TableData newElement = new TableData(TableDataList.getInstance());
+				TableData newElement = new TableData(TableDataList.getInstance(),false,"","");
 				TableDataList.getInstance().add(newElement);
 				viewer.refresh();
 				viewer.setSelection((new StructuredSelection(newElement)));
