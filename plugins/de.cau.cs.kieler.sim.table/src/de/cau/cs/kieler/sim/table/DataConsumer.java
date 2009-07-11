@@ -16,7 +16,10 @@ public class DataConsumer extends JSONStringDataComponent implements
 	@Override
 	public String step(String JSONString) {
 		// TODO Auto-generated method stub
+		System.out.println("    CONSUMER START");
+		System.out.println("RECEIVED: "+JSONString);
 		try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
+		System.out.println("    CONSUMER DONE");
 		return null;
 	}
 

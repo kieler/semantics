@@ -96,7 +96,7 @@ public class JSONDataPool {
 			//merge new data
 			this.dataDeltaPool.add(jsonMerger.mergeObjects(
 					this.dataDeltaPool.get(poolCounter), newData));
-			jsonMerger.mergeObjects(this.dataPool, newData);
+			this.dataPool = jsonMerger.mergeObjects(this.dataPool, newData);
 			this.poolCounter++;
 		}
 	}

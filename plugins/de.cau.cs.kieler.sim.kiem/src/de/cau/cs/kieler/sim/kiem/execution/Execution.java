@@ -174,6 +174,9 @@ public class Execution implements Runnable {
 					//reduce number of steps
 					if (steps > -1) steps--;
 					System.out.println("-- execution step -------------------------------");
+					try {
+						System.out.println("DATA POOL: "+this.dataPool.getData(null).toString());
+					}catch(Exception e){e.printStackTrace();}
 
 					//call all pure producers first
 					for(int c = 0; c < this.dataComponentList.size(); c++) {
@@ -296,7 +299,7 @@ public class Execution implements Runnable {
 			//delay while paused
 			while (steps == 0) {
 				starttime = System.currentTimeMillis();
-				System.out.println(">>PAUSED<<");
+				//System.out.println(">>PAUSED<<");
 				try{Thread.sleep(PAUSE_DEYLAY);}catch(Exception e){}
 				//if stop is requested, jump out
 				if (this.stop) return;

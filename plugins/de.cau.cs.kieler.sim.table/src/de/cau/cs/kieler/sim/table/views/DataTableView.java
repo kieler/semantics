@@ -42,6 +42,7 @@ public class DataTableView extends ViewPart {
 	 */
 	public static final String ID = "de.cau.cs.kieler.sim.table.views.KiemTable";
 
+	private static DataTableView dataTableView;
 	private DataTableViewer viewer;
 	private Action doubleClickAction;
 	private TableDataList tableDataList;
@@ -53,6 +54,14 @@ public class DataTableView extends ViewPart {
 	 * The constructor.
 	 */
 	public DataTableView() {
+		dataTableView = this;
+	}
+	
+	public static DataTableView getInstance() {
+		return dataTableView;
+	}
+	public TableDataList getTableDataList() {
+		return tableDataList;
 	}
 
 	/**

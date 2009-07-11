@@ -38,4 +38,11 @@ public class DataComponent extends JSONObjectDataComponent implements
 		return true;
 	}
 	
+	public boolean needModelFile() {
+		return true;
+	}
+	
+	public boolean isMaster() {
+		return false;
+	}
 }
