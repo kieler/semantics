@@ -1,0 +1,88 @@
+Notes-Types { Esterel-Technologies }  DEFINITIONS ::=
+BEGIN
+    Graphical ::= SEQUENCE OF { SEQUENCE {
+    annot_object OID,
+    name STRING,
+        note_graphical_information {
+            NT_INCRUSTABLE BOOLEAN
+            {
+            	 NT_DEFAULT_VALUE T },
+            NT_PERMANENT BOOLEAN
+            {
+            	 NT_DEFAULT_VALUE T },
+            NT_MODIFY BOOLEAN
+            {
+            	 NT_DEFAULT_VALUE T },
+            NT_LOCATION STRING
+            {
+            	 NT_DEFAULT_VALUE "RELATIVE" },
+            NT_FONT INTEGER
+            {
+            	 NT_DEFAULT_VALUE 2 },
+            NT_POS_X REAL
+            {
+            	 NT_DEFAULT_VALUE -1 },
+            NT_POS_Y REAL
+            {
+            	 NT_DEFAULT_VALUE -1 }
+        },
+        information {
+            Text TEXT
+            {
+            	 NT_INCRUSTABLE T },
+            to_c BOOLEAN
+            {
+            	 NT_DEFAULT_VALUE T ,
+            	 NT_PRINTABLE F }
+    } } }
+
+    Graphical_not_inC ::= SEQUENCE OF { SEQUENCE {
+    annot_object OID,
+    name STRING,
+        note_graphical_information {
+            NT_INCRUSTABLE BOOLEAN
+            {
+            	 NT_DEFAULT_VALUE T },
+            NT_PERMANENT BOOLEAN
+            {
+            	 NT_DEFAULT_VALUE T },
+            NT_MODIFY BOOLEAN
+            {
+            	 NT_DEFAULT_VALUE T },
+            NT_LOCATION STRING
+            {
+            	 NT_DEFAULT_VALUE "RELATIVE" },
+            NT_FONT INTEGER
+            {
+            	 NT_DEFAULT_VALUE 2 },
+            NT_POS_X REAL
+            {
+            	 NT_DEFAULT_VALUE -1 },
+            NT_POS_Y REAL
+            {
+            	 NT_DEFAULT_VALUE -1 }
+        },
+        information {
+            Text TEXT
+            {
+            	 NT_INCRUSTABLE T }
+    } } }
+
+END
+
+Notes-Values { Esterel-Technologies }  DEFINITIONS ::=
+BEGIN
+    Graphical ::= {
+        {"!ed/2b50/26A2/14A0/478f7d9bc45", "Graphical_1",T , T , T , "RELATIVE" , 2 , -54.173228 , 58.346457 , "translation of 
+dataflow variables
+to control flow 
+signals" , T },
+        {"!ed/21a2/26A2/14A0/478f72bd4969", "Graphical_1",T , T , T , "RELATIVE" , 2 , -17.716535 , 150.000000 , "In SCADE no random behaviour is
+available. So here an error is triggered
+regularly." , T },
+        {"!ed/2fff/26A2/14A0/478f84731444", "Graphical_1",T , T , T , "RELATIVE" , 2 , 0.000000 , 27.086614 , "translate signals to variables" , T }}
+    Graphical_not_inC ::= {
+        {"!ed/3224/26A2/14A0/478f85846605", "Graphical_not_inC_1",T , T , T , "RELATIVE" , 2 , 6.259843 , 40.629921 , "No state machine needed, because only 
+only one state" }}
+END
+

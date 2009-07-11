@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping xmlns="http://rtsys.informatik.uni-kiel.de/modelgui">
+
+<display port="0">
+  <colorize id="cGreen" input="true,false" color="#00ff00, #004400" color-property="fill" />
+</display>
+
+<display port="1">
+  <colorize id="cYellow" input="true,false" color="#ffe400, #5b5b00"  color-property="fill" />
+</display>
+
+<display port="2">
+  <colorize id="cRed" input="true,false" color="#ff0000, #440000"  color-property="fill" />
+</display>
+
+<display port="3">
+  <colorize id="pGreen" input="true,false" color="#00ff00, #004400"  color-property="fill" />
+</display>
+
+<display port="4">
+  <colorize id="pRed" input="true,false" color="#ff0000, #440000"  color-property="fill" />
+</display>
+
+<control port="0">
+	<button id="button"/>
+</control>
+
+</mapping>

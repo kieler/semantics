@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="edu.unikiel.rtsys.kev.feature"
+      label="KIEL Environment Visualization Feature"
+      version="1.0.0"
+      provider-name="Christian-Albrechts-Universitär zu Kiel">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.ui" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.resources" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.batik.swing" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.batik.bridge" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.batik.util" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.w3c.dom.svg" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.batik.dom" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.batik.dom.svg" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.batik.css" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.xerces" version="2.9.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.kev" version="1.0.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="de.cau.cs.kieler.kev"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kev.extension.elevator"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kev.extension.scade"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
