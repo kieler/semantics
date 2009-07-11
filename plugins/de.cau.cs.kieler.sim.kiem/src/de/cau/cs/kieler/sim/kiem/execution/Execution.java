@@ -199,27 +199,29 @@ public class Execution implements Runnable {
 						if (dataComponent.isProducerConsumer()) {
 							System.out.println(c + ") " +dataComponent.getName() + " (Norm Producer) call");
 							//Consumer AND Producer => blocking
-							if (dataComponent.isJSON()) {
-								//TODO: reasonable data
-								try {
-									String[] filterKeys = dataComponent.getFilterKeys();
-									JSONObject newData = ((JSONObjectDataComponent)dataComponent).step(this.dataPool.getData(filterKeys));
+							try {
+								JSONObject oldData;
+								String[] filterKeys = dataComponent.getFilterKeys();
+								if (dataComponent.isDeltaConsumer()) {
+									oldData = this.dataPool.getDeltaData(filterKeys,dataComponent.deltaIndex);
+								}
+								else
+									oldData = this.dataPool.getData(filterKeys);
+								if (dataComponent.isJSON()) {
+									JSONObject newData = ((JSONObjectDataComponent)dataComponent).step(oldData);
 									if (newData != null)
 										this.dataPool.putData(newData);
-								}catch(Exception e){
-									e.printStackTrace();
 								}
-							}
-							else {
-								//TODO: reasonable data
-								try {
-									String[] filterKeys = dataComponent.getFilterKeys();
-									String newData = ((JSONStringDataComponent)dataComponent).step(this.dataPool.getData(filterKeys).toString());
+								else {
+									String newData = ((JSONStringDataComponent)dataComponent).step(oldData.toString());
 									if (newData != null && newData != "") 
 										this.dataPool.putData(new JSONObject(newData));
-								}catch(Exception e){
-									e.printStackTrace();
 								}
+								//memorize last delta index
+								if (dataComponent.isDeltaConsumer())
+									dataComponent.deltaIndex = this.dataPool.getPoolCounter();
+							}catch(Exception e) {
+								e.printStackTrace();
 							}
 							System.out.println(dataComponent.getName() + " (Norm Producer) return");
 						}
@@ -227,10 +229,18 @@ public class Execution implements Runnable {
 								System.out.println(c + ") " +dataComponent.getName() + " (Pure Consumer) call");
 								//pure Consumer
 								//set current data
-								//TODO: reasonable data
 								try {
 									String[] filterKeys = dataComponent.getFilterKeys();
-									consumerExecutionArray[c].setData(this.dataPool.getData(filterKeys));
+									JSONObject oldData;
+									if (dataComponent.isDeltaConsumer()) {
+										oldData = this.dataPool.getDeltaData(filterKeys,dataComponent.deltaIndex);
+									}
+									else
+										oldData = this.dataPool.getData(filterKeys);
+									consumerExecutionArray[c].setData(oldData);
+									//memorize last delta index
+									if (dataComponent.isDeltaConsumer())
+										dataComponent.deltaIndex = this.dataPool.getPoolCounter();
 								}catch(Exception e){
 									e.printStackTrace();
 								}

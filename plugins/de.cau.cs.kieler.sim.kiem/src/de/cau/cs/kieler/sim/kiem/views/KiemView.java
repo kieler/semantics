@@ -104,7 +104,7 @@ public class KiemView extends ViewPart {
 		hookSelectionChangedAction();
 		hookDoubleClickAction();
 		checkForSingleEnabledMaster(true);
-		updateView();
+		updateView(true);
 	}
 	
 	// This will create the columns for the table
@@ -375,10 +375,11 @@ public class KiemView extends ViewPart {
 		}
 	}
 	
-	public void updateView() {
+	public void updateView(boolean deselect) {
 		viewer.refresh();
 		refreshEnabledDisabledTextColors();
-		viewer.setSelection(null);
+		if (deselect)
+			viewer.setSelection(null);
 		updateEnabled();
 
 	}
@@ -432,7 +433,7 @@ public class KiemView extends ViewPart {
 				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				dataComponent.setEnabled(true);
 				checkForSingleEnabledMaster(false,dataComponent);
-				updateView();
+				updateView(true);
 			}
 		};
 		actionEnable.setText("Enable");
@@ -447,7 +448,7 @@ public class KiemView extends ViewPart {
 				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 				dataComponent.setEnabled(false);
 				checkForSingleEnabledMaster(false,dataComponent);
-				updateView();
+				updateView(true);
 			}
 		};
 		actionDisable.setText("Disable");
@@ -467,7 +468,7 @@ public class KiemView extends ViewPart {
 					viewer.refresh();
 					refreshEnabledDisabledTextColors();
 				}
-				updateView();
+				updateView(false);
 			}
 		};
 		actionUp.setText("Schedule before");
@@ -489,7 +490,7 @@ public class KiemView extends ViewPart {
 					viewer.refresh();
 					refreshEnabledDisabledTextColors();
 				}
-				updateView();
+				updateView(false);
 			}
 		};
 		actionDown.setText("Schedule behind");
@@ -506,7 +507,7 @@ public class KiemView extends ViewPart {
 				if (initDataComponent(false)) {
 					KIEM.execution.stepExecution();
 				}
-				updateView();
+				updateView(true);
 			}
 		};
 		actionStep.setText("Step");
@@ -523,7 +524,7 @@ public class KiemView extends ViewPart {
 				if (initDataComponent(false)) {
 					KIEM.execution.runExecution();
 				}
-				updateView();
+				updateView(true);
 			}
 		};
 		actionRun.setText("Run");
@@ -540,7 +541,7 @@ public class KiemView extends ViewPart {
 				if (initDataComponent(false)) {
 					KIEM.execution.pauseExecution();
 				}
-				updateView();
+				updateView(true);
 			}
 		};
 		actionPause.setText("Pause");
@@ -568,7 +569,7 @@ public class KiemView extends ViewPart {
 				
 				KIEM.resetCurrentModelFile();
 				KIEM.execution = null;
-				updateView();
+				updateView(true);
 
 				//show execution results
 				showMessage("KIELER Execution Manager - Execution Timing Results",
@@ -604,7 +605,7 @@ public class KiemView extends ViewPart {
 							//toggle enabledness
 							dataComponent.setEnabled(!dataComponent.isEnabled());
 							checkForSingleEnabledMaster(false,dataComponent);
-							updateView();
+							updateView(true);
 						}
 					}// end if - selected
 				}// end if - selected

@@ -29,7 +29,7 @@ public class JSONDataPool {
 
 	//-------------------------------------------------------------------------
 	
-	public long getPoolCounter() {
+	public synchronized long getPoolCounter() {
 		return (this.poolCounter + this.poolCounterDiff);
 	}
 	
@@ -63,21 +63,23 @@ public class JSONDataPool {
 		if (filterKeys == null) {
 			//all data
 			returnObject = new JSONObject();
-			for (int c = (int)(deltaPoolIndex-this.poolCounterDiff);
-				 c < this.poolCounter; c++) {
+			for (int c = (int)(deltaPoolIndex-this.poolCounterDiff+1);
+				 c <= this.poolCounter; c++) {
 				 JSONObject JSONobj = dataDeltaPool.get(c);
-				 jsonMerger.mergeObjects(returnObject,JSONobj);
+				 returnObject = jsonMerger.mergeObjects(returnObject,JSONobj);
 			}
 		}
 		else {
 			//filtered data
 			returnObject = new JSONObject();
-			for (int c = (int)(deltaPoolIndex-this.poolCounterDiff);
-				 c < this.poolCounter; c++) {
+			for (int c = (int)(deltaPoolIndex-this.poolCounterDiff+1);
+				 c <= this.poolCounter; c++) {
 				 JSONObject JSONobj = dataDeltaPool.get(c);
 				 for (int cc = 0; cc < filterKeys.length; cc++) {
-						Object obj = JSONobj.get(filterKeys[cc]);
-						returnObject.append(filterKeys[cc], obj);
+				 		if (JSONobj.has(filterKeys[cc])) {
+					 		Object obj = JSONobj.get(filterKeys[cc]);
+					 		returnObject.accumulate(filterKeys[cc], obj);
+					 	}
 				 }
 			}
 		}
@@ -94,8 +96,7 @@ public class JSONDataPool {
 		
 		if (newData != null) {
 			//merge new data
-			this.dataDeltaPool.add(jsonMerger.mergeObjects(
-					this.dataDeltaPool.get(poolCounter), newData));
+			this.dataDeltaPool.add(newData);
 			this.dataPool = jsonMerger.mergeObjects(this.dataPool, newData);
 			this.poolCounter++;
 		}

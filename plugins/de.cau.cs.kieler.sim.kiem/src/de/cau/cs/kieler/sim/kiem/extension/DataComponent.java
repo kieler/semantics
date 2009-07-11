@@ -17,7 +17,6 @@ public abstract class DataComponent implements IDataComponent,
 	private KiemView KIEMViewInstance; //thread iff this DataComponent
 									   //is a master
 	
-	
 	public DataComponent() {
 		super();
 		enabled = true;
@@ -77,11 +76,14 @@ public abstract class DataComponent implements IDataComponent,
 		return null;
 	}
 	
-	//if this DataComponent implements a consumer, 
-	//it only wants delta values since tick number (default 0 = all)
-	public int getDelta() {
-		return 0;
+	//if this DataComponent implements a consumer, which wants delta values 
+	//only, it should override this method to return true
+	public boolean isDeltaConsumer() {
+		return false;
 	}
+	//this is used to store the deltaIndex values inside the components
+	//object
+	public long deltaIndex = 0;
 	
 	//-------------------------------------------------------------------------
 	//           at most ONE DataComponent can be a Master! 
@@ -105,7 +107,7 @@ public abstract class DataComponent implements IDataComponent,
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				int returnValue = KIEMInstance.execution.stepExecution();
-				KIEMViewInstance.updateView();
+				KIEMViewInstance.updateView(true);
 				return returnValue;
 			}
 		}
@@ -121,7 +123,7 @@ public abstract class DataComponent implements IDataComponent,
 				KIEMInstance.execution.stopExecution();
 				KIEMInstance.resetCurrentModelFile();
 				KIEMInstance.execution = null;
-				KIEMViewInstance.updateView();
+				KIEMViewInstance.updateView(true);
 				return;
 			}
 		}
@@ -135,7 +137,7 @@ public abstract class DataComponent implements IDataComponent,
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.pauseExecution();
-				KIEMViewInstance.updateView();
+				KIEMViewInstance.updateView(true);
 				return;
 			}
 		}
@@ -149,7 +151,7 @@ public abstract class DataComponent implements IDataComponent,
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.setAimedStepDuration(aimedStepDuration);
-				KIEMViewInstance.updateView();
+				KIEMViewInstance.updateView(true);
 				return;
 			}
 		}
@@ -175,7 +177,7 @@ public abstract class DataComponent implements IDataComponent,
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.runExecution();
-				KIEMViewInstance.updateView();
+				KIEMViewInstance.updateView(true);
 				return;
 			}
 		}

@@ -26,25 +26,27 @@ public class JSONMerger {
 	    JSONObject clone = new JSONObject(base.toString());
 	    // Walk parameter list for the merged object and merge recursively.
 	    String[] fields = JSONObject.getNames(merge);
-	    for (String field : fields) {
-	      Object existing = clone.opt(field); //opt = get object if exists otherwise set to null
-	      Object update = merge.get(field); //here the object does exists
-	      if (existing == null || update == null) {
-	        // It's new custom config, not referenced in the prototype, or
-	        // it's removing a pre-configured value.
-	        clone.put(field, update);
-	      } else {
-	        // Merge if object type is JSONObject.
-	        if (update instanceof JSONObject &&
-	            existing instanceof JSONObject) {
-	          clone.put(field, mergeObjects((JSONObject)existing,
-	                                        (JSONObject)update));
-	        } else {
-	          // Otherwise we just overwrite it.
-	          clone.put(field, update);
-	        }
-	      }
-	    }
+	    if (fields != null && fields.length > 0) {
+		    for (String field : fields) {
+			      Object existing = clone.opt(field); //opt = get object if exists otherwise set to null
+			      Object update = merge.get(field); //here the object does exists
+			      if (existing == null || update == null) {
+			        // It's new custom config, not referenced in the prototype, or
+			        // it's removing a pre-configured value.
+			        clone.put(field, update);
+			      } else {
+			        // Merge if object type is JSONObject.
+			        if (update instanceof JSONObject &&
+			            existing instanceof JSONObject) {
+			          clone.put(field, mergeObjects((JSONObject)existing,
+			                                        (JSONObject)update));
+			        } else {
+			          // Otherwise we just overwrite it.
+			          clone.put(field, update);
+			        }
+			      }
+		    }//next field
+	    }//end if there are fields to add
 	    return clone;
 	  }
 
