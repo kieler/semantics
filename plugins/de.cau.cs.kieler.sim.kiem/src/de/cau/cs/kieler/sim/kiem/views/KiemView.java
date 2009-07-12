@@ -300,7 +300,7 @@ public class KiemView extends ViewPart {
 		}//next c
 		
 		//now create and run the execution thread
-		KIEM.execution = new Execution(KIEM.getDataComponentList(), this);
+		KIEM.execution = new Execution(KIEM.getDataComponentList());
 		//take the last set delay
 		KIEM.execution.setAimedStepDuration(KIEM.getAimedStepDuration());
 		KIEM.executionThread = new Thread(KIEM.execution);

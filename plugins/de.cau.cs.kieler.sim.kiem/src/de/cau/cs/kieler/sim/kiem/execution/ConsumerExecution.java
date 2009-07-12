@@ -22,12 +22,12 @@ public class ConsumerExecution implements Runnable {
 	}
 	
 	
-	public synchronized void step() {
-		//check if we allready done
+	public synchronized boolean step() {
+		//check if we already done
 		if (!done) {
-			//deadline missed, count up skipInit
+			//deadline missed
 			System.out.println("  SKIPPED - NOT READY YET");
-			//this.skipInit++;
+			return false;
 		}
 		else {
 			System.out.println("  START - READY");
@@ -35,6 +35,7 @@ public class ConsumerExecution implements Runnable {
 			this.done = false;
 			//awake this thread
 			this.notify();
+			return true;
 		}
 	}
 

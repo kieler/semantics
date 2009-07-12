@@ -25,14 +25,11 @@ public class Execution implements Runnable {
 	private long stepCounter;
 	private ConsumerExecution[] consumerExecutionArray;
 	private ProducerExecution[] producerExecutionArray;
-	private KiemView parent; //for errors
 	private JSONDataPool dataPool;
 	
 	private static final int PAUSE_DEYLAY = 50; //in ms
 	
-	public Execution(List<DataComponent> dataComponentList,
-					 KiemView parent) {
-		this.parent = parent;
+	public Execution(List<DataComponent> dataComponentList) {
 		this.stepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
 		this.stop = false; 
 		this.steps = 0; // == paused
@@ -176,9 +173,6 @@ public class Execution implements Runnable {
 					//reduce number of steps
 					if (steps > -1) steps--;
 					System.out.println("-- execution step -------------------------------");
-//					try {
-//						System.out.println("DATA POOL: "+this.dataPool.getData(null).toString());
-//					}catch(Exception e){e.printStackTrace();}
 
 					//===========================================//
 					//==  P U R E    P R O D U C E R    (CALL) ==//
@@ -249,14 +243,16 @@ public class Execution implements Runnable {
 									else
 										oldData = this.dataPool.getData(filterKeys);
 									consumerExecutionArray[c].setData(oldData);
-									//memorize last delta index
-									if (dataComponent.isDeltaConsumer())
-										dataComponent.deltaIndex = this.dataPool.getPoolCounter();
 								}catch(Exception e){
 									e.printStackTrace();
 								}
-								//call async method
-								consumerExecutionArray[c].step();
+								//call async method 
+								if (consumerExecutionArray[c].step()) {
+									//if step was successful (not skipped)
+									if (dataComponent.isDeltaConsumer())
+										//memorize last delta index
+										dataComponent.deltaIndex = this.dataPool.getPoolCounter();
+								}
 									
 						}
 						//===========================================//
@@ -284,8 +280,9 @@ public class Execution implements Runnable {
 						}
 					}//next producer/consumer
 					//calculate execution timings (and current step Duration)
+					//do not floor => add 1ms
 					endtime = System.currentTimeMillis();
-					this.stepDuration = (int)(endtime - starttime);
+					this.stepDuration = (int)(endtime - starttime) + 1;
 					if (this.maximumStepDuration < this.stepDuration) {
 						this.maximumStepDuration = this.stepDuration;
 					}
