@@ -9,28 +9,25 @@ public class ConsumerExecution implements Runnable {
 	
 	private boolean done;
 	private boolean stop;
-	private boolean error;
 	private DataComponent dataComponent;
 	private JSONObject data;
 	
 	public ConsumerExecution(DataComponent dataComponent) {
 		this.stop = false; 
 		this.done = true; 
-		this.error = false;
 		this.data = null;
 		this.dataComponent = dataComponent;
 	}
-	
 	
 	public synchronized boolean step() {
 		//check if we already done
 		if (!done) {
 			//deadline missed
-			System.out.println("  SKIPPED - NOT READY YET");
+//System.out.println("  SKIPPED - NOT READY YET");
 			return false;
 		}
 		else {
-			System.out.println("  START - READY");
+//System.out.println("  START - READY");
 			//deadline met 
 			this.done = false;
 			//awake this thread
@@ -50,10 +47,6 @@ public class ConsumerExecution implements Runnable {
 		this.stop = true;
 	}
 
-	public boolean isError() {
-		return this.error;
-	}
-	
 	public void run() {
 		while (!this.stop) {
 			//go to sleep
@@ -66,25 +59,21 @@ public class ConsumerExecution implements Runnable {
 				}
 			}catch(Exception e){
 				e.printStackTrace();
-				this.error = true;
-				this.stop = true;
-				this.data = null;
-				this.done = true;
 			}
 			
 			try {
-				System.out.println("  "+dataComponent.getName() + " (Pure Consumer) calc start");
+//System.out.println("  "+dataComponent.getName() + " (Pure Consumer) calc start");
 				//do asynchronous call
 				if (this.dataComponent.isJSON()) {
 					JSONObjectDataComponent compJSON = 
 						(JSONObjectDataComponent)dataComponent;
-					//do not send any data cause this is a producer only
+					//do use any response data cause this is a consumer only
 					compJSON.step(this.data);
 				}
 				else {
 					JSONStringDataComponent compString = 
 						(JSONStringDataComponent)dataComponent;
-					//do not send any data cause this is a producer only
+					//do use any response data cause this is a consumer only
 					if (this.data != null)
 						compString.step(this.data.toString());
 					else
@@ -92,10 +81,6 @@ public class ConsumerExecution implements Runnable {
 				}
 			}catch(Exception e){
 				e.printStackTrace();
-				this.error = true;
-				this.stop = true;
-				this.data = null;
-				this.done = true;
 			}
 			
 		}//next while not stop

@@ -242,14 +242,15 @@ public class KiemView extends ViewPart {
 			//only those which have overridden the needModelFile() method
 			//and also are enabled are beeing tested here
 			for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
-				DataComponent dataComponent = KIEM.getDataComponentList().get(c);
-				if (dataComponent.isEnabled() &&
+			  DataComponent dataComponent = KIEM.getDataComponentList().get(c);
+			  if (dataComponent.isEnabled() &&
 					dataComponent.needModelFile()) {
-					showWarning("Component '"+dataComponent.getName()+"' needs an input model file."+
-							    "\nPlease select one in the Project Explorer!");
+					showWarning("Component '"+dataComponent.getName()
+							   +"' needs an input model file."+
+							   "\nPlease select one in the Project Explorer!");
 					KIEM.resetCurrentModelFile();
 					return false;
-				}
+			  }
 			}
 			KIEM.resetCurrentModelFile();
 		}
@@ -337,7 +338,8 @@ public class KiemView extends ViewPart {
 			getActionDown().setEnabled(false);
 			return;
 		}
-		if (((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement() == null) {
+		if (((org.eclipse.jface.viewers.StructuredSelection)
+						viewer.getSelection()).getFirstElement() == null) {
 			//no object selected
 			getActionEnable().setEnabled(false);
 			getActionDisable().setEnabled(false);
@@ -345,7 +347,9 @@ public class KiemView extends ViewPart {
 			getActionDown().setEnabled(false);
 		}
 		else {
-			DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
+			DataComponent dataComponent = 
+				(DataComponent)((org.eclipse.jface.viewers
+				.StructuredSelection)viewer.getSelection()).getFirstElement();
 			if (dataComponent.isEnabled()) {
 				//currently enabled
 				getActionEnable().setEnabled(false);
@@ -430,7 +434,9 @@ public class KiemView extends ViewPart {
 		if (actionEnable != null) return actionEnable;
 		actionEnable = new Action() {
 			public void run() {
-				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
+				DataComponent dataComponent = (DataComponent)
+					((org.eclipse.jface.viewers.StructuredSelection)viewer
+										.getSelection()).getFirstElement();
 				dataComponent.setEnabled(true);
 				checkForSingleEnabledMaster(false,dataComponent);
 				updateView(true);
@@ -445,7 +451,9 @@ public class KiemView extends ViewPart {
 		if (actionDisable != null) return actionDisable;
 		actionDisable = new Action() {
 			public void run() {
-				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
+				DataComponent dataComponent = (DataComponent)
+					((org.eclipse.jface.viewers.StructuredSelection)viewer
+										.getSelection()).getFirstElement();
 				dataComponent.setEnabled(false);
 				checkForSingleEnabledMaster(false,dataComponent);
 				updateView(true);
@@ -460,21 +468,26 @@ public class KiemView extends ViewPart {
 		if (actionUp != null) return actionUp;
 		actionUp = new Action() {
 			public void run() {
-				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
-				int listIndex = KIEM.getDataComponentList().indexOf(dataComponent);
+				DataComponent dataComponent = (DataComponent)
+					((org.eclipse.jface.viewers.StructuredSelection)viewer
+										.getSelection()).getFirstElement();
+				int listIndex = KIEM.getDataComponentList()
+									.indexOf(dataComponent);
 				if (listIndex > 0) {
-				    KIEM.getDataComponentList().remove(listIndex);
-					KIEM.getDataComponentList().add(listIndex-1, dataComponent);
-					viewer.refresh();
-					refreshEnabledDisabledTextColors();
+				   KIEM.getDataComponentList().remove(listIndex);
+				   KIEM.getDataComponentList().add(listIndex-1, dataComponent);
+				   viewer.refresh();
+				   refreshEnabledDisabledTextColors();
 				}
 				updateView(false);
 			}
 		};
 		actionUp.setText("Schedule before");
 		actionUp.setToolTipText("Schedule before");
-		actionUp.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/upIcon.png"));
-		actionUp.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/UpIconDisabled.png"));
+		actionUp.setImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/upIcon.png"));
+		actionUp.setDisabledImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/UpIconDisabled.png"));
 		return actionUp;
 	}
 	
@@ -482,21 +495,26 @@ public class KiemView extends ViewPart {
 		if (actionDown != null) return actionDown;
 		actionDown = new Action() {
 			public void run() {
-				DataComponent dataComponent = (DataComponent)((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
-				int listIndex = KIEM.getDataComponentList().indexOf(dataComponent);
+				DataComponent dataComponent = (DataComponent)
+					((org.eclipse.jface.viewers.StructuredSelection)viewer
+										.getSelection()).getFirstElement();
+				int listIndex = 
+						KIEM.getDataComponentList().indexOf(dataComponent);
 				if (listIndex < KIEM.getDataComponentList().size()-1) {
-					KIEM.getDataComponentList().remove(listIndex);
-					KIEM.getDataComponentList().add(listIndex+1, dataComponent);
-					viewer.refresh();
-					refreshEnabledDisabledTextColors();
+				   KIEM.getDataComponentList().remove(listIndex);
+				   KIEM.getDataComponentList().add(listIndex+1, dataComponent);
+				   viewer.refresh();
+				   refreshEnabledDisabledTextColors();
 				}
 				updateView(false);
 			}
 		};
 		actionDown.setText("Schedule behind");
 		actionDown.setToolTipText("Schedule behind");
-		actionDown.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/DownIcon.png"));
-		actionDown.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/downIconDisabled.png"));
+		actionDown.setImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/DownIcon.png"));
+		actionDown.setDisabledImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/downIconDisabled.png"));
 		return actionDown;
 	}
 	
@@ -512,8 +530,10 @@ public class KiemView extends ViewPart {
 		};
 		actionStep.setText("Step");
 		actionStep.setToolTipText("Step execution");
-		actionStep.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/StepIcon.png"));
-		actionStep.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/stepIconDisabled.png"));
+		actionStep.setImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/StepIcon.png"));
+		actionStep.setDisabledImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/stepIconDisabled.png"));
 		return actionStep;
 	}
 	
@@ -529,8 +549,10 @@ public class KiemView extends ViewPart {
 		};
 		actionRun.setText("Run");
 		actionRun.setToolTipText("Run execution");
-		actionRun.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/PlayIcon.png"));
-		actionRun.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/playIconDisabled.png"));
+		actionRun.setImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/PlayIcon.png"));
+		actionRun.setDisabledImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/playIconDisabled.png"));
 		return actionRun;
 	}
 	
@@ -546,8 +568,10 @@ public class KiemView extends ViewPart {
 		};
 		actionPause.setText("Pause");
 		actionPause.setToolTipText("Pause execution");
-		actionPause.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/PauseIcon.png"));
-		actionPause.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/pauseIconDisabled.png"));
+		actionPause.setImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/PauseIcon.png"));
+		actionPause.setDisabledImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/pauseIconDisabled.png"));
 		return actionPause;
 	}
 	
@@ -559,34 +583,51 @@ public class KiemView extends ViewPart {
 					KIEM.execution.stopExecution();
 				}
 				//get results
-				long executionTime = KIEM.execution.getExecutionDurantion();
-				long minStepDuration = KIEM.execution.getMinimumStepDuration();
-				long wavStepDuration = KIEM.execution.getWeightedAverageStepDuration();
-				long aveStepDuration = KIEM.execution.getAverageStepDuration();
-				long maxStepDuration = KIEM.execution.getMaximumStepDuration();
-				long steps         = KIEM.execution.getSteps();
-				long aimedStepDuration = KIEM.execution.getAimedStepDuration();
+				long executionTime   = 
+					KIEM.execution.getExecutionDurantion();
+				long minStepDuration = 
+					KIEM.execution.getMinimumStepDuration();
+				long wavStepDuration = 
+					KIEM.execution.getWeightedAverageStepDuration();
+				long aveStepDuration = 
+					KIEM.execution.getAverageStepDuration();
+				long maxStepDuration = 
+					KIEM.execution.getMaximumStepDuration();
+				long steps           = 
+					KIEM.execution.getSteps();
+				long aimedStepDuration = 
+					KIEM.execution.getAimedStepDuration();
 				
 				KIEM.resetCurrentModelFile();
 				KIEM.execution = null;
 				updateView(true);
 
 				//show execution results
-				showMessage("KIELER Execution Manager - Execution Timing Results",
-							"                          Number of Steps : "+steps+"\n"+
-							"                Overall Execution Time : "+executionTime+" ms\n\n"+
-						    "                    Aimed Step Duration : "+aimedStepDuration+ " ms\n"+
-						    "                 Minimum Step Duration : "+minStepDuration+ " ms\n"+
-						    "Weighted Average Step Duration : "+wavStepDuration+ " ms\n"+
-						    "                 Average Step Duration : "+aveStepDuration+ " ms\n"+
-						    "                Maximum Step Duration : "+maxStepDuration+ " ms");
+				showMessage(
+				"KIELER Execution Manager - Execution Timing Results",
+				"                          Number of Steps : "
+					+steps+"\n"+
+				"                Overall Execution Time : "
+					+executionTime+" ms\n\n"+
+				"                    Aimed Step Duration : "
+					+aimedStepDuration+ " ms\n"+
+				"                 Minimum Step Duration : "
+					+minStepDuration+ " ms\n"+
+				"Weighted Average Step Duration : "
+					+wavStepDuration+ " ms\n"+
+				"                 Average Step Duration : "
+					+aveStepDuration+ " ms\n"+
+				"                Maximum Step Duration : "
+					+maxStepDuration+ " ms");
 				
 			}
 		};
 		actionStop.setText("Stop");
 		actionStop.setToolTipText("Stop execution");
-		actionStop.setImageDescriptor(KiemPlugin.getImageDescriptor("icons/StopIcon.png"));
-		actionStop.setDisabledImageDescriptor(KiemPlugin.getImageDescriptor("icons/stopIconDisabled.png"));
+		actionStop.setImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/StopIcon.png"));
+		actionStop.setDisabledImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/stopIconDisabled.png"));
 		return actionStop;
 	}
 	
@@ -596,16 +637,16 @@ public class KiemView extends ViewPart {
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				if (selection != null) {
-					Object obj = ((IStructuredSelection)selection).getFirstElement();
+					Object obj = ((IStructuredSelection)selection)
+													.getFirstElement();
 					if (obj != null) {
 						//only if execution is stopped
 						if (KIEM.execution == null) {
-							//showMessage("Double-click detected on "+obj.toString());
-							DataComponent dataComponent = (DataComponent)obj;
-							//toggle enabledness
-							dataComponent.setEnabled(!dataComponent.isEnabled());
-							checkForSingleEnabledMaster(false,dataComponent);
-							updateView(true);
+						  DataComponent dataComponent = (DataComponent)obj;
+						  //toggle enabledness
+						  dataComponent.setEnabled(!dataComponent.isEnabled());
+						  checkForSingleEnabledMaster(false,dataComponent);
+						  updateView(true);
 						}
 					}// end if - selected
 				}// end if - selected
@@ -656,7 +697,10 @@ public class KiemView extends ViewPart {
 					KIEM.setMaster(dataComponentTemp);
 				} else {
 					if (!silent)
-						showWarning("At most one master data component is allowed!\n'"+dataComponentTemp.getName()+"' will be disabled.");
+						showWarning("At most one master data"
+								   +" component is allowed!\n'"
+								   +dataComponentTemp.getName()
+								   +"' will be disabled.");
 					//disable it//
 					dataComponentTemp.setEnabled(false);
 					this.viewer.refresh();

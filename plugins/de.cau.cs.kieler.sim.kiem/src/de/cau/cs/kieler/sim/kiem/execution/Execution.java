@@ -7,7 +7,6 @@ import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.*;
-import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
 public class Execution implements Runnable {
 	
@@ -26,7 +25,8 @@ public class Execution implements Runnable {
 	private ConsumerExecution[] consumerExecutionArray;
 	private ProducerExecution[] producerExecutionArray;
 	private JSONDataPool dataPool;
-	
+
+	//delay to wait in paused state until
 	private static final int PAUSE_DEYLAY = 50; //in ms
 	
 	public Execution(List<DataComponent> dataComponentList) {
@@ -37,8 +37,10 @@ public class Execution implements Runnable {
 		
 		this.dataPool = new JSONDataPool();
 		
-		consumerExecutionArray = new ConsumerExecution[this.dataComponentList.size()];
-		producerExecutionArray = new ProducerExecution[this.dataComponentList.size()];
+		consumerExecutionArray = new ConsumerExecution
+										[this.dataComponentList.size()];
+		producerExecutionArray = new ProducerExecution
+										[this.dataComponentList.size()];
 		
 		//for each pure consumer ... create ConsumerExecution Thread
 		//for each pure producer ... create ProducerExecution Thread
@@ -47,17 +49,18 @@ public class Execution implements Runnable {
 			if (dataComponent.isEnabled()) {
 				if(dataComponent.isPureConsumer()) {
 					//pure Consumer
-					consumerExecutionArray[c] = new ConsumerExecution(dataComponent);
+					consumerExecutionArray[c] = 
+								new ConsumerExecution(dataComponent);
 					(new Thread(consumerExecutionArray[c])).start();
 				}
 				else if(dataComponent.isPureProducer()) {
 					//pure Producer
-					producerExecutionArray[c] = new ProducerExecution(dataComponent, this);
+					producerExecutionArray[c] = 
+								new ProducerExecution(dataComponent, this);
 					(new Thread(producerExecutionArray[c])).start();
 				}
 			}
 		}
-		
 	}
 	
 	public int getStepDuration() {
@@ -165,14 +168,15 @@ public class Execution implements Runnable {
 			long endtime   = System.currentTimeMillis();
 			
 			synchronized(this) {
-				//test if we have to make a step (1) or if we are in running mode (-1)
+				//test if we have to make a step (1) or if we are 
+				//in running mode (-1)
 				if ((steps == -1)||(steps > 0)) {
 					//make a tick
 					this.stepCounter++;
 					
 					//reduce number of steps
 					if (steps > -1) steps--;
-					System.out.println("-- execution step -------------------------------");
+//System.out.println("-- execution step -------------------------------");
 
 					//===========================================//
 					//==  P U R E    P R O D U C E R    (CALL) ==//
@@ -183,7 +187,7 @@ public class Execution implements Runnable {
 							dataComponentList.get(c);
 						if (dataComponent.isEnabled() && 
 							dataComponent.isPureProducer()) {
-								System.out.println(c + ") " + dataComponent.getName() + " (Pure Producer) call");
+//System.out.println(c + ") " + dataComponent.getName() + " (Pure Producer) call");
 								//make a step (within producerExecution's monitor)
 								producerExecutionArray[c].blockingStep();
 						}
@@ -199,49 +203,60 @@ public class Execution implements Runnable {
 						//==  C O N S U M E R  /  P R O D U C E R  ==//
 						//===========================================//
 						if (dataComponent.isProducerConsumer()) {
-							System.out.println(c + ") " +dataComponent.getName() + " (Norm Producer) call");
+//System.out.println(c + ") " +dataComponent.getName() + " (Norm Producer) call");
 							//Consumer AND Producer => blocking
 							try {
 								JSONObject oldData;
-								String[] filterKeys = dataComponent.getFilterKeys();
+								String[] filterKeys = 
+									dataComponent.getFilterKeys();
 								if (dataComponent.isDeltaConsumer()) {
-									oldData = this.dataPool.getDeltaData(filterKeys,dataComponent.deltaIndex);
+									oldData = this.dataPool.getDeltaData
+										 (filterKeys,dataComponent.deltaIndex);
 								}
 								else
 									oldData = this.dataPool.getData(filterKeys);
 								if (dataComponent.isJSON()) {
-									JSONObject newData = ((JSONObjectDataComponent)dataComponent).step(oldData);
+									JSONObject newData = 
+										((JSONObjectDataComponent)dataComponent)
+										.step(oldData);
 									if (newData != null)
 										this.dataPool.putData(newData);
 								}
 								else {
-									String newData = ((JSONStringDataComponent)dataComponent).step(oldData.toString());
+									String newData = 
+										((JSONStringDataComponent)dataComponent)
+										.step(oldData.toString());
 									if (newData != null && newData != "") 
-										this.dataPool.putData(new JSONObject(newData));
+										this.dataPool.putData(
+													   new JSONObject(newData));
 								}
 								//memorize last delta index
 								if (dataComponent.isDeltaConsumer())
-									dataComponent.deltaIndex = this.dataPool.getPoolCounter();
+									dataComponent.deltaIndex = 
+										this.dataPool.getPoolCounter();
 							}catch(Exception e) {
 								e.printStackTrace();
 							}
-							System.out.println(dataComponent.getName() + " (Norm Producer) return");
+//System.out.println(dataComponent.getName() + " (Norm Producer) return");
 						}
 						//===========================================//
 						//==       P U R E    C O N S U M E R      ==//
 						//===========================================//
 						else if(dataComponent.isPureConsumer()) {
-								System.out.println(c + ") " +dataComponent.getName() + " (Pure Consumer) call");
+//System.out.println(c + ") " +dataComponent.getName() + " (Pure Consumer) call");
 								//pure Consumer
 								//set current data
 								try {
-									String[] filterKeys = dataComponent.getFilterKeys();
+									String[] filterKeys = 
+											dataComponent.getFilterKeys();
 									JSONObject oldData;
 									if (dataComponent.isDeltaConsumer()) {
-										oldData = this.dataPool.getDeltaData(filterKeys,dataComponent.deltaIndex);
+										oldData = this.dataPool.getDeltaData
+										  (filterKeys,dataComponent.deltaIndex);
 									}
 									else
-										oldData = this.dataPool.getData(filterKeys);
+										oldData = this.dataPool
+										  .getData(filterKeys);
 									consumerExecutionArray[c].setData(oldData);
 								}catch(Exception e){
 									e.printStackTrace();
@@ -251,7 +266,8 @@ public class Execution implements Runnable {
 									//if step was successful (not skipped)
 									if (dataComponent.isDeltaConsumer())
 										//memorize last delta index
-										dataComponent.deltaIndex = this.dataPool.getPoolCounter();
+										dataComponent.deltaIndex = 
+												this.dataPool.getPoolCounter();
 								}
 									
 						}
@@ -259,7 +275,7 @@ public class Execution implements Runnable {
 						//==  P U R E    P R O D U C E R    (REAP) ==//
 						//===========================================//
 						else if(dataComponent.isPureProducer()) {
-								System.out.println(c + ") " +dataComponent.getName() + " (Pure Producer) wait");
+//System.out.println(c + ") " +dataComponent.getName() + " (Pure Producer) wait");
 								//pure Producer
 								//get blocking result
 								producerExecutionArray[c].blockingWaitUntilDone();
@@ -268,9 +284,10 @@ public class Execution implements Runnable {
 								//reap the producer and only in the next iteration
 								//THEN call him again
 								if (this.stop == true) return;
-								System.out.println(c + ") " +dataComponent.getName() + " (Pure Producer) done");
+//System.out.println(c + ") " +dataComponent.getName() + " (Pure Producer) done");
 								try {
-									JSONObject newData = producerExecutionArray[c].getData();
+									JSONObject newData = 
+										producerExecutionArray[c].getData();
 									if (newData != null) 
 										this.dataPool.putData(newData);
 								}catch(Exception e){
@@ -279,6 +296,7 @@ public class Execution implements Runnable {
 								
 						}
 					}//next producer/consumer
+					
 					//calculate execution timings (and current step Duration)
 					//do not floor => add 1ms
 					endtime = System.currentTimeMillis();
@@ -296,7 +314,9 @@ public class Execution implements Runnable {
 					}
 					else {
 						//other ticks
-						this.weightedAverageStepDuration = (this.weightedAverageStepDuration + this.stepDuration)/2;
+						this.weightedAverageStepDuration = 
+							(this.weightedAverageStepDuration 
+														+ this.stepDuration)/2;
 					}
 					this.accumulatedStepDurations += this.stepDuration;
 				}//end if - make a step

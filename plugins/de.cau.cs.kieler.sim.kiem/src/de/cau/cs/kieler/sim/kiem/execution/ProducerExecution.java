@@ -62,7 +62,6 @@ public class ProducerExecution implements Runnable {
 	public void stopExecution() {
 		this.stop = true;
 	}
-
 	
 	public void run() {
 		while (!this.stop) {
@@ -91,7 +90,7 @@ public class ProducerExecution implements Runnable {
 					e.printStackTrace();
 				}
 				
-				System.out.println("  "+dataComponent.getName() + " (Pure Producer) calc start");
+//System.out.println("  "+dataComponent.getName() + " (Pure Producer) calc start");
 				//do asynchronous call
 				if (this.dataComponent.isJSON()) {
 					JSONObjectDataComponent compJSON = 
@@ -106,16 +105,13 @@ public class ProducerExecution implements Runnable {
 					String JSONString = compString.step(null);
 					this.data = null;
 					if (JSONString != null && !JSONString.equals("")) {
-						try {
-							this.data = new JSONObject(JSONString);
-						}catch(Exception e) {
-							e.printStackTrace();
-						}
+						try {this.data = new JSONObject(JSONString);}
+						catch(Exception e) {e.printStackTrace();}
 					}//not null
 				}
 			}//end if not done
 			
-			System.out.println("  "+dataComponent.getName() + " (Pure Producer) calc end");
+//System.out.println("  "+dataComponent.getName() + " (Pure Producer) calc end");
 			
 		}//next while not stop
 	}

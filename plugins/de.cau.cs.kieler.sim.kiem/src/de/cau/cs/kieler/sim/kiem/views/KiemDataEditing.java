@@ -15,7 +15,9 @@ public class KiemDataEditing extends EditingSupport {
 	private int columnIndex;
 	private KiemView parent;
 
-	public KiemDataEditing(KiemView parent, ColumnViewer viewer, int columnIndex) {
+	public KiemDataEditing(KiemView parent, 
+						  ColumnViewer viewer, 
+						  int columnIndex) {
 		super(viewer);
 		
 		// Create the correct editor based on the column index

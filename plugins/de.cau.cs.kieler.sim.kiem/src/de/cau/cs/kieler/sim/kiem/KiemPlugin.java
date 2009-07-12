@@ -102,9 +102,12 @@ public class KiemPlugin extends AbstractUIPlugin {
 	
 	public void updateCurrentModelFile() {
 		//get the selected model from the project explorer
-		ISelection selection = this.getWorkbench().getActiveWorkbenchWindow().getSelectionService().getSelection("org.eclipse.ui.navigator.ProjectExplorer");
+		ISelection selection = this.getWorkbench()
+			.getActiveWorkbenchWindow().getSelectionService()
+			.getSelection("org.eclipse.ui.navigator.ProjectExplorer");
 		//update currentModelFile property
-        this.currentModelFile = extractSelection(selection).getFullPath().toString();
+        this.currentModelFile = extractSelection(selection)
+        	.getFullPath().toString();
 	}
 	
 	public int getAimedStepDuration() {
@@ -152,34 +155,46 @@ public class KiemPlugin extends AbstractUIPlugin {
 			return dataComponentList;
 				
 		// get the available interfaces and initialize them
-		IConfigurationElement[] jsonComponents = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDjsoncomponent);
-		IConfigurationElement[] stringComponents = Platform.getExtensionRegistry().getConfigurationElementsFor(Messages.extensionPointIDstringcomponent);
+		IConfigurationElement[] jsonComponents = 
+				Platform.getExtensionRegistry()
+				.getConfigurationElementsFor(
+							Messages.extensionPointIDjsoncomponent);
+		
+		IConfigurationElement[] stringComponents = 
+				Platform.getExtensionRegistry()
+				.getConfigurationElementsFor(
+							Messages.extensionPointIDstringcomponent);
+		
 		dataComponentList = new ArrayList<DataComponent>
 											    (jsonComponents.length
 											    +stringComponents.length);
-		System.out.println("Found Controllers for "+Messages.extensionPointIDjsoncomponent+": "+jsonComponents.length);
+		
+//System.out.println("Found Controllers for "+Messages.extensionPointIDjsoncomponent+": "+jsonComponents.length);
 		for (int i = 0; i < jsonComponents.length; i++) {
 			try{
-				JSONObjectDataComponent dataComponent = (JSONObjectDataComponent) jsonComponents[i].createExecutableExtension("class");
+				JSONObjectDataComponent dataComponent = 
+					(JSONObjectDataComponent) jsonComponents[i]
+					                    .createExecutableExtension("class");
 				dataComponentList.add(dataComponent);
-				System.out.println(dataComponent.getName());
+//System.out.println(dataComponent.getName());
 			}catch(Exception e){
-				throw new RuntimeException("Error at loading a KIEM data component plugin");
+				throw new RuntimeException
+					("Error at loading a KIEM data component plugin");
 			} 
 		}
-		System.out.println("Found Controllers for "+Messages.extensionPointIDstringcomponent+": "+stringComponents.length);
+//System.out.println("Found Controllers for "+Messages.extensionPointIDstringcomponent+": "+stringComponents.length);
 		for (int i = 0; i < stringComponents.length; i++) {
 			try{
-				JSONStringDataComponent dataComponent = (JSONStringDataComponent)stringComponents[i].createExecutableExtension("class");
+				JSONStringDataComponent dataComponent = 
+					(JSONStringDataComponent)stringComponents[i]
+                                        .createExecutableExtension("class");
 				dataComponentList.add(dataComponent);
-				System.out.println(dataComponent.getName());
+//System.out.println(dataComponent.getName());
 			}catch(Exception e){
-				throw new RuntimeException("Error at loading a KIEM data component plugin");
+				throw new RuntimeException
+					("Error at loading a KIEM data component plugin");
 			} 
 		}
-		
 		return dataComponentList;
 	}
-	
-	
 }

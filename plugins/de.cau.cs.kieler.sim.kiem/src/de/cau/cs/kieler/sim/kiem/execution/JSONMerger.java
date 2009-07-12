@@ -10,13 +10,14 @@ public class JSONMerger {
 			
 	}
 	/**
-	   * Merges two JSON objects together (recursively), with values from "merge"
-	   * replacing values in "base" to produce a new object.
+	   * Merges two JSON objects together (recursively), with values from 
+	   * "merge" replacing values in "base" to produce a new object.
 	   *
 	   * @param base The base object that values will be replaced into.
 	   * @param merge The object to merge values from.
 	   *
-	   * @throws JSONException if the two objects can't be merged for some reason.
+	   * @throws JSONException if the two objects can't be merged for some
+	   *  		 reason.
 	   */
 	  public JSONObject mergeObjects(JSONObject base, JSONObject merge)
 	      throws JSONException {
@@ -28,11 +29,13 @@ public class JSONMerger {
 	    String[] fields = JSONObject.getNames(merge);
 	    if (fields != null && fields.length > 0) {
 		    for (String field : fields) {
-			      Object existing = clone.opt(field); //opt = get object if exists otherwise set to null
-			      Object update = merge.get(field); //here the object does exists
+		    	  //opt = get object if exists otherwise set to null
+			      Object existing = clone.opt(field);
+			      //here the object does exists
+			      Object update = merge.get(field); 
 			      if (existing == null || update == null) {
-			        // It's new custom config, not referenced in the prototype, or
-			        // it's removing a pre-configured value.
+			        // New custom config, not referenced in the prototype, or
+			        // Removing a pre-configured value.
 			        clone.put(field, update);
 			      } else {
 			        // Merge if object type is JSONObject.
@@ -49,5 +52,4 @@ public class JSONMerger {
 	    }//end if there are fields to add
 	    return clone;
 	  }
-
 }
