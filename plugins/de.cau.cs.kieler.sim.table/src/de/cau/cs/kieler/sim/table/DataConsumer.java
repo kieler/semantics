@@ -21,15 +21,15 @@ public class DataConsumer extends JSONStringDataComponent implements
 		//boolean modified = false;
 		for (int c = 0; c < TableDataList.getInstance().size(); c++) {
 			TableData tableData = TableDataList.getInstance().get(c);
-			if (tableData.isPresent()) {
+			if (tableData.isPresent()&&(!tableData.isModified())) {
 				//modified = true;
 				tableData.setPresent(false);
 			}
 		}
 		
 		// TODO Auto-generated method stub
-		System.out.println("    CONSUMER START");
-		System.out.println("RECEIVED: "+JSONString);
+		//System.out.println("    CONSUMER START");
+		//System.out.println("RECEIVED: "+JSONString);
 		
 		try {
 			JSONObject allData = new JSONObject(JSONString);
@@ -74,8 +74,8 @@ public class DataConsumer extends JSONStringDataComponent implements
 		//update only if not currently edited
 		if (!DataTableView.getInstance().isCurrentlyEdited())
 			TableDataList.getInstance().updateView();
-		try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
-		System.out.println("    CONSUMER DONE");
+		//try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
+		//System.out.println("    CONSUMER DONE");
 		return null;
 	}
 

@@ -11,9 +11,13 @@ import org.eclipse.swt.SWT;
 public class TableDataEditing extends EditingSupport {
 	private CellEditor editor;
 	private int columnIndex;
+	DataTableViewer viewer;
 
-	public TableDataEditing(ColumnViewer viewer, int columnIndex) {
+	public TableDataEditing(DataTableViewer viewer, 
+							int columnIndex) {
 		super(viewer);
+		
+		this.viewer = viewer; 
 		
 		// Create the correct editor based on the column index
 		switch (columnIndex) {
@@ -66,14 +70,16 @@ public class TableDataEditing extends EditingSupport {
 		switch (this.columnIndex) {
 		case 0:
 			if (tableData.isPresent() != (Boolean)value)
-				tableData.setModified(true);
-			tableData.setPresent((Boolean)value);
+				tableData.setModified(true); {
+					tableData.setPresent((Boolean)value);
+				}
 			break;
 		case 1:
 			try {
 				String newValue = String.valueOf(value);
-				if (!tableData.getKey().equals(newValue))
+				if (!tableData.getKey().equals(newValue)) {
 					tableData.setModified(true);
+				}
 				tableData.setKey(newValue);
 			}
 			catch(Exception e) {
@@ -83,8 +89,9 @@ public class TableDataEditing extends EditingSupport {
 			break;
 		case 2:
 			String newValue = String.valueOf(value);
-			if (!tableData.getValue().equals(newValue))
+			if (!tableData.getValue().equals(newValue)) {
 				tableData.setModified(true);
+			}
 			tableData.setValue(newValue);
 			break;
 		default:
@@ -92,6 +99,7 @@ public class TableDataEditing extends EditingSupport {
 		}
 
 		getViewer().update(element, null);
+		viewer.setSelection(null);
 	}
 
 }

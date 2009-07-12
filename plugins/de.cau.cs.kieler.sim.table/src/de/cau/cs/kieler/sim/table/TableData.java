@@ -9,6 +9,10 @@ public class TableData {
 	private String 	value;
 	private boolean modified;
 	
+	public TableDataList getParentTableDataList() {
+		return tableDataList;
+	}
+	
 	public TableData(TableDataList parentTableDataList) {
 		this.tableDataList = parentTableDataList;
 		this.present = true;

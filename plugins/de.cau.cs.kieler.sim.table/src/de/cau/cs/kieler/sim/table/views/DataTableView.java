@@ -8,6 +8,8 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import org.eclipse.ui.part.*;
 import org.eclipse.jface.viewers.*;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -47,8 +49,9 @@ public class DataTableView extends ViewPart {
 	private Action doubleClickAction;
 	private TableDataList tableDataList;
 	private Table table;
+	private boolean selected;
 	
-	private Action actionNew; //new
+	private Action actionNew; 		//new
 	private Action actionDelete;	//delete
 	/**
 	 * The constructor.
@@ -69,6 +72,7 @@ public class DataTableView extends ViewPart {
 	}
 	public boolean isCurrentlyEdited() {
 		return (viewer.isCellEditorActive()
+				|| (this.selected)
 				|| viewer.isBusy());
 	}
 
@@ -94,11 +98,11 @@ public class DataTableView extends ViewPart {
 	}
 
 	// This will create the columns for the table
-	private void createColumns(TableViewer viewer) {
+	private void createColumns(DataTableViewer viewer) {
 		String[] titles = { "P", "Key", "Value" };
 		String[] toolTip = { "Present", "Key", "Value" };
 		int[] bounds = { 22, 120, 120 };
-
+		
 		for (int i = 0; i < titles.length; i++) {
 			TableViewerColumn column = new TableViewerColumn(viewer, SWT.NONE);
 			column.getColumn().setText(titles[i]);
@@ -188,6 +192,12 @@ public class DataTableView extends ViewPart {
 					Object obj = ((IStructuredSelection)selection).getFirstElement();
 					if (obj != null) {
 						//showMessage("Double-click detected on "+obj.toString());
+						//.
+						//TableData tableData = (TableData)obj;
+						//int index = tableData.getParentTableDataList().indexOf(tableData);
+						//viewer.getCellEditors()[index].activate();
+						//int columnIndex = 0;
+						//viewer.editElement(tableData, columnIndex);
 						//TableData tableData = (TableData)obj;
 						//toggle present/absent
 						//tableData.setPresent(!tableData.isPresent());
@@ -211,10 +221,12 @@ public class DataTableView extends ViewPart {
 		if (((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement() == null) {
 			//no object selected
 			getActionDelete().setEnabled(false);
+			selected = false;
 		}
 		else {
 			//object selected
 			getActionDelete().setEnabled(true);
+			selected = true;
 		}
 		
 	}

@@ -16,30 +16,33 @@ public class DataProducer extends JSONStringDataComponent implements
 
 	@Override
 	public String step(String JSONString) {
-		try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
+		//try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
 		
 		String returnString = "";
 		
 		TableDataList tableDataList = TableDataList.getInstance();
 		for (int c = 0; c < tableDataList.size(); c++) {
 			TableData tableData = tableDataList.get(c);
-			if (tableData.isPresent()) {
-				if (tableData.isModified()) {
+			if (tableData.isModified()) {
+				if (tableData.isPresent()) {
 					if (!returnString.equals(""))
 						returnString += ",";
 					String key = tableData.getKey();
 					String value = tableData.getValue();
 					returnString += "\""+key+"\":\""+value+"\"";
 				}
+				//we have sent all modified values => reset
+				synchronized(tableData) {
+					tableData.setModified(false);
+				}
 			}
 		}
 		
-		//we have sent all modified values => reset
-		TableDataList.getInstance().resetModified();
-
 		//update only if not currently edited
-		if (!DataTableView.getInstance().isCurrentlyEdited())
-			TableDataList.getInstance().updateView();
+		//synchronized(DataTableView.getInstance()) {
+			if (!DataTableView.getInstance().isCurrentlyEdited())
+				TableDataList.getInstance().updateView();
+		//}
 		
 		returnString = "{" + returnString + "}";
 		

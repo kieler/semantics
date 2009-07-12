@@ -22,6 +22,10 @@ public class TableDataList {
 		content = this;
 	}
 	
+	public int indexOf(TableData tableData) {
+		return tableDataList.indexOf(tableData);
+	}
+	
 	public void resetModified() {
 		for (int c = 0; c < tableDataList.size(); c++) {
 			tableDataList.get(c).setModified(false);
@@ -30,7 +34,7 @@ public class TableDataList {
 	
 	public void updateView() {
 		//asynchronously update the table
-		Display.getDefault().syncExec(
+		Display.getDefault().asyncExec(
 				  new Runnable() {
 				    public void run(){
 						viewer.refresh();
