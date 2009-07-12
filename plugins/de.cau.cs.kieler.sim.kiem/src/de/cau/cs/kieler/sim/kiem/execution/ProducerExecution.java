@@ -8,39 +8,48 @@ import de.cau.cs.kieler.sim.kiem.json.*;
 public class ProducerExecution implements Runnable {
 	
 	private boolean done;
-	private boolean doneInternal;
 	private boolean stop;
-	private boolean error;
 	private DataComponent dataComponent;
 	private JSONObject data;
-	private Execution parent;
 	
 	public ProducerExecution(DataComponent dataComponent,
 						     Execution parent) {
-		this.parent = parent;
 		this.stop = false; 
 		this.done = false; 
-		this.doneInternal = true;
-		this.error = false;
 		this.data = null;
 		this.dataComponent = dataComponent;
 	}
 	
-	public synchronized void step() {
-		if (doneInternal) {
-			doneInternal = false;
-			this.notify();
+	public void blockingStep() {
+		synchronized(this) {
+			done = false;
+			//this will awake the execution (blockinWaitUntilDone())
+			//AND
+			//the waiting producer thread
+			//but only the producer thread will proceed, cause done
+			//is guaranteed to be false!
+			//the execution will fall asleep until the producer has
+			//finished doing its step
+			this.notifyAll();
 		}
 	}
 
-	public boolean isDone() {
-		return this.done;
-	}
-	public synchronized void setDone(boolean done) {
-		this.done = done;
-		synchronized(parent) {
-			parent.notify();
-		}
+	//this method resumes only if producer is done (and sleeping)
+	public void blockingWaitUntilDone() {
+		synchronized(this) {
+			while (!this.done) {
+				try {
+					//we pass the lock to someone else because
+					//we are still waiting for done to become true
+					this.notifyAll();
+					this.wait();
+				}
+				catch(Exception e) {
+					e.printStackTrace();
+				}
+			}//end while
+		}//end synchronized
+		//at this point done is true and we may reap the results now
 	}
 	
 	public JSONObject getData() {
@@ -54,33 +63,34 @@ public class ProducerExecution implements Runnable {
 		this.stop = true;
 	}
 
-	public boolean isError() {
-		return this.error;
-	}
 	
 	public void run() {
 		while (!this.stop) {
-			try {
-				synchronized(this) {
-				    //now we got the result and are done
-					this.doneInternal = true;
-					this.done = true;
-					synchronized(parent) {
-						parent.notify();
-					}
-					//go to sleep
-					this.wait();
-				}
-			}catch(Exception e){
-				e.printStackTrace();
-				this.error = true;
-				this.stop = true;
-				this.data = null;
-				this.done = true;
-			}
-
-			//caller must ensure that done == false (before)
+			//caller step() must ensure that done == false (before)
 			if (!done) {
+				try {
+					synchronized(this) {
+					    //now we got the result and are done
+						//so we set done to true to indicate that the results
+						//can be reaped
+						//while done is true we sleep and awake the
+						//execution (blockingWaitUntilDone()) possibly waiting
+						//it will return if done==true and being awakened
+						this.done = true;
+						//only proceed if done == false 
+						//(hence blockingStep() was called)
+						while (this.done) {
+							this.notifyAll();
+							//at this point blockingWaitUntilDone() can return
+							this.wait();
+						}
+						//at this point we know that someone wants us
+						//to make a step and done is false
+					}
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				
 				System.out.println("  "+dataComponent.getName() + " (Pure Producer) calc start");
 				//do asynchronous call
 				if (this.dataComponent.isJSON()) {
@@ -94,12 +104,12 @@ public class ProducerExecution implements Runnable {
 						(JSONStringDataComponent)dataComponent;
 					//do not send any data cause this is a producer only
 					String JSONString = compString.step(null);
-					if (JSONString != null) {
+					this.data = null;
+					if (JSONString != null && !JSONString.equals("")) {
 						try {
 							this.data = new JSONObject(JSONString);
 						}catch(Exception e) {
 							e.printStackTrace();
-							this.error = true;
 						}
 					}//not null
 				}

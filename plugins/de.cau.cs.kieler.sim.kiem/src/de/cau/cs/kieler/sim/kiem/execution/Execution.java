@@ -176,19 +176,22 @@ public class Execution implements Runnable {
 					//reduce number of steps
 					if (steps > -1) steps--;
 					System.out.println("-- execution step -------------------------------");
-					try {
-						System.out.println("DATA POOL: "+this.dataPool.getData(null).toString());
-					}catch(Exception e){e.printStackTrace();}
+//					try {
+//						System.out.println("DATA POOL: "+this.dataPool.getData(null).toString());
+//					}catch(Exception e){e.printStackTrace();}
 
-					//call all pure producers first
+					//===========================================//
+					//==  P U R E    P R O D U C E R    (CALL) ==//
+					//===========================================//
 					for(int c = 0; c < this.dataComponentList.size(); c++) {
+						//call all pure producers first
 						DataComponent dataComponent = 
 							dataComponentList.get(c);
 						if (dataComponent.isEnabled() && 
 							dataComponent.isPureProducer()) {
 								System.out.println(c + ") " + dataComponent.getName() + " (Pure Producer) call");
-								producerExecutionArray[c].setDone(false);
-								producerExecutionArray[c].step();
+								//make a step (within producerExecution's monitor)
+								producerExecutionArray[c].blockingStep();
 						}
 					}//next producer/consumer
 					
@@ -198,6 +201,9 @@ public class Execution implements Runnable {
 							dataComponentList.get(c);
 						if (!dataComponent.isEnabled()) continue;
 						
+						//===========================================//
+						//==  C O N S U M E R  /  P R O D U C E R  ==//
+						//===========================================//
 						if (dataComponent.isProducerConsumer()) {
 							System.out.println(c + ") " +dataComponent.getName() + " (Norm Producer) call");
 							//Consumer AND Producer => blocking
@@ -227,6 +233,9 @@ public class Execution implements Runnable {
 							}
 							System.out.println(dataComponent.getName() + " (Norm Producer) return");
 						}
+						//===========================================//
+						//==       P U R E    C O N S U M E R      ==//
+						//===========================================//
 						else if(dataComponent.isPureConsumer()) {
 								System.out.println(c + ") " +dataComponent.getName() + " (Pure Consumer) call");
 								//pure Consumer
@@ -247,27 +256,23 @@ public class Execution implements Runnable {
 									e.printStackTrace();
 								}
 								//call async method
-								//if (consumerExecutionArray[c].isDone())
-									consumerExecutionArray[c].step();
-								//else
-								//	System.out.println("  SKIPPED - NOT READY YET");
+								consumerExecutionArray[c].step();
 									
 						}
+						//===========================================//
+						//==  P U R E    P R O D U C E R    (REAP) ==//
+						//===========================================//
 						else if(dataComponent.isPureProducer()) {
 								System.out.println(c + ") " +dataComponent.getName() + " (Pure Producer) wait");
 								//pure Producer
 								//get blocking result
-								while (!producerExecutionArray[c].isDone()) {
-									try {
-										this.wait();
-									} catch (InterruptedException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-									if (this.stop == true) return;
-								}
+								producerExecutionArray[c].blockingWaitUntilDone();
+								//now reap the results
+								//note that due to sequential order we always FIRST
+								//reap the producer and only in the next iteration
+								//THEN call him again
+								if (this.stop == true) return;
 								System.out.println(c + ") " +dataComponent.getName() + " (Pure Producer) done");
-								//TODO: reasonable data
 								try {
 									JSONObject newData = producerExecutionArray[c].getData();
 									if (newData != null) 

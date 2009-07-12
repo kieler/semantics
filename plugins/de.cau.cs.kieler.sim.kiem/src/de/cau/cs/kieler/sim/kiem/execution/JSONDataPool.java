@@ -7,9 +7,13 @@ import de.cau.cs.kieler.sim.kiem.json.*;
 
 public class JSONDataPool {
 	
-	//this is the maximum number of steps that will be kept in history
+	//this is the maximum number of consecutive new entries that will be kept
+	//in history for a delta update
+	//meaning that between two consecutive calls of getDeltaData there should
+	//not be more than DATA_DELTA_POOL_HISTORY_MAX new entries been produced
+	//(regardless of any steps!)
 	//note that the history is needed for Delta Listener only
-	private static final int DATA_DELTA_POOL_HISTORY_MAX = 10000;
+	private static final int DATA_DELTA_POOL_HISTORY_MAX = 1000000;
 	
 	private List<JSONObject> dataDeltaPool;
 	private JSONObject dataPool;
@@ -56,14 +60,23 @@ public class JSONDataPool {
 	}
 	
 	//-------------------------------------------------------------------------
-		
+	
+	private int getPoolStartIndex(long deltaIndex) {
+		int newIndex = (int)(deltaIndex - this.poolCounterDiff+1);
+		//if deltaIndex is FAR TOO old, then we can only
+		//copy the values in memory 
+		//THIS MEANS getDeltaData() WAS CALLED TOO LONG AGO 
+		if (newIndex < 0) newIndex = 0;
+		return newIndex;
+	}
+	
 	public JSONObject getDeltaData(String[] filterKeys,
 							   	   long deltaPoolIndex) throws JSONException {
 		JSONObject returnObject = null;
 		if (filterKeys == null) {
 			//all data
 			returnObject = new JSONObject();
-			for (int c = (int)(deltaPoolIndex-this.poolCounterDiff+1);
+			for (int c = getPoolStartIndex(deltaPoolIndex);
 				 c <= this.poolCounter; c++) {
 				 JSONObject JSONobj = dataDeltaPool.get(c);
 				 returnObject = jsonMerger.mergeObjects(returnObject,JSONobj);
@@ -72,7 +85,7 @@ public class JSONDataPool {
 		else {
 			//filtered data
 			returnObject = new JSONObject();
-			for (int c = (int)(deltaPoolIndex-this.poolCounterDiff+1);
+			for (int c = getPoolStartIndex(deltaPoolIndex);
 				 c <= this.poolCounter; c++) {
 				 JSONObject JSONobj = dataDeltaPool.get(c);
 				 for (int cc = 0; cc < filterKeys.length; cc++) {
@@ -91,7 +104,8 @@ public class JSONDataPool {
 	public synchronized void putData(JSONObject newData) throws JSONException {
 		if (poolCounter >= DATA_DELTA_POOL_HISTORY_MAX) {
 			this.dataDeltaPool.remove(0);
-			this.poolCounterDiff--;
+			this.poolCounterDiff++;
+			this.poolCounter--;
 		}
 		
 		if (newData != null) {
