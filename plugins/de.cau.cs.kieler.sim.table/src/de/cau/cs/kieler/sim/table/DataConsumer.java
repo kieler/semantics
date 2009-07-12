@@ -74,7 +74,10 @@ public class DataConsumer extends JSONStringDataComponent implements
 		//update only if not currently edited
 		if (!DataTableView.getInstance().isCurrentlyEdited())
 			TableDataList.getInstance().updateView();
-		try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
+		
+		//Slow down so that user can eye-catch all changes!
+		try{Thread.sleep(250);}catch(Exception e){}
+		//try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
 		//System.out.println("    CONSUMER DONE");
 		return null;
 	}
