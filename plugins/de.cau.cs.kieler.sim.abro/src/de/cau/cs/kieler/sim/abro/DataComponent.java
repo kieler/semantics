@@ -44,9 +44,10 @@ public class DataComponent extends JSONObjectDataComponent implements
 
 	@Override
 	public JSONObject step(JSONObject JSONobject) {
-		try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
-		
-		JSONObject returnObj = new JSONObject();
+	//try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
+	System.out.println("ABRO received: "+ JSONobject.toString());
+	
+	JSONObject returnObj = new JSONObject();
 		
 		try{
 			if (JSONobject.has("R")) {
