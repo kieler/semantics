@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <dashboard>
+   <buildloop logsdir="/MyDeveloping/kieler/trunk/cruisecontrol/ccworkingdir/logs/"
+	      artifactsdir="/MyDeveloping/kieler/trunk/cruisecontrol/ccworkingdir/artifacts/" />
+   <features allowforcebuild="true"/>
+   <trackingtool projectname="test" baseurl="" keywords=""/>
+   <trackingtool projectname="helloworld" baseurl="http://localhost/" keywords=""/>
+   <subtabs>
+     <subtab class="net.sourceforge.cruisecontrol.dashboard.widgets.ErrorsAndWarningsMessagesWidget" />
+   </subtabs>
+</dashboard>
+ 

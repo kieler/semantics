@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository class='org.eclipse.equinox.internal.p2.artifact.repository.simple.SimpleArtifactRepository' version='1.0.0'?>
+<repository name='file:/home/haf/shared/kieler/workspace2/de.cau.cs.kieler.updatesite/ - artifacts' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
+  <properties size='2'>
+    <property name='p2.compressed' value='false'/>
+    <property name='p2.timestamp' value='1244555623433'/>
+  </properties>
+  <mappings size='3'>
+    <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
+    <rule filter='(&amp; (classifier=binary))' output='${repoUrl}/binary/${id}_${version}'/>
+    <rule filter='(&amp; (classifier=org.eclipse.update.feature))' output='${repoUrl}/features/${id}_${version}.jar'/>
+  </mappings>
+  <artifacts size='20'>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='437373'/>
+        <property name='download.size' value='437373'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts.dsl.generator' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='2209'/>
+        <property name='download.size' value='2209'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='de.cau.cs.kieler.synccharts.feature' version='0.1.0'>
+      <properties size='2'>
+        <property name='artifact.size' value='5405'/>
+        <property name='download.size' value='5405'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts.custom.contextMenu' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='50832'/>
+        <property name='download.size' value='50832'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='example' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='2687'/>
+        <property name='download.size' value='2687'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts.diagram' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='471891'/>
+        <property name='download.size' value='471891'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts.dsl.editor' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='26528'/>
+        <property name='download.size' value='26528'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts.dsl' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='46197'/>
+        <property name='download.size' value='46197'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.ssm.emf' version='1.0.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='299133'/>
+        <property name='download.size' value='299133'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts.custom.contextMenu' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='53050'/>
+        <property name='download.size' value='53050'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts.custom.contextMenu' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='53051'/>
+        <property name='download.size' value='53051'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts.custom' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='48069'/>
+        <property name='download.size' value='48069'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.ssm.emf' version='1.0.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='304846'/>
+        <property name='download.size' value='304846'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='de.cau.cs.kieler.ssm.feature' version='0.1.0'>
+      <properties size='2'>
+        <property name='artifact.size' value='749'/>
+        <property name='download.size' value='749'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='339046'/>
+        <property name='download.size' value='339046'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts.custom.contextMenu' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='51919'/>
+        <property name='download.size' value='51919'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts.diagram' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='494511'/>
+        <property name='download.size' value='494511'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts.edit' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='63336'/>
+        <property name='download.size' value='63336'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='de.cau.cs.kieler.synccharts.feature' version='0.1.0'>
+      <properties size='2'>
+        <property name='artifact.size' value='5412'/>
+        <property name='download.size' value='5412'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='de.cau.cs.kieler.synccharts.custom.contextMenu' version='0.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='52905'/>
+        <property name='download.size' value='52905'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+  </artifacts>
+</repository>

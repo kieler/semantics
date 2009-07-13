@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite">
+      KIELER Update Site
+   </description>
+   <feature url="features/de.cau.cs.kieler.synccharts.feature_0.1.0.jar" id="de.cau.cs.kieler.synccharts.feature" version="0.1.0">
+      <category name="kieler"/>
+   </feature>
+   <category-def name="kieler" label="KIELER">
+      <description>
+         Kiel Integrated Environment for Layout for the Eclipse RichClientPlatform
+      </description>
+   </category-def>
+</site>

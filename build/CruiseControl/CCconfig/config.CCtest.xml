@@ -1,0 +1,25 @@
+<cruisecontrol>
+  <dashboard url="http://localhost/CCdashboard" postinterval="5"/> <!-- 5 is default -->
+ 
+  <project name="CCtest" requireModification="false" buildafterfailed="true" forceOnly="true">
+
+    <log dir="/MyDeveloping/kieler/trunk/cruisecontrol/ccworkingdir/logs/${project.name}/"/>
+
+    <bootstrappers>
+    </bootstrappers>
+
+    <modificationset>
+      <svn localWorkingCopy="/MyDeveloping/kieler/trunk/cruisecontrol/CCtest/" username="chsch" password="anna2507"/>
+    </modificationset>
+
+    <schedule interval="60">
+      <ant buildfile="build.CCtest.xml"/>
+    </schedule>
+
+    <publishers>
+      <artifactspublisher dir="/MyDeveloping/kieler/trunk/cruisecontrol/CCtest/bin/"
+			  dest="/MyDeveloping/kieler/trunk/cruisecontrol/ccworkingdir/artifacts/CCtest"/>
+    </publishers>
+
+  </project>
+</cruisecontrol>

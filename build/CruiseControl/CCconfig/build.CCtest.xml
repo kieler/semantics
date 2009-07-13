@@ -1,0 +1,14 @@
+<project name="build-test" default="build" basedir="/MyDeveloping/kieler/trunk/cruisecontrol/CCtest/">
+
+  <property name="compile.source" value="1.6"/>
+  <property name="compile.target" value="1.6"/>
+
+  <target name="build">
+    <echo message="${svnrevision}"/>
+    <javac srcdir="src" destdir="bin"
+           debug="${compile.debug}"
+           source="${compile.source}"
+           target="${compile.target}"/>
+  </target>
+
+</project>

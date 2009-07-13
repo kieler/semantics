@@ -1,0 +1,19 @@
+<!-- Delegating build script, used by cruisecontrol to build MY_PROJECT_1.
+     Note that the basedir is set to the checked out project -->
+<project name="build-MY_PROJECT_1"
+        default="build"
+        basedir="/MyDeveloping/kieler/trunk/cruisecontrol/CCtest/">
+    <target name="build">
+        <!-- Get the latest from CVS -->
+        <svn RepositoryLocation="https:://rtsys.informatik.uni-kiel.de/svn/kieler/trunk/cruisecontrol/CCtest/"
+	     username="tomcat5" password="edcvgz"
+	     />
+        <!-- Call the target that does everything -->
+        <ant antfile="build.xml" target="build-everything"/>
+    </target>
+</project>
+
+
+<cruisecontrol>
+
+</cruisecontrol>
