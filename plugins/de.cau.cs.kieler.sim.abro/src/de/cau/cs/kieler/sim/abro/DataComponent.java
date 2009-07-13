@@ -1,7 +1,5 @@
 package de.cau.cs.kieler.sim.abro;
 
-import java.util.Random;
-
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
@@ -16,7 +14,6 @@ public class DataComponent extends JSONObjectDataComponent implements
 	boolean dB;
 	boolean done;
 	
-
 	public DataComponent() {
 		resetABO();
 	}
@@ -43,11 +40,8 @@ public class DataComponent extends JSONObjectDataComponent implements
 	}
 
 	public JSONObject step(JSONObject JSONobject) {
-	//try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
-	System.out.println("ABRO received: "+ JSONobject.toString());
-	
-	JSONObject returnObj = new JSONObject();
-		
+		System.out.println("ABRO received: "+ JSONobject.toString());
+		JSONObject returnObj = new JSONObject();
 		try{
 			if (JSONobject.has("R")) {
 				resetABO();
@@ -76,17 +70,14 @@ public class DataComponent extends JSONObjectDataComponent implements
 			if (wA && wB) {
 				returnObj.accumulate("state","wA, wB");
 			}
-			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
 		return returnObj;
 	}
 
 	public void initialize() {
 		// TODO Auto-generated method stub
-		System.out.println("ABRO DataConsumerProducer initialize");
 		resetABO();
 	}
 
@@ -100,15 +91,25 @@ public class DataComponent extends JSONObjectDataComponent implements
 		return true;
 	}
 	
+	@Override
 	public boolean needModelFile() {
 		return false;
 	}
 	
+	@Override
 	public boolean isMaster() {
 		return false;
 	}
 
+	@Override
 	public boolean isDeltaConsumer() {
 		return true;
 	}
+	
+	@Override
+	public String[] getLocalInterfaceVariables() {
+		String[] signals = {"state", "A", "B", "R", "O"}; 
+		return signals;
+	}
+
 }

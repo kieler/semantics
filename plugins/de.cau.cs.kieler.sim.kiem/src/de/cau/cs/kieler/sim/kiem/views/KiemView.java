@@ -1,6 +1,7 @@
 package de.cau.cs.kieler.sim.kiem.views;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Color;
@@ -227,6 +228,7 @@ public class KiemView extends ViewPart {
   //---------------------------------------------------------------------------	
   //---------------------------------------------------------------------------
 	public boolean initDataComponent() {
+		//by default do this silently
 		return initDataComponent(true);
 	}
 	
@@ -290,6 +292,31 @@ public class KiemView extends ViewPart {
 		}
 		
 		this.setAllEnabled(false);
+		
+		//get all localInterfaceVariables and combine them into
+		//globalInterfaceVariables
+		//initialize all (enabled) data producer and consumer
+		List<String> globalInterfaceVariables = new LinkedList<String>();
+		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
+			DataComponent dataComponent = KIEM.getDataComponentList().get(c);
+			String[] localInterfaceVariables = 
+									dataComponent.getLocalInterfaceVariables();
+			if (localInterfaceVariables != null) {
+				for (int cc = 0; cc < localInterfaceVariables.length; cc++) {
+				   String localInterfaceVariable = localInterfaceVariables[cc];
+				   globalInterfaceVariables.add(localInterfaceVariable);
+				}//next cc
+			}//end if enabled
+		}//next c
+		
+		//initialize globalInterfaceVariables in all enabled components
+		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
+			DataComponent dataComponent = KIEM.getDataComponentList().get(c);
+			if (dataComponent.isEnabled()) {
+				dataComponent.setGloblaInterfaceVariables
+					((String[])globalInterfaceVariables.toArray(new String [0]));
+			}//end if enabled
+		}//next c
 		
 		//initialize all (enabled) data producer and consumer
 		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
@@ -529,7 +556,7 @@ public class KiemView extends ViewPart {
 			}
 		};
 		actionStep.setText("Step");
-		actionStep.setToolTipText("Step execution");
+		actionStep.setToolTipText("Step Execution");
 		actionStep.setImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/StepIcon.png"));
 		actionStep.setDisabledImageDescriptor(
@@ -548,7 +575,7 @@ public class KiemView extends ViewPart {
 			}
 		};
 		actionRun.setText("Run");
-		actionRun.setToolTipText("Run execution");
+		actionRun.setToolTipText("Run Execution");
 		actionRun.setImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/PlayIcon.png"));
 		actionRun.setDisabledImageDescriptor(
@@ -567,7 +594,7 @@ public class KiemView extends ViewPart {
 			}
 		};
 		actionPause.setText("Pause");
-		actionPause.setToolTipText("Pause execution");
+		actionPause.setToolTipText("Pause Execution");
 		actionPause.setImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/PauseIcon.png"));
 		actionPause.setDisabledImageDescriptor(
@@ -623,7 +650,7 @@ public class KiemView extends ViewPart {
 			}
 		};
 		actionStop.setText("Stop");
-		actionStop.setToolTipText("Stop execution");
+		actionStop.setToolTipText("Stop Execution");
 		actionStop.setImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/StopIcon.png"));
 		actionStop.setDisabledImageDescriptor(

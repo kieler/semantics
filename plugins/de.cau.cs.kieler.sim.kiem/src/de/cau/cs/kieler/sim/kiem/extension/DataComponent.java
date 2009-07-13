@@ -10,7 +10,6 @@ public abstract class DataComponent implements IDataComponent,
 											   IExecutableExtension {
 	
 	private String name;
-	private String modelFile;
 	private boolean enabled;
 	private boolean json;
 	private KiemPlugin KIEMInstance;   //only contains access to execution
@@ -56,13 +55,18 @@ public abstract class DataComponent implements IDataComponent,
 		return (!this.isProducer() && this.isConsumer());
 	}
 		
+	//-------------------------------------------------------------------------
+	private String modelFile;
+
 	protected String getModelFile() {
 		return modelFile;
 	}
+	
 	public void setModelFile(String modelFile) {
 		this.modelFile = modelFile;
 		return;
 	}
+	
 	//if this producer/consumer needs the model file override this
 	//and return true
 	//the ExecutionManager will then check for it
@@ -70,11 +74,42 @@ public abstract class DataComponent implements IDataComponent,
 		return false;
 	}
 		
+	//-------------------------------------------------------------------------
+
 	//if this DataComponent implements a consumer, 
 	//provide some key's of interest 
 	public String[] getFilterKeys() {
 		return null;
 	}
+	
+	//-------------------------------------------------------------------------
+	private String[] globalInterfaceVariables;
+
+	//this is an optional method that will provide some
+	//interfae Variables that can be used by other DataComponents
+	//within and after the initialization phase every DataComponent
+	//may receive the union of all thos variables by calling the
+	//getGlobalInterfaceVariables() method
+	public String[] getLocalInterfaceVariables() {
+		return null;
+	}
+	
+	public void setGloblaInterfaceVariables
+									(String[] globalInterfaceVariables) {
+		this.globalInterfaceVariables = globalInterfaceVariables;
+	}
+	
+	protected String[] getGlobalInterfaceVariables() {
+		if (globalInterfaceVariables == null) {
+			//probably not initialized or there are no such
+			//variables
+			return null;
+		}
+		else
+			return globalInterfaceVariables;
+	}
+
+	//-------------------------------------------------------------------------
 	
 	//if this DataComponent implements a consumer, which wants delta values 
 	//only, it should override this method to return true
@@ -84,6 +119,36 @@ public abstract class DataComponent implements IDataComponent,
 	//this is used to store the deltaIndex values inside the components
 	//object
 	public long deltaIndex = 0;
+	
+	//-------------------------------------------------------------------------
+
+	//TODO: not implemented yet
+	//this method can be overridden to force the execution to pause
+	//please note that it cannot be guaranteed that the execution is paused
+	//because if the user clicks "play" or "step" in the GUI, or if a master
+	//calls step(), then the execution continues
+	public boolean isPauseFlag() {
+		return false;
+	}
+	
+	//TODO: not implemented yet
+	//override this method to flag that a "macro tick" is not yet done
+	//during e.g., a fixedpoint semantics of a DataComponent
+	//in case ANY DataComponent raises this flag (by returning false)
+	//the KIEM GUI will display another icon "Macro Step Execution"
+	//that will perform as many steps until each DataComponent returns
+	//true (possibly an infinite number of steps)
+	//any following step should be interpreted as the beginning of a new
+	//macro step
+	//All DataComponents that already have flaged isStepDone == true will
+	//not be scheduled again during this MacroStep
+	//if you need them to update again they should also return a false
+	//value.
+	//Also note that this method is ignored for pure data consumers because
+	//there is blocking impact on the schedule from them
+	public boolean isStepDone() {
+		return true;
+	}
 	
 	//-------------------------------------------------------------------------
 	//           at most ONE DataComponent can be a Master! 

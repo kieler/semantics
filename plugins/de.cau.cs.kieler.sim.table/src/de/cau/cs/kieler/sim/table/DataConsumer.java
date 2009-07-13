@@ -84,6 +84,19 @@ public class DataConsumer extends JSONStringDataComponent implements
 	public void initialize() {
 		// TODO Auto-generated method stub
 		System.out.println("Raw Table Consumer initialize");
+		//make an entry of all global interface variables/signals
+		String[] variables = this.getGlobalInterfaceVariables();
+		for (int c = 0; c < variables.length; c++) {
+			String key = variables[c];
+			String value = "";
+			//add to list
+			TableDataList.getInstance().add(new TableData(TableDataList.getInstance(),
+										false, 
+										key,
+										value));
+		}
+		//update the table
+		TableDataList.getInstance().updateView();
 	}
 
 	public boolean isConsumer() {

@@ -10,6 +10,13 @@ import de.cau.cs.kieler.sim.kiem.json.*;
 
 public class Execution implements Runnable {
 	
+	//delay to wait in paused state until
+	private static final int PAUSE_DEYLAY = 50;   //in ms
+	
+	//defines the number of steps in ...
+	private static final int INFINITY_STEPS = -1; //...run mode
+	private static final int NO_STEPS = 0;        //...pause mode
+	
 	private int aimedStepDuration;
 	private boolean stop;
 	private List<DataComponent> dataComponentList;
@@ -26,13 +33,11 @@ public class Execution implements Runnable {
 	private ProducerExecution[] producerExecutionArray;
 	private JSONDataPool dataPool;
 
-	//delay to wait in paused state until
-	private static final int PAUSE_DEYLAY = 50; //in ms
 	
 	public Execution(List<DataComponent> dataComponentList) {
 		this.stepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
 		this.stop = false; 
-		this.steps = 0; // == paused
+		this.steps = NO_STEPS; // == paused
 		this.dataComponentList = dataComponentList;
 		
 		this.dataPool = new JSONDataPool();
@@ -99,17 +104,20 @@ public class Execution implements Runnable {
 	}
 	
 	public synchronized int stepExecution() {
-		if (this.steps > 0) {
+		if (this.steps > NO_STEPS) {
 			return -1;
 		}
 		else {
+			//make one step
+			//note that consecutive calls will be enqueued into the
+			//implicit condition variable's queue of this monitor
 			this.steps = 1;
 			return stepDuration;
 		}
 	}
 	
 	public synchronized void pauseExecution() {
-		this.steps = 0;
+		this.steps = NO_STEPS;
 	}
 	
 	private void resetTimingVariables() {
@@ -124,26 +132,26 @@ public class Execution implements Runnable {
 	}
 	
 	public synchronized void runExecution() {
-		this.steps = -1; //indicates run mode
+		this.steps = INFINITY_STEPS; //indicates run mode
 	}
 	
 	public boolean isPaused() {
-		return (steps == 0);
+		return (steps == NO_STEPS);
 	}
 
 	public boolean isRunning() {
-		return (steps == -1);
+		return (steps == INFINITY_STEPS);
 	}
 	
 	public void stopExecution() {
 		//not synchronized to stop immediately w/o queuing
 		this.stop = true;
-		this.steps = 0;
+		this.steps = NO_STEPS;
 		
 		synchronized(this) {
 			//for safety reasons do this synchronized again
 			this.stop = true;
-			this.steps = 0;
+			this.steps = NO_STEPS;
 			//stop all child execution threads
 			for (int c = 0; c < this.dataComponentList.size(); c++) {
 				//reset delta index
@@ -170,12 +178,12 @@ public class Execution implements Runnable {
 			synchronized(this) {
 				//test if we have to make a step (1) or if we are 
 				//in running mode (-1)
-				if ((steps == -1)||(steps > 0)) {
+				if ((steps == INFINITY_STEPS)||(steps > NO_STEPS)) {
 					//make a tick
 					this.stepCounter++;
 					
 					//reduce number of steps
-					if (steps > -1) steps--;
+					if (steps > INFINITY_STEPS) steps--;
 //System.out.println("-- execution step -------------------------------");
 
 					//===========================================//
@@ -326,7 +334,7 @@ public class Execution implements Runnable {
 			if (this.stop == true) return;
 
 			//delay if time of step is left (in run mode only)
-			if (steps == -1) {
+			if (steps == INFINITY_STEPS) {
 				int timeToDelay = this.aimedStepDuration - this.stepDuration;
 				if (timeToDelay > 0)
 					try{Thread.sleep(timeToDelay);}catch(Exception e){}
@@ -336,7 +344,7 @@ public class Execution implements Runnable {
 			if (this.stop == true) return;
 			
 			//delay while paused
-			while (steps == 0) {
+			while (steps == NO_STEPS) {
 				starttime = System.currentTimeMillis();
 				//System.out.println(">>PAUSED<<");
 				try{Thread.sleep(PAUSE_DEYLAY);}catch(Exception e){}
