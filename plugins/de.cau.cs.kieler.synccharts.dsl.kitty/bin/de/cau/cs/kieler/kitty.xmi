@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.openarchitectureware.xtext:XtextFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.openarchitectureware.xtext="http://www.openarchitectureware.org/xtext" name="kitty" nsURI="http://de.cau.cs.kieler.synccharts.dsl.kitty">
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="Chart">
+    <type alias="" name="Chart"/>
+    <content xsi:type="org.openarchitectureware.xtext:Group">
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="statechart"/>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="name" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="SableCCIdentifier"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="OPTIONAL">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="["/>
+        <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="ANY">
+          <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="chartArgs" operator="ADD">
+            <token xsi:type="org.openarchitectureware.xtext:RuleName" name="ChartArgument"/>
+          </children>
+          <children xsi:type="org.openarchitectureware.xtext:Keyword" value=";"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="chartArgs" operator="ADD">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="ChartArgument"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" cardinality="OPTIONAL" value=";"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="]"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="{"/>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" cardinality="ANY" feature="iodeclarations" operator="ADD">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="IoDeclaration"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="cstate" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="CState"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="}"/>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value=";"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:StringRule" name="StateChartIdentifier">
+    <content xsi:type="org.openarchitectureware.xtext:Alternatives" cardinality="ONEORMORE">
+      <alternatives xsi:type="org.openarchitectureware.xtext:Keyword" value="_"/>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Keyword" value="#"/>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Keyword" value="."/>
+      <alternatives xsi:type="org.openarchitectureware.xtext:RuleName" name="ID"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:StringRule" name="SableCCIdentifier">
+    <content xsi:type="org.openarchitectureware.xtext:Alternatives" cardinality="ANY">
+      <alternatives xsi:type="org.openarchitectureware.xtext:Keyword" value="_"/>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Keyword" value="#"/>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Keyword" value="."/>
+      <alternatives xsi:type="org.openarchitectureware.xtext:RuleName" name="ID"/>
+      <alternatives xsi:type="org.openarchitectureware.xtext:RuleName" name="INT"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="ChartArgument">
+    <type alias="" name="ChartArgument"/>
+    <content xsi:type="org.openarchitectureware.xtext:Alternatives">
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="model"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="model" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+        </children>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="version"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="version" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+        </children>
+      </alternatives>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="IoDeclaration">
+    <type alias="" name="IoDeclaration"/>
+    <content xsi:type="org.openarchitectureware.xtext:Group">
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="type" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="DeclarationType"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="name" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="SableCCIdentifier"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="OPTIONAL">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value=":"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="initialValue" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="INT"/>
+        </children>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="OPTIONAL">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value=":"/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="varEventType" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="VarEventType"/>
+        </children>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value=";"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:EnumRule" name="DeclarationType">
+    <type alias="" name="DeclarationType"/>
+    <literals keyword="input" name="input"/>
+    <literals keyword="output" name="output"/>
+    <literals keyword="var" name="variable"/>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:EnumRule" name="VarEventType">
+    <type alias="" name="VarEventType"/>
+    <literals keyword="boolean" name="boolean"/>
+    <literals keyword="double" name="double"/>
+    <literals keyword="float" name="float"/>
+    <literals keyword="integer" name="integer"/>
+    <literals keyword="combine integer with +" name="combPlus"/>
+    <literals keyword="combine integer with *" name="combMal"/>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="CState">
+    <type alias="" name="CState"/>
+    <content xsi:type="org.openarchitectureware.xtext:Group">
+      <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="OPTIONAL">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="["/>
+        <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="ANY">
+          <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="stateArgs" operator="ADD">
+            <token xsi:type="org.openarchitectureware.xtext:RuleName" name="StateArgument"/>
+          </children>
+          <children xsi:type="org.openarchitectureware.xtext:Keyword" value=";"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="stateArgs" operator="ADD">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="StateArgument"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" cardinality="OPTIONAL" value=";"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="]"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="{"/>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" cardinality="OPTIONAL" feature="firstRegion" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Region"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Alternatives" cardinality="ANY">
+        <alternatives xsi:type="org.openarchitectureware.xtext:Assignment" feature="states" operator="ADD">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="State"/>
+        </alternatives>
+        <alternatives xsi:type="org.openarchitectureware.xtext:Assignment" feature="transitions" operator="ADD">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Transition"/>
+        </alternatives>
+        <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+          <children xsi:type="org.openarchitectureware.xtext:Keyword" value="||"/>
+          <children xsi:type="org.openarchitectureware.xtext:Assignment" cardinality="OPTIONAL" feature="innerRegions" operator="ADD">
+            <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Region"/>
+          </children>
+        </alternatives>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="}"/>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value=";"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="StateArgument">
+    <type alias="" name="StateArgument"/>
+    <content xsi:type="org.openarchitectureware.xtext:Alternatives">
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="label"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="label" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+        </children>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="type"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="type" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Pseudo"/>
+        </children>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Assignment" feature="event" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Event"/>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Assignment" feature="variable" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Variable"/>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="doActivity"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="doAction" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+        </children>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="do"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="doAction" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+        </children>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="entryActivity"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="entryAction" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+        </children>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="entry"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="entryAction" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+        </children>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="exitActivity"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="exitAction" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+        </children>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="exit"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="exitAction" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+        </children>
+      </alternatives>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:EnumRule" name="Pseudo">
+    <type alias="" name="Pseudo"/>
+    <literals keyword="final" name="final"/>
+    <literals keyword="initial" name="initial"/>
+    <literals keyword="history" name="history"/>
+    <literals keyword="choice" name="choice"/>
+    <literals keyword="dynamicchoice" name="dynamicchoice"/>
+    <literals keyword="suspend" name="suspend"/>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="Event">
+    <type alias="" name="Event"/>
+    <content xsi:type="org.openarchitectureware.xtext:Group">
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="localEvent"/>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="localEvent" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="Variable">
+    <type alias="" name="Variable"/>
+    <content xsi:type="org.openarchitectureware.xtext:Group">
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="localVariable"/>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="localVariable" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="Region">
+    <type alias="" name="Region"/>
+    <content xsi:type="org.openarchitectureware.xtext:Group">
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="&lt;"/>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="regionID" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="SableCCIdentifier"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value=">"/>
+      <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="OPTIONAL">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="["/>
+        <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="ANY">
+          <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="regArgs" operator="ADD">
+            <token xsi:type="org.openarchitectureware.xtext:RuleName" name="RegionArgument"/>
+          </children>
+          <children xsi:type="org.openarchitectureware.xtext:Keyword" value=";"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="stateArgs" operator="ADD">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="RegionArgument"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" cardinality="OPTIONAL" value=";"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="]"/>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="RegionArgument">
+    <type alias="" name="RegionArgument"/>
+    <content xsi:type="org.openarchitectureware.xtext:Alternatives">
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="label"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="label" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+        </children>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Assignment" feature="event" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Event"/>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Assignment" feature="variable" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="Variable"/>
+      </alternatives>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="State">
+    <type alias="" name="State"/>
+    <content xsi:type="org.openarchitectureware.xtext:Alternatives">
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="name" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="SableCCIdentifier"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="OPTIONAL">
+          <children xsi:type="org.openarchitectureware.xtext:Keyword" value="["/>
+          <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="ANY">
+            <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="stateArgs" operator="ADD">
+              <token xsi:type="org.openarchitectureware.xtext:RuleName" name="StateArgument"/>
+            </children>
+            <children xsi:type="org.openarchitectureware.xtext:Keyword" value=";"/>
+          </children>
+          <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="stateArgs" operator="ADD">
+            <token xsi:type="org.openarchitectureware.xtext:RuleName" name="StateArgument"/>
+          </children>
+          <children xsi:type="org.openarchitectureware.xtext:Keyword" cardinality="OPTIONAL" value=";"/>
+          <children xsi:type="org.openarchitectureware.xtext:Keyword" value="]"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value=";"/>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="name" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="SableCCIdentifier"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="cstate" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="CState"/>
+        </children>
+      </alternatives>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="Transition">
+    <type alias="" name="Transition"/>
+    <content xsi:type="org.openarchitectureware.xtext:Alternatives">
+      <alternatives xsi:type="org.openarchitectureware.xtext:RuleName" name="InitialTransition"/>
+      <alternatives xsi:type="org.openarchitectureware.xtext:RuleName" name="NonInitialTransition"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="InitialTransition">
+    <type alias="" name="InitialTransition"/>
+    <content xsi:type="org.openarchitectureware.xtext:Group">
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="->"/>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="targetState" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="SableCCIdentifier"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="OPTIONAL">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="["/>
+        <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="ANY">
+          <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="transArgs" operator="ADD">
+            <token xsi:type="org.openarchitectureware.xtext:RuleName" name="TransArgument"/>
+          </children>
+          <children xsi:type="org.openarchitectureware.xtext:Keyword" value=";"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="transArgs" operator="ADD">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="TransArgument"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" cardinality="OPTIONAL" value=";"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="]"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value=";"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="NonInitialTransition">
+    <type alias="" name="NonInitialTransition"/>
+    <content xsi:type="org.openarchitectureware.xtext:Group">
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" cardinality="OPTIONAL" feature="sourceState" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="SableCCIdentifier"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value="->"/>
+      <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="targetState" operator="ASSIGN">
+        <token xsi:type="org.openarchitectureware.xtext:RuleName" name="SableCCIdentifier"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="OPTIONAL">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="["/>
+        <children xsi:type="org.openarchitectureware.xtext:Group" cardinality="ANY">
+          <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="transArgs" operator="ADD">
+            <token xsi:type="org.openarchitectureware.xtext:RuleName" name="TransArgument"/>
+          </children>
+          <children xsi:type="org.openarchitectureware.xtext:Keyword" value=";"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="transArgs" operator="ADD">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="TransArgument"/>
+        </children>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" cardinality="OPTIONAL" value=";"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="]"/>
+      </children>
+      <children xsi:type="org.openarchitectureware.xtext:Keyword" value=";"/>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:TypeRule" name="TransArgument">
+    <type alias="" name="TransArgument"/>
+    <content xsi:type="org.openarchitectureware.xtext:Alternatives">
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="label"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="label" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+        </children>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="type"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="type" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="TransitionType"/>
+        </children>
+      </alternatives>
+      <alternatives xsi:type="org.openarchitectureware.xtext:Group">
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="priority"/>
+        <children xsi:type="org.openarchitectureware.xtext:Keyword" value="="/>
+        <children xsi:type="org.openarchitectureware.xtext:Assignment" feature="priority" operator="ASSIGN">
+          <token xsi:type="org.openarchitectureware.xtext:RuleName" name="STRING"/>
+        </children>
+      </alternatives>
+    </content>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:EnumRule" name="TransitionType">
+    <type alias="" name="TransitionType"/>
+    <literals keyword="weakAbortion" name="weakabortion"/>
+    <literals keyword="wa" name="wa"/>
+    <literals keyword="strongAbortion" name="strongabortion"/>
+    <literals keyword="sa" name="sa"/>
+    <literals keyword="normalTermination" name="normaltermination"/>
+    <literals keyword="nt" name="nt"/>
+    <literals keyword="suspension" name="suspension"/>
+    <literals keyword="sp" name="sp"/>
+    <literals keyword="conditional" name="conditional"/>
+    <literals keyword="co" name="co"/>
+    <literals keyword="internal" name="internal"/>
+    <literals keyword="it" name="it"/>
+  </rules>
+  <rules xsi:type="org.openarchitectureware.xtext:NativeLexerRule" name="ID"/>
+  <rules xsi:type="org.openarchitectureware.xtext:NativeLexerRule" name="STRING"/>
+  <rules xsi:type="org.openarchitectureware.xtext:NativeLexerRule" name="INT"/>
+  <rules xsi:type="org.openarchitectureware.xtext:NativeLexerRule" name="WS"/>
+  <rules xsi:type="org.openarchitectureware.xtext:NativeLexerRule" name="ML_COMMENT"/>
+  <rules xsi:type="org.openarchitectureware.xtext:NativeLexerRule" name="SL_COMMENT"/>
+</org.openarchitectureware.xtext:XtextFile>

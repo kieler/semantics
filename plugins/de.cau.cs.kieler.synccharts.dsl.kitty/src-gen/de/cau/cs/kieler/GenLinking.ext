@@ -1,0 +1,10 @@
+
+extension de::cau::cs::kieler::Extensions;
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+link(emf::EObject this) :
+	let all = allLocalElements() :
+        null;
+
+
+

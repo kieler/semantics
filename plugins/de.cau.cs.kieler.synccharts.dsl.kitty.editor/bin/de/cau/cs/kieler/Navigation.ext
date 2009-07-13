@@ -1,0 +1,10 @@
+import kitty;
+
+extension de::cau::cs::kieler::Extensions;
+extension de::cau::cs::kieler::GenNavigation reexport;
+/*
+ * overwrite the extensions
+ * ''emf::EObject findDeclaration(String,Object,Object)''
+ * ''List[emf::EObject] findReferences(String,Object,Object)''
+ * from de::cau::cs::kieler::GenNavigation.ext to control the construction of the findReferences / findDeclaration actions
+ */

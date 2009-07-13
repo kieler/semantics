@@ -1,0 +1,9 @@
+import kitty;
+
+extension de::cau::cs::kieler::Extensions reexport;
+extension de::cau::cs::kieler::GenEditorExtensions reexport;
+
+/*
+ * use this file to overwrite the label() and the image()
+ * extension for your model elements
+ */

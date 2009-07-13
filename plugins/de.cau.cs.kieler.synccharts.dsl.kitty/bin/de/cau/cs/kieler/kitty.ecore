@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="kitty" nsURI="http://de.cau.cs.kieler.synccharts.dsl.kitty" nsPrefix="kitty">
+  <eClassifiers xsi:type="ecore:EClass" name="Chart">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="chartArgs" ordered="false" upperBound="-1" eType="//ChartArgument" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="iodeclarations" ordered="false" upperBound="-1" eType="//IoDeclaration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cstate" ordered="false" eType="//CState" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ChartArgument">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="model" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IoDeclaration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="varEventType" ordered="false" unique="false" eType="//VarEventType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false" unique="false" eType="//DeclarationType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="initialValue" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CState">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="firstRegion" ordered="false" eType="//Region" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateArgs" ordered="false" upperBound="-1" eType="//StateArgument" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="innerRegions" ordered="false" upperBound="-1" eType="//Region" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" ordered="false" upperBound="-1" eType="//Transition" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="states" ordered="false" upperBound="-1" eType="//State" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StateArgument">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" ordered="false" eType="//Event" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="doAction" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="exitAction" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="entryAction" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false" unique="false" eType="//Pseudo"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" ordered="false" eType="//Variable" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Event">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="localEvent" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Variable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="localVariable" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Region">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="regArgs" ordered="false" upperBound="-1" eType="//RegionArgument" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="regionID" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateArgs" ordered="false" upperBound="-1" eType="//RegionArgument" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RegionArgument">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" ordered="false" eType="//Variable" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" ordered="false" eType="//Event" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="State">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateArgs" ordered="false" upperBound="-1" eType="//StateArgument" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cstate" ordered="false" eType="//CState" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transArgs" ordered="false" upperBound="-1" eType="//TransArgument" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetState" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InitialTransition" eSuperTypes="//Transition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NonInitialTransition" eSuperTypes="//Transition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceState" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TransArgument">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false" unique="false" eType="//TransitionType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="DeclarationType">
+    <eLiterals name="NULL" value="1"/>
+    <eLiterals name="input" value="1"/>
+    <eLiterals name="output" value="2"/>
+    <eLiterals name="variable" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="VarEventType">
+    <eLiterals name="NULL" value="1"/>
+    <eLiterals name="boolean" value="1"/>
+    <eLiterals name="double" value="2"/>
+    <eLiterals name="float" value="3"/>
+    <eLiterals name="integer" value="4"/>
+    <eLiterals name="combPlus" value="5"/>
+    <eLiterals name="combMal" value="6"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Pseudo">
+    <eLiterals name="NULL" value="1"/>
+    <eLiterals name="final" value="1"/>
+    <eLiterals name="initial" value="2"/>
+    <eLiterals name="history" value="3"/>
+    <eLiterals name="choice" value="4"/>
+    <eLiterals name="dynamicchoice" value="5"/>
+    <eLiterals name="suspend" value="6"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TransitionType">
+    <eLiterals name="NULL" value="1"/>
+    <eLiterals name="weakabortion" value="1"/>
+    <eLiterals name="wa" value="2"/>
+    <eLiterals name="strongabortion" value="3"/>
+    <eLiterals name="sa" value="4"/>
+    <eLiterals name="normaltermination" value="5"/>
+    <eLiterals name="nt" value="6"/>
+    <eLiterals name="suspension" value="7"/>
+    <eLiterals name="sp" value="8"/>
+    <eLiterals name="conditional" value="9"/>
+    <eLiterals name="co" value="10"/>
+    <eLiterals name="internal" value="11"/>
+    <eLiterals name="it" value="12"/>
+  </eClassifiers>
+</ecore:EPackage>
