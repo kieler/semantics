@@ -54,7 +54,7 @@ public class ConsumerExecution implements Runnable {
 				synchronized(this){
 					//now we got the result and are done
 					this.done = true;
-					System.out.println("  "+dataComponent.getName() + " (Pure Consumer) calc end");
+//System.out.println("  "+dataComponent.getName() + " (Pure Consumer) calc end");
 					this.wait();
 				}
 			}catch(Exception e){

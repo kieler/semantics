@@ -346,7 +346,7 @@ public class Execution implements Runnable {
 			//delay while paused
 			while (steps == NO_STEPS) {
 				starttime = System.currentTimeMillis();
-				//System.out.println(">>PAUSED<<");
+//System.out.println(">>PAUSED<<");
 				try{Thread.sleep(PAUSE_DEYLAY);}catch(Exception e){}
 				//if stop is requested, jump out
 				if (this.stop) return;

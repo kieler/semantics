@@ -40,7 +40,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 	}
 
 	public JSONObject step(JSONObject JSONobject) {
-		System.out.println("ABRO received: "+ JSONobject.toString());
+//System.out.println("ABRO received: "+ JSONobject.toString());
 		JSONObject returnObj = new JSONObject();
 		try{
 			if (JSONobject.has("R")) {

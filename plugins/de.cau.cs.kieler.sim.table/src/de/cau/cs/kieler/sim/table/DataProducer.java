@@ -45,7 +45,7 @@ public class DataProducer extends JSONStringDataComponent implements
 		
 		returnString = "{" + returnString + "}";
 		
-		System.out.println(returnString);
+//System.out.println(returnString);
 		return returnString;
 	}
 

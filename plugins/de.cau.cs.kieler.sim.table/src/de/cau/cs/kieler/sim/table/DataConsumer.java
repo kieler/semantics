@@ -27,8 +27,8 @@ public class DataConsumer extends JSONStringDataComponent implements
 		}
 		
 		// TODO Auto-generated method stub
-		//System.out.println("    CONSUMER START");
-		//System.out.println("RECEIVED: "+JSONString);
+//System.out.println("    CONSUMER START");
+//System.out.println("RECEIVED: "+JSONString);
 		
 		try {
 			JSONObject allData = new JSONObject(JSONString);
@@ -77,7 +77,7 @@ public class DataConsumer extends JSONStringDataComponent implements
 		//Slow down so that user can eye-catch all changes!
 		try{Thread.sleep(250);}catch(Exception e){}
 		//try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
-		//System.out.println("    CONSUMER DONE");
+//System.out.println("    CONSUMER DONE");
 		return null;
 	}
 
