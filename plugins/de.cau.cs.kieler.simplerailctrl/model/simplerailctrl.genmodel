@@ -5,7 +5,8 @@
     modelPluginID="de.cau.cs.kieler.simplerailctrl" modelName="Simplerailctrl" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="6.0" copyrightFields="false">
   <foreignModel>simplerailctrl.ecore</foreignModel>
-  <genPackages prefix="Simplerailctrl" disposableProviderFactory="true" ecorePackage="simplerailctrl.ecore#/">
+  <genPackages prefix="Simplerailctrl" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
+      ecorePackage="simplerailctrl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="simplerailctrl.ecore#//TRACK">
       <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_JCT_0"/>
       <genEnumLiterals ecoreEnumLiteral="simplerailctrl.ecore#//TRACK/IC_LN_0"/>
