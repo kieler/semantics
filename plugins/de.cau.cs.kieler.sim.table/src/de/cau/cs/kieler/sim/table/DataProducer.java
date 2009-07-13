@@ -14,7 +14,6 @@ public class DataProducer extends JSONStringDataComponent implements
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public String step(String JSONString) {
 		//try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
 		
@@ -50,19 +49,16 @@ public class DataProducer extends JSONStringDataComponent implements
 		return returnString;
 	}
 
-	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
 		System.out.println("Raw Table Producer initialize");
 	}
 
-	@Override
 	public boolean isConsumer() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public boolean isProducer() {
 		// TODO Auto-generated method stub
 		return true;

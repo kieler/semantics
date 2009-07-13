@@ -42,7 +42,6 @@ public class DataComponent extends JSONObjectDataComponent implements
 		done = true;
 	}
 
-	@Override
 	public JSONObject step(JSONObject JSONobject) {
 	//try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
 	System.out.println("ABRO received: "+ JSONobject.toString());
@@ -85,20 +84,17 @@ public class DataComponent extends JSONObjectDataComponent implements
 		return returnObj;
 	}
 
-	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
 		System.out.println("ABRO DataConsumerProducer initialize");
 		resetABO();
 	}
 
-	@Override
 	public boolean isConsumer() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
-	@Override
 	public boolean isProducer() {
 		// TODO Auto-generated method stub
 		return true;

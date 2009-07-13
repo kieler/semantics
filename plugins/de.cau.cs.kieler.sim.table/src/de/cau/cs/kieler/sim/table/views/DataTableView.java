@@ -185,7 +185,6 @@ public class DataTableView extends ViewPart {
 
 	private void hookSideEffectActions() {
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
-			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				ISelection selection = viewer.getSelection();
 				if (selection != null) {
@@ -208,7 +207,6 @@ public class DataTableView extends ViewPart {
 			}
 		});
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				updateEnabled();
 			}

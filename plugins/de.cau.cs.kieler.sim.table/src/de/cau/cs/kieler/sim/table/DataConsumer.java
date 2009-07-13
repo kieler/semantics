@@ -15,7 +15,6 @@ public class DataConsumer extends JSONStringDataComponent implements
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public String step(String JSONString) {
 		//set all entries to absent per default
 		//boolean modified = false;
@@ -82,19 +81,16 @@ public class DataConsumer extends JSONStringDataComponent implements
 		return null;
 	}
 
-	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
 		System.out.println("Raw Table Consumer initialize");
 	}
 
-	@Override
 	public boolean isConsumer() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
-	@Override
 	public boolean isProducer() {
 		// TODO Auto-generated method stub
 		return false;

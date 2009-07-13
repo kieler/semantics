@@ -16,7 +16,6 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 					"icons/unchecked.png").createImage();
 
 
-	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		TableData tableData = (TableData) element;
 		if (columnIndex == 0) {
@@ -30,7 +29,6 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 		return null;
 	}
 
-	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		TableData tableData = (TableData) element;
 		switch (columnIndex) {
@@ -48,25 +46,21 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 		}
 	}
 
-	@Override
 	public void addListener(ILabelProviderListener listener) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public boolean isLabelProperty(Object element, String property) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public void removeListener(ILabelProviderListener listener) {
 		// TODO Auto-generated method stub
 
