@@ -21,7 +21,7 @@
     <domainDiagramElement
         href="simplerailctrl.genmodel#//simplerailctrl/RailController"/>
     <topLevelNodes
-        visualID="2001"
+        visualID="2004"
         editPartClassName="SetSpeedEditPart"
         itemSemanticEditPolicyClassName="SetSpeedItemSemanticEditPolicy"
         canonicalEditPolicyClassName="SetSpeedCanonicalEditPolicy"
@@ -55,7 +55,7 @@
             href="simplerailctrl.genmodel#//simplerailctrl/RailController/nodes"/>
       </modelFacet>
       <labels
-          visualID="5001"
+          visualID="5008"
           editPartClassName="SetSpeedTrackEditPart"
           itemSemanticEditPolicyClassName="SetSpeedTrackItemSemanticEditPolicy"
           elementIcon="true">
@@ -76,7 +76,7 @@
         </modelFacet>
       </labels>
       <labels
-          visualID="5002"
+          visualID="5009"
           editPartClassName="SetSpeedSpeedEditPart"
           itemSemanticEditPolicyClassName="SetSpeedSpeedItemSemanticEditPolicy">
         <diagramRunTimeClass
@@ -97,7 +97,7 @@
       </labels>
     </topLevelNodes>
     <topLevelNodes
-        visualID="2002"
+        visualID="2005"
         editPartClassName="SetSignalEditPart"
         itemSemanticEditPolicyClassName="SetSignalItemSemanticEditPolicy"
         canonicalEditPolicyClassName="SetSignalCanonicalEditPolicy"
@@ -131,7 +131,7 @@
             href="simplerailctrl.genmodel#//simplerailctrl/RailController/nodes"/>
       </modelFacet>
       <labels
-          visualID="5003"
+          visualID="5010"
           editPartClassName="SetSignalTrackEditPart"
           itemSemanticEditPolicyClassName="SetSignalTrackItemSemanticEditPolicy"
           elementIcon="true">
@@ -152,7 +152,7 @@
         </modelFacet>
       </labels>
       <labels
-          visualID="5004"
+          visualID="5011"
           editPartClassName="SetSignalPositionEditPart"
           itemSemanticEditPolicyClassName="SetSignalPositionItemSemanticEditPolicy">
         <diagramRunTimeClass
@@ -172,7 +172,7 @@
         </modelFacet>
       </labels>
       <labels
-          visualID="5005"
+          visualID="5012"
           editPartClassName="SetSignalColorEditPart"
           itemSemanticEditPolicyClassName="SetSignalColorItemSemanticEditPolicy">
         <diagramRunTimeClass
@@ -193,7 +193,7 @@
       </labels>
     </topLevelNodes>
     <topLevelNodes
-        visualID="2003"
+        visualID="2006"
         editPartClassName="SetPointEditPart"
         itemSemanticEditPolicyClassName="SetPointItemSemanticEditPolicy"
         canonicalEditPolicyClassName="SetPointCanonicalEditPolicy"
@@ -227,7 +227,7 @@
             href="simplerailctrl.genmodel#//simplerailctrl/RailController/nodes"/>
       </modelFacet>
       <labels
-          visualID="5006"
+          visualID="5013"
           editPartClassName="SetPointPointEditPart"
           itemSemanticEditPolicyClassName="SetPointPointItemSemanticEditPolicy"
           elementIcon="true">
@@ -248,7 +248,7 @@
         </modelFacet>
       </labels>
       <labels
-          visualID="5007"
+          visualID="5014"
           editPartClassName="SetPointDirectionEditPart"
           itemSemanticEditPolicyClassName="SetPointDirectionItemSemanticEditPolicy">
         <diagramRunTimeClass
@@ -269,7 +269,7 @@
       </labels>
     </topLevelNodes>
     <links
-        visualID="4001"
+        visualID="4004"
         editPartClassName="EventWaitEditPart"
         itemSemanticEditPolicyClassName="EventWaitItemSemanticEditPolicy"
         createCommandClassName="EventWaitCreateCommand"
@@ -299,7 +299,7 @@
             href="simplerailctrl.genmodel#//simplerailctrl/Transition/destination"/>
       </modelFacet>
       <labels
-          visualID="6001"
+          visualID="6004"
           editPartClassName="EventWaitSecondsEditPart"
           itemSemanticEditPolicyClassName="EventWaitSecondsItemSemanticEditPolicy"
           elementIcon="true">
@@ -325,7 +325,7 @@
       </labels>
     </links>
     <links
-        visualID="4002"
+        visualID="4005"
         editPartClassName="EventContactEditPart"
         itemSemanticEditPolicyClassName="EventContactItemSemanticEditPolicy"
         createCommandClassName="EventContactCreateCommand"
@@ -355,7 +355,7 @@
             href="simplerailctrl.genmodel#//simplerailctrl/Transition/destination"/>
       </modelFacet>
       <labels
-          visualID="6002"
+          visualID="6005"
           editPartClassName="EventContactTrackPositionEditPart"
           itemSemanticEditPolicyClassName="EventContactTrackPositionItemSemanticEditPolicy"
           elementIcon="true">
@@ -383,7 +383,7 @@
       </labels>
     </links>
     <links
-        visualID="4003"
+        visualID="4006"
         editPartClassName="EventOccupiedEditPart"
         itemSemanticEditPolicyClassName="EventOccupiedItemSemanticEditPolicy"
         createCommandClassName="EventOccupiedCreateCommand"
@@ -413,7 +413,7 @@
             href="simplerailctrl.genmodel#//simplerailctrl/Transition/destination"/>
       </modelFacet>
       <labels
-          visualID="6003"
+          visualID="6006"
           editPartClassName="EventOccupiedTrackEditPart"
           itemSemanticEditPolicyClassName="EventOccupiedTrackItemSemanticEditPolicy"
           elementIcon="true">

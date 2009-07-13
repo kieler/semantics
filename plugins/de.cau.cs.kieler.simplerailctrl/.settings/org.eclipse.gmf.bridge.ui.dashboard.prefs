@@ -1,0 +1,6 @@
+#Sat Jul 04 12:48:35 CEST 2009
+eclipse.preferences.version=1
+gmf_dashboard/domainModel=platform\:/resource/de.cau.cs.kieler.simplerailctrl.codegen.c/model/simplerailctrl.ecore
+gmf_dashboard/graphicalDefinitionModel=platform\:/resource/de.cau.cs.kieler.simplerailctrl/model/simplerailctrl.gmfgraph
+gmf_dashboard/mappingModel=platform\:/resource/de.cau.cs.kieler.simplerailctrl.codegen.c/model/simplerailctrl.gmfmap
+gmf_dashboard/toolingDefinitionModel=platform\:/resource/de.cau.cs.kieler.simplerailctrl/model/simplerailctrl.gmftool
