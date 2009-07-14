@@ -96,8 +96,6 @@ public class JSONDataPool {
 				 }
 			}
 		}
-		System.out.println("POOL(DELTA="+deltaPoolIndex+")"+returnObject.toString());
-		
 		return returnObject;
 	}
 	

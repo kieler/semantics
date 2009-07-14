@@ -209,7 +209,7 @@ public class Execution implements Runnable {
 					//(or if any consumer is skipped in the next steps
 					// it will refer to this counter index later on!)
 					stepDataPoolIndex = dataPool.getPoolCounter();
-					System.out.println(stepDataPoolIndex);
+//System.out.println(stepDataPoolIndex);
 					
 					//reduce number of steps
 					if (steps > INFINITY_STEPS) steps--;
