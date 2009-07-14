@@ -195,7 +195,8 @@ public abstract class DataComponent implements IDataComponent,
 				return returnValue;
 			}
 		}
-		throw new Exception("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master!"
+							+"Override isMaster() to return true!");
 	}
 	//if this is a master it can stop the execution
 	public void masterStopExecution() throws Exception {
@@ -211,7 +212,8 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new Exception("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master!"
+				+"Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
 	public void masterPauseExecution() throws Exception {
@@ -225,7 +227,8 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new Exception("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master!"
+				+"Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
 	public void masterSetAimedStepDuration(int aimedStepDuration) throws Exception {
@@ -239,7 +242,8 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new Exception("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master!"
+				+"Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
 	public int masterGetAimedStepDuration() throws Exception {
@@ -251,7 +255,8 @@ public abstract class DataComponent implements IDataComponent,
 				return KIEMInstance.execution.getAimedStepDuration();
 			}
 		}
-		throw new Exception("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master!"
+				+"Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
 	public void masterRunExecution() throws Exception {
@@ -265,7 +270,8 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new Exception("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master!"
+				+"Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
 	public boolean masterIsPaused() throws Exception {
@@ -277,7 +283,8 @@ public abstract class DataComponent implements IDataComponent,
 				return KIEMInstance.execution.isPaused();
 			}
 		}
-		throw new Exception("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master!"
+				+"Override isMaster() to return true!");
 	}
 	//if this is a master it can pause the execution
 	public boolean masterIsRunning() throws Exception {
@@ -289,7 +296,8 @@ public abstract class DataComponent implements IDataComponent,
 				return KIEMInstance.execution.isRunning();
 			}
 		}
-		throw new Exception("This instance is not a master! Override isMaster() to return true!");
+		throw new Exception("This instance is not a master!"
+				+"Override isMaster() to return true!");
 	}
 	//is called from the ExecutionManager only iff isMaster() returns true
 	public void masterSetKIEMInstances(KiemPlugin KIEMInstance, 
