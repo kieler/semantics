@@ -18,19 +18,19 @@ public class EMFCodeGenTask extends Task {
 	}
 	
 	public void setGenModelCode(Boolean genModelCode) {
-		this.genModelCode = "-model";
+		if (genModelCode) this.genModelCode = "-model";
 	}
 	
-	public void setGenEditCode(Boolean genEditorCode) {
-		this.genEditCode = "-edit";
+	public void setGenEditCode(Boolean genEditCode) {
+		if (genEditCode) this.genEditCode = "-edit";
 	}
 	
-	public void setGenEditorCode(Boolean genEditCode) {
-		this.genEditorCode = "-editor";
+	public void setGenEditorCode(Boolean genEditorCode) {
+		if (genEditorCode) this.genEditorCode = "-editor";
 	}
 	
 	public void setGenTestsCode(Boolean genTestsCode) {
-		this.genTestsCode = "-tests";
+		if (genTestsCode) this.genTestsCode = "-tests";
 	}
 	
 	public void execute() {
