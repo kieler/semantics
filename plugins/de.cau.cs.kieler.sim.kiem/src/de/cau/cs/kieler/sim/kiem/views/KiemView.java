@@ -118,11 +118,11 @@ public class KiemView extends ViewPart {
 							"Master", 
 							"Model" };
 		String[] toolTip = { "Enabled/Disabled", 
-							 "Name of Data Producer/Consumer", 
-				 			 "Producer or Consumer", 
+							 "Name of Data Component", 
+				 			 "Producer, Consumer or Initialization Data Component", 
 				 			 //"JSONObject (JSONString otherwise)", 
-				 			 "Is a Master that leads execution", 
-				 			 "Needs selected model file" };
+				 			 "Is a Master that leads Execution", 
+				 			 "Needs selected Model File" };
 		int[] bounds = { 22, 180, 110, 45, 45};
 
 		for (int i = 0; i < titles.length; i++) {
