@@ -7,7 +7,7 @@
 	<!-- target calls the eclipse antRunner processing THIS build file on target 'main' -->
 	<target name="call.antRunner">
 		<property name="jobdir" location="../../../${job}/workspace" />
-		<property name="projectPropertiesFile" location="${jobdir}${projectProperties}" />
+		<property name="projectPropertiesFile" location="${jobdir}/${projectProperties}" />
 		
 	    <echo message="${jobdir}"/>
 		<echo message="${baseLocation}"/>
