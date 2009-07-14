@@ -145,10 +145,10 @@ public class DataTableView extends ViewPart {
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
 		IToolBarManager manager1 = bars.getToolBarManager();
-		manager1.add(getActionPermanent());
-		manager1.add(new Separator());
 		manager1.add(getActionAdd());
 		manager1.add(getActionDelete());
+		manager1.add(new Separator());
+		manager1.add(getActionPermanent());
 	}
 	
 	private Action getActionAdd() {
