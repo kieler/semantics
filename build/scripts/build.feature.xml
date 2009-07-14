@@ -2,70 +2,73 @@
 
 	<property name="scriptdir" location="."/>
 	<property file="${scriptdir}/build.general.properties" />
-	<!-- property file="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/scripts/build.general.properties" / -->
+	<property file="${projectPropertiesFile}" />
 	
 	<!-- target calls the eclipse antRunner processing THIS build file on target 'main' -->
 	<target name="call.antRunner">
-	        <!--  property name="jobdirabs" location="${jobdir}"/ -->
-	        <property name="jobdir" location="../../../${job}/workspace"/>
-	        <echo message="${jobdir}"/>
+		<property name="jobdir" location="../../../${job}/workspace" />
+		<property name="projectPropertiesFile" location="${jobdir}${projectProperties}" />
+		
+	    <echo message="${jobdir}"/>
 		<echo message="${baseLocation}"/>
-		<echo message="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar"/>
+		<echo message="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
+
+		<property name="workspace" value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseWorkspace"/>
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg value="-configuration" />
-			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseHome" />
+			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse" />
 			<arg value="-data" />
-			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseHome/workspace" />
+			<arg value="${workspace}" />
 			<arg value="-clean" />
 			<arg value="-consoleLog" />
 			<arg value="-application" />
 			<arg value="org.eclipse.ant.core.antRunner" />
 			<arg value="-buildfile" />
 			<arg value="${scriptdir}/build.feature.xml" />
-			<arg value="main" />
+			<arg value="genEMFcode" />
+			<arg value="genGMFcode" />
+			<arg value="build" />
 			<arg value="-Dbasedir=${jobdir}" />
 			<arg value="-Dscriptdir=${scriptdir}" />
+			<arg value="-DprojectPropertiesFile=${projectPropertiesFile}" />
 			<arg value="-DpluginPath=${pluginPath}" />
 			<arg value="-DtopLevelElementType=feature" />
 			<arg value="-DtopLevelElementId=${part}" />
+			
 			<classpath>
 				<pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
 		</java>
 	</target>
 
-	<target name="main">
+	<target name="build">
 		<echo message="BaseDir ${basedir}"/>
 		<echo message="ScriptDir ${scriptdir}"/>
 		<echo message="BuildDir ${buildDirectory}"/>
 		<echo message="PluginPath ${pluginPath}"/>
-		<!--available file="${pluginPath}" property="jarDa" value="gefunden"/ -->
-		<!-- property name="jarDa" value="nicht gefunden"/ -->
-		<!-- echo message="core....jar ${jarDa}"/ -->
-		<!-- antcall target="copy"/ -->
 		
-	  <mkdir dir="${buildDirectory}/update-site/features" />
-	  <mkdir dir="${buildDirectory}/update-site/plugins" />
-	  <ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
-	       <target name="generate"/>
-	  </ant>
-	  <ant antfile="build.xml" dir="${elementPath}">
-	      <property name="feature.destination" value="${buildDirectory}/update-site/features"/>
-	      <property name="plugin.destination" value="${buildDirectory}/update-site/plugins"/>
-	      <target name="build.jars"/>
-	      <target name="build.update.jar"/>
-	  </ant>
+		<mkdir dir="${buildDirectory}/update-site/features" />
+		<mkdir dir="${buildDirectory}/update-site/plugins" />
+		<ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
+			<target name="generate"/>
+		</ant>
+		<ant antfile="build.xml" dir="${elementPath}">
+			<property name="feature.destination" value="${buildDirectory}/update-site/features"/>
+			<property name="plugin.destination" value="${buildDirectory}/update-site/plugins"/>
+			<target name="build.jars"/>
+			<target name="build.update.jar"/>
+		</ant>
 	</target>
 	
-	<target name="copy"> <!-- if="jarDa"-->
-		<echo message="copying"/>
-		<copy todir="${buildDirectory}">
-			<fileset dir="${buildDirectory}/../../KIELER_core/workspace/update-site/plugins"/>
-		</copy>
-		<unjar src="${buildDirectory}/../../KIELER_core/workspace/update-site/plugins/de.cau.cs.kieler.core_0.1.1.jar" dest="${buildDirectory}/de.cau.cs.kieler.core_0.1.1/"/>
-		<unjar src="${buildDirectory}/../../KIELER_core/workspace/update-site/plugins/de.cau.cs.kieler.core.kgraph_0.1.0.jar" dest="${buildDirectory}/de.cau.cs.kieler.kgraph_0.1.0/"/>
-		<unjar src="${buildDirectory}/../../KIELER_core/workspace/update-site/plugins/de.cau.cs.kieler.core.ui_0.1.0.jar" dest="${buildDirectory}/de.cau.cs.kieler.core.ui_0.1.0/"/>
+	<target name="genEMFcode" if="genModel">
+		<kieler.genEMFcode genModel="${genModel}"
+						   genModelCode="${genModelCode}" genEditCode="${genEditCode}" genEditorCode="${genEditorCode}" genTestsCode="${genTestsCode}" />
 	</target>
+
+	<target name="genGMFcode" if="gmfgenModel">
+		<kieler.genGMFdiagramCode gmfgenModel="${gmfgenModel}"/>
+	</target>
+
 	
 <!--	      <mkdir dir="${buildDirectory}/update-site"/>
 	      <mkdir dir="${buildDirectory}/update-site/features"/>
