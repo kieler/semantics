@@ -13,7 +13,8 @@
 		<echo message="${baseLocation}"/>
 		<echo message="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 
-		<property name="workspace" value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseWorkspace"/>
+		<!-- property name="workspace" value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseWorkspace"/ -->
+		<property name="workspace" value="${jobdir}/eclipseWorkspace"/>
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg value="-configuration" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse" />
@@ -63,10 +64,20 @@
 	<target name="genEMFcode" if="genModel">
 		<kieler.genEMFcode genModel="${genModel}"
 						   genModelCode="${genModelCode}" genEditCode="${genEditCode}" genEditorCode="${genEditorCode}" genTestsCode="${genTestsCode}" />
+		<move todir="${buildDirectory}/plugins">
+		    <fileset dir="${buildDirectory}/eclipseWorkspace/"/>
+		</move>
 	</target>
 
 	<target name="genGMFcode" if="gmfgenModel">
 		<kieler.genGMFdiagramCode gmfgenModel="${gmfgenModel}"/>
+		<move todir="${buildDirectory}/plugins">
+		    <fileset dir="${buildDirectory}/eclipseWorkspace/"/>
+		</move>
+	</target>
+	
+	<target name="rmEclipseWorkspace">
+		<delete dir="${buildDirectory}/eclipseWorkspace"/>
 	</target>
 
 	
