@@ -7,6 +7,7 @@ import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.*;
+import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
 public class Execution implements Runnable {
 	
@@ -50,9 +51,14 @@ public class Execution implements Runnable {
 	//threads for consumers and producers
 	private ConsumerExecution[] consumerExecutionArray;
 	private ProducerExecution[] producerExecutionArray;
+	
+	//KiemView to control execution
+	KiemView view;
 
 	
-	public Execution(List<DataComponent> dataComponentList) {
+	public Execution(List<DataComponent> dataComponentList,
+					 KiemView view) {
+		this.view = view;
 		this.stepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
 		this.stop = false; 
 		this.steps = NO_STEPS; // == paused
@@ -210,6 +216,16 @@ public class Execution implements Runnable {
 			long endtime   = System.currentTimeMillis();
 			
 			synchronized(this) {
+				//iff any isPauseFlag() returns true, pause execution
+				for(int c = 0; c < this.dataComponentList.size(); c++) {
+					DataComponent dataComponent = 
+						dataComponentList.get(c);
+					if (dataComponent.isPauseFlag()) {
+						this.pauseExecution();
+						view.updateViewAsync();
+					}
+				}
+
 				//test if we have to make a step (1) or if we are 
 				//in running mode (-1)
 				if ((steps == INFINITY_STEPS)||(steps > NO_STEPS)) {

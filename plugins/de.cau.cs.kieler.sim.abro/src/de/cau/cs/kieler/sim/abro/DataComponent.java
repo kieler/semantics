@@ -14,8 +14,9 @@ public class DataComponent extends JSONObjectDataComponent implements
 	boolean dB;
 	boolean done;
 	
+	boolean paused; //demonstrate isPauseFlag() usage
+	
 	public DataComponent() {
-		resetABO();
 	}
 	
 	private void resetABO() {
@@ -37,6 +38,15 @@ public class DataComponent extends JSONObjectDataComponent implements
 		dB = false;
 		dA = false;
 		done = true;
+		paused = true;
+	}
+	
+	@Override
+	public boolean isPauseFlag() {
+		//only send paused==true flag ONCE!!!
+		boolean backup = paused;
+		paused = false;
+		return backup;
 	}
 
 	public JSONObject step(JSONObject JSONobject) {
@@ -78,7 +88,9 @@ public class DataComponent extends JSONObjectDataComponent implements
 
 	public void initialize() {
 		// TODO Auto-generated method stub
+		System.out.println("ABRO in Java in Kieler IN ACTION :-) initialize");
 		resetABO();
+		paused = false;
 	}
 
 	public boolean isConsumer() {

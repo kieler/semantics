@@ -10,6 +10,7 @@ import org.eclipse.swt.graphics.RGB;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 
 import org.eclipse.ui.part.*;
@@ -333,7 +334,7 @@ public class KiemView extends ViewPart {
 		}//next c
 		
 		//now create and run the execution thread
-		KIEM.execution = new Execution(KIEM.getDataComponentList());
+		KIEM.execution = new Execution(KIEM.getDataComponentList(), this);
 		//take the last set delay
 		KIEM.execution.setAimedStepDuration(KIEM.getAimedStepDuration());
 		KIEM.executionThread = new Thread(KIEM.execution);
@@ -412,13 +413,22 @@ public class KiemView extends ViewPart {
 		}
 	}
 	
-	public void updateView(boolean deselect) {
+
+	public void updateViewAsync() {
+		Display.getDefault().asyncExec(
+				  new Runnable() {
+				    public void run(){
+				    	updateView(true);
+				    }
+		});
+	}
+	
+	protected void updateView(boolean deselect) {
 		viewer.refresh();
 		refreshEnabledDisabledTextColors();
 		if (deselect)
 			viewer.setSelection(null);
 		updateEnabled();
-
 	}
 	
 	public void updateEnabled() {
@@ -438,6 +448,7 @@ public class KiemView extends ViewPart {
 		if (allDisabled) return;
 		if (KIEM.execution == null) {
 			//execution is stopped
+			getActionStep().setEnabled(true);
 			getActionMacroStep().setEnabled(true);
 			getActionRun().setEnabled(true);
 			getActionPause().setEnabled(true);
@@ -446,6 +457,7 @@ public class KiemView extends ViewPart {
 		}
 		else if (KIEM.execution.isRunning()) {
 			//execution is running
+			getActionStep().setEnabled(false);
 			getActionMacroStep().setEnabled(false);
 			getActionRun().setEnabled(false);
 			getActionPause().setEnabled(true);
@@ -455,6 +467,7 @@ public class KiemView extends ViewPart {
 		else {
 			//execution is paused
 			getActionMacroStep().setEnabled(true);
+			getActionStep().setEnabled(true);
 			getActionRun().setEnabled(true);
 			getActionPause().setEnabled(false);
 			getActionStop().setEnabled(true);

@@ -141,15 +141,16 @@ public abstract class DataComponent implements IDataComponent,
 	
 	//-------------------------------------------------------------------------
 
-	//TODO: not implemented yet
 	//this method can be overridden to force the execution to pause
-	//please note that it cannot be guaranteed that the execution is paused
-	//because if the user clicks "play" or "step" in the GUI, or if a master
-	//calls step(), then the execution continues
+	//be carefull if you override this method it will force the simulation
+	//to pause and hence it *CANNOT* proceed until *EVERY* component's
+	//isPauseFlag() returns false!
+	//also the step() function will never get called again!
+	//be careful when implementing side effects in this method!
 	public boolean isPauseFlag() {
 		return false;
 	}
-	
+
 	//TODO: not implemented yet
 	//override this method to flag that a "macro tick" is not yet done
 	//during e.g., a fixedpoint semantics of a DataComponent
@@ -191,7 +192,7 @@ public abstract class DataComponent implements IDataComponent,
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				int returnValue = KIEMInstance.execution.stepExecution();
-				KIEMViewInstance.updateView(true);
+				KIEMViewInstance.updateViewAsync();
 				return returnValue;
 			}
 		}
@@ -208,7 +209,7 @@ public abstract class DataComponent implements IDataComponent,
 				KIEMInstance.execution.stopExecution();
 				KIEMInstance.resetCurrentModelFile();
 				KIEMInstance.execution = null;
-				KIEMViewInstance.updateView(true);
+				KIEMViewInstance.updateViewAsync();
 				return;
 			}
 		}
@@ -223,7 +224,7 @@ public abstract class DataComponent implements IDataComponent,
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.pauseExecution();
-				KIEMViewInstance.updateView(true);
+				KIEMViewInstance.updateViewAsync();
 				return;
 			}
 		}
@@ -238,7 +239,7 @@ public abstract class DataComponent implements IDataComponent,
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.setAimedStepDuration(aimedStepDuration);
-				KIEMViewInstance.updateView(true);
+				KIEMViewInstance.updateViewAsync();
 				return;
 			}
 		}
@@ -266,7 +267,7 @@ public abstract class DataComponent implements IDataComponent,
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.runExecution();
-				KIEMViewInstance.updateView(true);
+				KIEMViewInstance.updateViewAsync();
 				return;
 			}
 		}
