@@ -67,15 +67,17 @@
 	<target name="genEMFcode" if="genModel">
 		<kieler.genEMFcode genModel="${genModel}"
 						   genModelCode="${genModelCode}" genEditCode="${genEditCode}" genEditorCode="${genEditorCode}" genTestsCode="${genTestsCode}" />
-		<move todir="${buildDirectory}/plugins">
+		<copy todir="${buildDirectory}/plugins">
 		    <fileset dir="${buildDirectory}/eclipseWorkspace/"/>
-		</move>
+		</copy>
 	</target>
 
 	<target name="genGMFcode" if="gmfgenModel">
 		<kieler.genGMFdiagramCode gmfgenModel="${gmfgenModel}"/>
 		<move todir="${buildDirectory}/plugins">
-		    <fileset dir="${buildDirectory}/eclipseWorkspace/"/>
+		    <fileset dir="${buildDirectory}/eclipseWorkspace/">
+				<include name="*.diagram/**" />
+			</fileset>
 		</move>
 	</target>
 	
