@@ -1,15 +1,19 @@
 package antTask;
 
+import java.util.ArrayList;
+
 import org.apache.tools.ant.Task;
 
 public class EMFCodeGenTask extends Task {
 	
 	String genModel = null;
-	String genModelCode = "";
-	String genEditCode = "";
-	String genEditorCode = "";
-	String genTestsCode = "";
+	String genModelCode = null;
+	String genEditCode = null;
+	String genEditorCode = null;
+	String genTestsCode = null;
 
+	ArrayList<String> config = new ArrayList<String>();
+	
 	public EMFCodeGenTask() {
 	}
 	
@@ -18,19 +22,19 @@ public class EMFCodeGenTask extends Task {
 	}
 	
 	public void setGenModelCode(Boolean genModelCode) {
-		if (genModelCode) this.genModelCode = "-model";
+		if (genModelCode) /* this.genModelCode = */ this.config.add("-model");
 	}
 	
 	public void setGenEditCode(Boolean genEditCode) {
-		if (genEditCode) this.genEditCode = "-edit";
+		if (genEditCode) /* this.genEditCode = */ this.config.add("-edit");
 	}
 	
 	public void setGenEditorCode(Boolean genEditorCode) {
-		if (genEditorCode) this.genEditorCode = "-editor";
+		if (genEditorCode) /* this.genEditorCode = */ this.config.add("-editor");
 	}
 	
 	public void setGenTestsCode(Boolean genTestsCode) {
-		if (genTestsCode) this.genTestsCode = "-tests";
+		if (genTestsCode) /* this.genTestsCode = */ this.config.add("-tests");
 	}
 	
 	public void execute() {
@@ -40,8 +44,9 @@ public class EMFCodeGenTask extends Task {
 			  + "The particular projects will be generated in the given workspace (specified by -data <path/to/workspace> while launching antRunner).");
 		}
 		else {
-			String[] params = new String[] {this.genModelCode, this.genEditCode, this.genEditorCode, this.genTestsCode, this.genModel};
-			log(params[0]+" "+params[1]+" "+params[2]+" "+params[3]+" "+params[4]);
+			config.add(genModel);
+			log(config.toString());
+			String[] params = (String[]) config.toArray(new String[1]); //new String[] {this.genModelCode, this.genEditCode, this.genEditorCode, this.genTestsCode, this.genModel};
 			new org.eclipse.emf.codegen.ecore.Generator().run(params);
 		}
 
