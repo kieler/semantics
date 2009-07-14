@@ -28,6 +28,7 @@
 			<arg value="${scriptdir}/build.feature.xml" />
 			<arg value="genEMFcode" />
 			<arg value="genGMFcode" />
+			<arg value="rmEclipseWorkspace" />
 			<arg value="build" />
 			<arg value="-Dbasedir=${jobdir}" />
 			<arg value="-Dscriptdir=${scriptdir}" />
