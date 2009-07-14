@@ -256,14 +256,18 @@ public class Execution implements Runnable {
 			long endtime   = System.currentTimeMillis();
 			
 			synchronized(this) {
-				//iff any isPauseFlag() returns true, pause execution
-				for(int c = 0; c < this.dataComponentList.size(); c++) {
-					DataComponent dataComponent = 
-						dataComponentList.get(c);
-					if (   dataComponent.isEnabled()
-						&& dataComponent.isPauseFlag()) {
-						this.pauseExecution();
-						view.updateViewAsync();
+				//test only if we have to make a step (1) or if we are 
+				//in running mode (-1)
+				if ((steps == INFINITY_STEPS)||(steps > NO_STEPS)) {
+					//iff any isPauseFlag() returns true, pause execution
+					for(int c = 0; c < this.dataComponentList.size(); c++) {
+						DataComponent dataComponent = 
+							dataComponentList.get(c);
+						if (   dataComponent.isEnabled()
+							&& dataComponent.isPauseFlag()) {
+							this.pauseExecution();
+							view.updateViewAsync();
+						}
 					}
 				}
 
