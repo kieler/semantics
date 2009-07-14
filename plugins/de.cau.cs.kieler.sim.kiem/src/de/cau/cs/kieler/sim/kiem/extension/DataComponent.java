@@ -20,6 +20,8 @@ public abstract class DataComponent implements IDataComponent,
 		super();
 		enabled = true;
 		json = false;
+		skipped = false;
+		deltaIndex = 0;
 	}
 	
 	public void setInitializationData(IConfigurationElement config,
@@ -118,7 +120,24 @@ public abstract class DataComponent implements IDataComponent,
 	}
 	//this is used to store the deltaIndex values inside the components
 	//object
-	public long deltaIndex = 0;
+	private long deltaIndex;
+	public long getDeltaIndex() {
+		return deltaIndex;
+	}
+	public void setDeltaIndex(long deltaIndex) {
+		this.deltaIndex = deltaIndex;
+	}
+	
+	//indicates that this component was skipped
+	//(this prevents its deltaIndex to advance)
+	private boolean skipped;
+	public boolean getSkipped() {
+		return skipped;
+	}
+	public void setSkipped(boolean skipped) {
+		this.skipped = skipped;
+	}
+	
 	
 	//-------------------------------------------------------------------------
 

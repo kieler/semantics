@@ -36,6 +36,7 @@ public class KiemView extends ViewPart {
 	private Action actionDisable;
 	private Action actionUp;
 	private Action actionDown;
+	private Action actionMacroStep;
 	private Action actionStep;
 	private Action actionRun;
 	private Action actionPause;
@@ -178,6 +179,8 @@ public class KiemView extends ViewPart {
 		manager.add(getActionDown());
 		manager.add(new Separator());
 		manager.add(getActionStep());
+		//TODO: macro step implementation
+		//manager.add(getActionMacroStep());
 		manager.add(getActionRun());
 		manager.add(getActionPause());
 		manager.add(getActionStop());
@@ -194,6 +197,8 @@ public class KiemView extends ViewPart {
 		manager.add(getDelayTextField());
 		manager.add(new Separator());
 		manager.add(getActionStep());
+		//TODO: macro step implementation
+		//manager.add(getActionMacroStep());
 		manager.add(getActionRun());
 		manager.add(getActionPause());
 		manager.add(getActionStop());
@@ -349,6 +354,7 @@ public class KiemView extends ViewPart {
 		getActionUp().setEnabled(enabled);
 		getActionDown().setEnabled(enabled);
 		getActionStep().setEnabled(enabled);
+		getActionMacroStep().setEnabled(enabled);
 		getActionRun().setEnabled(enabled);
 		getActionPause().setEnabled(enabled);
 		getActionStop().setEnabled(enabled);
@@ -422,6 +428,7 @@ public class KiemView extends ViewPart {
 		updateEnabledEnabledDisabledUpDown();
 		if (KIEM.getMaster() != null) {
 			getActionStep().setEnabled(false);
+			getActionMacroStep().setEnabled(false);
 			getActionRun().setEnabled(false);
 			getActionPause().setEnabled(false);
 			getActionStop().setEnabled(false);
@@ -431,7 +438,7 @@ public class KiemView extends ViewPart {
 		if (allDisabled) return;
 		if (KIEM.execution == null) {
 			//execution is stopped
-			getActionStep().setEnabled(true);
+			getActionMacroStep().setEnabled(true);
 			getActionRun().setEnabled(true);
 			getActionPause().setEnabled(true);
 			getActionStop().setEnabled(false);
@@ -439,7 +446,7 @@ public class KiemView extends ViewPart {
 		}
 		else if (KIEM.execution.isRunning()) {
 			//execution is running
-			getActionStep().setEnabled(false);
+			getActionMacroStep().setEnabled(false);
 			getActionRun().setEnabled(false);
 			getActionPause().setEnabled(true);
 			getActionStop().setEnabled(true);
@@ -447,7 +454,7 @@ public class KiemView extends ViewPart {
 		}
 		else {
 			//execution is paused
-			getActionStep().setEnabled(true);
+			getActionMacroStep().setEnabled(true);
 			getActionRun().setEnabled(true);
 			getActionPause().setEnabled(false);
 			getActionStop().setEnabled(true);
@@ -514,7 +521,7 @@ public class KiemView extends ViewPart {
 		actionUp.setImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/upIcon.png"));
 		actionUp.setDisabledImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/UpIconDisabled.png"));
+				KiemPlugin.getImageDescriptor("icons/upIconDisabled.png"));
 		return actionUp;
 	}
 	
@@ -539,7 +546,7 @@ public class KiemView extends ViewPart {
 		actionDown.setText("Schedule behind");
 		actionDown.setToolTipText("Schedule behind");
 		actionDown.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/DownIcon.png"));
+				KiemPlugin.getImageDescriptor("icons/downIcon.png"));
 		actionDown.setDisabledImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/downIconDisabled.png"));
 		return actionDown;
@@ -558,10 +565,29 @@ public class KiemView extends ViewPart {
 		actionStep.setText("Step");
 		actionStep.setToolTipText("Step Execution");
 		actionStep.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/StepIcon.png"));
+				KiemPlugin.getImageDescriptor("icons/stepIcon.png"));
 		actionStep.setDisabledImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/stepIconDisabled.png"));
 		return actionStep;
+	}
+
+	private Action getActionMacroStep() {
+		if (actionMacroStep != null) return actionMacroStep;
+		actionMacroStep = new Action() {
+			public void run() {
+				if (initDataComponent(false)) {
+					KIEM.execution.macroStepExecution();
+				}
+				updateView(true);
+			}
+		};
+		actionMacroStep.setText("Macro Step");
+		actionMacroStep.setToolTipText("Macro Step Execution");
+		actionMacroStep.setImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/macroStepIcon.png"));
+		actionMacroStep.setDisabledImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/macroStepIconDisabled.png"));
+		return actionMacroStep;
 	}
 	
 	private Action getActionRun() {
@@ -577,7 +603,7 @@ public class KiemView extends ViewPart {
 		actionRun.setText("Run");
 		actionRun.setToolTipText("Run Execution");
 		actionRun.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/PlayIcon.png"));
+				KiemPlugin.getImageDescriptor("icons/playIcon.png"));
 		actionRun.setDisabledImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/playIconDisabled.png"));
 		return actionRun;
@@ -596,7 +622,7 @@ public class KiemView extends ViewPart {
 		actionPause.setText("Pause");
 		actionPause.setToolTipText("Pause Execution");
 		actionPause.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/PauseIcon.png"));
+				KiemPlugin.getImageDescriptor("icons/pauseIcon.png"));
 		actionPause.setDisabledImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/pauseIconDisabled.png"));
 		return actionPause;
@@ -652,7 +678,7 @@ public class KiemView extends ViewPart {
 		actionStop.setText("Stop");
 		actionStop.setToolTipText("Stop Execution");
 		actionStop.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/StopIcon.png"));
+				KiemPlugin.getImageDescriptor("icons/stopIcon.png"));
 		actionStop.setDisabledImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/stopIconDisabled.png"));
 		return actionStop;

@@ -46,9 +46,6 @@ public class Execution implements Runnable {
 
 	//the data pool
 	private JSONDataPool dataPool;
-
-	//index of the data pool in the current step
-	private long stepDataPoolIndex;
 	
 	//threads for consumers and producers
 	private ConsumerExecution[] consumerExecutionArray;
@@ -62,7 +59,6 @@ public class Execution implements Runnable {
 		this.dataComponentList = dataComponentList;
 		
 		this.dataPool = new JSONDataPool();
-		stepDataPoolIndex = 0;
 		
 		consumerExecutionArray = new ConsumerExecution
 										[this.dataComponentList.size()];
@@ -137,6 +133,20 @@ public class Execution implements Runnable {
 			return stepDuration;
 		}
 	}
+
+	public synchronized int macroStepExecution() {
+		//TODO: implement macro step execution!!!
+		if (this.steps > NO_STEPS) {
+			return -1;
+		}
+		else {
+			//make one step
+			//note that consecutive calls will be enqueued into the
+			//implicit condition variable's queue of this monitor
+			this.steps = 1;
+			return stepDuration;
+		}
+	}
 	
 	public synchronized void pauseExecution() {
 		this.steps = NO_STEPS;
@@ -177,7 +187,9 @@ public class Execution implements Runnable {
 			//stop all child execution threads
 			for (int c = 0; c < this.dataComponentList.size(); c++) {
 				//reset delta index
-				this.dataComponentList.get(c).deltaIndex = 0;
+				this.dataComponentList.get(c).setDeltaIndex(0);
+				//reset skipped
+				this.dataComponentList.get(c).setSkipped(false);
 				if (this.consumerExecutionArray[c] != null)
 					this.consumerExecutionArray[c].stopExecution();
 				if (this.producerExecutionArray[c] != null)
@@ -208,8 +220,19 @@ public class Execution implements Runnable {
 					//referred to for this step
 					//(or if any consumer is skipped in the next steps
 					// it will refer to this counter index later on!)
-					stepDataPoolIndex = dataPool.getPoolCounter();
-//System.out.println(stepDataPoolIndex);
+					for(int c = 0; c < this.dataComponentList.size(); c++) {
+						//call all pure producers first
+						DataComponent dataComponent = 
+							dataComponentList.get(c);
+						if (   dataComponent.isEnabled()
+							&& dataComponent.isDeltaConsumer()
+							&& (!dataComponent.getSkipped())) {
+							//advance delta counter for all *NOT* skipped 
+							//components
+							dataComponent.setDeltaIndex
+												(dataPool.getPoolCounter());
+						 }
+					}
 					
 					//reduce number of steps
 					if (steps > INFINITY_STEPS) steps--;
@@ -243,17 +266,12 @@ public class Execution implements Runnable {
 //System.out.println(c + ") " +dataComponent.getName() + " (Norm Producer) call");
 							//Consumer AND Producer => blocking
 							try {
-								//memorize current step pool index
-								if (dataComponent.isDeltaConsumer())
-									dataComponent.deltaIndex =
-										stepDataPoolIndex;
-
 								JSONObject oldData;
 								String[] filterKeys = 
 									dataComponent.getFilterKeys();
 								if (dataComponent.isDeltaConsumer()) {
 									oldData = this.dataPool.getDeltaData
-										 (filterKeys,dataComponent.deltaIndex);
+										 (filterKeys,dataComponent.getDeltaIndex());
 								}
 								else
 									oldData = this.dataPool.getData(filterKeys);
@@ -283,9 +301,6 @@ public class Execution implements Runnable {
 						else if(dataComponent.isPureConsumer()) {
 //System.out.println(c + ") " +dataComponent.getName() + " (Pure Consumer) call");
 								//pure Consumer
-								//make a backup for the case of a skip  
-								long backupDeltaIndex = dataComponent.deltaIndex;
-								dataComponent.deltaIndex = stepDataPoolIndex;
 								//set current data
 								try {
 									String[] filterKeys = 
@@ -293,7 +308,7 @@ public class Execution implements Runnable {
 									JSONObject oldData;
 									if (dataComponent.isDeltaConsumer()) {
 										oldData = this.dataPool.getDeltaData
-										  (filterKeys,dataComponent.deltaIndex);
+										  (filterKeys,dataComponent.getDeltaIndex());
 									}
 									else
 										oldData = this.dataPool
@@ -303,17 +318,14 @@ public class Execution implements Runnable {
 									e.printStackTrace();
 								}
 								//call async method 
-								if (consumerExecutionArray[c].step()) {
-									//if step was successful (not skipped)
-									if (dataComponent.isDeltaConsumer())
-										//memorize last delta index
-										dataComponent.deltaIndex = 
-												stepDataPoolIndex;
-									else
-										//revert to backup id cause it was skipped...
-										dataComponent.deltaIndex = backupDeltaIndex;
+								if (!(consumerExecutionArray[c].step())) {
+									//if step was *NOT* successful (skipped)
+									//set skipped:=true this prevents the delta
+									//index to advance in the next steps!
+									dataComponent.setSkipped(true);
 								}
-									
+								else
+									dataComponent.setSkipped(false);
 						}
 						//===========================================//
 						//==  P U R E    P R O D U C E R    (REAP) ==//
