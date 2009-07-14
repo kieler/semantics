@@ -169,6 +169,28 @@ public abstract class DataComponent implements IDataComponent,
 	public boolean isStepDone() {
 		return true;
 	}
+
+	//-------------------------------------------------------------------------
+	// The following methods are called before the command is processed
+	// note: these command methods are called inside the synchronized lock
+	//       so deadlock can occur if you or another object within these
+	//		 methods refer to the execution-thread!!!
+	//-------------------------------------------------------------------------
+	public void commandStep() {
+		//BE CAREFUL WHEN USING THIS (S.A.)//
+	}
+	public void commandMacroStep() {
+		//BE CAREFUL WHEN USING THIS (S.A.)//
+	}
+	public void commandPlay() {
+		//BE CAREFUL WHEN USING THIS (S.A.)//
+	}
+	public void commandPause() {
+		//BE CAREFUL WHEN USING THIS (S.A.)//
+	}
+	public void commandStop() {
+		//BE CAREFUL WHEN USING THIS (S.A.)//
+	}
 	
 	//-------------------------------------------------------------------------
 	//           at most ONE DataComponent can be a Master! 
@@ -185,15 +207,30 @@ public abstract class DataComponent implements IDataComponent,
 	//if this is a master it can initiate the execution
 	//this method returns -1 if the previous step did not completed yet
 	//otherwise it will return the last execution time of the full step
-	public int masterStepExecution() throws Exception {
+	public void masterStepExecution() throws Exception {
 		if (this.isMaster()) {
 			if ((KIEMViewInstance != null)) {
 				KIEMViewInstance.initDataComponent();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
-				int returnValue = KIEMInstance.execution.stepExecution();
+				KIEMInstance.execution.stepExecution();
 				KIEMViewInstance.updateViewAsync();
-				return returnValue;
+			}
+		}
+		throw new Exception("This instance is not a master!"
+							+"Override isMaster() to return true!");
+	}
+	//if this is a master it can initiate the execution
+	//this method returns -1 if the previous step did not completed yet
+	//otherwise it will return the last execution time of the full step
+	public void masterMacroStepExecution() throws Exception {
+		if (this.isMaster()) {
+			if ((KIEMViewInstance != null)) {
+				KIEMViewInstance.initDataComponent();
+			}
+			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
+				KIEMInstance.execution.macroStepExecution();
+				KIEMViewInstance.updateViewAsync();
 			}
 		}
 		throw new Exception("This instance is not a master!"

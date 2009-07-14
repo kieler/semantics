@@ -41,14 +41,6 @@ public class DataComponent extends JSONObjectDataComponent implements
 		paused = true;
 	}
 	
-	@Override
-	public boolean isPauseFlag() {
-		//only send paused==true flag ONCE!!!
-		boolean backup = paused;
-		paused = false;
-		return backup;
-	}
-
 	public JSONObject step(JSONObject JSONobject) {
 //System.out.println("ABRO received: "+ JSONobject.toString());
 		JSONObject returnObj = new JSONObject();
@@ -86,6 +78,9 @@ public class DataComponent extends JSONObjectDataComponent implements
 		return returnObj;
 	}
 
+	//--------------------------------------------------------------------------
+	//additional methods
+	
 	public void initialize() {
 		// TODO Auto-generated method stub
 		System.out.println("ABRO in Java in Kieler IN ACTION :-) initialize");
@@ -118,6 +113,16 @@ public class DataComponent extends JSONObjectDataComponent implements
 		return true;
 	}
 	
+	@Override
+	public boolean isPauseFlag() {
+		return paused;
+	}
+	
+	@Override
+	public void commandPause() {
+		paused = false;
+	}
+
 	@Override
 	public String[] getLocalInterfaceVariables() {
 		String[] signals = {"state", "A", "B", "R", "O"}; 

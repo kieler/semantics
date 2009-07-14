@@ -127,35 +127,65 @@ public class Execution implements Runnable {
 		return this.aimedStepDuration;
 	}
 	
-	public synchronized int stepExecution() {
-		if (this.steps > NO_STEPS) {
-			return -1;
-		}
-		else {
-			//make one step
-			//note that consecutive calls will be enqueued into the
-			//implicit condition variable's queue of this monitor
-			this.steps = 1;
-			return stepDuration;
+	public void stepExecution() {
+		synchronized(this) {
+			if (this.steps == NO_STEPS) {
+				//notify components
+				for(int c = 0; c < this.dataComponentList.size(); c++) {
+					DataComponent dataComponent = 
+						dataComponentList.get(c);
+					if (   dataComponent.isEnabled()
+						&& dataComponent.isPauseFlag()) {
+						dataComponent.commandStep();
+					}
+				}
+				//make one step
+				//note that consecutive calls will be enqueued into the
+				//implicit condition variable's queue of this monitor
+				this.steps = 1;
+			}
+			else 
+				return; //skip in this case make NO step
 		}
 	}
 
-	public synchronized int macroStepExecution() {
+	public void macroStepExecution() {
 		//TODO: implement macro step execution!!!
-		if (this.steps > NO_STEPS) {
-			return -1;
-		}
-		else {
-			//make one step
-			//note that consecutive calls will be enqueued into the
-			//implicit condition variable's queue of this monitor
-			this.steps = 1;
-			return stepDuration;
+		synchronized(this) {
+			if (this.steps == NO_STEPS) {
+				//notify components
+				for(int c = 0; c < this.dataComponentList.size(); c++) {
+					DataComponent dataComponent = 
+						dataComponentList.get(c);
+					if (   dataComponent.isEnabled()
+						&& dataComponent.isPauseFlag()) {
+						dataComponent.commandMacroStep();
+					}
+				}
+				//make one step
+				//note that consecutive calls will be enqueued into the
+				//implicit condition variable's queue of this monitor
+				this.steps = 1;
+			}
+			else 
+				return; //skip in this case make NO step
 		}
 	}
 	
-	public synchronized void pauseExecution() {
-		this.steps = NO_STEPS;
+	public void pauseExecution() {
+		synchronized(this) {
+			//notify components
+			for(int c = 0; c < this.dataComponentList.size(); c++) {
+				DataComponent dataComponent = 
+					dataComponentList.get(c);
+				if (   dataComponent.isEnabled()
+					&& dataComponent.isPauseFlag()) {
+					dataComponent.commandPause();
+				}
+			}
+
+			this.steps = NO_STEPS;
+		}
 	}
 	
 	private void resetTimingVariables() {
@@ -185,8 +215,18 @@ public class Execution implements Runnable {
 		//not synchronized to stop immediately w/o queuing
 		this.stop = true;
 		this.steps = NO_STEPS;
-		
+
 		synchronized(this) {
+			//notify components
+			for(int c = 0; c < this.dataComponentList.size(); c++) {
+				DataComponent dataComponent = 
+					dataComponentList.get(c);
+				if (   dataComponent.isEnabled()
+					&& dataComponent.isPauseFlag()) {
+					dataComponent.commandStop();
+				}
+			}
+			
 			//for safety reasons do this synchronized again
 			this.stop = true;
 			this.steps = NO_STEPS;
@@ -220,7 +260,8 @@ public class Execution implements Runnable {
 				for(int c = 0; c < this.dataComponentList.size(); c++) {
 					DataComponent dataComponent = 
 						dataComponentList.get(c);
-					if (dataComponent.isPauseFlag()) {
+					if (   dataComponent.isEnabled()
+						&& dataComponent.isPauseFlag()) {
 						this.pauseExecution();
 						view.updateViewAsync();
 					}
