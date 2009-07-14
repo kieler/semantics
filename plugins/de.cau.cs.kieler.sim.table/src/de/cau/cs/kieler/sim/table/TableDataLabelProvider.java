@@ -11,19 +11,33 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 	private static final Image CHECKED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.table",
 					"icons/checked.png").createImage();
+	private static final Image CHECKED_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.table",
+					"icons/checkedDisabled.png").createImage();
 	private static final Image UNCHECKED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.table",
 					"icons/unchecked.png").createImage();
+	private static final Image PERMANENT = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.table",
+					"icons/permanent.png").createImage();
 
 
 	public Image getColumnImage(Object element, int columnIndex) {
 		TableData tableData = (TableData) element;
 		if (columnIndex == 0) {
 			if (tableData.isPresent()) {
-				return CHECKED;
+				if (tableData.isPermanent())
+					return CHECKED_DISABLED;
+				else
+					return CHECKED;
 			}
 			else {
 				return UNCHECKED;
+			}
+		}
+		if (columnIndex == 1) {
+			if (tableData.isPermanent()) {
+				return PERMANENT;
 			}
 		}
 		return null;

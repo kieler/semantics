@@ -28,7 +28,8 @@ public class DataProducer extends JSONStringDataComponent implements
 						returnString += ",";
 					String key = tableData.getKey();
 					String value = tableData.getValue();
-					returnString += "\""+key+"\":\""+value+"\"";
+					if (value.equals("")) value = "\"\"";
+					returnString += "\""+key+"\":"+value+"";
 				}
 				//we have sent all modified values => reset
 				synchronized(tableData) {

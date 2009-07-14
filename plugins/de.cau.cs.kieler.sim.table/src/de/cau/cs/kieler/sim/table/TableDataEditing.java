@@ -38,7 +38,9 @@ public class TableDataEditing extends EditingSupport {
 
 	@Override
 	protected boolean canEdit(Object element) {
-		return true;
+		TableData tableData = (TableData) element;
+		//only *NOT* permanent entries are editable
+		return (!tableData.isPermanent());
 	}
 
 	@Override

@@ -8,6 +8,7 @@ public class TableData {
 	private String  key;
 	private String 	value;
 	private boolean modified;
+	private boolean permanent;
 	
 	public TableDataList getParentTableDataList() {
 		return tableDataList;
@@ -51,9 +52,6 @@ public class TableData {
 	public String getKey() {
 		return this.key;
 	}
-	public boolean isPresent() {
-		return this.present;
-	}
 	
 	public void setValue(String value) {
 		this.value = value;
@@ -67,12 +65,24 @@ public class TableData {
 	public void setPresent(boolean present) {
 		this.present = present;
 	}
+	public boolean isPresent() {
+		//return present flag if present OR permanent 
+		return (this.present || this.permanent);
+	}
 	
 	public void setModified(boolean modified) {
 		this.modified = modified;
 	}
 	public boolean isModified() {
-		return this.modified;
+		//return modified flag if modified OR permanent 
+		return (this.modified || this.permanent);
+	}
+
+	public void setPermanent(boolean permanent) {
+		this.permanent = permanent;
+	}
+	public boolean isPermanent() {
+		return this.permanent;
 	}
 	
 }

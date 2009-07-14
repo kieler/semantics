@@ -53,6 +53,7 @@ public class DataTableView extends ViewPart {
 	
 	private Action actionNew; 		//new
 	private Action actionDelete;	//delete
+	private Action actionPermanent;	//permanent
 	/**
 	 * The constructor.
 	 */
@@ -135,6 +136,8 @@ public class DataTableView extends ViewPart {
 	private void buildContextMenu(IMenuManager manager) {
 		manager.add(getActionAdd());
 		manager.add(getActionDelete());
+		manager.add(new Separator());
+		manager.add(getActionPermanent());
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
@@ -142,6 +145,8 @@ public class DataTableView extends ViewPart {
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
 		IToolBarManager manager1 = bars.getToolBarManager();
+		manager1.add(getActionPermanent());
+		manager1.add(new Separator());
 		manager1.add(getActionAdd());
 		manager1.add(getActionDelete());
 	}
@@ -182,6 +187,26 @@ public class DataTableView extends ViewPart {
 		return actionDelete;
 	}
 
+	private Action getActionPermanent() {
+		if (actionPermanent != null) return actionPermanent;
+		actionPermanent = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				Object obj = ((IStructuredSelection)selection).getFirstElement();
+				//toggle permanent
+				TableData tableData = (TableData)obj;
+				tableData.setPermanent(!tableData.isPermanent());
+				viewer.setSelection(null);
+				viewer.refresh();
+				updateEnabled();			
+			}
+		};
+		actionPermanent.setText("Permanent");
+		actionPermanent.setToolTipText("Permanent");
+		actionPermanent.setImageDescriptor(TablePlugin.getImageDescriptor("icons/permanentIcon.png"));
+		return actionPermanent;
+	}
+	
 
 	private void hookSideEffectActions() {
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
@@ -190,18 +215,12 @@ public class DataTableView extends ViewPart {
 				if (selection != null) {
 					Object obj = ((IStructuredSelection)selection).getFirstElement();
 					if (obj != null) {
-						//showMessage("Double-click detected on "+obj.toString());
-						//.
-						//TableData tableData = (TableData)obj;
-						//int index = tableData.getParentTableDataList().indexOf(tableData);
-						//viewer.getCellEditors()[index].activate();
-						//int columnIndex = 0;
-						//viewer.editElement(tableData, columnIndex);
-						//TableData tableData = (TableData)obj;
-						//toggle present/absent
-						//tableData.setPresent(!tableData.isPresent());
-						//viewer.refresh();
-						//updateEnabled();
+						//toggle permanent
+						TableData tableData = (TableData)obj;
+						tableData.setPermanent(!tableData.isPermanent());
+						viewer.setSelection(null);
+						viewer.refresh();
+						updateEnabled();			
 					}
 				}
 			}
@@ -216,14 +235,27 @@ public class DataTableView extends ViewPart {
 	  //---------------------------------------------------------------------------	
 	
 	private void updateEnabled() {
-		if (((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement() == null) {
+		Object obj = ((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
+		if (obj == null) {
 			//no object selected
 			getActionDelete().setEnabled(false);
+			getActionPermanent().setEnabled(false);
 			selected = false;
 		}
 		else {
 			//object selected
 			getActionDelete().setEnabled(true);
+			getActionPermanent().setEnabled(true);
+			if (((TableData)obj).isPermanent()) {
+				actionPermanent.setText("Volatile");
+				actionPermanent.setToolTipText("Volatile");
+				actionPermanent.setImageDescriptor(TablePlugin.getImageDescriptor("icons/volatileIcon.png"));
+			}
+			else {
+				actionPermanent.setText("Permanent");
+				actionPermanent.setToolTipText("Permanent");
+				actionPermanent.setImageDescriptor(TablePlugin.getImageDescriptor("icons/permanentIcon.png"));
+			}
 			selected = true;
 		}
 		
