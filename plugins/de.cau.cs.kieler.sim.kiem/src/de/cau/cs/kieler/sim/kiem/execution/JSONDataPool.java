@@ -62,7 +62,7 @@ public class JSONDataPool {
 	//-------------------------------------------------------------------------
 	
 	private int getPoolStartIndex(long deltaIndex) {
-		int newIndex = (int)(deltaIndex - this.poolCounterDiff+1);
+		int newIndex = (int)(deltaIndex - this.poolCounterDiff + 1);
 		//if deltaIndex is FAR TOO old, then we can only
 		//copy the values in memory 
 		//THIS MEANS getDeltaData() WAS CALLED TOO LONG AGO 
@@ -96,6 +96,8 @@ public class JSONDataPool {
 				 }
 			}
 		}
+		System.out.println("POOL(DELTA="+deltaPoolIndex+")"+returnObject.toString());
+		
 		return returnObject;
 	}
 	
