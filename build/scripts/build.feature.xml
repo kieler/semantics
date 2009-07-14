@@ -65,6 +65,11 @@
 	</target>
 	
 	<target name="genEMFcode" if="genModel">
+		<property name="genModelCode" value="false"/>
+		<property name="genEditCode" value="false"/>
+		<property name="genEditorCode" value="false"/>
+		<property name="genTestsCode" value="false"/>
+
 		<kieler.genEMFcode genModel="${genModel}"
 						   genModelCode="${genModelCode}" genEditCode="${genEditCode}" genEditorCode="${genEditorCode}" genTestsCode="${genTestsCode}" />
 		<copy todir="${buildDirectory}/plugins">
