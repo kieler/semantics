@@ -49,6 +49,7 @@
 		<echo message="ScriptDir ${scriptdir}"/>
 		<echo message="BuildDir ${buildDirectory}"/>
 		<echo message="PluginPath ${pluginPath}"/>
+		<echo message="GenModel ${genModel}"/>
 		
 		<mkdir dir="${buildDirectory}/update-site/features" />
 		<mkdir dir="${buildDirectory}/update-site/plugins" />
