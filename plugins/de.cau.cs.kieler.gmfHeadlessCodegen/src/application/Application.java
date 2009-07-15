@@ -1,6 +1,6 @@
 package application;
 
-import org.eclipse.emf.common.util.Diagnostic;
+// import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -10,10 +10,11 @@ import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.gmf.codegen.gmfgen.GenDiagram;
 import org.eclipse.gmf.codegen.gmfgen.GenEditorGenerator;
 import org.eclipse.gmf.codegen.util.Generator;
-import org.eclipse.gmf.internal.bridge.transform.ValidationHelper;
+//import org.eclipse.gmf.internal.bridge.transform.ValidationHelper;
 import org.eclipse.gmf.internal.codegen.CodeGenUIPlugin;
 import org.eclipse.gmf.internal.common.migrate.ModelLoadHelper;
 
+//@SuppressWarnings("restriction")
 public class Application implements IApplication {
 	
 	private GenEditorGenerator myGenModel = null;
@@ -31,7 +32,7 @@ public class Application implements IApplication {
 	/** @author chris
 	  * @copied from original source file
 	  */
-	private Diagnostic loadGenModel(URI genModelURI) {
+	private void loadGenModel(URI genModelURI) {
 		ResourceSet srcResSet = new ResourceSetImpl();
 		srcResSet.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap());		
 		ModelLoadHelper loadHelper = new ModelLoadHelper(srcResSet, genModelURI);
@@ -44,7 +45,7 @@ public class Application implements IApplication {
 		if (myGenModel != null && myGenModel.getDomainGenModel() != null) {
 			myGenModel.getDomainGenModel().reconcile();
 		}
-		return ValidationHelper.createResourceProblemMarkers(loadHelper.getDiagnostics());
+		// return ValidationHelper.createResourceProblemMarkers(loadHelper.getDiagnostics());
 	}
 
 	/** @author chris

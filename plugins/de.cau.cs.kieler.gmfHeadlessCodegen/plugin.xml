@@ -26,5 +26,13 @@
             name="kieler.genGMFdiagramCode">
       </antTask>
    </extension>
+   <extension
+         id="antRunner"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="de.cau.cs.kieler.emfHeadlessCodegen.application"
+            name="antRunner">
+      </product>
+   </extension>
 
 </plugin>

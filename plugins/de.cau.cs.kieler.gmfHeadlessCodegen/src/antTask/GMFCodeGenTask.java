@@ -1,7 +1,7 @@
 package antTask;
 
 import org.apache.tools.ant.Task;
-import org.eclipse.emf.common.util.Diagnostic;
+// import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -9,10 +9,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gmf.codegen.gmfgen.GenDiagram;
 import org.eclipse.gmf.codegen.gmfgen.GenEditorGenerator;
 import org.eclipse.gmf.codegen.util.Generator;
-import org.eclipse.gmf.internal.bridge.transform.ValidationHelper;
+// import org.eclipse.gmf.internal.bridge.transform.ValidationHelper;
 import org.eclipse.gmf.internal.codegen.CodeGenUIPlugin;
 import org.eclipse.gmf.internal.common.migrate.ModelLoadHelper;
 
+//@SuppressWarnings("restriction")
 public class GMFCodeGenTask extends Task {
 	
 	private String GmfgenModelPath = null;
@@ -41,7 +42,7 @@ public class GMFCodeGenTask extends Task {
 	/** @author chsch
 	  * @copied from original source file
 	  */
-	private Diagnostic loadGenModel(URI genModelURI) {
+	private void loadGenModel(URI genModelURI) {
 		ResourceSet srcResSet = new ResourceSetImpl();
 		srcResSet.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap());		
 		ModelLoadHelper loadHelper = new ModelLoadHelper(srcResSet, genModelURI);
@@ -54,7 +55,7 @@ public class GMFCodeGenTask extends Task {
 		if (myGenModel != null && myGenModel.getDomainGenModel() != null) {
 			myGenModel.getDomainGenModel().reconcile();
 		}
-		return ValidationHelper.createResourceProblemMarkers(loadHelper.getDiagnostics());
+		// return ValidationHelper.createResourceProblemMarkers(loadHelper.getDiagnostics());
 	}
 	
 	/** @author chsch
