@@ -16,7 +16,7 @@
 
 		<!-- property name="workspace" value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseWorkspace"/ -->
 		<property name="workspace" value="${jobdir}/eclipseWorkspace"/>
-		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
+		<!-- java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg value="-configuration" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse" />
 			<arg value="-data" />
@@ -40,7 +40,23 @@
 			<classpath>
 				<pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
-		</java>
+		</java -->
+		
+		<exec executable="/tmp/eclipse_64/antRunner/antRunner">
+			<arg value="-configuration" />
+			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/ECLIPSE1c" />
+			<arg value="-data /var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/eclipseWorkspace/" />
+			<arg value="-debug" />
+			<arg value="-consoleLog" />
+			<arg value="-buildfile" />
+			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/scripts/build.feature.xml" />
+			<arg value="genEMFcode" />
+			<arg value="genGMFcode" />
+			<arg value="-DgenModel=/var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/plugins/de.cau.cs.kieler.synccharts/model/synccharts.genmodel" />
+			<arg value="-DgenModelCode="true"" />
+			<arg value="-DgenEditCode="true"" />
+			<arg value="-DgmfgenModel=/var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/plugins/de.cau.cs.kieler.synccharts/model/synccharts.gmfgen"/>
+		</exec>
 		<antcall target="rmEclipseWorkspace"/>
 	</target>
 
