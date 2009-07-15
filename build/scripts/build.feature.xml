@@ -90,7 +90,7 @@
 			<arg value="-buildfile" />
 			<arg value="${scriptdir}/build.feature.xml" />
 			<arg value="build" />
-			<arg value="-Dbasedir=${jobdir}" />
+			<arg value="-Dbasedir=${system.WORKSPACE}" />
 			<arg value="-Dscriptdir=${scriptdir}" />
 			<arg value="-DprojectPropertiesFile=${projectPropertiesFile}" />
 			<arg value="-DpluginPath=${pluginPath}" />
