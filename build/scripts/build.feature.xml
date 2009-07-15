@@ -8,7 +8,7 @@
 	<!-- target calls the eclipse antRunner processing THIS build file on target 'main' -->
 	<target name="call.antRunner">
 		<!-- property name="jobdir" location="../../../${job}/workspace" / -->
-		<property name="projectPropertiesFile" location="${system.workspace}/${projectProperties}" />
+		<property name="projectPropertiesFile" location="${system.WORKSPACE}/${projectProperties}" />
 		
 	    <!-- echo message="${jobdir}"/ -->
 		<echo message="${baseLocation}"/>
@@ -16,7 +16,7 @@
 		<echo message="PropertiesFile: ${projectProperties} ${projectPropertiesFile}"/>
 
 		<!-- property name="workspace" value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseWorkspace"/ -->
-		<property name="eclipseWorkspace" location="${system.workspace}/eclipseWorkspace"/>
+		<property name="eclipseWorkspace" location="${system.WORKSPACE}/eclipseWorkspace"/>
 
 		<!-- java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg value="-configuration" />
@@ -65,7 +65,7 @@
 			<!-- arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/eclipseWorkspace/" / -->
 			<arg value="${eclipseWorkspace}" />
 			<arg value="-clean" />
-			<arg value="-debug" />
+			<!-- arg value="-debug" /-->
 			<arg value="-consoleLog" />
 			<arg value="-buildfile" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/scripts/build.feature.xml" />
@@ -73,7 +73,7 @@
 			<arg value="-DtopLevelElementType=feature" />
 			<arg value="-DtopLevelElementId=${part}" />
 			<arg value="-Dscriptdir=${scriptdir}" />
-			<arg value="-Dbasedir=${system.workspace}" />
+			<arg value="-Dbasedir=${system.WORKSPACE}" />
 			<arg value="-DprojectPropertiesFile=${projectPropertiesFile}" />
 			<arg value="-DpluginPath=${pluginPath}" />
 			<arg value="-DgenModel=${genModel}" />
