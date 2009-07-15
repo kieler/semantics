@@ -92,19 +92,19 @@
 
 	<target name="build">
 		<echo message="BaseDir ${basedir}"/>
+		<echo message="BuildDir ${buildDirectory}"/>
 		<echo message="ScriptDir ${scriptdir}"/>
-		<echo message="BuildDir ${system.WORKSPACE}"/>
 		<echo message="PluginPath ${pluginPath}"/>
 		<echo message="GenModel ${genModel}"/>
 		
-		<mkdir dir="${system.WORKSPACE}/update-site/features" />
-		<mkdir dir="${system.WORKSPACE}/update-site/plugins" />
+		<mkdir dir="${basedir}/update-site/features" />
+		<mkdir dir="${basedir}/update-site/plugins" />
 		<ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
 			<target name="generate"/>
 		</ant>
 		<ant antfile="build.xml" dir="${elementPath}">
-			<property name="feature.destination" value="${buildDirectory}/update-site/features"/>
-			<property name="plugin.destination" value="${buildDirectory}/update-site/plugins"/>
+			<property name="feature.destination" value="${basedir}/update-site/features"/>
+			<property name="plugin.destination" value="${basedir}/update-site/plugins"/>
 			<target name="build.jars"/>
 			<target name="build.update.jar"/>
 		</ant>
