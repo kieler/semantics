@@ -58,7 +58,7 @@
 			<isset property="gmfgenModel"/>
 		</condition>	-->
 		
-		<exec executable="/tmp/eclipse_64/antRunner/antRunner">
+		<exec executable="/tmp/eclipse_64/antRunner/antRunner" failonerror="true">
 			<arg value="-configuration" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse" />
 			<arg value="-data" />
@@ -157,9 +157,9 @@
 	
 	<target name="rmEclipseWorkspace">
 		<delete verbose="true">
-			<fileset dir="${basedir}">
-				<include name="eclipseWorkspace/*" />
-				<include name="eclipseWorkspace/.metadata/*" />
+			<fileset dir="${basedir}/eclipseWorkspace">
+				<include name="**/*" />
+				<include name=".metadata" />
 			</fileset>
 		</delete>
 	</target>
