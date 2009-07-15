@@ -70,6 +70,7 @@
 			<arg value="-buildfile" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/scripts/build.feature.xml" />
 			<arg value="genCode" />
+			<arg value="build" />
 			<arg value="-DtopLevelElementType=feature" />
 			<arg value="-DtopLevelElementId=${part}" />
 			<arg value="-Dscriptdir=${scriptdir}" />
@@ -155,7 +156,7 @@
 	</target>
 	
 	<target name="rmEclipseWorkspace">
-		<delete>
+		<delete verbose="true">
 			<fileset dir="${basedir}">
 				<include name="eclipseWorkspace/*" />
 				<include name="eclipseWorkspace/.metadata/*" />
