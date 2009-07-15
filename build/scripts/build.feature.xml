@@ -44,8 +44,8 @@
 			</classpath>
 		</java -->
 		
-		<property name="genModel" value=""/>
-		<property name="gmfgenModel" value=""/>
+		<property name="genModel" value=" "/>
+		<property name="gmfgenModel" value=" "/>
 		<property name="genModelCode" value="false"/>
 		<property name="genEditCode" value="false"/>
 		<property name="genEditorCode" value="false"/>
@@ -93,12 +93,12 @@
 	<target name="build">
 		<echo message="BaseDir ${basedir}"/>
 		<echo message="ScriptDir ${scriptdir}"/>
-		<echo message="BuildDir ${system.workspace}"/>
+		<echo message="BuildDir ${system.WORKSPACE}"/>
 		<echo message="PluginPath ${pluginPath}"/>
 		<echo message="GenModel ${genModel}"/>
 		
-		<mkdir dir="${system.workspace}/update-site/features" />
-		<mkdir dir="${system.workspace}/update-site/plugins" />
+		<mkdir dir="${system.WORKSPACE}/update-site/features" />
+		<mkdir dir="${system.WORKSPACE}/update-site/plugins" />
 		<ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
 			<target name="generate"/>
 		</ant>
