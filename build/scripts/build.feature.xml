@@ -81,9 +81,9 @@
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg value="-configuration" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse2" />
-			<!-- arg value="-data" / -->
-			<!-- arg value="${workspace}" / -->
-			<!-- arg value="-clean" / -->
+			<arg value="-data" />
+			<arg value="${workspace}" />
+			<arg value="-clean" />
 			<arg value="-consoleLog" />
 			<arg value="-application" />
 			<arg value="org.eclipse.ant.core.antRunner" />
@@ -175,12 +175,13 @@
 				<include name=".metadata" />
 			</fileset>
 		</delete -->
-		<exec executable="bash">
+	<!--	<exec executable="bash">
 			<arg value="-c" />			
 			<arg value="rm" />			
 			<arg value="-rf" />			
 			<arg value="${basedir}/eclipseWorkspace" />			
-		</exec>
+		</exec> -->
+		<deltree dir="{basedir}/eclipseWorkspace" />
 	</target>
 
 	
