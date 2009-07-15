@@ -1,21 +1,22 @@
 <project name="Build All Elements" default="call.antRunner">
 
+	<property environment="system"/>
 	<property name="scriptdir" location="."/>
 	<property file="${scriptdir}/build.general.properties" />
 	<property file="${projectPropertiesFile}" />
 	
 	<!-- target calls the eclipse antRunner processing THIS build file on target 'main' -->
 	<target name="call.antRunner">
-		<property name="jobdir" location="../../../${job}/workspace" />
-		<property name="projectPropertiesFile" location="${jobdir}/${projectProperties}" />
+		<!-- property name="jobdir" location="../../../${job}/workspace" / -->
+		<property name="projectPropertiesFile" location="${system.workspace}/${projectProperties}" />
 		
-	    <echo message="${jobdir}"/>
+	    <!-- echo message="${jobdir}"/ -->
 		<echo message="${baseLocation}"/>
 		<echo message="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 		<echo message="PropertiesFile: ${projectProperties} ${projectPropertiesFile}"/>
 
 		<!-- property name="workspace" value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseWorkspace"/ -->
-		<property name="workspace" value="${jobdir}/eclipseWorkspace"/>
+		<property name="eclipseWorkspace" location="${system.workspace}/eclipseWorkspace"/>
 		<!-- java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg value="-configuration" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse" />
@@ -44,19 +45,28 @@
 		
 		<exec executable="/tmp/eclipse_64/antRunner/antRunner">
 			<arg value="-configuration" />
-			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/ECLIPSE1c" />
+			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse" />
 			<arg value="-data" />
-			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/eclipseWorkspace/" />
+			<!-- arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/eclipseWorkspace/" / -->
+			<arg value="${eclipseWorkspace}" />
+			<arg value="-clean" />
 			<arg value="-debug" />
 			<arg value="-consoleLog" />
 			<arg value="-buildfile" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/scripts/build.feature.xml" />
 			<arg value="genEMFcode" />
 			<arg value="genGMFcode" />
-			<arg value="-DgenModel=/var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/plugins/de.cau.cs.kieler.synccharts/model/synccharts.genmodel" />
-			<arg value="-DgenModelCode="true"" />
-			<arg value="-DgenEditCode="true"" />
+			<arg value="-Dscriptdir=${scriptdir}" />
+			<arg value="-DprojectPropertiesFile=${projectPropertiesFile}" />
+			<arg value="-DpluginPath=${pluginPath}" />
+			<arg value="-DtopLevelElementType=feature" />
+			<arg value="-DtopLevelElementId=${part}" />
+	<!--	<arg value="-DgenModel=/var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/plugins/de.cau.cs.kieler.synccharts/model/synccharts.genmodel" />
+			<arg value="-DgenModelCode=true" />
+			<arg value="-DgenEditCode=true" />
 			<arg value="-DgmfgenModel=/var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/plugins/de.cau.cs.kieler.synccharts/model/synccharts.gmfgen"/>
+	-->
+			
 		</exec>
 		<antcall target="rmEclipseWorkspace"/>
 	</target>
@@ -64,12 +74,12 @@
 	<target name="build">
 		<echo message="BaseDir ${basedir}"/>
 		<echo message="ScriptDir ${scriptdir}"/>
-		<echo message="BuildDir ${buildDirectory}"/>
+		<echo message="BuildDir ${system.workspace}"/>
 		<echo message="PluginPath ${pluginPath}"/>
 		<echo message="GenModel ${genModel}"/>
 		
-		<mkdir dir="${buildDirectory}/update-site/features" />
-		<mkdir dir="${buildDirectory}/update-site/plugins" />
+		<mkdir dir="${system.workspace}/update-site/features" />
+		<mkdir dir="${system.workspace}/update-site/plugins" />
 		<ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
 			<target name="generate"/>
 		</ant>
@@ -89,22 +99,33 @@
 
 		<kieler.genEMFcode genModel="${genModel}"
 						   genModelCode="${genModelCode}" genEditCode="${genEditCode}" genEditorCode="${genEditorCode}" genTestsCode="${genTestsCode}" />
-		<copy todir="${buildDirectory}/plugins">
-		    <fileset dir="${buildDirectory}/eclipseWorkspace/"/>
+						   
+		<copy todir="${system.workspace}/plugins">
+		    <fileset dir="${system.workspace}/eclipseWorkspace/">
+				<include name="*.model/**" />
+				<include name="*.edit/**" />
+				<include name="*.editor/**" />
+				<include name="*.tests/**" />
+			</fileset>
 		</copy>
 	</target>
 
 	<target name="genGMFcode" if="gmfgenModel">
 		<kieler.genGMFdiagramCode gmfgenModel="${gmfgenModel}"/>
-		<move todir="${buildDirectory}/plugins">
-		    <fileset dir="${buildDirectory}/eclipseWorkspace/">
+		
+		<copy todir="${system.workspace}/plugins">
+		    <fileset dir="${system.workspace}/eclipseWorkspace/">
 				<include name="*.diagram/**" />
 			</fileset>
-		</move>
+		</copy>
 	</target>
 	
 	<target name="rmEclipseWorkspace">
-		<delete dir="${buildDirectory}/eclipseWorkspace"/>
+		<delete>
+			<fileset dir="${system.workspace}">
+				<include dir="eclipseWorkspace/**">
+			</fileset>
+		</delete>
 	</target>
 
 	
