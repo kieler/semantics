@@ -44,17 +44,19 @@
 			</classpath>
 		</java -->
 		
+		<property name="genModel" value=""/>
+		<property name="gmfgenModel" value=""/>
 		<property name="genModelCode" value="false"/>
 		<property name="genEditCode" value="false"/>
 		<property name="genEditorCode" value="false"/>
 		<property name="genTestsCode" value="false"/>
 
-		<condition property="system.genModel" value="${genModel}">
+<!--	<condition property="system.genModel" value="${genModel}">
 			<isset property="genModel"/>
 		</condition>
 		<condition property="system.gmfgenModel" value="${gmfgenModel}">
 			<isset property="gmfgenModel"/>
-		</condition>
+		</condition>	-->
 		
 		<exec executable="/tmp/eclipse_64/antRunner/antRunner">
 			<arg value="-configuration" />
@@ -67,15 +69,15 @@
 			<arg value="-consoleLog" />
 			<arg value="-buildfile" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/scripts/build.feature.xml" />
-			<arg value="genEMFcode" />
-			<arg value="genGMFcode" />
+			<arg value="genCode" />
 			<arg value="-DtopLevelElementType=feature" />
 			<arg value="-DtopLevelElementId=${part}" />
 			<arg value="-Dscriptdir=${scriptdir}" />
+			<arg value="-Dbasedir=${system.workspace}" />
 			<arg value="-DprojectPropertiesFile=${projectPropertiesFile}" />
 			<arg value="-DpluginPath=${pluginPath}" />
-<!--			<arg value="-DgenModel=${genModel}" />
-			<arg value="-DgmfgenModel=${gmfgenModel}" /> -->
+			<arg value="-DgenModel=${genModel}" />
+			<arg value="-DgmfgenModel=${gmfgenModel}" />
 			<arg value="-DgenModelCode=${genModelCode}" />
 			<arg value="-DgenEditCode=${genEditCode}" />
 			<arg value="-DgenEditorCode=${genEditorCode}" />
@@ -84,9 +86,7 @@
 			<arg value="-DgenModelCode=true" />
 			<arg value="-DgenEditCode=true" />
 			<arg value="-DgmfgenModel=/var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/plugins/de.cau.cs.kieler.synccharts/model/synccharts.gmfgen"/>
-	-->
-			
-		</exec>
+	--> </exec>
 		<antcall target="rmEclipseWorkspace"/>
 	</target>
 
@@ -110,13 +110,30 @@
 		</ant>
 	</target>
 	
-	<target name="genEMFcode" if="system.genModel">
+	
+	<target name="genCode" >
+		<condition property="genEMFcode">
+			<not>
+				<equals arg1="${genModel}" arg2=""/>
+			</not>
+		</condition>
+		<condition property="genGMFcode">
+			<not>
+				<equals arg1="${gmfgenModel}" arg2=""/>
+			</not>
+		</condition>
+		<antcall target="genEMFcode"/>
+		<antcall target="genGMFcode"/>
+	</target>	
+	
+	
+	<target name="genEMFcode" if="genEMFcode" >
 
-		<kieler.genEMFcode genModel="${system.genModel}"
+		<kieler.genEMFcode genModel="${genModel}"
 						   genModelCode="${genModelCode}" genEditCode="${genEditCode}" genEditorCode="${genEditorCode}" genTestsCode="${genTestsCode}" />
 						   
-		<copy todir="${system.workspace}/plugins">
-		    <fileset dir="${system.workspace}/eclipseWorkspace/">
+		<copy todir="${basedir}/plugins">
+		    <fileset dir="${basedir}/eclipseWorkspace/">
 				<include name="*.model/**" />
 				<include name="*.edit/**" />
 				<include name="*.editor/**" />
@@ -125,11 +142,11 @@
 		</copy>
 	</target>
 
-	<target name="genGMFcode" if="system.gmfgenModel">
-		<kieler.genGMFdiagramCode gmfgenModel="${system.gmfgenModel}"/>
+	<target name="genGMFcode" if="genGMFcode">
+		<kieler.genGMFdiagramCode gmfgenModel="${gmfgenModel}"/>
 		
-		<copy todir="${system.workspace}/plugins">
-		    <fileset dir="${system.workspace}/eclipseWorkspace/">
+		<copy todir="${basedir}/plugins">
+		    <fileset dir="${basedir}/eclipseWorkspace/">
 				<include name="*.diagram/**" />
 			</fileset>
 		</copy>
@@ -137,8 +154,9 @@
 	
 	<target name="rmEclipseWorkspace">
 		<delete>
-			<fileset dir="${system.workspace}">
+			<fileset dir="${basedir}">
 				<include name="eclipseWorkspace/**" />
+				<include name="eclipseWorkspace/.metadata/**" />
 			</fileset>
 		</delete>
 	</target>
