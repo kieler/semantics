@@ -124,7 +124,7 @@ public class KiemView extends ViewPart {
 				 			 //"JSONObject (JSONString otherwise)", 
 				 			 "Is a Master that leads Execution", 
 				 			 "Needs selected Model File" };
-		int[] bounds = { 22, 180, 110, 45, 45};
+		int[] bounds = { 22, 180, 120, 50, 50};
 
 		for (int i = 0; i < titles.length; i++) {
 			TableViewerColumn column = new TableViewerColumn(viewer, SWT.NONE);
