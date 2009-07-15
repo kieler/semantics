@@ -45,7 +45,8 @@
 		<exec executable="/tmp/eclipse_64/antRunner/antRunner">
 			<arg value="-configuration" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/ECLIPSE1c" />
-			<arg value="-data /var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/eclipseWorkspace/" />
+			<arg value="-data" />
+			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/eclipseWorkspace/" />
 			<arg value="-debug" />
 			<arg value="-consoleLog" />
 			<arg value="-buildfile" />
