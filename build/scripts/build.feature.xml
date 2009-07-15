@@ -112,11 +112,13 @@
 	
 	
 	<target name="genCode" >
+		<echo message="genCode 1: ${genModel}"/>
 		<condition property="genEMFcode">
 			<not>
 				<equals arg1="${genModel}" arg2=""/>
 			</not>
 		</condition>
+		<echo message="genCode 2: ${gmfgenModel}"/>
 		<condition property="genGMFcode">
 			<not>
 				<equals arg1="${gmfgenModel}" arg2=""/>
@@ -155,8 +157,8 @@
 	<target name="rmEclipseWorkspace">
 		<delete>
 			<fileset dir="${basedir}">
-				<include name="eclipseWorkspace/**" />
-				<include name="eclipseWorkspace/.metadata/**" />
+				<include name="eclipseWorkspace/*" />
+				<include name="eclipseWorkspace/.metadata/*" />
 			</fileset>
 		</delete>
 	</target>
