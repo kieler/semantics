@@ -17,6 +17,7 @@
 
 		<!-- property name="workspace" value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseWorkspace"/ -->
 		<property name="eclipseWorkspace" location="${system.workspace}/eclipseWorkspace"/>
+
 		<!-- java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg value="-configuration" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse" />
@@ -43,6 +44,18 @@
 			</classpath>
 		</java -->
 		
+		<property name="genModelCode" value="false"/>
+		<property name="genEditCode" value="false"/>
+		<property name="genEditorCode" value="false"/>
+		<property name="genTestsCode" value="false"/>
+
+		<condition property="system.genModel" value="${genModel}">
+			<isset property="genModel"/>
+		</condition>
+		<condition property="system.gmfgenModel" value="${gmfgenModel}">
+			<isset property="gmfgenModel"/>
+		</condition>
+		
 		<exec executable="/tmp/eclipse_64/antRunner/antRunner">
 			<arg value="-configuration" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse" />
@@ -56,11 +69,17 @@
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/scripts/build.feature.xml" />
 			<arg value="genEMFcode" />
 			<arg value="genGMFcode" />
+			<arg value="-DtopLevelElementType=feature" />
+			<arg value="-DtopLevelElementId=${part}" />
 			<arg value="-Dscriptdir=${scriptdir}" />
 			<arg value="-DprojectPropertiesFile=${projectPropertiesFile}" />
 			<arg value="-DpluginPath=${pluginPath}" />
-			<arg value="-DtopLevelElementType=feature" />
-			<arg value="-DtopLevelElementId=${part}" />
+<!--			<arg value="-DgenModel=${genModel}" />
+			<arg value="-DgmfgenModel=${gmfgenModel}" /> -->
+			<arg value="-DgenModelCode=${genModelCode}" />
+			<arg value="-DgenEditCode=${genEditCode}" />
+			<arg value="-DgenEditorCode=${genEditorCode}" />
+			<arg value="-DgenTestsCode=${genTestsCode}" />
 	<!--	<arg value="-DgenModel=/var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/plugins/de.cau.cs.kieler.synccharts/model/synccharts.genmodel" />
 			<arg value="-DgenModelCode=true" />
 			<arg value="-DgenEditCode=true" />
@@ -91,13 +110,9 @@
 		</ant>
 	</target>
 	
-	<target name="genEMFcode" if="genModel">
-		<property name="genModelCode" value="false"/>
-		<property name="genEditCode" value="false"/>
-		<property name="genEditorCode" value="false"/>
-		<property name="genTestsCode" value="false"/>
+	<target name="genEMFcode" if="system.genModel">
 
-		<kieler.genEMFcode genModel="${genModel}"
+		<kieler.genEMFcode genModel="${system.genModel}"
 						   genModelCode="${genModelCode}" genEditCode="${genEditCode}" genEditorCode="${genEditorCode}" genTestsCode="${genTestsCode}" />
 						   
 		<copy todir="${system.workspace}/plugins">
@@ -110,8 +125,8 @@
 		</copy>
 	</target>
 
-	<target name="genGMFcode" if="gmfgenModel">
-		<kieler.genGMFdiagramCode gmfgenModel="${gmfgenModel}"/>
+	<target name="genGMFcode" if="system.gmfgenModel">
+		<kieler.genGMFdiagramCode gmfgenModel="${system.gmfgenModel}"/>
 		
 		<copy todir="${system.workspace}/plugins">
 		    <fileset dir="${system.workspace}/eclipseWorkspace/">
@@ -123,7 +138,7 @@
 	<target name="rmEclipseWorkspace">
 		<delete>
 			<fileset dir="${system.workspace}">
-				<include dir="eclipseWorkspace/**">
+				<include name="eclipseWorkspace/**" />
 			</fileset>
 		</delete>
 	</target>
