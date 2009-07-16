@@ -7,7 +7,6 @@ public abstract class JSONStringDataComponent
 	//constructor
 	public JSONStringDataComponent() {
 		super();
-		this.setJSON(false);
 	}
 	
 }

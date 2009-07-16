@@ -4,24 +4,19 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
 public abstract class DataComponent implements IDataComponent,
 											   IExecutableExtension {
 	
 	private String name;
-	private boolean enabled;
-	private boolean json;
-	private KiemPlugin KIEMInstance;   //only contains access to execution
-	private KiemView KIEMViewInstance; //thread iff this DataComponent
-									   //is a master
+	private KiemPlugin KIEMInstance;   		//only contains access to execution
+	private KiemView KIEMViewInstance; 		//thread iff this DataComponent
+									   		//is a master
 	
 	public DataComponent() {
 		super();
-		enabled = true;
-		json = false;
-		skipped = false;
-		deltaIndex = 0;
 	}
 	
 	public void setInitializationData(IConfigurationElement config,
@@ -33,30 +28,6 @@ public abstract class DataComponent implements IDataComponent,
 		return name;
 	}
 	
-	public boolean isEnabled() {
-		return enabled;
-	}
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-	
-	public boolean isJSON() {
-		return this.json;
-	}
-	protected void setJSON(boolean json) {
-		this.json = json;
-	}
-	
-	public boolean isProducerConsumer() {
-		return (this.isProducer() && this.isConsumer());
-	}
-	public boolean isPureProducer() {
-		return (this.isProducer() && !this.isConsumer());
-	}
-	public boolean isPureConsumer() {
-		return (!this.isProducer() && this.isConsumer());
-	}
-		
 	//-------------------------------------------------------------------------
 	private String modelFile;
 
@@ -72,7 +43,7 @@ public abstract class DataComponent implements IDataComponent,
 	//if this producer/consumer needs the model file override this
 	//and return true
 	//the ExecutionManager will then check for it
-	public boolean needModelFile() {
+	public boolean isModelFileNeeded() {
 		return false;
 	}
 		
@@ -81,6 +52,13 @@ public abstract class DataComponent implements IDataComponent,
 	//if this DataComponent implements a consumer, 
 	//provide some key's of interest 
 	public String[] getFilterKeys() {
+		return null;
+	}
+	
+	//-------------------------------------------------------------------------
+	
+	//provide some properties that the user should enter
+	public String[] getPropertyKeys() {
 		return null;
 	}
 	
@@ -118,26 +96,6 @@ public abstract class DataComponent implements IDataComponent,
 	public boolean isDeltaConsumer() {
 		return false;
 	}
-	//this is used to store the deltaIndex values inside the components
-	//object
-	private long deltaIndex;
-	public long getDeltaIndex() {
-		return deltaIndex;
-	}
-	public void setDeltaIndex(long deltaIndex) {
-		this.deltaIndex = deltaIndex;
-	}
-	
-	//indicates that this component was skipped
-	//(this prevents its deltaIndex to advance)
-	private boolean skipped;
-	public boolean getSkipped() {
-		return skipped;
-	}
-	public void setSkipped(boolean skipped) {
-		this.skipped = skipped;
-	}
-	
 	
 	//-------------------------------------------------------------------------
 
@@ -210,7 +168,7 @@ public abstract class DataComponent implements IDataComponent,
 	public void masterStepExecution() throws Exception {
 		if (this.isMaster()) {
 			if ((KIEMViewInstance != null)) {
-				KIEMViewInstance.initDataComponent();
+				KIEMViewInstance.initDataComponentEx();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.stepExecution();
@@ -226,7 +184,7 @@ public abstract class DataComponent implements IDataComponent,
 	public void masterMacroStepExecution() throws Exception {
 		if (this.isMaster()) {
 			if ((KIEMViewInstance != null)) {
-				KIEMViewInstance.initDataComponent();
+				KIEMViewInstance.initDataComponentEx();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.macroStepExecution();
@@ -240,7 +198,7 @@ public abstract class DataComponent implements IDataComponent,
 	public void masterStopExecution() throws Exception {
 		if (this.isMaster()) {
 			if (KIEMViewInstance != null) {
-				KIEMViewInstance.initDataComponent();
+				KIEMViewInstance.initDataComponentEx();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.stopExecution();
@@ -257,7 +215,7 @@ public abstract class DataComponent implements IDataComponent,
 	public void masterPauseExecution() throws Exception {
 		if (this.isMaster()) {
 			if ((KIEMViewInstance != null)) {
-				KIEMViewInstance.initDataComponent();
+				KIEMViewInstance.initDataComponentEx();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.pauseExecution();
@@ -272,7 +230,7 @@ public abstract class DataComponent implements IDataComponent,
 	public void masterSetAimedStepDuration(int aimedStepDuration) throws Exception {
 		if (this.isMaster()) {
 			if (KIEMViewInstance != null) {
-				KIEMViewInstance.initDataComponent();
+				KIEMViewInstance.initDataComponentEx();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.setAimedStepDuration(aimedStepDuration);
@@ -287,7 +245,7 @@ public abstract class DataComponent implements IDataComponent,
 	public int masterGetAimedStepDuration() throws Exception {
 		if (this.isMaster()) {
 			if (KIEMViewInstance != null) {
-				KIEMViewInstance.initDataComponent();
+				KIEMViewInstance.initDataComponentEx();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				return KIEMInstance.execution.getAimedStepDuration();
@@ -300,7 +258,7 @@ public abstract class DataComponent implements IDataComponent,
 	public void masterRunExecution() throws Exception {
 		if (this.isMaster()) {
 			if ((KIEMViewInstance != null)) {
-				KIEMViewInstance.initDataComponent();
+				KIEMViewInstance.initDataComponentEx();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.runExecution();
@@ -315,7 +273,7 @@ public abstract class DataComponent implements IDataComponent,
 	public boolean masterIsPaused() throws Exception {
 		if (this.isMaster()) {
 			if (KIEMViewInstance != null) {
-				KIEMViewInstance.initDataComponent();
+				KIEMViewInstance.initDataComponentEx();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				return KIEMInstance.execution.isPaused();
@@ -328,7 +286,7 @@ public abstract class DataComponent implements IDataComponent,
 	public boolean masterIsRunning() throws Exception {
 		if (this.isMaster()) {
 			if (KIEMViewInstance != null) {
-				KIEMViewInstance.initDataComponent();
+				KIEMViewInstance.initDataComponentEx();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				return KIEMInstance.execution.isRunning();
@@ -344,6 +302,5 @@ public abstract class DataComponent implements IDataComponent,
 		this.KIEMViewInstance = KIEMViewInstance;
 	}
 	//-------------------------------------------------------------------------
-	
 	
 }

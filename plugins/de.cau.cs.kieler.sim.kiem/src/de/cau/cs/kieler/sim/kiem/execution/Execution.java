@@ -3,6 +3,7 @@ package de.cau.cs.kieler.sim.kiem.execution;
 import java.util.List;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
@@ -20,7 +21,7 @@ public class Execution implements Runnable {
 
 	//basic data component list of all enabled (and disabled)
 	//data components
-	private List<DataComponent> dataComponentList;
+	private List<DataComponentEx> dataComponentExList;
 	
 	//intended duration of a step
 	private int aimedStepDuration;
@@ -56,36 +57,36 @@ public class Execution implements Runnable {
 	KiemView view;
 
 	
-	public Execution(List<DataComponent> dataComponentList,
+	public Execution(List<DataComponentEx> dataComponentExList,
 					 KiemView view) {
 		this.view = view;
 		this.stepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
 		this.stop = false; 
 		this.steps = NO_STEPS; // == paused
-		this.dataComponentList = dataComponentList;
+		this.dataComponentExList = dataComponentExList;
 		
 		this.dataPool = new JSONDataPool();
 		
 		consumerExecutionArray = new ConsumerExecution
-										[this.dataComponentList.size()];
+										[this.dataComponentExList.size()];
 		producerExecutionArray = new ProducerExecution
-										[this.dataComponentList.size()];
+										[this.dataComponentExList.size()];
 		
 		//for each pure consumer ... create ConsumerExecution Thread
 		//for each pure producer ... create ProducerExecution Thread
-		for (int c = 0; c < dataComponentList.size(); c++) {
-			DataComponent dataComponent = dataComponentList.get(c);
-			if (dataComponent.isEnabled()) {
-				if(dataComponent.isPureConsumer()) {
+		for (int c = 0; c < dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentEx = dataComponentExList.get(c);
+			if (dataComponentEx.isEnabled()) {
+				if(dataComponentEx.isConsumerOnly()) {
 					//pure Consumer
 					consumerExecutionArray[c] = 
-								new ConsumerExecution(dataComponent);
+								new ConsumerExecution(dataComponentEx.getDataComponent());
 					(new Thread(consumerExecutionArray[c])).start();
 				}
-				else if(dataComponent.isPureProducer()) {
+				else if(dataComponentEx.isProducerOnly()) {
 					//pure Producer
 					producerExecutionArray[c] = 
-								new ProducerExecution(dataComponent, this);
+								new ProducerExecution(dataComponentEx.getDataComponent(), this);
 					(new Thread(producerExecutionArray[c])).start();
 				}
 			}
@@ -131,12 +132,12 @@ public class Execution implements Runnable {
 		synchronized(this) {
 			if (this.steps == NO_STEPS) {
 				//notify components
-				for(int c = 0; c < this.dataComponentList.size(); c++) {
-					DataComponent dataComponent = 
-						dataComponentList.get(c);
-					if (   dataComponent.isEnabled()
-						&& dataComponent.isPauseFlag()) {
-						dataComponent.commandStep();
+				for(int c = 0; c < this.dataComponentExList.size(); c++) {
+					DataComponentEx dataComponentEx = 
+						dataComponentExList.get(c);
+					if (   dataComponentEx.isEnabled()
+						&& dataComponentEx.isPauseFlag()) {
+						dataComponentEx.getDataComponent().commandStep();
 					}
 				}
 				//make one step
@@ -154,12 +155,12 @@ public class Execution implements Runnable {
 		synchronized(this) {
 			if (this.steps == NO_STEPS) {
 				//notify components
-				for(int c = 0; c < this.dataComponentList.size(); c++) {
-					DataComponent dataComponent = 
-						dataComponentList.get(c);
-					if (   dataComponent.isEnabled()
-						&& dataComponent.isPauseFlag()) {
-						dataComponent.commandMacroStep();
+				for(int c = 0; c < this.dataComponentExList.size(); c++) {
+					DataComponentEx dataComponentEx = 
+						dataComponentExList.get(c);
+					if (   dataComponentEx.isEnabled()
+						&& dataComponentEx.isPauseFlag()) {
+						dataComponentEx.getDataComponent().commandMacroStep();
 					}
 				}
 				//make one step
@@ -175,12 +176,12 @@ public class Execution implements Runnable {
 	public void pauseExecution() {
 		synchronized(this) {
 			//notify components
-			for(int c = 0; c < this.dataComponentList.size(); c++) {
-				DataComponent dataComponent = 
-					dataComponentList.get(c);
-				if (   dataComponent.isEnabled()
-					&& dataComponent.isPauseFlag()) {
-					dataComponent.commandPause();
+			for(int c = 0; c < this.dataComponentExList.size(); c++) {
+				DataComponentEx dataComponentEx = 
+					dataComponentExList.get(c);
+				if (   dataComponentEx.isEnabled()
+					&& dataComponentEx.isPauseFlag()) {
+					dataComponentEx.getDataComponent().commandPause();
 				}
 			}
 
@@ -218,12 +219,12 @@ public class Execution implements Runnable {
 
 		synchronized(this) {
 			//notify components
-			for(int c = 0; c < this.dataComponentList.size(); c++) {
-				DataComponent dataComponent = 
-					dataComponentList.get(c);
-				if (   dataComponent.isEnabled()
-					&& dataComponent.isPauseFlag()) {
-					dataComponent.commandStop();
+			for(int c = 0; c < this.dataComponentExList.size(); c++) {
+				DataComponentEx dataComponentEx = 
+					dataComponentExList.get(c);
+				if (   dataComponentEx.isEnabled()
+					&& dataComponentEx.isPauseFlag()) {
+					dataComponentEx.getDataComponent().commandStop();
 				}
 			}
 			
@@ -231,11 +232,11 @@ public class Execution implements Runnable {
 			this.stop = true;
 			this.steps = NO_STEPS;
 			//stop all child execution threads
-			for (int c = 0; c < this.dataComponentList.size(); c++) {
+			for (int c = 0; c < this.dataComponentExList.size(); c++) {
 				//reset delta index
-				this.dataComponentList.get(c).setDeltaIndex(0);
+				this.dataComponentExList.get(c).setDeltaIndex(0);
 				//reset skipped
-				this.dataComponentList.get(c).setSkipped(false);
+				this.dataComponentExList.get(c).setSkipped(false);
 				if (this.consumerExecutionArray[c] != null)
 					this.consumerExecutionArray[c].stopExecution();
 				if (this.producerExecutionArray[c] != null)
@@ -260,11 +261,11 @@ public class Execution implements Runnable {
 				//in running mode (-1)
 				if ((steps == INFINITY_STEPS)||(steps > NO_STEPS)) {
 					//iff any isPauseFlag() returns true, pause execution
-					for(int c = 0; c < this.dataComponentList.size(); c++) {
-						DataComponent dataComponent = 
-							dataComponentList.get(c);
-						if (   dataComponent.isEnabled()
-							&& dataComponent.isPauseFlag()) {
+					for(int c = 0; c < this.dataComponentExList.size(); c++) {
+						DataComponentEx dataComponentEx = 
+							dataComponentExList.get(c);
+						if (   dataComponentEx.isEnabled()
+							&& dataComponentEx.isPauseFlag()) {
 							this.pauseExecution();
 							view.updateViewAsync();
 						}
@@ -281,16 +282,16 @@ public class Execution implements Runnable {
 					//referred to for this step
 					//(or if any consumer is skipped in the next steps
 					// it will refer to this counter index later on!)
-					for(int c = 0; c < this.dataComponentList.size(); c++) {
+					for(int c = 0; c < this.dataComponentExList.size(); c++) {
 						//call all pure producers first
-						DataComponent dataComponent = 
-							dataComponentList.get(c);
-						if (   dataComponent.isEnabled()
-							&& dataComponent.isDeltaConsumer()
-							&& (!dataComponent.getSkipped())) {
+						DataComponentEx dataComponentEx = 
+							dataComponentExList.get(c);
+						if (   dataComponentEx.isEnabled()
+							&& dataComponentEx.isDeltaConsumer()
+							&& (!dataComponentEx.getSkipped())) {
 							//advance delta counter for all *NOT* skipped 
 							//components
-							dataComponent.setDeltaIndex
+							dataComponentEx.setDeltaIndex
 												(dataPool.getPoolCounter());
 						 }
 					}
@@ -302,50 +303,50 @@ public class Execution implements Runnable {
 					//===========================================//
 					//==  P U R E    P R O D U C E R    (CALL) ==//
 					//===========================================//
-					for(int c = 0; c < this.dataComponentList.size(); c++) {
+					for(int c = 0; c < this.dataComponentExList.size(); c++) {
 						//call all pure producers first
-						DataComponent dataComponent = 
-							dataComponentList.get(c);
-						if (dataComponent.isEnabled() && 
-							dataComponent.isPureProducer()) {
-//System.out.println(c + ") " + dataComponent.getName() + " (Pure Producer) call");
+						DataComponentEx dataComponentEx = 
+							dataComponentExList.get(c);
+						if (dataComponentEx.isEnabled() && 
+							dataComponentEx.isProducerOnly()) {
+//System.out.println(c + ") " + dataComponentEx.getName() + " (Pure Producer) call");
 								//make a step (within producerExecution's monitor)
 								producerExecutionArray[c].blockingStep();
 						}
 					}//next producer/consumer
 					
-					//make a step - according to the dataComponentList order
-					for(int c = 0; c < this.dataComponentList.size(); c++) {
-						DataComponent dataComponent = 
-							dataComponentList.get(c);
-						if (!dataComponent.isEnabled()) continue;
+					//make a step - according to the dataComponentExList order
+					for(int c = 0; c < this.dataComponentExList.size(); c++) {
+						DataComponentEx dataComponentEx = 
+							dataComponentExList.get(c);
+						if (!dataComponentEx.isEnabled()) continue;
 						
 						//===========================================//
 						//==  C O N S U M E R  /  P R O D U C E R  ==//
 						//===========================================//
-						if (dataComponent.isProducerConsumer()) {
-//System.out.println(c + ") " +dataComponent.getName() + " (Norm Producer) call");
+						if (dataComponentEx.isProducerConsumer()) {
+//System.out.println(c + ") " +dataComponentEx.getName() + " (Norm Producer) call");
 							//Consumer AND Producer => blocking
 							try {
 								JSONObject oldData;
 								String[] filterKeys = 
-									dataComponent.getFilterKeys();
-								if (dataComponent.isDeltaConsumer()) {
+									dataComponentEx.getFilterKeys();
+								if (dataComponentEx.isDeltaConsumer()) {
 									oldData = this.dataPool.getDeltaData
-										 (filterKeys,dataComponent.getDeltaIndex());
+										 (filterKeys,dataComponentEx.getDeltaIndex());
 								}
 								else
 									oldData = this.dataPool.getData(filterKeys);
-								if (dataComponent.isJSON()) {
+								if (dataComponentEx.isJSON()) {
 									JSONObject newData = 
-										((JSONObjectDataComponent)dataComponent)
+										((JSONObjectDataComponent)dataComponentEx.getDataComponent())
 										.step(oldData);
 									if (newData != null)
 										this.dataPool.putData(newData);
 								}
 								else {
 									String newData = 
-										((JSONStringDataComponent)dataComponent)
+										((JSONStringDataComponent)dataComponentEx.getDataComponent())
 										.step(oldData.toString());
 									if (newData != null && newData != "") 
 										this.dataPool.putData(
@@ -354,22 +355,22 @@ public class Execution implements Runnable {
 							}catch(Exception e) {
 								e.printStackTrace();
 							}
-//System.out.println(dataComponent.getName() + " (Norm Producer) return");
+//System.out.println(dataComponentEx.getName() + " (Norm Producer) return");
 						}
 						//===========================================//
 						//==       P U R E    C O N S U M E R      ==//
 						//===========================================//
-						else if(dataComponent.isPureConsumer()) {
-//System.out.println(c + ") " +dataComponent.getName() + " (Pure Consumer) call");
+						else if(dataComponentEx.isConsumerOnly()) {
+//System.out.println(c + ") " +dataComponentEx.getName() + " (Pure Consumer) call");
 								//pure Consumer
 								//set current data
 								try {
 									String[] filterKeys = 
-											dataComponent.getFilterKeys();
+											dataComponentEx.getFilterKeys();
 									JSONObject oldData;
-									if (dataComponent.isDeltaConsumer()) {
+									if (dataComponentEx.isDeltaConsumer()) {
 										oldData = this.dataPool.getDeltaData
-										  (filterKeys,dataComponent.getDeltaIndex());
+										  (filterKeys,dataComponentEx.getDeltaIndex());
 									}
 									else
 										oldData = this.dataPool
@@ -383,16 +384,16 @@ public class Execution implements Runnable {
 									//if step was *NOT* successful (skipped)
 									//set skipped:=true this prevents the delta
 									//index to advance in the next steps!
-									dataComponent.setSkipped(true);
+									dataComponentEx.setSkipped(true);
 								}
 								else
-									dataComponent.setSkipped(false);
+									dataComponentEx.setSkipped(false);
 						}
 						//===========================================//
 						//==  P U R E    P R O D U C E R    (REAP) ==//
 						//===========================================//
-						else if(dataComponent.isPureProducer()) {
-//System.out.println(c + ") " +dataComponent.getName() + " (Pure Producer) wait");
+						else if(dataComponentEx.isProducerOnly()) {
+//System.out.println(c + ") " +dataComponentEx.getName() + " (Pure Producer) wait");
 								//pure Producer
 								//get blocking result
 								producerExecutionArray[c].blockingWaitUntilDone();
@@ -401,7 +402,7 @@ public class Execution implements Runnable {
 								//reap the producer and only in the next iteration
 								//THEN call him again
 								if (this.stop == true) return;
-//System.out.println(c + ") " +dataComponent.getName() + " (Pure Producer) done");
+//System.out.println(c + ") " +dataComponentEx.getName() + " (Pure Producer) done");
 								try {
 									JSONObject newData = 
 										producerExecutionArray[c].getData();

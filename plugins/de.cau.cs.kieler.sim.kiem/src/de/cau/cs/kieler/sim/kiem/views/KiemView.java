@@ -22,6 +22,7 @@ import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.*;
 import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
@@ -44,7 +45,10 @@ public class KiemView extends ViewPart {
 	private Action actionStop;
 	private Action doubleClickAction;
 	private AimedStepDurationTextField delayTextField;
+	private DataComponentEx currentMaster;
 
+	List<DataComponentEx> dataComponentExList;
+	
 	public KiemPlugin KIEM;
 	
 	public static final String ID = "de.cau.cs.kieler.sim.kiem.views.KiemView";
@@ -59,8 +63,46 @@ public class KiemView extends ViewPart {
 	 */
 	public KiemView() {
 		KIEM = KiemPlugin.getDefault();
+		dataComponentExList = getDefaultComponentExList();
+		this.currentMaster = null;
 	}
 	
+	private List<DataComponentEx> getDefaultComponentExList() {
+		List list = KIEM.getDataComponentList();
+		List<DataComponentEx> returnList = 
+							new LinkedList<DataComponentEx>();
+		//first add pure producer
+		for (int c = 0; c < list.size(); c ++) {
+			DataComponent dataComponent = (DataComponent)list.get(c);
+			DataComponentEx dataComponentEx = 
+				new DataComponentEx(dataComponent);
+			if (dataComponentEx.isProducerOnly()) {
+				returnList.add(dataComponentEx);
+				System.out.println("PRODUCER:"+dataComponentEx.getName());
+			}
+		}
+		//then add consumer & producer
+		for (int c = 0; c < list.size(); c ++) {
+			DataComponent dataComponent = (DataComponent)list.get(c);
+			DataComponentEx dataComponentEx = 
+				new DataComponentEx(dataComponent);
+			if (dataComponentEx.isProducerConsumer()) {
+				returnList.add(dataComponentEx);
+				System.out.println("CONSUMER/PRODUCER:"+dataComponentEx.getName());
+			}
+		}
+		//then add pure consumer
+		for (int c = 0; c < list.size(); c ++) {
+			DataComponent dataComponent = (DataComponent)list.get(c);
+			DataComponentEx dataComponentEx = 
+				new DataComponentEx(dataComponent);
+			if (dataComponentEx.isConsumerOnly()) {
+				returnList.add(dataComponentEx);
+				System.out.println("CONSUMER:"+dataComponentEx.getName());
+			}
+		}
+		return returnList;
+	}
 	
 	/**
 	 * We will cache window object in order to
@@ -76,12 +118,12 @@ public class KiemView extends ViewPart {
 		Color colorEnabled  = new Color(null, new RGB(0,0,0));
 		Color colorDisabled = new Color(null, new RGB(150,150,150));
 		Color colorMaster   = new Color(null, new RGB(0,0,255));
-		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
-			DataComponent dataComponent = 
-				KIEM.getDataComponentList().get(c);
-			if (dataComponent.isEnabled()) {
+		for (int c = 0; c < dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentEx = 
+				dataComponentExList.get(c);
+			if (dataComponentEx.isEnabled()) {
 				viewer.getTable().getItem(c).setForeground(colorEnabled);
-				if (dataComponent.isMaster()) {
+				if (dataComponentEx.isMaster()) {
 					viewer.getTable().getItem(c).setForeground(colorMaster);
 				}
 			}
@@ -100,7 +142,7 @@ public class KiemView extends ViewPart {
 		createColumns(viewer);
 		viewer.setContentProvider(new KiemContentProvider());
 		viewer.setLabelProvider(new KiemLabelProvider(this));
-		viewer.setInput(KIEM.getDataComponentList());
+		viewer.setInput(dataComponentExList);
 
 		buildLocalToolBar();
 		hookContextMenu();
@@ -233,12 +275,12 @@ public class KiemView extends ViewPart {
 	
   //---------------------------------------------------------------------------	
   //---------------------------------------------------------------------------
-	public boolean initDataComponent() {
+	public boolean initDataComponentEx() {
 		//by default do this silently
-		return initDataComponent(true);
+		return initDataComponentEx(true);
 	}
 	
-	private boolean initDataComponent(boolean silent) {
+	private boolean initDataComponentEx(boolean silent) {
 		if (KIEM.execution != null) return true;
 
 		try {
@@ -249,11 +291,11 @@ public class KiemView extends ViewPart {
 			//not all producer may require a selected model
 			//only those which have overridden the needModelFile() method
 			//and also are enabled are beeing tested here
-			for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
-			  DataComponent dataComponent = KIEM.getDataComponentList().get(c);
-			  if (dataComponent.isEnabled() &&
-					dataComponent.needModelFile()) {
-					showWarning("Component '"+dataComponent.getName()
+			for (int c = 0; c < dataComponentExList.size(); c++) {
+			  DataComponentEx dataComponentEx = dataComponentExList.get(c);
+			  if (dataComponentEx.isEnabled() &&
+					dataComponentEx.isModelFileNeeded()) {
+					showWarning("Component '"+dataComponentEx.getName()
 							   +"' needs an input model file."+
 							   "\nPlease select one in the Project Explorer!");
 					KIEM.resetCurrentModelFile();
@@ -267,14 +309,14 @@ public class KiemView extends ViewPart {
 		int countEnabledConsumer = 0;
 
 		//count all (enabled) data producer and consumer
-		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
-			DataComponent dataComponent = KIEM.getDataComponentList().get(c);
-			dataComponent.setModelFile(KIEM.getCurrentModelFile());
-			if (dataComponent.isEnabled()) {
-				if (dataComponent.isProducer()) {
+		for (int c = 0; c < dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentEx = dataComponentExList.get(c);
+			dataComponentEx.setModelFile(KIEM.getCurrentModelFile());
+			if (dataComponentEx.isEnabled()) {
+				if (dataComponentEx.isProducer()) {
 					countEnabledProducer++;
 				}
-				if (dataComponent.isConsumer()) {
+				if (dataComponentEx.isConsumer()) {
 					countEnabledConsumer++;
 				}
 			}//end if enabled
@@ -303,10 +345,10 @@ public class KiemView extends ViewPart {
 		//globalInterfaceVariables
 		//initialize all (enabled) data producer and consumer
 		List<String> globalInterfaceVariables = new LinkedList<String>();
-		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
-			DataComponent dataComponent = KIEM.getDataComponentList().get(c);
+		for (int c = 0; c < dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			String[] localInterfaceVariables = 
-									dataComponent.getLocalInterfaceVariables();
+									dataComponentEx.getLocalInterfaceVariables();
 			if (localInterfaceVariables != null) {
 				for (int cc = 0; cc < localInterfaceVariables.length; cc++) {
 				   String localInterfaceVariable = localInterfaceVariables[cc];
@@ -316,25 +358,25 @@ public class KiemView extends ViewPart {
 		}//next c
 		
 		//initialize globalInterfaceVariables in all enabled components
-		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
-			DataComponent dataComponent = KIEM.getDataComponentList().get(c);
-			if (dataComponent.isEnabled()) {
-				dataComponent.setGloblaInterfaceVariables
+		for (int c = 0; c < dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentEx = dataComponentExList.get(c);
+			if (dataComponentEx.isEnabled()) {
+				dataComponentEx.setGloblaInterfaceVariables
 					((String[])globalInterfaceVariables.toArray(new String [0]));
 			}//end if enabled
 		}//next c
 		
 		//initialize all (enabled) data producer and consumer
-		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
-			DataComponent dataComponent = KIEM.getDataComponentList().get(c);
-			dataComponent.setModelFile(KIEM.getCurrentModelFile());
-			if (dataComponent.isEnabled()) {
-				dataComponent.initialize();
+		for (int c = 0; c < dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentEx = dataComponentExList.get(c);
+			dataComponentEx.setModelFile(KIEM.getCurrentModelFile());
+			if (dataComponentEx.isEnabled()) {
+				dataComponentEx.getDataComponent().initialize();
 			}//end if enabled
 		}//next c
 		
 		//now create and run the execution thread
-		KIEM.execution = new Execution(KIEM.getDataComponentList(), this);
+		KIEM.execution = new Execution(dataComponentExList, this);
 		//take the last set delay
 		KIEM.execution.setAimedStepDuration(KIEM.getAimedStepDuration());
 		KIEM.executionThread = new Thread(KIEM.execution);
@@ -381,10 +423,10 @@ public class KiemView extends ViewPart {
 			getActionDown().setEnabled(false);
 		}
 		else {
-			DataComponent dataComponent = 
-				(DataComponent)((org.eclipse.jface.viewers
+			DataComponentEx dataComponentEx = 
+				(DataComponentEx)((org.eclipse.jface.viewers
 				.StructuredSelection)viewer.getSelection()).getFirstElement();
-			if (dataComponent.isEnabled()) {
+			if (dataComponentEx.isEnabled()) {
 				//currently enabled
 				getActionEnable().setEnabled(false);
 				getActionDisable().setEnabled(true);
@@ -394,13 +436,13 @@ public class KiemView extends ViewPart {
 				getActionEnable().setEnabled(true);
 				getActionDisable().setEnabled(false);
 			}
-			int listIndex = KIEM.getDataComponentList().indexOf(dataComponent);
+			int listIndex = dataComponentExList.indexOf(dataComponentEx);
 			if (listIndex <= 0) {
 				//currently top
 				getActionUp().setEnabled(false);
 				getActionDown().setEnabled(true);
 			}
-			else if (listIndex >= KIEM.getDataComponentList().size()-1) {
+			else if (listIndex >= dataComponentExList.size()-1) {
 				//currently bottom
 				getActionUp().setEnabled(true);
 				getActionDown().setEnabled(false);
@@ -436,7 +478,7 @@ public class KiemView extends ViewPart {
 	}
 	public void updateEnabled(boolean silent) {
 		updateEnabledEnabledDisabledUpDown();
-		if (KIEM.getMaster() != null) {
+		if (currentMaster != null) {
 			getActionStep().setEnabled(false);
 			getActionMacroStep().setEnabled(false);
 			getActionRun().setEnabled(false);
@@ -481,11 +523,11 @@ public class KiemView extends ViewPart {
 		if (actionEnable != null) return actionEnable;
 		actionEnable = new Action() {
 			public void run() {
-				DataComponent dataComponent = (DataComponent)
+				DataComponentEx dataComponentEx = (DataComponentEx)
 					((org.eclipse.jface.viewers.StructuredSelection)viewer
 										.getSelection()).getFirstElement();
-				dataComponent.setEnabled(true);
-				checkForSingleEnabledMaster(false,dataComponent);
+				dataComponentEx.setEnabled(true);
+				checkForSingleEnabledMaster(false,dataComponentEx);
 				updateView(true);
 			}
 		};
@@ -498,11 +540,11 @@ public class KiemView extends ViewPart {
 		if (actionDisable != null) return actionDisable;
 		actionDisable = new Action() {
 			public void run() {
-				DataComponent dataComponent = (DataComponent)
+				DataComponentEx dataComponentEx = (DataComponentEx)
 					((org.eclipse.jface.viewers.StructuredSelection)viewer
 										.getSelection()).getFirstElement();
-				dataComponent.setEnabled(false);
-				checkForSingleEnabledMaster(false,dataComponent);
+				dataComponentEx.setEnabled(false);
+				checkForSingleEnabledMaster(false,dataComponentEx);
 				updateView(true);
 			}
 		};
@@ -515,14 +557,14 @@ public class KiemView extends ViewPart {
 		if (actionUp != null) return actionUp;
 		actionUp = new Action() {
 			public void run() {
-				DataComponent dataComponent = (DataComponent)
+				DataComponentEx dataComponentEx = (DataComponentEx)
 					((org.eclipse.jface.viewers.StructuredSelection)viewer
 										.getSelection()).getFirstElement();
-				int listIndex = KIEM.getDataComponentList()
-									.indexOf(dataComponent);
+				int listIndex = dataComponentExList
+									.indexOf(dataComponentEx);
 				if (listIndex > 0) {
-				   KIEM.getDataComponentList().remove(listIndex);
-				   KIEM.getDataComponentList().add(listIndex-1, dataComponent);
+				   dataComponentExList.remove(listIndex);
+				   dataComponentExList.add(listIndex-1, dataComponentEx);
 				   viewer.refresh();
 				   refreshEnabledDisabledTextColors();
 				}
@@ -542,14 +584,14 @@ public class KiemView extends ViewPart {
 		if (actionDown != null) return actionDown;
 		actionDown = new Action() {
 			public void run() {
-				DataComponent dataComponent = (DataComponent)
+				DataComponentEx dataComponentEx = (DataComponentEx)
 					((org.eclipse.jface.viewers.StructuredSelection)viewer
 										.getSelection()).getFirstElement();
 				int listIndex = 
-						KIEM.getDataComponentList().indexOf(dataComponent);
-				if (listIndex < KIEM.getDataComponentList().size()-1) {
-				   KIEM.getDataComponentList().remove(listIndex);
-				   KIEM.getDataComponentList().add(listIndex+1, dataComponent);
+						dataComponentExList.indexOf(dataComponentEx);
+				if (listIndex < dataComponentExList.size()-1) {
+				   dataComponentExList.remove(listIndex);
+				   dataComponentExList.add(listIndex+1, dataComponentEx);
 				   viewer.refresh();
 				   refreshEnabledDisabledTextColors();
 				}
@@ -569,7 +611,7 @@ public class KiemView extends ViewPart {
 		if (actionStep != null) return actionStep;
 		actionStep = new Action() {
 			public void run() {
-				if (initDataComponent(false)) {
+				if (initDataComponentEx(false)) {
 					KIEM.execution.stepExecution();
 				}
 				updateView(true);
@@ -588,7 +630,7 @@ public class KiemView extends ViewPart {
 		if (actionMacroStep != null) return actionMacroStep;
 		actionMacroStep = new Action() {
 			public void run() {
-				if (initDataComponent(false)) {
+				if (initDataComponentEx(false)) {
 					KIEM.execution.macroStepExecution();
 				}
 				updateView(true);
@@ -607,7 +649,7 @@ public class KiemView extends ViewPart {
 		if (actionRun != null) return actionRun;
 		actionRun = new Action() {
 			public void run() {
-				if (initDataComponent(false)) {
+				if (initDataComponentEx(false)) {
 					KIEM.execution.runExecution();
 				}
 				updateView(true);
@@ -626,7 +668,7 @@ public class KiemView extends ViewPart {
 		if (actionPause != null) return actionPause;
 		actionPause = new Action() {
 			public void run() {
-				if (initDataComponent(false)) {
+				if (initDataComponentEx(false)) {
 					KIEM.execution.pauseExecution();
 				}
 				updateView(true);
@@ -708,10 +750,10 @@ public class KiemView extends ViewPart {
 					if (obj != null) {
 						//only if execution is stopped
 						if (KIEM.execution == null) {
-						  DataComponent dataComponent = (DataComponent)obj;
+						  DataComponentEx dataComponentEx = (DataComponentEx)obj;
 						  //toggle enabledness
-						  dataComponent.setEnabled(!dataComponent.isEnabled());
-						  checkForSingleEnabledMaster(false,dataComponent);
+						  dataComponentEx.setEnabled(!dataComponentEx.isEnabled());
+						  checkForSingleEnabledMaster(false,dataComponentEx);
 						  updateView(true);
 						}
 					}// end if - selected
@@ -743,24 +785,24 @@ public class KiemView extends ViewPart {
 		checkForSingleEnabledMaster(silent,null); 
 	}
 	public void checkForSingleEnabledMaster(boolean silent,
-											DataComponent dataComponent) {
-		KIEM.setMaster(null);
-		if (dataComponent != null &&
-			dataComponent.isMaster() &&
-			dataComponent.isEnabled()) {
+											DataComponentEx dataComponentEx) {
+		currentMaster = null;
+		if (dataComponentEx != null &&
+			dataComponentEx.isMaster() &&
+			dataComponentEx.isEnabled()) {
 			//preset NEW selection
-			KIEM.setMaster(dataComponent); 
+			currentMaster = dataComponentEx;
 		}
 		
-		for (int c = 0; c < KIEM.getDataComponentList().size(); c++) {
-			DataComponent dataComponentTemp = 
-				KIEM.getDataComponentList().get(c);
-			dataComponentTemp.masterSetKIEMInstances(null, null);
+		for (int c = 0; c < dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentTemp = 
+				dataComponentExList.get(c);
+			dataComponentTemp.getDataComponent().masterSetKIEMInstances(null, null);
 			if (dataComponentTemp.isMaster() &&
 				dataComponentTemp.isEnabled() &&
-				dataComponentTemp != KIEM.getMaster()) {
-				if (KIEM.getMaster() == null) {
-					KIEM.setMaster(dataComponentTemp);
+				dataComponentTemp != currentMaster) {
+				if (currentMaster == null) {
+					currentMaster = dataComponentTemp;
 				} else {
 					if (!silent)
 						showWarning("At most one master data"
@@ -774,8 +816,8 @@ public class KiemView extends ViewPart {
 				}
 			}
 		}
-		if (KIEM.getMaster() != null) {
-			KIEM.getMaster().masterSetKIEMInstances(KIEM, this);
+		if (currentMaster != null) {
+		   currentMaster.getDataComponent().masterSetKIEMInstances(KIEM, this);
 		}
 		
 	}

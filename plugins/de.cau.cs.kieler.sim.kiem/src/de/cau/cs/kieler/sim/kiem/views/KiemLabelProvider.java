@@ -5,6 +5,7 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 
 public class KiemLabelProvider implements ITableLabelProvider {
@@ -66,9 +67,9 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 	}
 
 	public Image getColumnImage(Object element, int columnIndex) {
-		DataComponent dataComponent = (DataComponent)element;
+		DataComponentEx dataComponentEx = (DataComponentEx)element;
 		if (columnIndex == 0) {
-			if (dataComponent.isEnabled()) {
+			if (dataComponentEx.isEnabled()) {
 				//enabled
 				if (parent.KIEM.execution == null)
 					return CHECKED;
@@ -84,9 +85,9 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 			}
 		}
 		else if (columnIndex == 1) {
-			if (dataComponent.isProducerConsumer()) {
+			if (dataComponentEx.isProducerConsumer()) {
 				//producer
-				if (dataComponent.isEnabled()) {
+				if (dataComponentEx.isEnabled()) {
 					//enabled
 					return PRODUCERCONSUMER_ENABLED;
 				}
@@ -95,9 +96,9 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 					return PRODUCERCONSUMER_DISABLED;
 				}
 			}
-			else if (dataComponent.isProducer()) {
+			else if (dataComponentEx.isProducer()) {
 				//producer
-				if (dataComponent.isEnabled()) {
+				if (dataComponentEx.isEnabled()) {
 					//enabled
 					return PRODUCER_ENABLED;
 				}
@@ -106,9 +107,9 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 					return PRODUCER_DISABLED;
 				}
 			}
-			else if (dataComponent.isConsumer()) {
+			else if (dataComponentEx.isConsumer()) {
 				//consumer
-				if (dataComponent.isEnabled()) {
+				if (dataComponentEx.isEnabled()) {
 					//enabled
 					return CONSUMER_ENABLED;
 				}
@@ -119,7 +120,7 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 			}
 			else {
 				//consumer
-				if (dataComponent.isEnabled()) {
+				if (dataComponentEx.isEnabled()) {
 					//enabled
 					return INITCOMPONENT_ENABLED;
 				}
@@ -130,9 +131,9 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 			}
 		}
 		else if (columnIndex == 3) {
-			if (dataComponent.isMaster()) {
+			if (dataComponentEx.isMaster()) {
 				//enabled
-				if (dataComponent.isEnabled())
+				if (dataComponentEx.isEnabled())
 					return CHECKEDPLAIN_MASTER;
 				else
 					return CHECKEDPLAIN_DISABLED;					
@@ -143,10 +144,10 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 			}
 		}
 		else if (columnIndex == 4) {
-			if (dataComponent.needModelFile()) {
+			if (dataComponentEx.isModelFileNeeded()) {
 				//enabled
-				if (dataComponent.isEnabled()) {
-					if (dataComponent.isMaster())
+				if (dataComponentEx.isEnabled()) {
+					if (dataComponentEx.isMaster())
 						return CHECKEDPLAIN_MASTER;
 					else
 						return CHECKEDPLAIN;
@@ -163,19 +164,19 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 	}
 
 	public String getColumnText(Object element, int columnIndex) {
-		DataComponent dataComponent = (DataComponent)element;
+		DataComponentEx dataComponentEx = (DataComponentEx)element;
 		switch (columnIndex) {
 		case 0 :  // ENABLED_COLUMN
 			return ""; 
 		case 1 : // NAME_COLUMN
-			return dataComponent.getName();
+			return dataComponentEx.getName();
 		case 2 : // TYPE_COLUMN
 			String type = "";
-			if (dataComponent.isProducerConsumer())
+			if (dataComponentEx.isProducerConsumer())
 				type = "Consumer/Producer";
-			else if (dataComponent.isProducer())
+			else if (dataComponentEx.isProducer())
 				type = "Producer";
-			else if (dataComponent.isConsumer())
+			else if (dataComponentEx.isConsumer())
 				type = "Consumer";
 			else
 				type = "Initializer";

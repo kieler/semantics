@@ -64,7 +64,7 @@ public class ConsumerExecution implements Runnable {
 			try {
 //System.out.println("  "+dataComponent.getName() + " (Pure Consumer) calc start");
 				//do asynchronous call
-				if (this.dataComponent.isJSON()) {
+				if (this.dataComponent instanceof JSONObjectDataComponent) {
 					JSONObjectDataComponent compJSON = 
 						(JSONObjectDataComponent)dataComponent;
 					//do use any response data cause this is a consumer only

@@ -17,6 +17,7 @@ import org.osgi.framework.BundleContext;
 //import org.eclipse.jface.viewers.IStructuredSelection;
 //import org.eclipse.core.runtime.IAdaptable;
 
+import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
@@ -41,7 +42,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 	
 	//List of available dataProducers and dataConsumers
 	List<DataComponent> dataComponentList;
-	DataComponent masterDataComponent;
 	
 	//Contains the current model to execute or null initially/after stop
 	private String currentModelFile;
@@ -59,7 +59,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 		currentModelFile = null;
 		execution = null;
 		aimedStepDuration = AIMED_STEP_DURATION_DEFAULT;
-		masterDataComponent = null;
 	}
 
 	/*
@@ -128,12 +127,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 		currentModelFile = null;
 	}
 	
-	public DataComponent getMaster() {
-		return masterDataComponent;
-	}
-	public void setMaster(DataComponent masterDataComponent) {
-		this.masterDataComponent = masterDataComponent;
-	}
 	
 	public IResource extractSelection(ISelection sel) {
 	      if (!(sel instanceof IStructuredSelection))
@@ -150,7 +143,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 	}
 	
 	
-	public List<DataComponent> getDataComponentList(){
+	public List<DataComponent>getDataComponentList(){
 		if(dataComponentList != null)
 			return dataComponentList;
 				

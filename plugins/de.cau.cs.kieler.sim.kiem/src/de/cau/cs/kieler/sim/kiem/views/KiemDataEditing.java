@@ -4,11 +4,9 @@ import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckboxCellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 
-import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 
 public class KiemDataEditing extends EditingSupport {
 	private CellEditor editor;
@@ -50,11 +48,11 @@ public class KiemDataEditing extends EditingSupport {
 
 	@Override
 	protected Object getValue(Object element) {
-		DataComponent dataComponent = (DataComponent)element;
+		DataComponentEx dataComponentEx = (DataComponentEx)element;
 
 		switch (this.columnIndex) {
 		case 0:
-			return dataComponent.isEnabled();
+			return dataComponentEx.isEnabled();
 		default:
 			break;
 		}
@@ -63,11 +61,11 @@ public class KiemDataEditing extends EditingSupport {
 
 	@Override
 	protected void setValue(Object element, Object value) {
-		DataComponent dataComponent = (DataComponent)element;
+		DataComponentEx dataComponentEx = (DataComponentEx)element;
 
 		switch (this.columnIndex) {
 		case 0:
-			dataComponent.setEnabled((Boolean)value);
+			dataComponentEx.setEnabled((Boolean)value);
 			break;
 		default:
 			break;
@@ -76,7 +74,7 @@ public class KiemDataEditing extends EditingSupport {
 		getViewer().update(element, null);
 		parent.refreshEnabledDisabledTextColors();
 		getViewer().setSelection(null);
-		parent.checkForSingleEnabledMaster(false,dataComponent);
+		parent.checkForSingleEnabledMaster(false,dataComponentEx);
 	}
 
 }

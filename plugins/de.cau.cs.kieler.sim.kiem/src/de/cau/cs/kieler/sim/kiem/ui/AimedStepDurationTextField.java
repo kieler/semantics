@@ -45,7 +45,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 		textfield = new Text(parent,SWT.BORDER);
 		this.textfield.setEnabled(this.enabled);
 		textfield.setToolTipText("Aimed Duration of Steps in Run Mode (ms)");
-		textfield.setText(KIEM.AIMED_STEP_DURATION_DEFAULT+"    ");
+		textfield.setText(KIEM.AIMED_STEP_DURATION_DEFAULT+"        ");
 		textfield.addKeyListener(this);
 		textfield.addFocusListener(this);
 		return textfield;
@@ -62,6 +62,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	
 	public void focusLost(FocusEvent e) {
 		updateDelay();
+		textfield.setText(""+KIEM.getAimedStepDuration()+"ms");
 	}
 	
 	public int getAimedStepDuration() {
@@ -76,10 +77,8 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 			if (aimedStepDuration > KIEM.AIMED_STEP_DURATION_MAX) throw(new NumberFormatException("Delay must be <= "+KIEM.AIMED_STEP_DURATION_MAX+"ms!"));
 			KIEM.setAimedStepDuration(aimedStepDuration);
 		}catch(NumberFormatException exc){
-			textfield.setText(""+KIEM.getAimedStepDuration());
-			//Status s = new Status(0,"Error","Please enter only integer numbers!",exc);
-			//ErrorDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),"Error",exc.getMessage(),s,IStatus.ERROR);	
 		}
+		textfield.setText(""+KIEM.getAimedStepDuration()+"ms");
 	}
 	
 	private void updateDelay(){
@@ -90,9 +89,6 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 			if (aimedStepDuration > KIEM.AIMED_STEP_DURATION_MAX) throw(new NumberFormatException("Delay must be <= "+KIEM.AIMED_STEP_DURATION_MAX+"ms!"));
 			KIEM.setAimedStepDuration(aimedStepDuration);
 		}catch(NumberFormatException exc){
-			textfield.setText(""+KIEM.getAimedStepDuration());
-			//Status s = new Status(0,"Error","Please enter only integer numbers!",exc);
-			//ErrorDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),"Error",exc.getMessage(),s,IStatus.ERROR);	
 		}
 	}
 

@@ -92,7 +92,7 @@ public class ProducerExecution implements Runnable {
 				
 //System.out.println("  "+dataComponent.getName() + " (Pure Producer) calc start");
 				//do asynchronous call
-				if (this.dataComponent.isJSON()) {
+				if (this.dataComponent instanceof JSONObjectDataComponent) {
 					JSONObjectDataComponent compJSON = 
 						(JSONObjectDataComponent)dataComponent;
 					//do not send any data cause this is a producer only
