@@ -84,7 +84,7 @@ public class XTextParserWrapper implements IParser {
 				// If the element is a transition, has a trigger and is immediate, add a '#' to the string
 				if (((EObjectAdapter) element).getRealObject() instanceof Transition) {
 					Transition transition = (Transition) (((EObjectAdapter) element).getRealObject());
-					if ((transition.getTrigger() != null) && (transition.isImmediate())) {
+					if ((transition.getTrigger() != null) && (transition.isIsImmediate())) {
 						immediateString = "#";
 					}
 				}

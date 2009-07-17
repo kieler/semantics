@@ -13,10 +13,9 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.ShapeCompartmentFigure;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 
+import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.StateFlag;
-import de.cau.cs.kieler.synccharts.StateKind;
 
 public class AttributeAwareStateFigure extends AttributeAwareFigure {
 	
@@ -78,14 +77,14 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
 		this.setCurrentFigure(normalNChildrenStateFigure);
 		
 		// Create all needed conditions
-		Condition kindNormal = new Condition(SyncchartsPackage.eINSTANCE.getState_StateKind(), StateKind.NORMAL);
-		Condition kindPseudo = new Condition(SyncchartsPackage.eINSTANCE.getState_StateKind(), StateKind.PSEUDO);
-		Condition kindReference = new Condition(SyncchartsPackage.eINSTANCE.getState_StateKind(), StateKind.REFERENCE);
-		Condition kindTextual = new Condition(SyncchartsPackage.eINSTANCE.getState_StateKind(), StateKind.TEXTUAL);
+		Condition kindNormal = new Condition(SyncchartsPackage.eINSTANCE.getState_Type(), StateType.NORMAL);
+		Condition kindPseudo = new Condition(SyncchartsPackage.eINSTANCE.getState_Type(), StateType.PSEUDO);
+		Condition kindReference = new Condition(SyncchartsPackage.eINSTANCE.getState_Type(), StateType.REFERENCE);
+		Condition kindTextual = new Condition(SyncchartsPackage.eINSTANCE.getState_Type(), StateType.TEXTUAL);
 		
-		Condition flagNormal = new Condition(SyncchartsPackage.eINSTANCE.getState_StateFlag(), StateFlag.NORMAL);
-		Condition flagInitial = new Condition(SyncchartsPackage.eINSTANCE.getState_StateFlag(), StateFlag.INITIAL);
-		Condition flagFinal = new Condition(SyncchartsPackage.eINSTANCE.getState_StateFlag(), StateFlag.FINAL);
+		//Condition flagNormal = new Condition(SyncchartsPackage.eINSTANCE.getState_StateFlag(), tateFlag.NORMAL);
+		Condition flagInitial = new Condition(SyncchartsPackage.eINSTANCE.getState_IsInitial(), true);
+		Condition flagFinal = new Condition(SyncchartsPackage.eINSTANCE.getState_IsFinal(), true);
 		
 		Condition noChildren = new SizeCondition(SyncchartsPackage.eINSTANCE.getState_Regions(), new Integer(0));
 		Condition noSignals = new SizeCondition(SyncchartsPackage.eINSTANCE.getState_Signals(), new Integer(0));
@@ -96,7 +95,7 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
 		// Combine conditions in lists
 		List<Condition> normalNCSF = new LinkedList<Condition>();
 		normalNCSF.add(kindNormal);
-		normalNCSF.add(flagNormal);
+		//normalNCSF.add(flagNormal);
 		normalNCSF.add(noChildren);
 		normalNCSF.add(noSignals);
 		normalNCSF.add(noEntryActions);

@@ -11,7 +11,7 @@ import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.gef.EditPart;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.TransitionKind;
+import de.cau.cs.kieler.synccharts.TransitionType;
 
 public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 
@@ -25,10 +25,10 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 		this.setLineWidth(2);
 		
 		// Create all needed conditions
-		Condition kindWeakAbort = new Condition(SyncchartsPackage.eINSTANCE.getTransition_TransitionKind(), TransitionKind.WEAKABORT);
-		Condition kindStrongAbort = new Condition(SyncchartsPackage.eINSTANCE.getTransition_TransitionKind(), TransitionKind.STRONGABORT);
-		Condition kindNormalTermination = new Condition(SyncchartsPackage.eINSTANCE.getTransition_TransitionKind(), TransitionKind.NORMALTERMINATION);
-		Condition isHistory = new Condition(SyncchartsPackage.eINSTANCE.getTransition_History(), new Boolean(true));
+		Condition kindWeakAbort = new Condition(SyncchartsPackage.eINSTANCE.getTransition_Type(), TransitionType.WEAKABORT);
+		Condition kindStrongAbort = new Condition(SyncchartsPackage.eINSTANCE.getTransition_Type(), TransitionType.STRONGABORT);
+		Condition kindNormalTermination = new Condition(SyncchartsPackage.eINSTANCE.getTransition_Type(), TransitionType.NORMALTERMINATION);
+		Condition isHistory = new Condition(SyncchartsPackage.eINSTANCE.getTransition_IsHistory(), new Boolean(true));
 		
 		// Combine them in lists
 		List<Condition> weakAbortHistorySF = new LinkedList<Condition>();
