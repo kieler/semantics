@@ -78,7 +78,6 @@ public class KiemView extends ViewPart {
 				new DataComponentEx(dataComponent);
 			if (dataComponentEx.isProducerOnly()) {
 				returnList.add(dataComponentEx);
-				System.out.println("PRODUCER:"+dataComponentEx.getName());
 			}
 		}
 		//then add consumer & producer
@@ -88,7 +87,6 @@ public class KiemView extends ViewPart {
 				new DataComponentEx(dataComponent);
 			if (dataComponentEx.isProducerConsumer()) {
 				returnList.add(dataComponentEx);
-				System.out.println("CONSUMER/PRODUCER:"+dataComponentEx.getName());
 			}
 		}
 		//then add pure consumer
@@ -98,7 +96,6 @@ public class KiemView extends ViewPart {
 				new DataComponentEx(dataComponent);
 			if (dataComponentEx.isConsumerOnly()) {
 				returnList.add(dataComponentEx);
-				System.out.println("CONSUMER:"+dataComponentEx.getName());
 			}
 		}
 		return returnList;

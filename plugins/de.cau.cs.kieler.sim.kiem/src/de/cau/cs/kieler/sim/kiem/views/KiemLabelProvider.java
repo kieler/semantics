@@ -59,6 +59,19 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/checkedplainMaster.png").createImage();
 
+	private static final Image FOLDED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/fold.png").createImage();
+	private static final Image FOLDED_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/foldDisabled.png").createImage();
+	private static final Image UNFOLDED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/unfold.png").createImage();
+	private static final Image UNFOLDED_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/unfoldDisabled.png").createImage();
+
 	private KiemView parent;
 	
 	public KiemLabelProvider(KiemView parent) {
