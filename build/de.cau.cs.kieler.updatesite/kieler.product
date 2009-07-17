@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?pde version="3.4"?>
+<?pde version="3.5"?>
 
-<product name="KIELER" id="de.cau.cs.kieler.core.ui.product" application="org.eclipse.ui.ide.workbench" version="0.1.0" useFeatures="false">
+<product name="KIELER" id="de.cau.cs.kieler.core.ui.product" application="org.eclipse.ui.ide.workbench" version="0.1.0" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -31,6 +31,7 @@
       <plugin id="de.cau.cs.kieler.dataflow.diagram"/>
       <plugin id="de.cau.cs.kieler.dataflow.diagram.layout"/>
       <plugin id="de.cau.cs.kieler.dataflow.edit"/>
+      <plugin id="de.cau.cs.kieler.dataflow.model"/>
       <plugin id="de.cau.cs.kieler.dataflow.ui"/>
       <plugin id="de.cau.cs.kieler.kiml.layout"/>
       <plugin id="de.cau.cs.kieler.kiml.layouter.graphviz"/>
@@ -42,6 +43,8 @@
       <plugin id="de.cau.cs.kieler.synccharts.diagram.custom"/>
       <plugin id="de.cau.cs.kieler.synccharts.dsl"/>
       <plugin id="de.cau.cs.kieler.synccharts.edit"/>
+      <plugin id="de.cau.cs.kieler.synccharts.model"/>
+      <plugin id="javax.transaction" fragment="true"/>
       <plugin id="javax.xml"/>
       <plugin id="net.sourceforge.lpg.lpgjavaruntime"/>
       <plugin id="org.antlr"/>
@@ -60,6 +63,7 @@
       <plugin id="org.apache.batik.util.gui"/>
       <plugin id="org.apache.batik.xml"/>
       <plugin id="org.apache.commons.cli"/>
+      <plugin id="org.apache.commons.lang"/>
       <plugin id="org.apache.commons.logging"/>
       <plugin id="org.apache.lucene"/>
       <plugin id="org.apache.xerces"/>
@@ -68,10 +72,13 @@
       <plugin id="org.eclipse.ant.core"/>
       <plugin id="org.eclipse.ant.ui"/>
       <plugin id="org.eclipse.compare"/>
+      <plugin id="org.eclipse.compare.core"/>
       <plugin id="org.eclipse.core.commands"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.databinding"/>
       <plugin id="org.eclipse.core.databinding.beans"/>
+      <plugin id="org.eclipse.core.databinding.observable"/>
+      <plugin id="org.eclipse.core.databinding.property"/>
       <plugin id="org.eclipse.core.expressions"/>
       <plugin id="org.eclipse.core.filebuffers"/>
       <plugin id="org.eclipse.core.filesystem"/>
@@ -129,7 +136,9 @@
       <plugin id="org.eclipse.equinox.p2.metadata"/>
       <plugin id="org.eclipse.equinox.p2.metadata.generator"/>
       <plugin id="org.eclipse.equinox.p2.metadata.repository"/>
+      <plugin id="org.eclipse.equinox.p2.publisher"/>
       <plugin id="org.eclipse.equinox.p2.reconciler.dropins"/>
+      <plugin id="org.eclipse.equinox.p2.repository"/>
       <plugin id="org.eclipse.equinox.p2.touchpoint.eclipse"/>
       <plugin id="org.eclipse.equinox.p2.touchpoint.natives"/>
       <plugin id="org.eclipse.equinox.p2.ui"/>
@@ -200,8 +209,8 @@
       <plugin id="org.eclipse.pde"/>
       <plugin id="org.eclipse.pde.build"/>
       <plugin id="org.eclipse.pde.core"/>
-      <plugin id="org.eclipse.pde.p2.ui"/>
       <plugin id="org.eclipse.pde.ui"/>
+      <plugin id="org.eclipse.persistence.jpa.equinox.weaving" fragment="true"/>
       <plugin id="org.eclipse.platform"/>
       <plugin id="org.eclipse.rcp"/>
       <plugin id="org.eclipse.search"/>
@@ -264,8 +273,10 @@
       <plugin id="org.sat4j.core"/>
       <plugin id="org.sat4j.pb"/>
       <plugin id="org.w3c.css.sac"/>
+      <plugin id="org.w3c.dom.events"/>
       <plugin id="org.w3c.dom.smil"/>
       <plugin id="org.w3c.dom.svg"/>
    </plugins>
+
 
 </product>
