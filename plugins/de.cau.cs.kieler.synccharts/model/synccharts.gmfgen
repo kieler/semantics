@@ -451,6 +451,21 @@
             href="synccharts.genmodel#//synccharts/State/outgoingTransitions"/>
         <childMetaFeature
             href="synccharts.genmodel#//synccharts/State/outgoingTransitions"/>
+        <modelElementInitializer
+            xsi:type="gmfgen:GenFeatureSeqInitializer">
+          <initializers
+              xsi:type="gmfgen:GenFeatureValueSpec"
+              value="//@expressionProviders/@providers.0/@expressions.0">
+            <feature
+                href="synccharts.genmodel#//synccharts/Transition/delay"/>
+          </initializers>
+          <initializers
+              xsi:type="gmfgen:GenFeatureValueSpec"
+              value="//@expressionProviders/@providers.1/@expressions.0">
+            <feature
+                href="synccharts.genmodel#//synccharts/Transition/priority"/>
+          </initializers>
+        </modelElementInitializer>
         <sourceMetaFeature
             href="synccharts.genmodel#//synccharts/Transition/sourceState"/>
         <targetMetaFeature
@@ -945,6 +960,18 @@
   </propertySheet>
   <domainGenModel
       href="synccharts.genmodel#/"/>
+  <expressionProviders>
+    <providers
+        xsi:type="gmfgen:GenLiteralExpressionProvider">
+      <expressions
+          body="1"/>
+    </providers>
+    <providers
+        xsi:type="gmfgen:GenExpressionInterpreter">
+      <expressions
+          body="self.sourceState.outgoingTransitions->size()"/>
+    </providers>
+  </expressionProviders>
   <labelParsers
       extensibleViaService="true">
     <implementations
