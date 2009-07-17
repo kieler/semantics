@@ -1,0 +1,48 @@
+// specify your DSL grammar rules here ...
+// IMPORTANT: You should change the property 'overwrite.pluginresources=true' in the properties file to 'overwrite.pluginresources=false' AFTER first generation
+
+importMetamodel "http://www.informatik.uni-kiel.de/rtsys/synccharts" as synccharts;
+
+Action [synccharts::Action] :
+
+	(trigger=Expression)? ("/" (effects+=Emission | effects+=Assignment)*)?; 
+		
+Expression [synccharts::Expression] :
+
+	SignalReference | VariableReference | ComplexExpression;
+
+ComplexExpression [synccharts::ComplexExpression] :
+
+	"(" ( subExpressions+=Expression)? operator=Operator subExpressions+=Expression ")";
+
+Emission [synccharts::Emission] :
+
+	signal=Signal ("(" newValue=Expression ")")?;
+
+Assignment [synccharts::Assignment] :
+
+	variable=Variable "=" expression=Expression;
+
+SignalReference [synccharts::SignalReference] :
+
+	signal=Signal;
+	
+VariableReference [synccharts::VariableReference] :
+
+	variable=Variable;
+
+Signal [synccharts::Signal] :
+
+	name=ID;
+	
+Variable [synccharts::Variable] :
+
+	name=ID | value=INT;
+	
+Operator [synccharts::Operator] :
+
+	operatorKind=OperatorKind;
+	
+Enum OperatorKind [synccharts::OperatorKind] :
+
+	NOT="not" | EQ="=" | LT="<" | LEQ="<=" | AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="/" | VAL="?";

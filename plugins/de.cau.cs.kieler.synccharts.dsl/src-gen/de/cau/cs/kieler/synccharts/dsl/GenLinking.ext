@@ -1,0 +1,10 @@
+
+extension de::cau::cs::kieler::synccharts::dsl::Extensions;
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+link(emf::EObject this) :
+	let all = allLocalElements() :
+        null;
+
+
+

@@ -1,0 +1,100 @@
+import scdsl;
+import synccharts;
+import codeassist;
+
+extension de::cau::cs::kieler::synccharts::dsl::EditorExtensions;
+
+/* proposals for Feature Variable::name */
+List[Proposal] completeVariable_name(emf::EObject ctx, String prefix) :
+	{newProposal("VariableName")};
+
+/* proposals for Feature Signal::name */
+List[Proposal] completeSignal_name(emf::EObject ctx, String prefix) :
+	{newProposal("SignalName")};
+
+/* proposals for Feature Variable::value */
+List[Proposal] completeVariable_value(emf::EObject ctx, String prefix) :
+	{newProposal("VariableValue")};
+
+
+
+/* proposals for Feature SignalReference::signal */
+List[Proposal] completeSignalReference_signal(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature ComplexExpression::subExpressions */
+List[Proposal] completeComplexExpression_subExpressions(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature VariableReference::variable */
+List[Proposal] completeVariableReference_variable(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Emission::newValue */
+List[Proposal] completeEmission_newValue(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Emission::signal */
+List[Proposal] completeEmission_signal(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Action::trigger */
+List[Proposal] completeAction_trigger(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Assignment::variable */
+List[Proposal] completeAssignment_variable(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Action::effects */
+List[Proposal] completeAction_effects(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature ComplexExpression::operator */
+List[Proposal] completeComplexExpression_operator(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Operator::operatorKind */
+List[Proposal] completeOperator_operatorKind(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Action::effects */
+List[Proposal] completeAction_effects(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Assignment::expression */
+List[Proposal] completeAssignment_expression(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature ComplexExpression::subExpressions */
+List[Proposal] completeComplexExpression_subExpressions(emf::EObject ctx, String prefix) :
+	{};
+
+
+
+
+
+
+List[Proposal] sortProposals(List[Proposal] proposalsToSort):
+	proposalsToSort.sortBy(e|e.label.toLowerCase());
+
+isKeywordProposal(Proposal this):
+	type == codeassist::Type::KEYWORD;
+
+isAssignmentProposal(Proposal this):
+	type == codeassist::Type::ASSIGNMENT;
+	
+isEnumProposal(Proposal this):
+	type == codeassist::Type::ENUM_LITERAL;
+
+// create extensions
+Proposal newProposal(String proposal) :
+	newProposal(proposal,proposal);
+	
+Proposal newProposal(String label, String toReplace) :
+	newProposal(label,toReplace,"default.gif");
+	
+create Proposal newProposal(String label, String replace, String image) :
+	setLabel(label==null?"ERROR":label)->
+	setToInsert(replace==null?"ERROR":replace)->
+	setImage(image);

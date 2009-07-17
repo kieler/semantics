@@ -1,0 +1,50 @@
+/*
+ * Copyright (c) 2007 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Dmitry Stadnik (Borland) - initial API and implementation
+ */
+
+«IMPORT "http://www.eclipse.org/gmf/2008/GenModel"»
+«IMPORT "http://www.eclipse.org/emf/2002/Ecore"»
+
+«DEFINE className FOR gmfgen::GenDiagram»DiagramPreferenceInitializer«ENDDEFINE»
+
+«DEFINE qualifiedClassName FOR gmfgen::GenDiagram»«preferencesPackageName».«EXPAND className»«ENDDEFINE»
+
+«DEFINE PreferenceInitializer FOR gmfgen::GenDiagram-»
+«EXPAND xpt::Common::copyright FOR editorGen-»
+package «preferencesPackageName»;
+
+«EXPAND xpt::Common::generatedClassComment»
+public class «EXPAND className» extends org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer {
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public void initializeDefaultPreferences() {
+		org.eclipse.jface.preference.IPreferenceStore store = getPreferenceStore();
+		«EXPAND xpt::diagram::preferences::PrintingPreferencePage::qualifiedClassName».initDefaults(store);
+		«IF null == preferences-»
+			«EXPAND xpt::diagram::preferences::GeneralPreferencePage::qualifiedClassName».initDefaults(store);
+			«EXPAND xpt::diagram::preferences::AppearancePreferencePage::qualifiedClassName».initDefaults(store);
+			«EXPAND xpt::diagram::preferences::ConnectionsPreferencePage::qualifiedClassName».initDefaults(store);
+			«EXPAND xpt::diagram::preferences::RulersAndGridPreferencePage::qualifiedClassName».initDefaults(store);
+		«ELSE-»
+			«EXPAND initDefaults("store") FOR preferences-»
+		«ENDIF-»
+		«REM» This sets the preference 'showPopupBars' to 'false' by default «ENDREM»
+		store.setDefault("Global.showPopupBars", false);
+		store.setValue("Global.showPopupBars", false);
+		«REM» Additions end here «ENDREM»
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	protected org.eclipse.jface.preference.IPreferenceStore getPreferenceStore() {
+		return «editorGen.plugin.getActivatorQualifiedClassName()».getInstance().getPreferenceStore();
+	}
+} 
+«ENDDEFINE»

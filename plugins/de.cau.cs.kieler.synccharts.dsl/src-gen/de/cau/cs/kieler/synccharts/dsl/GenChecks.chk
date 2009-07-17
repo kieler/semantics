@@ -1,0 +1,14 @@
+import scdsl;
+import synccharts;
+
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+extension de::cau::cs::kieler::synccharts::dsl::Extensions;
+
+/*
+ * check linking
+ */
+
+
+
+

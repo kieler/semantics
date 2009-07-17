@@ -1,0 +1,12 @@
+
+extension de::cau::cs::kieler::synccharts::dsl::Extensions;
+extension de::cau::cs::kieler::synccharts::dsl::Linking;
+
+link(emf::EObject this) :
+	this.allVisibleElements().internalLink();
+
+Void internalLink(emf::EObject this) :
+	null;
+
+
+
