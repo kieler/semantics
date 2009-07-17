@@ -1,0 +1,43 @@
+grammar de.cau.cs.kieler.Esi  hidden (WS, COMMENT) 
+ // with org.eclipse.xtext.common.Terminals
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+generate esi ""
+
+tracelist:
+  (
+   (traces+=trace)?   
+    (('!' 'reset' ';' traces+=trace)+)
+   )
+   ;
+
+trace: 
+   ((ticks+=tick )+)
+   ;
+  
+tick:
+   (input+=signal)* ('%' 'Output' ':' (output+=signal)*)? ';' 
+   ; 
+
+signal:
+     name=ID               
+   | name=ID '(' val=num ')' 
+   ;
+               
+/*------------------------------------------------------------------
+* LEXER RULES
+*------------------------------------------------------------------*/
+
+terminal ID	: (Letter | '_') (Letter | Digit | '_')*;
+
+terminal num	 returns ecore::EInt : ('+'|'-')?(Digit)+ ;
+
+terminal WS :  '\t' | ' ' | '\r' | '\n';
+
+terminal COMMENT : '%' ('A'..'N' | 'P'..'Z') -> '\n' ;
+
+terminal Digit : ('0' .. '9') ;
+
+terminal Letter 
+	:	'a'..'z'|'A'..'Z';
