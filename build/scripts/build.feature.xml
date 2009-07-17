@@ -169,19 +169,14 @@
 	</target>
 	
 	<target name="rmEclipseWorkspace">
-	<!-- <delete verbose="true">
-			<fileset dir="${basedir}/eclipseWorkspace">
-				<include name="**/*" />
-				<include name=".metadata" />
-			</fileset>
-		</delete -->
+	<delete verbose="true" dir="${basedir}/eclipseWorkspace" />
 	<!--	<exec executable="bash">
 			<arg value="-c" />			
 			<arg value="rm" />			
 			<arg value="-rf" />			
 			<arg value="${basedir}/eclipseWorkspace" />			
 		</exec> -->
-		<deltree dir="{basedir}/eclipseWorkspace" />
+		<!-- deltree dir="{basedir}/eclipseWorkspace" / -->
 	</target>
 
 	
