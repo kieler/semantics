@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2006, 2007 Borland Software Corporation
+ï»¿/*
+ * Copyright (c) 2006, 2009 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,19 +11,19 @@
  *    Alexander Shatalin (Borland) - initial API and implementation
  */
 
-«IMPORT "http://www.eclipse.org/gmf/2008/GenModel"»
-«EXTENSION xpt::diagram::editparts::Utils»
+Â«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'Â»
+Â«EXTENSION xpt::diagram::editparts::UtilsÂ»
 
-«DEFINE createFigure FOR gmfgen::GenCompartment-»
-	«IF !needsTitle-»
-		«REM»By default titles are shown even if there are no TitleStyle, we need to switch it off«ENDREM»«-»
-		«EXPAND xpt::Common::generatedMemberComment»
+Â«DEFINE createFigure FOR gmfgen::GenCompartment-Â»
+	Â«IF not needsTitle-Â»
+		Â«REMÂ»By default titles are shown even if there are no TitleStyle, we need to switch it offÂ«ENDREMÂ»Â«-Â»
+		Â«EXPAND xpt::Common::generatedMemberCommentÂ»
 		public org.eclipse.draw2d.IFigure createFigure() {
 			org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure result = (org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure) super.createFigure();
 			result.setTitleVisibility(false);
 			
-			«REM» Additions start here «ENDREM»
-			«REM» Make compartment borders invisible «ENDREM»
+			Â«REMÂ» Additions start here Â«ENDREMÂ»
+			Â«REMÂ» Make compartment borders invisible Â«ENDREMÂ»
 			Object border = result.getBorder();
 			if (border instanceof org.eclipse.draw2d.LineBorder) {
 				org.eclipse.draw2d.LineBorder lineBorder = ((org.eclipse.draw2d.LineBorder) border);
@@ -31,20 +31,20 @@
 				lineBorder.setColor(org.eclipse.draw2d.ColorConstants.black); 
 			} 
 			result.setBorder(null);
-			«REM» Give all but state compartments a custom layout «ENDREM» 
-			«IF title != "StateCompartment"-»
-				«IF title != "RegionCompartment"-»
+			Â«REMÂ» Give all but state compartments a custom layout Â«ENDREMÂ» 
+			Â«IF title != "StateCompartment"-Â»
+				Â«IF title != "RegionCompartment"-Â»
 				result.getContentPane().setLayoutManager(new de.cau.cs.kieler.synccharts.custom.CustomCompartmentLayout());
-				«REM» Add the compartment's title as a new figure within the compartment «ENDREM»
-				«REM» «IF title != "RegionCompartment"-» «ENDREM»
+				Â«REMÂ» Add the compartment's title as a new figure within the compartment Â«ENDREMÂ»
+				Â«REMÂ» Â«IF title != "RegionCompartment"-Â» Â«ENDREMÂ»
 					org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel title = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();
 					title.setText(result.getCompartmentTitle() + " ");
 					title.setForegroundColor(org.eclipse.draw2d.ColorConstants.black);
 					result.getContentPane().add(title, 0);
-				«ENDIF-»
-			«ENDIF-»
-			«REM» Additions end here «ENDREM»
+				Â«ENDIF-Â»
+			Â«ENDIF-Â»
+			Â«REMÂ» Additions end here Â«ENDREMÂ»
 			return result;
 		}
-	«ENDIF-»
-«ENDDEFINE»
+	Â«ENDIF-Â»
+Â«ENDDEFINEÂ»

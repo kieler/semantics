@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2006, 2007 Borland Software Corporation
+ï»¿/*
+ * Copyright (c) 2006, 2009 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,44 +11,43 @@
  *    Alexander Shatalin (Borland) - initial API and implementation
  */
 
-«IMPORT "http://www.eclipse.org/gmf/2008/GenModel"»
-«IMPORT "http://www.eclipse.org/emf/2002/Ecore"»
-«EXTENSION xpt::diagram::ViewmapAttributesUtils»
-«EXTENSION xpt::diagram::editparts::Utils»
+Â«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'Â»
+Â«EXTENSION xpt::diagram::ViewmapAttributesUtilsÂ»
+Â«EXTENSION xpt::diagram::editparts::UtilsÂ»
 
-«DEFINE createNodeShape(gmfgen::GenNode node) FOR gmfgen::FigureViewmap-»
-	«LET figureQualifiedClassName == null ? "org.eclipse.draw2d.RectangleFigure" : figureQualifiedClassName AS fqn-»
-		«EXPAND xpt::Common::generatedMemberComment»
+Â«DEFINE createNodeShape(node : gmfgen::GenNode) FOR gmfgen::FigureViewmap-Â»
+	Â«LET (if figureQualifiedClassName = null then 'org.eclipse.draw2d.RectangleFigure' else figureQualifiedClassName endif) AS fqn-Â»
+		Â«EXPAND xpt::Common::generatedMemberCommentÂ»
 		protected org.eclipse.draw2d.IFigure createNodeShape() {
-			«REM» Added "this" «ENDREM»
-			return primaryShape = new «fqn»(this)«IF node.getLayoutType().value == gmfgen::ViewmapLayoutType::XY_LAYOUT.value»{
+			Â«REMÂ» Added "this" Â«ENDREMÂ»
+			return primaryShape = new Â«fqnÂ»(this)Â«IF node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUTÂ»{
 				protected boolean useLocalCoordinates() {
 					return true;
 				}
-			}«ENDIF»;
+			}Â«ENDIFÂ»;
 		}
 
-		«EXPAND getPrimaryShapeMethod FOR fqn-»
-	«ENDLET-»
-«ENDDEFINE»
+		Â«EXPAND getPrimaryShapeMethod FOR fqn-Â»
+	Â«ENDLET-Â»
+Â«ENDDEFINEÂ»
 
-«DEFINE createNodeShape(gmfgen::GenNode node) FOR gmfgen::InnerClassViewmap-»
-	«EXPAND xpt::Common::generatedMemberComment»
+Â«DEFINE createNodeShape(node : gmfgen::GenNode) FOR gmfgen::InnerClassViewmap-Â»
+	Â«EXPAND xpt::Common::generatedMemberCommentÂ»
 	protected org.eclipse.draw2d.IFigure createNodeShape() {
-		«REM» Added "this" to let edit part pass itself to the figure «ENDREM»
-		«className» figure = new «className»(this);
-		«IF node.childNodes.size() > 0 && node.getLayoutType().value == gmfgen::ViewmapLayoutType::XY_LAYOUT.value-»
+		Â«REMÂ» Added "this" to let edit part pass itself to the figure Â«ENDREMÂ»
+		Â«classNameÂ» figure = new Â«classNameÂ»(this);
+		Â«IF node.childNodes->size() > 0 and node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT-Â»
  		figure.setUseLocalCoordinates(true);
-		«ENDIF-»
+		Â«ENDIF-Â»
  		return primaryShape = figure;
 	}
 
-	«EXPAND getPrimaryShapeMethod FOR className-»
-«ENDDEFINE»
+	Â«EXPAND getPrimaryShapeMethod FOR className-Â»
+Â«ENDDEFINEÂ»
 
-«DEFINE getPrimaryShapeMethod FOR String-»
-	«EXPAND xpt::Common::generatedMemberComment»
-	public «this» getPrimaryShape() {
-		return («this») primaryShape;
+Â«DEFINE getPrimaryShapeMethod FOR String-Â»
+	Â«EXPAND xpt::Common::generatedMemberCommentÂ»
+	public Â«selfÂ» getPrimaryShape() {
+		return (Â«selfÂ») primaryShape;
 	}
-«ENDDEFINE»
+Â«ENDDEFINEÂ»

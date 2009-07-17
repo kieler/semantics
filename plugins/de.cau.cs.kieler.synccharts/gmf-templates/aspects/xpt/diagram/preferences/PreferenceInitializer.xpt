@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2007 Borland Software Corporation
+﻿/*
+ * Copyright (c) 2007, 2009 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,41 +10,72 @@
  *    Dmitry Stadnik (Borland) - initial API and implementation
  */
 
-�IMPORT "http://www.eclipse.org/gmf/2008/GenModel"�
-�IMPORT "http://www.eclipse.org/emf/2002/Ecore"�
+«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'»
 
-�DEFINE className FOR gmfgen::GenDiagram�DiagramPreferenceInitializer�ENDDEFINE�
+«EXTENSION xpt::diagram::Utils»
 
-�DEFINE qualifiedClassName FOR gmfgen::GenDiagram��preferencesPackageName�.�EXPAND className��ENDDEFINE�
+«DEFINE className FOR gmfgen::GenDiagram»DiagramPreferenceInitializer«ENDDEFINE»
 
-�DEFINE PreferenceInitializer FOR gmfgen::GenDiagram-�
-�EXPAND xpt::Common::copyright FOR editorGen-�
-package �preferencesPackageName�;
+«DEFINE qualifiedClassName FOR gmfgen::GenDiagram»«preferencesPackageName».«EXPAND className»«ENDDEFINE»
 
-�EXPAND xpt::Common::generatedClassComment�
-public class �EXPAND className� extends org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer {
+«DEFINE PreferenceInitializer FOR gmfgen::GenDiagram-»
+«EXPAND xpt::Common::copyright FOR editorGen-»
+package «preferencesPackageName»;
 
-	�EXPAND xpt::Common::generatedMemberComment�
+«EXPAND xpt::Common::generatedClassComment»
+public class «EXPAND className» extends org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer {
+
+	«EXPAND xpt::Common::generatedMemberComment»
 	public void initializeDefaultPreferences() {
 		org.eclipse.jface.preference.IPreferenceStore store = getPreferenceStore();
-		�EXPAND xpt::diagram::preferences::PrintingPreferencePage::qualifiedClassName�.initDefaults(store);
-		�IF null == preferences-�
-			�EXPAND xpt::diagram::preferences::GeneralPreferencePage::qualifiedClassName�.initDefaults(store);
-			�EXPAND xpt::diagram::preferences::AppearancePreferencePage::qualifiedClassName�.initDefaults(store);
-			�EXPAND xpt::diagram::preferences::ConnectionsPreferencePage::qualifiedClassName�.initDefaults(store);
-			�EXPAND xpt::diagram::preferences::RulersAndGridPreferencePage::qualifiedClassName�.initDefaults(store);
-		�ELSE-�
-			�EXPAND initDefaults("store") FOR preferences-�
-		�ENDIF-�
-		�REM� This sets the preference 'showPopupBars' to 'false' by default �ENDREM�
+«IF preferences = null-»
+		«EXPAND initDefaults('store') FOREACH allPreferencePages(self)»
+«ELSE»«REM»default values for predefined pages will be set manually«ENDREM-»
+		«EXPAND initDefaults('store') FOREACH (allPreferencePages(self))[gmfgen::GenCustomPreferencePage]»
+		«EXPAND initDefaults('store') FOR preferences-»
+«ENDIF-»
+«REM» This sets the preference 'showPopupBars' to 'false' by default «ENDREM»
 		store.setDefault("Global.showPopupBars", false);
 		store.setValue("Global.showPopupBars", false);
-		�REM� Additions end here �ENDREM�
+		«REM» Additions end here «ENDREM»
 	}
 
-	�EXPAND xpt::Common::generatedMemberComment�
+	«EXPAND xpt::Common::generatedMemberComment»
 	protected org.eclipse.jface.preference.IPreferenceStore getPreferenceStore() {
-		return �editorGen.plugin.getActivatorQualifiedClassName()�.getInstance().getPreferenceStore();
+		return «editorGen.plugin.getActivatorQualifiedClassName()».getInstance().getPreferenceStore();
 	}
 } 
-�ENDDEFINE�
+«ENDDEFINE»
+
+«DEFINE initDefaults(storeVar : String) FOR gmfgen::GenPreferencePage»«ERROR 'Abstract define for ' + self.repr()»«ENDDEFINE»
+
+«DEFINE initDefaults(storeVar : String) FOR gmfgen::GenStandardPreferencePage-»
+«EXPAND impl::preferences::StandardPage::call_initDefaults(storeVar)»
+«ENDDEFINE»
+
+«DEFINE initDefaults(storeVar : String) FOR gmfgen::GenCustomPreferencePage-»
+«EXPAND impl::preferences::CustomPage::call_initDefaults(storeVar)»
+«ENDDEFINE»
+
+«DEFINE initDefaults(storeVar : String) FOR gmfgen::GenDiagramPreferences»
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_SHOW_CONNECTION_HANDLES, «showConnectionHandles»);
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_SHOW_POPUP_BARS, «showPopupBars»);
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_ENABLE_ANIMATED_LAYOUT, «enableAnimatedLayout»);
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_ENABLE_ANIMATED_ZOOM, «enableAnimatedZoom»);
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_ENABLE_ANTIALIAS, «enableAntiAlias»);
+	«EXPAND initDefaultFont(storeVar, 'PREF_DEFAULT_FONT') FOR defaultFont-»
+	«EXPAND initDefaultColor(storeVar, 'PREF_FONT_COLOR') FOR fontColor-»
+	«EXPAND initDefaultColor(storeVar, 'PREF_FILL_COLOR') FOR fillColor-»
+	«EXPAND initDefaultColor(storeVar, 'PREF_LINE_COLOR') FOR lineColor-»
+	«EXPAND initDefaultColor(storeVar, 'PREF_NOTE_FILL_COLOR') FOR noteFillColor-»
+	«EXPAND initDefaultColor(storeVar, 'PREF_NOTE_LINE_COLOR') FOR noteLineColor-»
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_LINE_STYLE, org.eclipse.gmf.runtime.notation.Routing.«lineStyle»);
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_SHOW_RULERS, «showRulers»);
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_RULER_UNITS, org.eclipse.gef.rulers.RulerProvider.UNIT_«rulerUnits»);
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_SHOW_GRID, «showGrid»);
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_SNAP_TO_GRID, «snapToGrid»);
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_SNAP_TO_GEOMETRY, «snapToGeometry»);
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_GRID_SPACING, «gridSpacing»);
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_PROMPT_ON_DEL_FROM_MODEL, «promptOnDelFromModel»);
+	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_PROMPT_ON_DEL_FROM_DIAGRAM, «promptOnDelFromDiagram»);
+«ENDDEFINE»

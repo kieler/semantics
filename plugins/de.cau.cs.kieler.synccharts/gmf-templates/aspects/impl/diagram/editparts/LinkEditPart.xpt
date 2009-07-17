@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2006, 2007 Borland Software Corporation
+ï»¿/*
+ * Copyright (c) 2006, 2009 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,18 +11,18 @@
  *    Alexander Shatalin (Borland) - initial API and implementation
  */
 
-«IMPORT "http://www.eclipse.org/gmf/2008/GenModel"»
+Â«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'Â»
 
-«DEFINE createLinkFigure(gmfgen::GenLink link) FOR gmfgen::InnerClassViewmap»
+Â«DEFINE createLinkFigure(link : gmfgen::GenLink) FOR gmfgen::InnerClassViewmapÂ»
 	protected org.eclipse.draw2d.Connection createConnectionFigure() {
-		«REM» Added "this" to let edit part pass itself to the figure «ENDREM»
-		return new «className»(this);
+		Â«REMÂ» Added "this" to let edit part pass itself to the figure Â«ENDREMÂ»
+		return new Â«classNameÂ»(this);
 	}
 
-	«EXPAND xpt::Common::generatedMemberComment»
-	public «className» getPrimaryShape() {
-		return («className») getFigure();
+	Â«EXPAND xpt::Common::generatedMemberCommentÂ»
+	public Â«classNameÂ» getPrimaryShape() {
+		return (Â«classNameÂ») getFigure();
 	}
 
-	«classBody»
-«ENDDEFINE»
+	Â«classBodyÂ»
+Â«ENDDEFINEÂ»

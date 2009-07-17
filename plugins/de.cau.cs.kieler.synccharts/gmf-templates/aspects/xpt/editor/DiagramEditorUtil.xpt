@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2007, 2008 Borland Software Corporation
+ï»¿/*
+ * Copyright (c) 2007, 2009 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,18 +9,15 @@
  * Contributors:
  *    Artem Tikhomirov (Borland) - initial API and implementation
  */
-«IMPORT "http://www.eclipse.org/gmf/2008/GenModel"»
-«IMPORT "http://www.eclipse.org/emf/2002/GenModel"»
-«IMPORT "http://www.eclipse.org/emf/2002/Ecore"»
-«EXTENSION xpt::editor::GenDiagram»
-«EXTENSION xpt::GenModelUtils»
-«EXTENSION xpt::editor::Utils»
+Â«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'Â»
+Â«EXTENSION xpt::editor::GenDiagramÂ»
+Â«EXTENSION xpt::editor::UtilsÂ»
 
-«DEFINE createInitialModelMethod FOR gmfgen::GenDiagram»
-	«EXPAND xpt::Common::generatedMemberComment("Create a new instance of domain element associated with canvas.\n<!-- begin-user-doc -->\n<!-- end-user-doc -->")»
-	private static «EXPAND MetaModel::QualifiedClassName FOR domainDiagramElement» createInitialModel() {
-		«REM» Additions start here «ENDREM»
-		«REM» Add a root region with a state and another region to the diagram «ENDREM»
+Â«DEFINE createInitialModelMethod FOR gmfgen::GenDiagramÂ»
+	Â«EXPAND xpt::Common::generatedMemberComment('Create a new instance of domain element associated with canvas.\n<!-- begin-user-doc -->\n<!-- end-user-doc -->')Â»
+	private static Â«EXPAND MetaModel::QualifiedClassName FOR domainDiagramElementÂ» createInitialModel() {
+		Â«REMÂ» Additions start here Â«ENDREMÂ»
+		Â«REMÂ» Add a root region with a state and another region to the diagram Â«ENDREMÂ»
 		de.cau.cs.kieler.synccharts.Region root = de.cau.cs.kieler.synccharts.SyncchartsFactory.eINSTANCE.createRegion();
 		de.cau.cs.kieler.synccharts.State state = de.cau.cs.kieler.synccharts.SyncchartsFactory.eINSTANCE.createState();
 		de.cau.cs.kieler.synccharts.Region region = de.cau.cs.kieler.synccharts.SyncchartsFactory.eINSTANCE.createRegion();
@@ -28,7 +25,7 @@
 		state.getRegions().add(region);
 		root.getInnerStates().add(state);
 		return root
-		«REM» This is old code: «EXPAND MetaModel::NewInstance FOR domainDiagramElement» «ENDREM»;
-		«REM» Additions end here «ENDREM»
+		Â«REMÂ» This is old code: Â«EXPAND MetaModel::NewInstance FOR domainDiagramElementÂ» Â«ENDREMÂ»;
+		Â«REMÂ» Additions end here Â«ENDREMÂ»
 	}
-«ENDDEFINE»
+Â«ENDDEFINEÂ»
