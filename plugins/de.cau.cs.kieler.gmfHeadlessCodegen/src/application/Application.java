@@ -14,7 +14,7 @@ import org.eclipse.gmf.codegen.util.Generator;
 import org.eclipse.gmf.internal.codegen.CodeGenUIPlugin;
 import org.eclipse.gmf.internal.common.migrate.ModelLoadHelper;
 
-//@SuppressWarnings("restriction")
+@SuppressWarnings("restriction")
 public class Application implements IApplication {
 	
 	private GenEditorGenerator myGenModel = null;
