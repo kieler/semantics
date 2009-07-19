@@ -3,6 +3,7 @@ package de.cau.cs.kieler.sim.kiem.data;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -21,7 +22,9 @@ public class KiemPropertyTypeBool extends KiemPropertyType
 	
 	@Override 
 	public void setCellEditor(Composite parent) {
-		cellEditor = new ComboBoxCellEditor(parent, BOOL_ITEMS);
+		cellEditor = new ComboBoxCellEditor(parent, 
+									BOOL_ITEMS, 
+									SWT.Deactivate);
 	}
 
 	@Override
