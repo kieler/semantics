@@ -161,14 +161,23 @@ public class KiemView extends ViewPart {
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = 
 				dataComponentExList.get(c);
+			//select color
+			Color currentColor = colorDisabled;
 			if (dataComponentEx.isEnabled()) {
-				viewer.getTree().getItem(c).setForeground(colorEnabled);
+				currentColor = colorEnabled;
 				if (dataComponentEx.isMaster()) {
-					viewer.getTree().getItem(c).setForeground(colorMaster);
+					currentColor = colorMaster;
 				}
 			}
-			else
-				viewer.getTree().getItem(c).setForeground(colorDisabled);
+			
+			//update text colors
+			viewer.getTree().getItem(c).setForeground(currentColor);
+			//enable subitems
+			int subItemCnt = viewer.getTree().getItem(c).getItemCount();
+			for (int cc = 0; cc < subItemCnt; cc ++) {
+				viewer.getTree().getItem(c).getItem(cc).setForeground(currentColor);
+			}
+			
 		}
 	}
 	

@@ -73,9 +73,6 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 				"icons/unfoldDisabled.png").createImage();
 
-	private static final Image PROPERTY = AbstractUIPlugin
-	.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-			"icons/propertyIcon.png").createImage();
 	
 	private KiemView parent;
 	
@@ -87,8 +84,10 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 	public Image getColumnImage(Object element, int columnIndex) {
 		//if property
 		if (element instanceof KiemProperty) { 
-			if (columnIndex == 0)
-				return PROPERTY;
+			if (columnIndex == 0) {
+				KiemProperty property = (KiemProperty)element;
+				return property.getType().getIcon(); 
+			}
 			else 
 				return null;
 		}

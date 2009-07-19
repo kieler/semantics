@@ -27,17 +27,7 @@ public class KiemPropertyEditing extends EditingSupport {
 		switch (columnIndex) {
 		case 1:
 			this.tree = ((TreeViewer)viewer).getTree();
-			stringEditor = new TextCellEditor(tree);
-			intEditor = new TextCellEditor(tree);
-			boolEditor = new ComboBoxCellEditor(tree, BOOL_ITEMS);
-			fileEditor = new TextCellEditor(tree);
-			modelEditor = new TextCellEditor(tree);
-			
-			//editor = new CheckboxCellEditor(null, SWT.CHECK | SWT.READ_ONLY);
 			break;
-		//case 1:
-			//editor = new TextCellEditor(((TableViewer) viewer).getTable());
-		//	break;
 		default:
 			throw new RuntimeException("Editing not supported");
 		}
@@ -56,96 +46,20 @@ public class KiemPropertyEditing extends EditingSupport {
 	@Override
 	protected CellEditor getCellEditor(Object element) {
 		KiemProperty property = (KiemProperty)element;
-		switch (property.getType()) {
-			case KSTRING : { 
-				return stringEditor;
-			}
-			case KINT : { 
-				return intEditor;
-			}
-			case KBOOL : { 
-				return boolEditor;
-			}
-			case KFILE : { 
-				return fileEditor;
-			}
-			case KMODEL : { 
-				return modelEditor;
-			}
-		}
-		return null;
+		property.getType().setCellEditor(tree);
+		return property.getType().getCellEditor();
 	}
 
 	@Override
 	protected Object getValue(Object element) {
 		KiemProperty property = (KiemProperty)element;
-
-		switch (this.columnIndex) {
-		case 1:
-			switch (property.getType()) {
-			case KSTRING : { 
-				return property.getValue();
-			}
-			case KINT : { 
-				return property.getValue();
-			}
-			case KBOOL : {
-				if (property.getValue().equals("true")) return 1;
-				else return 0;
-			}
-			case KFILE : { 
-				return  property.getValue();
-			}
-			case KMODEL : { 
-				return  property.getValue();
-			}
-		}
-		default:
-			break;
-		}
-		return null;
+		return property.getType().getValue(element);
 	}
 
 	@Override
 	protected void setValue(Object element, Object value) {
 		KiemProperty property = (KiemProperty)element;
-
-		switch (this.columnIndex) {
-		case 1:
-			switch (property.getType()) {
-			case KSTRING : { 
-				property.setValue((String)value);
-				break;
-			}
-			case KINT : { 
-				try {
-					property.setValue(""+Integer.valueOf((String)value));
-				}catch(Exception e) {
-				}
-				break;
-			}
-			case KBOOL : {
-				if ((Integer) value == 0) {
-					property.setValue("false");
-				}
-				else {
-					property.setValue("true");
-				}
-				break;
-			}
-			case KFILE : { 
-				property.setValue((String)value);
-				break;
-			}
-			case KMODEL : { 
-				property.setValue((String)value);
-				break;
-			}
-			}
-			break;
-		default:
-			break;
-		}
+		property.getType().setValue(element, value);
 		getViewer().update(element, null);
 	}
 

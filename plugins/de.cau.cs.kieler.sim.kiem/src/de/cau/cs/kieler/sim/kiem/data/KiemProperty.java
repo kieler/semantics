@@ -1,45 +1,48 @@
 package de.cau.cs.kieler.sim.kiem.data;
 
-public class KiemProperty {
+import java.io.Serializable;
+
+public class KiemProperty implements Serializable {
 
 	String key;
 	String value;
-	KTYPE  type;
-	
-	public static enum KTYPE {
-	    KSTRING, KINT, KBOOL, KFILE, KMODEL
-	}
+	KiemPropertyType type;
 	
 	public KiemProperty() {
 		this.key = "";
 		this.value = "";
-		this.type = KTYPE.KSTRING; 
+		this.type = new KiemPropertyTypeString(); 
 	}
-	public KiemProperty(String key, KTYPE type, String value) {
+	public KiemProperty(String key, KiemPropertyType type, String value) {
 		this.key = key;
 		this.value = value;
+		this.type = type; 
+	}
+	public KiemProperty(String key, KiemPropertyType type) {
+		this.key = key;
+		this.value = "";
 		this.type = type; 
 	}
 
 	public KiemProperty(String key) {
 		this.key = key;
 		this.value = "";
-		this.type = KTYPE.KSTRING; 
+		this.type = new KiemPropertyTypeString();  
 	}
 	public KiemProperty(String key, String value) {
 		this.key = key;
 		this.value = value;
-		this.type = KTYPE.KSTRING; 
+		this.type = new KiemPropertyTypeString();  
 	}
 	public KiemProperty(String key, int value) {
 		this.key = key;
 		this.value = value+"";
-		this.type = KTYPE.KINT; 
+		this.type = new KiemPropertyTypeInt(); 
 	}
 	public KiemProperty(String key, boolean value) {
 		this.key = key;
 		this.value = (value == true) ? "true" : "false";
-		this.type = KTYPE.KBOOL; 
+		this.type = new KiemPropertyTypeBool(); 
 	}
 	
 	public String getKey() {
@@ -48,7 +51,7 @@ public class KiemProperty {
 	public String getValue() {
 		return this.value;
 	}
-	public KTYPE getType() {
+	public KiemPropertyType getType() {
 		return this.type;
 	}
 	
