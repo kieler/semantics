@@ -543,6 +543,15 @@ public class KiemView extends ViewPart {
 	}
 	
 
+	public void updateViewSync() {
+		Display.getDefault().syncExec(
+				  new Runnable() {
+				    public void run(){
+				    	updateView(true);
+				    }
+		});
+	}
+
 	public void updateViewAsync() {
 		Display.getDefault().asyncExec(
 				  new Runnable() {
