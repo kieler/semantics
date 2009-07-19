@@ -4,6 +4,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
@@ -58,10 +59,10 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 	
 	//provide some properties that the user should enter
-	public String[] getPropertyKeys() {
+	public KiemProperty[] getProperties() {
 		return null;
 	}
-	
+
 	//-------------------------------------------------------------------------
 	private String[] globalInterfaceVariables;
 

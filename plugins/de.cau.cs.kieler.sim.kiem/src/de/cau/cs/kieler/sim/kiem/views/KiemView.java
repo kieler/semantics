@@ -12,6 +12,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
 
 import org.eclipse.ui.part.*;
 import org.eclipse.jface.viewers.*;
@@ -23,6 +25,7 @@ import org.eclipse.swt.widgets.Menu;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
+import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.*;
 import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
@@ -33,7 +36,7 @@ import org.eclipse.ui.part.FileEditorInput;
 
 
 public class KiemView extends ViewPart {
-	private TableViewer viewer;
+	private KiemTableViewer viewer;
 	private Action actionEnable;
 	private Action actionDisable;
 	private Action actionUp;
@@ -52,6 +55,46 @@ public class KiemView extends ViewPart {
 	public KiemPlugin KIEM;
 	
 	public static final String ID = "de.cau.cs.kieler.sim.kiem.views.KiemView";
+	
+	public static final int[] columnBoundsCollapsed 
+								= { 180, 0 , 20, 120, 50, 50};
+	public static final int[] columnBounds 
+								= { 180, 100 , 20, 120, 50, 50};
+	public int columnProperty = -1;
+
+	public static final String[] columnTitlesCollapsed = { 
+			"Component Name",
+			"Value", 
+			"",
+			"Type", 
+			//"JSON", 
+			"Master", 
+			"Model" };
+	public static final String[] columnTitles = { 
+		"Component Name / Key",
+		"Value", 
+		"",
+		"Type", 
+		//"JSON", 
+		"Master", 
+		"Model" };
+	public static final String[] columnToolTipCollapsed = { 
+			 "Name of Data Component",
+			 "Property Value",
+			 "Enabled/Disabled",
+ 			 "Producer, Consumer or Initialization Data Component", 
+ 			 //"JSONObject (JSONString otherwise)", 
+ 			 "Is a Master that leads Execution", 
+ 			 "Needs selected Model File" };
+	public static final String[] columnToolTip = { 
+		 "Property Key",
+		 "Property Value",
+		 "Enabled/Disabled",
+		 "Producer, Consumer or Initialization Data Component", 
+		 //"JSONObject (JSONString otherwise)", 
+		 "Is a Master that leads Execution", 
+		 "Needs selected Model File" };
+	
 
 	private IWorkbenchWindow window;
 
@@ -119,13 +162,13 @@ public class KiemView extends ViewPart {
 			DataComponentEx dataComponentEx = 
 				dataComponentExList.get(c);
 			if (dataComponentEx.isEnabled()) {
-				viewer.getTable().getItem(c).setForeground(colorEnabled);
+				viewer.getTree().getItem(c).setForeground(colorEnabled);
 				if (dataComponentEx.isMaster()) {
-					viewer.getTable().getItem(c).setForeground(colorMaster);
+					viewer.getTree().getItem(c).setForeground(colorMaster);
 				}
 			}
 			else
-				viewer.getTable().getItem(c).setForeground(colorDisabled);
+				viewer.getTree().getItem(c).setForeground(colorDisabled);
 		}
 	}
 	
@@ -134,7 +177,7 @@ public class KiemView extends ViewPart {
   //---------------------------------------------------------------------------	
 	
 	public void createPartControl(Composite parent) {
-		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL
+		viewer = new KiemTableViewer(parent, SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.FULL_SELECTION);
 		createColumns(viewer);
 		viewer.setContentProvider(new KiemContentProvider());
@@ -144,40 +187,56 @@ public class KiemView extends ViewPart {
 		buildLocalToolBar();
 		hookContextMenu();
 		hookSelectionChangedAction();
-		hookDoubleClickAction();
+		hookTreeAction();
 		checkForSingleEnabledMaster(true);
 		updateView(true);
 	}
 	
 	// This will create the columns for the table
-	private void createColumns(TableViewer viewer) {
-		String[] titles = { "", 
-							"Component Name", 
-							"Type", 
-							//"JSON", 
-							"Master", 
-							"Model" };
-		String[] toolTip = { "Enabled/Disabled", 
-							 "Name of Data Component", 
-				 			 "Producer, Consumer or Initialization Data Component", 
-				 			 //"JSONObject (JSONString otherwise)", 
-				 			 "Is a Master that leads Execution", 
-				 			 "Needs selected Model File" };
-		int[] bounds = { 22, 180, 120, 50, 50};
-
-		for (int i = 0; i < titles.length; i++) {
-			TableViewerColumn column = new TableViewerColumn(viewer, SWT.NONE);
-			column.getColumn().setText(titles[i]);
-			column.getColumn().setWidth(bounds[i]);
-			column.getColumn().setToolTipText(toolTip[i]);
+	private void createColumns(KiemTableViewer viewer) {
+		for (int i = 0; i < columnTitles.length; i++) {
+			TreeViewerColumn column = new TreeViewerColumn(viewer, SWT.NONE);
 			column.getColumn().setResizable(true);
 			column.getColumn().setMoveable(true);
-			if (i == 0)
-				column.setEditingSupport(new KiemDataEditing(this, viewer, i));
+			column.getColumn().setText(columnTitlesCollapsed[i]);
+			column.getColumn().setToolTipText(columnToolTipCollapsed[i]);
+			column.getColumn().setWidth(columnBoundsCollapsed[i]);
+			if (i == 2)
+				column.setEditingSupport(new KiemComponentEditing(this, viewer, i));
+			if (i == 1)
+				column.setEditingSupport(new KiemPropertyEditing(this, viewer, i));
 		}
-		Table table = viewer.getTable();
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
+		Tree tree = viewer.getTree();
+		tree.setHeaderVisible(true);
+		tree.setLinesVisible(true);
+	}
+	
+  //---------------------------------------------------------------------------
+	
+	private void refreshTableColumns(boolean collapsed) {
+		Tree tree = viewer.getTree();
+		if (columnProperty == -1) {
+			columnProperty = columnBounds[1];
+		}
+		
+		if (collapsed) {
+			for (int i = 0; i < columnTitles.length; i++) {
+				TreeColumn column = tree.getColumn(i);
+				column.setText(columnTitlesCollapsed[i]);
+				column.setToolTipText(columnToolTipCollapsed[i]);
+			}
+			TreeColumn column = tree.getColumn(1);
+			column.setWidth(0);
+		}
+		else {
+			for (int i = 0; i < columnTitles.length; i++) {
+				TreeColumn column = tree.getColumn(i);
+				column.setText(columnTitles[i]);
+				column.setToolTipText(columnToolTip[i]);
+			}
+			TreeColumn column = tree.getColumn(1);
+			column.setWidth(columnProperty);
+		}
 	}
 	
   //---------------------------------------------------------------------------	
@@ -186,10 +245,24 @@ public class KiemView extends ViewPart {
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				updateEnabled();
+				updateColumnsCollapsed();
+				//do not refresh, otherwise the cell editor is aborted!
 			}
 		});
 	}
-	private void hookDoubleClickAction() {
+	private void hookTreeAction() {
+		viewer.addTreeListener(new ITreeViewerListener() {
+			@Override
+			public void treeCollapsed(TreeExpansionEvent event) {
+				// TODO Auto-generated method stub
+				updateView(false);
+			}
+			@Override
+			public void treeExpanded(TreeExpansionEvent event) {
+				// TODO Auto-generated method stub
+				updateView(false);
+			}
+		});
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
 				getDoubleClickAction().run();
@@ -403,6 +476,8 @@ public class KiemView extends ViewPart {
 	
 
 	public void updateEnabledEnabledDisabledUpDown() {
+		Object selection = ((org.eclipse.jface.viewers.StructuredSelection)
+				viewer.getSelection()).getFirstElement();
 		if (KIEM.execution != null) {
 			//execution is running
 			getActionEnable().setEnabled(false);
@@ -411,9 +486,9 @@ public class KiemView extends ViewPart {
 			getActionDown().setEnabled(false);
 			return;
 		}
-		if (((org.eclipse.jface.viewers.StructuredSelection)
-						viewer.getSelection()).getFirstElement() == null) {
-			//no object selected
+		if (	(selection == null) 
+			 || (selection instanceof KiemProperty)) {
+			//no object selected OR property selected
 			getActionEnable().setEnabled(false);
 			getActionDisable().setEnabled(false);
 			getActionUp().setEnabled(false);
@@ -463,11 +538,35 @@ public class KiemView extends ViewPart {
 	}
 	
 	protected void updateView(boolean deselect) {
+		updateColumnsCollapsed();
 		viewer.refresh();
 		refreshEnabledDisabledTextColors();
 		if (deselect)
 			viewer.setSelection(null);
 		updateEnabled();
+	}
+	
+	public void updateColumnsCollapsed() {
+		//if selected update columns
+		ISelection selection = viewer.getSelection();
+		if (selection != null) {
+			Object obj = ((IStructuredSelection)selection)
+											.getFirstElement();
+			if (obj != null) {
+				if (obj instanceof KiemProperty) {
+					//unfolded - show property headers
+					refreshTableColumns(false);
+				}
+				else {
+					//collapsed
+					refreshTableColumns(true);
+				}
+			}
+			else {
+				//default (nothing selected) also collapsed
+				refreshTableColumns(true);
+			}
+		}
 	}
 	
 	public void updateEnabled() {
@@ -744,7 +843,7 @@ public class KiemView extends ViewPart {
 				if (selection != null) {
 					Object obj = ((IStructuredSelection)selection)
 													.getFirstElement();
-					if (obj != null) {
+					if (obj instanceof DataComponentEx) {
 						//only if execution is stopped
 						if (KIEM.execution == null) {
 						  DataComponentEx dataComponentEx = (DataComponentEx)obj;

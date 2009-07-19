@@ -8,19 +8,19 @@ import org.eclipse.swt.SWT;
 
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 
-public class KiemDataEditing extends EditingSupport {
+public class KiemComponentEditing extends EditingSupport {
 	private CellEditor editor;
 	private int columnIndex;
 	private KiemView parent;
 
-	public KiemDataEditing(KiemView parent, 
+	public KiemComponentEditing(KiemView parent, 
 						  ColumnViewer viewer, 
 						  int columnIndex) {
 		super(viewer);
 		
 		// Create the correct editor based on the column index
 		switch (columnIndex) {
-		case 0:
+		case 2:
 			editor = new CheckboxCellEditor(null, SWT.CHECK | SWT.READ_ONLY);
 			break;
 		//case 1:
@@ -51,7 +51,7 @@ public class KiemDataEditing extends EditingSupport {
 		DataComponentEx dataComponentEx = (DataComponentEx)element;
 
 		switch (this.columnIndex) {
-		case 0:
+		case 2:
 			return dataComponentEx.isEnabled();
 		default:
 			break;
@@ -62,9 +62,8 @@ public class KiemDataEditing extends EditingSupport {
 	@Override
 	protected void setValue(Object element, Object value) {
 		DataComponentEx dataComponentEx = (DataComponentEx)element;
-
 		switch (this.columnIndex) {
-		case 0:
+		case 2:
 			dataComponentEx.setEnabled((Boolean)value);
 			break;
 		default:

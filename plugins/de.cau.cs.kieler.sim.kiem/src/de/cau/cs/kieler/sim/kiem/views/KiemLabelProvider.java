@@ -6,6 +6,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
+import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 
 public class KiemLabelProvider implements ITableLabelProvider {
@@ -72,6 +73,10 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 				"icons/unfoldDisabled.png").createImage();
 
+	private static final Image PROPERTY = AbstractUIPlugin
+	.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+			"icons/propertyIcon.png").createImage();
+	
 	private KiemView parent;
 	
 	public KiemLabelProvider(KiemView parent) {
@@ -80,24 +85,17 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 	}
 
 	public Image getColumnImage(Object element, int columnIndex) {
+		//if property
+		if (element instanceof KiemProperty) { 
+			if (columnIndex == 0)
+				return PROPERTY;
+			else 
+				return null;
+		}
+
+		//if component
 		DataComponentEx dataComponentEx = (DataComponentEx)element;
 		if (columnIndex == 0) {
-			if (dataComponentEx.isEnabled()) {
-				//enabled
-				if (parent.KIEM.execution == null)
-					return CHECKED;
-				else
-					return CHECKED_DISABLED;
-			}
-			else {
-				//disabled
-				if (parent.KIEM.execution == null)
-					return UNCHECKED;
-				else
-					return UNCHECKED_DISABLED;
-			}
-		}
-		else if (columnIndex == 1) {
 			if (dataComponentEx.isProducerConsumer()) {
 				//producer
 				if (dataComponentEx.isEnabled()) {
@@ -143,7 +141,23 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 				}
 			}
 		}
-		else if (columnIndex == 3) {
+		else if (columnIndex == 2) {
+			if (dataComponentEx.isEnabled()) {
+				//enabled
+				if (parent.KIEM.execution == null)
+					return CHECKED;
+				else
+					return CHECKED_DISABLED;
+			}
+			else {
+				//disabled
+				if (parent.KIEM.execution == null)
+					return UNCHECKED;
+				else
+					return UNCHECKED_DISABLED;
+			}
+		}
+		else if (columnIndex == 4) {
 			if (dataComponentEx.isMaster()) {
 				//enabled
 				if (dataComponentEx.isEnabled())
@@ -156,7 +170,7 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 				return null;
 			}
 		}
-		else if (columnIndex == 4) {
+		else if (columnIndex == 5) {
 			if (dataComponentEx.isModelFileNeeded()) {
 				//enabled
 				if (dataComponentEx.isEnabled()) {
@@ -177,31 +191,53 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 	}
 
 	public String getColumnText(Object element, int columnIndex) {
-		DataComponentEx dataComponentEx = (DataComponentEx)element;
-		switch (columnIndex) {
-		case 0 :  // ENABLED_COLUMN
-			return ""; 
-		case 1 : // NAME_COLUMN
-			return dataComponentEx.getName();
-		case 2 : // TYPE_COLUMN
-			String type = "";
-			if (dataComponentEx.isProducerConsumer())
-				type = "Consumer/Producer";
-			else if (dataComponentEx.isProducer())
-				type = "Producer";
-			else if (dataComponentEx.isConsumer())
-				type = "Consumer";
-			else
-				type = "Initializer";
-			return type;
-		//case 3 : // JSON_COLUMN 
-		//	return "";
-		case 3 : // MASTER_COLUMN
-			return "";
-		case 4 : // NEEDMODEL_COLUMN
-			return "";
-		default :
-			throw new RuntimeException("columnIndex out of bounds (6)");
+		if (element instanceof KiemProperty) { 
+			switch (columnIndex) {
+			case 0 :  // NAME_COLUMN or KEY_COLUMN
+				{KiemProperty kiemProperty = (KiemProperty)element;
+				return kiemProperty.getKey();}
+			case 1 :  // VALUE_COLUMN
+				{KiemProperty kiemProperty = (KiemProperty)element;
+				return kiemProperty.getValue();}
+			case 2 :  // ENABLED_COLUMN
+				return "";
+			case 3 : // TYPE_COLUMN
+				return "";
+			case 4 : // MASTER_COLUMN
+				return "";
+			case 5 : // NEEDMODEL_COLUMN
+				return "";
+			default :
+				throw new RuntimeException("columnIndex out of bounds (6)");
+			}
+		}
+		else {
+			DataComponentEx dataComponentEx = (DataComponentEx)element;
+			switch (columnIndex) {
+			case 0 :  // NAME_COLUMN or KEY_COLUMN
+				return dataComponentEx.getName();
+			case 1 :  // VALUE_COLUMN
+				return "";
+			case 2 :  // ENABLED_COLUMN
+				return "";
+			case 3 : // TYPE_COLUMN
+				String type = "";
+				if (dataComponentEx.isProducerConsumer())
+					type = "Consumer/Producer";
+				else if (dataComponentEx.isProducer())
+					type = "Producer";
+				else if (dataComponentEx.isConsumer())
+					type = "Consumer";
+				else
+					type = "Initializer";
+				return type;
+			case 4 : // MASTER_COLUMN
+				return "";
+			case 5 : // NEEDMODEL_COLUMN
+				return "";
+			default :
+				throw new RuntimeException("columnIndex out of bounds (6)");
+			}
 		}
 	}
 

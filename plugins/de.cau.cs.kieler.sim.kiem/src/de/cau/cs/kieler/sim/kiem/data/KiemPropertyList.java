@@ -10,13 +10,16 @@ public class KiemPropertyList {
 	public KiemPropertyList() {
 		this.propertyList = new LinkedList<KiemProperty>();
 	}
-	public KiemPropertyList(String[] propertyKeys) {
-		if (propertyKeys != null) {
+	public KiemPropertyList(KiemProperty[] properties) {
+		if (properties != null) {
 			this.propertyList = new LinkedList<KiemProperty>();
-			for (int c = 0; c < propertyKeys.length; c++) {
+			for (int c = 0; c < properties.length; c++) {
 				//add new property with null value and according key
-				this.propertyList.add(new KiemProperty(propertyKeys[c]));
+				this.propertyList.add(properties[c]);
 			}
+		}
+		else {
+			this.propertyList = new LinkedList<KiemProperty>();
 		}
 	}
 	
@@ -80,5 +83,18 @@ public class KiemPropertyList {
 		if (this.existsProperty(key)) return false;
 		this.propertyList.add(new KiemProperty(key,value));
 		return true;
+	}
+	
+	
+	public int size() {
+		return this.propertyList.size();	
+	}
+	
+	public boolean hasElements() {
+		return (size() > 0);
+	}
+	
+	public Object[] getElements() {
+		return this.propertyList.toArray();
 	}
 }

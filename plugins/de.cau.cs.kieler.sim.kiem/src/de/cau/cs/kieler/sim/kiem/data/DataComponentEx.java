@@ -9,22 +9,42 @@ public class DataComponentEx {
 	private boolean enabled;
 	private boolean skipped;
 	protected KiemPropertyList properties;  //List of properties
-	private boolean propertiesCollapsed;
 	private DataComponent component;
 	private long deltaIndex;
 	private Boolean json;
+	private Boolean propertyComponent; 	   //this component is just a property!
 	
+	//normal constructor
 	public DataComponentEx(DataComponent component) {
+		super();
 		this.component = component;
 		this.enabled = true;
 		this.skipped = false;
-		this.propertiesCollapsed = false;
-		this.properties = new KiemPropertyList
-								(this.component.getPropertyKeys());
+		this.properties = new KiemPropertyList(this.component.getProperties());
+		this.propertyComponent = false;
 		this.json = null;
 		this.deltaIndex = 0;
 	}
-	
+
+	// --------- for property list entries ------------------------- 
+	public DataComponentEx() {
+		this.component = null;
+		this.enabled = true;
+		this.skipped = false;
+		this.properties = null;
+		this.propertyComponent = true;
+		this.json = null;
+		this.deltaIndex = 0;
+	}
+
+	public boolean isPropertyComponent() {
+		return this.propertyComponent;
+	}
+	public void setPropertyComponent(boolean propertyComponent) {
+		this.propertyComponent = propertyComponent;
+	}
+	// --------- ------------------------- ------------------------- 
+
 	public boolean isJSON() {
 		if (this.json != null) return this.json.booleanValue();
 		if (this.getDataComponent() instanceof JSONObjectDataComponent)
@@ -40,13 +60,6 @@ public class DataComponentEx {
 	
 	public KiemPropertyList getPropertyList() {
 		return this.properties;
-	}
-	
-	public boolean isPropertyListCollapsed() {
-		return this.propertiesCollapsed;
-	}
-	public void setPropertyListCollapsed(boolean propertiesCollapsed) {
-		this.propertiesCollapsed = propertiesCollapsed;
 	}
 	
 	
@@ -105,8 +118,8 @@ public class DataComponentEx {
 	public String[] getLocalInterfaceVariables() {
 		return this.component.getLocalInterfaceVariables(); 
 	}
-	public String[] getPropertyKeys() {
-		return this.component.getPropertyKeys(); 
+	public KiemProperty[] getProperties() {
+		return this.component.getProperties(); 
 	}
 
 	public boolean isDeltaConsumer() {
