@@ -39,10 +39,8 @@ public class DataProducer extends JSONStringDataComponent implements
 		}
 		
 		//update only if not currently edited
-		//synchronized(DataTableView.getInstance()) {
-			if (!DataTableView.getInstance().isCurrentlyEdited())
-				TableDataList.getInstance().updateView();
-		//}
+		if (!DataTableView.getInstance().isCurrentlyEdited())
+			TableDataList.getInstance().updateView();
 		
 		returnString = "{" + returnString + "}";
 		

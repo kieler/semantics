@@ -1,7 +1,5 @@
 package de.cau.cs.kieler.sim.table;
 
-import java.util.Random;
-
 import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONArray;
