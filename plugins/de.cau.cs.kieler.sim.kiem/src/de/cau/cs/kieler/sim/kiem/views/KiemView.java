@@ -227,6 +227,12 @@ public class KiemView extends ViewPart {
 		if (columnProperty == -1) {
 			columnProperty = columnBounds[1];
 		}
+		else {
+			TreeColumn column = tree.getColumn(1);
+			if (column.getWidth() > 0)
+				columnProperty = column.getWidth();
+		}
+			
 		
 		if (collapsed) {
 			for (int i = 0; i < columnTitles.length; i++) {
