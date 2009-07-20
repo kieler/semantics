@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="synccharts"
-    nsURI="http://www.informatik.uni-kiel.de/rtsys/synccharts" nsPrefix="synccharts">
+    nsURI="http://kieler.cs.cau.de/SyncCharts" nsPrefix="synccharts">
   <eClassifiers xsi:type="ecore:EClass" name="Action">
     <eStructuralFeatures xsi:type="ecore:EReference" name="effects" upperBound="-1"
         eType="#//Effect" containment="true" eOpposite="#//Effect/parentAction"/>
