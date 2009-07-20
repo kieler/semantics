@@ -93,5 +93,12 @@
          </and>
       </definition>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="de.cau.cs.kieler.newWizards.category"
+            name="KIELER">
+      </category>
+   </extension>
 
 </plugin>
