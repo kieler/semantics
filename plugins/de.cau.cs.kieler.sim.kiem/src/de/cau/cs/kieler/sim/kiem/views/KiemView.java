@@ -702,8 +702,8 @@ public class KiemView extends ViewPart {
 			  }
 			}
 		};
-		actionAdd.setText("Add DataComponent");
-		actionAdd.setToolTipText("Add DataComponent");
+		actionAdd.setText("Add Data Component");
+		actionAdd.setToolTipText("Add Data Component");
 		actionAdd.setImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/addIcon.png"));
 		//actionUp.setDisabledImageDescriptor(
@@ -718,8 +718,8 @@ public class KiemView extends ViewPart {
 				updateView(true);
 			}
 		};
-		actionDelete.setText("Delete DataComponent");
-		actionDelete.setToolTipText("Delete DataComponent");
+		actionDelete.setText("Delete Data Component");
+		actionDelete.setToolTipText("Delete Data Component");
 		actionDelete.setImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/deleteIcon.png"));
 		//actionUp.setDisabledImageDescriptor(

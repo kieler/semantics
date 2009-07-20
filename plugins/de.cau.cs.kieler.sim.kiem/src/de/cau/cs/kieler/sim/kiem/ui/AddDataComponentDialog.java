@@ -102,7 +102,14 @@ public class AddDataComponentDialog extends Dialog {
     	for (int c = 0; c < componentList.size(); c++) {
     		DataComponent component = componentList.get(c);
         	TableItem item = new TableItem(table, SWT.NULL);
-        	item.setText(component.getName());
+        	String type = "Initializer";
+        	if (component.isObserver() && component.isProducer())
+        		type = "Observer/Producer";
+        	else if (component.isObserver())
+        		type = "Observer";
+        	else if (component.isProducer())
+        		type = "Producer";
+        	item.setText(component.getName()+ " (" + type+")");
         	item.setData(component);
         	if (component.isObserver() && component.isProducer())
         		item.setImage(KiemIcons.PRODUCEROBSERVER_ENABLED);

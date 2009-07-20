@@ -14,10 +14,10 @@ public class KiemIcons {
 					"icons/producerDisabled.png").createImage();
 	public static final Image OBSERVER_ENABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/Observer.png").createImage();
+					"icons/observer.png").createImage();
 	public static final Image OBSERVER_DISABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/ObserverDisabled.png").createImage();
+					"icons/observerDisabled.png").createImage();
 	public static final Image PRODUCEROBSERVER_ENABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/producerObserver.png").createImage();
