@@ -53,7 +53,7 @@ public class DataProducer extends JSONStringDataComponent implements
 		System.out.println("Raw Table Producer initialize");
 	}
 
-	public boolean isConsumer() {
+	public boolean isObserver() {
 		// TODO Auto-generated method stub
 		return false;
 	}

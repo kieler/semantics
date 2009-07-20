@@ -6,10 +6,10 @@ import de.cau.cs.kieler.sim.kiem.json.JSONArray;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.sim.table.views.DataTableView;
 
-public class DataConsumer extends JSONStringDataComponent implements
+public class DataObserver extends JSONStringDataComponent implements
 		IJSONStringDataComponent {
 
-	public DataConsumer() {
+	public DataObserver() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -97,7 +97,7 @@ public class DataConsumer extends JSONStringDataComponent implements
 		TableDataList.getInstance().updateView();
 	}
 
-	public boolean isConsumer() {
+	public boolean isObserver() {
 		// TODO Auto-generated method stub
 		return true;
 	}
@@ -108,7 +108,7 @@ public class DataConsumer extends JSONStringDataComponent implements
 	}
 
 	@Override
-	public boolean isDeltaConsumer() {
+	public boolean isDeltaObserver() {
 		// TODO Auto-generated method stub
 		return true;
 	}

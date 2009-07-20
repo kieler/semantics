@@ -4,12 +4,8 @@
 
    <extension
          point="org.eclipse.ui.views">
-      <category
-            name="KIELER"
-            id="de.cau.cs.kieler.views.category">
-      </category>
       <view
-            category="de.cau.cs.kieler.views.category"
+            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.sim.table.views.DataTableView"
             icon="icons/tableIcon.png"
             id="de.cau.cs.kieler.sim.table.views.KiemTable"
@@ -27,7 +23,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.string.datacomponent">
       <content
-            class="de.cau.cs.kieler.sim.table.DataConsumer"
+            class="de.cau.cs.kieler.sim.table.DataObserver"
             id="de.cau.cs.kieler.sim.table.dataconsumer"
             name="Raw Table">
       </content>
