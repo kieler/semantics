@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="de.cau.cs.kieler.commands.category"
+            categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.simplerailctrl.codegen.c.handlers.CodeGenerationHandler"
             description="%Generates C-Code for Kieler Model Railway"
             id="de.cau.cs.kieler.simplerailctrl.codegen.c.codeGenerationAction"
