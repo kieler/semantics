@@ -11,6 +11,7 @@ import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 
 public class KiemContentProvider implements ITreeContentProvider {
 
+	@SuppressWarnings("unchecked")
 	public Object[] getElements(Object inputElement) {
 		return ((List<DataComponent>)inputElement).toArray();
 	}
@@ -30,7 +31,6 @@ public class KiemContentProvider implements ITreeContentProvider {
 
 	@Override
 	public Object getParent(Object element) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

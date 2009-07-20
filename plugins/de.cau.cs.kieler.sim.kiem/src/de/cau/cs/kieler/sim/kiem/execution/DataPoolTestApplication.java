@@ -13,7 +13,7 @@ public class DataPoolTestApplication {
 		// TODO Auto-generated method stub
 		try {
 			JSONDataPool dataPool = new JSONDataPool();
-			long index = dataPool.getPoolCounter();
+			//long index = dataPool.getPoolCounter();
 			dataPool.putData(new JSONObject("{key01=value01}"));
 			dataPool.putData(new JSONObject("{key02=value02}"));
 			dataPool.putData(new JSONObject("{key03=value03}"));

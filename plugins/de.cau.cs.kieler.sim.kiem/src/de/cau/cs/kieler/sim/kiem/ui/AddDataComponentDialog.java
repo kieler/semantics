@@ -2,7 +2,6 @@ package de.cau.cs.kieler.sim.kiem.ui;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -14,13 +13,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableItem;
 
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 
@@ -28,7 +24,6 @@ public class AddDataComponentDialog extends Dialog {
 
 	public AddDataComponentDialog(Shell parent) {
 		super(parent);
-		// TODO Auto-generated constructor stub
 	}
 	
 	Table table;
@@ -55,11 +50,9 @@ public class AddDataComponentDialog extends Dialog {
         table.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 			}
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 				updateSelectedList();
 			}
         });

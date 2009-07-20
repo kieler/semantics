@@ -1,20 +1,14 @@
 package de.cau.cs.kieler.sim.kiem.views;
 
-import org.eclipse.jface.viewers.ComboBoxCellEditor;
-import org.eclipse.jface.viewers.DialogCellEditor;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 
 public class KiemPropertyEditing extends EditingSupport {
-	private int columnIndex;
 	private KiemView parent;
 	private Composite tree;
 	
@@ -31,7 +25,6 @@ public class KiemPropertyEditing extends EditingSupport {
 		default:
 			throw new RuntimeException("Editing not supported");
 		}
-		this.columnIndex = columnIndex;
 		this.parent = parent;
 	}
 

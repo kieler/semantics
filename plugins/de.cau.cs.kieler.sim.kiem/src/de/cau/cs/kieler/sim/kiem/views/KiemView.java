@@ -1,17 +1,14 @@
 package de.cau.cs.kieler.sim.kiem.views;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.RGB;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 
@@ -19,7 +16,6 @@ import org.eclipse.ui.part.*;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.viewers.*;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.*;
@@ -33,9 +29,7 @@ import de.cau.cs.kieler.sim.kiem.extension.*;
 import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
 import de.cau.cs.kieler.sim.kiem.ui.AddDataComponentDialog;
 
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.part.FileEditorInput;
 
 
 public class KiemView extends ViewPart {
@@ -100,6 +94,7 @@ public class KiemView extends ViewPart {
 		 "Needs selected Model File" };
 	
 
+	@SuppressWarnings("unused")
 	private IWorkbenchWindow window;
 
  	
@@ -126,13 +121,12 @@ public class KiemView extends ViewPart {
 			DataComponentEx dataComponentEx = new DataComponentEx(componentClone);
 			this.dataComponentExList.add(dataComponentEx);
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	private List<DataComponentEx> getDefaultComponentExList() {
-		List list = KIEM.getDataComponentList();
+		List<DataComponent> list = KIEM.getDataComponentList();
 		List<DataComponentEx> returnList = 
 							new LinkedList<DataComponentEx>();
 		//first add pure producer
@@ -290,12 +284,10 @@ public class KiemView extends ViewPart {
 		viewer.addTreeListener(new ITreeViewerListener() {
 			@Override
 			public void treeCollapsed(TreeExpansionEvent event) {
-				// TODO Auto-generated method stub
 				updateView(false);
 			}
 			@Override
 			public void treeExpanded(TreeExpansionEvent event) {
-				// TODO Auto-generated method stub
 				updateView(false);
 			}
 		});

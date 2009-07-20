@@ -17,12 +17,10 @@ import org.osgi.framework.BundleContext;
 //import org.eclipse.jface.viewers.IStructuredSelection;
 //import org.eclipse.core.runtime.IAdaptable;
 
-import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
-import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
 /**
  * The activator class controls the plug-in life cycle
