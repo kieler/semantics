@@ -289,7 +289,7 @@ public class Execution implements Runnable {
 						if (   dataComponentEx.isEnabled()
 							&& dataComponentEx.isDeltaObserver()
 							&&   (!dataComponentEx.getSkipped()
-							     ||dataComponentEx.isDeltaObserver())
+							    ||!dataComponentEx.isDeltaObserver())
 							){
 							//advance delta counter for all *NOT* skipped 
 							//components

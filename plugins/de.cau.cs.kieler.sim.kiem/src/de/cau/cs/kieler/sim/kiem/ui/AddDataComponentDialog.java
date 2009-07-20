@@ -39,7 +39,7 @@ public class AddDataComponentDialog extends Dialog {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Add Data Component(s)");
+		newShell.setText("Add Data Component");
 	}
 	
     protected Control createDialogArea(Composite parent) {
