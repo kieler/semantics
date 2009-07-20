@@ -168,8 +168,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 				JSONObjectDataComponent dataComponent = 
 					(JSONObjectDataComponent) jsonComponents[i]
 					                    .createExecutableExtension("class");
+				dataComponent.setConfigurationElemenet(jsonComponents[i]);
 				dataComponentList.add(dataComponent);
-//System.out.println(dataComponent.getName());
+//System.out.println(jsonComponents[i]);
 			}catch(Exception e){
 				throw new RuntimeException
 					("Error at loading a KIEM data component plugin");
@@ -181,6 +182,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 				JSONStringDataComponent dataComponent = 
 					(JSONStringDataComponent)stringComponents[i]
                                         .createExecutableExtension("class");
+				dataComponent.setConfigurationElemenet(stringComponents[i]);
 				dataComponentList.add(dataComponent);
 //System.out.println(dataComponent.getName());
 			}catch(Exception e){

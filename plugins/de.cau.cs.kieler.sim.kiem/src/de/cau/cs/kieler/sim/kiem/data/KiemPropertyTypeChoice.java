@@ -6,47 +6,51 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-public class KiemPropertyTypeBool extends KiemPropertyType
+public class KiemPropertyTypeChoice extends KiemPropertyType
 									implements IKiemPropertyType {
 	
-	private static final long serialVersionUID = -5476290662796694133L;
-	private static final Image PROPERTY_BOOL = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/propertyBoolIcon.png").createImage();
-	private static final String[] BOOL_ITEMS = {"false", "true"};
+	private static final long serialVersionUID = 922994563762566959L;
 
-	public KiemPropertyTypeBool() {
+	private static final Image PROPERTY_CHOICE = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+					"icons/propertyChoiceIcon.png").createImage();
+	
+	private String[] items;
+
+	public KiemPropertyTypeChoice(String[] items) {
 		super();
+		this.items = items;
 	}
 	
 	@Override 
 	public void setCellEditor(Composite parent) {
 		cellEditor = new ComboBoxCellEditor(parent, 
-									BOOL_ITEMS, 
+									items, 
 									SWT.Deactivate);
 	}
 
 	@Override
 	public Object getValue(Object element) {
 		KiemProperty property = (KiemProperty)element;
-		if (property.getValue().equals("true")) return 1;
-		else return 0;
+		for (int c = 0; c < items.length; c ++) {
+			if (property.getValue().equals(items[c])) return c;
+		}
+		return 0; //default is the first item
 	}
 
 	@Override
 	public void setValue(Object element, Object value) {
 		KiemProperty property = (KiemProperty)element;
-		if ((Integer) value == 0) {
-			property.setValue("false");
-		}
-		else {
-			property.setValue("true");
-		}
+		property.setValue(items[(Integer)value]);
+	}
+	
+	public void setItems(String[] items) {
+		this.items = items;
 	}
 
 	@Override
 	public Image getIcon() {
-		return PROPERTY_BOOL;
+		return PROPERTY_CHOICE;
 	}
 
 }

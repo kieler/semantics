@@ -8,70 +8,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
 
 public class KiemLabelProvider implements ITableLabelProvider {
-
-	// define icons
-	private static final Image PRODUCER_ENABLED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/producer.png").createImage();
-	private static final Image PRODUCER_DISABLED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/producerDisabled.png").createImage();
-	private static final Image CONSUMER_ENABLED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/consumer.png").createImage();
-	private static final Image CONSUMER_DISABLED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/consumerDisabled.png").createImage();
-	private static final Image PRODUCERCONSUMER_ENABLED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/producerConsumer.png").createImage();
-	private static final Image PRODUCERCONSUMER_DISABLED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/producerConsumerDisabled.png").createImage();
-	private static final Image INITCOMPONENT_ENABLED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/initComponent.png").createImage();
-private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/initComponentDisabled.png").createImage();
-
-	
-	private static final Image CHECKED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/checked.png").createImage();
-	private static final Image CHECKED_DISABLED = AbstractUIPlugin
-				.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/checkedDisabled.png").createImage();
-	private static final Image UNCHECKED = AbstractUIPlugin
-				.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/unchecked.png").createImage();
-	private static final Image UNCHECKED_DISABLED = AbstractUIPlugin
-				.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/uncheckedDisabled.png").createImage();
-	private static final Image CHECKEDPLAIN = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/checkedplain.png").createImage();
-	private static final Image CHECKEDPLAIN_DISABLED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/checkedplainDisabled.png").createImage();
-	private static final Image CHECKEDPLAIN_MASTER = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/checkedplainMaster.png").createImage();
-
-	private static final Image FOLDED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-				"icons/fold.png").createImage();
-	private static final Image FOLDED_DISABLED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-				"icons/foldDisabled.png").createImage();
-	private static final Image UNFOLDED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-				"icons/unfold.png").createImage();
-	private static final Image UNFOLDED_DISABLED = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-				"icons/unfoldDisabled.png").createImage();
 
 	
 	private KiemView parent;
@@ -99,44 +38,44 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 				//producer
 				if (dataComponentEx.isEnabled()) {
 					//enabled
-					return PRODUCERCONSUMER_ENABLED;
+					return KiemIcons.PRODUCERCONSUMER_ENABLED;
 				}
 				else {
 					//disabled
-					return PRODUCERCONSUMER_DISABLED;
+					return KiemIcons.PRODUCERCONSUMER_DISABLED;
 				}
 			}
 			else if (dataComponentEx.isProducer()) {
 				//producer
 				if (dataComponentEx.isEnabled()) {
 					//enabled
-					return PRODUCER_ENABLED;
+					return KiemIcons.PRODUCER_ENABLED;
 				}
 				else {
 					//disabled
-					return PRODUCER_DISABLED;
+					return KiemIcons.PRODUCER_DISABLED;
 				}
 			}
 			else if (dataComponentEx.isConsumer()) {
 				//consumer
 				if (dataComponentEx.isEnabled()) {
 					//enabled
-					return CONSUMER_ENABLED;
+					return KiemIcons.CONSUMER_ENABLED;
 				}
 				else {
 					//disabled
-					return CONSUMER_DISABLED;
+					return KiemIcons.CONSUMER_DISABLED;
 				}
 			}
 			else {
 				//consumer
 				if (dataComponentEx.isEnabled()) {
 					//enabled
-					return INITCOMPONENT_ENABLED;
+					return KiemIcons.INITCOMPONENT_ENABLED;
 				}
 				else {
 					//disabled
-					return INITCOMPONENT_DISABLED;
+					return KiemIcons.INITCOMPONENT_DISABLED;
 				}
 			}
 		}
@@ -144,25 +83,25 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 			if (dataComponentEx.isEnabled()) {
 				//enabled
 				if (parent.KIEM.execution == null)
-					return CHECKED;
+					return KiemIcons.CHECKED;
 				else
-					return CHECKED_DISABLED;
+					return KiemIcons.CHECKED_DISABLED;
 			}
 			else {
 				//disabled
 				if (parent.KIEM.execution == null)
-					return UNCHECKED;
+					return KiemIcons.UNCHECKED;
 				else
-					return UNCHECKED_DISABLED;
+					return KiemIcons.UNCHECKED_DISABLED;
 			}
 		}
 		else if (columnIndex == 4) {
 			if (dataComponentEx.isMaster()) {
 				//enabled
 				if (dataComponentEx.isEnabled())
-					return CHECKEDPLAIN_MASTER;
+					return KiemIcons.CHECKEDPLAIN_MASTER;
 				else
-					return CHECKEDPLAIN_DISABLED;					
+					return KiemIcons.CHECKEDPLAIN_DISABLED;					
 			}
 			else {
 				//disabled
@@ -174,12 +113,12 @@ private static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 				//enabled
 				if (dataComponentEx.isEnabled()) {
 					if (dataComponentEx.isMaster())
-						return CHECKEDPLAIN_MASTER;
+						return KiemIcons.CHECKEDPLAIN_MASTER;
 					else
-						return CHECKEDPLAIN;
+						return KiemIcons.CHECKEDPLAIN;
 				}
 				else
-					return CHECKEDPLAIN_DISABLED;					
+					return KiemIcons.CHECKEDPLAIN_DISABLED;					
 			}
 			else {
 				//disabled

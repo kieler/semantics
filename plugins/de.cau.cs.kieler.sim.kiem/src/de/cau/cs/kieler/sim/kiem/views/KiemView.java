@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 
 import org.eclipse.ui.part.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.action.*;
@@ -29,6 +31,7 @@ import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.*;
 import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
+import de.cau.cs.kieler.sim.kiem.ui.AddDataComponentDialog;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -37,8 +40,9 @@ import org.eclipse.ui.part.FileEditorInput;
 
 public class KiemView extends ViewPart {
 	private KiemTableViewer viewer;
-	private Action actionEnable;
-	private Action actionDisable;
+	private Action actionAdd;
+	private Action actionDelete;
+	private Action actionEnableDisable;
 	private Action actionUp;
 	private Action actionDown;
 	private Action actionMacroStep;
@@ -100,7 +104,6 @@ public class KiemView extends ViewPart {
 
  	
   //---------------------------------------------------------------------------	
-
 	/**
 	 * The constructor.
 	 */
@@ -108,6 +111,24 @@ public class KiemView extends ViewPart {
 		KIEM = KiemPlugin.getDefault();
 		dataComponentExList = getDefaultComponentExList();
 		this.currentMaster = null;
+	}
+	
+	
+	private void addTodataComponentExList(DataComponent component) {
+		IConfigurationElement componentConfigEle = 
+								component.getConfigurationElement();
+		DataComponent componentClone;
+		try {
+			componentClone = (DataComponent)
+						componentConfigEle.createExecutableExtension("class");
+			componentClone.setConfigurationElemenet(componentConfigEle);
+			
+			DataComponentEx dataComponentEx = new DataComponentEx(componentClone);
+			this.dataComponentExList.add(dataComponentEx);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private List<DataComponentEx> getDefaultComponentExList() {
@@ -300,8 +321,7 @@ public class KiemView extends ViewPart {
   //---------------------------------------------------------------------------	
 
 	private void buildContextMenu(IMenuManager manager) {
-		manager.add(getActionEnable());
-		manager.add(getActionDisable());
+		manager.add(getActionEnableDisable());
 		manager.add(new Separator());
 		manager.add(getActionUp());
 		manager.add(getActionDown());
@@ -312,6 +332,9 @@ public class KiemView extends ViewPart {
 		manager.add(getActionRun());
 		manager.add(getActionPause());
 		manager.add(getActionStop());
+		manager.add(new Separator());
+		manager.add(getActionAdd());
+		manager.add(getActionDelete());
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
@@ -319,6 +342,9 @@ public class KiemView extends ViewPart {
 	private void buildLocalToolBar() {
 		IActionBars bars = getViewSite().getActionBars();
 		IToolBarManager manager = bars.getToolBarManager();
+		manager.add(getActionAdd());
+		manager.add(getActionDelete());
+		manager.add(new Separator());
 		manager.add(getActionUp());
 		manager.add(getActionDown());
 		manager.add(new Separator());
@@ -477,8 +503,9 @@ public class KiemView extends ViewPart {
 	
 	private void setAllEnabled(boolean enabled) {
 		allDisabled = !enabled;
-		getActionEnable().setEnabled(enabled);
-		getActionDisable().setEnabled(enabled);
+		getActionEnableDisable().setEnabled(enabled);
+		getActionAdd().setEnabled(enabled);
+		getActionDelete().setEnabled(enabled);
 		getActionUp().setEnabled(enabled);
 		getActionDown().setEnabled(enabled);
 		getActionStep().setEnabled(enabled);
@@ -490,22 +517,25 @@ public class KiemView extends ViewPart {
 	}
 	
 
-	public void updateEnabledEnabledDisabledUpDown() {
+	public void updateEnabledEnabledDisabledUpDownAddDelete() {
 		Object selection = ((org.eclipse.jface.viewers.StructuredSelection)
 				viewer.getSelection()).getFirstElement();
 		if (KIEM.execution != null) {
 			//execution is running
-			getActionEnable().setEnabled(false);
-			getActionDisable().setEnabled(false);
+			getActionEnableDisable().setEnabled(false);
+			getActionAdd().setEnabled(false);
+			getActionDelete().setEnabled(false);
 			getActionUp().setEnabled(false);
 			getActionDown().setEnabled(false);
 			return;
 		}
+
+		getActionAdd().setEnabled(true);
 		if (	(selection == null) 
 			 || (selection instanceof KiemProperty)) {
 			//no object selected OR property selected
-			getActionEnable().setEnabled(false);
-			getActionDisable().setEnabled(false);
+			getActionEnableDisable().setEnabled(false);
+			getActionDelete().setEnabled(false);
 			getActionUp().setEnabled(false);
 			getActionDown().setEnabled(false);
 		}
@@ -513,15 +543,17 @@ public class KiemView extends ViewPart {
 			DataComponentEx dataComponentEx = 
 				(DataComponentEx)((org.eclipse.jface.viewers
 				.StructuredSelection)viewer.getSelection()).getFirstElement();
+			getActionEnableDisable().setEnabled(true);
+			getActionDelete().setEnabled(true);
 			if (dataComponentEx.isEnabled()) {
 				//currently enabled
-				getActionEnable().setEnabled(false);
-				getActionDisable().setEnabled(true);
+				actionEnableDisable.setText("Disable");
+				actionEnableDisable.setToolTipText("Disable DataProducer/DataConsumer");
 			}
 			else {
 				//currently disabled
-				getActionEnable().setEnabled(true);
-				getActionDisable().setEnabled(false);
+				actionEnableDisable.setText("Enable");
+				actionEnableDisable.setToolTipText("Enable DataProducer/DataConsumer");
 			}
 			int listIndex = dataComponentExList.indexOf(dataComponentEx);
 			if (listIndex <= 0) {
@@ -597,7 +629,7 @@ public class KiemView extends ViewPart {
 		updateEnabled(false);
 	}
 	public void updateEnabled(boolean silent) {
-		updateEnabledEnabledDisabledUpDown();
+		updateEnabledEnabledDisabledUpDownAddDelete();
 		if (currentMaster != null) {
 			getActionStep().setEnabled(false);
 			getActionMacroStep().setEnabled(false);
@@ -638,40 +670,70 @@ public class KiemView extends ViewPart {
 	}
 	
   //---------------------------------------------------------------------------	
+
+	private Action getActionAdd() {
+		if (actionAdd != null) return actionAdd;
+		actionAdd = new Action() {
+			public void run() {
+			  AddDataComponentDialog addDialog = 
+				new AddDataComponentDialog(viewer.getControl().getShell());
+			  addDialog.setComponentExList(dataComponentExList);
+			  addDialog.setComponentList(KiemPlugin.getDefault().getDataComponentList());
+			  if (addDialog.open() == 0) {
+				 List<DataComponent> selected = addDialog.getSelectedComponents();
+				 if (selected != null) {
+					 for (int c = 0; c < selected.size(); c++) {
+						 addTodataComponentExList(selected.get(c));
+					 }
+					 checkForSingleEnabledMaster(false);
+					 updateView(true);
+				 }
+			  }
+			}
+		};
+		actionAdd.setText("Add Producer/Consumer");
+		actionAdd.setToolTipText("Add DataProducer/DataConsumer");
+		actionAdd.setImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/addIcon.png"));
+		//actionUp.setDisabledImageDescriptor(
+		//		KiemPlugin.getImageDescriptor("icons/upIconDisabled.png"));
+		return actionAdd;
+	}
+
+	private Action getActionDelete() {
+		if (actionDelete != null) return actionDelete;
+		actionDelete = new Action() {
+			public void run() {
+				updateView(true);
+			}
+		};
+		actionDelete.setText("Delete Producer/Consumer");
+		actionDelete.setToolTipText("Delete DataProducer/DataConsumer");
+		actionDelete.setImageDescriptor(
+				KiemPlugin.getImageDescriptor("icons/deleteIcon.png"));
+		//actionUp.setDisabledImageDescriptor(
+		//		KiemPlugin.getImageDescriptor("icons/upIconDisabled.png"));
+		return actionDelete;
+	}
 	
-	private Action getActionEnable() {
-		if (actionEnable != null) return actionEnable;
-		actionEnable = new Action() {
+	
+	private Action getActionEnableDisable() {
+		if (actionEnableDisable != null) return actionEnableDisable;
+		actionEnableDisable = new Action() {
 			public void run() {
 				DataComponentEx dataComponentEx = (DataComponentEx)
 					((org.eclipse.jface.viewers.StructuredSelection)viewer
 										.getSelection()).getFirstElement();
-				dataComponentEx.setEnabled(true);
+				dataComponentEx.setEnabled(!dataComponentEx.isEnabled());
 				checkForSingleEnabledMaster(false,dataComponentEx);
 				updateView(true);
 			}
 		};
-		actionEnable.setText("Enable");
-		actionEnable.setToolTipText("Enable DataProducer/DataConsumer");
-		return actionEnable;
+		actionEnableDisable.setText("Enable");
+		actionEnableDisable.setToolTipText("Enable DataProducer/DataConsumer");
+		return actionEnableDisable;
 	}
 	
-	private Action getActionDisable() {
-		if (actionDisable != null) return actionDisable;
-		actionDisable = new Action() {
-			public void run() {
-				DataComponentEx dataComponentEx = (DataComponentEx)
-					((org.eclipse.jface.viewers.StructuredSelection)viewer
-										.getSelection()).getFirstElement();
-				dataComponentEx.setEnabled(false);
-				checkForSingleEnabledMaster(false,dataComponentEx);
-				updateView(true);
-			}
-		};
-		actionDisable.setText("Disable");
-		actionDisable.setToolTipText("Disable DataProducer/DataConsumer");
-		return actionDisable;
-	}
 	
 	private Action getActionUp() {
 		if (actionUp != null) return actionUp;

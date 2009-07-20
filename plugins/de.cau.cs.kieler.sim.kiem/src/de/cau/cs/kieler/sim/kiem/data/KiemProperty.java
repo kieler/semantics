@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class KiemProperty implements Serializable {
 
+	private static final long serialVersionUID = -6897758298476417410L;
 	String key;
 	String value;
 	KiemPropertyType type;
@@ -16,6 +17,11 @@ public class KiemProperty implements Serializable {
 	public KiemProperty(String key, KiemPropertyType type, String value) {
 		this.key = key;
 		this.value = value;
+		this.type = type; 
+	}
+	public KiemProperty(String key, KiemPropertyType type, int value) {
+		this.key = key;
+		this.value = ""+value;
 		this.type = type; 
 	}
 	public KiemProperty(String key, KiemPropertyType type) {

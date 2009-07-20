@@ -1,6 +1,5 @@
 package de.cau.cs.kieler.sim.kiem.data;
 
-import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.graphics.Image;
 
 public interface IKiemPropertyType {

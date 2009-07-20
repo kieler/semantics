@@ -15,9 +15,17 @@ public abstract class DataComponent implements IDataComponent,
 	private KiemPlugin KIEMInstance;   		//only contains access to execution
 	private KiemView KIEMViewInstance; 		//thread iff this DataComponent
 									   		//is a master
+	private IConfigurationElement configEle;
 	
 	public DataComponent() {
 		super();
+	}
+	
+	public void setConfigurationElemenet(IConfigurationElement configEle) {
+		this.configEle = configEle;
+	}
+	public IConfigurationElement getConfigurationElement() {
+		return this.configEle;
 	}
 	
 	public void setInitializationData(IConfigurationElement config,
@@ -27,6 +35,16 @@ public abstract class DataComponent implements IDataComponent,
 	
 	public String getName() {
 		return name;
+	}
+
+	//-------------------------------------------------------------------------
+
+	//overwrite this if this component is explicitly multi instantiable ONLY!
+	//note that you have to consider thread safety here because all instances
+	//will be run in a different (and hence concurrent) thread
+	//be aware of this for example if you share a common view etc
+	public boolean isMultiInstantiable() {
+		return false;
 	}
 	
 	//-------------------------------------------------------------------------

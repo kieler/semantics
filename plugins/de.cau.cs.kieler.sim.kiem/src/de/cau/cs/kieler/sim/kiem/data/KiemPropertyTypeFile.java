@@ -1,13 +1,8 @@
 package de.cau.cs.kieler.sim.kiem.data;
 
-import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.jface.viewers.DialogCellEditor;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
@@ -16,19 +11,23 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class KiemPropertyTypeFile extends KiemPropertyType
 									implements IKiemPropertyType {
 	
+	private static final long serialVersionUID = 7428611730135550207L;
+
+
 	private static final Image PROPERTY_FILE = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/propertyFileIcon.png").createImage();
 
 	
 	private static final String[] DEFAULT_FILTER_NAMES = {"All Files (*.*)"};
-	private static final String[] FILTER_EXTS = {"*.*"};
+	private static final String[] DEFAULT_FILTER_EXTS = {"*.*"};
 	private String[] filterNames;
 	private String[] filterExts;
 	
 	public KiemPropertyTypeFile() {
 		super();
 		this.filterNames = DEFAULT_FILTER_NAMES;
+		this.filterExts = DEFAULT_FILTER_EXTS;
 	}
 
 	@Override
@@ -46,7 +45,6 @@ public class KiemPropertyTypeFile extends KiemPropertyType
 
 	@Override
 	public Image getIcon() {
-		// TODO Auto-generated method stub
 		return PROPERTY_FILE;
 	}
 	
@@ -79,7 +77,6 @@ public class KiemPropertyTypeFile extends KiemPropertyType
 	        super(parent);
 	    }
 
-
 		@Override
 		protected Object openDialogBox(Control cellEditorWindow) {
 				
@@ -91,16 +88,6 @@ public class KiemPropertyTypeFile extends KiemPropertyType
 				System.getProperty("file.separator") + 
 				dlg.getFileName().toString();
 			}
-			/*
-			* Here you can instantiate any built-in or custom Dialog you want
-			*/
-			//InputDialog dialog = new InputDialog(null, "New Value", "Enter a new value", getValue().toString(), null);
-
-			/*
-			* Only if the user clicks OK in your dialog do you return the new value otherwise return the original value
-			*/
-			//return (InputDialog.OK == dialog.open()) ? dialog.getValue(): getValue();
-			//}
 			return null;
 		}
 	}

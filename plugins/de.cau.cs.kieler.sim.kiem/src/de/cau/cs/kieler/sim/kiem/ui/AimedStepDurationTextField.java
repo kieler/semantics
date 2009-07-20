@@ -45,7 +45,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 		textfield = new Text(parent,SWT.BORDER);
 		this.textfield.setEnabled(this.enabled);
 		textfield.setToolTipText("Aimed Duration of Steps in Run Mode (ms)");
-		textfield.setText(KIEM.AIMED_STEP_DURATION_DEFAULT+"ms        ");
+		textfield.setText(KIEM.AIMED_STEP_DURATION_DEFAULT+"ms     ");
 		textfield.addKeyListener(this);
 		textfield.addFocusListener(this);
 		return textfield;

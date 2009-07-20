@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Composite;
 
 public abstract class KiemPropertyType implements Serializable,
 										IKiemPropertyType {
+	private static final long serialVersionUID = 3312580956244391881L;
 	protected CellEditor cellEditor;
 	
 	public KiemPropertyType() {
