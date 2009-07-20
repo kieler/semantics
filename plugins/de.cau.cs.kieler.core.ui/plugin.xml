@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            id="de.cau.cs.kieler.views.category"
+            id="de.cau.cs.kieler"
             name="KIELER">
       </category>
    </extension>
@@ -13,7 +13,7 @@
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
-               id="de.cau.cs.kieler.menu"
+               id="de.cau.cs.kieler"
                label="KIELER"
                mnemonic="K">
          </menu>
@@ -21,13 +21,13 @@
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
-               id="de.cau.cs.kieler.toolbar">
+               id="de.cau.cs.kieler">
          </toolbar>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
-               id="de.cau.cs.kieler.contextMenu"
+               id="de.cau.cs.kieler"
                label="KIELER"
                mnemonic="K">
          </menu>
@@ -37,7 +37,7 @@
          point="org.eclipse.ui.preferencePages">
       <page
             class="de.cau.cs.kieler.core.ui.preferences.KielerPreferencePage"
-            id="de.cau.cs.kieler.preferencePage"
+            id="de.cau.cs.kieler"
             name="KIELER">
       </page>
    </extension>
@@ -45,7 +45,7 @@
          point="org.eclipse.ui.commands">
       <category
             description="Commands from the KIELER project"
-            id="de.cau.cs.kieler.commands.category"
+            id="de.cau.cs.kieler"
             name="KIELER">
       </category>
    </extension>
@@ -96,7 +96,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            id="de.cau.cs.kieler.newWizards.category"
+            id="de.cau.cs.kieler"
             name="KIELER">
       </category>
    </extension>
