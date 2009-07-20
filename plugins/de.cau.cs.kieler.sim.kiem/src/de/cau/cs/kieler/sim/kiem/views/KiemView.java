@@ -320,13 +320,13 @@ public class KiemView extends ViewPart {
 		manager.add(getActionUp());
 		manager.add(getActionDown());
 		manager.add(new Separator());
-		manager.add(getActionStep());
+		//manager.add(getActionStep());
 		//TODO: macro step implementation
 		//manager.add(getActionMacroStep());
-		manager.add(getActionRun());
-		manager.add(getActionPause());
-		manager.add(getActionStop());
-		manager.add(new Separator());
+		//manager.add(getActionRun());
+		//manager.add(getActionPause());
+		//manager.add(getActionStop());
+		//manager.add(new Separator());
 		manager.add(getActionAdd());
 		manager.add(getActionDelete());
 		// Other plug-ins can contribute there actions here
@@ -702,7 +702,7 @@ public class KiemView extends ViewPart {
 			  }
 			}
 		};
-		actionAdd.setText("Add Data Component");
+		actionAdd.setText("Add");
 		actionAdd.setToolTipText("Add Data Component");
 		actionAdd.setImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/addIcon.png"));
@@ -715,10 +715,19 @@ public class KiemView extends ViewPart {
 		if (actionDelete != null) return actionDelete;
 		actionDelete = new Action() {
 			public void run() {
+				IStructuredSelection selection =
+					(org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection();
+				for (int c = 0; c < selection.size(); c++) {
+					DataComponentEx dataComponentEx = (DataComponentEx)
+													selection.toArray()[c];
+					if (dataComponentExList.contains(dataComponentEx)) {
+						dataComponentExList.remove(dataComponentEx);
+					}
+				}
 				updateView(true);
 			}
 		};
-		actionDelete.setText("Delete Data Component");
+		actionDelete.setText("Delete");
 		actionDelete.setToolTipText("Delete Data Component");
 		actionDelete.setImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/deleteIcon.png"));
@@ -732,11 +741,19 @@ public class KiemView extends ViewPart {
 		if (actionEnableDisable != null) return actionEnableDisable;
 		actionEnableDisable = new Action() {
 			public void run() {
-				DataComponentEx dataComponentEx = (DataComponentEx)
-					((org.eclipse.jface.viewers.StructuredSelection)viewer
-										.getSelection()).getFirstElement();
-				dataComponentEx.setEnabled(!dataComponentEx.isEnabled());
-				checkForSingleEnabledMaster(false,dataComponentEx);
+				DataComponentEx firstDataComponentEx = (DataComponentEx)
+				((org.eclipse.jface.viewers.StructuredSelection)viewer
+									.getSelection()).getFirstElement();
+				boolean enabledDisabled = !firstDataComponentEx.isEnabled();
+
+				IStructuredSelection selection =
+					(org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection();
+				for (int c = 0; c < selection.size(); c++) {
+					DataComponentEx dataComponentEx = (DataComponentEx)
+													selection.toArray()[c];
+					dataComponentEx.setEnabled(enabledDisabled);
+				}
+				checkForSingleEnabledMaster(false,firstDataComponentEx);
 				updateView(true);
 			}
 		};
