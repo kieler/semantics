@@ -5,14 +5,14 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.*;
 
-public class ConsumerExecution implements Runnable {
+public class ObserverExecution implements Runnable {
 	
 	private boolean done;
 	private boolean stop;
 	private DataComponent dataComponent;
 	private JSONObject data;
 	
-	public ConsumerExecution(DataComponent dataComponent) {
+	public ObserverExecution(DataComponent dataComponent) {
 		this.stop = false; 
 		this.done = true; 
 		this.data = null;
@@ -54,7 +54,7 @@ public class ConsumerExecution implements Runnable {
 				synchronized(this){
 					//now we got the result and are done
 					this.done = true;
-//System.out.println("  "+dataComponent.getName() + " (Pure Consumer) calc end");
+//System.out.println("  "+dataComponent.getName() + " (Pure Observer) calc end");
 					this.wait();
 				}
 			}catch(Exception e){
@@ -62,18 +62,18 @@ public class ConsumerExecution implements Runnable {
 			}
 			
 			try {
-//System.out.println("  "+dataComponent.getName() + " (Pure Consumer) calc start");
+//System.out.println("  "+dataComponent.getName() + " (Pure Observer) calc start");
 				//do asynchronous call
 				if (this.dataComponent instanceof JSONObjectDataComponent) {
 					JSONObjectDataComponent compJSON = 
 						(JSONObjectDataComponent)dataComponent;
-					//do use any response data cause this is a consumer only
+					//do use any response data cause this is a Observer only
 					compJSON.step(this.data);
 				}
 				else {
 					JSONStringDataComponent compString = 
 						(JSONStringDataComponent)dataComponent;
-					//do use any response data cause this is a consumer only
+					//do use any response data cause this is a Observer only
 					if (this.data != null)
 						compString.step(this.data.toString());
 					else

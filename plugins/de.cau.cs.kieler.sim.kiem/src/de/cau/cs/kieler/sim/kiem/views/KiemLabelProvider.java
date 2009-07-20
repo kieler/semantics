@@ -32,15 +32,15 @@ public class KiemLabelProvider implements ITableLabelProvider {
 		//if component
 		DataComponentEx dataComponentEx = (DataComponentEx)element;
 		if (columnIndex == 0) {
-			if (dataComponentEx.isProducerConsumer()) {
+			if (dataComponentEx.isProducerObserver()) {
 				//producer
 				if (dataComponentEx.isEnabled()) {
 					//enabled
-					return KiemIcons.PRODUCERCONSUMER_ENABLED;
+					return KiemIcons.PRODUCEROBSERVER_ENABLED;
 				}
 				else {
 					//disabled
-					return KiemIcons.PRODUCERCONSUMER_DISABLED;
+					return KiemIcons.PRODUCEROBSERVER_DISABLED;
 				}
 			}
 			else if (dataComponentEx.isProducer()) {
@@ -54,19 +54,19 @@ public class KiemLabelProvider implements ITableLabelProvider {
 					return KiemIcons.PRODUCER_DISABLED;
 				}
 			}
-			else if (dataComponentEx.isConsumer()) {
-				//consumer
+			else if (dataComponentEx.isObserver()) {
+				//Observer
 				if (dataComponentEx.isEnabled()) {
 					//enabled
-					return KiemIcons.CONSUMER_ENABLED;
+					return KiemIcons.OBSERVER_ENABLED;
 				}
 				else {
 					//disabled
-					return KiemIcons.CONSUMER_DISABLED;
+					return KiemIcons.OBSERVER_DISABLED;
 				}
 			}
 			else {
-				//consumer
+				//Observer
 				if (dataComponentEx.isEnabled()) {
 					//enabled
 					return KiemIcons.INITCOMPONENT_ENABLED;
@@ -158,12 +158,12 @@ public class KiemLabelProvider implements ITableLabelProvider {
 				return "";
 			case 3 : // TYPE_COLUMN
 				String type = "";
-				if (dataComponentEx.isProducerConsumer())
-					type = "Consumer/Producer";
+				if (dataComponentEx.isProducerObserver())
+					type = "Observer/Producer";
 				else if (dataComponentEx.isProducer())
 					type = "Producer";
-				else if (dataComponentEx.isConsumer())
-					type = "Consumer";
+				else if (dataComponentEx.isObserver())
+					type = "Observer";
 				else
 					type = "Initializer";
 				return type;

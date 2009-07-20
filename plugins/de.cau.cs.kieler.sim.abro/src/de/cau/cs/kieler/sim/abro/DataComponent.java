@@ -1,5 +1,8 @@
 package de.cau.cs.kieler.sim.abro;
 
+import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeChoice;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
@@ -88,7 +91,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 		paused = false;
 	}
 
-	public boolean isConsumer() {
+	public boolean isObserver() {
 		// TODO Auto-generated method stub
 		return true;
 	}
@@ -99,7 +102,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 	}
 	
 	@Override
-	public boolean needModelFile() {
+	public boolean isModelFileNeeded() {
 		return false;
 	}
 	
@@ -109,13 +112,8 @@ public class DataComponent extends JSONObjectDataComponent implements
 	}
 
 	@Override
-	public boolean isDeltaConsumer() {
-		return true;
-	}
-	
-	@Override
 	public boolean isPauseFlag() {
-		return paused;
+		return false;
 	}
 	
 	@Override
@@ -128,5 +126,34 @@ public class DataComponent extends JSONObjectDataComponent implements
 		String[] signals = {"state", "A", "B", "R", "O"}; 
 		return signals;
 	}
+	
+	@Override
+	public boolean isMultiInstantiable() {
+		return true;
+	}
 
+	@Override
+	public KiemProperty[] getProperties() {
+		KiemProperty[] properties = new KiemProperty[5];
+		properties[0] = new KiemProperty(
+				"model",
+				"my model");
+		properties[1] = new KiemProperty(
+				"some bool",
+				true);
+		properties[2] = new KiemProperty(
+				"an integer",
+				2);
+		properties[3] = new KiemProperty(
+				"a file",
+				new KiemPropertyTypeFile(),
+				"c:/nothing.txt");
+		String[] items = {"trace 1","trace 2", "trace 3", "trace 4"};
+		properties[4] = new KiemProperty(
+				"a choice",
+				new KiemPropertyTypeChoice(items),
+				items[2]);
+		return properties;
+	}	
+	
 }

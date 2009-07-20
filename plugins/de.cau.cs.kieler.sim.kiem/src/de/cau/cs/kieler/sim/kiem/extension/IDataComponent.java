@@ -8,7 +8,7 @@ public interface IDataComponent {
 	//DataComponent is a producer and returns != null in step method
 	public boolean isProducer();
 
-	//DataComponent is a consumer and needs a parameter != null in step method
-	public boolean isConsumer();
+	//DataComponent is a Observer and needs a parameter != null in step method
+	public boolean isObserver();
 
 }

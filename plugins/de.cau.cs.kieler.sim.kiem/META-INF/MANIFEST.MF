@@ -6,7 +6,9 @@ Bundle-Version: 0.1.0
 Bundle-Activator: de.cau.cs.kieler.sim.kiem.KiemPlugin
 Bundle-Vendor: Christian-Albrechts University of Kiel
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.core;bundle-version="0.1.2",
+ de.cau.cs.kieler.core.ui;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.data,

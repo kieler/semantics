@@ -12,18 +12,18 @@ public class KiemIcons {
 	public static final Image PRODUCER_DISABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/producerDisabled.png").createImage();
-	public static final Image CONSUMER_ENABLED = AbstractUIPlugin
+	public static final Image OBSERVER_ENABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/consumer.png").createImage();
-	public static final Image CONSUMER_DISABLED = AbstractUIPlugin
+					"icons/Observer.png").createImage();
+	public static final Image OBSERVER_DISABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/consumerDisabled.png").createImage();
-	public static final Image PRODUCERCONSUMER_ENABLED = AbstractUIPlugin
+					"icons/ObserverDisabled.png").createImage();
+	public static final Image PRODUCEROBSERVER_ENABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/producerConsumer.png").createImage();
-	public static final Image PRODUCERCONSUMER_DISABLED = AbstractUIPlugin
+					"icons/producerObserver.png").createImage();
+	public static final Image PRODUCEROBSERVER_DISABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/producerConsumerDisabled.png").createImage();
+					"icons/producerObserverDisabled.png").createImage();
 	public static final Image INITCOMPONENT_ENABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/initComponent.png").createImage();

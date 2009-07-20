@@ -48,8 +48,8 @@ public class Execution implements Runnable {
 	//the data pool
 	private JSONDataPool dataPool;
 	
-	//threads for consumers and producers
-	private ConsumerExecution[] consumerExecutionArray;
+	//threads for Observers and producers
+	private ObserverExecution[] ObserverExecutionArray;
 	private ProducerExecution[] producerExecutionArray;
 	
 	//KiemView to control execution
@@ -66,21 +66,21 @@ public class Execution implements Runnable {
 		
 		this.dataPool = new JSONDataPool();
 		
-		consumerExecutionArray = new ConsumerExecution
+		ObserverExecutionArray = new ObserverExecution
 										[this.dataComponentExList.size()];
 		producerExecutionArray = new ProducerExecution
 										[this.dataComponentExList.size()];
 		
-		//for each pure consumer ... create ConsumerExecution Thread
+		//for each pure Observer ... create ObserverExecution Thread
 		//for each pure producer ... create ProducerExecution Thread
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			if (dataComponentEx.isEnabled()) {
-				if(dataComponentEx.isConsumerOnly()) {
-					//pure Consumer
-					consumerExecutionArray[c] = 
-								new ConsumerExecution(dataComponentEx.getDataComponent());
-					(new Thread(consumerExecutionArray[c])).start();
+				if(dataComponentEx.isObserverOnly()) {
+					//pure Observer
+					ObserverExecutionArray[c] = 
+								new ObserverExecution(dataComponentEx.getDataComponent());
+					(new Thread(ObserverExecutionArray[c])).start();
 				}
 				else if(dataComponentEx.isProducerOnly()) {
 					//pure Producer
@@ -236,8 +236,8 @@ public class Execution implements Runnable {
 				this.dataComponentExList.get(c).setDeltaIndex(0);
 				//reset skipped
 				this.dataComponentExList.get(c).setSkipped(false);
-				if (this.consumerExecutionArray[c] != null)
-					this.consumerExecutionArray[c].stopExecution();
+				if (this.ObserverExecutionArray[c] != null)
+					this.ObserverExecutionArray[c].stopExecution();
 				if (this.producerExecutionArray[c] != null)
 					this.producerExecutionArray[c].stopExecution();
 			}
@@ -276,20 +276,24 @@ public class Execution implements Runnable {
 				if ((steps == INFINITY_STEPS)||(steps > NO_STEPS)) {
 					//make a tick
 					this.stepCounter++;
+					view.updateStepsAsync();
 					
 					//this is the data pool index which will be
 					//referred to for this step
-					//(or if any consumer is skipped in the next steps
+					//(or if any Observer is skipped in the next steps
 					// it will refer to this counter index later on!)
 					for(int c = 0; c < this.dataComponentExList.size(); c++) {
 						//call all pure producers first
 						DataComponentEx dataComponentEx = 
 							dataComponentExList.get(c);
 						if (   dataComponentEx.isEnabled()
-							&& dataComponentEx.isDeltaConsumer()
-							&& (!dataComponentEx.getSkipped())) {
+							&& dataComponentEx.isDeltaObserver()
+							&&   (!dataComponentEx.getSkipped()
+							     ||dataComponentEx.isDeltaObserver())
+							){
 							//advance delta counter for all *NOT* skipped 
 							//components
+							//or any that are *NOT* deltaObservers!
 							dataComponentEx.setDeltaIndex
 												(dataPool.getPoolCounter());
 						 }
@@ -312,7 +316,7 @@ public class Execution implements Runnable {
 								//make a step (within producerExecution's monitor)
 								producerExecutionArray[c].blockingStep();
 						}
-					}//next producer/consumer
+					}//next producer/Observer
 					
 					//make a step - according to the dataComponentExList order
 					for(int c = 0; c < this.dataComponentExList.size(); c++) {
@@ -323,19 +327,19 @@ public class Execution implements Runnable {
 						//===========================================//
 						//==  C O N S U M E R  /  P R O D U C E R  ==//
 						//===========================================//
-						if (dataComponentEx.isProducerConsumer()) {
+						if (dataComponentEx.isProducerObserver()) {
 //System.out.println(c + ") " +dataComponentEx.getName() + " (Norm Producer) call");
-							//Consumer AND Producer => blocking
+							//Observer AND Producer => blocking
 							try {
 								JSONObject oldData;
 								String[] filterKeys = 
 									dataComponentEx.getFilterKeys();
-								if (dataComponentEx.isDeltaConsumer()) {
+								//if (dataComponentEx.isDeltaObserver()) {
 									oldData = this.dataPool.getDeltaData
 										 (filterKeys,dataComponentEx.getDeltaIndex());
-								}
-								else
-									oldData = this.dataPool.getData(filterKeys);
+								//}
+								//else
+								//	oldData = this.dataPool.getData(filterKeys);
 								if (dataComponentEx.isJSON()) {
 									JSONObject newData = 
 										((JSONObjectDataComponent)dataComponentEx.getDataComponent())
@@ -359,27 +363,27 @@ public class Execution implements Runnable {
 						//===========================================//
 						//==       P U R E    C O N S U M E R      ==//
 						//===========================================//
-						else if(dataComponentEx.isConsumerOnly()) {
-//System.out.println(c + ") " +dataComponentEx.getName() + " (Pure Consumer) call");
-								//pure Consumer
+						else if(dataComponentEx.isObserverOnly()) {
+//System.out.println(c + ") " +dataComponentEx.getName() + " (Pure Observer) call");
+								//pure Observer
 								//set current data
 								try {
 									String[] filterKeys = 
 											dataComponentEx.getFilterKeys();
 									JSONObject oldData;
-									if (dataComponentEx.isDeltaConsumer()) {
+									//if (dataComponentEx.isDeltaObserver()) {
 										oldData = this.dataPool.getDeltaData
 										  (filterKeys,dataComponentEx.getDeltaIndex());
-									}
-									else
-										oldData = this.dataPool
-										  .getData(filterKeys);
-									consumerExecutionArray[c].setData(oldData);
+									//}
+									//else
+									//	oldData = this.dataPool
+									//	  .getData(filterKeys);
+									ObserverExecutionArray[c].setData(oldData);
 								}catch(Exception e){
 									e.printStackTrace();
 								}
 								//call async method 
-								if (!(consumerExecutionArray[c].step())) {
+								if (!(ObserverExecutionArray[c].step())) {
 									//if step was *NOT* successful (skipped)
 									//set skipped:=true this prevents the delta
 									//index to advance in the next steps!
@@ -412,7 +416,7 @@ public class Execution implements Runnable {
 								}
 								
 						}
-					}//next producer/consumer
+					}//next producer/Observer
 					
 					//calculate execution timings (and current step Duration)
 					//do not floor => add 1ms

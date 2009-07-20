@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -22,8 +24,11 @@ import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 
 public class AddDataComponentDialog extends Dialog {
 
+	AddDataComponentDialog dialog;
+	
 	public AddDataComponentDialog(Shell parent) {
 		super(parent);
+		dialog = this;
 	}
 	
 	Table table;
@@ -54,6 +59,18 @@ public class AddDataComponentDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				updateSelectedList();
+			}
+        });
+        table.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				updateSelectedList();
+				dialog.close();
+			}
+			public void mouseDown(MouseEvent e) {
+			}
+			@Override
+			public void mouseUp(MouseEvent e) {
 			}
         });
         updateTable();
@@ -87,10 +104,10 @@ public class AddDataComponentDialog extends Dialog {
         	TableItem item = new TableItem(table, SWT.NULL);
         	item.setText(component.getName());
         	item.setData(component);
-        	if (component.isConsumer() && component.isProducer())
-        		item.setImage(KiemIcons.PRODUCERCONSUMER_ENABLED);
-        	else if (component.isConsumer())
-        		item.setImage(KiemIcons.CONSUMER_ENABLED);
+        	if (component.isObserver() && component.isProducer())
+        		item.setImage(KiemIcons.PRODUCEROBSERVER_ENABLED);
+        	else if (component.isObserver())
+        		item.setImage(KiemIcons.OBSERVER_ENABLED);
         	else if (component.isProducer())
         		item.setImage(KiemIcons.PRODUCER_ENABLED);
         	else 

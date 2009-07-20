@@ -5,12 +5,8 @@
    <extension-point id="de.cau.cs.kieler.sim.kiem.json.datacomponent" name="de.cau.cs.kieler.sim.kiem.json.datacomponent" schema="schema/de.cau.cs.kieler.sim.kiem.json.datacomponent.exsd"/>
    <extension
          point="org.eclipse.ui.views">
-      <category
-            id="de.cau.cs.kieler.views.category"
-            name="KIELER">
-      </category>
       <view
-            category="de.cau.cs.kieler.views.category"
+            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.sim.kiem.views.KiemView"
             icon="icons/kiemIcon.png"
             id="de.cau.cs.kieler.sim.kiem.view"

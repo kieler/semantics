@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.*;
 import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
 import de.cau.cs.kieler.sim.kiem.ui.AddDataComponentDialog;
+import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
 
 import org.eclipse.ui.IWorkbenchWindow;
 
@@ -45,7 +46,8 @@ public class KiemView extends ViewPart {
 	private Action actionPause;
 	private Action actionStop;
 	private Action doubleClickAction;
-	private AimedStepDurationTextField delayTextField;
+	private AimedStepDurationTextField aimedStepDurationTextField;
+	private StepTextField stepTextField;
 	private DataComponentEx currentMaster;
 
 	List<DataComponentEx> dataComponentExList;
@@ -80,7 +82,7 @@ public class KiemView extends ViewPart {
 			 "Name of Data Component",
 			 "Property Value",
 			 "Enabled/Disabled",
- 			 "Producer, Consumer or Initialization Data Component", 
+ 			 "Producer, Observer or Initialization Data Component", 
  			 //"JSONObject (JSONString otherwise)", 
  			 "Is a Master that leads Execution", 
  			 "Needs selected Model File" };
@@ -88,7 +90,7 @@ public class KiemView extends ViewPart {
 		 "Property Key",
 		 "Property Value",
 		 "Enabled/Disabled",
-		 "Producer, Consumer or Initialization Data Component", 
+		 "Producer, Observer or Initialization Data Component", 
 		 //"JSONObject (JSONString otherwise)", 
 		 "Is a Master that leads Execution", 
 		 "Needs selected Model File" };
@@ -138,21 +140,21 @@ public class KiemView extends ViewPart {
 				returnList.add(dataComponentEx);
 			}
 		}
-		//then add consumer & producer
+		//then add Observer & producer
 		for (int c = 0; c < list.size(); c ++) {
 			DataComponent dataComponent = (DataComponent)list.get(c);
 			DataComponentEx dataComponentEx = 
 				new DataComponentEx(dataComponent);
-			if (dataComponentEx.isProducerConsumer()) {
+			if (dataComponentEx.isProducerObserver()) {
 				returnList.add(dataComponentEx);
 			}
 		}
-		//then add pure consumer
+		//then add pure Observer
 		for (int c = 0; c < list.size(); c ++) {
 			DataComponent dataComponent = (DataComponent)list.get(c);
 			DataComponentEx dataComponentEx = 
 				new DataComponentEx(dataComponent);
-			if (dataComponentEx.isConsumerOnly()) {
+			if (dataComponentEx.isObserverOnly()) {
 				returnList.add(dataComponentEx);
 			}
 		}
@@ -334,13 +336,13 @@ public class KiemView extends ViewPart {
 	private void buildLocalToolBar() {
 		IActionBars bars = getViewSite().getActionBars();
 		IToolBarManager manager = bars.getToolBarManager();
-		manager.add(getActionAdd());
-		manager.add(getActionDelete());
-		manager.add(new Separator());
+		//manager.add(getActionAdd());
+		//manager.add(getActionDelete());
 		manager.add(getActionUp());
 		manager.add(getActionDown());
 		manager.add(new Separator());
-		manager.add(getDelayTextField());
+		manager.add(getAimedStepDurationTextField());
+		manager.add(getStepTextField());
 		manager.add(new Separator());
 		manager.add(getActionStep());
 		//TODO: macro step implementation
@@ -409,9 +411,9 @@ public class KiemView extends ViewPart {
 		}
 
 		int countEnabledProducer = 0;
-		int countEnabledConsumer = 0;
+		int countEnabledObserver = 0;
 
-		//count all (enabled) data producer and consumer
+		//count all (enabled) data producer and Observer
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			dataComponentEx.setModelFile(KIEM.getCurrentModelFile());
@@ -419,8 +421,8 @@ public class KiemView extends ViewPart {
 				if (dataComponentEx.isProducer()) {
 					countEnabledProducer++;
 				}
-				if (dataComponentEx.isConsumer()) {
-					countEnabledConsumer++;
+				if (dataComponentEx.isObserver()) {
+					countEnabledObserver++;
 				}
 			}//end if enabled
 		}//next c
@@ -433,9 +435,9 @@ public class KiemView extends ViewPart {
 			KIEM.execution = null;
 			return false;
 		}
-		else if (countEnabledConsumer < 1) {
+		else if (countEnabledObserver < 1) {
 			if (!silent)
-				showWarning("Please enable at least one Data Consumer!");
+				showWarning("Please enable at least one Data Observer!");
 			KIEM.resetCurrentModelFile();
 			KIEM.execution.stopExecution();
 			KIEM.execution = null;
@@ -446,7 +448,7 @@ public class KiemView extends ViewPart {
 		
 		//get all localInterfaceVariables and combine them into
 		//globalInterfaceVariables
-		//initialize all (enabled) data producer and consumer
+		//initialize all (enabled) data producer and Observer
 		List<String> globalInterfaceVariables = new LinkedList<String>();
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
@@ -469,7 +471,7 @@ public class KiemView extends ViewPart {
 			}//end if enabled
 		}//next c
 		
-		//initialize all (enabled) data producer and consumer
+		//initialize all (enabled) data producer and Observer
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			dataComponentEx.setModelFile(KIEM.getCurrentModelFile());
@@ -505,7 +507,7 @@ public class KiemView extends ViewPart {
 		getActionRun().setEnabled(enabled);
 		getActionPause().setEnabled(enabled);
 		getActionStop().setEnabled(enabled);
-		getDelayTextField().setEnabled(enabled);
+		getAimedStepDurationTextField().setEnabled(enabled);
 	}
 	
 
@@ -540,12 +542,12 @@ public class KiemView extends ViewPart {
 			if (dataComponentEx.isEnabled()) {
 				//currently enabled
 				actionEnableDisable.setText("Disable");
-				actionEnableDisable.setToolTipText("Disable DataProducer/DataConsumer");
+				actionEnableDisable.setToolTipText("Disable DataProducer/DataObserver");
 			}
 			else {
 				//currently disabled
 				actionEnableDisable.setText("Enable");
-				actionEnableDisable.setToolTipText("Enable DataProducer/DataConsumer");
+				actionEnableDisable.setToolTipText("Enable DataProducer/DataObserver");
 			}
 			int listIndex = dataComponentExList.indexOf(dataComponentEx);
 			if (listIndex <= 0) {
@@ -581,6 +583,22 @@ public class KiemView extends ViewPart {
 				  new Runnable() {
 				    public void run(){
 				    	updateView(true);
+				    }
+		});
+	}
+
+	public void updateStepsAsync() {
+		Display.getDefault().asyncExec(
+				  new Runnable() {
+				    public void run(){
+						if (KIEM.execution != null) {
+							//update step counter if run
+							getStepTextField().updateTextfield(""+KIEM.execution.getSteps());
+						}
+						else {
+							//hide textfield otherwise
+							getStepTextField().updateTextfield(null);
+						}	
 				    }
 		});
 	}
@@ -621,6 +639,7 @@ public class KiemView extends ViewPart {
 		updateEnabled(false);
 	}
 	public void updateEnabled(boolean silent) {
+		updateStepsAsync();
 		updateEnabledEnabledDisabledUpDownAddDelete();
 		if (currentMaster != null) {
 			getActionStep().setEnabled(false);
@@ -628,7 +647,7 @@ public class KiemView extends ViewPart {
 			getActionRun().setEnabled(false);
 			getActionPause().setEnabled(false);
 			getActionStop().setEnabled(false);
-			getDelayTextField().setEnabled(false);
+			getAimedStepDurationTextField().setEnabled(false);
 			return;
 		}
 		if (allDisabled) return;
@@ -639,7 +658,7 @@ public class KiemView extends ViewPart {
 			getActionRun().setEnabled(true);
 			getActionPause().setEnabled(true);
 			getActionStop().setEnabled(false);
-			getDelayTextField().setEnabled(true);
+			getAimedStepDurationTextField().setEnabled(true);
 		}
 		else if (KIEM.execution.isRunning()) {
 			//execution is running
@@ -648,7 +667,7 @@ public class KiemView extends ViewPart {
 			getActionRun().setEnabled(false);
 			getActionPause().setEnabled(true);
 			getActionStop().setEnabled(true);
-			getDelayTextField().setEnabled(true);
+			getAimedStepDurationTextField().setEnabled(true);
 		}
 		else {
 			//execution is paused
@@ -657,7 +676,7 @@ public class KiemView extends ViewPart {
 			getActionRun().setEnabled(true);
 			getActionPause().setEnabled(false);
 			getActionStop().setEnabled(true);
-			getDelayTextField().setEnabled(true);
+			getAimedStepDurationTextField().setEnabled(true);
 		}
 	}
 	
@@ -683,8 +702,8 @@ public class KiemView extends ViewPart {
 			  }
 			}
 		};
-		actionAdd.setText("Add Producer/Consumer");
-		actionAdd.setToolTipText("Add DataProducer/DataConsumer");
+		actionAdd.setText("Add DataComponent");
+		actionAdd.setToolTipText("Add DataComponent");
 		actionAdd.setImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/addIcon.png"));
 		//actionUp.setDisabledImageDescriptor(
@@ -699,8 +718,8 @@ public class KiemView extends ViewPart {
 				updateView(true);
 			}
 		};
-		actionDelete.setText("Delete Producer/Consumer");
-		actionDelete.setToolTipText("Delete DataProducer/DataConsumer");
+		actionDelete.setText("Delete DataComponent");
+		actionDelete.setToolTipText("Delete DataComponent");
 		actionDelete.setImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/deleteIcon.png"));
 		//actionUp.setDisabledImageDescriptor(
@@ -722,7 +741,7 @@ public class KiemView extends ViewPart {
 			}
 		};
 		actionEnableDisable.setText("Enable");
-		actionEnableDisable.setToolTipText("Enable DataProducer/DataConsumer");
+		actionEnableDisable.setToolTipText("Enable DataProducer/DataObserver");
 		return actionEnableDisable;
 	}
 	
@@ -938,12 +957,18 @@ public class KiemView extends ViewPart {
 		return doubleClickAction;
 	}
 
-	private AimedStepDurationTextField getDelayTextField() {
-		if (delayTextField != null) return delayTextField;
-		delayTextField = new AimedStepDurationTextField(KIEM);
-		return delayTextField;
+	private AimedStepDurationTextField getAimedStepDurationTextField() {
+		if (aimedStepDurationTextField != null) return aimedStepDurationTextField;
+		aimedStepDurationTextField = new AimedStepDurationTextField(KIEM);
+		return aimedStepDurationTextField;
 	}
- 
+
+	private StepTextField getStepTextField() {
+		if (stepTextField != null) return stepTextField;
+		stepTextField = new StepTextField(KIEM);
+		return stepTextField;
+	}
+	
   //---------------------------------------------------------------------------	
 
 	/**

@@ -58,7 +58,7 @@ public abstract class DataComponent implements IDataComponent,
 		return;
 	}
 	
-	//if this producer/consumer needs the model file override this
+	//if this producer/Observer needs the model file override this
 	//and return true
 	//the ExecutionManager will then check for it
 	public boolean isModelFileNeeded() {
@@ -67,7 +67,7 @@ public abstract class DataComponent implements IDataComponent,
 		
 	//-------------------------------------------------------------------------
 
-	//if this DataComponent implements a consumer, 
+	//if this DataComponent implements a Observer, 
 	//provide some key's of interest 
 	public String[] getFilterKeys() {
 		return null;
@@ -109,10 +109,12 @@ public abstract class DataComponent implements IDataComponent,
 
 	//-------------------------------------------------------------------------
 	
-	//if this DataComponent implements a consumer, which wants delta values 
-	//only, it should override this method to return true
-	public boolean isDeltaConsumer() {
-		return false;
+	//Delta values means all values that are in the present and were in the
+	//past ticks when this component may have been skipped
+	//If a component do only want values of the present tick, it should override
+	//and return false
+	public boolean isDeltaObserver() {
+		return true;
 	}
 	
 	//-------------------------------------------------------------------------
@@ -140,7 +142,7 @@ public abstract class DataComponent implements IDataComponent,
 	//not be scheduled again during this MacroStep
 	//if you need them to update again they should also return a false
 	//value.
-	//Also note that this method is ignored for pure data consumers because
+	//Also note that this method is ignored for pure data Observers because
 	//there is blocking impact on the schedule from them
 	public boolean isStepDone() {
 		return true;

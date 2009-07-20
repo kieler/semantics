@@ -92,17 +92,17 @@ public class DataComponentEx {
 	public boolean isProducer() {
 		return this.component.isProducer();
 	}
-	public boolean isConsumer() {
-		return this.component.isConsumer();
+	public boolean isObserver() {
+		return this.component.isObserver();
 	}
-	public boolean isProducerConsumer() {
-		return (this.isProducer() && this.isConsumer());
+	public boolean isProducerObserver() {
+		return (this.isProducer() && this.isObserver());
 	}
 	public boolean isProducerOnly() {
-		return (this.isProducer() && !this.isConsumer());
+		return (this.isProducer() && !this.isObserver());
 	}
-	public boolean isConsumerOnly() {
-		return (!this.isProducer() && this.isConsumer());
+	public boolean isObserverOnly() {
+		return (!this.isProducer() && this.isObserver());
 	}
 	
 	//-----------------------------------------------------------------------
@@ -122,8 +122,8 @@ public class DataComponentEx {
 		return this.component.getProperties(); 
 	}
 
-	public boolean isDeltaConsumer() {
-		return this.component.isDeltaConsumer(); 
+	public boolean isDeltaObserver() {
+		return this.component.isDeltaObserver(); 
 	}
 	public boolean isMaster() {
 		return this.component.isMaster(); 

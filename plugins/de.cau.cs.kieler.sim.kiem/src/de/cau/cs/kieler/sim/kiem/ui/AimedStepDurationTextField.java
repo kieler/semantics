@@ -34,11 +34,11 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	
 	@Override
 	protected Control createControl(Composite parent) {
-		this.updateDelay();
+		this.updateDuration();
 		textfield = new Text(parent,SWT.BORDER);
 		this.textfield.setEnabled(this.enabled);
 		textfield.setToolTipText("Aimed Duration of Steps in Run Mode (ms)");
-		textfield.setText(KiemPlugin.AIMED_STEP_DURATION_DEFAULT+"ms     ");
+		textfield.setText(KiemPlugin.AIMED_STEP_DURATION_DEFAULT+"ms   ");
 		textfield.addKeyListener(this);
 		textfield.addFocusListener(this);
 		return textfield;
@@ -46,7 +46,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 
 	public void keyPressed(KeyEvent e) {
 		if(e.character=='\r'){
-			updateDelay();
+			updateDuration();
 		}			
 	}
 	public void keyReleased(KeyEvent e) {
@@ -54,7 +54,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	}
 	
 	public void focusLost(FocusEvent e) {
-		updateDelay();
+		updateDuration();
 		textfield.setText(""+KIEM.getAimedStepDuration()+"ms");
 	}
 	
@@ -71,10 +71,10 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	public void setStepDuration(int aimedStepDuration) {
 		try{
 			if (aimedStepDuration < KiemPlugin.AIMED_STEP_DURATION_MIN) 
-				throw(new NumberFormatException("Delay must be >= "
+				throw(new NumberFormatException("Duration must be >= "
 						+KiemPlugin.AIMED_STEP_DURATION_MIN+"ms!"));
 			if (aimedStepDuration > KiemPlugin.AIMED_STEP_DURATION_MAX) 
-				throw(new NumberFormatException("Delay must be <= "
+				throw(new NumberFormatException("Duration must be <= "
 						+KiemPlugin.AIMED_STEP_DURATION_MAX+"ms!"));
 			KIEM.setAimedStepDuration(aimedStepDuration);
 		}catch(NumberFormatException exc){
@@ -82,15 +82,15 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 		textfield.setText(""+KIEM.getAimedStepDuration()+"ms");
 	}
 	
-	private void updateDelay(){
+	private void updateDuration(){
 		if (textfield == null) return;
 		try{
 			int aimedStepDuration = Integer.parseInt(textfield.getText().trim());
 			if (aimedStepDuration < KiemPlugin.AIMED_STEP_DURATION_MIN)
-				throw(new NumberFormatException("Delay must be >= "
+				throw(new NumberFormatException("Duration must be >= "
 						+KiemPlugin.AIMED_STEP_DURATION_MIN+"ms!"));
 			if (aimedStepDuration > KiemPlugin.AIMED_STEP_DURATION_MAX) 
-				throw(new NumberFormatException("Delay must be <= "
+				throw(new NumberFormatException("Duration must be <= "
 						+KiemPlugin.AIMED_STEP_DURATION_MAX+"ms!"));
 			KIEM.setAimedStepDuration(aimedStepDuration);
 		}catch(NumberFormatException exc){

@@ -38,7 +38,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 	//The shared instance
 	private static KiemPlugin plugin;
 	
-	//List of available dataProducers and dataConsumers
+	//List of available dataProducers and dataObservers
 	List<DataComponent> dataComponentList;
 	
 	//Contains the current model to execute or null initially/after stop
