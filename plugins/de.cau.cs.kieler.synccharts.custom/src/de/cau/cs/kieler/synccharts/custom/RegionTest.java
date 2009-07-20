@@ -64,47 +64,39 @@ public class RegionTest extends ApplicationWindow {
         //parentFigure.setLayoutManager(new wLayout());
         lws.setContents(parentFigure);
         
-        NeighborAwareOpenRectangleFigure region1 = new NeighborAwareOpenRectangleFigure();
-        region1.setFill(false);
-        region1.setLineWidth(2);
-        region1.setLineStyle(Graphics.LINE_DASH);
-        region1.setForegroundColor(ColorConstants.gray);
-        Rectangle bounds = new Rectangle(100,100,200,200); 
-        region1.setBounds(bounds);
-        region1.setDrawSides(true, true, true, true);
+        NeighborAwareOpenRectangleFigure region1 = getNewRectangle(10, 10, 20, 20);
         parentFigure.add(region1);
         
-        NeighborAwareOpenRectangleFigure region2 = new NeighborAwareOpenRectangleFigure();
-        region2.setFill(false);
-        region2.setLineWidth(2);
-        region2.setLineStyle(Graphics.LINE_DASH);
-        region2.setForegroundColor(ColorConstants.gray);
-        Rectangle bounds2 = new Rectangle(300,100,200,200); 
-        region2.setBounds(bounds2);
-        region2.setDrawSides(true, true, true, true);
+        NeighborAwareOpenRectangleFigure region2 = getNewRectangle(40, 40, 20, 20);
         parentFigure.add(region2);
-
-        NeighborAwareOpenRectangleFigure region3 = new NeighborAwareOpenRectangleFigure();
-        region3.setFill(false);
-        region3.setLineWidth(2);
-        region3.setLineStyle(Graphics.LINE_DASH);
-        region3.setForegroundColor(ColorConstants.gray);
-        Rectangle bounds3 = new Rectangle(500,100,200,200); 
-        region3.setBounds(bounds3);
-        region3.setDrawSides(true, true, true, true);
+        
+        NeighborAwareOpenRectangleFigure region3 = getNewRectangle(70, 5, 20, 70);
         parentFigure.add(region3);
         
-        NeighborAwareOpenRectangleFigure region4 = new NeighborAwareOpenRectangleFigure();
-        region4.setFill(false);
-        region4.setLineWidth(2);
-        region4.setLineStyle(Graphics.LINE_DASH);
-        region4.setForegroundColor(ColorConstants.gray);
-        Rectangle bounds4 = new Rectangle(150,300,400,50); 
-        region4.setBounds(bounds4);
-        region4.setDrawSides(true, true, true, true);
+        NeighborAwareOpenRectangleFigure region4 = getNewRectangle(5, 80, 80, 20);
         parentFigure.add(region4);
         
+        NeighborAwareOpenRectangleFigure region5 = getNewRectangle(10, 120, 20, 20);
+        parentFigure.add(region5);
+        
+        NeighborAwareOpenRectangleFigure region6 = getNewRectangle(40, 130, 20, 20);
+        parentFigure.add(region6);
+        
+        parentFigure.setLayoutManager(new StretchingXYLayout());
+        
         return composite;
+    }
+    
+    NeighborAwareOpenRectangleFigure getNewRectangle(int x, int y, int width, int height){
+        NeighborAwareOpenRectangleFigure rect = new NeighborAwareOpenRectangleFigure();
+        rect.setFill(false);
+        rect.setLineWidth(2);
+        rect.setLineStyle(Graphics.LINE_DASH);
+        rect.setForegroundColor(ColorConstants.gray);
+        Rectangle bounds4 = new Rectangle(x,y,width,height); 
+        rect.setBounds(bounds4);
+        rect.setDrawSides(true, true, true, true);
+        return rect;
     }
     
     /**
@@ -112,6 +104,7 @@ public class RegionTest extends ApplicationWindow {
      */
     public static void main(String[] args) {
             RegionTest window = new RegionTest(null);
+            //window.getShell().setFullScreen(true);//Size(500, 500);
             window.setBlockOnOpen(true);
             window.open();
     }
