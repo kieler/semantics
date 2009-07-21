@@ -11,6 +11,7 @@
       itemSemanticEditPolicyClassName="RegionItemSemanticEditPolicy"
       canonicalEditPolicyClassName="RegionCanonicalEditPolicy"
       iconProviderPriority="Low"
+      creationWizardCategoryID="de.cau.cs.kieler"
       validationEnabled="true"
       validationDecorators="true">
     <diagramRunTimeClass
