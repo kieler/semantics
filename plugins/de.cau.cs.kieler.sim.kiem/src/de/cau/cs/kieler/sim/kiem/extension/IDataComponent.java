@@ -1,5 +1,7 @@
 package de.cau.cs.kieler.sim.kiem.extension;
 
+import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
+
 public interface IDataComponent {
 
 	//initialize prior execution

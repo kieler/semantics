@@ -1,6 +1,7 @@
 package de.cau.cs.kieler.sim.abro;
 
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyList;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
@@ -16,6 +17,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 	boolean dA;
 	boolean dB;
 	boolean done;
+	String stateName;
 	
 	boolean paused; //demonstrate isPauseFlag() usage
 	
@@ -64,16 +66,16 @@ public class DataComponent extends JSONObjectDataComponent implements
 				}
 			}
 			if (done) {
-				returnObj.accumulate("state","done");
+				returnObj.accumulate(stateName,"done");
 			}
 			if (dA && !dB) {
-				returnObj.accumulate("state","dA, wB");
+				returnObj.accumulate(stateName,"dA, wB");
 			}
 			if (dB && !dA) {
-				returnObj.accumulate("state","wA, dB");
+				returnObj.accumulate(stateName,"wA, dB");
 			}
 			if (wA && wB) {
-				returnObj.accumulate("state","wA, wB");
+				returnObj.accumulate(stateName,"wA, wB");
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -86,6 +88,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 	
 	public void initialize() {
 		// TODO Auto-generated method stub
+		stateName = getProperties()[0].getValue();
 		System.out.println("ABRO in Java in Kieler IN ACTION :-) initialize");
 		resetABO();
 		paused = false;
@@ -123,7 +126,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 
 	@Override
 	public String[] getLocalInterfaceVariables() {
-		String[] signals = {"state", "A", "B", "R", "O"}; 
+		String[] signals = {getProperties()[0].getValue(), "A", "B", "R", "O"}; 
 		return signals;
 	}
 	
@@ -133,11 +136,11 @@ public class DataComponent extends JSONObjectDataComponent implements
 	}
 
 	@Override
-	public KiemProperty[] getProperties() {
+	public KiemProperty[] initializeProperties() {
 		KiemProperty[] properties = new KiemProperty[5];
 		properties[0] = new KiemProperty(
-				"model",
-				"my model");
+				"state name",
+				"state");
 		properties[1] = new KiemProperty(
 				"some bool",
 				true);

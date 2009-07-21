@@ -93,6 +93,15 @@ public class KiemPropertyList {
 	public boolean hasElements() {
 		return (size() > 0);
 	}
+
+	
+	public KiemProperty[] toArray() {
+		KiemProperty[] returnArray = new KiemProperty[this.propertyList.size()];
+		for (int c = 0; c < this.propertyList.size(); c ++){
+			returnArray[c] = this.propertyList.get(c);
+		}
+		return returnArray;
+	}
 	
 	public Object[] getElements() {
 		return this.propertyList.toArray();

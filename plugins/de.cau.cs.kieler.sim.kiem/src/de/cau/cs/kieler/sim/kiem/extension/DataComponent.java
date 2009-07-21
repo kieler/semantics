@@ -14,10 +14,16 @@ public abstract class DataComponent implements IDataComponent,
 	private KiemPlugin KIEMInstance;   		//only contains access to execution
 	private KiemView KIEMViewInstance; 		//thread iff this DataComponent
 									   		//is a master
+	private KiemProperty[] properties;
 	private IConfigurationElement configEle;
 	
 	public DataComponent() {
 		super();
+		properties = initializeProperties();
+	}
+	
+	public KiemProperty[] getProperties() {
+		return this.properties;
 	}
 	
 	public void setConfigurationElemenet(IConfigurationElement configEle) {
@@ -76,7 +82,7 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 	
 	//provide some properties that the user should enter
-	public KiemProperty[] getProperties() {
+	public KiemProperty[] initializeProperties() {
 		return null;
 	}
 

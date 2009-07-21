@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.sim.table;
 
+import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;

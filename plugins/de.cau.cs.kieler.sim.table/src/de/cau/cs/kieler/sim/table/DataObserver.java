@@ -1,5 +1,7 @@
 package de.cau.cs.kieler.sim.table;
 
+import java.util.List;
+
 import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONArray;
@@ -8,12 +10,15 @@ import de.cau.cs.kieler.sim.table.views.DataTableView;
 
 public class DataObserver extends JSONStringDataComponent implements
 		IJSONStringDataComponent {
-
+//
+	//List<TableData> da
+	
 	public DataObserver() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public String step(String JSONString) {
+		System.out.println(JSONString);
 		//set all entries to absent per default
 		//boolean modified = false;
 		for (int c = 0; c < TableDataList.getInstance().size(); c++) {

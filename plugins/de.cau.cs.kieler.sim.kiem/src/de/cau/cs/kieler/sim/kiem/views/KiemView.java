@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Menu;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyList;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.*;
 import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
@@ -198,9 +199,7 @@ public class KiemView extends ViewPart {
 		}
 	}
 	
-	
-	
-  //---------------------------------------------------------------------------	
+   //---------------------------------------------------------------------------	
 	
 	public void createPartControl(Composite parent) {
 		viewer = new KiemTableViewer(parent, SWT.MULTI | SWT.H_SCROLL
@@ -476,7 +475,7 @@ public class KiemView extends ViewPart {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			dataComponentEx.setModelFile(KIEM.getCurrentModelFile());
 			if (dataComponentEx.isEnabled()) {
-				dataComponentEx.getDataComponent().initialize();
+					dataComponentEx.getDataComponent().initialize();
 			}//end if enabled
 		}//next c
 		
