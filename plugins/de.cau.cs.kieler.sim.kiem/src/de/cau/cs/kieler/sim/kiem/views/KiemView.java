@@ -732,6 +732,9 @@ public class KiemView extends ViewPart {
 		if (actionEnableDisable != null) return actionEnableDisable;
 		actionEnableDisable = new Action() {
 			public void run() {
+				//do not change if executing
+				if (KIEM.execution != null)
+					return;
 				DataComponentEx firstDataComponentEx = (DataComponentEx)
 				((org.eclipse.jface.viewers.StructuredSelection)viewer
 									.getSelection()).getFirstElement();
