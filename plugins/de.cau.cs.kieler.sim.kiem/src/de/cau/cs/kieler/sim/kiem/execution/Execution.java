@@ -242,7 +242,18 @@ public class Execution implements Runnable {
 					this.producerExecutionArray[c].stopExecution();
 			}
 		}
-		
+		//wrapup components
+		wrapupComponents();
+	}
+	
+	public synchronized void wrapupComponents() {
+		for(int c = 0; c < this.dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentEx = 
+				dataComponentExList.get(c);
+			if (dataComponentEx.isEnabled()) {
+				dataComponentEx.getDataComponent().wrapup();
+			}
+		}
 	}
 	
 	public void run() {

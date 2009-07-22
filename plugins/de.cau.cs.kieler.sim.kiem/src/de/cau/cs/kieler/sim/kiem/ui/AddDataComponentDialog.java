@@ -156,8 +156,15 @@ public class AddDataComponentDialog extends Dialog {
     		if (!dataComponentEx.getDataComponent().isMultiInstantiable()) {
     			//now we have a NOT multiple instantiable component in the list
     			//check if this is our component, if yes return false!
-    			if (component.equals(dataComponentEx.getDataComponent()))
-    				return false;
+    			if (component.getClass().getName().equals(
+    				(dataComponentEx.getDataComponent()).getClass().getName())) {
+    				//class equal
+    				if (component.getName().equals(
+    					dataComponentEx.getDataComponent().getName())) {
+    					//name equal
+    					return false;
+    				}
+    			}
     		}
     	}
     	return true;

@@ -1,11 +1,12 @@
 package de.cau.cs.kieler.sim.kiem.extension;
 
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-
 public interface IDataComponent {
 
 	//initialize prior execution
 	public void initialize();
+	
+	//wrapup after execution
+	public void wrapup();
 
 	//DataComponent is a producer and returns != null in step method
 	public boolean isProducer();
