@@ -514,20 +514,32 @@ public class KiemView extends ViewPart {
 				actionEnableDisable.setText("Enable");
 				actionEnableDisable.setToolTipText("Enable DataProducer/DataObserver");
 			}
-			int listIndex = dataComponentExList.indexOf(dataComponentEx);
-			if (listIndex <= 0) {
+
+			//find index of top most and bottom most selection
+			ITreeSelection selections = (ITreeSelection)(org.eclipse.jface.viewers
+										.StructuredSelection)viewer.getSelection();
+			int listIndexMostTop = -1;
+			int listIndexMostBottom = -1;
+			for (int c = 0; c < selections.size(); c ++) {
+				dataComponentEx = (DataComponentEx)selections.toArray()[c];
+				int index = dataComponentExList.indexOf(dataComponentEx);
+				if ((listIndexMostTop == -1)||(index < listIndexMostTop))
+					listIndexMostTop = index;
+				if ((listIndexMostBottom == -1)||(listIndexMostBottom < index))
+					listIndexMostBottom = index;
+			}
+			if (listIndexMostTop <= 0) {
 				//currently top
 				getActionUp().setEnabled(false);
-				getActionDown().setEnabled(true);
 			}
-			else if (listIndex >= dataComponentExList.size()-1) {
-				//currently bottom
+			else {
 				getActionUp().setEnabled(true);
+			}
+			if (listIndexMostBottom >= dataComponentExList.size()-1) {
+				//currently bottom
 				getActionDown().setEnabled(false);
 			}
 			else {
-				//currently in the middel
-				getActionUp().setEnabled(true);
 				getActionDown().setEnabled(true);
 			}
 		}
@@ -732,17 +744,20 @@ public class KiemView extends ViewPart {
 		if (actionUp != null) return actionUp;
 		actionUp = new Action() {
 			public void run() {
-				DataComponentEx dataComponentEx = (DataComponentEx)
-					((org.eclipse.jface.viewers.StructuredSelection)viewer
-										.getSelection()).getFirstElement();
-				int listIndex = dataComponentExList
-									.indexOf(dataComponentEx);
-				if (listIndex > 0) {
-				   dataComponentExList.remove(listIndex);
-				   dataComponentExList.add(listIndex-1, dataComponentEx);
-				   viewer.refresh();
-				   refreshEnabledDisabledTextColors();
+				ITreeSelection selections = (ITreeSelection)(org.eclipse.jface.viewers
+						.StructuredSelection)viewer.getSelection();
+				//go thru list from up to down!
+				for (int c = 0; c < selections.size(); c ++) {
+					DataComponentEx dataComponentEx = (DataComponentEx)selections.toArray()[c];
+					int listIndex = 
+						dataComponentExList.indexOf(dataComponentEx);
+					if (listIndex > 0) {
+					   dataComponentExList.remove(listIndex);
+					   dataComponentExList.add(listIndex-1, dataComponentEx);
+					}
 				}
+			    viewer.refresh();
+			    refreshEnabledDisabledTextColors();
 				updateView(false);
 			}
 		};
@@ -759,17 +774,20 @@ public class KiemView extends ViewPart {
 		if (actionDown != null) return actionDown;
 		actionDown = new Action() {
 			public void run() {
-				DataComponentEx dataComponentEx = (DataComponentEx)
-					((org.eclipse.jface.viewers.StructuredSelection)viewer
-										.getSelection()).getFirstElement();
-				int listIndex = 
+				ITreeSelection selections = (ITreeSelection)(org.eclipse.jface.viewers
+						.StructuredSelection)viewer.getSelection();
+				//go thru list from down to up!
+				for (int c = selections.size()-1; c >= 0; c --) {
+					DataComponentEx dataComponentEx = (DataComponentEx)selections.toArray()[c];
+					int listIndex = 
 						dataComponentExList.indexOf(dataComponentEx);
-				if (listIndex < dataComponentExList.size()-1) {
-				   dataComponentExList.remove(listIndex);
-				   dataComponentExList.add(listIndex+1, dataComponentEx);
-				   viewer.refresh();
-				   refreshEnabledDisabledTextColors();
+					if (listIndex < dataComponentExList.size()-1) {
+						   dataComponentExList.remove(listIndex);
+						   dataComponentExList.add(listIndex+1, dataComponentEx);
+						}
 				}
+				viewer.refresh();
+				refreshEnabledDisabledTextColors();
 				updateView(false);
 			}
 		};
