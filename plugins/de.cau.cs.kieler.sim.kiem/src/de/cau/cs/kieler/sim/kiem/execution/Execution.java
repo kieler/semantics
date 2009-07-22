@@ -2,6 +2,16 @@ package de.cau.cs.kieler.sim.kiem.execution;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
@@ -54,6 +64,10 @@ public class Execution implements Runnable {
 	
 	//KiemView to control execution
 	KiemView view;
+	
+	//Timeout
+	TimeoutThread timeout;
+	private static final int TIMEOUT = 1000;
 
 	
 	public Execution(List<DataComponentEx> dataComponentExList,
@@ -66,6 +80,9 @@ public class Execution implements Runnable {
 		
 		this.dataPool = new JSONDataPool();
 		
+		this.timeout = new TimeoutThread();
+		this.timeout.start();
+		
 		ObserverExecutionArray = new ObserverExecution
 										[this.dataComponentExList.size()];
 		producerExecutionArray = new ProducerExecution
@@ -75,20 +92,24 @@ public class Execution implements Runnable {
 		//for each pure producer ... create ProducerExecution Thread
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
+			timeout.timeout(TIMEOUT, "isEnabled, isObserver, isProducer", dataComponentEx, this);
 			if (dataComponentEx.isEnabled()) {
 				if(dataComponentEx.isObserverOnly()) {
 					//pure Observer
 					ObserverExecutionArray[c] = 
-								new ObserverExecution(dataComponentEx.getDataComponent());
+								new ObserverExecution(dataComponentEx.
+										getDataComponent(), this);
 					(new Thread(ObserverExecutionArray[c])).start();
 				}
 				else if(dataComponentEx.isProducerOnly()) {
 					//pure Producer
 					producerExecutionArray[c] = 
-								new ProducerExecution(dataComponentEx.getDataComponent(), this);
+								new ProducerExecution(dataComponentEx.
+										getDataComponent(), this);
 					(new Thread(producerExecutionArray[c])).start();
 				}
 			}
+			timeout.abortTimeout();
 		}
 	}
 	
@@ -134,10 +155,13 @@ public class Execution implements Runnable {
 				for(int c = 0; c < this.dataComponentExList.size(); c++) {
 					DataComponentEx dataComponentEx = 
 						dataComponentExList.get(c);
+					timeout.timeout(TIMEOUT, "isEnabled, isPauseFlag", dataComponentEx, this);
 					if (   dataComponentEx.isEnabled()
 						&& dataComponentEx.isPauseFlag()) {
+						timeout.timeout(TIMEOUT, "commandStep", dataComponentEx, this);
 						dataComponentEx.getDataComponent().commandStep();
 					}
+					timeout.abortTimeout();
 				}
 				//make one step
 				//note that consecutive calls will be enqueued into the
@@ -157,10 +181,13 @@ public class Execution implements Runnable {
 				for(int c = 0; c < this.dataComponentExList.size(); c++) {
 					DataComponentEx dataComponentEx = 
 						dataComponentExList.get(c);
+					timeout.timeout(TIMEOUT, "isEnabled, isPauseFlag", dataComponentEx, this);
 					if (   dataComponentEx.isEnabled()
 						&& dataComponentEx.isPauseFlag()) {
+						timeout.timeout(TIMEOUT, "commandMacroStep", dataComponentEx, this);
 						dataComponentEx.getDataComponent().commandMacroStep();
 					}
+					timeout.abortTimeout();
 				}
 				//make one step
 				//note that consecutive calls will be enqueued into the
@@ -178,10 +205,13 @@ public class Execution implements Runnable {
 			for(int c = 0; c < this.dataComponentExList.size(); c++) {
 				DataComponentEx dataComponentEx = 
 					dataComponentExList.get(c);
+				timeout.timeout(TIMEOUT, "isEnabled, isPauseFlag", dataComponentEx, this);
 				if (   dataComponentEx.isEnabled()
 					&& dataComponentEx.isPauseFlag()) {
+					timeout.timeout(TIMEOUT, "commandPause", dataComponentEx, this);
 					dataComponentEx.getDataComponent().commandPause();
 				}
+				timeout.abortTimeout();
 			}
 
 			this.steps = NO_STEPS;
@@ -211,6 +241,11 @@ public class Execution implements Runnable {
 		return (steps == INFINITY_STEPS);
 	}
 	
+	public void errorTerminate() {
+		view.KIEM.execution = null;
+		view.updateViewAsync();
+	}
+	
 	public void stopExecution() {
 		//not synchronized to stop immediately w/o queuing
 		this.stop = true;
@@ -221,10 +256,15 @@ public class Execution implements Runnable {
 			for(int c = 0; c < this.dataComponentExList.size(); c++) {
 				DataComponentEx dataComponentEx = 
 					dataComponentExList.get(c);
+				timeout.timeout(TIMEOUT, "isEnabled, isPauseFlag", dataComponentEx, this);
 				if (   dataComponentEx.isEnabled()
 					&& dataComponentEx.isPauseFlag()) {
+					timeout.abortTimeout();
+					timeout.timeout(TIMEOUT, "commandStop", dataComponentEx, this);
 					dataComponentEx.getDataComponent().commandStop();
+					timeout.abortTimeout();
 				}
+				timeout.abortTimeout();
 			}
 			
 			//for safety reasons do this synchronized again
@@ -244,7 +284,10 @@ public class Execution implements Runnable {
 		}
 		//wrapup components
 		wrapupComponents();
-	}
+		
+		//stop timeout thread
+		this.timeout.terminate();
+}
 	
 	public synchronized void wrapupComponents() {
 		for(int c = 0; c < this.dataComponentExList.size(); c++) {
@@ -343,8 +386,10 @@ public class Execution implements Runnable {
 							//Observer AND Producer => blocking
 							try {
 								JSONObject oldData;
+								timeout.timeout(1000, "catching filters", dataComponentEx, this);
 								String[] filterKeys = 
 									dataComponentEx.getFilterKeys();
+								timeout.abortTimeout();
 								//if (dataComponentEx.isDeltaObserver()) {
 									oldData = this.dataPool.getDeltaData
 										 (filterKeys,dataComponentEx.getDeltaIndex());
@@ -352,9 +397,11 @@ public class Execution implements Runnable {
 								//else
 								//	oldData = this.dataPool.getData(filterKeys);
 								if (dataComponentEx.isJSON()) {
+									timeout.timeout(1000, "getting data", dataComponentEx, this);
 									JSONObject newData = 
 										((JSONObjectDataComponent)dataComponentEx.getDataComponent())
 										.step(oldData);
+									timeout.abortTimeout();
 									if (newData != null)
 										this.dataPool.putData(newData);
 								}
@@ -479,6 +526,29 @@ public class Execution implements Runnable {
 			}
 			
 		}//next while not stop
+	}
+
+	protected void showError(String textMessage, String PluginID) {
+		try{
+			IStatus status = new Status(IStatus.WARNING,
+					PluginID,
+					42,textMessage, null);
+			KiemPlugin.getDefault().getLog().log(status);
+			
+			Display.getDefault().asyncExec(
+					  new Runnable() {
+						    public void run(){
+								try{
+									IViewPart VP = view.getViewSite().getPage().showView("org.eclipse.pde.runtime.LogView");
+									VP.setFocus();
+								}catch(Exception e){
+									e.printStackTrace();
+								}		
+						    }
+			});
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 	}
 
 }

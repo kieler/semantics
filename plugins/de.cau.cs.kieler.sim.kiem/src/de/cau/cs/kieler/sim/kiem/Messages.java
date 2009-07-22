@@ -6,8 +6,6 @@ public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "de.cau.cs.kieler.sim.kiem.messages"; //$NON-NLS-1$
 	public static String extensionPointIDjsoncomponent;
 	public static String extensionPointIDstringcomponent;
-	public static String Refresh;
-	public static String ReloadSVGImage;
 	public static String ViewTitle;
 	static {
 		// initialize resource bundle

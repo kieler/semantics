@@ -1,5 +1,8 @@
 package de.cau.cs.kieler.sim.kiem.execution;
 
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.PlatformUI;
+
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
@@ -11,12 +14,14 @@ public class ProducerExecution implements Runnable {
 	private boolean stop;
 	private DataComponent dataComponent;
 	private JSONObject data;
+	private Execution parent;
 	
 	public ProducerExecution(DataComponent dataComponent,
 						     Execution parent) {
 		this.stop = false; 
 		this.done = false; 
 		this.data = null;
+		this.parent = parent;
 		this.dataComponent = dataComponent;
 	}
 	
@@ -45,7 +50,7 @@ public class ProducerExecution implements Runnable {
 					this.wait();
 				}
 				catch(Exception e) {
-					e.printStackTrace();
+					parent.showError(e.getMessage(), this.dataComponent.getConfigurationElement().getContributor().getName());
 				}
 			}//end while
 		}//end synchronized
@@ -85,10 +90,10 @@ public class ProducerExecution implements Runnable {
 						}
 						//at this point we know that someone wants us
 						//to make a step and done is false
+					}}
+					catch(Exception e) {
+						parent.showError(e.getMessage(), this.dataComponent.getConfigurationElement().getContributor().getName());
 					}
-				}catch(Exception e){
-					e.printStackTrace();
-				}
 				
 //System.out.println("  "+dataComponent.getName() + " (Pure Producer) calc start");
 				//do asynchronous call
@@ -106,7 +111,9 @@ public class ProducerExecution implements Runnable {
 					this.data = null;
 					if (JSONString != null && !JSONString.equals("")) {
 						try {this.data = new JSONObject(JSONString);}
-						catch(Exception e) {e.printStackTrace();}
+						catch(Exception e) {
+							parent.showError(e.getMessage(), this.dataComponent.getConfigurationElement().getContributor().getName());
+						}
 					}//not null
 				}
 			}//end if not done
@@ -115,5 +122,4 @@ public class ProducerExecution implements Runnable {
 			
 		}//next while not stop
 	}
-
 }

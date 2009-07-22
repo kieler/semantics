@@ -11,11 +11,14 @@ public class ObserverExecution implements Runnable {
 	private boolean stop;
 	private DataComponent dataComponent;
 	private JSONObject data;
+	private Execution parent;
 	
-	public ObserverExecution(DataComponent dataComponent) {
+	public ObserverExecution(DataComponent dataComponent,
+							 Execution parent) {
 		this.stop = false; 
 		this.done = true; 
 		this.data = null;
+		this.parent = parent;
 		this.dataComponent = dataComponent;
 	}
 	
@@ -56,10 +59,10 @@ public class ObserverExecution implements Runnable {
 					this.done = true;
 //System.out.println("  "+dataComponent.getName() + " (Pure Observer) calc end");
 					this.wait();
+				}}
+				catch(Exception e) {
+					parent.showError(e.getMessage(), this.dataComponent.getConfigurationElement().getContributor().getName());
 				}
-			}catch(Exception e){
-				e.printStackTrace();
-			}
 			
 			try {
 //System.out.println("  "+dataComponent.getName() + " (Pure Observer) calc start");
@@ -78,10 +81,10 @@ public class ObserverExecution implements Runnable {
 						compString.step(this.data.toString());
 					else
 						compString.step(null);
+				}}
+				catch(Exception e) {
+					parent.showError(e.getMessage(), this.dataComponent.getConfigurationElement().getContributor().getName());
 				}
-			}catch(Exception e){
-				e.printStackTrace();
-			}
 			
 		}//next while not stop
 	}

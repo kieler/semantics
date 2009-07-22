@@ -595,12 +595,15 @@ public class KiemView extends ViewPart {
 	}
 	
 	protected void updateView(boolean deselect) {
-		updateColumnsCollapsed();
-		viewer.refresh();
-		refreshEnabledDisabledTextColors();
-		if (deselect)
-			viewer.setSelection(null);
-		updateEnabled();
+		if (!viewer.isBusy()) {
+			updateColumnsCollapsed();
+			viewer.refresh();
+			refreshEnabledDisabledTextColors();
+			if (deselect) {
+				viewer.setSelection(null);
+			}
+			updateEnabled();
+		}
 	}
 	
 	public void updateColumnsCollapsed() {

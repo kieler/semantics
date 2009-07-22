@@ -14,13 +14,13 @@ public class DataPoolTestApplication {
 		try {
 			JSONDataPool dataPool = new JSONDataPool();
 			//long index = dataPool.getPoolCounter();
-			dataPool.putData(new JSONObject("{key01=value01}"));
+			dataPool.putData(new JSONObject("{key01={key01=value01}}"));
 			dataPool.putData(new JSONObject("{key02=value02}"));
 			dataPool.putData(new JSONObject("{key03=value03}"));
 			dataPool.putData(new JSONObject("{key04=value04}"));
 			dataPool.putData(new JSONObject("{key05=value05}"));
 			dataPool.putData(new JSONObject("{key06=value06}"));
-			dataPool.putData(new JSONObject("{key07=value07}"));
+			dataPool.putData(new JSONObject("{key07={key07=value07}}"));
 			//System.out.println(dataPool.getDeltaData(filter,index).toString());
 			System.out.println(dataPool.getData(null).toString());
 			
