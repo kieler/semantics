@@ -1,17 +1,36 @@
 package de.cau.cs.kieler.sim.kiem.extension;
 
+/**
+ * The Interface IDataComponent.
+ * @author delphino
+ */
 public interface IDataComponent {
 
-	//initialize prior execution
+	/**
+	 * Initialize. Do some initializing prior to execution. 
+	 */
 	public void initialize();
 	
-	//wrapup after execution
+	//
+	/**
+	 * Wrapup. Do some wrapping-up after execution has finished.
+	 */
 	public void wrapup();
 
-	//DataComponent is a producer and returns != null in step method
+	/**
+	 * Checks if is producer. DataComponent is a producer and returns != null
+	 * in step method.
+	 * 
+	 * @return true, if is producer
+	 */
 	public boolean isProducer();
 
-	//DataComponent is a Observer and needs a parameter != null in step method
+	/**
+	 * Checks if is observer. DataComponent is an Observer and needs a 
+	 * parameter != null in step method.
+	 * 
+	 * @return true, if is observer
+	 */
 	public boolean isObserver();
 
 }

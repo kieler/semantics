@@ -3,6 +3,8 @@ package de.cau.cs.kieler.sim.kiem.views;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
@@ -286,7 +288,19 @@ public class KiemView extends ViewPart {
 		});
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
-				getDoubleClickAction().run();
+				getActionEnableDisable().run();
+			}
+		});
+		viewer.getControl().addKeyListener(new KeyListener(){
+			@Override
+			public void keyPressed(KeyEvent e) {
+				//if user pressed delete
+				if (e.keyCode == 127) {
+					getActionDelete().run();
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
 			}
 		});
 	}
@@ -929,31 +943,6 @@ public class KiemView extends ViewPart {
 		actionStop.setDisabledImageDescriptor(
 				KiemPlugin.getImageDescriptor("icons/stopIconDisabled.png"));
 		return actionStop;
-	}
-	
-	private Action getDoubleClickAction() {
-		if (doubleClickAction != null) return doubleClickAction;
-		doubleClickAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				if (selection != null) {
-					Object obj = ((IStructuredSelection)selection)
-													.getFirstElement();
-					if (obj instanceof DataComponentEx) {
-						//only if execution is stopped
-						if (KIEM.execution == null) {
-						  DataComponentEx dataComponentEx = (DataComponentEx)obj;
-						  //toggle enabledness
-						  dataComponentEx.setEnabled(!dataComponentEx.isEnabled());
-						  checkForSingleEnabledMaster(false,dataComponentEx);
-						  updateView(true);
-						}
-					}// end if - selected
-				}// end if - selected
-				updateEnabled();
-			}//end run
-		};
-		return doubleClickAction;
 	}
 
 	private AimedStepDurationTextField getAimedStepDurationTextField() {

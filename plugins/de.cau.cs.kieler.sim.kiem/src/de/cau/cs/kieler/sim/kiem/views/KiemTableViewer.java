@@ -4,7 +4,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
-public class KiemTableViewer extends TreeViewer {
+public class KiemTableViewer extends TreeViewer{
 
 	public KiemTableViewer(Table table) {
 		super(table);
@@ -17,5 +17,4 @@ public class KiemTableViewer extends TreeViewer {
 	public KiemTableViewer(Composite parent) {
 		super(parent);
 	}
-
 }
