@@ -82,6 +82,9 @@ public class DataComponent extends JSONObjectDataComponent implements
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
+		//try{Thread.sleep(20000);}catch(Exception e){}
+		
 		return returnObj;
 	}
 
@@ -109,11 +112,6 @@ public class DataComponent extends JSONObjectDataComponent implements
 	public boolean isProducer() {
 		// TODO Auto-generated method stub
 		return true;
-	}
-	
-	@Override
-	public boolean isModelFileNeeded() {
-		return false;
 	}
 	
 	@Override
