@@ -3,6 +3,7 @@ package de.cau.cs.kieler.sim.abro;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyList;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeChoice;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
@@ -143,7 +144,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 
 	@Override
 	public KiemProperty[] initializeProperties() {
-		KiemProperty[] properties = new KiemProperty[6];
+		KiemProperty[] properties = new KiemProperty[7];
 		properties[0] = new KiemProperty(
 				"state name",
 				"state");
@@ -166,6 +167,10 @@ public class DataComponent extends JSONObjectDataComponent implements
 				"workspace file",
 				new KiemPropertyTypeWorkspaceFile(),
 				"/nothing.txt");
+		properties[6] = new KiemProperty(
+				"editor",
+				new KiemPropertyTypeEditor(),
+				"");
 		return properties;
 	}	
 	

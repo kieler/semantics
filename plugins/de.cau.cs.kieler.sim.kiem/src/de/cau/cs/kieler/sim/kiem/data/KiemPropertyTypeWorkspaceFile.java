@@ -89,7 +89,7 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 											   new WorkbenchLabelProvider(), 
 											   new BaseWorkbenchContentProvider());
 			dlg.setTitle("Open");
-			dlg.setMessage("Select a file from your workspace to open:");
+			dlg.setMessage("Select a file from your workspace to be opened:");
 			dlg.setInput(ResourcesPlugin.getWorkspace().getRoot());
 			dlg.setAllowMultiple(false);
 			int val = dlg.open();
