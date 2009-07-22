@@ -7,7 +7,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-//import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
@@ -16,6 +15,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 									implements IKiemPropertyType {
 	
+	private static final long serialVersionUID = -2468753195329915004L;
 
 
 	private static final Image PROPERTY_FILE = AbstractUIPlugin
