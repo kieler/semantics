@@ -41,9 +41,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 	//List of available dataProducers and dataObservers
 	List<DataComponent> dataComponentList;
 	
-	//Contains the current model to execute or null initially/after stop
-	private String currentModelFile;
-	
 	//Execution object and thread
 	public Execution execution;
 	public Thread executionThread;
@@ -54,7 +51,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 	 */
 	public KiemPlugin() {
 		dataComponentList = this.getDataComponentList();
-		currentModelFile = null;
 		execution = null;
 		aimedStepDuration = AIMED_STEP_DURATION_DEFAULT;
 	}
@@ -102,9 +98,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 		ISelection selection = this.getWorkbench()
 			.getActiveWorkbenchWindow().getSelectionService()
 			.getSelection("org.eclipse.ui.navigator.ProjectExplorer");
-		//update currentModelFile property
-        this.currentModelFile = extractSelection(selection)
-        	.getFullPath().toString();
 	}
 	
 	public int getAimedStepDuration() {
@@ -116,15 +109,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 		if (execution != null)
 			this.execution.setAimedStepDuration(aimedStepDuration);
 	}
-	
-	public String getCurrentModelFile() {
-		return this.currentModelFile;
-	}
-	
-	public void resetCurrentModelFile() {
-		currentModelFile = null;
-	}
-	
 	
 	public IResource extractSelection(ISelection sel) {
 	      if (!(sel instanceof IStructuredSelection))

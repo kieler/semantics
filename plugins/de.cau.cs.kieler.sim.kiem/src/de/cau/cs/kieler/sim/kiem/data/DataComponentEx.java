@@ -134,15 +134,9 @@ public class DataComponentEx {
 	public boolean isStepDone() {
 		return this.component.isStepDone(); 
 	}
-	public boolean isModelFileNeeded() {
-		return this.component.isModelFileNeeded(); 
-	}
 	
-	public void setModelFile(String modelFile) {
-		this.component.setModelFile(modelFile); 
-	}
 	public void setGloblaInterfaceVariables(String[] globalInterfaceVariables) {
-		this.component.setGloblaInterfaceVariables(globalInterfaceVariables); 
+		this.component.setGlobalInterfaceVariables(globalInterfaceVariables); 
 	}
 	
 }

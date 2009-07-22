@@ -60,7 +60,7 @@ public class KiemView extends ViewPart {
 	public static final int[] columnBoundsCollapsed 
 								= { 180, 0 , 20, 120, 50, 50};
 	public static final int[] columnBounds 
-								= { 180, 100 , 20, 120, 50, 50};
+								= { 180, 200 , 20, 120, 50, 50};
 	public int columnProperty = -1;
 
 	public static final String[] columnTitlesCollapsed = { 
@@ -68,33 +68,25 @@ public class KiemView extends ViewPart {
 			"Value", 
 			"",
 			"Type", 
-			//"JSON", 
-			"Master", 
-			"Model" };
+			"Master"};
 	public static final String[] columnTitles = { 
 		"Component Name / Key",
 		"Value", 
 		"",
 		"Type", 
-		//"JSON", 
-		"Master", 
-		"Model" };
+		"Master"};
 	public static final String[] columnToolTipCollapsed = { 
 			 "Name of Data Component",
 			 "Property Value",
 			 "Enabled/Disabled",
  			 "Producer, Observer or Initialization Data Component", 
- 			 //"JSONObject (JSONString otherwise)", 
- 			 "Is a Master that leads Execution", 
- 			 "Needs selected Model File" };
+ 			 "Is a Master that leads Execution"};
 	public static final String[] columnToolTip = { 
 		 "Property Key",
 		 "Property Value",
 		 "Enabled/Disabled",
 		 "Producer, Observer or Initialization Data Component", 
-		 //"JSONObject (JSONString otherwise)", 
-		 "Is a Master that leads Execution", 
-		 "Needs selected Model File" };
+		 "Is a Master that leads Execution"};
 	
 
 	@SuppressWarnings("unused")
@@ -387,35 +379,12 @@ public class KiemView extends ViewPart {
 	private boolean initDataComponentEx(boolean silent) {
 		if (KIEM.execution != null) return true;
 
-		try {
-			//update model file
-			KIEM.updateCurrentModelFile();
-		}
-		catch(Exception e) {
-			//not all producer may require a selected model
-			//only those which have overridden the needModelFile() method
-			//and also are enabled are beeing tested here
-			for (int c = 0; c < dataComponentExList.size(); c++) {
-			  DataComponentEx dataComponentEx = dataComponentExList.get(c);
-			  if (dataComponentEx.isEnabled() &&
-					dataComponentEx.isModelFileNeeded()) {
-					showWarning("Component '"+dataComponentEx.getName()
-							   +"' needs an input model file."+
-							   "\nPlease select one in the Project Explorer!");
-					KIEM.resetCurrentModelFile();
-					return false;
-			  }
-			}
-			KIEM.resetCurrentModelFile();
-		}
-
 		int countEnabledProducer = 0;
 		int countEnabledObserver = 0;
 
 		//count all (enabled) data producer and Observer
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
-			dataComponentEx.setModelFile(KIEM.getCurrentModelFile());
 			if (dataComponentEx.isEnabled()) {
 				if (dataComponentEx.isProducer()) {
 					countEnabledProducer++;
@@ -429,7 +398,6 @@ public class KiemView extends ViewPart {
 		if (countEnabledProducer < 1) {
 			if (!silent)
 				showWarning("Please enable at least one Data Producer!");
-			KIEM.resetCurrentModelFile();
 			KIEM.execution.stopExecution();
 			KIEM.execution = null;
 			return false;
@@ -437,7 +405,6 @@ public class KiemView extends ViewPart {
 		else if (countEnabledObserver < 1) {
 			if (!silent)
 				showWarning("Please enable at least one Data Observer!");
-			KIEM.resetCurrentModelFile();
 			KIEM.execution.stopExecution();
 			KIEM.execution = null;
 			return false;
@@ -473,7 +440,6 @@ public class KiemView extends ViewPart {
 		//initialize all (enabled) data producer and Observer
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
-			dataComponentEx.setModelFile(KIEM.getCurrentModelFile());
 			if (dataComponentEx.isEnabled()) {
 					dataComponentEx.getDataComponent().initialize();
 			}//end if enabled
@@ -915,7 +881,6 @@ public class KiemView extends ViewPart {
 				long aimedStepDuration = 
 					KIEM.execution.getAimedStepDuration();
 				
-				KIEM.resetCurrentModelFile();
 				KIEM.execution = null;
 				updateView(true);
 

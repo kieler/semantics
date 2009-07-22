@@ -106,23 +106,6 @@ public class KiemLabelProvider implements ITableLabelProvider {
 				return null;
 			}
 		}
-		else if (columnIndex == 5) {
-			if (dataComponentEx.isModelFileNeeded()) {
-				//enabled
-				if (dataComponentEx.isEnabled()) {
-					if (dataComponentEx.isMaster())
-						return KiemIcons.CHECKEDPLAIN_MASTER;
-					else
-						return KiemIcons.CHECKEDPLAIN;
-				}
-				else
-					return KiemIcons.CHECKEDPLAIN_DISABLED;					
-			}
-			else {
-				//disabled
-				return null;
-			}
-		}
 		return null;
 	}
 
@@ -140,8 +123,6 @@ public class KiemLabelProvider implements ITableLabelProvider {
 			case 3 : // TYPE_COLUMN
 				return "";
 			case 4 : // MASTER_COLUMN
-				return "";
-			case 5 : // NEEDMODEL_COLUMN
 				return "";
 			default :
 				throw new RuntimeException("columnIndex out of bounds (6)");
