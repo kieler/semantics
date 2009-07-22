@@ -42,7 +42,7 @@ public class DataObserver extends JSONStringDataComponent implements
 					if (obj instanceof JSONObject) {
 						value = ((JSONObject)obj).toString();
 					}
-					if (obj instanceof JSONArray) {
+					else if (obj instanceof JSONArray) {
 						value = ((JSONArray)obj).toString();
 					}
 					else {
