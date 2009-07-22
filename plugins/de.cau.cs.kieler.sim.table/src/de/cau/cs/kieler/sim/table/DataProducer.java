@@ -63,6 +63,12 @@ public class DataProducer extends JSONStringDataComponent implements
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	@Override
+	public void wrapup() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

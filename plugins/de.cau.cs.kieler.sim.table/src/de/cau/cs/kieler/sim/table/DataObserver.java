@@ -1,7 +1,5 @@
 package de.cau.cs.kieler.sim.table;
 
-import java.util.List;
-
 import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONArray;
@@ -10,11 +8,10 @@ import de.cau.cs.kieler.sim.table.views.DataTableView;
 
 public class DataObserver extends JSONStringDataComponent implements
 		IJSONStringDataComponent {
-//
+
 	//List<TableData> da
 	
 	public DataObserver() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String step(String JSONString) {
@@ -116,5 +113,11 @@ public class DataObserver extends JSONStringDataComponent implements
 	public boolean isDeltaObserver() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public void wrapup() {
+		// TODO Auto-generated method stub
+		
 	}
 }
