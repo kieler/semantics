@@ -49,7 +49,7 @@ public class TimeoutThread extends Thread {
 	}
 	
 	public void run() {
-		System.out.println("Timeout - thread started");
+//System.out.println("Timeout - thread started");
 		while(!terminate) {
 
 			synchronized(this) {
@@ -62,17 +62,17 @@ public class TimeoutThread extends Thread {
 				//a value > 100
 			}
 			
-			System.out.println("Timeout - started");
+//System.out.println("Timeout - started");
 
 			while (!terminate && active) {
 				try{Thread.sleep(this.timeout/100);}catch(Exception e){}
 				if (this.abort) {
-					System.out.println("Timeout - aborted");
+//System.out.println("Timeout - aborted");
 					//timeout aborted
 					this.active = false;
 				}
 				else if (System.currentTimeMillis() > stopTime) {
-					System.out.println("Timeout - catched !!!");
+//System.out.println("Timeout - catched !!!");
 					//timeout
 					this.execution.showError(
 							"Timeout of component '"+dataComponentEx.getName()+

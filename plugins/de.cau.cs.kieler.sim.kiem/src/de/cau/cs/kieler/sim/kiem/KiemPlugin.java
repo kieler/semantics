@@ -1,15 +1,21 @@
 package de.cau.cs.kieler.sim.kiem;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -17,10 +23,12 @@ import org.osgi.framework.BundleContext;
 //import org.eclipse.jface.viewers.IStructuredSelection;
 //import org.eclipse.core.runtime.IAdaptable;
 
+import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -39,20 +47,26 @@ public class KiemPlugin extends AbstractUIPlugin {
 	private static KiemPlugin plugin;
 	
 	//List of available dataProducers and dataObservers
-	List<DataComponent> dataComponentList;
+	private List<DataComponent> dataComponentList;
+	
+	//List of selected dataComponentEx's (modified by KiemView)
+	private List<DataComponentEx> dataComponentExList;
 	
 	//Execution object and thread
 	public Execution execution;
 	public Thread executionThread;
 	private int aimedStepDuration;
+	private KiemView KIEMViewInstance;
 	
 	/**
 	 * The constructor
 	 */
 	public KiemPlugin() {
 		dataComponentList = this.getDataComponentList();
+		dataComponentExList = getDefaultComponentExList();
 		execution = null;
 		aimedStepDuration = AIMED_STEP_DURATION_DEFAULT;
+		KIEMViewInstance = null;
 	}
 
 	/*
@@ -93,12 +107,33 @@ public class KiemPlugin extends AbstractUIPlugin {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 	
-	public void updateCurrentModelFile() {
-		//get the selected model from the project explorer
-		ISelection selection = this.getWorkbench()
-			.getActiveWorkbenchWindow().getSelectionService()
-			.getSelection("org.eclipse.ui.navigator.ProjectExplorer");
+	public List<DataComponentEx> getDataComponentExList() {
+		return this.dataComponentExList;
 	}
+	
+	public void updateViewAsync() {
+		if (this.KIEMViewInstance != null) {
+			this.KIEMViewInstance.updateViewAsync();
+
+		}
+	}
+	public void updateStepsAsync() {
+		if (this.KIEMViewInstance != null) {
+			this.KIEMViewInstance.updateStepsAsync();
+
+		}
+	}
+	public void setKIEMViewInstance(KiemView KIEMViewInstance) {
+		this.KIEMViewInstance = KIEMViewInstance;
+	}
+	
+	
+//	public void updateCurrentModelFile() {
+//		//get the selected model from the project explorer
+//		ISelection selection = this.getWorkbench()
+//			.getActiveWorkbenchWindow().getSelectionService()
+//			.getSelection("org.eclipse.ui.navigator.ProjectExplorer");
+//	}
 	
 	public int getAimedStepDuration() {
 		return this.aimedStepDuration;
@@ -174,4 +209,186 @@ public class KiemPlugin extends AbstractUIPlugin {
 		}
 		return dataComponentList;
 	}
+	
+	public boolean initExecution() {
+		if (this.execution != null) return true;
+
+		int countEnabledProducer = 0;
+		int countEnabledObserver = 0;
+
+		//count all (enabled) data producer and Observer
+		for (int c = 0; c < dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentEx = dataComponentExList.get(c);
+			if (dataComponentEx.isEnabled()) {
+				if (dataComponentEx.isProducer()) {
+					countEnabledProducer++;
+				}
+				if (dataComponentEx.isObserver()) {
+					countEnabledObserver++;
+				}
+			}//end if enabled
+		}//next c
+
+		if (countEnabledProducer < 1) {
+			this.showError("Please enable at least one Data Producer!",this.PLUGIN_ID);
+			this.execution.stopExecution();
+			this.execution = null;
+			return false;
+		}
+		else if (countEnabledObserver < 1) {
+			showError("Please enable at least one Data Observer!",this.PLUGIN_ID);
+			this.execution.stopExecution();
+			this.execution = null;
+			return false;
+		}
+		
+		
+		//get all localInterfaceVariables and combine them into
+		//globalInterfaceVariables
+		//initialize all (enabled) data producer and Observer
+		List<String> globalInterfaceVariables = new LinkedList<String>();
+		for (int c = 0; c < dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentEx = dataComponentExList.get(c);
+			String[] localInterfaceVariables = 
+									dataComponentEx.getLocalInterfaceVariables();
+			if (localInterfaceVariables != null) {
+				for (int cc = 0; cc < localInterfaceVariables.length; cc++) {
+				   String localInterfaceVariable = localInterfaceVariables[cc];
+				   globalInterfaceVariables.add(localInterfaceVariable);
+				}//next cc
+			}//end if enabled
+		}//next c
+		
+		//initialize globalInterfaceVariables in all enabled components
+		for (int c = 0; c < dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentEx = dataComponentExList.get(c);
+			if (dataComponentEx.isEnabled()) {
+				dataComponentEx.setGloblaInterfaceVariables
+					((String[])globalInterfaceVariables.toArray(new String [0]));
+			}//end if enabled
+		}//next c
+		
+		//initialize all (enabled) data producer and Observer
+		for (int c = 0; c < dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentEx = dataComponentExList.get(c);
+			if (dataComponentEx.isEnabled()) {
+					dataComponentEx.getDataComponent().initialize();
+			}//end if enabled
+		}//next c
+		
+		//now create and run the execution thread
+		this.execution = new Execution(dataComponentExList);
+		//take the last set delay
+		this.execution.setAimedStepDuration(this.getAimedStepDuration());
+		this.executionThread = new Thread(this.execution);
+		this.executionThread.start();
+
+		return true;
+	}
+
+	//-------------------------------------------------------------------------
+	
+	public void addTodataComponentExList(DataComponent component) {
+		IConfigurationElement componentConfigEle = 
+								component.getConfigurationElement();
+		DataComponent componentClone;
+		try {
+			componentClone = (DataComponent)
+						componentConfigEle.createExecutableExtension("class");
+			componentClone.setConfigurationElemenet(componentConfigEle);
+			
+			DataComponentEx dataComponentEx = new DataComponentEx(componentClone);
+			this.dataComponentExList.add(dataComponentEx);
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+	}
+
+	//-------------------------------------------------------------------------
+	
+	public List<DataComponentEx> getDefaultComponentExList() {
+		List<DataComponent> list = this.getDataComponentList();
+		List<DataComponentEx> returnList = 
+							new LinkedList<DataComponentEx>();
+		//first add pure producer
+		for (int c = 0; c < list.size(); c ++) {
+			DataComponent dataComponent = (DataComponent)list.get(c);
+			DataComponentEx dataComponentEx = 
+				new DataComponentEx(dataComponent);
+			if (dataComponentEx.isProducerOnly()) {
+				returnList.add(dataComponentEx);
+			}
+		}
+		//then add Observer & producer
+		for (int c = 0; c < list.size(); c ++) {
+			DataComponent dataComponent = (DataComponent)list.get(c);
+			DataComponentEx dataComponentEx = 
+				new DataComponentEx(dataComponent);
+			if (dataComponentEx.isProducerObserver()) {
+				returnList.add(dataComponentEx);
+			}
+		}
+		//then add pure Observer
+		for (int c = 0; c < list.size(); c ++) {
+			DataComponent dataComponent = (DataComponent)list.get(c);
+			DataComponentEx dataComponentEx = 
+				new DataComponentEx(dataComponent);
+			if (dataComponentEx.isObserverOnly()) {
+				returnList.add(dataComponentEx);
+			}
+		}
+		return returnList;
+	}
+
+	//-------------------------------------------------------------------------
+
+	public void showWarning(String textMessage, String PluginID) {
+		try{
+			IStatus status = new Status(IStatus.WARNING,
+					PluginID,
+					42,textMessage, null);
+			KiemPlugin.getDefault().getLog().log(status);
+			
+			Display.getDefault().asyncExec(
+					  new Runnable() {
+						    public void run(){
+								try{
+									IViewPart VP = KIEMViewInstance.getViewSite().getPage().showView("org.eclipse.pde.runtime.LogView");
+									VP.setFocus();
+								}catch(Exception e){
+									showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+								}		
+						    }
+			});
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
+	}
+
+	//-------------------------------------------------------------------------
+	
+	public void showError(String textMessage, String PluginID) {
+		try{
+			IStatus status = new Status(IStatus.ERROR,
+					PluginID,
+					42,textMessage, null);
+			KiemPlugin.getDefault().getLog().log(status);
+			
+			Display.getDefault().asyncExec(
+					  new Runnable() {
+						    public void run(){
+								try{
+									IViewPart VP = KIEMViewInstance.getViewSite().getPage().showView("org.eclipse.pde.runtime.LogView");
+									VP.setFocus();
+								}catch(Exception e){
+									e.printStackTrace();
+								}		
+						    }
+			});
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
+	}
+	
+	
 }

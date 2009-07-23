@@ -80,14 +80,14 @@ public class KiemLabelProvider implements ITableLabelProvider {
 		else if (columnIndex == 2) {
 			if (dataComponentEx.isEnabled()) {
 				//enabled
-				if (parent.KIEM.execution == null)
+				if (parent.KIEMInstance.execution == null)
 					return KiemIcons.CHECKED;
 				else
 					return KiemIcons.CHECKED_DISABLED;
 			}
 			else {
 				//disabled
-				if (parent.KIEM.execution == null)
+				if (parent.KIEMInstance.execution == null)
 					return KiemIcons.UNCHECKED;
 				else
 					return KiemIcons.UNCHECKED_DISABLED;

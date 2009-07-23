@@ -66,7 +66,7 @@ public class Execution implements Runnable {
 	private ProducerExecution[] producerExecutionArray;
 	
 	//KiemView to control execution
-	KiemView view;
+	//KiemView view;
 	
 	//Timeout
 	TimeoutThread timeout;
@@ -79,9 +79,7 @@ public class Execution implements Runnable {
 	 * @param dataComponentExList the data component ex list
 	 * @param view the view
 	 */
-	public Execution(List<DataComponentEx> dataComponentExList,
-					 KiemView view) {
-		this.view = view;
+	public Execution(List<DataComponentEx> dataComponentExList) {
 		this.stepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
 		this.stop = false; 
 		this.steps = NO_STEPS; // == paused
@@ -267,9 +265,9 @@ public class Execution implements Runnable {
 		this.steps = NO_STEPS;
 		this.stop = true;
 		//release the object
-		view.KIEM.execution = null;
+		KiemPlugin.getDefault().execution = null;
 		//update the view
-		view.updateViewAsync();
+		KiemPlugin.getDefault().updateViewAsync();
 		//try to stop all components, no blocking stopExecution() call
 		for (int c = 0; c < this.dataComponentExList.size(); c++) {
 			if (this.observerExecutionArray[c] != null) {
@@ -366,7 +364,7 @@ public class Execution implements Runnable {
 						if (   dataComponentEx.isEnabled()
 							&& dataComponentEx.isPauseFlag()) {
 							this.pauseExecution();
-							view.updateViewAsync();
+							KiemPlugin.getDefault().updateViewAsync();
 						}
 						timeout.abortTimeout();
 					}
@@ -377,7 +375,7 @@ public class Execution implements Runnable {
 				if ((steps == INFINITY_STEPS)||(steps > NO_STEPS)) {
 					//make a tick
 					this.stepCounter++;
-					view.updateStepsAsync();
+					KiemPlugin.getDefault().updateStepsAsync();
 					
 					//this is the data pool index which will be
 					//referred to for this step
@@ -466,7 +464,7 @@ public class Execution implements Runnable {
 													   new JSONObject(newData));
 								}
 							}catch(Exception e) {
-								showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+								KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
 							}
 //System.out.println(dataComponentEx.getName() + " (Norm Producer) return");
 						}
@@ -486,7 +484,7 @@ public class Execution implements Runnable {
 										  (filterKeys,dataComponentEx.getDeltaIndex());
 									observerExecutionArray[c].setData(oldData);
 								}catch(Exception e){
-									showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+									KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
 								}
 								//call async method 
 								if (!(observerExecutionArray[c].step())) {
@@ -523,7 +521,7 @@ public class Execution implements Runnable {
 									if (newData != null) 
 										this.dataPool.putData(newData);
 								}catch(Exception e){
-									showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+									KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
 								}
 								
 						}
@@ -563,7 +561,7 @@ public class Execution implements Runnable {
 				int timeToDelay = this.aimedStepDuration - this.stepDuration;
 				if (timeToDelay > 0)
 					try{Thread.sleep(timeToDelay);}catch(Exception e){
-						showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+						KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
 					}
 			}	
 			
@@ -575,7 +573,7 @@ public class Execution implements Runnable {
 				starttime = System.currentTimeMillis();
 //System.out.println(">>PAUSED<<");
 				try{Thread.sleep(PAUSE_DEYLAY);}catch(Exception e){
-					showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+					KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
 				}
 				//if stop is requested, jump out
 				if (this.stop) return;
@@ -588,52 +586,10 @@ public class Execution implements Runnable {
 
 	//-------------------------------------------------------------------------
 	
-	protected void showWarning(String textMessage, String PluginID) {
-		try{
-			IStatus status = new Status(IStatus.WARNING,
-					PluginID,
-					42,textMessage, null);
-			KiemPlugin.getDefault().getLog().log(status);
-			
-			Display.getDefault().asyncExec(
-					  new Runnable() {
-						    public void run(){
-								try{
-									IViewPart VP = view.getViewSite().getPage().showView("org.eclipse.pde.runtime.LogView");
-									VP.setFocus();
-								}catch(Exception e){
-									showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
-								}		
-						    }
-			});
-		}catch(Exception e){
-			e.printStackTrace();
-		}		
+	public void showError(String textMessage, String PluginID) {
+		KiemPlugin.getDefault().showError(textMessage, PluginID);
 	}
-
-	//-------------------------------------------------------------------------
-	
-	protected void showError(String textMessage, String PluginID) {
-		try{
-			IStatus status = new Status(IStatus.ERROR,
-					PluginID,
-					42,textMessage, null);
-			KiemPlugin.getDefault().getLog().log(status);
-			
-			Display.getDefault().asyncExec(
-					  new Runnable() {
-						    public void run(){
-								try{
-									IViewPart VP = view.getViewSite().getPage().showView("org.eclipse.pde.runtime.LogView");
-									VP.setFocus();
-								}catch(Exception e){
-									e.printStackTrace();
-								}		
-						    }
-			});
-		}catch(Exception e){
-			e.printStackTrace();
-		}		
+	public void showWarning(String textMessage, String PluginID) {
+		KiemPlugin.getDefault().showWarning(textMessage, PluginID);
 	}
-	
 }

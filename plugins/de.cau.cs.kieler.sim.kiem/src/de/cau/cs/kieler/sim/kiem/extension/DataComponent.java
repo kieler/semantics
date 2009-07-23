@@ -312,6 +312,23 @@ public abstract class DataComponent implements IDataComponent,
 	}
 	
 	/**
+	 * Override this if the DataComponents implements the GUI buttons by
+	 * itself. When this option returns false, then the component must
+	 * implement the following methods:
+	 * 		masterGUIstep
+	 * 		masterGUImacrostep
+	 * 		masterGUIrun
+	 * 		masterGUIpause
+	 * 		masterGUIstop
+	 * 
+	 * @return true, if component implements the GUI buttons
+	 */
+	public boolean isMasterImplementingGUI() {
+		return false;
+	}
+	
+	
+	/**
 	 * Master step execution. If this is a master it can initiate the execution
 	 * this method returns -1 if the previous step did not completed yet
 	 * otherwise it will return the last execution time of the full step
@@ -323,8 +340,8 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public final void masterStepExecution() throws Exception {
 		if (this.isMaster()) {
-			if ((KIEMViewInstance != null)) {
-				KIEMViewInstance.initDataComponentEx();
+			if ((KIEMInstance != null)) {
+				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.stepExecution();
@@ -347,8 +364,8 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public final void masterMacroStepExecution() throws Exception {
 		if (this.isMaster()) {
-			if ((KIEMViewInstance != null)) {
-				KIEMViewInstance.initDataComponentEx();
+			if ((KIEMInstance != null)) {
+				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.macroStepExecution();
@@ -369,8 +386,8 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public final void masterStopExecution() throws Exception {
 		if (this.isMaster()) {
-			if (KIEMViewInstance != null) {
-				KIEMViewInstance.initDataComponentEx();
+			if (KIEMInstance != null) {
+				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.stopExecution();
@@ -393,8 +410,8 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public final void masterPauseExecution() throws Exception {
 		if (this.isMaster()) {
-			if ((KIEMViewInstance != null)) {
-				KIEMViewInstance.initDataComponentEx();
+			if ((KIEMInstance != null)) {
+				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.pauseExecution();
@@ -419,8 +436,8 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public final void masterSetAimedStepDuration(int aimedStepDuration) throws Exception {
 		if (this.isMaster()) {
-			if (KIEMViewInstance != null) {
-				KIEMViewInstance.initDataComponentEx();
+			if (KIEMInstance != null) {
+				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.setAimedStepDuration(aimedStepDuration);
@@ -445,8 +462,8 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public final int masterGetAimedStepDuration() throws Exception {
 		if (this.isMaster()) {
-			if (KIEMViewInstance != null) {
-				KIEMViewInstance.initDataComponentEx();
+			if (KIEMInstance != null) {
+				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				return KIEMInstance.execution.getAimedStepDuration();
@@ -466,8 +483,8 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public final void masterRunExecution() throws Exception {
 		if (this.isMaster()) {
-			if ((KIEMViewInstance != null)) {
-				KIEMViewInstance.initDataComponentEx();
+			if ((KIEMInstance != null)) {
+				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.runExecution();
@@ -492,8 +509,8 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public final boolean masterIsPaused() throws Exception {
 		if (this.isMaster()) {
-			if (KIEMViewInstance != null) {
-				KIEMViewInstance.initDataComponentEx();
+			if (KIEMInstance != null) {
+				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				return KIEMInstance.execution.isPaused();
@@ -516,8 +533,8 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public final boolean masterIsRunning() throws Exception {
 		if (this.isMaster()) {
-			if (KIEMViewInstance != null) {
-				KIEMViewInstance.initDataComponentEx();
+			if (KIEMInstance != null) {
+				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				return KIEMInstance.execution.isRunning();
@@ -542,6 +559,47 @@ public abstract class DataComponent implements IDataComponent,
 		this.KIEMInstance = KIEMInstance;
 		this.KIEMViewInstance = KIEMViewInstance;
 	}
+	
 	//-------------------------------------------------------------------------
 	
+	/**
+	 * Master implementation of the step button. This is only called if the
+	 * component returns true in method isMasterImplementingGUI
+	 */
+	public void	masterGUIstep() {
+		//no default implementation
+	}
+	
+	/**
+	 * Master implementation of the macro step button. This is only called if
+	 * the component returns true in method isMasterImplementingGUI
+	 */
+	public void	masterGUImacroStep() {
+		//no default implementation
+	}
+	
+	/**
+	 * Master implementation of the run button. This is only called if the
+	 * component returns true in method isMasterImplementingGUI
+	 */
+	public void masterGUIrun() {
+		//no default implementation
+	}
+	
+	/**
+	 * Master implementation of the pause button. This is only called if the
+	 * component returns true in method isMasterImplementingGUI
+	 */
+	public void masterGUIpause() {
+		//no default implementation
+	}
+	
+	/**
+	 * Master implementation of the stop button. This is only called if the
+	 * component returns true in method isMasterImplementingGUI
+	 */
+	public void masterGUIstop() {
+		//no default implementation
+	}
+		
 }

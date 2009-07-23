@@ -139,4 +139,23 @@ public class DataComponentEx {
 		this.component.setGlobalInterfaceVariables(globalInterfaceVariables); 
 	}
 	
+	public boolean isMasterImplementingGUI() {
+		return this.component.isMasterImplementingGUI();
+	}
+	public void	masterGUIstep() {
+		this.component.masterGUIstep();
+	}
+	public void	masterGUImacroStep() {
+		this.component.masterGUImacroStep();
+	}
+	public void	masterGUIrun() {
+		this.component.masterGUIrun();
+	}
+	public void	masterGUIpause() {
+		this.component.masterGUIpause();
+	}
+	public void	masterGUIstop() {
+		this.component.masterGUIstop();
+	}
+	
 }
