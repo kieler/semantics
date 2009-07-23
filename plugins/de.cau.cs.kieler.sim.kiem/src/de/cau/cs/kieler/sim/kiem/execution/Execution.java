@@ -250,6 +250,8 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	public synchronized void runExecutionSync() {
+		pausedCommand = false;
+		
 		synchronized(this) {
 			//notify components
 			for(int c = 0; c < this.dataComponentExList.size(); c++) {
