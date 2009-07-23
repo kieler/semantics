@@ -27,16 +27,14 @@ public class KiemPropertyTypeBool extends KiemPropertyType
 	}
 
 	@Override
-	public Object getValue(Object element) {
-		KiemProperty property = (KiemProperty)element;
+	public Object getValue(KiemProperty property) {
 		if (property.getValue().equals("true")) return 1;
 		else return 0;
 	}
 
 	@Override
-	public void setValue(Object element, Object value) {
-		KiemProperty property = (KiemProperty)element;
-		if ((Integer) value == 0) {
+	public void setValue(KiemProperty property, Object value) {
+		if (Integer.parseInt((String)value) == 0) {
 			property.setValue("false");
 		}
 		else {

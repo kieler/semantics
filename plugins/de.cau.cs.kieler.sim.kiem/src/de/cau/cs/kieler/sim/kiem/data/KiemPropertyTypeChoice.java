@@ -30,8 +30,7 @@ public class KiemPropertyTypeChoice extends KiemPropertyType
 	}
 
 	@Override
-	public Object getValue(Object element) {
-		KiemProperty property = (KiemProperty)element;
+	public Object getValue(KiemProperty property) {
 		for (int c = 0; c < items.length; c ++) {
 			if (property.getValue().equals(items[c])) return c;
 		}
@@ -39,9 +38,9 @@ public class KiemPropertyTypeChoice extends KiemPropertyType
 	}
 
 	@Override
-	public void setValue(Object element, Object value) {
+	public void setValue(KiemProperty element, Object value) {
 		KiemProperty property = (KiemProperty)element;
-		property.setValue(items[(Integer)value]);
+		property.setValue(items[Integer.parseInt((String)value)]);
 	}
 	
 	public void setItems(String[] items) {

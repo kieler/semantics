@@ -16,14 +16,12 @@ public class KiemPropertyTypeInt extends KiemPropertyType
 	}
 
 	@Override
-	public Object getValue(Object element) {
-		KiemProperty property = (KiemProperty)element;
+	public Object getValue(KiemProperty property) {
 		return property.value;
 	}
 
 	@Override
-	public void setValue(Object element, Object value) {
-		KiemProperty property = (KiemProperty)element;
+	public void setValue(KiemProperty property, Object value) {
 		try {
 			property.setValue(""+Integer.valueOf((String)value));
 		}catch(Exception e) {

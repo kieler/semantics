@@ -46,13 +46,13 @@ public class KiemPropertyEditing extends EditingSupport {
 	@Override
 	protected Object getValue(Object element) {
 		KiemProperty property = (KiemProperty)element;
-		return property.getType().getValue(element);
+		return property.getType().getValue(property);
 	}
 
 	@Override
 	protected void setValue(Object element, Object value) {
 		KiemProperty property = (KiemProperty)element;
-		property.getType().setValue(element, value);
+		property.getType().setValue(property, ""+value);
 		getViewer().update(element, null);
 	}
 

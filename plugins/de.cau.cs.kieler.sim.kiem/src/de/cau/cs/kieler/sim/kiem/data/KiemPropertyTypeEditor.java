@@ -47,9 +47,8 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 	}
 	
 	@Override
-	public Object getValue(Object element) {
+	public Object getValue(KiemProperty property) {
 		if ((items == null)||(items.length == 0)) return 0;
-		KiemProperty property = (KiemProperty)element;
 		for (int c = 0; c < items.length; c ++) {
 			if (property.getValue().equals(items[c])) return c;
 		}
@@ -57,10 +56,9 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 	}
 
 	@Override
-	public void setValue(Object element, Object value) {
+	public void setValue(KiemProperty property, Object value) {
 		if ((items == null)||(items.length == 0)) return;
-		KiemProperty property = (KiemProperty)element;
-		property.setValue(items[(Integer)value]);
+		property.setValue(items[Integer.parseInt((String)value)]);
 	}
 	
 	public void setItems(String[] items) {
