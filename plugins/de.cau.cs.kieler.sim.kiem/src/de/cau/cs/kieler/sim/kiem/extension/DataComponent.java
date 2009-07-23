@@ -320,6 +320,11 @@ public abstract class DataComponent implements IDataComponent,
 	 * 		masterGUIrun
 	 * 		masterGUIpause
 	 * 		masterGUIstop
+	 *  	masterGUIisEnabledStep
+	 *  	masterGUIisEnabledMacroStep
+	 *  	masterGUIisEnabledRun
+	 *  	masterGUIisEnabledPause
+	 *  	masterGUIisEnabledStop
 	 * 
 	 * @return true, if component implements the GUI buttons
 	 */
@@ -600,6 +605,56 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public void masterGUIstop() {
 		//no default implementation
+	}
+		
+	/**
+	 * Master implementing GUI buttons should return whether
+	 * step button is enabled.
+	 * 
+	 * @return true, if button is enabled
+	 */
+	public boolean masterGUIisEnabledStep() {
+		return false;
+	}
+	
+	/**
+	 * Master implementing GUI buttons should return whether
+	 * macro step button is enabled.
+	 * 
+	 * @return true, if button is enabled
+	 */
+	public boolean masterGUIisEnabledMacroStep() {
+		return false;
+	}
+	
+	/**
+	 * Master implementing GUI buttons should return whether
+	 * run button is enabled.
+	 * 
+	 * @return true, if button is enabled
+	 */
+	public boolean masterGUIisEnabledRun() {
+		return false;
+	}
+	
+	/**
+	 * Master implementing GUI buttons should return whether
+	 * pause button is enabled.
+	 * 
+	 * @return true, if button is enabled
+	 */
+	public boolean masterGUIisEnabledPause() {
+		return false;
+	}
+	
+	/**
+	 * Master implementing GUI buttons should return whether
+	 * stop button is enabled.
+	 * 
+	 * @return true, if button is enabled
+	 */
+	public boolean masterGUIisEnabledStop() {
+		return false;
 	}
 		
 }

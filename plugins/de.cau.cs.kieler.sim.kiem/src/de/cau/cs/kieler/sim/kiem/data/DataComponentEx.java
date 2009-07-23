@@ -158,4 +158,20 @@ public class DataComponentEx {
 		this.component.masterGUIstop();
 	}
 	
+	public boolean masterGUIisEnabledStep() {
+		return this.component.masterGUIisEnabledStep();
+	}
+	public boolean masterGUIisEnabledMacroStep() {
+		return this.component.masterGUIisEnabledMacroStep();
+	}
+	public boolean masterGUIisEnabledPause() {
+		return this.component.masterGUIisEnabledPause();
+	}
+	public boolean masterGUIisEnabledRun() {
+		return this.component.masterGUIisEnabledRun();
+	}
+	public boolean masterGUIisEnabledStop() {
+		return this.component.masterGUIisEnabledStop();
+	}
+	
 }

@@ -500,13 +500,29 @@ public class KiemView extends ViewPart {
 		updateStepsAsync();
 		updateEnabledEnabledDisabledUpDownAddDelete();
 		if (currentMaster != null) {
-			//if the master is not implementing the GUI
 			if (!currentMaster.isMasterImplementingGUI()) {
+				//if the master is not implementing the GUI
 				getActionStep().setEnabled(false);
 				getActionMacroStep().setEnabled(false);
 				getActionRun().setEnabled(false);
 				getActionPause().setEnabled(false);
 				getActionStop().setEnabled(false);
+				getAimedStepDurationTextField().setEnabled(false);
+				return;
+			}
+			else {
+				//master is responsible for enabling/disabling
+				//buttons
+				getActionStep().setEnabled(
+						currentMaster.masterGUIisEnabledStep());
+				getActionMacroStep().setEnabled(
+						currentMaster.masterGUIisEnabledMacroStep());
+				getActionRun().setEnabled(
+						currentMaster.masterGUIisEnabledRun());
+				getActionPause().setEnabled(
+						currentMaster.masterGUIisEnabledPause());
+				getActionStop().setEnabled(
+						currentMaster.masterGUIisEnabledStop());
 				getAimedStepDurationTextField().setEnabled(false);
 				return;
 			}
@@ -685,7 +701,7 @@ public class KiemView extends ViewPart {
 		actionStep = new Action() {
 			public void run() {
 				if ((currentMaster != null) 
-					&& !currentMaster.isMasterImplementingGUI()) {
+					&& currentMaster.isMasterImplementingGUI()) {
 					//if a master implements the action
 					currentMaster.masterGUIstep();
 				}
@@ -712,7 +728,7 @@ public class KiemView extends ViewPart {
 		actionMacroStep = new Action() {
 			public void run() {
 				if ((currentMaster != null) 
-						&& !currentMaster.isMasterImplementingGUI()) {
+						&& currentMaster.isMasterImplementingGUI()) {
 						//if a master implements the action
 						currentMaster.masterGUImacroStep();
 					}
@@ -739,7 +755,7 @@ public class KiemView extends ViewPart {
 		actionRun = new Action() {
 			public void run() {
 				if ((currentMaster != null) 
-						&& !currentMaster.isMasterImplementingGUI()) {
+						&& currentMaster.isMasterImplementingGUI()) {
 						//if a master implements the action
 						currentMaster.masterGUIrun();
 					}
@@ -766,7 +782,7 @@ public class KiemView extends ViewPart {
 		actionPause = new Action() {
 			public void run() {
 				if ((currentMaster != null) 
-						&& !currentMaster.isMasterImplementingGUI()) {
+						&& currentMaster.isMasterImplementingGUI()) {
 						//if a master implements the action
 						currentMaster.masterGUIpause();
 					}
@@ -793,7 +809,7 @@ public class KiemView extends ViewPart {
 		actionStop = new Action() {
 			public void run() {
 				if ((currentMaster != null) 
-						&& !currentMaster.isMasterImplementingGUI()) {
+						&& currentMaster.isMasterImplementingGUI()) {
 						//if a master implements the action
 						currentMaster.masterGUIstop();
 					}
