@@ -231,13 +231,13 @@ public class KiemPlugin extends AbstractUIPlugin {
 
 		if (countEnabledProducer < 1) {
 			this.showError("Please enable at least one Data Producer!",this.PLUGIN_ID);
-			this.execution.stopExecution();
+			this.execution.stopExecutionSync();
 			this.execution = null;
 			return false;
 		}
 		else if (countEnabledObserver < 1) {
 			showError("Please enable at least one Data Observer!",this.PLUGIN_ID);
-			this.execution.stopExecution();
+			this.execution.stopExecutionSync();
 			this.execution = null;
 			return false;
 		}

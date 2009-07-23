@@ -693,7 +693,7 @@ public class KiemView extends ViewPart {
 					//otherwise default implementation
 					setAllEnabled(false);
 					if (KIEMInstance.initExecution()) {
-						KIEMInstance.execution.stepExecution();
+						KIEMInstance.execution.stepExecutionSync();
 					}
 					setAllEnabled(true);
 				}
@@ -720,7 +720,7 @@ public class KiemView extends ViewPart {
 						//otherwise default implementation
 						setAllEnabled(false);
 						if (KIEMInstance.initExecution()) {
-							KIEMInstance.execution.macroStepExecution();
+							KIEMInstance.execution.macroStepExecutionSync();
 						}
 						setAllEnabled(true);
 				}
@@ -747,7 +747,7 @@ public class KiemView extends ViewPart {
 						//otherwise default implementation
 						setAllEnabled(false);
 						if (KIEMInstance.initExecution()) {
-							KIEMInstance.execution.runExecution();
+							KIEMInstance.execution.runExecutionSync();
 						}
 						setAllEnabled(true);
 				}
@@ -774,7 +774,7 @@ public class KiemView extends ViewPart {
 						//otherwise default implementation
 						setAllEnabled(false);
 						if (KIEMInstance.initExecution()) {
-							KIEMInstance.execution.pauseExecution();
+							KIEMInstance.execution.pauseExecutionSync();
 						}
 						setAllEnabled(true);
 				}
@@ -800,7 +800,7 @@ public class KiemView extends ViewPart {
 					else {
 						//otherwise default implementation
 						if (KIEMInstance.execution != null) {
-							KIEMInstance.execution.stopExecution();
+							KIEMInstance.execution.stopExecutionSync();
 						}
 						//get results
 						long executionTime   = 

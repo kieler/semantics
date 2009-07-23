@@ -116,7 +116,7 @@ public class ProducerExecution implements Runnable {
 					if (JSONString != null && !JSONString.equals("")) {
 						try {this.data = new JSONObject(JSONString);}
 						catch(Exception e) {
-							parent.showError(e.getMessage(), 
+							parent.showWarning(e.getMessage(), 
 									this.dataComponent.getConfigurationElement()
 									.getContributor().getName());
 						}

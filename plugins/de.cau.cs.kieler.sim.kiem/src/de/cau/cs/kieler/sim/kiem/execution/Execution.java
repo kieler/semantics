@@ -43,6 +43,9 @@ public class Execution implements Runnable {
 	//    or INFINITY_STEPS in run mode
 	private long steps;
 	
+	//indicates paused command
+	private boolean pausedCommand;
+	
 	//flag that indicates the termination (from outside)
 	private boolean stop;
 	
@@ -70,9 +73,10 @@ public class Execution implements Runnable {
 	
 	//Timeout
 	TimeoutThread timeout;
-	private static final int TIMEOUT = 5000; //5 seconds
+	private static final int TIMEOUT = 1000; //1 second
 
-	
+	//-------------------------------------------------------------------------
+
 	/**
 	 * Instantiates a new execution (thread). 
 	 * 
@@ -81,7 +85,8 @@ public class Execution implements Runnable {
 	 */
 	public Execution(List<DataComponentEx> dataComponentExList) {
 		this.stepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
-		this.stop = false; 
+		this.stop = false;
+		this.pausedCommand = false;
 		this.steps = NO_STEPS; // == paused
 		this.dataComponentExList = dataComponentExList;
 		
@@ -120,6 +125,8 @@ public class Execution implements Runnable {
 		}
 	}
 	
+	//-------------------------------------------------------------------------
+	
 	public int getStepDuration() {
 		return stepDuration;
 	}	
@@ -155,7 +162,13 @@ public class Execution implements Runnable {
 		return this.aimedStepDuration;
 	}
 	
-	public void stepExecution() {
+	//-------------------------------------------------------------------------
+	
+	public void stepExecutionSync() {
+		//do not block if currently doing step
+		if (this.steps != NO_STEPS) 
+			return;
+		
 		synchronized(this) {
 			if (this.steps == NO_STEPS) {
 				//notify components
@@ -173,15 +186,20 @@ public class Execution implements Runnable {
 				//make one step
 				//note that consecutive calls will be enqueued into the
 				//implicit condition variable's queue of this monitor
-				this.steps = 1;
+				this.steps++;
 			}
 			else 
 				return; //skip in this case make NO step
 		}
 	}
 
-	public void macroStepExecution() {
-		//TODO: implement macro step execution!!!
+	//-------------------------------------------------------------------------
+
+	//TODO: implement macro step execution!!!
+	public void macroStepExecutionSync() {
+		//do not block if currently doing step
+		if (this.steps != NO_STEPS) return;
+		
 		synchronized(this) {
 			if (this.steps == NO_STEPS) {
 				//notify components
@@ -206,7 +224,11 @@ public class Execution implements Runnable {
 		}
 	}
 	
-	public void pauseExecution() {
+	//-------------------------------------------------------------------------
+	
+	public void pauseExecutionSync() {
+		pausedCommand = true;
+		
 		synchronized(this) {
 			//notify components
 			for(int c = 0; c < this.dataComponentExList.size(); c++) {
@@ -225,21 +247,119 @@ public class Execution implements Runnable {
 		}
 	}
 	
-	private void resetTimingVariables() {
-		this.executionStartTime = System.currentTimeMillis();
-		this.maximumStepDuration = 0; 
-		this.minimumStepDuration = -1; //infinity
-		this.weightedAverageStepDuration = 0;
-		this.accumulatedStepDurations = 0;
-		this.accumulatedPlauseDurations = 0;
-		this.stepCounter = 0;
-		this.stepDuration = 0;
-	}
+	//-------------------------------------------------------------------------
 	
-	public synchronized void runExecution() {
+	public synchronized void runExecutionSync() {
+		synchronized(this) {
+			//notify components
+			for(int c = 0; c < this.dataComponentExList.size(); c++) {
+				DataComponentEx dataComponentEx = 
+					dataComponentExList.get(c);
+				timeout.timeout(TIMEOUT, "isEnabled, isPauseFlag", dataComponentEx, this);
+				if (   dataComponentEx.isEnabled()
+					&& dataComponentEx.isPauseFlag()) {
+					timeout.timeout(TIMEOUT, "commandRun", dataComponentEx, this);
+					dataComponentEx.getDataComponent().commandRun();
+				}
+				timeout.abortTimeout();
+			}
+		}
 		this.steps = INFINITY_STEPS; //indicates run mode
 	}
+	
+	//-------------------------------------------------------------------------
+	
+	public void stopExecutionSync() {
+		//not synchronized to stop immediately w/o queuing
+		this.steps = NO_STEPS;
+		this.stop = true;
 
+		synchronized(this) {
+			//notify components
+			for(int c = 0; c < this.dataComponentExList.size(); c++) {
+				DataComponentEx dataComponentEx = 
+					dataComponentExList.get(c);
+				timeout.timeout(TIMEOUT, "isEnabled, isPauseFlag", dataComponentEx, this);
+				if (   dataComponentEx.isEnabled()
+					&& dataComponentEx.isPauseFlag()) {
+					timeout.abortTimeout();
+					timeout.timeout(TIMEOUT, "commandStop", dataComponentEx, this);
+					dataComponentEx.getDataComponent().commandStop();
+					timeout.abortTimeout();
+				}
+				timeout.abortTimeout();
+			}
+			
+			//for safety reasons do this synchronized again
+			this.stop = true;
+			this.steps = NO_STEPS;
+			//stop all child execution threads
+			for (int c = 0; c < this.dataComponentExList.size(); c++) {
+				//reset delta index
+				this.dataComponentExList.get(c).setDeltaIndex(0);
+				//reset skipped
+				this.dataComponentExList.get(c).setSkipped(false);
+				if (this.observerExecutionArray[c] != null)
+					this.observerExecutionArray[c].stopExecution();
+				if (this.producerExecutionArray[c] != null)
+					this.producerExecutionArray[c].stopExecution();
+			}
+		}
+		//wrapup components
+		wrapupComponents();
+		
+		//stop timeout thread
+		this.timeout.terminate();
+	}
+	
+
+	//-------------------------------------------------------------------------
+	
+//	public void stepExecutionAsync() {
+//		Thread asyncStep = new Thread() {
+//			public void run() {
+//				stepExecutionSync();
+//			}
+//		};
+//		asyncStep.start();
+//	}
+//	
+//	public void macroStepExecutionAsync() {
+//		Thread asyncStep = new Thread() {
+//			public void run() {
+//				macroStepExecutionSync();
+//			}
+//		};
+//		asyncStep.start();
+//	}
+//
+//	public void runExecutionAsync() {
+//		Thread asyncStep = new Thread() {
+//			public void run() {
+//				runExecutionSync();
+//			}
+//		};
+//		asyncStep.start();
+//	}
+//
+//	public void pauseExecutionAsync() {
+//		Thread asyncStep = new Thread() {
+//			public void run() {
+//				pauseExecutionSync();
+//			}
+//		};
+//		asyncStep.start();
+//	}
+//
+//	public void stopExecutionAsync() {
+//		Thread asyncStep = new Thread() {
+//			public void run() {
+//				stopExecutionSync();
+//			}
+//		};
+//		asyncStep.start();
+//	}
+	
 	//-------------------------------------------------------------------------
 	
 	public boolean isPaused() {
@@ -283,51 +403,6 @@ public class Execution implements Runnable {
 
 	//-------------------------------------------------------------------------
 	
-	public void stopExecution() {
-		//not synchronized to stop immediately w/o queuing
-		this.steps = NO_STEPS;
-		this.stop = true;
-
-		synchronized(this) {
-			//notify components
-			for(int c = 0; c < this.dataComponentExList.size(); c++) {
-				DataComponentEx dataComponentEx = 
-					dataComponentExList.get(c);
-				timeout.timeout(TIMEOUT, "isEnabled, isPauseFlag", dataComponentEx, this);
-				if (   dataComponentEx.isEnabled()
-					&& dataComponentEx.isPauseFlag()) {
-					timeout.abortTimeout();
-					timeout.timeout(TIMEOUT, "commandStop", dataComponentEx, this);
-					dataComponentEx.getDataComponent().commandStop();
-					timeout.abortTimeout();
-				}
-				timeout.abortTimeout();
-			}
-			
-			//for safety reasons do this synchronized again
-			this.stop = true;
-			this.steps = NO_STEPS;
-			//stop all child execution threads
-			for (int c = 0; c < this.dataComponentExList.size(); c++) {
-				//reset delta index
-				this.dataComponentExList.get(c).setDeltaIndex(0);
-				//reset skipped
-				this.dataComponentExList.get(c).setSkipped(false);
-				if (this.observerExecutionArray[c] != null)
-					this.observerExecutionArray[c].stopExecution();
-				if (this.producerExecutionArray[c] != null)
-					this.producerExecutionArray[c].stopExecution();
-			}
-		}
-		//wrapup components
-		wrapupComponents();
-		
-		//stop timeout thread
-		this.timeout.terminate();
-	}
-	
-	//-------------------------------------------------------------------------
-	
 	public synchronized void wrapupComponents() {
 		for(int c = 0; c < this.dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = 
@@ -338,6 +413,20 @@ public class Execution implements Runnable {
 				timeout.abortTimeout();
 			}
 		}
+	}
+	
+	
+	//-------------------------------------------------------------------------
+	
+	private void resetTimingVariables() {
+		this.executionStartTime = System.currentTimeMillis();
+		this.maximumStepDuration = 0; 
+		this.minimumStepDuration = -1; //infinity
+		this.weightedAverageStepDuration = 0;
+		this.accumulatedStepDurations = 0;
+		this.accumulatedPlauseDurations = 0;
+		this.stepCounter = 0;
+		this.stepDuration = 0;
 	}
 	
 	//-------------------------------------------------------------------------
@@ -363,7 +452,7 @@ public class Execution implements Runnable {
 						timeout.timeout(TIMEOUT, "isEnabled, isPauseFlag", dataComponentEx, this);
 						if (   dataComponentEx.isEnabled()
 							&& dataComponentEx.isPauseFlag()) {
-							this.pauseExecution();
+							this.pauseExecutionSync();
 							KiemPlugin.getDefault().updateViewAsync();
 						}
 						timeout.abortTimeout();
@@ -400,8 +489,6 @@ public class Execution implements Runnable {
 						timeout.abortTimeout();
 					}
 					
-					//reduce number of steps
-					if (steps > INFINITY_STEPS) steps--;
 //System.out.println("-- execution step -------------------------------");
 
 					//===========================================//
@@ -417,7 +504,13 @@ public class Execution implements Runnable {
 //System.out.println(c + ") " + dataComponentEx.getName() + " (Pure Producer) call");
 								//make a step (within producerExecution's monitor)
 								timeout.timeout(TIMEOUT, "step (call)", dataComponentEx, this);
-								producerExecutionArray[c].blockingStep();
+								//should normally not happen (if no errors)
+								try {
+									producerExecutionArray[c].blockingStep();
+								}catch(Exception e){
+									if (!stop)
+										KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(), KiemPlugin.PLUGIN_ID);
+								}
 						}
 						timeout.abortTimeout();
 					}//next producer/Observer
@@ -440,12 +533,8 @@ public class Execution implements Runnable {
 								timeout.timeout(TIMEOUT, "getFilterKeys", dataComponentEx, this);
 								String[] filterKeys = 
 									dataComponentEx.getFilterKeys();
-								//if (dataComponentEx.isDeltaObserver()) {
 									oldData = this.dataPool.getDeltaData
 										 (filterKeys,dataComponentEx.getDeltaIndex());
-								//}
-								//else
-								//	oldData = this.dataPool.getData(filterKeys);
 								if (dataComponentEx.isJSON()) {
 									timeout.timeout(TIMEOUT, "step", dataComponentEx, this);
 									JSONObject newData = 
@@ -464,7 +553,8 @@ public class Execution implements Runnable {
 													   new JSONObject(newData));
 								}
 							}catch(Exception e) {
-								KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+								if (!stop)
+									KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(), KiemPlugin.PLUGIN_ID);
 							}
 //System.out.println(dataComponentEx.getName() + " (Norm Producer) return");
 						}
@@ -484,45 +574,57 @@ public class Execution implements Runnable {
 										  (filterKeys,dataComponentEx.getDeltaIndex());
 									observerExecutionArray[c].setData(oldData);
 								}catch(Exception e){
-									KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+									if (!stop)
+										KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(), KiemPlugin.PLUGIN_ID);
 								}
-								//call async method 
-								if (!(observerExecutionArray[c].step())) {
-									//if step was *NOT* successful (skipped)
-									//set skipped:=true this prevents the delta
-									//index to advance in the next steps!
-									dataComponentEx.setSkipped(true);
+								//call async method - no timeout
+								try {
+									if (!(observerExecutionArray[c].step())) {
+										//if step was *NOT* successful (skipped)
+										//set skipped:=true this prevents the delta
+										//index to advance in the next steps!
+										dataComponentEx.setSkipped(true);
+									}
+									else
+										dataComponentEx.setSkipped(false);
+								} catch(Exception e){
+									if (!stop)
+										KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(), KiemPlugin.PLUGIN_ID);
 								}
-								else
-									dataComponentEx.setSkipped(false);
 						}
 						//===========================================//
 						//==  P U R E    P R O D U C E R    (REAP) ==//
 						//===========================================//
 						else if(dataComponentEx.isProducerOnly()) {
+							timeout.timeout(TIMEOUT, "step (reap)", dataComponentEx, this);
+							try {
 //System.out.println(c + ") " +dataComponentEx.getName() + " (Pure Producer) wait");
 								//pure Producer
 								//get blocking result
-								timeout.timeout(TIMEOUT, "step (reap)", dataComponentEx, this);
 								producerExecutionArray[c].blockingWaitUntilDone();
 								//now reap the results
 								//note that due to sequential order we always FIRST
 								//reap the producer and only in the next iteration
 								//THEN call him again
+							}catch(Exception e){
+								if (!stop)
+									KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+							}
 
-								//escape if stopped
-								timeout.abortTimeout();
-								if (this.stop == true) return;
+							//escape if stopped
+							timeout.abortTimeout();
+							if (this.stop == true) return;
 								
 //System.out.println(c + ") " +dataComponentEx.getName() + " (Pure Producer) done");
-								try {
-									JSONObject newData = 
-										producerExecutionArray[c].getData();
-									if (newData != null) 
-										this.dataPool.putData(newData);
-								}catch(Exception e){
+							try {
+								JSONObject newData = 
+									producerExecutionArray[c].getData();
+								if (newData != null) 
+									this.dataPool.putData(newData);
+							}catch(Exception e){
+								if (!stop)
 									KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
-								}
+							}
 								
 						}
 					}//next producer/Observer
@@ -550,9 +652,21 @@ public class Execution implements Runnable {
 														+ this.stepDuration)/2;
 					}
 					this.accumulatedStepDurations += this.stepDuration;
-				}//end if - make a step
-			}//end synchronized
 
+					//indicate step is done hence
+					//reduce number of steps
+					if (steps > INFINITY_STEPS) steps--;
+					
+				}//end if - make a step
+				
+				//got async pause command!
+				if (pausedCommand) {
+					pausedCommand = false;
+					steps = NO_STEPS;
+				}
+
+			}//end synchronized
+			
 			//escape if stopped
 			if (this.stop == true) return;
 
@@ -561,7 +675,8 @@ public class Execution implements Runnable {
 				int timeToDelay = this.aimedStepDuration - this.stepDuration;
 				if (timeToDelay > 0)
 					try{Thread.sleep(timeToDelay);}catch(Exception e){
-						KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+						if (!stop)
+							KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
 					}
 			}	
 			
@@ -573,7 +688,8 @@ public class Execution implements Runnable {
 				starttime = System.currentTimeMillis();
 //System.out.println(">>PAUSED<<");
 				try{Thread.sleep(PAUSE_DEYLAY);}catch(Exception e){
-					KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+					if (!stop)
+						KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
 				}
 				//if stop is requested, jump out
 				if (this.stop) return;

@@ -265,12 +265,12 @@ public abstract class DataComponent implements IDataComponent,
 	}
 	
 	/**
-	 * Command play. Called just before a play command is executed.
+	 * Command run. Called just before a run command is executed.
 	 * ATTENTION: This command method is called inside the 
 	 * synchronized lock so a deadlock can easily occur if this or another 
 	 * object called from within this method refers to the execution-thread!!!
 	 */
-	public void commandPlay() {
+	public void commandRun() {
 		//BE CAREFUL WHEN USING THIS (S.A.)//
 	}
 	
@@ -344,7 +344,7 @@ public abstract class DataComponent implements IDataComponent,
 				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
-				KIEMInstance.execution.stepExecution();
+				KIEMInstance.execution.stepExecutionSync();
 				KIEMViewInstance.updateViewAsync();
 			}
 		}
@@ -368,7 +368,7 @@ public abstract class DataComponent implements IDataComponent,
 				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
-				KIEMInstance.execution.macroStepExecution();
+				KIEMInstance.execution.macroStepExecutionSync();
 				KIEMViewInstance.updateViewAsync();
 			}
 		}
@@ -390,7 +390,7 @@ public abstract class DataComponent implements IDataComponent,
 				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
-				KIEMInstance.execution.stopExecution();
+				KIEMInstance.execution.stopExecutionSync();
 				KIEMInstance.execution = null;
 				KIEMViewInstance.updateViewAsync();
 				return;
@@ -414,7 +414,7 @@ public abstract class DataComponent implements IDataComponent,
 				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
-				KIEMInstance.execution.pauseExecution();
+				KIEMInstance.execution.pauseExecutionSync();
 				KIEMViewInstance.updateViewAsync();
 				return;
 			}
@@ -487,7 +487,7 @@ public abstract class DataComponent implements IDataComponent,
 				KIEMInstance.initExecution();
 			}
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
-				KIEMInstance.execution.runExecution();
+				KIEMInstance.execution.runExecutionSync();
 				KIEMViewInstance.updateViewAsync();
 				return;
 			}
