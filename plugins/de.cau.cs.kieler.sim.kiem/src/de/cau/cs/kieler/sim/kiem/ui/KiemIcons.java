@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.sim.kiem.ui;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
@@ -67,5 +68,61 @@ public static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 				"icons/unfoldDisabled.png").createImage();
 
+	//-------------------------------------------------------------------------
+	//image descriptors
 	
+	public static final ImageDescriptor IMGDESCR_ADD = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/addIcon.png");
+	public static final ImageDescriptor IMGDESCR_DELETE = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/deleteIcon.png");
+	
+	public static final ImageDescriptor IMGDESCR_UP = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/upIcon.png");
+	public static final ImageDescriptor IMGDESCR_UP_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/upIconDisabled.png");
+	public static final ImageDescriptor IMGDESCR_DOWN = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/downIcon.png");
+	public static final ImageDescriptor IMGDESCR_DOWN_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/downIconDisabled.png");
+	
+	public static final ImageDescriptor IMGDESCR_STEP = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/stepIcon.png");
+	public static final ImageDescriptor IMGDESCR_STEP_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/stepIconDisabled.png");
+
+	public static final ImageDescriptor IMGDESCR_MACROSTEP = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/macroStepIcon.png");
+	public static final ImageDescriptor IMGDESCR_MACROSTEP_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/macroStepIconDisabled.png");
+	
+	public static final ImageDescriptor IMGDESCR_RUN = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/runIcon.png");
+	public static final ImageDescriptor IMGDESCR_RUN_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/runIconDisabled.png");
+
+	public static final ImageDescriptor IMGDESCR_PAUSE = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/pauseIcon.png");
+	public static final ImageDescriptor IMGDESCR_PAUSE_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/pauseIconDisabled.png");
+
+	public static final ImageDescriptor IMGDESCR_STOP = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/stopIcon.png");
+	public static final ImageDescriptor IMGDESCR_STOP_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/stopIconDisabled.png");
 }

@@ -38,21 +38,41 @@ public abstract class DataComponent implements IDataComponent,
 	
 	//-------------------------------------------------------------------------
 	
+	/**
+	 * Sets the configuration elemenet. This method is needed to instantiate 
+	 * several component instances only.
+	 * 
+	 * @param configEle the new configuration elemenet
+	 */
 	public final void setConfigurationElemenet(IConfigurationElement configEle) {
 		this.configEle = configEle;
 	}
 	
+	/**
+	 * Gets the configuration element. This method is needed to instantiate 
+	 * several component instances only.
+	 * 
+	 * @return the configuration element
+	 */
 	public final IConfigurationElement getConfigurationElement() {
 		return this.configEle;
 	}
 	
 	//-------------------------------------------------------------------------
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.core.runtime.IExecutableExtension#setInitializationData(org.eclipse.core.runtime.IConfigurationElement, java.lang.String, java.lang.Object)
+	 */
 	public final void setInitializationData(IConfigurationElement config,
 			String propertyName, Object data) throws CoreException {
 		this.name = config.getAttribute("name");
 	}
 	
+	/**
+	 * Gets the name of the component which is defined in the extension.
+	 * 
+	 * @return the name of the component
+	 */
 	public final String getName() {
 		return name;
 	}
@@ -278,7 +298,7 @@ public abstract class DataComponent implements IDataComponent,
 	//           at most ONE DataComponent can be a Master! 
 	//-------------------------------------------------------------------------
 	/**
-	 * Checks if is master. Override this, if this DataComponent is a master.
+	 * Override this, if this DataComponent is a master.
 	 * If it returns true then
 	 * 		1. ExecutionManager ensures that no other master is present
 	 * 		2. Calling stepExecution initializes a tick

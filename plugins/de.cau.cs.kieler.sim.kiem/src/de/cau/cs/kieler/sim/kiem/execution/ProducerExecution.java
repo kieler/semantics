@@ -50,7 +50,9 @@ public class ProducerExecution implements Runnable {
 					this.wait();
 				}
 				catch(Exception e) {
-					parent.showError(e.getMessage(), this.dataComponent.getConfigurationElement().getContributor().getName());
+					parent.showWarning(e.getMessage(), 
+							this.dataComponent.getConfigurationElement()
+							.getContributor().getName());
 				}
 			}//end while
 		}//end synchronized
@@ -92,7 +94,9 @@ public class ProducerExecution implements Runnable {
 						//to make a step and done is false
 					}}
 					catch(Exception e) {
-						parent.showError(e.getMessage(), this.dataComponent.getConfigurationElement().getContributor().getName());
+						parent.showWarning(e.getMessage(), 
+								this.dataComponent.getConfigurationElement()
+								.getContributor().getName());
 					}
 				
 //System.out.println("  "+dataComponent.getName() + " (Pure Producer) calc start");
@@ -112,7 +116,9 @@ public class ProducerExecution implements Runnable {
 					if (JSONString != null && !JSONString.equals("")) {
 						try {this.data = new JSONObject(JSONString);}
 						catch(Exception e) {
-							parent.showError(e.getMessage(), this.dataComponent.getConfigurationElement().getContributor().getName());
+							parent.showError(e.getMessage(), 
+									this.dataComponent.getConfigurationElement()
+									.getContributor().getName());
 						}
 					}//not null
 				}

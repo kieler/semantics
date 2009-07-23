@@ -3,6 +3,9 @@ package de.cau.cs.kieler.sim.kiem.execution;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 
+/**
+ * The Class TimeoutThread.
+ */
 public class TimeoutThread extends Thread {
 
 	private int timeout;
@@ -16,7 +19,7 @@ public class TimeoutThread extends Thread {
 	
 	public TimeoutThread() {
 		this.active = false;
-		this.timeout = 5000;
+		this.timeout = 0;
 	}
 	
 	public synchronized void timeout(int timeout,
@@ -24,6 +27,8 @@ public class TimeoutThread extends Thread {
 						DataComponentEx dataComponentEx,
 						Execution execution) {
 		this.timeout = timeout;
+		//ensure timeout is reasonable!
+		if (this.timeout < 100) this.timeout = 100;
 		this.execution = execution;
 		this.abort = false;
 		this.jobDescription = jobDescription;
@@ -48,7 +53,13 @@ public class TimeoutThread extends Thread {
 		while(!terminate) {
 
 			synchronized(this) {
-				try{this.wait();}catch(Exception e){}
+				//only fall asleep if non-active
+				//this prevents waiting when abortTimeout not was called
+				//before a new call of the timeout method 
+				if (!this.active)
+					try{this.wait();}catch(Exception e){}
+				//at this point timeout() was called and this.timeout has
+				//a value > 100
 			}
 			
 			System.out.println("Timeout - started");

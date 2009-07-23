@@ -83,7 +83,9 @@ public class ObserverExecution implements Runnable {
 						compString.step(null);
 				}}
 				catch(Exception e) {
-					parent.showError(e.getMessage(), this.dataComponent.getConfigurationElement().getContributor().getName());
+					parent.showWarning(e.getMessage(), 
+							this.dataComponent.getConfigurationElement()
+							.getContributor().getName());
 				}
 			
 		}//next while not stop

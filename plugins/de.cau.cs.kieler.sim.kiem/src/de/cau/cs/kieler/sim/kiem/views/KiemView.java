@@ -31,6 +31,7 @@ import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.*;
 import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
 import de.cau.cs.kieler.sim.kiem.ui.AddDataComponentDialog;
+import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
 import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
 
 import org.eclipse.ui.IWorkbenchWindow;
@@ -48,7 +49,6 @@ public class KiemView extends ViewPart {
 	private Action actionRun;
 	private Action actionPause;
 	private Action actionStop;
-	private Action doubleClickAction;
 	private AimedStepDurationTextField aimedStepDurationTextField;
 	private StepTextField stepTextField;
 	private DataComponentEx currentMaster;
@@ -696,12 +696,9 @@ public class KiemView extends ViewPart {
 			  }
 			}
 		};
-		actionAdd.setText("Add");
+		actionAdd.setText("Add Component");
 		actionAdd.setToolTipText("Add Data Component");
-		actionAdd.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/addIcon.png"));
-		//actionUp.setDisabledImageDescriptor(
-		//		KiemPlugin.getImageDescriptor("icons/upIconDisabled.png"));
+		actionAdd.setImageDescriptor(KiemIcons.IMGDESCR_ADD);
 		return actionAdd;
 	}
 
@@ -721,12 +718,9 @@ public class KiemView extends ViewPart {
 				updateView(true);
 			}
 		};
-		actionDelete.setText("Delete");
+		actionDelete.setText("Delete Component");
 		actionDelete.setToolTipText("Delete Data Component");
-		actionDelete.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/deleteIcon.png"));
-		//actionUp.setDisabledImageDescriptor(
-		//		KiemPlugin.getImageDescriptor("icons/upIconDisabled.png"));
+		actionDelete.setImageDescriptor(KiemIcons.IMGDESCR_DELETE);
 		return actionDelete;
 	}
 	
@@ -738,20 +732,23 @@ public class KiemView extends ViewPart {
 				//do not change if executing
 				if (KIEM.execution != null)
 					return;
-				DataComponentEx firstDataComponentEx = (DataComponentEx)
-				((org.eclipse.jface.viewers.StructuredSelection)viewer
-									.getSelection()).getFirstElement();
-				boolean enabledDisabled = !firstDataComponentEx.isEnabled();
+				//this may not always be applicable e.g., if a property is selected
+				try {
+					DataComponentEx firstDataComponentEx = (DataComponentEx)
+					((org.eclipse.jface.viewers.StructuredSelection)viewer
+										.getSelection()).getFirstElement();
+					boolean enabledDisabled = !firstDataComponentEx.isEnabled();
 
-				IStructuredSelection selection =
-					(org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection();
-				for (int c = 0; c < selection.size(); c++) {
-					DataComponentEx dataComponentEx = (DataComponentEx)
-													selection.toArray()[c];
-					dataComponentEx.setEnabled(enabledDisabled);
-				}
-				checkForSingleEnabledMaster(false,firstDataComponentEx);
-				updateView(true);
+					IStructuredSelection selection =
+						(org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection();
+					for (int c = 0; c < selection.size(); c++) {
+						DataComponentEx dataComponentEx = (DataComponentEx)
+														selection.toArray()[c];
+						dataComponentEx.setEnabled(enabledDisabled);
+					}
+					checkForSingleEnabledMaster(false,firstDataComponentEx);
+					updateView(true);
+				}catch(Exception e) {}
 			}
 		};
 		actionEnableDisable.setText("Enable");
@@ -783,10 +780,8 @@ public class KiemView extends ViewPart {
 		};
 		actionUp.setText("Schedule before");
 		actionUp.setToolTipText("Schedule before");
-		actionUp.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/upIcon.png"));
-		actionUp.setDisabledImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/upIconDisabled.png"));
+		actionUp.setImageDescriptor(KiemIcons.IMGDESCR_UP);
+		actionUp.setDisabledImageDescriptor(KiemIcons.IMGDESCR_UP_DISABLED);
 		return actionUp;
 	}
 	
@@ -813,10 +808,8 @@ public class KiemView extends ViewPart {
 		};
 		actionDown.setText("Schedule behind");
 		actionDown.setToolTipText("Schedule behind");
-		actionDown.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/downIcon.png"));
-		actionDown.setDisabledImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/downIconDisabled.png"));
+		actionDown.setImageDescriptor(KiemIcons.IMGDESCR_DOWN);
+		actionDown.setDisabledImageDescriptor(KiemIcons.IMGDESCR_DOWN_DISABLED);
 		return actionDown;
 	}
 	
@@ -832,10 +825,8 @@ public class KiemView extends ViewPart {
 		};
 		actionStep.setText("Step");
 		actionStep.setToolTipText("Step Execution");
-		actionStep.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/stepIcon.png"));
-		actionStep.setDisabledImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/stepIconDisabled.png"));
+		actionStep.setImageDescriptor(KiemIcons.IMGDESCR_STEP);
+		actionStep.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
 		return actionStep;
 	}
 
@@ -851,10 +842,8 @@ public class KiemView extends ViewPart {
 		};
 		actionMacroStep.setText("Macro Step");
 		actionMacroStep.setToolTipText("Macro Step Execution");
-		actionMacroStep.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/macroStepIcon.png"));
-		actionMacroStep.setDisabledImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/macroStepIconDisabled.png"));
+		actionMacroStep.setImageDescriptor(KiemIcons.IMGDESCR_MACROSTEP);
+		actionMacroStep.setDisabledImageDescriptor(KiemIcons.IMGDESCR_MACROSTEP_DISABLED);
 		return actionMacroStep;
 	}
 	
@@ -870,10 +859,8 @@ public class KiemView extends ViewPart {
 		};
 		actionRun.setText("Run");
 		actionRun.setToolTipText("Run Execution");
-		actionRun.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/playIcon.png"));
-		actionRun.setDisabledImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/playIconDisabled.png"));
+		actionRun.setImageDescriptor(KiemIcons.IMGDESCR_RUN);
+		actionRun.setDisabledImageDescriptor(KiemIcons.IMGDESCR_RUN_DISABLED);
 		return actionRun;
 	}
 	
@@ -889,10 +876,8 @@ public class KiemView extends ViewPart {
 		};
 		actionPause.setText("Pause");
 		actionPause.setToolTipText("Pause Execution");
-		actionPause.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/pauseIcon.png"));
-		actionPause.setDisabledImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/pauseIconDisabled.png"));
+		actionPause.setImageDescriptor(KiemIcons.IMGDESCR_PAUSE);
+		actionPause.setDisabledImageDescriptor(KiemIcons.IMGDESCR_PAUSE_DISABLED);
 		return actionPause;
 	}
 	
@@ -944,10 +929,8 @@ public class KiemView extends ViewPart {
 		};
 		actionStop.setText("Stop");
 		actionStop.setToolTipText("Stop Execution");
-		actionStop.setImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/stopIcon.png"));
-		actionStop.setDisabledImageDescriptor(
-				KiemPlugin.getImageDescriptor("icons/stopIconDisabled.png"));
+		actionStop.setImageDescriptor(KiemIcons.IMGDESCR_STOP);
+		actionStop.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STOP_DISABLED);
 		return actionStop;
 	}
 

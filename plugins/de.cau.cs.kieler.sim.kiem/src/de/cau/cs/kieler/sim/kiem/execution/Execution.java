@@ -2,15 +2,10 @@ package de.cau.cs.kieler.sim.kiem.execution;
 
 import java.util.List;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
@@ -19,6 +14,14 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.*;
 import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
+/**
+ * The Class Execution. This is the base class for the whole execution.
+ * It creates and manages the worker threads for pure observer and pure
+ * producer components. It also implements the scheduling between all
+ * components. Additionally it manages a timeout component that checks
+ * whether a component-method exceeds the maximum timeout and then terminates
+ * all executions w/ an error log message.
+ */
 public class Execution implements Runnable {
 	
 	//delay to wait in paused state until
@@ -59,7 +62,7 @@ public class Execution implements Runnable {
 	private JSONDataPool dataPool;
 	
 	//threads for Observers and producers
-	private ObserverExecution[] ObserverExecutionArray;
+	private ObserverExecution[] observerExecutionArray;
 	private ProducerExecution[] producerExecutionArray;
 	
 	//KiemView to control execution
@@ -67,9 +70,15 @@ public class Execution implements Runnable {
 	
 	//Timeout
 	TimeoutThread timeout;
-	private static final int TIMEOUT = 1000;
+	private static final int TIMEOUT = 5000; //5 seconds
 
 	
+	/**
+	 * Instantiates a new execution (thread). 
+	 * 
+	 * @param dataComponentExList the data component ex list
+	 * @param view the view
+	 */
 	public Execution(List<DataComponentEx> dataComponentExList,
 					 KiemView view) {
 		this.view = view;
@@ -83,7 +92,7 @@ public class Execution implements Runnable {
 		this.timeout = new TimeoutThread();
 		this.timeout.start();
 		
-		ObserverExecutionArray = new ObserverExecution
+		observerExecutionArray = new ObserverExecution
 										[this.dataComponentExList.size()];
 		producerExecutionArray = new ProducerExecution
 										[this.dataComponentExList.size()];
@@ -96,10 +105,10 @@ public class Execution implements Runnable {
 			if (dataComponentEx.isEnabled()) {
 				if(dataComponentEx.isObserverOnly()) {
 					//pure Observer
-					ObserverExecutionArray[c] = 
+					observerExecutionArray[c] = 
 								new ObserverExecution(dataComponentEx.
 										getDataComponent(), this);
-					(new Thread(ObserverExecutionArray[c])).start();
+					(new Thread(observerExecutionArray[c])).start();
 				}
 				else if(dataComponentEx.isProducerOnly()) {
 					//pure Producer
@@ -232,6 +241,8 @@ public class Execution implements Runnable {
 	public synchronized void runExecution() {
 		this.steps = INFINITY_STEPS; //indicates run mode
 	}
+
+	//-------------------------------------------------------------------------
 	
 	public boolean isPaused() {
 		return (steps == NO_STEPS);
@@ -241,15 +252,43 @@ public class Execution implements Runnable {
 		return (steps == INFINITY_STEPS);
 	}
 	
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Terminates the execution in case of an error.
+	 * This will also (try) to terminate all created helper threads. They
+	 * may not finish immediately and in case of a deadlock they won't 
+	 * do so ever, but the user will get a response. This function is called
+	 * by the TimeoutThread. Hence the call of this method should only
+	 * happen during the development of a new component. 
+	 */
 	public void errorTerminate() {
+		//sto this execution thread
+		this.steps = NO_STEPS;
+		this.stop = true;
+		//release the object
 		view.KIEM.execution = null;
+		//update the view
 		view.updateViewAsync();
+		//try to stop all components, no blocking stopExecution() call
+		for (int c = 0; c < this.dataComponentExList.size(); c++) {
+			if (this.observerExecutionArray[c] != null) {
+				this.observerExecutionArray[c].stopExecution();
+				this.observerExecutionArray[c] = null;
+			}
+			if (this.producerExecutionArray[c] != null) {
+				this.producerExecutionArray[c].stopExecution();
+				this.observerExecutionArray[c] = null;
+			}
+		}
 	}
+
+	//-------------------------------------------------------------------------
 	
 	public void stopExecution() {
 		//not synchronized to stop immediately w/o queuing
-		this.stop = true;
 		this.steps = NO_STEPS;
+		this.stop = true;
 
 		synchronized(this) {
 			//notify components
@@ -276,8 +315,8 @@ public class Execution implements Runnable {
 				this.dataComponentExList.get(c).setDeltaIndex(0);
 				//reset skipped
 				this.dataComponentExList.get(c).setSkipped(false);
-				if (this.ObserverExecutionArray[c] != null)
-					this.ObserverExecutionArray[c].stopExecution();
+				if (this.observerExecutionArray[c] != null)
+					this.observerExecutionArray[c].stopExecution();
 				if (this.producerExecutionArray[c] != null)
 					this.producerExecutionArray[c].stopExecution();
 			}
@@ -287,17 +326,23 @@ public class Execution implements Runnable {
 		
 		//stop timeout thread
 		this.timeout.terminate();
-}
+	}
+	
+	//-------------------------------------------------------------------------
 	
 	public synchronized void wrapupComponents() {
 		for(int c = 0; c < this.dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = 
 				dataComponentExList.get(c);
 			if (dataComponentEx.isEnabled()) {
+				timeout.timeout(TIMEOUT, "wrapup", dataComponentEx, this);
 				dataComponentEx.getDataComponent().wrapup();
+				timeout.abortTimeout();
 			}
 		}
 	}
+	
+	//-------------------------------------------------------------------------
 	
 	public void run() {
 		synchronized(this) {
@@ -317,11 +362,13 @@ public class Execution implements Runnable {
 					for(int c = 0; c < this.dataComponentExList.size(); c++) {
 						DataComponentEx dataComponentEx = 
 							dataComponentExList.get(c);
+						timeout.timeout(TIMEOUT, "isEnabled, isPauseFlag", dataComponentEx, this);
 						if (   dataComponentEx.isEnabled()
 							&& dataComponentEx.isPauseFlag()) {
 							this.pauseExecution();
 							view.updateViewAsync();
 						}
+						timeout.abortTimeout();
 					}
 				}
 
@@ -340,6 +387,7 @@ public class Execution implements Runnable {
 						//call all pure producers first
 						DataComponentEx dataComponentEx = 
 							dataComponentExList.get(c);
+						timeout.timeout(TIMEOUT, "isEnabled, isDeltaObserver", dataComponentEx, this);
 						if (   dataComponentEx.isEnabled()
 							&& dataComponentEx.isDeltaObserver()
 							&&   (!dataComponentEx.getSkipped()
@@ -350,7 +398,8 @@ public class Execution implements Runnable {
 							//or any that are *NOT* deltaObservers!
 							dataComponentEx.setDeltaIndex
 												(dataPool.getPoolCounter());
-						 }
+						}
+						timeout.abortTimeout();
 					}
 					
 					//reduce number of steps
@@ -364,12 +413,15 @@ public class Execution implements Runnable {
 						//call all pure producers first
 						DataComponentEx dataComponentEx = 
 							dataComponentExList.get(c);
+						timeout.timeout(TIMEOUT, "isEnabled, isProducer, isObserver", dataComponentEx, this);
 						if (dataComponentEx.isEnabled() && 
 							dataComponentEx.isProducerOnly()) {
 //System.out.println(c + ") " + dataComponentEx.getName() + " (Pure Producer) call");
 								//make a step (within producerExecution's monitor)
+								timeout.timeout(TIMEOUT, "step (call)", dataComponentEx, this);
 								producerExecutionArray[c].blockingStep();
 						}
+						timeout.abortTimeout();
 					}//next producer/Observer
 					
 					//make a step - according to the dataComponentExList order
@@ -381,15 +433,15 @@ public class Execution implements Runnable {
 						//===========================================//
 						//==  C O N S U M E R  /  P R O D U C E R  ==//
 						//===========================================//
+						timeout.timeout(TIMEOUT, "isProducer, isObserer", dataComponentEx, this);
 						if (dataComponentEx.isProducerObserver()) {
 //System.out.println(c + ") " +dataComponentEx.getName() + " (Norm Producer) call");
 							//Observer AND Producer => blocking
 							try {
 								JSONObject oldData;
-								timeout.timeout(1000, "catching filters", dataComponentEx, this);
+								timeout.timeout(TIMEOUT, "getFilterKeys", dataComponentEx, this);
 								String[] filterKeys = 
 									dataComponentEx.getFilterKeys();
-								timeout.abortTimeout();
 								//if (dataComponentEx.isDeltaObserver()) {
 									oldData = this.dataPool.getDeltaData
 										 (filterKeys,dataComponentEx.getDeltaIndex());
@@ -397,15 +449,15 @@ public class Execution implements Runnable {
 								//else
 								//	oldData = this.dataPool.getData(filterKeys);
 								if (dataComponentEx.isJSON()) {
-									timeout.timeout(1000, "getting data", dataComponentEx, this);
+									timeout.timeout(TIMEOUT, "step", dataComponentEx, this);
 									JSONObject newData = 
 										((JSONObjectDataComponent)dataComponentEx.getDataComponent())
 										.step(oldData);
-									timeout.abortTimeout();
 									if (newData != null)
 										this.dataPool.putData(newData);
 								}
 								else {
+									timeout.timeout(TIMEOUT, "step", dataComponentEx, this);
 									String newData = 
 										((JSONStringDataComponent)dataComponentEx.getDataComponent())
 										.step(oldData.toString());
@@ -414,7 +466,7 @@ public class Execution implements Runnable {
 													   new JSONObject(newData));
 								}
 							}catch(Exception e) {
-								e.printStackTrace();
+								showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
 							}
 //System.out.println(dataComponentEx.getName() + " (Norm Producer) return");
 						}
@@ -426,22 +478,18 @@ public class Execution implements Runnable {
 								//pure Observer
 								//set current data
 								try {
+									timeout.timeout(TIMEOUT, "getFilterKeys", dataComponentEx, this);
 									String[] filterKeys = 
 											dataComponentEx.getFilterKeys();
 									JSONObject oldData;
-									//if (dataComponentEx.isDeltaObserver()) {
-										oldData = this.dataPool.getDeltaData
+									oldData = this.dataPool.getDeltaData
 										  (filterKeys,dataComponentEx.getDeltaIndex());
-									//}
-									//else
-									//	oldData = this.dataPool
-									//	  .getData(filterKeys);
-									ObserverExecutionArray[c].setData(oldData);
+									observerExecutionArray[c].setData(oldData);
 								}catch(Exception e){
-									e.printStackTrace();
+									showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
 								}
 								//call async method 
-								if (!(ObserverExecutionArray[c].step())) {
+								if (!(observerExecutionArray[c].step())) {
 									//if step was *NOT* successful (skipped)
 									//set skipped:=true this prevents the delta
 									//index to advance in the next steps!
@@ -457,12 +505,17 @@ public class Execution implements Runnable {
 //System.out.println(c + ") " +dataComponentEx.getName() + " (Pure Producer) wait");
 								//pure Producer
 								//get blocking result
+								timeout.timeout(TIMEOUT, "step (reap)", dataComponentEx, this);
 								producerExecutionArray[c].blockingWaitUntilDone();
 								//now reap the results
 								//note that due to sequential order we always FIRST
 								//reap the producer and only in the next iteration
 								//THEN call him again
+
+								//escape if stopped
+								timeout.abortTimeout();
 								if (this.stop == true) return;
+								
 //System.out.println(c + ") " +dataComponentEx.getName() + " (Pure Producer) done");
 								try {
 									JSONObject newData = 
@@ -470,11 +523,12 @@ public class Execution implements Runnable {
 									if (newData != null) 
 										this.dataPool.putData(newData);
 								}catch(Exception e){
-									e.printStackTrace();
+									showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
 								}
 								
 						}
 					}//next producer/Observer
+					timeout.abortTimeout();
 					
 					//calculate execution timings (and current step Duration)
 					//do not floor => add 1ms
@@ -508,7 +562,9 @@ public class Execution implements Runnable {
 			if (steps == INFINITY_STEPS) {
 				int timeToDelay = this.aimedStepDuration - this.stepDuration;
 				if (timeToDelay > 0)
-					try{Thread.sleep(timeToDelay);}catch(Exception e){}
+					try{Thread.sleep(timeToDelay);}catch(Exception e){
+						showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+					}
 			}	
 			
 			//escape if stopped
@@ -518,7 +574,9 @@ public class Execution implements Runnable {
 			while (steps == NO_STEPS) {
 				starttime = System.currentTimeMillis();
 //System.out.println(">>PAUSED<<");
-				try{Thread.sleep(PAUSE_DEYLAY);}catch(Exception e){}
+				try{Thread.sleep(PAUSE_DEYLAY);}catch(Exception e){
+					showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+				}
 				//if stop is requested, jump out
 				if (this.stop) return;
 				endtime = System.currentTimeMillis();
@@ -528,9 +586,36 @@ public class Execution implements Runnable {
 		}//next while not stop
 	}
 
-	protected void showError(String textMessage, String PluginID) {
+	//-------------------------------------------------------------------------
+	
+	protected void showWarning(String textMessage, String PluginID) {
 		try{
 			IStatus status = new Status(IStatus.WARNING,
+					PluginID,
+					42,textMessage, null);
+			KiemPlugin.getDefault().getLog().log(status);
+			
+			Display.getDefault().asyncExec(
+					  new Runnable() {
+						    public void run(){
+								try{
+									IViewPart VP = view.getViewSite().getPage().showView("org.eclipse.pde.runtime.LogView");
+									VP.setFocus();
+								}catch(Exception e){
+									showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+								}		
+						    }
+			});
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
+	}
+
+	//-------------------------------------------------------------------------
+	
+	protected void showError(String textMessage, String PluginID) {
+		try{
+			IStatus status = new Status(IStatus.ERROR,
 					PluginID,
 					42,textMessage, null);
 			KiemPlugin.getDefault().getLog().log(status);
@@ -550,5 +635,5 @@ public class Execution implements Runnable {
 			e.printStackTrace();
 		}		
 	}
-
+	
 }
