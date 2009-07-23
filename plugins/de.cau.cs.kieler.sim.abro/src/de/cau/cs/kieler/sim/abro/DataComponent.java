@@ -1,6 +1,7 @@
 package de.cau.cs.kieler.sim.abro;
 
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyError;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyList;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
@@ -83,7 +84,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 			e.printStackTrace();
 		}
 		
-		//try{Thread.sleep(20000);}catch(Exception e){}
+		//try{Thread.sleep(800);}catch(Exception e){}
 		
 		return returnObj;
 	}
@@ -170,6 +171,13 @@ public class DataComponent extends JSONObjectDataComponent implements
 				new KiemPropertyTypeEditor(),
 				"");
 		return properties;
-	}	
+	}
+	
+	@Override
+	public void testProperties(KiemProperty[] properties) throws KiemPropertyError {
+		if (properties[0].getValue().trim().length() == 0) {
+			throw new KiemPropertyError("The state name cannot be empty!");
+		}
+	}
 	
 }

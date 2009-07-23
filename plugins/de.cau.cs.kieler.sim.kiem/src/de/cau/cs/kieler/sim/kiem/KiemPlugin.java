@@ -24,6 +24,8 @@ import org.osgi.framework.BundleContext;
 //import org.eclipse.core.runtime.IAdaptable;
 
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
+import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyError;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
@@ -231,17 +233,26 @@ public class KiemPlugin extends AbstractUIPlugin {
 
 		if (countEnabledProducer < 1) {
 			this.showError("Please enable at least one Data Producer!",this.PLUGIN_ID);
-			this.execution.stopExecutionSync();
-			this.execution = null;
 			return false;
 		}
 		else if (countEnabledObserver < 1) {
 			showError("Please enable at least one Data Observer!",this.PLUGIN_ID);
-			this.execution.stopExecutionSync();
-			this.execution = null;
 			return false;
 		}
 		
+		//now check if properties are ok hence no KiemPropertyError is thrown
+		for (int c = 0; c < dataComponentExList.size(); c++) {
+			DataComponentEx dataComponentEx = dataComponentExList.get(c);
+			KiemProperty[] properties = dataComponentEx.getProperties();
+			try {
+				dataComponentEx.testProperties(properties);
+			} catch (KiemPropertyError e) {
+				this.showError(e.getMessage(), dataComponentEx
+						.getDataComponent().getConfigurationElement()
+						.getContributor().getName());
+				return false;
+			}
+		}
 		
 		//get all localInterfaceVariables and combine them into
 		//globalInterfaceVariables

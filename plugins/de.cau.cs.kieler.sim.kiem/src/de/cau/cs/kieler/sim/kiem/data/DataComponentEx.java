@@ -135,6 +135,11 @@ public class DataComponentEx {
 		return this.component.isStepDone(); 
 	}
 	
+	public void testProperties(KiemProperty[] properties) 
+									throws KiemPropertyError {
+		this.component.testProperties(properties);
+	}
+	
 	public void setGloblaInterfaceVariables(String[] globalInterfaceVariables) {
 		this.component.setGlobalInterfaceVariables(globalInterfaceVariables); 
 	}
