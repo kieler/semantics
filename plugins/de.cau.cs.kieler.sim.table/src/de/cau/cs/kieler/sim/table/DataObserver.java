@@ -1,5 +1,8 @@
 package de.cau.cs.kieler.sim.table;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONArray;
@@ -9,22 +12,15 @@ import de.cau.cs.kieler.sim.table.views.DataTableView;
 public class DataObserver extends JSONStringDataComponent implements
 		IJSONStringDataComponent {
 
-	//List<TableData> da
+	List<TableData> tableDataTmp;
 	
 	public DataObserver() {
 	}
 
 	public String step(String JSONString) {
 		System.out.println(JSONString);
-		//set all entries to absent per default
-		//boolean modified = false;
-		for (int c = 0; c < TableDataList.getInstance().size(); c++) {
-			TableData tableData = TableDataList.getInstance().get(c);
-			if (tableData.isPresent()&&(!tableData.isModified())) {
-				//modified = true;
-				tableData.setPresent(false);
-			}
-		}
+
+		tableDataTmp = new LinkedList<TableData>();
 		
 		// TODO Auto-generated method stub
 //System.out.println("    CONSUMER START");
@@ -46,7 +42,9 @@ public class DataObserver extends JSONStringDataComponent implements
 						value = ((JSONArray)obj).toString();
 					}
 					else {
-						value = (String)obj;
+						value = "\""+(String)obj+"\"";
+						if (((String)obj).length() == 0)
+							value = "";
 					}
 					//add to table or update table
 					if (TableDataList.getInstance().contains(key)) {
@@ -54,7 +52,7 @@ public class DataObserver extends JSONStringDataComponent implements
 						TableData data = TableDataList.getInstance().get(key);
 						data.setValue(value);
 						data.setPresent(true);
-						//modified = true;
+						tableDataTmp.add(data);
 					}
 					else {
 						//add
@@ -62,10 +60,19 @@ public class DataObserver extends JSONStringDataComponent implements
 													true, 
 													key,
 													value));
-						//modified = true;
 					}
 				}
-				//if (modified)
+				
+				//set all NOT updated entries to absent per default
+				for (int c = 0; c < TableDataList.getInstance().size(); c++) {
+					TableData tableData = TableDataList.getInstance().get(c);
+					if (tableData.isPresent()&&(!tableData.isModified())) {
+						if(!tableDataTmp.contains(tableData)) {
+							tableData.setPresent(false);
+						}
+					}
+				}
+				
 			}
 		}catch(Exception e){
 			e.printStackTrace();
