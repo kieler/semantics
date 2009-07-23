@@ -19,6 +19,14 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 
+/**
+ * A special layout for states: If the state is simple, its name is written in the center
+ * and the compartments are reduced in size to zero. If the state is complex, the name is
+ * written on top and the compartments are laid out in a column below the name.
+ * @author schm
+ *
+ */
+
 public class StateLayout extends ConstrainedToolbarLayout {
 
 	boolean containsRegions;
@@ -29,6 +37,9 @@ public class StateLayout extends ConstrainedToolbarLayout {
 	boolean containsExitActions;
 	boolean containsSuspensionTrigger;
 	
+	/**
+	 * Apply the layout.
+	 */
 	// A layout for states
 	public void layout(IFigure parent) {
 		if (!parent.isVisible())
@@ -58,6 +69,10 @@ public class StateLayout extends ConstrainedToolbarLayout {
 		}
 	}
 	
+	/**
+	 * Lookup which compartments of a state have contents.
+	 * @param state The state to check.
+	 */
 	// Method to lookup which compartments have contents
 	private void retrieveContents(State state) {
 		containsRegions = false;
@@ -91,6 +106,15 @@ public class StateLayout extends ConstrainedToolbarLayout {
 		}
 	}
 
+	/**
+	 * Apply the layout for complex states.
+	 * @param parent The state figure.
+	 * @param children The children of the state figure.
+	 * @param x The x coordinate of the state figure.
+	 * @param y The y coordinate of the state figure.
+	 * @param height The height of the state figure.
+	 * @param width The width of the state figure.
+	 */
 	// The layout for complex states
 	private void complexLayout(IFigure parent, List children, int x, int y, int height, int width) {
 		
@@ -205,6 +229,11 @@ public class StateLayout extends ConstrainedToolbarLayout {
 		}	
 	}
 
+	/**
+	 * Set the visibility of a compartment's title label.
+	 * @param child The compartment.
+	 * @param b True if visible, false otherwise.
+	 */
 	// Method to make the compartment's title figure invisible
 	private void setCompartmentTitleVisibility(Object child, boolean b) {
 		for (Object o : ((ShapeCompartmentFigure) child).getContentPane().getChildren()) {
@@ -214,6 +243,11 @@ public class StateLayout extends ConstrainedToolbarLayout {
 		}
 	}
 
+	/**
+	 * Retrieve the name of a compartment.
+	 * @param child The compartment.
+	 * @return The name of the compartment.
+	 */
 	// Method to retrieve a compartment's name
 	private String getName(ShapeCompartmentFigure child) {
 		if ((child.getChildren() != null) && (child.getChildren().size() > 0)
@@ -228,6 +262,15 @@ public class StateLayout extends ConstrainedToolbarLayout {
 		return "";
 	}
 
+	/**
+	 * Apply the layout for simple states.
+	 * @param parent The state figure.
+	 * @param children The children of the state figure.
+	 * @param x The x coordinate of the state figure.
+	 * @param y The y coordinate of the state figure.
+	 * @param height The height of the state figure.
+	 * @param width The width of the state figure.
+	 */
 	// The layout for simple states
 	private void simpleLayout(IFigure parent, List children, int x, int y, int height, int width) {
 		String name;
@@ -293,6 +336,11 @@ public class StateLayout extends ConstrainedToolbarLayout {
 		return children;
 	}
 
+	/**
+	 * Check whether a state is simple.
+	 * @param state The state to check.
+	 * @return True if simple, false otherwise.
+	 */
 	// Method to decide whether a state is simple
 	private boolean isSimple(State state) {
 		if ((state.getRegions() == null || state.getRegions().size() == 0)
@@ -305,6 +353,9 @@ public class StateLayout extends ConstrainedToolbarLayout {
 		return false;
 	}
 
+	/**
+	 * Calculate the minimum size of the figure.
+	 */
 	// Method to calculate the minimum size of a figure
 	@Override
 	public Dimension calculateMinimumSize(IFigure parent, int hint, int hint2) {
@@ -339,6 +390,9 @@ public class StateLayout extends ConstrainedToolbarLayout {
 		return new Dimension(minWidth, minHeight);
 	}
 	
+	/**
+	 * Calculate the preferred size of the figure.
+	 */
 	// Method to calculate the preferred size of a figure
 	@Override
 	protected Dimension calculatePreferredSize(IFigure parent, int hint, int hint2) {

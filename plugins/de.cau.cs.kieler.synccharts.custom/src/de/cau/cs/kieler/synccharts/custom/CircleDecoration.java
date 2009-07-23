@@ -6,27 +6,45 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 
+/**
+ * A decoration that depicts a circle.
+ * @author schm
+ *
+ */
 // A new decoration that depicts a circle
 public class CircleDecoration extends PolygonDecoration {
 	
+	/**
+	 * This method has to be empty. Otherwise the circle would change its size at different angles.
+	 */
 	@Override
 	public void setRotation(double angle) {
 	// This has to be empty, otherwise the circle would be deformed at
 	// different angles
 	}
 	
+	/**
+	 * Draw the outline of the circle.
+	 */
 	@Override
 	protected void outlineShape(Graphics g) {
 		Rectangle ovalBounds = getBoundsFromPoints();
 		g.drawOval(ovalBounds);
 	}
 	
+	/**
+	 * Fill the circle.
+	 */
 	@Override
 	protected void fillShape(Graphics g) {
 		Rectangle ovalBounds = getBoundsFromPoints();
 		g.fillOval(ovalBounds);
 	}
 	
+	/**
+	 * Calculate the bounds of the decoration.
+	 * @return The bounds of the decoration.
+	 */
 	// Transforms the PointList into bounds that can be used to draw the circle
 	protected Rectangle getBoundsFromPoints() {
 		if (getPoints().size() < 2) {

@@ -4,8 +4,16 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.draw2d.ColorConstants;
 
+/**
+ * A circle decoration with an 'H' inside.
+ * @author schm
+ *
+ */
 public class HistoryDecoration extends CircleDecoration {
 
+	/**
+	 * Outline the shape and draw an 'H' inside.
+	 */
 	// Decoration for history transitions;
 	// draws an "H" inside the circle.
 	@Override

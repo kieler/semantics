@@ -5,6 +5,8 @@ import java.io.ByteArrayInputStream;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.Shape;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -30,6 +32,12 @@ import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.VariableReference;
 import de.cau.cs.kieler.synccharts.dsl.parser.XtextParser;
 
+/**
+ * Command that parses the text of a label, creates the referenced objects
+ * and integrates them into the existing meta model.
+ * @author schm
+ *
+ */
 // This command parses the text of a label and integrates the results into the
 // given SSM model
 public class XTextParseCommand extends AbstractTransactionalCommand {
@@ -38,17 +46,32 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 	XtextParser parser;
 	String string;
 	
+	/**
+	 * The constructor.
+	 * @param element The element that is to be changed.
+	 * @param newString The string to parse.
+	 * @param flags Some flags.
+	 */
 	public XTextParseCommand(IAdaptable element, String newString, int flags) {
 		super(TransactionUtil.getEditingDomain(((Action) (((EObjectAdapter) element).getRealObject()))), newString, null);
 		this.element = element;
 		this.string = newString;
 	}
 
+	/**
+	 * Another constructor.
+	 * @param editingDomain The editing domain.
+	 * @param newString The string to parse.
+	 * @param object The object.
+	 */
 	public XTextParseCommand(TransactionalEditingDomain editingDomain,
 			String newString, Object object) {
 		super(editingDomain, newString, null);
 	}
 
+	/**
+	 * Execute the command.
+	 */
 	// This method is executed when the text of the label has been changed
 	@Override
 	protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
@@ -140,6 +163,13 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 		return CommandResult.newOKCommandResult();
 	}
 
+	/**
+	 * Check whether the signals in the new action were already defined in the
+	 * parent state of the old action.
+	 * @param action The old action that is to be replaced.
+	 * @param newAction The newly created action.
+	 * @return True if all signals have been defined, false otherwise.
+	 */
 	// Method to check whether the signals have already been defined in the parent state
 	private boolean checkSignals(Action action, Action newAction) {
 		boolean allValid = true;
@@ -184,6 +214,9 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 		return allValid;
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#checkSignals(Action, Action)}
+	 */
 	// A similar method for suspension triggers
 	private boolean checkSignals(SuspensionTrigger suspensionTrigger, Expression expression, Expression newExpression) {
 		boolean allValid = true;
@@ -208,6 +241,11 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 		return allValid;
 	}
 	
+	/**
+	 * Update the references to a signal in an action.
+	 * @param action The action.
+	 * @param signal The signal.
+	 */
 	// Methods to forward signal pointers
 	private void forwardSignals(Action action, Signal signal) {
 		Expression trigger = action.getTrigger();
@@ -254,6 +292,9 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 //		}
 	}
 	
+	/**
+	 * See {@link XTextParseCommand#checkSignals(Action, Action)}
+	 */
 	// Methods to forward signal pointers
 	private void forwardSignals(Expression expression, Signal signal) {
 		
@@ -266,6 +307,9 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 		}
 	}
 	
+	/**
+	 * See {@link XTextParseCommand#checkSignals(Action, Action)}
+	 */
 	private void setSignal(ComplexExpression trigger, Signal signal) {
 		EList<Expression> subExpressions = trigger.getSubExpressions();
 		Expression expression;
@@ -283,6 +327,11 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 		}
 	}
 	
+	/**
+	 * Collect all the signals that are declared in a state.
+	 * @param state The state.
+	 * @return List of declared signals.
+	 */
 	// Method to collect all signals declared in state or its parent (+ grandparent etc.) states
 	private EList<Signal> collectValidSignals(State state) {
 		EList<Signal> newSignals = new BasicEList<Signal>();
@@ -295,6 +344,11 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 		return newSignals;
 	}
 	
+	/**
+	 * Get all signals referenced in an action.
+	 * @param action The action.
+	 * @return The referenced signals.
+	 */
 	// Several methods to get the signals from the different types of model elements
 	private EList<Signal> getSignals(Action action) {
 		EList<Signal> signals = getSignals(action.getTrigger());
@@ -338,6 +392,9 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 		return signals;
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(Effect e) {
 		if (e instanceof Emission) {
 			return getSignals(((Emission) e));
@@ -348,6 +405,9 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 		return null;
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(Expression expression) {
 		if (expression instanceof SignalReference)
 			return getSignals((SignalReference)expression);
@@ -358,6 +418,9 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 		return null;
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(ComplexExpression complexExpression) {
 		EList<Signal> signals = new BasicEList<Signal>();
 		EList<Signal> tempSignals;
@@ -372,26 +435,44 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 		return signals;
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(Assignment assignment) {
 		return getSignals(assignment.getExpression());
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(Emission emission) {
 		return getSignals(emission.getSignal());
 	}
 
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(Variable variable) {
 		return new BasicEList<Signal>();
 	}
 
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(SignalReference signalRef) {
 		return getSignals(signalRef.getSignal());
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(VariableReference variableRef) {
 		return getSignals(variableRef.getVariable());
 	}
 
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(Signal signal) {
 		EList<Signal> signals = new BasicEList<Signal>();
 		signals.add(signal);

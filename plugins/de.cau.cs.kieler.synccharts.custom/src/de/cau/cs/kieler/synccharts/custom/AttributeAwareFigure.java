@@ -13,6 +13,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.notation.View;
 
+/**
+ * This class represents node figures that are aware of changes made to
+ * their corresponding model element.
+ * @author schm
+ *
+ */
 public class AttributeAwareFigure extends Figure implements Adapter {
 
 	// This list contains all possible figures and when they are to be displayed	
@@ -26,28 +32,51 @@ public class AttributeAwareFigure extends Figure implements Adapter {
 	protected Figure currentFigure;
 	protected AbstractLayout layout;
 	
+	/**
+	 * The constructor.
+	 */
 	public AttributeAwareFigure() {
 		super();
 	}
 	
+	/**
+	 * Sets the layout of the figure.
+	 * @deprecated Do not use this.
+	 * @param l The layout.
+	 */
 	public void setLayout(AbstractLayout l) {
 		layout = l;
 	}
 	
+	/**
+	 * Returns the model element the figure has to watch.
+	 * @return The model element to be watched.
+	 */
 	public EObject getModelElement() {
 		return modelElement;
 	}
 	
+	/**
+	 * This method tells a connection which edit part it has to watch.
+	 * @param e The edit part to watch.
+	 */
 	// This method is used to establish a link between the figure and its EditPart
 	public void setModelElementAndRegisterFromEditPart(EditPart e) {
 		modelElement = ((View) (e.getModel())).getElement();
 		((Notifier) modelElement).eAdapters().add(this);
 	}
 	
+	/**
+	 * Set the figure that is to be drawn if no condition id fulfilled.
+	 * @param f The figure to be drawn if no condition is fulfilled.
+	 */
 	public void setDefaultFigure(Figure f) {
 		defaultFigure = f;
 	}
 	
+	/**
+	 * Paints the figure.
+	 */
 	// Instead of painting the figure itself, its currentFigure is painted
 	// after its bounds have been adjusted
 	@Override
@@ -61,29 +90,50 @@ public class AttributeAwareFigure extends Figure implements Adapter {
 		currentFigure.setBounds(newBounds);
 		currentFigure.paint(g);
 	}
-	
+	/**
+	 * Returns the current figure that is to be drawn.
+	 * @return The current figure that is to be drawn.
+	 */
 	public Figure getCurrentFigure() {
 		return currentFigure;
 	}
 	
+	/**
+	 * Sets the figure that is currently to be drawn.
+	 * @param f The figure that is currently to be drawn.
+	 */
 	public void setCurrentFigure(Figure f) {
 		currentFigure = f;
 	}
 	
+	/**
+	 * Add a conditionalFigure to the figure.
+	 * @param cf The new ConditionalFigure to add.
+	 */
 	public void addConditionalFigure(ConditionalFigure cf) {
 		conditionalFigureList.add(cf);
 	}
 	
+	/**
+	 * @deprecated Do not use this.
+	 */
 	public Notifier getTarget() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * @deprecated Do not use this.
+	 */
 	public boolean isAdapterForType(Object type) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	/**
+	 * Adjust the appearance to the changes reported in the notification.
+	 * @param notification The notification containing the changes made to the model element.
+	 */
 	// If the model element's properties have changed, adjust currentFigure
 	public void notifyChanged(Notification notification) {
 		try {	
@@ -110,6 +160,9 @@ public class AttributeAwareFigure extends Figure implements Adapter {
 		this.repaint();
 	}
 
+	/**
+	 * @deprecated Do not use this.
+	 */
 	public void setTarget(Notifier newTarget) {
 		// TODO Auto-generated method stub
 		

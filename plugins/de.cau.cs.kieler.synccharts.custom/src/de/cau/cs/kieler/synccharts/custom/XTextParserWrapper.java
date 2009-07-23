@@ -31,6 +31,11 @@ import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.VariableReference;
 import de.cau.cs.kieler.synccharts.dsl.parser.XtextParser;
 
+/**
+ * This class is wrapped around the XText parser to disguise it as a common GMF parser.
+ * @author schm
+ *
+ */
 // A wrapper for the xText parser
 public class XTextParserWrapper implements IParser {
 
@@ -46,6 +51,9 @@ public class XTextParserWrapper implements IParser {
 		return null;
 	}
 
+	/**
+	 * Return the edit string.
+	 */
 	// Method to return the editString of an action or a suspensionTrigger
 	public String getEditString(IAdaptable element, int flags) {
 		if (element instanceof EObjectAdapter) {
@@ -65,6 +73,9 @@ public class XTextParserWrapper implements IParser {
 		return "";
 	}
 
+	/**
+	 * Return the parse command.
+	 */
 	// Return the xText command
 	public ICommand getParseCommand(IAdaptable element, String newString, int flags) {
 		if (((EObjectAdapter) element).getRealObject() instanceof SuspensionTrigger) {
@@ -75,6 +86,9 @@ public class XTextParserWrapper implements IParser {
 		}
 	}
 
+	/**
+	 * Return the print string.
+	 */
 	// Return the print string of an action or a suspensionTrigger
 	public String getPrintString(IAdaptable element, int flags) {
 		String immediateString = "";
@@ -106,6 +120,9 @@ public class XTextParserWrapper implements IParser {
 		return "";
 	}
 
+	/**
+	 * Check whether an event is affected.
+	 */
 	// This wrapper affects notification events
 	public boolean isAffectingEvent(Object event, int flags) {
 		if (event instanceof Notification) {
@@ -120,6 +137,9 @@ public class XTextParserWrapper implements IParser {
 		return false;
 	}
 
+	/**
+	 * Check whether the edit string is valid.
+	 */
 	// Check whether the edit string is valid by parsing it
 	public IParserEditStatus isValidEditString(IAdaptable element, String editString) {
 		try {
@@ -149,7 +169,12 @@ public class XTextParserWrapper implements IParser {
 		}
 		return ParserEditStatus.UNEDITABLE_STATUS;
 	}
-			
+	
+	/**
+	 * Collect all the signals that are declared in a state.
+	 * @param state The state.
+	 * @return List of declared signals.
+	 */
 	// Method to collect all signals declared in state or its parent (+ grandparent etc.) states
 	private EList<Signal> collectValidSignals(State state) {
 		EList<Signal> newSignals = new BasicEList<Signal>();
@@ -162,6 +187,13 @@ public class XTextParserWrapper implements IParser {
 		return newSignals;
 	}
 	
+	/**
+	 * Check whether the signals in the new action were already defined in the
+	 * parent state of the old action.
+	 * @param action The old action that is to be replaced.
+	 * @param newAction The newly created action.
+	 * @return True if all signals have been defined, false otherwise.
+	 */
 	// Methods to check whether the signals are defined correctly
 	private boolean checkSignals(Action action, Action newAction) {
 		boolean allValid = true;
@@ -205,6 +237,9 @@ public class XTextParserWrapper implements IParser {
 		return allValid;
 	}
 	
+	/**
+	 * @see {@link XTextParserWrapper#checkSignals(Action, Action)}
+	 */
 	// A similar method for suspension triggers
 	private boolean checkSignals(SuspensionTrigger suspensionTrigger, Expression expression, Expression newExpression) {
 		boolean allValid = true;
@@ -228,6 +263,11 @@ public class XTextParserWrapper implements IParser {
 		return allValid;
 	}
 	
+	/**
+	 * Get all signals referenced in an action.
+	 * @param action The action.
+	 * @return The referenced signals.
+	 */
 	private EList<Signal> getSignals(Action action) {
 		EList<Signal> signals = getSignals(action.getTrigger());
 		EList<Signal> tempSignals;
@@ -258,6 +298,9 @@ public class XTextParserWrapper implements IParser {
 		return signals;
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(Effect e) {
 		if (e instanceof Emission) {
 			return getSignals(((Emission) e));
@@ -268,6 +311,9 @@ public class XTextParserWrapper implements IParser {
 		return null;
 	}
 
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(Expression expression) {
 		if (expression instanceof SignalReference)
 			return getSignals((SignalReference)expression);
@@ -278,6 +324,9 @@ public class XTextParserWrapper implements IParser {
 		return null;
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(ComplexExpression complexExpression) {
 		EList<Signal> signals = new BasicEList<Signal>();
 		EList<Signal> tempSignals;
@@ -292,26 +341,44 @@ public class XTextParserWrapper implements IParser {
 		return signals;
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(Assignment assignment) {
 		return getSignals(assignment.getExpression());
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(Emission emission) {
 		return getSignals(emission.getSignal());
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(SignalReference signalRef) {
 		return getSignals(signalRef.getSignal());
 	}
 	
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(VariableReference variableRef) {
 		return getSignals(variableRef.getVariable());
 	}
 
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(Variable variable) {
 		return new BasicEList<Signal>();
 	}
 
+	/**
+	 * @see {@link XTextParseCommand#getSignals(Action)}
+	 */
 	private EList<Signal> getSignals(Signal signal) {
 		EList<Signal> signals = new BasicEList<Signal>();
 		signals.add(signal);

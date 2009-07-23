@@ -7,8 +7,15 @@ import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 
+/**
+ * A layout for compartments.
+ * @deprecated It is currently not used.
+ */
 public class CustomRegionCompartmentLayout extends XYLayout {
 
+	/**
+	 * Apply the layout.
+	 */
 	// A custom layout for the region compartment which lays its children out
 	// in columns that equally share the maximal available width;
 	// it is currently not used.
@@ -44,6 +51,9 @@ public class CustomRegionCompartmentLayout extends XYLayout {
 		}
 	}
 
+	/**
+	 * Calculate the preferred size of the figure.
+	 */
 	// Method to calculate the preferred size of a figure
 	@Override
 	protected Dimension calculatePreferredSize(IFigure parent, int hint, int hint2) {

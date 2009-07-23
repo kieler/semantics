@@ -9,11 +9,20 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 
+/**
+ * A layout for compartments that lays out the compartment's children in rows, which
+ * are wrapped around if they are longer than the available space.
+ * @author schm
+ *
+ */
 public class CustomCompartmentLayout extends XYLayout {
 
 	// The maximum height of all elements in the current row
 	int maxHeight;
 	
+	/**
+	 * Apply the layout.
+	 */
 	// A custom layout for compartments which lays its children out in rows
 	// and wraps them around if needed.
 	public void layout(IFigure parent) {
@@ -63,6 +72,11 @@ public class CustomCompartmentLayout extends XYLayout {
 		}
 	}
 
+	/**
+	 * Sort the list of children so that all WrappingLabels come first.
+	 * @param list
+	 * @return
+	 */
 	// Return a sorted list in which WrappingLabels come first
 	private List sort(List list) {
 		List newList = new LinkedList();
@@ -79,6 +93,9 @@ public class CustomCompartmentLayout extends XYLayout {
 		return newList;
 	}
 
+	/**
+	 * Calculate the preferred size of the figure.
+	 */
 	// Method to calculate the preferred size of a figure
 	@Override
 	protected Dimension calculatePreferredSize(IFigure parent, int hint, int hint2) {

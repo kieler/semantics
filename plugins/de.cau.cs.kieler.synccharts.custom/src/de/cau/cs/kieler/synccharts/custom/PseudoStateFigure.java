@@ -5,13 +5,24 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 
+/**
+ * A grey filled circle with a 'P' inside.
+ * @author schm
+ *
+ */
 public class PseudoStateFigure extends Ellipse {
 	
+	/**
+	 * The constructor.
+	 */
 	// A class that draws a 'P' inside of an ellipse
 	public PseudoStateFigure() {
 		super();
 	}
 
+	/**
+	 * Draw the outline of the circle and a 'P' inside.
+	 */
 	@Override
 	protected void outlineShape(Graphics graphics) {
 		Rectangle t = Rectangle.SINGLETON;

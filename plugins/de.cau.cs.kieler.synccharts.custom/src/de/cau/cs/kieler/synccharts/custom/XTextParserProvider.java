@@ -12,9 +12,17 @@ import org.eclipse.gmf.runtime.emf.ui.services.parser.ParserHintAdapter;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.SuspensionTrigger;
 
+/**
+ * The provider for the XText parser.
+ * @author schm
+ *
+ */
 // A provider for the xText parser
 public class XTextParserProvider extends AbstractProvider implements IParserProvider {
 	
+	/**
+	 * Return the XText parser
+	 */
 	// Return the xText parser
 	public IParser getParser(IAdaptable hint) {
 		if (hint instanceof ParserHintAdapter) {
@@ -33,6 +41,9 @@ public class XTextParserProvider extends AbstractProvider implements IParserProv
 		return null;
 	}
 
+	/**
+	 * Check whether an operation is provided.
+	 */
 	// Provide hint for GetParserOperations
 	public boolean provides(IOperation operation) {
 		if (operation instanceof GetParserOperation) {

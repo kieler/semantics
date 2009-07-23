@@ -13,8 +13,17 @@ import org.eclipse.gef.EditPart;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.TransitionType;
 
+/**
+ * This class represents attribute aware transition figures.
+ * @author schm
+ *
+ */
 public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 
+	/**
+	 * The constructor.
+	 * @param e The edit part the figure is supposed to watch.
+	 */
 	// The attribute aware figure that is used for transitions
 	public AttributeAwareTransitionFigure(EditPart e) {
 		super();
@@ -79,6 +88,10 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 		notifyChanged(null);
 	}
 	
+	/**
+	 * Create the strong abortion decoration.
+	 * @return The decoration.
+	 */
 	// Methods to create the different decorations
 	private RotatableDecoration createStrongAbortionDecoration() {
 		PolygonDecoration circleDecoration = new CircleDecoration();
@@ -92,6 +105,10 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 		return circleDecoration;
 	}
 	
+	/**
+	 * Create the weak abortion decoration.
+	 * @return The decoration.
+	 */	
 	private RotatableDecoration createWeakAbortionDecoration() {
 		PolygonDecoration pointDecoration = new PolygonDecoration();
 		pointDecoration.setForegroundColor(ColorConstants.black);
@@ -102,6 +119,10 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 		return pointDecoration;
 	}
 	
+	/**
+	 * Create the normal termination decoration.
+	 * @return The decoration.
+	 */
 	private RotatableDecoration createNormalTerminationDecoration() {
 		PolygonDecoration triangleDecoration = new PolygonDecoration();
 		triangleDecoration.setLineWidth(2);
@@ -115,6 +136,10 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 		return triangleDecoration;
 	}
 	
+	/**
+	 * Create the arrow decoration.
+	 * @return The decoration.
+	 */
 	private RotatableDecoration createArrowDecoration() {
 		PolylineDecoration arrowDecoration = new PolylineDecoration();
 		arrowDecoration.setLineWidth(2);
@@ -127,7 +152,11 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 		arrowDecoration.setTemplate(arrowDecorationPoints);
 		return arrowDecoration;
 	}
-	
+
+	/**
+	 * Create the history decoration.
+	 * @return The decoration.
+	 */
 	private RotatableDecoration createHistoryDecoration() {
 		HistoryDecoration historyDecoration = new HistoryDecoration();
 		historyDecoration.setLineWidth(2);

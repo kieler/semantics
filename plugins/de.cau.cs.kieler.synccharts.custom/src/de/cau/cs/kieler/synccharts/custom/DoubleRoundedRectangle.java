@@ -4,13 +4,24 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Rectangle;
 
+/**
+ * A rounded rectangle with a double border.
+ * @author schm
+ *
+ */
 public class DoubleRoundedRectangle extends RoundedRectangle {
 
+	/**
+	 * The constructor.
+	 */
 	// A class that draws two rectangles instead of only one
 	public DoubleRoundedRectangle() {
 		super();
 	}
 	
+	/**
+	 * Draw the outline twice.
+	 */
 	protected void outlineShape(Graphics graphics) {
 		Rectangle f = Rectangle.SINGLETON;
 		Rectangle r = getBounds();

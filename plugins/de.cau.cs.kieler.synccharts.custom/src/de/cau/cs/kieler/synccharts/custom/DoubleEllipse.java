@@ -4,13 +4,24 @@ import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Rectangle;
 
+/**
+ * An ellipse with a double border
+ * @author schm
+ *
+ */
 public class DoubleEllipse extends Ellipse {
 	
+	/**
+	 * The constructor.
+	 */
 	// A class that draws two ellipses instead of only one
 	public DoubleEllipse() {
 		super();
 	}
 
+	/**
+	 * Draw the outline twice.
+	 */
 	@Override
 	protected void outlineShape(Graphics graphics) {
 		Rectangle r = Rectangle.SINGLETON;

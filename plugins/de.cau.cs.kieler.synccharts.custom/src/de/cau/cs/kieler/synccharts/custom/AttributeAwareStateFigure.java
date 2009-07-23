@@ -17,6 +17,11 @@ import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.State;
 
+/**
+ * This class represents attribute aware state figures.
+ * @author schm
+ *
+ */
 public class AttributeAwareStateFigure extends AttributeAwareFigure {
 	
 	boolean containsRegions;
@@ -27,6 +32,10 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
 	boolean containsExitActions;
 	boolean containsSuspensionTrigger;
 	
+	/**
+	 * The constructor
+	 * @param e The edit part the figure is supposed to watch.
+	 */
 	// This is the figure for states
 	public AttributeAwareStateFigure(EditPart e) {
 		super();
@@ -151,6 +160,10 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
 		notifyChanged(null);
 	}
 	
+	/**
+	 * Returns the minimum size of the figure.
+	 * @return The minimum size of the figure.
+	 */
 	// The minimum size of a simple state is 40x40 pixels
 	// The minimum height of complex states is the sum of 
 	// all its children's minimum heights, while its minimum
@@ -204,12 +217,21 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
 		return super.getMinimumSize(hint, hint2);
 	}
 	
+	/**
+	 *  Returns the preferred size of the figure. Here it is the same as the minimum size.
+	 *  @return The preferred size of the figure.
+	 */
 	// The preferred size is the same as the minimum size
 	@Override
 	public Dimension getPreferredSize(int hint, int hint2) {
 		return getMinimumSize(hint, hint2);
 	}
 	
+	/**
+	 * Retrieve the name of a compartment.
+	 * @param child The compartment to retrieve the name from.
+	 * @return The name of the compartment.
+	 */
 	// Method to retrieve a compartment's name
 	private String getName(ShapeCompartmentFigure child) {
 		if ((child.getChildren() != null) && (child.getChildren().size() > 0)
@@ -224,6 +246,10 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
 		return "";
 	}
 	
+	/**
+	 * Lookup which compartments have contents
+	 * @param state The state for which the compartments have to be checked.
+	 */
 	// Method to lookup which compartments have contents
 	private void retrieveContents(State state) {
 		containsRegions = false;
@@ -257,6 +283,11 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
 		}
 	}
 	
+	/**
+	 * Check whether a state is simple or complex.
+	 * @param state The state to check
+	 * @return True if simple, otherwise false.
+	 */
 	// Method to decide whether a state is simple
 	private boolean isSimple(State state) {
 		if ((state.getRegions() == null || state.getRegions().size() == 0)
