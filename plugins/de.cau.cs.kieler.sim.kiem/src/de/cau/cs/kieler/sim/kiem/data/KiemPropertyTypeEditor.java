@@ -35,6 +35,10 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 	public void refreshItems() {
 	    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 	    IEditorReference[] editors = page.getEditorReferences();
+	    if ((editors == null)||(editors.length == 0)) {
+	    	this.items = new String[0];
+	    	return;
+	    }
 		String[] items = new String[editors.length];
 		for (int c = 0; c < editors.length; c++) {
 			 items[c] = editors[c].getTitle() + " (" + editors[c].getId() + ")";
@@ -44,6 +48,7 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 	
 	@Override
 	public Object getValue(Object element) {
+		if ((items == null)||(items.length == 0)) return 0;
 		KiemProperty property = (KiemProperty)element;
 		for (int c = 0; c < items.length; c ++) {
 			if (property.getValue().equals(items[c])) return c;
@@ -53,6 +58,7 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 
 	@Override
 	public void setValue(Object element, Object value) {
+		if ((items == null)||(items.length == 0)) return;
 		KiemProperty property = (KiemProperty)element;
 		property.setValue(items[(Integer)value]);
 	}
