@@ -48,6 +48,7 @@ public class KiemComponentEditing extends EditingSupport {
 
 	@Override
 	protected Object getValue(Object element) {
+		if (!(element instanceof DataComponentEx)) return null;
 		DataComponentEx dataComponentEx = (DataComponentEx)element;
 
 		switch (this.columnIndex) {
@@ -61,6 +62,7 @@ public class KiemComponentEditing extends EditingSupport {
 
 	@Override
 	protected void setValue(Object element, Object value) {
+		if (!(element instanceof DataComponentEx)) return;
 		DataComponentEx dataComponentEx = (DataComponentEx)element;
 		switch (this.columnIndex) {
 		case 2:
