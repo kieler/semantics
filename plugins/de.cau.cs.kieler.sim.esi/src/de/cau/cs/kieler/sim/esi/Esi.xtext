@@ -20,9 +20,8 @@ tick:
    (input+=signal)* ('%' 'Output' ':' (output+=signal)*)? ';' 
    ; 
 
-signal:
-     name=ID               
-   | name=ID '(' val=num ')' 
+signal:     
+     name=ID (valued?='('  val=NUM ')')? 
    ;
                
 /*------------------------------------------------------------------
@@ -31,7 +30,7 @@ signal:
 
 terminal ID	: (Letter | '_') (Letter | Digit | '_')*;
 
-terminal num	 returns ecore::EInt : ('+'|'-')?(Digit)+ ;
+terminal NUM	 returns ecore::EInt : ('+'|'-')?(Digit)+ ;
 
 terminal WS :  '\t' | ' ' | '\r' | '\n';
 

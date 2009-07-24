@@ -2,13 +2,11 @@ package de.cau.cs.kieler.sim.esi;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+
 import java.io.InputStream;
 import java.util.Iterator;
 
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.ISetup;
 import org.eclipse.xtext.resource.*;
@@ -18,8 +16,8 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.EsiStandaloneSetup;
 import de.cau.cs.kieler.esi.*;
-import de.cau.cs.kieler.esi.impl.traceImpl;
-import de.cau.cs.kieler.parser.antlr.EsiParser;
+import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
@@ -28,12 +26,12 @@ import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 public class DataComponent extends JSONObjectDataComponent implements
 		IJSONObjectDataComponent {
 	
-	private String traceFile = "/home/ctr/runtime-EclipseApplication/test/abro.esi";
+	private KiemPropertyTypeFile traceFile;
+	
+	private String traceFileString = "/home/ctr/runtime-EclipseApplication/test/abro.esi";
 	private tracelist model = null;
 	private Iterator<trace> iTrace;
 	private Iterator<tick> iTick;
-	/*private Iterator<EObject> traces = null;
-	private Iterator<EObject> ticks = null;*/
 	
 	public JSONObject step(JSONObject JSONobject) {
 		JSONObject returnObj = new JSONObject();
@@ -44,39 +42,9 @@ public class DataComponent extends JSONObjectDataComponent implements
 			if(iTick.hasNext()){
 				tick t = iTick.next();
 				for(signal s: t.getInput()){
-					returnObj.accumulate(s.getName(), "");
+					returnObj.accumulate(s.getName(), s.isValued()?s.getVal():"");
 				}	
 			}
-			/*while(traces.hasNext()){
-				System.out.println(traces.next());
-			}*/
-		/*	if (JSONobject.has("R")) {
-				resetABO();
-			}
-			else {
-				if (wA && JSONobject.has("A")) {
-					transition_wA_dA();
-				}
-				if (wB && JSONobject.has("B")) {
-					transition_wB_dB();
-				}
-				if (dA && dB) {
-					transition_done();
-					returnObj.accumulate("O","");
-				}
-			}
-			if (done) {
-				returnObj.accumulate("state","done");
-			}
-			if (dA && !dB) {
-				returnObj.accumulate("state","dA, wB");
-			}
-			if (dB && !dA) {
-				returnObj.accumulate("state","wA, dB");
-			}
-			if (wA && wB) {
-				returnObj.accumulate("state","wA, wB");
-			}*/
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -105,7 +73,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 		InputStream in;
 		//if(model==null){
 		try {
-			in = new FileInputStream(traceFile);
+			in = new FileInputStream(traceFileString);
 			resource.load(in, null);
 			EcoreUtil.resolveAll(resource); 
 			//parser.setElementFactory(EsiFactory.eINSTANCE);
@@ -140,11 +108,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 		return false;
 	}
 
-	@Override
-	public boolean isDeltaConsumer() {
-		return false;
-	}
-	
+
 	@Override
 	public boolean isPauseFlag() {
 		return false;
@@ -160,4 +124,33 @@ public class DataComponent extends JSONObjectDataComponent implements
 		return signals;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
+	 */
+	public boolean isObserver() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public KiemProperty[] initializeProperties() {
+		KiemProperty[] properties = new KiemProperty[1];
+		properties[0] = new KiemProperty(
+				"Input File",
+				new KiemPropertyTypeFile(),
+				"/home/ctr/runtime-EclipseApplication/test/abro.esi");
+		return properties;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
+	 */
+	public void wrapup() {
+		// TODO Auto-generated method stub
+		
+	}	
+	
 }
+	
+	
+
