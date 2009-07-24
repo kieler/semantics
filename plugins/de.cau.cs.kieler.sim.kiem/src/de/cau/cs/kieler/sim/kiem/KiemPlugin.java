@@ -386,10 +386,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 			//KiemPlugin.getDefault().getLog().log(status);
 			
 			StatusAdapter statusAdapter = new StatusAdapter(status);
-			//statusAdapter.setProperty(
-			//		IStatusAdapterConstants.TITLE_PROPERTY, PluginID);
-			//statusAdapter.setProperty(
-			//		IStatusAdapterConstants.EXPLANATION_PROPERTY, PluginID);
 			statusAdapter.setProperty(
 					IStatusAdapterConstants.TIMESTAMP_PROPERTY, 
 					System.currentTimeMillis());
@@ -399,17 +395,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 			StatusManager.getManager().handle(statusAdapter,
 					StatusManager.LOG | StatusManager.SHOW);
 			
-//			Display.getDefault().asyncExec(
-//					  new Runnable() {
-//						    public void run(){
-//								try{
-//									IViewPart VP = KIEMViewInstance.getViewSite().getPage().showView("org.eclipse.pde.runtime.LogView");
-//									VP.setFocus();
-//								}catch(Exception e){
-//									showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
-//								}		
-//						    }
-//			});
 		}catch(Exception e){
 			e.printStackTrace();
 		}		
@@ -441,32 +426,15 @@ public class KiemPlugin extends AbstractUIPlugin {
 			//KiemPlugin.getDefault().getLog().log(status);
 
 			StatusAdapter statusAdapter = new StatusAdapter(status);
-			//statusAdapter.setProperty(
-			//		IStatusAdapterConstants.TITLE_PROPERTY, PluginID);
-			//statusAdapter.setProperty(
-			//		IStatusAdapterConstants.EXPLANATION_PROPERTY, PluginID);
 			statusAdapter.setProperty(
 					IStatusAdapterConstants.TIMESTAMP_PROPERTY, 
 					System.currentTimeMillis());
 			
-			//StatusAdapter statusAdapter = new StatusAdapter(status);
-			//statusAdapter.
 			//use status manager instead
 			//BLOCK = modal window, force the user to act!
 			StatusManager.getManager().handle(statusAdapter,
 					StatusManager.BLOCK | StatusManager.LOG | StatusManager.SHOW);
 			
-//			Display.getDefault().asyncExec(
-//					  new Runnable() {
-//						    public void run(){
-//								try{
-//									IViewPart VP = KIEMViewInstance.getViewSite().getPage().showView("org.eclipse.pde.runtime.LogView");
-//									VP.setFocus();
-//								}catch(Exception e){
-//									e.printStackTrace();
-//								}		
-//						    }
-//			});
 		}catch(Exception e){
 			e.printStackTrace();
 		}		
