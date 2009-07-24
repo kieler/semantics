@@ -1,13 +1,17 @@
-/*******************************************************************************
- * Copyright (c) 2005, 2009 committers of openArchitectureWare and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/******************************************************************************
+ * KIELER - Kiel Integrated Environment for Layout for the Eclipse RCP
  *
- * Contributors:
- *     committers of openArchitectureWare - initial API and implementation
- *******************************************************************************/
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright ${year} by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ ******************************************************************************/
+
 package de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw;
 
 import java.io.IOException;

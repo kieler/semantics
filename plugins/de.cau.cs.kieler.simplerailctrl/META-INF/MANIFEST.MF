@@ -6,7 +6,7 @@ Bundle-Name: %pluginName
 Bundle-SymbolicName: de.cau.cs.kieler.simplerailctrl;singleton:=true
 Bundle-Version: 0.1.0
 Bundle-ClassPath: .
-Bundle-Vendor: %providerName
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Localization: plugin
 Export-Package: de.cau.cs.kieler.simplerailctrl,
  de.cau.cs.kieler.simplerailctrl.impl,

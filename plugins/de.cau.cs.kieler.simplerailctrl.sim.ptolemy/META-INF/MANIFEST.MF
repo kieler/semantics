@@ -29,3 +29,4 @@ Import-Package: de.cau.cs.kieler.simplerailctrl.provider,
  org.eclipse.emf.common.ui,
  org.eclipse.emf.common.util,
  org.eclipse.ui.part
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
