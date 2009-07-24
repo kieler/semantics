@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.synccharts.viewmanagement.StateActivityConsumer"
+            id="de.cau.cs.kieler.sim.viewmanagement.stateactivity"
+            name="Viewmanagement SyncCharts Visualizer">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.viewmanagement.triggers">
+      <trigger
+            class="de.cau.cs.kieler.synccharts.viewmanagement.StateActivityTrigger"
+            name="State Activity Trigger">
+      </trigger>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.viewmanagement.combination">
+      <combination
+            class="de.cau.cs.kieler.synccharts.viewmanagement.ActiveStateHighlightCombination"
+            name="Active State Highlight">
+      </combination>
+   </extension>
+
+</plugin>
