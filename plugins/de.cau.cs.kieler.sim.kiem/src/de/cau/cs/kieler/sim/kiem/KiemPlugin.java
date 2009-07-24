@@ -368,10 +368,15 @@ public class KiemPlugin extends AbstractUIPlugin {
 		try{
 			String message = PluginID;
 			
-			if ((exception == null ) && (textMessage != null)) {
-				message += ": " + textMessage;			
+			if (textMessage != null) {
+				message = textMessage  + " (" + PluginID + ")";
+				exception = null;
 			}
-			
+			else if (exception != null) {
+				message = exception.getMessage()  + " (" + PluginID + ")";
+				exception = null;
+			}
+
 			IStatus status = new Status(IStatus.WARNING,
 					PluginID,
 					42,
@@ -418,10 +423,15 @@ public class KiemPlugin extends AbstractUIPlugin {
 		try{
 			String message = PluginID;
 			
-			if ((exception == null ) && (textMessage != null)) {
-				message += ": " + textMessage;			
+			if (textMessage != null) {
+				message = textMessage  + " (" + PluginID + ")";
+				exception = null;
 			}
-			
+			else if (exception != null) {
+				message = exception.getMessage()  + " (" + PluginID + ")";
+				exception = null;
+			}
+
 			IStatus status = new Status(IStatus.ERROR,
 					PluginID,
 					42,
