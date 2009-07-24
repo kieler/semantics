@@ -17,7 +17,6 @@ package de.cau.cs.kieler.synccharts.custom;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.ui.internal.dnd.SwtUtil;
 
 /**
  * A rectangle figure that can be configured to draw only specific
@@ -27,14 +26,27 @@ import org.eclipse.ui.internal.dnd.SwtUtil;
  */
 public class OpenRectangleFigure extends Shape {
 
+    /** boolean flag that indicate whether this side shall be drawn */
     protected boolean north = true;
+    /** boolean flag that indicate whether this side shall be drawn */
     protected boolean south = true;
+    /** boolean flag that indicate whether this side shall be drawn */
     protected boolean west = true;
+    /** boolean flag that indicate whether this side shall be drawn */
     protected boolean east = true;
     
-    // earlier bounds to check if bounds have changed
+    /** earlier bounds to check if bounds have changed
+     */
     protected Rectangle preBounds;
-    
+
+    /**
+     * Set which sides of the rectangle shall be drawn. If a value is true, 
+     * the side gets drawn. It is not drawn otherwise
+     * @param north north side
+     * @param east east side
+     * @param south south side
+     * @param west west side
+     */
     public void setDrawSides(boolean north, boolean east, boolean south, boolean west){
         this.north = north;
         this.east = east;
@@ -49,14 +61,24 @@ public class OpenRectangleFigure extends Shape {
             graphics.fillRectangle(getBounds());
     }
     
+    /**
+     * Really repaint the Figure, i.e. the coordinates or dimensions
+     * have been changed. This method may be overriden by subclasses to
+     * do some action only when the figure has changed.
+     * 
+     * The base implementation does nothing.
+     */
     public void realRepaint(){
         // empty, may be extended by subclasses
     }
     
     /**
+     * Draws the outline of the shape, i.e. a rectangle where not all
+     * border get drawn but only those specified by the setDrawSide() method.
      * @see Shape#outlineShape(Graphics)
      */
     protected void outlineShape(Graphics graphics) {
+        // first part is taken from original rectangle
         float lineInset = Math.max(1.0f, getLineWidthFloat()) / 2.0f;
         int inset1 = (int)Math.floor(lineInset);
         int inset2 = (int)Math.ceil(lineInset);
@@ -73,7 +95,7 @@ public class OpenRectangleFigure extends Shape {
         r.width -= inset1 + inset2;
         r.height -= inset1 + inset2;
         
-        //graphics.drawRectangle(r);
+        // here only draw certain sides
         if (north)
             graphics.drawLine(r.getTopLeft(), r.getTopRight());
         if (east)

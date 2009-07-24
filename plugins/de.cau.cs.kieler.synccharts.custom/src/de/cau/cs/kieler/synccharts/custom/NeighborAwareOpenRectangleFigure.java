@@ -16,18 +16,36 @@ package de.cau.cs.kieler.synccharts.custom;
 
 import java.util.List;
 
-import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 /**
+ * An OpenRectangleFigure that draws only its outline sides under certain
+ * conditions. It iterates its sibling figures and determines which are
+ * neighbors on which sides and how far they are away.
+ * <p>
+ * In general it draws only its east and south border. Even then only iff 
+ * at the corresponding side there is a neighbor. If there is no neighbor (e.g.
+ * if the figure is at the lower bottom of its parent) then the side is not
+ * drawn.
+ * <p>
+ * If the neighbors are too far away, the corresponding site still gets drawn
+ * to get clear bounds if the children are laid out sparsely.
+ *  
  * @author haf
  * 
  */
 public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
 
+    /**
+     * Determine on which hierarchy level siblings are expected.
+     */
     private int siblingLevel = 1;
 
+    /**
+     * Iterate your siblings and determine if they are neighbors and on
+     * what sides and how far away. Configure your side drawing accordingly.
+     */
     public void checkNeighbors() {
         this.north = false;
         this.east = false;
@@ -55,6 +73,11 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
         }
     }
 
+    /**
+     * Indicate that all sibling shall check for their neighbors. This is 
+     * likely be called whenever this figure has been modified (e.g. moved) and
+     * all siblings have to be checked whether this is still a neighbor or not.
+     */
     public void allCheck() {
         IFigure parent = this;
         for (int i = siblingLevel; i > 0; i--) {
@@ -81,17 +104,57 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
         }
     }
 
-    @Override
-    public void setBounds(Rectangle rect) {
-        super.setBounds(rect);
-    }
-
+    /**
+     * Overriding the realRepaint() method in order to trigger a check
+     * for neighborhood for all siblings whenever this figure is modified.
+     */
     @Override
     public void realRepaint() {
         super.realRepaint();
         allCheck();
     }
 
+    /**
+     * Set the hierarchy level on which this figure searches for sibling
+     * neighbors. In a complex context (e.g. in the Eclipse Graphical Editing
+     * Framework or Graphical Modeling Framework) the 
+     * NeigborAwareOpenRectangleFigures might be nested in an additional parent.
+     * Like:
+     * <ul>
+     *  <li>Parent Figure </li>
+     *  <li>
+     *          <ul>
+     *                  <li>DefaultSizeNodeFigure</li>
+     *                  <li> 
+     *                  <ul>
+     *                  <li> NeighborAwareOpenRectangleFigure</li>
+     *                  </ul>
+     *                  </li>
+     *                  <li>DefaultSizeNodeFigure</li>
+     *                  <li> 
+     *                  <ul>
+     *                  <li> NeighborAwareOpenRectangleFigure</li>
+     *                  </ul>
+     *                  </li>
+     *                  <li>DefaultSizeNodeFigure</li>
+     *                  <li> 
+     *                  <ul>
+     *                  <li> NeighborAwareOpenRectangleFigure</li>
+     *                  </ul>
+     *                  </li>
+     *                  <li>...</li>
+     *          </ul>
+     *   </li>
+     * </ul>
+     * 
+     * Hence this siblingLevel tells the figure not only look into its parent,
+     * but the corresponding amount of levels up in the hierarchy and just then 
+     * dive back into it. For simplicity this only covers the simple trees like
+     * shown above and not arbitrary trees.
+     * 
+     * @param level the hierarchy level which shall be used to find
+     *        sibling elements.
+     */
     public void setSiblingLevel(int level) {
         this.siblingLevel = level;
     }

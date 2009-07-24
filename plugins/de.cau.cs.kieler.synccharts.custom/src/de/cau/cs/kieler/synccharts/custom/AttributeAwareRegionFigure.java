@@ -20,8 +20,18 @@ import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.gef.EditPart;
 
 /**
- * This class represents the attribute aware region figures, which are grey dashed boxes.
+ * This class represents the attribute aware region figures, which are grey 
+ * dashed boxes.
+ * <p>
+ * It is not really an AttributeAwareFigure, but only provides the same
+ * constructor to be able to be used the same way from the GMF templates.
+ * <p>
+ * Instead, it extends NeighborAwareOpenRectangleFigure in order
+ * to reduce the number of border lines that have to be drawn and make the
+ * diagram clearer.
+ * 
  * @author schm
+ * @contribution haf
  *
  */
 //public class AttributeAwareRegionFigure extends AttributeAwareFigure {

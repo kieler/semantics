@@ -42,6 +42,12 @@
 					title.setForegroundColor(org.eclipse.draw2d.ColorConstants.black);
 					result.getContentPane().add(title, 0);
 				«ENDIF-»
+				«REM» Set a StretchingXYLayout for the Region compartment such that all regions get extended to the full bounding box«ENDREM»
+				«REM»
+				«IF title = "RegionCompartment"-»
+					result.getContentPane().setLayoutManager(new de.cau.cs.kieler.synccharts.custom.StretchingXYLayout());
+				«ENDIF-»
+				«ENDREM»
 			«ENDIF-»
 			«REM» Additions end here «ENDREM»
 			return result;
