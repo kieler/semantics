@@ -1,7 +1,7 @@
 package de.cau.cs.kieler.sim.abro;
 
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyError;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyList;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
@@ -174,9 +174,9 @@ public class DataComponent extends JSONObjectDataComponent implements
 	}
 	
 	@Override
-	public void testProperties(KiemProperty[] properties) throws KiemPropertyError {
+	public void testProperties(KiemProperty[] properties) throws KiemPropertyException {
 		if (properties[0].getValue().trim().length() == 0) {
-			throw new KiemPropertyError("The state name cannot be empty!");
+			throw new KiemPropertyException("The state name cannot be empty!");
 		}
 	}
 	

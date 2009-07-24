@@ -77,7 +77,8 @@ public class TimeoutThread extends Thread {
 					this.execution.showError(
 							"Timeout of component '"+dataComponentEx.getName()+
 							"' occurred while performing the following operation: "
-							+this.jobDescription, KiemPlugin.PLUGIN_ID);
+							+this.jobDescription, KiemPlugin.PLUGIN_ID,
+							null);
 					this.execution.errorTerminate();
 					return;
 				}

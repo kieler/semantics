@@ -17,6 +17,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
 //import org.eclipse.jface.viewers.ISelection;
@@ -25,7 +26,7 @@ import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyError;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
@@ -237,11 +238,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 		}//next c
 
 		if (countEnabledProducer < 1) {
-			this.showError("Please enable at least one Data Producer!",this.PLUGIN_ID);
+			this.showError("Please enable at least one Data Producer!",this.PLUGIN_ID,null);
 			return false;
 		}
 		else if (countEnabledObserver < 1) {
-			showError("Please enable at least one Data Observer!",this.PLUGIN_ID);
+			showError("Please enable at least one Data Observer!",this.PLUGIN_ID,null);
 			return false;
 		}
 		
@@ -251,10 +252,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 			KiemProperty[] properties = dataComponentEx.getProperties();
 			try {
 				dataComponentEx.testProperties(properties);
-			} catch (KiemPropertyError e) {
+			} catch (KiemPropertyException e) {
 				this.showError(e.getMessage(), dataComponentEx
 						.getDataComponent().getConfigurationElement()
-						.getContributor().getName());
+						.getContributor().getName(),
+						e);
 				return false;
 			}
 		}
@@ -358,24 +360,31 @@ public class KiemPlugin extends AbstractUIPlugin {
 
 	//-------------------------------------------------------------------------
 
-	public void showWarning(String textMessage, String PluginID) {
+	public void showWarning(String textMessage, 
+							String PluginID, 
+							Exception exception) {
 		try{
 			IStatus status = new Status(IStatus.WARNING,
 					PluginID,
-					42,textMessage, null);
-			KiemPlugin.getDefault().getLog().log(status);
+					42,textMessage, exception);
+			//directly to error log
+			//KiemPlugin.getDefault().getLog().log(status);
+
+			//use status manager instead
+			StatusManager.getManager().handle(status,StatusManager.LOG);
+			StatusManager.getManager().handle(status,StatusManager.SHOW);
 			
-			Display.getDefault().asyncExec(
-					  new Runnable() {
-						    public void run(){
-								try{
-									IViewPart VP = KIEMViewInstance.getViewSite().getPage().showView("org.eclipse.pde.runtime.LogView");
-									VP.setFocus();
-								}catch(Exception e){
-									showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
-								}		
-						    }
-			});
+//			Display.getDefault().asyncExec(
+//					  new Runnable() {
+//						    public void run(){
+//								try{
+//									IViewPart VP = KIEMViewInstance.getViewSite().getPage().showView("org.eclipse.pde.runtime.LogView");
+//									VP.setFocus();
+//								}catch(Exception e){
+//									showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+//								}		
+//						    }
+//			});
 		}catch(Exception e){
 			e.printStackTrace();
 		}		
@@ -383,24 +392,31 @@ public class KiemPlugin extends AbstractUIPlugin {
 
 	//-------------------------------------------------------------------------
 	
-	public void showError(String textMessage, String PluginID) {
+	public void showError(String textMessage, 
+						  String PluginID,
+						  Exception exception) {
 		try{
 			IStatus status = new Status(IStatus.ERROR,
 					PluginID,
-					42,textMessage, null);
-			KiemPlugin.getDefault().getLog().log(status);
+					42,textMessage, exception);
+			//directly to error log
+			//KiemPlugin.getDefault().getLog().log(status);
 			
-			Display.getDefault().asyncExec(
-					  new Runnable() {
-						    public void run(){
-								try{
-									IViewPart VP = KIEMViewInstance.getViewSite().getPage().showView("org.eclipse.pde.runtime.LogView");
-									VP.setFocus();
-								}catch(Exception e){
-									e.printStackTrace();
-								}		
-						    }
-			});
+			//use status manager instead
+			StatusManager.getManager().handle(status,StatusManager.LOG);
+			StatusManager.getManager().handle(status,StatusManager.SHOW);
+			
+//			Display.getDefault().asyncExec(
+//					  new Runnable() {
+//						    public void run(){
+//								try{
+//									IViewPart VP = KIEMViewInstance.getViewSite().getPage().showView("org.eclipse.pde.runtime.LogView");
+//									VP.setFocus();
+//								}catch(Exception e){
+//									e.printStackTrace();
+//								}		
+//						    }
+//			});
 		}catch(Exception e){
 			e.printStackTrace();
 		}		

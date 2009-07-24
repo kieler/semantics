@@ -52,7 +52,8 @@ public class ProducerExecution implements Runnable {
 				catch(Exception e) {
 					parent.showWarning(e.getMessage(), 
 							this.dataComponent.getConfigurationElement()
-							.getContributor().getName());
+							.getContributor().getName(),
+							e);
 				}
 			}//end while
 		}//end synchronized
@@ -96,7 +97,8 @@ public class ProducerExecution implements Runnable {
 					catch(Exception e) {
 						parent.showWarning(e.getMessage(), 
 								this.dataComponent.getConfigurationElement()
-								.getContributor().getName());
+								.getContributor().getName(),
+								e);
 					}
 				
 //System.out.println("  "+dataComponent.getName() + " (Pure Producer) calc start");
@@ -118,7 +120,8 @@ public class ProducerExecution implements Runnable {
 						catch(Exception e) {
 							parent.showWarning(e.getMessage(), 
 									this.dataComponent.getConfigurationElement()
-									.getContributor().getName());
+									.getContributor().getName(),
+									e);
 						}
 					}//not null
 				}

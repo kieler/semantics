@@ -511,7 +511,9 @@ public class Execution implements Runnable {
 									producerExecutionArray[c].blockingStep();
 								}catch(Exception e){
 									if (!stop)
-										KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(), KiemPlugin.PLUGIN_ID);
+										KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(), 
+												KiemPlugin.PLUGIN_ID, 
+												e);
 								}
 						}
 						timeout.abortTimeout();
@@ -556,7 +558,10 @@ public class Execution implements Runnable {
 								}
 							}catch(Exception e) {
 								if (!stop)
-									KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(), KiemPlugin.PLUGIN_ID);
+									KiemPlugin.getDefault().showWarning(
+											e.getLocalizedMessage(), 
+											KiemPlugin.PLUGIN_ID, 
+											e);
 							}
 //System.out.println(dataComponentEx.getName() + " (Norm Producer) return");
 						}
@@ -577,7 +582,10 @@ public class Execution implements Runnable {
 									observerExecutionArray[c].setData(oldData);
 								}catch(Exception e){
 									if (!stop)
-										KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(), KiemPlugin.PLUGIN_ID);
+										KiemPlugin.getDefault().showWarning(
+												e.getLocalizedMessage(), 
+												KiemPlugin.PLUGIN_ID,
+												e);
 								}
 								//call async method - no timeout
 								try {
@@ -591,7 +599,10 @@ public class Execution implements Runnable {
 										dataComponentEx.setSkipped(false);
 								} catch(Exception e){
 									if (!stop)
-										KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(), KiemPlugin.PLUGIN_ID);
+										KiemPlugin.getDefault().showWarning(
+												e.getLocalizedMessage(), 
+												KiemPlugin.PLUGIN_ID,
+												e);
 								}
 						}
 						//===========================================//
@@ -610,7 +621,10 @@ public class Execution implements Runnable {
 								//THEN call him again
 							}catch(Exception e){
 								if (!stop)
-									KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+									KiemPlugin.getDefault().showWarning(
+											e.getMessage(), 
+											KiemPlugin.PLUGIN_ID,
+											e);
 							}
 
 							//escape if stopped
@@ -625,7 +639,10 @@ public class Execution implements Runnable {
 									this.dataPool.putData(newData);
 							}catch(Exception e){
 								if (!stop)
-									KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+									KiemPlugin.getDefault().showWarning(
+											e.getMessage(), 
+											KiemPlugin.PLUGIN_ID,
+											e);
 							}
 								
 						}
@@ -678,7 +695,10 @@ public class Execution implements Runnable {
 				if (timeToDelay > 0)
 					try{Thread.sleep(timeToDelay);}catch(Exception e){
 						if (!stop)
-							KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+							KiemPlugin.getDefault().showWarning(
+									e.getMessage(), 
+									KiemPlugin.PLUGIN_ID,
+									e);
 					}
 			}	
 			
@@ -691,7 +711,10 @@ public class Execution implements Runnable {
 //System.out.println(">>PAUSED<<");
 				try{Thread.sleep(PAUSE_DEYLAY);}catch(Exception e){
 					if (!stop)
-						KiemPlugin.getDefault().showWarning(e.getMessage(), KiemPlugin.PLUGIN_ID);
+						KiemPlugin.getDefault().showWarning(
+								e.getMessage(), 
+								KiemPlugin.PLUGIN_ID,
+								e);
 				}
 				//if stop is requested, jump out
 				if (this.stop) return;
@@ -704,10 +727,10 @@ public class Execution implements Runnable {
 
 	//-------------------------------------------------------------------------
 	
-	public void showError(String textMessage, String PluginID) {
-		KiemPlugin.getDefault().showError(textMessage, PluginID);
+	public void showError(String textMessage, String PluginID, Exception e) {
+		KiemPlugin.getDefault().showError(textMessage, PluginID, e);
 	}
-	public void showWarning(String textMessage, String PluginID) {
-		KiemPlugin.getDefault().showWarning(textMessage, PluginID);
+	public void showWarning(String textMessage, String PluginID, Exception e) {
+		KiemPlugin.getDefault().showWarning(textMessage, PluginID, e);
 	}
 }

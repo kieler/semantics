@@ -61,7 +61,11 @@ public class ObserverExecution implements Runnable {
 					this.wait();
 				}}
 				catch(Exception e) {
-					parent.showError(e.getMessage(), this.dataComponent.getConfigurationElement().getContributor().getName());
+					parent.showError(
+							e.getMessage(), 
+							this.dataComponent.getConfigurationElement()
+							.getContributor().getName(),
+							e);
 				}
 			
 			try {
@@ -85,7 +89,8 @@ public class ObserverExecution implements Runnable {
 				catch(Exception e) {
 					parent.showWarning(e.getMessage(), 
 							this.dataComponent.getConfigurationElement()
-							.getContributor().getName());
+							.getContributor().getName(),
+							e);
 				}
 			
 		}//next while not stop

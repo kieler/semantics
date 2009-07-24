@@ -136,7 +136,7 @@ public class DataComponentEx {
 	}
 	
 	public void testProperties(KiemProperty[] properties) 
-									throws KiemPropertyError {
+									throws KiemPropertyException {
 		this.component.testProperties(properties);
 	}
 	
