@@ -42,6 +42,8 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
      */
     private int siblingLevel = 1;
 
+    private int margin = 10;
+    
     /**
      * Iterate your siblings and determine if they are neighbors and on
      * what sides and how far away. Configure your side drawing accordingly.
@@ -61,15 +63,52 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
             List siblings = parent.getChildren();
             Rectangle myBounds = this.getBounds();
             Rectangle herBounds = null;
+            int northDistance = Integer.MAX_VALUE;
+            int westDistance = Integer.MAX_VALUE;
+            int eastDistance = Integer.MAX_VALUE;
+            int southDistance = Integer.MAX_VALUE;
             for (Object sibling : siblings) {
                 if (sibling != this && sibling instanceof IFigure) {
                     herBounds = ((IFigure) sibling).getBounds();
+                    // check if the sibling is east or south and only then draw
+                    // the border
                     if (myBounds.getTopRight().x <= herBounds.getTopLeft().x)
                         this.east = true;
                     if (myBounds.getBottomLeft().y <= herBounds.getTopLeft().y)
                         this.south = true;
+                    // check if there is also something west or north. Then
+                    // we check if it is too far away so it would make sense
+                    // to draw the border
+                    int dist = myBounds.getTopLeft().x - herBounds.getTopRight().x; 
+                    if (dist >= 0 && westDistance > dist)
+                        westDistance = dist;
+                    dist = myBounds.getTopLeft().y - herBounds.getBottomRight().y;
+                    if (dist >= 0 && northDistance > dist)
+                        northDistance = dist;
+                    // check how far we are from the border
+                    dist = myBounds.getTopLeft().x;
+                    if (dist >= 0 && westDistance > dist)
+                        westDistance = dist;
+                    dist = myBounds.getTopLeft().y;
+                    if (dist >= 0 && northDistance > dist)
+                        northDistance = dist;
+                    dist = parent.getClientArea().getBottomRight().x - myBounds.getBottomRight().x ;
+                    if (dist >= 0 && eastDistance > dist)
+                        eastDistance = dist;
+                    dist = parent.getClientArea().getBottomRight().y - myBounds.getBottomRight().y;
+                    if (dist >= 0 && southDistance > dist)
+                        southDistance = dist;
                 }
             }
+            // don't draw if we are too near (either parent border or neighbor)
+            if(westDistance < Integer.MAX_VALUE && westDistance > this.margin )
+                this.west = true;
+            if(northDistance < Integer.MAX_VALUE && northDistance > this.margin )
+                this.north = true;
+            if(eastDistance < Integer.MAX_VALUE && eastDistance > this.margin )
+                this.east = true;
+            if(southDistance < Integer.MAX_VALUE && southDistance > this.margin )
+                this.south = true;
         }
     }
 
@@ -159,4 +198,14 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
         this.siblingLevel = level;
     }
 
+    /**
+     * Set the margin from either the border of the parent or siblings
+     * at which the corresponding sides shall be drawn no matter what.
+     * This can help to clarify a nodes bounds if it is too far away from its 
+     * neighbors or the parent bounds.
+     * @param margin the desired margin.
+     */
+    public void setNoDrawMargin(int margin){
+        this.margin = margin;
+    }
 }

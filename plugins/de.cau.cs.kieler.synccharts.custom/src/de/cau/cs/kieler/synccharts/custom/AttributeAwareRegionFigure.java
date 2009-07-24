@@ -53,6 +53,7 @@ import org.eclipse.gef.EditPart;
 		this.setLineStyle(Graphics.LINE_DASH);
 		this.setForegroundColor(ColorConstants.gray);
 		
+		this.setNoDrawMargin(10);
 		this.setSiblingLevel(2);
 	}
 }

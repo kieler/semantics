@@ -211,6 +211,11 @@ public class StateLayout extends ConstrainedToolbarLayout {
 			}
 		}
 
+		// stretch if the node is larger than the 
+		if (totalHeight < height){
+		    totalHeight = height;
+		}
+		
 		// Labels are centered in the upper area while compartments share the
 		// rest of the space, always using the full available width
 		for (int i = 0; i < numChildren; i++) {
