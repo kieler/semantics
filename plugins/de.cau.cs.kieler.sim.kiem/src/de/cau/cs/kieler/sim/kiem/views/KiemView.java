@@ -146,7 +146,8 @@ public class KiemView extends ViewPart {
    //---------------------------------------------------------------------------	
 	
 	public void createPartControl(Composite parent) {
-		viewer = new KiemTableViewer(parent, SWT.MULTI | SWT.H_SCROLL
+		viewer = new KiemTableViewer(parent, SWT.HIDE_SELECTION | 
+				SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.FULL_SELECTION);
 		createColumns(viewer);
 		viewer.setContentProvider(new KiemContentProvider());

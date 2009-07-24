@@ -476,9 +476,9 @@ public class Execution implements Runnable {
 						//call all pure producers first
 						DataComponentEx dataComponentEx = 
 							dataComponentExList.get(c);
+						long poolCounter = dataPool.getPoolCounter();
 						timeout.timeout(TIMEOUT, "isEnabled, isDeltaObserver", dataComponentEx, this);
 						if (   dataComponentEx.isEnabled()
-							&& dataComponentEx.isDeltaObserver()
 							&&   (!dataComponentEx.getSkipped()
 							    ||!dataComponentEx.isDeltaObserver())
 							){
@@ -486,7 +486,7 @@ public class Execution implements Runnable {
 							//components
 							//or any that are *NOT* deltaObservers!
 							dataComponentEx.setDeltaIndex
-												(dataPool.getPoolCounter());
+												(poolCounter);
 						}
 						timeout.abortTimeout();
 					}
