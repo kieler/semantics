@@ -10,12 +10,6 @@
 
 <plugin>
 
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <package
-            uri="http://www.informatik.uni-kiel.de/rtsys/synccharts"
-            class="de.cau.cs.kieler.synccharts.SyncchartsPackage"
-            genModel="model/synccharts.genmodel"/>
-   </extension>
    <extension
          point="org.openarchitectureware.adapter.emf.check.checks">
       <metaModel
