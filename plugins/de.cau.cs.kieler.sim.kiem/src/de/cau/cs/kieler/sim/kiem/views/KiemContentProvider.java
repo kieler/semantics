@@ -22,19 +22,16 @@ public class KiemContentProvider implements ITreeContentProvider {
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 	}
 
-	@Override
 	public Object[] getChildren(Object parentElement) {
 		//only if component
 		DataComponentEx dataComponentEx = (DataComponentEx)parentElement;
 		return dataComponentEx.getPropertyList().getElements();
 	}
 
-	@Override
 	public Object getParent(Object element) {
 		return null;
 	}
 
-	@Override
 	public boolean hasChildren(Object element) {
 		//if property -> no children
 		if (element instanceof KiemProperty) 

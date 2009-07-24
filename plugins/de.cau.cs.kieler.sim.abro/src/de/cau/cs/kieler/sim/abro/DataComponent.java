@@ -92,7 +92,6 @@ public class DataComponent extends JSONObjectDataComponent implements
 	//--------------------------------------------------------------------------
 	//additional methods
 	
-	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
 		stateName = getProperties()[0].getValue();
@@ -101,7 +100,6 @@ public class DataComponent extends JSONObjectDataComponent implements
 		paused = false;
 	}
 
-	@Override
 	public void wrapup() {
 	}
 	

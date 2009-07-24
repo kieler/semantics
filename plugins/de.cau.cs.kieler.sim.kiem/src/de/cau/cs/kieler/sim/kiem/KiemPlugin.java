@@ -17,6 +17,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
+import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
@@ -364,15 +366,33 @@ public class KiemPlugin extends AbstractUIPlugin {
 							String PluginID, 
 							Exception exception) {
 		try{
+			String message = PluginID;
+			
+			if ((exception == null ) && (textMessage != null)) {
+				message += ": " + textMessage;			
+			}
+			
 			IStatus status = new Status(IStatus.WARNING,
 					PluginID,
-					42,textMessage, exception);
+					42,
+					message,
+					exception);
 			//directly to error log
 			//KiemPlugin.getDefault().getLog().log(status);
+			
+			StatusAdapter statusAdapter = new StatusAdapter(status);
+			//statusAdapter.setProperty(
+			//		IStatusAdapterConstants.TITLE_PROPERTY, PluginID);
+			//statusAdapter.setProperty(
+			//		IStatusAdapterConstants.EXPLANATION_PROPERTY, PluginID);
+			statusAdapter.setProperty(
+					IStatusAdapterConstants.TIMESTAMP_PROPERTY, 
+					System.currentTimeMillis());
+			 
 
 			//use status manager instead
-			StatusManager.getManager().handle(status,StatusManager.LOG);
-			StatusManager.getManager().handle(status,StatusManager.SHOW);
+			StatusManager.getManager().handle(statusAdapter,
+					StatusManager.LOG | StatusManager.SHOW);
 			
 //			Display.getDefault().asyncExec(
 //					  new Runnable() {
@@ -396,15 +416,35 @@ public class KiemPlugin extends AbstractUIPlugin {
 						  String PluginID,
 						  Exception exception) {
 		try{
+			String message = PluginID;
+			
+			if ((exception == null ) && (textMessage != null)) {
+				message += ": " + textMessage;			
+			}
+			
 			IStatus status = new Status(IStatus.ERROR,
 					PluginID,
-					42,textMessage, exception);
+					42,
+					message,
+					exception);
 			//directly to error log
 			//KiemPlugin.getDefault().getLog().log(status);
+
+			StatusAdapter statusAdapter = new StatusAdapter(status);
+			//statusAdapter.setProperty(
+			//		IStatusAdapterConstants.TITLE_PROPERTY, PluginID);
+			//statusAdapter.setProperty(
+			//		IStatusAdapterConstants.EXPLANATION_PROPERTY, PluginID);
+			statusAdapter.setProperty(
+					IStatusAdapterConstants.TIMESTAMP_PROPERTY, 
+					System.currentTimeMillis());
 			
+			//StatusAdapter statusAdapter = new StatusAdapter(status);
+			//statusAdapter.
 			//use status manager instead
-			StatusManager.getManager().handle(status,StatusManager.LOG);
-			StatusManager.getManager().handle(status,StatusManager.SHOW);
+			//BLOCK = modal window, force the user to act!
+			StatusManager.getManager().handle(statusAdapter,
+					StatusManager.BLOCK | StatusManager.LOG | StatusManager.SHOW);
 			
 //			Display.getDefault().asyncExec(
 //					  new Runnable() {

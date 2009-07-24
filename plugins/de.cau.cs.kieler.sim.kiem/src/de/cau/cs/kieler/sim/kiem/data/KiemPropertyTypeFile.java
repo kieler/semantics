@@ -31,12 +31,10 @@ public class KiemPropertyTypeFile extends KiemPropertyType
 		this.filterExts = DEFAULT_FILTER_EXTS;
 	}
 
-	@Override
 	public Object getValue(KiemProperty property) {
 		return property.value;
 	}
 
-	@Override
 	public void setValue(KiemProperty property, Object value) {
 		if (value != null)
 			property.setValue((String)value);

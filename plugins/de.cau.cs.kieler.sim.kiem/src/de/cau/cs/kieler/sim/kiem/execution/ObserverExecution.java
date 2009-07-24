@@ -62,7 +62,7 @@ public class ObserverExecution implements Runnable {
 				}}
 				catch(Exception e) {
 					parent.showError(
-							e.getMessage(), 
+							null, 
 							this.dataComponent.getConfigurationElement()
 							.getContributor().getName(),
 							e);
@@ -87,7 +87,7 @@ public class ObserverExecution implements Runnable {
 						compString.step(null);
 				}}
 				catch(Exception e) {
-					parent.showWarning(e.getMessage(), 
+					parent.showWarning(null, 
 							this.dataComponent.getConfigurationElement()
 							.getContributor().getName(),
 							e);

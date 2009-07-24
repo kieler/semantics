@@ -27,13 +27,11 @@ public class KiemPropertyTypeBool extends KiemPropertyType
 									SWT.Deactivate);
 	}
 
-	@Override
 	public Object getValue(KiemProperty property) {
 		if (property.getValue().equals("true")) return 1;
 		else return 0;
 	}
 
-	@Override
 	public void setValue(KiemProperty property, Object value) {
 		if (Integer.parseInt((String)value) == 0) {
 			property.setValue("false");

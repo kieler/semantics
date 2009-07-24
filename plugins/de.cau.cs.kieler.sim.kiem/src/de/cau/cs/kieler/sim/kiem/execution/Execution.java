@@ -511,7 +511,8 @@ public class Execution implements Runnable {
 									producerExecutionArray[c].blockingStep();
 								}catch(Exception e){
 									if (!stop)
-										KiemPlugin.getDefault().showWarning(e.getLocalizedMessage(), 
+										KiemPlugin.getDefault().showWarning(
+												null, 
 												KiemPlugin.PLUGIN_ID, 
 												e);
 								}
@@ -559,7 +560,7 @@ public class Execution implements Runnable {
 							}catch(Exception e) {
 								if (!stop)
 									KiemPlugin.getDefault().showWarning(
-											e.getLocalizedMessage(), 
+											null, 
 											KiemPlugin.PLUGIN_ID, 
 											e);
 							}
@@ -583,7 +584,7 @@ public class Execution implements Runnable {
 								}catch(Exception e){
 									if (!stop)
 										KiemPlugin.getDefault().showWarning(
-												e.getLocalizedMessage(), 
+												null, 
 												KiemPlugin.PLUGIN_ID,
 												e);
 								}
@@ -622,7 +623,7 @@ public class Execution implements Runnable {
 							}catch(Exception e){
 								if (!stop)
 									KiemPlugin.getDefault().showWarning(
-											e.getMessage(), 
+											null, 
 											KiemPlugin.PLUGIN_ID,
 											e);
 							}
@@ -640,7 +641,7 @@ public class Execution implements Runnable {
 							}catch(Exception e){
 								if (!stop)
 									KiemPlugin.getDefault().showWarning(
-											e.getMessage(), 
+											null, 
 											KiemPlugin.PLUGIN_ID,
 											e);
 							}
@@ -696,7 +697,7 @@ public class Execution implements Runnable {
 					try{Thread.sleep(timeToDelay);}catch(Exception e){
 						if (!stop)
 							KiemPlugin.getDefault().showWarning(
-									e.getMessage(), 
+									null, 
 									KiemPlugin.PLUGIN_ID,
 									e);
 					}
@@ -712,7 +713,7 @@ public class Execution implements Runnable {
 				try{Thread.sleep(PAUSE_DEYLAY);}catch(Exception e){
 					if (!stop)
 						KiemPlugin.getDefault().showWarning(
-								e.getMessage(), 
+								null, 
 								KiemPlugin.PLUGIN_ID,
 								e);
 				}

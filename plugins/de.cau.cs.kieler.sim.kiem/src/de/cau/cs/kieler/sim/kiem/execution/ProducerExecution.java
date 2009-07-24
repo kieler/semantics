@@ -50,7 +50,8 @@ public class ProducerExecution implements Runnable {
 					this.wait();
 				}
 				catch(Exception e) {
-					parent.showWarning(e.getMessage(), 
+					parent.showWarning(
+							null, 
 							this.dataComponent.getConfigurationElement()
 							.getContributor().getName(),
 							e);
@@ -118,7 +119,8 @@ public class ProducerExecution implements Runnable {
 					if (JSONString != null && !JSONString.equals("")) {
 						try {this.data = new JSONObject(JSONString);}
 						catch(Exception e) {
-							parent.showWarning(e.getMessage(), 
+							parent.showWarning(
+									null, 
 									this.dataComponent.getConfigurationElement()
 									.getContributor().getName(),
 									e);

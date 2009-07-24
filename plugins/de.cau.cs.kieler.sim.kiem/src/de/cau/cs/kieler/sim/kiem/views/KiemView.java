@@ -228,11 +228,9 @@ public class KiemView extends ViewPart {
 	}
 	private void hookTreeAction() {
 		viewer.addTreeListener(new ITreeViewerListener() {
-			@Override
 			public void treeCollapsed(TreeExpansionEvent event) {
 				updateView(false);
 			}
-			@Override
 			public void treeExpanded(TreeExpansionEvent event) {
 				updateView(false);
 			}
@@ -243,14 +241,12 @@ public class KiemView extends ViewPart {
 			}
 		});
 		viewer.getControl().addKeyListener(new KeyListener(){
-			@Override
 			public void keyPressed(KeyEvent e) {
 				//if user pressed delete
 				if (e.keyCode == 127) {
 					getActionDelete().run();
 				}
 			}
-			@Override
 			public void keyReleased(KeyEvent e) {
 			}
 		});

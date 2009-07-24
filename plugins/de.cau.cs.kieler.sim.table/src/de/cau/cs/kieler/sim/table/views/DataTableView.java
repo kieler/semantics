@@ -100,14 +100,12 @@ public class DataTableView extends ViewPart {
 		viewer.setContentProvider(new TableDataContentProvider());
 		viewer.setLabelProvider(new TableDataLabelProvider());
 		viewer.getControl().addKeyListener(new KeyListener(){
-			@Override
 			public void keyPressed(KeyEvent e) {
 				//if user pressed delete
 				if (e.keyCode == 127) {
 					getActionDelete().run();
 				}
 			}
-			@Override
 			public void keyReleased(KeyEvent e) {
 			}
 		});

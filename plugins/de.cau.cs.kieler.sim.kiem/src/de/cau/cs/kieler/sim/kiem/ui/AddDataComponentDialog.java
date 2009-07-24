@@ -53,23 +53,19 @@ public class AddDataComponentDialog extends Dialog {
         
         table = new Table(composite, SWT.BORDER | SWT.MULTI);
         table.addSelectionListener(new SelectionListener() {
-			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 			}
-			@Override
 			public void widgetSelected(SelectionEvent e) {
 				updateSelectedList();
 			}
         });
         table.addMouseListener(new MouseListener() {
-			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				updateSelectedList();
 				dialog.close();
 			}
 			public void mouseDown(MouseEvent e) {
 			}
-			@Override
 			public void mouseUp(MouseEvent e) {
 			}
         });

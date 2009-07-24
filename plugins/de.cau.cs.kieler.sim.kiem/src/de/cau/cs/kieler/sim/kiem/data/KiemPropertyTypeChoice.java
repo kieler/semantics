@@ -30,7 +30,6 @@ public class KiemPropertyTypeChoice extends KiemPropertyType
 									SWT.Deactivate);
 	}
 
-	@Override
 	public Object getValue(KiemProperty property) {
 		for (int c = 0; c < items.length; c ++) {
 			if (property.getValue().equals(items[c])) return c;
@@ -38,7 +37,6 @@ public class KiemPropertyTypeChoice extends KiemPropertyType
 		return 0; //default is the first item
 	}
 
-	@Override
 	public void setValue(KiemProperty element, Object value) {
 		KiemProperty property = (KiemProperty)element;
 		property.setValue(items[Integer.parseInt((String)value)]);

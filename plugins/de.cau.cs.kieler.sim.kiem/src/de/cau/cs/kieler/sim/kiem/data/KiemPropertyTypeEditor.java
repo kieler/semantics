@@ -47,7 +47,6 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 		this.items = items;
 	}
 	
-	@Override
 	public Object getValue(KiemProperty property) {
 		if ((items == null)||(items.length == 0)) return 0;
 		for (int c = 0; c < items.length; c ++) {
@@ -56,7 +55,6 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 		return 0; //default is the first item
 	}
 
-	@Override
 	public void setValue(KiemProperty property, Object value) {
 		if ((items == null)||(items.length == 0)) return;
 		property.setValue(items[Integer.parseInt((String)value)]);

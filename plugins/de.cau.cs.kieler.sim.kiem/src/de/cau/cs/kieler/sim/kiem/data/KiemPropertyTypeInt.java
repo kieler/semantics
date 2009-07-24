@@ -15,12 +15,10 @@ public class KiemPropertyTypeInt extends KiemPropertyType
 		super();
 	}
 
-	@Override
 	public Object getValue(KiemProperty property) {
 		return property.value;
 	}
 
-	@Override
 	public void setValue(KiemProperty property, Object value) {
 		try {
 			property.setValue(""+Integer.valueOf((String)value));

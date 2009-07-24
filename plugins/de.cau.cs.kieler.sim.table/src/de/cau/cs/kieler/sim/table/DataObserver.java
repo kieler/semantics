@@ -85,7 +85,6 @@ public class DataObserver extends JSONStringDataComponent implements
 		
 		//Slow down so that user can eye-catch all changes!
 		try{Thread.sleep(250);}catch(Exception e){}
-		//try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
 //System.out.println("    CONSUMER DONE");
 		return null;
 	}
@@ -124,7 +123,6 @@ public class DataObserver extends JSONStringDataComponent implements
 		return true;
 	}
 
-	@Override
 	public void wrapup() {
 		// TODO Auto-generated method stub
 		

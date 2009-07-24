@@ -15,12 +15,10 @@ public class KiemPropertyTypeString extends KiemPropertyType
 		super();
 	}
 
-	@Override
 	public Object getValue(KiemProperty property) {
 		return property.value;
 	}
 
-	@Override
 	public void setValue(KiemProperty property, Object value) {
 		property.setValue((String)value);
 	}
