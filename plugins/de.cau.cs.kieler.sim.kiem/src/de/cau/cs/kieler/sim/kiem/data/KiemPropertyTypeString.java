@@ -26,7 +26,7 @@ public class KiemPropertyTypeString extends KiemPropertyType
 	}
 
 	@Override
-	public Image getIcon() {
+	public Image provideIcon() {
 		return PROPERTY_STRING;
 	}
 

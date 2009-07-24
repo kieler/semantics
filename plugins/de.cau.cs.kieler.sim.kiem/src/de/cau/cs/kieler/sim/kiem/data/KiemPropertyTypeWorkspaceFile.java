@@ -2,6 +2,7 @@ package de.cau.cs.kieler.sim.kiem.data;
 
 import org.eclipse.core.internal.resources.File;
 
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.DialogCellEditor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.swt.graphics.Image;
@@ -46,14 +47,14 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 	}
 
 	@Override
-	public Image getIcon() {
+	public Image provideIcon() {
 		return PROPERTY_FILE;
 	}
 	
 	
 	@Override 
-	public void setCellEditor(Composite parent) {
-		cellEditor = new CustomDialogCellEditor(parent);
+	public CellEditor provideCellEditor(Composite parent) {
+		return new CustomDialogCellEditor(parent);
 	}
 	
 

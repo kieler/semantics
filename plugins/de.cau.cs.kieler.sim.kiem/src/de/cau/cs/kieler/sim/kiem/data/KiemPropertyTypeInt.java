@@ -29,7 +29,7 @@ public class KiemPropertyTypeInt extends KiemPropertyType
 	}
 
 	@Override
-	public Image getIcon() {
+	public Image provideIcon() {
 		return PROPERTY_INT;
 	}
 

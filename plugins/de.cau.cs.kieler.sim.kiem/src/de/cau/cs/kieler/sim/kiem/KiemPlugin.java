@@ -125,6 +125,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 
 		}
 	}
+	public void setViewFocus() {
+		if (this.KIEMViewInstance != null) {
+			this.KIEMViewInstance.setFocus();
+		}
+	}
 	public void setKIEMViewInstance(KiemView KIEMViewInstance) {
 		this.KIEMViewInstance = KIEMViewInstance;
 	}

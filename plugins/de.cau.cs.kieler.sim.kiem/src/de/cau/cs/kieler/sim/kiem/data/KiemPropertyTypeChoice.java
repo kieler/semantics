@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.sim.kiem.data;
 
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -23,8 +24,8 @@ public class KiemPropertyTypeChoice extends KiemPropertyType
 	}
 	
 	@Override 
-	public void setCellEditor(Composite parent) {
-		cellEditor = new ComboBoxCellEditor(parent, 
+	public CellEditor provideCellEditor(Composite parent) {
+		return new ComboBoxCellEditor(parent, 
 									items, 
 									SWT.Deactivate);
 	}
@@ -48,7 +49,7 @@ public class KiemPropertyTypeChoice extends KiemPropertyType
 	}
 
 	@Override
-	public Image getIcon() {
+	public Image provideIcon() {
 		return PROPERTY_CHOICE;
 	}
 

@@ -47,6 +47,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	public void keyPressed(KeyEvent e) {
 		if(e.character=='\r'){
 			updateDuration();
+			KiemPlugin.getDefault().setViewFocus();
 		}			
 	}
 	public void keyReleased(KeyEvent e) {

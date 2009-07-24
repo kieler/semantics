@@ -8,6 +8,4 @@ public interface IKiemPropertyType {
 	
 	public void setValue(KiemProperty property, Object value);
 	
-	public Image getIcon();
-	
 }
