@@ -21,17 +21,17 @@ public class TableDataEditing extends EditingSupport {
 		
 		// Create the correct editor based on the column index
 		switch (columnIndex) {
-		case 0:
+		case 1:
 			editor = new CheckboxCellEditor(null, SWT.CHECK | SWT.READ_ONLY);
 			break;
-		case 1:
-			editor = new TextCellEditor(((TableViewer) viewer).getTable());
-			break;
 		case 2:
-			editor = new TextCellEditor(((TableViewer) viewer).getTable());
+			editor = new TextCellEditor(((DataTableViewer) viewer).getTree());
+			break;
+		case 3:
+			editor = new TextCellEditor(((DataTableViewer) viewer).getTree());
 			break;
 		default:
-			throw new RuntimeException("columnIndex out of bounds (3)");
+			throw new RuntimeException("columnIndex out of bounds (4)");
 		}
 		this.columnIndex = columnIndex;
 	}
@@ -53,11 +53,11 @@ public class TableDataEditing extends EditingSupport {
 		TableData tableData = (TableData) element;
 
 		switch (this.columnIndex) {
-		case 0:
-			return tableData.isPresent();
 		case 1:
-			return tableData.getKey();
+			return tableData.isPresent();
 		case 2:
+			return tableData.getKey();
+		case 3:
 			return tableData.getValue();
 		default:
 			break;
@@ -70,13 +70,13 @@ public class TableDataEditing extends EditingSupport {
 		TableData tableData = (TableData) element;
 
 		switch (this.columnIndex) {
-		case 0:
+		case 1:
 			if (tableData.isPresent() != (Boolean)value)
 				tableData.setModified(true); {
 					tableData.setPresent((Boolean)value);
 				}
 			break;
-		case 1:
+		case 2:
 			try {
 				String newValue = String.valueOf(value);
 				if (!tableData.getKey().equals(newValue)) {
@@ -89,7 +89,7 @@ public class TableDataEditing extends EditingSupport {
 				//do not set the key//
 			}
 			break;
-		case 2:
+		case 3:
 			String newValue = String.valueOf(value);
 			if (!tableData.getValue().equals(newValue)) {
 				tableData.setModified(true);

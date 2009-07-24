@@ -1,11 +1,11 @@
 package de.cau.cs.kieler.sim.table;
 
-import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
 
-public class DataTableViewer extends TableViewer {
+public class DataTableViewer extends TreeViewer {
 	
 	public DataTableViewer(Composite parent, int style) {
 		super(parent, style);

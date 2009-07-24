@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Tree;
 
 import org.eclipse.ui.part.*;
 import org.eclipse.jface.viewers.*;
@@ -27,6 +28,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.table.DataTableViewer;
 import de.cau.cs.kieler.sim.table.TableData;
@@ -91,31 +93,47 @@ public class DataTableView extends ViewPart {
 	}
 
 	private void createViewer(Composite parent) {
-		viewer = new DataTableViewer(parent, SWT.MULTI | SWT.H_SCROLL
+		viewer = new DataTableViewer(parent,SWT.HIDE_SELECTION |
+				SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.FULL_SELECTION);
 		createColumns(viewer);
 		viewer.setContentProvider(new TableDataContentProvider());
 		viewer.setLabelProvider(new TableDataLabelProvider());
+		viewer.getControl().addKeyListener(new KeyListener(){
+			@Override
+			public void keyPressed(KeyEvent e) {
+				//if user pressed delete
+				if (e.keyCode == 127) {
+					getActionDelete().run();
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+		});
 	}
 
 	// This will create the columns for the table
 	private void createColumns(DataTableViewer viewer) {
-		String[] titles = { "P", "Key", "Value" };
-		String[] toolTip = { "Present", "Key", "Value" };
-		int[] bounds = { 22, 120, 120 };
+		String[] titles = { "", "P", "Key", "Value" };
+		String[] toolTip = { "", "Present", "Key", "Value" };
+		int[] bounds = { 0, 22, 120, 120 };
 		
 		for (int i = 0; i < titles.length; i++) {
-			TableViewerColumn column = new TableViewerColumn(viewer, SWT.NONE);
+			TreeViewerColumn column = new TreeViewerColumn(viewer, SWT.NONE);
 			column.getColumn().setText(titles[i]);
 			column.getColumn().setWidth(bounds[i]);
 			column.getColumn().setToolTipText(toolTip[i]);
 			column.getColumn().setResizable(true);
 			column.getColumn().setMoveable(true);
-			column.setEditingSupport(new TableDataEditing(viewer, i));
+			if (i == 0)
+				column.getColumn().setResizable(false);
+			else
+				column.setEditingSupport(new TableDataEditing(viewer, i));
 		}
-		Table table = viewer.getTable();
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
+		Tree tree = viewer.getTree();
+		tree.setHeaderVisible(true);
+		tree.setLinesVisible(true);
 	}
 
 	
@@ -172,10 +190,14 @@ public class DataTableView extends ViewPart {
 		if (actionDelete != null) return actionDelete;
 		actionDelete = new Action() {
 			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				if (obj != null) {
-					TableDataList.getInstance().remove(((TableData)obj).getKey());
+				IStructuredSelection selection =
+					(org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection();
+				for (int c = 0; c < selection.size(); c++) {
+					TableData tableData = (TableData)
+													selection.toArray()[c];
+					if (TableDataList.getInstance().contains(tableData.getKey())) {
+						TableDataList.getInstance().remove(tableData.getKey());
+					}
 				}
 				viewer.refresh();
 				updateEnabled();			
@@ -191,11 +213,16 @@ public class DataTableView extends ViewPart {
 		if (actionPermanent != null) return actionPermanent;
 		actionPermanent = new Action() {
 			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				//toggle permanent
-				TableData tableData = (TableData)obj;
-				tableData.setPermanent(!tableData.isPermanent());
+				IStructuredSelection selection =
+					(org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection();
+				//toggle w.r.t first selected value
+				boolean permanentValue = !((TableData)((IStructuredSelection)selection)
+										 	.getFirstElement()).isPermanent();
+				for (int c = 0; c < selection.size(); c++) {
+					TableData tableData = (TableData)
+													selection.toArray()[c];
+					tableData.setPermanent(permanentValue);
+				}
 				viewer.setSelection(null);
 				viewer.refresh();
 				updateEnabled();			

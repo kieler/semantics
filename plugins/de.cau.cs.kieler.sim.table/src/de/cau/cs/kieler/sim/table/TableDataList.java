@@ -14,9 +14,9 @@ public class TableDataList {
 	
 	private List<TableData> tableDataList;
 	private static TableDataList content;
-	private TableViewer viewer;
+	private DataTableViewer viewer;
 
-	public TableDataList(TableViewer viewer) {
+	public TableDataList(DataTableViewer viewer) {
 		this.viewer = viewer;
 		tableDataList = new ArrayList<TableData>();
 		content = this;

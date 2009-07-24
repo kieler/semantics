@@ -56,10 +56,12 @@ public class DataObserver extends JSONStringDataComponent implements
 					}
 					else {
 						//add
-						TableDataList.getInstance().add(new TableData(TableDataList.getInstance(),
-													true, 
-													key,
-													value));
+						TableData data = new TableData(TableDataList.getInstance(),
+								true, 
+								key,
+								value);
+						tableDataTmp.add(data);
+						TableDataList.getInstance().add(data);
 					}
 				}
 				

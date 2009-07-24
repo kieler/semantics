@@ -24,7 +24,7 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 
 	public Image getColumnImage(Object element, int columnIndex) {
 		TableData tableData = (TableData) element;
-		if (columnIndex == 0) {
+		if (columnIndex == 1) {
 			if (tableData.isPresent()) {
 				if (tableData.isPermanent())
 					return CHECKED_DISABLED;
@@ -35,7 +35,7 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 				return UNCHECKED;
 			}
 		}
-		if (columnIndex == 1) {
+		if (columnIndex == 2) {
 			if (tableData.isPermanent()) {
 				return PERMANENT;
 			}
@@ -46,17 +46,19 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 	public String getColumnText(Object element, int columnIndex) {
 		TableData tableData = (TableData) element;
 		switch (columnIndex) {
-		case 0 :  // PRESENT_COLUMN
+		case 0 :  // NOT_VISIBLE_COLUMN
 			return ""; 
-		case 1 : // KEY_COLUMN
+		case 1 :  // PRESENT_COLUMN
+			return ""; 
+		case 2 : // KEY_COLUMN
 			if (tableData.isModified())
 				return "*"+tableData.getKey();
 			else
 				return tableData.getKey();
-		case 2 : // VALUE_COLUMN 
+		case 3 : // VALUE_COLUMN 
 			return tableData.getValue();
 		default :
-			throw new RuntimeException("columnIndex out of bounds (3)");
+			throw new RuntimeException("columnIndex out of bounds (4)");
 		}
 	}
 
