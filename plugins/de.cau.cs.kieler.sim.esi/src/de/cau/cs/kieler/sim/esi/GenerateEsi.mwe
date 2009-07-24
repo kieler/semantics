@@ -1,5 +1,5 @@
 <workflow>
-	<property file="de/cau/cs/kieler/sim/esi/GenerateEsi.properties"/>
+	<property file="${runtimeProject}/de/cau/cs/kieler/sim/esi/GenerateEsi.properties"/>
 	
 	<property name="runtimeProject" value="../${projectName}"/>
 	
