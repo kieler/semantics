@@ -1,7 +1,8 @@
 <workflow>
-	<property file="${runtimeProject}/de/cau/cs/kieler/sim/esi/GenerateEsi.properties"/>
-	
+	<property file="de/cau/cs/kieler/sim/esi/GenerateEsi.properties"/>
+		
 	<property name="runtimeProject" value="../${projectName}"/>
+	
 	
 	<bean class="org.eclipse.emf.mwe.utils.StandaloneSetup" platformUri="${runtimeProject}/.."/>
 	
