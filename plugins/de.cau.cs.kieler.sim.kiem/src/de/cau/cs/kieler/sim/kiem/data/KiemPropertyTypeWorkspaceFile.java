@@ -52,7 +52,7 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 	public Object getValue(KiemProperty property) {
 		return property.value;
 	}
-
+	
 	public void setValue(KiemProperty property, Object value) {
 		if (value != null)
 			property.setValue((String)value);

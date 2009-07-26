@@ -79,4 +79,19 @@ public class KiemProperty implements Serializable {
 		this.value = value;
 	}
 
+	
+	public String getFilePath() {
+		return this.value.replace("\\", "/");
+	}
+	
+	public String getDirectory() {
+		String backDir = this.value;
+		backDir = backDir.replace("\\", "/");
+		int i = backDir.lastIndexOf("/");
+		if (i > -1)
+			backDir = backDir.substring(0,i+1);
+		return backDir;
+	}
+
+
 }

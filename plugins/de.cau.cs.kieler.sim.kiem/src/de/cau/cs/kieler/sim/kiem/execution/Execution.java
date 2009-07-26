@@ -419,6 +419,15 @@ public class Execution implements Runnable {
 
 	//-------------------------------------------------------------------------
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#finalize()
+	 */
+	protected void finalize() {
+		errorTerminate();
+	}
+
+	//-------------------------------------------------------------------------
+	
 	public synchronized void wrapupComponents() {
 		for(int c = 0; c < this.dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = 

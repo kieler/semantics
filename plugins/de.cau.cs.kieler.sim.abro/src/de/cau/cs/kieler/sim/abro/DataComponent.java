@@ -158,7 +158,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 		KiemProperty[] properties = new KiemProperty[7];
 		properties[0] = new KiemProperty(
 				"state name",
-				"state");
+				"ABRO state");
 		properties[1] = new KiemProperty(
 				"some bool",
 				true);

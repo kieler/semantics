@@ -277,20 +277,21 @@ public class KiemPlugin extends AbstractUIPlugin {
 			}
 		}
 		
-		//get all localInterfaceVariables and combine them into
-		//globalInterfaceVariables
-		//initialize all (enabled) data producer and Observer
+		//get all localInterfaceVariables from (enabled) data producer 
+		//and combine them into globalInterfaceVariables
 		List<String> globalInterfaceVariables = new LinkedList<String>();
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
-			String[] localInterfaceVariables = 
-									dataComponentEx.getLocalInterfaceVariables();
-			if (localInterfaceVariables != null) {
-				for (int cc = 0; cc < localInterfaceVariables.length; cc++) {
-				   String localInterfaceVariable = localInterfaceVariables[cc];
-				   globalInterfaceVariables.add(localInterfaceVariable);
-				}//next cc
-			}//end if enabled
+			if (dataComponentEx.isEnabled()) {
+				String[] localInterfaceVariables = 
+					dataComponentEx.getLocalInterfaceVariables();
+					if (localInterfaceVariables != null) {
+						for (int cc = 0; cc < localInterfaceVariables.length; cc++) {
+							String localInterfaceVariable = localInterfaceVariables[cc];
+							globalInterfaceVariables.add(localInterfaceVariable);
+						}//next cc
+					}//end if not null
+			}//if enabled
 		}//next c
 		
 		//initialize globalInterfaceVariables in all enabled components
