@@ -33,6 +33,7 @@ import ptolemy.actor.IOPortEvent;
 import ptolemy.actor.IOPortEventListener;
 import ptolemy.actor.Manager;
 import ptolemy.data.IntToken;
+import ptolemy.data.expr.Parameter;
 import ptolemy.domains.fsm.modal.ModalController;
 import ptolemy.domains.fsm.modal.ModalModel;
 import ptolemy.kernel.InstantiableNamedObj;
@@ -55,13 +56,20 @@ public class ExecutePtolemyModel implements Runnable {
 	private String currentState;
 	private Manager manager; 
 	
-	public ExecutePtolemyModel(String PtolemyModel) {
+	private String host;
+	private String port;
+	
+	public ExecutePtolemyModel(String PtolemyModel, 
+							   String host,
+							   String port) {
 		System.out.println("Execution Thread - Constructor");
 		this.PtolemyModel = PtolemyModel;
 		this.paused = true;
 		this.stop = false;
 		this.makesteps = 0;
 		this.currentState = "";
+		this.host = host;
+		this.port = port;
 	}
 	
 	public String getCurrentState() {
@@ -194,7 +202,7 @@ public class ExecutePtolemyModel implements Runnable {
             // check if the parsed model is of correct type
             if (ptolemyModel != null && ptolemyModel instanceof CompositeActor) {
                 CompositeActor modelActor = ((CompositeActor) ptolemyModel);
-
+                
                 // get the manager that manages execution
                 manager = modelActor.getManager();
                 // there is likely no manager available, hence create a new one
@@ -215,6 +223,22 @@ public class ExecutePtolemyModel implements Runnable {
                 		modalModelList,
                 		modelActor.entityList(), 
                 		modelActor.getName());
+                
+                //modify host and port of railway simulation engine actor
+                if (modelActor.entityList() != null) {
+                    for (int c = 0; c < modelActor.entityList().size(); c++) {
+                    	Object entity = modelActor.entityList().get(c);
+                    	
+                    	if (entity instanceof ModelRailwayIO) {
+                    	  ModelRailwayIO modelRailwayIO =
+                    			(ModelRailwayIO) entity;
+                    	  modelRailwayIO.host.setExpression("'"+this.host+"'");
+                    	  modelRailwayIO.port.setExpression(this.port);
+                    	}
+                    	
+                    }//next c
+                }
+                
                 
 
         		System.out.println("Execution Thread - Run 2");

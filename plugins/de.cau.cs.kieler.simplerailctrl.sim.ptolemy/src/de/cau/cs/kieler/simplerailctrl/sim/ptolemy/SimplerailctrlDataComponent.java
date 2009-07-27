@@ -149,7 +149,9 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 		if (this.Model2ModelTransformation(kielerModel, ptolemyModel)) {
 			System.out.println("Now loading Ptolemy Model..." + ptolemyModelFile);
 	        //Load the Ptolemy Model
-	        PTOEXE = new ExecutePtolemyModel(ptolemyModelFile);
+			String host = this.getProperties()[2].getValue();
+			String port = this.getProperties()[3].getValue();
+	        PTOEXE = new ExecutePtolemyModel(ptolemyModelFile,host,port);
 	        PTOEXE_Thread = new Thread(PTOEXE);
 			System.out.println("Now executing Ptolemy Model...");
 	        //Start the Thread - it is paused by default (steps==0)
@@ -187,7 +189,7 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 	 */
 	@Override
 	public KiemProperty[] provideProperties() {
-		KiemProperty[] properties = new KiemProperty[2];
+		KiemProperty[] properties = new KiemProperty[4];
 		properties[0] = new KiemProperty(
 				"KIELER Model File",
 				new KiemPropertyTypeWorkspaceFile(),
@@ -195,6 +197,12 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 		properties[1] = new KiemProperty(
 				"State Name",
 				"RAIL state");
+		properties[2] = new KiemProperty(
+				"Host",
+				"epoch");
+		properties[3] = new KiemProperty(
+				"Port",
+				5000);
 		return properties;
 	}
 

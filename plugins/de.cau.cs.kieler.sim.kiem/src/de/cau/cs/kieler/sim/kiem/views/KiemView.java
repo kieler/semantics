@@ -72,9 +72,9 @@ public class KiemView extends ViewPart {
 	public static final String ID = "de.cau.cs.kieler.sim.kiem.views.KiemView";
 	
 	public static final int[] columnBoundsCollapsed 
-								= { 180, 0 , 20, 120, 50, 50};
+								= { 220, 0 , 20, 120, 50, 50};
 	public static final int[] columnBounds 
-								= { 180, 200 , 20, 120, 50, 50};
+								= { 220, 200 , 20, 120, 50, 50};
 	public int columnProperty = -1;
 
 	public static final String[] columnTitlesCollapsed = { 
@@ -213,6 +213,8 @@ public class KiemView extends ViewPart {
 			for (int i = 0; i < columnTitles.length; i++) {
 				TreeColumn column = tree.getColumn(i);
 				column.setText(columnTitlesCollapsed[i]);
+				if (i == 1)
+					column.setResizable(false); //resize value not allowed
 				column.setToolTipText(columnToolTipCollapsed[i]);
 			}
 			TreeColumn column = tree.getColumn(1);
@@ -222,6 +224,8 @@ public class KiemView extends ViewPart {
 			for (int i = 0; i < columnTitles.length; i++) {
 				TreeColumn column = tree.getColumn(i);
 				column.setText(columnTitles[i]);
+				if (i == 1)
+					column.setResizable(true); //resize value allowed
 				column.setToolTipText(columnToolTip[i]);
 			}
 			TreeColumn column = tree.getColumn(1);
