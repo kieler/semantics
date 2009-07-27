@@ -22,7 +22,7 @@ public class DataPoolTestApplication {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String[] filter = {"key01","key03","key05","key07"};
+		String[] filter = null;//{"key01","key03","key05","key07"};
 		
 		// TODO Auto-generated method stub
 		try {
@@ -39,6 +39,8 @@ public class DataPoolTestApplication {
 			System.out.println(dataPool.getData(null).toString());
 			
 
+			System.out.println("");
+			System.out.println(dataPool.getPoolCounter());
 			System.out.println("");
 			System.out.println(dataPool.getDeltaData(filter,0).toString());
 			System.out.println(dataPool.getDeltaData(filter,1).toString());
