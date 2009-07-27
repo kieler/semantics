@@ -38,7 +38,6 @@ public abstract class DataComponent implements IDataComponent,
 	private KiemProperty[] properties;
 	private IConfigurationElement configEle;
 	private String[] globalInterfaceVariables;
-	private String   pluginId;
 	
 	//-------------------------------------------------------------------------
 	
@@ -49,7 +48,6 @@ public abstract class DataComponent implements IDataComponent,
 	public DataComponent() {
 		super();
 		properties = provideProperties();
-		this.pluginId = getConfigurationElement().getContributor().getName();
 	}
 	
 	//-------------------------------------------------------------------------
@@ -82,7 +80,8 @@ public abstract class DataComponent implements IDataComponent,
 	 * @return the plugin id
 	 */
 	public final String getPluginId() {
-		return this.pluginId;
+		if (getConfigurationElement() == null) return null;
+		return getConfigurationElement().getContributor().getName();
 	}
 	
 	//-------------------------------------------------------------------------
