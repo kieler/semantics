@@ -38,9 +38,15 @@ public class DataComponent extends JSONObjectDataComponent implements
 	
 	boolean paused; //demonstrate isPauseFlag() usage
 	
+	/**
+	 * Instantiates a new data component.
+	 */
 	public DataComponent() {
 	}
 	
+	/**
+	 * Reset abo.
+	 */
 	private void resetABO() {
 		wA = true;
 		wB = true;
@@ -48,14 +54,26 @@ public class DataComponent extends JSONObjectDataComponent implements
 		dB = false;
 		done = false;
 	}
+	
+	/**
+	 * Transition_w a_d a.
+	 */
 	private void transition_wA_dA() {
 		wA = false;
 		dA = true;
 	}
+	
+	/**
+	 * Transition_w b_d b.
+	 */
 	private void transition_wB_dB() {
 		wB = false;
 		dB = true;
 	}
+	
+	/**
+	 * Transition_done.
+	 */
 	private void transition_done() {
 		dB = false;
 		dA = false;
@@ -63,6 +81,9 @@ public class DataComponent extends JSONObjectDataComponent implements
 		paused = true;
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent#step(de.cau.cs.kieler.sim.kiem.json.JSONObject)
+	 */
 	public JSONObject step(JSONObject JSONobject) {
 //System.out.println("ABRO received: "+ JSONobject.toString());
 		JSONObject returnObj = new JSONObject();
@@ -106,6 +127,9 @@ public class DataComponent extends JSONObjectDataComponent implements
 	//--------------------------------------------------------------------------
 	//additional methods
 	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
+	 */
 	public void initialize() {
 		// TODO Auto-generated method stub
 		stateName = getProperties()[0].getValue();
@@ -114,45 +138,72 @@ public class DataComponent extends JSONObjectDataComponent implements
 		paused = false;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
+	 */
 	public void wrapup() {
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
+	 */
 	public boolean isObserver() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
+	 */
 	public boolean isProducer() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMaster()
+	 */
 	@Override
 	public boolean isMaster() {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isPauseFlag()
+	 */
 	@Override
 	public boolean isPauseFlag() {
 		return false;
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#commandPause()
+	 */
 	@Override
 	public void commandPause() {
 		paused = false;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideInterfaceVariables()
+	 */
 	@Override
 	public String[] provideInterfaceVariables() {
 		String[] signals = {getProperties()[0].getValue(), "A", "B", "R", "O"}; 
 		return signals;
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMultiInstantiable()
+	 */
 	@Override
 	public boolean isMultiInstantiable() {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideProperties()
+	 */
 	@Override
 	public KiemProperty[] provideProperties() {
 		KiemProperty[] properties = new KiemProperty[7];
@@ -185,11 +236,22 @@ public class DataComponent extends JSONObjectDataComponent implements
 		return properties;
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#checkProperties(de.cau.cs.kieler.sim.kiem.data.KiemProperty[])
+	 */
 	@Override
 	public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
 		if (properties[0].getValue().trim().length() == 0) {
 			throw new KiemPropertyException("The state name cannot be empty!");
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isDeltaObserver()
+	 */
+	public boolean isDeltaObserver() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

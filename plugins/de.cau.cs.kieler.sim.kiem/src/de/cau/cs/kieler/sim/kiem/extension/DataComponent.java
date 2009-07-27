@@ -213,21 +213,37 @@ public abstract class DataComponent implements IDataComponent,
 	}
 
 	//-------------------------------------------------------------------------
-	
+
 	/**
-	 * Checks if is delta observer. Delta values means all values that are in
-	 * the present and were in the past ticks when this component may have been
-	 * skipped. If a component does only want values of the present tick, it 
-	 * should override and return false.
-	 * 
-	 * @return true, if is delta observer
+	 * Overwrite this if this component can explicitly handle recorded values.
+	 * In case the user makes steps back, only observers that return true
+	 * in this method will get any (recorded) data. Components that return
+	 * false (default) will not get any data, while the the user navigates
+	 * within the recorded tick area. 
+	 *  
+	 * @return 		a boolean indicating that the component is recorded observer
 	 */
-	public boolean isDeltaObserver() {
-		return true;
+	public boolean isRecordedObserver() {
+		return false;
 	}
 	
 	//-------------------------------------------------------------------------
 
+	/**
+	 * Checks if is delta observer. Delta values means all changed values that
+	 * are in the present and were in the past ticks when this component may
+	 * have been skipped. 
+	 * If a component wants all (accumulated & updated) values of the present
+	 * tick, it should return false.
+	 * 
+	 * @return true, if is delta observer
+	 */
+	public boolean isDeltaObserver() {
+		return false;
+	}
+	
+	//-------------------------------------------------------------------------
+	
 	/**
 	 * Checks if is pause flag. This method can be overridden to force the 
 	 * execution to pause. Be careful if you override this method - it will 

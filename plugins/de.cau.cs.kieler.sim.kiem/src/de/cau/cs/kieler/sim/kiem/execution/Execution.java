@@ -39,6 +39,10 @@ import de.cau.cs.kieler.sim.kiem.views.KiemView;
  * all executions w/ an error log message.
  */
 public class Execution implements Runnable {
+
+	//Timeout for DataComponents
+	TimeoutThread timeout;
+	private static final int TIMEOUT = 5000; //5 seconds
 	
 	//delay to wait in paused state until
 	private static final int PAUSE_DEYLAY = 50;   //in ms
@@ -87,10 +91,6 @@ public class Execution implements Runnable {
 	//KiemView to control execution
 	//KiemView view;
 	
-	//Timeout
-	TimeoutThread timeout;
-	private static final int TIMEOUT = 5000; //5 seconds
-
 	//-------------------------------------------------------------------------
 
 	/**

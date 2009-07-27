@@ -25,10 +25,18 @@ import java.util.Random;
 public class DataProducer extends JSONStringDataComponent implements
 		IJSONStringDataComponent {
 
+	/**
+	 * Instantiates a new data producer.
+	 */
 	public DataProducer() {
 		// TODO Auto-generated constructor stub
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent#step(java.lang.String)
+	 */
 	public String step(String JSONString) {
 		//try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
 		
@@ -63,25 +71,44 @@ public class DataProducer extends JSONStringDataComponent implements
 		return returnString;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
+	 */
 	public void initialize() {
 		// TODO Auto-generated method stub
 		System.out.println("Raw Table Producer initialize");
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
+	 */
 	public boolean isObserver() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
+	 */
 	public boolean isProducer() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
+	 */
 	public void wrapup() {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
+
 }

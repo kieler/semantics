@@ -28,9 +28,19 @@ public class DataObserver extends JSONStringDataComponent implements
 
 	List<TableData> tableDataTmp;
 	
+	/**
+	 * This method is called when information about an Data
+	 * which was previously requested using an asynchronous
+	 * interface becomes available.
+	 */
 	public DataObserver() {
 	}
 
+	//-------------------------------------------------------------------------
+	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent#step(java.lang.String)
+	 */
 	public String step(String JSONString) {
 		System.out.println(JSONString);
 
@@ -103,6 +113,11 @@ public class DataObserver extends JSONStringDataComponent implements
 		return null;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
+	 */
 	public void initialize() {
 		// TODO Auto-generated method stub
 		System.out.println("Raw Table Consumer initialize");
@@ -121,22 +136,41 @@ public class DataObserver extends JSONStringDataComponent implements
 		TableDataList.getInstance().updateView();
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
+	 */
 	public boolean isObserver() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
+	 */
 	public boolean isProducer() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isDeltaObserver()
+	 */
 	public boolean isDeltaObserver() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
+	 */
 	public void wrapup() {
 		// TODO Auto-generated method stub
 		

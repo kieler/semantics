@@ -46,5 +46,5 @@ public interface IDataComponent {
 	 * @return true, if is observer
 	 */
 	public boolean isObserver();
-
+	
 }

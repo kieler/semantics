@@ -178,15 +178,17 @@ public class StateObserver extends JSONObjectDataComponent implements
 	private HashMap<String,EditPart> cachedEditParts;
     
     /**
-     * This method searches recursively for an EditPart using the modelElement
-     * URIFragment provided. The latter can be obtained by calling
+     * This method searches recursively for an EditPart using the 
+     * modelElement URIFragment provided. The latter can be 
+     * obtained by calling:
      * 
      * myEObject.eResource().getURIFragment(myNode).toString();
      * 
-     * This returns the URI fragment that, when passed to getEObject will
-     * return the given object.
+     * This returns the URI fragment that, when passed to getEObject
+     * will return the given object.
      * 
-     * @param elementURIFragment the URIFragment of the EObject to search for
+     * @param elementURIFragment the URIFragment of the EObject to 
+     * 		  search for
      * @param parent the parent EditPart
      * 
      * @return the EditPart of the EObject
@@ -209,9 +211,12 @@ public class StateObserver extends JSONObjectDataComponent implements
                 View view = (View) ((ShapeEditPart) child).getModel();
                 EObject modelElement = view.getElement();
     			if (modelElement.equals(
-    					modelElement.eResource().getEObject(elementURIFragment))) {
+    					modelElement.eResource()
+    					.getEObject(elementURIFragment))) {
                 	//first cache for later calls
-                	cachedEditParts.put(elementURIFragment, (ShapeEditPart) child);
+                	cachedEditParts.put(
+                			elementURIFragment, 
+                			(ShapeEditPart) child);
                 	//then return
                 	return (ShapeEditPart) child;
     			}
