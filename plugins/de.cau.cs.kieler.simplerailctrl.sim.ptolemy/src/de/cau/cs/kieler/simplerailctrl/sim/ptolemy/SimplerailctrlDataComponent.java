@@ -44,6 +44,7 @@ import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.simplerailctrl.sim.ptolemy.handlers.ModelTransformationHandler;
 import de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.MomlWriter;
@@ -56,11 +57,23 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 	private String kielerModel;
 	private String ptolemyModel;
 	private String workspaceFolder;
+
+	//-------------------------------------------------------------------------
 	
+	/**
+	 * Instantiates a new simplerailctrl data component.
+	 */
 	public SimplerailctrlDataComponent() {
 	}
 
-	 public static String getPluginFolder() {
+    //-------------------------------------------------------------------------
+	
+	 /**
+ 	 * Gets the plugin folder.
+ 	 * 
+ 	 * @return the plugin folder
+ 	 */
+ 	public static String getPluginFolder() {
 	        if(_pluginFolder == null) {
 	            _pluginFolder = Platform.getBundle("de.cau.cs.kieler.simplerailctrl.sim.ptolemy").getLocation();// .toFile();// .resolve(url);
 	            _pluginFolder = _pluginFolder.replace("initial@reference:", "");
@@ -68,8 +81,18 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 	        return _pluginFolder;
 	 }
 	 
-	 public boolean Model2ModelTransformation(String inputModel,
-			 								  String outputModel) {
+    //-------------------------------------------------------------------------
+	 
+	 /**
+     * Transform KIELER simplerailctrl model into ptolemy model.
+     * 
+     * @param inputModel the input EMF model
+     * @param outputModel the output PTO model
+     * 
+     * @return true, if successful
+     */
+    public boolean Model2ModelTransformation(String inputModel,
+			 								 String outputModel) {
 		 	try {
 		        //Workflow
 		        Workflow workflow = new Workflow();
@@ -117,12 +140,14 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 	        
 		    return true;
 	}
+	 
+    //-------------------------------------------------------------------------	 
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent#step(de.cau.cs.kieler.sim.kiem.json.JSONObject)
 	 */
 	public JSONObject step(JSONObject JSONobject) throws
-						KiemExecutionException {
+												KiemExecutionException {
 		PTOEXE.executionStep();
 		// TODO Auto-generated method stub
 		String currentState = PTOEXE.getCurrentState();
@@ -132,10 +157,12 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 		return returnObj;
 	}
 
+    //-------------------------------------------------------------------------	 
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
 	 */
-	public void initialize() {
+	public void initialize() throws KiemInitializationException {
 		// TODO Auto-generated method stub
 		workspaceFolder = Platform.getLocation().toString();
 		
@@ -157,8 +184,13 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 	        //Start the Thread - it is paused by default (steps==0)
 	        PTOEXE_Thread.start();
 		}//end if
+		else 
+			new KiemInitializationException
+					("Ptolemy Model could not be generated", true);
 	}
 
+    //-------------------------------------------------------------------------	 
+	
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
 	 */
@@ -167,6 +199,8 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 		return true;
 	}
 
+    //-------------------------------------------------------------------------	 
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
 	 */
@@ -174,6 +208,8 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+    //-------------------------------------------------------------------------	 
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
@@ -184,6 +220,8 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 		PTOEXE = null;
 	}
 	 
+    //-------------------------------------------------------------------------	 
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#initializeProperties()
 	 */
@@ -206,6 +244,8 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 		return properties;
 	}
 
+    //-------------------------------------------------------------------------	 
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#testProperties(de.cau.cs.kieler.sim.kiem.data.KiemProperty[])
 	 */
@@ -215,7 +255,5 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 			throw new KiemPropertyException("A SimpleRailCtrl-Model File must be selected!");
 		}
 	}
-	 
-	
 	
 }

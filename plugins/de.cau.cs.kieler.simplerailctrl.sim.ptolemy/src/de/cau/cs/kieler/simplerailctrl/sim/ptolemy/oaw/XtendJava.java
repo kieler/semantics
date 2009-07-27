@@ -40,10 +40,10 @@ public class XtendJava {
 		return ""+i;//myNode.hashCode();
 	}
 
-	public final static String modelElementXPath(Node myNode) {
-		int index = myNode.eContainer().eContents().indexOf(myNode);
-		String returnString = "//@nodes."+index;
-		return returnString;
+	public final static String getURIFragment(Node myNode) {
+		//Returns the URI fragment that, when passed to getEObject will
+		//return the given object.
+		return myNode.eResource().getURIFragment(myNode).toString();
 	}
 	
 	

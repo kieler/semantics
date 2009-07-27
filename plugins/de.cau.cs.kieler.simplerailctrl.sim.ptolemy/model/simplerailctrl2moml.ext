@@ -281,10 +281,10 @@ Void dump(String s) :
 			dump(java.lang.String)
 ;
 
-//get string representation of an model element to identify it 
-String modelElementXPath(simplerailctrl::Node node) :
+//get URIFragment of an model element to identify it 
+String getURIFragment(simplerailctrl::Node node) :
 	JAVA de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.XtendJava.
-			modelElementXPath(de.cau.cs.kieler.simplerailctrl.Node)
+			getURIFragment(de.cau.cs.kieler.simplerailctrl.Node)
 ;
 //get hash value of an object to identify it 
 String hash(simplerailctrl::Node node) :
@@ -349,11 +349,11 @@ boolean createSimpleStateEntity(EntityType baseEntity,
 								simplerailctrl::Node state):
 	let newState = new EntityType:
 	let markedBefore = isMarked(state):
-	//let xpath = "//@nodes."+hash(state):
-	let modelElementXPath = modelElementXPath(state):
-	let p1 = newPropertyType("modelElementXPath",
+	//elementURIFragment is *NOT* real XPATH!
+	let elementURIFragment = getURIFragment(state):
+	let p1 = newPropertyType("elementURIFragment",
 							 "ptolemy.kernel.util.StringAttribute",
-							 modelElementXPath):
+							 elementURIFragment):
 	// set name of node to xpath of business model
 	//   //@nodes.1	
 	newState.setName(state.getMetaType()+hash(state)) ->

@@ -22,6 +22,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 
+import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
+
 import ptolemy.actor.Actor;
 import ptolemy.actor.CompositeActor;
 //import ptolemy.actor.StateReceiver;
@@ -59,6 +61,8 @@ public class ExecutePtolemyModel implements Runnable {
 	private String host;
 	private String port;
 	
+	private KiemExecutionException executionException; 
+	
 	public ExecutePtolemyModel(String PtolemyModel, 
 							   String host,
 							   String port) {
@@ -70,16 +74,20 @@ public class ExecutePtolemyModel implements Runnable {
 		this.currentState = "";
 		this.host = host;
 		this.port = port;
+		this.executionException = null;
 	}
 	
 	public String getCurrentState() {
 		return currentState;
 	}
 	
-	public synchronized void executionStep() {
+	public synchronized void executionStep() throws KiemExecutionException {
 		//System.out.println("Execution Thread - Make Step");
 		this.paused = false;
 		this.makesteps++;
+		//throw exception that may have occurred
+		if (this.executionException != null)
+			throw this.executionException;
 	}
 	public synchronized void executionPlay() {
 		this.paused = false;
@@ -238,8 +246,6 @@ public class ExecutePtolemyModel implements Runnable {
                     	
                     }//next c
                 }
-                
-                
 
         		System.out.println("Execution Thread - Run 2");
 
@@ -267,7 +273,9 @@ public class ExecutePtolemyModel implements Runnable {
                         		for (int c = 0; c < modalModelList.size(); c++) {
                         			ModalModel modalModel = modalModelList.get(c);
                         			currentState = ((StringAttribute)modalModel.getController()
-                        					.currentState().getAttribute("modelElementXPath")).getValueAsString();
+                        					.currentState()
+                        					.getAttribute("elementURIFragment"))
+                        					.getValueAsString();
                         		}
                         		
                         	}
@@ -280,7 +288,8 @@ public class ExecutePtolemyModel implements Runnable {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+        	this.executionException = new KiemExecutionException(e.getLocalizedMessage(),true);
+        	//e.printStackTrace();
         }
 	}
 	
