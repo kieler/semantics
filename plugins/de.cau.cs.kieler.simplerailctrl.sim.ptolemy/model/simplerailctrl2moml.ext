@@ -281,6 +281,11 @@ Void dump(String s) :
 			dump(java.lang.String)
 ;
 
+//get string representation of an model element to identify it 
+String modelElementXPath(simplerailctrl::Node node) :
+	JAVA de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.XtendJava.
+			modelElementXPath(de.cau.cs.kieler.simplerailctrl.Node)
+;
 //get hash value of an object to identify it 
 String hash(simplerailctrl::Node node) :
 	JAVA de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.XtendJava.
@@ -344,7 +349,16 @@ boolean createSimpleStateEntity(EntityType baseEntity,
 								simplerailctrl::Node state):
 	let newState = new EntityType:
 	let markedBefore = isMarked(state):
-	newState.setName(getMetaType(state)+hash(state)) ->
+	//let xpath = "//@nodes."+hash(state):
+	let modelElementXPath = modelElementXPath(state):
+	let p1 = newPropertyType("modelElementXPath",
+							 "ptolemy.kernel.util.StringAttribute",
+							 modelElementXPath):
+	// set name of node to xpath of business model
+	//   //@nodes.1	
+	newState.setName(state.getMetaType()+hash(state)) ->
+	newState.property.add(p1) ->
+	//newState.setName(getMetaType(state)+hash(state)) ->
   	newState.setClass1("ptolemy.domains.fsm.kernel.State") ->
 	if (!markedBefore) then baseEntity.entity.add(newState) ->
 	if (!markedBefore) then addSelfTransition(baseEntity, state) ->
@@ -518,6 +532,17 @@ RelationType createRelation(String name,
 	relation.property.add(p7) ->
 	relation.property.add(p8) ->
 	relation
+;
+
+PropertyType newPropertyType
+								(String name,
+								String class,
+								String value) :
+	let p1 = new PropertyType :
+	p1.setClass(class) ->
+	p1.setName(name) ->
+	p1.setValue(value) ->
+	p1
 ;
 
 //create guardExpression (for a relation)

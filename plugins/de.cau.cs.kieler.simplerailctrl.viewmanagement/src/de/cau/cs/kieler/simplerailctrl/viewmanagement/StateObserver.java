@@ -221,7 +221,7 @@ public class StateObserver extends JSONObjectDataComponent implements
     }
 
     
-    public KiemProperty[] initializeProperties() {
+    public KiemProperty[] provideProperties() {
         KiemProperty[] properties = new KiemProperty[2];
         properties[0] = new KiemProperty("state variable", "RAIL state");
         properties[1] = new KiemProperty("editor",

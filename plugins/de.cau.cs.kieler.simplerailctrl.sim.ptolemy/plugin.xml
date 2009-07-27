@@ -101,6 +101,14 @@
             type="org.eclipse.core.resources.IResource">
       </propertyTester>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.simplerailctrl.sim.ptolemy.SimplerailctrlDataComponent"
+            id="de.cau.cs.kieler.simplerailctrl.sim.ptolemy.content1"
+            name="SimpleRailCtrl Ptolemy Simulator">
+      </content>
+   </extension>
 
 
 </plugin>

@@ -107,7 +107,7 @@ public class DataObserver extends JSONStringDataComponent implements
 		// TODO Auto-generated method stub
 		System.out.println("Raw Table Consumer initialize");
 		//make an entry of all global interface variables/signals
-		String[] variables = this.getGlobalInterfaceVariables();
+		String[] variables = this.getInterfaceVariables();
 		for (int c = 0; c < variables.length; c++) {
 			String key = variables[c];
 			String value = "";

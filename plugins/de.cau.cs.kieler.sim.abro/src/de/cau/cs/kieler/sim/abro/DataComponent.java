@@ -143,7 +143,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 	}
 
 	@Override
-	public String[] getLocalInterfaceVariables() {
+	public String[] provideInterfaceVariables() {
 		String[] signals = {getProperties()[0].getValue(), "A", "B", "R", "O"}; 
 		return signals;
 	}
@@ -154,7 +154,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 	}
 
 	@Override
-	public KiemProperty[] initializeProperties() {
+	public KiemProperty[] provideProperties() {
 		KiemProperty[] properties = new KiemProperty[7];
 		properties[0] = new KiemProperty(
 				"state name",
@@ -186,7 +186,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 	}
 	
 	@Override
-	public void testProperties(KiemProperty[] properties) throws KiemPropertyException {
+	public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
 		if (properties[0].getValue().trim().length() == 0) {
 			throw new KiemPropertyException("The state name cannot be empty!");
 		}

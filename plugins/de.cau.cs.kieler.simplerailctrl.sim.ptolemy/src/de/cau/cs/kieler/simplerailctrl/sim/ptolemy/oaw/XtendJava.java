@@ -36,8 +36,16 @@ public class XtendJava {
 	//-------------------------------------------------------------------------
 
 	public final static String hash(Node myNode) {
-		return ""+myNode.hashCode();
+		int i = myNode.eContainer().eContents().indexOf(myNode);
+		return ""+i;//myNode.hashCode();
 	}
+
+	public final static String modelElementXPath(Node myNode) {
+		int index = myNode.eContainer().eContents().indexOf(myNode);
+		String returnString = "//@nodes."+index;
+		return returnString;
+	}
+	
 	
 	public final static String hash(Transition myTransition) {
 		return ""+myTransition.hashCode();
