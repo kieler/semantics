@@ -25,6 +25,8 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.*;
 import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
@@ -87,7 +89,7 @@ public class Execution implements Runnable {
 	
 	//Timeout
 	TimeoutThread timeout;
-	private static final int TIMEOUT = 1000; //1 second
+	private static final int TIMEOUT = 5000; //5 seconds
 
 	//-------------------------------------------------------------------------
 
@@ -434,7 +436,13 @@ public class Execution implements Runnable {
 				dataComponentExList.get(c);
 			if (dataComponentEx.isEnabled()) {
 				timeout.timeout(TIMEOUT, "wrapup", dataComponentEx, this);
-				dataComponentEx.getDataComponent().wrapup();
+				try {
+					dataComponentEx.getDataComponent().wrapup();
+				}catch(KiemInitializationException e) {
+					timeout.abortTimeout();
+					KiemPlugin.getDefault().handleComponentError(
+							dataComponentEx.getDataComponent(), e);
+				}
 				timeout.abortTimeout();
 			}
 		}
@@ -565,17 +573,29 @@ public class Execution implements Runnable {
 										 (filterKeys,dataComponentEx.getDeltaIndex());
 								if (dataComponentEx.isJSON()) {
 									timeout.timeout(TIMEOUT, "step", dataComponentEx, this);
-									JSONObject newData = 
-										((JSONObjectDataComponent)dataComponentEx.getDataComponent())
+									JSONObject newData = null;
+									try {
+										newData = ((JSONObjectDataComponent)dataComponentEx.getDataComponent())
 										.step(oldData);
+									}catch(KiemExecutionException e) {
+										timeout.abortTimeout();
+										KiemPlugin.getDefault().handleComponentError(
+										 dataComponentEx.getDataComponent(), e);
+									}
 									if (newData != null)
 										this.dataPool.putData(newData);
 								}
 								else {
 									timeout.timeout(TIMEOUT, "step", dataComponentEx, this);
-									String newData = 
-										((JSONStringDataComponent)dataComponentEx.getDataComponent())
+									String newData = null;
+									try {
+										newData = ((JSONStringDataComponent)dataComponentEx.getDataComponent())
 										.step(oldData.toString());
+									}catch(KiemExecutionException e) {
+										timeout.abortTimeout();
+										KiemPlugin.getDefault().handleComponentError(
+										 dataComponentEx.getDataComponent(), e);
+									}
 									if (newData != null && newData != "") 
 										this.dataPool.putData(
 													   new JSONObject(newData));

@@ -17,9 +17,11 @@ package de.cau.cs.kieler.sim.kiem.execution;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
 
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.json.*;
 
 public class ProducerExecution implements Runnable {
@@ -66,8 +68,7 @@ public class ProducerExecution implements Runnable {
 				catch(Exception e) {
 					parent.showWarning(
 							null, 
-							this.dataComponent.getConfigurationElement()
-							.getContributor().getName(),
+							this.dataComponent.getPluginId(),
 							e);
 				}
 			}//end while
@@ -122,21 +123,31 @@ public class ProducerExecution implements Runnable {
 					JSONObjectDataComponent compJSON = 
 						(JSONObjectDataComponent)dataComponent;
 					//do not send any data cause this is a producer only
-					this.data = compJSON.step(null);
+					try {
+						this.data = compJSON.step(null);
+					}catch(KiemExecutionException e) {
+						KiemPlugin.getDefault().handleComponentError(
+						 dataComponent, e);
+					}
 				}
 				else {
 					JSONStringDataComponent compString = 
 						(JSONStringDataComponent)dataComponent;
 					//do not send any data cause this is a producer only
-					String JSONString = compString.step(null);
+					String JSONString = null;
+					try {
+						JSONString = compString.step(null);
+					}catch(KiemExecutionException e) {
+						KiemPlugin.getDefault().handleComponentError(
+						 dataComponent, e);
+					}
 					this.data = null;
 					if (JSONString != null && !JSONString.equals("")) {
 						try {this.data = new JSONObject(JSONString);}
 						catch(Exception e) {
 							parent.showWarning(
 									null, 
-									this.dataComponent.getConfigurationElement()
-									.getContributor().getName(),
+									this.dataComponent.getPluginId(),
 									e);
 						}
 					}//not null

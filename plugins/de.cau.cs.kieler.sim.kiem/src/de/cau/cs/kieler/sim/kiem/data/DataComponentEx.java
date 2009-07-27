@@ -129,8 +129,8 @@ public class DataComponentEx {
 	public String[] getFilterKeys() {
 		return this.component.getFilterKeys();
 	}
-	public String[] getLocalInterfaceVariables() {
-		return this.component.getLocalInterfaceVariables(); 
+	public String[] provideInterfaceVariables() {
+		return this.component.provideInterfaceVariables(); 
 	}
 	public KiemProperty[] getProperties() {
 		return this.component.getProperties(); 
@@ -149,13 +149,13 @@ public class DataComponentEx {
 		return this.component.isStepDone(); 
 	}
 	
-	public void testProperties(KiemProperty[] properties) 
+	public void checkProperties(KiemProperty[] properties) 
 									throws KiemPropertyException {
-		this.component.testProperties(properties);
+		this.component.checkProperties(properties);
 	}
 	
-	public void setGloblaInterfaceVariables(String[] globalInterfaceVariables) {
-		this.component.setGlobalInterfaceVariables(globalInterfaceVariables); 
+	public void setInterfaceVariables(String[] globalInterfaceVariables) {
+		this.component.setInterfaceVariables(globalInterfaceVariables); 
 	}
 	
 	public boolean isMasterImplementingGUI() {

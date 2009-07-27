@@ -47,6 +47,8 @@ import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
 /**
@@ -213,8 +215,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 				dataComponentList.add(dataComponent);
 //System.out.println(jsonComponents[i]);
 			}catch(Exception e){
-				throw new RuntimeException
-					("Error at loading a KIEM data component plugin");
+				//throw new RuntimeException
+				//	("Error at loading a KIEM data component plugin");
+				this.showWarning("Error at loading KIEM data component" +
+						" '"+jsonComponents[i].getContributor().getName()+"'",
+						null, e);
 			} 
 		}
 //System.out.println("Found Controllers for "+Messages.extensionPointIDstringcomponent+": "+stringComponents.length);
@@ -227,8 +232,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 				dataComponentList.add(dataComponent);
 //System.out.println(dataComponent.getName());
 			}catch(Exception e){
-				throw new RuntimeException
-					("Error at loading a KIEM data component plugin");
+//				throw new RuntimeException
+//					("Error at loading a KIEM data component plugin");
+				this.showWarning("Error at loading KIEM data component" +
+						" '"+jsonComponents[i].getContributor().getName()+"'",
+						null, e);
 			} 
 		}
 		return dataComponentList;
@@ -267,7 +275,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			KiemProperty[] properties = dataComponentEx.getProperties();
 			try {
-				dataComponentEx.testProperties(properties);
+				dataComponentEx.checkProperties(properties);
 			} catch (KiemPropertyException e) {
 				this.showError(e.getMessage(), dataComponentEx
 						.getDataComponent().getConfigurationElement()
@@ -284,7 +292,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			if (dataComponentEx.isEnabled()) {
 				String[] localInterfaceVariables = 
-					dataComponentEx.getLocalInterfaceVariables();
+					dataComponentEx.provideInterfaceVariables();
 					if (localInterfaceVariables != null) {
 						for (int cc = 0; cc < localInterfaceVariables.length; cc++) {
 							String localInterfaceVariable = localInterfaceVariables[cc];
@@ -298,7 +306,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			if (dataComponentEx.isEnabled()) {
-				dataComponentEx.setGloblaInterfaceVariables
+				dataComponentEx.setInterfaceVariables
 					((String[])globalInterfaceVariables.toArray(new String [0]));
 			}//end if enabled
 		}//next c
@@ -307,7 +315,12 @@ public class KiemPlugin extends AbstractUIPlugin {
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			if (dataComponentEx.isEnabled()) {
+				try {
 					dataComponentEx.getDataComponent().initialize();
+				}catch(KiemInitializationException e) {
+					KiemPlugin.getDefault().handleComponentError(
+							dataComponentEx.getDataComponent(), e);
+				}
 			}//end if enabled
 		}//next c
 		
@@ -376,21 +389,53 @@ public class KiemPlugin extends AbstractUIPlugin {
 	}
 
 	//-------------------------------------------------------------------------
+	
+	public void handleComponentError(DataComponent dataComponent,
+									 Exception e) {
+		
+		boolean mustStop = false; 
+		
+		//check if mustStop flag is set
+		if (e instanceof KiemExecutionException) {
+			mustStop = ((KiemExecutionException)e).isMustStop();
+		}
+		else if (e instanceof KiemInitializationException) {
+			mustStop = ((KiemInitializationException)e).isMustStop();
+		}
+		
+		//show error or warning message dialog
+		if (mustStop) {
+			KiemPlugin.getDefault().showError(
+					null, dataComponent.getPluginId(), e);
+			KiemPlugin.getDefault().execution.errorTerminate();
+		}
+		else {
+			KiemPlugin.getDefault().showWarning(
+					null, dataComponent.getPluginId(), e);
+		}
+		
+	}
+	
+
+	//-------------------------------------------------------------------------
 
 	public void showWarning(String textMessage, 
 							String PluginID, 
 							Exception exception) {
 		try{
-			String message = PluginID;
+			String message = "";
+			if (PluginID != null) message = " (" + PluginID + ")";
 			
 			if (textMessage != null) {
-				message = textMessage  + " (" + PluginID + ")";
+				message = textMessage + message;
 				exception = null;
 			}
 			else if (exception != null) {
-				message = exception.getMessage()  + " (" + PluginID + ")";
+				message = exception.getMessage() + message;
 				exception = null;
 			}
+			
+			if (PluginID == null) PluginID = this.PLUGIN_ID;
 
 			IStatus status = new Status(IStatus.WARNING,
 					PluginID,
@@ -421,16 +466,19 @@ public class KiemPlugin extends AbstractUIPlugin {
 						  String PluginID,
 						  Exception exception) {
 		try{
-			String message = PluginID;
+			String message = "";
+			if (PluginID != null) message = " (" + PluginID + ")";
 			
 			if (textMessage != null) {
-				message = textMessage  + " (" + PluginID + ")";
+				message = textMessage + message;
 				exception = null;
 			}
 			else if (exception != null) {
-				message = exception.getMessage()  + " (" + PluginID + ")";
+				message = exception.getMessage() + message;
 				exception = null;
 			}
+
+			if (PluginID == null) PluginID = this.PLUGIN_ID;
 
 			IStatus status = new Status(IStatus.ERROR,
 					PluginID,

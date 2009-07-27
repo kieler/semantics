@@ -14,14 +14,23 @@
 
 package de.cau.cs.kieler.sim.kiem.extension;
 
-import de.cau.cs.kieler.sim.kiem.json.*;
+/**
+ * @author cmot
+ *
+ */
+public class KiemInitializationException extends Exception {
 
-public interface IJSONObjectDataComponent  {
+	private static final long serialVersionUID = -8183839879570123277L;
+
+	private boolean mustStop;
 	
-	//one step function for a Observer and producer
-	//for a producer only the argument will always be null
-	//for a Observer only this method will be called asynchronous
-	public JSONObject step(JSONObject JSONobject)
-										throws KiemExecutionException;
+	public KiemInitializationException(String message, boolean mustStop) {
+		super(message);
+		this.mustStop = mustStop;
+	}
+
+	public boolean isMustStop() {
+		return this.mustStop;
+	}
 
 }

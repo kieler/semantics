@@ -14,9 +14,11 @@
 
 package de.cau.cs.kieler.sim.kiem.execution;
 
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.json.*;
 
 public class ObserverExecution implements Runnable {
@@ -77,8 +79,7 @@ public class ObserverExecution implements Runnable {
 				catch(Exception e) {
 					parent.showError(
 							null, 
-							this.dataComponent.getConfigurationElement()
-							.getContributor().getName(),
+							this.dataComponent.getPluginId(),
 							e);
 				}
 			
@@ -88,22 +89,33 @@ public class ObserverExecution implements Runnable {
 				if (this.dataComponent instanceof JSONObjectDataComponent) {
 					JSONObjectDataComponent compJSON = 
 						(JSONObjectDataComponent)dataComponent;
-					//do use any response data cause this is a Observer only
-					compJSON.step(this.data);
+					//do not use any response data cause this is an 
+					//observer only
+					try {
+						compJSON.step(this.data);
+					}catch(KiemExecutionException e) {
+						KiemPlugin.getDefault().handleComponentError(
+						 dataComponent, e);
+					}
 				}
 				else {
 					JSONStringDataComponent compString = 
 						(JSONStringDataComponent)dataComponent;
-					//do use any response data cause this is a Observer only
-					if (this.data != null)
-						compString.step(this.data.toString());
-					else
-						compString.step(null);
+					//do not use any response data cause this is an 
+					//observer only
+					try {
+						if (this.data != null)
+							compString.step(this.data.toString());
+						else
+							compString.step(null);
+					}catch(KiemExecutionException e) {
+						KiemPlugin.getDefault().handleComponentError(
+						 dataComponent, e);
+					}
 				}}
 				catch(Exception e) {
 					parent.showWarning(null, 
-							this.dataComponent.getConfigurationElement()
-							.getContributor().getName(),
+							this.dataComponent.getPluginId(),
 							e);
 				}
 			

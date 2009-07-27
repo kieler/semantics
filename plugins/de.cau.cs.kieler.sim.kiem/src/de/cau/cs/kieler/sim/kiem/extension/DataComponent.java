@@ -38,6 +38,7 @@ public abstract class DataComponent implements IDataComponent,
 	private KiemProperty[] properties;
 	private IConfigurationElement configEle;
 	private String[] globalInterfaceVariables;
+	private String   pluginId;
 	
 	//-------------------------------------------------------------------------
 	
@@ -47,7 +48,8 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public DataComponent() {
 		super();
-		properties = initializeProperties();
+		properties = provideProperties();
+		this.pluginId = getConfigurationElement().getContributor().getName();
 	}
 	
 	//-------------------------------------------------------------------------
@@ -70,6 +72,17 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public final IConfigurationElement getConfigurationElement() {
 		return this.configEle;
+	}
+
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Gets the component's plugin id.
+	 * 
+	 * @return the plugin id
+	 */
+	public final String getPluginId() {
+		return this.pluginId;
 	}
 	
 	//-------------------------------------------------------------------------
@@ -131,7 +144,7 @@ public abstract class DataComponent implements IDataComponent,
 	}
 	
 	/**
-	 * Initialize properties. The component may create and publicize its 
+	 * Provide properties. The component may create and publicize its 
 	 * properties with this method.
 	 * They will be set/modified by the execution manager during
 	 * the user edits them. Whenever the user decides to run/start the execution
@@ -140,12 +153,12 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @return the kiem property[]
 	 */
-	public KiemProperty[] initializeProperties() {
+	public KiemProperty[] provideProperties() {
 		return null;
 	}
 	
 	/**
-	 * This method is intended to test if the properties are filled correctly.
+	 * This method is intended to check if the properties are filled correctly.
 	 * Here a component may check for required and optional properties and their
 	 * settings. Also an @see:KiemPropertyError can be raised if some property
 	 * prevents the the execution of this component.
@@ -154,14 +167,14 @@ public abstract class DataComponent implements IDataComponent,
 	 * @throws KiemPropertyError	if a property prevents the execution throw
 	 * 								this error
 	 */
-	public void testProperties(KiemProperty[] properties) 
-												throws KiemPropertyException {
+	public void checkProperties(KiemProperty[] properties) 
+											throws KiemPropertyException {
 	}
 
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Gets the local interface variables. This is an optional method that will 
+	 * Provide (local) interface variables. This is an optional method that will 
 	 * provide some interface variables that can be used by other DataComponents
 	 * within and after the initialization phase every DataComponent may receive
 	 * the union of all those variables by calling the 
@@ -169,7 +182,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @return the local interface variables
 	 */
-	public String[] getLocalInterfaceVariables() {
+	public String[] provideInterfaceVariables() {
 		return null;
 	}
 	
@@ -179,18 +192,18 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @param globalInterfaceVariables the new global interface variables
 	 */
-	public final void setGlobalInterfaceVariables
+	public final void setInterfaceVariables
 									(String[] globalInterfaceVariables) {
 		this.globalInterfaceVariables = globalInterfaceVariables;
 	}
 	
 	/**
-	 * Gets the global interface variables. Is called by the execution manager
-	 * during the initialization phase.
+	 * Gets the (global) interface variables. Is called by the execution 
+	 * manager during the initialization phase.
 	 * 
 	 * @return the global interface variables
 	 */
-	protected String[] getGlobalInterfaceVariables() {
+	protected final String[] getInterfaceVariables() {
 		if (globalInterfaceVariables == null) {
 			//probably not initialized or there are no such
 			//variables
@@ -357,7 +370,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @throws Exception the exception
 	 */
-	public final void masterStepExecution() throws Exception {
+	public final void masterStepExecution() throws KiemMasterException  {
 		if (this.isMaster()) {
 			if ((KIEMInstance != null)) {
 				KIEMInstance.initExecution();
@@ -367,7 +380,7 @@ public abstract class DataComponent implements IDataComponent,
 				KIEMViewInstance.updateViewAsync();
 			}
 		}
-		throw new Exception("This instance is not a master!"
+		throw new KiemMasterException("This instance is not a master!"
 							+"Override isMaster() to return true!");
 	}
 	
@@ -381,7 +394,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @throws Exception the exception
 	 */
-	public final void masterMacroStepExecution() throws Exception {
+	public final void masterMacroStepExecution() throws KiemMasterException {
 		if (this.isMaster()) {
 			if ((KIEMInstance != null)) {
 				KIEMInstance.initExecution();
@@ -391,7 +404,7 @@ public abstract class DataComponent implements IDataComponent,
 				KIEMViewInstance.updateViewAsync();
 			}
 		}
-		throw new Exception("This instance is not a master!"
+		throw new KiemMasterException("This instance is not a master!"
 							+"Override isMaster() to return true!");
 	}
 	
@@ -403,7 +416,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @throws Exception the exception
 	 */
-	public final void masterStopExecution() throws Exception {
+	public final void masterStopExecution() throws KiemMasterException {
 		if (this.isMaster()) {
 			if (KIEMInstance != null) {
 				KIEMInstance.initExecution();
@@ -415,7 +428,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new Exception("This instance is not a master!"
+		throw new KiemMasterException("This instance is not a master!"
 				+"Override isMaster() to return true!");
 	}
 	
@@ -427,7 +440,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @throws Exception the exception
 	 */
-	public final void masterPauseExecution() throws Exception {
+	public final void masterPauseExecution() throws KiemMasterException {
 		if (this.isMaster()) {
 			if ((KIEMInstance != null)) {
 				KIEMInstance.initExecution();
@@ -438,7 +451,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new Exception("This instance is not a master!"
+		throw new KiemMasterException("This instance is not a master!"
 				+"Override isMaster() to return true!");
 	}
 	
@@ -453,7 +466,8 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @throws Exception the exception
 	 */
-	public final void masterSetAimedStepDuration(int aimedStepDuration) throws Exception {
+	public final void masterSetAimedStepDuration(int aimedStepDuration)
+													throws KiemMasterException {
 		if (this.isMaster()) {
 			if (KIEMInstance != null) {
 				KIEMInstance.initExecution();
@@ -464,7 +478,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new Exception("This instance is not a master!"
+		throw new KiemMasterException("This instance is not a master!"
 				+"Override isMaster() to return true!");
 	}
 	
@@ -479,7 +493,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @throws Exception the exception
 	 */
-	public final int masterGetAimedStepDuration() throws Exception {
+	public final int masterGetAimedStepDuration() throws KiemMasterException {
 		if (this.isMaster()) {
 			if (KIEMInstance != null) {
 				KIEMInstance.initExecution();
@@ -488,7 +502,7 @@ public abstract class DataComponent implements IDataComponent,
 				return KIEMInstance.execution.getAimedStepDuration();
 			}
 		}
-		throw new Exception("This instance is not a master!"
+		throw new KiemMasterException("This instance is not a master!"
 				+"Override isMaster() to return true!");
 	}
 
@@ -500,7 +514,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @throws Exception the exception
 	 */
-	public final void masterRunExecution() throws Exception {
+	public final void masterRunExecution() throws KiemMasterException {
 		if (this.isMaster()) {
 			if ((KIEMInstance != null)) {
 				KIEMInstance.initExecution();
@@ -511,7 +525,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new Exception("This instance is not a master!"
+		throw new KiemMasterException("This instance is not a master!"
 				+"Override isMaster() to return true!");
 	}
 
@@ -526,7 +540,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @throws Exception the exception
 	 */
-	public final boolean masterIsPaused() throws Exception {
+	public final boolean masterIsPaused() throws KiemMasterException {
 		if (this.isMaster()) {
 			if (KIEMInstance != null) {
 				KIEMInstance.initExecution();
@@ -535,7 +549,7 @@ public abstract class DataComponent implements IDataComponent,
 				return KIEMInstance.execution.isPaused();
 			}
 		}
-		throw new Exception("This instance is not a master!"
+		throw new KiemMasterException("This instance is not a master!"
 				+"Override isMaster() to return true!");
 	}
 
@@ -550,7 +564,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @throws Exception the exception
 	 */
-	public final boolean masterIsRunning() throws Exception {
+	public final boolean masterIsRunning() throws KiemMasterException {
 		if (this.isMaster()) {
 			if (KIEMInstance != null) {
 				KIEMInstance.initExecution();
@@ -559,7 +573,7 @@ public abstract class DataComponent implements IDataComponent,
 				return KIEMInstance.execution.isRunning();
 			}
 		}
-		throw new Exception("This instance is not a master!"
+		throw new KiemMasterException("This instance is not a master!"
 				+"Override isMaster() to return true!");
 	}
 
@@ -570,8 +584,8 @@ public abstract class DataComponent implements IDataComponent,
 	 * ATTENTION: At most ONE DataComponent can be a Master!
 	 * This method *SHOULD NOT* be overridden!
 	 * 
-	 * @param KIEMInstance the kIEM instance
-	 * @param KIEMViewInstance the kIEM view instance
+	 * @param KIEMInstance the KIEM instance
+	 * @param KIEMViewInstance the KIEM view instance
 	 */
 	public final void masterSetKIEMInstances(KiemPlugin KIEMInstance, 
 							  		   KiemView KIEMViewInstance) {

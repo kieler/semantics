@@ -23,13 +23,13 @@ public interface IDataComponent {
 	/**
 	 * Initialize. Do some initializing prior to execution. 
 	 */
-	public void initialize();
+	public void initialize() throws KiemInitializationException;
 	
 	//
 	/**
 	 * Wrapup. Do some wrapping-up after execution has finished.
 	 */
-	public void wrapup();
+	public void wrapup() throws KiemInitializationException;
 
 	/**
 	 * Checks if is producer. DataComponent is a producer and returns != null
