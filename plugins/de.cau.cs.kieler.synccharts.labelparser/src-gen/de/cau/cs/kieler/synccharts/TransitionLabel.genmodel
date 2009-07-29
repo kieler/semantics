@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="ASCII"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.synccharts.labelparser/src-gen" editDirectory="/de.cau.cs.kieler.synccharts.labelparser.edit/src" editorDirectory="/de.cau.cs.kieler.synccharts.labelparser.editor/src" modelPluginID="de.cau.cs.kieler.synccharts.labelparser" forceOverwrite="true" modelName="TransitionLabel" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.synccharts.labelparser.edit" editorPluginID="de.cau.cs.kieler.synccharts.labelparser.editor">
+  <genPackages prefix="Transitionlabel" basePackage="de.cau.cs.kieler.synccharts" disposableProviderFactory="true">
+    <ecorePackage href="TransitionLabel.ecore#/"/>
+    <genEnums typeSafeEnumCompatible="false">
+      <ecoreEnum href="TransitionLabel.ecore#//OperatorKind"/>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/EQ"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/LT"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/LEQ"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/GT"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/GEQ"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/NOT"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/AND"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/OR"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/ADD"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/SUB"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/MULT"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/DIV"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/MOD"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/VAL"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="TransitionLabel.ecore#//OperatorKind/PRE"/>
+      </genEnumLiterals>
+    </genEnums>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//Model"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Model/signals"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Model/variables"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Model/actions"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//Action"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Action/trigger"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Action/effects"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//Effect"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//Emission"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Emission/signal"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Emission/newValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//Assignment"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Assignment/variable"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Assignment/expression"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//SignalReference"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//SignalReference/reference"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//VariableReference"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//VariableReference/reference"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//Signal"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//Signal/name"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//Variable"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//Variable/name"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//IntValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//IntValue/value"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//FloatValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//FloatValue/value"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//BooleanValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//BooleanValue/value"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//Value"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//HostCode"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//HostCode/code"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//Operator"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//Operator/operatorKind"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//Expression"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//Expression/operator"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Expression/subExpressions"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//Operations"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//Operations/operators"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="TransitionLabel.ecore#//Operation"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Operation/subExpression"/>
+      </genFeatures>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

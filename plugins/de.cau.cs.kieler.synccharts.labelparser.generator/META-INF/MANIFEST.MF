@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.cau.cs.kieler.synccharts.labelparser.generator
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0
+Bundle-SymbolicName: de.cau.cs.kieler.synccharts.labelparser.generator; singleton:=true
+Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
+Bundle-ActivationPolicy: lazy
+Require-Bundle:  de.cau.cs.kieler.synccharts.labelparser,
+ org.eclipse.xpand,
+ org.eclipse.xtend,
+ org.eclipse.xtext,
+ org.eclipse.emf.mwe.core,
+ org.eclipse.emf.mwe.utils,
+ org.eclipse.xtend.typesystem.emf
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

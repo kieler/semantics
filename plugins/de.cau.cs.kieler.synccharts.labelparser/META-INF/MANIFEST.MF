@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.cau.cs.kieler.synccharts.labelparser
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0
+Bundle-SymbolicName: de.cau.cs.kieler.synccharts.labelparser; singleton:=true
+Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.generator;resolution:=optional,
+ de.itemis.xtext.antlr;resolution:=optional,
+ org.apache.commons.logging;resolution:=optional,
+ org.eclipse.emf.codegen.ecore;resolution:=optional,
+ org.eclipse.xtext.log4j;resolution:=optional,
+ org.eclipse.emf.mwe.utils;resolution:=optional,
+ org.eclipse.emf.mwe.core;resolution:=optional,
+ com.ibm.icu;resolution:=optional,
+ org.eclipse.xtext.xtend;resolution:=optional,
+ org.eclipse.xtext.util,
+ org.antlr.runtime,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: de.cau.cs.kieler.synccharts.parser.antlr,
+ de.cau.cs.kieler.synccharts,
+ de.cau.cs.kieler.synccharts.services,
+ de.cau.cs.kieler.synccharts.transitionlabel,
+ de.cau.cs.kieler.synccharts.transitionlabel.impl,
+ de.cau.cs.kieler.synccharts.transitionlabel.util,
+ de.cau.cs.kieler.synccharts.parseTreeConstruction,
+ de.cau.cs.kieler.synccharts.validation
