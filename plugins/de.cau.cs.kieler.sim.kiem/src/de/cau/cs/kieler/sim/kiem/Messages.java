@@ -16,10 +16,20 @@ package de.cau.cs.kieler.sim.kiem;
 
 import org.eclipse.osgi.util.NLS;
 
+/**
+ * The Class Messages is used to externalize strings in the messages.properties
+ * file.
+ */
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "de.cau.cs.kieler.sim.kiem.messages"; //$NON-NLS-1$
+	
+	/** The extension point i djsoncomponent. */
 	public static String extensionPointIDjsoncomponent;
+	
+	/** The extension point i dstringcomponent. */
 	public static String extensionPointIDstringcomponent;
+	
+	/** The View title. */
 	public static String ViewTitle;
 	static {
 		// initialize resource bundle
