@@ -6,7 +6,7 @@
       <content
             class="de.cau.cs.kieler.simplerailctrl.viewmanagement.StateObserver"
             id="de.cau.cs.kieler.simplerailctrl.viewmanagement.Observer"
-            name="Simplerailctrl State View Management">
+            name="SimpleRailctrl State View Management">
       </content>
    </extension>
    <extension

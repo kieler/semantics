@@ -128,7 +128,7 @@ public class DataTableView extends ViewPart {
 	// This will create the columns for the table
 	private void createColumns(DataTableViewer viewer) {
 		String[] titles = { "", "P", "Key", "Value" };
-		String[] toolTip = { "", "Present", "Key", "Value" };
+		String[] toolTip = { "", "Present/Absent/No Signal", "Key", "Value" };
 		int[] bounds = { 0, 22, 120, 120 };
 		
 		for (int i = 0; i < titles.length; i++) {

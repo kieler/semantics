@@ -46,13 +46,36 @@ public class DataProducer extends JSONStringDataComponent implements
 		for (int c = 0; c < tableDataList.size(); c++) {
 			TableData tableData = tableDataList.get(c);
 			if (tableData.isModified()) {
-				if (tableData.isPresent()) {
+				if (!tableData.isSignal()) {
+					//if NO signal
 					if (!returnString.equals(""))
 						returnString += ",";
 					String key = tableData.getKey();
 					String value = tableData.getValue();
-					if (value.equals("")) value = "\"\"";
-					returnString += "\""+key+"\":"+value+"";
+					//only add if there is any value
+					if (!value.equals("")) //value = "\"\"";
+						returnString += "\""+key+"\":"+value+"}";
+				}
+				else if (tableData.isPresent()) {
+					//if signal is marked as present
+					if (!returnString.equals(""))
+						returnString += ",";
+					String key = tableData.getKey();
+					String value = tableData.getValue();
+					if (value.equals("")) 
+						returnString += "\""+key+"\":{\"status\":true}";
+					else
+						returnString += "\""+key+"\":{\"status\":true,\"value\":"+value+"}";
+				} else {
+					//if signals is marked as absent
+					if (!returnString.equals(""))
+						returnString += ",";
+					String key = tableData.getKey();
+					String value = tableData.getValue();
+					if (value.equals("")) 
+						returnString += "\""+key+"\":{\"status\":false}";
+					else
+						returnString += "\""+key+"\":{\"status\":false,\"value\":"+value+"}";
 				}
 				//we have sent all modified values => reset
 				synchronized(tableData) {

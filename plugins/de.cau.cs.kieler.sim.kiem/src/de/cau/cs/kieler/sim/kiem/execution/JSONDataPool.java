@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sim.kiem.execution;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class JSONDataPool {
 	//not be more than DATA_DELTA_POOL_HISTORY_MAX new entries been produced
 	//(regardless of any steps!)
 	//note that the history is needed for Delta Listener only
-	private static final int DATA_DELTA_POOL_HISTORY_MAX = 4;
+	private static final int DATA_DELTA_POOL_HISTORY_MAX = 100;
 	
 	private List<JSONObject> dataDeltaPool;
 	private JSONObject dataPool;
@@ -72,6 +73,10 @@ public class JSONDataPool {
 	 * 
 	 * @throws JSONException a JSON exception
 	 */
+	public JSONObject getData(String[] filterKeys, 
+							  long deltaPoolIndexTo) throws JSONException {
+		return this.getDeltaData(filterKeys, -1, deltaPoolIndexTo);
+	}
 	public JSONObject getData(String[] filterKeys) throws JSONException {
 		JSONObject returnObject = null;
 		if (filterKeys == null) {
@@ -136,6 +141,8 @@ public class JSONDataPool {
 							   	   long deltaPoolIndexFrom,
 							   	   long deltaPoolIndexTo) throws JSONException {
 		JSONObject returnObject = null;
+		
+		
 		int poolCounterFrom = getPoolIndex(deltaPoolIndexFrom) + 1;
 		int poolCounterTo = getPoolIndex(deltaPoolIndexTo);
 		if (filterKeys == null) {

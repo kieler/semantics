@@ -23,6 +23,7 @@ import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
@@ -85,35 +86,39 @@ public class DataComponent extends JSONObjectDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent#step(de.cau.cs.kieler.sim.kiem.json.JSONObject)
 	 */
 	public JSONObject step(JSONObject JSONobject) {
-//System.out.println("ABRO received: "+ JSONobject.toString());
+System.out.println("ABRO: "+ JSONobject.toString());
+
 		JSONObject returnObj = new JSONObject();
 		try{
-			if (JSONobject.has("R")) {
-				resetABO();
+			if (JSONobject.has("R")
+				&& (JSONSignalValues.isPresent(JSONobject.get("R")))) {
+					resetABO();
 			}
 			else {
-				if (wA && JSONobject.has("A")) {
+				if (wA && JSONobject.has("A") 
+					&& (JSONSignalValues.isPresent(JSONobject.get("A")))) {
 					transition_wA_dA();
 				}
-				if (wB && JSONobject.has("B")) {
+				if (wB && JSONobject.has("B")
+					&& (JSONSignalValues.isPresent(JSONobject.get("B")))) {
 					transition_wB_dB();
 				}
 				if (dA && dB) {
 					transition_done();
-					returnObj.accumulate("O","");
+					returnObj.accumulate("O", JSONSignalValues.newValue(true));
 				}
 			}
 			if (done) {
-				returnObj.accumulate(stateName,"done");
+				returnObj.accumulate(stateName, "done");
 			}
 			if (dA && !dB) {
-				returnObj.accumulate(stateName,"dA, wB");
+				returnObj.accumulate(stateName, "dA, wB");
 			}
 			if (dB && !dA) {
-				returnObj.accumulate(stateName,"wA, dB");
+				returnObj.accumulate(stateName, "wa, dB");
 			}
 			if (wA && wB) {
-				returnObj.accumulate(stateName,"wA, wB");
+				returnObj.accumulate(stateName, "wA, wB");
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -148,6 +153,14 @@ public class DataComponent extends JSONObjectDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
 	 */
 	public boolean isObserver() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
+	 */
+	public boolean isDeltaObserver() {
 		// TODO Auto-generated method stub
 		return true;
 	}
@@ -246,12 +259,4 @@ public class DataComponent extends JSONObjectDataComponent implements
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isDeltaObserver()
-	 */
-	public boolean isDeltaObserver() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
 }

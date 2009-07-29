@@ -31,22 +31,35 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 	private static final Image UNCHECKED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.table",
 					"icons/unchecked.png").createImage();
+	private static final Image UNCHECKED_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.table",
+					"icons/uncheckedDisabled.png").createImage();
 	private static final Image PERMANENT = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.table",
 					"icons/permanent.png").createImage();
+	private static final Image HIDDEN = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.table",
+					"icons/hidden.png").createImage();
 
 
 	public Image getColumnImage(Object element, int columnIndex) {
 		TableData tableData = (TableData) element;
 		if (columnIndex == 1) {
-			if (tableData.isPresent()) {
-				if (tableData.isPermanent())
-					return CHECKED_DISABLED;
-				else
+			if (!tableData.isPermanent()) {
+				if (tableData.isPresent())
 					return CHECKED;
+				else if (tableData.isSignal())
+					return UNCHECKED;
+				else
+					return HIDDEN;
 			}
 			else {
-				return UNCHECKED;
+				if (tableData.isPresent())
+					return CHECKED_DISABLED;
+				else if (tableData.isSignal())
+					return UNCHECKED_DISABLED;
+				else
+					return HIDDEN;
 			}
 		}
 		if (columnIndex == 2) {

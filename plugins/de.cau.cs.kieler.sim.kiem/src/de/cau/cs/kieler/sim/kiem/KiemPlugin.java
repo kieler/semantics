@@ -428,11 +428,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 			
 			if (textMessage != null) {
 				message = textMessage + message;
-				exception = null;
+				//exception = null;
 			}
 			else if (exception != null) {
 				message = exception.getMessage() + message;
-				exception = null;
+				//exception = null;
 			}
 			
 			if (PluginID == null) PluginID = this.PLUGIN_ID;
@@ -471,11 +471,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 			
 			if (textMessage != null) {
 				message = textMessage + message;
-				exception = null;
+				//exception = null;
 			}
 			else if (exception != null) {
 				message = exception.getMessage() + message;
-				exception = null;
+				//exception = null;
 			}
 
 			if (PluginID == null) PluginID = this.PLUGIN_ID;

@@ -237,10 +237,12 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 				"RAIL state");
 		properties[2] = new KiemProperty(
 				"Host",
-				"epoch");
+				"localhost");
+//				"epoch");
 		properties[3] = new KiemProperty(
 				"Port",
-				5000);
+				2000);
+//				5000);
 		return properties;
 	}
 

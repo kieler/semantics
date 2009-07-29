@@ -38,6 +38,9 @@ public abstract class DataComponent implements IDataComponent,
 	private KiemProperty[] properties;
 	private IConfigurationElement configEle;
 	private String[] globalInterfaceVariables;
+	private boolean historyStep;			//indicates that the step is
+											//a history step, all produced data
+											//will not be considered
 	
 	//-------------------------------------------------------------------------
 	
@@ -215,16 +218,39 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Overwrite this if this component can explicitly handle recorded values.
-	 * In case the user makes steps back, only observers that return true
-	 * in this method will get any (recorded) data. Components that return
-	 * false (default) will not get any data, while the the user navigates
-	 * within the recorded tick area. 
+	 * Overwrite this if this component can explicitly handle past recorded 
+	 * history values.
+	 * In case the user makes steps back into the history, only observers
+	 * that return true in this method will get any (recorded) history data.
+	 * Components that return false (default) will not get any data, while 
+	 * the the user navigates within the recorded tick area. 
 	 *  
-	 * @return 		a boolean indicating that the component is recorded observer
+	 * @return	a boolean indicating that the component is recorded observer
 	 */
-	public boolean isRecordedObserver() {
+	public boolean isHistoryObserver() {
 		return false;
+	}
+	
+	/**
+	 * Sets the history step flag. This is called by the execution 
+	 * manager to flag that the current step lies in history.
+	 * 
+	 * @param historyStep the flag to set
+	 */
+	public final void setHistoryStep(boolean historyStep) {
+		this.historyStep = historyStep;
+	}
+	
+	/**
+	 * Checks if the current step is a history step. This can be called
+	 * by the component itself to check if the current step lies in 
+	 * history. If this is the case, any produced output data will not
+	 * be considered.
+	 * 
+	 * @return true, if is history step
+	 */
+	public final boolean isHistoryStep() {
+		return this.historyStep;
 	}
 	
 	//-------------------------------------------------------------------------
@@ -611,6 +637,14 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 	
 	/**
+	 * Master implementation of the step back button. This is only called if
+	 * the component returns true in method isMasterImplementingGUI
+	 */
+	public void	masterGUIstepBack() {
+		//no default implementation
+	}
+	
+	/**
 	 * Master implementation of the step button. This is only called if the
 	 * component returns true in method isMasterImplementingGUI
 	 */
@@ -648,6 +682,16 @@ public abstract class DataComponent implements IDataComponent,
 	 */
 	public void masterGUIstop() {
 		//no default implementation
+	}
+	
+	/**
+	 * Master implementing GUI buttons should return whether
+	 * step back button is enabled.
+	 * 
+	 * @return true, if button is enabled
+	 */
+	public boolean masterGUIisEnabledStepBack() {
+		return false;
 	}
 		
 	/**

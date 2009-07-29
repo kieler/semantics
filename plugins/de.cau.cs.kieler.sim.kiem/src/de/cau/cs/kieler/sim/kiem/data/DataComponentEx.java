@@ -14,6 +14,8 @@
 
 package de.cau.cs.kieler.sim.kiem.data;
 
+import java.util.HashMap;
+
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 
@@ -21,9 +23,9 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 public class DataComponentEx {
 	
 	private boolean enabled;
-	private boolean skipped;
 	protected KiemPropertyList properties;  //List of properties
 	private DataComponent component;
+	private HashMap<Long,Long> poolIndices;
 	private long deltaIndex;
 	private Boolean json;
 	private Boolean propertyComponent; 	   //this component is just a property!
@@ -33,10 +35,10 @@ public class DataComponentEx {
 		super();
 		this.component = component;
 		this.enabled = true;
-		this.skipped = false;
 		this.properties = new KiemPropertyList(this.component.getProperties());
 		this.propertyComponent = false;
 		this.json = null;
+		this.poolIndices = new HashMap<Long,Long>();
 		this.deltaIndex = 0;
 	}
 
@@ -44,10 +46,10 @@ public class DataComponentEx {
 	public DataComponentEx() {
 		this.component = null;
 		this.enabled = true;
-		this.skipped = false;
 		this.properties = null;
 		this.propertyComponent = true;
 		this.json = null;
+		this.poolIndices = new HashMap<Long,Long>();
 		this.deltaIndex = 0;
 	}
 
@@ -77,15 +79,6 @@ public class DataComponentEx {
 	}
 	
 	
-	//indicates that this component was skipped
-	//(this prevents its deltaIndex to advance)
-	public boolean getSkipped() {
-		return skipped;
-	}
-	public void setSkipped(boolean skipped) {
-		this.skipped = skipped;
-	}
-
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -95,13 +88,27 @@ public class DataComponentEx {
 	
 	//this is used to store the deltaIndex values inside the components
 	//object
+	//public HashMap<Long,Long> getDeltaIndex() {
+	//	return deltaIndex;
+	//}
+	public void resetPoolIndices() {
+		poolIndices = new HashMap<Long,Long>();
+	}
+	public void addPoolIndex(long poolIndex, 
+							  long stepCounter) {
+		if (!poolIndices.containsKey(stepCounter))
+			poolIndices.put(stepCounter, poolIndex);
+	}
+	public long getPoolIndex(long stepCounter) {
+		if (!poolIndices.containsKey(stepCounter)) return -1;
+		return poolIndices.get(stepCounter);
+	}
 	public long getDeltaIndex() {
-		return deltaIndex;
+		return this.deltaIndex;
 	}
 	public void setDeltaIndex(long deltaIndex) {
 		this.deltaIndex = deltaIndex;
 	}
-	
 	
 	public boolean isProducer() {
 		return this.component.isProducer();
@@ -139,6 +146,16 @@ public class DataComponentEx {
 	public boolean isDeltaObserver() {
 		return this.component.isDeltaObserver(); 
 	}
+	public boolean isHistoryObserver() {
+		return this.component.isHistoryObserver();
+	}
+	public boolean isHistoryStep() {
+		return this.component.isHistoryStep();
+	}
+	public void setHistoryStep(boolean historyStep) {
+		this.component.setHistoryStep(historyStep);
+	}
+	
 	public boolean isMaster() {
 		return this.component.isMaster(); 
 	}
@@ -161,6 +178,9 @@ public class DataComponentEx {
 	public boolean isMasterImplementingGUI() {
 		return this.component.isMasterImplementingGUI();
 	}
+	public void	masterGUIstepBack() {
+		this.component.masterGUIstepBack();
+	}
 	public void	masterGUIstep() {
 		this.component.masterGUIstep();
 	}
@@ -177,6 +197,9 @@ public class DataComponentEx {
 		this.component.masterGUIstop();
 	}
 	
+	public boolean masterGUIisEnabledStepBack() {
+		return this.component.masterGUIisEnabledStepBack();
+	}
 	public boolean masterGUIisEnabledStep() {
 		return this.component.masterGUIisEnabledStep();
 	}

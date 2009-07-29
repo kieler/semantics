@@ -112,6 +112,13 @@ public static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 				"icons/stepIconDisabled.png");
 
+	public static final ImageDescriptor IMGDESCR_STEPBACK = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/stepBackIcon.png");
+	public static final ImageDescriptor IMGDESCR_STEPBACK_DISABLED = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/stepBackIconDisabled.png");
+
 	public static final ImageDescriptor IMGDESCR_MACROSTEP = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 				"icons/macroStepIcon.png");

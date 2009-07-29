@@ -68,7 +68,21 @@ public class TableDataEditing extends EditingSupport {
 
 		switch (this.columnIndex) {
 		case 1:
-			return tableData.isPresent();
+			tableData.setModified(true);
+			if (!tableData.isSignal()) { 
+					//NO SIG => SIG PRESENT
+					tableData.setSignal(true);
+					tableData.setPresent(true);
+				}
+			else if (tableData.isPresent()) { 
+					//SIG PRESENT => SIG ABSENT
+					tableData.setPresent(false);
+			}
+			else {
+					//SIG ABSENT => NO SIG
+					tableData.setSignal(false);
+			}
+			return true;  
 		case 2:
 			return tableData.getKey();
 		case 3:
@@ -85,10 +99,11 @@ public class TableDataEditing extends EditingSupport {
 
 		switch (this.columnIndex) {
 		case 1:
-			if (tableData.isPresent() != (Boolean)value)
-				tableData.setModified(true); {
-					tableData.setPresent((Boolean)value);
-				}
+			//DO NOTHING
+//			if (tableData.isPresent() != (Boolean)value)
+//				tableData.setModified(true); {
+//					tableData.setPresent((Boolean)value);
+//				}
 			break;
 		case 2:
 			try {

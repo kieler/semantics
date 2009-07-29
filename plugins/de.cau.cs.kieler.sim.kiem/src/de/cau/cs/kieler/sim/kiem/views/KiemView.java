@@ -59,6 +59,7 @@ public class KiemView extends ViewPart {
 	private Action actionUp;
 	private Action actionDown;
 	private Action actionMacroStep;
+	private Action actionStepBack;
 	private Action actionStep;
 	private Action actionRun;
 	private Action actionPause;
@@ -314,6 +315,7 @@ public class KiemView extends ViewPart {
 		manager.add(getAimedStepDurationTextField());
 		manager.add(getStepTextField());
 		manager.add(new Separator());
+		manager.add(getActionStepBack());
 		manager.add(getActionStep());
 		//TODO: macro step implementation
 		//manager.add(getActionMacroStep());
@@ -360,6 +362,7 @@ public class KiemView extends ViewPart {
 		getActionDelete().setEnabled(enabled);
 		getActionUp().setEnabled(enabled);
 		getActionDown().setEnabled(enabled);
+		getActionStepBack().setEnabled(enabled);
 		getActionStep().setEnabled(enabled);
 		getActionMacroStep().setEnabled(enabled);
 		getActionRun().setEnabled(enabled);
@@ -463,7 +466,16 @@ public class KiemView extends ViewPart {
 				    public void run(){
 						if (KIEMInstance.execution != null) {
 							//update step counter if run
-							getStepTextField().updateTextfield(""+KIEMInstance.execution.getSteps());
+							String steps = ""+KIEMInstance.execution.getSteps();
+							if (KIEMInstance.execution.isHistoryStep())
+								steps = "[" + steps + "]";
+							getStepTextField().updateTextfield(steps);
+							//update StepBackButton
+							if ((KIEMInstance.execution.getSteps() > 0)
+								&& (!KIEMInstance.execution.isRunning()))
+								getActionStepBack().setEnabled(true);
+							else
+								getActionStepBack().setEnabled(false);
 						}
 						else {
 							//hide textfield otherwise
@@ -517,6 +529,7 @@ public class KiemView extends ViewPart {
 		if (currentMaster != null) {
 			if (!currentMaster.isMasterImplementingGUI()) {
 				//if the master is not implementing the GUI
+				getActionStepBack().setEnabled(false);
 				getActionStep().setEnabled(false);
 				getActionMacroStep().setEnabled(false);
 				getActionRun().setEnabled(false);
@@ -528,6 +541,8 @@ public class KiemView extends ViewPart {
 			else {
 				//master is responsible for enabling/disabling
 				//buttons
+				getActionStepBack().setEnabled(
+						currentMaster.masterGUIisEnabledStepBack());
 				getActionStep().setEnabled(
 						currentMaster.masterGUIisEnabledStep());
 				getActionMacroStep().setEnabled(
@@ -545,6 +560,7 @@ public class KiemView extends ViewPart {
 		if (allDisabled) return;
 		if (KIEMInstance.execution == null) {
 			//execution is stopped
+			getActionStepBack().setEnabled(false);
 			getActionStep().setEnabled(true);
 			getActionMacroStep().setEnabled(true);
 			getActionRun().setEnabled(true);
@@ -554,6 +570,7 @@ public class KiemView extends ViewPart {
 		}
 		else if (KIEMInstance.execution.isRunning()) {
 			//execution is running
+			getActionStepBack().setEnabled(false);
 			getActionStep().setEnabled(false);
 			getActionMacroStep().setEnabled(false);
 			getActionRun().setEnabled(false);
@@ -563,8 +580,12 @@ public class KiemView extends ViewPart {
 		}
 		else {
 			//execution is paused
-			getActionMacroStep().setEnabled(true);
+			if (KIEMInstance.execution.getSteps() > 0)
+				getActionStepBack().setEnabled(true);
+			else
+				getActionStepBack().setEnabled(false);
 			getActionStep().setEnabled(true);
+			getActionMacroStep().setEnabled(true);
 			getActionRun().setEnabled(true);
 			getActionPause().setEnabled(false);
 			getActionStop().setEnabled(true);
@@ -711,6 +732,33 @@ public class KiemView extends ViewPart {
 		return actionDown;
 	}
 	
+	private Action getActionStepBack() {
+		if (actionStepBack != null) return actionStepBack;
+		actionStepBack = new Action() {
+			public void run() {
+				if ((currentMaster != null) 
+					&& currentMaster.isMasterImplementingGUI()) {
+					//if a master implements the action
+					currentMaster.masterGUIstepBack();
+				}
+				else {
+					//otherwise default implementation
+					setAllEnabled(false);
+					if (KIEMInstance.initExecution()) {
+						KIEMInstance.execution.stepBackExecutionSync();
+					}
+					setAllEnabled(true);
+				}
+				updateView(true);
+			}
+		};
+		actionStepBack.setText("Step Back");
+		actionStepBack.setToolTipText("Step Back Execution");
+		actionStepBack.setImageDescriptor(KiemIcons.IMGDESCR_STEPBACK);
+		actionStepBack.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEPBACK_DISABLED);
+		return actionStepBack;
+	}
+
 	private Action getActionStep() {
 		if (actionStep != null) return actionStep;
 		actionStep = new Action() {
@@ -845,7 +893,7 @@ public class KiemView extends ViewPart {
 						long maxStepDuration = 
 							KIEMInstance.execution.getMaximumStepDuration();
 						long steps           = 
-							KIEMInstance.execution.getSteps();
+							KIEMInstance.execution.getMaximumSteps();
 						long aimedStepDuration = 
 							KIEMInstance.execution.getAimedStepDuration();
 						

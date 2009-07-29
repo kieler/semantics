@@ -18,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONArray;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
@@ -42,7 +43,7 @@ public class DataObserver extends JSONStringDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent#step(java.lang.String)
 	 */
 	public String step(String JSONString) {
-		System.out.println(JSONString);
+		System.out.println("TABLE: "+JSONString);
 
 		tableDataTmp = new LinkedList<TableData>();
 		
@@ -59,7 +60,31 @@ public class DataObserver extends JSONStringDataComponent implements
 					Object obj = allData.get(fieldNames[c]);
 					String key = fieldNames[c];
 					String value;
+					boolean isPresent = false; //default
+					boolean isSignal = false;
 					if (obj instanceof JSONObject) {
+						//can be a signal
+						isPresent = JSONSignalValues.isPresent((JSONObject)obj);
+						//extract signal value if any
+						if (JSONSignalValues.isSignalValue((JSONObject)obj)) {
+							isSignal = true;
+							obj = JSONSignalValues.getSignalValue((JSONObject)obj);
+						}
+					}
+					
+					if (obj == null) {
+						value = "";
+					}
+					else if (obj instanceof Double) {
+						value = ((Double)obj)+"";
+					}
+					else if (obj instanceof Integer) {
+						value = ((Integer)obj)+"";
+					}
+					else if (obj instanceof Boolean) {
+						value = ((Boolean)obj).toString();
+					}
+					else if (obj instanceof JSONObject) {
 						value = ((JSONObject)obj).toString();
 					}
 					else if (obj instanceof JSONArray) {
@@ -67,37 +92,43 @@ public class DataObserver extends JSONStringDataComponent implements
 					}
 					else {
 						value = "\""+(String)obj+"\"";
-						if (((String)obj).length() == 0)
-							value = "";
 					}
 					//add to table or update table
 					if (TableDataList.getInstance().contains(key)) {
 						//update
-						TableData data = TableDataList.getInstance().get(key);
-						data.setValue(value);
-						data.setPresent(true);
-						tableDataTmp.add(data);
+						TableData tableData = TableDataList.getInstance().get(key);
+						synchronized(tableData) {
+							tableData.setSignal(isSignal);
+							tableData.setValue(value);
+							tableData.setPresent(isPresent);
+							tableData.setModified(false);
+						}
+						tableDataTmp.add(tableData);
 					}
 					else {
 						//add
-						TableData data = new TableData(TableDataList.getInstance(),
-								true, 
+						TableData tableData = new TableData(TableDataList.getInstance(),
+								isPresent, 
 								key,
 								value);
-						tableDataTmp.add(data);
-						TableDataList.getInstance().add(data);
+						tableDataTmp.add(tableData);
+						TableDataList.getInstance().add(tableData);
 					}
 				}
 				
-				//set all NOT updated entries to absent per default
-				for (int c = 0; c < TableDataList.getInstance().size(); c++) {
-					TableData tableData = TableDataList.getInstance().get(c);
-					if (tableData.isPresent()&&(!tableData.isModified())) {
-						if(!tableDataTmp.contains(tableData)) {
-							tableData.setPresent(false);
+				if (this.isHistoryStep()) {
+					//set all NOT updated entries to absent per default
+					for (int c = 0; c < TableDataList.getInstance().size(); c++) {
+						TableData tableData = TableDataList.getInstance().get(c);
+						if (tableData.isPresent()&&(!tableData.isModified())) {
+							if(!tableDataTmp.contains(tableData)) {
+								tableData.setPresent(false);
+							}
 						}
+						tableData.setModified(false);
 					}
 				}
+				
 				
 			}
 		}catch(Exception e){
@@ -108,7 +139,7 @@ public class DataObserver extends JSONStringDataComponent implements
 			TableDataList.getInstance().updateView();
 		
 		//Slow down so that user can eye-catch all changes!
-		try{Thread.sleep(250);}catch(Exception e){}
+		try{Thread.sleep(80);}catch(Exception e){}
 //System.out.println("    CONSUMER DONE");
 		return null;
 	}
@@ -162,6 +193,16 @@ public class DataObserver extends JSONStringDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isDeltaObserver()
 	 */
 	public boolean isDeltaObserver() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isDeltaObserver()
+	 */
+	public boolean isHistoryObserver() {
 		// TODO Auto-generated method stub
 		return true;
 	}
