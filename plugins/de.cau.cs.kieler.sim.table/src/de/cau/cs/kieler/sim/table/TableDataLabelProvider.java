@@ -59,7 +59,7 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 				else if (tableData.isSignal())
 					return UNCHECKED_DISABLED;
 				else
-					return HIDDEN;
+					return null;
 			}
 		}
 		if (columnIndex == 2) {

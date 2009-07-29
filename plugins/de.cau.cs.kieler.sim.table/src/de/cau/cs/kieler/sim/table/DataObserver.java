@@ -109,6 +109,7 @@ public class DataObserver extends JSONStringDataComponent implements
 						//add
 						TableData tableData = new TableData(TableDataList.getInstance(),
 								isPresent, 
+								isSignal,
 								key,
 								value);
 						tableDataTmp.add(tableData);

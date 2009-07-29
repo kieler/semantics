@@ -17,7 +17,10 @@ package de.cau.cs.kieler.sim.table.views;
 
 import java.util.Arrays;
 
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Tree;
 
@@ -29,6 +32,7 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
@@ -62,7 +66,6 @@ public class DataTableView extends ViewPart {
 
 	private static DataTableView dataTableView;
 	private DataTableViewer viewer;
-	private Action doubleClickAction;
 	private TableDataList tableDataList;
 	private Table table;
 	private boolean selected;
@@ -70,6 +73,12 @@ public class DataTableView extends ViewPart {
 	private Action actionNew; 		//new
 	private Action actionDelete;	//delete
 	private Action actionPermanent;	//permanent
+	private Action actionSignal; //toggle signal/variable
+	
+	private Button buttonSignal;
+	private Button buttonPermanent;
+	
+	IToolBarManager toolBarManager; 
 	/**
 	 * The constructor.
 	 */
@@ -164,21 +173,23 @@ public class DataTableView extends ViewPart {
 
 	
 	private void buildContextMenu(IMenuManager manager) {
+		manager.add(getActionSignal());
+		manager.add(getActionPermanent());
+		manager.add(new Separator());
 		manager.add(getActionAdd());
 		manager.add(getActionDelete());
-		manager.add(new Separator());
-		manager.add(getActionPermanent());
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
 	
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
-		IToolBarManager manager1 = bars.getToolBarManager();
-		manager1.add(getActionAdd());
-		manager1.add(getActionDelete());
-		manager1.add(new Separator());
-		manager1.add(getActionPermanent());
+		toolBarManager = bars.getToolBarManager();
+		toolBarManager.add(getActionAdd());
+		toolBarManager.add(getActionDelete());
+		toolBarManager.add(new Separator());
+		toolBarManager.add(getActionSignal());
+		toolBarManager.add(getActionPermanent());
 	}
 	
 	private Action getActionAdd() {
@@ -223,7 +234,7 @@ public class DataTableView extends ViewPart {
 
 	private Action getActionPermanent() {
 		if (actionPermanent != null) return actionPermanent;
-		actionPermanent = new Action() {
+		actionPermanent = new Action("", IAction.AS_CHECK_BOX)  {
 			public void run() {
 				IStructuredSelection selection =
 					(org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection();
@@ -235,7 +246,7 @@ public class DataTableView extends ViewPart {
 													selection.toArray()[c];
 					tableData.setPermanent(permanentValue);
 				}
-				viewer.setSelection(null);
+				//viewer.setSelection(null);
 				viewer.refresh();
 				updateEnabled();			
 			}
@@ -244,6 +255,47 @@ public class DataTableView extends ViewPart {
 		actionPermanent.setToolTipText("Permanent");
 		actionPermanent.setImageDescriptor(TablePlugin.getImageDescriptor("icons/permanentIcon.png"));
 		return actionPermanent;
+	}
+	
+	private Button getButtonSignal() {
+		if (buttonSignal != null) return buttonSignal;
+		Display display = new Display();
+	    final Shell shell = new Shell(display);
+	    buttonSignal = new Button(shell, SWT.TOGGLE);
+	    buttonSignal.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				getActionSignal().run();
+			}
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+			}
+	    });
+	    return buttonSignal;
+	}
+	private Action getActionSignal() {
+		if (actionSignal != null) return actionSignal;
+		actionSignal = new Action("", IAction.AS_CHECK_BOX) {
+			public void run() {
+				IStructuredSelection selection =
+					(org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection();
+				//toggle w.r.t first selected value
+				boolean signalValue = !((TableData)((IStructuredSelection)selection)
+										 	.getFirstElement()).isSignal();
+				for (int c = 0; c < selection.size(); c++) {
+					TableData tableData = (TableData)
+													selection.toArray()[c];
+					tableData.setSignal(signalValue);
+				}
+				//viewer.setSelection(null);
+				viewer.refresh();
+				updateEnabled();			
+			}
+		};
+		actionSignal.setText("Signal");
+		actionSignal.setToolTipText("Signal");
+		actionSignal.setImageDescriptor(TablePlugin.getImageDescriptor("icons/signalIcon.png"));
+		return actionSignal;
 	}
 	
 
@@ -255,11 +307,7 @@ public class DataTableView extends ViewPart {
 					Object obj = ((IStructuredSelection)selection).getFirstElement();
 					if (obj != null) {
 						//toggle permanent
-						TableData tableData = (TableData)obj;
-						tableData.setPermanent(!tableData.isPermanent());
-						viewer.setSelection(null);
-						viewer.refresh();
-						updateEnabled();			
+						getActionPermanent().run();
 					}
 				}
 			}
@@ -279,22 +327,27 @@ public class DataTableView extends ViewPart {
 			//no object selected
 			getActionDelete().setEnabled(false);
 			getActionPermanent().setEnabled(false);
+			getActionSignal().setEnabled(false);
 			selected = false;
 		}
 		else {
 			//object selected
 			getActionDelete().setEnabled(true);
 			getActionPermanent().setEnabled(true);
+			getActionSignal().setEnabled(true);
 			if (((TableData)obj).isPermanent()) {
-				actionPermanent.setText("Volatile");
-				actionPermanent.setToolTipText("Volatile");
-				actionPermanent.setImageDescriptor(TablePlugin.getImageDescriptor("icons/volatileIcon.png"));
+				actionPermanent.setChecked(true);
 			}
 			else {
-				actionPermanent.setText("Permanent");
-				actionPermanent.setToolTipText("Permanent");
-				actionPermanent.setImageDescriptor(TablePlugin.getImageDescriptor("icons/permanentIcon.png"));
+				actionPermanent.setChecked(false);
 			}
+			if (((TableData)obj).isSignal()) {
+				actionSignal.setChecked(true);
+			}
+			else {
+				actionSignal.setChecked(false);
+			}
+			
 			selected = true;
 		}
 		
