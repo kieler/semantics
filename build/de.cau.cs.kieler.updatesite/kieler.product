@@ -38,7 +38,9 @@
       <plugin id="de.cau.cs.kieler.kiml.graphviz.layouter"/>
       <plugin id="de.cau.cs.kieler.kiml.layout"/>
       <plugin id="de.cau.cs.kieler.kiml.ui"/>
+      <plugin id="de.cau.cs.kieler.kiml.zest"/>
       <plugin id="de.cau.cs.kieler.klodd.hierarchical"/>
+      <plugin id="de.cau.cs.kieler.klodd.ui"/>
       <plugin id="de.cau.cs.kieler.synccharts"/>
       <plugin id="de.cau.cs.kieler.synccharts.custom"/>
       <plugin id="de.cau.cs.kieler.synccharts.diagram"/>
@@ -259,6 +261,7 @@
       <plugin id="org.eclipse.xtext"/>
       <plugin id="org.eclipse.xtext.log4j"/>
       <plugin id="org.eclipse.xtext.util"/>
+      <plugin id="org.eclipse.zest.layouts"/>
       <plugin id="org.junit"/>
       <plugin id="org.openarchitectureware.adapter.emf.check"/>
       <plugin id="org.openarchitectureware.base"/>
