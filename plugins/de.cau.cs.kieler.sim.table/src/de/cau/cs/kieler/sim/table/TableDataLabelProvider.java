@@ -37,9 +37,6 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 	private static final Image PERMANENT = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.table",
 					"icons/permanent.png").createImage();
-	private static final Image HIDDEN = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.table",
-					"icons/hidden.png").createImage();
 
 
 	public Image getColumnImage(Object element, int columnIndex) {
@@ -51,7 +48,7 @@ public class TableDataLabelProvider implements ITableLabelProvider {
 				else if (tableData.isSignal())
 					return UNCHECKED;
 				else
-					return HIDDEN;
+					return null;
 			}
 			else {
 				if (tableData.isPresent())

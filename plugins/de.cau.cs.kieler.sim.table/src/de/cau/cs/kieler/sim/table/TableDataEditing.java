@@ -77,7 +77,7 @@ public class TableDataEditing extends EditingSupport {
 					tableData.setPresent(true);
 				}
 			}
-			return null;  
+			return true;  
 		case 2:
 			return tableData.getKey();
 		case 3:
@@ -125,7 +125,9 @@ public class TableDataEditing extends EditingSupport {
 		}
 
 		getViewer().update(element, null);
-		//viewer.setSelection(null);
+		//MUST unselect because if currently edited, no updates
+		//can be made
+		viewer.setSelection(null);
 	}
 
 }
