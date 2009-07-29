@@ -1,3 +1,17 @@
+/******************************************************************************
+ * KIELER - Kiel Integrated Environment for Layout for the Eclipse RCP
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ ******************************************************************************/
+
 package de.cau.cs.kieler.sim.syncsignalreset;
 
 import org.eclipse.core.runtime.Plugin;
@@ -6,18 +20,18 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends Plugin {
+public class SyncSignalResetPlugin extends Plugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.syncsignalreset";
 
 	// The shared instance
-	private static Activator plugin;
+	private static SyncSignalResetPlugin plugin;
 	
 	/**
 	 * The constructor
 	 */
-	public Activator() {
+	public SyncSignalResetPlugin() {
 	}
 
 	/*
@@ -43,7 +57,7 @@ public class Activator extends Plugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static SyncSignalResetPlugin getDefault() {
 		return plugin;
 	}
 

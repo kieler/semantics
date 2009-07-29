@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Syncsignalreset
 Bundle-SymbolicName: de.cau.cs.kieler.sim.syncsignalreset;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.sim.syncsignalreset.Activator
+Bundle-Activator: de.cau.cs.kieler.sim.syncsignalreset.SyncSignalResetPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0"
