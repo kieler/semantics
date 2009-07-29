@@ -8,9 +8,8 @@ Require-Bundle: de.cau.cs.kieler.core,
  org.eclipse.core.runtime;bundle-version="3.4.0",
  org.eclipse.core.expressions;bundle-version="3.4.1"
 Export-Package: de.cau.cs.kieler.core.ui,
- de.cau.cs.kieler.core.ui.util,
- de.cau.cs.kieler.core.ui.widgets
-Bundle-Vendor: Christian-Albrechts-University of Kiel
+ de.cau.cs.kieler.core.ui.util
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Activator: de.cau.cs.kieler.core.ui.CoreUIPlugin
 Bundle-ActivationPolicy: lazy

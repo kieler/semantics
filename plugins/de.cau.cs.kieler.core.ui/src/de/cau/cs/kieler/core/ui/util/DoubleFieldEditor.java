@@ -18,9 +18,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * Field editor for input of float values.
+ * Field editor for input of double values.
  * 
- * @author ?
  */
 public class DoubleFieldEditor extends StringFieldEditor {
 
@@ -49,15 +48,12 @@ public class DoubleFieldEditor extends StringFieldEditor {
     public void setValidRange(double lowerBound, double upperBound) {
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
-//        setErrorMessage(JFaceResources.format(
-//        		"DoubleFieldEditor.errorMessageRange", //$NON-NLS-1$
-//        		new Object[] { new Integer((int)lowerBound), new Integer((int)upperBound) }));
         setErrorMessage("Double Field requires double in the bounds ["+lowerBound+","+upperBound+"]");
     }
 	
-    /* (non-Javadoc)
-     * Method declared on StringFieldEditor.
-     * Checks whether the entered String is a valid double or not.
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.jface.preference.StringFieldEditor#checkState()
      */
     protected boolean checkState() {
 
@@ -84,8 +80,9 @@ public class DoubleFieldEditor extends StringFieldEditor {
         return false;
     }
     
-    /* (non-Javadoc)
-     * Method declared on FieldEditor.
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.jface.preference.StringFieldEditor#doLoad()
      */
     protected void doLoad() {
         Text text = getTextControl();
@@ -96,8 +93,9 @@ public class DoubleFieldEditor extends StringFieldEditor {
         }
     }
     
-    /* (non-Javadoc)
-     * Method declared on FieldEditor.
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.jface.preference.StringFieldEditor#doLoadDefault()
      */
     protected void doLoadDefault() {
         Text text = getTextControl();
@@ -108,8 +106,9 @@ public class DoubleFieldEditor extends StringFieldEditor {
         valueChanged();
     }
     
-    /* (non-Javadoc)
-     * Method declared on FieldEditor.
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.jface.preference.StringFieldEditor#doStore()
      */
     protected void doStore() {
         Text text = getTextControl();

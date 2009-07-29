@@ -20,7 +20,7 @@ import de.cau.cs.kieler.core.IKielerPreferenceStore;
 /**
  * Wrapper class for Eclipse preference stores.
  * 
- * @author msp
+ * @author <a href="mailto:msp@informatik.uni-kiel.de">Miro Sp&ouml;nemann</a>
  */
 public class KielerPreferenceStore implements IKielerPreferenceStore {
 

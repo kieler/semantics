@@ -23,16 +23,21 @@ import de.cau.cs.kieler.core.ui.CoreUIPlugin;
  * Main preference page for the KIELER project. All subprojects should
  * put their preference pages into this page.
  * 
- * @author msp
+ * @author <a href="mailto:msp@informatik.uni-kiel.de">Miro Sp&ouml;nemann</a>
  */
 public class KielerPreferencePage extends FieldEditorPreferencePage implements
         IWorkbenchPreferencePage {
 
+	public KielerPreferencePage() {
+		super(GRID);
+		setDescription("Main preference page for the KIELER project");
+	}
+	
     /* (non-Javadoc)
      * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors()
      */
     protected void createFieldEditors() {
-        setDescription("Main preference page for the KIELER project");
+        // FIXME no KIELER-wide preferences yet; empty pages are not allowed according to Eclipse conventions
     }
 
     /* (non-Javadoc)

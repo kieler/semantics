@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * Field editor for input of float values.
  * 
- * @author msp
+ * @author <a href="mailto:msp@informatik.uni-kiel.de">Miro Sp&ouml;nemann</a>
  */
 public class FloatFieldEditor extends StringFieldEditor {
 	
