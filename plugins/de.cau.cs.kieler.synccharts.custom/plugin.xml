@@ -3,16 +3,6 @@
 <plugin>
 
    <extension
-         point="org.eclipse.help.toc">
-      <toc
-            file="toc.xml">
-      </toc>
-      <toc
-            file="testToc.xml"
-            primary="true">
-      </toc>
-   </extension>
-   <extension
          point="org.eclipse.gmf.runtime.common.ui.services.parserProviders">
       <ParserProvider
             class="de.cau.cs.kieler.synccharts.custom.XTextParserProvider">

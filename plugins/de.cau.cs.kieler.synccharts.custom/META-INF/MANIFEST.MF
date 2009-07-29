@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Custom Plug-in
+Bundle-Name: SyncCharts Custom Code
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.custom; singleton:=true
 Bundle-Version: 0.1.0
 Bundle-Activator: de.cau.cs.kieler.synccharts.custom.Activator
@@ -29,3 +29,4 @@ Import-Package: org.eclipse.draw2d,
  org.eclipse.gef,
  org.eclipse.gmf.runtime.notation
 Export-Package: de.cau.cs.kieler.synccharts.custom
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
