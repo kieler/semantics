@@ -21,6 +21,8 @@ import org.eclipse.osgi.util.NLS;
  * file.
  */
 public class Messages extends NLS {
+	
+	/** The Constant BUNDLE_NAME. */
 	private static final String BUNDLE_NAME = "de.cau.cs.kieler.sim.kiem.messages"; //$NON-NLS-1$
 	
 	/** The extension point i djsoncomponent. */
@@ -36,6 +38,9 @@ public class Messages extends NLS {
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}
 
-	private Messages() {
+	/**
+	 * Instantiates the messages class.
+	 */
+	public Messages() {
 	}
 }
