@@ -15,29 +15,14 @@
 package de.cau.cs.kieler.sim.table.views;
 
 
-import java.util.Arrays;
-
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Tree;
 
 import org.eclipse.ui.part.*;
 import org.eclipse.jface.viewers.*;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.*;
@@ -45,9 +30,6 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
 
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
-import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.table.DataTableViewer;
 import de.cau.cs.kieler.sim.table.TableData;
 import de.cau.cs.kieler.sim.table.TableDataContentProvider;
@@ -76,9 +58,7 @@ public class DataTableView extends ViewPart {
 	private Action actionSignal; //toggle signal/variable
 	
 	private Button buttonSignal;
-	private Button buttonPermanent;
 	
-	IToolBarManager toolBarManager; 
 	/**
 	 * The constructor.
 	 */
@@ -184,7 +164,7 @@ public class DataTableView extends ViewPart {
 	
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
-		toolBarManager = bars.getToolBarManager();
+		IToolBarManager toolBarManager = bars.getToolBarManager();
 		toolBarManager.add(getActionAdd());
 		toolBarManager.add(getActionDelete());
 		toolBarManager.add(new Separator());
@@ -222,6 +202,7 @@ public class DataTableView extends ViewPart {
 						TableDataList.getInstance().remove(tableData.getKey());
 					}
 				}
+				viewer.setSelection(null);
 				viewer.refresh();
 				updateEnabled();			
 			}
@@ -246,7 +227,7 @@ public class DataTableView extends ViewPart {
 													selection.toArray()[c];
 					tableData.setPermanent(permanentValue);
 				}
-				//viewer.setSelection(null);
+				viewer.setSelection(null);
 				viewer.refresh();
 				updateEnabled();			
 			}
@@ -257,22 +238,6 @@ public class DataTableView extends ViewPart {
 		return actionPermanent;
 	}
 	
-	private Button getButtonSignal() {
-		if (buttonSignal != null) return buttonSignal;
-		Display display = new Display();
-	    final Shell shell = new Shell(display);
-	    buttonSignal = new Button(shell, SWT.TOGGLE);
-	    buttonSignal.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				getActionSignal().run();
-			}
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-			}
-	    });
-	    return buttonSignal;
-	}
 	private Action getActionSignal() {
 		if (actionSignal != null) return actionSignal;
 		actionSignal = new Action("", IAction.AS_CHECK_BOX) {
@@ -287,7 +252,7 @@ public class DataTableView extends ViewPart {
 													selection.toArray()[c];
 					tableData.setSignal(signalValue);
 				}
-				//viewer.setSelection(null);
+				viewer.setSelection(null);
 				viewer.refresh();
 				updateEnabled();			
 			}

@@ -130,8 +130,13 @@ public class DataProducer extends JSONStringDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
 	 */
 	public void wrapup() {
-		// TODO Auto-generated method stub
-		
+		//clear table
+		TableDataList tableDataList = TableDataList.getInstance();
+		for (int c = tableDataList.size()-1; c >= 0 ; c--) {
+				TableData tableData = tableDataList.get(c);
+				TableDataList.getInstance().remove(tableData.getKey());
+		}
+		TableDataList.getInstance().updateView();
 	}
 
 }
