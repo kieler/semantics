@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xtools2_universal_type_manager-->
+<?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.mmi.ui.signatures.diagram" version="7.0.0"><feature description="" name="Rational Modeling Platform (com.ibm.xtools.rmp)" url="" version="7.0.0"/></signature>?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.0/notation" xmlns:uml="http://www.eclipse.org/uml2/2.0.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation">
+  <notation:Diagram xmi:id="_yXL_QHtfEd63wLreEXcnQg" type="Sequence" element="_yW_K8ntfEd63wLreEXcnQg" name="sequencediagram.dnx" measurementUnit="Himetric">
+    <children xmi:id="_yXL_QXtfEd63wLreEXcnQg" element="_yW_K8ntfEd63wLreEXcnQg">
+      <children xmi:id="_yXL_QntfEd63wLreEXcnQg" type="interaction_compartment">
+        <children xmi:id="_yaoU0HtfEd63wLreEXcnQg" element="_yW_K83tfEd63wLreEXcnQg">
+          <eAnnotations xmi:id="_yao74HtfEd63wLreEXcnQg" source="com.ibm.xtools.uml.ui.diagram.internal.styles">
+            <details xmi:id="_yaqxEHtfEd63wLreEXcnQg" key="LifelineLabelStyle" value="Represents Name and Type Name"/>
+          </eAnnotations>
+          <children xmi:id="_yarYIHtfEd63wLreEXcnQg" type="Stereotype"/>
+          <children xmi:id="_yarYIXtfEd63wLreEXcnQg" type="Name"/>
+          <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_yaoU0XtfEd63wLreEXcnQg" fontName="Trebuchet MS" showStereotype="Label"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yaoU0ntfEd63wLreEXcnQg" x="564" y="-1"/>
+        </children>
+        <children xmi:id="_1YLrEHtfEd63wLreEXcnQg" element="_1XfHgHtfEd63wLreEXcnQg">
+          <eAnnotations xmi:id="_1YMSIHtfEd63wLreEXcnQg" source="com.ibm.xtools.uml.ui.diagram.internal.styles">
+            <details xmi:id="_1YMSIXtfEd63wLreEXcnQg" key="LifelineLabelStyle" value="Represents Name and Type Name"/>
+          </eAnnotations>
+          <children xmi:id="_1YM5MHtfEd63wLreEXcnQg" type="Stereotype"/>
+          <children xmi:id="_1YNgQHtfEd63wLreEXcnQg" type="Name"/>
+          <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_1YLrEXtfEd63wLreEXcnQg" fontName="Trebuchet MS" showStereotype="Label"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1YLrEntfEd63wLreEXcnQg" x="564" y="6531"/>
+        </children>
+        <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_yXL_Q3tfEd63wLreEXcnQg"/>
+      </children>
+      <children xmi:id="_yXL_RHtfEd63wLreEXcnQg" type="Name"/>
+      <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_yXL_RXtfEd63wLreEXcnQg" fontName="Trebuchet MS" showStereotype="Label"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yXL_RntfEd63wLreEXcnQg" x="846" y="846"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLDiagramStyle" xmi:id="_yXL_R3tfEd63wLreEXcnQg"/>
+  </notation:Diagram>
+  <uml:Package xmi:id="_yW_K8HtfEd63wLreEXcnQg">
+    <packagedElement xmi:type="uml:Collaboration" xmi:id="_yW_K8XtfEd63wLreEXcnQg">
+      <ownedBehavior xmi:type="uml:Interaction" xmi:id="_yW_K8ntfEd63wLreEXcnQg">
+        <lifeline xmi:id="_yW_K83tfEd63wLreEXcnQg" represents="_yW_K9HtfEd63wLreEXcnQg"/>
+        <lifeline xmi:id="_1XfHgHtfEd63wLreEXcnQg" name="Property" represents="_1Xg8sHtfEd63wLreEXcnQg"/>
+      </ownedBehavior>
+      <ownedAttribute xmi:id="_yW_K9HtfEd63wLreEXcnQg" name="self">
+        <type xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=TSCSerializer%5Bjcu%5Ename=TSCSerializer.java%5Bjpack%5Ename=de.cau.cs.kieler.synccharts.dsl.util%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.synccharts.dsl.textualsyncchart%5D%5D%5D%5D$uml.Class"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_1Xg8sHtfEd63wLreEXcnQg" name="Property">
+        <type xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=TSCSerializer%5Bjcu%5Ename=TSCSerializer.java%5Bjpack%5Ename=de.cau.cs.kieler.synccharts.dsl.util%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.synccharts.dsl.textualsyncchart%5D%5D%5D%5D$uml.Class"/>
+      </ownedAttribute>
+    </packagedElement>
+  </uml:Package>
+</xmi:XMI>

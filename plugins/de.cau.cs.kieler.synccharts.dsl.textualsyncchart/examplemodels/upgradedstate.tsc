@@ -1,0 +1,9 @@
+state Statechart {
+	init state mystate {
+		init state S1
+	}
+	o-> final state stop
+	state {
+		onentry entryAction
+	}
+}
