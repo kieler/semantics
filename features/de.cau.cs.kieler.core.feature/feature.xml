@@ -5,21 +5,33 @@
       version="0.1.0"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description url="https://rtsys.informatik.uni-kiel.de/trac/kieler/wiki">
+      The KIELER core feature contains various classes and user interface contributions that are used by the subprojects of KIELER.
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright>
+      Copyright 2009 by&lt;br&gt;
+&amp;nbsp;+ Christian-Albrechts-University of Kiel&lt;br&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;+ Department of Computer Science&lt;br&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;+ Real-Time and Embedded Systems
+Group
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      This program and the accompanying materials are made available
+under the terms of the Eclipse Public License (EPL).
    </license>
 
    <url>
       <update label="KIELER Update Site" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite"/>
    </url>
+
+   <requires>
+      <import plugin="org.eclipse.emf.ecore" version="2.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.expressions" version="3.4.1" match="greaterOrEqual"/>
+   </requires>
 
    <plugin
          id="de.cau.cs.kieler.core"
