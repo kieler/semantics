@@ -16,23 +16,27 @@ package de.cau.cs.kieler.sim.kiem.execution;
 
 import de.cau.cs.kieler.sim.kiem.json.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class JSONMerger.
+ * The Class JSONMerger implements the merging functionality of used
+ * by the DataPool. It is able to merge two JSONObjects (that are
+ * lists of key-value-pairs) into one object.
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Stephan Knaur <skn@informatik.uni-kiel.de>
  * 
  */
 public class JSONMerger {
-
-	//This class merges two JSON-Objects
 	
+	//-------------------------------------------------------------------------
+
 	/**
 	 * Instantiates a new jSON merger.
 	 */
 	JSONMerger() {
 			
 	}
+	
+	//-------------------------------------------------------------------------
 	
 	/**
 	 * Merges two JSON objects together (recursively), with values from

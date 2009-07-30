@@ -21,35 +21,46 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.json.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ObserverExecution.
+ * The Class ObserverExecution. This implements the behavior of an observer
+ * worker thread that operates on one dedicated DataComponenet that is
+ * a pure observer.
+ * 
+ * An observer not needs to get finished during one execution step but may
+ * be skipped when it not finishes until it should be called in a consecutive
+ * execution step.
+ * 
+ * It sleeps until it is called and indicates that it is ready for the next
+ * step with its done flag. 
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
  */
 public class ObserverExecution implements Runnable {
 	
-	/** The done. */
+	/** The done flag indicates that the DataComponent successfully
+	 * finished its step. */
 	private boolean done;
 	
-	/** The stop. */
+	/** The stop flag indicates that the thrad should terminate. */
 	private boolean stop;
 	
-	/** The data component. */
+	/** The data component that is affected. */
 	private DataComponent dataComponent;
 	
-	/** The data. */
+	/** The input data for the observer DataComponent. */
 	private JSONObject data;
 	
-	/** The parent. */
+	/** The parent execution needed in case of raising errors. */
 	private Execution parent;
 	
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * Instantiates a new observer execution.
+	 * Instantiates a new observer execution worker thread.
 	 * 
-	 * @param dataComponent the data component
-	 * @param parent the parent
+	 * @param dataComponent the affected DataComponent
+	 * @param parent the parent execution
 	 */
 	public ObserverExecution(DataComponent dataComponent,
 							 Execution parent) {
@@ -60,10 +71,14 @@ public class ObserverExecution implements Runnable {
 		this.dataComponent = dataComponent;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Step.
+	 * Schedules a new step of the observer DataComponent. If the component
+	 * is not ready yet then false is returned. Otherwise the worker thread
+	 * is awakened and true is returned.
 	 * 
-	 * @return true, if successful
+	 * @return true, if step is successfully scheduled
 	 */
 	public synchronized boolean step() {
 		//check if we already done
@@ -82,31 +97,28 @@ public class ObserverExecution implements Runnable {
 		}
 	}
 
-	/**
-	 * Gets the data.
-	 * 
-	 * @return the data
-	 */
-	public JSONObject getData() {
-		return this.data;
-	}
+	//-------------------------------------------------------------------------
 	
 	/**
-	 * Sets the data.
+	 * Sets the input JSON data for the observer DataComponent.
 	 * 
-	 * @param data the new data
+	 * @param data the input data
 	 */
 	public void setData(JSONObject data) {
 		this.data = data;
 	}
 
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * Stop execution.
+	 * Terminates the execution of this thread.
 	 */
 	public void stopExecution() {
 		this.stop = true;
 	}
 
+	//-------------------------------------------------------------------------
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */

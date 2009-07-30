@@ -14,44 +14,44 @@
 
 package de.cau.cs.kieler.sim.kiem.execution;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 import de.cau.cs.kieler.sim.kiem.json.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class JSONDataPool.
+ * The Class JSONDataPool. It implements the "brain" of the execution manager
+ * and provides the execution manager with delta data information for it's
+ * delta observer DataComponents. This also affects the history steps.
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
  */
 public class JSONDataPool {
 	
-	//this is the maximum number of consecutive new entries that will be kept
-	//in history for a delta update
-	//meaning that between two consecutive calls of getDeltaData there should
-	//not be more than DATA_DELTA_POOL_HISTORY_MAX new entries been produced
-	//(regardless of any steps!)
-	//note that the history is needed for Delta Listener only
-	/** The Constant DATA_DELTA_POOL_HISTORY_MAX. */
+	/** This is the maximum number of consecutive new entries that will be 
+	 * kept in history for a delta update meaning that between two 
+	 * consecutive calls of getDeltaData there should not be more than 
+	 * DATA_DELTA_POOL_HISTORY_MAX new entries been produced (regardless 
+	 * of any steps!) note that the dataDeltePool is needed for Delta 
+	 * Observer and for history steps only. */
 	private static final int DATA_DELTA_POOL_HISTORY_MAX = 100;
 	
 	/** The data delta pool. */
 	private List<JSONObject> dataDeltaPool;
 	
-	/** The data pool. */
+	/** The most current data pool. */
 	private JSONObject dataPool;
 	
-	/** The json merger. */
+	/** The json merger for merging new data into the pool or for
+	 * merging several deltas together. */
 	private JSONMerger jsonMerger;
 	
-	/** The pool counter. */
-	private int poolCounter;  		   		//up to DATA_DELTA_POOL_HISTORY_MAX
+	/** The current pool counter up to DATA_DELTA_POOL_HISTORY_MAX. */
+	private int poolCounter;  		   	
 	
 	/** The pool counter diff. */
-	private long poolCounterDiff;			//remember diff
+	private long poolCounterDiff;			
 	
 	//-------------------------------------------------------------------------
 	

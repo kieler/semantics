@@ -14,9 +14,6 @@
 
 package de.cau.cs.kieler.sim.kiem.execution;
 
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.PlatformUI;
-
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
@@ -24,35 +21,49 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.json.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ProducerExecution.
+ * The Class ProducerExecution. This implements the behavior of a producer
+ * worker thread that operates on one dedicated DataComponenet that is
+ * a pure producer.
+ * 
+ * A producer needs no input data and hence is called in the beginning of 
+ * a step so that it has the maximum time to concurrently compute its
+ * results.
+ * 
+ * If a {@link #blockingStep()} is scheduled then the producer worker 
+ * thread is awaked and can start to compute data. When the method
+ * {@link #blockingWaitUntilDone()} is called, then this blocks until
+ * the data is computed. 
+ * Note that this could also trigger a time out in the execution thread.
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
  */
 public class ProducerExecution implements Runnable {
 	
-	/** The done. */
+	/** The done flag indicates that the DataComponent successfully
+	 * finished its step. */
 	private boolean done;
 	
-	/** The stop. */
+	/** The stop flag indicates that the thrad should terminate. */
 	private boolean stop;
 	
-	/** The data component. */
+	/** The data component that is affected. */
 	private DataComponent dataComponent;
 	
-	/** The data. */
+	/** The output data of the producer DataComponent. */
 	private JSONObject data;
 	
-	/** The parent. */
+	/** The parent execution needed in case of raising errors. */
 	private Execution parent;
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Instantiates a new producer execution.
+	 * Instantiates a new producer execution worker thread.
 	 * 
-	 * @param dataComponent the data component
-	 * @param parent the parent
+	 * @param dataComponent the affected DataComponent
+	 * @param parent the parent execution
 	 */
 	public ProducerExecution(DataComponent dataComponent,
 						     Execution parent) {
@@ -63,8 +74,15 @@ public class ProducerExecution implements Runnable {
 		this.dataComponent = dataComponent;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Blocking step.
+	 * Schedule a (blocking) step. T
+	 * this will awake the execution ({@link #blockingWaitUntilDone()})
+	 * AND the waiting producer thread  but only the producer thread
+	 * will proceed, cause done is guaranteed to be false!
+	 * The execution will fall asleep until the producer has finished
+	 * doing its step.
 	 */
 	public void blockingStep() {
 		synchronized(this) {
@@ -80,9 +98,11 @@ public class ProducerExecution implements Runnable {
 		}
 	}
 
-	//this method resumes only if producer is done (and sleeping)
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Blocking wait until done.
+	 * Blocking wait until done. This method resumes only if the producer
+	 * DataComponent is done (and sleeping again).
 	 */
 	public void blockingWaitUntilDone() {
 		synchronized(this) {
@@ -104,31 +124,28 @@ public class ProducerExecution implements Runnable {
 		//at this point done is true and we may reap the results now
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Gets the data.
+	 * Gets the JSON data that was produced by the producer DataComponent.
 	 * 
-	 * @return the data
+	 * @return the produced data
 	 */
 	public JSONObject getData() {
 		return this.data;
 	}
 	
-	/**
-	 * Sets the data.
-	 * 
-	 * @param data the new data
-	 */
-	public void setData(JSONObject data) {
-		this.data = data;
-	}
+	//-------------------------------------------------------------------------
 
 	/**
-	 * Stop execution.
+	 * Terminates the execution of this thread.
 	 */
 	public void stopExecution() {
 		this.stop = true;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
@@ -203,4 +220,5 @@ public class ProducerExecution implements Runnable {
 			
 		}//next while not stop
 	}
+	
 }
