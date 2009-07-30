@@ -38,6 +38,9 @@ import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 
 /**
  * The Class AddDataComponentDialog.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
  */
 public class AddDataComponentDialog extends Dialog {
 

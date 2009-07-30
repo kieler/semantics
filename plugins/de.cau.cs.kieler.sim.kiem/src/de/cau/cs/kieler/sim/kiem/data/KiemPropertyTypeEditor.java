@@ -24,21 +24,37 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class KiemPropertyTypeEditor.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public class KiemPropertyTypeEditor extends KiemPropertyType
 									implements IKiemPropertyType {
 	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 3163900421868918205L;
 
+	/** The Constant PROPERTY_CHOICE. */
 	private static final Image PROPERTY_CHOICE = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/propertyEditorIcon.png").createImage();
 	
+	/** The items. */
 	private String[] items;
 
+	/**
+	 * Instantiates a new kiem property type editor.
+	 */
 	public KiemPropertyTypeEditor() {
 		super();
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets.Composite)
+	 */
 	@Override 
 	public CellEditor provideCellEditor(Composite parent) {
 		refreshItems();
@@ -47,6 +63,9 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 									SWT.Deactivate);
 	}
 
+	/**
+	 * Refresh items.
+	 */
 	public void refreshItems() {
 	    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 	    IEditorReference[] editors = page.getEditorReferences();
@@ -61,6 +80,9 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 		this.items = items;
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
+	 */
 	public Object getValue(KiemProperty property) {
 		if ((items == null)||(items.length == 0)) return 0;
 		for (int c = 0; c < items.length; c ++) {
@@ -69,15 +91,26 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 		return 0; //default is the first item
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
+	 */
 	public void setValue(KiemProperty property, Object value) {
 		if ((items == null)||(items.length == 0)) return;
 		property.setValue(items[Integer.parseInt((String)value)]);
 	}
 	
+	/**
+	 * Sets the items.
+	 * 
+	 * @param items the new items
+	 */
 	public void setItems(String[] items) {
 		this.items = items;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()
+	 */
 	@Override
 	public Image provideIcon() {
 		return PROPERTY_CHOICE;

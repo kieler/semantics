@@ -18,8 +18,23 @@ import de.cau.cs.kieler.sim.kiem.json.JSONArray;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class JSONSignalValues.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public class JSONSignalValues {
 	
+	/**
+	 * Sets the present.
+	 * 
+	 * @param signalValue the signal value
+	 * @param isPresent the is present
+	 * 
+	 * @throws JSONException the JSON exception
+	 */
 	public static void setPresent(JSONObject signalValue,
 								  boolean isPresent) 
 														throws JSONException {
@@ -28,6 +43,15 @@ public class JSONSignalValues {
 
 	//-------------------------------------------------------------------------
 	
+	/**
+	 * Checks if is signal value.
+	 * 
+	 * @param signalValue the signal value
+	 * 
+	 * @return true, if is signal value
+	 * 
+	 * @throws JSONException the JSON exception
+	 */
 	public static boolean isSignalValue(Object signalValue) 
 														throws JSONException {
 		if (!(signalValue instanceof JSONObject)) return false;
@@ -36,6 +60,15 @@ public class JSONSignalValues {
 	
 	//-------------------------------------------------------------------------
 	
+	/**
+	 * Gets the signal value.
+	 * 
+	 * @param signalValue the signal value
+	 * 
+	 * @return the signal value
+	 * 
+	 * @throws JSONException the JSON exception
+	 */
 	public static Object getSignalValue(Object signalValue)
 													throws JSONException {
 		if (!isSignalValue(signalValue)) return null;
@@ -46,6 +79,15 @@ public class JSONSignalValues {
 	
 	//-------------------------------------------------------------------------
 	
+	/**
+	 * Checks if is present.
+	 * 
+	 * @param signalValue the signal value
+	 * 
+	 * @return true, if is present
+	 * 
+	 * @throws JSONException the JSON exception
+	 */
 	public static boolean isPresent(Object signalValue) 
 													throws JSONException {
 		if (!isSignalValue(signalValue)) return false;
@@ -57,6 +99,16 @@ public class JSONSignalValues {
 
 	//-------------------------------------------------------------------------
 	
+	/**
+	 * New value.
+	 * 
+	 * @param value the value
+	 * @param present the present
+	 * 
+	 * @return the jSON object
+	 * 
+	 * @throws JSONException the JSON exception
+	 */
 	public static JSONObject newValue(Object value, 
 									  boolean present) 
 														throws JSONException {
@@ -71,6 +123,15 @@ public class JSONSignalValues {
 	
 	//-------------------------------------------------------------------------
 	
+	/**
+	 * New value.
+	 * 
+	 * @param present the present
+	 * 
+	 * @return the jSON object
+	 * 
+	 * @throws JSONException the JSON exception
+	 */
 	public static JSONObject newValue(boolean present) 
 														throws JSONException {
 		

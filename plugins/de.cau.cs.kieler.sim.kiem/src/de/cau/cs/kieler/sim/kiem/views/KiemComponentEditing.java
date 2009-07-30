@@ -27,6 +27,9 @@ import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
  * DataComponentExs in the DataComponentExs table of the KiemView. It 
  * basically only allows the modification of the enabled tag of a 
  * DataComponentEx.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
  */
 public class KiemComponentEditing extends EditingSupport {
 	

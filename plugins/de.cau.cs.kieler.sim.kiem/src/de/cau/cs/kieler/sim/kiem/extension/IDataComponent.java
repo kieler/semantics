@@ -14,20 +14,27 @@
 
 package de.cau.cs.kieler.sim.kiem.extension;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface IDataComponent.
- * @author delphino
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
  */
 public interface IDataComponent {
 
 	/**
-	 * Initialize. Do some initializing prior to execution. 
+	 * Initialize. Do some initializing prior to execution.
+	 * 
+	 * @throws KiemInitializationException the kiem initialization exception
 	 */
 	public void initialize() throws KiemInitializationException;
 	
 	//
 	/**
 	 * Wrapup. Do some wrapping-up after execution has finished.
+	 * 
+	 * @throws KiemInitializationException the kiem initialization exception
 	 */
 	public void wrapup() throws KiemInitializationException;
 
@@ -40,7 +47,7 @@ public interface IDataComponent {
 	public boolean isProducer();
 
 	/**
-	 * Checks if is observer. DataComponent is an Observer and needs a 
+	 * Checks if is observer. DataComponent is an Observer and needs a
 	 * parameter != null in step method.
 	 * 
 	 * @return true, if is observer

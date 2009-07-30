@@ -17,22 +17,41 @@ package de.cau.cs.kieler.sim.kiem.data;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class KiemPropertyTypeInt.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public class KiemPropertyTypeInt extends KiemPropertyType
 									implements IKiemPropertyType {
 	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 8908596145125394334L;
+	
+	/** The Constant PROPERTY_INT. */
 	private static final Image PROPERTY_INT = AbstractUIPlugin
 	.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 			"icons/propertyIntIcon.png").createImage();
 
+	/**
+	 * Instantiates a new kiem property type int.
+	 */
 	public KiemPropertyTypeInt() {
 		super();
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
+	 */
 	public Object getValue(KiemProperty property) {
 		return property.value;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
+	 */
 	public void setValue(KiemProperty property, Object value) {
 		try {
 			property.setValue(""+Integer.valueOf((String)value));
@@ -40,6 +59,9 @@ public class KiemPropertyTypeInt extends KiemPropertyType
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()
+	 */
 	@Override
 	public Image provideIcon() {
 		return PROPERTY_INT;

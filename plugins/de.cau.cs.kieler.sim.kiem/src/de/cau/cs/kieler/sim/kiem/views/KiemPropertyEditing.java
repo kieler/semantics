@@ -25,6 +25,9 @@ import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 /**
  * The Class KiemPropertyEditing. It handles the editing support for
  * KiemProperties in the DataComponentExs table of the KiemView.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
  */
 public class KiemPropertyEditing extends EditingSupport {
 	

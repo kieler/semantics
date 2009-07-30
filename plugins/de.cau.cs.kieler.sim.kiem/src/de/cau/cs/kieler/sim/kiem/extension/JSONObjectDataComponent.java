@@ -14,11 +14,21 @@
 
 package de.cau.cs.kieler.sim.kiem.extension;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class JSONObjectDataComponent.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public abstract class JSONObjectDataComponent 
 							extends DataComponent 
 							implements IJSONObjectDataComponent {
 
 	//constructor
+	/**
+	 * Instantiates a new jSON object data component.
+	 */
 	public JSONObjectDataComponent() {
 		super();
 	}

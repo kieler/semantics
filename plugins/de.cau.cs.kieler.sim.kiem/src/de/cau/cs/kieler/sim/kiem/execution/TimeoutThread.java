@@ -17,25 +17,55 @@ package de.cau.cs.kieler.sim.kiem.execution;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TimeoutThread.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
  */
 public class TimeoutThread extends Thread {
 
+	/** The timeout. */
 	private int timeout;
+	
+	/** The active. */
 	private boolean active;
+	
+	/** The execution. */
 	private Execution execution;
+	
+	/** The stop time. */
 	private long startTime, stopTime;
+	
+	/** The abort. */
 	private boolean abort;
+	
+	/** The job description. */
 	private String jobDescription;
+	
+	/** The data component ex. */
 	private DataComponentEx dataComponentEx;
+	
+	/** The terminate. */
 	private boolean terminate;
 	
+	/**
+	 * Instantiates a new timeout thread.
+	 */
 	public TimeoutThread() {
 		this.active = false;
 		this.timeout = 0;
 	}
 	
+	/**
+	 * Timeout.
+	 * 
+	 * @param timeout the timeout
+	 * @param jobDescription the job description
+	 * @param dataComponentEx the data component ex
+	 * @param execution the execution
+	 */
 	public synchronized void timeout(int timeout,
 						String jobDescription,
 						DataComponentEx dataComponentEx,
@@ -53,15 +83,24 @@ public class TimeoutThread extends Thread {
 		this.notifyAll();
 	}
 
+	/**
+	 * Abort timeout.
+	 */
 	public void abortTimeout() {
 		this.abort = true;
 	}
 	
+	/**
+	 * Terminate.
+	 */
 	public synchronized void terminate() {
 		this.terminate = true;
 		this.notifyAll();
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
 	public void run() {
 //System.out.println("Timeout - thread started");
 		while(!terminate) {

@@ -20,6 +20,13 @@ import java.util.List;
 
 import de.cau.cs.kieler.sim.kiem.json.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class JSONDataPool.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public class JSONDataPool {
 	
 	//this is the maximum number of consecutive new entries that will be kept
@@ -28,12 +35,22 @@ public class JSONDataPool {
 	//not be more than DATA_DELTA_POOL_HISTORY_MAX new entries been produced
 	//(regardless of any steps!)
 	//note that the history is needed for Delta Listener only
+	/** The Constant DATA_DELTA_POOL_HISTORY_MAX. */
 	private static final int DATA_DELTA_POOL_HISTORY_MAX = 100;
 	
+	/** The data delta pool. */
 	private List<JSONObject> dataDeltaPool;
+	
+	/** The data pool. */
 	private JSONObject dataPool;
+	
+	/** The json merger. */
 	private JSONMerger jsonMerger;
+	
+	/** The pool counter. */
 	private int poolCounter;  		   		//up to DATA_DELTA_POOL_HISTORY_MAX
+	
+	/** The pool counter diff. */
 	private long poolCounterDiff;			//remember diff
 	
 	//-------------------------------------------------------------------------
@@ -67,7 +84,8 @@ public class JSONDataPool {
 	 * since it just returns the current data pool contents. But be aware of
 	 * the fact that the returned JSON object may have hundreds of values!
 	 * 
-	 * @param filterKeys the filter keys, optional, may be null 
+	 * @param filterKeys the filter keys, optional, may be null
+	 * @param deltaPoolIndexTo the delta pool index to
 	 * 
 	 * @return the JSONObject containing all data
 	 * 
@@ -77,6 +95,16 @@ public class JSONDataPool {
 							  long deltaPoolIndexTo) throws JSONException {
 		return this.getDeltaData(filterKeys, -1, deltaPoolIndexTo);
 	}
+	
+	/**
+	 * Gets the data.
+	 * 
+	 * @param filterKeys the filter keys
+	 * 
+	 * @return the data
+	 * 
+	 * @throws JSONException the JSON exception
+	 */
 	public JSONObject getData(String[] filterKeys) throws JSONException {
 		JSONObject returnObject = null;
 		if (filterKeys == null) {
@@ -124,8 +152,8 @@ public class JSONDataPool {
 	 * deltaPoolIndexTo or the current index if the latter is not provided.
 	 * It optionally filters the results if filterKeys is not null.
 	 * 
-	 * @param filterKeys the filter keys, optional, may be null 
-	 * @param deltaPoolIndex the delta pool index 
+	 * @param filterKeys the filter keys, optional, may be null
+	 * @param deltaPoolIndexFrom the delta pool index from
 	 * 
 	 * @return the delta data
 	 * 
@@ -137,6 +165,18 @@ public class JSONDataPool {
 			   	   deltaPoolIndexFrom,
 			   	   this.getPoolCounter());
 	}
+	
+	/**
+	 * Gets the delta data.
+	 * 
+	 * @param filterKeys the filter keys
+	 * @param deltaPoolIndexFrom the delta pool index from
+	 * @param deltaPoolIndexTo the delta pool index to
+	 * 
+	 * @return the delta data
+	 * 
+	 * @throws JSONException the JSON exception
+	 */
 	public JSONObject getDeltaData(String[] filterKeys,
 							   	   long deltaPoolIndexFrom,
 							   	   long deltaPoolIndexTo) throws JSONException {

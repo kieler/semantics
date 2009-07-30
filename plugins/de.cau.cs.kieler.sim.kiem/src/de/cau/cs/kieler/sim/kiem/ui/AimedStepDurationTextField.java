@@ -29,6 +29,9 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * The Class AimedStepDurationTextField. This is the GUI component that shows
  * the currently set aimed step duration for the execution. It can also be used
  * to edit this duration. 
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
  */
 public class AimedStepDurationTextField extends ControlContribution implements KeyListener,
 																   FocusListener{

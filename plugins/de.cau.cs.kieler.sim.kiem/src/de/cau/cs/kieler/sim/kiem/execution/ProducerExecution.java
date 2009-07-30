@@ -24,14 +24,36 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.json.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProducerExecution.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public class ProducerExecution implements Runnable {
 	
+	/** The done. */
 	private boolean done;
+	
+	/** The stop. */
 	private boolean stop;
+	
+	/** The data component. */
 	private DataComponent dataComponent;
+	
+	/** The data. */
 	private JSONObject data;
+	
+	/** The parent. */
 	private Execution parent;
 	
+	/**
+	 * Instantiates a new producer execution.
+	 * 
+	 * @param dataComponent the data component
+	 * @param parent the parent
+	 */
 	public ProducerExecution(DataComponent dataComponent,
 						     Execution parent) {
 		this.stop = false; 
@@ -41,6 +63,9 @@ public class ProducerExecution implements Runnable {
 		this.dataComponent = dataComponent;
 	}
 	
+	/**
+	 * Blocking step.
+	 */
 	public void blockingStep() {
 		synchronized(this) {
 			done = false;
@@ -56,6 +81,9 @@ public class ProducerExecution implements Runnable {
 	}
 
 	//this method resumes only if producer is done (and sleeping)
+	/**
+	 * Blocking wait until done.
+	 */
 	public void blockingWaitUntilDone() {
 		synchronized(this) {
 			while (!this.done) {
@@ -76,17 +104,34 @@ public class ProducerExecution implements Runnable {
 		//at this point done is true and we may reap the results now
 	}
 	
+	/**
+	 * Gets the data.
+	 * 
+	 * @return the data
+	 */
 	public JSONObject getData() {
 		return this.data;
 	}
+	
+	/**
+	 * Sets the data.
+	 * 
+	 * @param data the new data
+	 */
 	public void setData(JSONObject data) {
 		this.data = data;
 	}
 
+	/**
+	 * Stop execution.
+	 */
 	public void stopExecution() {
 		this.stop = true;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	public void run() {
 		while (!this.stop) {
 			//caller step() must ensure that done == false (before)

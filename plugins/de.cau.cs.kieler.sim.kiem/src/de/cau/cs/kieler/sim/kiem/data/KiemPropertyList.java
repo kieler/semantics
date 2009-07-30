@@ -17,13 +17,30 @@ package de.cau.cs.kieler.sim.kiem.data;
 import java.util.LinkedList;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class KiemPropertyList.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public class KiemPropertyList {
 
+	/** The property list. */
 	List<KiemProperty> propertyList;
 	
+	/**
+	 * Instantiates a new kiem property list.
+	 */
 	public KiemPropertyList() {
 		this.propertyList = new LinkedList<KiemProperty>();
 	}
+	
+	/**
+	 * Instantiates a new kiem property list.
+	 * 
+	 * @param properties the properties
+	 */
 	public KiemPropertyList(KiemProperty[] properties) {
 		if (properties != null) {
 			this.propertyList = new LinkedList<KiemProperty>();
@@ -37,6 +54,11 @@ public class KiemPropertyList {
 		}
 	}
 	
+	/**
+	 * Gets the keys.
+	 * 
+	 * @return the keys
+	 */
 	public String[] getKeys() {
 		String[] tmp = new String[this.propertyList.size()];
 		for (int c = 0; c < this.propertyList.size(); c++) {
@@ -45,6 +67,11 @@ public class KiemPropertyList {
 		return tmp;
 	}
 	
+	/**
+	 * Gets the values.
+	 * 
+	 * @return the values
+	 */
 	public String[] getValues() {
 		String[] tmp = new String[this.propertyList.size()];
 		for (int c = 0; c < this.propertyList.size(); c++) {
@@ -53,6 +80,13 @@ public class KiemPropertyList {
 		return tmp;
 	}
 	
+	/**
+	 * Gets the property.
+	 * 
+	 * @param key the key
+	 * 
+	 * @return the property
+	 */
 	public String getProperty(String key) {
 		for (int c = 0; c < this.propertyList.size(); c++) {
 			KiemProperty tmp = this.propertyList.get(c);
@@ -62,6 +96,11 @@ public class KiemPropertyList {
 		return null;
 	}
 	
+	/**
+	 * Removes the property.
+	 * 
+	 * @param key the key
+	 */
 	public void removeProperty(String key) {
 		for (int c = 0; c < this.propertyList.size(); c++) {
 			KiemProperty tmp = this.propertyList.get(c);
@@ -72,6 +111,14 @@ public class KiemPropertyList {
 		}
 	}
 	
+	/**
+	 * Update property.
+	 * 
+	 * @param key the key
+	 * @param value the value
+	 * 
+	 * @return true, if successful
+	 */
 	public boolean updateProperty(String key, String value) {
 		for (int c = 0; c < this.propertyList.size(); c++) {
 			KiemProperty tmp = this.propertyList.get(c);
@@ -83,6 +130,13 @@ public class KiemPropertyList {
 		return false;
 	}
 	
+	/**
+	 * Exists property.
+	 * 
+	 * @param key the key
+	 * 
+	 * @return true, if successful
+	 */
 	public boolean existsProperty(String key) {
 		for (int c = 0; c < this.propertyList.size(); c++) {
 			KiemProperty tmp = this.propertyList.get(c);
@@ -93,6 +147,14 @@ public class KiemPropertyList {
 		return false;
 	}
 	
+	/**
+	 * Adds the property.
+	 * 
+	 * @param key the key
+	 * @param value the value
+	 * 
+	 * @return true, if successful
+	 */
 	public boolean addProperty(String key, String value) {
 		if (this.existsProperty(key)) return false;
 		this.propertyList.add(new KiemProperty(key,value));
@@ -100,15 +162,30 @@ public class KiemPropertyList {
 	}
 	
 	
+	/**
+	 * Size.
+	 * 
+	 * @return the int
+	 */
 	public int size() {
 		return this.propertyList.size();	
 	}
 	
+	/**
+	 * Checks for elements.
+	 * 
+	 * @return true, if successful
+	 */
 	public boolean hasElements() {
 		return (size() > 0);
 	}
 
 	
+	/**
+	 * To array.
+	 * 
+	 * @return the kiem property[]
+	 */
 	public KiemProperty[] toArray() {
 		KiemProperty[] returnArray = new KiemProperty[this.propertyList.size()];
 		for (int c = 0; c < this.propertyList.size(); c ++){
@@ -117,6 +194,11 @@ public class KiemPropertyList {
 		return returnArray;
 	}
 	
+	/**
+	 * Gets the elements.
+	 * 
+	 * @return the elements
+	 */
 	public Object[] getElements() {
 		return this.propertyList.toArray();
 	}

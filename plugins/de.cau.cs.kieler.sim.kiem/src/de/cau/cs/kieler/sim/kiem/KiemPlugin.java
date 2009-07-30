@@ -48,6 +48,9 @@ import de.cau.cs.kieler.sim.kiem.views.KiemView;
  * This activator class controls the life cycle of the KiemPlugin.
  * It also provides the access to the one and only instance of this
  * class and hence a way to access the execution thread.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
  */
 public class KiemPlugin extends AbstractUIPlugin {
 

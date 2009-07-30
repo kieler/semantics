@@ -14,14 +14,22 @@
 
 package de.cau.cs.kieler.sim.kiem.extension;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author cmot
- *
+ * The Class KiemMasterException.
+ * 
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
  */
 public class KiemMasterException extends Exception {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1645050957113020503L;
 	
+	/**
+	 * Instantiates a new kiem master exception.
+	 * 
+	 * @param message the message
+	 */
 	public KiemMasterException(String message) {
 		super(message);
 	}

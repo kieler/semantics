@@ -14,15 +14,25 @@
 
 package de.cau.cs.kieler.sim.kiem.data;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class KiemPropertyError defines an error that can be thrown
- * by DataComponents if the properties are not correct set. This is 
+ * by DataComponents if the properties are not correct set. This is
  * checked prior to initialization and will prevent execution.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
  */
 public class KiemPropertyException extends Exception {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -1023528743545009469L;
 
+	/**
+	 * Instantiates a new kiem property exception.
+	 * 
+	 * @param message the message
+	 */
 	public KiemPropertyException(String message) {
 		super(message);
 	}

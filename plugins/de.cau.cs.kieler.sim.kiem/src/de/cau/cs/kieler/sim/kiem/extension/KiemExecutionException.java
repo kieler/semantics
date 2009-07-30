@@ -14,21 +14,36 @@
 
 package de.cau.cs.kieler.sim.kiem.extension;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author cmot
- *
+ * The Class KiemExecutionException.
+ * 
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
  */
 public class KiemExecutionException extends Exception {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1645050957113020503L;
 	
+	/** The must stop. */
 	private boolean mustStop;
 	
+	/**
+	 * Instantiates a new kiem execution exception.
+	 * 
+	 * @param message the message
+	 * @param mustStop the must stop
+	 */
 	public KiemExecutionException(String message, boolean mustStop) {
 		super(message);
 		this.mustStop = mustStop;
 	}
 
+	/**
+	 * Checks if is must stop.
+	 * 
+	 * @return true, if is must stop
+	 */
 	public boolean isMustStop() {
 		return this.mustStop;
 	}

@@ -22,22 +22,37 @@ import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author cmot
  * The DataComponent class implements the basic behavior of a Data Observer
- * and/or Data Producer component. Implemented components may want to 
+ * and/or Data Producer component. Implemented components may want to
  * override some of the here provided methods.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
  */
 public abstract class DataComponent implements IDataComponent,
 											   IExecutableExtension {
 	
+	/** The name. */
 	private String name;
+	
+	/** The KIEM instance. */
 	private KiemPlugin KIEMInstance;   		//only contains access to execution
+	
+	/** The KIEM view instance. */
 	private KiemView KIEMViewInstance; 		//thread iff this DataComponent
 									   		//is a master
-	private KiemProperty[] properties;
+	/** The properties. */
+		   									private KiemProperty[] properties;
+	
+	/** The config ele. */
 	private IConfigurationElement configEle;
+	
+	/** The global interface variables. */
 	private String[] globalInterfaceVariables;
+	
+	/** The history step. */
 	private boolean historyStep;			//indicates that the step is
 											//a history step, all produced data
 											//will not be considered
@@ -45,9 +60,9 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Constructor initializes the properties with the @link:DataComponent#inititializProperties() inititializProperties
-	 * method that may be overridden.
-	 */
+											 * Constructor initializes the properties with the @link:DataComponent#inititializProperties() inititializProperties
+											 * method that may be overridden.
+											 */
 	public DataComponent() {
 		super();
 		properties = provideProperties();
@@ -56,7 +71,7 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Sets the configuration elemenet. This method is needed to instantiate 
+	 * Sets the configuration elemenet. This method is needed to instantiate
 	 * several component instances only.
 	 * 
 	 * @param configEle the new configuration elemenet
@@ -66,7 +81,7 @@ public abstract class DataComponent implements IDataComponent,
 	}
 	
 	/**
-	 * Gets the configuration element. This method is needed to instantiate 
+	 * Gets the configuration element. This method is needed to instantiate
 	 * several component instances only.
 	 * 
 	 * @return the configuration element
@@ -109,11 +124,11 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Overwrite this if this component is explicitly multi instantiable ONLY! 
-	 * note that you have to consider thread safety here because all instances 
-	 * will be run in a different (and hence concurrent) thread 
-	 * be aware of this for example if you share a common view etc
-	 *  
+	 * Overwrite this if this component is explicitly multi instantiable ONLY!
+	 * note that you have to consider thread safety here because all instances
+	 * will be run in a different (and hence concurrent) thread
+	 * be aware of this for example if you share a common view etc.
+	 * 
 	 * @return 		a boolean indicating that the component is multi threadable
 	 */
 	public boolean isMultiInstantiable() {
@@ -125,9 +140,9 @@ public abstract class DataComponent implements IDataComponent,
 	/**
 	 * If this DataComponent implements an Observer, provide some key's of
 	 * interest. If you use null then not filter is being used and the component
-	 * will get all values. 
+	 * will get all values.
 	 * 
-	 * @return		a String array with the keys of interest
+	 * @return 	a String array with the keys of interest
 	 */
 	public String[] getFilterKeys() {
 		return null;
@@ -146,7 +161,7 @@ public abstract class DataComponent implements IDataComponent,
 	}
 	
 	/**
-	 * Provide properties. The component may create and publicize its 
+	 * Provide properties. The component may create and publicize its
 	 * properties with this method.
 	 * They will be set/modified by the execution manager during
 	 * the user edits them. Whenever the user decides to run/start the execution
@@ -164,10 +179,12 @@ public abstract class DataComponent implements IDataComponent,
 	 * Here a component may check for required and optional properties and their
 	 * settings. Also an @see:KiemPropertyError can be raised if some property
 	 * prevents the the execution of this component.
-	 *   
+	 * 
 	 * @param properties 			properties with the current user settings
-	 * @throws KiemPropertyError	if a property prevents the execution throw
-	 * 								this error
+	 * 
+	 * @throws KiemPropertyError if a property prevents the execution throw
+	 * this error
+	 * @throws KiemPropertyException the kiem property exception
 	 */
 	public void checkProperties(KiemProperty[] properties) 
 											throws KiemPropertyException {
@@ -176,10 +193,10 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Provide (local) interface variables. This is an optional method that will 
+	 * Provide (local) interface variables. This is an optional method that will
 	 * provide some interface variables that can be used by other DataComponents
 	 * within and after the initialization phase every DataComponent may receive
-	 * the union of all those variables by calling the 
+	 * the union of all those variables by calling the
 	 * getGlobalInterfaceVariables() method.
 	 * 
 	 * @return the local interface variables
@@ -200,7 +217,7 @@ public abstract class DataComponent implements IDataComponent,
 	}
 	
 	/**
-	 * Gets the (global) interface variables. Is called by the execution 
+	 * Gets the (global) interface variables. Is called by the execution
 	 * manager during the initialization phase.
 	 * 
 	 * @return the global interface variables
@@ -218,21 +235,21 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Overwrite this if this component can explicitly handle past recorded 
+	 * Overwrite this if this component can explicitly handle past recorded
 	 * history values.
 	 * In case the user makes steps back into the history, only observers
 	 * that return true in this method will get any (recorded) history data.
-	 * Components that return false (default) will not get any data, while 
-	 * the the user navigates within the recorded tick area. 
-	 *  
-	 * @return	a boolean indicating that the component is recorded observer
+	 * Components that return false (default) will not get any data, while
+	 * the the user navigates within the recorded tick area.
+	 * 
+	 * @return a boolean indicating that the component is recorded observer
 	 */
 	public boolean isHistoryObserver() {
 		return false;
 	}
 	
 	/**
-	 * Sets the history step flag. This is called by the execution 
+	 * Sets the history step flag. This is called by the execution
 	 * manager to flag that the current step lies in history.
 	 * 
 	 * @param historyStep the flag to set
@@ -243,7 +260,7 @@ public abstract class DataComponent implements IDataComponent,
 	
 	/**
 	 * Checks if the current step is a history step. This can be called
-	 * by the component itself to check if the current step lies in 
+	 * by the component itself to check if the current step lies in
 	 * history. If this is the case, any produced output data will not
 	 * be considered.
 	 * 
@@ -258,7 +275,7 @@ public abstract class DataComponent implements IDataComponent,
 	/**
 	 * Checks if is delta observer. Delta values means all changed values that
 	 * are in the present and were in the past ticks when this component may
-	 * have been skipped. 
+	 * have been skipped.
 	 * If a component wants all (accumulated & updated) values of the present
 	 * tick, it should return false.
 	 * 
@@ -271,11 +288,11 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Checks if is pause flag. This method can be overridden to force the 
-	 * execution to pause. Be careful if you override this method - it will 
-	 * force the simulation to pause and hence it *CANNOT* proceed until 
-	 * *EVERY* component's isPauseFlag() returns false! 
-	 * Also the step() function will never get called again! 
+	 * Checks if is pause flag. This method can be overridden to force the
+	 * execution to pause. Be careful if you override this method - it will
+	 * force the simulation to pause and hence it *CANNOT* proceed until
+	 * *EVERY* component's isPauseFlag() returns false!
+	 * Also the step() function will never get called again!
 	 * Be careful when implementing side effects in this method!
 	 * 
 	 * @return true, if is pause flag
@@ -286,18 +303,18 @@ public abstract class DataComponent implements IDataComponent,
 
 	/**
 	 * Checks if is a macro step is done. Override this method to flag that a
-	 * "macro tick" is not yet done during e.g., a fixed point semantics of a 
+	 * "macro tick" is not yet done during e.g., a fixed point semantics of a
 	 * DataComponent.
-	 * In case ANY DataComponent raises this flag (by returning false) the 
-	 * KIEM GUI will display another icon "Macro Step Execution" that will 
+	 * In case ANY DataComponent raises this flag (by returning false) the
+	 * KIEM GUI will display another icon "Macro Step Execution" that will
 	 * perform as many steps until each DataComponent returns true (possibly
-	 * an infinite number of steps) any following step should be interpreted 
-	 * as the beginning of a new macro step *ALL* DataComponents that already 
+	 * an infinite number of steps) any following step should be interpreted
+	 * as the beginning of a new macro step *ALL* DataComponents that already
 	 * have flagged isStepDone == true will not be scheduled again during this
-	 * MacroStep if you need them to update again they should also return a 
-	 * false value.	
+	 * MacroStep if you need them to update again they should also return a
+	 * false value.
 	 * Also note that this method is ignored for pure Data Observers because
-	 * there is blocking impact on the schedule from them. 
+	 * there is blocking impact on the schedule from them.
 	 * 
 	 * @return true, if is macro step is done
 	 */
@@ -314,8 +331,8 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 	/**
 	 * Command step. Called just before a step command is executed.
-	 * ATTENTION: This command method is called inside the 
-	 * synchronized lock so a deadlock can easily occur if this or another 
+	 * ATTENTION: This command method is called inside the
+	 * synchronized lock so a deadlock can easily occur if this or another
 	 * object called from within this method refers to the execution-thread!!!
 	 */
 	public void commandStep() {
@@ -324,8 +341,8 @@ public abstract class DataComponent implements IDataComponent,
 	
 	/**
 	 * Command macro step. Called just before a macro step command is executed.
-	 * ATTENTION: This command method is called inside the 
-	 * synchronized lock so a deadlock can easily occur if this or another 
+	 * ATTENTION: This command method is called inside the
+	 * synchronized lock so a deadlock can easily occur if this or another
 	 * object called from within this method refers to the execution-thread!!!
 	 */
 	public void commandMacroStep() {
@@ -334,8 +351,8 @@ public abstract class DataComponent implements IDataComponent,
 	
 	/**
 	 * Command run. Called just before a run command is executed.
-	 * ATTENTION: This command method is called inside the 
-	 * synchronized lock so a deadlock can easily occur if this or another 
+	 * ATTENTION: This command method is called inside the
+	 * synchronized lock so a deadlock can easily occur if this or another
 	 * object called from within this method refers to the execution-thread!!!
 	 */
 	public void commandRun() {
@@ -344,8 +361,8 @@ public abstract class DataComponent implements IDataComponent,
 	
 	/**
 	 * Command pause. Called just before a pause command is executed.
-	 * ATTENTION: This command method is called inside the 
-	 * synchronized lock so a deadlock can easily occur if this or another 
+	 * ATTENTION: This command method is called inside the
+	 * synchronized lock so a deadlock can easily occur if this or another
 	 * object called from within this method refers to the execution-thread!!!
 	 */
 	public void commandPause() {
@@ -368,10 +385,10 @@ public abstract class DataComponent implements IDataComponent,
 	/**
 	 * Override this, if this DataComponent is a master.
 	 * If it returns true then
-	 * 		1. ExecutionManager ensures that no other master is present
-	 * 		2. Calling stepExecution initializes a tick
+	 * 1. ExecutionManager ensures that no other master is present
+	 * 2. Calling stepExecution initializes a tick
 	 * 
-	 * ATTENTION: At most ONE DataComponent can be a Master! 
+	 * ATTENTION: At most ONE DataComponent can be a Master!
 	 * 
 	 * @return true, if is master
 	 */
@@ -383,16 +400,16 @@ public abstract class DataComponent implements IDataComponent,
 	 * Override this if the DataComponents implements the GUI buttons by
 	 * itself. When this option returns false, then the component must
 	 * implement the following methods:
-	 * 		masterGUIstep
-	 * 		masterGUImacrostep
-	 * 		masterGUIrun
-	 * 		masterGUIpause
-	 * 		masterGUIstop
-	 *  	masterGUIisEnabledStep
-	 *  	masterGUIisEnabledMacroStep
-	 *  	masterGUIisEnabledRun
-	 *  	masterGUIisEnabledPause
-	 *  	masterGUIisEnabledStop
+	 * masterGUIstep
+	 * masterGUImacrostep
+	 * masterGUIrun
+	 * masterGUIpause
+	 * masterGUIstop
+	 * masterGUIisEnabledStep
+	 * masterGUIisEnabledMacroStep
+	 * masterGUIisEnabledRun
+	 * masterGUIisEnabledPause
+	 * masterGUIisEnabledStop
 	 * 
 	 * @return true, if component implements the GUI buttons
 	 */
@@ -406,10 +423,11 @@ public abstract class DataComponent implements IDataComponent,
 	 * this method returns -1 if the previous step did not completed yet
 	 * otherwise it will return the last execution time of the full step
 	 * 
-	 * ATTENTION: At most ONE DataComponent can be a Master! 
+	 * ATTENTION: At most ONE DataComponent can be a Master!
 	 * This method *SHOULD NOT* be overridden!
 	 * 
 	 * @throws Exception the exception
+	 * @throws KiemMasterException the kiem master exception
 	 */
 	public final void masterStepExecution() throws KiemMasterException  {
 		if (this.isMaster()) {
@@ -426,14 +444,15 @@ public abstract class DataComponent implements IDataComponent,
 	}
 	
 	/**
-	 * Master macro step execution. If this is a master it can initiate the 
-	 * execution this method returns -1 if the previous step did not completed 
+	 * Master macro step execution. If this is a master it can initiate the
+	 * execution this method returns -1 if the previous step did not completed
 	 * yet otherwise it will return the last execution time of the full step.
 	 * 
-	 * ATTENTION: At most ONE DataComponent can be a Master! 
+	 * ATTENTION: At most ONE DataComponent can be a Master!
 	 * This method *SHOULD NOT* be overridden!
 	 * 
 	 * @throws Exception the exception
+	 * @throws KiemMasterException the kiem master exception
 	 */
 	public final void masterMacroStepExecution() throws KiemMasterException {
 		if (this.isMaster()) {
@@ -452,10 +471,11 @@ public abstract class DataComponent implements IDataComponent,
 	/**
 	 * Master stop execution. If this is a master it can stop the execution.
 	 * 
-	 * ATTENTION: At most ONE DataComponent can be a Master! 
+	 * ATTENTION: At most ONE DataComponent can be a Master!
 	 * This method *SHOULD NOT* be overridden!
 	 * 
 	 * @throws Exception the exception
+	 * @throws KiemMasterException the kiem master exception
 	 */
 	public final void masterStopExecution() throws KiemMasterException {
 		if (this.isMaster()) {
@@ -480,6 +500,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * This method *SHOULD NOT* be overridden!
 	 * 
 	 * @throws Exception the exception
+	 * @throws KiemMasterException the kiem master exception
 	 */
 	public final void masterPauseExecution() throws KiemMasterException {
 		if (this.isMaster()) {
@@ -506,6 +527,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * @param aimedStepDuration the aimed step duration
 	 * 
 	 * @throws Exception the exception
+	 * @throws KiemMasterException the kiem master exception
 	 */
 	public final void masterSetAimedStepDuration(int aimedStepDuration)
 													throws KiemMasterException {
@@ -533,6 +555,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * @return the aimed step duration set priorly
 	 * 
 	 * @throws Exception the exception
+	 * @throws KiemMasterException the kiem master exception
 	 */
 	public final int masterGetAimedStepDuration() throws KiemMasterException {
 		if (this.isMaster()) {
@@ -554,6 +577,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * This method *SHOULD NOT* be overridden!
 	 * 
 	 * @throws Exception the exception
+	 * @throws KiemMasterException the kiem master exception
 	 */
 	public final void masterRunExecution() throws KiemMasterException {
 		if (this.isMaster()) {
@@ -580,6 +604,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * @return true, if paused
 	 * 
 	 * @throws Exception the exception
+	 * @throws KiemMasterException the kiem master exception
 	 */
 	public final boolean masterIsPaused() throws KiemMasterException {
 		if (this.isMaster()) {
@@ -595,7 +620,7 @@ public abstract class DataComponent implements IDataComponent,
 	}
 
 	/**
-	 * Master is running. If this is a master it can detect whether the 
+	 * Master is running. If this is a master it can detect whether the
 	 * execution is currently running.
 	 * 
 	 * ATTENTION: At most ONE DataComponent can be a Master!
@@ -604,6 +629,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * @return true, if running
 	 * 
 	 * @throws Exception the exception
+	 * @throws KiemMasterException the kiem master exception
 	 */
 	public final boolean masterIsRunning() throws KiemMasterException {
 		if (this.isMaster()) {
@@ -620,7 +646,7 @@ public abstract class DataComponent implements IDataComponent,
 
 	/**
 	 * Master set kiem instances. Is called from the ExecutionManager
-	 * only iff isMaster() returns true! 
+	 * only iff isMaster() returns true!
 	 * 
 	 * ATTENTION: At most ONE DataComponent can be a Master!
 	 * This method *SHOULD NOT* be overridden!

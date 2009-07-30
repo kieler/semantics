@@ -16,23 +16,36 @@ package de.cau.cs.kieler.sim.kiem.execution;
 
 import de.cau.cs.kieler.sim.kiem.json.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class JSONMerger.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public class JSONMerger {
 
 	//This class merges two JSON-Objects
 	
+	/**
+	 * Instantiates a new jSON merger.
+	 */
 	JSONMerger() {
 			
 	}
+	
 	/**
-	   * Merges two JSON objects together (recursively), with values from 
-	   * "merge" replacing values in "base" to produce a new object.
-	   *
-	   * @param base The base object that values will be replaced into.
-	   * @param merge The object to merge values from.
-	   *
-	   * @throws JSONException if the two objects can't be merged for some
-	   *  		 reason.
-	   */
+	 * Merges two JSON objects together (recursively), with values from
+	 * "merge" replacing values in "base" to produce a new object.
+	 * 
+	 * @param base The base object that values will be replaced into.
+	 * @param merge The object to merge values from.
+	 * 
+	 * @return the JSON object
+	 * 
+	 * @throws JSONException if the two objects can't be merged for some
+	 * reason.
+	 */
 	  public JSONObject mergeObjects(JSONObject base, JSONObject merge)
 	      throws JSONException {
 	    // Clone the initial object (JSONObject doesn't support "clone").

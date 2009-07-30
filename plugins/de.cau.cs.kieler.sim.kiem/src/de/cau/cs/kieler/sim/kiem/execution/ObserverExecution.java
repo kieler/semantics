@@ -21,14 +21,36 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.json.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ObserverExecution.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public class ObserverExecution implements Runnable {
 	
+	/** The done. */
 	private boolean done;
+	
+	/** The stop. */
 	private boolean stop;
+	
+	/** The data component. */
 	private DataComponent dataComponent;
+	
+	/** The data. */
 	private JSONObject data;
+	
+	/** The parent. */
 	private Execution parent;
 	
+	/**
+	 * Instantiates a new observer execution.
+	 * 
+	 * @param dataComponent the data component
+	 * @param parent the parent
+	 */
 	public ObserverExecution(DataComponent dataComponent,
 							 Execution parent) {
 		this.stop = false; 
@@ -38,6 +60,11 @@ public class ObserverExecution implements Runnable {
 		this.dataComponent = dataComponent;
 	}
 	
+	/**
+	 * Step.
+	 * 
+	 * @return true, if successful
+	 */
 	public synchronized boolean step() {
 		//check if we already done
 		if (!done) {
@@ -55,17 +82,34 @@ public class ObserverExecution implements Runnable {
 		}
 	}
 
+	/**
+	 * Gets the data.
+	 * 
+	 * @return the data
+	 */
 	public JSONObject getData() {
 		return this.data;
 	}
+	
+	/**
+	 * Sets the data.
+	 * 
+	 * @param data the new data
+	 */
 	public void setData(JSONObject data) {
 		this.data = data;
 	}
 
+	/**
+	 * Stop execution.
+	 */
 	public void stopExecution() {
 		this.stop = true;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	public void run() {
 		while (!this.stop) {
 			//go to sleep

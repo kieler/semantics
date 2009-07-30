@@ -16,10 +16,19 @@ package de.cau.cs.kieler.sim.kiem.execution;
 
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DataPoolTestApplication.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public class DataPoolTestApplication {
 
 	/**
-	 * @param args
+	 * The main method.
+	 * 
+	 * @param args the args
 	 */
 	public static void main(String[] args) {
 		String[] filter = null;//{"key01","key03","key05","key07"};

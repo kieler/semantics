@@ -16,10 +16,30 @@ package de.cau.cs.kieler.sim.kiem.data;
 
 import org.eclipse.swt.graphics.Image;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Interface IKiemPropertyType.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public interface IKiemPropertyType {
 	
+	/**
+	 * Gets the value.
+	 * 
+	 * @param property the property
+	 * 
+	 * @return the value
+	 */
 	public Object getValue(KiemProperty property);
 	
+	/**
+	 * Sets the value.
+	 * 
+	 * @param property the property
+	 * @param value the value
+	 */
 	public void setValue(KiemProperty property, Object value);
 	
 }

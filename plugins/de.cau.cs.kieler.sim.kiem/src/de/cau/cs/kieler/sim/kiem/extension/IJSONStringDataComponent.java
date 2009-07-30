@@ -14,11 +14,27 @@
 
 package de.cau.cs.kieler.sim.kiem.extension;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Interface IJSONStringDataComponent.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public interface IJSONStringDataComponent  {
 	
 	//one step function for a Observer and producer
 	//for a producer only the argument will always be null
 	//for a Observer only this method will be called asynchronous
+	/**
+	 * Step.
+	 * 
+	 * @param JSONString the jSON string
+	 * 
+	 * @return the string
+	 * 
+	 * @throws KiemExecutionException the kiem execution exception
+	 */
 	public String step(String JSONString)
 										throws KiemExecutionException;   
 

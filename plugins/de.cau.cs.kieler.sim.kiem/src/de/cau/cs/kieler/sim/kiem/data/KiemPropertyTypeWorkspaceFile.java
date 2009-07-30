@@ -27,71 +27,135 @@ import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class KiemPropertyTypeWorkspaceFile.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
+ */
 public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 									implements IKiemPropertyType {
 	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -2468753195329915004L;
 
 
+	/** The Constant PROPERTY_FILE. */
 	private static final Image PROPERTY_FILE = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/propertyFileIcon.png").createImage();
 
 	
+	/** The Constant DEFAULT_FILTER_NAMES. */
 	private static final String[] DEFAULT_FILTER_NAMES = {"All Files (*.*)"};
+	
+	/** The Constant DEFAULT_FILTER_EXTS. */
 	private static final String[] DEFAULT_FILTER_EXTS = {"*.*"};
+	
+	/** The filter names. */
 	private String[] filterNames;
+	
+	/** The filter exts. */
 	private String[] filterExts;
 	
+	/**
+	 * Instantiates a new kiem property type workspace file.
+	 */
 	public KiemPropertyTypeWorkspaceFile() {
 		super();
 		this.filterNames = DEFAULT_FILTER_NAMES;
 		this.filterExts = DEFAULT_FILTER_EXTS;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
+	 */
 	public Object getValue(KiemProperty property) {
 		return property.value;
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
+	 */
 	public void setValue(KiemProperty property, Object value) {
 		if (value != null)
 			property.setValue((String)value);
 	}
 
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()
+	 */
 	@Override
 	public Image provideIcon() {
 		return PROPERTY_FILE;
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets.Composite)
+	 */
 	@Override 
 	public CellEditor provideCellEditor(Composite parent) {
 		return new CustomDialogCellEditor(parent);
 	}
 	
 
+	/**
+	 * Sets the filter names.
+	 * 
+	 * @param filterNames the new filter names
+	 */
 	public void setFilterNames(String[] filterNames) {
 		this.filterNames = filterNames;
 	}
+	
+	/**
+	 * Gets the filter names.
+	 * 
+	 * @return the filter names
+	 */
 	public String[] getFilterNames() {
 		return this.filterNames;
 	}
 	
+	/**
+	 * Sets the filter exts.
+	 * 
+	 * @param filterExts the new filter exts
+	 */
 	public void setFilterExts(String[] filterExts) {
 		this.filterExts = filterExts;
 	}
+	
+	/**
+	 * Gets the filter exts.
+	 * 
+	 * @return the filter exts
+	 */
 	public String[] getFilterExts() {
 		return this.filterExts;
 	}
 	
 	//--------------------
 	
+	/**
+	 * The Class CustomDialogCellEditor.
+	 */
 	public class CustomDialogCellEditor extends DialogCellEditor {
 		
-	    public CustomDialogCellEditor(Composite parent) {
+	    /**
+    	 * Instantiates a new custom dialog cell editor.
+    	 * 
+    	 * @param parent the parent
+    	 */
+    	public CustomDialogCellEditor(Composite parent) {
 	        super(parent);
 	    }
 
+		/* (non-Javadoc)
+		 * @see org.eclipse.jface.viewers.DialogCellEditor#openDialogBox(org.eclipse.swt.widgets.Control)
+		 */
 		@Override
 		protected Object openDialogBox(Control cellEditorWindow) {
 				

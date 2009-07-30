@@ -23,6 +23,9 @@ import org.eclipse.swt.widgets.Text;
 /**
  * The Class StepTextField. This is the GUI component that shows the
  * number of current steps during a running or paused execution.
+ *
+ * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * 
  */
 public class StepTextField extends ControlContribution {
 
