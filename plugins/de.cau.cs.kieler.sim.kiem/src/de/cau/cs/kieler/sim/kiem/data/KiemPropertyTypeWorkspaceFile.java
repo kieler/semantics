@@ -14,10 +14,9 @@
 
 package de.cau.cs.kieler.sim.kiem.data;
 
-import org.eclipse.core.internal.resources.File;
-
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.DialogCellEditor;
+import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -27,13 +26,14 @@ import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class KiemPropertyTypeWorkspaceFile.
+ * The Class KiemPropertyTypeWorkspaceFile. This implements a sample KiemPropertyType that
+ * uses a customized Eclipse dialog to browse for a workspace file.
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
  */
+@SuppressWarnings("restriction")
 public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 									implements IKiemPropertyType {
 	
@@ -53,20 +53,24 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 	/** The Constant DEFAULT_FILTER_EXTS. */
 	private static final String[] DEFAULT_FILTER_EXTS = {"*.*"};
 	
-	/** The filter names. */
+	/** The filter extension names. */
 	private String[] filterNames;
 	
-	/** The filter exts. */
+	/** The filter extensions. */
 	private String[] filterExts;
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Instantiates a new kiem property type workspace file.
+	 * Instantiates a new KiemPropertyType workspace file.
 	 */
 	public KiemPropertyTypeWorkspaceFile() {
 		super();
 		this.filterNames = DEFAULT_FILTER_NAMES;
 		this.filterExts = DEFAULT_FILTER_EXTS;
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
@@ -75,6 +79,8 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 		return property.value;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
 	 */
@@ -83,6 +89,8 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 			property.setValue((String)value);
 	}
 
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()
 	 */
@@ -90,8 +98,9 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 	public Image provideIcon() {
 		return PROPERTY_FILE;
 	}
-	
-	
+		
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets.Composite)
 	 */
@@ -100,9 +109,10 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 		return new CustomDialogCellEditor(parent);
 	}
 	
+	//-------------------------------------------------------------------------
 
 	/**
-	 * Sets the filter names.
+	 * Sets the filter extension names.
 	 * 
 	 * @param filterNames the new filter names
 	 */
@@ -110,8 +120,10 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 		this.filterNames = filterNames;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Gets the filter names.
+	 * Gets the filter extension names.
 	 * 
 	 * @return the filter names
 	 */
@@ -119,31 +131,37 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 		return this.filterNames;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Sets the filter exts.
+	 * Sets the filter extensions.
 	 * 
-	 * @param filterExts the new filter exts
+	 * @param filterExts the new filter extensions
 	 */
 	public void setFilterExts(String[] filterExts) {
 		this.filterExts = filterExts;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Gets the filter exts.
+	 * Gets the filter extensions.
 	 * 
-	 * @return the filter exts
+	 * @return the filter extensions
 	 */
 	public String[] getFilterExts() {
 		return this.filterExts;
 	}
 	
-	//--------------------
-	
+	//-------------------------------------------------------------------------
+
 	/**
 	 * The Class CustomDialogCellEditor.
 	 */
 	public class CustomDialogCellEditor extends DialogCellEditor {
 		
+		//---------------------------------------------------------------------
+
 	    /**
     	 * Instantiates a new custom dialog cell editor.
     	 * 
@@ -153,7 +171,9 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 	        super(parent);
 	    }
 
-		/* (non-Javadoc)
+		//---------------------------------------------------------------------
+
+    	/* (non-Javadoc)
 		 * @see org.eclipse.jface.viewers.DialogCellEditor#openDialogBox(org.eclipse.swt.widgets.Control)
 		 */
 		@Override
@@ -174,5 +194,7 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType
 			}
 			return null;
 		}
+		
 	}
+	
 }

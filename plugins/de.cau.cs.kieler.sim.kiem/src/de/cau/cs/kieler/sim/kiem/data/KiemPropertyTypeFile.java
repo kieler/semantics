@@ -23,9 +23,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class KiemPropertyTypeFile.
+ * The Class KiemPropertyTypeFile. This implements a sample KiemPropertyType that
+ * uses a standard SWT dialog to browse for a file.
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
@@ -49,14 +49,16 @@ public class KiemPropertyTypeFile extends KiemPropertyType
 	/** The Constant DEFAULT_FILTER_EXTS. */
 	private static final String[] DEFAULT_FILTER_EXTS = {"*.*"};
 	
-	/** The filter names. */
+	/** The filter extension names. */
 	private String[] filterNames;
 	
-	/** The filter exts. */
+	/** The filter extensions. */
 	private String[] filterExts;
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Instantiates a new kiem property type file.
+	 * Instantiates a new KiemPropertyType file.
 	 */
 	public KiemPropertyTypeFile() {
 		super();
@@ -64,12 +66,16 @@ public class KiemPropertyTypeFile extends KiemPropertyType
 		this.filterExts = DEFAULT_FILTER_EXTS;
 	}
 
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
 	 */
 	public Object getValue(KiemProperty property) {
 		return property.value;
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
@@ -79,6 +85,8 @@ public class KiemPropertyTypeFile extends KiemPropertyType
 			property.setValue((String)value);
 	}
 
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()
 	 */
@@ -87,7 +95,8 @@ public class KiemPropertyTypeFile extends KiemPropertyType
 		return PROPERTY_FILE;
 	}
 	
-	
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets.Composite)
 	 */
@@ -95,10 +104,11 @@ public class KiemPropertyTypeFile extends KiemPropertyType
 	public CellEditor provideCellEditor(Composite parent) {
 		return new CustomDialogCellEditor(parent);
 	}
-	
+
+	//-------------------------------------------------------------------------
 
 	/**
-	 * Sets the filter names.
+	 * Sets the filter extension names.
 	 * 
 	 * @param filterNames the new filter names
 	 */
@@ -106,8 +116,10 @@ public class KiemPropertyTypeFile extends KiemPropertyType
 		this.filterNames = filterNames;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Gets the filter names.
+	 * Gets the filter extension names.
 	 * 
 	 * @return the filter names
 	 */
@@ -115,32 +127,38 @@ public class KiemPropertyTypeFile extends KiemPropertyType
 		return this.filterNames;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Sets the filter exts.
+	 * Sets the filter extensions.
 	 * 
-	 * @param filterExts the new filter exts
+	 * @param filterExts the new filter extensions 
 	 */
 	public void setFilterExts(String[] filterExts) {
 		this.filterExts = filterExts;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Gets the filter exts.
+	 * Gets the filter extensions.
 	 * 
-	 * @return the filter exts
+	 * @return the filter extensions
 	 */
 	public String[] getFilterExts() {
 		return this.filterExts;
 	}
 	
-	//--------------------
-	
+	//-------------------------------------------------------------------------
+
 	/**
 	 * The Class CustomDialogCellEditor.
 	 */
 	public class CustomDialogCellEditor extends DialogCellEditor {
 		
-	    /**
+    	//---------------------------------------------------------------------
+
+		/**
     	 * Instantiates a new custom dialog cell editor.
     	 * 
     	 * @param parent the parent
@@ -148,6 +166,8 @@ public class KiemPropertyTypeFile extends KiemPropertyType
     	public CustomDialogCellEditor(Composite parent) {
 	        super(parent);
 	    }
+    	
+    	//---------------------------------------------------------------------
 
 		/* (non-Javadoc)
 		 * @see org.eclipse.jface.viewers.DialogCellEditor#openDialogBox(org.eclipse.swt.widgets.Control)
@@ -165,5 +185,7 @@ public class KiemPropertyTypeFile extends KiemPropertyType
 			}
 			return null;
 		}
+		
 	}
+
 }

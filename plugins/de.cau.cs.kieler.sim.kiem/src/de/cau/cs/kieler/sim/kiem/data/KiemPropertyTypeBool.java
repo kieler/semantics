@@ -21,7 +21,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class KiemPropertyTypeBool.
  *
@@ -42,12 +41,16 @@ public class KiemPropertyTypeBool extends KiemPropertyType
 	/** The Constant BOOL_ITEMS. */
 	private static final String[] BOOL_ITEMS = {"false", "true"};
 
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * Instantiates a new kiem property type bool.
+	 * Instantiates a new KiemPropertyTypeBool.
 	 */
 	public KiemPropertyTypeBool() {
 		super();
 	}
+
+	//-------------------------------------------------------------------------
 	
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets.Composite)
@@ -59,6 +62,8 @@ public class KiemPropertyTypeBool extends KiemPropertyType
 									SWT.Deactivate);
 	}
 
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
 	 */
@@ -66,6 +71,8 @@ public class KiemPropertyTypeBool extends KiemPropertyType
 		if (property.getValue().equals("true")) return 1;
 		else return 0;
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
@@ -78,6 +85,8 @@ public class KiemPropertyTypeBool extends KiemPropertyType
 			property.setValue("true");
 		}
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()

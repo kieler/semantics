@@ -24,9 +24,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class KiemPropertyTypeEditor.
+ * The Class KiemPropertyTypeEditor. This implements a sample KiemPropertyType that
+ * uses a displays a list of all open editors to choose from.
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
@@ -42,16 +42,20 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/propertyEditorIcon.png").createImage();
 	
-	/** The items. */
+	/** The editor items. */
 	private String[] items;
 
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Instantiates a new kiem property type editor.
+	 * Instantiates a new KiemPropertyType editor.
 	 */
 	public KiemPropertyTypeEditor() {
 		super();
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets.Composite)
 	 */
@@ -63,8 +67,11 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 									SWT.Deactivate);
 	}
 
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Refresh items.
+	 * Refresh editor items. Goes thru the list of all opened Eclipse editors
+	 * and adds them to the items list for the drop down list.
 	 */
 	public void refreshItems() {
 	    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
@@ -80,6 +87,8 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 		this.items = items;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
 	 */
@@ -91,6 +100,8 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 		return 0; //default is the first item
 	}
 
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
 	 */
@@ -99,14 +110,7 @@ public class KiemPropertyTypeEditor extends KiemPropertyType
 		property.setValue(items[Integer.parseInt((String)value)]);
 	}
 	
-	/**
-	 * Sets the items.
-	 * 
-	 * @param items the new items
-	 */
-	public void setItems(String[] items) {
-		this.items = items;
-	}
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()

@@ -281,7 +281,8 @@ public abstract class DataComponent implements IDataComponent,
 	 * Checks if the current step is a history step. This can be called
 	 * by the component itself to check if the current step lies in
 	 * history. If this is the case, any produced output data will not
-	 * be considered.
+	 * be considered. The DataComponent may implement special behavior in
+	 * its step() method depending on the return value of this method.
 	 * 
 	 * @return true, if is history step
 	 */
@@ -340,7 +341,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * @return true, if is macro step is done
 	 */
 	//TODO: not implemented yet
-	public boolean isStepDone() {
+	public boolean isMacroStepDone() {
 		return true;
 	}
 

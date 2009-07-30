@@ -17,9 +17,9 @@ package de.cau.cs.kieler.sim.kiem.data;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class KiemPropertyTypeString.
+ * The Class KiemPropertyTypeString. This implements a sample KiemPropertyType for
+ * a String type.
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
@@ -35,12 +35,16 @@ public class KiemPropertyTypeString extends KiemPropertyType
 	.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 			"icons/propertyStringIcon.png").createImage();
 
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Instantiates a new kiem property type string.
+	 * Instantiates a new KiemPropertyType string.
 	 */
 	public KiemPropertyTypeString() {
 		super();
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
@@ -49,12 +53,16 @@ public class KiemPropertyTypeString extends KiemPropertyType
 		return property.value;
 	}
 
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
 	 */
 	public void setValue(KiemProperty property, Object value) {
 		property.setValue((String)value);
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()

@@ -65,7 +65,7 @@ public class KiemContentProvider implements ITreeContentProvider {
 	public Object[] getChildren(Object parentElement) {
 		//only if component
 		DataComponentEx dataComponentEx = (DataComponentEx)parentElement;
-		return dataComponentEx.getPropertyList().getElements();
+		return dataComponentEx.getProperties(); 
 	}
 
 	//-------------------------------------------------------------------------
@@ -89,7 +89,8 @@ public class KiemContentProvider implements ITreeContentProvider {
 
 		//if component -> count properties
 		DataComponentEx dataComponentEx = (DataComponentEx)element;
-		return (dataComponentEx.getPropertyList().hasElements());
+		if (dataComponentEx.getProperties() == null) return false;
+		return (dataComponentEx.getProperties().length > 0);
 	}
 
 }

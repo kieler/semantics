@@ -16,9 +16,12 @@ package de.cau.cs.kieler.sim.kiem.data;
 
 import java.io.Serializable;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class KiemProperty.
+ * The Class KiemProperty. This is the basic serializable KiemProperty 
+ * implementation which can hold a key value pair of types String and
+ * also a KiemPropertyType.  
+ * The contents of the KiemProperty can be saved and loaded but the
+ * KiemPropertyType is recovered by its identifier.
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
@@ -28,30 +31,23 @@ public class KiemProperty implements Serializable {
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -6897758298476417410L;
 	
-	/** The key. */
+	/** The String key of the KiemProperty. */
 	String key;
 	
-	/** The value. */
+	/** The String value of the KiemProperty. */
 	String value;
 	
-	/** The type. */
+	/** The KiemPropertyType of the KiemProperty. */
 	KiemPropertyType type;
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Instantiates a new kiem property.
-	 */
-	public KiemProperty() {
-		this.key = "";
-		this.value = "";
-		this.type = new KiemPropertyTypeString(); 
-	}
-	
-	/**
-	 * Instantiates a new kiem property.
+	 * Instantiates a new String KiemProperty, with given default value.
 	 * 
-	 * @param key the key
-	 * @param type the type
-	 * @param value the value
+	 * @param key the key of this property
+	 * @param type the type of this property
+	 * @param value the value of this property
 	 */
 	public KiemProperty(String key, KiemPropertyType type, String value) {
 		this.key = key;
@@ -59,24 +55,28 @@ public class KiemProperty implements Serializable {
 		this.type = type; 
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Instantiates a new kiem property.
+	 * Instantiates a new KiemProperty of given type with given default value.
 	 * 
-	 * @param key the key
-	 * @param type the type
-	 * @param value the value
+	 * @param key the key of this property
+	 * @param type the type of this property
+	 * @param value the value of this property
 	 */
 	public KiemProperty(String key, KiemPropertyType type, int value) {
 		this.key = key;
 		this.value = ""+value;
 		this.type = type; 
 	}
+
+	//-------------------------------------------------------------------------
 	
 	/**
-	 * Instantiates a new kiem property.
+	 * Instantiates a new KiemProperty of given type with empty default value.
 	 * 
-	 * @param key the key
-	 * @param type the type
+	 * @param key the key of this property
+	 * @param type the type of this property
 	 */
 	public KiemProperty(String key, KiemPropertyType type) {
 		this.key = key;
@@ -84,10 +84,12 @@ public class KiemProperty implements Serializable {
 		this.type = type; 
 	}
 
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Instantiates a new kiem property.
+	 * Instantiates a new String KiemProperty with empty default value. 
 	 * 
-	 * @param key the key
+	 * @param key the key of this property
 	 */
 	public KiemProperty(String key) {
 		this.key = key;
@@ -95,11 +97,13 @@ public class KiemProperty implements Serializable {
 		this.type = new KiemPropertyTypeString();  
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Instantiates a new kiem property.
+	 * Instantiates a new String KiemProperty with given default value.
 	 * 
-	 * @param key the key
-	 * @param value the value
+	 * @param key the key of this property
+	 * @param value the value of this property
 	 */
 	public KiemProperty(String key, String value) {
 		this.key = key;
@@ -107,23 +111,27 @@ public class KiemProperty implements Serializable {
 		this.type = new KiemPropertyTypeString();  
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Instantiates a new kiem property.
+	 * Instantiates a new int KiemProperty with given default value.
 	 * 
-	 * @param key the key
-	 * @param value the value
+	 * @param key the key of this property
+	 * @param value the value of this property
 	 */
 	public KiemProperty(String key, int value) {
 		this.key = key;
 		this.value = value+"";
 		this.type = new KiemPropertyTypeInt(); 
 	}
-	
+
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Instantiates a new kiem property.
+	 * Instantiates a new boolean KiemProperty with given default value.
 	 * 
-	 * @param key the key
-	 * @param value the value
+	 * @param key the key of this property
+	 * @param value the value of this property
 	 */
 	public KiemProperty(String key, boolean value) {
 		this.key = key;
@@ -131,56 +139,69 @@ public class KiemProperty implements Serializable {
 		this.type = new KiemPropertyTypeBool(); 
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Gets the key.
+	 * Gets the key of the KiemProperty.
 	 * 
-	 * @return the key
+	 * @return the String property key
 	 */
 	public String getKey() {
 		return this.key;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Gets the value.
+	 * Gets the value of the KiempProperty.
 	 * 
-	 * @return the value
+	 * @return the String property value
 	 */
 	public String getValue() {
 		return this.value;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Gets the type.
+	 * Gets the type of the KiemProperty.
 	 * 
-	 * @return the type
+	 * @return the KiemPropertyType
 	 */
 	public KiemPropertyType getType() {
 		return this.type;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Sets the value.
+	 * Sets the value of the KiemPorperty.
 	 * 
-	 * @param value the new value
+	 * @param value the new String property value
 	 */
 	public void setValue(String value) {
 		this.value = value;
 	}
 
+	//-------------------------------------------------------------------------
 	
 	/**
-	 * Gets the file path.
+	 * Gets the file path as a String. This interprets the property value as
+	 * a file path.
 	 * 
-	 * @return the file path
+	 * @return the String file path
 	 */
 	public String getFilePath() {
 		return this.value.replace("\\", "/");
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Gets the directory.
+	 * Gets the directory as a String. This interprets the property value as
+	 * a file and extracts the directory out of it.
 	 * 
-	 * @return the directory
+	 * @return the String directory
 	 */
 	public String getDirectory() {
 		String backDir = this.value;
@@ -190,6 +211,5 @@ public class KiemProperty implements Serializable {
 			backDir = backDir.substring(0,i+1);
 		return backDir;
 	}
-
 
 }

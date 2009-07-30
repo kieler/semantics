@@ -19,7 +19,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class KiemPropertyTypeInt.
+ * The Class KiemPropertyTypeInt. This implements a sample KiemPropertyType for
+ * an integer type.
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
@@ -35,12 +36,16 @@ public class KiemPropertyTypeInt extends KiemPropertyType
 	.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 			"icons/propertyIntIcon.png").createImage();
 
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Instantiates a new kiem property type int.
+	 * Instantiates a new KiemPropertyType int.
 	 */
 	public KiemPropertyTypeInt() {
 		super();
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
@@ -48,6 +53,8 @@ public class KiemPropertyTypeInt extends KiemPropertyType
 	public Object getValue(KiemProperty property) {
 		return property.value;
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
@@ -58,6 +65,8 @@ public class KiemPropertyTypeInt extends KiemPropertyType
 		}catch(Exception e) {
 		}
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()

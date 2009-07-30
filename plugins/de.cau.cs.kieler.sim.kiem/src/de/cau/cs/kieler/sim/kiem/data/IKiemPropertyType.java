@@ -14,31 +14,43 @@
 
 package de.cau.cs.kieler.sim.kiem.data;
 
-import org.eclipse.swt.graphics.Image;
-
-// TODO: Auto-generated Javadoc
 /**
- * The Interface IKiemPropertyType.
- *
+ * The Interface IKiemPropertyType. This is the base interface that has to
+ * be implemented by new KiemProperty types that also must extend the
+ * {@link KiemPropertyType} abstract class.
+ * KiemProperties have to implement the {@link #getValue(KiemProperty)} and
+ * the {@link #setValue(KiemProperty, Object)} methods depending on the
+ * CellEditor that is used. The standard CellEditor is the TextCellEditor
+ * but KiemPropertyTypes may provide their own CellEditors by overriding
+ * the method {@link KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets.Composite)}. 
+ * 
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
  */
 public interface IKiemPropertyType {
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Gets the value.
+	 * Gets the value of the property type. This method is called by the
+	 * cell editor and its returned object depends on the latter.
 	 * 
-	 * @param property the property
+	 * @param property the KiemProperty
 	 * 
-	 * @return the value
+	 * @return the value of the property with the type depending on the
+	 * 				cell editor
 	 */
 	public Object getValue(KiemProperty property);
 	
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * Sets the value.
+	 * Sets the value of the property type. This method is called by the
+	 * cell editor and the object parameter depends on the latter.
 	 * 
-	 * @param property the property
-	 * @param value the value
+	 * @param property the KiemProperty
+	 * @param value the value of the property with the type depending on the
+	 * 				cell editor
 	 */
 	public void setValue(KiemProperty property, Object value);
 	

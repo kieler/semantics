@@ -21,9 +21,9 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class KiemPropertyTypeChoice.
+ * The Class KiemPropertyTypeChoice. This implements a sample KiemPropertyType for
+ * selecting a String from a String[] array with a drop down list.
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
@@ -39,11 +39,13 @@ public class KiemPropertyTypeChoice extends KiemPropertyType
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 					"icons/propertyChoiceIcon.png").createImage();
 	
-	/** The items. */
+	/** The items to display in the drop down list. */
 	private String[] items;
 
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * Instantiates a new kiem property type choice.
+	 * Instantiates a new KiemPropertyType choice.
 	 * 
 	 * @param items the items
 	 */
@@ -52,6 +54,8 @@ public class KiemPropertyTypeChoice extends KiemPropertyType
 		this.items = items;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets.Composite)
 	 */
@@ -61,6 +65,8 @@ public class KiemPropertyTypeChoice extends KiemPropertyType
 									items, 
 									SWT.Deactivate);
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
@@ -72,6 +78,8 @@ public class KiemPropertyTypeChoice extends KiemPropertyType
 		return 0; //default is the first item
 	}
 
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
 	 */
@@ -80,14 +88,7 @@ public class KiemPropertyTypeChoice extends KiemPropertyType
 		property.setValue(items[Integer.parseInt((String)value)]);
 	}
 	
-	/**
-	 * Sets the items.
-	 * 
-	 * @param items the new items
-	 */
-	public void setItems(String[] items) {
-		this.items = items;
-	}
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()
