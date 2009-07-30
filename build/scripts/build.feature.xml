@@ -82,7 +82,7 @@
 			<arg value="-configuration" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse2" />
 			<arg value="-data" />
-			<arg value="${workspace}" />
+			<arg value="${eclipseWorkspace}" />
 			<arg value="-clean" />
 			<arg value="-consoleLog" />
 			<arg value="-application" />

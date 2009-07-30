@@ -5,6 +5,7 @@
 	<property file="${scriptdir}/build.general.properties" />
 
 	<property name="eclipseLocation" value="${baseLocation}" />
+	<property name="eclipseWorkspace" location="${system.WORKSPACE}/eclipseWorkspace"/>
 
 	<target name="build" depends="init, pde-build" />
 
@@ -23,8 +24,11 @@
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg value="-configuration" />
 			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse" />
+			<arg value="-data" />
+			<arg value="${eclipseWorkspace}" />
 			<arg value="-application" />
 			<arg value="org.eclipse.ant.core.antRunner" />
+			<arg value="-consoleLog" />
 			<arg value="-buildfile" />
 			<arg value="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/productBuild/productBuild.xml" />
 			<arg value="-Dbasedir=${system.WORKSPACE}" />
