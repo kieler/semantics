@@ -54,7 +54,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 				
 			}
 		}catch(Exception e) {
-			throw new KiemExecutionException(e.getMessage(), false);
+			throw new KiemExecutionException(e.getMessage(), false, e);
 		}
 		return allDataOut;
 	}		

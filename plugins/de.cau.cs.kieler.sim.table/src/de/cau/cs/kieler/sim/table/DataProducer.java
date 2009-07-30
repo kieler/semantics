@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sim.table;
 
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.sim.table.views.DataTableView;
@@ -63,9 +64,9 @@ public class DataProducer extends JSONStringDataComponent implements
 					String key = tableData.getKey();
 					String value = tableData.getValue();
 					if (value.equals("")) 
-						returnString += "\""+key+"\":{\"status\":true}";
+						returnString += "\""+key+"\":{\""+JSONSignalValues.presentKey+"\":true}";
 					else
-						returnString += "\""+key+"\":{\"status\":true,\"value\":"+value+"}";
+						returnString += "\""+key+"\":{\""+JSONSignalValues.presentKey+"\":true,\"value\":"+value+"}";
 				} else {
 					//if signals is marked as absent
 					if (!returnString.equals(""))
@@ -73,9 +74,9 @@ public class DataProducer extends JSONStringDataComponent implements
 					String key = tableData.getKey();
 					String value = tableData.getValue();
 					if (value.equals("")) 
-						returnString += "\""+key+"\":{\"status\":false}";
+						returnString += "\""+key+"\":{\""+JSONSignalValues.presentKey+"\":false}";
 					else
-						returnString += "\""+key+"\":{\"status\":false,\"value\":"+value+"}";
+						returnString += "\""+key+"\":{\""+JSONSignalValues.presentKey+"\":false,\"value\":"+value+"}";
 				}
 				//we have sent all modified values => reset
 				synchronized(tableData) {
