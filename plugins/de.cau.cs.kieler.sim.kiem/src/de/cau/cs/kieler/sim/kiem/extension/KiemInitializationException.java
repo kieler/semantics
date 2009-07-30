@@ -14,9 +14,13 @@
 
 package de.cau.cs.kieler.sim.kiem.extension;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class KiemInitializationException.
+ * The Class KiemInitializationException. This exception is used by 
+ * DataComponents to flag errors within their initialization() and their
+ * wrapup() method during the initialization and wrap-up phase. 
+ * If the {@link #mustStop} flag is set to true, then this means 
+ * the execution *CANNOT* been started and the execution manager will
+ * not do so if any DataComponent throws an error with this flag.
  * 
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  */
@@ -28,24 +32,46 @@ public class KiemInitializationException extends Exception {
 	/** The must stop. */
 	private boolean mustStop;
 	
+	/** The cause of this Exception. */
+	private Exception cause;
+	
+	//-------------------------------------------------------------------------
+
 	/**
 	 * Instantiates a new kiem initialization exception.
 	 * 
-	 * @param message the message
-	 * @param mustStop the must stop
+	 * @param message the message of this Exception to display to the user
+	 * @param mustStop the must stop flag indicating if the execution must stop
+	 * @param cause the cause of this Exception if any, or null otherwise
 	 */
-	public KiemInitializationException(String message, boolean mustStop) {
+	public KiemInitializationException(String message, 
+									   boolean mustStop,
+									   Exception cause) {
 		super(message);
 		this.mustStop = mustStop;
+		this.cause = cause;
 	}
 
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Checks if is must stop.
+	 * Checks if the execution must stop when this Exception occurs.
 	 * 
-	 * @return true, if is must stop
+	 * @return true, if execution must stop
 	 */
 	public boolean isMustStop() {
 		return this.mustStop;
+	}
+
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Gets the cause of this Exception.
+	 * 
+	 * @return the cause of this Exception, if any
+	 */
+	public Exception getCause() {
+		return cause;
 	}
 
 }

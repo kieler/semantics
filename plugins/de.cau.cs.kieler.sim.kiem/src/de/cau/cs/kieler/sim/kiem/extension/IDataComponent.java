@@ -14,41 +14,51 @@
 
 package de.cau.cs.kieler.sim.kiem.extension;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Interface IDataComponent.
+ * The Interface IDataComponent that a {@link DataComponent} implements.
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
  */
 public interface IDataComponent {
 
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * Initialize. Do some initializing prior to execution.
+	 * Initialize. Do some initializing prior to execution. If an error
+	 * occurs during initialization, the DataComponent should raise a
+	 * {@link KiemInitializationException}.
 	 * 
 	 * @throws KiemInitializationException the kiem initialization exception
 	 */
 	public void initialize() throws KiemInitializationException;
 	
-	//
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Wrapup. Do some wrapping-up after execution has finished.
+	 * Wrapup. Do some wrapping-up after execution has finished. If an error
+	 * occurs during wrap up, the DataComponent should raise a
+	 * {@link KiemInitializationException}.
 	 * 
 	 * @throws KiemInitializationException the kiem initialization exception
 	 */
 	public void wrapup() throws KiemInitializationException;
 
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Checks if is producer. DataComponent is a producer and returns != null
-	 * in step method.
+	 * To check whether the DataComponent is a producer. If the DataComponent
+	 * is a producer it should return != null in its step() method.
 	 * 
 	 * @return true, if is producer
 	 */
 	public boolean isProducer();
 
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * Checks if is observer. DataComponent is an Observer and needs a
-	 * parameter != null in step method.
+	 * To check whether the DataComponent is an observer. If the DataComponent
+	 * is an observer the arguments in its step() method will be != null.
 	 * 
 	 * @return true, if is observer
 	 */

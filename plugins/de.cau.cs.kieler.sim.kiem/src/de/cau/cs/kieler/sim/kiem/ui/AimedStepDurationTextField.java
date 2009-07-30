@@ -72,6 +72,18 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	}
 	
 	//-------------------------------------------------------------------------
+	
+	/**
+	 * Returns whether the text field is currently enabled or not.
+	 * 
+	 * @return true, if text field is enabled
+	 */
+	@Override
+	public boolean isEnabled() {
+		return this.enabled;
+	}
+	
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.action.ControlContribution#createControl(org.eclipse.swt.widgets.Composite)
