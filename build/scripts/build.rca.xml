@@ -1,0 +1,39 @@
+<project name="de.vogella.build" default="build">
+
+	<property environment="system"/>
+	<property name="scriptdir" location="."/>
+	<property file="${scriptdir}/build.general.properties" />
+
+	<property name="eclipseLocation" value="${baseLocation}" />
+
+	<target name="build" depends="init, pde-build" />
+
+	<target name="clean">
+		<delete dir="${buildDirectory}" />
+	</target>
+
+	<target name="init">
+		<mkdir dir="${buildDirectory}" />
+		<mkdir dir="${buildDirectory}/features" />
+	</target>
+
+	<!-- This target actually executes the PDE Build process by launching the 
+		 Eclipse antRunner application.
+		 The working directory is specified by means of $basedir (and $buildDirectory in properties file) -->
+	<target name="pde-build">
+		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
+			<arg value="-application" />
+			<arg value="org.eclipse.ant.core.antRunner" />
+			<arg value="-buildfile" />
+			<arg value="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/productBuild/productBuild.xml" />
+			<arg value="-Dbasedir=${system.WORKSPACE}" />
+			<arg value="-DpluginPath=${pluginPath}" />
+			<arg value="-Dscriptdir=${scriptdir}" />
+			<arg value="-Dbuildproperties=${scriptdir}/build.rca.properties" />
+			<classpath>
+				<pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
+			</classpath>
+		</java>
+	</target>
+
+</project>
