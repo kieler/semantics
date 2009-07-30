@@ -34,7 +34,7 @@
 			<arg value="-Dbasedir=${system.WORKSPACE}" />
 			<arg value="-DpluginPath=${pluginPath}" />
 			<arg value="-Dscriptdir=${scriptdir}" />
-			<arg value="-Dbuildproperties=${scriptdir}/build.rca.properties" />
+			<arg value="-DbuildProperties=${scriptdir}/build.general.properties" />
 			<classpath>
 				<pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
