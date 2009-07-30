@@ -36,27 +36,60 @@ import org.eclipse.swt.widgets.TableItem;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 
+/**
+ * The Class AddDataComponentDialog.
+ */
 public class AddDataComponentDialog extends Dialog {
 
+	/** The basic dialog SWT component. */
 	AddDataComponentDialog dialog;
 	
+	/** The temporary table that allows the user to select DataComponents. */
+	Table table;
+	
+	/** The list that holds the currently selected DataComponents. */
+	List<DataComponent> selectedList;
+	
+	/** The component list should hold all available default DataComponents
+	 * and is used to update the table. */
+	List<DataComponent> componentList;
+	
+	/** The DataComponentExList. It is used to check for multiple instances.
+	 * It should hold all DataComponentEx's that are in the original list
+	 * of the KiemView to check if another instance of a DataComponent
+	 * can safely be added. */
+	List<DataComponentEx> dataComponentExList;
+	
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Instantiates a dialog.
+	 * 
+	 * @param parent the SWT parent of this dialog
+	 */
 	public AddDataComponentDialog(Shell parent) {
 		super(parent);
 		dialog = this;
 	}
 	
-	Table table;
-	List<DataComponent> selectedList;
-	List<DataComponent> componentList;
-	List<DataComponentEx> dataComponentExList;
-	
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
+	 */
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
+		//set the title of this dialog
 		newShell.setText("Add Data Component");
 	}
 	
-    protected Control createDialogArea(Composite parent) {
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
+	 */
+	protected Control createDialogArea(Composite parent) {
         Composite composite = (Composite) super.createDialogArea(parent);
         
         GridLayout gridLayout = new GridLayout();
@@ -96,19 +129,54 @@ public class AddDataComponentDialog extends Dialog {
         return composite;
     }
 
-    @Override
+	//-------------------------------------------------------------------------
+
+    /* (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#getInitialSize()
+	 */
+	@Override
     protected Point getInitialSize() {
+		//set the dimensions of the dialog
         return new Point(400, 300);
     }
 
+    //-------------------------------------------------------------------------
+
+    /**
+     * Sets the component list. The component list should hold all available
+ 	 * default DataComponents and is used to update the table.
+ 	 * This should be provided by the calling instance.
+     * 
+     * @param dataComponents the new component list
+     */
     public void setComponentList(List<DataComponent> dataComponents) {
     	this.componentList = dataComponents;
     }
+
+    //-------------------------------------------------------------------------
+    
+    /**
+     * Sets the DataComponentEsList. It is used to check for multiple 
+     * instances. It should hold all DataComponentEx's that are in the original
+     * list of the KiemView to check if another instance of a DataComponent
+	 * can safely be added. 
+ 	 * This should be provided by the calling instance.
+     * 
+     * @param dataComponentExList the new component list
+     */
     public void setComponentExList(List<DataComponentEx> dataComponentExList) {
     	this.dataComponentExList = dataComponentExList;
     }
     
-    private void updateTable() {
+	//-------------------------------------------------------------------------
+
+    /**
+	 * Updates the temporary table from which the user can select (multiple)
+	 * DataComponents that he/she wishes to add to its list.
+	 * The type of the DataComponent is shown in brackets, and the icon is
+	 * also personalized for each type of DataComponent.
+	 */
+	private void updateTable() {
     	for (int c = 0; c < componentList.size(); c++) {
     		DataComponent component = componentList.get(c);
         	TableItem item = new TableItem(table, SWT.NULL);
@@ -132,12 +200,27 @@ public class AddDataComponentDialog extends Dialog {
     	}
     }
     
-    public List<DataComponent> getSelectedComponents() {
+	//-------------------------------------------------------------------------
+
+    /**
+	 * Gets the selected components. This is normally called after the user has
+	 * selected and chosen DataComponents and already closed the dialog. 
+	 * 
+	 * @return the selected DataComponents for which DataComponentExs has to be
+	 * 		   created by the calling instance
+	 */
+	public List<DataComponent> getSelectedComponents() {
     	return selectedList;
     }
     
-    
-    private void updateSelectedList() {	
+	//-------------------------------------------------------------------------
+
+    /**
+	 * Updates the selected list. This is done immediately when the user
+	 * selects DataComponents in the list. The selected list can be optained
+	 * by calling {@link #getSelectedComponents()}.
+	 */
+	private void updateSelectedList() {	
     	selectedList =
     		new LinkedList<DataComponent>();
     	TableItem[] selection = table.getSelection();
@@ -149,14 +232,23 @@ public class AddDataComponentDialog extends Dialog {
 	    		selectedList.add(dataComponent);
 			}
     	}
-    	
     	if (selection.length < 1)
     		selectedList = null;
-    	
     }
 
     //---------------------------------------------------------------------------
     
+    /**
+     * Check if multiple instances of a DataComponent are okay and if not
+     * check if there already is another instance in the original 
+     * DataComponentExList. If the latter is the case then return false. 
+     * In any other case it is okay to add another instance of this 
+     * DataComponent so this method returns true.
+     * 
+     * @param component the DataComponent that we want to check on
+     * 
+     * @return true, if another instance of this DataComponent is allowed
+     */
     public boolean checkMultipleInstanceOk(DataComponent component) {
     	//nothing to check = no multiple instances possible if empty list
     	if (dataComponentExList == null) return true; 
@@ -182,7 +274,13 @@ public class AddDataComponentDialog extends Dialog {
 
     //---------------------------------------------------------------------------	
     
-	public void refreshEnabledDisabledTextColors() {
+	/**
+     * Refreshes the enabled/disabled text colors of the DataComponent selection
+     * list. In case a DataComponent is *NOT* multiple instantiable and there
+     * already is one instance in the original DataComponentExList (of the
+     * KiemView) then we indicate this by a grayed colorDisabled.
+     */
+    public void refreshEnabledDisabledTextColors() {
 		//change the text color (black or gray)
 		Color colorEnabled  = new Color(null, new RGB(0,0,0));
 		Color colorDisabled = new Color(null, new RGB(150,150,150));
@@ -198,14 +296,9 @@ public class AddDataComponentDialog extends Dialog {
 			else { 
 				currentColor = colorDisabled;
 			}
-			
 			//update text colors
 			table.getItem(c).setForeground(currentColor);
 		}
 	}
 	
-	//---------------------------------------------------------------------------	
-	
-
-
 }

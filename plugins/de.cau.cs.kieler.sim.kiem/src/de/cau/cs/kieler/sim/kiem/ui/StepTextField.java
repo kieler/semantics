@@ -14,33 +14,52 @@
 
 package de.cau.cs.kieler.sim.kiem.ui;
 
-
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-
+/**
+ * The Class StepTextField. This is the GUI component that shows the
+ * number of current steps during a running or paused execution.
+ */
 public class StepTextField extends ControlContribution {
 
+	/** The SWT textfield component. */
 	Text textfield;
+	
+	//-------------------------------------------------------------------------
 		
-	public StepTextField(KiemPlugin KIEM) {
+	/**
+	 * Instantiates a new step text field GUI ControlContribution.
+	 */
+	public StepTextField() {
 		super("Step Text Field");
 	}
 	
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.action.ControlContribution#createControl(org.eclipse.swt.widgets.Composite)
+	 */
 	@Override
 	protected Control createControl(Composite parent) {
 		textfield = new Text(parent,SWT.BORDER);
 		this.textfield.setEnabled(false);
-		//this.textfield.setVisible(false);
 		textfield.setToolTipText("Current Step Counter");
+		//reserver some amount of space
 		textfield.setText("            ");
 		return textfield;
 	}
 	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Update the contents (i.e., the # of steps) of the textfield.
+	 * 
+	 * @param text the text to display in the textfield
+	 */
 	public void updateTextfield(String text) {
 		if (text == null) {
 			//this.textfield.setVisible(false);

@@ -1235,7 +1235,7 @@ public class KiemView extends ViewPart {
 	 */
 	private StepTextField getStepTextField() {
 		if (stepTextField != null) return stepTextField;
-		stepTextField = new StepTextField(KIEMInstance);
+		stepTextField = new StepTextField();
 		return stepTextField;
 	}
 	
