@@ -22,10 +22,31 @@ import org.eclipse.swt.widgets.Composite;
 
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 
+/**
+ * The Class KiemPropertyEditing. It handles the editing support for
+ * KiemProperties in the DataComponentExs table of the KiemView.
+ */
 public class KiemPropertyEditing extends EditingSupport {
-	private KiemView parent;
-	private Composite tree;
 	
+	/** The parent view to trigger a refresh. */
+	private KiemView parent;
+	
+	/** The tree (table) to operate on. */
+	private Composite tree;
+
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Instantiates a new Kiem property editing for the tree. KiemProperty 
+	 * values are in the second column (index 1) of the tree-table of 
+	 * DataComponentExs where the first column (index 0) holds the KiemProperty
+	 * key. Hence editing support for KiemProperties is only available for the
+	 * first, the value column. Otherwise an error is generated.
+	 * 
+	 * @param parent the parent view
+	 * @param viewer the column viewer
+	 * @param columnIndex the column index
+	 */
 	public KiemPropertyEditing(KiemView parent, 
 						  ColumnViewer viewer, 
 						  int columnIndex) {
@@ -34,6 +55,8 @@ public class KiemPropertyEditing extends EditingSupport {
 		// Create the correct editor based on the column index
 		switch (columnIndex) {
 		case 1:
+			//save the tree of the viewer inside tree for later
+			//register the appropriate cell editor for it
 			this.tree = ((TreeViewer)viewer).getTree();
 			break;
 		default:
@@ -42,6 +65,11 @@ public class KiemPropertyEditing extends EditingSupport {
 		this.parent = parent;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
+	 */
 	@Override
 	protected boolean canEdit(Object element) {
 		//do not allow to modify enabled/disabled status during execution
@@ -50,21 +78,41 @@ public class KiemPropertyEditing extends EditingSupport {
 		return true;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.EditingSupport#getCellEditor(java.lang.Object)
+	 */
 	@Override
 	protected CellEditor getCellEditor(Object element) {
+		//this gets not a special (static) cell editor
+		//but a dynamic one that is based on the KiemPropertyType of
+		//the KiemProperty element
 		KiemProperty property = (KiemProperty)element;
 		property.getType().setCellEditor(tree);
 		return property.getType().getCellEditor();
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
+	 */
 	@Override
 	protected Object getValue(Object element) {
+		//get the value using the getValue() method of the KiemPropertyType
 		KiemProperty property = (KiemProperty)element;
 		return property.getType().getValue(property);
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.EditingSupport#setValue(java.lang.Object, java.lang.Object)
+	 */
 	@Override
 	protected void setValue(Object element, Object value) {
+		//set the value using the getValue() method of the KiemPropertyType
 		KiemProperty property = (KiemProperty)element;
 		property.getType().setValue(property, ""+value);
 		getViewer().update(element, null);

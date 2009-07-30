@@ -22,11 +22,34 @@ import org.eclipse.swt.SWT;
 
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 
+/**
+ * The Class KiemComponentEditing. It handles the editing support for
+ * DataComponentExs in the DataComponentExs table of the KiemView. It 
+ * basically only allows the modification of the enabled tag of a 
+ * DataComponentEx.
+ */
 public class KiemComponentEditing extends EditingSupport {
+	
+	/** The cell editor. */
 	private CellEditor editor;
+	
+	/** The column index. */
 	private int columnIndex;
+	
+	/** The parent view used to trigger a refresh. */
 	private KiemView parent;
 
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Instantiates a new kiem component editing. This is only used in the
+	 * third column where the check-box for enabling or disabling a
+	 * DataComponent exists. For other columns this method generates an error.
+	 * 
+	 * @param parent the parent
+	 * @param viewer the viewer
+	 * @param columnIndex the column index
+	 */
 	public KiemComponentEditing(KiemView parent, 
 						  ColumnViewer viewer, 
 						  int columnIndex) {
@@ -35,17 +58,17 @@ public class KiemComponentEditing extends EditingSupport {
 		// Create the correct editor based on the column index
 		switch (columnIndex) {
 		case 2:
+			//only in the third column, there should be a check box editing
 			editor = new CheckboxCellEditor(null, SWT.CHECK | SWT.READ_ONLY);
 			break;
-		//case 1:
-			//editor = new TextCellEditor(((TableViewer) viewer).getTable());
-		//	break;
 		default:
 			throw new RuntimeException("Editing not supported");
 		}
 		this.columnIndex = columnIndex;
 		this.parent = parent;
 	}
+
+	//-------------------------------------------------------------------------
 
 	@Override
 	protected boolean canEdit(Object element) {
@@ -55,10 +78,15 @@ public class KiemComponentEditing extends EditingSupport {
 		return true;
 	}
 
+	//-------------------------------------------------------------------------
+
 	@Override
 	protected CellEditor getCellEditor(Object element) {
+		//return the registered cell editor 
 		return editor;
 	}
+	
+	//-------------------------------------------------------------------------
 
 	@Override
 	protected Object getValue(Object element) {
@@ -67,12 +95,16 @@ public class KiemComponentEditing extends EditingSupport {
 
 		switch (this.columnIndex) {
 		case 2:
+			//only for the third column, return whether the component is 
+			//enabled
 			return dataComponentEx.isEnabled();
 		default:
 			break;
 		}
 		return null;
 	}
+	
+	//-------------------------------------------------------------------------
 
 	@Override
 	protected void setValue(Object element, Object value) {
@@ -85,8 +117,10 @@ public class KiemComponentEditing extends EditingSupport {
 		default:
 			break;
 		}
-
+		//update the table view
 		parent.updateView(true);
+		//check for a single enabled master, because we could just have
+		//enabled a master where there may be already an enabled one
 		parent.checkForSingleEnabledMaster(false,dataComponentEx);
 	}
 

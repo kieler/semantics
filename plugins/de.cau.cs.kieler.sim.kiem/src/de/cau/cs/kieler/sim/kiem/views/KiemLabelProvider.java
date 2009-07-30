@@ -22,16 +22,33 @@ import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
 
+/**
+ * The Class KiemLabelProvider provides the labels for the table of
+ * DataComponentExs in the KiemView.
+ */
 public class KiemLabelProvider implements ITableLabelProvider {
 
 	
+	/** The parent view. This is used to trigger a refresh. */
 	private KiemView parent;
 	
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Instantiates a new kiem label provider.
+	 * 
+	 * @param parent the parent view
+	 */
 	public KiemLabelProvider(KiemView parent) {
 		super();
 		this.parent = parent;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang.Object, int)
+	 */
 	public Image getColumnImage(Object element, int columnIndex) {
 		//if property
 		if (element instanceof KiemProperty) { 
@@ -122,7 +139,12 @@ public class KiemLabelProvider implements ITableLabelProvider {
 		}
 		return null;
 	}
+	
+	//-------------------------------------------------------------------------
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang.Object, int)
+	 */
 	public String getColumnText(Object element, int columnIndex) {
 		if (element instanceof KiemProperty) { 
 			switch (columnIndex) {
@@ -172,12 +194,27 @@ public class KiemLabelProvider implements ITableLabelProvider {
 		}
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.jface.viewers.ILabelProviderListener)
+	 */
 	public void addListener(ILabelProviderListener listener) {
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
+	 */
 	public void dispose() {
 	}
+	
+	//-------------------------------------------------------------------------
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang.Object, java.lang.String)
+	 */
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}

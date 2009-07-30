@@ -18,16 +18,43 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
+/**
+ * The Class KiemTableViewer. This is just a TreeViewer, where it is possible
+ * to add extensions or modifications in the future within this class 
+ * declaration.
+ */
 public class KiemTableViewer extends TreeViewer{
 
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Instantiates a new kiem table tree viewer.
+	 * 
+	 * @param table the table to use as a basis
+	 */
 	public KiemTableViewer(Table table) {
 		super(table);
 	}
 
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Instantiates a new kiem table tree viewer.
+	 * 
+	 * @param parent the parent
+	 * @param style the style
+	 */
 	public KiemTableViewer(Composite parent, int style) {
 		super(parent, style);
 	}
+	
+	//-------------------------------------------------------------------------
 
+	/**
+	 * Instantiates a new kiem table tree viewer. Use the default style.
+	 * 
+	 * @param parent the parent
+	 */
 	public KiemTableViewer(Composite parent) {
 		super(parent);
 	}

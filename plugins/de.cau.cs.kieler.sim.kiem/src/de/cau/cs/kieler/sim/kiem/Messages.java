@@ -25,10 +25,10 @@ public class Messages extends NLS {
 	/** The Constant BUNDLE_NAME. */
 	private static final String BUNDLE_NAME = "de.cau.cs.kieler.sim.kiem.messages"; //$NON-NLS-1$
 	
-	/** The extension point i djsoncomponent. */
+	/** The extension point jsoncomponent. */
 	public static String extensionPointIDjsoncomponent;
 	
-	/** The extension point i dstringcomponent. */
+	/** The extension point stringcomponent. */
 	public static String extensionPointIDstringcomponent;
 	
 	/** The View title. */

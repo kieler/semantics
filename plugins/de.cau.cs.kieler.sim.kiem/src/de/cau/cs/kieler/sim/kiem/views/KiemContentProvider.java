@@ -23,29 +23,62 @@ import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 
+/**
+ * The Class KiemContentProvider. This provides the content for the
+ * tree-table of DataComponentExs. It decides based on the type 
+ * (DataComponentEx or KiemProperty) what content has to be provided.
+ */
 public class KiemContentProvider implements ITreeContentProvider {
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
+	 */
 	@SuppressWarnings("unchecked")
 	public Object[] getElements(Object inputElement) {
 		return ((List<DataComponent>)inputElement).toArray();
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
+	 */
 	public void dispose() {
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)
+	 */
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang.Object)
+	 */
 	public Object[] getChildren(Object parentElement) {
 		//only if component
 		DataComponentEx dataComponentEx = (DataComponentEx)parentElement;
 		return dataComponentEx.getPropertyList().getElements();
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getParent(java.lang.Object)
+	 */
 	public Object getParent(Object element) {
 		return null;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.ITreeContentProvider#hasChildren(java.lang.Object)
+	 */
 	public boolean hasChildren(Object element) {
 		//if property -> no children
 		if (element instanceof KiemProperty) 
