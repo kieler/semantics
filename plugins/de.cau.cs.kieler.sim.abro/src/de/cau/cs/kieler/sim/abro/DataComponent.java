@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sim.abro;
 
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyList;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
