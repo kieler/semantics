@@ -25,7 +25,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * The Class KiemPropertyTypeChoice. This implements a sample KiemPropertyType for
  * selecting a String from a String[] array with a drop down list.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemPropertyTypeChoice extends KiemPropertyType

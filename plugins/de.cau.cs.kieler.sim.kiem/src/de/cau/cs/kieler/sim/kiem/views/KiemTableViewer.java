@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Table;
  * to add extensions or modifications in the future within this class 
  * declaration.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemTableViewer extends TreeViewer{

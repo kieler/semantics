@@ -21,7 +21,7 @@ import de.cau.cs.kieler.sim.kiem.json.*;
  * extension point it can handle JSONObject of the concrete Java
  * JSON implementation that can be found on {@link "www.json.org/java"}.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public interface IJSONObjectDataComponent  {

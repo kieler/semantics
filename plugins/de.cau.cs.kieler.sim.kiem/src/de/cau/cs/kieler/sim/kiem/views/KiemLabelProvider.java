@@ -26,7 +26,7 @@ import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
  * The Class KiemLabelProvider provides the labels for the table of
  * DataComponentExs in the KiemView.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemLabelProvider implements ITableLabelProvider {

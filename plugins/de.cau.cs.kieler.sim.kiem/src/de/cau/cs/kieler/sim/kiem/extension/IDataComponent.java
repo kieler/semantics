@@ -17,7 +17,7 @@ package de.cau.cs.kieler.sim.kiem.extension;
 /**
  * The Interface IDataComponent that a {@link DataComponent} implements.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public interface IDataComponent {

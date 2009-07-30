@@ -39,7 +39,7 @@ import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
  * 
  * A timeout must be at least 100ms (reasonable).
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class TimeoutThread extends Thread {

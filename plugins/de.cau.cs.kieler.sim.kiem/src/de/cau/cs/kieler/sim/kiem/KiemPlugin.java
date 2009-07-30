@@ -49,7 +49,7 @@ import de.cau.cs.kieler.sim.kiem.views.KiemView;
  * It also provides the access to the one and only instance of this
  * class and hence a way to access the execution thread.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemPlugin extends AbstractUIPlugin {

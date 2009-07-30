@@ -20,7 +20,7 @@ package de.cau.cs.kieler.sim.kiem.extension;
  * A JSON implementation for Java that can be found on 
  * {@link "www.json.org/java"}.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public interface IJSONStringDataComponent  {

@@ -23,7 +23,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * the ones that are used by the kiem property types and are declared
  * directly by those types.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemIcons {

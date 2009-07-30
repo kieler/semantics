@@ -31,7 +31,7 @@ import de.cau.cs.kieler.sim.kiem.json.*;
  * whether a component-method exceeds the maximum timeout and then terminates
  * all executions w/ an error log message.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class Execution implements Runnable {

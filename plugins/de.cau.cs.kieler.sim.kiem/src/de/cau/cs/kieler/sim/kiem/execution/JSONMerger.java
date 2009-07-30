@@ -21,7 +21,7 @@ import de.cau.cs.kieler.sim.kiem.json.*;
  * by the DataPool. It is able to merge two JSONObjects (that are
  * lists of key-value-pairs) into one object.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * @author Stephan Knaur <skn@informatik.uni-kiel.de>
  * 
  */

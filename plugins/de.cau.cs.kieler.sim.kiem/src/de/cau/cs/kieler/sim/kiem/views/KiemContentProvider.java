@@ -28,7 +28,7 @@ import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
  * tree-table of DataComponentExs. It decides based on the type 
  * (DataComponentEx or KiemProperty) what content has to be provided.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemContentProvider implements ITreeContentProvider {

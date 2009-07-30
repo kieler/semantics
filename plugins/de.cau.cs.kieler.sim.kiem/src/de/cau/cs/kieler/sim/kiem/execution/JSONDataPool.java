@@ -24,7 +24,7 @@ import de.cau.cs.kieler.sim.kiem.json.*;
  * and provides the execution manager with delta data information for it's
  * delta observer DataComponents. This also affects the history steps.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class JSONDataPool {

@@ -27,7 +27,7 @@ import de.cau.cs.kieler.sim.kiem.views.KiemView;
  * and/or Data Producer component. Implemented components may want to
  * override some of the here provided methods.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public abstract class DataComponent implements IDataComponent,
@@ -59,7 +59,7 @@ public abstract class DataComponent implements IDataComponent,
 	
 	/**
 	 * Constructor initializes the properties with the
-	 * {@link: #inititializProperties()} inititializProperties
+	 * {@link #inititializProperties()} inititializProperties
 	 * method that may be overridden by the component. It sets the properties
 	 * to null in the default case to indicate that the DataComponent has no
 	 * properties.
@@ -159,7 +159,7 @@ public abstract class DataComponent implements IDataComponent,
 	/**
 	 * Returns the properties associated with this component. These are set in
 	 * the constructor and may be overridden by 
-	 * {@link: #initializeProperties()}.
+	 * {@link #initializeProperties()}.
 	 * 
 	 * @return 	KiemProperty[] array of properties
 	 */

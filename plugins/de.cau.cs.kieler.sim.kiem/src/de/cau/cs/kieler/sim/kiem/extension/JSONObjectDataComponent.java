@@ -19,7 +19,7 @@ package de.cau.cs.kieler.sim.kiem.extension;
  * extension point JSONObjectDataComponent that implements the 
  * interface {@link IJSONObjectDataComponent}.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public abstract class JSONObjectDataComponent 

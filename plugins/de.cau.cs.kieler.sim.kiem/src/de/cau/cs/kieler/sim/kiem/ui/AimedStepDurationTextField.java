@@ -30,7 +30,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * the currently set aimed step duration for the execution. It can also be used
  * to edit this duration. 
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class AimedStepDurationTextField extends ControlContribution implements KeyListener,

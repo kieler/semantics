@@ -19,7 +19,7 @@ package de.cau.cs.kieler.sim.kiem.extension;
  * DataComponent implementation if a non-master DataComponent tries
  * to access the master~ methods.
  * 
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class KiemMasterException extends Exception {
 

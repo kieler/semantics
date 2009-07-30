@@ -21,7 +21,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * The Class KiemPropertyTypeString. This implements a sample KiemPropertyType for
  * a String type.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemPropertyTypeString extends KiemPropertyType

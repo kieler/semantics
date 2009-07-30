@@ -27,7 +27,7 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
  * whether a DataComponent instance is enabled or disabled or the current
  * pool index for delta observer DataComponents.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class DataComponentEx {

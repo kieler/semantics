@@ -20,7 +20,7 @@ import org.eclipse.osgi.util.NLS;
  * The Class Messages is used to externalize strings in the messages.properties
  * file.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class Messages extends NLS {

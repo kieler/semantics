@@ -22,7 +22,7 @@ package de.cau.cs.kieler.sim.kiem.extension;
  * the execution *CANNOT* been started and the execution manager will
  * not do so if any DataComponent throws an error with this flag.
  * 
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class KiemInitializationException extends Exception {
 

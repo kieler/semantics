@@ -27,7 +27,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * The Class KiemPropertyTypeFile. This implements a sample KiemPropertyType that
  * uses a standard SWT dialog to browse for a file.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemPropertyTypeFile extends KiemPropertyType

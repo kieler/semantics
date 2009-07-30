@@ -20,7 +20,7 @@ package de.cau.cs.kieler.sim.kiem.data;
  * checked prior to initialization of the DataComponents and will 
  * prevent any execution.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemPropertyException extends Exception {

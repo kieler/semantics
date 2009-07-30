@@ -28,7 +28,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * The Class KiemPropertyTypeEditor. This implements a sample KiemPropertyType that
  * uses a displays a list of all open editors to choose from.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemPropertyTypeEditor extends KiemPropertyType

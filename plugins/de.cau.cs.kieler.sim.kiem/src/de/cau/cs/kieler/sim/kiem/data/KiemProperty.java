@@ -23,7 +23,7 @@ import java.io.Serializable;
  * The contents of the KiemProperty can be saved and loaded but the
  * KiemPropertyType is recovered by its identifier.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemProperty implements Serializable {

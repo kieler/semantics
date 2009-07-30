@@ -49,7 +49,7 @@ import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
  * registered in the Eclipse IDE. It holds the DataComponent table list
  * view and buttons to control the execution.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemView extends ViewPart {

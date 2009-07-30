@@ -24,7 +24,7 @@ package de.cau.cs.kieler.sim.kiem.data;
  * but KiemPropertyTypes may provide their own CellEditors by overriding
  * the method {@link KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets.Composite)}. 
  * 
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public interface IKiemPropertyType {

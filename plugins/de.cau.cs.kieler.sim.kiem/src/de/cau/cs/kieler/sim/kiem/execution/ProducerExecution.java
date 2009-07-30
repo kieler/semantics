@@ -36,7 +36,7 @@ import de.cau.cs.kieler.sim.kiem.json.*;
  * the data is computed. 
  * Note that this could also trigger a time out in the execution thread.
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class ProducerExecution implements Runnable {

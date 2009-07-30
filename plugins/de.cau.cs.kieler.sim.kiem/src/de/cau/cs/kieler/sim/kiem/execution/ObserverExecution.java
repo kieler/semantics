@@ -33,7 +33,7 @@ import de.cau.cs.kieler.sim.kiem.json.*;
  * It sleeps until it is called and indicates that it is ready for the next
  * step with its done flag. 
  *
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class ObserverExecution implements Runnable {

@@ -25,7 +25,7 @@ package de.cau.cs.kieler.sim.kiem.extension;
  * and the eclipse instance is not affected as long as the left memory
  * is still enough. 
  * 
- * @author Christian Motika <cmot@informatik.uni-kiel.de>
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class KiemExecutionException extends Exception {
 
