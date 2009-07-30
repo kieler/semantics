@@ -17,38 +17,60 @@ package de.cau.cs.kieler.sim.kiem.execution;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class TimeoutThread.
+ * The Class TimeoutThread. It is used to handle timeouts of methods implemented
+ * by DataComponents during the execution. An instance of this class is designed
+ * to run in a concurrent worker thread. Whenever the timeout method is called
+ * the timeout is activated. 
+ * 
+ * There are two possibilities to stop or deactivate
+ * the timeout when the component finished in time:
+ * 1. set another new timeout by calling {@link #timeout(int, String, DataComponentEx, Execution)}
+ * again.
+ * 2. reset the timeout by calling {@link #abortTimeout()}.
+ * 
+ * When a timeout is triggered then an error message is generated and the 
+ * execution is stopped immediately. Note that the execution manager only tries
+ * to stop all concurrent threads but cannot guarantee that they really terminate
+ * in the end.
+ * 
+ * If a timeout is triggered and the execution is stopped, the timeout thread
+ * itself also terminates.
+ * 
+ * A timeout must be at least 100ms (reasonable).
  *
  * @author Christian Motika <cmot@informatik.uni-kiel.de>
  * 
  */
 public class TimeoutThread extends Thread {
 
-	/** The timeout. */
+	/** The timeout to count down (ms). */
 	private int timeout;
 	
-	/** The active. */
+	/** The active flag indicates that the timeout is active. */
 	private boolean active;
 	
-	/** The execution. */
+	/** The execution link for stopping it in case of a triggered timeout. */
 	private Execution execution;
 	
-	/** The stop time. */
-	private long startTime, stopTime;
+	/** The stop time is the time when the timeout will be triggered if 
+	 * not deactivated before. */
+	private long stopTime;
 	
-	/** The abort. */
+	/** The abort flag indicates that the timeout should not be triggered. */
 	private boolean abort;
 	
-	/** The job description. */
+	/** The job description for the generated error message. This should be
+	 * the job that is actually encapsulated by the timeout. */
 	private String jobDescription;
 	
-	/** The data component ex. */
+	/** The DataComponentEx which is observed by this timeout. */
 	private DataComponentEx dataComponentEx;
 	
-	/** The terminate. */
+	/** The terminate.  Indicates that this thread should terminate. */
 	private boolean terminate;
+	
+	//-------------------------------------------------------------------------
 	
 	/**
 	 * Instantiates a new timeout thread.
@@ -57,52 +79,63 @@ public class TimeoutThread extends Thread {
 		this.active = false;
 		this.timeout = 0;
 	}
+
+	//-------------------------------------------------------------------------
 	
 	/**
-	 * Timeout.
+	 * Activate as a new timeout. The jobDescription should hold information
+	 * about the called methods of the DataComponentEx.
 	 * 
-	 * @param timeout the timeout
+	 * @param timeout the timeout in ms
 	 * @param jobDescription the job description
-	 * @param dataComponentEx the data component ex
-	 * @param execution the execution
+	 * @param dataComponentEx the affected DataComponentEx
+	 * @param execution a link to the execution
 	 */
 	public synchronized void timeout(int timeout,
 						String jobDescription,
 						DataComponentEx dataComponentEx,
 						Execution execution) {
 		this.timeout = timeout;
-		//ensure timeout is reasonable!
+		//ensure timeout is reasonable! (not too small)
 		if (this.timeout < 100) this.timeout = 100;
 		this.execution = execution;
 		this.abort = false;
 		this.jobDescription = jobDescription;
 		this.dataComponentEx = dataComponentEx;
 		this.active = true;
-		startTime = System.currentTimeMillis();
-		stopTime  = this.startTime + this.timeout;
+		stopTime  = System.currentTimeMillis() + this.timeout;
 		this.notifyAll();
 	}
 
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Abort timeout.
+	 * Abort a timeout. This aborts the current timeout. Another way to
+	 * abort a timeout is to simply set a new one by calling the method 
+	 * {@link #timeout(int, String, DataComponentEx, Execution)}.
 	 */
 	public void abortTimeout() {
 		this.abort = true;
 	}
-	
+
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Terminate.
+	 * Terminates this thread by awaking it (if it is suspended). The 
+	 * {@link #run()} method will terminate if it sees the {@link #terminate}
+	 * flag to be true.
 	 */
 	public synchronized void terminate() {
 		this.terminate = true;
 		this.notifyAll();
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see java.lang.Thread#run()
 	 */
 	public void run() {
-//System.out.println("Timeout - thread started");
 		while(!terminate) {
 
 			synchronized(this) {
@@ -115,24 +148,27 @@ public class TimeoutThread extends Thread {
 				//a value > 100
 			}
 			
-//System.out.println("Timeout - started");
-
 			while (!terminate && active) {
+				//sleep for a tenth amount of time of the timeout
 				try{Thread.sleep(this.timeout/100);}catch(Exception e){}
 				if (this.abort) {
-//System.out.println("Timeout - aborted");
 					//timeout aborted
 					this.active = false;
 				}
+				else if (this.terminate) {
+					//timeout thrad terminated
+					return;
+				}
 				else if (System.currentTimeMillis() > stopTime) {
-//System.out.println("Timeout - catched !!!");
-					//timeout
+					//timeout is triggered
 					this.execution.showError(
 							"Timeout of component '"+dataComponentEx.getName()+
-							"' occurred while performing the following operation: "
+							"' occurred while performing the following" +
+							" operation: "
 							+this.jobDescription, KiemPlugin.PLUGIN_ID,
 							null);
 					this.execution.errorTerminate();
+					//this also stops this thread
 					return;
 				}
 			}//end while active

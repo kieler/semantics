@@ -15,12 +15,6 @@
 package de.cau.cs.kieler.sim.kiem.execution;
 
 import java.util.List;
-
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IViewPart;
-
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
@@ -28,9 +22,7 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.*;
-import de.cau.cs.kieler.sim.kiem.views.KiemView;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Execution. This is the base class for the whole execution.
  * It creates and manages the worker threads for pure observer and pure
@@ -44,104 +36,87 @@ import de.cau.cs.kieler.sim.kiem.views.KiemView;
  */
 public class Execution implements Runnable {
 
-	//Timeout for DataComponents
-	/** The timeout. */
+	/** Timeout for DataComponents. */
 	TimeoutThread timeout;
 	
-	/** The Constant TIMEOUT. */
-	private static final int TIMEOUT = 5000; //5 seconds
+	/** The Constant TIMEOUT. 5 seconds. */
+	private static final int TIMEOUT = 5000; 
 	
-	//delay to wait in paused state until
-	/** The Constant PAUSE_DEYLAY. */
-	private static final int PAUSE_DEYLAY = 50;   //in ms
+	/** Delay to wait in paused state in ms. */
+	private static final int PAUSE_DEYLAY = 50; 
 	
-	//defines the number of steps in ...
-	/** The Constant INFINITY_STEPS. */
-	private static final int INFINITY_STEPS = -2; //...run mode
+	/** Defines the number of steps in run mode. */
+	private static final int INFINITY_STEPS = -2;
 	
-	/** The Constant FORWARD_STEP. */
-	private static final int FORWARD_STEP = 1;	  //...normal forward step
+	/** Defines the number of steps of normal forward step. */
+	private static final int FORWARD_STEP = 1;	 
 	
-	/** The Constant BACKWARD_STEP. */
-	private static final int BACKWARD_STEP = -1;  //...when user makes step backwards
+	/** Defines the number of steps when user makes step backwards. */
+	private static final int BACKWARD_STEP = -1;
 	
-	/** The Constant NO_STEPS. */
-	private static final int NO_STEPS = 0;        //...pause mode
+	/** Defines the number of steps in pause mode. */
+	private static final int NO_STEPS = 0;
 
-	//basic data component list of all enabled (and disabled)
-	//data components
-	/** The data component ex list. */
+	/** Basic DataComponentList of all enabled (and disabled)
+	DataComponents. */
 	private List<DataComponentEx> dataComponentExList;
 	
-	//intended duration of a step
-	/** The aimed step duration. */
+	/** The Intended duration of a step. */
 	private int aimedStepDuration;
 
-	//the steps left to perform
-	//can be NO_STEPS in pause mode
-	//    or INFINITY_STEPS in run mode
-	/** The steps. */
+	/** The step to perform can be NO_STEPS in pause mode 
+	 * or INFINITY_STEPS in run mode or FORWARD_STEP / BACKWARD_STEP. */
 	private long steps;
 	
-	//indicates paused command
-	/** The paused command. */
+	/** Indicates paused command. */
 	private boolean pausedCommand;
 	
-	//flag that indicates the termination (from outside)
-	/** The stop. */
+	/** Flag that indicates the termination (from outside). */
 	private boolean stop;
 	
-	//time measurement
-	/** The step duration. */
+	/** The step duration (for time measurement).  */
 	private int stepDuration;
 	
-	/** The maximum step duration. */
+	/** The maximum step duration (for time measurement). */
 	private int maximumStepDuration;
 	
-	/** The minimum step duration. */
+	/** The minimum step duration (for time measurement). */
 	private int minimumStepDuration;
 	
-	/** The weighted average step duration. */
+	/** The weighted average step duration (for time measurement). */
 	private int weightedAverageStepDuration;
 	
-	/** The accumulated step durations. */
+	/** The accumulated step durations (for time measurement). */
 	private long accumulatedStepDurations;
 	
-	/** The accumulated plause durations. */
+	/** The accumulated pause durations (for time measurement). */
 	private long accumulatedPlauseDurations;
 	
-	/** The execution start time. */
+	/** The execution start time (for time measurement). */
 	private long executionStartTime;
 	
-	//each step advance the counter
-	/** The step counter. */
+	/** The step counter. Is advanced in {@link #FORWARD_STEP} */
 	private long stepCounter;
 	
-	//by default this is equal to stepCounter-1
-	//in case of history steps: stepCount < stepCounterMax
-	/** The step counter max. */
+	/** The step counter max. By default this is equal to stepCounter-1.
+	 * In case of history steps: stepCount < stepCounterMax. */
 	private long stepCounterMax; 
 
-	//the data pool
 	/** The data pool. */
 	private JSONDataPool dataPool;
 	
-	//threads for Observers and producers
-	/** The observer execution array. */
+	/** Threads for observers. */
 	private ObserverExecution[] observerExecutionArray;
 	
-	/** The producer execution array. */
+	/** Threads for producers. */
 	private ProducerExecution[] producerExecutionArray;
-	
-	//KiemView to control execution
-	//KiemView view;
 	
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Instantiates a new execution (thread).
+	 * Instantiates and starts a new execution (thread).
 	 * 
-	 * @param dataComponentExList the data component ex list
+	 * @param dataComponentExList the current DataComponentExList
 	 */
 	public Execution(List<DataComponentEx> dataComponentExList) {
 		this.stepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
@@ -149,18 +124,15 @@ public class Execution implements Runnable {
 		this.pausedCommand = false;
 		this.steps = NO_STEPS; // == paused
 		this.dataComponentExList = dataComponentExList;
-		
 		this.dataPool = new JSONDataPool();
-		
+		//start the timeout worker thread
 		this.timeout = new TimeoutThread();
 		this.timeout.start();
-		
 		observerExecutionArray = new ObserverExecution
 										[this.dataComponentExList.size()];
 		producerExecutionArray = new ProducerExecution
 										[this.dataComponentExList.size()];
-		
-		//for each pure Observer ... create ObserverExecution Thread
+		//for each pure observer ... create ObserverExecution Thread
 		//for each pure producer ... create ProducerExecution Thread
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
@@ -188,25 +160,29 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Gets the step duration.
+	 * Gets the currently set aimed step duration.
 	 * 
 	 * @return the step duration
 	 */
 	public int getStepDuration() {
 		return stepDuration;
 	}	
+
+	//-------------------------------------------------------------------------
 	
 	/**
-	 * Gets the maximum step duration.
+	 * Gets the measured maximum step duration.
 	 * 
 	 * @return the maximum step duration
 	 */
 	public int getMaximumStepDuration() {
 		return maximumStepDuration;
 	}	
+
+	//-------------------------------------------------------------------------
 	
 	/**
-	 * Gets the minimum step duration.
+	 * Gets the measured minimum step duration.
 	 * 
 	 * @return the minimum step duration
 	 */
@@ -214,8 +190,10 @@ public class Execution implements Runnable {
 		return minimumStepDuration;
 	}	
 	
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * Gets the weighted average step duration.
+	 * Gets the measured weighted average step duration.
 	 * 
 	 * @return the weighted average step duration
 	 */
@@ -223,14 +201,18 @@ public class Execution implements Runnable {
 		return weightedAverageStepDuration;
 	}	
 	
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * Gets the average step duration.
+	 * Gets the measured average step duration.
 	 * 
 	 * @return the average step duration
 	 */
 	public int getAverageStepDuration() {
 		return (int)(this.accumulatedStepDurations/this.stepCounter);
 	}	
+
+	//-------------------------------------------------------------------------
 	
 	/**
 	 * Gets the execution start time.
@@ -241,55 +223,70 @@ public class Execution implements Runnable {
 		return executionStartTime;
 	}	
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Gets the execution durantion.
+	 * Gets the execution duration.
 	 * 
-	 * @return the execution durantion
+	 * @return the execution duration
 	 */
-	public long getExecutionDurantion() {
+	public long getExecutionDuration() {
 		return 	System.currentTimeMillis() 
 				- executionStartTime 
 				- accumulatedPlauseDurations;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Gets the steps.
+	 * Gets the current step.
 	 * 
-	 * @return the steps
+	 * @return the step
 	 */
 	public long getSteps() {
 		return this.stepCounter;
 	}
+
+	//-------------------------------------------------------------------------
 	
 	/**
-	 * Gets the maximum steps.
+	 * Gets the maximum step. This usually not differs by more than 1 from the
+	 * current step ({@link #getSteps()}), unless the current step is a
+	 * history step.
 	 * 
-	 * @return the maximum steps
+	 * @return the maximum step
 	 */
 	public long getMaximumSteps() {
 		return this.stepCounterMax+1;
 	}
+
+	//-------------------------------------------------------------------------
 	
 	/**
-	 * Checks if is history step.
+	 * Checks whether the current step is a history step.
 	 * 
-	 * @return true, if is history step
+	 * @return true, if the current step is a history step
 	 */
 	public boolean isHistoryStep() {
 		return (this.stepCounter <= this.stepCounterMax);
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Sets the aimed step duration.
+	 * Sets the aimed step duration. This is usually called from outside during
+	 * the execution, if the user modifies the value in the GUI.
 	 * 
 	 * @param aimedStepDuration the new aimed step duration
 	 */
 	public void setAimedStepDuration(int aimedStepDuration) {
 		this.aimedStepDuration = aimedStepDuration;
 	}
+
+	//-------------------------------------------------------------------------
 	
 	/**
-	 * Gets the aimed step duration.
+	 * Gets the last set and currently used aimed step duration.
 	 * 
 	 * @return the aimed step duration
 	 */
@@ -300,15 +297,22 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Step back execution sync.
+	 * Make a backward execution step. Because we do not want to block the GUI
+	 * or a calling master component, if the currently processed step is not
+	 * yet done, this method returns false and no processes another step.
+	 * Otherwise, if the last step was already processed, the method will
+	 * schedule the next step but will return asynchronously. It will first
+	 * synchronously inform all components about the step command.
+	 * 
+	 * @return true, if step is being processed
 	 */
-	public void stepBackExecutionSync() {
+	public boolean stepBackExecutionSync() {
 		//cannot make steps back in this case
-		if (this.getSteps() <= 0) return;
+		if (this.getSteps() <= 0) return false;
 		
 		//do not block if currently doing step
 		if (this.steps != NO_STEPS) 
-			return;
+			return false;
 		
 		synchronized(this) {
 			if (this.steps == NO_STEPS) {
@@ -331,19 +335,27 @@ public class Execution implements Runnable {
 				this.steps = BACKWARD_STEP;
 			}
 			else 
-				return; //skip in this case make NO step
+				return false; //skip in this case make NO step
 		}
+		return true;
 	}
 
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Step execution sync.
+	 * Make a forward execution step. Because we do not want to block the GUI
+	 * or a calling master component, if the currently processed step is not
+	 * yet done, this method returns false and no processes another step.
+	 * Otherwise, if the last step was already processed, the method will
+	 * schedule the next step but will return asynchronously. It will first
+	 * synchronously inform all components about the step command.
+	 * 
+	 * @return true, if step is being processed
 	 */
-	public void stepExecutionSync() {
+	public boolean stepExecutionSync() {
 		//do not block if currently doing step
 		if (this.steps != NO_STEPS) 
-			return;
+			return false;
 		
 		synchronized(this) {
 			if (this.steps == NO_STEPS) {
@@ -362,13 +374,14 @@ public class Execution implements Runnable {
 				this.steps = FORWARD_STEP;
 			}
 			else 
-				return; //skip in this case make NO step
+				return false; //skip in this case make NO step
 		}
+		return true;
 	}
 
 	//-------------------------------------------------------------------------
 
-	//TODO: implement macro step execution!!!
+	//TODO: implement macro step execution
 	/**
 	 * Macro step execution sync.
 	 */
@@ -379,7 +392,10 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Pause execution sync.
+	 * Pauses the execution. The pauseCommand flag is set to true to 
+	 * immediately pause the execution. Before the steps are being set to
+	 * {@link #NO_STEPS} the DataComponents are informed about the
+	 * pause command.
 	 */
 	public void pauseExecutionSync() {
 		pausedCommand = true;
@@ -404,7 +420,10 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Run execution sync.
+	 * Runs the execution. The pausedCommand flag is set to false and the steps
+	 * are being set to infinity, which is interpreted by the {@link #run()}
+	 * method. Before that is done the DataComponents are informed about the
+	 * run command.
 	 */
 	public synchronized void runExecutionSync() {
 		pausedCommand = false;
@@ -428,7 +447,12 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Stop execution sync.
+	 * Stops the execution. In this case the stop flag is immediately set so
+	 * that no further step is made. The data components are then beeing
+	 * informed about the stop command. For safety reasons we again set
+	 * the stop flag in synchronized monitor of this object and then
+	 * stop all worker threads that where started. The latter includes the
+	 * timeout thread.
 	 */
 	public void stopExecutionSync() {
 		//not synchronized to stop immediately w/o queuing
@@ -471,7 +495,6 @@ public class Execution implements Runnable {
 		//stop timeout thread
 		this.timeout.terminate();
 	}
-	
 
 	//-------------------------------------------------------------------------
 	
@@ -533,6 +556,8 @@ public class Execution implements Runnable {
 		return (steps == NO_STEPS);
 	}
 
+	//-------------------------------------------------------------------------
+	
 	/**
 	 * Checks if the execution is in run mode. This means forward steps are
 	 * produced automatically with the given (aimed) step duration.
@@ -554,7 +579,7 @@ public class Execution implements Runnable {
 	 * happen during the development of a new component.
 	 */
 	public void errorTerminate() {
-		//sto this execution thread
+		//stop this execution thread immediately
 		this.steps = NO_STEPS;
 		this.stop = true;
 		//release the object
@@ -586,7 +611,7 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Wrapup components.
+	 * Wrapup components after execution was stopped.
 	 */
 	public synchronized void wrapupComponents() {
 		for(int c = 0; c < this.dataComponentExList.size(); c++) {
@@ -610,7 +635,7 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Reset timing variables.
+	 * Reset all timing variables.
 	 */
 	private void resetTimingVariables() {
 		this.executionStartTime = System.currentTimeMillis();
@@ -627,13 +652,17 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Gets the input data for a DataComponent that is an observer.
+	 * Gets the input data for a DataComponent that is an observer. If the
+	 * history flag is set (hence the current step is a history step) then
+	 * this component will get the full data. Otherwise the isDeltaObserver()
+	 * method is inspected to find out if the DataComponent only wants the
+	 * delta data between the last call.
 	 * 
 	 * @param dataComponentEx DataComponent to get the data for
 	 * 
 	 * @return the input data
 	 * 
-	 * @throws JSONException the JSON exception
+	 * @throws JSONException a JSONException
 	 */
 	private JSONObject getInputData(DataComponentEx dataComponentEx)
 														 throws JSONException {
@@ -651,7 +680,8 @@ public class Execution implements Runnable {
 			dataComponentEx.setHistoryStep(true);
 			
 			//this is a history step - always send full data
-			long oldPoolCounter = dataComponentEx.getPoolIndex(this.getSteps());
+			long oldPoolCounter = 
+					dataComponentEx.getPoolIndex(this.getSteps());
 			oldData = this.dataPool.getData(filterKeys, oldPoolCounter);
 		}
 		else {
@@ -660,17 +690,16 @@ public class Execution implements Runnable {
 
 			//this is a new step
 			if (dataComponentEx.isDeltaObserver()) {
-				oldData = this.dataPool.getDeltaData(filterKeys, lastPoolCounter);
+			  oldData = this.dataPool.getDeltaData(filterKeys, lastPoolCounter);
 			}
 			else {
-				oldData = this.dataPool.getData(filterKeys);
+			  oldData = this.dataPool.getData(filterKeys);
 			}
 
 			//set pool index (for later going back in history)
 			dataComponentEx.addPoolIndex(this.dataPool.getPoolCounter(),
 										 this.getSteps());
 		}
-		
 
 		return oldData;
 	}
@@ -678,16 +707,16 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Makes step of a consumer AND producer data component. This is not
+	 * Makes step of an observer AND producer data component. This is not
 	 * sourced out into a separate thread because it is made in a blocking
 	 * sense.
 	 * 
 	 * @param dataComponentEx the data component which should make a step
 	 * 
-	 * @throws Exception the exception
+	 * @throws JSONException a JSONException
 	 */
-	private void makeStepConsumerProducer(DataComponentEx dataComponentEx) 
-															throws Exception {
+	private void makeStepObserverProducer(DataComponentEx dataComponentEx) 
+															throws JSONException {
 		JSONObject oldData;
 		
 		//get the current input data according to the current step
@@ -738,7 +767,8 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Check for pause flag.
+	 * Checks all DataComponents for a pause flag. If any pase flag is found,
+	 * this leads to a paused execution.
 	 */
 	private void checkForPauseFlag() {
 		//test only if we have to make a step (1) or if we are 
@@ -752,6 +782,7 @@ public class Execution implements Runnable {
 				if (   dataComponentEx.isEnabled()
 					&& dataComponentEx.isPauseFlag()) {
 					this.pauseExecutionSync();
+					//update the GUI
 					KiemPlugin.getDefault().updateViewAsync();
 				}
 				timeout.abortTimeout();
@@ -775,7 +806,6 @@ public class Execution implements Runnable {
 			
 			long starttime = System.currentTimeMillis();
 			long endtime   = System.currentTimeMillis();
-			
 			
 			synchronized(this) {
 				//iff *ANY* isPauseFlag() returns true, pause execution
@@ -874,7 +904,7 @@ public class Execution implements Runnable {
 							//Observer AND Producer => blocking
 							try {
 								//make a step
-								makeStepConsumerProducer(dataComponentEx);
+								makeStepObserverProducer(dataComponentEx);
 								//save current pool index for next invokation
 								dataComponentEx.setDeltaIndex(this.dataPool.getPoolCounter());
 							}catch(Exception e) {
@@ -1047,24 +1077,31 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Show error.
+	 * A proxy method for showing an error from within an 
+	 * {@link ObserverExecution}, a {@link ProducerExecution} or the 
+	 * {@link TimeoutThread}.
 	 * 
-	 * @param textMessage the text message
-	 * @param PluginID the plugin id
-	 * @param e the e
+	 * @param textMessage the text message to display
+	 * @param PluginID the plug-in id
+	 * @param e the original Exception
 	 */
 	public void showError(String textMessage, String PluginID, Exception e) {
 		KiemPlugin.getDefault().showError(textMessage, PluginID, e);
 	}
 	
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * Show warning.
+	 * A proxy method for showing a warning from within an 
+	 * {@link ObserverExecution}, a {@link ProducerExecution} or the
+	 * {@link TimeoutThread}.
 	 * 
-	 * @param textMessage the text message
-	 * @param PluginID the plugin id
-	 * @param e the e
+	 * @param textMessage the text message to display
+	 * @param PluginID the plug-in id
+	 * @param e the original Exception
 	 */
 	public void showWarning(String textMessage, String PluginID, Exception e) {
 		KiemPlugin.getDefault().showWarning(textMessage, PluginID, e);
 	}
+	
 }

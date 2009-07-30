@@ -1171,7 +1171,7 @@ public class KiemView extends ViewPart {
 						}
 						//get results
 						long executionTime   = 
-							KIEMInstance.execution.getExecutionDurantion();
+							KIEMInstance.execution.getExecutionDuration();
 						long minStepDuration = 
 							KIEMInstance.execution.getMinimumStepDuration();
 						long wavStepDuration = 
