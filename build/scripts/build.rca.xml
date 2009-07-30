@@ -9,12 +9,11 @@
 	<target name="build" depends="init, pde-build" />
 
 	<target name="clean">
-		<delete dir="${buildDirectory}" />
+		<!-- delete dir="${buildDirectory}" / -->
 	</target>
 
 	<target name="init">
-		<mkdir dir="${buildDirectory}" />
-		<mkdir dir="${buildDirectory}/features" />
+		<mkdir dir="${system.WORKSPACE}/features" />
 	</target>
 
 	<!-- This target actually executes the PDE Build process by launching the 
