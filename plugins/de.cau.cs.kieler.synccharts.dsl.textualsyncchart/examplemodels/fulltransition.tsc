@@ -1,4 +1,0 @@
-state SC {
-	init state strt 
-	>-> end with 1 myTrigger/myEffects
-}

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--xtools2_universal_type_manager-->
-<?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.mmi.ui.signatures.topic" version="7.0.0"><feature description="" name="Rational Modeling Platform (com.ibm.xtools.rmp)" url="" version="7.0.0"/></signature>?>
-<topic:TopicQuery xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:topic="http://www.ibm.com/xtools/6.0.0/Topic" xmi:id="_4v0VQHtfEd63wLreEXcnQg" topicId="com.ibm.xtools.mmi.ui.RelatedVisualizerElements" name="topicdiagram">
-  <context href="mmi:///#jsrctype%5Ename=TSCSerializer%5Bjcu%5Ename=TSCSerializer.java%5Bjpack%5Ename=de.cau.cs.kieler.synccharts.dsl.util%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.synccharts.dsl.textualsyncchart%5D%5D%5D%5D$uml.Class"/>
-</topic:TopicQuery>
