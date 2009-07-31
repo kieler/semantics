@@ -336,6 +336,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 	public boolean initExecution() {
 		if (this.execution != null) return true;
 
+		this.KIEMViewInstance.setAllEnabled(false);
 		//count all (enabled) data producer and Observer
 		int countEnabledProducer = 0;
 		int countEnabledObserver = 0;
@@ -353,11 +354,13 @@ public class KiemPlugin extends AbstractUIPlugin {
 		if (countEnabledProducer < 1) {
 			this.showError(Messages.ErrorNoDataProducer,
 					KiemPlugin.PLUGIN_ID,null);
+			this.KIEMViewInstance.setAllEnabled(true);
 			return false;
 		}
 		else if (countEnabledObserver < 1) {
 			showError(Messages.ErrorNoDataObserver,
 					KiemPlugin.PLUGIN_ID,null);
+			this.KIEMViewInstance.setAllEnabled(true);
 			return false;
 		}
 		
@@ -372,6 +375,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 						.getDataComponent().getConfigurationElement()
 						.getContributor().getName(),
 						e);
+				this.KIEMViewInstance.setAllEnabled(true);
 				return false;
 			}
 		}
@@ -411,6 +415,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 				}catch(KiemInitializationException e) {
 					KiemPlugin.getDefault().handleComponentError(
 							dataComponentEx.getDataComponent(), e);
+					this.KIEMViewInstance.setAllEnabled(true);
 					return false;
 				}
 			}//end if enabled
@@ -423,6 +428,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 		this.executionThread = new Thread(this.execution);
 		this.executionThread.start();
 
+		this.KIEMViewInstance.setAllEnabled(true);
 		return true;
 	}
 

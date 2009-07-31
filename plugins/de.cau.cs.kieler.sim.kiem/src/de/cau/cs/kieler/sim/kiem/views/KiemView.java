@@ -459,7 +459,7 @@ public class KiemView extends ViewPart {
 	 * 
 	 * @param enabled the new enabled status
 	 */
-	private void setAllEnabled(boolean enabled) {
+	public void setAllEnabled(boolean enabled) {
 		allDisabled = !enabled;
 		if (getActionEnableDisable().isEnabled() != enabled)
 			getActionEnableDisable().setEnabled(enabled);
@@ -749,7 +749,7 @@ public class KiemView extends ViewPart {
 				getActionMacroStep().setEnabled(true);
 			if (getActionRun().isEnabled() != true)
 				getActionRun().setEnabled(true);
-			if (getActionPause().isEnabled() != false)
+			if (getActionPause().isEnabled() != true)
 				getActionPause().setEnabled(true);
 			if (getActionStop().isEnabled() != false)
 				getActionStop().setEnabled(false);
@@ -766,7 +766,7 @@ public class KiemView extends ViewPart {
 				getActionMacroStep().setEnabled(false);
 			if (getActionRun().isEnabled() != false)
 				getActionRun().setEnabled(false);
-			if (getActionPause().isEnabled() != false)
+			if (getActionPause().isEnabled() != true)
 				getActionPause().setEnabled(true);
 			if (getActionStop().isEnabled() != true)
 				getActionStop().setEnabled(true);
@@ -791,7 +791,7 @@ public class KiemView extends ViewPart {
 				getActionRun().setEnabled(true);
 			if (getActionPause().isEnabled() != false)
 				getActionPause().setEnabled(false);
-			if (getActionStop().isEnabled() != false)
+			if (getActionStop().isEnabled() != true)
 				getActionStop().setEnabled(true);
 			if (getAimedStepDurationTextField().isEnabled() != true)
 				getAimedStepDurationTextField().setEnabled(true);
@@ -996,11 +996,9 @@ public class KiemView extends ViewPart {
 				}
 				else {
 					//otherwise default implementation
-					setAllEnabled(false);
 					if (KIEMInstance.initExecution()) {
 						KIEMInstance.execution.stepBackExecutionSync();
 					}
-					setAllEnabled(true);
 				}
 				updateView(true);
 			}
@@ -1032,11 +1030,9 @@ public class KiemView extends ViewPart {
 				}
 				else {
 					//otherwise default implementation
-					setAllEnabled(false);
 					if (KIEMInstance.initExecution()) {
 						KIEMInstance.execution.stepExecutionSync();
 					}
-					setAllEnabled(true);
 				}
 				updateView(true);
 			}
@@ -1068,11 +1064,9 @@ public class KiemView extends ViewPart {
 					}
 					else {
 						//otherwise default implementation
-						setAllEnabled(false);
 						if (KIEMInstance.initExecution()) {
 							KIEMInstance.execution.macroStepExecutionSync();
 						}
-						setAllEnabled(true);
 				}
 				updateView(true);
 			}
@@ -1104,11 +1098,9 @@ public class KiemView extends ViewPart {
 					}
 					else {
 						//otherwise default implementation
-						setAllEnabled(false);
 						if (KIEMInstance.initExecution()) {
 							KIEMInstance.execution.runExecutionSync();
 						}
-						setAllEnabled(true);
 				}
 				updateView(true);
 			}
@@ -1140,11 +1132,9 @@ public class KiemView extends ViewPart {
 					}
 					else {
 						//otherwise default implementation
-						setAllEnabled(false);
 						if (KIEMInstance.initExecution()) {
 							KIEMInstance.execution.pauseExecutionSync();
 						}
-						setAllEnabled(true);
 				}
 				updateView(true);
 			}
