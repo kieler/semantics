@@ -526,8 +526,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 	 * This method handles errors or warnings within the execution of
 	 * DataComponents. It specifically handles the following two types
 	 * or errors:<BR>
-	 * - {@link de.cau.cs.kieler.sim.kiem.execution.KiemExecutionException}<BR>
-	 * - {@link de.cau.cs.kieler.sim.kiem.execution.KiemInitializationException}<BR>
+	 * - {@link KiemExecutionException}<BR>
+	 * - {@link KiemExecutionException}<BR>
 	 * If the mustStop flag is set, then the execution is immediately stopped.
 	 * Note that all threads will be advised to stop in the
 	 * {@link de.cau.cs.kieler.sim.kiem.execution.Execution#errorTerminate()}
