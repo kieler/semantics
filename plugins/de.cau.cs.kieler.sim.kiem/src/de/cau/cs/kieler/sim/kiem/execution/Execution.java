@@ -100,7 +100,7 @@ public class Execution implements Runnable {
 	
 	/** The step counter max. By default this is equal to stepCounter-1.
 	 * In case of history steps: stepCount < stepCounterMax. */
-	private long stepCounterMax; 
+	private long stepCounterMax;
 
 	/** The data pool. */
 	private JSONDataPool dataPool;
@@ -1041,7 +1041,21 @@ public class Execution implements Runnable {
 			//delay if time of step is left (in run mode only)
 			if (steps == INFINITY_STEPS) {
 				int timeToDelay = this.aimedStepDuration - this.stepDuration;
-				if (timeToDelay > 0)
+				if (timeToDelay > 0) {
+					//remember aimed step duration
+					int backupAimedStepDuration = this.aimedStepDuration;
+					//do not delay the WHOLE amount of time if lager than a second!
+					while (timeToDelay > 1000) {
+						try{Thread.sleep(1000);}catch(Exception e){}
+						timeToDelay -= 1000;
+						if (backupAimedStepDuration != this.aimedStepDuration) {
+							//if user changed aimedStepDuration during count down, 
+							//then we do not wait any longer in this step!
+							timeToDelay = 0;
+							break;
+						}
+					}
+					//delay the rest if necessary
 					try{Thread.sleep(timeToDelay);}catch(Exception e){
 						if (!stop)
 							KiemPlugin.getDefault().showWarning(
@@ -1049,6 +1063,8 @@ public class Execution implements Runnable {
 									KiemPlugin.PLUGIN_ID,
 									e);
 					}
+				}
+				
 			}	
 			
 			//escape if stopped
