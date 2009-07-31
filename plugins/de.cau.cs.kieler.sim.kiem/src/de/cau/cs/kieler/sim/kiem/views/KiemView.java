@@ -310,9 +310,19 @@ public class KiemView extends ViewPart {
 	private void hookTreeAction() {
 		viewer.addTreeListener(new ITreeViewerListener() {
 			public void treeCollapsed(TreeExpansionEvent event) {
+				if  (event.getElement() instanceof DataComponentEx) {
+					//set a flag that the properties are collapsed
+					((DataComponentEx)event.getElement()).setUnfolded(false);
+					updateColumnsCollapsed();
+				}
 				updateView(false);
 			}
 			public void treeExpanded(TreeExpansionEvent event) {
+				if  (event.getElement() instanceof DataComponentEx) {
+					//set a flag that the properties are expanded
+					((DataComponentEx)event.getElement()).setUnfolded(true);
+					updateColumnsCollapsed();
+				}
 				updateView(false);
 			}
 		});
@@ -674,7 +684,12 @@ public class KiemView extends ViewPart {
 			Object obj = ((IStructuredSelection)selection)
 											.getFirstElement();
 			if (obj != null) {
-				if (obj instanceof KiemProperty) {
+				if ((obj instanceof KiemProperty) ||
+						((obj instanceof DataComponentEx)
+					 && (((DataComponentEx)obj).getProperties() != null)
+					 && (((DataComponentEx)obj).getProperties().length > 0)
+					 && (((DataComponentEx)obj).isUnfolded())
+					)){
 					//unfolded - show property headers
 					refreshTableColumns(false);
 				}

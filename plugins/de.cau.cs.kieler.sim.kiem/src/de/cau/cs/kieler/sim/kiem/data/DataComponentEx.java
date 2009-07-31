@@ -48,6 +48,9 @@ public class DataComponentEx {
 	/** The boolean json flag indicating a JSON capable DataComponent. */
 	private Boolean json;
 	
+	/** Indicates that the properties are unfolded. */
+	private boolean unfolded;
+	
 	//------------------------------------------------------------------------- 
 
 	/**
@@ -82,6 +85,28 @@ public class DataComponentEx {
 		return this.json.booleanValue();
 	}
 	
+	//------------------------------------------------------------------------- 
+	
+  	 /**
+	 * Checks whether the properties of this DataComponent are unfolded.
+	 * 
+	 * @return true, if properties are unfolded
+	 */
+	public boolean isUnfolded() {
+  		 return this.unfolded;
+  	 }
+  	 
+ 	//-------------------------------------------------------------------------
+  	 
+  	 /**
+	  * Sets whether the properties of this DataComponent are unfolded.
+	  * 
+	  * @param unfolded set to true if they are unfolded
+	  */
+	 public void setUnfolded(boolean unfolded) {
+  		 this.unfolded = unfolded;
+  	 }
+  	 
 	//------------------------------------------------------------------------- 
 	
 	/**
