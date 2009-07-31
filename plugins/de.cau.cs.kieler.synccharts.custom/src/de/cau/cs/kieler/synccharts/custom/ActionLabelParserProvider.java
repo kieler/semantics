@@ -27,11 +27,11 @@ import de.cau.cs.kieler.synccharts.Action;
 
 /**
  * The provider for the XText parser.
- * @author schm
+ * @author schm, haf
  *
  */
 // A provider for the xText parser
-public class XTextParserProvider extends AbstractProvider implements IParserProvider {
+public class ActionLabelParserProvider extends AbstractProvider implements IParserProvider {
 	
 	/**
 	 * Return the XText parser
@@ -41,17 +41,10 @@ public class XTextParserProvider extends AbstractProvider implements IParserProv
 		if (hint instanceof ParserHintAdapter) {
 			Object element = ((ParserHintAdapter) hint).getAdapter(EObject.class);
 			if ((element != null) && (element instanceof Action)) {
-				Action action = (Action) element;
-				XTextParserWrapper wrapper = new XTextParserWrapper(action);
+				ActionLabelParserWrapper wrapper = new ActionLabelParserWrapper();
 				return wrapper;
 			}
-/*
-			else if ((element != null) && (element instanceof SuspensionTrigger)) {
-				SuspensionTrigger suspensionTrigger = (SuspensionTrigger) element;
-				XTextParserWrapper wrapper = new XTextParserWrapper(suspensionTrigger);
-				return wrapper;
-			}
-*/		}
+		}
 		return null;
 	}
 

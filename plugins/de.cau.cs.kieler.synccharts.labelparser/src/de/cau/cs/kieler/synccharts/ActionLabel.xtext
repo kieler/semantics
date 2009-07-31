@@ -3,52 +3,44 @@ grammar de.cau.cs.kieler.synccharts.TransitionLabel with org.eclipse.xtext.commo
 generate transitionlabel "http://kieler.cs.cau.de/synccharts/actionlabel"
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/synccharts" as synccharts
+//import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
+//import "synccharts" as synchcharts
 
-// dummy rule to test the language in an editor
-Model : 
-	((signals+=Signal | variables+=Variable))* (actions+=Action ";")*;
+//dummy rule to test the language in an editor
+//Model : 
+//	((signals+=Signal | variables+=Variable))* (actions+=Action ";")*;
 
-Action :
+Action returns synccharts::Action:
 	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
-	(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 		
+	isImmediate?='#' (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect)*)?;// (";" parentStateEntryAction=[synccharts::State]? ";" parentStateExitAction=[synccharts::State]? ";" parentStateInnerAction=[synccharts::State]?)? ; 		
 
-Effect : 
+// dummy rule that will never be parsed. However, the serializer might get
+// a transition instead of an action and needs to know how to serialize it
+// here we define, that the textual representation will only hold the elements
+// of an action. This is only meaningful for the graphical editor. If you need
+// a proper textual representation of a Transition, you should override this 
+// rule!
+//Transition returns synccharts::Transition:
+//	Action;
+
+Effect returns synccharts::Effect: 
 	Emission | Assignment | HostCode;
 		
-//Expression :
-//	TerminalExpression | ComplexExpression;
+Emission returns synccharts::Emission:
+	signal=[synccharts::Signal] ("(" newValue=PrimaryExpression ")")?;
 
-// TODO: Signal and Variable references both are evaluated by simple IDs
-//TerminalExpression:
-//    SignalOrVariableReference | HostCode | Value;
+Assignment returns synccharts::Assignment:
+	variable=[synccharts::Variable] ":=" expression=PrimaryExpression;
 
-// TODO: add more complex expressions and not only simple operations without recursion
-//UnbracedComplexExpression : 
-//	((subExpressions+=TerminalExpression))? operator=Operator subExpressions+=Expression ;
+SignalReference returns synccharts::SignalReference:
+	signal = [synccharts::Signal];
 
-//BracedComplexExpression : 
-//	"(" UnbracedComplexExpression ")";
-
-//ComplexExpression :
-//	UnbracedComplexExpression | BracedComplexExpression;
-
-Emission :
-	signal=[Signal] ("(" newValue=PrimaryExpression ")")?;
-
-Assignment :
-	variable=[Variable] ":=" expression=PrimaryExpression;
-
-SignalReference:
-	reference = [Signal];
+//SignalReference :
+//	signal = [Signal];
 	
-VariableReference:
-	reference = [Variable];
-
-Signal:
-	"input" name = ID ";";
-
-Variable:
-	"var" name = ID ";";
+VariableReference returns synccharts::VariableReference:
+	variable = [synccharts::Variable];
 
 IntValue: 
 	value=INT;
@@ -59,61 +51,64 @@ BooleanValue:
 Value:
 	IntValue | FloatValue | BooleanValue;
 
+//Signal:
+//	"signal" name = ID;
+	
+//Variable:
+//	"variable" name = ID;
+
 // make sure the Float rule does not shadow the built-in INT rule
 terminal Float returns ecore::EDouble : ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
 terminal Boolean returns ecore::EBoolean : "true" | "false";
 
-HostCode:
+HostCode returns synccharts::HostCode:
 	//"'"code=STRING"'";
 	//("(" type=ID ")")? 
 	code=STRING; 	
 	
-Operator :
-	operatorKind=OperatorKind;
-
-ValOperation returns Expression:
+ValOperation returns synccharts::ComplexExpression:
 	operator=ValOperator subExpressions+=SignalReference;
 
-ValueExpression returns Expression:
+ValueExpression returns synccharts::Expression:
 	IntValue | FloatValue | ValOperation | VariableReference;
 
-CompareOperation returns Expression:
+CompareOperation returns synccharts::Expression:
 	ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
 
-NotOperation returns Operations:
-	operators=NotOperator subExpressions+=BooleanExpression;
+NotOperation returns synccharts::ComplexExpression:
+	operator=NotOperator subExpressions+=BooleanExpression;
 
-NotOrNormalExpression returns Expression:
+NotOrNormalExpression returns synccharts::Expression:
 	NotOperation | BooleanExpression;
 
-AndOperation returns Expression:
+AndOperation returns synccharts::Expression:
 	NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd subExpression+=NotOrNormalExpression)*;
 
-OrOperation returns Expression:
+OrOperation returns synccharts::Expression:
 	AndOperation ({Operation.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
 
 // TODO: get rid of parentheses
-BooleanExpression returns Expression:
+BooleanExpression returns synccharts::Expression:
 	BooleanValue | SignalReference | CompareOperation | "("OrOperation")" ;
 
-PrimaryExpression returns Expression:
+PrimaryExpression returns synccharts::Expression:
 	//ValueExpression | BooleanExpression;
 	BooleanExpression;
 	
-enum OperatorKind :
+enum OperatorType returns synccharts::OperatorType:
 	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre";
 
-enum ValOperator returns OperatorKind:
+enum ValOperator returns synccharts::OperatorType:
 	VAL="?";
 
-enum CompareOperator returns OperatorKind:
+enum CompareOperator returns synccharts::OperatorType:
 	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
 	
-enum NotOperator returns OperatorKind:
+enum NotOperator returns synccharts::OperatorType:
 	NOT="not";
 
-enum OperatorOr returns OperatorKind:
+enum OperatorOr returns synccharts::OperatorType:
 	OR="or";
 
-enum OperatorAnd returns OperatorKind:
+enum OperatorAnd returns synccharts::OperatorType:
 	AND="and";

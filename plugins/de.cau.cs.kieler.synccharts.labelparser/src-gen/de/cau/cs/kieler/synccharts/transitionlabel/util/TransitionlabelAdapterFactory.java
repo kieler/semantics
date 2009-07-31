@@ -5,6 +5,8 @@
  */
 package de.cau.cs.kieler.synccharts.transitionlabel.util;
 
+import de.cau.cs.kieler.synccharts.Expression;
+
 import de.cau.cs.kieler.synccharts.transitionlabel.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -78,51 +80,6 @@ public class TransitionlabelAdapterFactory extends AdapterFactoryImpl
     new TransitionlabelSwitch<Adapter>()
     {
       @Override
-      public Adapter caseModel(Model object)
-      {
-        return createModelAdapter();
-      }
-      @Override
-      public Adapter caseAction(Action object)
-      {
-        return createActionAdapter();
-      }
-      @Override
-      public Adapter caseEffect(Effect object)
-      {
-        return createEffectAdapter();
-      }
-      @Override
-      public Adapter caseEmission(Emission object)
-      {
-        return createEmissionAdapter();
-      }
-      @Override
-      public Adapter caseAssignment(Assignment object)
-      {
-        return createAssignmentAdapter();
-      }
-      @Override
-      public Adapter caseSignalReference(SignalReference object)
-      {
-        return createSignalReferenceAdapter();
-      }
-      @Override
-      public Adapter caseVariableReference(VariableReference object)
-      {
-        return createVariableReferenceAdapter();
-      }
-      @Override
-      public Adapter caseSignal(Signal object)
-      {
-        return createSignalAdapter();
-      }
-      @Override
-      public Adapter caseVariable(Variable object)
-      {
-        return createVariableAdapter();
-      }
-      @Override
       public Adapter caseIntValue(IntValue object)
       {
         return createIntValueAdapter();
@@ -143,29 +100,14 @@ public class TransitionlabelAdapterFactory extends AdapterFactoryImpl
         return createValueAdapter();
       }
       @Override
-      public Adapter caseHostCode(HostCode object)
+      public Adapter caseOperation(Operation object)
       {
-        return createHostCodeAdapter();
-      }
-      @Override
-      public Adapter caseOperator(Operator object)
-      {
-        return createOperatorAdapter();
+        return createOperationAdapter();
       }
       @Override
       public Adapter caseExpression(Expression object)
       {
         return createExpressionAdapter();
-      }
-      @Override
-      public Adapter caseOperations(Operations object)
-      {
-        return createOperationsAdapter();
-      }
-      @Override
-      public Adapter caseOperation(Operation object)
-      {
-        return createOperationAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -188,141 +130,6 @@ public class TransitionlabelAdapterFactory extends AdapterFactoryImpl
     return modelSwitch.doSwitch((EObject)target);
   }
 
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.Model <em>Model</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.Model
-   * @generated
-   */
-  public Adapter createModelAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.Action <em>Action</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.Action
-   * @generated
-   */
-  public Adapter createActionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.Effect <em>Effect</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.Effect
-   * @generated
-   */
-  public Adapter createEffectAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.Emission <em>Emission</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.Emission
-   * @generated
-   */
-  public Adapter createEmissionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.Assignment <em>Assignment</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.Assignment
-   * @generated
-   */
-  public Adapter createAssignmentAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.SignalReference <em>Signal Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.SignalReference
-   * @generated
-   */
-  public Adapter createSignalReferenceAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.VariableReference <em>Variable Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.VariableReference
-   * @generated
-   */
-  public Adapter createVariableReferenceAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.Signal <em>Signal</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.Signal
-   * @generated
-   */
-  public Adapter createSignalAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.Variable <em>Variable</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.Variable
-   * @generated
-   */
-  public Adapter createVariableAdapter()
-  {
-    return null;
-  }
 
   /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.IntValue <em>Int Value</em>}'.
@@ -385,66 +192,6 @@ public class TransitionlabelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.HostCode <em>Host Code</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.HostCode
-   * @generated
-   */
-  public Adapter createHostCodeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.Operator <em>Operator</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.Operator
-   * @generated
-   */
-  public Adapter createOperatorAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.Expression <em>Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.Expression
-   * @generated
-   */
-  public Adapter createExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.Operations <em>Operations</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.Operations
-   * @generated
-   */
-  public Adapter createOperationsAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.transitionlabel.Operation <em>Operation</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -455,6 +202,21 @@ public class TransitionlabelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createOperationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.Expression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.synccharts.Expression
+   * @generated
+   */
+  public Adapter createExpressionAdapter()
   {
     return null;
   }

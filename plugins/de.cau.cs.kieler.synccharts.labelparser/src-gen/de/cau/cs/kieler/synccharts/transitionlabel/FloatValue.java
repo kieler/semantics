@@ -5,6 +5,7 @@
  */
 package de.cau.cs.kieler.synccharts.transitionlabel;
 
+import de.cau.cs.kieler.synccharts.Expression;
 
 /**
  * <!-- begin-user-doc -->

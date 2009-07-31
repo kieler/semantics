@@ -3,7 +3,22 @@
  */
 package de.cau.cs.kieler.synccharts.scoping;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.IScopedElement;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
+
+import com.google.inject.Scope;
+
+import de.cau.cs.kieler.synccharts.Signal;
+import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.Variable;
 
 /**
  * This class contains custom scoping description.
@@ -13,5 +28,110 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
  *
  */
 public class TransitionLabelScopeProvider extends AbstractDeclarativeScopeProvider {
+    
+    public static State parent;
+    
+    /* (non-Javadoc)
+     * @see org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider#getScope(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EClass)
+     */
+    @Override
+    public IScope getScope(EObject context, EClass type) {
+        if(parent != null)
+            return new ExternalScope(parent);
+        return super.getScope(context, type);
+    }
+    
+    /* (non-Javadoc)
+     * @see org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider#getScope(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference)
+     */
+    @Override
+    public IScope getScope(EObject context, EReference reference) {
+        if(parent != null)
+            return new ExternalScope(parent);
+        return super.getScope(context, reference);
+    }
+    
+    class ExternalScope implements IScope{
+        
+        State parentState;
+        List<IScopedElement> scopedElements;
+        
+        public ExternalScope(State parentState) {
+            this.parentState = parentState; 
+            this.scopedElements = new ArrayList<IScopedElement>();
+            // State scopedState = parentState;
+           // while(scopedState != null){
+                List<Signal> signals = parentState.getSignals();
+                for (Signal signal : signals) {
+                    scopedElements.add(new ExternalScopedElement(signal, signal.getName()));
+                }
+                List<Variable> variables = parentState.getVariables();
+                for (Variable variable : variables) {
+                    scopedElements.add(new ExternalScopedElement(variable, variable.getName()));
+                }
+            //    if(scopedState.getParentRegion() != null)
+            //        scopedState = scopedState.getParentRegion().getParentState();
+           // }
+        }
+        
+        /* (non-Javadoc)
+         * @see org.eclipse.xtext.scoping.IScope#getAllContents()
+         */
+        public Iterable<IScopedElement> getAllContents() {
+            List<IScopedElement> elements = new ArrayList<IScopedElement>();
+            elements.addAll(elements);
+            IScope outerScope = this.getOuterScope();
+            elements.addAll((Collection<? extends IScopedElement>) outerScope.getContents());
+            return elements;
+        }
 
+        /* (non-Javadoc)
+         * @see org.eclipse.xtext.scoping.IScope#getContents()
+         */
+        public Iterable<IScopedElement> getContents() {
+             return scopedElements;
+        }
+
+        /* (non-Javadoc)
+         * @see org.eclipse.xtext.scoping.IScope#getOuterScope()
+         */
+        public IScope getOuterScope() {
+            if(parentState.getParentRegion() != null && parentState.getParentRegion().getParentState() != null)
+                return new ExternalScope(parentState.getParentRegion().getParentState());
+            return IScope.NULLSCOPE;
+        }
+        
+        class ExternalScopedElement implements IScopedElement{
+
+            EObject object;
+            String name;
+            
+            public ExternalScopedElement(EObject o, String n) {
+                object = o;
+                name = n;
+            }
+            
+            /* (non-Javadoc)
+             * @see org.eclipse.xtext.scoping.IScopedElement#additionalInformation()
+             */
+            public Object additionalInformation() {
+                return null;
+            }
+
+            /* (non-Javadoc)
+             * @see org.eclipse.xtext.scoping.IScopedElement#element()
+             */
+            public EObject element() {
+                return object;
+            }
+
+            /* (non-Javadoc)
+             * @see org.eclipse.xtext.scoping.IScopedElement#name()
+             */
+            public String name() {
+                return name;
+            }
+            
+        }
+    }
 }

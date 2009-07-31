@@ -172,13 +172,13 @@
             href="synccharts.ecore#//State/suspensionTrigger"/>
         <ownedChild>
           <domainMetaElement
-              href="synccharts.ecore#//SuspensionTrigger"/>
+              href="synccharts.ecore#//Action"/>
           <labelMappings
               xsi:type="gmfmap:FeatureLabelMapping">
             <diagramLabel
                 href="synccharts.gmfgraph#SuspensionTriggerName"/>
             <features
-                href="synccharts.ecore#//SuspensionTrigger/trigger"/>
+                href="synccharts.ecore#//Action/triggersAndEffects"/>
           </labelMappings>
           <diagramNode
               href="synccharts.gmfgraph#InvisibleNode"/>
@@ -230,7 +230,7 @@
           xsi:type="gmfmap:FeatureValueSpec">
         <feature
             xsi:type="ecore:EAttribute"
-            href="synccharts.ecore#//Transition/delay"/>
+            href="synccharts.ecore#//Action/delay"/>
         <value
             body="1"
             language="literal"/>

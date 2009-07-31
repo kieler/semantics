@@ -3,7 +3,7 @@ import synccharts;
 //context State if (type == StateType::PSEUDO) ERROR "pseudo states must not have a name!" :
 //	(name == null) || (name.length == 0);
 
-context State if (type == StateKind::PSEUDO) ERROR "pseudo states must not be initial or final!" :
+context State if (type == StateType::PSEUDO) ERROR "pseudo states must not be initial or final!" :
 	isInitial == false && isFinal == false;
 	
 context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain regions!" :
@@ -44,10 +44,10 @@ context Transition ERROR "Delays have to be at least 1!" :
 //context SignalRenaming ERROR "The old and new signal of a signal renaming must be different!" :
 //	oldSignal != newSignal;
 	
-context Operator if ((type == OperatorType::NOT) || (type == OperatorType::VAL)) ERROR "Unary operators may not have more or less than one operand!" :
+context ComplexExpression if ((operator == OperatorType::NOT) || (operator == OperatorType::VAL)) ERROR "Unary operators may not have more or less than one operand!" :
 	subExpressions.size == 1;
 	
-context Operator if (!((type == OperatorType::NOT) || (type == OperatorType::VAL))) ERROR "Binary operators may not have more or less than two operands!" :
+context ComplexExpression if (!((operator == OperatorType::NOT) || (operator == OperatorType::VAL))) ERROR "Binary operators may not have more or less than two operands!" :
 	subExpressions.size == 2;
 	
 context Emission if (signal.type == ValueType::PURE) ERROR "Pure signals cannot be assigned a value!" :

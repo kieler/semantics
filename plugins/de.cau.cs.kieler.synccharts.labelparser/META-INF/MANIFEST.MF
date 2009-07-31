@@ -19,13 +19,16 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.util,
  org.antlr.runtime,
  org.eclipse.emf.ecore,
- org.eclipse.emf.common
+ org.eclipse.emf.common,
+ de.cau.cs.kieler.synccharts.model;bundle-version="1.0.0",
+ de.cau.cs.kieler.synccharts;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.synccharts.parser.antlr,
- de.cau.cs.kieler.synccharts,
+Export-Package: de.cau.cs.kieler.synccharts,
+ de.cau.cs.kieler.synccharts.parseTreeConstruction,
+ de.cau.cs.kieler.synccharts.parser.antlr,
+ de.cau.cs.kieler.synccharts.scoping,
  de.cau.cs.kieler.synccharts.services,
  de.cau.cs.kieler.synccharts.transitionlabel,
  de.cau.cs.kieler.synccharts.transitionlabel.impl,
  de.cau.cs.kieler.synccharts.transitionlabel.util,
- de.cau.cs.kieler.synccharts.parseTreeConstruction,
  de.cau.cs.kieler.synccharts.validation

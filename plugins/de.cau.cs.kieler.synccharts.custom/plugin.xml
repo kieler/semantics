@@ -11,5 +11,14 @@
          </Priority>
       </ParserProvider>
    </extension>
+   <extension
+         point="org.eclipse.gmf.runtime.common.ui.services.parserProviders">
+      <ParserProvider
+            class="de.cau.cs.kieler.synccharts.custom.ActionLabelParserProvider">
+         <Priority
+               name="High">
+         </Priority>
+      </ParserProvider>
+   </extension>
 
 </plugin>

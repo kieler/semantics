@@ -5,25 +5,25 @@
  */
 package de.cau.cs.kieler.synccharts.transitionlabel.impl;
 
-import de.cau.cs.kieler.synccharts.transitionlabel.BooleanValue;
-import de.cau.cs.kieler.synccharts.transitionlabel.Expression;
-import de.cau.cs.kieler.synccharts.transitionlabel.OperatorKind;
-import de.cau.cs.kieler.synccharts.transitionlabel.TransitionlabelPackage;
+import de.cau.cs.kieler.synccharts.Action;
+import de.cau.cs.kieler.synccharts.Assignment;
+import de.cau.cs.kieler.synccharts.ComplexExpression;
+import de.cau.cs.kieler.synccharts.Emission;
+import de.cau.cs.kieler.synccharts.Expression;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
-import java.util.Collection;
+import de.cau.cs.kieler.synccharts.transitionlabel.BooleanValue;
+import de.cau.cs.kieler.synccharts.transitionlabel.TransitionlabelPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,8 +32,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.impl.BooleanValueImpl#getOperator <em>Operator</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.impl.BooleanValueImpl#getSubExpressions <em>Sub Expressions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.impl.BooleanValueImpl#getParentAction <em>Parent Action</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.impl.BooleanValueImpl#getParentEmisson <em>Parent Emisson</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.impl.BooleanValueImpl#getParentAssignment <em>Parent Assignment</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.impl.BooleanValueImpl#getParentExpression <em>Parent Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.impl.BooleanValueImpl#isValue <em>Value</em>}</li>
  * </ul>
  * </p>
@@ -42,36 +44,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class BooleanValueImpl extends ValueImpl implements BooleanValue
 {
-  /**
-   * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOperator()
-   * @generated
-   * @ordered
-   */
-  protected static final OperatorKind OPERATOR_EDEFAULT = OperatorKind.EQ;
-
-  /**
-   * The cached value of the '{@link #getOperator() <em>Operator</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOperator()
-   * @generated
-   * @ordered
-   */
-  protected OperatorKind operator = OPERATOR_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getSubExpressions() <em>Sub Expressions</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSubExpressions()
-   * @generated
-   * @ordered
-   */
-  protected EList<Expression> subExpressions;
-
   /**
    * The default value of the '{@link #isValue() <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -118,9 +90,10 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
    * <!-- end-user-doc -->
    * @generated
    */
-  public OperatorKind getOperator()
+  public Action getParentAction()
   {
-    return operator;
+    if (eContainerFeatureID() != TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION) return null;
+    return (Action)eContainer();
   }
 
   /**
@@ -128,12 +101,10 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOperator(OperatorKind newOperator)
+  public NotificationChain basicSetParentAction(Action newParentAction, NotificationChain msgs)
   {
-    OperatorKind oldOperator = operator;
-    operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, TransitionlabelPackage.BOOLEAN_VALUE__OPERATOR, oldOperator, operator));
+    msgs = eBasicSetContainer((InternalEObject)newParentAction, TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION, msgs);
+    return msgs;
   }
 
   /**
@@ -141,13 +112,157 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Expression> getSubExpressions()
+  public void setParentAction(Action newParentAction)
   {
-    if (subExpressions == null)
+    if (newParentAction != eInternalContainer() || (eContainerFeatureID() != TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION && newParentAction != null))
     {
-      subExpressions = new EObjectContainmentEList<Expression>(Expression.class, this, TransitionlabelPackage.BOOLEAN_VALUE__SUB_EXPRESSIONS);
+      if (EcoreUtil.isAncestor(this, newParentAction))
+        throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      NotificationChain msgs = null;
+      if (eInternalContainer() != null)
+        msgs = eBasicRemoveFromContainer(msgs);
+      if (newParentAction != null)
+        msgs = ((InternalEObject)newParentAction).eInverseAdd(this, SyncchartsPackage.ACTION__TRIGGER, Action.class, msgs);
+      msgs = basicSetParentAction(newParentAction, msgs);
+      if (msgs != null) msgs.dispatch();
     }
-    return subExpressions;
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION, newParentAction, newParentAction));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Emission getParentEmisson()
+  {
+    if (eContainerFeatureID() != TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON) return null;
+    return (Emission)eContainer();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetParentEmisson(Emission newParentEmisson, NotificationChain msgs)
+  {
+    msgs = eBasicSetContainer((InternalEObject)newParentEmisson, TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON, msgs);
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setParentEmisson(Emission newParentEmisson)
+  {
+    if (newParentEmisson != eInternalContainer() || (eContainerFeatureID() != TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON && newParentEmisson != null))
+    {
+      if (EcoreUtil.isAncestor(this, newParentEmisson))
+        throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      NotificationChain msgs = null;
+      if (eInternalContainer() != null)
+        msgs = eBasicRemoveFromContainer(msgs);
+      if (newParentEmisson != null)
+        msgs = ((InternalEObject)newParentEmisson).eInverseAdd(this, SyncchartsPackage.EMISSION__NEW_VALUE, Emission.class, msgs);
+      msgs = basicSetParentEmisson(newParentEmisson, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON, newParentEmisson, newParentEmisson));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Assignment getParentAssignment()
+  {
+    if (eContainerFeatureID() != TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT) return null;
+    return (Assignment)eContainer();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetParentAssignment(Assignment newParentAssignment, NotificationChain msgs)
+  {
+    msgs = eBasicSetContainer((InternalEObject)newParentAssignment, TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT, msgs);
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setParentAssignment(Assignment newParentAssignment)
+  {
+    if (newParentAssignment != eInternalContainer() || (eContainerFeatureID() != TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT && newParentAssignment != null))
+    {
+      if (EcoreUtil.isAncestor(this, newParentAssignment))
+        throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      NotificationChain msgs = null;
+      if (eInternalContainer() != null)
+        msgs = eBasicRemoveFromContainer(msgs);
+      if (newParentAssignment != null)
+        msgs = ((InternalEObject)newParentAssignment).eInverseAdd(this, SyncchartsPackage.ASSIGNMENT__EXPRESSION, Assignment.class, msgs);
+      msgs = basicSetParentAssignment(newParentAssignment, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT, newParentAssignment, newParentAssignment));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ComplexExpression getParentExpression()
+  {
+    if (eContainerFeatureID() != TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION) return null;
+    return (ComplexExpression)eContainer();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetParentExpression(ComplexExpression newParentExpression, NotificationChain msgs)
+  {
+    msgs = eBasicSetContainer((InternalEObject)newParentExpression, TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION, msgs);
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setParentExpression(ComplexExpression newParentExpression)
+  {
+    if (newParentExpression != eInternalContainer() || (eContainerFeatureID() != TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION && newParentExpression != null))
+    {
+      if (EcoreUtil.isAncestor(this, newParentExpression))
+        throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      NotificationChain msgs = null;
+      if (eInternalContainer() != null)
+        msgs = eBasicRemoveFromContainer(msgs);
+      if (newParentExpression != null)
+        msgs = ((InternalEObject)newParentExpression).eInverseAdd(this, SyncchartsPackage.COMPLEX_EXPRESSION__SUB_EXPRESSIONS, ComplexExpression.class, msgs);
+      msgs = basicSetParentExpression(newParentExpression, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION, newParentExpression, newParentExpression));
   }
 
   /**
@@ -179,14 +294,72 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
    * @generated
    */
   @Override
+  public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION:
+        if (eInternalContainer() != null)
+          msgs = eBasicRemoveFromContainer(msgs);
+        return basicSetParentAction((Action)otherEnd, msgs);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON:
+        if (eInternalContainer() != null)
+          msgs = eBasicRemoveFromContainer(msgs);
+        return basicSetParentEmisson((Emission)otherEnd, msgs);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT:
+        if (eInternalContainer() != null)
+          msgs = eBasicRemoveFromContainer(msgs);
+        return basicSetParentAssignment((Assignment)otherEnd, msgs);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION:
+        if (eInternalContainer() != null)
+          msgs = eBasicRemoveFromContainer(msgs);
+        return basicSetParentExpression((ComplexExpression)otherEnd, msgs);
+    }
+    return super.eInverseAdd(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case TransitionlabelPackage.BOOLEAN_VALUE__SUB_EXPRESSIONS:
-        return ((InternalEList<?>)getSubExpressions()).basicRemove(otherEnd, msgs);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION:
+        return basicSetParentAction(null, msgs);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON:
+        return basicSetParentEmisson(null, msgs);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT:
+        return basicSetParentAssignment(null, msgs);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION:
+        return basicSetParentExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs)
+  {
+    switch (eContainerFeatureID())
+    {
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION:
+        return eInternalContainer().eInverseRemove(this, SyncchartsPackage.ACTION__TRIGGER, Action.class, msgs);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON:
+        return eInternalContainer().eInverseRemove(this, SyncchartsPackage.EMISSION__NEW_VALUE, Emission.class, msgs);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT:
+        return eInternalContainer().eInverseRemove(this, SyncchartsPackage.ASSIGNMENT__EXPRESSION, Assignment.class, msgs);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION:
+        return eInternalContainer().eInverseRemove(this, SyncchartsPackage.COMPLEX_EXPRESSION__SUB_EXPRESSIONS, ComplexExpression.class, msgs);
+    }
+    return super.eBasicRemoveFromContainerFeature(msgs);
   }
 
   /**
@@ -199,10 +372,14 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
   {
     switch (featureID)
     {
-      case TransitionlabelPackage.BOOLEAN_VALUE__OPERATOR:
-        return getOperator();
-      case TransitionlabelPackage.BOOLEAN_VALUE__SUB_EXPRESSIONS:
-        return getSubExpressions();
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION:
+        return getParentAction();
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON:
+        return getParentEmisson();
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT:
+        return getParentAssignment();
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION:
+        return getParentExpression();
       case TransitionlabelPackage.BOOLEAN_VALUE__VALUE:
         return isValue();
     }
@@ -214,18 +391,22 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case TransitionlabelPackage.BOOLEAN_VALUE__OPERATOR:
-        setOperator((OperatorKind)newValue);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION:
+        setParentAction((Action)newValue);
         return;
-      case TransitionlabelPackage.BOOLEAN_VALUE__SUB_EXPRESSIONS:
-        getSubExpressions().clear();
-        getSubExpressions().addAll((Collection<? extends Expression>)newValue);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON:
+        setParentEmisson((Emission)newValue);
+        return;
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT:
+        setParentAssignment((Assignment)newValue);
+        return;
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION:
+        setParentExpression((ComplexExpression)newValue);
         return;
       case TransitionlabelPackage.BOOLEAN_VALUE__VALUE:
         setValue((Boolean)newValue);
@@ -244,11 +425,17 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
   {
     switch (featureID)
     {
-      case TransitionlabelPackage.BOOLEAN_VALUE__OPERATOR:
-        setOperator(OPERATOR_EDEFAULT);
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION:
+        setParentAction((Action)null);
         return;
-      case TransitionlabelPackage.BOOLEAN_VALUE__SUB_EXPRESSIONS:
-        getSubExpressions().clear();
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON:
+        setParentEmisson((Emission)null);
+        return;
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT:
+        setParentAssignment((Assignment)null);
+        return;
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION:
+        setParentExpression((ComplexExpression)null);
         return;
       case TransitionlabelPackage.BOOLEAN_VALUE__VALUE:
         setValue(VALUE_EDEFAULT);
@@ -267,10 +454,14 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
   {
     switch (featureID)
     {
-      case TransitionlabelPackage.BOOLEAN_VALUE__OPERATOR:
-        return operator != OPERATOR_EDEFAULT;
-      case TransitionlabelPackage.BOOLEAN_VALUE__SUB_EXPRESSIONS:
-        return subExpressions != null && !subExpressions.isEmpty();
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION:
+        return getParentAction() != null;
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON:
+        return getParentEmisson() != null;
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT:
+        return getParentAssignment() != null;
+      case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION:
+        return getParentExpression() != null;
       case TransitionlabelPackage.BOOLEAN_VALUE__VALUE:
         return value != VALUE_EDEFAULT;
     }
@@ -289,8 +480,10 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
     {
       switch (derivedFeatureID)
       {
-        case TransitionlabelPackage.BOOLEAN_VALUE__OPERATOR: return TransitionlabelPackage.EXPRESSION__OPERATOR;
-        case TransitionlabelPackage.BOOLEAN_VALUE__SUB_EXPRESSIONS: return TransitionlabelPackage.EXPRESSION__SUB_EXPRESSIONS;
+        case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION: return SyncchartsPackage.EXPRESSION__PARENT_ACTION;
+        case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON: return SyncchartsPackage.EXPRESSION__PARENT_EMISSON;
+        case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT: return SyncchartsPackage.EXPRESSION__PARENT_ASSIGNMENT;
+        case TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION: return SyncchartsPackage.EXPRESSION__PARENT_EXPRESSION;
         default: return -1;
       }
     }
@@ -309,8 +502,10 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
     {
       switch (baseFeatureID)
       {
-        case TransitionlabelPackage.EXPRESSION__OPERATOR: return TransitionlabelPackage.BOOLEAN_VALUE__OPERATOR;
-        case TransitionlabelPackage.EXPRESSION__SUB_EXPRESSIONS: return TransitionlabelPackage.BOOLEAN_VALUE__SUB_EXPRESSIONS;
+        case SyncchartsPackage.EXPRESSION__PARENT_ACTION: return TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ACTION;
+        case SyncchartsPackage.EXPRESSION__PARENT_EMISSON: return TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EMISSON;
+        case SyncchartsPackage.EXPRESSION__PARENT_ASSIGNMENT: return TransitionlabelPackage.BOOLEAN_VALUE__PARENT_ASSIGNMENT;
+        case SyncchartsPackage.EXPRESSION__PARENT_EXPRESSION: return TransitionlabelPackage.BOOLEAN_VALUE__PARENT_EXPRESSION;
         default: return -1;
       }
     }
@@ -328,9 +523,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (operator: ");
-    result.append(operator);
-    result.append(", value: ");
+    result.append(" (value: ");
     result.append(value);
     result.append(')');
     return result.toString();

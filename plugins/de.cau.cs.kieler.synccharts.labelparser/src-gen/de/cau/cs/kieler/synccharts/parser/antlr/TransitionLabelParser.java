@@ -40,7 +40,7 @@ public class TransitionLabelParser extends org.eclipse.xtext.parser.antlr.Abstra
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "Model";
+		return "Action";
 	}
 	
 	public TransitionLabelGrammarAccess getGrammarAccess() {

@@ -5,6 +5,8 @@
  */
 package de.cau.cs.kieler.synccharts.transitionlabel.util;
 
+import de.cau.cs.kieler.synccharts.Expression;
+
 import de.cau.cs.kieler.synccharts.transitionlabel.*;
 
 import java.util.List;
@@ -95,73 +97,6 @@ public class TransitionlabelSwitch<T>
   {
     switch (classifierID)
     {
-      case TransitionlabelPackage.MODEL:
-      {
-        Model model = (Model)theEObject;
-        T result = caseModel(model);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TransitionlabelPackage.ACTION:
-      {
-        Action action = (Action)theEObject;
-        T result = caseAction(action);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TransitionlabelPackage.EFFECT:
-      {
-        Effect effect = (Effect)theEObject;
-        T result = caseEffect(effect);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TransitionlabelPackage.EMISSION:
-      {
-        Emission emission = (Emission)theEObject;
-        T result = caseEmission(emission);
-        if (result == null) result = caseEffect(emission);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TransitionlabelPackage.ASSIGNMENT:
-      {
-        Assignment assignment = (Assignment)theEObject;
-        T result = caseAssignment(assignment);
-        if (result == null) result = caseEffect(assignment);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TransitionlabelPackage.SIGNAL_REFERENCE:
-      {
-        SignalReference signalReference = (SignalReference)theEObject;
-        T result = caseSignalReference(signalReference);
-        if (result == null) result = caseExpression(signalReference);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TransitionlabelPackage.VARIABLE_REFERENCE:
-      {
-        VariableReference variableReference = (VariableReference)theEObject;
-        T result = caseVariableReference(variableReference);
-        if (result == null) result = caseExpression(variableReference);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TransitionlabelPackage.SIGNAL:
-      {
-        Signal signal = (Signal)theEObject;
-        T result = caseSignal(signal);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TransitionlabelPackage.VARIABLE:
-      {
-        Variable variable = (Variable)theEObject;
-        T result = caseVariable(variable);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case TransitionlabelPackage.INT_VALUE:
       {
         IntValue intValue = (IntValue)theEObject;
@@ -196,36 +131,6 @@ public class TransitionlabelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case TransitionlabelPackage.HOST_CODE:
-      {
-        HostCode hostCode = (HostCode)theEObject;
-        T result = caseHostCode(hostCode);
-        if (result == null) result = caseEffect(hostCode);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TransitionlabelPackage.OPERATOR:
-      {
-        Operator operator = (Operator)theEObject;
-        T result = caseOperator(operator);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TransitionlabelPackage.EXPRESSION:
-      {
-        Expression expression = (Expression)theEObject;
-        T result = caseExpression(expression);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TransitionlabelPackage.OPERATIONS:
-      {
-        Operations operations = (Operations)theEObject;
-        T result = caseOperations(operations);
-        if (result == null) result = caseExpression(operations);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case TransitionlabelPackage.OPERATION:
       {
         Operation operation = (Operation)theEObject;
@@ -236,150 +141,6 @@ public class TransitionlabelSwitch<T>
       }
       default: return defaultCase(theEObject);
     }
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Model</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Model</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseModel(Model object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Action</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Action</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAction(Action object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Effect</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Effect</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEffect(Effect object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Emission</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Emission</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEmission(Emission object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAssignment(Assignment object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Signal Reference</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signal Reference</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSignalReference(SignalReference object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable Reference</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable Reference</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseVariableReference(VariableReference object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Signal</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signal</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSignal(Signal object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseVariable(Variable object)
-  {
-    return null;
   }
 
   /**
@@ -447,33 +208,17 @@ public class TransitionlabelSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Host Code</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Operation</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Host Code</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Operation</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseHostCode(HostCode object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Operator</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Operator</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseOperator(Operator object)
+  public T caseOperation(Operation object)
   {
     return null;
   }
@@ -490,38 +235,6 @@ public class TransitionlabelSwitch<T>
    * @generated
    */
   public T caseExpression(Expression object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Operations</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Operations</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseOperations(Operations object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Operation</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Operation</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseOperation(Operation object)
   {
     return null;
   }

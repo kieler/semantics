@@ -37,9 +37,8 @@ import de.cau.cs.kieler.synccharts.Expression;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.SignalReference;
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.SuspensionTrigger;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.VariableReference;
@@ -58,9 +57,10 @@ public class XTextParserWrapper implements IParser {
 	public XTextParserWrapper(Action action) {
 	}
 	
+	/*
 	public XTextParserWrapper(SuspensionTrigger suspensionTrigger) {
 	}
-
+*/
 	public IContentAssistProcessor getCompletionProcessor(IAdaptable element) {
 		return null;
 	}
@@ -77,12 +77,14 @@ public class XTextParserWrapper implements IParser {
 					return action.getTriggersAndEffects().replace("INVALID: ", "");
 				}
 			}
+			/*
 			else if (((EObjectAdapter) element).getRealObject() instanceof SuspensionTrigger) {
 				SuspensionTrigger suspensionTrigger = (SuspensionTrigger) (((EObjectAdapter) element).getRealObject());
 				if (suspensionTrigger.getTrigger() != null) {
 					return suspensionTrigger.getTrigger().replace("INVALID: ", "");
 				}
 			}
+			*/
 		}
 		return "";
 	}
@@ -92,12 +94,13 @@ public class XTextParserWrapper implements IParser {
 	 */
 	// Return the xText command
 	public ICommand getParseCommand(IAdaptable element, String newString, int flags) {
-		if (((EObjectAdapter) element).getRealObject() instanceof SuspensionTrigger) {
+		/*
+	        if (((EObjectAdapter) element).getRealObject() instanceof SuspensionTrigger) {
 			return new XTextParseExpressionCommand(element, newString, flags);
 		}
-		else {
+		else {*/
 			return new XTextParseCommand(element, newString, flags);
-		}
+		//}
 	}
 
 	/**
@@ -119,7 +122,7 @@ public class XTextParserWrapper implements IParser {
 				if (action.getTriggersAndEffects() != null) {
 					return immediateString + action.getTriggersAndEffects();
 				}
-			}
+			}/*
 			else if (((EObjectAdapter) element).getRealObject() instanceof SuspensionTrigger) {
 				SuspensionTrigger suspensionTrigger = (SuspensionTrigger) (((EObjectAdapter) element).getRealObject());
 				// If the suspension trigger is immediate, add a '#' to the string
@@ -129,7 +132,7 @@ public class XTextParserWrapper implements IParser {
 				if (suspensionTrigger.getTrigger() != null) {
 					return immediateString + suspensionTrigger.getTrigger();
 				}
-			}
+			}*/
 		}
 		return "";
 	}
@@ -143,10 +146,10 @@ public class XTextParserWrapper implements IParser {
 			Object feature = ((Notification) event).getFeature();
 			if (feature.equals(SyncchartsPackage.eINSTANCE.getAction_TriggersAndEffects())) {
 				return true;
-			}
+			}/*
 			else if (feature.equals(SyncchartsPackage.eINSTANCE.getSuspensionTrigger_Trigger())) {
 				return true;
-			}
+			}*/
 		}
 		return false;
 	}
@@ -166,7 +169,7 @@ public class XTextParserWrapper implements IParser {
 				if (checkSignals(action, newAction)) {
 					return ParserEditStatus.EDITABLE_STATUS;
 				}
-			}
+			}/*
 			if (element instanceof SuspensionTrigger) {
 				ByteArrayInputStream stream = new ByteArrayInputStream(editString.getBytes());
 				parser = new XtextParser(stream);
@@ -176,7 +179,7 @@ public class XTextParserWrapper implements IParser {
 				if (checkSignals((SuspensionTrigger) element, expression, newExpression)) {
 					return ParserEditStatus.EDITABLE_STATUS;
 				}
-			}
+			}*/
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -255,7 +258,7 @@ public class XTextParserWrapper implements IParser {
 	 * @see {@link XTextParserWrapper#checkSignals(Action, Action)}
 	 */
 	// A similar method for suspension triggers
-	private boolean checkSignals(SuspensionTrigger suspensionTrigger, Expression expression, Expression newExpression) {
+/*	private boolean checkSignals(SuspensionTrigger suspensionTrigger, Expression expression, Expression newExpression) {
 		boolean allValid = true;
 		boolean oneEqual = false;
 		for (Signal s1 : getSignals(newExpression)) {
@@ -276,7 +279,7 @@ public class XTextParserWrapper implements IParser {
 		}
 		return allValid;
 	}
-	
+*/	
 	/**
 	 * Get all signals referenced in an action.
 	 * @param action The action.

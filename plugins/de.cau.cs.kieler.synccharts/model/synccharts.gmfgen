@@ -456,12 +456,6 @@
             xsi:type="gmfgen:GenFeatureSeqInitializer">
           <initializers
               xsi:type="gmfgen:GenFeatureValueSpec"
-              value="//@expressionProviders/@providers.0/@expressions.0">
-            <feature
-                href="synccharts.genmodel#//synccharts/Transition/delay"/>
-          </initializers>
-          <initializers
-              xsi:type="gmfgen:GenFeatureValueSpec"
               value="//@expressionProviders/@providers.1/@expressions.0">
             <feature
                 href="synccharts.genmodel#//synccharts/Transition/priority"/>

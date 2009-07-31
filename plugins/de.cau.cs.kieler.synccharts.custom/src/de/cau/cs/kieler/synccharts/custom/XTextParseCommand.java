@@ -19,8 +19,6 @@ import java.io.ByteArrayInputStream;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.draw2d.Graphics;
-import org.eclipse.draw2d.Shape;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -40,7 +38,6 @@ import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.SignalReference;
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.SuspensionTrigger;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.VariableReference;
@@ -139,7 +136,7 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 					action.getEffects().add(newAction.getEffects().get(i));
 				}
 			}
-			else if ((element != null) && (element instanceof EObjectAdapter) && (((EObjectAdapter)element).getRealObject() instanceof SuspensionTrigger)) {
+		/*	else if ((element != null) && (element instanceof EObjectAdapter) && (((EObjectAdapter)element).getRealObject() instanceof SuspensionTrigger)) {
 				ByteArrayInputStream stream = new ByteArrayInputStream(string.getBytes());
 				parser = new XtextParser(stream);
 				Node node = parser.getParser().parse();
@@ -169,7 +166,7 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 				// Integrate the new Expression into the SSM model
 				suspensionTrigger.setExpression(newExpression);
 				suspensionTrigger.setTrigger(string);
-			}
+			}*/
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -232,7 +229,7 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 	 * @see {@link XTextParseCommand#checkSignals(Action, Action)}
 	 */
 	// A similar method for suspension triggers
-	private boolean checkSignals(SuspensionTrigger suspensionTrigger, Expression expression, Expression newExpression) {
+/*	private boolean checkSignals(SuspensionTrigger suspensionTrigger, Expression expression, Expression newExpression) {
 		boolean allValid = true;
 		boolean oneEqual = false;
 		for (Signal s1 : getSignals(newExpression)) {
@@ -254,7 +251,7 @@ public class XTextParseCommand extends AbstractTransactionalCommand {
 		}
 		return allValid;
 	}
-	
+*/	
 	/**
 	 * Update the references to a signal in an action.
 	 * @param action The action.

@@ -32,275 +32,59 @@ protected class ThisRootNode extends RootToken {
 	
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Model_Group(this, this, 0, inst);
-			case 1: return new Action_Group(this, this, 1, inst);
-			case 2: return new Effect_Alternatives(this, this, 2, inst);
-			case 3: return new Emission_Group(this, this, 3, inst);
-			case 4: return new Assignment_Group(this, this, 4, inst);
-			case 5: return new SignalReference_ReferenceAssignment(this, this, 5, inst);
-			case 6: return new VariableReference_ReferenceAssignment(this, this, 6, inst);
-			case 7: return new Signal_Group(this, this, 7, inst);
-			case 8: return new Variable_Group(this, this, 8, inst);
-			case 9: return new IntValue_ValueAssignment(this, this, 9, inst);
-			case 10: return new FloatValue_ValueAssignment(this, this, 10, inst);
-			case 11: return new BooleanValue_ValueAssignment(this, this, 11, inst);
-			case 12: return new Value_Alternatives(this, this, 12, inst);
-			case 13: return new HostCode_CodeAssignment(this, this, 13, inst);
-			case 14: return new Operator_OperatorKindAssignment(this, this, 14, inst);
-			case 15: return new ValOperation_Group(this, this, 15, inst);
-			case 16: return new ValueExpression_Alternatives(this, this, 16, inst);
-			case 17: return new CompareOperation_Group(this, this, 17, inst);
-			case 18: return new NotOperation_Group(this, this, 18, inst);
-			case 19: return new NotOrNormalExpression_Alternatives(this, this, 19, inst);
-			case 20: return new AndOperation_Group(this, this, 20, inst);
-			case 21: return new OrOperation_Group(this, this, 21, inst);
-			case 22: return new BooleanExpression_Alternatives(this, this, 22, inst);
-			case 23: return new PrimaryExpression_BooleanExpressionParserRuleCall(this, this, 23, inst);
-			default: return null;
-		}	
-	}	
-}
-	
-
-/************ begin Rule Model ****************
- *
- * Model:
- *   (signals+=Signal|variables+=Variable)* (actions+=Action ";")*; 
- * 
- * // dummy rule to test the language in an editor
- *
- **/
-
-// (signals+=Signal|variables+=Variable)* (actions+=Action ";")*
-protected class Model_Group extends GroupToken {
-	
-	public Model_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Group getGrammarElement() {
-		return grammarAccess.getModelAccess().getGroup();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Model_Group_1(parent, this, 0, inst);
-			case 1: return new Model_Alternatives_0(parent, this, 1, inst);
-			default: return null;
-		}	
-	}	
-		
-	public IInstanceDescription tryConsume() {
-		if(!current.isInstanceOf(grammarAccess.getModelRule().getType().getClassifier())) return null;
-		return tryConsumeVal();
-	}
-}
-
-// (signals+=Signal|variables+=Variable)*
-protected class Model_Alternatives_0 extends AlternativesToken {
-
-	public Model_Alternatives_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Alternatives getGrammarElement() {
-		return grammarAccess.getModelAccess().getAlternatives_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Model_SignalsAssignment_0_0(parent, this, 0, inst);
-			case 1: return new Model_VariablesAssignment_0_1(parent, this, 1, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// signals+=Signal
-protected class Model_SignalsAssignment_0_0 extends AssignmentToken  {
-	
-	public Model_SignalsAssignment_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getModelAccess().getSignalsAssignment_0_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Signal_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("signals",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("signals");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getSignalRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getModelAccess().getSignalsSignalParserRuleCall_0_0_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new Model_Alternatives_0(parent, next, actIndex, consumed);
-			default: return parent.createParentFollower(next, actIndex , index - 1, consumed);
-		}	
-	}	
-}
-
-// variables+=Variable
-protected class Model_VariablesAssignment_0_1 extends AssignmentToken  {
-	
-	public Model_VariablesAssignment_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getModelAccess().getVariablesAssignment_0_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Variable_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("variables",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("variables");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getVariableRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getModelAccess().getVariablesVariableParserRuleCall_0_1_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new Model_Alternatives_0(parent, next, actIndex, consumed);
-			default: return parent.createParentFollower(next, actIndex , index - 1, consumed);
-		}	
-	}	
-}
-
-
-// (actions+=Action ";")*
-protected class Model_Group_1 extends GroupToken {
-	
-	public Model_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Group getGrammarElement() {
-		return grammarAccess.getModelAccess().getGroup_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Model_SemicolonKeyword_1_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// actions+=Action
-protected class Model_ActionsAssignment_1_0 extends AssignmentToken  {
-	
-	public Model_ActionsAssignment_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getModelAccess().getActionsAssignment_1_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
 			case 0: return new Action_Group(this, this, 0, inst);
+			case 1: return new Effect_Alternatives(this, this, 1, inst);
+			case 2: return new Emission_Group(this, this, 2, inst);
+			case 3: return new Assignment_Group(this, this, 3, inst);
+			case 4: return new SignalReference_SignalAssignment(this, this, 4, inst);
+			case 5: return new VariableReference_VariableAssignment(this, this, 5, inst);
+			case 6: return new IntValue_ValueAssignment(this, this, 6, inst);
+			case 7: return new FloatValue_ValueAssignment(this, this, 7, inst);
+			case 8: return new BooleanValue_ValueAssignment(this, this, 8, inst);
+			case 9: return new Value_Alternatives(this, this, 9, inst);
+			case 10: return new HostCode_CodeAssignment(this, this, 10, inst);
+			case 11: return new ValOperation_Group(this, this, 11, inst);
+			case 12: return new ValueExpression_Alternatives(this, this, 12, inst);
+			case 13: return new CompareOperation_Group(this, this, 13, inst);
+			case 14: return new NotOperation_Group(this, this, 14, inst);
+			case 15: return new NotOrNormalExpression_Alternatives(this, this, 15, inst);
+			case 16: return new AndOperation_Group(this, this, 16, inst);
+			case 17: return new OrOperation_Group(this, this, 17, inst);
+			case 18: return new BooleanExpression_Alternatives(this, this, 18, inst);
+			case 19: return new PrimaryExpression_BooleanExpressionParserRuleCall(this, this, 19, inst);
 			default: return null;
 		}	
 	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("actions",false)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("actions");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getActionRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getModelAccess().getActionsActionParserRuleCall_1_0_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new Model_Group_1(parent, next, actIndex, consumed);
-			case 1: return new Model_Alternatives_0(parent, next, actIndex, consumed);
-			default: return parent.createParentFollower(next, actIndex , index - 2, consumed);
-		}	
-	}	
 }
-
-// ";"
-protected class Model_SemicolonKeyword_1_1 extends KeywordToken  {
 	
-	public Model_SemicolonKeyword_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getModelAccess().getSemicolonKeyword_1_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Model_ActionsAssignment_1_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-
-
-/************ end Rule Model ****************/
-
 
 /************ begin Rule Action ****************
  *
- * Action:
- *   trigger=PrimaryExpression? ("/" effects+=Effect*)?; 
+ * Action returns synccharts::Action:
+ *   isImmediate?="#" delay=INT? trigger=BooleanExpression? ("/" effects+=Effect*)?; 
+ * //import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
+ * //import "synccharts" as synchcharts
  * 
- *   
+ * //dummy rule to test the language in an editor
+ * //Model : 
+ * //	((signals+=Signal | variables+=Variable))* (actions+=Action ";")*;
+ * 
+ *     
  * 	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
+ * 	         // (";" parentStateEntryAction=[synccharts::State]? ";" parentStateExitAction=[synccharts::State]? ";" parentStateInnerAction=[synccharts::State]?)? ; 		
+ * 
+ * // dummy rule that will never be parsed. However, the serializer might get
+ * // a transition instead of an action and needs to know how to serialize it
+ * // here we define, that the textual representation will only hold the elements
+ * // of an action. This is only meaningful for the graphical editor. If you need
+ * // a proper textual representation of a Transition, you should override this 
+ * // rule!
+ * //Transition returns synccharts::Transition:
+ * //	Action;
  *
  **/
 
-// trigger=PrimaryExpression? ("/" effects+=Effect*)? 
+// isImmediate?="#" delay=INT? trigger=BooleanExpression? ("/" effects+=Effect*)? 
 // 	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
 protected class Action_Group extends GroupToken {
 	
@@ -314,8 +98,10 @@ protected class Action_Group extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Action_Group_1(parent, this, 0, inst);
-			case 1: return new Action_TriggerAssignment_0(parent, this, 1, inst);
+			case 0: return new Action_Group_3(parent, this, 0, inst);
+			case 1: return new Action_TriggerAssignment_2(parent, this, 1, inst);
+			case 2: return new Action_DelayAssignment_1(parent, this, 2, inst);
+			case 3: return new Action_IsImmediateAssignment_0(parent, this, 3, inst);
 			default: return null;
 		}	
 	}	
@@ -326,20 +112,82 @@ protected class Action_Group extends GroupToken {
 	}
 }
 
-// trigger=PrimaryExpression?
-protected class Action_TriggerAssignment_0 extends AssignmentToken  {
+// isImmediate?="#" 
+// 	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
+protected class Action_IsImmediateAssignment_0 extends AssignmentToken  {
 	
-	public Action_TriggerAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Action_IsImmediateAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getActionAccess().getTriggerAssignment_0();
+		return grammarAccess.getActionAccess().getIsImmediateAssignment_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new PrimaryExpression_BooleanExpressionParserRuleCall(this, this, 0, inst);
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("isImmediate",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isImmediate");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getActionAccess().getIsImmediateNumberSignKeyword_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// delay=INT?
+protected class Action_DelayAssignment_1 extends AssignmentToken  {
+	
+	public Action_DelayAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Assignment getGrammarElement() {
+		return grammarAccess.getActionAccess().getDelayAssignment_1();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Action_IsImmediateAssignment_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("delay",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("delay");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getActionAccess().getDelayINTTerminalRuleCall_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// trigger=BooleanExpression?
+protected class Action_TriggerAssignment_2 extends AssignmentToken  {
+	
+	public Action_TriggerAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Assignment getGrammarElement() {
+		return grammarAccess.getActionAccess().getTriggerAssignment_2();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new BooleanExpression_Alternatives(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -349,9 +197,9 @@ protected class Action_TriggerAssignment_0 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("trigger");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getPrimaryExpressionRule().getType().getClassifier())) {
+			if(param.isInstanceOf(grammarAccess.getBooleanExpressionRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getActionAccess().getTriggerPrimaryExpressionParserRuleCall_0_0(); 
+				element = grammarAccess.getActionAccess().getTriggerBooleanExpressionParserRuleCall_2_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -362,26 +210,28 @@ protected class Action_TriggerAssignment_0 extends AssignmentToken  {
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
-			default: return parent.createParentFollower(next, actIndex , index, consumed);
+			case 0: return new Action_DelayAssignment_1(parent, next, actIndex, consumed);
+			case 1: return new Action_IsImmediateAssignment_0(parent, next, actIndex, consumed);
+			default: return null;
 		}	
 	}	
 }
 
 // ("/" effects+=Effect*)?
-protected class Action_Group_1 extends GroupToken {
+protected class Action_Group_3 extends GroupToken {
 	
-	public Action_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Action_Group_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Group getGrammarElement() {
-		return grammarAccess.getActionAccess().getGroup_1();
+		return grammarAccess.getActionAccess().getGroup_3();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Action_EffectsAssignment_1_1(parent, this, 0, inst);
-			case 1: return new Action_SolidusKeyword_1_0(parent, this, 1, inst);
+			case 0: return new Action_EffectsAssignment_3_1(parent, this, 0, inst);
+			case 1: return new Action_SolidusKeyword_3_0(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -389,34 +239,36 @@ protected class Action_Group_1 extends GroupToken {
 }
 
 // "/"
-protected class Action_SolidusKeyword_1_0 extends KeywordToken  {
+protected class Action_SolidusKeyword_3_0 extends KeywordToken  {
 	
-	public Action_SolidusKeyword_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Action_SolidusKeyword_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Keyword getGrammarElement() {
-		return grammarAccess.getActionAccess().getSolidusKeyword_1_0();
+		return grammarAccess.getActionAccess().getSolidusKeyword_3_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Action_TriggerAssignment_0(parent, this, 0, inst);
-			default: return parent.createParentFollower(this, index, index - 1, inst);
+			case 0: return new Action_TriggerAssignment_2(parent, this, 0, inst);
+			case 1: return new Action_DelayAssignment_1(parent, this, 1, inst);
+			case 2: return new Action_IsImmediateAssignment_0(parent, this, 2, inst);
+			default: return null;
 		}	
 	}	
 		
 }
 
 // effects+=Effect*
-protected class Action_EffectsAssignment_1_1 extends AssignmentToken  {
+protected class Action_EffectsAssignment_3_1 extends AssignmentToken  {
 	
-	public Action_EffectsAssignment_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Action_EffectsAssignment_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getActionAccess().getEffectsAssignment_1_1();
+		return grammarAccess.getActionAccess().getEffectsAssignment_3_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -433,7 +285,7 @@ protected class Action_EffectsAssignment_1_1 extends AssignmentToken  {
 			IInstanceDescription param = getDescr((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getEffectRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getActionAccess().getEffectsEffectParserRuleCall_1_1_0(); 
+				element = grammarAccess.getActionAccess().getEffectsEffectParserRuleCall_3_1_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -444,8 +296,8 @@ protected class Action_EffectsAssignment_1_1 extends AssignmentToken  {
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new Action_EffectsAssignment_1_1(parent, next, actIndex, consumed);
-			case 1: return new Action_SolidusKeyword_1_0(parent, next, actIndex, consumed);
+			case 0: return new Action_EffectsAssignment_3_1(parent, next, actIndex, consumed);
+			case 1: return new Action_SolidusKeyword_3_0(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
@@ -458,52 +310,30 @@ protected class Action_EffectsAssignment_1_1 extends AssignmentToken  {
 
 /************ begin Rule Effect ****************
  *
- * Effect:
- *   Emission|Assignment|HostCode;  		
+ * Effect returns synccharts::Effect:
+ *   Emission|Assignment|HostCode; // (";" parentStateEntryAction=[synccharts::State]? ";" parentStateExitAction=[synccharts::State]? ";" parentStateInnerAction=[synccharts::State]?)? ; 		
  * 
- *    
- * 	        
- * 		
- * //Expression :
- * //	TerminalExpression | ComplexExpression;
- * 
- * // TODO: Signal and Variable references both are evaluated by simple IDs
- * //TerminalExpression:
- * //    SignalOrVariableReference | HostCode | Value;
- * 
- * // TODO: add more complex expressions and not only simple operations without recursion
- * //UnbracedComplexExpression : 
- * //	((subExpressions+=TerminalExpression))? operator=Operator subExpressions+=Expression ;
- * 
- * //BracedComplexExpression : 
- * //	"(" UnbracedComplexExpression ")";
- * 
- * //ComplexExpression :
- * //	UnbracedComplexExpression | BracedComplexExpression;
+ * // dummy rule that will never be parsed. However, the serializer might get
+ * // a transition instead of an action and needs to know how to serialize it
+ * // here we define, that the textual representation will only hold the elements
+ * // of an action. This is only meaningful for the graphical editor. If you need
+ * // a proper textual representation of a Transition, you should override this 
+ * // rule!
+ * //Transition returns synccharts::Transition:
+ * //	Action;
  *
  **/
 
-// Emission|Assignment|HostCode  		
+// Emission|Assignment|HostCode // (";" parentStateEntryAction=[synccharts::State]? ";" parentStateExitAction=[synccharts::State]? ";" parentStateInnerAction=[synccharts::State]?)? ; 		
 // 
-//    
-// 	        
-// 		
-// //Expression :
-// //	TerminalExpression | ComplexExpression;
-// 
-// // TODO: Signal and Variable references both are evaluated by simple IDs
-// //TerminalExpression:
-// //    SignalOrVariableReference | HostCode | Value;
-// 
-// // TODO: add more complex expressions and not only simple operations without recursion
-// //UnbracedComplexExpression : 
-// //	((subExpressions+=TerminalExpression))? operator=Operator subExpressions+=Expression ;
-// 
-// //BracedComplexExpression : 
-// //	"(" UnbracedComplexExpression ")";
-// 
-// //ComplexExpression :
-// //	UnbracedComplexExpression | BracedComplexExpression;
+// // dummy rule that will never be parsed. However, the serializer might get
+// // a transition instead of an action and needs to know how to serialize it
+// // here we define, that the textual representation will only hold the elements
+// // of an action. This is only meaningful for the graphical editor. If you need
+// // a proper textual representation of a Transition, you should override this 
+// // rule!
+// //Transition returns synccharts::Transition:
+// //	Action;
 protected class Effect_Alternatives extends AlternativesToken {
 
 	public Effect_Alternatives(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -628,29 +458,12 @@ protected class Effect_HostCodeParserRuleCall_2 extends RuleCallToken {
 
 /************ begin Rule Emission ****************
  *
- * Emission:
- *   signal=[Signal] ("(" newValue=PrimaryExpression ")")?; 
- * 		
- * //Expression :
- * //	TerminalExpression | ComplexExpression;
- * 
- * // TODO: Signal and Variable references both are evaluated by simple IDs
- * //TerminalExpression:
- * //    SignalOrVariableReference | HostCode | Value;
- * 
- * // TODO: add more complex expressions and not only simple operations without recursion
- * //UnbracedComplexExpression : 
- * //	((subExpressions+=TerminalExpression))? operator=Operator subExpressions+=Expression ;
- * 
- * //BracedComplexExpression : 
- * //	"(" UnbracedComplexExpression ")";
- * 
- * //ComplexExpression :
- * //	UnbracedComplexExpression | BracedComplexExpression;
+ * Emission returns synccharts::Emission:
+ *   signal=[synccharts::Signal] ("(" newValue=PrimaryExpression ")")?;
  *
  **/
 
-// signal=[Signal] ("(" newValue=PrimaryExpression ")")?
+// signal=[synccharts::Signal] ("(" newValue=PrimaryExpression ")")?
 protected class Emission_Group extends GroupToken {
 	
 	public Emission_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -675,7 +488,7 @@ protected class Emission_Group extends GroupToken {
 	}
 }
 
-// signal=[Signal]
+// signal=[synccharts::Signal]
 protected class Emission_SignalAssignment_0 extends AssignmentToken  {
 	
 	public Emission_SignalAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -817,12 +630,12 @@ protected class Emission_RightParenthesisKeyword_1_2 extends KeywordToken  {
 
 /************ begin Rule Assignment ****************
  *
- * Assignment:
- *   variable=[Variable] ":=" expression=PrimaryExpression;
+ * Assignment returns synccharts::Assignment:
+ *   variable=[synccharts::Variable] ":=" expression=PrimaryExpression;
  *
  **/
 
-// variable=[Variable] ":=" expression=PrimaryExpression
+// variable=[synccharts::Variable] ":=" expression=PrimaryExpression
 protected class Assignment_Group extends GroupToken {
 	
 	public Assignment_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -846,7 +659,7 @@ protected class Assignment_Group extends GroupToken {
 	}
 }
 
-// variable=[Variable]
+// variable=[synccharts::Variable]
 protected class Assignment_VariableAssignment_0 extends AssignmentToken  {
 	
 	public Assignment_VariableAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -947,20 +760,26 @@ protected class Assignment_ExpressionAssignment_2 extends AssignmentToken  {
 
 /************ begin Rule SignalReference ****************
  *
- * SignalReference:
- *   reference=[Signal];
+ * SignalReference returns synccharts::SignalReference:
+ *   signal=[synccharts::Signal]; 
+ * 
+ *     
+ * 	    
+ * 
+ * //SignalReference :
+ * //	signal = [Signal];
  *
  **/
 
-// reference=[Signal]
-protected class SignalReference_ReferenceAssignment extends AssignmentToken  {
+// signal=[synccharts::Signal]
+protected class SignalReference_SignalAssignment extends AssignmentToken  {
 	
-	public SignalReference_ReferenceAssignment(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public SignalReference_SignalAssignment(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalReferenceAccess().getReferenceAssignment();
+		return grammarAccess.getSignalReferenceAccess().getSignalAssignment();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -974,13 +793,13 @@ protected class SignalReference_ReferenceAssignment extends AssignmentToken  {
 		return tryConsumeVal();
 	}
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("reference",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("reference");
+		if((value = current.getConsumable("signal",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("signal");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
 			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getSignalReferenceAccess().getReferenceSignalCrossReference_0().getType().getClassifier())) {
+			if(param.isInstanceOf(grammarAccess.getSignalReferenceAccess().getSignalSignalCrossReference_0().getType().getClassifier())) {
 				type = AssignmentType.CR;
-				element = grammarAccess.getSignalReferenceAccess().getReferenceSignalCrossReference_0(); 
+				element = grammarAccess.getSignalReferenceAccess().getSignalSignalCrossReference_0(); 
 				return obj;
 			}
 		}
@@ -994,20 +813,23 @@ protected class SignalReference_ReferenceAssignment extends AssignmentToken  {
 
 /************ begin Rule VariableReference ****************
  *
- * VariableReference:
- *   reference=[Variable];
+ * VariableReference returns synccharts::VariableReference:
+ *   variable=[synccharts::Variable]; 
+ * 
+ * //SignalReference :
+ * //	signal = [Signal];
  *
  **/
 
-// reference=[Variable]
-protected class VariableReference_ReferenceAssignment extends AssignmentToken  {
+// variable=[synccharts::Variable]
+protected class VariableReference_VariableAssignment extends AssignmentToken  {
 	
-	public VariableReference_ReferenceAssignment(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public VariableReference_VariableAssignment(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getVariableReferenceAccess().getReferenceAssignment();
+		return grammarAccess.getVariableReferenceAccess().getVariableAssignment();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -1021,13 +843,13 @@ protected class VariableReference_ReferenceAssignment extends AssignmentToken  {
 		return tryConsumeVal();
 	}
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("reference",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("reference");
+		if((value = current.getConsumable("variable",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("variable");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
 			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getVariableReferenceAccess().getReferenceVariableCrossReference_0().getType().getClassifier())) {
+			if(param.isInstanceOf(grammarAccess.getVariableReferenceAccess().getVariableVariableCrossReference_0().getType().getClassifier())) {
 				type = AssignmentType.CR;
-				element = grammarAccess.getVariableReferenceAccess().getReferenceVariableCrossReference_0(); 
+				element = grammarAccess.getVariableReferenceAccess().getVariableVariableCrossReference_0(); 
 				return obj;
 			}
 		}
@@ -1037,216 +859,6 @@ protected class VariableReference_ReferenceAssignment extends AssignmentToken  {
 }
 
 /************ end Rule VariableReference ****************/
-
-
-/************ begin Rule Signal ****************
- *
- * Signal:
- *   "input" name=ID ";";
- *
- **/
-
-// "input" name=ID ";"
-protected class Signal_Group extends GroupToken {
-	
-	public Signal_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Group getGrammarElement() {
-		return grammarAccess.getSignalAccess().getGroup();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Signal_SemicolonKeyword_2(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	public IInstanceDescription tryConsume() {
-		if(!current.isInstanceOf(grammarAccess.getSignalRule().getType().getClassifier())) return null;
-		return tryConsumeVal();
-	}
-}
-
-// "input"
-protected class Signal_InputKeyword_0 extends KeywordToken  {
-	
-	public Signal_InputKeyword_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getSignalAccess().getInputKeyword_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-}
-
-// name=ID
-protected class Signal_NameAssignment_1 extends AssignmentToken  {
-	
-	public Signal_NameAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getNameAssignment_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Signal_InputKeyword_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("name",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("name");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
-			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_1_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// ";"
-protected class Signal_SemicolonKeyword_2 extends KeywordToken  {
-	
-	public Signal_SemicolonKeyword_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getSignalAccess().getSemicolonKeyword_2();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Signal_NameAssignment_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-
-/************ end Rule Signal ****************/
-
-
-/************ begin Rule Variable ****************
- *
- * Variable:
- *   "var" name=ID ";";
- *
- **/
-
-// "var" name=ID ";"
-protected class Variable_Group extends GroupToken {
-	
-	public Variable_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Group getGrammarElement() {
-		return grammarAccess.getVariableAccess().getGroup();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Variable_SemicolonKeyword_2(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	public IInstanceDescription tryConsume() {
-		if(!current.isInstanceOf(grammarAccess.getVariableRule().getType().getClassifier())) return null;
-		return tryConsumeVal();
-	}
-}
-
-// "var"
-protected class Variable_VarKeyword_0 extends KeywordToken  {
-	
-	public Variable_VarKeyword_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getVariableAccess().getVarKeyword_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-}
-
-// name=ID
-protected class Variable_NameAssignment_1 extends AssignmentToken  {
-	
-	public Variable_NameAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getVariableAccess().getNameAssignment_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Variable_VarKeyword_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("name",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("name");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
-			type = AssignmentType.LRC;
-			element = grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_1_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// ";"
-protected class Variable_SemicolonKeyword_2 extends KeywordToken  {
-	
-	public Variable_SemicolonKeyword_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getVariableAccess().getSemicolonKeyword_2();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Variable_NameAssignment_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-
-/************ end Rule Variable ****************/
 
 
 /************ begin Rule IntValue ****************
@@ -1388,6 +1000,12 @@ protected class BooleanValue_ValueAssignment extends AssignmentToken  {
  * 
  * 	        
  * 
+ * //Signal:
+ * //	"signal" name = ID;
+ * 	
+ * //Variable:
+ * //	"variable" name = ID;
+ * 
  * // make sure the Float rule does not shadow the built-in INT rule
  *
  **/
@@ -1395,6 +1013,12 @@ protected class BooleanValue_ValueAssignment extends AssignmentToken  {
 // IntValue|FloatValue|BooleanValue 
 // 
 // 	        
+// 
+// //Signal:
+// //	"signal" name = ID;
+// 	
+// //Variable:
+// //	"variable" name = ID;
 // 
 // // make sure the Float rule does not shadow the built-in INT rule
 protected class Value_Alternatives extends AlternativesToken {
@@ -1521,10 +1145,10 @@ protected class Value_BooleanValueParserRuleCall_2 extends RuleCallToken {
 
 /************ begin Rule HostCode ****************
  *
- * HostCode:
+ * HostCode returns synccharts::HostCode:
  *   code=STRING; 
  * 
- * 
+ *     
  * 	//"'"code=STRING"'";
  * 	 //("(" type=ID ")")?
  *
@@ -1569,53 +1193,9 @@ protected class HostCode_CodeAssignment extends AssignmentToken  {
 /************ end Rule HostCode ****************/
 
 
-/************ begin Rule Operator ****************
- *
- * Operator:
- *   operatorKind=OperatorKind;
- *
- **/
-
-// operatorKind=OperatorKind
-protected class Operator_OperatorKindAssignment extends AssignmentToken  {
-	
-	public Operator_OperatorKindAssignment(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getOperatorAccess().getOperatorKindAssignment();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-	public IInstanceDescription tryConsume() {
-		if(!current.isInstanceOf(grammarAccess.getOperatorRule().getType().getClassifier())) return null;
-		return tryConsumeVal();
-	}
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("operatorKind",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("operatorKind");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.ERC;
-			element = grammarAccess.getOperatorAccess().getOperatorKindOperatorKindEnumRuleCall_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-/************ end Rule Operator ****************/
-
-
 /************ begin Rule ValOperation ****************
  *
- * ValOperation returns Expression:
+ * ValOperation returns synccharts::ComplexExpression:
  *   operator=ValOperator subExpressions+=SignalReference;
  *
  **/
@@ -1687,7 +1267,7 @@ protected class ValOperation_SubExpressionsAssignment_1 extends AssignmentToken 
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new SignalReference_ReferenceAssignment(this, this, 0, inst);
+			case 0: return new SignalReference_SignalAssignment(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1722,7 +1302,7 @@ protected class ValOperation_SubExpressionsAssignment_1 extends AssignmentToken 
 
 /************ begin Rule ValueExpression ****************
  *
- * ValueExpression returns Expression:
+ * ValueExpression returns synccharts::Expression:
  *   IntValue|FloatValue|ValOperation|VariableReference;
  *
  **/
@@ -1860,13 +1440,13 @@ protected class ValueExpression_VariableReferenceParserRuleCall_3 extends RuleCa
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new VariableReference_ReferenceAssignment(this, this, 0, inst);
+			case 0: return new VariableReference_VariableAssignment(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if(checkForRecursion(VariableReference_ReferenceAssignment.class, current)) return null;
+		if(checkForRecursion(VariableReference_VariableAssignment.class, current)) return null;
 		if(!current.isInstanceOf(grammarAccess.getVariableReferenceRule().getType().getClassifier())) return null;
 		return current;
 	}
@@ -1884,7 +1464,7 @@ protected class ValueExpression_VariableReferenceParserRuleCall_3 extends RuleCa
 
 /************ begin Rule CompareOperation ****************
  *
- * CompareOperation returns Expression:
+ * CompareOperation returns synccharts::Expression:
  *   ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator
  *   subExpressions+=ValueExpression);
  *
@@ -2075,12 +1655,12 @@ protected class CompareOperation_SubExpressionsAssignment_1_2 extends Assignment
 
 /************ begin Rule NotOperation ****************
  *
- * NotOperation returns Operations:
- *   operators=NotOperator subExpressions+=BooleanExpression;
+ * NotOperation returns synccharts::ComplexExpression:
+ *   operator=NotOperator subExpressions+=BooleanExpression;
  *
  **/
 
-// operators=NotOperator subExpressions+=BooleanExpression
+// operator=NotOperator subExpressions+=BooleanExpression
 protected class NotOperation_Group extends GroupToken {
 	
 	public NotOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2104,15 +1684,15 @@ protected class NotOperation_Group extends GroupToken {
 	}
 }
 
-// operators=NotOperator
-protected class NotOperation_OperatorsAssignment_0 extends AssignmentToken  {
+// operator=NotOperator
+protected class NotOperation_OperatorAssignment_0 extends AssignmentToken  {
 	
-	public NotOperation_OperatorsAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public NotOperation_OperatorAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getNotOperationAccess().getOperatorsAssignment_0();
+		return grammarAccess.getNotOperationAccess().getOperatorAssignment_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -2122,11 +1702,11 @@ protected class NotOperation_OperatorsAssignment_0 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("operators",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("operators");
+		if((value = current.getConsumable("operator",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("operator");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.ERC;
-			element = grammarAccess.getNotOperationAccess().getOperatorsNotOperatorEnumRuleCall_0_0();
+			element = grammarAccess.getNotOperationAccess().getOperatorNotOperatorEnumRuleCall_0_0();
 			return obj;
 		}
 		return null;
@@ -2170,7 +1750,7 @@ protected class NotOperation_SubExpressionsAssignment_1 extends AssignmentToken 
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new NotOperation_OperatorsAssignment_0(parent, next, actIndex, consumed);
+			case 0: return new NotOperation_OperatorAssignment_0(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
@@ -2182,7 +1762,7 @@ protected class NotOperation_SubExpressionsAssignment_1 extends AssignmentToken 
 
 /************ begin Rule NotOrNormalExpression ****************
  *
- * NotOrNormalExpression returns Expression:
+ * NotOrNormalExpression returns synccharts::Expression:
  *   NotOperation|BooleanExpression;
  *
  **/
@@ -2280,7 +1860,7 @@ protected class NotOrNormalExpression_BooleanExpressionParserRuleCall_1 extends 
 
 /************ begin Rule AndOperation ****************
  *
- * AndOperation returns Expression:
+ * AndOperation returns synccharts::Expression:
  *   NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd
  *   subExpression+=NotOrNormalExpression)*;
  *
@@ -2473,7 +2053,7 @@ protected class AndOperation_SubExpressionAssignment_1_2 extends AssignmentToken
 
 /************ begin Rule OrOperation ****************
  *
- * OrOperation returns Expression:
+ * OrOperation returns synccharts::Expression:
  *   AndOperation ({Operation.subExpressions+=current} operator=OperatorOr
  *   subExpressions+=AndOperation)*; 
  * 
@@ -2671,7 +2251,7 @@ protected class OrOperation_SubExpressionsAssignment_1_2 extends AssignmentToken
 
 /************ begin Rule BooleanExpression ****************
  *
- * BooleanExpression returns Expression:
+ * BooleanExpression returns synccharts::Expression:
  *   BooleanValue|SignalReference|CompareOperation|"(" OrOperation ")"; 
  * 
  * // TODO: get rid of parentheses
@@ -2751,13 +2331,13 @@ protected class BooleanExpression_SignalReferenceParserRuleCall_1 extends RuleCa
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new SignalReference_ReferenceAssignment(this, this, 0, inst);
+			case 0: return new SignalReference_SignalAssignment(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if(checkForRecursion(SignalReference_ReferenceAssignment.class, current)) return null;
+		if(checkForRecursion(SignalReference_SignalAssignment.class, current)) return null;
 		if(!current.isInstanceOf(grammarAccess.getSignalReferenceRule().getType().getClassifier())) return null;
 		return current;
 	}
@@ -2898,7 +2478,7 @@ protected class BooleanExpression_RightParenthesisKeyword_3_2 extends KeywordTok
 
 /************ begin Rule PrimaryExpression ****************
  *
- * PrimaryExpression returns Expression:
+ * PrimaryExpression returns synccharts::Expression:
  *   BooleanExpression; 
  * 
  *     
