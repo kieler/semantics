@@ -87,7 +87,7 @@ public class TableData {
 	public String getKey() {
 		return this.key;
 	}
-	
+
 	public void setValue(String value) {
 		this.value = value;
 	}

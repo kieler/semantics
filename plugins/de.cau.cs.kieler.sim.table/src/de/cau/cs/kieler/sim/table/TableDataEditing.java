@@ -22,6 +22,8 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 
+import de.cau.cs.kieler.sim.table.views.DataTableView;
+
 public class TableDataEditing extends EditingSupport {
 	private CellEditor editor;
 	private int columnIndex;
@@ -65,6 +67,9 @@ public class TableDataEditing extends EditingSupport {
 	@Override
 	protected Object getValue(Object element) {
 		TableData tableData = (TableData) element;
+
+		//table data is being edited and should not be updated by observer
+		DataTableView.getInstance().setCurrentlyEditing(true);
 
 		switch (this.columnIndex) {
 		case 1:
@@ -125,9 +130,14 @@ public class TableDataEditing extends EditingSupport {
 		}
 
 		getViewer().update(element, null);
+
+		//table data is not being edited any more and can be
+		//updated by observer again
+		DataTableView.getInstance().setCurrentlyEditing(false);
+		
 		//MUST unselect because if currently edited, no updates
 		//can be made
-		viewer.setSelection(null);
+		//viewer.setSelection(null);
 	}
 
 }

@@ -98,10 +98,10 @@ public class DataObserver extends JSONStringDataComponent implements
 						//update
 						TableData tableData = TableDataList.getInstance().get(key);
 						synchronized(tableData) {
-							tableData.setSignal(isSignal);
-							tableData.setValue(value);
-							tableData.setPresent(isPresent);
-							tableData.setModified(false);
+								tableData.setSignal(isSignal);
+								tableData.setValue(value);
+								tableData.setPresent(isPresent);
+								tableData.setModified(false);
 						}
 						tableDataTmp.add(tableData);
 					}
@@ -126,7 +126,9 @@ public class DataObserver extends JSONStringDataComponent implements
 								tableData.setPresent(false);
 							}
 						}
-						tableData.setModified(false);
+						if (tableData.isModified()) {
+							tableData.setModified(false);
+						}
 					}
 				}
 				
@@ -136,8 +138,8 @@ public class DataObserver extends JSONStringDataComponent implements
 			e.printStackTrace();
 		}
 		//update only if not currently edited
-		if (!DataTableView.getInstance().isCurrentlyEdited())
-			TableDataList.getInstance().updateView();
+		if (!DataTableView.getInstance().isCurrentlyEditing())
+			TableDataList.getInstance().updateViewAsync();
 		
 		//Slow down so that user can eye-catch all changes!
 		try{Thread.sleep(80);}catch(Exception e){}
@@ -165,7 +167,7 @@ public class DataObserver extends JSONStringDataComponent implements
 										value));
 		}
 		//update the table
-		TableDataList.getInstance().updateView();
+		TableDataList.getInstance().updateViewAsync();
 	}
 
 	//-------------------------------------------------------------------------

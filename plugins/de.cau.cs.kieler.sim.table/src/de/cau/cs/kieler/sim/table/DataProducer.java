@@ -86,8 +86,8 @@ public class DataProducer extends JSONStringDataComponent implements
 		}
 		
 		//update only if not currently edited
-		if (!DataTableView.getInstance().isCurrentlyEdited())
-			TableDataList.getInstance().updateView();
+		if (!DataTableView.getInstance().isCurrentlyEditing())
+			TableDataList.getInstance().updateViewAsync();
 		
 		returnString = "{" + returnString + "}";
 		
@@ -137,7 +137,7 @@ public class DataProducer extends JSONStringDataComponent implements
 				TableData tableData = tableDataList.get(c);
 				TableDataList.getInstance().remove(tableData.getKey());
 		}
-		TableDataList.getInstance().updateView();
+		TableDataList.getInstance().updateViewAsync();
 	}
 
 }

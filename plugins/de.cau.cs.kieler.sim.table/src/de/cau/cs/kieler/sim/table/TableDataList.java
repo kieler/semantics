@@ -46,13 +46,14 @@ public class TableDataList {
 		}
 	}
 	
-	public void updateView() {
+
+	public void updateViewAsync() {
 		//asynchronously update the table
 		Display.getDefault().asyncExec(
-				  new Runnable() {
-				    public void run(){
+				  new Runnable(){
+					public void run() {
 						viewer.refresh();
-				    }
+					}
 		});
 	}
 	

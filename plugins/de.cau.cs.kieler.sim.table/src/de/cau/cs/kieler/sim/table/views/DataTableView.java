@@ -50,7 +50,6 @@ public class DataTableView extends ViewPart {
 	private DataTableViewer viewer;
 	private TableDataList tableDataList;
 	private Table table;
-	private boolean selected;
 	
 	private Action actionNew; 		//new
 	private Action actionDelete;	//delete
@@ -59,11 +58,14 @@ public class DataTableView extends ViewPart {
 	
 	private Button buttonSignal;
 	
+	private boolean currentlyEditing;
+	
 	/**
 	 * The constructor.
 	 */
 	public DataTableView() {
 		dataTableView = this;
+		currentlyEditing = false;
 	}
 	
 	public static DataTableView getInstance() {
@@ -76,11 +78,14 @@ public class DataTableView extends ViewPart {
 		viewer.refresh();
 		return;
 	}
-	public boolean isCurrentlyEdited() {
-		return (viewer.isCellEditorActive()
-				|| (this.selected)
-				|| viewer.isBusy());
+	
+	public void setCurrentlyEditing(boolean currentlyEditing) {
+		this.currentlyEditing = currentlyEditing;
 	}
+	public boolean isCurrentlyEditing() {
+		return currentlyEditing;
+	}
+
 
 	/**
 	 * This is a callback that will allow us
@@ -202,7 +207,7 @@ public class DataTableView extends ViewPart {
 						TableDataList.getInstance().remove(tableData.getKey());
 					}
 				}
-				viewer.setSelection(null);
+				//viewer.setSelection(null);
 				viewer.refresh();
 				updateEnabled();			
 			}
@@ -227,7 +232,7 @@ public class DataTableView extends ViewPart {
 													selection.toArray()[c];
 					tableData.setPermanent(permanentValue);
 				}
-				viewer.setSelection(null);
+				//viewer.setSelection(null);
 				viewer.refresh();
 				updateEnabled();			
 			}
@@ -252,7 +257,7 @@ public class DataTableView extends ViewPart {
 													selection.toArray()[c];
 					tableData.setSignal(signalValue);
 				}
-				viewer.setSelection(null);
+				//viewer.setSelection(null);
 				viewer.refresh();
 				updateEnabled();			
 			}
@@ -293,7 +298,7 @@ public class DataTableView extends ViewPart {
 			getActionDelete().setEnabled(false);
 			getActionPermanent().setEnabled(false);
 			getActionSignal().setEnabled(false);
-			selected = false;
+			//selected = false;
 		}
 		else {
 			//object selected
@@ -313,12 +318,13 @@ public class DataTableView extends ViewPart {
 				actionSignal.setChecked(false);
 			}
 			
-			selected = true;
+			//selected = true;
 		}
 		
 	}
+
+	//-------------------------------------------------------------------------	
 	
-  //---------------------------------------------------------------------------	
 	
 	private void showMessage(String message) {
 		MessageDialog.openInformation(
