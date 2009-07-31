@@ -23,6 +23,16 @@ import org.eclipse.emf.common.util.Enumerator;
 public enum StateType implements Enumerator
 {
   /**
+   * The '<em><b>NORMAL</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #NORMAL_VALUE
+   * @generated
+   * @ordered
+   */
+  NORMAL(0, "NORMAL", "NORMAL"),
+
+  /**
    * The '<em><b>PSEUDO</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -30,7 +40,7 @@ public enum StateType implements Enumerator
    * @generated
    * @ordered
    */
-  PSEUDO(0, "PSEUDO", "PSEUDO"),
+  PSEUDO(1, "PSEUDO", "cond"),
 
   /**
    * The '<em><b>REFERENCE</b></em>' literal object.
@@ -40,7 +50,7 @@ public enum StateType implements Enumerator
    * @generated
    * @ordered
    */
-  REFERENCE(1, "REFERENCE", "reference"),
+  REFERENCE(2, "REFERENCE", "reference"),
 
   /**
    * The '<em><b>TEXTUAL</b></em>' literal object.
@@ -50,7 +60,22 @@ public enum StateType implements Enumerator
    * @generated
    * @ordered
    */
-  TEXTUAL(2, "TEXTUAL", "textual");
+  TEXTUAL(3, "TEXTUAL", "textual");
+
+  /**
+   * The '<em><b>NORMAL</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>NORMAL</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #NORMAL
+   * @model
+   * @generated
+   * @ordered
+   */
+  public static final int NORMAL_VALUE = 0;
 
   /**
    * The '<em><b>PSEUDO</b></em>' literal value.
@@ -61,11 +86,11 @@ public enum StateType implements Enumerator
    * </p>
    * <!-- end-user-doc -->
    * @see #PSEUDO
-   * @model
+   * @model literal="cond"
    * @generated
    * @ordered
    */
-  public static final int PSEUDO_VALUE = 0;
+  public static final int PSEUDO_VALUE = 1;
 
   /**
    * The '<em><b>REFERENCE</b></em>' literal value.
@@ -80,7 +105,7 @@ public enum StateType implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int REFERENCE_VALUE = 1;
+  public static final int REFERENCE_VALUE = 2;
 
   /**
    * The '<em><b>TEXTUAL</b></em>' literal value.
@@ -95,7 +120,7 @@ public enum StateType implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int TEXTUAL_VALUE = 2;
+  public static final int TEXTUAL_VALUE = 3;
 
   /**
    * An array of all the '<em><b>State Type</b></em>' enumerators.
@@ -106,6 +131,7 @@ public enum StateType implements Enumerator
   private static final StateType[] VALUES_ARRAY =
     new StateType[]
     {
+      NORMAL,
       PSEUDO,
       REFERENCE,
       TEXTUAL,
@@ -167,6 +193,7 @@ public enum StateType implements Enumerator
   {
     switch (value)
     {
+      case NORMAL_VALUE: return NORMAL;
       case PSEUDO_VALUE: return PSEUDO;
       case REFERENCE_VALUE: return REFERENCE;
       case TEXTUAL_VALUE: return TEXTUAL;

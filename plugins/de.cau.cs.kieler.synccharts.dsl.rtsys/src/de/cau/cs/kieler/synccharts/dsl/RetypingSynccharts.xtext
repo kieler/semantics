@@ -31,10 +31,13 @@ generate retypingSynccharts "http://www.cau.de/cs/kieler/synccharts/dsl/Retyping
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 State :
-	//{State}
-	((isInitial?='init')?(isFinal?='final')?|(stateKind=StateType)?) // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
-	('state')? // optional keyword, cf.Meeting_Textu alSyntax-II
-	(stateName=ID)? //optional ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+	//!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
+	//!!!!!!!!!! ((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*   !!!!!!!!!! //
+	//!!!!!!!!!! DO NOT USE THE RULE ABOVE !!!!!!!!!! //
+	//((isInitial?='init')?(isFinal?='final')?(stateKind=StateType)?)* // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
+	((isInitial?='init')?(isFinal?='final')?(stateKind=StateType)?)
+	'state' // optional keyword, cf.Meeting_Textu alSyntax-II
+	(stateName=ID) //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 	(label=STRING)? 
 //	(stateContent=StateContent)?
 //	(outgoingTransitions+=Transition)*
@@ -51,7 +54,7 @@ State :
 //	'}'
 //;
 enum StateType	:
-	PSEUDO | REFERENCE='reference' | TEXTUAL='textual'
+	NORMAL | PSEUDO='cond' | REFERENCE='reference' | TEXTUAL='textual'
 ; 
 //////Effect:
 //////	effectID=STRING

@@ -42,13 +42,12 @@ public class RetypingSyncchartsParser extends AbstractContentAssistParser {
 		if (nameMappings == null) {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				{
-					put(grammarAccess.getStateAccess().getAlternatives_0(), "rule__State__Alternatives_0");
 					put(grammarAccess.getStateTypeAccess().getAlternatives(), "rule__StateType__Alternatives");
 					put(grammarAccess.getStateAccess().getGroup(), "rule__State__Group__0");
-					put(grammarAccess.getStateAccess().getGroup_0_0(), "rule__State__Group_0_0__0");
-					put(grammarAccess.getStateAccess().getIsInitialAssignment_0_0_0(), "rule__State__IsInitialAssignment_0_0_0");
-					put(grammarAccess.getStateAccess().getIsFinalAssignment_0_0_1(), "rule__State__IsFinalAssignment_0_0_1");
-					put(grammarAccess.getStateAccess().getStateKindAssignment_0_1(), "rule__State__StateKindAssignment_0_1");
+					put(grammarAccess.getStateAccess().getGroup_0(), "rule__State__Group_0__0");
+					put(grammarAccess.getStateAccess().getIsInitialAssignment_0_0(), "rule__State__IsInitialAssignment_0_0");
+					put(grammarAccess.getStateAccess().getIsFinalAssignment_0_1(), "rule__State__IsFinalAssignment_0_1");
+					put(grammarAccess.getStateAccess().getStateKindAssignment_0_2(), "rule__State__StateKindAssignment_0_2");
 					put(grammarAccess.getStateAccess().getStateNameAssignment_2(), "rule__State__StateNameAssignment_2");
 					put(grammarAccess.getStateAccess().getLabelAssignment_3(), "rule__State__LabelAssignment_3");
 				}

@@ -83,7 +83,7 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * @generated
    * @ordered
    */
-  protected static final StateType STATE_KIND_EDEFAULT = StateType.PSEUDO;
+  protected static final StateType STATE_KIND_EDEFAULT = StateType.NORMAL;
 
   /**
    * The cached value of the '{@link #getStateKind() <em>State Kind</em>}' attribute.

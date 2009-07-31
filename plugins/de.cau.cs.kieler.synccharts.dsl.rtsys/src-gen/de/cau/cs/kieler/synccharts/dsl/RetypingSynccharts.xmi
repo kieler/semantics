@@ -12,21 +12,19 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts#//State"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Alternatives">
-          <groups xsi:type="xtext:Group">
-            <tokens xsi:type="xtext:Assignment" cardinality="?" feature="isInitial" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="init"/>
-            </tokens>
-            <tokens xsi:type="xtext:Assignment" cardinality="?" feature="isFinal" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="final"/>
-            </tokens>
-          </groups>
-          <groups xsi:type="xtext:Assignment" cardinality="?" feature="stateKind" operator="=">
+        <tokens xsi:type="xtext:Group">
+          <tokens xsi:type="xtext:Assignment" cardinality="?" feature="isInitial" operator="?=">
+            <terminal xsi:type="xtext:Keyword" value="init"/>
+          </tokens>
+          <tokens xsi:type="xtext:Assignment" cardinality="?" feature="isFinal" operator="?=">
+            <terminal xsi:type="xtext:Keyword" value="final"/>
+          </tokens>
+          <tokens xsi:type="xtext:Assignment" cardinality="?" feature="stateKind" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
-          </groups>
+          </tokens>
         </tokens>
-        <tokens xsi:type="xtext:Keyword" cardinality="?" value="state"/>
-        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="stateName" operator="=">
+        <tokens xsi:type="xtext:Keyword" value="state"/>
+        <tokens xsi:type="xtext:Assignment" feature="stateName" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
         </tokens>
         <tokens xsi:type="xtext:Assignment" cardinality="?" feature="label" operator="=">
@@ -40,8 +38,12 @@
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts#//StateType/NORMAL"/>
+          <literal value="NORMAL"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts#//StateType/PSEUDO"/>
-          <literal value="PSEUDO"/>
+          <literal value="cond"/>
         </groups>
         <groups xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts#//StateType/REFERENCE"/>

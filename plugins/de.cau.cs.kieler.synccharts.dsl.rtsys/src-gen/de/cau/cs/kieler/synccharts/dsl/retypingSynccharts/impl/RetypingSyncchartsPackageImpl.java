@@ -253,6 +253,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
 
     // Initialize enums and add enum literals
     initEEnum(stateTypeEEnum, StateType.class, "StateType");
+    addEEnumLiteral(stateTypeEEnum, StateType.NORMAL);
     addEEnumLiteral(stateTypeEEnum, StateType.PSEUDO);
     addEEnumLiteral(stateTypeEEnum, StateType.REFERENCE);
     addEEnumLiteral(stateTypeEEnum, StateType.TEXTUAL);

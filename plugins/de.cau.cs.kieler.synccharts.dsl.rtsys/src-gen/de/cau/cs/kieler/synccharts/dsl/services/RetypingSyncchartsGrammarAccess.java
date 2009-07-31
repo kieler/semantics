@@ -20,14 +20,13 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	public class StateElements implements IParserRuleAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "State");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Group cGroup_0_0 = (Group)cAlternatives_0.eContents().get(0);
-		private final Assignment cIsInitialAssignment_0_0_0 = (Assignment)cGroup_0_0.eContents().get(0);
-		private final Keyword cIsInitialInitKeyword_0_0_0_0 = (Keyword)cIsInitialAssignment_0_0_0.eContents().get(0);
-		private final Assignment cIsFinalAssignment_0_0_1 = (Assignment)cGroup_0_0.eContents().get(1);
-		private final Keyword cIsFinalFinalKeyword_0_0_1_0 = (Keyword)cIsFinalAssignment_0_0_1.eContents().get(0);
-		private final Assignment cStateKindAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_0_1_0 = (RuleCall)cStateKindAssignment_0_1.eContents().get(0);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final Assignment cIsInitialAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_0_0_0 = (Keyword)cIsInitialAssignment_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_0_1_0 = (Keyword)cIsFinalAssignment_0_1.eContents().get(0);
+		private final Assignment cStateKindAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cStateKindStateTypeEnumRuleCall_0_2_0 = (RuleCall)cStateKindAssignment_0_2.eContents().get(0);
 		private final Keyword cStateKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cStateNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cStateNameIDTerminalRuleCall_2_0 = (RuleCall)cStateNameAssignment_2.eContents().get(0);
@@ -35,14 +34,17 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final RuleCall cLabelSTRINGTerminalRuleCall_3_0 = (RuleCall)cLabelAssignment_3.eContents().get(0);
 		
 		//State:
-		//  (isInitial?="init"? isFinal?="final"?|stateKind=StateType?) "state"? stateName=ID?
+		//  (isInitial?="init"? isFinal?="final"? stateKind=StateType?) "state" stateName=ID
 		//  label=STRING?; 
 		//
 		//  
-		//	//{State}
-		//	   // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
-		//	   // optional keyword, cf.Meeting_Textu alSyntax-II
-		//	   //optional ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+		//	//!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
+		//	 //!!!!!!!!!! ((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*   !!!!!!!!!! //
+		//	 //!!!!!!!!!! DO NOT USE THE RULE ABOVE !!!!!!!!!! //
+		//	 //((isInitial?='init')?(isFinal?='final')?(stateKind=StateType)?)* // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
+		//	 
+		//	  // optional keyword, cf.Meeting_Textu alSyntax-II
+		//	   //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 		//	  
 		////	(stateContent=StateContent)?
 		////	(outgoingTransitions+=Transition)*
@@ -60,47 +62,46 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		////;
 		public ParserRule getRule() { return rule; }
 
-		//(isInitial?="init"? isFinal?="final"?|stateKind=StateType?) "state"? stateName=ID?
+		//(isInitial?="init"? isFinal?="final"? stateKind=StateType?) "state" stateName=ID
 		//label=STRING? 
-		//	//{State}
-		//	   // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
-		//	   // optional keyword, cf.Meeting_Textu alSyntax-II
-		//	   //optional ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+		//	//!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
+		//	 //!!!!!!!!!! ((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*   !!!!!!!!!! //
+		//	 //!!!!!!!!!! DO NOT USE THE RULE ABOVE !!!!!!!!!! //
+		//	 //((isInitial?='init')?(isFinal?='final')?(stateKind=StateType)?)* // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
+		//	 
+		//	  // optional keyword, cf.Meeting_Textu alSyntax-II
+		//	   //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 		//	  
 		////	(stateContent=StateContent)?
 		////	(outgoingTransitions+=Transition)*
 		public Group getGroup() { return cGroup; }
 
-		//isInitial?="init"? isFinal?="final"?|stateKind=StateType? 
-		//	//{State}
-		//	   // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
-
-		//isInitial?="init"? isFinal?="final"?
-		public Group getGroup_0_0() { return cGroup_0_0; }
+		//isInitial?="init"? isFinal?="final"? stateKind=StateType?
+		public Group getGroup_0() { return cGroup_0; }
 
 		//isInitial?="init"?
-		public Assignment getIsInitialAssignment_0_0_0() { return cIsInitialAssignment_0_0_0; }
+		public Assignment getIsInitialAssignment_0_0() { return cIsInitialAssignment_0_0; }
 
 		//"init"
-		public Keyword getIsInitialInitKeyword_0_0_0_0() { return cIsInitialInitKeyword_0_0_0_0; }
+		public Keyword getIsInitialInitKeyword_0_0_0() { return cIsInitialInitKeyword_0_0_0; }
 
 		//isFinal?="final"?
-		public Assignment getIsFinalAssignment_0_0_1() { return cIsFinalAssignment_0_0_1; }
+		public Assignment getIsFinalAssignment_0_1() { return cIsFinalAssignment_0_1; }
 
 		//"final"
-		public Keyword getIsFinalFinalKeyword_0_0_1_0() { return cIsFinalFinalKeyword_0_0_1_0; }
+		public Keyword getIsFinalFinalKeyword_0_1_0() { return cIsFinalFinalKeyword_0_1_0; }
 
 		//stateKind=StateType?
-		public Assignment getStateKindAssignment_0_1() { return cStateKindAssignment_0_1; }
+		public Assignment getStateKindAssignment_0_2() { return cStateKindAssignment_0_2; }
 
 		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_0_1_0() { return cStateKindStateTypeEnumRuleCall_0_1_0; }
+		public RuleCall getStateKindStateTypeEnumRuleCall_0_2_0() { return cStateKindStateTypeEnumRuleCall_0_2_0; }
 
-		//"state"?
+		//"state" 
+		//	  // optional keyword, cf.Meeting_Textu alSyntax-II
 		public Keyword getStateKeyword_1() { return cStateKeyword_1; }
 
-		//stateName=ID?
+		//stateName=ID
 		public Assignment getStateNameAssignment_2() { return cStateNameAssignment_2; }
 
 		//ID
@@ -117,15 +118,17 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	public class StateTypeElements implements IEnumRuleAccess {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "StateType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cPSEUDOEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cPSEUDOPSEUDOKeyword_0_0 = (Keyword)cPSEUDOEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cREFERENCEEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cREFERENCEReferenceKeyword_1_0 = (Keyword)cREFERENCEEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cTEXTUALEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cTEXTUALTextualKeyword_2_0 = (Keyword)cTEXTUALEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cNORMALEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cNORMALNORMALKeyword_0_0 = (Keyword)cNORMALEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cPSEUDOEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cPSEUDOCondKeyword_1_0 = (Keyword)cPSEUDOEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cREFERENCEEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cREFERENCEReferenceKeyword_2_0 = (Keyword)cREFERENCEEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cTEXTUALEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cTEXTUALTextualKeyword_3_0 = (Keyword)cTEXTUALEnumLiteralDeclaration_3.eContents().get(0);
 		
 		//enum StateType:
-		//  PSEUDO | REFERENCE="reference" | TEXTUAL="textual"; 
+		//  NORMAL | PSEUDO="cond" | REFERENCE="reference" | TEXTUAL="textual"; 
 		////StateContent:
 		////	'{'
 		//////	(regions+=Region)*
@@ -138,7 +141,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		////	'}'
 		////;
 		//  	 
-		//	        
+		//	            
 		// 
 		////////Effect:
 		////////	effectID=STRING
@@ -290,7 +293,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		////	AND="and";
 		public EnumRule getRule() { return rule; }
 
-		//PSEUDO | REFERENCE="reference" | TEXTUAL="textual" 
+		//NORMAL | PSEUDO="cond" | REFERENCE="reference" | TEXTUAL="textual" 
 		////StateContent:
 		////	'{'
 		//////	(regions+=Region)*
@@ -303,7 +306,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		////	'}'
 		////;
 		//  	 
-		//	        
+		//	            
 		// 
 		////////Effect:
 		////////	effectID=STRING
@@ -455,23 +458,29 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		////	AND="and";
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//PSEUDO
-		public EnumLiteralDeclaration getPSEUDOEnumLiteralDeclaration_0() { return cPSEUDOEnumLiteralDeclaration_0; }
+		//NORMAL
+		public EnumLiteralDeclaration getNORMALEnumLiteralDeclaration_0() { return cNORMALEnumLiteralDeclaration_0; }
 
-		//"PSEUDO"
-		public Keyword getPSEUDOPSEUDOKeyword_0_0() { return cPSEUDOPSEUDOKeyword_0_0; }
+		//"NORMAL"
+		public Keyword getNORMALNORMALKeyword_0_0() { return cNORMALNORMALKeyword_0_0; }
+
+		//PSEUDO="cond"
+		public EnumLiteralDeclaration getPSEUDOEnumLiteralDeclaration_1() { return cPSEUDOEnumLiteralDeclaration_1; }
+
+		//"cond"
+		public Keyword getPSEUDOCondKeyword_1_0() { return cPSEUDOCondKeyword_1_0; }
 
 		//REFERENCE="reference"
-		public EnumLiteralDeclaration getREFERENCEEnumLiteralDeclaration_1() { return cREFERENCEEnumLiteralDeclaration_1; }
+		public EnumLiteralDeclaration getREFERENCEEnumLiteralDeclaration_2() { return cREFERENCEEnumLiteralDeclaration_2; }
 
 		//"reference"
-		public Keyword getREFERENCEReferenceKeyword_1_0() { return cREFERENCEReferenceKeyword_1_0; }
+		public Keyword getREFERENCEReferenceKeyword_2_0() { return cREFERENCEReferenceKeyword_2_0; }
 
 		//TEXTUAL="textual"
-		public EnumLiteralDeclaration getTEXTUALEnumLiteralDeclaration_2() { return cTEXTUALEnumLiteralDeclaration_2; }
+		public EnumLiteralDeclaration getTEXTUALEnumLiteralDeclaration_3() { return cTEXTUALEnumLiteralDeclaration_3; }
 
 		//"textual"
-		public Keyword getTEXTUALTextualKeyword_2_0() { return cTEXTUALTextualKeyword_2_0; }
+		public Keyword getTEXTUALTextualKeyword_3_0() { return cTEXTUALTextualKeyword_3_0; }
 	}
 	
 	private StateElements pState;
@@ -499,14 +508,17 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 
 	
 	//State:
-	//  (isInitial?="init"? isFinal?="final"?|stateKind=StateType?) "state"? stateName=ID?
+	//  (isInitial?="init"? isFinal?="final"? stateKind=StateType?) "state" stateName=ID
 	//  label=STRING?; 
 	//
 	//  
-	//	//{State}
-	//	   // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
-	//	   // optional keyword, cf.Meeting_Textu alSyntax-II
-	//	   //optional ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+	//	//!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
+	//	 //!!!!!!!!!! ((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*   !!!!!!!!!! //
+	//	 //!!!!!!!!!! DO NOT USE THE RULE ABOVE !!!!!!!!!! //
+	//	 //((isInitial?='init')?(isFinal?='final')?(stateKind=StateType)?)* // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
+	//	 
+	//	  // optional keyword, cf.Meeting_Textu alSyntax-II
+	//	   //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 	//	  
 	////	(stateContent=StateContent)?
 	////	(outgoingTransitions+=Transition)*
@@ -531,7 +543,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	}
 
 	//enum StateType:
-	//  PSEUDO | REFERENCE="reference" | TEXTUAL="textual"; 
+	//  NORMAL | PSEUDO="cond" | REFERENCE="reference" | TEXTUAL="textual"; 
 	////StateContent:
 	////	'{'
 	//////	(regions+=Region)*
@@ -544,7 +556,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	////	'}'
 	////;
 	//  	 
-	//	        
+	//	            
 	// 
 	////////Effect:
 	////////	effectID=STRING

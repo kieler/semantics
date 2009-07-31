@@ -5,6 +5,9 @@
     <genEnums typeSafeEnumCompatible="false">
       <ecoreEnum href="RetypingSynccharts.ecore#//StateType"/>
       <genEnumLiterals>
+        <ecoreEnumLiteral href="RetypingSynccharts.ecore#//StateType/NORMAL"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
         <ecoreEnumLiteral href="RetypingSynccharts.ecore#//StateType/PSEUDO"/>
       </genEnumLiterals>
       <genEnumLiterals>

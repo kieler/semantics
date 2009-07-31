@@ -11,8 +11,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="StateType">
-    <eLiterals name="PSEUDO" literal="PSEUDO"/>
-    <eLiterals name="REFERENCE" value="1" literal="reference"/>
-    <eLiterals name="TEXTUAL" value="2" literal="textual"/>
+    <eLiterals name="NORMAL" literal="NORMAL"/>
+    <eLiterals name="PSEUDO" value="1" literal="cond"/>
+    <eLiterals name="REFERENCE" value="2" literal="reference"/>
+    <eLiterals name="TEXTUAL" value="3" literal="textual"/>
   </eClassifiers>
 </ecore:EPackage>
