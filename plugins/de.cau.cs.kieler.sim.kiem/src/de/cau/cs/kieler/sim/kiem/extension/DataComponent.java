@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.views.KiemView;
@@ -477,8 +478,7 @@ public abstract class DataComponent implements IDataComponent,
 				KIEMViewInstance.updateViewAsync();
 			}
 		}
-		throw new KiemMasterException("This instance is not a master!"
-							+"Override isMaster() to return true!");
+		throw new KiemMasterException(Messages.ErrorKiemMasterException);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -505,8 +505,7 @@ public abstract class DataComponent implements IDataComponent,
 				KIEMViewInstance.updateViewAsync();
 			}
 		}
-		throw new KiemMasterException("This instance is not a master!"
-							+"Override isMaster() to return true!");
+		throw new KiemMasterException(Messages.ErrorKiemMasterException);
 	}
 	
 	/**
@@ -529,8 +528,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new KiemMasterException("This instance is not a master!"
-				+"Override isMaster() to return true!");
+		throw new KiemMasterException(Messages.ErrorKiemMasterException);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -554,8 +552,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new KiemMasterException("This instance is not a master!"
-				+"Override isMaster() to return true!");
+		throw new KiemMasterException(Messages.ErrorKiemMasterException);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -583,8 +580,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new KiemMasterException("This instance is not a master!"
-				+"Override isMaster() to return true!");
+		throw new KiemMasterException(Messages.ErrorKiemMasterException);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -609,8 +605,7 @@ public abstract class DataComponent implements IDataComponent,
 				return KIEMInstance.execution.getAimedStepDuration();
 			}
 		}
-		throw new KiemMasterException("This instance is not a master!"
-				+"Override isMaster() to return true!");
+		throw new KiemMasterException(Messages.ErrorKiemMasterException);
 	}
 
 	//-------------------------------------------------------------------------
@@ -634,8 +629,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new KiemMasterException("This instance is not a master!"
-				+"Override isMaster() to return true!");
+		throw new KiemMasterException(Messages.ErrorKiemMasterException);
 	}
 
 	//-------------------------------------------------------------------------
@@ -660,8 +654,7 @@ public abstract class DataComponent implements IDataComponent,
 				return KIEMInstance.execution.isPaused();
 			}
 		}
-		throw new KiemMasterException("This instance is not a master!"
-				+"Override isMaster() to return true!");
+		throw new KiemMasterException(Messages.ErrorKiemMasterException);
 	}
 
 	//-------------------------------------------------------------------------
@@ -686,8 +679,7 @@ public abstract class DataComponent implements IDataComponent,
 				return KIEMInstance.execution.isRunning();
 			}
 		}
-		throw new KiemMasterException("This instance is not a master!"
-				+"Override isMaster() to return true!");
+		throw new KiemMasterException(Messages.ErrorKiemMasterException);
 	}
 
 	//-------------------------------------------------------------------------

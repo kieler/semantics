@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
+import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 
@@ -84,7 +85,7 @@ public class AddDataComponentDialog extends Dialog {
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		//set the title of this dialog
-		newShell.setText("Add Data Component");
+		newShell.setText(Messages.AddDataComponentTitle);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -183,13 +184,13 @@ public class AddDataComponentDialog extends Dialog {
     	for (int c = 0; c < componentList.size(); c++) {
     		DataComponent component = componentList.get(c);
         	TableItem item = new TableItem(table, SWT.NULL);
-        	String type = "Initializer";
+        	String type = Messages.InitializationDataComponent;
         	if (component.isObserver() && component.isProducer())
-        		type = "Observer/Producer";
+        		type = Messages.ObserverProducerDataComponent;
         	else if (component.isObserver())
-        		type = "Observer";
+        		type = Messages.ObserverDataComponent;
         	else if (component.isProducer())
-        		type = "Producer";
+        		type = Messages.ProducerDataComponent;
         	item.setText(component.getName()+ " (" + type+")");
         	item.setData(component);
         	if (component.isObserver() && component.isProducer())

@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.sim.kiem.execution;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 
 /**
@@ -162,10 +163,10 @@ public class TimeoutThread extends Thread {
 				else if (System.currentTimeMillis() > stopTime) {
 					//timeout is triggered
 					this.execution.showError(
-							"Timeout of component '"+dataComponentEx.getName()+
-							"' occurred while performing the following" +
-							" operation: "
-							+this.jobDescription, KiemPlugin.PLUGIN_ID,
+							Messages.ErrorTimeoutExecution
+								.replace("%JOBDESCRIPTION", this.jobDescription)
+								.replace("%COMPONENTNAME", dataComponentEx.getName())
+							, KiemPlugin.PLUGIN_ID,
 							null);
 					this.execution.errorTerminate();
 					//this also stops this thread

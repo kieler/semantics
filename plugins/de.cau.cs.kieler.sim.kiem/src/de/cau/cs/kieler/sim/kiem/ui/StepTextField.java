@@ -20,6 +20,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
+import de.cau.cs.kieler.sim.kiem.Messages;
+
 /**
  * The Class StepTextField. This is the GUI component that shows the
  * number of current steps during a running or paused execution.
@@ -38,7 +40,7 @@ public class StepTextField extends ControlContribution {
 	 * Instantiates a new step text field GUI ControlContribution.
 	 */
 	public StepTextField() {
-		super("Step Text Field");
+		super(Messages.StepTextFieldName);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -50,9 +52,9 @@ public class StepTextField extends ControlContribution {
 	protected Control createControl(Composite parent) {
 		textfield = new Text(parent,SWT.BORDER);
 		this.textfield.setEnabled(false);
-		textfield.setToolTipText("Current Step Counter");
+		textfield.setToolTipText(Messages.StepTextFieldHint);
 		//reserver some amount of space
-		textfield.setText("            ");
+		textfield.setText(Messages.StepTextFieldReserveSpace);
 		return textfield;
 	}
 	
@@ -66,7 +68,7 @@ public class StepTextField extends ControlContribution {
 	public void updateTextfield(String text) {
 		if (text == null) {
 			//this.textfield.setVisible(false);
-			this.textfield.setText("");
+			this.textfield.setText(Messages.StepTextFieldNoStep);
 		}
 		else {
 			this.textfield.setText(text);

@@ -115,35 +115,35 @@ public class KiemView extends ViewPart {
 
 	/** The Constant columnTitlesCollapsed - properties not visible. */
 	public static final String[] columnTitlesCollapsed = { 
-			"Component Name",
-			"Value", 
-			"",
-			"Type", 
-			"Master"};
+			Messages.TableComponentName,
+			Messages.TableValue, 
+			Messages.TableEnabled,
+			Messages.TableType, 
+			Messages.TableMaster};
 	
 	/** The Constant columnTitles - properties visible. */
 	public static final String[] columnTitles = { 
-		"Component Name / Key",
-		"Value", 
-		"",
-		"Type", 
-		"Master"};
+			Messages.TableComponentNameKey,
+			Messages.TableValue, 
+			Messages.TableEnabled,
+			Messages.TableType, 
+			Messages.TableMaster};
 	
 	/** The Constant columnToolTipCollapsed - properties not visible. */
 	public static final String[] columnToolTipCollapsed = { 
-			 "Name of Data Component",
-			 "Property Value",
-			 "Enabled/Disabled",
- 			 "Producer, Observer or Initialization Data Component", 
- 			 "Is a Master that leads Execution"};
+			Messages.TableHintComponentName,
+			Messages.TableHintValue, 
+			Messages.TableHintEnabled,
+			Messages.TableHintType, 
+			Messages.TableHintMaster};
 	
 	/** The Constant columnToolTip - properties visible. */
 	public static final String[] columnToolTip = { 
-		 "Property Key",
-		 "Property Value",
-		 "Enabled/Disabled",
-		 "Producer, Observer or Initialization Data Component", 
-		 "Is a Master that leads Execution"};
+			Messages.TableHintComponentNameKey,
+			Messages.TableHintValue, 
+			Messages.TableHintEnabled,
+			Messages.TableHintType, 
+			Messages.TableHintMaster};
 	
 	/** True if all actions are (temporary) disabled. */
 	private boolean allDisabled;
@@ -538,13 +538,13 @@ public class KiemView extends ViewPart {
 				getActionDelete().setEnabled(true);
 			if (dataComponentEx.isEnabled()) {
 				//currently enabled
-				actionEnableDisable.setText("Disable");
-				actionEnableDisable.setToolTipText("Disable DataProducer/DataObserver");
+				actionEnableDisable.setText(Messages.ActionDisable);
+				actionEnableDisable.setToolTipText(Messages.ActionHintDisable);
 			}
 			else {
 				//currently disabled
-				actionEnableDisable.setText("Enable");
-				actionEnableDisable.setToolTipText("Enable DataProducer/DataObserver");
+				actionEnableDisable.setText(Messages.ActionEnable);
+				actionEnableDisable.setToolTipText(Messages.ActionHintEnable);
 			}
 
 			//find index of top most and bottom most selection
@@ -829,8 +829,8 @@ public class KiemView extends ViewPart {
 			  }
 			}
 		};
-		actionAdd.setText("Add Component");
-		actionAdd.setToolTipText("Add Data Component");
+		actionAdd.setText(Messages.ActionAdd);
+		actionAdd.setToolTipText(Messages.ActionHintAdd);
 		actionAdd.setImageDescriptor(KiemIcons.IMGDESCR_ADD);
 		return actionAdd;
 	}
@@ -859,8 +859,8 @@ public class KiemView extends ViewPart {
 				updateView(true);
 			}
 		};
-		actionDelete.setText("Delete Component");
-		actionDelete.setToolTipText("Delete Data Component");
+		actionDelete.setText(Messages.ActionDelete);
+		actionDelete.setToolTipText(Messages.ActionHintDelete);
 		actionDelete.setImageDescriptor(KiemIcons.IMGDESCR_DELETE);
 		return actionDelete;
 	}
@@ -899,8 +899,8 @@ public class KiemView extends ViewPart {
 				}catch(Exception e) {}
 			}
 		};
-		actionEnableDisable.setText("Enable");
-		actionEnableDisable.setToolTipText("Enable DataProducer/DataObserver");
+		actionEnableDisable.setText(Messages.ActionEnable);
+		actionEnableDisable.setToolTipText(Messages.ActionHintEnable);
 		return actionEnableDisable;
 	}
 	
@@ -933,8 +933,8 @@ public class KiemView extends ViewPart {
 				updateView(false);
 			}
 		};
-		actionUp.setText("Schedule before");
-		actionUp.setToolTipText("Schedule before");
+		actionUp.setText(Messages.ActionUp);
+		actionUp.setToolTipText(Messages.ActionHintUp);
 		actionUp.setImageDescriptor(KiemIcons.IMGDESCR_UP);
 		actionUp.setDisabledImageDescriptor(KiemIcons.IMGDESCR_UP_DISABLED);
 		return actionUp;
@@ -969,8 +969,8 @@ public class KiemView extends ViewPart {
 				updateView(false);
 			}
 		};
-		actionDown.setText("Schedule behind");
-		actionDown.setToolTipText("Schedule behind");
+		actionDown.setText(Messages.ActionDown);
+		actionDown.setToolTipText(Messages.ActionHintDown);
 		actionDown.setImageDescriptor(KiemIcons.IMGDESCR_DOWN);
 		actionDown.setDisabledImageDescriptor(KiemIcons.IMGDESCR_DOWN_DISABLED);
 		return actionDown;
@@ -1005,8 +1005,8 @@ public class KiemView extends ViewPart {
 				updateView(true);
 			}
 		};
-		actionStepBack.setText("Step Back");
-		actionStepBack.setToolTipText("Step Back Execution");
+		actionStepBack.setText(Messages.ActionStepBack);
+		actionStepBack.setToolTipText(Messages.ActionHintStepBack);
 		actionStepBack.setImageDescriptor(KiemIcons.IMGDESCR_STEPBACK);
 		actionStepBack.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEPBACK_DISABLED);
 		return actionStepBack;
@@ -1041,8 +1041,8 @@ public class KiemView extends ViewPart {
 				updateView(true);
 			}
 		};
-		actionStep.setText("Step");
-		actionStep.setToolTipText("Step Execution");
+		actionStep.setText(Messages.ActionStep);
+		actionStep.setToolTipText(Messages.ActionHintStep);
 		actionStep.setImageDescriptor(KiemIcons.IMGDESCR_STEP);
 		actionStep.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
 		return actionStep;
@@ -1077,8 +1077,8 @@ public class KiemView extends ViewPart {
 				updateView(true);
 			}
 		};
-		actionMacroStep.setText("Macro Step");
-		actionMacroStep.setToolTipText("Macro Step Execution");
+		actionMacroStep.setText(Messages.ActionMacroStep);
+		actionMacroStep.setToolTipText(Messages.ActionHintMacroStep);
 		actionMacroStep.setImageDescriptor(KiemIcons.IMGDESCR_MACROSTEP);
 		actionMacroStep.setDisabledImageDescriptor(KiemIcons.IMGDESCR_MACROSTEP_DISABLED);
 		return actionMacroStep;
@@ -1113,8 +1113,8 @@ public class KiemView extends ViewPart {
 				updateView(true);
 			}
 		};
-		actionRun.setText("Run");
-		actionRun.setToolTipText("Run Execution");
+		actionRun.setText(Messages.ActionHintRun);
+		actionRun.setToolTipText(Messages.ActionHintRun);
 		actionRun.setImageDescriptor(KiemIcons.IMGDESCR_RUN);
 		actionRun.setDisabledImageDescriptor(KiemIcons.IMGDESCR_RUN_DISABLED);
 		return actionRun;
@@ -1149,8 +1149,8 @@ public class KiemView extends ViewPart {
 				updateView(true);
 			}
 		};
-		actionPause.setText("Pause");
-		actionPause.setToolTipText("Pause Execution");
+		actionPause.setText(Messages.ActionPause);
+		actionPause.setToolTipText(Messages.ActionHintPause);
 		actionPause.setImageDescriptor(KiemIcons.IMGDESCR_PAUSE);
 		actionPause.setDisabledImageDescriptor(KiemIcons.IMGDESCR_PAUSE_DISABLED);
 		return actionPause;
@@ -1202,27 +1202,27 @@ public class KiemView extends ViewPart {
 
 						//show execution results
 						showMessage(
-						"KIELER Execution Manager - Execution Timing Results",
-						"                          Number of Steps : "
+						Messages.TimingResultsTitle,
+						Messages.TimingResultsNumberOfSteps +
 							+steps+"\n"+
-						"                Overall Execution Time : "
+						Messages.TimingResultsOverallExecutionTime +
 							+executionTime+" ms\n\n"+
-						"                    Aimed Step Duration : "
+						Messages.TimingResultsAimedStepDuration +
 							+aimedStepDuration+ " ms\n"+
-						"                 Minimum Step Duration : "
+						Messages.TimingResultsMinimumStepDuration+
 							+minStepDuration+ " ms\n"+
-						"Weighted Average Step Duration : "
+						Messages.TimingResultsWheightedAverageStepDuration +
 							+wavStepDuration+ " ms\n"+
-						"                 Average Step Duration : "
+						Messages.TimingResultsAverageStepDuration + 
 							+aveStepDuration+ " ms\n"+
-						"                Maximum Step Duration : "
+						Messages.TimingResultsMaximumStepDuration +
 							+maxStepDuration+ " ms");
 				}
 				updateView(true);
 			}
 		};
-		actionStop.setText("Stop");
-		actionStop.setToolTipText("Stop Execution");
+		actionStop.setText(Messages.ActionStop);
+		actionStop.setToolTipText(Messages.ActionHintStop);
 		actionStop.setImageDescriptor(KiemIcons.IMGDESCR_STOP);
 		actionStop.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STOP_DISABLED);
 		return actionStop;
@@ -1298,11 +1298,12 @@ public class KiemView extends ViewPart {
 			//preset NEW selection
 			currentMaster = dataComponentEx;
 		}
-		
+
 		for (int c = 0; c < KIEMInstance.getDataComponentExList().size(); c++) {
 			DataComponentEx dataComponentTemp = 
 				KIEMInstance.getDataComponentExList().get(c);
 			dataComponentTemp.getDataComponent().masterSetKIEMInstances(null, null);
+
 			if (dataComponentTemp.isMaster() &&
 				dataComponentTemp.isEnabled() &&
 				dataComponentTemp != currentMaster) {
@@ -1310,10 +1311,9 @@ public class KiemView extends ViewPart {
 					currentMaster = dataComponentTemp;
 				} else {
 					if (!silent)
-						showWarning("At most one master data"
-								   +" component is allowed!\n'"
-								   +dataComponentTemp.getName()
-								   +"' will be disabled.");
+						
+						showWarning(Messages.WarningAtMostOneMaster
+								.replace("%COMPONENTNAME", dataComponentTemp.getName()));
 					//disable it//
 					dataComponentTemp.setEnabled(false);
 					this.viewer.refresh();

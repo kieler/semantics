@@ -289,9 +289,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 			}catch(Exception e){
 				//throw new RuntimeException
 				//	("Error at loading a KIEM data component plugin");
-				this.showWarning("Error at loading KIEM data component" +
-						" '"+jsonComponents[i].getContributor().getName()+"'",
-						null, e);
+				this.showWarning(Messages.WarningLoadingDataComponent
+						.replace("%COMPONENTNAME", jsonComponents[i].getContributor().getName())
+						,null, e);
 			} 
 		}
 //System.out.println("Found Controllers for "+Messages.extensionPointIDstringcomponent+": "+stringComponents.length);
@@ -306,9 +306,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 			}catch(Exception e){
 //				throw new RuntimeException
 //					("Error at loading a KIEM data component plugin");
-				this.showWarning("Error at loading KIEM data component" +
-						" '"+jsonComponents[i].getContributor().getName()+"'",
-						null, e);
+				this.showWarning(Messages.WarningLoadingDataComponent
+						.replace("%COMPONENTNAME", stringComponents[i].getContributor().getName())
+						,null, e);
 			} 
 		}
 		return dataComponentList;
@@ -351,12 +351,12 @@ public class KiemPlugin extends AbstractUIPlugin {
 			}//end if enabled
 		}//next c
 		if (countEnabledProducer < 1) {
-			this.showError("Please enable at least one Data Producer!",
+			this.showError(Messages.ErrorNoDataProducer,
 					KiemPlugin.PLUGIN_ID,null);
 			return false;
 		}
 		else if (countEnabledObserver < 1) {
-			showError("Please enable at least one Data Observer!",
+			showError(Messages.ErrorNoDataObserver,
 					KiemPlugin.PLUGIN_ID,null);
 			return false;
 		}
@@ -597,7 +597,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 			}
 
 			//do not post the same message twice
-			if (exception.getMessage().startsWith(textMessage))
+			if ((exception != null)
+					&& (exception.getMessage().startsWith(textMessage)))
 				message = "" + PluginID + "";
 			else
 				message += " (" + PluginID + ")";
@@ -655,7 +656,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 			}
 			
 			//do not post the same message twice
-			if (exception.getMessage().startsWith(textMessage))
+			if ((exception != null)
+				&& (exception.getMessage().startsWith(textMessage)))
 				message = "" + PluginID + "";
 			else
 				message += " (" + PluginID + ")";

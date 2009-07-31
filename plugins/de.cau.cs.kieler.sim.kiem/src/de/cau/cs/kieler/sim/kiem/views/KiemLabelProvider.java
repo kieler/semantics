@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
+import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
@@ -179,13 +180,13 @@ public class KiemLabelProvider implements ITableLabelProvider {
 			case 3 : // TYPE_COLUMN
 				String type = "";
 				if (dataComponentEx.isProducerObserver())
-					type = "Observer/Producer";
+					type = Messages.ObserverProducerDataComponent;
 				else if (dataComponentEx.isProducer())
-					type = "Producer";
+					type = Messages.ProducerDataComponent;
 				else if (dataComponentEx.isObserver())
-					type = "Observer";
+					type = Messages.ObserverDataComponent;
 				else
-					type = "Initializer";
+					type = Messages.InitializationDataComponent;
 				return type;
 			case 4 : // MASTER_COLUMN
 				return "";

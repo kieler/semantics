@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.Messages;
 
 /**
  * The Class AimedStepDurationTextField. This is the GUI component that shows
@@ -53,7 +54,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	 * @param KIEM a reference to to the KIEM plug-in 
 	 */
 	public AimedStepDurationTextField(KiemPlugin KIEM) {
-		super("Aimed Step Duration Text Field");
+		super(Messages.DurationTextFieldName);
 		this.KIEM = KIEM;
 	}
 	
@@ -94,9 +95,11 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 		textfield = new Text(parent,SWT.BORDER);
 		//per default enable it
 		this.textfield.setEnabled(this.enabled);
-		textfield.setToolTipText("Aimed Duration of Steps in Run Mode (ms)");
+		textfield.setToolTipText(Messages.DurationTextFieldHint);
 		//reserve some amount of space and declare default value
-		textfield.setText(KiemPlugin.AIMED_STEP_DURATION_DEFAULT+"ms   ");
+		textfield.setText(KiemPlugin.AIMED_STEP_DURATION_DEFAULT
+				+Messages.DurationTextFieldSuffix
+				+Messages.DurationTextFieldReserveSpace);
 		//add some listeners
 		textfield.addKeyListener(this);
 		textfield.addFocusListener(this);
@@ -131,7 +134,8 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	 */
 	public void focusLost(FocusEvent e) {
 		updateDuration();
-		textfield.setText(""+KIEM.getAimedStepDuration()+"ms");
+		textfield.setText(""+KIEM.getAimedStepDuration()
+				+Messages.DurationTextFieldSuffix);
 	}
 
 	//-------------------------------------------------------------------------
@@ -148,11 +152,15 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 		try{
 			int aimedStepDuration = Integer.parseInt(textfield.getText().trim());
 			if (aimedStepDuration < KiemPlugin.AIMED_STEP_DURATION_MIN)
-				throw(new NumberFormatException("Duration must be >= "
-						+KiemPlugin.AIMED_STEP_DURATION_MIN+"ms!"));
+				throw(new NumberFormatException(
+						Messages.WarningDurationTooSmall 
+						+KiemPlugin.AIMED_STEP_DURATION_MIN
+						+Messages.DurationTextFieldSuffix+"!"));
 			if (aimedStepDuration > KiemPlugin.AIMED_STEP_DURATION_MAX) 
-				throw(new NumberFormatException("Duration must be <= "
-						+KiemPlugin.AIMED_STEP_DURATION_MAX+"ms!"));
+				throw(new NumberFormatException(
+						Messages.WarningDurationTooLarge
+						+KiemPlugin.AIMED_STEP_DURATION_MAX
+						+Messages.DurationTextFieldSuffix+"!"));
 			KIEM.setAimedStepDuration(aimedStepDuration);
 		}catch(NumberFormatException exc){
 		}
