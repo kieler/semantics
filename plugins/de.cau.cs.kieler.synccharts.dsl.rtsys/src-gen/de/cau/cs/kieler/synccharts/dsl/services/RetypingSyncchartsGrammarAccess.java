@@ -20,1211 +20,97 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	public class StateElements implements IParserRuleAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "State");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cIsInitialAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Keyword cIsInitialInitKeyword_0_0 = (Keyword)cIsInitialAssignment_0.eContents().get(0);
-		private final Assignment cIsFinalAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cIsFinalFinalKeyword_1_0 = (Keyword)cIsFinalAssignment_1.eContents().get(0);
-		private final Assignment cStateKindAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_2_0 = (RuleCall)cStateKindAssignment_2.eContents().get(0);
-		private final Keyword cStateKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cStateNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cStateNameIDTerminalRuleCall_4_0 = (RuleCall)cStateNameAssignment_4.eContents().get(0);
-		private final Assignment cLabelAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cLabelSTRINGTerminalRuleCall_5_0 = (RuleCall)cLabelAssignment_5.eContents().get(0);
-		private final Assignment cStateContentAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cStateContentStateContentParserRuleCall_6_0 = (RuleCall)cStateContentAssignment_6.eContents().get(0);
-		private final Assignment cOutgoingTransitionsAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_7_0 = (RuleCall)cOutgoingTransitionsAssignment_7.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Group cGroup_0_0 = (Group)cAlternatives_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_0_0_0 = (Assignment)cGroup_0_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_0_0_0_0 = (Keyword)cIsInitialAssignment_0_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_0_0_1 = (Assignment)cGroup_0_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_0_0_1_0 = (Keyword)cIsFinalAssignment_0_0_1.eContents().get(0);
+		private final Assignment cStateKindAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final RuleCall cStateKindStateTypeEnumRuleCall_0_1_0 = (RuleCall)cStateKindAssignment_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cStateNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cStateNameIDTerminalRuleCall_2_0 = (RuleCall)cStateNameAssignment_2.eContents().get(0);
+		private final Assignment cLabelAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_3_0 = (RuleCall)cLabelAssignment_3.eContents().get(0);
 		
 		//State:
-		//  isInitial?="init"? isFinal?="final"? stateKind=StateType? "state"? stateName=ID?
-		//  label=STRING? stateContent=StateContent? outgoingTransitions+=Transition*; 
+		//  (isInitial?="init"? isFinal?="final"?|stateKind=StateType?) "state"? stateName=ID?
+		//  label=STRING?; 
 		//
 		//  
-		//	 
-		//	  // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
+		//	//{State}
+		//	   // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
 		//	   // optional keyword, cf.Meeting_Textu alSyntax-II
 		//	   //optional ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+		//	  
+		////	(stateContent=StateContent)?
+		////	(outgoingTransitions+=Transition)*
+		//
+		////StateContent:
+		////	'{'
+		//////	(regions+=Region)*
+		////	(		(exitActions+=ExitAction )
+		////		| 	(entryActions+=EntryAction)
+		////		| 	(innerAction+=InnerAction)
+		////		| 	(signalsAndVariables+=ValuedObject)
+		////		|	(innerStates+=State	('||' parallelStates+=State)*)
+		////	)+	
+		////	'}'
+		////;
 		public ParserRule getRule() { return rule; }
 
-		//isInitial?="init"? isFinal?="final"? stateKind=StateType? "state"? stateName=ID?
-		//label=STRING? stateContent=StateContent? outgoingTransitions+=Transition* 
-		//	 
-		//	  // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
+		//(isInitial?="init"? isFinal?="final"?|stateKind=StateType?) "state"? stateName=ID?
+		//label=STRING? 
+		//	//{State}
+		//	   // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
 		//	   // optional keyword, cf.Meeting_Textu alSyntax-II
 		//	   //optional ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+		//	  
+		////	(stateContent=StateContent)?
+		////	(outgoingTransitions+=Transition)*
 		public Group getGroup() { return cGroup; }
 
+		//isInitial?="init"? isFinal?="final"?|stateKind=StateType? 
+		//	//{State}
+		//	   // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
+		//isInitial?="init"? isFinal?="final"?
+		public Group getGroup_0_0() { return cGroup_0_0; }
+
 		//isInitial?="init"?
-		public Assignment getIsInitialAssignment_0() { return cIsInitialAssignment_0; }
+		public Assignment getIsInitialAssignment_0_0_0() { return cIsInitialAssignment_0_0_0; }
 
 		//"init"
-		public Keyword getIsInitialInitKeyword_0_0() { return cIsInitialInitKeyword_0_0; }
+		public Keyword getIsInitialInitKeyword_0_0_0_0() { return cIsInitialInitKeyword_0_0_0_0; }
 
 		//isFinal?="final"?
-		public Assignment getIsFinalAssignment_1() { return cIsFinalAssignment_1; }
+		public Assignment getIsFinalAssignment_0_0_1() { return cIsFinalAssignment_0_0_1; }
 
 		//"final"
-		public Keyword getIsFinalFinalKeyword_1_0() { return cIsFinalFinalKeyword_1_0; }
+		public Keyword getIsFinalFinalKeyword_0_0_1_0() { return cIsFinalFinalKeyword_0_0_1_0; }
 
 		//stateKind=StateType?
-		public Assignment getStateKindAssignment_2() { return cStateKindAssignment_2; }
+		public Assignment getStateKindAssignment_0_1() { return cStateKindAssignment_0_1; }
 
 		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_2_0() { return cStateKindStateTypeEnumRuleCall_2_0; }
+		public RuleCall getStateKindStateTypeEnumRuleCall_0_1_0() { return cStateKindStateTypeEnumRuleCall_0_1_0; }
 
 		//"state"?
-		public Keyword getStateKeyword_3() { return cStateKeyword_3; }
+		public Keyword getStateKeyword_1() { return cStateKeyword_1; }
 
 		//stateName=ID?
-		public Assignment getStateNameAssignment_4() { return cStateNameAssignment_4; }
+		public Assignment getStateNameAssignment_2() { return cStateNameAssignment_2; }
 
 		//ID
-		public RuleCall getStateNameIDTerminalRuleCall_4_0() { return cStateNameIDTerminalRuleCall_4_0; }
+		public RuleCall getStateNameIDTerminalRuleCall_2_0() { return cStateNameIDTerminalRuleCall_2_0; }
 
 		//label=STRING?
-		public Assignment getLabelAssignment_5() { return cLabelAssignment_5; }
+		public Assignment getLabelAssignment_3() { return cLabelAssignment_3; }
 
 		//STRING
-		public RuleCall getLabelSTRINGTerminalRuleCall_5_0() { return cLabelSTRINGTerminalRuleCall_5_0; }
-
-		//stateContent=StateContent?
-		public Assignment getStateContentAssignment_6() { return cStateContentAssignment_6; }
-
-		//StateContent
-		public RuleCall getStateContentStateContentParserRuleCall_6_0() { return cStateContentStateContentParserRuleCall_6_0; }
-
-		//outgoingTransitions+=Transition*
-		public Assignment getOutgoingTransitionsAssignment_7() { return cOutgoingTransitionsAssignment_7; }
-
-		//Transition
-		public RuleCall getOutgoingTransitionsTransitionParserRuleCall_7_0() { return cOutgoingTransitionsTransitionParserRuleCall_7_0; }
-	}
-
-	public class StateContentElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "StateContent");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Assignment cExitActionsAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
-		private final RuleCall cExitActionsExitActionParserRuleCall_1_0_0 = (RuleCall)cExitActionsAssignment_1_0.eContents().get(0);
-		private final Assignment cEntryActionsAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
-		private final RuleCall cEntryActionsEntryActionParserRuleCall_1_1_0 = (RuleCall)cEntryActionsAssignment_1_1.eContents().get(0);
-		private final Assignment cInnerActionAssignment_1_2 = (Assignment)cAlternatives_1.eContents().get(2);
-		private final RuleCall cInnerActionInnerActionParserRuleCall_1_2_0 = (RuleCall)cInnerActionAssignment_1_2.eContents().get(0);
-		private final Assignment cSignalsAndVariablesAssignment_1_3 = (Assignment)cAlternatives_1.eContents().get(3);
-		private final RuleCall cSignalsAndVariablesValuedObjectParserRuleCall_1_3_0 = (RuleCall)cSignalsAndVariablesAssignment_1_3.eContents().get(0);
-		private final Group cGroup_1_4 = (Group)cAlternatives_1.eContents().get(4);
-		private final Assignment cInnerStatesAssignment_1_4_0 = (Assignment)cGroup_1_4.eContents().get(0);
-		private final RuleCall cInnerStatesStateParserRuleCall_1_4_0_0 = (RuleCall)cInnerStatesAssignment_1_4_0.eContents().get(0);
-		private final Group cGroup_1_4_1 = (Group)cGroup_1_4.eContents().get(1);
-		private final Keyword cVerticalLineVerticalLineKeyword_1_4_1_0 = (Keyword)cGroup_1_4_1.eContents().get(0);
-		private final Assignment cParallelStatesAssignment_1_4_1_1 = (Assignment)cGroup_1_4_1.eContents().get(1);
-		private final RuleCall cParallelStatesStateParserRuleCall_1_4_1_1_0 = (RuleCall)cParallelStatesAssignment_1_4_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		
-		//StateContent:
-		//  "{" (exitActions+=ExitAction|entryActions+=EntryAction|innerAction+=InnerAction|
-		//  signalsAndVariables+=ValuedObject|innerStates+=State ("||" parallelStates+=State)*
-		//  )+ "}"; 
-		//
-		//	
-		////	(regions+=Region)*
-		public ParserRule getRule() { return rule; }
-
-		//"{" (exitActions+=ExitAction|entryActions+=EntryAction|innerAction+=InnerAction|
-		//signalsAndVariables+=ValuedObject|innerStates+=State ("||" parallelStates+=State)*
-		//)+ "}" 
-		//	
-		////	(regions+=Region)*
-		public Group getGroup() { return cGroup; }
-
-		//"{" 
-		//	
-		////	(regions+=Region)*
-		public Keyword getLeftCurlyBracketKeyword_0() { return cLeftCurlyBracketKeyword_0; }
-
-		//(exitActions+=ExitAction|entryActions+=EntryAction|innerAction+=InnerAction|
-		//signalsAndVariables+=ValuedObject|innerStates+=State ("||" parallelStates+=State)*
-		//)+ 
-		////	(regions+=Region)*
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
-
-		//exitActions+=ExitAction
-		public Assignment getExitActionsAssignment_1_0() { return cExitActionsAssignment_1_0; }
-
-		//ExitAction
-		public RuleCall getExitActionsExitActionParserRuleCall_1_0_0() { return cExitActionsExitActionParserRuleCall_1_0_0; }
-
-		//entryActions+=EntryAction
-		public Assignment getEntryActionsAssignment_1_1() { return cEntryActionsAssignment_1_1; }
-
-		//EntryAction
-		public RuleCall getEntryActionsEntryActionParserRuleCall_1_1_0() { return cEntryActionsEntryActionParserRuleCall_1_1_0; }
-
-		//innerAction+=InnerAction
-		public Assignment getInnerActionAssignment_1_2() { return cInnerActionAssignment_1_2; }
-
-		//InnerAction
-		public RuleCall getInnerActionInnerActionParserRuleCall_1_2_0() { return cInnerActionInnerActionParserRuleCall_1_2_0; }
-
-		//signalsAndVariables+=ValuedObject
-		public Assignment getSignalsAndVariablesAssignment_1_3() { return cSignalsAndVariablesAssignment_1_3; }
-
-		//ValuedObject
-		public RuleCall getSignalsAndVariablesValuedObjectParserRuleCall_1_3_0() { return cSignalsAndVariablesValuedObjectParserRuleCall_1_3_0; }
-
-		//innerStates+=State ("||" parallelStates+=State)*
-		public Group getGroup_1_4() { return cGroup_1_4; }
-
-		//innerStates+=State
-		public Assignment getInnerStatesAssignment_1_4_0() { return cInnerStatesAssignment_1_4_0; }
-
-		//State
-		public RuleCall getInnerStatesStateParserRuleCall_1_4_0_0() { return cInnerStatesStateParserRuleCall_1_4_0_0; }
-
-		//("||" parallelStates+=State)*
-		public Group getGroup_1_4_1() { return cGroup_1_4_1; }
-
-		//"||"
-		public Keyword getVerticalLineVerticalLineKeyword_1_4_1_0() { return cVerticalLineVerticalLineKeyword_1_4_1_0; }
-
-		//parallelStates+=State
-		public Assignment getParallelStatesAssignment_1_4_1_1() { return cParallelStatesAssignment_1_4_1_1; }
-
-		//State
-		public RuleCall getParallelStatesStateParserRuleCall_1_4_1_1_0() { return cParallelStatesStateParserRuleCall_1_4_1_1_0; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_2() { return cRightCurlyBracketKeyword_2; }
-	}
-
-	public class EntryActionElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EntryAction");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cOnentryKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cTriggerAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTriggerPrimaryExpressionParserRuleCall_1_0 = (RuleCall)cTriggerAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cSolidusKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cEffectsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_2_1_0 = (RuleCall)cEffectsAssignment_2_1.eContents().get(0);
-		
-		//EntryAction returns Action:
-		//  "onentry" trigger=PrimaryExpression? ("/" effects+=Effect*)?;  
-		//////Effect:
-		//////	effectID=STRING
-		//////;
-		//    // transitionlabel::Action :
-		//	          //do we need both in one list: triggersAndEffects?
-		public ParserRule getRule() { return rule; }
-
-		//"onentry" trigger=PrimaryExpression? ("/" effects+=Effect*)? // transitionlabel::Action :
-		public Group getGroup() { return cGroup; }
-
-		//"onentry" // transitionlabel::Action :
-		public Keyword getOnentryKeyword_0() { return cOnentryKeyword_0; }
-
-		//trigger=PrimaryExpression?
-		public Assignment getTriggerAssignment_1() { return cTriggerAssignment_1; }
-
-		//PrimaryExpression
-		public RuleCall getTriggerPrimaryExpressionParserRuleCall_1_0() { return cTriggerPrimaryExpressionParserRuleCall_1_0; }
-
-		//("/" effects+=Effect*)?
-		public Group getGroup_2() { return cGroup_2; }
-
-		//"/"
-		public Keyword getSolidusKeyword_2_0() { return cSolidusKeyword_2_0; }
-
-		//effects+=Effect*
-		public Assignment getEffectsAssignment_2_1() { return cEffectsAssignment_2_1; }
-
-		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_2_1_0() { return cEffectsEffectParserRuleCall_2_1_0; }
-	}
-
-	public class ExitActionElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ExitAction");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cOnexitKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cTriggerAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTriggerPrimaryExpressionParserRuleCall_1_0 = (RuleCall)cTriggerAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cSolidusKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cEffectsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_2_1_0 = (RuleCall)cEffectsAssignment_2_1.eContents().get(0);
-		
-		//ExitAction returns Action:
-		//  "onexit" trigger=PrimaryExpression? ("/" effects+=Effect*)?;    //do we need both in one list: triggersAndEffects?
-		public ParserRule getRule() { return rule; }
-
-		//"onexit" trigger=PrimaryExpression? ("/" effects+=Effect*)?
-		public Group getGroup() { return cGroup; }
-
-		//"onexit"
-		public Keyword getOnexitKeyword_0() { return cOnexitKeyword_0; }
-
-		//trigger=PrimaryExpression?
-		public Assignment getTriggerAssignment_1() { return cTriggerAssignment_1; }
-
-		//PrimaryExpression
-		public RuleCall getTriggerPrimaryExpressionParserRuleCall_1_0() { return cTriggerPrimaryExpressionParserRuleCall_1_0; }
-
-		//("/" effects+=Effect*)?
-		public Group getGroup_2() { return cGroup_2; }
-
-		//"/"
-		public Keyword getSolidusKeyword_2_0() { return cSolidusKeyword_2_0; }
-
-		//effects+=Effect*
-		public Assignment getEffectsAssignment_2_1() { return cEffectsAssignment_2_1; }
-
-		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_2_1_0() { return cEffectsEffectParserRuleCall_2_1_0; }
-	}
-
-	public class InnerActionElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InnerAction");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cOninnerKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cTriggerAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTriggerPrimaryExpressionParserRuleCall_1_0 = (RuleCall)cTriggerAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cSolidusKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cEffectsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_2_1_0 = (RuleCall)cEffectsAssignment_2_1.eContents().get(0);
-		
-		//InnerAction returns Action:
-		//  "oninner" trigger=PrimaryExpression? ("/" effects+=Effect*)?;  
-		//
-		//      
-		//	       
-		//
-		////ValuedObject:
-		////	Signal | Variable
-		////;
-		////Signal:
-		////	(isLocal?='local')? (isInput?='input')? (isOutput?='output')?
-		////	type=ValueType name=ID (':=' initialValue=ID)? 
-		////	//combineOperator=CombineOperator 
-		////;
-		//////enum CombineOperator :
-		//////NONE='none' | ADD='add' | MULT='mult' | HOST='host'
-		//////;
-		////Variable:
-		////	type=ValueType name=ID (':=' initialValue=ID)? 
-		////;
-		////enum ValueType:
-		////	PURE | BOOL | UNSIGNED | INTEGER | DOUBLE | HOST
-		////;
-		public ParserRule getRule() { return rule; }
-
-		//"oninner" trigger=PrimaryExpression? ("/" effects+=Effect*)?
-		public Group getGroup() { return cGroup; }
-
-		//"oninner"
-		public Keyword getOninnerKeyword_0() { return cOninnerKeyword_0; }
-
-		//trigger=PrimaryExpression?
-		public Assignment getTriggerAssignment_1() { return cTriggerAssignment_1; }
-
-		//PrimaryExpression
-		public RuleCall getTriggerPrimaryExpressionParserRuleCall_1_0() { return cTriggerPrimaryExpressionParserRuleCall_1_0; }
-
-		//("/" effects+=Effect*)?
-		public Group getGroup_2() { return cGroup_2; }
-
-		//"/"
-		public Keyword getSolidusKeyword_2_0() { return cSolidusKeyword_2_0; }
-
-		//effects+=Effect*
-		public Assignment getEffectsAssignment_2_1() { return cEffectsAssignment_2_1; }
-
-		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_2_1_0() { return cEffectsEffectParserRuleCall_2_1_0; }
-	}
-
-	public class TransitionElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Transition");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cSourceStateNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cSourceStateNameIDTerminalRuleCall_0_0 = (RuleCall)cSourceStateNameAssignment_0.eContents().get(0);
-		private final Assignment cTransitionTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTransitionTypeTransitionTypeEnumRuleCall_1_0 = (RuleCall)cTransitionTypeAssignment_1.eContents().get(0);
-		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Assignment cTargetStateNameAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
-		private final RuleCall cTargetStateNameIDTerminalRuleCall_2_0_0 = (RuleCall)cTargetStateNameAssignment_2_0.eContents().get(0);
-		private final Assignment cDeclaredTargetStateAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
-		private final RuleCall cDeclaredTargetStateDeclaredTargetStateParserRuleCall_2_1_0 = (RuleCall)cDeclaredTargetStateAssignment_2_1.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cWithKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cTransitionLabelAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final CrossReference cTransitionLabelActionCrossReference_3_1_0 = (CrossReference)cTransitionLabelAssignment_3_1.eContents().get(0);
-		private final RuleCall cTransitionLabelActionIDTerminalRuleCall_3_1_0_1 = (RuleCall)cTransitionLabelActionCrossReference_3_1_0.eContents().get(1);
-		
-		//Transition:
-		//  sourceStateName=ID? transitionType=TransitionType (targetStateName=ID|
-		//  declaredTargetState=declaredTargetState) ("with" transitionLabel=[Action])?;  
-		//
-		////ValuedObject:
-		////	Signal | Variable
-		////;
-		////Signal:
-		////	(isLocal?='local')? (isInput?='input')? (isOutput?='output')?
-		////	type=ValueType name=ID (':=' initialValue=ID)? 
-		////	//combineOperator=CombineOperator 
-		////;
-		//////enum CombineOperator :
-		//////NONE='none' | ADD='add' | MULT='mult' | HOST='host'
-		//////;
-		////Variable:
-		////	type=ValueType name=ID (':=' initialValue=ID)? 
-		////;
-		////enum ValueType:
-		////	PURE | BOOL | UNSIGNED | INTEGER | DOUBLE | HOST
-		////;	
-		//
-		//	 
-		//	 
-		//	      
-		//	  
-		////			(isHistory?='history')?
-		////			
-		////		( 	(delay=INT) (trigger=ID)
-		//////		|	(delay=INT) ('/'effects+=ID)				
-		////		| 	(delay=INT) (trigger=ID)('/'effects+=ID)
-		////		|	(isImmediate?='#') (trigger=ID)? ('/'effects+=ID)?
-		////		|   ((trigger=ID) | ('/'effects+=ID))
-		////		| 	(trigger=ID) ('/'effects+=ID)
-		////		)	
-		////)?
-		public ParserRule getRule() { return rule; }
-
-		//sourceStateName=ID? transitionType=TransitionType (targetStateName=ID|
-		//declaredTargetState=declaredTargetState) ("with" transitionLabel=[Action])? 
-		//	 
-		//	 
-		//	      
-		//	  
-		////			(isHistory?='history')?
-		////			
-		////		( 	(delay=INT) (trigger=ID)
-		//////		|	(delay=INT) ('/'effects+=ID)				
-		////		| 	(delay=INT) (trigger=ID)('/'effects+=ID)
-		////		|	(isImmediate?='#') (trigger=ID)? ('/'effects+=ID)?
-		////		|   ((trigger=ID) | ('/'effects+=ID))
-		////		| 	(trigger=ID) ('/'effects+=ID)
-		////		)	
-		////)?
-		public Group getGroup() { return cGroup; }
-
-		//sourceStateName=ID?
-		public Assignment getSourceStateNameAssignment_0() { return cSourceStateNameAssignment_0; }
-
-		//ID
-		public RuleCall getSourceStateNameIDTerminalRuleCall_0_0() { return cSourceStateNameIDTerminalRuleCall_0_0; }
-
-		//transitionType=TransitionType
-		public Assignment getTransitionTypeAssignment_1() { return cTransitionTypeAssignment_1; }
-
-		//TransitionType
-		public RuleCall getTransitionTypeTransitionTypeEnumRuleCall_1_0() { return cTransitionTypeTransitionTypeEnumRuleCall_1_0; }
-
-		//targetStateName=ID|declaredTargetState=declaredTargetState
-		public Alternatives getAlternatives_2() { return cAlternatives_2; }
-
-		//targetStateName=ID
-		public Assignment getTargetStateNameAssignment_2_0() { return cTargetStateNameAssignment_2_0; }
-
-		//ID
-		public RuleCall getTargetStateNameIDTerminalRuleCall_2_0_0() { return cTargetStateNameIDTerminalRuleCall_2_0_0; }
-
-		//declaredTargetState=declaredTargetState
-		public Assignment getDeclaredTargetStateAssignment_2_1() { return cDeclaredTargetStateAssignment_2_1; }
-
-		//declaredTargetState
-		public RuleCall getDeclaredTargetStateDeclaredTargetStateParserRuleCall_2_1_0() { return cDeclaredTargetStateDeclaredTargetStateParserRuleCall_2_1_0; }
-
-		//("with" transitionLabel=[Action])?
-		public Group getGroup_3() { return cGroup_3; }
-
-		//"with"
-		public Keyword getWithKeyword_3_0() { return cWithKeyword_3_0; }
-
-		//transitionLabel=[Action]
-		public Assignment getTransitionLabelAssignment_3_1() { return cTransitionLabelAssignment_3_1; }
-
-		//[Action]
-		public CrossReference getTransitionLabelActionCrossReference_3_1_0() { return cTransitionLabelActionCrossReference_3_1_0; }
-
-		//ID
-		public RuleCall getTransitionLabelActionIDTerminalRuleCall_3_1_0_1() { return cTransitionLabelActionIDTerminalRuleCall_3_1_0_1; }
-	}
-
-	public class DeclaredTargetStateElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "declaredTargetState");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cIsInitialAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Keyword cIsInitialInitKeyword_0_0 = (Keyword)cIsInitialAssignment_0.eContents().get(0);
-		private final Assignment cIsFinalAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cIsFinalFinalKeyword_1_0 = (Keyword)cIsFinalAssignment_1.eContents().get(0);
-		private final Keyword cStateKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cDeclaredStateTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cDeclaredStateTypeStateTypeEnumRuleCall_3_0 = (RuleCall)cDeclaredStateTypeAssignment_3.eContents().get(0);
-		private final Assignment cDeclaredStateNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cDeclaredStateNameIDTerminalRuleCall_4_0 = (RuleCall)cDeclaredStateNameAssignment_4.eContents().get(0);
-		
-		//declaredTargetState returns State:
-		//  isInitial?="init"? isFinal?="final"? "state" declaredStateType=StateType?
-		//  declaredStateName=ID; 	
-		//    
-		//	     
-		//	  
-		//
-		//
-		////=======================================================================================================//
-		public ParserRule getRule() { return rule; }
-
-		//isInitial?="init"? isFinal?="final"? "state" declaredStateType=StateType?
-		//declaredStateName=ID
-		public Group getGroup() { return cGroup; }
-
-		//isInitial?="init"?
-		public Assignment getIsInitialAssignment_0() { return cIsInitialAssignment_0; }
-
-		//"init"
-		public Keyword getIsInitialInitKeyword_0_0() { return cIsInitialInitKeyword_0_0; }
-
-		//isFinal?="final"?
-		public Assignment getIsFinalAssignment_1() { return cIsFinalAssignment_1; }
-
-		//"final"
-		public Keyword getIsFinalFinalKeyword_1_0() { return cIsFinalFinalKeyword_1_0; }
-
-		//"state"
-		public Keyword getStateKeyword_2() { return cStateKeyword_2; }
-
-		//declaredStateType=StateType?
-		public Assignment getDeclaredStateTypeAssignment_3() { return cDeclaredStateTypeAssignment_3; }
-
-		//StateType
-		public RuleCall getDeclaredStateTypeStateTypeEnumRuleCall_3_0() { return cDeclaredStateTypeStateTypeEnumRuleCall_3_0; }
-
-		//declaredStateName=ID
-		public Assignment getDeclaredStateNameAssignment_4() { return cDeclaredStateNameAssignment_4; }
-
-		//ID
-		public RuleCall getDeclaredStateNameIDTerminalRuleCall_4_0() { return cDeclaredStateNameIDTerminalRuleCall_4_0; }
-	}
-
-	public class ActionElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Action");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cTriggerAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cTriggerPrimaryExpressionParserRuleCall_0_0 = (RuleCall)cTriggerAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cSolidusKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cEffectsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_1_1_0 = (RuleCall)cEffectsAssignment_1_1.eContents().get(0);
-		
-		//Action:
-		//  trigger=PrimaryExpression? ("/" effects+=Effect*)?; 
-		//
-		////=======================================================================================================//
-		//  
-		//	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
-		public ParserRule getRule() { return rule; }
-
-		//trigger=PrimaryExpression? ("/" effects+=Effect*)? 
-		//	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
-		public Group getGroup() { return cGroup; }
-
-		//trigger=PrimaryExpression?
-		public Assignment getTriggerAssignment_0() { return cTriggerAssignment_0; }
-
-		//PrimaryExpression
-		public RuleCall getTriggerPrimaryExpressionParserRuleCall_0_0() { return cTriggerPrimaryExpressionParserRuleCall_0_0; }
-
-		//("/" effects+=Effect*)?
-		public Group getGroup_1() { return cGroup_1; }
-
-		//"/"
-		public Keyword getSolidusKeyword_1_0() { return cSolidusKeyword_1_0; }
-
-		//effects+=Effect*
-		public Assignment getEffectsAssignment_1_1() { return cEffectsAssignment_1_1; }
-
-		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_1_1_0() { return cEffectsEffectParserRuleCall_1_1_0; }
-	}
-
-	public class EffectElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Effect");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cEmissionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cAssignmentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cHostCodeParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		
-		//Effect:
-		//  Emission|Assignment|HostCode;
-		public ParserRule getRule() { return rule; }
-
-		//Emission|Assignment|HostCode
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//Emission
-		public RuleCall getEmissionParserRuleCall_0() { return cEmissionParserRuleCall_0; }
-
-		//Assignment
-		public RuleCall getAssignmentParserRuleCall_1() { return cAssignmentParserRuleCall_1; }
-
-		//HostCode
-		public RuleCall getHostCodeParserRuleCall_2() { return cHostCodeParserRuleCall_2; }
-	}
-
-	public class EmissionElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Emission");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cSignalAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cSignalSignalCrossReference_0_0 = (CrossReference)cSignalAssignment_0.eContents().get(0);
-		private final RuleCall cSignalSignalIDTerminalRuleCall_0_0_1 = (RuleCall)cSignalSignalCrossReference_0_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cNewValueAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cNewValuePrimaryExpressionParserRuleCall_1_1_0 = (RuleCall)cNewValueAssignment_1_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		
-		//Emission:
-		//  signal=[Signal] ("(" newValue=PrimaryExpression ")")?;
-		public ParserRule getRule() { return rule; }
-
-		//signal=[Signal] ("(" newValue=PrimaryExpression ")")?
-		public Group getGroup() { return cGroup; }
-
-		//signal=[Signal]
-		public Assignment getSignalAssignment_0() { return cSignalAssignment_0; }
-
-		//[Signal]
-		public CrossReference getSignalSignalCrossReference_0_0() { return cSignalSignalCrossReference_0_0; }
-
-		//ID
-		public RuleCall getSignalSignalIDTerminalRuleCall_0_0_1() { return cSignalSignalIDTerminalRuleCall_0_0_1; }
-
-		//("(" newValue=PrimaryExpression ")")?
-		public Group getGroup_1() { return cGroup_1; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
-
-		//newValue=PrimaryExpression
-		public Assignment getNewValueAssignment_1_1() { return cNewValueAssignment_1_1; }
-
-		//PrimaryExpression
-		public RuleCall getNewValuePrimaryExpressionParserRuleCall_1_1_0() { return cNewValuePrimaryExpressionParserRuleCall_1_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
-	}
-
-	public class AssignmentElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Assignment");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cVariableAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cVariableVariableCrossReference_0_0 = (CrossReference)cVariableAssignment_0.eContents().get(0);
-		private final RuleCall cVariableVariableIDTerminalRuleCall_0_0_1 = (RuleCall)cVariableVariableCrossReference_0_0.eContents().get(1);
-		private final Keyword cColonEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cExpressionPrimaryExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
-		
-		//Assignment:
-		//  variable=[Variable] ":=" expression=PrimaryExpression;
-		public ParserRule getRule() { return rule; }
-
-		//variable=[Variable] ":=" expression=PrimaryExpression
-		public Group getGroup() { return cGroup; }
-
-		//variable=[Variable]
-		public Assignment getVariableAssignment_0() { return cVariableAssignment_0; }
-
-		//[Variable]
-		public CrossReference getVariableVariableCrossReference_0_0() { return cVariableVariableCrossReference_0_0; }
-
-		//ID
-		public RuleCall getVariableVariableIDTerminalRuleCall_0_0_1() { return cVariableVariableIDTerminalRuleCall_0_0_1; }
-
-		//":="
-		public Keyword getColonEqualsSignKeyword_1() { return cColonEqualsSignKeyword_1; }
-
-		//expression=PrimaryExpression
-		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
-
-		//PrimaryExpression
-		public RuleCall getExpressionPrimaryExpressionParserRuleCall_2_0() { return cExpressionPrimaryExpressionParserRuleCall_2_0; }
-	}
-
-	public class SignalReferenceElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SignalReference");
-		private final Assignment cReferenceAssignment = (Assignment)rule.eContents().get(1);
-		private final CrossReference cReferenceSignalCrossReference_0 = (CrossReference)cReferenceAssignment.eContents().get(0);
-		private final RuleCall cReferenceSignalIDTerminalRuleCall_0_1 = (RuleCall)cReferenceSignalCrossReference_0.eContents().get(1);
-		
-		//SignalReference:
-		//  reference=[Signal];
-		public ParserRule getRule() { return rule; }
-
-		//reference=[Signal]
-		public Assignment getReferenceAssignment() { return cReferenceAssignment; }
-
-		//[Signal]
-		public CrossReference getReferenceSignalCrossReference_0() { return cReferenceSignalCrossReference_0; }
-
-		//ID
-		public RuleCall getReferenceSignalIDTerminalRuleCall_0_1() { return cReferenceSignalIDTerminalRuleCall_0_1; }
-	}
-
-	public class VariableReferenceElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableReference");
-		private final Assignment cReferenceAssignment = (Assignment)rule.eContents().get(1);
-		private final CrossReference cReferenceVariableCrossReference_0 = (CrossReference)cReferenceAssignment.eContents().get(0);
-		private final RuleCall cReferenceVariableIDTerminalRuleCall_0_1 = (RuleCall)cReferenceVariableCrossReference_0.eContents().get(1);
-		
-		//VariableReference:
-		//  reference=[Variable];
-		public ParserRule getRule() { return rule; }
-
-		//reference=[Variable]
-		public Assignment getReferenceAssignment() { return cReferenceAssignment; }
-
-		//[Variable]
-		public CrossReference getReferenceVariableCrossReference_0() { return cReferenceVariableCrossReference_0; }
-
-		//ID
-		public RuleCall getReferenceVariableIDTerminalRuleCall_0_1() { return cReferenceVariableIDTerminalRuleCall_0_1; }
-	}
-
-	public class ValuedObjectElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedObject");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cSignalParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cVariableParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//ValuedObject:
-		//  Signal|Variable;
-		public ParserRule getRule() { return rule; }
-
-		//Signal|Variable
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//Signal
-		public RuleCall getSignalParserRuleCall_0() { return cSignalParserRuleCall_0; }
-
-		//Variable
-		public RuleCall getVariableParserRuleCall_1() { return cVariableParserRuleCall_1; }
-	}
-
-	public class SignalElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cInputKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cColonEqualsSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cInitialValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cInitialValueIDTerminalRuleCall_2_1_0 = (RuleCall)cInitialValueAssignment_2_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//Signal:
-		//  "input" name=ID (":=" initialValue=ID)? ";";
-		public ParserRule getRule() { return rule; }
-
-		//"input" name=ID (":=" initialValue=ID)? ";"
-		public Group getGroup() { return cGroup; }
-
-		//"input"
-		public Keyword getInputKeyword_0() { return cInputKeyword_0; }
-
-		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
-
-		//(":=" initialValue=ID)?
-		public Group getGroup_2() { return cGroup_2; }
-
-		//":="
-		public Keyword getColonEqualsSignKeyword_2_0() { return cColonEqualsSignKeyword_2_0; }
-
-		//initialValue=ID
-		public Assignment getInitialValueAssignment_2_1() { return cInitialValueAssignment_2_1; }
-
-		//ID
-		public RuleCall getInitialValueIDTerminalRuleCall_2_1_0() { return cInitialValueIDTerminalRuleCall_2_1_0; }
-
-		//";"
-		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
-	}
-
-	public class VariableElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Variable");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cVarKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cColonEqualsSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cInitialValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cInitialValueIDTerminalRuleCall_2_1_0 = (RuleCall)cInitialValueAssignment_2_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//Variable:
-		//  "var" name=ID (":=" initialValue=ID)? ";";
-		public ParserRule getRule() { return rule; }
-
-		//"var" name=ID (":=" initialValue=ID)? ";"
-		public Group getGroup() { return cGroup; }
-
-		//"var"
-		public Keyword getVarKeyword_0() { return cVarKeyword_0; }
-
-		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
-
-		//(":=" initialValue=ID)?
-		public Group getGroup_2() { return cGroup_2; }
-
-		//":="
-		public Keyword getColonEqualsSignKeyword_2_0() { return cColonEqualsSignKeyword_2_0; }
-
-		//initialValue=ID
-		public Assignment getInitialValueAssignment_2_1() { return cInitialValueAssignment_2_1; }
-
-		//ID
-		public RuleCall getInitialValueIDTerminalRuleCall_2_1_0() { return cInitialValueIDTerminalRuleCall_2_1_0; }
-
-		//";"
-		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
-	}
-
-	public class IntValueElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IntValue");
-		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueINTTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
-		
-		//IntValue:
-		//  value=INT;
-		public ParserRule getRule() { return rule; }
-
-		//value=INT
-		public Assignment getValueAssignment() { return cValueAssignment; }
-
-		//INT
-		public RuleCall getValueINTTerminalRuleCall_0() { return cValueINTTerminalRuleCall_0; }
-	}
-
-	public class FloatValueElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FloatValue");
-		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueFloatTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
-		
-		//FloatValue:
-		//  value=Float;
-		public ParserRule getRule() { return rule; }
-
-		//value=Float
-		public Assignment getValueAssignment() { return cValueAssignment; }
-
-		//Float
-		public RuleCall getValueFloatTerminalRuleCall_0() { return cValueFloatTerminalRuleCall_0; }
-	}
-
-	public class BooleanValueElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanValue");
-		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueBooleanTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
-		
-		//BooleanValue:
-		//  value=Boolean;
-		public ParserRule getRule() { return rule; }
-
-		//value=Boolean
-		public Assignment getValueAssignment() { return cValueAssignment; }
-
-		//Boolean
-		public RuleCall getValueBooleanTerminalRuleCall_0() { return cValueBooleanTerminalRuleCall_0; }
-	}
-
-	public class ValueElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Value");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cBooleanValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		
-		//Value:
-		//  IntValue|FloatValue|BooleanValue; 
-		//
-		//	        
-		//
-		//// make sure the Float rule does not shadow the built-in INT rule
-		public ParserRule getRule() { return rule; }
-
-		//IntValue|FloatValue|BooleanValue 
-		//
-		//	        
-		//
-		//// make sure the Float rule does not shadow the built-in INT rule
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//IntValue
-		public RuleCall getIntValueParserRuleCall_0() { return cIntValueParserRuleCall_0; }
-
-		//FloatValue
-		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
-
-		//BooleanValue
-		public RuleCall getBooleanValueParserRuleCall_2() { return cBooleanValueParserRuleCall_2; }
-	}
-
-	public class HostCodeElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "HostCode");
-		private final Assignment cCodeAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cCodeSTRINGTerminalRuleCall_0 = (RuleCall)cCodeAssignment.eContents().get(0);
-		
-		//HostCode:
-		//  code=STRING; 
-		//
-		//
-		//	//"'"code=STRING"'";
-		//	 //("(" type=ID ")")?
-		public ParserRule getRule() { return rule; }
-
-		//code=STRING 
-		//	//"'"code=STRING"'";
-		//	 //("(" type=ID ")")?
-		public Assignment getCodeAssignment() { return cCodeAssignment; }
-
-		//STRING
-		public RuleCall getCodeSTRINGTerminalRuleCall_0() { return cCodeSTRINGTerminalRuleCall_0; }
-	}
-
-	public class OperatorElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Operator");
-		private final Assignment cOperatorKindAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cOperatorKindOperatorKindEnumRuleCall_0 = (RuleCall)cOperatorKindAssignment.eContents().get(0);
-		
-		//Operator:
-		//  operatorKind=OperatorKind;
-		public ParserRule getRule() { return rule; }
-
-		//operatorKind=OperatorKind
-		public Assignment getOperatorKindAssignment() { return cOperatorKindAssignment; }
-
-		//OperatorKind
-		public RuleCall getOperatorKindOperatorKindEnumRuleCall_0() { return cOperatorKindOperatorKindEnumRuleCall_0; }
-	}
-
-	public class ValOperationElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValOperation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cOperatorAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cOperatorValOperatorEnumRuleCall_0_0 = (RuleCall)cOperatorAssignment_0.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cSubExpressionsSignalReferenceParserRuleCall_1_0 = (RuleCall)cSubExpressionsAssignment_1.eContents().get(0);
-		
-		//ValOperation returns Expression:
-		//  operator=ValOperator subExpressions+=SignalReference;
-		public ParserRule getRule() { return rule; }
-
-		//operator=ValOperator subExpressions+=SignalReference
-		public Group getGroup() { return cGroup; }
-
-		//operator=ValOperator
-		public Assignment getOperatorAssignment_0() { return cOperatorAssignment_0; }
-
-		//ValOperator
-		public RuleCall getOperatorValOperatorEnumRuleCall_0_0() { return cOperatorValOperatorEnumRuleCall_0_0; }
-
-		//subExpressions+=SignalReference
-		public Assignment getSubExpressionsAssignment_1() { return cSubExpressionsAssignment_1; }
-
-		//SignalReference
-		public RuleCall getSubExpressionsSignalReferenceParserRuleCall_1_0() { return cSubExpressionsSignalReferenceParserRuleCall_1_0; }
-	}
-
-	public class ValueExpressionElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValueExpression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cValOperationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cVariableReferenceParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		
-		//ValueExpression returns Expression:
-		//  IntValue|FloatValue|ValOperation|VariableReference;
-		public ParserRule getRule() { return rule; }
-
-		//IntValue|FloatValue|ValOperation|VariableReference
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//IntValue
-		public RuleCall getIntValueParserRuleCall_0() { return cIntValueParserRuleCall_0; }
-
-		//FloatValue
-		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
-
-		//ValOperation
-		public RuleCall getValOperationParserRuleCall_2() { return cValOperationParserRuleCall_2; }
-
-		//VariableReference
-		public RuleCall getVariableReferenceParserRuleCall_3() { return cVariableReferenceParserRuleCall_3; }
-	}
-
-	public class CompareOperationElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CompareOperation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cValueExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cOperationSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorCompareOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsValueExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
-		
-		//CompareOperation returns Expression:
-		//  ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator
-		//  subExpressions+=ValueExpression);
-		public ParserRule getRule() { return rule; }
-
-		//ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator
-		//subExpressions+=ValueExpression)
-		public Group getGroup() { return cGroup; }
-
-		//ValueExpression
-		public RuleCall getValueExpressionParserRuleCall_0() { return cValueExpressionParserRuleCall_0; }
-
-		//{Operation.subExpressions+=current} operator=CompareOperator subExpressions+=
-		//ValueExpression
-		public Group getGroup_1() { return cGroup_1; }
-
-		//{Operation.subExpressions+=current}
-		public Action getOperationSubExpressionsAction_1_0() { return cOperationSubExpressionsAction_1_0; }
-
-		//operator=CompareOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
-
-		//CompareOperator
-		public RuleCall getOperatorCompareOperatorEnumRuleCall_1_1_0() { return cOperatorCompareOperatorEnumRuleCall_1_1_0; }
-
-		//subExpressions+=ValueExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
-
-		//ValueExpression
-		public RuleCall getSubExpressionsValueExpressionParserRuleCall_1_2_0() { return cSubExpressionsValueExpressionParserRuleCall_1_2_0; }
-	}
-
-	public class NotOperationElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "NotOperation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cOperatorsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cOperatorsNotOperatorEnumRuleCall_0_0 = (RuleCall)cOperatorsAssignment_0.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cSubExpressionsBooleanExpressionParserRuleCall_1_0 = (RuleCall)cSubExpressionsAssignment_1.eContents().get(0);
-		
-		//NotOperation returns Operations:
-		//  operators=NotOperator subExpressions+=BooleanExpression;
-		public ParserRule getRule() { return rule; }
-
-		//operators=NotOperator subExpressions+=BooleanExpression
-		public Group getGroup() { return cGroup; }
-
-		//operators=NotOperator
-		public Assignment getOperatorsAssignment_0() { return cOperatorsAssignment_0; }
-
-		//NotOperator
-		public RuleCall getOperatorsNotOperatorEnumRuleCall_0_0() { return cOperatorsNotOperatorEnumRuleCall_0_0; }
-
-		//subExpressions+=BooleanExpression
-		public Assignment getSubExpressionsAssignment_1() { return cSubExpressionsAssignment_1; }
-
-		//BooleanExpression
-		public RuleCall getSubExpressionsBooleanExpressionParserRuleCall_1_0() { return cSubExpressionsBooleanExpressionParserRuleCall_1_0; }
-	}
-
-	public class NotOrNormalExpressionElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "NotOrNormalExpression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cNotOperationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cBooleanExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//NotOrNormalExpression returns Expression:
-		//  NotOperation|BooleanExpression;
-		public ParserRule getRule() { return rule; }
-
-		//NotOperation|BooleanExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//NotOperation
-		public RuleCall getNotOperationParserRuleCall_0() { return cNotOperationParserRuleCall_0; }
-
-		//BooleanExpression
-		public RuleCall getBooleanExpressionParserRuleCall_1() { return cBooleanExpressionParserRuleCall_1; }
-	}
-
-	public class AndOperationElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AndOperation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cNotOrNormalExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cOperationSubExpressionAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorOperatorAndEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionNotOrNormalExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionAssignment_1_2.eContents().get(0);
-		
-		//AndOperation returns Expression:
-		//  NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd
-		//  subExpression+=NotOrNormalExpression)*;
-		public ParserRule getRule() { return rule; }
-
-		//NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd
-		//subExpression+=NotOrNormalExpression)*
-		public Group getGroup() { return cGroup; }
-
-		//NotOrNormalExpression
-		public RuleCall getNotOrNormalExpressionParserRuleCall_0() { return cNotOrNormalExpressionParserRuleCall_0; }
-
-		//({Operation.subExpression+=current} operator=OperatorAnd subExpression+=
-		//NotOrNormalExpression)*
-		public Group getGroup_1() { return cGroup_1; }
-
-		//{Operation.subExpression+=current}
-		public Action getOperationSubExpressionAction_1_0() { return cOperationSubExpressionAction_1_0; }
-
-		//operator=OperatorAnd
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
-
-		//OperatorAnd
-		public RuleCall getOperatorOperatorAndEnumRuleCall_1_1_0() { return cOperatorOperatorAndEnumRuleCall_1_1_0; }
-
-		//subExpression+=NotOrNormalExpression
-		public Assignment getSubExpressionAssignment_1_2() { return cSubExpressionAssignment_1_2; }
-
-		//NotOrNormalExpression
-		public RuleCall getSubExpressionNotOrNormalExpressionParserRuleCall_1_2_0() { return cSubExpressionNotOrNormalExpressionParserRuleCall_1_2_0; }
-	}
-
-	public class OrOperationElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "OrOperation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cAndOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cOperationSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorOperatorOrEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsAndOperationParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
-		
-		//OrOperation returns Expression:
-		//  AndOperation ({Operation.subExpressions+=current} operator=OperatorOr
-		//  subExpressions+=AndOperation)*; 
-		//
-		//    
-		//	      
-		//
-		//// TODO: get rid of parentheses
-		public ParserRule getRule() { return rule; }
-
-		//AndOperation ({Operation.subExpressions+=current} operator=OperatorOr
-		//subExpressions+=AndOperation)*
-		public Group getGroup() { return cGroup; }
-
-		//AndOperation
-		public RuleCall getAndOperationParserRuleCall_0() { return cAndOperationParserRuleCall_0; }
-
-		//({Operation.subExpressions+=current} operator=OperatorOr subExpressions+=
-		//AndOperation)*
-		public Group getGroup_1() { return cGroup_1; }
-
-		//{Operation.subExpressions+=current}
-		public Action getOperationSubExpressionsAction_1_0() { return cOperationSubExpressionsAction_1_0; }
-
-		//operator=OperatorOr
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
-
-		//OperatorOr
-		public RuleCall getOperatorOperatorOrEnumRuleCall_1_1_0() { return cOperatorOperatorOrEnumRuleCall_1_1_0; }
-
-		//subExpressions+=AndOperation
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
-
-		//AndOperation
-		public RuleCall getSubExpressionsAndOperationParserRuleCall_1_2_0() { return cSubExpressionsAndOperationParserRuleCall_1_2_0; }
-	}
-
-	public class BooleanExpressionElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanExpression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cBooleanValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cSignalReferenceParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cCompareOperationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
-		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final RuleCall cOrOperationParserRuleCall_3_1 = (RuleCall)cGroup_3.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
-		
-		//BooleanExpression returns Expression:
-		//  BooleanValue|SignalReference|CompareOperation|"(" OrOperation ")"; 
-		//
-		//// TODO: get rid of parentheses
-		public ParserRule getRule() { return rule; }
-
-		//BooleanValue|SignalReference|CompareOperation|"(" OrOperation ")" 
-		//
-		//// TODO: get rid of parentheses
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//BooleanValue
-		public RuleCall getBooleanValueParserRuleCall_0() { return cBooleanValueParserRuleCall_0; }
-
-		//SignalReference
-		public RuleCall getSignalReferenceParserRuleCall_1() { return cSignalReferenceParserRuleCall_1; }
-
-		//CompareOperation
-		public RuleCall getCompareOperationParserRuleCall_2() { return cCompareOperationParserRuleCall_2; }
-
-		//"(" OrOperation ")"
-		public Group getGroup_3() { return cGroup_3; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
-
-		//OrOperation
-		public RuleCall getOrOperationParserRuleCall_3_1() { return cOrOperationParserRuleCall_3_1; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
-	}
-
-	public class PrimaryExpressionElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PrimaryExpression");
-		private final RuleCall cBooleanExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
-		
-		//PrimaryExpression returns Expression:
-		//  BooleanExpression; 
-		//
-		//    
-		//	//ValueExpression | BooleanExpression;
-		public ParserRule getRule() { return rule; }
-
-		//BooleanExpression 
-		//	//ValueExpression | BooleanExpression;
-		public RuleCall getBooleanExpressionParserRuleCall() { return cBooleanExpressionParserRuleCall; }
+		public RuleCall getLabelSTRINGTerminalRuleCall_3_0() { return cLabelSTRINGTerminalRuleCall_3_0; }
 	}
 	
 	
@@ -1240,21 +126,333 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		
 		//enum StateType:
 		//  PSEUDO | REFERENCE="reference" | TEXTUAL="textual"; 
+		////StateContent:
+		////	'{'
+		//////	(regions+=Region)*
+		////	(		(exitActions+=ExitAction )
+		////		| 	(entryActions+=EntryAction)
+		////		| 	(innerAction+=InnerAction)
+		////		| 	(signalsAndVariables+=ValuedObject)
+		////		|	(innerStates+=State	('||' parallelStates+=State)*)
+		////	)+	
+		////	'}'
+		////;
 		//  	 
 		//	        
 		// 
-		//////Effect:
-		//////	effectID=STRING
+		////////Effect:
+		////////	effectID=STRING
+		////////;
+		////EntryAction returns Action:// transitionlabel::Action :
+		////	'onentry' (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  //do we need both in one list: triggersAndEffects?
+		////
+		////ExitAction returns Action :
+		////	'onexit' (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+		////
+		////InnerAction returns Action :
+		////	'oninner' (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+		////
+		//////ValuedObject:
+		//////	Signal | Variable
 		//////;
+		//////Signal:
+		//////	(isLocal?='local')? (isInput?='input')? (isOutput?='output')?
+		//////	type=ValueType name=ID (':=' initialValue=ID)? 
+		//////	//combineOperator=CombineOperator 
+		//////;
+		////////enum CombineOperator :
+		////////NONE='none' | ADD='add' | MULT='mult' | HOST='host'
+		////////;
+		//////Variable:
+		//////	type=ValueType name=ID (':=' initialValue=ID)? 
+		//////;
+		//////enum ValueType:
+		//////	PURE | BOOL | UNSIGNED | INTEGER | DOUBLE | HOST
+		//////;	
+		////Transition:
+		////	(sourceStateName=ID)? 
+		////	transitionType=TransitionType 
+		////	(targetStateName=ID | declaredTargetState=declaredTargetState)  
+		////	('with' transitionLabel=[Action])?
+		//////			(isHistory?='history')?
+		//////			
+		//////		( 	(delay=INT) (trigger=ID)
+		////////		|	(delay=INT) ('/'effects+=ID)				
+		//////		| 	(delay=INT) (trigger=ID)('/'effects+=ID)
+		//////		|	(isImmediate?='#') (trigger=ID)? ('/'effects+=ID)?
+		//////		|   ((trigger=ID) | ('/'effects+=ID))
+		//////		| 	(trigger=ID) ('/'effects+=ID)
+		//////		)	
+		//////)?
+		////;
+		////enum TransitionType :
+		////	STRONGABORT='o->' | WEAKABORT='-->' | NORMALTERMINATION='>->'
+		////;	
+		////declaredTargetState returns State:
+		////	(isInitial?='init')? (isFinal?='final')? 'state' 
+		////	(declaredStateType=StateType)? declaredStateName=ID
+		////;
+		////
+		//////=======================================================================================================//
+		////Action :
+		////	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
+		////	(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 		
+		////
+		////Effect : 
+		////	Emission | Assignment | HostCode;
+		////
+		////Emission :
+		////	signal=[Signal] ("(" newValue=PrimaryExpression ")")?;
+		////
+		////Assignment :
+		////	variable=[Variable] ":=" expression=PrimaryExpression;
+		////
+		////SignalReference:
+		////	reference = [Signal];
+		////	
+		////VariableReference:
+		////	reference = [Variable];
+		////ValuedObject:
+		////	Signal | Variable
+		////;
+		////Signal:
+		////	"input" name = ID (':=' initialValue=ID)?";";
+		////
+		////Variable:
+		////	"var" name = ID (':=' initialValue=ID)?";";
+		////
+		////IntValue: 
+		////	value=INT;
+		////FloatValue:
+		////    value=Float;
+		////BooleanValue:
+		////    value=Boolean;
+		////Value:
+		////	IntValue | FloatValue | BooleanValue;
+		////
+		////// make sure the Float rule does not shadow the built-in INT rule
+		////terminal Float returns ecore::EDouble : ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
+		////terminal Boolean returns ecore::EBoolean : "true" | "false";
+		////
+		////HostCode:
+		////	//"'"code=STRING"'";
+		////	//("(" type=ID ")")? 
+		////	code=STRING; 	
+		////	
+		////Operator :
+		////	operatorKind=OperatorKind;
+		////
+		////ValOperation returns Expression:
+		////	operator=ValOperator subExpressions+=SignalReference;
+		////
+		////ValueExpression returns Expression:
+		////	IntValue | FloatValue | ValOperation | VariableReference;
+		////
+		////CompareOperation returns Expression:
+		////	ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
+		////
+		////NotOperation returns Operations:
+		////	operators=NotOperator subExpressions+=BooleanExpression;
+		////
+		////NotOrNormalExpression returns Expression:
+		////	NotOperation | BooleanExpression;
+		////
+		////AndOperation returns Expression:
+		////	NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd subExpression+=NotOrNormalExpression)*;
+		////
+		////OrOperation returns Expression:
+		////	AndOperation ({Operation.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
+		////
+		////// TODO: get rid of parentheses
+		////BooleanExpression returns Expression:
+		////	BooleanValue | SignalReference | CompareOperation | "("OrOperation")" ;
+		////
+		////PrimaryExpression returns Expression:
+		////	//ValueExpression | BooleanExpression;
+		////	BooleanExpression;
+		////	
+		////enum OperatorKind :
+		////	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre";
+		////
+		////enum ValOperator returns OperatorKind:
+		////	VAL="?";
+		////
+		////enum CompareOperator returns OperatorKind:
+		////	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
+		////	
+		////enum NotOperator returns OperatorKind:
+		////	NOT="not";
+		////
+		////enum OperatorOr returns OperatorKind:
+		////	OR="or";
+		////
+		////enum OperatorAnd returns OperatorKind:
+		////	AND="and";
 		public EnumRule getRule() { return rule; }
 
 		//PSEUDO | REFERENCE="reference" | TEXTUAL="textual" 
+		////StateContent:
+		////	'{'
+		//////	(regions+=Region)*
+		////	(		(exitActions+=ExitAction )
+		////		| 	(entryActions+=EntryAction)
+		////		| 	(innerAction+=InnerAction)
+		////		| 	(signalsAndVariables+=ValuedObject)
+		////		|	(innerStates+=State	('||' parallelStates+=State)*)
+		////	)+	
+		////	'}'
+		////;
 		//  	 
 		//	        
 		// 
-		//////Effect:
-		//////	effectID=STRING
+		////////Effect:
+		////////	effectID=STRING
+		////////;
+		////EntryAction returns Action:// transitionlabel::Action :
+		////	'onentry' (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  //do we need both in one list: triggersAndEffects?
+		////
+		////ExitAction returns Action :
+		////	'onexit' (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+		////
+		////InnerAction returns Action :
+		////	'oninner' (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+		////
+		//////ValuedObject:
+		//////	Signal | Variable
 		//////;
+		//////Signal:
+		//////	(isLocal?='local')? (isInput?='input')? (isOutput?='output')?
+		//////	type=ValueType name=ID (':=' initialValue=ID)? 
+		//////	//combineOperator=CombineOperator 
+		//////;
+		////////enum CombineOperator :
+		////////NONE='none' | ADD='add' | MULT='mult' | HOST='host'
+		////////;
+		//////Variable:
+		//////	type=ValueType name=ID (':=' initialValue=ID)? 
+		//////;
+		//////enum ValueType:
+		//////	PURE | BOOL | UNSIGNED | INTEGER | DOUBLE | HOST
+		//////;	
+		////Transition:
+		////	(sourceStateName=ID)? 
+		////	transitionType=TransitionType 
+		////	(targetStateName=ID | declaredTargetState=declaredTargetState)  
+		////	('with' transitionLabel=[Action])?
+		//////			(isHistory?='history')?
+		//////			
+		//////		( 	(delay=INT) (trigger=ID)
+		////////		|	(delay=INT) ('/'effects+=ID)				
+		//////		| 	(delay=INT) (trigger=ID)('/'effects+=ID)
+		//////		|	(isImmediate?='#') (trigger=ID)? ('/'effects+=ID)?
+		//////		|   ((trigger=ID) | ('/'effects+=ID))
+		//////		| 	(trigger=ID) ('/'effects+=ID)
+		//////		)	
+		//////)?
+		////;
+		////enum TransitionType :
+		////	STRONGABORT='o->' | WEAKABORT='-->' | NORMALTERMINATION='>->'
+		////;	
+		////declaredTargetState returns State:
+		////	(isInitial?='init')? (isFinal?='final')? 'state' 
+		////	(declaredStateType=StateType)? declaredStateName=ID
+		////;
+		////
+		//////=======================================================================================================//
+		////Action :
+		////	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
+		////	(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 		
+		////
+		////Effect : 
+		////	Emission | Assignment | HostCode;
+		////
+		////Emission :
+		////	signal=[Signal] ("(" newValue=PrimaryExpression ")")?;
+		////
+		////Assignment :
+		////	variable=[Variable] ":=" expression=PrimaryExpression;
+		////
+		////SignalReference:
+		////	reference = [Signal];
+		////	
+		////VariableReference:
+		////	reference = [Variable];
+		////ValuedObject:
+		////	Signal | Variable
+		////;
+		////Signal:
+		////	"input" name = ID (':=' initialValue=ID)?";";
+		////
+		////Variable:
+		////	"var" name = ID (':=' initialValue=ID)?";";
+		////
+		////IntValue: 
+		////	value=INT;
+		////FloatValue:
+		////    value=Float;
+		////BooleanValue:
+		////    value=Boolean;
+		////Value:
+		////	IntValue | FloatValue | BooleanValue;
+		////
+		////// make sure the Float rule does not shadow the built-in INT rule
+		////terminal Float returns ecore::EDouble : ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
+		////terminal Boolean returns ecore::EBoolean : "true" | "false";
+		////
+		////HostCode:
+		////	//"'"code=STRING"'";
+		////	//("(" type=ID ")")? 
+		////	code=STRING; 	
+		////	
+		////Operator :
+		////	operatorKind=OperatorKind;
+		////
+		////ValOperation returns Expression:
+		////	operator=ValOperator subExpressions+=SignalReference;
+		////
+		////ValueExpression returns Expression:
+		////	IntValue | FloatValue | ValOperation | VariableReference;
+		////
+		////CompareOperation returns Expression:
+		////	ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
+		////
+		////NotOperation returns Operations:
+		////	operators=NotOperator subExpressions+=BooleanExpression;
+		////
+		////NotOrNormalExpression returns Expression:
+		////	NotOperation | BooleanExpression;
+		////
+		////AndOperation returns Expression:
+		////	NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd subExpression+=NotOrNormalExpression)*;
+		////
+		////OrOperation returns Expression:
+		////	AndOperation ({Operation.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
+		////
+		////// TODO: get rid of parentheses
+		////BooleanExpression returns Expression:
+		////	BooleanValue | SignalReference | CompareOperation | "("OrOperation")" ;
+		////
+		////PrimaryExpression returns Expression:
+		////	//ValueExpression | BooleanExpression;
+		////	BooleanExpression;
+		////	
+		////enum OperatorKind :
+		////	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre";
+		////
+		////enum ValOperator returns OperatorKind:
+		////	VAL="?";
+		////
+		////enum CompareOperator returns OperatorKind:
+		////	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
+		////	
+		////enum NotOperator returns OperatorKind:
+		////	NOT="not";
+		////
+		////enum OperatorOr returns OperatorKind:
+		////	OR="or";
+		////
+		////enum OperatorAnd returns OperatorKind:
+		////	AND="and";
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//PSEUDO
@@ -1275,334 +473,9 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//"textual"
 		public Keyword getTEXTUALTextualKeyword_2_0() { return cTEXTUALTextualKeyword_2_0; }
 	}
-
-	public class TransitionTypeElements implements IEnumRuleAccess {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "TransitionType");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cSTRONGABORTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cSTRONGABORTOKeyword_0_0 = (Keyword)cSTRONGABORTEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cWEAKABORTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_1_0 = (Keyword)cWEAKABORTEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cNORMALTERMINATIONEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0 = (Keyword)cNORMALTERMINATIONEnumLiteralDeclaration_2.eContents().get(0);
-		
-		//enum TransitionType:
-		//  STRONGABORT="o->" | WEAKABORT="-->" | NORMALTERMINATION=">->";
-		public EnumRule getRule() { return rule; }
-
-		//STRONGABORT="o->" | WEAKABORT="-->" | NORMALTERMINATION=">->"
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//STRONGABORT="o->"
-		public EnumLiteralDeclaration getSTRONGABORTEnumLiteralDeclaration_0() { return cSTRONGABORTEnumLiteralDeclaration_0; }
-
-		//"o->"
-		public Keyword getSTRONGABORTOKeyword_0_0() { return cSTRONGABORTOKeyword_0_0; }
-
-		//WEAKABORT="-->"
-		public EnumLiteralDeclaration getWEAKABORTEnumLiteralDeclaration_1() { return cWEAKABORTEnumLiteralDeclaration_1; }
-
-		//"-->"
-		public Keyword getWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_1_0() { return cWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_1_0; }
-
-		//NORMALTERMINATION=">->"
-		public EnumLiteralDeclaration getNORMALTERMINATIONEnumLiteralDeclaration_2() { return cNORMALTERMINATIONEnumLiteralDeclaration_2; }
-
-		//">->"
-		public Keyword getNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0() { return cNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0; }
-	}
-
-	public class OperatorKindElements implements IEnumRuleAccess {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OperatorKind");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cEQEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cEQEqualsSignKeyword_0_0 = (Keyword)cEQEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cLTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cLTLessThanSignKeyword_1_0 = (Keyword)cLTEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cLEQEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cLEQLessThanSignEqualsSignKeyword_2_0 = (Keyword)cLEQEnumLiteralDeclaration_2.eContents().get(0);
-		private final EnumLiteralDeclaration cGTEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cGTGreaterThanSignKeyword_3_0 = (Keyword)cGTEnumLiteralDeclaration_3.eContents().get(0);
-		private final EnumLiteralDeclaration cGEQEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
-		private final Keyword cGEQGreaterThanSignEqualsSignKeyword_4_0 = (Keyword)cGEQEnumLiteralDeclaration_4.eContents().get(0);
-		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
-		private final Keyword cNOTNotKeyword_5_0 = (Keyword)cNOTEnumLiteralDeclaration_5.eContents().get(0);
-		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
-		private final Keyword cANDAndKeyword_6_0 = (Keyword)cANDEnumLiteralDeclaration_6.eContents().get(0);
-		private final EnumLiteralDeclaration cOREnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
-		private final Keyword cOROrKeyword_7_0 = (Keyword)cOREnumLiteralDeclaration_7.eContents().get(0);
-		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration_8 = (EnumLiteralDeclaration)cAlternatives.eContents().get(8);
-		private final Keyword cADDPlusSignKeyword_8_0 = (Keyword)cADDEnumLiteralDeclaration_8.eContents().get(0);
-		private final EnumLiteralDeclaration cSUBEnumLiteralDeclaration_9 = (EnumLiteralDeclaration)cAlternatives.eContents().get(9);
-		private final Keyword cSUBHyphenMinusKeyword_9_0 = (Keyword)cSUBEnumLiteralDeclaration_9.eContents().get(0);
-		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration_10 = (EnumLiteralDeclaration)cAlternatives.eContents().get(10);
-		private final Keyword cMULTAsteriskKeyword_10_0 = (Keyword)cMULTEnumLiteralDeclaration_10.eContents().get(0);
-		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration_11 = (EnumLiteralDeclaration)cAlternatives.eContents().get(11);
-		private final Keyword cDIVDivKeyword_11_0 = (Keyword)cDIVEnumLiteralDeclaration_11.eContents().get(0);
-		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration_12 = (EnumLiteralDeclaration)cAlternatives.eContents().get(12);
-		private final Keyword cMODModKeyword_12_0 = (Keyword)cMODEnumLiteralDeclaration_12.eContents().get(0);
-		private final EnumLiteralDeclaration cVALEnumLiteralDeclaration_13 = (EnumLiteralDeclaration)cAlternatives.eContents().get(13);
-		private final Keyword cVALQuestionMarkKeyword_13_0 = (Keyword)cVALEnumLiteralDeclaration_13.eContents().get(0);
-		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration_14 = (EnumLiteralDeclaration)cAlternatives.eContents().get(14);
-		private final Keyword cPREPreKeyword_14_0 = (Keyword)cPREEnumLiteralDeclaration_14.eContents().get(0);
-		
-		//enum OperatorKind:
-		//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | AND="and" | OR="or" | ADD="+" | SUB=
-		//  "-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre";
-		public EnumRule getRule() { return rule; }
-
-		//EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | AND="and" | OR="or" | ADD="+" | SUB=
-		//"-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre"
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//EQ="="
-		public EnumLiteralDeclaration getEQEnumLiteralDeclaration_0() { return cEQEnumLiteralDeclaration_0; }
-
-		//"="
-		public Keyword getEQEqualsSignKeyword_0_0() { return cEQEqualsSignKeyword_0_0; }
-
-		//LT="<"
-		public EnumLiteralDeclaration getLTEnumLiteralDeclaration_1() { return cLTEnumLiteralDeclaration_1; }
-
-		//"<"
-		public Keyword getLTLessThanSignKeyword_1_0() { return cLTLessThanSignKeyword_1_0; }
-
-		//LEQ="<="
-		public EnumLiteralDeclaration getLEQEnumLiteralDeclaration_2() { return cLEQEnumLiteralDeclaration_2; }
-
-		//"<="
-		public Keyword getLEQLessThanSignEqualsSignKeyword_2_0() { return cLEQLessThanSignEqualsSignKeyword_2_0; }
-
-		//GT=">"
-		public EnumLiteralDeclaration getGTEnumLiteralDeclaration_3() { return cGTEnumLiteralDeclaration_3; }
-
-		//">"
-		public Keyword getGTGreaterThanSignKeyword_3_0() { return cGTGreaterThanSignKeyword_3_0; }
-
-		//GEQ=">="
-		public EnumLiteralDeclaration getGEQEnumLiteralDeclaration_4() { return cGEQEnumLiteralDeclaration_4; }
-
-		//">="
-		public Keyword getGEQGreaterThanSignEqualsSignKeyword_4_0() { return cGEQGreaterThanSignEqualsSignKeyword_4_0; }
-
-		//NOT="not"
-		public EnumLiteralDeclaration getNOTEnumLiteralDeclaration_5() { return cNOTEnumLiteralDeclaration_5; }
-
-		//"not"
-		public Keyword getNOTNotKeyword_5_0() { return cNOTNotKeyword_5_0; }
-
-		//AND="and"
-		public EnumLiteralDeclaration getANDEnumLiteralDeclaration_6() { return cANDEnumLiteralDeclaration_6; }
-
-		//"and"
-		public Keyword getANDAndKeyword_6_0() { return cANDAndKeyword_6_0; }
-
-		//OR="or"
-		public EnumLiteralDeclaration getOREnumLiteralDeclaration_7() { return cOREnumLiteralDeclaration_7; }
-
-		//"or"
-		public Keyword getOROrKeyword_7_0() { return cOROrKeyword_7_0; }
-
-		//ADD="+"
-		public EnumLiteralDeclaration getADDEnumLiteralDeclaration_8() { return cADDEnumLiteralDeclaration_8; }
-
-		//"+"
-		public Keyword getADDPlusSignKeyword_8_0() { return cADDPlusSignKeyword_8_0; }
-
-		//SUB="-"
-		public EnumLiteralDeclaration getSUBEnumLiteralDeclaration_9() { return cSUBEnumLiteralDeclaration_9; }
-
-		//"-"
-		public Keyword getSUBHyphenMinusKeyword_9_0() { return cSUBHyphenMinusKeyword_9_0; }
-
-		//MULT="*"
-		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration_10() { return cMULTEnumLiteralDeclaration_10; }
-
-		//"*"
-		public Keyword getMULTAsteriskKeyword_10_0() { return cMULTAsteriskKeyword_10_0; }
-
-		//DIV="div"
-		public EnumLiteralDeclaration getDIVEnumLiteralDeclaration_11() { return cDIVEnumLiteralDeclaration_11; }
-
-		//"div"
-		public Keyword getDIVDivKeyword_11_0() { return cDIVDivKeyword_11_0; }
-
-		//MOD="mod"
-		public EnumLiteralDeclaration getMODEnumLiteralDeclaration_12() { return cMODEnumLiteralDeclaration_12; }
-
-		//"mod"
-		public Keyword getMODModKeyword_12_0() { return cMODModKeyword_12_0; }
-
-		//VAL="?"
-		public EnumLiteralDeclaration getVALEnumLiteralDeclaration_13() { return cVALEnumLiteralDeclaration_13; }
-
-		//"?"
-		public Keyword getVALQuestionMarkKeyword_13_0() { return cVALQuestionMarkKeyword_13_0; }
-
-		//PRE="pre"
-		public EnumLiteralDeclaration getPREEnumLiteralDeclaration_14() { return cPREEnumLiteralDeclaration_14; }
-
-		//"pre"
-		public Keyword getPREPreKeyword_14_0() { return cPREPreKeyword_14_0; }
-	}
-
-	public class ValOperatorElements implements IEnumRuleAccess {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "ValOperator");
-		private final EnumLiteralDeclaration cVALEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cVALQuestionMarkKeyword_0 = (Keyword)cVALEnumLiteralDeclaration.eContents().get(0);
-		
-		//enum ValOperator returns OperatorKind:
-		//  VAL="?";
-		public EnumRule getRule() { return rule; }
-
-		//VAL="?"
-		public EnumLiteralDeclaration getVALEnumLiteralDeclaration() { return cVALEnumLiteralDeclaration; }
-
-		//"?"
-		public Keyword getVALQuestionMarkKeyword_0() { return cVALQuestionMarkKeyword_0; }
-	}
-
-	public class CompareOperatorElements implements IEnumRuleAccess {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "CompareOperator");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cEQEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cEQEqualsSignKeyword_0_0 = (Keyword)cEQEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cLTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cLTLessThanSignKeyword_1_0 = (Keyword)cLTEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cLEQEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cLEQLessThanSignEqualsSignKeyword_2_0 = (Keyword)cLEQEnumLiteralDeclaration_2.eContents().get(0);
-		private final EnumLiteralDeclaration cGTEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cGTGreaterThanSignKeyword_3_0 = (Keyword)cGTEnumLiteralDeclaration_3.eContents().get(0);
-		private final EnumLiteralDeclaration cGEQEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
-		private final Keyword cGEQGreaterThanSignEqualsSignKeyword_4_0 = (Keyword)cGEQEnumLiteralDeclaration_4.eContents().get(0);
-		
-		//enum CompareOperator returns OperatorKind:
-		//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
-		public EnumRule getRule() { return rule; }
-
-		//EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">="
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//EQ="="
-		public EnumLiteralDeclaration getEQEnumLiteralDeclaration_0() { return cEQEnumLiteralDeclaration_0; }
-
-		//"="
-		public Keyword getEQEqualsSignKeyword_0_0() { return cEQEqualsSignKeyword_0_0; }
-
-		//LT="<"
-		public EnumLiteralDeclaration getLTEnumLiteralDeclaration_1() { return cLTEnumLiteralDeclaration_1; }
-
-		//"<"
-		public Keyword getLTLessThanSignKeyword_1_0() { return cLTLessThanSignKeyword_1_0; }
-
-		//LEQ="<="
-		public EnumLiteralDeclaration getLEQEnumLiteralDeclaration_2() { return cLEQEnumLiteralDeclaration_2; }
-
-		//"<="
-		public Keyword getLEQLessThanSignEqualsSignKeyword_2_0() { return cLEQLessThanSignEqualsSignKeyword_2_0; }
-
-		//GT=">"
-		public EnumLiteralDeclaration getGTEnumLiteralDeclaration_3() { return cGTEnumLiteralDeclaration_3; }
-
-		//">"
-		public Keyword getGTGreaterThanSignKeyword_3_0() { return cGTGreaterThanSignKeyword_3_0; }
-
-		//GEQ=">="
-		public EnumLiteralDeclaration getGEQEnumLiteralDeclaration_4() { return cGEQEnumLiteralDeclaration_4; }
-
-		//">="
-		public Keyword getGEQGreaterThanSignEqualsSignKeyword_4_0() { return cGEQGreaterThanSignEqualsSignKeyword_4_0; }
-	}
-
-	public class NotOperatorElements implements IEnumRuleAccess {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "NotOperator");
-		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cNOTNotKeyword_0 = (Keyword)cNOTEnumLiteralDeclaration.eContents().get(0);
-		
-		//enum NotOperator returns OperatorKind:
-		//  NOT="not";
-		public EnumRule getRule() { return rule; }
-
-		//NOT="not"
-		public EnumLiteralDeclaration getNOTEnumLiteralDeclaration() { return cNOTEnumLiteralDeclaration; }
-
-		//"not"
-		public Keyword getNOTNotKeyword_0() { return cNOTNotKeyword_0; }
-	}
-
-	public class OperatorOrElements implements IEnumRuleAccess {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OperatorOr");
-		private final EnumLiteralDeclaration cOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cOROrKeyword_0 = (Keyword)cOREnumLiteralDeclaration.eContents().get(0);
-		
-		//enum OperatorOr returns OperatorKind:
-		//  OR="or";
-		public EnumRule getRule() { return rule; }
-
-		//OR="or"
-		public EnumLiteralDeclaration getOREnumLiteralDeclaration() { return cOREnumLiteralDeclaration; }
-
-		//"or"
-		public Keyword getOROrKeyword_0() { return cOROrKeyword_0; }
-	}
-
-	public class OperatorAndElements implements IEnumRuleAccess {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OperatorAnd");
-		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cANDAndKeyword_0 = (Keyword)cANDEnumLiteralDeclaration.eContents().get(0);
-		
-		//enum OperatorAnd returns OperatorKind:
-		//  AND="and";
-		public EnumRule getRule() { return rule; }
-
-		//AND="and"
-		public EnumLiteralDeclaration getANDEnumLiteralDeclaration() { return cANDEnumLiteralDeclaration; }
-
-		//"and"
-		public Keyword getANDAndKeyword_0() { return cANDAndKeyword_0; }
-	}
 	
 	private StateElements pState;
-	private StateContentElements pStateContent;
 	private StateTypeElements unknownRuleStateType;
-	private EntryActionElements pEntryAction;
-	private ExitActionElements pExitAction;
-	private InnerActionElements pInnerAction;
-	private TransitionElements pTransition;
-	private TransitionTypeElements unknownRuleTransitionType;
-	private DeclaredTargetStateElements pDeclaredTargetState;
-	private ActionElements pAction;
-	private EffectElements pEffect;
-	private EmissionElements pEmission;
-	private AssignmentElements pAssignment;
-	private SignalReferenceElements pSignalReference;
-	private VariableReferenceElements pVariableReference;
-	private ValuedObjectElements pValuedObject;
-	private SignalElements pSignal;
-	private VariableElements pVariable;
-	private IntValueElements pIntValue;
-	private FloatValueElements pFloatValue;
-	private BooleanValueElements pBooleanValue;
-	private ValueElements pValue;
-	private TerminalRule tFloat;
-	private TerminalRule tBoolean;
-	private HostCodeElements pHostCode;
-	private OperatorElements pOperator;
-	private ValOperationElements pValOperation;
-	private ValueExpressionElements pValueExpression;
-	private CompareOperationElements pCompareOperation;
-	private NotOperationElements pNotOperation;
-	private NotOrNormalExpressionElements pNotOrNormalExpression;
-	private AndOperationElements pAndOperation;
-	private OrOperationElements pOrOperation;
-	private BooleanExpressionElements pBooleanExpression;
-	private PrimaryExpressionElements pPrimaryExpression;
-	private OperatorKindElements unknownRuleOperatorKind;
-	private ValOperatorElements unknownRuleValOperator;
-	private CompareOperatorElements unknownRuleCompareOperator;
-	private NotOperatorElements unknownRuleNotOperator;
-	private OperatorOrElements unknownRuleOperatorOr;
-	private OperatorAndElements unknownRuleOperatorAnd;
 	
 	private final GrammarProvider grammarProvider;
 
@@ -1626,14 +499,29 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 
 	
 	//State:
-	//  isInitial?="init"? isFinal?="final"? stateKind=StateType? "state"? stateName=ID?
-	//  label=STRING? stateContent=StateContent? outgoingTransitions+=Transition*; 
+	//  (isInitial?="init"? isFinal?="final"?|stateKind=StateType?) "state"? stateName=ID?
+	//  label=STRING?; 
 	//
 	//  
-	//	 
-	//	  // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
+	//	//{State}
+	//	   // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
 	//	   // optional keyword, cf.Meeting_Textu alSyntax-II
 	//	   //optional ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+	//	  
+	////	(stateContent=StateContent)?
+	////	(outgoingTransitions+=Transition)*
+	//
+	////StateContent:
+	////	'{'
+	//////	(regions+=Region)*
+	////	(		(exitActions+=ExitAction )
+	////		| 	(entryActions+=EntryAction)
+	////		| 	(innerAction+=InnerAction)
+	////		| 	(signalsAndVariables+=ValuedObject)
+	////		|	(innerStates+=State	('||' parallelStates+=State)*)
+	////	)+	
+	////	'}'
+	////;
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
 	}
@@ -1642,502 +530,176 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		return getStateAccess().getRule();
 	}
 
-	//StateContent:
-	//  "{" (exitActions+=ExitAction|entryActions+=EntryAction|innerAction+=InnerAction|
-	//  signalsAndVariables+=ValuedObject|innerStates+=State ("||" parallelStates+=State)*
-	//  )+ "}"; 
-	//
-	//	
-	////	(regions+=Region)*
-	public StateContentElements getStateContentAccess() {
-		return (pStateContent != null) ? pStateContent : (pStateContent = new StateContentElements());
-	}
-	
-	public ParserRule getStateContentRule() {
-		return getStateContentAccess().getRule();
-	}
-
 	//enum StateType:
 	//  PSEUDO | REFERENCE="reference" | TEXTUAL="textual"; 
+	////StateContent:
+	////	'{'
+	//////	(regions+=Region)*
+	////	(		(exitActions+=ExitAction )
+	////		| 	(entryActions+=EntryAction)
+	////		| 	(innerAction+=InnerAction)
+	////		| 	(signalsAndVariables+=ValuedObject)
+	////		|	(innerStates+=State	('||' parallelStates+=State)*)
+	////	)+	
+	////	'}'
+	////;
 	//  	 
 	//	        
 	// 
-	//////Effect:
-	//////	effectID=STRING
+	////////Effect:
+	////////	effectID=STRING
+	////////;
+	////EntryAction returns Action:// transitionlabel::Action :
+	////	'onentry' (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  //do we need both in one list: triggersAndEffects?
+	////
+	////ExitAction returns Action :
+	////	'onexit' (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+	////
+	////InnerAction returns Action :
+	////	'oninner' (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+	////
+	//////ValuedObject:
+	//////	Signal | Variable
 	//////;
+	//////Signal:
+	//////	(isLocal?='local')? (isInput?='input')? (isOutput?='output')?
+	//////	type=ValueType name=ID (':=' initialValue=ID)? 
+	//////	//combineOperator=CombineOperator 
+	//////;
+	////////enum CombineOperator :
+	////////NONE='none' | ADD='add' | MULT='mult' | HOST='host'
+	////////;
+	//////Variable:
+	//////	type=ValueType name=ID (':=' initialValue=ID)? 
+	//////;
+	//////enum ValueType:
+	//////	PURE | BOOL | UNSIGNED | INTEGER | DOUBLE | HOST
+	//////;	
+	////Transition:
+	////	(sourceStateName=ID)? 
+	////	transitionType=TransitionType 
+	////	(targetStateName=ID | declaredTargetState=declaredTargetState)  
+	////	('with' transitionLabel=[Action])?
+	//////			(isHistory?='history')?
+	//////			
+	//////		( 	(delay=INT) (trigger=ID)
+	////////		|	(delay=INT) ('/'effects+=ID)				
+	//////		| 	(delay=INT) (trigger=ID)('/'effects+=ID)
+	//////		|	(isImmediate?='#') (trigger=ID)? ('/'effects+=ID)?
+	//////		|   ((trigger=ID) | ('/'effects+=ID))
+	//////		| 	(trigger=ID) ('/'effects+=ID)
+	//////		)	
+	//////)?
+	////;
+	////enum TransitionType :
+	////	STRONGABORT='o->' | WEAKABORT='-->' | NORMALTERMINATION='>->'
+	////;	
+	////declaredTargetState returns State:
+	////	(isInitial?='init')? (isFinal?='final')? 'state' 
+	////	(declaredStateType=StateType)? declaredStateName=ID
+	////;
+	////
+	//////=======================================================================================================//
+	////Action :
+	////	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
+	////	(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 		
+	////
+	////Effect : 
+	////	Emission | Assignment | HostCode;
+	////
+	////Emission :
+	////	signal=[Signal] ("(" newValue=PrimaryExpression ")")?;
+	////
+	////Assignment :
+	////	variable=[Variable] ":=" expression=PrimaryExpression;
+	////
+	////SignalReference:
+	////	reference = [Signal];
+	////	
+	////VariableReference:
+	////	reference = [Variable];
+	////ValuedObject:
+	////	Signal | Variable
+	////;
+	////Signal:
+	////	"input" name = ID (':=' initialValue=ID)?";";
+	////
+	////Variable:
+	////	"var" name = ID (':=' initialValue=ID)?";";
+	////
+	////IntValue: 
+	////	value=INT;
+	////FloatValue:
+	////    value=Float;
+	////BooleanValue:
+	////    value=Boolean;
+	////Value:
+	////	IntValue | FloatValue | BooleanValue;
+	////
+	////// make sure the Float rule does not shadow the built-in INT rule
+	////terminal Float returns ecore::EDouble : ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
+	////terminal Boolean returns ecore::EBoolean : "true" | "false";
+	////
+	////HostCode:
+	////	//"'"code=STRING"'";
+	////	//("(" type=ID ")")? 
+	////	code=STRING; 	
+	////	
+	////Operator :
+	////	operatorKind=OperatorKind;
+	////
+	////ValOperation returns Expression:
+	////	operator=ValOperator subExpressions+=SignalReference;
+	////
+	////ValueExpression returns Expression:
+	////	IntValue | FloatValue | ValOperation | VariableReference;
+	////
+	////CompareOperation returns Expression:
+	////	ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
+	////
+	////NotOperation returns Operations:
+	////	operators=NotOperator subExpressions+=BooleanExpression;
+	////
+	////NotOrNormalExpression returns Expression:
+	////	NotOperation | BooleanExpression;
+	////
+	////AndOperation returns Expression:
+	////	NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd subExpression+=NotOrNormalExpression)*;
+	////
+	////OrOperation returns Expression:
+	////	AndOperation ({Operation.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
+	////
+	////// TODO: get rid of parentheses
+	////BooleanExpression returns Expression:
+	////	BooleanValue | SignalReference | CompareOperation | "("OrOperation")" ;
+	////
+	////PrimaryExpression returns Expression:
+	////	//ValueExpression | BooleanExpression;
+	////	BooleanExpression;
+	////	
+	////enum OperatorKind :
+	////	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre";
+	////
+	////enum ValOperator returns OperatorKind:
+	////	VAL="?";
+	////
+	////enum CompareOperator returns OperatorKind:
+	////	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
+	////	
+	////enum NotOperator returns OperatorKind:
+	////	NOT="not";
+	////
+	////enum OperatorOr returns OperatorKind:
+	////	OR="or";
+	////
+	////enum OperatorAnd returns OperatorKind:
+	////	AND="and";
 	public StateTypeElements getStateTypeAccess() {
 		return (unknownRuleStateType != null) ? unknownRuleStateType : (unknownRuleStateType = new StateTypeElements());
 	}
 	
 	public EnumRule getStateTypeRule() {
 		return getStateTypeAccess().getRule();
-	}
-
-	//EntryAction returns Action:
-	//  "onentry" trigger=PrimaryExpression? ("/" effects+=Effect*)?;  
-	//////Effect:
-	//////	effectID=STRING
-	//////;
-	//    // transitionlabel::Action :
-	//	          //do we need both in one list: triggersAndEffects?
-	public EntryActionElements getEntryActionAccess() {
-		return (pEntryAction != null) ? pEntryAction : (pEntryAction = new EntryActionElements());
-	}
-	
-	public ParserRule getEntryActionRule() {
-		return getEntryActionAccess().getRule();
-	}
-
-	//ExitAction returns Action:
-	//  "onexit" trigger=PrimaryExpression? ("/" effects+=Effect*)?;    //do we need both in one list: triggersAndEffects?
-	public ExitActionElements getExitActionAccess() {
-		return (pExitAction != null) ? pExitAction : (pExitAction = new ExitActionElements());
-	}
-	
-	public ParserRule getExitActionRule() {
-		return getExitActionAccess().getRule();
-	}
-
-	//InnerAction returns Action:
-	//  "oninner" trigger=PrimaryExpression? ("/" effects+=Effect*)?;  
-	//
-	//      
-	//	       
-	//
-	////ValuedObject:
-	////	Signal | Variable
-	////;
-	////Signal:
-	////	(isLocal?='local')? (isInput?='input')? (isOutput?='output')?
-	////	type=ValueType name=ID (':=' initialValue=ID)? 
-	////	//combineOperator=CombineOperator 
-	////;
-	//////enum CombineOperator :
-	//////NONE='none' | ADD='add' | MULT='mult' | HOST='host'
-	//////;
-	////Variable:
-	////	type=ValueType name=ID (':=' initialValue=ID)? 
-	////;
-	////enum ValueType:
-	////	PURE | BOOL | UNSIGNED | INTEGER | DOUBLE | HOST
-	////;
-	public InnerActionElements getInnerActionAccess() {
-		return (pInnerAction != null) ? pInnerAction : (pInnerAction = new InnerActionElements());
-	}
-	
-	public ParserRule getInnerActionRule() {
-		return getInnerActionAccess().getRule();
-	}
-
-	//Transition:
-	//  sourceStateName=ID? transitionType=TransitionType (targetStateName=ID|
-	//  declaredTargetState=declaredTargetState) ("with" transitionLabel=[Action])?;  
-	//
-	////ValuedObject:
-	////	Signal | Variable
-	////;
-	////Signal:
-	////	(isLocal?='local')? (isInput?='input')? (isOutput?='output')?
-	////	type=ValueType name=ID (':=' initialValue=ID)? 
-	////	//combineOperator=CombineOperator 
-	////;
-	//////enum CombineOperator :
-	//////NONE='none' | ADD='add' | MULT='mult' | HOST='host'
-	//////;
-	////Variable:
-	////	type=ValueType name=ID (':=' initialValue=ID)? 
-	////;
-	////enum ValueType:
-	////	PURE | BOOL | UNSIGNED | INTEGER | DOUBLE | HOST
-	////;	
-	//
-	//	 
-	//	 
-	//	      
-	//	  
-	////			(isHistory?='history')?
-	////			
-	////		( 	(delay=INT) (trigger=ID)
-	//////		|	(delay=INT) ('/'effects+=ID)				
-	////		| 	(delay=INT) (trigger=ID)('/'effects+=ID)
-	////		|	(isImmediate?='#') (trigger=ID)? ('/'effects+=ID)?
-	////		|   ((trigger=ID) | ('/'effects+=ID))
-	////		| 	(trigger=ID) ('/'effects+=ID)
-	////		)	
-	////)?
-	public TransitionElements getTransitionAccess() {
-		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
-	}
-	
-	public ParserRule getTransitionRule() {
-		return getTransitionAccess().getRule();
-	}
-
-	//enum TransitionType:
-	//  STRONGABORT="o->" | WEAKABORT="-->" | NORMALTERMINATION=">->";
-	public TransitionTypeElements getTransitionTypeAccess() {
-		return (unknownRuleTransitionType != null) ? unknownRuleTransitionType : (unknownRuleTransitionType = new TransitionTypeElements());
-	}
-	
-	public EnumRule getTransitionTypeRule() {
-		return getTransitionTypeAccess().getRule();
-	}
-
-	//declaredTargetState returns State:
-	//  isInitial?="init"? isFinal?="final"? "state" declaredStateType=StateType?
-	//  declaredStateName=ID; 	
-	//    
-	//	     
-	//	  
-	//
-	//
-	////=======================================================================================================//
-	public DeclaredTargetStateElements getDeclaredTargetStateAccess() {
-		return (pDeclaredTargetState != null) ? pDeclaredTargetState : (pDeclaredTargetState = new DeclaredTargetStateElements());
-	}
-	
-	public ParserRule getDeclaredTargetStateRule() {
-		return getDeclaredTargetStateAccess().getRule();
-	}
-
-	//Action:
-	//  trigger=PrimaryExpression? ("/" effects+=Effect*)?; 
-	//
-	////=======================================================================================================//
-	//  
-	//	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
-	public ActionElements getActionAccess() {
-		return (pAction != null) ? pAction : (pAction = new ActionElements());
-	}
-	
-	public ParserRule getActionRule() {
-		return getActionAccess().getRule();
-	}
-
-	//Effect:
-	//  Emission|Assignment|HostCode;
-	public EffectElements getEffectAccess() {
-		return (pEffect != null) ? pEffect : (pEffect = new EffectElements());
-	}
-	
-	public ParserRule getEffectRule() {
-		return getEffectAccess().getRule();
-	}
-
-	//Emission:
-	//  signal=[Signal] ("(" newValue=PrimaryExpression ")")?;
-	public EmissionElements getEmissionAccess() {
-		return (pEmission != null) ? pEmission : (pEmission = new EmissionElements());
-	}
-	
-	public ParserRule getEmissionRule() {
-		return getEmissionAccess().getRule();
-	}
-
-	//Assignment:
-	//  variable=[Variable] ":=" expression=PrimaryExpression;
-	public AssignmentElements getAssignmentAccess() {
-		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
-	}
-	
-	public ParserRule getAssignmentRule() {
-		return getAssignmentAccess().getRule();
-	}
-
-	//SignalReference:
-	//  reference=[Signal];
-	public SignalReferenceElements getSignalReferenceAccess() {
-		return (pSignalReference != null) ? pSignalReference : (pSignalReference = new SignalReferenceElements());
-	}
-	
-	public ParserRule getSignalReferenceRule() {
-		return getSignalReferenceAccess().getRule();
-	}
-
-	//VariableReference:
-	//  reference=[Variable];
-	public VariableReferenceElements getVariableReferenceAccess() {
-		return (pVariableReference != null) ? pVariableReference : (pVariableReference = new VariableReferenceElements());
-	}
-	
-	public ParserRule getVariableReferenceRule() {
-		return getVariableReferenceAccess().getRule();
-	}
-
-	//ValuedObject:
-	//  Signal|Variable;
-	public ValuedObjectElements getValuedObjectAccess() {
-		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
-	}
-	
-	public ParserRule getValuedObjectRule() {
-		return getValuedObjectAccess().getRule();
-	}
-
-	//Signal:
-	//  "input" name=ID (":=" initialValue=ID)? ";";
-	public SignalElements getSignalAccess() {
-		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
-	}
-	
-	public ParserRule getSignalRule() {
-		return getSignalAccess().getRule();
-	}
-
-	//Variable:
-	//  "var" name=ID (":=" initialValue=ID)? ";";
-	public VariableElements getVariableAccess() {
-		return (pVariable != null) ? pVariable : (pVariable = new VariableElements());
-	}
-	
-	public ParserRule getVariableRule() {
-		return getVariableAccess().getRule();
-	}
-
-	//IntValue:
-	//  value=INT;
-	public IntValueElements getIntValueAccess() {
-		return (pIntValue != null) ? pIntValue : (pIntValue = new IntValueElements());
-	}
-	
-	public ParserRule getIntValueRule() {
-		return getIntValueAccess().getRule();
-	}
-
-	//FloatValue:
-	//  value=Float;
-	public FloatValueElements getFloatValueAccess() {
-		return (pFloatValue != null) ? pFloatValue : (pFloatValue = new FloatValueElements());
-	}
-	
-	public ParserRule getFloatValueRule() {
-		return getFloatValueAccess().getRule();
-	}
-
-	//BooleanValue:
-	//  value=Boolean;
-	public BooleanValueElements getBooleanValueAccess() {
-		return (pBooleanValue != null) ? pBooleanValue : (pBooleanValue = new BooleanValueElements());
-	}
-	
-	public ParserRule getBooleanValueRule() {
-		return getBooleanValueAccess().getRule();
-	}
-
-	//Value:
-	//  IntValue|FloatValue|BooleanValue; 
-	//
-	//	        
-	//
-	//// make sure the Float rule does not shadow the built-in INT rule
-	public ValueElements getValueAccess() {
-		return (pValue != null) ? pValue : (pValue = new ValueElements());
-	}
-	
-	public ParserRule getValueRule() {
-		return getValueAccess().getRule();
-	}
-
-	//terminal Float returns ecore::EDouble:
-	//  (INT "." INT | INT ("." INT)? ("e" | "E") ("-" | "+")? INT) "f"? | INT "f"; 
-	//
-	//// make sure the Float rule does not shadow the built-in INT rule
-	public TerminalRule getFloatRule() {
-		return (tFloat != null) ? tFloat : (tFloat = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Float"));
-	} 
-
-	//terminal Boolean returns ecore::EBoolean:
-	//  "true" | "false";
-	public TerminalRule getBooleanRule() {
-		return (tBoolean != null) ? tBoolean : (tBoolean = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Boolean"));
-	} 
-
-	//HostCode:
-	//  code=STRING; 
-	//
-	//
-	//	//"'"code=STRING"'";
-	//	 //("(" type=ID ")")?
-	public HostCodeElements getHostCodeAccess() {
-		return (pHostCode != null) ? pHostCode : (pHostCode = new HostCodeElements());
-	}
-	
-	public ParserRule getHostCodeRule() {
-		return getHostCodeAccess().getRule();
-	}
-
-	//Operator:
-	//  operatorKind=OperatorKind;
-	public OperatorElements getOperatorAccess() {
-		return (pOperator != null) ? pOperator : (pOperator = new OperatorElements());
-	}
-	
-	public ParserRule getOperatorRule() {
-		return getOperatorAccess().getRule();
-	}
-
-	//ValOperation returns Expression:
-	//  operator=ValOperator subExpressions+=SignalReference;
-	public ValOperationElements getValOperationAccess() {
-		return (pValOperation != null) ? pValOperation : (pValOperation = new ValOperationElements());
-	}
-	
-	public ParserRule getValOperationRule() {
-		return getValOperationAccess().getRule();
-	}
-
-	//ValueExpression returns Expression:
-	//  IntValue|FloatValue|ValOperation|VariableReference;
-	public ValueExpressionElements getValueExpressionAccess() {
-		return (pValueExpression != null) ? pValueExpression : (pValueExpression = new ValueExpressionElements());
-	}
-	
-	public ParserRule getValueExpressionRule() {
-		return getValueExpressionAccess().getRule();
-	}
-
-	//CompareOperation returns Expression:
-	//  ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator
-	//  subExpressions+=ValueExpression);
-	public CompareOperationElements getCompareOperationAccess() {
-		return (pCompareOperation != null) ? pCompareOperation : (pCompareOperation = new CompareOperationElements());
-	}
-	
-	public ParserRule getCompareOperationRule() {
-		return getCompareOperationAccess().getRule();
-	}
-
-	//NotOperation returns Operations:
-	//  operators=NotOperator subExpressions+=BooleanExpression;
-	public NotOperationElements getNotOperationAccess() {
-		return (pNotOperation != null) ? pNotOperation : (pNotOperation = new NotOperationElements());
-	}
-	
-	public ParserRule getNotOperationRule() {
-		return getNotOperationAccess().getRule();
-	}
-
-	//NotOrNormalExpression returns Expression:
-	//  NotOperation|BooleanExpression;
-	public NotOrNormalExpressionElements getNotOrNormalExpressionAccess() {
-		return (pNotOrNormalExpression != null) ? pNotOrNormalExpression : (pNotOrNormalExpression = new NotOrNormalExpressionElements());
-	}
-	
-	public ParserRule getNotOrNormalExpressionRule() {
-		return getNotOrNormalExpressionAccess().getRule();
-	}
-
-	//AndOperation returns Expression:
-	//  NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd
-	//  subExpression+=NotOrNormalExpression)*;
-	public AndOperationElements getAndOperationAccess() {
-		return (pAndOperation != null) ? pAndOperation : (pAndOperation = new AndOperationElements());
-	}
-	
-	public ParserRule getAndOperationRule() {
-		return getAndOperationAccess().getRule();
-	}
-
-	//OrOperation returns Expression:
-	//  AndOperation ({Operation.subExpressions+=current} operator=OperatorOr
-	//  subExpressions+=AndOperation)*; 
-	//
-	//    
-	//	      
-	//
-	//// TODO: get rid of parentheses
-	public OrOperationElements getOrOperationAccess() {
-		return (pOrOperation != null) ? pOrOperation : (pOrOperation = new OrOperationElements());
-	}
-	
-	public ParserRule getOrOperationRule() {
-		return getOrOperationAccess().getRule();
-	}
-
-	//BooleanExpression returns Expression:
-	//  BooleanValue|SignalReference|CompareOperation|"(" OrOperation ")"; 
-	//
-	//// TODO: get rid of parentheses
-	public BooleanExpressionElements getBooleanExpressionAccess() {
-		return (pBooleanExpression != null) ? pBooleanExpression : (pBooleanExpression = new BooleanExpressionElements());
-	}
-	
-	public ParserRule getBooleanExpressionRule() {
-		return getBooleanExpressionAccess().getRule();
-	}
-
-	//PrimaryExpression returns Expression:
-	//  BooleanExpression; 
-	//
-	//    
-	//	//ValueExpression | BooleanExpression;
-	public PrimaryExpressionElements getPrimaryExpressionAccess() {
-		return (pPrimaryExpression != null) ? pPrimaryExpression : (pPrimaryExpression = new PrimaryExpressionElements());
-	}
-	
-	public ParserRule getPrimaryExpressionRule() {
-		return getPrimaryExpressionAccess().getRule();
-	}
-
-	//enum OperatorKind:
-	//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | AND="and" | OR="or" | ADD="+" | SUB=
-	//  "-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre";
-	public OperatorKindElements getOperatorKindAccess() {
-		return (unknownRuleOperatorKind != null) ? unknownRuleOperatorKind : (unknownRuleOperatorKind = new OperatorKindElements());
-	}
-	
-	public EnumRule getOperatorKindRule() {
-		return getOperatorKindAccess().getRule();
-	}
-
-	//enum ValOperator returns OperatorKind:
-	//  VAL="?";
-	public ValOperatorElements getValOperatorAccess() {
-		return (unknownRuleValOperator != null) ? unknownRuleValOperator : (unknownRuleValOperator = new ValOperatorElements());
-	}
-	
-	public EnumRule getValOperatorRule() {
-		return getValOperatorAccess().getRule();
-	}
-
-	//enum CompareOperator returns OperatorKind:
-	//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
-	public CompareOperatorElements getCompareOperatorAccess() {
-		return (unknownRuleCompareOperator != null) ? unknownRuleCompareOperator : (unknownRuleCompareOperator = new CompareOperatorElements());
-	}
-	
-	public EnumRule getCompareOperatorRule() {
-		return getCompareOperatorAccess().getRule();
-	}
-
-	//enum NotOperator returns OperatorKind:
-	//  NOT="not";
-	public NotOperatorElements getNotOperatorAccess() {
-		return (unknownRuleNotOperator != null) ? unknownRuleNotOperator : (unknownRuleNotOperator = new NotOperatorElements());
-	}
-	
-	public EnumRule getNotOperatorRule() {
-		return getNotOperatorAccess().getRule();
-	}
-
-	//enum OperatorOr returns OperatorKind:
-	//  OR="or";
-	public OperatorOrElements getOperatorOrAccess() {
-		return (unknownRuleOperatorOr != null) ? unknownRuleOperatorOr : (unknownRuleOperatorOr = new OperatorOrElements());
-	}
-	
-	public EnumRule getOperatorOrRule() {
-		return getOperatorOrAccess().getRule();
-	}
-
-	//enum OperatorAnd returns OperatorKind:
-	//  AND="and";
-	public OperatorAndElements getOperatorAndAccess() {
-		return (unknownRuleOperatorAnd != null) ? unknownRuleOperatorAnd : (unknownRuleOperatorAnd = new OperatorAndElements());
-	}
-	
-	public EnumRule getOperatorAndRule() {
-		return getOperatorAndAccess().getRule();
 	}
 
 	//terminal ID:
