@@ -47,7 +47,9 @@ import de.cau.cs.kieler.sim.kiem.views.KiemView;
 /**
  * This activator class controls the life cycle of the KiemPlugin.
  * It also provides the access to the one and only instance of this
- * class and hence a way to access the execution thread.
+ * class and hence a way to access the execution thread. For the 
+ * execution thread it allows to access the KiemView for updating
+ * or refreshing the table or the step information text field.
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
@@ -55,36 +57,36 @@ import de.cau.cs.kieler.sim.kiem.views.KiemView;
 public class KiemPlugin extends AbstractUIPlugin {
 
 	/** The Constant AIMED_STEP_DURATION_DEFAULT. 
-	 * Default value of the AimedStepDuration text field in ms */
+	 * Default value of the AimedStepDuration text field in ms. */
 	public static final int AIMED_STEP_DURATION_DEFAULT = 500;
 	
 	/** The Constant AIMED_STEP_DURATION_MIN. 
-	 * Minimum value of the AimedStepDuration text field in ms */
+	 * Minimum value of the AimedStepDuration text field in ms. */
 	public static final int AIMED_STEP_DURATION_MIN = 1;
 	
 	/** The Constant AIMED_STEP_DURATION_MAX. 
-	 * Maximum value of the AimedStepDuration text field in ms */
+	 * Maximum value of the AimedStepDuration text field in ms. */
 	public static final int AIMED_STEP_DURATION_MAX = 3600000;
 	
 	/** The Constant PLUGIN_ID. */
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem";
 
-	/** The shared instance */
+	/** The shared instance. */
 	private static KiemPlugin plugin;
 	
-	/** List of available dataProducers and dataObservers */
+	/** List of available dataProducers and dataObservers. */
 	private List<DataComponent> dataComponentList;
 	
-	/** List of selected dataComponentEx's (modified by KiemView) */
+	/** List of selected dataComponentEx's (modified by KiemView). */
 	private List<DataComponentEx> dataComponentExList;
 	
-	/** Execution object */
+	/** Execution object. */
 	public Execution execution;
 	
-	/** Execution thread */
+	/** Execution thread. */
 	public Thread executionThread;
 	
-	/** Current value of the aimed step duration in ms */
+	/** Current value of the aimed step duration in ms. */
 	private int aimedStepDuration;
 	
 	/** The KIEM view instance. */
@@ -95,8 +97,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 	/**
 	 * The constructor if the KIEM plug-in. A default DataComponentExList is
 	 * created. It contains all DataComponents in the default order
-	 * (@see #getDefaultComponentExList()). The execution is null by default.
-	 * The KIEMViewInstance is set, in the constructor of the
+	 * ({@link #getDefaultComponentExList()}). The execution is null by default.
+	 * The KIEMViewInstance is set, in the constructor of the.
+	 * 
 	 * @see de.cau.cs.kieler.sim.kiem.views.KiemView
 	 */
 	public KiemPlugin() {
@@ -144,7 +147,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Updates the view of the KiemView table asynchronously.
+	 * Updates the view of the KiemView table asynchronously. This method is
+	 * used to update the KiemView table from within the execution thread.
 	 */
 	public void updateViewAsync() {
 		if (this.KIEMViewInstance != null) {
@@ -154,7 +158,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 	}
 	
 	/**
-	 * Updates the steps in the Step text field asynchronously.
+	 * Updates the steps in the Step text field asynchronously. This method is 
+	 * used to update the KiemView steps from within the execution thread.
 	 */
 	public void updateStepsAsync() {
 		if (this.KIEMViewInstance != null) {
@@ -168,7 +173,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 	/**
 	 * Sets the view focus to the KiemView instance. This method is called by
 	 * the AimedStepDuration text field if the used wants to leave its focus
-	 * by pressing <ENTER>.
+	 * by pressing [ENTER].
 	 */
 	public void setViewFocus() {
 		if (this.KIEMViewInstance != null) {
@@ -241,9 +246,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 	
 	/**
 	 * This initializes the DataComponentList with all registered and loaded
-	 * plug-ins that extend the following two extension points:
-	 * @see de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent
-	 * @see de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent
+	 * plug-ins that extend the following two extension points:<BR>
+	 * - {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent}<BR>
+	 * - {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent}<BR>
 	 * If a DataComponent is registered but cannot be instantiated because
 	 * of an error this will result in a warning only so that all other
 	 * fully functional DataComponents are still loaded. This method remembers
@@ -314,13 +319,14 @@ public class KiemPlugin extends AbstractUIPlugin {
 	/**
 	 * Initializes the Execution. This is one of the heart-methods of this 
 	 * plug-in. It does the following tasks:
-	 * (1) Check if there are any (enabled) DataProducers or DataConsumers.
-	 * (2) Check if all DataComponent's properties are set correctly
-	 * (3) Grab all interface variables provided by the DataComponents.
-	 * (4) Distribute the union of all the variables to all DataComponents.
-	 * (5) Initialize the DataComponents
-	 * (6) Create an run the Execution thread
-	 * 
+	 * <BR><BR>
+	 * (1) Check if there are any (enabled) DataProducers or DataConsumers.<BR>
+	 * (2) Check if all DataComponent's properties are set correctly<BR>
+	 * (3) Grab all interface variables provided by the DataComponents.<BR>
+	 * (4) Distribute the union of all the variables to all DataComponents.<BR>
+	 * (5) Initialize the DataComponents<BR>
+	 * (6) Create an run the Execution thread<BR>
+	 * <BR>
 	 * This method returns true if the execution is successfully initialized
 	 * or if the execution thread already exists, hence the {@link #execution}
 	 * is not null.
@@ -423,8 +429,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Add a DataComponent instance to the DataComponentExList 
-	 * (@see #dataComponentExList).
+	 * Add a DataComponent instance to the {@link #dataComponentExList}.
 	 * This will clone the DataComponent and add an executable extension. It
 	 * then creates a new DataComponentEx instance that encapsulates the just
 	 * created DataComponent (and offers additional information and methods). 
@@ -453,12 +458,12 @@ public class KiemPlugin extends AbstractUIPlugin {
 	
 	/**
 	 * Returns the default ComponentExList. This will contain all registered
-	 * DataComponents that extend one the following extension points:
-	 * @see de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent
-	 * @see de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent
+	 * DataComponents that extend one the following extension points:<BR>
+	 * - {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent}<BR>
+	 * - {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent}<BR>
 	 * They will be ordered in the "natural" way, meaning that the (pure)
-	 * DataProducers are scheduled before the DataObserver&Producers which
-	 * are themselves scheduled before the (pure) DataObservers.
+	 * data producers are scheduled before the data observer & producers which
+	 * are themselves scheduled before the (pure) data observers.
 	 * Although DataComponents may be multiple instantiable, by default, there
 	 * will be exactly one instance per DataComponent in the list.
 	 * 
@@ -477,7 +482,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 				returnList.add(dataComponentEx);
 			}
 		}
-		//then add Observer & producer
+		//then add observer & producer
 		for (int c = 0; c < list.size(); c ++) {
 			DataComponent dataComponent = (DataComponent)list.get(c);
 			DataComponentEx dataComponentEx = 
@@ -486,7 +491,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 				returnList.add(dataComponentEx);
 			}
 		}
-		//then add pure Observer
+		//then add pure observer
 		for (int c = 0; c < list.size(); c ++) {
 			DataComponent dataComponent = (DataComponent)list.get(c);
 			DataComponentEx dataComponentEx = 
@@ -505,9 +510,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 	 * plug-in directly. Any modification on this list is persistent in this
 	 * one and only plug-in instance. The DataComponentExList holds a list 
 	 * of DataComponents, selected from all registered (and loaded) plug-ins
-	 * that extend the following extension points:
-	 * @see de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent
-	 * @see de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent
+	 * that extend the following extension points:<BR>
+	 * - {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent}<BR>
+	 * - {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent}<BR>
 	 * 
 	 * @return the DataComponentExList
 	 */
@@ -520,10 +525,10 @@ public class KiemPlugin extends AbstractUIPlugin {
 	/**
 	 * This method handles errors or warnings within the execution of
 	 * DataComponents. It specifically handles the following two types
-	 * or errors:
-	 * - @see de.cau.cs.kieler.sim.kiem.execution.KiemExecutionException
-	 * - @see de.cau.cs.kieler.sim.kiem.execution.KiemInitializationException
-	 * If the mustStop flag is set, then the execution is immediately stoped.
+	 * or errors:<BR>
+	 * - {@link de.cau.cs.kieler.sim.kiem.execution.KiemExecutionException}<BR>
+	 * - {@link de.cau.cs.kieler.sim.kiem.execution.KiemInitializationException}<BR>
+	 * If the mustStop flag is set, then the execution is immediately stopped.
 	 * Note that all threads will be advised to stop in the
 	 * {@link de.cau.cs.kieler.sim.kiem.execution.Execution#errorTerminate()}
 	 * method. But there is no guarantee that they really stop. The links to
@@ -531,19 +536,19 @@ public class KiemPlugin extends AbstractUIPlugin {
 	 * zombie threads.
 	 * 
 	 * @param dataComponent the DataComponent that caused the error or warning
-	 * @param e the Exception if any, or null
+	 * @param exception the Exception if any, or null
 	 */
 	public void handleComponentError(DataComponent dataComponent,
-									 Exception e) {
+									 Exception exception) {
 		
 		boolean mustStop = false; 
 		
 		//check if mustStop flag is set
-		if (e instanceof KiemExecutionException) {
-			mustStop = ((KiemExecutionException)e).isMustStop();
+		if (exception instanceof KiemExecutionException) {
+			mustStop = ((KiemExecutionException)exception).isMustStop();
 		}
-		else if (e instanceof KiemInitializationException) {
-			mustStop = ((KiemInitializationException)e).isMustStop();
+		else if (exception instanceof KiemInitializationException) {
+			mustStop = ((KiemInitializationException)exception).isMustStop();
 		}
 		
 		//show error or warning message dialog
@@ -552,12 +557,12 @@ public class KiemPlugin extends AbstractUIPlugin {
 			KiemPlugin.getDefault().execution.errorTerminate();
 			//then show modal error dialog
 			KiemPlugin.getDefault().showError(
-					null, dataComponent.getPluginId(), e);
+					null, dataComponent.getPluginId(), exception);
 		}
 		else {
 			//show non modal warning dialog
 			KiemPlugin.getDefault().showWarning(
-					null, dataComponent.getPluginId(), e);
+					null, dataComponent.getPluginId(), exception);
 		}
 		
 	}
@@ -567,7 +572,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 	/**
 	 * Shows a warning dialog using the StatusAdapter. This dialog will *NOT*
 	 * be modal, so that the user is notified but the current work is 
-	 * not interrupted. 
+	 * not interrupted. <BR>
 	 * Additionally the information will be logged in the error log so that
 	 * the user has the opportunity to e.g., access the error stack trace. 
 	 * The plug-in id is required, textMessage and exception are optional.

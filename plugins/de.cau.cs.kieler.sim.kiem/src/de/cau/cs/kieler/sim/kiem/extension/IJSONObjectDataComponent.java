@@ -30,14 +30,14 @@ public interface IJSONObjectDataComponent  {
 	
 	/**
 	 * Step method for a DataObserver and a DataPrroducer.
-	 * 
+	 * <BR><BR>
 	 * For a producer only the argument will always be null.
 	 * For an observer only this method will be called asynchronous. This
 	 * may mean that in case the observer is slow, it may be skipped at
 	 * some consecutive steps until it becomes ready again. If this is
-	 * not desired and the observer *MUST NOT* be skipped, then the 
+	 * not desired and the observer <B>MUST NOT</B> be skipped, then the 
 	 * DataComponent should also be a DataProducer but return just null.
-	 * 
+	 * <BR><BR>
 	 * If an error occurs during the execution of the step method, a
 	 * DataComponent should raise a {@link KiemExecutionException} that is
 	 * then catched by the execution manager an brought to the user's 
@@ -47,7 +47,7 @@ public interface IJSONObjectDataComponent  {
 	 * 
 	 * @return the JSONObject with the output data (if producer)
 	 * 
-	 * @throws KiemExecutionException the kiem execution exception
+	 * @throws KiemExecutionException a KiemExecutionException
 	 */
 	public JSONObject step(JSONObject JSONobject)
 										throws KiemExecutionException;

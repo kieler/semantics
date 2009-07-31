@@ -448,7 +448,7 @@ public class Execution implements Runnable {
 	
 	/**
 	 * Stops the execution. In this case the stop flag is immediately set so
-	 * that no further step is made. The data components are then beeing
+	 * that no further step is made. The data components are then being
 	 * informed about the stop command. For safety reasons we again set
 	 * the stop flag in synchronized monitor of this object and then
 	 * stop all worker threads that where started. The latter includes the
@@ -611,7 +611,7 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Wrapup components after execution was stopped.
+	 * Wrap-up components after execution was stopped.
 	 */
 	public synchronized void wrapupComponents() {
 		for(int c = 0; c < this.dataComponentExList.size(); c++) {
@@ -767,7 +767,7 @@ public class Execution implements Runnable {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Checks all DataComponents for a pause flag. If any pase flag is found,
+	 * Checks all DataComponents for a pause flag. If any pause flag is found,
 	 * this leads to a paused execution.
 	 */
 	private void checkForPauseFlag() {

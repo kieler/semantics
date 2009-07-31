@@ -25,15 +25,15 @@ import de.cau.cs.kieler.sim.kiem.json.*;
  * The Class ProducerExecution. This implements the behavior of a producer
  * worker thread that operates on one dedicated DataComponenet that is
  * a pure producer.
- * 
+ * <BR><BR>
  * A producer needs no input data and hence is called in the beginning of 
  * a step so that it has the maximum time to concurrently compute its
  * results.
- * 
+ * <BR><BR>
  * If a {@link #blockingStep()} is scheduled then the producer worker 
  * thread is awaked and can start to compute data. When the method
  * {@link #blockingWaitUntilDone()} is called, then this blocks until
- * the data is computed. 
+ * the data is computed. <BR>
  * Note that this could also trigger a time out in the execution thread.
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
@@ -77,10 +77,10 @@ public class ProducerExecution implements Runnable {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Schedule a (blocking) step. T
-	 * this will awake the execution ({@link #blockingWaitUntilDone()})
-	 * AND the waiting producer thread  but only the producer thread
-	 * will proceed, cause done is guaranteed to be false!
+	 * Schedule a (blocking) step. This will awake the execution
+	 * ({@link #blockingWaitUntilDone()}) <B>AND</B> the waiting producer
+	 * thread  but only the producer thread will proceed, cause done is guaranteed
+	 * to be false!<BR>
 	 * The execution will fall asleep until the producer has finished
 	 * doing its step.
 	 */

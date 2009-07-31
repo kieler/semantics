@@ -29,11 +29,12 @@ public class KiemMasterException extends Exception {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Instantiates a new kiem master exception.
+	 * Instantiates a new KiemMasterException.
 	 * 
 	 * @param message the message of this Exception to display to the user
 	 */
 	public KiemMasterException(String message) {
 		super(message);
 	}
+	
 }

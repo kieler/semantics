@@ -29,7 +29,7 @@ public abstract class JSONObjectDataComponent
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Instantiates a new jSON object data component.
+	 * Instantiates a new JSONObjectDataComponent.
 	 */
 	public JSONObjectDataComponent() {
 		super();

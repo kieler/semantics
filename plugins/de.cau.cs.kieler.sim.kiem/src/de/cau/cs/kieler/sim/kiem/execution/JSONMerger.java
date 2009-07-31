@@ -83,4 +83,5 @@ public class JSONMerger {
 	    }//end if there are fields to add
 	    return clone;
 	  }
+	  
 }

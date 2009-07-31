@@ -42,7 +42,7 @@ public class DataComponentEx {
 	/** The pool indices for history steps. */
 	private HashMap<Long,Long> poolIndices;
 	
-	/** The currently stored delta index */
+	/** The currently stored delta index. */
 	private long deltaIndex;
 	
 	/** The boolean json flag indicating a JSON capable DataComponent. */
@@ -158,7 +158,7 @@ public class DataComponentEx {
 	//------------------------------------------------------------------------- 
 
 	/**
-	 * Gets the delta index.  This is used for delta DataComponents only.
+	 * Gets the delta index. This is used for delta DataComponents only.
 	 * The delta index is the last pool index when this DataComponent as
 	 * an observer did not get skipped.
 	 * 
@@ -184,7 +184,7 @@ public class DataComponentEx {
 	//------------------------------------------------------------------------- 
 
 	/**
-	 * Checks whether the DataComponent is a producer *AND* an observer at the
+	 * Checks whether the DataComponent is a producer <B>AND</B> an observer at the
 	 * same time.
 	 * 
 	 * @return true, if it is a producer and an observer
@@ -260,7 +260,7 @@ public class DataComponentEx {
 
 	/**
 	 * Gets the filter keys if the DataComponent provides any or null if it
-	 * is an observer and wants *ALL* complete data.
+	 * is an observer and wants <B>ALL</B> complete data.
 	 * 
 	 * @return the filter keys
 	 * 

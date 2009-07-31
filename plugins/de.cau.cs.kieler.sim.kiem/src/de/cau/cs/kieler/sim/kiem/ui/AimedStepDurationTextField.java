@@ -36,13 +36,13 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 public class AimedStepDurationTextField extends ControlContribution implements KeyListener,
 																   FocusListener{
 
-	/** The SWT textfield. */
+	/** The SWT text field. */
 	Text textfield;
 	
 	/** A reference to to the KIEM plug-in for triggering refreshes. */
 	private KiemPlugin KIEM;
 	
-	/** Indicates if the textfield is currently enabled. */
+	/** Indicates if the text field is currently enabled. */
 	boolean enabled;
 
 	//-------------------------------------------------------------------------
@@ -140,7 +140,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	 * Updates the step duration. This methods also checks the bounds and it 
 	 * checks if a valid integer has been entered. In case the bounds are not
 	 * met or the user entered an invalid integer number, the duration is
-	 * not updated and the textfield is set back to the initial value.
+	 * not updated and the text field is set back to the initial value.
 
 	 */
 	private void updateDuration(){

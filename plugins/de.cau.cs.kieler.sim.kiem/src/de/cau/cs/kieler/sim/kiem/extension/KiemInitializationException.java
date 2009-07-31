@@ -19,7 +19,7 @@ package de.cau.cs.kieler.sim.kiem.extension;
  * DataComponents to flag errors within their initialization() and their
  * wrapup() method during the initialization and wrap-up phase. 
  * If the {@link #mustStop} flag is set to true, then this means 
- * the execution *CANNOT* been started and the execution manager will
+ * the execution <B>CANNOT</B> been started and the execution manager will
  * not do so if any DataComponent throws an error with this flag.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
@@ -38,7 +38,7 @@ public class KiemInitializationException extends Exception {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Instantiates a new kiem initialization exception.
+	 * Instantiates a new KiemInitializationException.
 	 * 
 	 * @param message the message of this Exception to display to the user
 	 * @param mustStop the must stop flag indicating if the execution must stop

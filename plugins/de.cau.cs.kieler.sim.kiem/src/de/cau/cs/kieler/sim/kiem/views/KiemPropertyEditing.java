@@ -40,7 +40,7 @@ public class KiemPropertyEditing extends EditingSupport {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Instantiates a new Kiem property editing for the tree. KiemProperty 
+	 * Instantiates a new KiemPropertyEditing for the tree. KiemProperty 
 	 * values are in the second column (index 1) of the tree-table of 
 	 * DataComponentExs where the first column (index 0) holds the KiemProperty
 	 * key. Hence editing support for KiemProperties is only available for the

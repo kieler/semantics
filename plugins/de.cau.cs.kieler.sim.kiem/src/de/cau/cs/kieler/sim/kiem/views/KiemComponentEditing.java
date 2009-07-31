@@ -45,7 +45,7 @@ public class KiemComponentEditing extends EditingSupport {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Instantiates a new kiem component editing. This is only used in the
+	 * Instantiates a new KiemComponentEditing. This is only used in the
 	 * third column where the check-box for enabling or disabling a
 	 * DataComponent exists. For other columns this method generates an error.
 	 * 
@@ -73,6 +73,9 @@ public class KiemComponentEditing extends EditingSupport {
 
 	//-------------------------------------------------------------------------
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
+	 */
 	@Override
 	protected boolean canEdit(Object element) {
 		//do not allow to modify enabled/disabled status during execution
@@ -83,6 +86,9 @@ public class KiemComponentEditing extends EditingSupport {
 
 	//-------------------------------------------------------------------------
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.EditingSupport#getCellEditor(java.lang.Object)
+	 */
 	@Override
 	protected CellEditor getCellEditor(Object element) {
 		//return the registered cell editor 
@@ -91,6 +97,9 @@ public class KiemComponentEditing extends EditingSupport {
 	
 	//-------------------------------------------------------------------------
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
+	 */
 	@Override
 	protected Object getValue(Object element) {
 		if (!(element instanceof DataComponentEx)) return null;
@@ -109,6 +118,9 @@ public class KiemComponentEditing extends EditingSupport {
 	
 	//-------------------------------------------------------------------------
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.EditingSupport#setValue(java.lang.Object, java.lang.Object)
+	 */
 	@Override
 	protected void setValue(Object element, Object value) {
 		if (!(element instanceof DataComponentEx)) return;

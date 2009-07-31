@@ -22,21 +22,21 @@ import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
  * by DataComponents during the execution. An instance of this class is designed
  * to run in a concurrent worker thread. Whenever the timeout method is called
  * the timeout is activated. 
- * 
+ * <BR><BR>
  * There are two possibilities to stop or deactivate
- * the timeout when the component finished in time:
+ * the timeout when the component finished in time:<BR>
  * 1. set another new timeout by calling {@link #timeout(int, String, DataComponentEx, Execution)}
- * again.
- * 2. reset the timeout by calling {@link #abortTimeout()}.
- * 
+ * again.<BR>
+ * 2. reset the timeout by calling {@link #abortTimeout()}.<BR>
+ * <BR><BR>
  * When a timeout is triggered then an error message is generated and the 
  * execution is stopped immediately. Note that the execution manager only tries
  * to stop all concurrent threads but cannot guarantee that they really terminate
  * in the end.
- * 
+ * <BR><BR>
  * If a timeout is triggered and the execution is stopped, the timeout thread
  * itself also terminates.
- * 
+ * <BR><BR>
  * A timeout must be at least 100ms (reasonable).
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de

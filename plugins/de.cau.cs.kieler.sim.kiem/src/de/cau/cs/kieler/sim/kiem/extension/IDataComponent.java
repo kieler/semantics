@@ -29,18 +29,18 @@ public interface IDataComponent {
 	 * occurs during initialization, the DataComponent should raise a
 	 * {@link KiemInitializationException}.
 	 * 
-	 * @throws KiemInitializationException the kiem initialization exception
+	 * @throws KiemInitializationException a KiemInitializationException
 	 */
 	public void initialize() throws KiemInitializationException;
 	
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Wrapup. Do some wrapping-up after execution has finished. If an error
+	 * Wrap-up. Do some wrapping-up after execution has finished. If an error
 	 * occurs during wrap up, the DataComponent should raise a
 	 * {@link KiemInitializationException}.
 	 * 
-	 * @throws KiemInitializationException the kiem initialization exception
+	 * @throws KiemInitializationException a KiemInitializationException
 	 */
 	public void wrapup() throws KiemInitializationException;
 

@@ -25,11 +25,11 @@ import de.cau.cs.kieler.sim.kiem.json.*;
  * The Class ObserverExecution. This implements the behavior of an observer
  * worker thread that operates on one dedicated DataComponenet that is
  * a pure observer.
- * 
+ * <BR><BR>
  * An observer not needs to get finished during one execution step but may
  * be skipped when it not finishes until it should be called in a consecutive
  * execution step.
- * 
+ * <BR><BR>
  * It sleeps until it is called and indicates that it is ready for the next
  * step with its done flag. 
  *

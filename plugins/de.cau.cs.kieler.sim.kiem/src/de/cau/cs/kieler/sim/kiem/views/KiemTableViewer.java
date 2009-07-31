@@ -31,7 +31,7 @@ public class KiemTableViewer extends TreeViewer{
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Instantiates a new kiem table tree viewer.
+	 * Instantiates a new KiemTableViewer.
 	 * 
 	 * @param table the table to use as a basis
 	 */
@@ -42,7 +42,7 @@ public class KiemTableViewer extends TreeViewer{
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Instantiates a new kiem table tree viewer.
+	 * Instantiates a new KiemTableViewer.
 	 * 
 	 * @param parent the parent
 	 * @param style the style
@@ -54,7 +54,7 @@ public class KiemTableViewer extends TreeViewer{
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Instantiates a new kiem table tree viewer. Use the default style.
+	 * Instantiates a new KiemTableViewer. Use the default style.
 	 * 
 	 * @param parent the parent
 	 */

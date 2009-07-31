@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Text;
  */
 public class StepTextField extends ControlContribution {
 
-	/** The SWT textfield component. */
+	/** The SWT text field component. */
 	Text textfield;
 	
 	//-------------------------------------------------------------------------
@@ -59,9 +59,9 @@ public class StepTextField extends ControlContribution {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Update the contents (i.e., the # of steps) of the textfield.
+	 * Update the contents (i.e., the # of steps) of the text field.
 	 * 
-	 * @param text the text to display in the textfield
+	 * @param text the text to display in the text field
 	 */
 	public void updateTextfield(String text) {
 		if (text == null) {

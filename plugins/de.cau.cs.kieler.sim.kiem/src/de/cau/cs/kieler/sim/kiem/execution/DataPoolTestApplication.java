@@ -16,9 +16,9 @@ package de.cau.cs.kieler.sim.kiem.execution;
 
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class DataPoolTestApplication.
+ * The Class DataPoolTestApplication. It only exists for experimental use 
+ * debug and testing of the {@link JSONDataPool}.
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
@@ -26,14 +26,15 @@ import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 public class DataPoolTestApplication {
 
 	/**
-	 * The main method.
+	 * The main method. It creates some example data keys and puts the 
+	 * into the data pool. It then tries to get the data values back
+	 * from the pool using the different getData() variants.
 	 * 
 	 * @param args the args
 	 */
 	public static void main(String[] args) {
 		String[] filter = null;//{"key01","key03","key05","key07"};
 		
-		// TODO Auto-generated method stub
 		try {
 			JSONDataPool dataPool = new JSONDataPool();
 			//long index = dataPool.getPoolCounter();

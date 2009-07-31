@@ -17,7 +17,6 @@ package de.cau.cs.kieler.sim.kiem.data;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class KiemPropertyTypeInt. This implements a sample KiemPropertyType for
  * an integer type.

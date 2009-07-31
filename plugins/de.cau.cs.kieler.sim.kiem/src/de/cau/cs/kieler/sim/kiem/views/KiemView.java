@@ -355,7 +355,7 @@ public class KiemView extends ViewPart {
 	//-------------------------------------------------------------------------	
 
 	/**
-	 * Builds the context menu for the table
+	 * Builds the context menu for the table.
 	 * 
 	 * @param manager the manager
 	 */
@@ -370,9 +370,11 @@ public class KiemView extends ViewPart {
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
+	
+	//-------------------------------------------------------------------------
 		
 	/**
-	 * Builds the local tool bar for the Kiem View part.
+	 * Builds the local tool bar for the KiemView part.
 	 */
 	private void buildLocalToolBar() {
 		IActionBars bars = getViewSite().getActionBars();
@@ -403,6 +405,8 @@ public class KiemView extends ViewPart {
 	private void showMessage(String message) {
 		showMessage(Messages.ViewTitle,message);
 	}
+	
+	//-------------------------------------------------------------------------
 
 	/**
 	 * Show message dialog with the message and a specific title.
@@ -417,6 +421,8 @@ public class KiemView extends ViewPart {
 			message);
 	}
 	
+	//-------------------------------------------------------------------------
+	
 	/**
 	 * Show warning dialog with the message.
 	 * 
@@ -429,6 +435,8 @@ public class KiemView extends ViewPart {
 			message);
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
 	 * Show error dialog with the message.
 	 * 
@@ -482,10 +490,10 @@ public class KiemView extends ViewPart {
 	//-------------------------------------------------------------------------	
 
 	/**
-	 * Updates the enabled disabled status of the following actions:
-	 * - up
-	 * - down
-	 * - add
+	 * Updates the enabled disabled status of the following actions:<BR>
+	 * - up<BR>
+	 * - down<BR>
+	 * - add<BR>
 	 * - delete
 	 */
 	public void updateEnabledEnabledDisabledUpDownAddDelete() {
@@ -577,7 +585,7 @@ public class KiemView extends ViewPart {
 
 	/**
 	 * Updates the table view synchronously from within another thread
-	 * 
+	 * <BR><BR>
 	 * BE CAREFUL WITH USING THIS METHOD BECAUSE THIS COULD MORE EASILY 
 	 * PRODUCE DEADLOCKS 
 	 */
@@ -589,6 +597,8 @@ public class KiemView extends ViewPart {
 				    }
 		});
 	}
+	
+	//-------------------------------------------------------------------------
 
 	/**
 	 * Updates the table view asynchronously from within another thread 
@@ -601,6 +611,8 @@ public class KiemView extends ViewPart {
 				    }
 		});
 	}
+	
+	//-------------------------------------------------------------------------
 
 	/**
 	 * Updates steps in the steps text field asynchronously from
@@ -1149,7 +1161,7 @@ public class KiemView extends ViewPart {
 	/**
 	 * Gets action stop. Triggers the execution to stop.
 	 * If a master is present, the this functionality may be implemented
-	 * by him.
+	 * by him.<BR>
 	 * All collected timing data will be presented to the user and the 
 	 * execution is being released. A master will also have to do this.
 	 * 
@@ -1264,6 +1276,8 @@ public class KiemView extends ViewPart {
     public void checkForSingleEnabledMaster(boolean silent) {
 		checkForSingleEnabledMaster(silent,null); 
 	}
+    
+    //-------------------------------------------------------------------------
 	
 	/**
 	 * Check the current selection (enabled DataComponentExs) for a just a 

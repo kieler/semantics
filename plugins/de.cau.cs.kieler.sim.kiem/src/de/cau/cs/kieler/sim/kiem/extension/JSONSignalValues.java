@@ -18,24 +18,24 @@ import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
 /**
- * The Class JSONSignalValues. This is an implementation of a *CONVENTION*
+ * The Class JSONSignalValues. This is an implementation of a <B>CONVENTION</B>
  * for representing signal values in JSON format. This convention is used
  * to explicitly denote the presents/absents of pure and valued signals.
- * 
+ * <BR><BR>
  * Signals in JSON format should contain not just a value but a 
  * JSONSignalValue. That is they contain a JSONObject as their value, where
- * at least one parameter is called *present* and this parameter is of type
+ * at least one parameter is called <B>present</B> and this parameter is of type
  * boolean, indicating the presents or absents of a signal.
- * 
- * Examples:
- * 		Valued signal a, present, with an integer value of 10:
- * 			a:{present:true, value:10}
- * 		Valued signal a, absent, with a string value of "hello signal":
- * 			a:{present:false, value:"hello signal"}
- * 		Pure signal b, present
- * 			b:{present:true}
- * 		Pure signal b, absent
- * 			b:{present:absent}
+ * <BR><BR>
+ * Examples:<BR>
+ * 		Valued signal a, present, with an integer value of 10:<BR>
+ * 			a:{present:true, value:10}<BR>
+ * 		Valued signal a, absent, with a string value of "hello signal":<BR>
+ * 			a:{present:false, value:"hello signal"}<BR>
+ * 		Pure signal b, present<BR>
+ * 			b:{present:true}<BR>
+ * 		Pure signal b, absent<BR>
+ * 			b:{present:absent}<BR>
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 

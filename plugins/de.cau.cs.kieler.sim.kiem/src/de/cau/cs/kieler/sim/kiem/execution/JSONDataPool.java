@@ -22,7 +22,7 @@ import de.cau.cs.kieler.sim.kiem.json.*;
 /**
  * The Class JSONDataPool. It implements the "brain" of the execution manager
  * and provides the execution manager with delta data information for it's
- * delta observer DataComponents. This also affects the history steps.
+ * delta observer DataComponents. This also is necessary for the history steps.
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
@@ -35,7 +35,7 @@ public class JSONDataPool {
 	 * DATA_DELTA_POOL_HISTORY_MAX new entries been produced (regardless 
 	 * of any steps!) note that the dataDeltePool is needed for Delta 
 	 * Observer and for history steps only. */
-	private static final int DATA_DELTA_POOL_HISTORY_MAX = 100;
+	private static final int DATA_DELTA_POOL_HISTORY_MAX = 100000;
 	
 	/** The data delta pool. */
 	private List<JSONObject> dataDeltaPool;
@@ -82,7 +82,7 @@ public class JSONDataPool {
 	/**
 	 * Gets the most current data. This is the most efficient method to call
 	 * since it just returns the current data pool contents. But be aware of
-	 * the fact that the returned JSON object may have hundreds of values!
+	 * the fact that the returned JSON object may have hundreds of values.
 	 * 
 	 * @param filterKeys the filter keys, optional, may be null
 	 * @param deltaPoolIndexTo the delta pool index to
@@ -95,6 +95,8 @@ public class JSONDataPool {
 							  long deltaPoolIndexTo) throws JSONException {
 		return this.getDeltaData(filterKeys, -1, deltaPoolIndexTo);
 	}
+	
+	//-------------------------------------------------------------------------
 	
 	/**
 	 * Gets the data.
@@ -128,9 +130,9 @@ public class JSONDataPool {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Gets the pool start index from a provided deltaIndex. if teh deltaIndex
-	 * is FAR TOO old, then it will return ALL values accumulated within
-	 * index 0 of the delta list!
+	 * Gets the pool start index from a provided deltaIndex. if the deltaIndex
+	 * is FAR TOO old, then it will return <B>ALL</B> values accumulated within
+	 * index 0 of the delta list.
 	 * 
 	 * @param deltaIndex the delta index
 	 * 
@@ -165,6 +167,8 @@ public class JSONDataPool {
 			   	   deltaPoolIndexFrom,
 			   	   this.getPoolCounter());
 	}
+	
+	//-------------------------------------------------------------------------
 	
 	/**
 	 * Gets the delta data.
@@ -215,7 +219,7 @@ public class JSONDataPool {
 	 * Puts a new JSONObject into the data pool. It will also put the item
 	 * into the delta pool list. If the list gets too large (according to
 	 * DATA_DELTA_POOL_HISTORY_MAX) then we accumulate the history older
-	 * than that into the object with the index 0. This allowes us to play
+	 * than that into the object with the index 0. This allows us to play
 	 * back up to DATA_DELTA_POOL_HISTORY_MAX data producers (*NOT* ticks).
 	 * 
 	 * @param newData the new JSONObject to save

@@ -32,7 +32,7 @@ public class KiemExecutionException extends Exception {
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1645050957113020503L;
 	
-	/** The must stop indicating that the execution *MUST* be stopped. */
+	/** The must stop indicating that the execution <B>MUST</B> be stopped. */
 	private boolean mustStop;
 	
 	/** The cause of this Exception. */
@@ -41,7 +41,7 @@ public class KiemExecutionException extends Exception {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Instantiates a new kiem execution exception.
+	 * Instantiates a new KiemExecutionException.
 	 * 
 	 * @param message the message of this Exception to display to the user
 	 * @param mustStop the must stop flag indicating if the execution must stop

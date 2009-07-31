@@ -29,7 +29,7 @@ public abstract class JSONStringDataComponent
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Instantiates a new jSON string data component.
+	 * Instantiates a new JSONStringDataComponent.
 	 */
 	public JSONStringDataComponent() {
 		super();

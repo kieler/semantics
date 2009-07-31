@@ -162,7 +162,7 @@ public class AddDataComponentDialog extends Dialog {
      * Sets the DataComponentEsList. It is used to check for multiple 
      * instances. It should hold all DataComponentEx's that are in the original
      * list of the KiemView to check if another instance of a DataComponent
-	 * can safely be added. 
+	 * can safely be added. <BR>
  	 * This should be provided by the calling instance.
      * 
      * @param dataComponentExList the new component list
@@ -220,7 +220,7 @@ public class AddDataComponentDialog extends Dialog {
 
     /**
 	 * Updates the selected list. This is done immediately when the user
-	 * selects DataComponents in the list. The selected list can be optained
+	 * selects DataComponents in the list. The selected list can be obtained
 	 * by calling {@link #getSelectedComponents()}.
 	 */
 	private void updateSelectedList() {	
@@ -279,7 +279,7 @@ public class AddDataComponentDialog extends Dialog {
     
 	/**
      * Refreshes the enabled/disabled text colors of the DataComponent selection
-     * list. In case a DataComponent is *NOT* multiple instantiable and there
+     * list. In case a DataComponent is <B>NOT</B> multiple instantiable and there
      * already is one instance in the original DataComponentExList (of the
      * KiemView) then we indicate this by a grayed colorDisabled.
      */
