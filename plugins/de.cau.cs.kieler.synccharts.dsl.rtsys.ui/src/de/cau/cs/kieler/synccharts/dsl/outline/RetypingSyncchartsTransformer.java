@@ -9,7 +9,25 @@ import java.util.List;
 
 import org.eclipse.xtext.ui.common.editor.outline.ContentOutlineNode;
 import org.eclipse.xtext.ui.common.editor.outline.transformer.AbstractDeclarativeSemanticModelTransformer;
+import org.eclipse.xtext.ui.core.ILocationInFileProvider;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.jface.text.Region;
+
+import com.google.inject.Provider;
+
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
 
@@ -19,16 +37,20 @@ import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
  */
 public class RetypingSyncchartsTransformer extends
 		AbstractDeclarativeSemanticModelTransformer {
+
 	/**
-	 *  @modified oba
+	 * @modified oba
 	 */
-	
+//	private Provider<ContentOutlineNode> contentOutlineNodeprovider = getOutlineNodeProvider();
+//	List<ContentOutlineNode> myContentOutlineNodes;
+//	private ILocationInFileProvider locationProvider;
+
 	/**
 	 * This method will be called by naming convention: - method name must be
 	 * createNode - first param: subclass of EObject - second param:
 	 * ContentOutlineNode
+	 * 
 	 */
-
 	public ContentOutlineNode createNode(State semanticState,
 			ContentOutlineNode parentNode) {
 		ContentOutlineNode node = super.newOutlineNode(semanticState,
@@ -50,21 +72,26 @@ public class RetypingSyncchartsTransformer extends
 			myStateLabel = semanticState.getLabel();
 		}
 
-		node
-				.setLabel(myStateType + " " + myStateName + ": \" " + myStateLabel
-						+ "\"");
-		
-		if (semanticState.eContents() != null){
-			ContentOutlineNode childNode = super.newOutlineNode(semanticState, parentNode);
-			if (semanticState.isIsFinal()) {
-				childNode.setLabel("isInitial");
-			}
-			if (semanticState.isIsFinal()) {
-				childNode.setLabel("isFinal");
-			}
-			
-		}
-		
+		node.setLabel(myStateType + " " + myStateName + ": \" " + myStateLabel
+				+ "\"");
+
+//		if (semanticState.isIsFinal()) {
+//			// create a content outline node via ContentOutlineNodeProvider
+//			// MyContentOutlineNodeProvider myContentOutlineNodeProvider = new
+//			// MyContentOutlineNodeProvider();
+//			if (contentOutlineNodeprovider != null) {
+//				ContentOutlineNode myContentOutlineNode = contentOutlineNodeprovider
+//						.get();
+//				myContentOutlineNodes.add(myContentOutlineNode);
+//				myContentOutlineNode = myContentOutlineNodes.get(0);
+//				myContentOutlineNode.setLabel("isFinal");
+//				node.setChildren(myContentOutlineNodes);
+//				// set the region
+//				Region location = locationProvider.getLocation(semanticState);
+//				myContentOutlineNode.setSelectionOffset(location.getOffset());
+//				myContentOutlineNode.setSelectionLength(location.getLength());
+//			}
+//		}
 		return node;
 	}
 

@@ -7,6 +7,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.xtext.ui.core.DefaultLabelProvider;
 
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
 
 /**
  * see
@@ -23,10 +24,17 @@ public class RetypingSyncchartsLabelProvider extends DefaultLabelProvider {
 	String image(State s) {
 		String myStateLabelImage = "keyword.gif"; // getImage(s.getLabel());
 		if (s.isIsFinal()) {
-			myStateLabelImage = "happybirds1XSmall.png";
+			/*myStateLabelImage = "happybirds2XSmall.png";*/
+			/*myStateLabelImage = "finalCircle.png";*/
+			myStateLabelImage = "finalState.png";
 		}
-		if (s.isIsFinal()) {
-			myStateLabelImage = "happybirds1XSmall.png";
+		if (s.isIsInitial()) {
+			/*myStateLabelImage = "happybirds1XSmall.png";*/
+			/*myStateLabelImage = "initState2.png";*/
+			myStateLabelImage = "import.gif";
+		}
+		if (s.getStateKind().equals(StateType.PSEUDO)){
+			myStateLabelImage = "rule.gif";
 		}
 		return myStateLabelImage;
 	}

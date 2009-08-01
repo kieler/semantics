@@ -10,9 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- ******************************************************************************/
-
-/******************************************************************************
+ ******************************************************************************//******************************************************************************
  * Namenueberlegungen fuer die neue Sprache:
  * RTSYS - ReTyped Synccharts
  * RTSYS - ReTouched Synccharts
@@ -24,53 +22,80 @@
  * RVH - Rational and Visionary Handling of Synccharts //Vision find ich passend:) 
  * SEWINCH -Simple Way of Editing Synccharts // Sevinc halam -- DA Name?
  * KITTY - KIeler TexTual sYnccharts // ssssuessss 
- ******************************************************************************/
-grammar de.cau.cs.kieler.synccharts.dsl.RetypingSynccharts with org.eclipse.xtext.common.Terminals
-generate retypingSynccharts "http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts"
-//import "platform:/resource/de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/TransitionLabel.ecore" as transitionlabel
-import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+ ******************************************************************************/grammar
+de.cau.cs.kieler.synccharts.dsl.RetypingSynccharts with org.eclipse.xtext.common.
+Terminals
 
-State :
-	//!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
-	//!!!!!!!!!! ((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*   !!!!!!!!!! //
-	//!!!!!!!!!! DO NOT USE THE RULE ABOVE !!!!!!!!!! //
-	//((isInitial?='init')?(isFinal?='final')?(stateKind=StateType)?)* // if pseudo, the keyword becomes 'cond' etc instead of 'pseudo'
-	((isInitial?='init')?(isFinal?='final')?(stateKind=StateType)?)
-	'state' // optional keyword, cf.Meeting_Textu alSyntax-II
-	(stateName=ID) //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
-	(label=STRING)? 
-//	(stateContent=StateContent)?
-//	(outgoingTransitions+=Transition)*
-;
-//StateContent:
-//	'{'
-////	(regions+=Region)*
-//	(		(exitActions+=ExitAction )
-//		| 	(entryActions+=EntryAction)
-//		| 	(innerAction+=InnerAction)
-//		| 	(signalsAndVariables+=ValuedObject)
-//		|	(innerStates+=State	('||' parallelStates+=State)*)
-//	)+	
-//	'}'
+generate retypingSynccharts
+"http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts" //import "platform:/resource/de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/TransitionLabel.ecore" as transitionlabel
+
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+//StateList:
+//	(states+=State)*
 //;
-enum StateType	:
-	NORMAL | PSEUDO='cond' | REFERENCE='reference' | TEXTUAL='textual'
+
+State:
+//!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
+  //((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*
+  // you have to list all possible combinations seperately 
+  // arbitrary positions for optional alternatives is not possible
+  // or you have to use ((..)?(..)?)* and then validate them manually   
+  (	(isInitial?='init')
+  | (isInitial?='init' isFinal?='final') 
+  | (isInitial?='init' stateKind=StateType)
+  | (stateKind=StateType)
+  | (stateKind=StateType isInitial?='init') 
+  | (stateKind=StateType isFinal?='final') 
+  | (isFinal?='final')
+  | (isFinal?='final' isInitial?='init') 
+  | (isFinal?='final' stateKind=StateType) 
+  | (stateKind=StateType isFinal?='final' isInitial?='init') 
+  | (isInitial?='init' isFinal?='final' (stateKind=StateType))
+  | (isInitial?='init' isFinal?='final' (stateKind=StateType))
+  | (isInitial?='init' (stateKind=StateType) isFinal?='final')
+  | (isFinal?='final' isInitial?='init' (stateKind=StateType))
+  | (isFinal?='final' (stateKind=StateType) isInitial?='init') 
+  | ((stateKind=StateType) isInitial?='init' isFinal?='final') 
+  | ((stateKind=StateType)  isFinal?='final' isInitial?='init')
+  )?
+  
+  ('state')? // optional keyword, cf.Meeting_TextualSyntax-II
+  (stateName=ID) //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+  (label=STRING)? 
+  (stateContent=StateContent)?
+  //	(outgoingTransitions+=Transition)*
 ; 
+StateContent:
+	'{'
+//	(regions+=Region)*
+	(		(exitActions+=ExitAction )
+		| 	(entryActions+=EntryAction)
+		| 	(innerAction+=InnerAction)
+//		| 	(signalsAndVariables+=ValuedObject)?
+		|	(innerStates+=State	('||' parallelStates+=State)*)
+	)+	
+	'}'
+;
+
+
+enum StateType:
+  NORMAL | PSEUDO='cond' | REFERENCE='reference' | TEXTUAL='textual'; 
 //////Effect:
 //////	effectID=STRING
 //////;
-//EntryAction returns Action:// transitionlabel::Action :
-//	'onentry' (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  //do we need both in one list: triggersAndEffects?
-//
-//ExitAction returns Action :
-//	'onexit' (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
-//
-//InnerAction returns Action :
-//	'oninner' (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
-//
-////ValuedObject:
-////	Signal | Variable
-////;
+EntryAction returns Action:// transitionlabel::Action :
+	'onentry' entryAction=STRING;//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  //do we need both in one list: triggersAndEffects?
+
+ExitAction returns Action :
+	'onexit' exit=STRING;//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+
+InnerAction returns Action :
+	'oninner' inner=STRING;//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+
+//ValuedObject:
+//	Signal | Variable
+//;
 ////Signal:
 ////	(isLocal?='local')? (isInput?='input')? (isOutput?='output')?
 ////	type=ValueType name=ID (':=' initialValue=ID)? 
