@@ -1368,19 +1368,33 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 			this.doSaveAs();
 			return;
 		}
+		
+		//TODO: implement saving
+		
 		setDirty(false);		
 	}
 
 	//-------------------------------------------------------------------------
 	
+	/**
+	 * Gets the file name (without possible extension) of the currently 
+	 * opened file, if any, or "noname" otherwise.
+	 * 
+	 * @return the active project name
+	 */
 	public String getActiveProjectName() {
-	    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-	    String name = page.getActiveEditor().getEditorInput().getName();
-	    int i = name.indexOf(".");
-	    if (i > -1) {
-	    	name = name.substring(0,i);
-	    }
+		try {
+		    IWorkbenchPage page = PlatformUI.getWorkbench()
+		    		.getActiveWorkbenchWindow().getActivePage();
+		    String name = page.getActiveEditor().getEditorInput().getName();
+		    int i = name.indexOf(".");
+		    if (i > -1) {
+		    	name = name.substring(0,i);
+		    }
 	    return name;
+		}catch(Exception e) {
+			return "noname";
+		}
 	}
 
 	//-------------------------------------------------------------------------
