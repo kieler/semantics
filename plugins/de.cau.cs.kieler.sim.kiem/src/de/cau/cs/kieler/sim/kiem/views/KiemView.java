@@ -147,7 +147,7 @@ public class KiemView extends ViewPart {
 	
 	/** True if all actions are (temporary) disabled. */
 	private boolean allDisabled;
-
+	
 	//-------------------------------------------------------------------------	
 
 	/**
@@ -192,7 +192,6 @@ public class KiemView extends ViewPart {
 			for (int cc = 0; cc < subItemCnt; cc ++) {
 				viewer.getTree().getItem(c).getItem(cc).setForeground(currentColor);
 			}
-			
 		}
 	}
 	
@@ -209,7 +208,7 @@ public class KiemView extends ViewPart {
 		viewer.setContentProvider(new KiemContentProvider());
 		viewer.setLabelProvider(new KiemLabelProvider(this));
 		viewer.setInput(KIEMInstance.getDataComponentExList());
-
+		
 		buildLocalToolBar();
 		hookContextMenu();
 		hookSelectionChangedAction();
@@ -661,6 +660,7 @@ public class KiemView extends ViewPart {
 	 * @param deselect a table entry
 	 */
 	protected void updateView(boolean deselect) {
+		//do not update if not necessary
 		if (!viewer.isBusy()) {
 			updateColumnsCollapsed();
 			viewer.refresh();
@@ -1004,6 +1004,8 @@ public class KiemView extends ViewPart {
 		if (actionStepBack != null) return actionStepBack;
 		actionStepBack = new Action() {
 			public void run() {
+				//only update if first step in execution
+				boolean mustUpdate = (KIEMInstance.execution == null);
 				if ((currentMaster != null) 
 					&& currentMaster.isMasterImplementingGUI()) {
 					//if a master implements the action
@@ -1015,7 +1017,8 @@ public class KiemView extends ViewPart {
 						KIEMInstance.execution.stepBackExecutionSync();
 					}
 				}
-				updateView(true);
+				if (mustUpdate)
+					updateView(true);
 			}
 		};
 		actionStepBack.setText(Messages.ActionStepBack);
@@ -1038,6 +1041,8 @@ public class KiemView extends ViewPart {
 		if (actionStep != null) return actionStep;
 		actionStep = new Action() {
 			public void run() {
+				//only update if first step in execution
+				boolean mustUpdate = (KIEMInstance.execution == null);
 				if ((currentMaster != null) 
 					&& currentMaster.isMasterImplementingGUI()) {
 					//if a master implements the action
@@ -1049,7 +1054,8 @@ public class KiemView extends ViewPart {
 						KIEMInstance.execution.stepExecutionSync();
 					}
 				}
-				updateView(true);
+				if (mustUpdate)
+					updateView(true);
 			}
 		};
 		actionStep.setText(Messages.ActionStep);
