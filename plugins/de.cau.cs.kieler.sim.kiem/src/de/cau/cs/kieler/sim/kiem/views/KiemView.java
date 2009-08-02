@@ -21,6 +21,8 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
+import org.eclipse.ui.dialogs.SaveAsDialog;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -28,9 +30,12 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 
 import org.eclipse.ui.part.*;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.StatusDialog;
 import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 
@@ -52,7 +57,7 @@ import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public class KiemView extends ViewPart {
+public class KiemView extends ViewPart implements ISaveablePart2 {
 	
 	/** The viewer table of DataComponentExs. */
 	private KiemTableViewer viewer;
@@ -148,6 +153,12 @@ public class KiemView extends ViewPart {
 	/** True if all actions are (temporary) disabled. */
 	private boolean allDisabled;
 	
+	/** True iff table or properties where modified */
+	private boolean isDirty;
+	
+	/** The currently opened file if any, null otherwise. */
+	private IPath currentFile;
+	
 	//-------------------------------------------------------------------------	
 
 	/**
@@ -159,6 +170,7 @@ public class KiemView extends ViewPart {
 		//view from within the execution
 		KIEMInstance.setKIEMViewInstance(this);
 		this.currentMaster = null;
+		this.currentFile = null;
 	}
 	
 	//-------------------------------------------------------------------------	
@@ -424,10 +436,10 @@ public class KiemView extends ViewPart {
 	 * @param message the message to present
 	 */
 	private void showMessage(String title, String message) {
-		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			title,
-			message);
+		MessageDialog.openWarning(
+				viewer.getControl().getShell(),
+				Messages.ViewTitle,
+				message);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -838,6 +850,7 @@ public class KiemView extends ViewPart {
 					 for (int c = 0; c < selected.size(); c++) {
 						 KIEMInstance.addTodataComponentExList(selected.get(c));
 					 }
+					 setDirty(true);
 					 checkForSingleEnabledMaster(false);
 					 updateView(true);
 				 }
@@ -869,6 +882,7 @@ public class KiemView extends ViewPart {
 													selection.toArray()[c];
 					if (KIEMInstance.getDataComponentExList().contains(dataComponentEx)) {
 						KIEMInstance.getDataComponentExList().remove(dataComponentEx);
+						 setDirty(true);
 					}
 				}
 				updateView(true);
@@ -908,6 +922,7 @@ public class KiemView extends ViewPart {
 						DataComponentEx dataComponentEx = (DataComponentEx)
 														selection.toArray()[c];
 						dataComponentEx.setEnabled(enabledDisabled);
+						setDirty(true);
 					}
 					checkForSingleEnabledMaster(false,firstDataComponentEx);
 					updateView(true);
@@ -941,6 +956,7 @@ public class KiemView extends ViewPart {
 					if (listIndex > 0) {
 					   KIEMInstance.getDataComponentExList().remove(listIndex);
 					   KIEMInstance.getDataComponentExList().add(listIndex-1, dataComponentEx);
+					   setDirty(true);
 					}
 				}
 			    viewer.refresh();
@@ -977,6 +993,7 @@ public class KiemView extends ViewPart {
 					if (listIndex < KIEMInstance.getDataComponentExList().size()-1) {
 						   KIEMInstance.getDataComponentExList().remove(listIndex);
 						   KIEMInstance.getDataComponentExList().add(listIndex+1, dataComponentEx);
+						   setDirty(true);
 						}
 				}
 				viewer.refresh();
@@ -1327,6 +1344,7 @@ public class KiemView extends ViewPart {
 								.replace("%COMPONENTNAME", dataComponentTemp.getName()));
 					//disable it//
 					dataComponentTemp.setEnabled(false);
+					setDirty(true);
 					this.viewer.refresh();
 					this.refreshEnabledDisabledTextColors();
 				}
@@ -1335,6 +1353,143 @@ public class KiemView extends ViewPart {
 		if (currentMaster != null) {
 		   currentMaster.getDataComponent().masterSetKIEMInstances(KIEMInstance, this);
 		}
+	}
+	
+	//-------------------------------------------------------------------------
+	//                            MAKE PROPERTIES SAVEABLE
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
+	 */
+	public void doSave(IProgressMonitor monitor) {
+		// TODO Auto-generated method stub
+		if (currentFile == null) {
+			this.doSaveAs();
+			return;
+		}
+		setDirty(false);		
+	}
+
+	//-------------------------------------------------------------------------
+	
+	public String getActiveProjectName() {
+	    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+	    String name = page.getActiveEditor().getEditorInput().getName();
+	    int i = name.indexOf(".");
+	    if (i > -1) {
+	    	name = name.substring(0,i);
+	    }
+	    return name;
+	}
+
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.ISaveablePart#doSaveAs()
+	 */
+	public void doSaveAs() {
+		// TODO Auto-generated method stub
+		SaveAsDialog dlg = new SaveAsDialog(this.getViewSite().getShell());
+		dlg.setBlockOnOpen(true);
+		dlg.setOriginalName(getActiveProjectName()+".execution");
+		if (dlg.open() == SaveAsDialog.OK) {
+			this.currentFile = dlg.getResult();
+			this.doSave(null);
+		}
+	}
+
+	//-------------------------------------------------------------------------
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.ISaveablePart#isDirty()
+	 */
+	public boolean isDirty() {
+		//isDirty is set to true iff table or properties are modified
+		return isDirty;
+
+	}
+
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Sets the dirty flag to true or false. It should be set to true whenever
+	 * the view table is modified (add or delete a DataComponent) or a 
+	 * property of a DataComponent is changed. It should be reset to false
+	 * whenever the user saves the execution.
+	 * 
+	 * @param isDirty the new dirty
+	 */
+	public void setDirty(boolean isDirty) {
+		this.isDirty = isDirty;
+		firePropertyChange(IWorkbenchPartConstants.PROP_DIRTY);
+	}
+
+	//-------------------------------------------------------------------------
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.ISaveablePart#isSaveAsAllowed()
+	 */
+	public boolean isSaveAsAllowed() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	//-------------------------------------------------------------------------
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.ISaveablePart#isSaveOnCloseNeeded()
+	 */
+	public boolean isSaveOnCloseNeeded() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.ISaveablePart2#promptToSaveOnClose()
+	 */
+	public int promptToSaveOnClose() {
+		// TODO Auto-generated method stub
+		if (this.isDirty) {
+			
+			String fileName = "noname.execution";
+			if (this.currentFile != null)
+				fileName = this.currentFile.toFile().getName();
+			
+			String[] buttons = {"Yes","No","Cancel"};
+			
+			MessageDialog dlg = new MessageDialog(
+					viewer.getControl().getShell(),
+					"Save Execution",
+					null,
+					"'"+fileName+"' has been modified. Save changes?",
+					MessageDialog.QUESTION,
+					buttons,
+					2);
+			
+			int answer = dlg.open();
+			
+			if (answer == 0) { //YES
+				//try to save or open saveas dialog
+				this.doSave(null);
+				//check is saved
+				if (this.isDirty())
+					//user has not saved (e.g. canceled saving)
+					return ISaveablePart2.CANCEL;
+				else
+					//user has saved, its safe to close view
+					return ISaveablePart2.NO;
+			}
+			else if (answer == 1) { //NO
+				return ISaveablePart2.NO;
+			}
+			//CANCEL
+			return ISaveablePart2.CANCEL;
+		}
+		else
+			return ISaveablePart2.NO;
 	}
 	
 }

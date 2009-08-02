@@ -117,8 +117,14 @@ public class KiemPropertyEditing extends EditingSupport {
 	protected void setValue(Object element, Object value) {
 		//set the value using the getValue() method of the KiemPropertyType
 		KiemProperty property = (KiemProperty)element;
+		String oldValue = ""+property.getValue();
 		property.getType().setValue(property, ""+value);
+		String newValue = ""+property.getValue();
+		boolean valueChanged
+					= !(newValue.equals(oldValue));
 		getViewer().update(element, null);
+		if (valueChanged)
+			parent.setDirty(true);
 	}
 
 }
