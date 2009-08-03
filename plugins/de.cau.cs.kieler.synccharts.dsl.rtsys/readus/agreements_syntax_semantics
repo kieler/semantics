@@ -12,4 +12,4 @@ SYNTAX (Xtext editor intern)
 ============================================================================================================
 User changes the label						 	--> the name will be set to the new value if it is unique
 User skips the state ID , label defined 		--> set the ID to the label
-User skips the state label 						--> label is deliberately skipped and will stay empty 
+User skips the state label 						--> label is deliberately skipped thus will remain empty 
