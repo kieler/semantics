@@ -14,6 +14,17 @@
             restorable="true">
       </view>
    </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="de.cau.cs.kieler.sim.kiem.KiemFakeEditor"
+            default="true"
+            extensions="execution"
+            icon="icons/kiemIcon.png"
+            id="de.cau.cs.kieler.sim.kiem.editor"
+            name="Execution Manager">
+      </editor>
+   </extension>
 
 
 </plugin>

@@ -132,6 +132,11 @@ public static final Image INITCOMPONENT_DISABLED = AbstractUIPlugin
 	//image descriptors
 	
 	/** The Constant Image/ImageDescriptor IMGDESCR_ADD. */
+	public static final ImageDescriptor IMGDESCR_OPEN = AbstractUIPlugin
+			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
+				"icons/openIcon.png");
+	
+	/** The Constant Image/ImageDescriptor IMGDESCR_ADD. */
 	public static final ImageDescriptor IMGDESCR_ADD = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
 				"icons/addIcon.png");

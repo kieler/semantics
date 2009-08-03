@@ -14,6 +14,9 @@
 
 package de.cau.cs.kieler.sim.kiem.views;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 import org.eclipse.swt.events.KeyEvent;
@@ -32,6 +35,7 @@ import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.part.*;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -1418,11 +1422,38 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 		}
 		
 		//TODO: implement saving
+        try {
+
+            System.out.println("Creating File/Object output stream...");
+           
+    		String workspaceFolder = Platform.getLocation().toString();
+            
+            FileOutputStream fileOut = new FileOutputStream(
+            				workspaceFolder + currentFile.toOSString());
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
+            System.out.println("Writing Hashtable Object...");
+            
+            out.writeObject(KiemPlugin.getDefault()
+            		.getDataComponentExList());
+
+            System.out.println("Closing all output streams...\n");
+            out.close();
+            fileOut.close();
+           
+        } catch (IOException e) {
+            e.printStackTrace();
+        }		
 		
 		setDirty(false);		
 	}
 
 	//-------------------------------------------------------------------------
+	
+	
+
+	//-------------------------------------------------------------------------
+	
 	
 	/**
 	 * Gets the file name (without possible extension) of the currently 

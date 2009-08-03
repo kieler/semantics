@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sim.kiem.data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
@@ -30,29 +31,43 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public class DataComponentEx {
+public class DataComponentEx implements Serializable {
 	
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -4500131140237160894L;
+
 	/** The boolean enabled flag indicating whether the DataComponent is 
 	 * enabled or not. */
 	private boolean enabled;
 	
 	/** The contained DataComponent. */
-	private DataComponent component;
+	private transient DataComponent component;
 	
 	/** The pool indices for history steps. */
-	private HashMap<Long,Long> poolIndices;
+	private transient HashMap<Long,Long> poolIndices;
 	
 	/** The currently stored delta index. */
-	private long deltaIndex;
+	private transient long deltaIndex;
 	
 	/** The boolean json flag indicating a JSON capable DataComponent. */
-	private Boolean json;
+	private transient Boolean json;
 	
 	/** Indicates that the properties are unfolded. */
 	private boolean unfolded;
+
+	/** Indicates that the properties are unfolded. */
+	private KiemProperty[] properties;
 	
 	//------------------------------------------------------------------------- 
 
+//	private synchronized void writeObject( java.io.ObjectOutputStream s )
+//	  throws IOException {
+//		//do not save anything
+//		System.out.println("SAVING");
+//	}
+	
+	//------------------------------------------------------------------------- 
+	
 	/**
 	 * Instantiates a new DataComponentEx wrapping a DataComponent.
 	 * 
@@ -65,6 +80,7 @@ public class DataComponentEx {
 		this.json = null;
 		this.poolIndices = new HashMap<Long,Long>();
 		this.deltaIndex = 0;
+		this.properties = this.component.getProperties();
 	}
 
 	//------------------------------------------------------------------------- 

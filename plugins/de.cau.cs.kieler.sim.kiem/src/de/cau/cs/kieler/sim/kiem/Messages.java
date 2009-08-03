@@ -89,6 +89,15 @@ public class Messages extends NLS {
 	
 	/** The Table hint component name key. */
 	public static String TableHintComponentNameKey;
+
+	/** The Action open. */
+	public static String ActionOpen;
+
+	/** The Action hint open. */
+	public static String ActionHintOpen;
+	
+	/** The Execution file extension. */
+	public static String ExecutionFileExtension;
 	
 	/** The Action disable. */
 	public static String ActionDisable;

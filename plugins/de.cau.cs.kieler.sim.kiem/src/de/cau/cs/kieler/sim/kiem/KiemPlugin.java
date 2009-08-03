@@ -23,6 +23,10 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.ISaveablePart2;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
@@ -52,7 +56,6 @@ import de.cau.cs.kieler.sim.kiem.views.KiemView;
  * or refreshing the table or the step information text field.
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * 
  */
 public class KiemPlugin extends AbstractUIPlugin {
 
@@ -142,6 +145,34 @@ public class KiemPlugin extends AbstractUIPlugin {
 	 */
 	public static KiemPlugin getDefault() {
 		return plugin;
+	}
+
+	//-------------------------------------------------------------------------
+
+	private IEditorInput editorInput;
+	public void openFile(IEditorInput editorInput) {
+        if (!(editorInput instanceof IFileEditorInput))
+               throw new RuntimeException("Invalid Input: Must be IFileEditorInput");
+
+		this.editorInput = editorInput;
+		
+		Display.getDefault().syncExec(
+				  new Runnable() {
+				    public void run(){
+
+						if (KIEMViewInstance.promptToSaveOnClose()
+								== ISaveablePart2.NO) {
+							dataComponentExList.clear();
+							
+							//LOAD
+							
+							KIEMViewInstance.updateViewAsync();
+							KIEMViewInstance.setDirty(false);
+						}
+				    
+				    }
+		});
+		
 	}
 
 	//-------------------------------------------------------------------------

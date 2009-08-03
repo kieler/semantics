@@ -23,5 +23,6 @@ Export-Package: de.cau.cs.kieler.sim.kiem,
 Import-Package: de.cau.cs.kieler.sim.kiem.json,
  org.eclipse.core.resources,
  org.eclipse.emf.common.ui,
+ org.eclipse.ui.editors.text,
  org.eclipse.ui.part
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
