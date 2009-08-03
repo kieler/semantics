@@ -180,6 +180,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	}
 	
 	//-------------------------------------------------------------------------	
+
+	/**
+	 * Sets the current file.
+	 * 
+	 * @param currentFile the new currently opened file
+	 */
+	public void setCurrentFile(IPath currentFile) {
+		this.currentFile = currentFile;
+	}
+	
+	//-------------------------------------------------------------------------	
 	
 	/**
 	 * Refreshes the text colors of enabled or master components. Disabled

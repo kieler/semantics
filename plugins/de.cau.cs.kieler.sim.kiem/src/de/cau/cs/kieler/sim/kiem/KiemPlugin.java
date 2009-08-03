@@ -154,68 +154,82 @@ public class KiemPlugin extends AbstractUIPlugin {
 
 	//-------------------------------------------------------------------------
 
-	private IEditorInput editorInput;
-	public void openFile(IEditorInput editorInputToOpen) {
-        if (!(editorInputToOpen instanceof IFileEditorInput))
+	/** The file editor input to open. */
+	private IEditorInput editorInputToOpen;
+	
+	/**
+	 * Opens an Execution File (*.execution) and tries to update the
+	 * dataComponentListEx according to this file. If the components or
+	 * properties loaded do not exist in the environment (e.g., the
+	 * according plug-ins where not loaded) then an error message will
+	 * bring this to the user's attention.
+	 * <BR><BR>
+	 * This method is called from the KiemProxyEditor that acts as a
+	 * proxy for passing the editoInput from the Workbench to the
+	 * KiemView.
+	 * 
+	 * @param editorInput the file editor input to open
+	 */
+	public void openFile(IEditorInput editorInput) {
+        if (!(editorInput instanceof IFileEditorInput))
                throw new RuntimeException("Invalid Input: Must be IFileEditorInput");
 
-		this.editorInput = editorInputToOpen;
+		this.editorInputToOpen = editorInput;
 		
 		Display.getDefault().syncExec(
-				  new Runnable() {
-				    public void run(){
-				    	
-				    	if (execution != null) {
-				    		showError("Cannot open Execution File while an Execution is running.\nPlease first stop the Execution.", PLUGIN_ID, null);
-				    		return;
-				    	}
+		  new Runnable() {
+			    public void run(){
+			    	//probe if execution is running
+			    	if (execution != null) {
+			    		showError(Messages.ErrorOpenDuringExecution, 
+			    				  PLUGIN_ID, 
+			    				  null);
+			    		return;
+			    	}
 
-						if (KIEMViewInstance.promptToSaveOnClose()
-								== ISaveablePart2.NO) {
-							dataComponentExList.clear();
-							
-							List<DataComponentEx> dataComponentExListTemp = null;
-							
-							//LOAD
-					        try {
+					if (KIEMViewInstance.promptToSaveOnClose()
+							== ISaveablePart2.NO) {
+						dataComponentExList.clear();
+						//temporary list only
+						List<DataComponentEx> dataComponentExListTemp = null;
+						//try to load the components into a temporary list
+				        try {
+				    		String workspaceFolder = Platform.getLocation()
+				    								.toString();
+				            FileInputStream fileIn = new FileInputStream(
+				            		workspaceFolder + 
+				            		((IFileEditorInput)editorInputToOpen)
+				            		.getFile().getFullPath().toFile());
+				            ObjectInputStream in = new ObjectInputStream(fileIn);
+				            try {
+				            	dataComponentExListTemp = 
+				            		(List<DataComponentEx>)in.readObject();
+							} catch (ClassNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+				            in.close();
+				            fileIn.close();
 
-					            System.out.println("Creating File/Object output stream...");
-					           
-					    		String workspaceFolder = Platform.getLocation().toString();
-					            
-					            FileInputStream fileIn = new FileInputStream(
-					            		workspaceFolder + 
-					            		((IFileEditorInput)editorInput).getFile().getFullPath().toFile());
-					            
-					            ObjectInputStream in = new ObjectInputStream(fileIn);
-
-					            System.out.println("Reading Object...");
-					            
-					            try {
-					            	dataComponentExListTemp = (List<DataComponentEx>)in.readObject();
-								} catch (ClassNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								
-					            System.out.println("Closing all output streams...\n");
-					            in.close();
-					            fileIn.close();
-
-					            //restore DataComponentExList
-					            restoreDataComponentListEx(dataComponentExListTemp);
-					            
-					        } catch (IOException e) {
-					            e.printStackTrace();
-					        }		
-							
-							KIEMViewInstance.updateViewAsync();
-							KIEMViewInstance.setDirty(false);
-						}
-				    
-				    }
-		});
-		
+				            //restore (full) DataComponentExList from
+				            //temporary list, this for example contains
+				            //no component because these are transient
+				            //and not serializable
+				            restoreDataComponentListEx(
+				            		dataComponentExListTemp);
+				        } catch (IOException e) {
+				            e.printStackTrace();
+				        }		
+				        //update the KiemView table
+						KIEMViewInstance.updateViewAsync();
+						//update the current file, dirty flag
+						KIEMViewInstance.setCurrentFile(
+								((IFileEditorInput)editorInputToOpen)
+								.getFile().getFullPath());
+						KIEMViewInstance.setDirty(false);
+					}
+			    }
+		  });
 	}
 
 	//-------------------------------------------------------------------------
@@ -344,23 +358,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 					DataComponentEx addedDataComponentEx
 						= this.addTodataComponentExList(dataComponent);
 					
+					//set the loaded properties
 					addedDataComponentEx.setProperties(properties);
 					componentRestored = true;
-					
-//					IConfigurationElement componentConfigEle = 
-//							dataComponent.getConfigurationElement();
-//					DataComponent componentClone;
-//					try {
-//							componentClone = (DataComponent)
-//							componentConfigEle.createExecutableExtension("class");
-//							componentClone.setConfigurationElemenet(componentConfigEle);
-//							
-//							dataComponentEx.setComponent(componentClone); 
-//							dataComponentEx.setProperties(properties);
-//							componentRestored = true;
-//					} catch (CoreException e) {
-//						e.printStackTrace();
-//					}//end try/catch					
 					break;
 				}//end if
 			}//next cc

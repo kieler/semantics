@@ -38,7 +38,7 @@ import org.eclipse.ui.part.MultiPageEditorPart;
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
-public class KiemFakeEditor extends MultiPageEditorPart
+public class KiemProxyEditor extends MultiPageEditorPart
  {
 
 	/** The editor input to later find this editor for closing it. */
@@ -49,7 +49,7 @@ public class KiemFakeEditor extends MultiPageEditorPart
 	/**
 	 * Instantiates a new (fake) editor.
 	 */
-	public KiemFakeEditor() {
+	public KiemProxyEditor() {
 		super();
 	}
 

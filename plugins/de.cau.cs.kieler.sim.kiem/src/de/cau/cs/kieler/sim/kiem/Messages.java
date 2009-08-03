@@ -246,6 +246,9 @@ public class Messages extends NLS {
 	/** The Error no data observer. */
 	public static String ErrorNoDataObserver;
 	
+	/** The Error open during execution. */
+	public static String ErrorOpenDuringExecution;
+	
 	//-------------------------------------------------------------------------
 	
 	static {

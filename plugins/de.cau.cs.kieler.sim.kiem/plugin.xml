@@ -17,7 +17,7 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="de.cau.cs.kieler.sim.kiem.KiemFakeEditor"
+            class="de.cau.cs.kieler.sim.kiem.KiemProxyEditor"
             default="true"
             extensions="execution"
             icon="icons/kiemIcon.png"

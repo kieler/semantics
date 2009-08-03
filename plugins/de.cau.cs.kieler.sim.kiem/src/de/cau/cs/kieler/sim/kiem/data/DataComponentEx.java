@@ -99,6 +99,7 @@ public class DataComponentEx implements Serializable {
 
 	public void setProperties(KiemProperty[] properties) {
 		this.component.setProperties(properties);
+		this.properties = properties;
 	}
 	
 	//------------------------------------------------------------------------- 
