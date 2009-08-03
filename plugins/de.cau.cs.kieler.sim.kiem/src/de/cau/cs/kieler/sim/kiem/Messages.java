@@ -132,6 +132,12 @@ public class Messages extends NLS {
 	/** The Action hint step. */
 	public static String ActionHintStep;
 	
+	/** The Action step forward most current. */
+	public static String ActionStepFMC;
+	
+	/** The Action hint step forward most current. */
+	public static String ActionHintStepFMC;
+
 	/** The Action step back. */
 	public static String ActionStepBack;
 	
