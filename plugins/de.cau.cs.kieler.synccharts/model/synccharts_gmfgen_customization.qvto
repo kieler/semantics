@@ -1,0 +1,81 @@
+modeltype GMFGEN uses gmfgen('http://www.eclipse.org/gmf/2009/GenModel');
+
+transformation SyncChartsCustomization(inout gmfgen:GMFGEN);
+
+main() {
+	var model := gmfgen.rootObjects()![GenEditorGenerator];
+	
+	// we want to use custom codegen templates which are required for
+	// certain special features such as attribute aware figures 
+	model.dynamicTemplates :=true;
+	model.templateDirectory := "de.cau.cs.kieler.synccharts/gmf-templates";
+	model.sameFileForDiagramAndModel := true;
+	
+	// some general plugin settings	
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.custom";
+	model.plugin.version := "0.1.0.qualifier";
+	model.plugin.provider := "Christian-Albrechts-Universität zu Kiel";
+	model.plugin.name := "SyncCharts Diagram Editor";
+	model.plugin.printingEnabled := true;
+	
+	// enable model validation
+	model.diagram.liveValidationUIFeedback := true;
+	model.diagram.validationDecorators := true;
+	model.diagram.validationEnabled := true;
+	
+	// use our own category for the "new" wizard
+	model.diagram.creationWizardCategoryID := "de.cau.cs.kieler";
+	
+	// customize class bodies of figures (required for attribute awareness)
+	model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] ->map customizeClassBody();
+	model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] ->map customizeClassBody();
+	model.diagram.links.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] ->map customizeClassBody();
+	
+	// special settings for all compartments
+	model.diagram.childNodes.allSubobjectsOfType(GenCompartment)[GenCompartment] ->map compartmentSettings();
+}
+
+mapping inout GenCompartment::compartmentSettings(){
+	// we want to be able to collapse all compartments
+	self.canCollapse := true;
+	// do not show compartments when they are empty
+	self.hideIfEmpty := true;
+	// don't use list layout (which determines not only a simple layouter but
+	// makes the compartment subclass a very different class that does not support
+	// any layout. Hence here we use a standard non-list compartment with
+	// a simple row or flow layout
+	self.listLayout := false;
+	// customize the title of the compartment according to its type	
+	self.needsTitle := false;
+	self.title := switch {
+		case (self.editPartClassName = "StateSignalCompartmentEditPart")  "Signal:";
+		case (self.editPartClassName = "StateSignalCompartment2EditPart") "Signal:";
+		case (self.editPartClassName = "StateVariableCompartmentEditPart")  "Variable:";
+		case (self.editPartClassName = "StateVariableCompartment2EditPart") "Variable:";
+		case (self.editPartClassName = "StateEntryActionsCompartmentEditPart")  "OnEntryAction:";
+		case (self.editPartClassName = "StateEntryActionsCompartment2EditPart") "OnEntryAction:";
+		case (self.editPartClassName = "StateInnerActionsCompartmentEditPart")  "OnInsideAction:";
+		case (self.editPartClassName = "StateInnerActionsCompartment2EditPart") "OnInsideAction:";
+		case (self.editPartClassName = "StateExitActionsCompartmentEditPart")  "OnExitAction:";
+		case (self.editPartClassName = "StateExitActionsCompartment2EditPart") "OnExitAction:";
+		case (self.editPartClassName = "StateSuspensionTriggerCompartmentEditPart")  "Suspend:";
+		case (self.editPartClassName = "StateSuspensionTriggerCompartment2EditPart") "Suspend:";
+		case (self.editPartClassName = "StateRegionCompartmentEditPart")  "RegionCompartment";
+		case (self.editPartClassName = "StateRegionCompartment2EditPart") "RegionCompartment";
+		case (self.editPartClassName = "RegionStateCompartmentEditPart")  "StateCompartment";
+		case (self.editPartClassName = "RegionStateCompartment2EditPart") "StateCompartment";
+		else "";
+	};
+}
+
+mapping inout InnerClassViewmap::customizeClassBody(){
+	// build a new class body by splitting it up and inserting
+	// a parameter in the constructor (the edit part) such that
+	// every figure has a reference to its corresponding
+	// edit part. Required for attribute awareness.
+	var string1 := self.classBody.substringBefore("Figure() {");
+	var string2 := "Figure(org.eclipse.gef.EditPart e) {super(e);";
+	var string3 := self.classBody.substringAfter("Figure() {");
+	self.classBody := string1.+(string2).+(string3);
+}
+

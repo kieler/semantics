@@ -85,6 +85,11 @@
         eType="#//State" containment="true" eOpposite="#//State/parentRegion"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"
         eOpposite="#//State/regions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
+        eType="#//Variable" containment="true" eOpposite="#//Variable/parentRegion"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
+        eType="#//Signal" containment="true" eOpposite="#//Signal/parentRegion"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Signal" eSuperTypes="#//ValuedObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
@@ -100,6 +105,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="combineOperator" lowerBound="1"
         eType="#//CombineOperator"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hostCombineOperator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentRegion" eType="#//Region"
+        eOpposite="#//Region/signals"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SignalReference" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" lowerBound="1"
@@ -114,6 +121,8 @@
         eType="#//State" eOpposite="#//State/signalRenamings"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="State">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//StateType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
         eType="#//Signal" containment="true" eOpposite="#//Signal/parentState"/>
@@ -131,14 +140,13 @@
         containment="true" eOpposite="#//Action/parentStateSuspension"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions" upperBound="-1"
         eType="#//Transition" containment="true" eOpposite="#//Transition/sourceState"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentRegion" lowerBound="1"
         eType="#//Region" eOpposite="#//Region/innerStates"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
         eType="#//Variable" containment="true" eOpposite="#//Variable/parentState"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bodyText" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInitial" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isFinal" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bodyText" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="StateType">
     <eLiterals name="NORMAL"/>
@@ -180,6 +188,8 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"
         eOpposite="#//State/variables"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentRegion" eType="#//Region"
+        eOpposite="#//Region/variables"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableReference" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
