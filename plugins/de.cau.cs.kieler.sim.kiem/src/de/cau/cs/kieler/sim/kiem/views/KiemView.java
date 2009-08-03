@@ -420,6 +420,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 		dn.add(getActionStepFMC());
 		manager.add(dn);
 
+		//manager.add(getActionStep());
+
 		//TODO: macro step implementation
 		//manager.add(getActionMacroStep());
 		
@@ -449,7 +451,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	 * @param message the message to present
 	 */
 	private void showMessage(String title, String message) {
-		MessageDialog.openWarning(
+		MessageDialog.openInformation(
 				viewer.getControl().getShell(),
 				Messages.ViewTitle,
 				message);

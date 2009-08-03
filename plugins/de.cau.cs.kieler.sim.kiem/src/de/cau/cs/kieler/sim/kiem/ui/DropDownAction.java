@@ -40,7 +40,7 @@ public class DropDownAction extends Action implements IMenuCreator {
 	/** The menu of the DropDownAction. */
 	private Menu fMenu;
 	
-	/** The default Action which implements the default beahvior. */
+	/** The default Action which implements the default behavior. */
 	private Action defaultAction;
 	
 	/** The item list that contains Actions and IContributionItems */
@@ -65,9 +65,9 @@ public class DropDownAction extends Action implements IMenuCreator {
 		IPropertyChangeListener pcl =
 			new PropertyChangeListener();
 		defaultAction.addPropertyChangeListener(pcl);
+		setMenuCreator(this);
 		//trigger setting text & images of the default action
 		pcl.propertyChange(null);
-		setMenuCreator(this);
 	}
 
 	//-------------------------------------------------------------------------	

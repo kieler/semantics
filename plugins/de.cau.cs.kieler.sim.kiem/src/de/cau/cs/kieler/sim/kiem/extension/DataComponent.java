@@ -69,7 +69,19 @@ public abstract class DataComponent implements IDataComponent,
 		super();
 		properties = provideProperties();
 	}
+
+	//-------------------------------------------------------------------------
 	
+	/**
+	 * Sets the properties. This method is needed to modify properties after
+	 * deserialization.
+	 * 
+	 * @param properties the new KiemProperty[] array
+	 */
+	public void setProperties(KiemProperty[] properties) {
+		this.properties = properties;
+	}
+
 	//-------------------------------------------------------------------------
 	
 	/**

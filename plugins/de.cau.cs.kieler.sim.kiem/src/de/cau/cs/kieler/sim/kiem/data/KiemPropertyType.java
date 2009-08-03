@@ -42,7 +42,7 @@ public abstract class KiemPropertyType implements Serializable,
 	private static final long serialVersionUID = 3312580956244391881L;
 	
 	/** The cell editor. */
-	protected CellEditor cellEditor;
+	protected transient CellEditor cellEditor;
 	
 	/** The Constant PROPERTY_DEFAULT. */
 	private static final Image PROPERTY_DEFAULT = AbstractUIPlugin

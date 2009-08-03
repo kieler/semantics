@@ -17,6 +17,8 @@ package de.cau.cs.kieler.sim.kiem.data;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 
@@ -44,19 +46,22 @@ public class DataComponentEx implements Serializable {
 	private transient DataComponent component;
 	
 	/** The pool indices for history steps. */
-	private transient HashMap<Long,Long> poolIndices;
+	private HashMap<Long,Long> poolIndices;
 	
 	/** The currently stored delta index. */
-	private transient long deltaIndex;
+	private long deltaIndex;
 	
 	/** The boolean json flag indicating a JSON capable DataComponent. */
-	private transient Boolean json;
+	private Boolean json;
 	
 	/** Indicates that the properties are unfolded. */
 	private boolean unfolded;
 
 	/** Indicates that the properties are unfolded. */
 	private KiemProperty[] properties;
+	
+	/** The component id of the component for deserialization */
+	private String componentId;
 	
 	//------------------------------------------------------------------------- 
 
@@ -81,10 +86,29 @@ public class DataComponentEx implements Serializable {
 		this.poolIndices = new HashMap<Long,Long>();
 		this.deltaIndex = 0;
 		this.properties = this.component.getProperties();
+		this.componentId = component.getConfigurationElement().toString();
 	}
 
 	//------------------------------------------------------------------------- 
 
+	public String getComponentId() {
+		return componentId;
+	}
+
+	//------------------------------------------------------------------------- 
+
+	public void setProperties(KiemProperty[] properties) {
+		this.component.setProperties(properties);
+	}
+	
+	//------------------------------------------------------------------------- 
+
+	public void setComponent(DataComponent component) {
+		this.component = component;
+	}
+	
+	//-------------------------------------------------------------------------
+	
 	/**
 	 * Checks whether this DataComponent is a JSON component that is able to
 	 * handle JSONObjects of the following Java implementation 
@@ -335,7 +359,7 @@ public class DataComponentEx implements Serializable {
 	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#getProperties()
 	 */
 	public KiemProperty[] getProperties() {
-		return this.component.getProperties(); 
+		return this.properties; 
 	}
 
 	//------------------------------------------------------------------------- 

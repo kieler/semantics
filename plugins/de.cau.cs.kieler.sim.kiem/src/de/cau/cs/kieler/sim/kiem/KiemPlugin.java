@@ -14,6 +14,11 @@
 
 package de.cau.cs.kieler.sim.kiem;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -150,21 +155,59 @@ public class KiemPlugin extends AbstractUIPlugin {
 	//-------------------------------------------------------------------------
 
 	private IEditorInput editorInput;
-	public void openFile(IEditorInput editorInput) {
-        if (!(editorInput instanceof IFileEditorInput))
+	public void openFile(IEditorInput editorInputToOpen) {
+        if (!(editorInputToOpen instanceof IFileEditorInput))
                throw new RuntimeException("Invalid Input: Must be IFileEditorInput");
 
-		this.editorInput = editorInput;
+		this.editorInput = editorInputToOpen;
 		
 		Display.getDefault().syncExec(
 				  new Runnable() {
 				    public void run(){
+				    	
+				    	if (execution != null) {
+				    		showError("Cannot open Execution File while an Execution is running.\nPlease first stop the Execution.", PLUGIN_ID, null);
+				    		return;
+				    	}
 
 						if (KIEMViewInstance.promptToSaveOnClose()
 								== ISaveablePart2.NO) {
 							dataComponentExList.clear();
 							
+							List<DataComponentEx> dataComponentExListTemp = null;
+							
 							//LOAD
+					        try {
+
+					            System.out.println("Creating File/Object output stream...");
+					           
+					    		String workspaceFolder = Platform.getLocation().toString();
+					            
+					            FileInputStream fileIn = new FileInputStream(
+					            		workspaceFolder + 
+					            		((IFileEditorInput)editorInput).getFile().getFullPath().toFile());
+					            
+					            ObjectInputStream in = new ObjectInputStream(fileIn);
+
+					            System.out.println("Reading Object...");
+					            
+					            try {
+					            	dataComponentExListTemp = (List<DataComponentEx>)in.readObject();
+								} catch (ClassNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+					            System.out.println("Closing all output streams...\n");
+					            in.close();
+					            fileIn.close();
+
+					            //restore DataComponentExList
+					            restoreDataComponentListEx(dataComponentExListTemp);
+					            
+					        } catch (IOException e) {
+					            e.printStackTrace();
+					        }		
 							
 							KIEMViewInstance.updateViewAsync();
 							KIEMViewInstance.setDirty(false);
@@ -275,6 +318,64 @@ public class KiemPlugin extends AbstractUIPlugin {
 	
 	//-------------------------------------------------------------------------
 	
+	/**
+	 * Tries to restore the data component list. If an item was not found it
+	 * will be deleted and an error message is shown.
+	 */
+	public void restoreDataComponentListEx(List<DataComponentEx> 
+														dataComponentExListTemp) {
+		List<DataComponent> dataComponentList = getDataComponentList();
+		
+		for (int c = 0; c < dataComponentExListTemp.size(); c ++) {
+			DataComponentEx dataComponentEx = dataComponentExListTemp.get(c);
+			String componentId = dataComponentEx.getComponentId();
+			KiemProperty[] properties = dataComponentEx.getProperties();
+			
+			boolean componentRestored = false;
+			
+			for (int cc = 0; cc < dataComponentList.size(); cc++) {
+				DataComponent dataComponent = dataComponentList.get(cc);
+				String vglComponentId = dataComponent.getConfigurationElement()
+											.toString();
+				
+				if (vglComponentId.equals(componentId)) {
+					//we found the component ... now restore it
+					
+					DataComponentEx addedDataComponentEx
+						= this.addTodataComponentExList(dataComponent);
+					
+					addedDataComponentEx.setProperties(properties);
+					componentRestored = true;
+					
+//					IConfigurationElement componentConfigEle = 
+//							dataComponent.getConfigurationElement();
+//					DataComponent componentClone;
+//					try {
+//							componentClone = (DataComponent)
+//							componentConfigEle.createExecutableExtension("class");
+//							componentClone.setConfigurationElemenet(componentConfigEle);
+//							
+//							dataComponentEx.setComponent(componentClone); 
+//							dataComponentEx.setProperties(properties);
+//							componentRestored = true;
+//					} catch (CoreException e) {
+//						e.printStackTrace();
+//					}//end try/catch					
+					break;
+				}//end if
+			}//next cc
+			
+			if (!componentRestored) {
+				this.showWarning(Messages.WarningLoadingDataComponent
+						.replace("%COMPONENTNAME", componentId)
+						,null, null);
+			}//end if - failed
+			
+		}//next c
+	}
+
+	//-------------------------------------------------------------------------
+
 	/**
 	 * This initializes the DataComponentList with all registered and loaded
 	 * plug-ins that extend the following two extension points:<BR>
@@ -469,12 +570,15 @@ public class KiemPlugin extends AbstractUIPlugin {
 	 * Add a DataComponent instance to the {@link #dataComponentExList}.
 	 * This will clone the DataComponent and add an executable extension. It
 	 * then creates a new DataComponentEx instance that encapsulates the just
-	 * created DataComponent (and offers additional information and methods). 
+	 * created DataComponent (and offers additional information and methods).
 	 * The latter will be added then to the DataComponentList.
 	 * 
 	 * @param component the component
+	 * 
+	 * @return the added dataComponentEx component
 	 */
-	public void addTodataComponentExList(DataComponent component) {
+	public DataComponentEx
+				addTodataComponentExList(DataComponent component) {
 		IConfigurationElement componentConfigEle = 
 								component.getConfigurationElement();
 		DataComponent componentClone;
@@ -486,9 +590,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 			DataComponentEx dataComponentEx = 
 						new DataComponentEx(componentClone);
 			this.dataComponentExList.add(dataComponentEx);
+			return dataComponentEx;
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	//-------------------------------------------------------------------------
