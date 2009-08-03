@@ -14,9 +14,6 @@
 
 package de.cau.cs.kieler.sim.kiem.views;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.swt.events.KeyEvent;
@@ -28,16 +25,13 @@ import org.eclipse.ui.dialogs.SaveAsDialog;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 
 import org.eclipse.ui.part.*;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -51,6 +45,7 @@ import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.extension.*;
 import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
 import de.cau.cs.kieler.sim.kiem.ui.AddDataComponentDialog;
+import de.cau.cs.kieler.sim.kiem.ui.DropDownAction;
 import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
 import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
 
@@ -60,7 +55,6 @@ import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
  * view and buttons to control the execution.
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * 
  */
 public class KiemView extends ViewPart implements ISaveablePart2 {
 	
@@ -416,19 +410,15 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 		manager.add(new Separator());
 		manager.add(getActionStepBack());
 
+		//add a drop down action
 		DropDownAction dn = new DropDownAction(getActionStep());
 		dn.add(new Separator());
 		dn.add(getActionStepFMC());
 		manager.add(dn);
-		
-		//manager.add(getActionStep());
-		//manager.appendToGroup("step", getActionStepFMC());
-		
-		//addActionToMenu((getActionStep().getMenuCreator().getMenu(null)),
-		//											getActionStepFMC());
-		//manager.add(getActionStep());
+
 		//TODO: macro step implementation
 		//manager.add(getActionMacroStep());
+		
 		manager.add(getActionRun());
 		manager.add(getActionPause());
 		manager.add(getActionStop());
@@ -1102,99 +1092,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	}
 
 	//-------------------------------------------------------------------------	
-
-	public class DropDownAction extends Action implements IMenuCreator {
-		private Menu fMenu;
-		private Action defaultAction;
-		private List<Object> itemList;
-		
-		public DropDownAction(Action defaultAction) {
-			//set images & hint text of default action
-			this.defaultAction = defaultAction;
-			setText(defaultAction.getText());
-			this.setImageDescriptor(defaultAction.getImageDescriptor());
-			this.setDisabledImageDescriptor(
-						defaultAction.getDisabledImageDescriptor());
-			this.setToolTipText(defaultAction.getToolTipText());
-			itemList = new LinkedList<Object>();
-			this.add(defaultAction);
-			//add a listener to react to changes of the defaultAction
-			defaultAction.addPropertyChangeListener(
-					new PropertyChangeListener());
-			setMenuCreator(this);
-		}
-
-		//-------------------------------------------------------------------------	
-
-		protected void addActionToMenu(Menu parent, Action action) {
-			ActionContributionItem item = new ActionContributionItem(action);
-			item.fill(parent, -1);
-		}
-
-		//-------------------------------------------------------------------------	
-
-		protected void addContributionItemToMenu(Menu parent, 
-											IContributionItem citem) {
-			//ActionContributionItem item = new ActionContributionItem(citem);
-			citem.fill(parent, -1);
-		}
-		
-		//-------------------------------------------------------------------------	
-	
-	class PropertyChangeListener implements IPropertyChangeListener {
-		public void propertyChange(
-				org.eclipse.jface.util.PropertyChangeEvent event) {
-			setEnabled(defaultAction.isEnabled());
-		}
-	}
-	
-		public void run() {
-			this.defaultAction.run();
-		}
-		
-		public void add(Action action) {
-			itemList.add(action);
-		}
-		public void add(IContributionItem contributionItem) {
-			itemList.add(contributionItem);
-		}
-
-		public void dispose() {
-			if (fMenu != null)  {
-				fMenu.dispose();
-				fMenu= null;
-			}
-		}
-
-		public Menu getMenu(Menu parent) {
-			return null;
-		}
-
-		public Menu getMenu(Control parent) {
-			if (fMenu != null)
-				fMenu.dispose();
-			
-			fMenu= new Menu(parent);
-			for (int c = 0; c < this.itemList.size(); c++) {
-				Object item  = itemList.get(c);
-				if (item instanceof Action) {
-					addActionToMenu(fMenu, (Action)itemList.get(c));
-				}
-				else if (item instanceof IContributionItem) {
-					addContributionItemToMenu(fMenu, 
-							(IContributionItem)itemList.get(c));
-				}
-				
-			}
-
-			return fMenu;
-		}
-
-		void clear() {
-			dispose();
-		}
-		
-	}
 
 	//-------------------------------------------------------------------------	
 		
