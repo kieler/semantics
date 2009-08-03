@@ -15,10 +15,8 @@
 package de.cau.cs.kieler.sim.kiem;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -178,7 +176,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 		
 		Display.getDefault().syncExec(
 		  new Runnable() {
-			    public void run(){
+			    @SuppressWarnings("unchecked")
+				public void run(){
 			    	//probe if execution is running
 			    	if (execution != null) {
 			    		showError(Messages.ErrorOpenDuringExecution, 
@@ -201,9 +200,13 @@ public class KiemPlugin extends AbstractUIPlugin {
 				            		((IFileEditorInput)editorInputToOpen)
 				            		.getFile().getFullPath().toFile());
 				            ObjectInputStream in = new ObjectInputStream(fileIn);
-				            try {
-				            	dataComponentExListTemp = 
-				            		(List<DataComponentEx>)in.readObject();
+			            	Object object;
+							try {
+								object = in.readObject();
+				            	if (object instanceof List<?>) {
+					            	dataComponentExListTemp = 
+					            		(List<DataComponentEx>)object;
+				            	}
 							} catch (ClassNotFoundException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -335,6 +338,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 	/**
 	 * Tries to restore the data component list. If an item was not found it
 	 * will be deleted and an error message is shown.
+	 * 
+	 * @param dataComponentExListTemp a temporary (partial) DataComponentExList
+	 * 								  to restore the full one from
 	 */
 	public void restoreDataComponentListEx(List<DataComponentEx> 
 														dataComponentExListTemp) {

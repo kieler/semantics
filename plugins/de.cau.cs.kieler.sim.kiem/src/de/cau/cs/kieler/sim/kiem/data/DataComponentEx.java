@@ -17,8 +17,6 @@ package de.cau.cs.kieler.sim.kiem.data;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 
@@ -91,24 +89,30 @@ public class DataComponentEx implements Serializable {
 
 	//------------------------------------------------------------------------- 
 
+	/**
+	 * Gets a component id to identify DataComponents during loading because
+	 * the DataComponents itself do not get serialized.
+	 * 
+	 * @return the component id
+	 */
 	public String getComponentId() {
 		return componentId;
 	}
 
 	//------------------------------------------------------------------------- 
 
+	/**
+	 * Sets the properties for the DataComponent and this DataComponentEx
+	 * instance. These are just too links to the same properties.
+	 * 
+	 * @param properties the new properties
+	 */
 	public void setProperties(KiemProperty[] properties) {
 		this.component.setProperties(properties);
 		this.properties = properties;
 	}
 	
 	//------------------------------------------------------------------------- 
-
-	public void setComponent(DataComponent component) {
-		this.component = component;
-	}
-	
-	//-------------------------------------------------------------------------
 	
 	/**
 	 * Checks whether this DataComponent is a JSON component that is able to
