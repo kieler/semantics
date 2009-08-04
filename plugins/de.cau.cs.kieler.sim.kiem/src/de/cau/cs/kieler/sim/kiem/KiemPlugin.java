@@ -343,7 +343,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 	 * 								  to restore the full one from
 	 */
 	public void restoreDataComponentListEx(List<DataComponentEx> 
-														dataComponentExListTemp) {
+													dataComponentExListTemp) {
 		List<DataComponent> dataComponentList = getDataComponentList();
 		
 		for (int c = 0; c < dataComponentExListTemp.size(); c ++) {
@@ -360,12 +360,14 @@ public class KiemPlugin extends AbstractUIPlugin {
 				
 				if (vglComponentId.equals(componentId)) {
 					//we found the component ... now restore it
-					
 					DataComponentEx addedDataComponentEx
 						= this.addTodataComponentExList(dataComponent);
-					
 					//set the loaded properties
 					addedDataComponentEx.setProperties(properties);
+					//set enabled disabled
+					addedDataComponentEx.setEnabled(
+							dataComponentEx.isEnabled());
+					//everything restored correctly
 					componentRestored = true;
 					break;
 				}//end if
@@ -746,7 +748,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 			}
 
 			//do not post the same message twice
-			if ((exception != null)
+			if ((exception != null) && (textMessage != null)
 					&& (exception.getMessage().startsWith(textMessage)))
 				message = "" + PluginID + "";
 			else
@@ -805,7 +807,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 			}
 			
 			//do not post the same message twice
-			if ((exception != null)
+			if ((exception != null) && (textMessage != null)
 				&& (exception.getMessage().startsWith(textMessage)))
 				message = "" + PluginID + "";
 			else

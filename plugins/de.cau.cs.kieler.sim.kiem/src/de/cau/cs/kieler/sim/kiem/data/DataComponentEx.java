@@ -36,25 +36,25 @@ public class DataComponentEx implements Serializable {
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -4500131140237160894L;
 
-	/** The boolean enabled flag indicating whether the DataComponent is 
-	 * enabled or not. */
-	private boolean enabled;
-	
 	/** The contained DataComponent. */
 	private transient DataComponent component;
 	
 	/** The pool indices for history steps. */
-	private HashMap<Long,Long> poolIndices;
+	private transient HashMap<Long,Long> poolIndices;
 	
 	/** The currently stored delta index. */
-	private long deltaIndex;
+	private transient long deltaIndex;
 	
 	/** The boolean json flag indicating a JSON capable DataComponent. */
-	private Boolean json;
+	private transient Boolean json;
 	
 	/** Indicates that the properties are unfolded. */
-	private boolean unfolded;
+	private transient boolean unfolded;
 
+	/** The boolean enabled flag indicating whether the DataComponent is 
+	 * enabled or not. */
+	private boolean enabled;
+	
 	/** Indicates that the properties are unfolded. */
 	private KiemProperty[] properties;
 	
