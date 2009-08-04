@@ -18,21 +18,32 @@ import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the SyncSignalReset plug-in's life cycle. This
+ * KIEM DataComponent implements synchronous semantics for executions with
+ * the KIELER Execution Manager. It should be scheduled to be the first or
+ * the last DataComponent. It then resets all signals that are present to be
+ * absent again. When there are no present signals, this DataComponent does
+ * simply nothing.
+ *
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class SyncSignalResetPlugin extends Plugin {
 
-	// The plug-in ID
+	/** The Constant PLUGIN_ID. */
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.syncsignalreset";
 
-	// The shared instance
+	/** The shared instance. */
 	private static SyncSignalResetPlugin plugin;
 	
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * The constructor
+	 * The constructor of the SyncSignalReset DataComponent
 	 */
 	public SyncSignalResetPlugin() {
 	}
+
+	//-------------------------------------------------------------------------
 
 	/*
 	 * (non-Javadoc)
@@ -43,6 +54,8 @@ public class SyncSignalResetPlugin extends Plugin {
 		plugin = this;
 	}
 
+	//-------------------------------------------------------------------------
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
@@ -52,8 +65,10 @@ public class SyncSignalResetPlugin extends Plugin {
 		super.stop(context);
 	}
 
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Returns the shared instance
+	 * Returns the shared instance of this plug-in
 	 *
 	 * @return the shared instance
 	 */

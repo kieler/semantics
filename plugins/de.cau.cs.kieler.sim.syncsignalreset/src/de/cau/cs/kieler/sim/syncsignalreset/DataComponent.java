@@ -19,11 +19,18 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.json.JSONArray;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
+/**
+ * The Class DataComponent implements the KIEM Extension Point. The 
+ * {@link #step(JSONObject)} method looks out for present signals and resets 
+ * the to be absent again, because signals within the KIELER Execution Manager
+ * are explicitly made present or absent.
+ */
 public class DataComponent extends JSONObjectDataComponent implements
 		IJSONObjectDataComponent {
+	
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent#step(de.cau.cs.kieler.sim.kiem.json.JSONObject)
@@ -38,7 +45,6 @@ public class DataComponent extends JSONObjectDataComponent implements
 					//extract key, value from JSONObject
 					Object obj = allDataIn.get(fieldNames[c]);
 					String key = fieldNames[c];
-					Object value;
 					if (obj instanceof JSONObject) {
 						//if signal
 						if (JSONSignalValues.isSignalValue((JSONObject)obj)) {
@@ -65,8 +71,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
 	 */
 	public void initialize() throws KiemInitializationException {
-		// TODO Auto-generated method stub
-		
+		//do nothing
 	}
 
 	//-------------------------------------------------------------------------
@@ -75,7 +80,6 @@ public class DataComponent extends JSONObjectDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
 	 */
 	public boolean isObserver() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -85,7 +89,6 @@ public class DataComponent extends JSONObjectDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
 	 */
 	public boolean isProducer() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -95,8 +98,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
 	 */
 	public void wrapup() throws KiemInitializationException {
-		// TODO Auto-generated method stub
-		
+		//do nothing
 	}
 
 	//-------------------------------------------------------------------------
@@ -105,7 +107,6 @@ public class DataComponent extends JSONObjectDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isDeltaObserver()
 	 */
 	public boolean isDeltaObserver() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
