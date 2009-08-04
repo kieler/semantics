@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xtools2_universal_type_manager-->
+<?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.mmi.ui.signatures.diagram" version="7.0.0"><feature description="" name="Rational Modeling Platform (com.ibm.xtools.rmp)" url="" version="7.0.0"/></signature>?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.0/notation" xmlns:uml="http://www.eclipse.org/uml2/2.0.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation" xmi:id="_GbY54IDxEd6yQ__Z0cXXRw" type="Class" name="classdiagram">
+  <children xmi:id="_GfiaEIDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GfkPQIDxEd6yQ__Z0cXXRw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_GfkPQYDxEd6yQ__Z0cXXRw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_GfkPQoDxEd6yQ__Z0cXXRw" type="Stereotype"/>
+    <children xmi:id="_GfkPQ4DxEd6yQ__Z0cXXRw" type="Name"/>
+    <children xmi:id="_GfkPRIDxEd6yQ__Z0cXXRw" type="Parent"/>
+    <children xmi:id="_GfkPRYDxEd6yQ__Z0cXXRw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_GfkPRoDxEd6yQ__Z0cXXRw"/>
+    </children>
+    <children xmi:id="_Gfk2UIDxEd6yQ__Z0cXXRw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Gfk2UYDxEd6yQ__Z0cXXRw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_GfiaEYDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=ObserverExecution%5Bjcu%5Ename=ObserverExecution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GfiaEoDxEd6yQ__Z0cXXRw" x="1845" y="48614"/>
+  </children>
+  <children xmi:id="_Gfk2UoDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_Gfk2VYDxEd6yQ__Z0cXXRw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_Gfk2VoDxEd6yQ__Z0cXXRw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_Gfk2V4DxEd6yQ__Z0cXXRw" type="Stereotype"/>
+    <children xmi:id="_Gfk2WIDxEd6yQ__Z0cXXRw" type="Name"/>
+    <children xmi:id="_Gfk2WYDxEd6yQ__Z0cXXRw" type="Parent"/>
+    <children xmi:id="_GfldYIDxEd6yQ__Z0cXXRw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_GfldYYDxEd6yQ__Z0cXXRw"/>
+    </children>
+    <children xmi:id="_GfldYoDxEd6yQ__Z0cXXRw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_GfldY4DxEd6yQ__Z0cXXRw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_Gfk2U4DxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=JSONMerger%5Bjcu%5Ename=JSONMerger.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Gfk2VIDxEd6yQ__Z0cXXRw" x="31352" y="59563"/>
+  </children>
+  <children xmi:id="_GfldZIDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GfldZ4DxEd6yQ__Z0cXXRw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_GfldaIDxEd6yQ__Z0cXXRw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_GfldaYDxEd6yQ__Z0cXXRw" type="Stereotype"/>
+    <children xmi:id="_GfldaoDxEd6yQ__Z0cXXRw" type="Name"/>
+    <children xmi:id="_Gflda4DxEd6yQ__Z0cXXRw" type="Parent"/>
+    <children xmi:id="_GfmEcIDxEd6yQ__Z0cXXRw" type="PackageContents">
+      <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_GfmEcYDxEd6yQ__Z0cXXRw" canonical="false" collapsed="true"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_GfldZYDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Package" href="mmi:///#jpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D$uml.Package"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GfldZoDxEd6yQ__Z0cXXRw" x="15208" y="1831"/>
+  </children>
+  <children xmi:id="_GfmEcoDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GfmEdYDxEd6yQ__Z0cXXRw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_GfmEdoDxEd6yQ__Z0cXXRw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_GfmEd4DxEd6yQ__Z0cXXRw" type="Stereotype"/>
+    <children xmi:id="_GfmEeIDxEd6yQ__Z0cXXRw" type="Name"/>
+    <children xmi:id="_GfmEeYDxEd6yQ__Z0cXXRw" type="Parent"/>
+    <children xmi:id="_GfmEeoDxEd6yQ__Z0cXXRw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_GfmEe4DxEd6yQ__Z0cXXRw"/>
+    </children>
+    <children xmi:id="_GfmrgIDxEd6yQ__Z0cXXRw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_GfmrgYDxEd6yQ__Z0cXXRw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_GfmEc4DxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=TimeoutThread%5Bjcu%5Ename=TimeoutThread.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GfmEdIDxEd6yQ__Z0cXXRw" x="12238" y="48611"/>
+  </children>
+  <children xmi:id="_GfmrgoDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GfmrhYDxEd6yQ__Z0cXXRw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_GfmrhoDxEd6yQ__Z0cXXRw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_Gfmrh4DxEd6yQ__Z0cXXRw" type="Stereotype"/>
+    <children xmi:id="_GfmriIDxEd6yQ__Z0cXXRw" type="Name"/>
+    <children xmi:id="_GfmriYDxEd6yQ__Z0cXXRw" type="Parent"/>
+    <children xmi:id="_GfmrioDxEd6yQ__Z0cXXRw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Gfmri4DxEd6yQ__Z0cXXRw"/>
+    </children>
+    <children xmi:id="_GfnSkIDxEd6yQ__Z0cXXRw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_GfnSkYDxEd6yQ__Z0cXXRw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_Gfmrg4DxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=JSONDataPool%5Bjcu%5Ename=JSONDataPool.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GfmrhIDxEd6yQ__Z0cXXRw" x="23593" y="48621"/>
+  </children>
+  <children xmi:id="_GfnSkoDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GfnSlYDxEd6yQ__Z0cXXRw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_GfnSloDxEd6yQ__Z0cXXRw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_GfnSl4DxEd6yQ__Z0cXXRw" type="Stereotype"/>
+    <children xmi:id="_GfnSmIDxEd6yQ__Z0cXXRw" type="Name"/>
+    <children xmi:id="_GfnSmYDxEd6yQ__Z0cXXRw" type="Parent"/>
+    <children xmi:id="_GfnSmoDxEd6yQ__Z0cXXRw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_GfnSm4DxEd6yQ__Z0cXXRw"/>
+    </children>
+    <children xmi:id="_Gfn5oIDxEd6yQ__Z0cXXRw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Gfn5oYDxEd6yQ__Z0cXXRw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_GfnSk4DxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=DataPoolTestApplication%5Bjcu%5Ename=DataPoolTestApplication.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GfnSlIDxEd6yQ__Z0cXXRw" x="21571" y="6196"/>
+  </children>
+  <children xmi:id="_Gfn5ooDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_Gfn5pYDxEd6yQ__Z0cXXRw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_Gfn5poDxEd6yQ__Z0cXXRw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_Gfn5p4DxEd6yQ__Z0cXXRw" type="Stereotype"/>
+    <children xmi:id="_Gfn5qIDxEd6yQ__Z0cXXRw" type="Name"/>
+    <children xmi:id="_Gfn5qYDxEd6yQ__Z0cXXRw" type="Parent"/>
+    <children xmi:id="_Gfn5qoDxEd6yQ__Z0cXXRw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Gfn5q4DxEd6yQ__Z0cXXRw"/>
+    </children>
+    <children xmi:id="_GfogsIDxEd6yQ__Z0cXXRw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_GfogsYDxEd6yQ__Z0cXXRw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_Gfn5o4DxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=Execution%5Bjcu%5Ename=Execution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Gfn5pIDxEd6yQ__Z0cXXRw" x="7391" y="15485"/>
+  </children>
+  <children xmi:id="_GfogsoDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GfogtYDxEd6yQ__Z0cXXRw" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_GfogtoDxEd6yQ__Z0cXXRw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_Gfogt4DxEd6yQ__Z0cXXRw" type="Stereotype"/>
+    <children xmi:id="_GfoguIDxEd6yQ__Z0cXXRw" type="Name"/>
+    <children xmi:id="_GfoguYDxEd6yQ__Z0cXXRw" type="Parent"/>
+    <children xmi:id="_GfoguoDxEd6yQ__Z0cXXRw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Gfogu4DxEd6yQ__Z0cXXRw"/>
+    </children>
+    <children xmi:id="_GfpHwIDxEd6yQ__Z0cXXRw" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_GfpHwYDxEd6yQ__Z0cXXRw"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_Gfogs4DxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=ProducerExecution%5Bjcu%5Ename=ProducerExecution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GfogtIDxEd6yQ__Z0cXXRw" x="8925" y="6182"/>
+  </children>
+  <styles xmi:type="umlnotation:UMLDiagramStyle" xmi:id="_GbY54YDxEd6yQ__Z0cXXRw"/>
+  <element xsi:nil="true"/>
+  <edges xmi:id="_GgsQoIDxEd6yQ__Z0cXXRw" type="OwnedElement" source="_GfldZIDxEd6yQ__Z0cXXRw" target="_GfiaEIDxEd6yQ__Z0cXXRw">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GgsQoYDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GgsQooDxEd6yQ__Z0cXXRw" points="[-18, 1151, 14138, -48921]$[-14157, 6824, -1, -43248]$[-14157, 45618, -1, -4454]"/>
+  </edges>
+  <edges xmi:id="_GgsQo4DxEd6yQ__Z0cXXRw" source="_GfiaEIDxEd6yQ__Z0cXXRw" target="_Gfn5ooDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GgsQpoDxEd6yQ__Z0cXXRw" type="KindLabel">
+      <children xmi:id="_Ggs3sIDxEd6yQ__Z0cXXRw" type="Stereotype"/>
+      <children xmi:id="_Ggs3soDxEd6yQ__Z0cXXRw" type="Kind"/>
+      <children xmi:id="_Ggs3sYDxEd6yQ__Z0cXXRw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GgsQp4DxEd6yQ__Z0cXXRw" y="-678"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GgsQpIDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=ObserverExecution%5Bjcu%5Ename=ObserverExecution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=Execution%5Bjcu%5Ename=Execution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GgsQpYDxEd6yQ__Z0cXXRw" points="[-18, -4454, -7096, 17576]$[7060, -6486, -18, 15544]"/>
+  </edges>
+  <edges xmi:id="_Ggs3s4DxEd6yQ__Z0cXXRw" type="OwnedElement" source="_GfldZIDxEd6yQ__Z0cXXRw" target="_Gfk2UoDxEd6yQ__Z0cXXRw">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_Ggs3tIDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Ggs3tYDxEd6yQ__Z0cXXRw" points="[-18, 1151, -13496, -56795]$[13478, 6824, 0, -51122]$[13478, 56557, 0, -1389]"/>
+  </edges>
+  <edges xmi:id="_Ggs3toDxEd6yQ__Z0cXXRw" type="OwnedElement" source="_GfldZIDxEd6yQ__Z0cXXRw" target="_Gfn5ooDxEd6yQ__Z0cXXRw">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_Ggs3t4DxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Ggs3uIDxEd6yQ__Z0cXXRw" points="[-18, 1151, 7060, -26891]$[-1525, 6824, 5553, -21218]$[-7096, 12497, -18, -15545]"/>
+  </edges>
+  <edges xmi:id="_GgtewIDxEd6yQ__Z0cXXRw" type="OwnedElement" source="_GfldZIDxEd6yQ__Z0cXXRw" target="_GfogsoDxEd6yQ__Z0cXXRw">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GgtewYDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GgtewoDxEd6yQ__Z0cXXRw" points="[-18, 1151, 7060, -5673]$[-7096, 3183, -18, -3641]"/>
+  </edges>
+  <edges xmi:id="_Ggtew4DxEd6yQ__Z0cXXRw" type="OwnedElement" source="_GfldZIDxEd6yQ__Z0cXXRw" target="_GfnSkoDxEd6yQ__Z0cXXRw">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GgtexIDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GgtexYDxEd6yQ__Z0cXXRw" points="[-18, 1151, -4962, -5673]$[4927, 3183, -17, -3641]"/>
+  </edges>
+  <edges xmi:id="_GgtexoDxEd6yQ__Z0cXXRw" type="OwnedElement" source="_GfldZIDxEd6yQ__Z0cXXRw" target="_GfmEcoDxEd6yQ__Z0cXXRw">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_Ggtex4DxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GgteyIDxEd6yQ__Z0cXXRw" points="[-18, 1151, 3267, -48921]$[-18, 28042, 3267, -22030]$[-3303, 45618, -18, -4454]"/>
+  </edges>
+  <edges xmi:id="_GgteyYDxEd6yQ__Z0cXXRw" type="OwnedElement" source="_GfldZIDxEd6yQ__Z0cXXRw" target="_GfmrgoDxEd6yQ__Z0cXXRw">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GgteyoDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Ggtey4DxEd6yQ__Z0cXXRw" points="[-18, 1151, -7773, -48921]$[9888, 6824, 2133, -43248]$[9888, 28042, 2133, -22030]$[7738, 45618, -17, -4454]"/>
+  </edges>
+  <edges xmi:id="_GguF0IDxEd6yQ__Z0cXXRw" source="_GfmEcoDxEd6yQ__Z0cXXRw" target="_Gfn5ooDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GguF04DxEd6yQ__Z0cXXRw" type="KindLabel">
+      <children xmi:id="_GguF1YDxEd6yQ__Z0cXXRw" type="Stereotype"/>
+      <children xmi:id="_GguF14DxEd6yQ__Z0cXXRw" type="Kind"/>
+      <children xmi:id="_GguF1oDxEd6yQ__Z0cXXRw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GguF1IDxEd6yQ__Z0cXXRw" y="-678"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GguF0YDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=TimeoutThread%5Bjcu%5Ename=TimeoutThread.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=Execution%5Bjcu%5Ename=Execution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GguF0oDxEd6yQ__Z0cXXRw" points="[-18, -4454, 3775, 17576]$[-3811, -6486, -18, 15544]"/>
+  </edges>
+  <edges xmi:id="_GguF2IDxEd6yQ__Z0cXXRw" source="_GfmrgoDxEd6yQ__Z0cXXRw" target="_Gfk2UoDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_Ggus4IDxEd6yQ__Z0cXXRw" type="KindLabel">
+      <children xmi:id="_Ggus4oDxEd6yQ__Z0cXXRw" type="Stereotype"/>
+      <children xmi:id="_Ggus5IDxEd6yQ__Z0cXXRw" type="Kind"/>
+      <children xmi:id="_Ggus44DxEd6yQ__Z0cXXRw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ggus4YDxEd6yQ__Z0cXXRw" y="-678"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GguF2YDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=JSONDataPool%5Bjcu%5Ename=JSONDataPool.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=JSONMerger%5Bjcu%5Ename=JSONMerger.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GguF2oDxEd6yQ__Z0cXXRw" points="[-17, 4453, -5740, -3421]$[5706, 6485, -17, -1389]"/>
+  </edges>
+  <edges xmi:id="_Ggus5YDxEd6yQ__Z0cXXRw" source="_GfnSkoDxEd6yQ__Z0cXXRw" target="_GfmrgoDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GgvT8IDxEd6yQ__Z0cXXRw" type="KindLabel">
+      <children xmi:id="_GgvT8oDxEd6yQ__Z0cXXRw" type="Stereotype"/>
+      <children xmi:id="_GgvT9IDxEd6yQ__Z0cXXRw" type="Kind"/>
+      <children xmi:id="_GgvT84DxEd6yQ__Z0cXXRw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GgvT8YDxEd6yQ__Z0cXXRw" y="-678"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_Ggus5oDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=DataPoolTestApplication%5Bjcu%5Ename=DataPoolTestApplication.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=JSONDataPool%5Bjcu%5Ename=JSONDataPool.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Ggus54DxEd6yQ__Z0cXXRw" points="[-17, 3641, -2828, -39607]$[2794, 38794, -17, -4454]"/>
+  </edges>
+  <edges xmi:id="_GgvT9YDxEd6yQ__Z0cXXRw" source="_Gfn5ooDxEd6yQ__Z0cXXRw" target="_GfiaEIDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GgvT-IDxEd6yQ__Z0cXXRw" type="KindLabel">
+      <children xmi:id="_GgvT-oDxEd6yQ__Z0cXXRw" type="Stereotype"/>
+      <children xmi:id="_Ggv7AYDxEd6yQ__Z0cXXRw" type="Kind"/>
+      <children xmi:id="_Ggv7AIDxEd6yQ__Z0cXXRw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GgvT-YDxEd6yQ__Z0cXXRw" y="-678"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GgvT9oDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=Execution%5Bjcu%5Ename=Execution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=ObserverExecution%5Bjcu%5Ename=ObserverExecution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GgvT94DxEd6yQ__Z0cXXRw" points="[-18, 15544, 7060, -6486]$[-7096, 17576, -18, -4454]"/>
+  </edges>
+  <edges xmi:id="_Ggv7AoDxEd6yQ__Z0cXXRw" source="_Gfn5ooDxEd6yQ__Z0cXXRw" target="_GfmEcoDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_Ggv7BYDxEd6yQ__Z0cXXRw" type="KindLabel">
+      <children xmi:id="_Ggv7B4DxEd6yQ__Z0cXXRw" type="Stereotype"/>
+      <children xmi:id="_GgwiEIDxEd6yQ__Z0cXXRw" type="Kind"/>
+      <children xmi:id="_Ggv7CIDxEd6yQ__Z0cXXRw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ggv7BoDxEd6yQ__Z0cXXRw" y="-678"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_Ggv7A4DxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=Execution%5Bjcu%5Ename=Execution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=TimeoutThread%5Bjcu%5Ename=TimeoutThread.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Ggv7BIDxEd6yQ__Z0cXXRw" points="[-18, 15544, -3811, -6486]$[3775, 17576, -18, -4454]"/>
+  </edges>
+  <edges xmi:id="_GgwiEYDxEd6yQ__Z0cXXRw" source="_Gfn5ooDxEd6yQ__Z0cXXRw" target="_GfmrgoDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GgwiFIDxEd6yQ__Z0cXXRw" type="KindLabel">
+      <children xmi:id="_GgwiFoDxEd6yQ__Z0cXXRw" type="Stereotype"/>
+      <children xmi:id="_GgwiGIDxEd6yQ__Z0cXXRw" type="Kind"/>
+      <children xmi:id="_GgwiF4DxEd6yQ__Z0cXXRw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GgwiFYDxEd6yQ__Z0cXXRw" y="-678"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GgwiEoDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=Execution%5Bjcu%5Ename=Execution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=JSONDataPool%5Bjcu%5Ename=JSONDataPool.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GgwiE4DxEd6yQ__Z0cXXRw" points="[-18, 15544, -14851, -6486]$[14816, 17576, -17, -4454]"/>
+  </edges>
+  <edges xmi:id="_GgwiGYDxEd6yQ__Z0cXXRw" source="_Gfn5ooDxEd6yQ__Z0cXXRw" target="_GfogsoDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GgxJIIDxEd6yQ__Z0cXXRw" type="KindLabel">
+      <children xmi:id="_GgxJIoDxEd6yQ__Z0cXXRw" type="Stereotype"/>
+      <children xmi:id="_GgxJJIDxEd6yQ__Z0cXXRw" type="Kind"/>
+      <children xmi:id="_GgxJI4DxEd6yQ__Z0cXXRw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GgxJIYDxEd6yQ__Z0cXXRw" y="-678"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GgwiGoDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=Execution%5Bjcu%5Ename=Execution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=ProducerExecution%5Bjcu%5Ename=ProducerExecution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GgwiG4DxEd6yQ__Z0cXXRw" points="[-18, -15545, -18, 5673]$[-18, -17577, -18, 3641]"/>
+  </edges>
+  <edges xmi:id="_GgxJJYDxEd6yQ__Z0cXXRw" source="_GfogsoDxEd6yQ__Z0cXXRw" target="_Gfn5ooDxEd6yQ__Z0cXXRw">
+    <children xmi:id="_GgxwMIDxEd6yQ__Z0cXXRw" type="KindLabel">
+      <children xmi:id="_GgxwMoDxEd6yQ__Z0cXXRw" type="Stereotype"/>
+      <children xmi:id="_GgxwNIDxEd6yQ__Z0cXXRw" type="Kind"/>
+      <children xmi:id="_GgxwM4DxEd6yQ__Z0cXXRw" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GgxwMYDxEd6yQ__Z0cXXRw" y="-678"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_GgxJJoDxEd6yQ__Z0cXXRw" fontName="Sans" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=ProducerExecution%5Bjcu%5Ename=ProducerExecution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=Execution%5Bjcu%5Ename=Execution.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.execution%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GgxJJ4DxEd6yQ__Z0cXXRw" points="[-18, 3641, -18, -17577]$[-18, 5673, -18, -15545]"/>
+  </edges>
+</notation:Diagram>

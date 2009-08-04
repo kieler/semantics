@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xtools2_universal_type_manager-->
+<?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.mmi.ui.signatures.diagram" version="7.0.0"><feature description="" name="Rational Modeling Platform (com.ibm.xtools.rmp)" url="" version="7.0.0"/></signature>?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.0/notation" xmlns:uml="http://www.eclipse.org/uml2/2.0.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation" xmi:id="_EFB_IID0Ed64-9fa4O63RQ" type="Class" name="classdiagram">
+  <children xmi:id="_EMNlMID0Ed64-9fa4O63RQ">
+    <children xmi:id="_EMOzUID0Ed64-9fa4O63RQ" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_EMOzUYD0Ed64-9fa4O63RQ" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_EMOzUoD0Ed64-9fa4O63RQ" type="Stereotype"/>
+    <children xmi:id="_EMPaYID0Ed64-9fa4O63RQ" type="Name"/>
+    <children xmi:id="_EMPaYYD0Ed64-9fa4O63RQ" type="Parent"/>
+    <children xmi:id="_EMPaYoD0Ed64-9fa4O63RQ" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EMPaY4D0Ed64-9fa4O63RQ"/>
+    </children>
+    <children xmi:id="_EMPaZID0Ed64-9fa4O63RQ" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EMPaZYD0Ed64-9fa4O63RQ"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_EMNlMYD0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=KiemIcons%5Bjcu%5Ename=KiemIcons.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EMNlMoD0Ed64-9fa4O63RQ" x="37321" y="18219"/>
+  </children>
+  <children xmi:id="_EMPaZoD0Ed64-9fa4O63RQ">
+    <children xmi:id="_EMQBcID0Ed64-9fa4O63RQ" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_EMQBcYD0Ed64-9fa4O63RQ" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_EMQBcoD0Ed64-9fa4O63RQ" type="Stereotype"/>
+    <children xmi:id="_EMQBc4D0Ed64-9fa4O63RQ" type="Name"/>
+    <children xmi:id="_EMQBdID0Ed64-9fa4O63RQ" type="Parent"/>
+    <children xmi:id="_EMQBdYD0Ed64-9fa4O63RQ" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EMQBdoD0Ed64-9fa4O63RQ"/>
+    </children>
+    <children xmi:id="_EMQBd4D0Ed64-9fa4O63RQ" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EMQBeID0Ed64-9fa4O63RQ"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_EMPaZ4D0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=AimedStepDurationTextField%5Bjcu%5Ename=AimedStepDurationTextField.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EMPaaID0Ed64-9fa4O63RQ" x="1839" y="6173"/>
+  </children>
+  <children xmi:id="_EMRPkID0Ed64-9fa4O63RQ">
+    <children xmi:id="_EMRPk4D0Ed64-9fa4O63RQ" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_EMRPlID0Ed64-9fa4O63RQ" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_EMRPlYD0Ed64-9fa4O63RQ" type="Stereotype"/>
+    <children xmi:id="_EMRPloD0Ed64-9fa4O63RQ" type="Name"/>
+    <children xmi:id="_EMR2oID0Ed64-9fa4O63RQ" type="Parent"/>
+    <children xmi:id="_EMR2oYD0Ed64-9fa4O63RQ" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EMR2ooD0Ed64-9fa4O63RQ"/>
+    </children>
+    <children xmi:id="_EMR2o4D0Ed64-9fa4O63RQ" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EMR2pID0Ed64-9fa4O63RQ"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_EMRPkYD0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=AddDataComponentDialog%5Bjcu%5Ename=AddDataComponentDialog.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EMRPkoD0Ed64-9fa4O63RQ" x="30567" y="6183"/>
+  </children>
+  <children xmi:id="_EMR2pYD0Ed64-9fa4O63RQ">
+    <children xmi:id="_EMSdsID0Ed64-9fa4O63RQ" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_EMSdsYD0Ed64-9fa4O63RQ" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_EMSdsoD0Ed64-9fa4O63RQ" type="Stereotype"/>
+    <children xmi:id="_EMSds4D0Ed64-9fa4O63RQ" type="Name"/>
+    <children xmi:id="_EMTEwID0Ed64-9fa4O63RQ" type="Parent"/>
+    <children xmi:id="_EMTEwYD0Ed64-9fa4O63RQ" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EMTEwoD0Ed64-9fa4O63RQ"/>
+    </children>
+    <children xmi:id="_EMTEw4D0Ed64-9fa4O63RQ" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EMTExID0Ed64-9fa4O63RQ"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_EMR2poD0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=DropDownAction%5Bjcu%5Ename=DropDownAction.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EMR2p4D0Ed64-9fa4O63RQ" x="11951" y="6193"/>
+  </children>
+  <children xmi:id="_EMTExYD0Ed64-9fa4O63RQ">
+    <children xmi:id="_EMTr0ID0Ed64-9fa4O63RQ" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_EMTr0YD0Ed64-9fa4O63RQ" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_EMTr0oD0Ed64-9fa4O63RQ" type="Stereotype"/>
+    <children xmi:id="_EMTr04D0Ed64-9fa4O63RQ" type="Name"/>
+    <children xmi:id="_EMTr1ID0Ed64-9fa4O63RQ" type="Parent"/>
+    <children xmi:id="_EMUS4ID0Ed64-9fa4O63RQ" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EMUS4YD0Ed64-9fa4O63RQ"/>
+    </children>
+    <children xmi:id="_EMUS4oD0Ed64-9fa4O63RQ" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EMUS44D0Ed64-9fa4O63RQ"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_EMTExoD0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=StepTextField%5Bjcu%5Ename=StepTextField.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EMTEx4D0Ed64-9fa4O63RQ" x="21579" y="6169"/>
+  </children>
+  <children xmi:id="_EMU58ID0Ed64-9fa4O63RQ">
+    <children xmi:id="_EMU584D0Ed64-9fa4O63RQ" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_EMU59ID0Ed64-9fa4O63RQ" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_EMU59YD0Ed64-9fa4O63RQ" type="Stereotype"/>
+    <children xmi:id="_EMU59oD0Ed64-9fa4O63RQ" type="Name"/>
+    <children xmi:id="_EMU594D0Ed64-9fa4O63RQ" type="Parent"/>
+    <children xmi:id="_EMU5-ID0Ed64-9fa4O63RQ" type="PackageContents">
+      <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_EMU5-YD0Ed64-9fa4O63RQ" canonical="false" collapsed="true"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_EMU58YD0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Package" href="mmi:///#jpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D$uml.Package"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EMU58oD0Ed64-9fa4O63RQ" x="24264" y="1844"/>
+  </children>
+  <children xmi:id="_EMVhAID0Ed64-9fa4O63RQ">
+    <children xmi:id="_EMVhA4D0Ed64-9fa4O63RQ" type="ImageCompartment">
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_EMVhBID0Ed64-9fa4O63RQ" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_EMVhBYD0Ed64-9fa4O63RQ" type="Stereotype"/>
+    <children xmi:id="_EMVhBoD0Ed64-9fa4O63RQ" type="Name"/>
+    <children xmi:id="_EMVhB4D0Ed64-9fa4O63RQ" type="Parent"/>
+    <children xmi:id="_EMWIEID0Ed64-9fa4O63RQ" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EMWIEYD0Ed64-9fa4O63RQ"/>
+    </children>
+    <children xmi:id="_EMWIEoD0Ed64-9fa4O63RQ" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_EMWIE4D0Ed64-9fa4O63RQ"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_EMVhAYD0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Class" href="mmi:///#jsrctype%5Ename=PropertyChangeListener%5Bjsrctype%5Ename=DropDownAction%5Bjcu%5Ename=DropDownAction.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D$uml.Class"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EMVhAoD0Ed64-9fa4O63RQ" x="12149" y="18211"/>
+  </children>
+  <styles xmi:type="umlnotation:UMLDiagramStyle" xmi:id="_EFB_IYD0Ed64-9fa4O63RQ"/>
+  <element xsi:nil="true"/>
+  <edges xmi:id="_ESdXIID0Ed64-9fa4O63RQ" type="OwnedElement" source="_EMU58ID0Ed64-9fa4O63RQ" target="_EMNlMID0Ed64-9fa4O63RQ">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_ESdXIYD0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ESdXIoD0Ed64-9fa4O63RQ" points="[-17, 1151, -15071, -25197]$[15070, 8179, 16, -18169]$[15053, 15206, -1, -11142]"/>
+  </edges>
+  <edges xmi:id="_ESdXI4D0Ed64-9fa4O63RQ" type="OwnedElement" source="_EMU58ID0Ed64-9fa4O63RQ" target="_EMPaZoD0Ed64-9fa4O63RQ">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_ESd-MID0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ESd-MYD0Ed64-9fa4O63RQ" points="[-17, 1151, 22386, -7028]$[-22403, 3183, 0, -4996]"/>
+  </edges>
+  <edges xmi:id="_ESd-MoD0Ed64-9fa4O63RQ" type="OwnedElement" source="_EMU58ID0Ed64-9fa4O63RQ" target="_EMRPkID0Ed64-9fa4O63RQ">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_ESd-M4D0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ESd-NID0Ed64-9fa4O63RQ" points="[-17, 1151, -8009, -7028]$[7975, 3183, -17, -4996]"/>
+  </edges>
+  <edges xmi:id="_ESd-NYD0Ed64-9fa4O63RQ" source="_EMRPkID0Ed64-9fa4O63RQ" target="_EMNlMID0Ed64-9fa4O63RQ">
+    <children xmi:id="_ESelQID0Ed64-9fa4O63RQ" type="KindLabel">
+      <children xmi:id="_ESelQoD0Ed64-9fa4O63RQ" type="Stereotype"/>
+      <children xmi:id="_ESelRID0Ed64-9fa4O63RQ" type="Kind"/>
+      <children xmi:id="_ESelQ4D0Ed64-9fa4O63RQ" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ESelQYD0Ed64-9fa4O63RQ" y="-678"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_ESd-NoD0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=AddDataComponentDialog%5Bjcu%5Ename=AddDataComponentDialog.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=KiemIcons%5Bjcu%5Ename=KiemIcons.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ESd-N4D0Ed64-9fa4O63RQ" points="[-17, 4995, -7079, -13174]$[7061, 7027, -1, -11142]"/>
+  </edges>
+  <edges xmi:id="_ESelRYD0Ed64-9fa4O63RQ" type="OwnedElement" source="_EMR2pYD0Ed64-9fa4O63RQ" target="_EMVhAID0Ed64-9fa4O63RQ">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_ESelRoD0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ESelR4D0Ed64-9fa4O63RQ" points="[-17, 4995, -17, -13174]$[-17, 7027, -17, -11142]"/>
+  </edges>
+  <edges xmi:id="_ESfzYID0Ed64-9fa4O63RQ" type="OwnedElement" source="_EMU58ID0Ed64-9fa4O63RQ" target="_EMR2pYD0Ed64-9fa4O63RQ">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_ESgacID0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ESgacYD0Ed64-9fa4O63RQ" points="[-17, 1151, 12514, -7028]$[-12548, 3183, -17, -4996]"/>
+  </edges>
+  <edges xmi:id="_ESgacoD0Ed64-9fa4O63RQ" source="_EMR2pYD0Ed64-9fa4O63RQ" target="_EMVhAID0Ed64-9fa4O63RQ">
+    <children xmi:id="_ESgadYD0Ed64-9fa4O63RQ" type="KindLabel">
+      <children xmi:id="_EShBgID0Ed64-9fa4O63RQ" type="Stereotype"/>
+      <children xmi:id="_EShBgoD0Ed64-9fa4O63RQ" type="Kind"/>
+      <children xmi:id="_EShBgYD0Ed64-9fa4O63RQ" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ESgadoD0Ed64-9fa4O63RQ" y="-678"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_ESgac4D0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=DropDownAction%5Bjcu%5Ename=DropDownAction.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=PropertyChangeListener%5Bjsrctype%5Ename=DropDownAction%5Bjcu%5Ename=DropDownAction.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ESgadID0Ed64-9fa4O63RQ" points="[-17, 4995, -17, -13174]$[-17, 7027, -17, -11142]"/>
+  </edges>
+  <edges xmi:id="_EShBg4D0Ed64-9fa4O63RQ" type="OwnedElement" source="_EMU58ID0Ed64-9fa4O63RQ" target="_EMTExYD0Ed64-9fa4O63RQ">
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_EShBhID0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Text"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_EShBhYD0Ed64-9fa4O63RQ" points="[-17, 1151, 3201, -7028]$[-3235, 3183, -17, -4996]"/>
+  </edges>
+  <edges xmi:id="_EShokID0Ed64-9fa4O63RQ" source="_EMVhAID0Ed64-9fa4O63RQ" target="_EMR2pYD0Ed64-9fa4O63RQ">
+    <children xmi:id="_EShok4D0Ed64-9fa4O63RQ" type="KindLabel">
+      <children xmi:id="_ESholYD0Ed64-9fa4O63RQ" type="Stereotype"/>
+      <children xmi:id="_EShol4D0Ed64-9fa4O63RQ" type="Kind"/>
+      <children xmi:id="_ESholoD0Ed64-9fa4O63RQ" type="Name"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ESholID0Ed64-9fa4O63RQ" y="-678"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_EShokYD0Ed64-9fa4O63RQ" fontName="Sans" showStereotype="Text"/>
+    <element xmi:type="uml:Usage" href="mmi:///#jdep%5Bjsrctype%5Ename=PropertyChangeListener%5Bjsrctype%5Ename=DropDownAction%5Bjcu%5Ename=DropDownAction.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D%5D%5Bjsrctype%5Ename=DropDownAction%5Bjcu%5Ename=DropDownAction.java%5Bjpack%5Ename=de.cau.cs.kieler.sim.kiem.ui%5Bjsrcroot%5Esrcfolder=src%5Bproject%5Eid=de.cau.cs.kieler.sim.kiem%5D%5D%5D%5D%5D$uml.Usage"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_EShokoD0Ed64-9fa4O63RQ" points="[-17, -11142, -17, 7027]$[-17, -13174, -17, 4995]"/>
+  </edges>
+</notation:Diagram>
