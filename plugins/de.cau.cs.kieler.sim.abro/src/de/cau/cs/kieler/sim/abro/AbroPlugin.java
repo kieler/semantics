@@ -14,7 +14,6 @@
 
 package de.cau.cs.kieler.sim.abro;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -44,7 +43,7 @@ public class AbroPlugin extends AbstractUIPlugin {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * The constructor of the ABRO plugin
+	 * The constructor of the ABRO plug-in.
 	 */
 	public AbroPlugin() {
 	}
@@ -74,25 +73,12 @@ public class AbroPlugin extends AbstractUIPlugin {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Returns the shared instance of this plug-in
+	 * Returns the shared instance of this plug-in.
 	 *
 	 * @return the shared instance
 	 */
 	public static AbroPlugin getDefault() {
 		return plugin;
-	}
-
-	//-------------------------------------------------------------------------
-
-	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 	
 }

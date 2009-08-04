@@ -38,7 +38,7 @@ public class SyncSignalResetPlugin extends Plugin {
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * The constructor of the SyncSignalReset DataComponent
+	 * The constructor of the SyncSignalReset DataComponent.
 	 */
 	public SyncSignalResetPlugin() {
 	}
@@ -68,7 +68,7 @@ public class SyncSignalResetPlugin extends Plugin {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Returns the shared instance of this plug-in
+	 * Returns the shared instance of this plug-in.
 	 *
 	 * @return the shared instance
 	 */
