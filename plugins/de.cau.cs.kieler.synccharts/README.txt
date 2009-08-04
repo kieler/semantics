@@ -23,6 +23,10 @@ Troubleshooting:
 Compile errors in freshly generated projects:
 - delete all generated projects before regeneration (make sure to really 
   remove all contents and not only the project file)
+- Make sure all dependencies to the editors are fulfilled. Check if there
+  are any errors in any of the projects in their META-INF/MANIFEST.MF files.
+  If there are missing dependencies, you need to install the corresponding
+  plug-ins.
 
 Updating the gmfgen model:
 - There are many customizations done to the gmfgen model. Hence, a pure
@@ -82,4 +86,13 @@ Files:
      Images, Classdiagrams for documentation, also linked from the wiki.
      So please don't remove or rename unless you also update the wiki page.
      
-   
+ customIcons/*
+     Custom Icons for the graphical editor. Make sure also to export this
+     folder to any application if you want to see these custom icons in
+     e.g. an RCP
+     
+ gmf-templates/*
+     Custom code generation templates for the diagram code generation from
+     the gmfgen model. They are necessary to generate custom code required
+     for some special features of the editor, e.g. Attribute Awareness and
+     other stuff.
