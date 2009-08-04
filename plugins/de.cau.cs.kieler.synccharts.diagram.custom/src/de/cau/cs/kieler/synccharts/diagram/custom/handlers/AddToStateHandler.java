@@ -144,11 +144,12 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
             class2 = StateSignalCompartment2EditPart.class;
             elementType = SyncchartsElementTypes.Signal_3003;
         }
+        /*
         else if (type.equals(VAL_VARIABLE)) {
             class1 = StateVariableCompartmentEditPart.class;
             class2 = StateVariableCompartment2EditPart.class;
             elementType = SyncchartsElementTypes.Variable_3007;
-        }
+        }*/
         else if (type.equals(VAL_SUSPENSION_TRIGGER)) {
             class1 = StateSuspensionTriggerCompartmentEditPart.class;
             class2 = StateSuspensionTriggerCompartment2EditPart.class;

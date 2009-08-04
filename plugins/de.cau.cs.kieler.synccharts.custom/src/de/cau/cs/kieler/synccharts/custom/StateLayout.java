@@ -112,9 +112,11 @@ public class StateLayout extends ConstrainedToolbarLayout {
 		if ((state.getExitActions() != null && state.getExitActions().size() > 0)) {
 			containsExitActions = true;
 		}
+		/*
 		if ((state.getVariables() != null && state.getVariables().size() > 0)) {
 			containsVariables = true;
 		}
+		*/
 		if (state.getSuspensionTrigger() != null) {
 			containsSuspensionTrigger = true;
 		}
@@ -146,54 +148,55 @@ public class StateLayout extends ConstrainedToolbarLayout {
 				int newWidth = childFigure.getPreferredSize().width;
 				int newHeight = childFigure.getPreferredSize().height;
 				// Empty compartments are not considered
-				if (child instanceof ShapeCompartmentFigure) {
-					if ((getName((ShapeCompartmentFigure) child).equals("Signal:") && (!containsSignals))
-							|| (getName((ShapeCompartmentFigure) child).equals("Variable:") && (!containsVariables))
-							|| (getName((ShapeCompartmentFigure) child).equals("OnEntryAction:") && (!containsEntryActions))
-							|| (getName((ShapeCompartmentFigure) child).equals("OnInsideAction:") && (!containsInnerActions))
-							|| (getName((ShapeCompartmentFigure) child).equals("OnExitAction:") && (!containsExitActions))
-							|| (getName((ShapeCompartmentFigure) child).equals("Suspend:") && (!containsSuspensionTrigger))
-							|| (getName((ShapeCompartmentFigure) child).equals("RegionCompartment") && (!containsRegions))) {
+				if (child instanceof ResizableCompartmentFigure) {
+				    String compartmentName = getName((ResizableCompartmentFigure)child);
+					if ((compartmentName.equals("Signal:") && (!containsSignals))
+							|| (compartmentName.equals("Variable:") && (!containsVariables))
+							|| (compartmentName.equals("OnEntryAction:") && (!containsEntryActions))
+							|| (compartmentName.equals("OnInsideAction:") && (!containsInnerActions))
+							|| (compartmentName.equals("OnExitAction:") && (!containsExitActions))
+							|| (compartmentName.equals("Suspend:") && (!containsSuspensionTrigger))
+							|| (compartmentName.equals("RegionCompartment") && (!containsRegions))) {
 						newWidth = 0;
 						newHeight = 0;
 					}
 					// Make title label invisible if the compartment is not a region compartment and has only the title label as content
-					if (getName((ShapeCompartmentFigure) child).equals("Signal:")) {
+					if (compartmentName.equals("Signal:")) {
 						if (!containsSignals) {
 							setCompartmentTitleVisibility(child, false);
 						} else {
 							setCompartmentTitleVisibility(child, true);
 						}
 					}
-					if (getName((ShapeCompartmentFigure) child).equals("Variable:")) {
+					if (compartmentName.equals("Variable:")) {
 						if (!containsVariables) {
 							setCompartmentTitleVisibility(child, false);
 						} else {
 							setCompartmentTitleVisibility(child, true);
 						}
 					}
-					if (getName((ShapeCompartmentFigure) child).equals("OnEntryAction:")) {
+					if (compartmentName.equals("OnEntryAction:")) {
 						if (!containsEntryActions) {
 							setCompartmentTitleVisibility(child, false);
 						} else {
 							setCompartmentTitleVisibility(child, true);
 						}
 					}
-					if (getName((ShapeCompartmentFigure) child).equals("OnInsideAction:")) {
+					if (compartmentName.equals("OnInsideAction:")) {
 						if (!containsInnerActions) {
 							setCompartmentTitleVisibility(child, false);
 						} else {
 							setCompartmentTitleVisibility(child, true);
 						}
 					}
-					if (getName((ShapeCompartmentFigure) child).equals("OnExitAction:")) {
+					if (compartmentName.equals("OnExitAction:")) {
 						if (!containsExitActions) {
 							setCompartmentTitleVisibility(child, false);
 						} else {
 							setCompartmentTitleVisibility(child, true);
 						}
 					}
-					if (getName((ShapeCompartmentFigure) child).equals("Suspend:")) {
+					if (compartmentName.equals("Suspend:")) {
 						if (!containsSuspensionTrigger) {
 							setCompartmentTitleVisibility(child, false);
 						} else {
@@ -268,7 +271,7 @@ public class StateLayout extends ConstrainedToolbarLayout {
 	 * @return The name of the compartment.
 	 */
 	// Method to retrieve a compartment's name
-	private String getName(ShapeCompartmentFigure child) {
+	private String getName(ResizableCompartmentFigure child) {
 		if ((child.getChildren() != null) && (child.getChildren().size() > 0)
 				&& (child.getChildren().get(0) instanceof IFigure)) {
 			IFigure rcf = (IFigure) child.getChildren().get(0);

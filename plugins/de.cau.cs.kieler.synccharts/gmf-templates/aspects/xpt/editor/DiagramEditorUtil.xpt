@@ -21,7 +21,7 @@
 		de.cau.cs.kieler.synccharts.Region root = de.cau.cs.kieler.synccharts.SyncchartsFactory.eINSTANCE.createRegion();
 		de.cau.cs.kieler.synccharts.State state = de.cau.cs.kieler.synccharts.SyncchartsFactory.eINSTANCE.createState();
 		de.cau.cs.kieler.synccharts.Region region = de.cau.cs.kieler.synccharts.SyncchartsFactory.eINSTANCE.createRegion();
-		state.setName("TOP LEVEL STATE");
+		state.setLabel("SyncChart");
 		state.getRegions().add(region);
 		root.getInnerStates().add(state);
 		return root

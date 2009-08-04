@@ -32,10 +32,11 @@ main() {
 	model.diagram.links.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] ->map customizeClassBody();
 	
 	// special settings for all compartments
-	model.diagram.childNodes.allSubobjectsOfType(GenCompartment)[GenCompartment] ->map compartmentSettings();
+	model.diagram.allSubobjectsOfType(GenCompartment)[GenCompartment] ->map compartmentSettings();
 }
 
 mapping inout GenCompartment::compartmentSettings(){
+
 	// we want to be able to collapse all compartments
 	self.canCollapse := true;
 	// do not show compartments when they are empty

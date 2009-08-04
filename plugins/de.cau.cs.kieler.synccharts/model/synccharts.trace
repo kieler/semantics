@@ -26,9 +26,6 @@
     <compartmentTraces
         visualID="7006"
         queryText="true"/>
-    <compartmentTraces
-        visualID="7007"
-        queryText="true"/>
   </nodeTraces>
   <childNodeTraces
       visualID="3001"
@@ -61,9 +58,6 @@
     <compartmentTraces
         visualID="7014"
         queryText="true"/>
-    <compartmentTraces
-        visualID="7015"
-        queryText="true"/>
   </childNodeTraces>
   <childNodeTraces
       visualID="3003"
@@ -91,13 +85,6 @@
       queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts' and _eClass_.name = 'Action') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts' and _eClass_.name = 'State') and _containmentMF_.name = 'exitActions')">
     <nodeLabelTraces
         visualID="5004"
-        queryText="true"/>
-  </childNodeTraces>
-  <childNodeTraces
-      visualID="3007"
-      queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts' and _eClass_.name = 'Variable') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts' and _eClass_.name = 'State') and _containmentMF_.name = 'variables')">
-    <nodeLabelTraces
-        visualID="5005"
         queryText="true"/>
   </childNodeTraces>
   <childNodeTraces

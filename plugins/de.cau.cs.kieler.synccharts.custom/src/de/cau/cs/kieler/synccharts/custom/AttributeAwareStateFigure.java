@@ -289,9 +289,11 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
 		if ((state.getExitActions() != null && state.getExitActions().size() > 0)) {
 			containsExitActions = true;
 		}
+		/*
 		if ((state.getVariables() != null && state.getVariables().size() > 0)) {
 			containsVariables = true;
 		}
+		*/
 		if (state.getSuspensionTrigger() != null) {
 			containsSuspensionTrigger = true;
 		}
