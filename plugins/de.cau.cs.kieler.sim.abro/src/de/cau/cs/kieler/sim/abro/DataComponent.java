@@ -23,20 +23,40 @@ import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
+/**
+ * The Class DataComponent. It implements the KIEM Extension Point
+ * for JSONObject capable DataComponents. The behavior is described
+ * in {@link AbroPlugin} and the method {@link #step(JSONObject)} 
+ * implements this behavior.
+ *
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ */
 public class DataComponent extends JSONObjectDataComponent implements
 		IJSONObjectDataComponent {
 	
+	/** The state ''wait for A''. */
 	boolean wA;
+	
+	/** The state ''wait for B'' */
 	boolean wB;
+	
+	/** The state ''done A''. */
 	boolean dA;
+	
+	/** The state ''done B'' */
 	boolean dB;
+	
+	/** The done state (got A and B). */
 	boolean done;
+	
+	/** The name of the state variable to output. */
 	String stateName;
 	
-	boolean paused; //demonstrate isPauseFlag() usage
+	//-------------------------------------------------------------------------
 	
 	/**
 	 * Instantiates a new data component.
@@ -44,6 +64,8 @@ public class DataComponent extends JSONObjectDataComponent implements
 	public DataComponent() {
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
 	 * Reset abo.
 	 */
@@ -55,6 +77,8 @@ public class DataComponent extends JSONObjectDataComponent implements
 		done = false;
 	}
 	
+	//-------------------------------------------------------------------------
+	
 	/**
 	 * Transition_w a_d a.
 	 */
@@ -63,6 +87,8 @@ public class DataComponent extends JSONObjectDataComponent implements
 		dA = true;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
 	 * Transition_w b_d b.
 	 */
@@ -71,6 +97,8 @@ public class DataComponent extends JSONObjectDataComponent implements
 		dB = true;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
 	 * Transition_done.
 	 */
@@ -78,35 +106,47 @@ public class DataComponent extends JSONObjectDataComponent implements
 		dB = false;
 		dA = false;
 		done = true;
-		paused = true;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent#step(de.cau.cs.kieler.sim.kiem.json.JSONObject)
 	 */
-	public JSONObject step(JSONObject JSONobject) {
-System.out.println("ABRO: "+ JSONobject.toString());
+	public JSONObject step(JSONObject JSONobject) 
+								throws KiemExecutionException {
 
 		JSONObject returnObj = new JSONObject();
 		try{
+			if (JSONobject.has("E")
+					&& (JSONSignalValues.isPresent(JSONobject.get("E")))) {
+				//raise sample error when signal E is present
+				throw new KiemExecutionException("Error detected!", true, null);
+			}
+
 			if (JSONobject.has("R")
 				&& (JSONSignalValues.isPresent(JSONobject.get("R")))) {
+					//reset ABO when R is present
 					resetABO();
 			}
 			else {
 				if (wA && JSONobject.has("A") 
 					&& (JSONSignalValues.isPresent(JSONobject.get("A")))) {
+					//take transition from waitA to doneA when A is present
 					transition_wA_dA();
 				}
 				if (wB && JSONobject.has("B")
 					&& (JSONSignalValues.isPresent(JSONobject.get("B")))) {
+					//take transition from waitB to doneB when B is present
 					transition_wB_dB();
 				}
 				if (dA && dB) {
+					//take normal termination if in both states doneA and doneB
 					transition_done();
 					returnObj.accumulate("O", JSONSignalValues.newValue(true));
 				}
 			}
+			//return the current state(s) ABRO is in
 			if (done) {
 				returnObj.accumulate(stateName, "done");
 			}
@@ -123,8 +163,6 @@ System.out.println("ABRO: "+ JSONobject.toString());
 			e.printStackTrace();
 		}
 		
-		//try{Thread.sleep(800);}catch(Exception e){}
-		
 		return returnObj;
 	}
 
@@ -135,43 +173,49 @@ System.out.println("ABRO: "+ JSONobject.toString());
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
 	 */
 	public void initialize() {
-		// TODO Auto-generated method stub
 		stateName = getProperties()[0].getValue();
-		System.out.println("ABRO in Java in Kieler IN ACTION :-) initialize");
+		//write some warm welcome to the console
+		System.out.println("ABRO in Java in KIELER in ACTION :-) initialize");
 		resetABO();
-		paused = false;
 	}
 
+	//-------------------------------------------------------------------------
+	
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
 	 */
 	public void wrapup() {
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
 	 */
 	public boolean isObserver() {
-		// TODO Auto-generated method stub
 		return true;
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
 	 */
 	public boolean isDeltaObserver() {
-		// TODO Auto-generated method stub
 		return true;
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
 	 */
 	public boolean isProducer() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMaster()
 	 */
@@ -180,6 +224,8 @@ System.out.println("ABRO: "+ JSONobject.toString());
 		return false;
 	}
 
+	//-------------------------------------------------------------------------
+	
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isPauseFlag()
 	 */
@@ -188,23 +234,20 @@ System.out.println("ABRO: "+ JSONobject.toString());
 		return false;
 	}
 	
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#commandPause()
-	 */
-	@Override
-	public void commandPause() {
-		paused = false;
-	}
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideInterfaceVariables()
 	 */
 	@Override
 	public String[] provideInterfaceVariables() {
-		String[] signals = {getProperties()[0].getValue(), "A", "B", "R", "O"}; 
+		String[] signals = {getProperties()[0].getValue(), 
+													"A", "B", "R", "O", "E"}; 
 		return signals;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMultiInstantiable()
 	 */
@@ -212,6 +255,8 @@ System.out.println("ABRO: "+ JSONobject.toString());
 	public boolean isMultiInstantiable() {
 		return true;
 	}
+
+	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideProperties()
@@ -248,11 +293,14 @@ System.out.println("ABRO: "+ JSONobject.toString());
 		return properties;
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#checkProperties(de.cau.cs.kieler.sim.kiem.data.KiemProperty[])
 	 */
 	@Override
-	public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
+	public void checkProperties(KiemProperty[] properties) 
+												throws KiemPropertyException {
 		if (properties[0].getValue().trim().length() == 0) {
 			throw new KiemPropertyException("The state name cannot be empty!");
 		}

@@ -19,21 +19,37 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The basic activator class controls the ABRO plug-in's life cycle.
+ * It illustrates the famous ABRO example, the "hello world" of the
+ * synchronous world. It is simply a Java plug-in implementing an 
+ * observing and producing DataComponent that reacts to signals 
+ * A, B, R with producing a present signal O whenever signal A and B
+ * just became present (in any order or even at the same time). The 
+ * state chart (or more specifically syncchart) then goes into the done
+ * state and is reset by signal R, i.e. it becomes ready and again waits
+ * for signals A and B. The strong abortion of the reset transition 
+ * indicates that whenever R is present, in the same tick no O will be
+ * produced. 
+ *
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
-public class Activator extends AbstractUIPlugin {
+public class AbroPlugin extends AbstractUIPlugin {
 
-	// The plug-in ID
+	/** The Constant PLUGIN_ID. */
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.abro";
 
-	// The shared instance
-	private static Activator plugin;
+	/** The plugin. */
+	private static AbroPlugin plugin;
+	
+	//-------------------------------------------------------------------------
 	
 	/**
-	 * The constructor
+	 * The constructor of the ABRO plugin
 	 */
-	public Activator() {
+	public AbroPlugin() {
 	}
+
+	//-------------------------------------------------------------------------
 
 	/*
 	 * (non-Javadoc)
@@ -44,6 +60,8 @@ public class Activator extends AbstractUIPlugin {
 		plugin = this;
 	}
 
+	//-------------------------------------------------------------------------
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
@@ -53,14 +71,18 @@ public class Activator extends AbstractUIPlugin {
 		super.stop(context);
 	}
 
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Returns the shared instance
+	 * Returns the shared instance of this plug-in
 	 *
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static AbroPlugin getDefault() {
 		return plugin;
 	}
+
+	//-------------------------------------------------------------------------
 
 	/**
 	 * Returns an image descriptor for the image file at the given
@@ -72,4 +94,5 @@ public class Activator extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
+	
 }
