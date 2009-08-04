@@ -36,13 +36,18 @@
 			<!-- If you don't want to use the Antlr fragment for some reason, remove the antlr fragment and uncomment the packrat parser fragment below.
 			<fragment class="org.eclipse.xtext.generator.parser.PackratParserFragment"/>
 			 -->
-	
+	        
+	        <!-- @modified(oba) add Check based validation fragment -->
+			<fragment class=
+  				"org.eclipse.xtext.generator.validation.CheckFragment"/>
 			
 			<!-- java-based API for validation -->
 			<fragment class="org.eclipse.xtext.generator.validation.JavaValidatorFragment">
                 <composedCheck value="org.eclipse.xtext.validation.ImportUriValidator"/>
             </fragment>
-			
+            
+
+   						
             
 			<!-- scoping API -->
 			<fragment class="org.eclipse.xtext.generator.scoping.JavaScopingFragment"/>

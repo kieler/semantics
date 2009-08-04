@@ -9,20 +9,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateKind" eType="#//StateType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="stateContent" eType="#//StateContent"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StateContent">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="exitActions" upperBound="-1"
-        eType="#//Action" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="entryActions" upperBound="-1"
-        eType="#//Action" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="innerAction" upperBound="-1"
-        eType="#//Action" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="innerStates" upperBound="-1"
-        eType="#//State" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parallelStates" upperBound="-1"
-        eType="#//State" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="StateType">
     <eLiterals name="NORMAL" literal="NORMAL"/>

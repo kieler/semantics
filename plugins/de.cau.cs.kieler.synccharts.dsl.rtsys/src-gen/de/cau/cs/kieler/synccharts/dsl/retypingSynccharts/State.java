@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts;
 
@@ -20,7 +21,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateKind <em>State Kind</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateName <em>State Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getLabel <em>Label</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateContent <em>State Content</em>}</li>
  * </ul>
  * </p>
  *
@@ -162,31 +162,5 @@ public interface State extends EObject
    * @generated
    */
   void setLabel(String value);
-
-  /**
-   * Returns the value of the '<em><b>State Content</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>State Content</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>State Content</em>' containment reference.
-   * @see #setStateContent(StateContent)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_StateContent()
-   * @model containment="true"
-   * @generated
-   */
-  StateContent getStateContent();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateContent <em>State Content</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>State Content</em>' containment reference.
-   * @see #getStateContent()
-   * @generated
-   */
-  void setStateContent(StateContent value);
 
 } // State

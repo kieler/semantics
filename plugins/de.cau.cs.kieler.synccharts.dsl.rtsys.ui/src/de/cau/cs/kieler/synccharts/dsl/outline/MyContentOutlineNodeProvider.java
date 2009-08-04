@@ -13,4 +13,6 @@ public class MyContentOutlineNodeProvider implements Provider<ContentOutlineNode
 		return providedContentOutlineNode;
 	}
 
+	
+	
 }

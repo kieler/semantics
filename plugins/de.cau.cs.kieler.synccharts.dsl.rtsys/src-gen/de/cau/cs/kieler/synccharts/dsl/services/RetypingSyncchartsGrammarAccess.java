@@ -118,8 +118,6 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final RuleCall cStateNameIDTerminalRuleCall_2_0 = (RuleCall)cStateNameAssignment_2.eContents().get(0);
 		private final Assignment cLabelAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_3_0 = (RuleCall)cLabelAssignment_3.eContents().get(0);
-		private final Assignment cStateContentAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cStateContentStateContentParserRuleCall_4_0 = (RuleCall)cStateContentAssignment_4.eContents().get(0);
 		
 		//State:
 		//  (isInitial?="init"|isInitial?="init" isFinal?="final"|isInitial?="init" stateKind=
@@ -131,7 +129,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//  ?="final"|isFinal?="final" isInitial?="init" stateKind=StateType|isFinal?="final"
 		//  stateKind=StateType isInitial?="init"|stateKind=StateType isInitial?="init" isFinal
 		//  ?="final"|stateKind=StateType isFinal?="final" isInitial?="init")? "state"?
-		//  stateName=ID label=STRING? stateContent=StateContent?; 
+		//  stateName=ID? label=STRING?; 
 		////StateList:
 		////	(states+=State)*
 		////;
@@ -164,8 +162,20 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//    // optional keyword, cf.Meeting_TextualSyntax-II
 		//     //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 		//    
-		//  
-		//  //	(outgoingTransitions+=Transition)*
+		////  (stateContent=StateContent)?
+		//   //	(outgoingTransitions+=Transition)*
+		// 
+		////StateContent:
+		////	'{'
+		//////	(regions+=Region)*
+		////	(		(exitActions+=ExitAction )
+		////		| 	(entryActions+=EntryAction)
+		////		| 	(innerAction+=InnerAction)
+		//////		| 	(signalsAndVariables+=ValuedObject)?
+		////		|	(innerStates+=State	('||' parallelStates+=State)*)
+		////	)+	
+		////	'}'
+		////;
 		public ParserRule getRule() { return rule; }
 
 		//(isInitial?="init"|isInitial?="init" isFinal?="final"|isInitial?="init" stateKind=
@@ -177,7 +187,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//?="final"|isFinal?="final" isInitial?="init" stateKind=StateType|isFinal?="final"
 		//stateKind=StateType isInitial?="init"|stateKind=StateType isInitial?="init" isFinal
 		//?="final"|stateKind=StateType isFinal?="final" isInitial?="init")? "state"?
-		//stateName=ID label=STRING? stateContent=StateContent? 
+		//stateName=ID? label=STRING? 
 		////!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
 		//   //((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*
 		//   // you have to list all possible combinations seperately 
@@ -205,8 +215,8 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//    // optional keyword, cf.Meeting_TextualSyntax-II
 		//     //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 		//    
-		//  
-		//  //	(outgoingTransitions+=Transition)*
+		////  (stateContent=StateContent)?
+		//   //	(outgoingTransitions+=Transition)*
 		public Group getGroup() { return cGroup; }
 
 		//(isInitial?="init"|isInitial?="init" isFinal?="final"|isInitial?="init" stateKind=
@@ -504,7 +514,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//"state"?
 		public Keyword getStateKeyword_1() { return cStateKeyword_1; }
 
-		//stateName=ID
+		//stateName=ID?
 		public Assignment getStateNameAssignment_2() { return cStateNameAssignment_2; }
 
 		//ID
@@ -515,111 +525,6 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 
 		//STRING
 		public RuleCall getLabelSTRINGTerminalRuleCall_3_0() { return cLabelSTRINGTerminalRuleCall_3_0; }
-
-		//stateContent=StateContent?
-		public Assignment getStateContentAssignment_4() { return cStateContentAssignment_4; }
-
-		//StateContent
-		public RuleCall getStateContentStateContentParserRuleCall_4_0() { return cStateContentStateContentParserRuleCall_4_0; }
-	}
-
-	public class StateContentElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "StateContent");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Assignment cExitActionsAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
-		private final RuleCall cExitActionsExitActionParserRuleCall_1_0_0 = (RuleCall)cExitActionsAssignment_1_0.eContents().get(0);
-		private final Assignment cEntryActionsAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
-		private final RuleCall cEntryActionsEntryActionParserRuleCall_1_1_0 = (RuleCall)cEntryActionsAssignment_1_1.eContents().get(0);
-		private final Assignment cInnerActionAssignment_1_2 = (Assignment)cAlternatives_1.eContents().get(2);
-		private final RuleCall cInnerActionInnerActionParserRuleCall_1_2_0 = (RuleCall)cInnerActionAssignment_1_2.eContents().get(0);
-		private final Group cGroup_1_3 = (Group)cAlternatives_1.eContents().get(3);
-		private final Assignment cInnerStatesAssignment_1_3_0 = (Assignment)cGroup_1_3.eContents().get(0);
-		private final RuleCall cInnerStatesStateParserRuleCall_1_3_0_0 = (RuleCall)cInnerStatesAssignment_1_3_0.eContents().get(0);
-		private final Group cGroup_1_3_1 = (Group)cGroup_1_3.eContents().get(1);
-		private final Keyword cVerticalLineVerticalLineKeyword_1_3_1_0 = (Keyword)cGroup_1_3_1.eContents().get(0);
-		private final Assignment cParallelStatesAssignment_1_3_1_1 = (Assignment)cGroup_1_3_1.eContents().get(1);
-		private final RuleCall cParallelStatesStateParserRuleCall_1_3_1_1_0 = (RuleCall)cParallelStatesAssignment_1_3_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		
-		//StateContent:
-		//  "{" (exitActions+=ExitAction|entryActions+=EntryAction|innerAction+=InnerAction|
-		//  innerStates+=State ("||" parallelStates+=State)*)+ "}";  
-		//
-		//	
-		////	(regions+=Region)*
-		//	 		   
-		//		 	 
-		//		 	 
-		////		| 	(signalsAndVariables+=ValuedObject)?
-		public ParserRule getRule() { return rule; }
-
-		//"{" (exitActions+=ExitAction|entryActions+=EntryAction|innerAction+=InnerAction|
-		//innerStates+=State ("||" parallelStates+=State)*)+ "}" 
-		//	
-		////	(regions+=Region)*
-		//	 		   
-		//		 	 
-		//		 	 
-		////		| 	(signalsAndVariables+=ValuedObject)?
-		public Group getGroup() { return cGroup; }
-
-		//"{" 
-		//	
-		////	(regions+=Region)*
-		public Keyword getLeftCurlyBracketKeyword_0() { return cLeftCurlyBracketKeyword_0; }
-
-		//(exitActions+=ExitAction|entryActions+=EntryAction|innerAction+=InnerAction|
-		//innerStates+=State ("||" parallelStates+=State)*)+ 
-		////	(regions+=Region)*
-		//	 		   
-		//		 	 
-		//		 	 
-		////		| 	(signalsAndVariables+=ValuedObject)?
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
-
-		//exitActions+=ExitAction
-		public Assignment getExitActionsAssignment_1_0() { return cExitActionsAssignment_1_0; }
-
-		//ExitAction
-		public RuleCall getExitActionsExitActionParserRuleCall_1_0_0() { return cExitActionsExitActionParserRuleCall_1_0_0; }
-
-		//entryActions+=EntryAction
-		public Assignment getEntryActionsAssignment_1_1() { return cEntryActionsAssignment_1_1; }
-
-		//EntryAction
-		public RuleCall getEntryActionsEntryActionParserRuleCall_1_1_0() { return cEntryActionsEntryActionParserRuleCall_1_1_0; }
-
-		//innerAction+=InnerAction
-		public Assignment getInnerActionAssignment_1_2() { return cInnerActionAssignment_1_2; }
-
-		//InnerAction
-		public RuleCall getInnerActionInnerActionParserRuleCall_1_2_0() { return cInnerActionInnerActionParserRuleCall_1_2_0; }
-
-		//innerStates+=State ("||" parallelStates+=State)*
-		public Group getGroup_1_3() { return cGroup_1_3; }
-
-		//innerStates+=State
-		public Assignment getInnerStatesAssignment_1_3_0() { return cInnerStatesAssignment_1_3_0; }
-
-		//State
-		public RuleCall getInnerStatesStateParserRuleCall_1_3_0_0() { return cInnerStatesStateParserRuleCall_1_3_0_0; }
-
-		//("||" parallelStates+=State)*
-		public Group getGroup_1_3_1() { return cGroup_1_3_1; }
-
-		//"||"
-		public Keyword getVerticalLineVerticalLineKeyword_1_3_1_0() { return cVerticalLineVerticalLineKeyword_1_3_1_0; }
-
-		//parallelStates+=State
-		public Assignment getParallelStatesAssignment_1_3_1_1() { return cParallelStatesAssignment_1_3_1_1; }
-
-		//State
-		public RuleCall getParallelStatesStateParserRuleCall_1_3_1_1_0() { return cParallelStatesStateParserRuleCall_1_3_1_1_0; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_2() { return cRightCurlyBracketKeyword_2; }
 	}
 
 	public class EntryActionElements implements IParserRuleAccess {
@@ -856,7 +761,18 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final Keyword cTEXTUALTextualKeyword_3_0 = (Keyword)cTEXTUALEnumLiteralDeclaration_3.eContents().get(0);
 		
 		//enum StateType:
-		//  NORMAL | PSEUDO="cond" | REFERENCE="reference" | TEXTUAL="textual"; 
+		//  NORMAL | PSEUDO="cond" | REFERENCE="reference" | TEXTUAL="textual";  
+		////StateContent:
+		////	'{'
+		//////	(regions+=Region)*
+		////	(		(exitActions+=ExitAction )
+		////		| 	(entryActions+=EntryAction)
+		////		| 	(innerAction+=InnerAction)
+		//////		| 	(signalsAndVariables+=ValuedObject)?
+		////		|	(innerStates+=State	('||' parallelStates+=State)*)
+		////	)+	
+		////	'}'
+		////;
 		//
 		//
 		//  
@@ -866,7 +782,18 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		////////;
 		public EnumRule getRule() { return rule; }
 
-		//NORMAL | PSEUDO="cond" | REFERENCE="reference" | TEXTUAL="textual" 
+		//NORMAL | PSEUDO="cond" | REFERENCE="reference" | TEXTUAL="textual"  
+		////StateContent:
+		////	'{'
+		//////	(regions+=Region)*
+		////	(		(exitActions+=ExitAction )
+		////		| 	(entryActions+=EntryAction)
+		////		| 	(innerAction+=InnerAction)
+		//////		| 	(signalsAndVariables+=ValuedObject)?
+		////		|	(innerStates+=State	('||' parallelStates+=State)*)
+		////	)+	
+		////	'}'
+		////;
 		//
 		//
 		//  
@@ -902,7 +829,6 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	}
 	
 	private StateElements pState;
-	private StateContentElements pStateContent;
 	private StateTypeElements unknownRuleStateType;
 	private EntryActionElements pEntryAction;
 	private ExitActionElements pExitAction;
@@ -939,7 +865,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	//  ?="final"|isFinal?="final" isInitial?="init" stateKind=StateType|isFinal?="final"
 	//  stateKind=StateType isInitial?="init"|stateKind=StateType isInitial?="init" isFinal
 	//  ?="final"|stateKind=StateType isFinal?="final" isInitial?="init")? "state"?
-	//  stateName=ID label=STRING? stateContent=StateContent?; 
+	//  stateName=ID? label=STRING?; 
 	////StateList:
 	////	(states+=State)*
 	////;
@@ -972,8 +898,20 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	//    // optional keyword, cf.Meeting_TextualSyntax-II
 	//     //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 	//    
-	//  
-	//  //	(outgoingTransitions+=Transition)*
+	////  (stateContent=StateContent)?
+	//   //	(outgoingTransitions+=Transition)*
+	// 
+	////StateContent:
+	////	'{'
+	//////	(regions+=Region)*
+	////	(		(exitActions+=ExitAction )
+	////		| 	(entryActions+=EntryAction)
+	////		| 	(innerAction+=InnerAction)
+	//////		| 	(signalsAndVariables+=ValuedObject)?
+	////		|	(innerStates+=State	('||' parallelStates+=State)*)
+	////	)+	
+	////	'}'
+	////;
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
 	}
@@ -982,26 +920,19 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		return getStateAccess().getRule();
 	}
 
-	//StateContent:
-	//  "{" (exitActions+=ExitAction|entryActions+=EntryAction|innerAction+=InnerAction|
-	//  innerStates+=State ("||" parallelStates+=State)*)+ "}";  
-	//
-	//	
-	////	(regions+=Region)*
-	//	 		   
-	//		 	 
-	//		 	 
-	////		| 	(signalsAndVariables+=ValuedObject)?
-	public StateContentElements getStateContentAccess() {
-		return (pStateContent != null) ? pStateContent : (pStateContent = new StateContentElements());
-	}
-	
-	public ParserRule getStateContentRule() {
-		return getStateContentAccess().getRule();
-	}
-
 	//enum StateType:
-	//  NORMAL | PSEUDO="cond" | REFERENCE="reference" | TEXTUAL="textual"; 
+	//  NORMAL | PSEUDO="cond" | REFERENCE="reference" | TEXTUAL="textual";  
+	////StateContent:
+	////	'{'
+	//////	(regions+=Region)*
+	////	(		(exitActions+=ExitAction )
+	////		| 	(entryActions+=EntryAction)
+	////		| 	(innerAction+=InnerAction)
+	//////		| 	(signalsAndVariables+=ValuedObject)?
+	////		|	(innerStates+=State	('||' parallelStates+=State)*)
+	////	)+	
+	////	'}'
+	////;
 	//
 	//
 	//  

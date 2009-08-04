@@ -34,27 +34,6 @@
       <genFeatures createChild="false">
         <ecoreFeature xsi:type="ecore:EAttribute" href="RetypingSynccharts.ecore#//State/label"/>
       </genFeatures>
-      <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="RetypingSynccharts.ecore#//State/stateContent"/>
-      </genFeatures>
-    </genClasses>
-    <genClasses>
-      <ecoreClass href="RetypingSynccharts.ecore#//StateContent"/>
-      <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="RetypingSynccharts.ecore#//StateContent/exitActions"/>
-      </genFeatures>
-      <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="RetypingSynccharts.ecore#//StateContent/entryActions"/>
-      </genFeatures>
-      <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="RetypingSynccharts.ecore#//StateContent/innerAction"/>
-      </genFeatures>
-      <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="RetypingSynccharts.ecore#//StateContent/innerStates"/>
-      </genFeatures>
-      <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="RetypingSynccharts.ecore#//StateContent/parallelStates"/>
-      </genFeatures>
     </genClasses>
     <genClasses>
       <ecoreClass href="RetypingSynccharts.ecore#//Action"/>

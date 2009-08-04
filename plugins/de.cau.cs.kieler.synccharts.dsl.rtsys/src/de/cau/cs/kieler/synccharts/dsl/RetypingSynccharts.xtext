@@ -61,22 +61,22 @@ State:
   )?
   
   ('state')? // optional keyword, cf.Meeting_TextualSyntax-II
-  (stateName=ID) //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+  (stateName=ID)? //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
   (label=STRING)? 
-  (stateContent=StateContent)?
+//  (stateContent=StateContent)?
   //	(outgoingTransitions+=Transition)*
 ; 
-StateContent:
-	'{'
-//	(regions+=Region)*
-	(		(exitActions+=ExitAction )
-		| 	(entryActions+=EntryAction)
-		| 	(innerAction+=InnerAction)
-//		| 	(signalsAndVariables+=ValuedObject)?
-		|	(innerStates+=State	('||' parallelStates+=State)*)
-	)+	
-	'}'
-;
+//StateContent:
+//	'{'
+////	(regions+=Region)*
+//	(		(exitActions+=ExitAction )
+//		| 	(entryActions+=EntryAction)
+//		| 	(innerAction+=InnerAction)
+////		| 	(signalsAndVariables+=ValuedObject)?
+//		|	(innerStates+=State	('||' parallelStates+=State)*)
+//	)+	
+//	'}'
+//;
 
 
 enum StateType:

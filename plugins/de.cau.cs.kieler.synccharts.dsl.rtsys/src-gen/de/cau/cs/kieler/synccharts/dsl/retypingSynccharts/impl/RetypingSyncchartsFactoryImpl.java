@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl;
 
@@ -69,7 +70,6 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
     switch (eClass.getClassifierID())
     {
       case RetypingSyncchartsPackage.STATE: return createState();
-      case RetypingSyncchartsPackage.STATE_CONTENT: return createStateContent();
       case RetypingSyncchartsPackage.ACTION: return createAction();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -119,17 +119,6 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
   {
     StateImpl state = new StateImpl();
     return state;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public StateContent createStateContent()
-  {
-    StateContentImpl stateContent = new StateContentImpl();
-    return stateContent;
   }
 
   /**

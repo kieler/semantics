@@ -33,10 +33,9 @@ protected class ThisRootNode extends RootToken {
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new State_Group(this, this, 0, inst);
-			case 1: return new StateContent_Group(this, this, 1, inst);
-			case 2: return new EntryAction_Group(this, this, 2, inst);
-			case 3: return new ExitAction_Group(this, this, 3, inst);
-			case 4: return new InnerAction_Group(this, this, 4, inst);
+			case 1: return new EntryAction_Group(this, this, 1, inst);
+			case 2: return new ExitAction_Group(this, this, 2, inst);
+			case 3: return new InnerAction_Group(this, this, 3, inst);
 			default: return null;
 		}	
 	}	
@@ -55,7 +54,7 @@ protected class ThisRootNode extends RootToken {
  *   ?="final"|isFinal?="final" isInitial?="init" stateKind=StateType|isFinal?="final"
  *   stateKind=StateType isInitial?="init"|stateKind=StateType isInitial?="init" isFinal
  *   ?="final"|stateKind=StateType isFinal?="final" isInitial?="init")? "state"?
- *   stateName=ID label=STRING? stateContent=StateContent?; 
+ *   stateName=ID? label=STRING?; 
  * //StateList:
  * //	(states+=State)*
  * //;
@@ -88,8 +87,20 @@ protected class ThisRootNode extends RootToken {
  *     // optional keyword, cf.Meeting_TextualSyntax-II
  *      //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
  *     
- *   
- *   //	(outgoingTransitions+=Transition)*
+ * //  (stateContent=StateContent)?
+ *    //	(outgoingTransitions+=Transition)*
+ *  
+ * //StateContent:
+ * //	'{'
+ * ////	(regions+=Region)*
+ * //	(		(exitActions+=ExitAction )
+ * //		| 	(entryActions+=EntryAction)
+ * //		| 	(innerAction+=InnerAction)
+ * ////		| 	(signalsAndVariables+=ValuedObject)?
+ * //		|	(innerStates+=State	('||' parallelStates+=State)*)
+ * //	)+	
+ * //	'}'
+ * //;
  *
  **/
 
@@ -102,7 +113,7 @@ protected class ThisRootNode extends RootToken {
 // ?="final"|isFinal?="final" isInitial?="init" stateKind=StateType|isFinal?="final"
 // stateKind=StateType isInitial?="init"|stateKind=StateType isInitial?="init" isFinal
 // ?="final"|stateKind=StateType isFinal?="final" isInitial?="init")? "state"?
-// stateName=ID label=STRING? stateContent=StateContent? 
+// stateName=ID? label=STRING? 
 // //!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
 //    //((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*
 //    // you have to list all possible combinations seperately 
@@ -130,8 +141,8 @@ protected class ThisRootNode extends RootToken {
 //     // optional keyword, cf.Meeting_TextualSyntax-II
 //      //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 //     
-//   
-//   //	(outgoingTransitions+=Transition)*
+// //  (stateContent=StateContent)?
+//    //	(outgoingTransitions+=Transition)*
 protected class State_Group extends GroupToken {
 	
 	public State_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -144,9 +155,10 @@ protected class State_Group extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_StateContentAssignment_4(parent, this, 0, inst);
-			case 1: return new State_LabelAssignment_3(parent, this, 1, inst);
-			case 2: return new State_StateNameAssignment_2(parent, this, 2, inst);
+			case 0: return new State_LabelAssignment_3(parent, this, 0, inst);
+			case 1: return new State_StateNameAssignment_2(parent, this, 1, inst);
+			case 2: return new State_StateKeyword_1(parent, this, 2, inst);
+			case 3: return new State_Alternatives_0(parent, this, 3, inst);
 			default: return null;
 		}	
 	}	
@@ -1713,7 +1725,7 @@ protected class State_StateKeyword_1 extends KeywordToken  {
 		
 }
 
-// stateName=ID
+// stateName=ID?
 protected class State_StateNameAssignment_2 extends AssignmentToken  {
 	
 	public State_StateNameAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1733,7 +1745,7 @@ protected class State_StateNameAssignment_2 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("stateName",true)) == null) return null;
+		if((value = current.getConsumable("stateName",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("stateName");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
@@ -1759,7 +1771,9 @@ protected class State_LabelAssignment_3 extends AssignmentToken  {
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new State_StateNameAssignment_2(parent, this, 0, inst);
-			default: return null;
+			case 1: return new State_StateKeyword_1(parent, this, 1, inst);
+			case 2: return new State_Alternatives_0(parent, this, 2, inst);
+			default: return parent.createParentFollower(this, index, index - 3, inst);
 		}	
 	}	
 		
@@ -1776,450 +1790,8 @@ protected class State_LabelAssignment_3 extends AssignmentToken  {
 
 }
 
-// stateContent=StateContent?
-protected class State_StateContentAssignment_4 extends AssignmentToken  {
-	
-	public State_StateContentAssignment_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateContentAssignment_4();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateContent_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("stateContent",false)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("stateContent");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getStateContentRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getStateAccess().getStateContentStateContentParserRuleCall_4_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new State_LabelAssignment_3(parent, next, actIndex, consumed);
-			case 1: return new State_StateNameAssignment_2(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
 
 /************ end Rule State ****************/
-
-
-/************ begin Rule StateContent ****************
- *
- * StateContent:
- *   "{" (exitActions+=ExitAction|entryActions+=EntryAction|innerAction+=InnerAction|
- *   innerStates+=State ("||" parallelStates+=State)*)+ "}";  
- * 
- * 	
- * //	(regions+=Region)*
- * 	 		   
- * 		 	 
- * 		 	 
- * //		| 	(signalsAndVariables+=ValuedObject)?
- *
- **/
-
-// "{" (exitActions+=ExitAction|entryActions+=EntryAction|innerAction+=InnerAction|
-// innerStates+=State ("||" parallelStates+=State)*)+ "}" 
-// 	
-// //	(regions+=Region)*
-// 	 		   
-// 		 	 
-// 		 	 
-// //		| 	(signalsAndVariables+=ValuedObject)?
-protected class StateContent_Group extends GroupToken {
-	
-	public StateContent_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Group getGrammarElement() {
-		return grammarAccess.getStateContentAccess().getGroup();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateContent_RightCurlyBracketKeyword_2(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	public IInstanceDescription tryConsume() {
-		if(!current.isInstanceOf(grammarAccess.getStateContentRule().getType().getClassifier())) return null;
-		return tryConsumeVal();
-	}
-}
-
-// "{" 
-// 	
-// //	(regions+=Region)*
-protected class StateContent_LeftCurlyBracketKeyword_0 extends KeywordToken  {
-	
-	public StateContent_LeftCurlyBracketKeyword_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getStateContentAccess().getLeftCurlyBracketKeyword_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-}
-
-// (exitActions+=ExitAction|entryActions+=EntryAction|innerAction+=InnerAction|
-// innerStates+=State ("||" parallelStates+=State)*)+ 
-// //	(regions+=Region)*
-// 	 		   
-// 		 	 
-// 		 	 
-// //		| 	(signalsAndVariables+=ValuedObject)?
-protected class StateContent_Alternatives_1 extends AlternativesToken {
-
-	public StateContent_Alternatives_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Alternatives getGrammarElement() {
-		return grammarAccess.getStateContentAccess().getAlternatives_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateContent_ExitActionsAssignment_1_0(parent, this, 0, inst);
-			case 1: return new StateContent_EntryActionsAssignment_1_1(parent, this, 1, inst);
-			case 2: return new StateContent_InnerActionAssignment_1_2(parent, this, 2, inst);
-			case 3: return new StateContent_Group_1_3(parent, this, 3, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// exitActions+=ExitAction
-protected class StateContent_ExitActionsAssignment_1_0 extends AssignmentToken  {
-	
-	public StateContent_ExitActionsAssignment_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateContentAccess().getExitActionsAssignment_1_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new ExitAction_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("exitActions",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("exitActions");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getExitActionRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getStateContentAccess().getExitActionsExitActionParserRuleCall_1_0_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new StateContent_Alternatives_1(parent, next, actIndex, consumed);
-			case 1: return new StateContent_LeftCurlyBracketKeyword_0(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-// entryActions+=EntryAction
-protected class StateContent_EntryActionsAssignment_1_1 extends AssignmentToken  {
-	
-	public StateContent_EntryActionsAssignment_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateContentAccess().getEntryActionsAssignment_1_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new EntryAction_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("entryActions",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("entryActions");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getEntryActionRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getStateContentAccess().getEntryActionsEntryActionParserRuleCall_1_1_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new StateContent_Alternatives_1(parent, next, actIndex, consumed);
-			case 1: return new StateContent_LeftCurlyBracketKeyword_0(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-// innerAction+=InnerAction
-protected class StateContent_InnerActionAssignment_1_2 extends AssignmentToken  {
-	
-	public StateContent_InnerActionAssignment_1_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateContentAccess().getInnerActionAssignment_1_2();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new InnerAction_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("innerAction",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("innerAction");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getInnerActionRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getStateContentAccess().getInnerActionInnerActionParserRuleCall_1_2_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new StateContent_Alternatives_1(parent, next, actIndex, consumed);
-			case 1: return new StateContent_LeftCurlyBracketKeyword_0(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-// innerStates+=State ("||" parallelStates+=State)*
-protected class StateContent_Group_1_3 extends GroupToken {
-	
-	public StateContent_Group_1_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Group getGrammarElement() {
-		return grammarAccess.getStateContentAccess().getGroup_1_3();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateContent_Group_1_3_1(parent, this, 0, inst);
-			case 1: return new StateContent_InnerStatesAssignment_1_3_0(parent, this, 1, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// innerStates+=State
-protected class StateContent_InnerStatesAssignment_1_3_0 extends AssignmentToken  {
-	
-	public StateContent_InnerStatesAssignment_1_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateContentAccess().getInnerStatesAssignment_1_3_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("innerStates",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("innerStates");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getStateRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getStateContentAccess().getInnerStatesStateParserRuleCall_1_3_0_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new StateContent_Alternatives_1(parent, next, actIndex, consumed);
-			case 1: return new StateContent_LeftCurlyBracketKeyword_0(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-// ("||" parallelStates+=State)*
-protected class StateContent_Group_1_3_1 extends GroupToken {
-	
-	public StateContent_Group_1_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Group getGrammarElement() {
-		return grammarAccess.getStateContentAccess().getGroup_1_3_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateContent_ParallelStatesAssignment_1_3_1_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// "||"
-protected class StateContent_VerticalLineVerticalLineKeyword_1_3_1_0 extends KeywordToken  {
-	
-	public StateContent_VerticalLineVerticalLineKeyword_1_3_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getStateContentAccess().getVerticalLineVerticalLineKeyword_1_3_1_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateContent_Group_1_3_1(parent, this, 0, inst);
-			case 1: return new StateContent_InnerStatesAssignment_1_3_0(parent, this, 1, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// parallelStates+=State
-protected class StateContent_ParallelStatesAssignment_1_3_1_1 extends AssignmentToken  {
-	
-	public StateContent_ParallelStatesAssignment_1_3_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateContentAccess().getParallelStatesAssignment_1_3_1_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("parallelStates",false)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("parallelStates");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getStateRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getStateContentAccess().getParallelStatesStateParserRuleCall_1_3_1_1_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new StateContent_VerticalLineVerticalLineKeyword_1_3_1_0(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-
-
-
-// "}"
-protected class StateContent_RightCurlyBracketKeyword_2 extends KeywordToken  {
-	
-	public StateContent_RightCurlyBracketKeyword_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getStateContentAccess().getRightCurlyBracketKeyword_2();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new StateContent_Alternatives_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-
-/************ end Rule StateContent ****************/
 
 
 /************ begin Rule EntryAction ****************

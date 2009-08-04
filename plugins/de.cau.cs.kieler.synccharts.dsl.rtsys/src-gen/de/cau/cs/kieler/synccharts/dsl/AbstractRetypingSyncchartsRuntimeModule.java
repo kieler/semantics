@@ -58,6 +58,26 @@ public abstract class AbstractRetypingSyncchartsRuntimeModule extends DefaultRun
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
+	// contributed by org.eclipse.xtext.generator.validation.CheckFragment
+	public Class<? extends org.eclipse.xtend.expression.ExecutionContext> bindExecutionContext() {
+		return org.eclipse.xtext.xtend.InjectableExecutionContext.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.validation.CheckFragment
+	public Class<? extends org.eclipse.xtend.expression.ResourceManager> bindResourceManager() {
+		return org.eclipse.xtext.xtend.InjectableResourceManager.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.validation.CheckFragment
+	public java.lang.ClassLoader bindClassLoaderToInstance() {
+		return AbstractRetypingSyncchartsRuntimeModule.class.getClassLoader();
+	}
+
+	// contributed by org.eclipse.xtext.generator.validation.CheckFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.synccharts.dsl.validation.RetypingSyncchartsCheckValidator> bindRetypingSyncchartsCheckValidator() {
+		return de.cau.cs.kieler.synccharts.dsl.validation.RetypingSyncchartsCheckValidator.class;
+	}
+
 	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
 	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.synccharts.dsl.validation.RetypingSyncchartsJavaValidator> bindRetypingSyncchartsJavaValidator() {
 		return de.cau.cs.kieler.synccharts.dsl.validation.RetypingSyncchartsJavaValidator.class;

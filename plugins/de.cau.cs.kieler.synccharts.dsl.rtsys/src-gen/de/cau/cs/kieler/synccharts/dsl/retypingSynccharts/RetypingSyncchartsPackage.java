@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts;
 
@@ -9,7 +10,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -116,86 +116,13 @@ public interface RetypingSyncchartsPackage extends EPackage
   int STATE__LABEL = 4;
 
   /**
-   * The feature id for the '<em><b>State Content</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE__STATE_CONTENT = 5;
-
-  /**
    * The number of structural features of the '<em>State</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE_FEATURE_COUNT = 6;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateContentImpl <em>State Content</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateContentImpl
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getStateContent()
-   * @generated
-   */
-  int STATE_CONTENT = 1;
-
-  /**
-   * The feature id for the '<em><b>Exit Actions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_CONTENT__EXIT_ACTIONS = 0;
-
-  /**
-   * The feature id for the '<em><b>Entry Actions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_CONTENT__ENTRY_ACTIONS = 1;
-
-  /**
-   * The feature id for the '<em><b>Inner Action</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_CONTENT__INNER_ACTION = 2;
-
-  /**
-   * The feature id for the '<em><b>Inner States</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_CONTENT__INNER_STATES = 3;
-
-  /**
-   * The feature id for the '<em><b>Parallel States</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_CONTENT__PARALLEL_STATES = 4;
-
-  /**
-   * The number of structural features of the '<em>State Content</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_CONTENT_FEATURE_COUNT = 5;
+  int STATE_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl <em>Action</em>}' class.
@@ -205,7 +132,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getAction()
    * @generated
    */
-  int ACTION = 2;
+  int ACTION = 1;
 
   /**
    * The feature id for the '<em><b>Entry Action</b></em>' attribute.
@@ -251,7 +178,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getStateType()
    * @generated
    */
-  int STATE_TYPE = 3;
+  int STATE_TYPE = 2;
 
 
   /**
@@ -318,82 +245,6 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    */
   EAttribute getState_Label();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateContent <em>State Content</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>State Content</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateContent()
-   * @see #getState()
-   * @generated
-   */
-  EReference getState_StateContent();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent <em>State Content</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>State Content</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent
-   * @generated
-   */
-  EClass getStateContent();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getExitActions <em>Exit Actions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Exit Actions</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getExitActions()
-   * @see #getStateContent()
-   * @generated
-   */
-  EReference getStateContent_ExitActions();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getEntryActions <em>Entry Actions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Entry Actions</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getEntryActions()
-   * @see #getStateContent()
-   * @generated
-   */
-  EReference getStateContent_EntryActions();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getInnerAction <em>Inner Action</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Inner Action</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getInnerAction()
-   * @see #getStateContent()
-   * @generated
-   */
-  EReference getStateContent_InnerAction();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getInnerStates <em>Inner States</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Inner States</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getInnerStates()
-   * @see #getStateContent()
-   * @generated
-   */
-  EReference getStateContent_InnerStates();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getParallelStates <em>Parallel States</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Parallel States</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getParallelStates()
-   * @see #getStateContent()
-   * @generated
-   */
-  EReference getStateContent_ParallelStates();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action <em>Action</em>}'.
@@ -520,64 +371,6 @@ public interface RetypingSyncchartsPackage extends EPackage
      * @generated
      */
     EAttribute STATE__LABEL = eINSTANCE.getState_Label();
-
-    /**
-     * The meta object literal for the '<em><b>State Content</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE__STATE_CONTENT = eINSTANCE.getState_StateContent();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateContentImpl <em>State Content</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateContentImpl
-     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getStateContent()
-     * @generated
-     */
-    EClass STATE_CONTENT = eINSTANCE.getStateContent();
-
-    /**
-     * The meta object literal for the '<em><b>Exit Actions</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_CONTENT__EXIT_ACTIONS = eINSTANCE.getStateContent_ExitActions();
-
-    /**
-     * The meta object literal for the '<em><b>Entry Actions</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_CONTENT__ENTRY_ACTIONS = eINSTANCE.getStateContent_EntryActions();
-
-    /**
-     * The meta object literal for the '<em><b>Inner Action</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_CONTENT__INNER_ACTION = eINSTANCE.getStateContent_InnerAction();
-
-    /**
-     * The meta object literal for the '<em><b>Inner States</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_CONTENT__INNER_STATES = eINSTANCE.getStateContent_InnerStates();
-
-    /**
-     * The meta object literal for the '<em><b>Parallel States</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_CONTENT__PARALLEL_STATES = eINSTANCE.getStateContent_ParallelStates();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl <em>Action</em>}' class.
