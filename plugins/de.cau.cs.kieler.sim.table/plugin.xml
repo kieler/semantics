@@ -9,7 +9,7 @@
             class="de.cau.cs.kieler.sim.table.views.DataTableView"
             icon="icons/tableIcon.png"
             id="de.cau.cs.kieler.sim.table.views.KiemTable"
-            name="Raw Table">
+            name="Data Table">
       </view>
    </extension>
    <extension
@@ -17,7 +17,7 @@
       <content
             class="de.cau.cs.kieler.sim.table.DataProducer"
             id="de.cau.cs.kieler.sim.table.dataproducer"
-            name="Raw Table">
+            name="Data Table">
       </content>
    </extension>
    <extension
@@ -25,7 +25,7 @@
       <content
             class="de.cau.cs.kieler.sim.table.DataObserver"
             id="de.cau.cs.kieler.sim.table.dataconsumer"
-            name="Raw Table">
+            name="Data Table">
       </content>
    </extension>
 
