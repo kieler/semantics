@@ -26,6 +26,8 @@ import de.cau.cs.kieler.sim.kiem.json.JSONObject;
  * {@link #step(JSONObject)} method looks out for present signals and resets 
  * the to be absent again, because signals within the KIELER Execution Manager
  * are explicitly made present or absent.
+ *
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class DataComponent extends JSONObjectDataComponent implements
 		IJSONObjectDataComponent {
