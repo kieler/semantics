@@ -22,7 +22,7 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
 /**
- * The Class DataComponent implements the KIEM Extension Point. The 
+ * The class DataComponent implements the KIEM Extension Point. The 
  * {@link #step(JSONObject)} method looks out for present signals and resets 
  * the to be absent again, because signals within the KIELER Execution Manager
  * are explicitly made present or absent.

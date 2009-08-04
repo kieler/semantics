@@ -19,21 +19,40 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the Table plug-in's life cycle. This plug-in
+ * implements the DataComponent Extension Point of the KIELER Execution Manager
+ * two times. The first as a role of a data producer, the second as a role of a
+ * data observer. In its second role the table is desired to display all 
+ * variables (and signals respectively) that are produces by the various data 
+ * producer components.
+ * In its first role it should also allow the user to edit variable oder signal 
+ * values or enter new ones.
+ * The table data producer should be scheduled before observer DataComponents
+ * that observe variables that should be entered/modified by the table (that
+ * means somewhere at the top of the scheduling list).
+ * The table data observer should be scheduled after producer DataComponents 
+ * that producer variables that should be displayed by the table (that means
+ * somewhere at the bottom of the scheduling list). 
+ *
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class TablePlugin extends AbstractUIPlugin {
 
-	// The plug-in ID
+	/** The Constant PLUGIN_ID. */
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.table";
 
-	// The shared instance
+	/** The shared instance. */
 	private static TablePlugin plugin;
 	
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * The constructor
+	 * The constructor of the table plug-in.
 	 */
 	public TablePlugin() {
 	}
+
+	//-------------------------------------------------------------------------
 
 	/*
 	 * (non-Javadoc)
@@ -44,6 +63,8 @@ public class TablePlugin extends AbstractUIPlugin {
 		plugin = this;
 	}
 
+	//-------------------------------------------------------------------------
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
@@ -53,8 +74,10 @@ public class TablePlugin extends AbstractUIPlugin {
 		super.stop(context);
 	}
 
+	//-------------------------------------------------------------------------
+
 	/**
-	 * Returns the shared instance
+	 * Returns the shared instance of the table plug-in.
 	 *
 	 * @return the shared instance
 	 */
@@ -62,14 +85,17 @@ public class TablePlugin extends AbstractUIPlugin {
 		return plugin;
 	}
 
+	//-------------------------------------------------------------------------
+
 	/**
 	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
+	 * plug-in relative path.
 	 *
-	 * @param path the path
-	 * @return the image descriptor
+	 * @param path the relative path to the image
+	 * @return the image descriptor of the image
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
+	
 }

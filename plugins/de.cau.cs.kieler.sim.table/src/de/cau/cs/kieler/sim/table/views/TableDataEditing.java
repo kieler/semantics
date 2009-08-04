@@ -12,23 +12,45 @@
  * See the file epl-v10.html for the license text.
  ******************************************************************************/
 
-package de.cau.cs.kieler.sim.table;
+package de.cau.cs.kieler.sim.table.views;
 
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckboxCellEditor;
-import org.eclipse.jface.viewers.ColumnViewer;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 
-import de.cau.cs.kieler.sim.table.views.DataTableView;
-
+/**
+ * The class TableDataEditing implements the editing support for DataTable
+ * entries of the table. Specifically it provides a check box CellEditor
+ * for the first (present) column and String CellEditors for the second
+ * (key) and the third (value) column.
+ * <BR><BR>
+ * It also sets a flag that the table is currently edited to prevent
+ * disturbing updates during an ongoing editing action. Therefore it needs
+ * access to the DataTableViewer.
+ * 
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ */
 public class TableDataEditing extends EditingSupport {
+	
+	/** The editor of this specific column. */
 	private CellEditor editor;
+	
+	/** The column index. */
 	private int columnIndex;
+	
+	/** The DataTableViewer to set the currently editing flag. */
 	DataTableViewer viewer;
 
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Instantiates a new table data editing.
+	 * 
+	 * @param viewer the viewer
+	 * @param columnIndex the column index
+	 */
 	public TableDataEditing(DataTableViewer viewer, 
 							int columnIndex) {
 		super(viewer);
@@ -52,6 +74,11 @@ public class TableDataEditing extends EditingSupport {
 		this.columnIndex = columnIndex;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
+	 */
 	@Override
 	protected boolean canEdit(Object element) {
 		TableData tableData = (TableData) element;
@@ -59,11 +86,21 @@ public class TableDataEditing extends EditingSupport {
 		return (!tableData.isPermanent());
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.EditingSupport#getCellEditor(java.lang.Object)
+	 */
 	@Override
 	protected CellEditor getCellEditor(Object element) {
 		return editor;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
+	 */
 	@Override
 	protected Object getValue(Object element) {
 		TableData tableData = (TableData) element;
@@ -93,17 +130,18 @@ public class TableDataEditing extends EditingSupport {
 		return null;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.EditingSupport#setValue(java.lang.Object, java.lang.Object)
+	 */
 	@Override
 	protected void setValue(Object element, Object value) {
 		TableData tableData = (TableData) element;
 
 		switch (this.columnIndex) {
 		case 1:
-			//DO NOTHING
-//			if (tableData.isPresent() != (Boolean)value)
-//				tableData.setModified(true); {
-//					tableData.setPresent((Boolean)value);
-//				}
+			//noop
 			break;
 		case 2:
 			try {
@@ -128,16 +166,13 @@ public class TableDataEditing extends EditingSupport {
 		default:
 			break;
 		}
-
+		
+		//updates the table
 		getViewer().update(element, null);
 
 		//table data is not being edited any more and can be
 		//updated by observer again
 		DataTableView.getInstance().setCurrentlyEditing(false);
-		
-		//MUST unselect because if currently edited, no updates
-		//can be made
-		//viewer.setSelection(null);
 	}
 
 }

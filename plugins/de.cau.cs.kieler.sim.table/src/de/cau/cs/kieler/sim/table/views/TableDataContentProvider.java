@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  ******************************************************************************/
 
-package de.cau.cs.kieler.sim.table;
+package de.cau.cs.kieler.sim.table.views;
 
 
 //import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -20,6 +20,11 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 //IStructuredContentProvider
+/**
+ * The Class TableDataContentProvider.
+ *
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ */
 public class TableDataContentProvider implements ITreeContentProvider  {
 
 	public Object[] getElements(Object inputElement) {

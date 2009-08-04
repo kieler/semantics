@@ -28,7 +28,7 @@ import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
 /**
- * The Class DataComponent. It implements the KIEM Extension Point
+ * The class DataComponent. It implements the KIEM Extension Point
  * for JSONObject capable DataComponents. The behavior is described
  * in {@link AbroPlugin} and the method {@link #step(JSONObject)} 
  * implements this behavior.

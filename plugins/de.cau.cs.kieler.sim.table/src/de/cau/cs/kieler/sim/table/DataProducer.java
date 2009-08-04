@@ -14,23 +14,31 @@
 
 package de.cau.cs.kieler.sim.table;
 
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
-import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.sim.table.views.DataTableView;
+import de.cau.cs.kieler.sim.table.views.TableData;
+import de.cau.cs.kieler.sim.table.views.TableDataList;
 
-import java.util.Random;
-
+/**
+ * The class DataProducer implements the producer DataComponent which
+ * should be scheduled before any observer DataComponents. In its
+ * {@link #step(String)} method it produces data according to the
+ * variables and signals that where modified by the user in the
+ * table's ViewPart.
+ *
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ */
 public class DataProducer extends JSONStringDataComponent implements
 		IJSONStringDataComponent {
 
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * Instantiates a new data producer.
+	 * Instantiates a new producer DataComponent.
 	 */
 	public DataProducer() {
-		// TODO Auto-generated constructor stub
 	}
 
 	//-------------------------------------------------------------------------
@@ -39,8 +47,6 @@ public class DataProducer extends JSONStringDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent#step(java.lang.String)
 	 */
 	public String step(String JSONString) {
-		//try{Thread.sleep(new Random().nextInt(200));}catch(Exception e){}
-		
 		String returnString = "";
 		
 		TableDataList tableDataList = TableDataList.getInstance();
@@ -64,9 +70,12 @@ public class DataProducer extends JSONStringDataComponent implements
 					String key = tableData.getKey();
 					String value = tableData.getValue();
 					if (value.equals("")) 
-						returnString += "\""+key+"\":{\""+JSONSignalValues.presentKey+"\":true}";
+						returnString += "\""+key+"\":{\""
+								+JSONSignalValues.presentKey+"\":true}";
 					else
-						returnString += "\""+key+"\":{\""+JSONSignalValues.presentKey+"\":true,\"value\":"+value+"}";
+						returnString += "\""+key+"\":{\""
+								+JSONSignalValues.presentKey
+								+"\":true,\"value\":"+value+"}";
 				} else {
 					//if signals is marked as absent
 					if (!returnString.equals(""))
@@ -74,9 +83,12 @@ public class DataProducer extends JSONStringDataComponent implements
 					String key = tableData.getKey();
 					String value = tableData.getValue();
 					if (value.equals("")) 
-						returnString += "\""+key+"\":{\""+JSONSignalValues.presentKey+"\":false}";
+						returnString += "\""+key+"\":{\""
+									+JSONSignalValues.presentKey+"\":false}";
 					else
-						returnString += "\""+key+"\":{\""+JSONSignalValues.presentKey+"\":false,\"value\":"+value+"}";
+						returnString += "\""+key+"\":{\""
+									+JSONSignalValues.presentKey
+									+"\":false,\"value\":"+value+"}";
 				}
 				//we have sent all modified values => reset
 				synchronized(tableData) {
@@ -91,7 +103,6 @@ public class DataProducer extends JSONStringDataComponent implements
 		
 		returnString = "{" + returnString + "}";
 		
-//System.out.println(returnString);
 		return returnString;
 	}
 
@@ -101,8 +112,6 @@ public class DataProducer extends JSONStringDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
 	 */
 	public void initialize() {
-		// TODO Auto-generated method stub
-		System.out.println("Raw Table Producer initialize");
 	}
 
 	//-------------------------------------------------------------------------
@@ -111,7 +120,6 @@ public class DataProducer extends JSONStringDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
 	 */
 	public boolean isObserver() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -121,7 +129,6 @@ public class DataProducer extends JSONStringDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
 	 */
 	public boolean isProducer() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

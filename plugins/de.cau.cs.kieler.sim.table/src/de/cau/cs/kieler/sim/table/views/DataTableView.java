@@ -14,82 +14,128 @@
 
 package de.cau.cs.kieler.sim.table.views;
 
-
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
-
 import org.eclipse.ui.part.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Table;
 
-import de.cau.cs.kieler.sim.table.DataTableViewer;
-import de.cau.cs.kieler.sim.table.TableData;
-import de.cau.cs.kieler.sim.table.TableDataContentProvider;
-import de.cau.cs.kieler.sim.table.TableDataEditing;
-import de.cau.cs.kieler.sim.table.TableDataLabelProvider;
-import de.cau.cs.kieler.sim.table.TableDataList;
 import de.cau.cs.kieler.sim.table.TablePlugin;
 
-
+/**
+ * The class DataTableView implements the ViewPart of the KIEM data table.
+ * This is the basic user interface that allows the user to observer values
+ * or modify values of variables or signals. The additional check box
+ * (for signals) lets the user set a signal explicitly to a present or
+ * absent status.
+ * 
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ */
 public class DataTableView extends ViewPart {
 
-	/**
-	 * The ID of the view as specified by the extension.
-	 */
+	/** The ID of the view as specified by the extension. */
 	public static final String ID = "de.cau.cs.kieler.sim.table.views.KiemTable";
 
+	/** This data table view instance. */
 	private static DataTableView dataTableView;
+	
+	/** The tree table viewer. */
 	private DataTableViewer viewer;
+	
+	/** The table list containing the data. */
 	private TableDataList tableDataList;
-	private Table table;
 	
-	private Action actionNew; 		//new
-	private Action actionDelete;	//delete
-	private Action actionPermanent;	//permanent
-	private Action actionSignal; //toggle signal/variable
+	/** The action for a new entry. */
+	private Action actionNew;
 	
-	private Button buttonSignal;
+	/** The action for deleting an entry. */
+	private Action actionDelete;
 	
+	/** The toggle action for making variables/signals permanent. */
+	private Action actionPermanent;
+	
+	/** The toggle action for flagging a variable as a signal. */
+	private Action actionSignal; 
+	
+	/** The flag indicating an ongoing editing to prevent updates. */
 	private boolean currentlyEditing;
 	
+	//-------------------------------------------------------------------------
+	
 	/**
-	 * The constructor.
+	 * The constructor of the ViewPart of the data table plug-in.
 	 */
 	public DataTableView() {
 		dataTableView = this;
 		currentlyEditing = false;
 	}
+
+	//-------------------------------------------------------------------------
 	
+	/**
+	 * Gets the single instance of DataTableView.
+	 * 
+	 * @return single instance of DataTableView
+	 */
 	public static DataTableView getInstance() {
 		return dataTableView;
 	}
+
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Gets the single instance of the TableDataList.
+	 * 
+	 * @return the table data list
+	 */
 	public TableDataList getTableDataList() {
 		return tableDataList;
 	}
+
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Refreshes the tree table viewer.
+	 */
 	public void refreshViewer() {
 		viewer.refresh();
 		return;
 	}
 	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Sets the currently editing status to true or false.
+	 * 
+	 * @param currentlyEditing true, if user is currently editing an entry
+	 */
 	public void setCurrentlyEditing(boolean currentlyEditing) {
 		this.currentlyEditing = currentlyEditing;
 	}
+
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Checks if user is currently editing an entry.
+	 * 
+	 * @return true, if user is currently editing
+	 */
 	public boolean isCurrentlyEditing() {
 		return currentlyEditing;
 	}
 
+	//-------------------------------------------------------------------------
 
 	/**
 	 * This is a callback that will allow us
 	 * to create the viewer and initialize it.
+	 * 
+	 * @param parent the composite parent
 	 */
 	public void createPartControl(Composite parent) {
 		createViewer(parent);
@@ -100,6 +146,13 @@ public class DataTableView extends ViewPart {
 		updateEnabled();			
 	}
 
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Creates the tree table viewer.
+	 * 
+	 * @param parent the composite parent
+	 */
 	private void createViewer(Composite parent) {
 		viewer = new DataTableViewer(parent,SWT.HIDE_SELECTION |
 				SWT.MULTI | SWT.H_SCROLL
@@ -119,7 +172,13 @@ public class DataTableView extends ViewPart {
 		});
 	}
 
-	// This will create the columns for the table
+	//-------------------------------------------------------------------------
+
+	/**
+	 * This will create the columns for the table
+	 * 
+	 * @param viewer the DataTableViewer
+	 */
 	private void createColumns(DataTableViewer viewer) {
 		String[] titles = { "", "P", "Key", "Value" };
 		String[] toolTip = { "", "Present/Absent/No Signal", "Key", "Value" };
@@ -142,7 +201,11 @@ public class DataTableView extends ViewPart {
 		tree.setLinesVisible(true);
 	}
 
+	//-------------------------------------------------------------------------
 	
+	/**
+	 * Hook context menu that allows editing of entries.
+	 */
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
@@ -156,7 +219,13 @@ public class DataTableView extends ViewPart {
 		getSite().registerContextMenu(menuMgr, viewer);
 	}
 
+	//-------------------------------------------------------------------------
 	
+	/**
+	 * Builds the context menu of the tree table viewer.
+	 * 
+	 * @param manager the manager
+	 */
 	private void buildContextMenu(IMenuManager manager) {
 		manager.add(getActionSignal());
 		manager.add(getActionPermanent());
@@ -167,6 +236,11 @@ public class DataTableView extends ViewPart {
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
 	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Contribute to the tool bar of this ViewPart.
+	 */
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
 		IToolBarManager toolBarManager = bars.getToolBarManager();
@@ -177,6 +251,13 @@ public class DataTableView extends ViewPart {
 		toolBarManager.add(getActionPermanent());
 	}
 	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Gets the action to add a new variable or signal.
+	 * 
+	 * @return the action add
+	 */
 	private Action getActionAdd() {
 		if (actionNew != null) return actionNew;
 		actionNew = new Action() {
@@ -194,6 +275,13 @@ public class DataTableView extends ViewPart {
 		return actionNew;
 	}
 	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Gets the action to delete a variable or signal.
+	 * 
+	 * @return the action delete
+	 */
 	private Action getActionDelete() {
 		if (actionDelete != null) return actionDelete;
 		actionDelete = new Action() {
@@ -218,6 +306,13 @@ public class DataTableView extends ViewPart {
 		return actionDelete;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Gets the action to flag a variable or signal as permanent.
+	 * 
+	 * @return the action permanent
+	 */
 	private Action getActionPermanent() {
 		if (actionPermanent != null) return actionPermanent;
 		actionPermanent = new Action("", IAction.AS_CHECK_BOX)  {
@@ -243,6 +338,13 @@ public class DataTableView extends ViewPart {
 		return actionPermanent;
 	}
 	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Gets the action to toggle a variable to a signal and vice versa.
+	 * 
+	 * @return the action signal
+	 */
 	private Action getActionSignal() {
 		if (actionSignal != null) return actionSignal;
 		actionSignal = new Action("", IAction.AS_CHECK_BOX) {
@@ -268,7 +370,11 @@ public class DataTableView extends ViewPart {
 		return actionSignal;
 	}
 	
+	//-------------------------------------------------------------------------
 
+	/**
+	 * Hook double click and selection changed effect actions.
+	 */
 	private void hookSideEffectActions() {
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
@@ -289,8 +395,11 @@ public class DataTableView extends ViewPart {
 		});
 	}
 	
-	  //---------------------------------------------------------------------------	
+	//-------------------------------------------------------------------------
 	
+	/**
+	 * Updates the enableness and toggle status of actions.
+	 */
 	private void updateEnabled() {
 		Object obj = ((org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection()).getFirstElement();
 		if (obj == null) {
@@ -298,7 +407,6 @@ public class DataTableView extends ViewPart {
 			getActionDelete().setEnabled(false);
 			getActionPermanent().setEnabled(false);
 			getActionSignal().setEnabled(false);
-			//selected = false;
 		}
 		else {
 			//object selected
@@ -317,24 +425,14 @@ public class DataTableView extends ViewPart {
 			else {
 				actionSignal.setChecked(false);
 			}
-			
-			//selected = true;
 		}
 		
 	}
 
 	//-------------------------------------------------------------------------	
-	
-	
-	private void showMessage(String message) {
-		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			"KIEM Table Data Consumer",
-			message);
-	}
 
 	/**
-	 * Passing the focus request to the viewer's control.
+	 * Pass the focus request to the viewer's control.
 	 */
 	public void setFocus() {
 		viewer.getControl().setFocus();
