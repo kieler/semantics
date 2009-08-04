@@ -1428,46 +1428,32 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void doSave(IProgressMonitor monitor) {
-		// TODO Auto-generated method stub
 		if (currentFile == null) {
 			this.doSaveAs();
 			return;
 		}
-		
-		//TODO: implement saving
         try {
-
-            System.out.println("Creating File/Object output stream...");
-           
     		String workspaceFolder = Platform.getLocation().toString();
             
             FileOutputStream fileOut = new FileOutputStream(
             				workspaceFolder + currentFile.toOSString());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
-            System.out.println("Writing Hashtable Object...");
-            
             out.writeObject(KiemPlugin.getDefault()
             		.getDataComponentExList());
 
-            System.out.println("Closing all output streams...\n");
             out.close();
             fileOut.close();
            
         } catch (IOException e) {
+        	//TODO: error behavior
             e.printStackTrace();
         }		
-		
 		setDirty(false);		
 	}
 
 	//-------------------------------------------------------------------------
-	
-	
-
-	//-------------------------------------------------------------------------
-	
-	
+		
 	/**
 	 * Gets the file name (without possible extension) of the currently 
 	 * opened file, if any, or "noname" otherwise.
@@ -1495,7 +1481,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	 * @see org.eclipse.ui.ISaveablePart#doSaveAs()
 	 */
 	public void doSaveAs() {
-		// TODO Auto-generated method stub
 		SaveAsDialog dlg = new SaveAsDialog(this.getViewSite().getShell());
 		dlg.setBlockOnOpen(true);
 		dlg.setOriginalName(getActiveProjectName()+".execution");
@@ -1537,7 +1522,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	 * @see org.eclipse.ui.ISaveablePart#isSaveAsAllowed()
 	 */
 	public boolean isSaveAsAllowed() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -1547,7 +1531,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	 * @see org.eclipse.ui.ISaveablePart#isSaveOnCloseNeeded()
 	 */
 	public boolean isSaveOnCloseNeeded() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -1557,9 +1540,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	 * @see org.eclipse.ui.ISaveablePart2#promptToSaveOnClose()
 	 */
 	public int promptToSaveOnClose() {
-		// TODO Auto-generated method stub
 		if (this.isDirty) {
-			
 			String fileName = "noname.execution";
 			if (this.currentFile != null)
 				fileName = this.currentFile.toFile().getName();
