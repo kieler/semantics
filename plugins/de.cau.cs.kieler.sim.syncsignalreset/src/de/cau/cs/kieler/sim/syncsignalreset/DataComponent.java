@@ -51,7 +51,10 @@ public class DataComponent extends JSONObjectDataComponent implements
 							//if present
 							if (JSONSignalValues.isPresent((JSONObject)obj)) {
 								//modify and set absent
-								JSONSignalValues.setPresent((JSONObject)obj, false);
+								JSONSignalValues.setPresent((JSONObject)obj,
+															 false);
+								//add to return JSON value only if 
+								//signal was changed
 								allDataOut.accumulate(key, (JSONObject)obj);
 							}
 						}
@@ -60,6 +63,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 				
 			}
 		}catch(Exception e) {
+			//if an exception occurs then throw a KiemExecutionException 
 			throw new KiemExecutionException(e.getMessage(), false, e);
 		}
 		return allDataOut;
