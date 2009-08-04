@@ -329,18 +329,22 @@
          point="de.cau.cs.kieler.kiml.layout.layoutInfo">
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart"
+            id="de.cau.cs.kieler.synccharts.diagram"
             type="de.cau.cs.kieler.layout.info.types.stateMachine">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart"
+            id="de.cau.cs.kieler.synccharts.diagram"
             type="de.cau.cs.kieler.layout.info.types.stateMachine">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart"
+            id="de.cau.cs.kieler.synccharts.region"
             type="de.cau.cs.kieler.layout.info.types.boxes">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart"
+            id="de.cau.cs.kieler.synccharts.region"
             type="de.cau.cs.kieler.layout.info.types.boxes">
       </binding>
       <binding
@@ -391,6 +395,11 @@
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateVariableCompartment2EditPart"
             type="de.cau.cs.kieler.layout.info.types.nolayout">
       </binding>
+      <option
+            diagram="de.cau.cs.kieler.synccharts.region"
+            option="de.cau.cs.kieler.layout.options.minSpacing"
+            value="5.0">
+      </option>
    </extension>
 
 </plugin>
