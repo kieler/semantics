@@ -18,28 +18,47 @@ import de.cau.cs.kieler.viewmanagement.ATrigger;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 
 /**
- * The Class StateTrigger.
+ * The class StateTrigger implements the trigger for the KIELER
+ * view management.
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class StateTrigger extends ATrigger {
 
+	/** The single instance of this class. */
 	static StateTrigger instance;
 	
-	public static StateTrigger getInstance() {
-		return instance;
-	}
+	//-------------------------------------------------------------------------
 	
+	/**
+	 * Instantiates a new StateTrigger.
+	 */
 	public StateTrigger() {
-		// TODO Auto-generated constructor stub
 		instance = this;
 	}
 
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Gets the single instance of StateTrigger.
+	 * 
+	 * @return single instance of StateTrigger
+	 */
+	public static StateTrigger getInstance() {
+		return instance;
+	}
+
+	//-------------------------------------------------------------------------
+	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.viewmanagement.ATrigger#finalize()
+	 */
 	@Override
 	public void finalize() {
-		// TODO Auto-generated method stub
 	    instance = null;
 	}
+
+	//-------------------------------------------------------------------------
 	
     /**
      * Notify the viewmanagement about an event that has
@@ -51,6 +70,5 @@ public class StateTrigger extends ATrigger {
     public synchronized void notifyTrigger(TriggerEventObject triggerEvent) {
         super.notifyTrigger(triggerEvent);
     }
-	
 
 }

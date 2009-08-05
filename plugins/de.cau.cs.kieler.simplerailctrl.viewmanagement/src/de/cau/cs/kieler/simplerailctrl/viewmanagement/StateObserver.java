@@ -10,8 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- * 
- *****************************************************************************/
+ ******************************************************************************/
 
 package de.cau.cs.kieler.simplerailctrl.viewmanagement;
 
@@ -42,16 +41,22 @@ import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
  * The class StateObserver implements a KIEM observer DataComponent
  * that is able to highlight state nodes in the SimpleRailCtrl
  * editor. The editor must be selected in the properties of this
- * DataComponent before the hightlighting can take place.
+ * DataComponent before the highlighting can take place.
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class StateObserver extends JSONObjectDataComponent implements
 		IJSONObjectDataComponent {
 
+    /** The root EditPart of the editor. */
     EditPart rootEditPart;
-    List<EditPart> lastHighligtedStates;
+    
+    /** The last highlighted states. */
+    List<EditPart> lastHighlightedStates;
 
+	/** The cached edit parts t be matched with FragmentURLs. */
+	private HashMap<String,EditPart> cachedEditParts;
+    
 	//-------------------------------------------------------------------------
     
 	/* (non-Javadoc)
@@ -117,7 +122,7 @@ public class StateObserver extends JSONObjectDataComponent implements
         StringTokenizer tokenizer = new StringTokenizer(this.getProperties()[1]
                 .getValue(), " ()");
         if (tokenizer.hasMoreTokens()) {
-            String fileString = tokenizer.nextToken();
+//TODO check im can be removed  //String fileString = tokenizer.nextToken();
             String editorString = tokenizer.nextToken();
 
             IEditorReference[] editorRefs = PlatformUI.getWorkbench()
@@ -141,7 +146,6 @@ public class StateObserver extends JSONObjectDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
 	 */
 	public boolean isObserver() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -151,7 +155,6 @@ public class StateObserver extends JSONObjectDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
 	 */
 	public boolean isProducer() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -161,26 +164,11 @@ public class StateObserver extends JSONObjectDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
 	 */
 	public void wrapup() {
-		// TODO Auto-generated method stub
-		
+		//noop
 	}
 	
 	//-------------------------------------------------------------------------
 	
-	class MyShapeEditPart extends ShapeEditPart {
-		public MyShapeEditPart(View view) {
-			super(view);
-			// TODO Auto-generated constructor stub
-		}
-		public String getElementGuid() {
-			return this.elementGuid;
-		}
-	}
-	
-    //-------------------------------------------------------------------------
-	
-	private HashMap<String,EditPart> cachedEditParts;
-    
     /**
      * This method searches recursively for an EditPart using the 
      * modelElement URIFragment provided. The latter can be 
@@ -197,7 +185,8 @@ public class StateObserver extends JSONObjectDataComponent implements
      * 
      * @return the EditPart of the EObject
      */
-    public EditPart getEditPart(String elementURIFragment, 
+    @SuppressWarnings("unchecked")
+	public EditPart getEditPart(String elementURIFragment, 
     								   EditPart parent) {
     	if (cachedEditParts == null) {
         	// if hashmap is not initialized, create it
@@ -209,7 +198,7 @@ public class StateObserver extends JSONObjectDataComponent implements
     			return cachedEditParts.get(elementURIFragment);
     	}
     	
-        List children = parent.getChildren();
+        List<EditPart> children = parent.getChildren();
         for (Object child : children) {
             if (child instanceof ShapeEditPart) {
                 View view = (View) ((ShapeEditPart) child).getModel();

@@ -28,24 +28,33 @@ import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 import de.cau.cs.kieler.viewmanagement.effects.HighlightEffect;
 
 /**
- * The Class StateCombination.
- *
+ * The class StateCombination implements a combination for the KIELER
+ * view management that is a trigger and an effect for the state
+ * highlighting in the SimpleRailCtrl editor.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class StateCombination extends ACombination {
 
+	/** The trigger. */
 	StateTrigger trigger;
 
-    Map<ShapeNodeEditPart, HighlightEffect> effects = new HashMap<ShapeNodeEditPart, HighlightEffect>();
+    /** The effects. */
+    Map<ShapeNodeEditPart, HighlightEffect> effects = 
+    				new HashMap<ShapeNodeEditPart, HighlightEffect>();
 
+	//-------------------------------------------------------------------------
 
-    @Override
+    /* (non-Javadoc)
+	 * @see de.cau.cs.kieler.viewmanagement.ACombination#evaluate(de.cau.cs.kieler.viewmanagement.TriggerEventObject)
+	 */
+	@Override
     public boolean evaluate(TriggerEventObject triggerEvent) {
-        // TODO: rename Trigger Toggle in
         if (triggerEvent.getAffectedObject() instanceof ShapeNodeEditPart) {
         	ShapeNodeEditPart editPart = (ShapeNodeEditPart) triggerEvent
             .getAffectedObject();
-    			if (triggerEvent.getTriggerToggle() && !effects.containsKey(editPart)) {
+    			if (triggerEvent.getTriggerToggle() 
+    				&& !effects.containsKey(editPart)) {
     					HighlightEffect effect = new HighlightEffect();
     					effect.setTarget(editPart);
     					effects.put(editPart, effect);
@@ -60,14 +69,24 @@ public class StateCombination extends ACombination {
         return false;
     }
 
-    @Override
+	//-------------------------------------------------------------------------
+
+    /* (non-Javadoc)
+	 * @see de.cau.cs.kieler.viewmanagement.ACombination#execute()
+	 */
+	@Override
     public void execute() {
         for (HighlightEffect effect : effects.values()) {
             effect.execute();
         }
     }
 
-    @Override
+	//-------------------------------------------------------------------------
+    
+    /* (non-Javadoc)
+	 * @see de.cau.cs.kieler.viewmanagement.ACombination#getTriggers()
+	 */
+	@Override
     public List<ATrigger> getTriggers() {
         List<ATrigger> triggers = new ArrayList<ATrigger>();
         trigger = (StateTrigger) RunLogic
@@ -75,5 +94,15 @@ public class StateCombination extends ACombination {
         triggers.add(trigger);
         return triggers;
     }
+
+	//-------------------------------------------------------------------------
+
+    /* (non-Javadoc)
+	 * @see de.cau.cs.kieler.viewmanagement.ACombination#undoLastEffect()
+	 */
+	@Override
+	public void undoLastEffect() {
+    	//not supported
+	}
 
 }

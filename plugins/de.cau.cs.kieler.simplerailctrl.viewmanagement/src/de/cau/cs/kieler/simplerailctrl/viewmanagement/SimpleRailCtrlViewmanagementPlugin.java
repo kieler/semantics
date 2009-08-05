@@ -18,24 +18,42 @@ import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The Class SimpleRailCtrlViewmanagementPlugin.
+ * The class SimpleRailCtrlViewmanagementPlugin implements the
+ * activator for this plug-in. This plug-in is able to highlight the
+ * states of the SimpleRailCtrl editor during an execution with the
+ * KIELER Execution Manager (KIEM) project.
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class SimpleRailCtrlViewmanagementPlugin extends Plugin {
 
-	// The plug-in ID
+	/** The constant PLUGIN_ID. */
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.simplerailctrl.viewmanagement";
 
-	// The shared instance
+	/** The shared instance of this plug-in. */
 	private static SimpleRailCtrlViewmanagementPlugin plugin;
+
+	//-------------------------------------------------------------------------
 	
 	/**
-	 * The constructor
+	 * Instantiates a new SimpleRailCtrlViewmanagementPlugin.
 	 */
 	public SimpleRailCtrlViewmanagementPlugin() {
 	}
 
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Returns the shared instance of this plug-in.
+	 *
+	 * @return the shared instance
+	 */
+	public static SimpleRailCtrlViewmanagementPlugin getDefault() {
+		return plugin;
+	}
+
+	//-------------------------------------------------------------------------
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.core.runtime.Plugins#start(org.osgi.framework.BundleContext)
@@ -45,6 +63,8 @@ public class SimpleRailCtrlViewmanagementPlugin extends Plugin {
 		plugin = this;
 	}
 
+	//-------------------------------------------------------------------------
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
@@ -52,15 +72,6 @@ public class SimpleRailCtrlViewmanagementPlugin extends Plugin {
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
-	}
-
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static SimpleRailCtrlViewmanagementPlugin getDefault() {
-		return plugin;
 	}
 
 }
