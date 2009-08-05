@@ -14,47 +14,51 @@
 
 package de.cau.cs.kieler.simplerailctrl.codegen.c.handlers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.emf.common.ui.URIEditorInput;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.ui.part.FileEditorInput;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.core.runtime.IAdaptable;
 
-import de.cau.cs.kieler.simplerailctrl.SimplerailctrlPackage;
-
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
-import org.eclipse.emf.mwe.core.WorkflowFacade;
 import org.eclipse.emf.mwe.utils.Reader;
-import org.eclipse.emf.mwe.utils.Writer;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.xpand2.Generator;
 import org.eclipse.xpand2.output.Outlet;
-import org.eclipse.xpand2.output.Output;
 import org.eclipse.emf.mwe.core.issues.*;
 import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 
 
+/**
+ * The class CodeGenerationHandler is an action handler that
+ * can generate C-Code out of the selected SimpleRailCtrl EMF
+ * that can be compiled and executed.
+ * 
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ */
+@SuppressWarnings("restriction")
 public class CodeGenerationHandler extends AbstractHandler {
 	
+	/** The plug-in folder. */
 	private static String _pluginFolder;
 	
+	//-------------------------------------------------------------------------
 	
+	/**
+	 * Extract selection of the project explorer.
+	 * 
+	 * @param sel the selection
+	 * 
+	 * @return the resource
+	 */
 	IResource extractSelection(ISelection sel) {
 	      if (!(sel instanceof IStructuredSelection))
 	         return null;
@@ -69,18 +73,24 @@ public class CodeGenerationHandler extends AbstractHandler {
 	      return (IResource) adapter;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		@SuppressWarnings("unused")
 		IWorkbenchWindow activeWorkbenchWindow = HandlerUtil
 				.getActiveWorkbenchWindow(event);
 
-		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+		IWorkbenchWindow window = HandlerUtil
+								.getActiveWorkbenchWindowChecked(event);
 	    
-        ISelection selection = window.getWorkbench().getActiveWorkbenchWindow().getSelectionService().getSelection();
-        String inputModel = extractSelection(selection).getFullPath().toString();
+        ISelection selection = window.getWorkbench().getActiveWorkbenchWindow()
+        						.getSelectionService().getSelection();
+        String inputModel = extractSelection(selection).getFullPath()
+        						.toString();
         
-        
-        System.out.println(inputModel);
-        		
         //Workflow
         Workflow workflow = new Workflow();
         
@@ -121,16 +131,10 @@ public class CodeGenerationHandler extends AbstractHandler {
 		}
         
         System.out.print(generator.getLogMessage());
-        
         System.out.print(issues.getInfos());
         System.out.print(issues.getIssues());
         System.out.print(issues.getWarnings());
         System.out.print(issues.getErrors().toString());
-        
-        //EMF writer
-        //Writer emfWriter = new Writer();
-        //emfWriter.setUri(modelURI);
-        //emfWriter.setModelSlot("model");        
         
         if (success) {
         	System.out.println("Code Generation - completed.");
@@ -142,8 +146,15 @@ public class CodeGenerationHandler extends AbstractHandler {
 		return null;
 	}
 
+	//-------------------------------------------------------------------------
 	
-	 public static String getPluginFolder() {
+	 /**
+ 	 * Gets the plug-in folder. This is needed to set the generated
+ 	 * source code folder.
+ 	 * 
+ 	 * @return the plug-in folder
+ 	 */
+ 	public static String getPluginFolder() {
 	        if(_pluginFolder == null) {
 	            _pluginFolder = Platform.getBundle("de.cau.cs.kieler.simplerailctrl.codegen.c").getLocation();// .toFile();// .resolve(url);
 	            _pluginFolder = _pluginFolder.replace("initial@reference:", "");
@@ -152,4 +163,5 @@ public class CodeGenerationHandler extends AbstractHandler {
 	        }
 	        return _pluginFolder;
 	 }
+ 	
 }
