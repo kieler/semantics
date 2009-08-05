@@ -49,10 +49,10 @@ public class StateObserver extends JSONObjectDataComponent implements
 		IJSONObjectDataComponent {
 
     /** The root EditPart of the editor. */
-    EditPart rootEditPart;
+    private EditPart rootEditPart;
     
     /** The last highlighted states. */
-    List<EditPart> lastHighlightedStates;
+    private List<String> lastHighlightedStates;
 
 	/** The cached edit parts t be matched with FragmentURLs. */
 	private HashMap<String,EditPart> cachedEditParts;
@@ -69,42 +69,46 @@ public class StateObserver extends JSONObjectDataComponent implements
             // some sanity checks
             if (trigger != null && rootEditPart != null
                     && data.has(elementURIFragmentKey)) {
+            	
+            	//set the rootEditPart
+            	StateCombination.getInstance().setRootEditPart(rootEditPart);
+            	
                 // find all states that are active
                 String stateData = (String)data.get(elementURIFragmentKey);
-                
                 StringTokenizer tokenizer = new StringTokenizer(stateData
                         .toString(), " ,");
-                List<EditPart> highlightedStates = new ArrayList<EditPart>();
+                List<String> highlightedStatesURI = new ArrayList<String>();
+                
                 while (tokenizer.hasMoreElements()) {
                     String elementURIFragment = tokenizer.nextToken();
-                    // notify the viewmanagement about this active state
+                    // notify the view management about this active state
                     TriggerEventObject triggerEvent = new TriggerEventObject();
-                    EditPart affectedState = getEditPart(
-                    			elementURIFragment, 
-                    			rootEditPart);
-                    highlightedStates.add(affectedState);
+                    
+                    System.out.println("VIEW MANAGEMENT:"+elementURIFragment);
+                    
+                    highlightedStatesURI.add(elementURIFragment);
                     // a state is already highlighted
-                    if(lastHighligtedStates != null && 
-                    		lastHighligtedStates.contains(affectedState))
+                    if(lastHighlightedStates != null && 
+                    		lastHighlightedStates.contains(elementURIFragment))
                         continue;
-                    triggerEvent.setAffectedObject(affectedState);
-                    triggerEvent.setTriggerToggle(true);
+                    triggerEvent.setAffectedObject(elementURIFragment);
+                    triggerEvent.setTriggerActive(true);
                     trigger.notifyTrigger(triggerEvent);
                 }
                 // find all states that are not highlighted anymore
-                if (lastHighligtedStates != null) {
-                    for (EditPart editPart : highlightedStates)
-                        lastHighligtedStates.remove(editPart);
-                    for (EditPart editPart : lastHighligtedStates) {
+                if (lastHighlightedStates != null) {
+                    for (String editPartURI : highlightedStatesURI)
+                    	lastHighlightedStates.remove(editPartURI);
+                    for (String editPartURI : lastHighlightedStates) {
                         TriggerEventObject triggerEvent = new TriggerEventObject();
-                        triggerEvent.setAffectedObject(editPart);
-                        triggerEvent.setTriggerToggle(false);
+                        triggerEvent.setAffectedObject(editPartURI);
+                        triggerEvent.setTriggerActive(false);
                         trigger.notifyTrigger(triggerEvent);
                     }
-                }
-                lastHighligtedStates = highlightedStates;
+                }//end if
+                lastHighlightedStates = highlightedStatesURI;
 
-            }
+            }//end if
         } catch (JSONException e) {
             /* nothing */
         } finally {
@@ -122,7 +126,7 @@ public class StateObserver extends JSONObjectDataComponent implements
         StringTokenizer tokenizer = new StringTokenizer(this.getProperties()[1]
                 .getValue(), " ()");
         if (tokenizer.hasMoreTokens()) {
-//TODO check im can be removed  //String fileString = tokenizer.nextToken();
+        	String fileString = tokenizer.nextToken();
             String editorString = tokenizer.nextToken();
 
             IEditorReference[] editorRefs = PlatformUI.getWorkbench()

@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
 
 import de.cau.cs.kieler.viewmanagement.ACombination;
@@ -36,27 +38,67 @@ import de.cau.cs.kieler.viewmanagement.effects.HighlightEffect;
  */
 public class StateCombination extends ACombination {
 
-	/** The trigger. */
+    /** The root EditPart of the editor. */
+    private EditPart rootEditPart;
+
+    /** The trigger. */
 	StateTrigger trigger;
 
     /** The effects. */
-    Map<ShapeNodeEditPart, HighlightEffect> effects = 
-    				new HashMap<ShapeNodeEditPart, HighlightEffect>();
+    Map<EditPart, HighlightEffect> effects = 
+    				new HashMap<EditPart, HighlightEffect>();
+
+    /** The single instance of this plug-in. */
+    private static StateCombination instance;
+    
+	//-------------------------------------------------------------------------
+    
+    /**
+	 * Instantiates a new StateCombination.
+	 */
+	public StateCombination() {
+		StateCombination.instance = this;
+    }
 
 	//-------------------------------------------------------------------------
+	
+	/**
+	 * Gets the single instance of StateCombination.
+	 * 
+	 * @return single instance of StateCombination
+	 */
+	public static StateCombination getInstance() {
+		return StateCombination.instance;
+	}
+
+	//-------------------------------------------------------------------------
+    
+	/**
+	 * Sets a new root EditPart.
+	 * 
+	 * @param rootEditPart the new root EditPart
+	 */
+	public void setRootEditPart(EditPart rootEditPart) {
+    	this.rootEditPart = rootEditPart;
+    }
+
+    //-------------------------------------------------------------------------
 
     /* (non-Javadoc)
 	 * @see de.cau.cs.kieler.viewmanagement.ACombination#evaluate(de.cau.cs.kieler.viewmanagement.TriggerEventObject)
 	 */
 	@Override
     public boolean evaluate(TriggerEventObject triggerEvent) {
-        if (triggerEvent.getAffectedObject() instanceof ShapeNodeEditPart) {
-        	ShapeNodeEditPart editPart = (ShapeNodeEditPart) triggerEvent
-            .getAffectedObject();
-    			if (triggerEvent.getTriggerToggle() 
+		//rootEditPart must be set before!
+        if (rootEditPart != null) {
+        	EditPart editPart = this.translateToEditPart(
+        							triggerEvent.toString(),
+        							rootEditPart); 
+            triggerEvent.getAffectedObject();
+    		if (triggerEvent.getTriggerState() 
     				&& !effects.containsKey(editPart)) {
     					HighlightEffect effect = new HighlightEffect();
-    					effect.setTarget(editPart);
+    					effect.setTarget((ShapeEditPart)editPart);
     					effects.put(editPart, effect);
     					return true;
     			} else {
@@ -102,6 +144,7 @@ public class StateCombination extends ACombination {
 	 */
 	@Override
 	public void undoLastEffect() {
+		
     	//not supported
 	}
 

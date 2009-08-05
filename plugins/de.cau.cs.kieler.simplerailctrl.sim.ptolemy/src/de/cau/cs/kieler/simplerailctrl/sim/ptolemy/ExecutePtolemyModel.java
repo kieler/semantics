@@ -281,6 +281,7 @@ public class ExecutePtolemyModel implements Runnable {
                         		
                         	  //iterate thru all modal models and concatenate
                         	  //the fragment URIs with a colon
+                        	  currentState = "";
                         	  for (int c = 0; c < modalModelList.size(); c++) {
                         		ModalModel modalModel = modalModelList.get(c);
                         		//if more than one active state

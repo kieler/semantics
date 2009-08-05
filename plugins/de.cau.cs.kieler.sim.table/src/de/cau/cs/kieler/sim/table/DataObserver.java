@@ -55,8 +55,6 @@ public class DataObserver extends JSONStringDataComponent implements
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent#step(java.lang.String)
 	 */
 	public String step(String JSONString) {
-		System.out.println("TABLE: "+JSONString);
-		
 		//create a new temporary list
 		tableDataTmp = new LinkedList<TableData>();
 		
