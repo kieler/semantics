@@ -10,8 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- * 
- *****************************************************************************/
+ ******************************************************************************/
 
 package de.cau.cs.kieler.simplerailctrl.viewmanagement;
 
@@ -19,20 +18,22 @@ import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The Class SimpleRailCtrlViewmanagementPlugin.
+ *
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
-public class Activator extends Plugin {
+public class SimpleRailCtrlViewmanagementPlugin extends Plugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.simplerailctrl.viewmanagement";
 
 	// The shared instance
-	private static Activator plugin;
+	private static SimpleRailCtrlViewmanagementPlugin plugin;
 	
 	/**
 	 * The constructor
 	 */
-	public Activator() {
+	public SimpleRailCtrlViewmanagementPlugin() {
 	}
 
 	/*
@@ -58,7 +59,7 @@ public class Activator extends Plugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static SimpleRailCtrlViewmanagementPlugin getDefault() {
 		return plugin;
 	}
 

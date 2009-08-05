@@ -39,8 +39,12 @@ import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 
 /**
- * An asynchronous update interface for receiving notifications
- * about State information as the State is constructed.
+ * The class StateObserver implements a KIEM observer DataComponent
+ * that is able to highlight state nodes in the SimpleRailCtrl
+ * editor. The editor must be selected in the properties of this
+ * DataComponent before the hightlighting can take place.
+ *
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class StateObserver extends JSONObjectDataComponent implements
 		IJSONObjectDataComponent {

@@ -10,8 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- * 
- *****************************************************************************/
+ ******************************************************************************/
 
 package de.cau.cs.kieler.simplerailctrl.viewmanagement;
 
@@ -28,6 +27,11 @@ import de.cau.cs.kieler.viewmanagement.RunLogic;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 import de.cau.cs.kieler.viewmanagement.effects.HighlightEffect;
 
+/**
+ * The Class StateCombination.
+ *
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ */
 public class StateCombination extends ACombination {
 
 	StateTrigger trigger;

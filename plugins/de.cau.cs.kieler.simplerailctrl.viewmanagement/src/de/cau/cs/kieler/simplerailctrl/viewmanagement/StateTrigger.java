@@ -10,14 +10,18 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- * 
- *****************************************************************************/
+ ******************************************************************************/
 
 package de.cau.cs.kieler.simplerailctrl.viewmanagement;
 
 import de.cau.cs.kieler.viewmanagement.ATrigger;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 
+/**
+ * The Class StateTrigger.
+ *
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ */
 public class StateTrigger extends ATrigger {
 
 	static StateTrigger instance;
