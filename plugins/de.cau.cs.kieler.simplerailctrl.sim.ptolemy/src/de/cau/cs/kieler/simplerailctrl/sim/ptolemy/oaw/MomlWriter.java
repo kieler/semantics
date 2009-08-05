@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -35,36 +34,82 @@ import org.eclipse.emf.mwe.utils.AbstractEMFWorkflowComponent;
 
 import Moml.util.MomlResourceFactoryImpl;
 
+/**
+ * The class MomlWriter implements an EMFWorkflowComponent that is able to 
+ * output valid MOML files. MOML files can be considered to be the XML 
+ * representation of Ptolemy models and for example can be loaded by the
+ * Vergil GUI of Ptolemy.
+ * 
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ */
 public class MomlWriter extends AbstractEMFWorkflowComponent {
 
+	/** The constant COMPONENT_NAME. */
 	private static final String COMPONENT_NAME = "Moml Writer";
 
-	private boolean OPTION_SCHEMA_LOCATION = true;
+//	/** The OPTION_SCHEMA_LOCATION. */
+//	private boolean OPTION_SCHEMA_LOCATION = true;
 
-	public void setOPTION_SCHEMA_LOCATION(final boolean option_schema_location) {
-		OPTION_SCHEMA_LOCATION = option_schema_location;
-	}
+//	/**
+//	 * Sets the OPTION_SCHEMA_LOCATION.
+//	 * 
+//	 * @param option_schema_location the new option_schema_location
+//	 */
+//	public void setOPTION_SCHEMA_LOCATION(final boolean option_schema_location) {
+//		OPTION_SCHEMA_LOCATION = option_schema_location;
+//	}
 
-	private boolean OPTION_SCHEMA_LOCATION_IMPLEMENTATION = true;
+//	/** The OPTION_SCHEMA_LOCATION_IMPLEMENTATION. */
+//	private boolean OPTION_SCHEMA_LOCATION_IMPLEMENTATION = true;
 
-	private final String encoding = null;
+//	/** The encoding. */
+//	private final String encoding = null;
 
+	/** The multiple resources in case of list. */
 	private boolean multipleResourcesInCaseOfList = false;
 
+	/** The clone slot contents. */
 	private boolean cloneSlotContents = false;
 
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Sets the multiple resources in case of list.
+	 * 
+	 * @param b the new multiple resources in case of list
+	 */
 	public void setMultipleResourcesInCaseOfList(final boolean b) {
 		multipleResourcesInCaseOfList = b;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Sets the clone slot contents.
+	 * 
+	 * @param b the new clone slot contents
+	 */
 	public void setCloneSlotContents(final boolean b) {
 		this.cloneSlotContents = b;
 	}
 
-	public void setOPTION_SCHEMA_LOCATION_IMPLEMENTATION(final boolean option_schema_location_implementation) {
-		OPTION_SCHEMA_LOCATION_IMPLEMENTATION = option_schema_location_implementation;
-	}
+	//-------------------------------------------------------------------------
 
+//	/**
+//	 * Sets the oPTIO n_ schem a_ locatio n_ implementation.
+//	 * 
+//	 * @param option_schema_location_implementation the new oPTIO n_ schem a_ locatio n_ implementation
+//	 */
+//	public void setOPTION_SCHEMA_LOCATION_IMPLEMENTATION(final boolean option_schema_location_implementation) {
+//		OPTION_SCHEMA_LOCATION_IMPLEMENTATION = option_schema_location_implementation;
+//	}
+
+	//-------------------------------------------------------------------------
+
+	@SuppressWarnings("unchecked")
+	/* (non-Javadoc)
+	 * @see org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent#invokeInternal(org.eclipse.emf.mwe.core.WorkflowContext, org.eclipse.emf.mwe.core.monitor.ProgressMonitor, org.eclipse.emf.mwe.core.issues.Issues)
+	 */
 	@Override
 	public void invokeInternal(final WorkflowContext ctx, final ProgressMonitor monitor, final Issues issues) {
 		Object slotContent = ctx.get(getModelSlot());
@@ -139,32 +184,45 @@ public class MomlWriter extends AbstractEMFWorkflowComponent {
 		}
 	}
 
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Creates the resource name.
+	 * 
+	 * @param eo the EObject
+	 * 
+	 * @return the string
+	 */
 	private String createResourceName(final EObject eo) {
 		return getUri() + (getUri().endsWith("/") ? "" : "/") + getName(eo) + ".ecore";
 	}
 
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Gets the name.
+	 * 
+	 * @param model the EObject model
+	 * 
+	 * @return the name
+	 */
 	private String getName(final EObject model) {
 		return (String) model.eGet(model.eClass().getEStructuralFeature("name"));
 	}
 
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Write to XMLResource.
+	 * 
+	 * @param r the XMLResource
+	 */
 	private void write(final XMLResource r) {
-	//private void write(final Resource r) {
 		try {
 	        // set options to save specific XML stuff required by MoML
 	        HashMap<Object, Object> options = new HashMap<Object, Object>();
 	        options.put(XMIResource.OPTION_SAVE_DOCTYPE, true);
 	        r.setDoctypeInfo("-//UC Berkeley//DTD MoML 1//EN","http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd");
-
-//			final Map<String, Object> options = new HashMap<String, Object>();
-//			if (OPTION_SCHEMA_LOCATION) {
-//				options.put(XMIResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
-//			}
-//			if (OPTION_SCHEMA_LOCATION_IMPLEMENTATION) {
-//				options.put(XMIResource.OPTION_SCHEMA_LOCATION_IMPLEMENTATION, Boolean.TRUE);
-//			}
-//			if (encoding != null) {
-//				options.put(XMIResource.OPTION_ENCODING, encoding);
-//			}
 			r.save(options);
 
 			//clean resource afterwards
@@ -175,19 +233,32 @@ public class MomlWriter extends AbstractEMFWorkflowComponent {
 		}
 	}
 
+	//-------------------------------------------------------------------------
+
 	/**
+	 * Gets the log message.
+	 * 
+	 * @return the log message
+	 * 
 	 * @see org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent#getLogMessage()
 	 */
 	@Override
 	public String getLogMessage() {
 		return "Writing model to " + uri;
 	}
+	
+	//-------------------------------------------------------------------------
 
 	/**
+	 * Gets the component name.
+	 * 
+	 * @return the component name
+	 * 
 	 * @see org.eclipse.emf.mwe.core.WorkflowComponent#getComponentName()
 	 */
 	@Override
 	public String getComponentName() {
 		return COMPONENT_NAME;
 	}
+	
 }

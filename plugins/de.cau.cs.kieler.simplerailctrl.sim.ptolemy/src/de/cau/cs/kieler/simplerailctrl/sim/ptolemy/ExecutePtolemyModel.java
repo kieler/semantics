@@ -10,13 +10,11 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- * 
- *****************************************************************************/
+ ******************************************************************************/
 package de.cau.cs.kieler.simplerailctrl.sim.ptolemy;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,49 +22,65 @@ import org.eclipse.emf.common.util.URI;
 
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 
-import ptolemy.actor.Actor;
 import ptolemy.actor.CompositeActor;
-//import ptolemy.actor.StateReceiver;
-import ptolemy.actor.ExecutionListener;
-import ptolemy.actor.FiringEvent;
-import ptolemy.actor.IOPort;
-import ptolemy.actor.ActorFiringListener;
-import ptolemy.actor.IOPortEvent;
-import ptolemy.actor.IOPortEventListener;
 import ptolemy.actor.Manager;
-import ptolemy.data.IntToken;
-import ptolemy.data.expr.Parameter;
 import ptolemy.domains.fsm.modal.ModalController;
 import ptolemy.domains.fsm.modal.ModalModel;
 import ptolemy.kernel.InstantiableNamedObj;
-import ptolemy.kernel.util.ChangeListener;
-import ptolemy.kernel.util.ChangeRequest;
-import ptolemy.kernel.util.DebugEvent;
-import ptolemy.kernel.util.DebugListener;
 import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;
 import ptolemy.moml.MoMLParser;
-import ptolemy.actor.lib.io.*;
 import ptolemy.actor.kiel.*;
 
+/**
+ * The class ExecutePtolemyModel implements the PtolemyExecutor. This is the
+ * component that enables loading and executing (generated) Ptolemy models.
+ * 
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ */
 public class ExecutePtolemyModel implements Runnable {
 	
+	/** The Ptolemy model to execute. */
 	private String PtolemyModel;
+	
+	/** The flag indicating the execution is paused. */
 	private boolean paused;
+	
+	/** The flag indicating the execution should stop. */
 	private boolean stop;
+	
+	/** The steps to make, because {@link #executionStep()} is 
+	 * called asynchronously. */
 	private int makesteps;
+	
+	/** The currently active state of the EMF model as FragmentURI. */
 	private String currentState;
+	
+	/** The Ptolemy manager. */
 	private Manager manager; 
 	
+	/** The host for connecting to the model railway simulation. */
 	private String host;
+	
+	/** The port for connecting to the model railway simulation. */
 	private String port;
 	
+	/** The KiemExecutionException that may have occurred during the 
+	 * asynchronous performance of steps. */
 	private KiemExecutionException executionException; 
 	
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Instantiates a new ExecutePtolemyModel.
+	 * 
+	 * @param PtolemyModel the Ptolemy model to execute
+	 * @param host the host for the simulation
+	 * @param port the port for the simulation
+	 */
 	public ExecutePtolemyModel(String PtolemyModel, 
 							   String host,
 							   String port) {
-		System.out.println("Execution Thread - Constructor");
 		this.PtolemyModel = PtolemyModel;
 		this.paused = true;
 		this.stop = false;
@@ -77,160 +91,159 @@ public class ExecutePtolemyModel implements Runnable {
 		this.executionException = null;
 	}
 	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Gets the currently active state as URIFragment.
+	 * 
+	 * @return the current state
+	 */
 	public String getCurrentState() {
 		return currentState;
 	}
 	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Trigger the execution to perform another step. This is done 
+	 * asynchronously meaning that the step is not immediately performed but
+	 * whenever the executing thread is able to perform the next one.
+	 * <BR><BR>
+	 * If the {@link #executionStop()} method is called before this step
+	 * is actually performed it wont be performed!
+	 * <BR><BR>
+	 * If any KiemExecutionException was thrown in the {@link #run()} method
+	 * of the thread then it is thrown in here. Note that this exception
+	 * normally happened in any step performed before the current one but only
+	 * now will be brought to the users or KIEM attention. 
+	 * 
+	 * @throws KiemExecutionException a KiemExecutionException
+	 */
 	public synchronized void executionStep() throws KiemExecutionException {
-		//System.out.println("Execution Thread - Make Step");
 		this.paused = false;
+		//increase steps to make
 		this.makesteps++;
-		//throw exception that may have occurred
+		//throw exception that may have occurred (asynchronously)
 		if (this.executionException != null)
 			throw this.executionException;
 	}
-	public synchronized void executionPlay() {
-		this.paused = false;
-		this.makesteps = -1;
-	}
+
+	//-------------------------------------------------------------------------
 	
+	/**
+	 * This immediately stops the execution and will prevent any steps to make
+	 * even if they were triggered before a call to this method.
+	 */
 	public void executionStop() {
 		this.stop = true;
 	}
+	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * This method will cause the execution pause.
+	 */
 	public void executionPause() {
 		this.paused = true;
 	}
 	
-	
-	class KielerActorFiringListener implements ActorFiringListener {
-		String objectPath;
-		ModalModel modalModel;
-		
-		KielerActorFiringListener(String objectPath,
-								  ModalModel modalModel) {
-			this.objectPath = objectPath;
-			this.modalModel = modalModel;
-		}
+	//-------------------------------------------------------------------------
 
-		/* (non-Javadoc)
-		 * @see ptolemy.actor.ActorFiringListener#firingEvent(ptolemy.actor.FiringEvent)
-		 */
-		public void firingEvent(FiringEvent event) {
-			// TODO Auto-generated method stub
-			String stateName = modalModel.getController().currentState().getName();
-			System.out.println(" >>> "+ objectPath + "." +stateName);
-		}
-		
-	}
-	
-	private void addStateListenersRecursively(List<ModalModel> modalModelList,
-											  List<InstantiableNamedObj> children, 
-											  String hierarchyLevel) {
+	/**
+	 * Fills the modalModelList by recursively going thru the models elements.
+	 * 
+	 * @param modalModelList the list of ModalModels to fill
+	 * @param children the children to walk thru
+	 */
+	@SuppressWarnings("unchecked")
+	private void fillModalModelList(List<ModalModel> modalModelList,
+									List<InstantiableNamedObj> children) {
 		// if no further children
 		if (children == null) return;
 
 		// do recursively for children
 		for (int c = 0; c < children.size(); c++){
 			Object child = children.get(c);
-        	//System.out.println("Child: "+ child.getClass().getName());
-            
             if(child instanceof CompositeActor){
             	CompositeActor compositeActor = (CompositeActor)child;
-            	System.out.println("CompositeActor: "+ compositeActor.getName());
             	
-            	addStateListenersRecursively(
+            	fillModalModelList(
             			modalModelList,
-            			compositeActor.entityList(),
-            			hierarchyLevel + "." + compositeActor.getName());
+            			compositeActor.entityList());
             }
             
 
             if (child instanceof ModalModel) {
             	ModalModel modalModel = (ModalModel)child;
-            	System.out.println("Add ModalModel: "+ modalModel.getName());
             	modalModelList.add(modalModel);
             	
-            	addStateListenersRecursively(
+            	fillModalModelList(
             			modalModelList,
-            			modalModel.entityList(),
-            			hierarchyLevel);
+            			modalModel.entityList());
             }
 
             if (child instanceof ModalController) {
             	ModalController modalController = (ModalController)child;
-            	System.out.println("" +
-            			": "+ modalController.getName());
             	
-            	addStateListenersRecursively(
+            	fillModalModelList(
             			modalModelList,
-            			modalController.entityList(),
-            			hierarchyLevel);
+            			modalController.entityList());
             }
-            
-//            if (child instanceof ptolemy.domains.fsm.kernel.State) {
-//            	ptolemy.domains.fsm.kernel.State state
-//            		= (ptolemy.domains.fsm.kernel.State) child;
-//            	
-//            	System.out.println(" >State: "+ state.getName());
-//            	
-//            }//end if state
         }//end while
 	}
 
 	
-	public void run() {
-		System.out.println("Execution Thread - Run 1");
-		System.out.println("PtolemyModel:" + PtolemyModel);
+	//-------------------------------------------------------------------------
 
-		// first create MoML file
-        //TestCreateMomlFile.main(null);
-        // get URI of MoML file
-		
-        //String filename = "src-gen/generated.moml";
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
+	@SuppressWarnings("unchecked")
+	public void run() {
 		URI fileURI = URI.createFileURI(new File(PtolemyModel).getAbsolutePath());
-    	
         URI momlFile = fileURI;
 
-        // create new MoML parser. Make sure ptolemy is in your dependencies
+        //create new MoML parser
+        //make sure Ptolemy is in dependencies
         MoMLParser parser = new MoMLParser();
         
         List<ModalModel> modalModelList = new LinkedList<ModalModel>();
         
         NamedObj ptolemyModel = null;
         try {
-            // parse
-            // FIXME: here it would be nicer to parse something from memory
-            //  maybe a String, hence the MoML code would be required in
-            //  form of a String
+            //parse
             ptolemyModel = parser.parse(null, new URL(momlFile.toString()));
-            System.out.println("MoML parsing finished...");
 
-            // now execute the model
-
-            // check if the parsed model is of correct type
+            //now execute the model
             if (ptolemyModel != null && ptolemyModel instanceof CompositeActor) {
+                //check if the parsed model is of correct type
                 CompositeActor modelActor = ((CompositeActor) ptolemyModel);
                 
-                // get the manager that manages execution
+                //get the manager that manages execution
                 manager = modelActor.getManager();
-                // there is likely no manager available, hence create a new one
                 if (manager == null) {
-                    manager = new Manager(modelActor.workspace(), "kieler manager");
+                    //there is likely no manager available, 
+                	//hence create a new one
+                    manager = new Manager(modelActor.workspace(), 
+                    						"kieler manager");
                     modelActor.setManager(manager);
                 }
                 else {
+                	//if there is already a manager (e.g., from previous calls)
+                	//then try to stop it and create a new one
                 	try {
                     	manager.stop();
                     	manager.wrapup();
                 	}catch(Exception e){}
-                    manager = new Manager(modelActor.workspace(), "kieler manager");
+                    manager = new Manager(modelActor.workspace(), 
+                    						"kieler manager");
                     modelActor.setManager(manager);
                 }
 
-                addStateListenersRecursively(
+                //go thru the model and add fill the modalModelList
+                fillModalModelList(
                 		modalModelList,
-                		modelActor.entityList(), 
-                		modelActor.getName());
+                		modelActor.entityList());
                 
                 //modify host and port of railway simulation engine actor
                 if (modelActor.entityList() != null) {
@@ -247,14 +260,10 @@ public class ExecutePtolemyModel implements Runnable {
                     }//next c
                 }
 
-        		System.out.println("Execution Thread - Run 2");
-
                 // run the model
                 if (manager != null) {
-                    List<Actor> children = modelActor.getChildren();
                     // run forest, run!
                     manager.initialize();
-                    //System.out.println(children.get(0).toString());
                     while(true) {
                     	
                     	while(this.paused) {
@@ -266,30 +275,35 @@ public class ExecutePtolemyModel implements Runnable {
                     	}
                     	
                     	synchronized(this) {
-                        	if ((this.makesteps == -1)||(this.makesteps > 0)) {
-                        		if (makesteps > 0) makesteps--;
+                          if ((this.makesteps == -1)||(this.makesteps > 0)) {
+                        	  if (makesteps > 0) makesteps--;
                         		manager.iterate();
                         		
-                        		for (int c = 0; c < modalModelList.size(); c++) {
-                        			ModalModel modalModel = modalModelList.get(c);
-                        			currentState = ((StringAttribute)modalModel.getController()
-                        					.currentState()
-                        					.getAttribute("elementURIFragment"))
-                        					.getValueAsString();
+                        	  //iterate thru all modal models and concatenate
+                        	  //the fragment URIs with a colon
+                        	  for (int c = 0; c < modalModelList.size(); c++) {
+                        		ModalModel modalModel = modalModelList.get(c);
+                        		//if more than one active state
+                        		if (!currentState.equals(""))
+                        			currentState += ", ";
+                        		currentState += ((StringAttribute)modalModel
+                        				 .getController()
+                        				 .currentState()
+                        				 .getAttribute("elementURIFragment"))
+                        				 .getValueAsString();
                         		}
                         		
                         	}
                     	}
-                        //((IOPort)actor.portList().get(0)).send(0, new IntToken(8));
-
                     }
                     // calling manager.execute() would run the model
                     // for the amount of iterations set in the director
                 }
             }
         } catch (Exception e) {
-        	this.executionException = new KiemExecutionException(e.getLocalizedMessage(),true);
-        	//e.printStackTrace();
+        	//raise a KiemExecutionException in case of any error
+        	this.executionException = 
+        		new KiemExecutionException(e.getLocalizedMessage(),true, e);
         }
 	}
 	

@@ -14,51 +14,98 @@
 
 package de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw;
 
-import java.util.Collection;
 import java.util.Hashtable;
 
 import de.cau.cs.kieler.simplerailctrl.*;
-import de.cau.cs.kieler.simplerailctrl.util.SimplerailctrlAdapterFactory;
-//import org.openarchitectureware.*;
-//import org.openarchitectureware.emf.*;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.*;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EcoreAdapterFactory;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import de.cau.cs.kieler.simplerailctrl.provider.*;
 
+/**
+ * The class XtendJava implements some Java escape code used in the model2model
+ * Xtend transformation.
+ * 
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ */
 public class XtendJava {
+	
+	/** The hash table used to remember marked states. */
+	static Hashtable<Integer,Node> ht = new Hashtable<Integer,Node>();
+
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Dump a String to the system console for debugging purposes.
+	 * 
+	 * @param aString the a string
+	 */
 	public final static void dump(String aString) {
 		System.out.println(aString);
 	}
 
 	//-------------------------------------------------------------------------
 
-	public final static String hash(Node myNode) {
-		int i = myNode.eContainer().eContents().indexOf(myNode);
-		return ""+i;//myNode.hashCode();
-	}
-
+	/**
+	 * Gets the URIFragment of a Node.
+	 * 
+	 * @param myNode the Node
+	 * 
+	 * @return the URIFragment
+	 */
 	public final static String getURIFragment(Node myNode) {
 		//Returns the URI fragment that, when passed to getEObject will
 		//return the given object.
 		return myNode.eResource().getURIFragment(myNode).toString();
 	}
 	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Returns a hash value of a Node.
+	 * 
+	 * @param myNode the Node
+	 * 
+	 * @return the hash value as a String
+	 */
+	public final static String hash(Node myNode) {
+		//int i = myNode.eContainer().eContents().indexOf(myNode);
+		//return ""+i;//myNode.hashCode();
+		return ""+myNode.hashCode();
+	}
+
+	//-------------------------------------------------------------------------
 	
+	/**
+	 *  Returns a hash value of a Transition.
+	 * 
+	 * @param myTransition the Transition
+	 * 
+	 * @return the hash value as a String
+	 */
 	public final static String hash(Transition myTransition) {
 		return ""+myTransition.hashCode();
 	}
 
-	public final static String hash(String aString) {
-		return ""+aString.hashCode();
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Returns a hash value of a String..
+	 * 
+	 * @param string the String
+	 * 
+	 * @return the hash value as a String
+	 */
+	public final static String hash(String string) {
+		return ""+string.hashCode();
 	}
 	
 	//-------------------------------------------------------------------------
-	
-	//-------------------------------------------------------------------------
 
+	/**
+	 * Builds the trigger of a Transition.
+	 * 
+	 * @param myTransition the Transition
+	 * 
+	 * @return the trigger as a String
+	 */
 	public final static String buildTrigger(Transition myTransition) {
 		String myTrigger = "";
 		if (myTransition.eClass().getName().equals("EventWait")) {
@@ -73,7 +120,7 @@ public class XtendJava {
 		}
 		if (myTransition.eClass().getName().equals("EventOccupied")) {
 			EventOccupied event = (EventOccupied)myTransition;
-			EList trackList = event.getTrack();
+			EList<TRACK> trackList = event.getTrack();
 			String condition   = event.getCondition().getLiteral();
 			String conjunction = event.getConjunction().getLiteral();
 			if(condition.equals("IF_NOT")) condition = "!("; 
@@ -93,22 +140,31 @@ public class XtendJava {
 
 	//-------------------------------------------------------------------------
 
+	/**
+	 * Builds the emission of a Node.
+	 * 
+	 * @param myNode the Node
+	 * 
+	 * @return the emission as a String
+	 */
 	public final static String buildEmission(Node myNode) {
 		String myEmission = "";
 		if (myNode.eClass().getName().equals("SetSpeed")) {
 			SetSpeed setSpeed = (SetSpeed)myNode;
 			int speed = setSpeed.getSpeed();
 			int motormode = setSpeed.getDirection().getValue();
-			EList trackList = setSpeed.getTrack();
+			EList<TRACK> trackList = setSpeed.getTrack();
 			myEmission += "tracks={";
 			for (int c = 0; c < trackList.size(); c++) {
 				if (c > 0) myEmission += ",";
 				int track = ((TRACK)trackList.get(c)).getValue();
 				//myEmission += "track"+track+"={speed="+speed+"}";
-				myEmission += "track"+track+"={speed="+speed+", motormode="+motormode+"}";
+				myEmission += "track"+track
+						+"={speed="+speed+", motormode="+motormode+"}";
 			}
 			myEmission += "};";
-			if (trackList.size() == 0) myEmission = "tracks={track12345={speed=0, motormode=0}};";
+			if (trackList.size() == 0) 
+				myEmission = "tracks={track12345={speed=0, motormode=0}};";
 			myEmission += "signals={signal12345={lights=0}};";
 			myEmission += "points={point12345={turn=0}}";
 			//myEmission += "tracks={track12345={speed=0, motormode=0}}";
@@ -117,7 +173,7 @@ public class XtendJava {
 		if (myNode.eClass().getName().equals("SetPoint")) {
 			SetPoint setPoint = (SetPoint)myNode;
 			int turn = setPoint.getDirection().getValue();
-			EList pointList = setPoint.getPoint();
+			EList<POINT> pointList = setPoint.getPoint();
 			myEmission += "points={";
 			for (int c = 0; c < pointList.size(); c++) {
 				if (c > 0) myEmission += ",";
@@ -125,7 +181,8 @@ public class XtendJava {
 				myEmission += "point"+point+"={turn="+turn+"}";
 			}
 			myEmission += "};";
-			if (pointList.size() == 0) myEmission = "points={point12345={turn=0}};";
+			if (pointList.size() == 0) 
+				myEmission = "points={point12345={turn=0}};";
 			myEmission += "signals={signal12345={lights=0}};";
 			//myEmission += "points={point12345={turn=0}}";
 			myEmission += "tracks={track12345={speed=0, motormode=0}}";
@@ -136,13 +193,13 @@ public class XtendJava {
 			int color = setSignal.getColor().getValue();
 			boolean position0 = false;
 			boolean position1 = false;
-			EList positionList = setSignal.getPosition();
+			EList<POSITION> positionList = setSignal.getPosition();
 			for (int c = 0; c < positionList.size(); c++){
 				int posval = ((POSITION)positionList.get(c)).getValue();
 				if (posval == 0) position0 = true;
 				if (posval == 1) position1 = true;
 			}
-			EList trackList = setSignal.getTrack();
+			EList<TRACK> trackList = setSignal.getTrack();
 			myEmission += "signals={";
 			for (int c = 0; c < trackList.size(); c++) {
 				if (c > 0) myEmission += ",";
@@ -158,8 +215,8 @@ public class XtendJava {
 				}
 			}
 			myEmission += "};";
-			if (trackList.size() == 0) myEmission = "signals={signal12345={lights=0}};";
-			//myEmission += "signals={signal12345={lights=0}}";
+			if (trackList.size() == 0) 
+				myEmission = "signals={signal12345={lights=0}};";
 			myEmission += "points={point12345={turn=0}};";
 			myEmission += "tracks={track12345={speed=0, motormode=0}}";
 		}
@@ -169,12 +226,27 @@ public class XtendJava {
 
 	//-------------------------------------------------------------------------
 
-	static Hashtable ht = new Hashtable();
+	/**
+	 * Mark a state Node. This puts the Node myNode into the hash table to
+	 * remember it.
+	 * 
+	 * @param myNode the Node to mark
+	 */
 	public final static void markState(Node myNode) {
 		ht.put(myNode.hashCode(), myNode);
 	}
 	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Checks whether a state Node myNode is marked.
+	 * 
+	 * @param myNode the Node to check
+	 * 
+	 * @return true, if state is marked
+	 */
 	public final static boolean isMarked(Node myNode) {
 		return ht.contains(myNode);
 	}
+	
 }

@@ -30,16 +30,33 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
-import org.eclipse.emf.mwe.utils.Writer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
 import de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.MomlWriter;
 
-
+/**
+ * The class ModelTransformationHandler is an action handler that
+ * can transform the selected SimpleRailCtrl EMF model into a
+ * semantically equivalent and executable Ptolemy model.
+ * 
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ */
+@SuppressWarnings("restriction")
 public class ModelTransformationHandler extends AbstractHandler {
 	
+	/** The constant generatedModelName. */
+	static final String generatedModelName = "generated.moml";
 	
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Extract selection of the project explorer.
+	 * 
+	 * @param sel the selection
+	 * 
+	 * @return the resource
+	 */
 	IResource extractSelection(ISelection sel) {
 	      if (!(sel instanceof IStructuredSelection))
 	         return null;
@@ -54,18 +71,24 @@ public class ModelTransformationHandler extends AbstractHandler {
 	      return (IResource) adapter;
 	}	
 
+	//-------------------------------------------------------------------------
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IWorkbenchWindow activeWorkbenchWindow = HandlerUtil
-				.getActiveWorkbenchWindow(event);
-		
+
+		//get the window
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-	    
-        ISelection selection = window.getWorkbench().getActiveWorkbenchWindow().getSelectionService().getSelection();
+		//extract the selection (using the selection service)
+        ISelection selection = window.getWorkbench().getActiveWorkbenchWindow()
+        					   .getSelectionService().getSelection();
+        //get the full path of the input model
         String inputModel = extractSelection(selection).getFullPath().toString();
-        
-        System.out.println(inputModel);
-        String outputModel = "/example/generated.moml";
+
+        //use the same workspace but a different name for the output model
+        int i = inputModel.lastIndexOf("/");
+        String outputModel = inputModel.substring(0,i) + "/" + generatedModelName;
 		
         //Workflow
         Workflow workflow = new Workflow();
@@ -81,7 +104,8 @@ public class ModelTransformationHandler extends AbstractHandler {
         momlWriter.setModelSlot("momlmodel");
         
         //Meta models
-        EmfMetaModel metaModel1 = new EmfMetaModel(de.cau.cs.kieler.simplerailctrl.SimplerailctrlPackage.eINSTANCE);
+        EmfMetaModel metaModel1 = new EmfMetaModel(
+        	  de.cau.cs.kieler.simplerailctrl.SimplerailctrlPackage.eINSTANCE);
         EmfMetaModel metaModel2 = new EmfMetaModel(Moml.MomlPackage.eINSTANCE);
 		
         //XtendComponent
