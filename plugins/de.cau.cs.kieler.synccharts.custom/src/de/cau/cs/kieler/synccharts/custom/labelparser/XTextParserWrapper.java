@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  * 
  *****************************************************************************/
-package de.cau.cs.kieler.synccharts.custom;
+package de.cau.cs.kieler.synccharts.custom.labelparser;
 
 import java.io.ByteArrayInputStream;
 

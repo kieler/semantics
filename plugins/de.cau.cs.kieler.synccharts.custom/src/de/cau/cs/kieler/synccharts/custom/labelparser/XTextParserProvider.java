@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  * 
  *****************************************************************************/
-package de.cau.cs.kieler.synccharts.custom;
+package de.cau.cs.kieler.synccharts.custom.labelparser;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EObject;
@@ -27,11 +27,11 @@ import de.cau.cs.kieler.synccharts.Action;
 
 /**
  * The provider for the XText parser.
- * @author schm, haf
+ * @author schm
  *
  */
 // A provider for the xText parser
-public class ActionLabelParserProvider extends AbstractProvider implements IParserProvider {
+public class XTextParserProvider extends AbstractProvider implements IParserProvider {
 	
 	/**
 	 * Return the XText parser
@@ -41,10 +41,17 @@ public class ActionLabelParserProvider extends AbstractProvider implements IPars
 		if (hint instanceof ParserHintAdapter) {
 			Object element = ((ParserHintAdapter) hint).getAdapter(EObject.class);
 			if ((element != null) && (element instanceof Action)) {
-				ActionLabelParserWrapper wrapper = new ActionLabelParserWrapper();
+				Action action = (Action) element;
+				XTextParserWrapper wrapper = new XTextParserWrapper(action);
 				return wrapper;
 			}
-		}
+/*
+			else if ((element != null) && (element instanceof SuspensionTrigger)) {
+				SuspensionTrigger suspensionTrigger = (SuspensionTrigger) element;
+				XTextParserWrapper wrapper = new XTextParserWrapper(suspensionTrigger);
+				return wrapper;
+			}
+*/		}
 		return null;
 	}
 
