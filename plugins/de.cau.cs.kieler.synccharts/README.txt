@@ -12,6 +12,7 @@ How to generate:
 3. select "Generate Model Code"
 4. select "Generate Edit Code"
 5. select "Generate Editor Code"
+6.a optionally re-generate the gmfgen file from the mapping file (see below)
 6. right-click the file model/synccharts.gmfgen
 7. select "Generate diagram code"
 8. Check if all freshly generated projects compile without errors
