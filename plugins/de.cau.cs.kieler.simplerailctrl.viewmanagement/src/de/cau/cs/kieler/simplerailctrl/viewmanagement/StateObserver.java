@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
@@ -126,7 +125,8 @@ public class StateObserver extends JSONObjectDataComponent implements
         StringTokenizer tokenizer = new StringTokenizer(this.getProperties()[1]
                 .getValue(), " ()");
         if (tokenizer.hasMoreTokens()) {
-        	String fileString = tokenizer.nextToken();
+        	//skip the file string 
+        	tokenizer.nextToken();
             String editorString = tokenizer.nextToken();
 
             IEditorReference[] editorRefs = PlatformUI.getWorkbench()
@@ -178,7 +178,7 @@ public class StateObserver extends JSONObjectDataComponent implements
      * modelElement URIFragment provided. The latter can be 
      * obtained by calling:
      * 
-     * myEObject.eResource().getURIFragment(myNode).toString();
+     * myEObject.eResource().getURIFragment(myEObject).toString();
      * 
      * This returns the URI fragment that, when passed to getEObject
      * will return the given object.

@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.eclipse.draw2d.ColorConstants;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
 
 import de.cau.cs.kieler.viewmanagement.ACombination;
 import de.cau.cs.kieler.viewmanagement.ATrigger;
@@ -92,21 +92,24 @@ public class StateCombination extends ACombination {
 		//rootEditPart must be set before!
         if (rootEditPart != null) {
         	EditPart editPart = this.translateToEditPart(
-        							triggerEvent.toString(),
+        							triggerEvent.getAffectedObject(),
         							rootEditPart); 
-            triggerEvent.getAffectedObject();
-    		if (triggerEvent.getTriggerState() 
-    				&& !effects.containsKey(editPart)) {
-    					HighlightEffect effect = new HighlightEffect();
-    					effect.setTarget((ShapeEditPart)editPart);
-    					effects.put(editPart, effect);
-    					return true;
-    			} else {
-    				HighlightEffect effect = effects.get(editPart);
-    				if(effect!=null)
-    					effect.undo();
-    				effects.remove(editPart);
-    			}
+        	if (editPart instanceof ShapeEditPart) {
+                triggerEvent.getAffectedObject();
+        		if (triggerEvent.getTriggerState() 
+        				&& !effects.containsKey(editPart)) {
+        					HighlightEffect effect = new HighlightEffect();
+        					effect.setTarget((ShapeEditPart)editPart);
+        					effect.setHighlightFigure(4, ColorConstants.orange);
+        					effects.put(editPart, effect);
+        					return true;
+       			} else {
+        				HighlightEffect effect = effects.get(editPart);
+        				if(effect!=null)
+        					effect.undo();
+        				effects.remove(editPart);
+       			}
+        	}
         }
         return false;
     }
@@ -119,6 +122,7 @@ public class StateCombination extends ACombination {
 	@Override
     public void execute() {
         for (HighlightEffect effect : effects.values()) {
+			effect.setHighlightFigure(4, ColorConstants.orange);
             effect.execute();
         }
     }
