@@ -329,74 +329,85 @@
          point="de.cau.cs.kieler.kiml.layout.layoutInfo">
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart"
-            id="de.cau.cs.kieler.synccharts.diagram"
-            type="de.cau.cs.kieler.layout.info.types.stateMachine">
+            id="de.cau.cs.kieler.synccharts.diagram">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart"
-            id="de.cau.cs.kieler.synccharts.diagram"
-            type="de.cau.cs.kieler.layout.info.types.stateMachine">
+            id="de.cau.cs.kieler.synccharts.diagram">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart"
-            id="de.cau.cs.kieler.synccharts.region"
-            type="de.cau.cs.kieler.layout.info.types.boxes">
+            id="de.cau.cs.kieler.synccharts.region">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart"
-            id="de.cau.cs.kieler.synccharts.region"
-            type="de.cau.cs.kieler.layout.info.types.boxes">
+            id="de.cau.cs.kieler.synccharts.region">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionsCompartmentEditPart"
-            type="de.cau.cs.kieler.layout.info.types.nolayout">
+            id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionsCompartment2EditPart"
-            type="de.cau.cs.kieler.layout.info.types.nolayout">
+            id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionsCompartmentEditPart"
-            type="de.cau.cs.kieler.layout.info.types.nolayout">
+            id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionsCompartment2EditPart"
-            type="de.cau.cs.kieler.layout.info.types.nolayout">
+            id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionsCompartmentEditPart"
-            type="de.cau.cs.kieler.layout.info.types.nolayout">
+            id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionsCompartment2EditPart"
-            type="de.cau.cs.kieler.layout.info.types.nolayout">
+            id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartmentEditPart"
-            type="de.cau.cs.kieler.layout.info.types.nolayout">
+            id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartment2EditPart"
-            type="de.cau.cs.kieler.layout.info.types.nolayout">
+            id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartmentEditPart"
-            type="de.cau.cs.kieler.layout.info.types.nolayout">
+            id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartment2EditPart"
-            type="de.cau.cs.kieler.layout.info.types.nolayout">
+            id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateVariableCompartmentEditPart"
-            type="de.cau.cs.kieler.layout.info.types.nolayout">
+            id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
       <binding
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateVariableCompartment2EditPart"
-            type="de.cau.cs.kieler.layout.info.types.nolayout">
+            id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
       <option
-            diagram="de.cau.cs.kieler.synccharts.region"
+            object="de.cau.cs.kieler.synccharts.diagram"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.stateMachine">
+      </option>
+      <option
+            object="de.cau.cs.kieler.synccharts.region"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.boxes">
+      </option>
+      <option
+            object="de.cau.cs.kieler.synccharts.nolayout"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.nolayout">
+      </option>
+      <option
+            object="de.cau.cs.kieler.synccharts.region"
             option="de.cau.cs.kieler.layout.options.minSpacing"
             value="5.0">
       </option>
