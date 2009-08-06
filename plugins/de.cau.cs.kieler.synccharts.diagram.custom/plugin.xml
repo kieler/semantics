@@ -383,14 +383,6 @@
             class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartment2EditPart"
             id="de.cau.cs.kieler.synccharts.nolayout">
       </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateVariableCompartmentEditPart"
-            id="de.cau.cs.kieler.synccharts.nolayout">
-      </binding>
-      <binding
-            class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateVariableCompartment2EditPart"
-            id="de.cau.cs.kieler.synccharts.nolayout">
-      </binding>
       <option
             object="de.cau.cs.kieler.synccharts.diagram"
             option="de.cau.cs.kieler.layout.options.diagramType"
