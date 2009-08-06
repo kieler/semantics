@@ -12,8 +12,8 @@ context State if (type == StateType::PSEUDO) ERROR "pseudo states must not conta
 context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain signals!" :
 	(signals == null) || (signals.size == 0);
 	
-context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain variables!" :
-	(variables == null) || (variables.size == 0);
+//context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain variables!" :
+//	(variables == null) || (variables.size == 0);
 	
 context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain actions!" :
 	((entryActions == null) || (entryActions.size == 0))
