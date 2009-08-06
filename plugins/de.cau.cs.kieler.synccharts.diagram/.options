@@ -1,0 +1,7 @@
+# Tracing options for the de.cau.cs.kieler.synccharts.diagram plug-in
+
+# Common issues
+de.cau.cs.kieler.synccharts.diagram/debug=false
+
+# Visual IDs
+de.cau.cs.kieler.synccharts.diagram/debug/visualID=false
