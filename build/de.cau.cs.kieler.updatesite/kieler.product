@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="KIELER" id="de.cau.cs.kieler.core.ui.product" application="org.eclipse.ui.ide.workbench" version="0.1.0" useFeatures="false" includeLaunchers="true">
+<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.ui.product" application="org.eclipse.ui.ide.workbench" version="0.1.0" useFeatures="false" includeLaunchers="true">
+
+   <aboutInfo>
+      <image path="/de.cau.cs.kieler.updatesite/kieler-about-v1.png"/>
+      <text>
+         TODO
+      </text>
+   </aboutInfo>
 
    <configIni use="default">
    </configIni>
@@ -12,12 +19,15 @@
 
    <windowImages/>
 
+   <splash
+      location="de.cau.cs.kieler.core.ui" />
    <launcher name="kieler">
       <solaris/>
       <win useIco="false">
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>
