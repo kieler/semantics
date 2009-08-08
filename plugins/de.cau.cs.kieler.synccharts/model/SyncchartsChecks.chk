@@ -1,8 +1,7 @@
 import synccharts;
 
-//context State if (type == StateType::PSEUDO) ERROR "pseudo states must not have a name!" :
-//	(name == null) || (name.length == 0);
-
+// ================================================================================================
+// Pseudo States 
 context State if (type == StateType::PSEUDO) ERROR "pseudo states must not be initial or final!" :
 	isInitial == false && isFinal == false;
 	
@@ -12,9 +11,6 @@ context State if (type == StateType::PSEUDO) ERROR "pseudo states must not conta
 context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain signals!" :
 	(signals == null) || (signals.size == 0);
 	
-//context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain variables!" :
-//	(variables == null) || (variables.size == 0);
-	
 context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain actions!" :
 	((entryActions == null) || (entryActions.size == 0))
 	&& ((innerActions == null) || (innerActions.size == 0))
@@ -22,33 +18,65 @@ context State if (type == StateType::PSEUDO) ERROR "pseudo states must not conta
 	
 context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain a suspension trigger!" :
 	suspensionTrigger == null;
-	
+// ================================================================================================
+// Reference States 
 context State if (type != StateType::REFERENCE) ERROR "only reference states may contain signal renamings!" :
 	(signalRenamings == null) || (signalRenamings.size == 0);
 
+context State if (type != StateType::REFERENCE || type!= StateType::TEXTUAL) ERROR "Only textual or reference states may contain body text!" :
+	(bodyText == null) || (bodyText.matches("\\s*"));
+// ================================================================================================
+// General States 
+context State if ((parentRegion != null || parentRegion.parentState != null) && isInitial == false) // not checked for root state 
+  ERROR "Not reachable state! Every state needs at least one incoming transition!" :
+  (parentRegion.innerStates.exists(e|e.outgoingTransitions.exists(t|t.targetState == this)));
+
+context State if ( label == null || label.matches("\\s*"))
+	ERROR "Anonymous states (= no label) need an ID" : 
+	(id != null && id.length>0);
+
+
+
+// ================================================================================================
+// Regions
+context Region if (parentState != null) // not checked for root state
+	ERROR "Every region should have exactly one initial state!" : 
+	(innerStates.select(s|s.isInitial).size == 1);
+
+// ================================================================================================
+// Signals
 context Signal if (isLocal) ERROR "local signals must not be input or output!" :
 	((!isInput) && (!isOutput));
 	
 context Signal ERROR "signals have to be input, local or output!" :
 	isInput || isLocal || isOutput;
 
-context Signal if ((initialValue == null) || (initialValue == "")) ERROR "only valued signals may have a combine type other than NONE!" :
+context Signal if ((initialValue == null) || (initialValue == "")) 
+    ERROR "only valued signals may have a combine type other than NONE!" :
 	combineOperator == CombineOperator::NONE;
 
-context Transition if (isImmediate) ERROR "immediate transitions must not have a delay!" :
+// ================================================================================================
+// Transitions
+context Transition if (isImmediate) ERROR "Immediate transitions must not have a delay!" :
 	(delay == null) || (delay == 1);
 	
 context Transition ERROR "Delays have to be at least 1!" :
 	(delay == null) || (delay >= 1);
-	
-//context SignalRenaming ERROR "The old and new signal of a signal renaming must be different!" :
-//	oldSignal != newSignal;
-	
+
+//context State if(outgoingTransitions.size > 1) 
+//    ERROR "Priorities of outgoing transitions need to be distinct!" :
+//    (outgoingTransitions.forAll(t|t.priority != )));
+
+// ================================================================================================
+// Expressions
 context ComplexExpression if ((operator == OperatorType::NOT) || (operator == OperatorType::VAL)) ERROR "Unary operators may not have more or less than one operand!" :
 	subExpressions.size == 1;
 	
 context ComplexExpression if (!((operator == OperatorType::NOT) || (operator == OperatorType::VAL))) ERROR "Binary operators may not have more or less than two operands!" :
 	subExpressions.size == 2;
+
+// ================================================================================================
+// Emissions
 	
 context Emission if (signal.type == ValueType::PURE) ERROR "Pure signals cannot be assigned a value!" :
 	newValue == null;
@@ -56,5 +84,10 @@ context Emission if (signal.type == ValueType::PURE) ERROR "Pure signals cannot 
 context Emission if (!(signal.type == ValueType::PURE)) ERROR "Valued signals must be assigned a value!" :
 	newValue != null;
 	
-//context Region ERROR "Every region must contain exactly one initial state" :
-//    innerStates
+// ================================================================================================
+// Actions
+
+context Action if (triggersAndEffects != null && triggersAndEffects.trim().compareTo("") != 0 ) 
+    ERROR "Triggers and Effects String has not correctly been parsed yet!" :
+    (trigger != null || (effects!=null && effects.size >0) );
+	
