@@ -14,7 +14,8 @@
       <domainMetaElement
           href="synccharts.ecore#//State"/>
       <labelMappings
-          xsi:type="gmfmap:FeatureLabelMapping">
+          xsi:type="gmfmap:FeatureLabelMapping"
+          viewPattern="">
         <diagramLabel
             href="synccharts.gmfgraph#StateName"/>
         <features
