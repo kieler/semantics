@@ -120,18 +120,18 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
         Class<?> class1 = null, class2 = null;
         IElementType elementType = null;
         if (type.equals(VAL_ENTRY_ACTION)) {
-            class1 = StateEntryActionsCompartmentEditPart.class;
-            class2 = StateEntryActionsCompartment2EditPart.class;
+            class1 = StateOnEntryActionEditPart.class;
+            class2 = StateOnEntryAction2EditPart.class;
             elementType = SyncchartsElementTypes.Action_3004;
         }
         else if (type.equals(VAL_EXIT_ACTION)) {
-            class1 = StateExitActionsCompartmentEditPart.class;
-            class2 = StateExitActionsCompartment2EditPart.class;
+            class1 = StateOnExitActionEditPart.class;
+            class2 = StateOnExitActionEditPart.class;
             elementType = SyncchartsElementTypes.Action_3006;
         }
         else if (type.equals(VAL_INSIDE_ACTION)) {
-            class1 = StateInnerActionsCompartmentEditPart.class;
-            class2 = StateInnerActionsCompartment2EditPart.class;
+            class1 = StateOnInsideActionEditPart.class;
+            class2 = StateOnInsideAction2EditPart.class;
             elementType = SyncchartsElementTypes.Action_3005;
         }
         else if (type.equals(VAL_REGION)) {
@@ -140,8 +140,8 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
             elementType = SyncchartsElementTypes.Region_3001;
         }
         else if (type.equals(VAL_SIGNAL)) {
-            class1 = StateSignalCompartmentEditPart.class;
-            class2 = StateSignalCompartment2EditPart.class;
+            class1 = StateSignalEditPart.class;
+            class2 = StateSignal2EditPart.class;
             elementType = SyncchartsElementTypes.Signal_3003;
         }
         /*
@@ -151,8 +151,8 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
             elementType = SyncchartsElementTypes.Variable_3007;
         }*/
         else if (type.equals(VAL_SUSPENSION_TRIGGER)) {
-            class1 = StateSuspensionTriggerCompartmentEditPart.class;
-            class2 = StateSuspensionTriggerCompartment2EditPart.class;
+            class1 = StateSuspendEditPart.class;
+            class2 = StateSuspend2EditPart.class;
             elementType = SyncchartsElementTypes.Action_3008;
         }
         else return;
