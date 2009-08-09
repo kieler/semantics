@@ -19,7 +19,7 @@
 	«EXPAND xpt::Common::generatedMemberComment»
 protected void doSaveDocument(org.eclipse.core.runtime.IProgressMonitor monitor, Object element, org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocument document, boolean overwrite) throws org.eclipse.core.runtime.CoreException {
 	«REM»Set validation here so at each saving the diagram gets validated.«ENDREM»
-	ValidateAction.runValidation((View) document.getContent());
+	ValidateAction.runValidation((org.eclipse.gmf.runtime.notation.View) document.getContent());
 	ResourceSetInfo info = getResourceSetInfo(element);
 	if (info != null) {
 		if (!overwrite && !info.isSynchronized()) {
