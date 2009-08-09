@@ -100,5 +100,25 @@
             name="KIELER">
       </category>
    </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="KIELER">
+         <property
+               name="aboutText"
+               value="TODO">
+         </property>
+         <property
+               name="aboutImage"
+               value="kieler-about-v1.png">
+         </property>
+         <property
+               name="appName"
+               value="KIELER">
+         </property>
+      </product>
+   </extension>
 
 </plugin>
