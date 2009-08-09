@@ -4,7 +4,7 @@
 <product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.ui.product" application="org.eclipse.ui.ide.workbench" version="0.1.0" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="/de.cau.cs.kieler.updatesite/kieler-about-v1.png"/>
+      <image path="/de.cau.cs.kieler.core.ui/kieler-about-v1.png"/>
       <text>
          TODO
       </text>
