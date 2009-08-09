@@ -32,7 +32,6 @@
    <vm>
    </vm>
 
-
    <plugins>
    </plugins>
 
@@ -40,6 +39,7 @@
       <feature id="de.cau.cs.kieler.core" version="0.1.0"/>
       <feature id="de.cau.cs.kieler.kiml" version="0.1.0"/>
       <feature id="de.cau.cs.kieler.dataflow" version="0.2.0"/>
+      <feature id="de.cau.cs.kieler.synccharts" version="0.1.0"/>
       <feature id="org.eclipse.draw2d" version="3.5.0.v20090422-2346-44-7w311A163902622"/>
       <feature id="org.eclipse.emf" version="2.5.0.v200906151043"/>
       <feature id="org.eclipse.emf.common" version="2.5.0.v200906151043"/>
