@@ -14,12 +14,6 @@
 
 	<target name="build" depends="" />
 
-	<target name="clean">
-		<delete>
-			<fileset dir="${buildDirectory}" includes="**/*" />
-		</delete>
-	</target>
-
 	<target name="call.antRunner">
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg value="-configuration" />
@@ -83,8 +77,12 @@
 		<ant antfile="build.xml" dir="${elementPath}">
 			<property name="feature.destination" value="${basedir}/update-site/features"/>
 			<property name="plugin.destination" value="${basedir}/update-site/plugins"/>
-			<target name="build.jars"/>
+			<!-- target name="build.jars"/ -->
 			<target name="build.update.jar"/>
+		</ant>
+		<ant antfile="build.xml" dir="${elementPath}" target="gather.bin.parts">
+			<property name="feature.base" value="${basedir}/update-site/features"/>
+			<property name="updateJar.omitRootfiles" value="true"/>
 		</ant>
 	</target>
 	
@@ -92,6 +90,16 @@
 		<!-- ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/productBuild/productBuild.xml" / -->
 		<ant antfile="${eclipse.build.scripts}/productBuild/productBuild.xml" />
 	</target>
+	
+	<target name="clean">
+		<available file="${elementPath}/build.xml" property="buildFilePresent"/>
+	    <antcall target="cleanUp" />
+	</target>
+	
+	<target name="cleanUp" if="buildFilePresent">
+		<ant antfile="build.xml" dir="${elementPath}" target="clean" />
+	</target>
+	
 	
 	<target name="noTargetInfo">
 		<echo message="No build target given. Please give a target explicitly -Dtarget=&lt;{feature,rca}&gt;" />
