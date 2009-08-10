@@ -108,7 +108,7 @@
             name="KIELER">
          <property
                name="aboutText"
-               value="TODO">
+               value="KIELER - a research project on enhancing the model-based design of complex systems.&#x0A;&#x0A;http://www.informatik.uni-kiel.de/rtsys/kieler/&#x0A;&#x0A;Copyright 2009 by Christian-Albrechts-University of Kiel, Department of Computer Science, Real-Time and Embedded Systems Group.">
          </property>
          <property
                name="aboutImage"
@@ -117,6 +117,22 @@
          <property
                name="appName"
                value="KIELER">
+         </property>
+         <property
+               name="startupForegroundColor"
+               value="000000">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="10,287,480,20">
+         </property>
+         <property
+               name="startupProgressRect"
+               value="10,310,480,15">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
          </property>
       </product>
    </extension>
