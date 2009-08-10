@@ -17,6 +17,7 @@ package de.cau.cs.kieler.sim.kiem.data;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 
@@ -84,7 +85,7 @@ public class DataComponentEx implements Serializable {
 		this.poolIndices = new HashMap<Long,Long>();
 		this.deltaIndex = 0;
 		this.properties = this.component.getProperties();
-		this.componentId = component.getConfigurationElement().toString();
+		this.componentId = component.getDataComponentId();
 	}
 
 	//------------------------------------------------------------------------- 

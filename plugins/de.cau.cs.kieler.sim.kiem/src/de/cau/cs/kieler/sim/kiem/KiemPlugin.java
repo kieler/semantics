@@ -208,7 +208,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 					            		(List<DataComponentEx>)object;
 				            	}
 							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 				            in.close();
@@ -335,6 +334,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 	
 	//-------------------------------------------------------------------------
 	
+	
 	/**
 	 * Tries to restore the data component list. If an item was not found it
 	 * will be deleted and an error message is shown.
@@ -355,8 +355,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 			
 			for (int cc = 0; cc < dataComponentList.size(); cc++) {
 				DataComponent dataComponent = dataComponentList.get(cc);
-				String vglComponentId = dataComponent.getConfigurationElement()
-											.toString();
+				String vglComponentId = dataComponent.getDataComponentId(); 
 				
 				if (vglComponentId.equals(componentId)) {
 					//we found the component ... now restore it

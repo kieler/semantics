@@ -192,7 +192,7 @@ create EntityType this createThread(simplerailctrl::Node initialNode,
 	let threadName = "Thread" + threadId:
 		p1.setName("_tableauFactory") ->
 		p1.setClass("ptolemy.vergil.fsm.modal.ModalTableauFactory") ->
-	this.property.add(p1) ->
+	//TODO: check if can be left out?! this.property.add(p1) ->
    	this.setName(threadName) ->
   	this.setClass1("ptolemy.domains.fsm.modal.ModalModel") ->
   	//first add ports
@@ -659,7 +659,7 @@ PropertyType createCountParamter():
 	prop2.setClass("ptolemy.kernel.util.SingletonConfigurableAttribute") ->
 	prop2.setName("_smallIconDescription") ->
 	prop1.property.add(prop1b) ->
-	property.property.add(prop1) ->
+	//TODO: Check if can be left out? property.property.add(prop1) ->
 	property.property.add(prop2) ->
 	property
 ;

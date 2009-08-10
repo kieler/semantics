@@ -73,6 +73,39 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 	
 	/**
+	 * Gets the String representation id of a DataComponent. The id will be
+	 * constituted by getting the pluginID and adding information about the
+	 * implemented extension point, i.e., the property types and names and 
+	 * the type of DataProducer. Note that this class can be overridden if
+	 * the implementation wants to provide its own identification.
+	 * 
+	 * @return the id as a String
+	 */
+	public String getDataComponentId() {
+		String propertiesId = "";
+		if (this.provideProperties() != null) {
+			KiemProperty[] properties = this.provideProperties();
+			for (int c = 0; c < properties.length; c++) {
+				propertiesId += properties[c].getKey();
+				propertiesId += properties[c].getType().getClass().getName();
+			}
+		}
+		String type = "";
+		if (this.isDeltaObserver()) type += "1"; else type += "0";
+		if (this.isHistoryObserver()) type += "1"; else type += "0";
+		if (this.isMaster()) type += "1"; else type += "0";
+		if (this.isMasterImplementingGUI()) type += "1"; else type += "0";
+		if (this.isMultiInstantiable()) type += "1"; else type += "0";
+		if (this.isObserver()) type += "1"; else type += "0";
+		if (this.isProducer()) type += "1"; else type += "0";
+		return 	this.getPluginId()
+			    + type
+				+ propertiesId;
+	}
+
+	//-------------------------------------------------------------------------
+
+	/**
 	 * Sets the properties. This method is needed to modify properties after
 	 * deserialization.
 	 * 
