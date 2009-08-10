@@ -54,7 +54,8 @@
 	</target>
 
 	<target name="build.feature" if="eclipse.running">
-		
+		<property name="elementPath" value="${basedir}/features/${feature}" />
+
 		<mkdir dir="${basedir}/update-site/features" />
 		<mkdir dir="${basedir}/update-site/plugins" />
 		
