@@ -18,160 +18,160 @@ import de.cau.cs.kieler.synccharts.diagram.edit.policies.TransitionItemSemanticE
  * @generated
  */
 public class TransitionEditPart extends ConnectionNodeEditPart implements
-        ITreeBranchEditPart {
+		ITreeBranchEditPart {
 
-    /**
-     * @generated
-     */
-    public static final int VISUAL_ID = 4001;
+	/**
+	 * @generated
+	 */
+	public static final int VISUAL_ID = 4001;
 
-    /**
-     * @generated
-     */
-    public TransitionEditPart(View view) {
-        super(view);
-    }
+	/**
+	 * @generated
+	 */
+	public TransitionEditPart(View view) {
+		super(view);
+	}
 
-    /**
-     * @generated
-     */
-    protected void createDefaultEditPolicies() {
-        super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-                new TransitionItemSemanticEditPolicy());
-    }
+	/**
+	 * @generated
+	 */
+	protected void createDefaultEditPolicies() {
+		super.createDefaultEditPolicies();
+		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
+				new TransitionItemSemanticEditPolicy());
+	}
 
-    /**
-     * @generated
-     */
-    protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof TransitionTriggersAndEffectsEditPart) {
-            ((TransitionTriggersAndEffectsEditPart) childEditPart)
-                    .setLabel(getPrimaryShape()
-                            .getFigureTransitionTriggersAndEffectsFigure());
-            return true;
-        }
-        return false;
-    }
+	/**
+	 * @generated
+	 */
+	protected boolean addFixedChild(EditPart childEditPart) {
+		if (childEditPart instanceof TransitionTriggersAndEffectsEditPart) {
+			((TransitionTriggersAndEffectsEditPart) childEditPart)
+					.setLabel(getPrimaryShape()
+							.getFigureTransitionTriggersAndEffectsFigure());
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * @generated
-     */
-    protected void addChildVisual(EditPart childEditPart, int index) {
-        if (addFixedChild(childEditPart)) {
-            return;
-        }
-        super.addChildVisual(childEditPart, -1);
-    }
+	/**
+	 * @generated
+	 */
+	protected void addChildVisual(EditPart childEditPart, int index) {
+		if (addFixedChild(childEditPart)) {
+			return;
+		}
+		super.addChildVisual(childEditPart, -1);
+	}
 
-    /**
-     * @generated
-     */
-    protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof TransitionTriggersAndEffectsEditPart) {
-            return true;
-        }
-        return false;
-    }
+	/**
+	 * @generated
+	 */
+	protected boolean removeFixedChild(EditPart childEditPart) {
+		if (childEditPart instanceof TransitionTriggersAndEffectsEditPart) {
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * @generated
-     */
-    protected void removeChildVisual(EditPart childEditPart) {
-        if (removeFixedChild(childEditPart)) {
-            return;
-        }
-        super.removeChildVisual(childEditPart);
-    }
+	/**
+	 * @generated
+	 */
+	protected void removeChildVisual(EditPart childEditPart) {
+		if (removeFixedChild(childEditPart)) {
+			return;
+		}
+		super.removeChildVisual(childEditPart);
+	}
 
-    /**
-     * Creates figure for this edit part.
-     * 
-     * Body of this method does not depend on settings in generation model
-     * so you may safely remove <i>generated</i> tag and modify it.
-     * 
-     * @generated
-     */
+	/**
+	 * Creates figure for this edit part.
+	 * 
+	 * Body of this method does not depend on settings in generation model
+	 * so you may safely remove <i>generated</i> tag and modify it.
+	 * 
+	 * @generated
+	 */
 
-    protected Connection createConnectionFigure() {
+	protected Connection createConnectionFigure() {
 
-        return new TransitionFigure(this);
-    }
+		return new TransitionFigure(this);
+	}
 
-    /**
-     * @generated
-     */
-    public TransitionFigure getPrimaryShape() {
-        return (TransitionFigure) getFigure();
-    }
+	/**
+	 * @generated
+	 */
+	public TransitionFigure getPrimaryShape() {
+		return (TransitionFigure) getFigure();
+	}
 
-    /**
-     * @generated
-     */
-    public class TransitionFigure extends AttributeAwareTransitionFigure {
+	/**
+	 * @generated
+	 */
+	public class TransitionFigure extends AttributeAwareTransitionFigure {
 
-        /**
-         * @generated
-         */
-        private WrappingLabel fFigureTransitionTriggersAndEffectsFigure;
+		/**
+		 * @generated
+		 */
+		private WrappingLabel fFigureTransitionTriggersAndEffectsFigure;
 
-        /**
-         * @generated
-         */
-        public TransitionFigure(EditPart e) {
-            super(e);
+		/**
+		 * @generated
+		 */
+		public TransitionFigure(EditPart e) {
+			super(e);
 
-            createContents();
-        }
+			createContents();
+		}
 
-        /**
-         * @generated
-         */
-        private void createContents() {
+		/**
+		 * @generated
+		 */
+		private void createContents() {
 
-            fFigureTransitionTriggersAndEffectsFigure = new WrappingLabel();
-            fFigureTransitionTriggersAndEffectsFigure.setText("<...> / <...>");
+			fFigureTransitionTriggersAndEffectsFigure = new WrappingLabel();
+			fFigureTransitionTriggersAndEffectsFigure.setText("<...> / <...>");
 
-            fFigureTransitionTriggersAndEffectsFigure
-                    .setFont(FFIGURETRANSITIONTRIGGERSANDEFFECTSFIGURE_FONT);
+			fFigureTransitionTriggersAndEffectsFigure
+					.setFont(FFIGURETRANSITIONTRIGGERSANDEFFECTSFIGURE_FONT);
 
-            this.add(fFigureTransitionTriggersAndEffectsFigure);
+			this.add(fFigureTransitionTriggersAndEffectsFigure);
 
-        }
+		}
 
-        /**
-         * @generated
-         */
-        private boolean myUseLocalCoordinates = false;
+		/**
+		 * @generated
+		 */
+		private boolean myUseLocalCoordinates = false;
 
-        /**
-         * @generated
-         */
-        protected boolean useLocalCoordinates() {
-            return myUseLocalCoordinates;
-        }
+		/**
+		 * @generated
+		 */
+		protected boolean useLocalCoordinates() {
+			return myUseLocalCoordinates;
+		}
 
-        /**
-         * @generated
-         */
-        protected void setUseLocalCoordinates(boolean useLocalCoordinates) {
-            myUseLocalCoordinates = useLocalCoordinates;
-        }
+		/**
+		 * @generated
+		 */
+		protected void setUseLocalCoordinates(boolean useLocalCoordinates) {
+			myUseLocalCoordinates = useLocalCoordinates;
+		}
 
-        /**
-         * @generated
-         */
-        public WrappingLabel getFigureTransitionTriggersAndEffectsFigure() {
-            return fFigureTransitionTriggersAndEffectsFigure;
-        }
+		/**
+		 * @generated
+		 */
+		public WrappingLabel getFigureTransitionTriggersAndEffectsFigure() {
+			return fFigureTransitionTriggersAndEffectsFigure;
+		}
 
-    }
+	}
 
-    /**
-     * @generated
-     */
-    static final Font FFIGURETRANSITIONTRIGGERSANDEFFECTSFIGURE_FONT = new Font(
-            Display.getCurrent(), Display.getDefault().getSystemFont()
-                    .getFontData()[0].getName(), 10, SWT.BOLD);
+	/**
+	 * @generated
+	 */
+	static final Font FFIGURETRANSITIONTRIGGERSANDEFFECTSFIGURE_FONT = new Font(
+			Display.getCurrent(), Display.getDefault().getSystemFont()
+					.getFontData()[0].getName(), 10, SWT.BOLD);
 
 }

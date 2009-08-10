@@ -20,60 +20,60 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
  * @generated
  */
 public class StateRegionCompartmentCanonicalEditPolicy extends
-        CanonicalEditPolicy {
+		CanonicalEditPolicy {
 
-    /**
-     * @generated
-     */
-    Set myFeaturesToSynchronize;
+	/**
+	 * @generated
+	 */
+	Set myFeaturesToSynchronize;
 
-    /**
-     * @generated
-     */
-    protected List getSemanticChildrenList() {
-        View viewObject = (View) getHost().getModel();
-        List result = new LinkedList();
-        for (Iterator it = SyncchartsDiagramUpdater
-                .getStateRegionCompartment_7006SemanticChildren(viewObject)
-                .iterator(); it.hasNext();) {
-            result
-                    .add(((SyncchartsNodeDescriptor) it.next())
-                            .getModelElement());
-        }
-        return result;
-    }
+	/**
+	 * @generated
+	 */
+	protected List getSemanticChildrenList() {
+		View viewObject = (View) getHost().getModel();
+		List result = new LinkedList();
+		for (Iterator it = SyncchartsDiagramUpdater
+				.getStateRegionCompartment_7006SemanticChildren(viewObject)
+				.iterator(); it.hasNext();) {
+			result
+					.add(((SyncchartsNodeDescriptor) it.next())
+							.getModelElement());
+		}
+		return result;
+	}
 
-    /**
-     * @generated
-     */
-    protected boolean isOrphaned(Collection semanticChildren, final View view) {
-        int visualID = SyncchartsVisualIDRegistry.getVisualID(view);
-        switch (visualID) {
-        case Region2EditPart.VISUAL_ID:
-            if (!semanticChildren.contains(view.getElement())) {
-                return true;
-            }
-        }
-        return false;
-    }
+	/**
+	 * @generated
+	 */
+	protected boolean isOrphaned(Collection semanticChildren, final View view) {
+		int visualID = SyncchartsVisualIDRegistry.getVisualID(view);
+		switch (visualID) {
+		case Region2EditPart.VISUAL_ID:
+			if (!semanticChildren.contains(view.getElement())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    /**
-     * @generated
-     */
-    protected String getDefaultFactoryHint() {
-        return null;
-    }
+	/**
+	 * @generated
+	 */
+	protected String getDefaultFactoryHint() {
+		return null;
+	}
 
-    /**
-     * @generated
-     */
-    protected Set getFeaturesToSynchronize() {
-        if (myFeaturesToSynchronize == null) {
-            myFeaturesToSynchronize = new HashSet();
-            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE
-                    .getState_Regions());
-        }
-        return myFeaturesToSynchronize;
-    }
+	/**
+	 * @generated
+	 */
+	protected Set getFeaturesToSynchronize() {
+		if (myFeaturesToSynchronize == null) {
+			myFeaturesToSynchronize = new HashSet();
+			myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE
+					.getState_Regions());
+		}
+		return myFeaturesToSynchronize;
+	}
 
 }

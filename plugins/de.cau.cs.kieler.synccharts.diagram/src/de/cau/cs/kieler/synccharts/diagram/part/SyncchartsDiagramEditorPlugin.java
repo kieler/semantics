@@ -27,223 +27,223 @@ import de.cau.cs.kieler.synccharts.provider.SyncchartsItemProviderAdapterFactory
  */
 public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
 
-    /**
-     * @generated
-     */
-    public static final String ID = "de.cau.cs.kieler.synccharts.diagram"; //$NON-NLS-1$
+	/**
+	 * @generated
+	 */
+	public static final String ID = "de.cau.cs.kieler.synccharts.diagram"; //$NON-NLS-1$
 
-    /**
-     * @generated
-     */
-    public static final PreferencesHint DIAGRAM_PREFERENCES_HINT = new PreferencesHint(
-            ID);
+	/**
+	 * @generated
+	 */
+	public static final PreferencesHint DIAGRAM_PREFERENCES_HINT = new PreferencesHint(
+			ID);
 
-    /**
-     * @generated
-     */
-    private static SyncchartsDiagramEditorPlugin instance;
+	/**
+	 * @generated
+	 */
+	private static SyncchartsDiagramEditorPlugin instance;
 
-    /**
-     * @generated
-     */
-    private ComposedAdapterFactory adapterFactory;
+	/**
+	 * @generated
+	 */
+	private ComposedAdapterFactory adapterFactory;
 
-    /**
-     * @generated
-     */
-    private SyncchartsDocumentProvider documentProvider;
+	/**
+	 * @generated
+	 */
+	private SyncchartsDocumentProvider documentProvider;
 
-    /**
-     * @generated
-     */
-    public SyncchartsDiagramEditorPlugin() {
-    }
+	/**
+	 * @generated
+	 */
+	public SyncchartsDiagramEditorPlugin() {
+	}
 
-    /**
-     * @generated
-     */
-    public void start(BundleContext context) throws Exception {
-        super.start(context);
-        instance = this;
-        PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT,
-                getPreferenceStore());
-        adapterFactory = createAdapterFactory();
-    }
+	/**
+	 * @generated
+	 */
+	public void start(BundleContext context) throws Exception {
+		super.start(context);
+		instance = this;
+		PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT,
+				getPreferenceStore());
+		adapterFactory = createAdapterFactory();
+	}
 
-    /**
-     * @generated
-     */
-    public void stop(BundleContext context) throws Exception {
-        adapterFactory.dispose();
-        adapterFactory = null;
-        instance = null;
-        super.stop(context);
-    }
+	/**
+	 * @generated
+	 */
+	public void stop(BundleContext context) throws Exception {
+		adapterFactory.dispose();
+		adapterFactory = null;
+		instance = null;
+		super.stop(context);
+	}
 
-    /**
-     * @generated
-     */
-    public static SyncchartsDiagramEditorPlugin getInstance() {
-        return instance;
-    }
+	/**
+	 * @generated
+	 */
+	public static SyncchartsDiagramEditorPlugin getInstance() {
+		return instance;
+	}
 
-    /**
-     * @generated
-     */
-    protected ComposedAdapterFactory createAdapterFactory() {
-        List factories = new ArrayList();
-        fillItemProviderFactories(factories);
-        return new ComposedAdapterFactory(factories);
-    }
+	/**
+	 * @generated
+	 */
+	protected ComposedAdapterFactory createAdapterFactory() {
+		List factories = new ArrayList();
+		fillItemProviderFactories(factories);
+		return new ComposedAdapterFactory(factories);
+	}
 
-    /**
-     * @generated
-     */
-    protected void fillItemProviderFactories(List factories) {
-        factories.add(new SyncchartsItemProviderAdapterFactory());
-        factories.add(new ResourceItemProviderAdapterFactory());
-        factories.add(new ReflectiveItemProviderAdapterFactory());
-    }
+	/**
+	 * @generated
+	 */
+	protected void fillItemProviderFactories(List factories) {
+		factories.add(new SyncchartsItemProviderAdapterFactory());
+		factories.add(new ResourceItemProviderAdapterFactory());
+		factories.add(new ReflectiveItemProviderAdapterFactory());
+	}
 
-    /**
-     * @generated
-     */
-    public AdapterFactory getItemProvidersAdapterFactory() {
-        return adapterFactory;
-    }
+	/**
+	 * @generated
+	 */
+	public AdapterFactory getItemProvidersAdapterFactory() {
+		return adapterFactory;
+	}
 
-    /**
-     * @generated
-     */
-    public ImageDescriptor getItemImageDescriptor(Object item) {
-        IItemLabelProvider labelProvider = (IItemLabelProvider) adapterFactory
-                .adapt(item, IItemLabelProvider.class);
-        if (labelProvider != null) {
-            return ExtendedImageRegistry.getInstance().getImageDescriptor(
-                    labelProvider.getImage(item));
-        }
-        return null;
-    }
+	/**
+	 * @generated
+	 */
+	public ImageDescriptor getItemImageDescriptor(Object item) {
+		IItemLabelProvider labelProvider = (IItemLabelProvider) adapterFactory
+				.adapt(item, IItemLabelProvider.class);
+		if (labelProvider != null) {
+			return ExtendedImageRegistry.getInstance().getImageDescriptor(
+					labelProvider.getImage(item));
+		}
+		return null;
+	}
 
-    /**
-     * Returns an image descriptor for the image file at the given
-     * plug-in relative path.
-     *
-     * @generated
-     * @param path the path
-     * @return the image descriptor
-     */
-    public static ImageDescriptor getBundledImageDescriptor(String path) {
-        return AbstractUIPlugin.imageDescriptorFromPlugin(ID, path);
-    }
+	/**
+	 * Returns an image descriptor for the image file at the given
+	 * plug-in relative path.
+	 *
+	 * @generated
+	 * @param path the path
+	 * @return the image descriptor
+	 */
+	public static ImageDescriptor getBundledImageDescriptor(String path) {
+		return AbstractUIPlugin.imageDescriptorFromPlugin(ID, path);
+	}
 
-    /**
-     * Respects images residing in any plug-in. If path is relative,
-     * then this bundle is looked up for the image, otherwise, for absolute 
-     * path, first segment is taken as id of plug-in with image
-     *
-     * @generated
-     * @param path the path to image, either absolute (with plug-in id as first segment), or relative for bundled images
-     * @return the image descriptor
-     */
-    public static ImageDescriptor findImageDescriptor(String path) {
-        final IPath p = new Path(path);
-        if (p.isAbsolute() && p.segmentCount() > 1) {
-            return AbstractUIPlugin.imageDescriptorFromPlugin(p.segment(0), p
-                    .removeFirstSegments(1).makeAbsolute().toString());
-        } else {
-            return getBundledImageDescriptor(p.makeAbsolute().toString());
-        }
-    }
+	/**
+	 * Respects images residing in any plug-in. If path is relative,
+	 * then this bundle is looked up for the image, otherwise, for absolute 
+	 * path, first segment is taken as id of plug-in with image
+	 *
+	 * @generated
+	 * @param path the path to image, either absolute (with plug-in id as first segment), or relative for bundled images
+	 * @return the image descriptor
+	 */
+	public static ImageDescriptor findImageDescriptor(String path) {
+		final IPath p = new Path(path);
+		if (p.isAbsolute() && p.segmentCount() > 1) {
+			return AbstractUIPlugin.imageDescriptorFromPlugin(p.segment(0), p
+					.removeFirstSegments(1).makeAbsolute().toString());
+		} else {
+			return getBundledImageDescriptor(p.makeAbsolute().toString());
+		}
+	}
 
-    /**
-     * Returns an image for the image file at the given plug-in relative path.
-     * Client do not need to dispose this image. Images will be disposed automatically.
-     *
-     * @generated
-     * @param path the path
-     * @return image instance
-     */
-    public Image getBundledImage(String path) {
-        Image image = getImageRegistry().get(path);
-        if (image == null) {
-            getImageRegistry().put(path, getBundledImageDescriptor(path));
-            image = getImageRegistry().get(path);
-        }
-        return image;
-    }
+	/**
+	 * Returns an image for the image file at the given plug-in relative path.
+	 * Client do not need to dispose this image. Images will be disposed automatically.
+	 *
+	 * @generated
+	 * @param path the path
+	 * @return image instance
+	 */
+	public Image getBundledImage(String path) {
+		Image image = getImageRegistry().get(path);
+		if (image == null) {
+			getImageRegistry().put(path, getBundledImageDescriptor(path));
+			image = getImageRegistry().get(path);
+		}
+		return image;
+	}
 
-    /**
-     * Returns string from plug-in's resource bundle
-     *
-     * @generated
-     */
-    public static String getString(String key) {
-        return Platform.getResourceString(getInstance().getBundle(), "%" + key); //$NON-NLS-1$
-    }
+	/**
+	 * Returns string from plug-in's resource bundle
+	 *
+	 * @generated
+	 */
+	public static String getString(String key) {
+		return Platform.getResourceString(getInstance().getBundle(), "%" + key); //$NON-NLS-1$
+	}
 
-    /**
-     * @generated
-     */
-    public SyncchartsDocumentProvider getDocumentProvider() {
-        if (documentProvider == null) {
-            documentProvider = new SyncchartsDocumentProvider();
-        }
-        return documentProvider;
-    }
+	/**
+	 * @generated
+	 */
+	public SyncchartsDocumentProvider getDocumentProvider() {
+		if (documentProvider == null) {
+			documentProvider = new SyncchartsDocumentProvider();
+		}
+		return documentProvider;
+	}
 
-    /**
-     * @generated
-     */
-    public void logError(String error) {
-        logError(error, null);
-    }
+	/**
+	 * @generated
+	 */
+	public void logError(String error) {
+		logError(error, null);
+	}
 
-    /**
-     * @generated
-     */
-    public void logError(String error, Throwable throwable) {
-        if (error == null && throwable != null) {
-            error = throwable.getMessage();
-        }
-        getLog().log(
-                new Status(IStatus.ERROR, SyncchartsDiagramEditorPlugin.ID,
-                        IStatus.OK, error, throwable));
-        debug(error, throwable);
-    }
+	/**
+	 * @generated
+	 */
+	public void logError(String error, Throwable throwable) {
+		if (error == null && throwable != null) {
+			error = throwable.getMessage();
+		}
+		getLog().log(
+				new Status(IStatus.ERROR, SyncchartsDiagramEditorPlugin.ID,
+						IStatus.OK, error, throwable));
+		debug(error, throwable);
+	}
 
-    /**
-     * @generated
-     */
-    public void logInfo(String message) {
-        logInfo(message, null);
-    }
+	/**
+	 * @generated
+	 */
+	public void logInfo(String message) {
+		logInfo(message, null);
+	}
 
-    /**
-     * @generated
-     */
-    public void logInfo(String message, Throwable throwable) {
-        if (message == null && throwable != null) {
-            message = throwable.getMessage();
-        }
-        getLog().log(
-                new Status(IStatus.INFO, SyncchartsDiagramEditorPlugin.ID,
-                        IStatus.OK, message, throwable));
-        debug(message, throwable);
-    }
+	/**
+	 * @generated
+	 */
+	public void logInfo(String message, Throwable throwable) {
+		if (message == null && throwable != null) {
+			message = throwable.getMessage();
+		}
+		getLog().log(
+				new Status(IStatus.INFO, SyncchartsDiagramEditorPlugin.ID,
+						IStatus.OK, message, throwable));
+		debug(message, throwable);
+	}
 
-    /**
-     * @generated
-     */
-    private void debug(String message, Throwable throwable) {
-        if (!isDebugging()) {
-            return;
-        }
-        if (message != null) {
-            System.err.println(message);
-        }
-        if (throwable != null) {
-            throwable.printStackTrace();
-        }
-    }
+	/**
+	 * @generated
+	 */
+	private void debug(String message, Throwable throwable) {
+		if (!isDebugging()) {
+			return;
+		}
+		if (message != null) {
+			System.err.println(message);
+		}
+		if (throwable != null) {
+			throwable.printStackTrace();
+		}
+	}
 }

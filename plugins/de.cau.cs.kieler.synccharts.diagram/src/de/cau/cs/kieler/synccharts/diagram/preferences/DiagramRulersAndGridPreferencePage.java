@@ -9,11 +9,11 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
  */
 public class DiagramRulersAndGridPreferencePage extends RulerGridPreferencePage {
 
-    /**
-     * @generated
-     */
-    public DiagramRulersAndGridPreferencePage() {
-        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance()
-                .getPreferenceStore());
-    }
+	/**
+	 * @generated
+	 */
+	public DiagramRulersAndGridPreferencePage() {
+		setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance()
+				.getPreferenceStore());
+	}
 }

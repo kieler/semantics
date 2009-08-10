@@ -19,130 +19,130 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
  */
 public class SyncchartsCreationWizard extends Wizard implements INewWizard {
 
-    /**
-     * @generated
-     */
-    private IWorkbench workbench;
+	/**
+	 * @generated
+	 */
+	private IWorkbench workbench;
 
-    /**
-     * @generated
-     */
-    protected IStructuredSelection selection;
+	/**
+	 * @generated
+	 */
+	protected IStructuredSelection selection;
 
-    /**
-     * @generated
-     */
-    protected SyncchartsCreationWizardPage diagramModelFilePage;
+	/**
+	 * @generated
+	 */
+	protected SyncchartsCreationWizardPage diagramModelFilePage;
 
-    /**
-     * @generated
-     */
-    protected Resource diagram;
+	/**
+	 * @generated
+	 */
+	protected Resource diagram;
 
-    /**
-     * @generated
-     */
-    private boolean openNewlyCreatedDiagramEditor = true;
+	/**
+	 * @generated
+	 */
+	private boolean openNewlyCreatedDiagramEditor = true;
 
-    /**
-     * @generated
-     */
-    public IWorkbench getWorkbench() {
-        return workbench;
-    }
+	/**
+	 * @generated
+	 */
+	public IWorkbench getWorkbench() {
+		return workbench;
+	}
 
-    /**
-     * @generated
-     */
-    public IStructuredSelection getSelection() {
-        return selection;
-    }
+	/**
+	 * @generated
+	 */
+	public IStructuredSelection getSelection() {
+		return selection;
+	}
 
-    /**
-     * @generated
-     */
-    public final Resource getDiagram() {
-        return diagram;
-    }
+	/**
+	 * @generated
+	 */
+	public final Resource getDiagram() {
+		return diagram;
+	}
 
-    /**
-     * @generated
-     */
-    public final boolean isOpenNewlyCreatedDiagramEditor() {
-        return openNewlyCreatedDiagramEditor;
-    }
+	/**
+	 * @generated
+	 */
+	public final boolean isOpenNewlyCreatedDiagramEditor() {
+		return openNewlyCreatedDiagramEditor;
+	}
 
-    /**
-     * @generated
-     */
-    public void setOpenNewlyCreatedDiagramEditor(
-            boolean openNewlyCreatedDiagramEditor) {
-        this.openNewlyCreatedDiagramEditor = openNewlyCreatedDiagramEditor;
-    }
+	/**
+	 * @generated
+	 */
+	public void setOpenNewlyCreatedDiagramEditor(
+			boolean openNewlyCreatedDiagramEditor) {
+		this.openNewlyCreatedDiagramEditor = openNewlyCreatedDiagramEditor;
+	}
 
-    /**
-     * @generated
-     */
-    public void init(IWorkbench workbench, IStructuredSelection selection) {
-        this.workbench = workbench;
-        this.selection = selection;
-        setWindowTitle(Messages.SyncchartsCreationWizardTitle);
-        setDefaultPageImageDescriptor(SyncchartsDiagramEditorPlugin
-                .getBundledImageDescriptor("icons/wizban/NewSyncchartsWizard.gif")); //$NON-NLS-1$
-        setNeedsProgressMonitor(true);
-    }
+	/**
+	 * @generated
+	 */
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		this.workbench = workbench;
+		this.selection = selection;
+		setWindowTitle(Messages.SyncchartsCreationWizardTitle);
+		setDefaultPageImageDescriptor(SyncchartsDiagramEditorPlugin
+				.getBundledImageDescriptor("icons/wizban/NewSyncchartsWizard.gif")); //$NON-NLS-1$
+		setNeedsProgressMonitor(true);
+	}
 
-    /**
-     * @generated
-     */
-    public void addPages() {
-        diagramModelFilePage = new SyncchartsCreationWizardPage(
-                "DiagramModelFile", getSelection(), "synccharts_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
-        diagramModelFilePage
-                .setTitle(Messages.SyncchartsCreationWizard_DiagramModelFilePageTitle);
-        diagramModelFilePage
-                .setDescription(Messages.SyncchartsCreationWizard_DiagramModelFilePageDescription);
-        addPage(diagramModelFilePage);
-    }
+	/**
+	 * @generated
+	 */
+	public void addPages() {
+		diagramModelFilePage = new SyncchartsCreationWizardPage(
+				"DiagramModelFile", getSelection(), "synccharts_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
+		diagramModelFilePage
+				.setTitle(Messages.SyncchartsCreationWizard_DiagramModelFilePageTitle);
+		diagramModelFilePage
+				.setDescription(Messages.SyncchartsCreationWizard_DiagramModelFilePageDescription);
+		addPage(diagramModelFilePage);
+	}
 
-    /**
-     * @generated
-     */
-    public boolean performFinish() {
-        IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
+	/**
+	 * @generated
+	 */
+	public boolean performFinish() {
+		IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
 
-            protected void execute(IProgressMonitor monitor)
-                    throws CoreException, InterruptedException {
-                diagram = SyncchartsDiagramEditorUtil.createDiagram(
-                        diagramModelFilePage.getURI(), monitor);
-                if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
-                    try {
-                        SyncchartsDiagramEditorUtil.openDiagram(diagram);
-                    } catch (PartInitException e) {
-                        ErrorDialog
-                                .openError(
-                                        getContainer().getShell(),
-                                        Messages.SyncchartsCreationWizardOpenEditorError,
-                                        null, e.getStatus());
-                    }
-                }
-            }
-        };
-        try {
-            getContainer().run(false, true, op);
-        } catch (InterruptedException e) {
-            return false;
-        } catch (InvocationTargetException e) {
-            if (e.getTargetException() instanceof CoreException) {
-                ErrorDialog.openError(getContainer().getShell(),
-                        Messages.SyncchartsCreationWizardCreationError, null,
-                        ((CoreException) e.getTargetException()).getStatus());
-            } else {
-                SyncchartsDiagramEditorPlugin.getInstance().logError(
-                        "Error creating diagram", e.getTargetException()); //$NON-NLS-1$
-            }
-            return false;
-        }
-        return diagram != null;
-    }
+			protected void execute(IProgressMonitor monitor)
+					throws CoreException, InterruptedException {
+				diagram = SyncchartsDiagramEditorUtil.createDiagram(
+						diagramModelFilePage.getURI(), monitor);
+				if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
+					try {
+						SyncchartsDiagramEditorUtil.openDiagram(diagram);
+					} catch (PartInitException e) {
+						ErrorDialog
+								.openError(
+										getContainer().getShell(),
+										Messages.SyncchartsCreationWizardOpenEditorError,
+										null, e.getStatus());
+					}
+				}
+			}
+		};
+		try {
+			getContainer().run(false, true, op);
+		} catch (InterruptedException e) {
+			return false;
+		} catch (InvocationTargetException e) {
+			if (e.getTargetException() instanceof CoreException) {
+				ErrorDialog.openError(getContainer().getShell(),
+						Messages.SyncchartsCreationWizardCreationError, null,
+						((CoreException) e.getTargetException()).getStatus());
+			} else {
+				SyncchartsDiagramEditorPlugin.getInstance().logError(
+						"Error creating diagram", e.getTargetException()); //$NON-NLS-1$
+			}
+			return false;
+		}
+		return diagram != null;
+	}
 }

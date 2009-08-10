@@ -1,0 +1,10 @@
+<project name="empty diagram project" default="empty" basedir=".">
+	<target name="empty">
+		<delete>
+			<fileset dir="src">
+				<include name="**/*.java" />
+				<include name="../message.properties" />
+			</fileset>
+		</delete>
+	</target>
+</project>

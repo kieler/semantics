@@ -26,73 +26,73 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
  */
 public class SyncchartsInitDiagramFileAction implements IObjectActionDelegate {
 
-    /**
-     * @generated
-     */
-    private IWorkbenchPart targetPart;
+	/**
+	 * @generated
+	 */
+	private IWorkbenchPart targetPart;
 
-    /**
-     * @generated
-     */
-    private URI domainModelURI;
+	/**
+	 * @generated
+	 */
+	private URI domainModelURI;
 
-    /**
-     * @generated
-     */
-    public void setActivePart(IAction action, IWorkbenchPart targetPart) {
-        this.targetPart = targetPart;
-    }
+	/**
+	 * @generated
+	 */
+	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
+		this.targetPart = targetPart;
+	}
 
-    /**
-     * @generated
-     */
-    public void selectionChanged(IAction action, ISelection selection) {
-        domainModelURI = null;
-        action.setEnabled(false);
-        if (selection instanceof IStructuredSelection == false
-                || selection.isEmpty()) {
-            return;
-        }
-        IFile file = (IFile) ((IStructuredSelection) selection)
-                .getFirstElement();
-        domainModelURI = URI.createPlatformResourceURI(file.getFullPath()
-                .toString(), true);
-        action.setEnabled(true);
-    }
+	/**
+	 * @generated
+	 */
+	public void selectionChanged(IAction action, ISelection selection) {
+		domainModelURI = null;
+		action.setEnabled(false);
+		if (selection instanceof IStructuredSelection == false
+				|| selection.isEmpty()) {
+			return;
+		}
+		IFile file = (IFile) ((IStructuredSelection) selection)
+				.getFirstElement();
+		domainModelURI = URI.createPlatformResourceURI(file.getFullPath()
+				.toString(), true);
+		action.setEnabled(true);
+	}
 
-    /**
-     * @generated
-     */
-    private Shell getShell() {
-        return targetPart.getSite().getShell();
-    }
+	/**
+	 * @generated
+	 */
+	private Shell getShell() {
+		return targetPart.getSite().getShell();
+	}
 
-    /**
-     * @generated
-     */
-    public void run(IAction action) {
-        TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
-                .createEditingDomain();
-        ResourceSet resourceSet = new ResourceSetImpl();
-        EObject diagramRoot = null;
-        try {
-            Resource resource = resourceSet.getResource(domainModelURI, true);
-            diagramRoot = (EObject) resource.getContents().get(0);
-        } catch (WrappedException ex) {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Unable to load resource: " + domainModelURI, ex); //$NON-NLS-1$
-        }
-        if (diagramRoot == null) {
-            MessageDialog.openError(getShell(),
-                    Messages.InitDiagramFile_ResourceErrorDialogTitle,
-                    Messages.InitDiagramFile_ResourceErrorDialogMessage);
-            return;
-        }
-        Wizard wizard = new SyncchartsNewDiagramFileWizard(domainModelURI,
-                diagramRoot, editingDomain);
-        wizard.setWindowTitle(NLS.bind(Messages.InitDiagramFile_WizardTitle,
-                RegionEditPart.MODEL_ID));
-        SyncchartsDiagramEditorUtil.runWizard(getShell(), wizard,
-                "InitDiagramFile"); //$NON-NLS-1$
-    }
+	/**
+	 * @generated
+	 */
+	public void run(IAction action) {
+		TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
+				.createEditingDomain();
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EObject diagramRoot = null;
+		try {
+			Resource resource = resourceSet.getResource(domainModelURI, true);
+			diagramRoot = (EObject) resource.getContents().get(0);
+		} catch (WrappedException ex) {
+			SyncchartsDiagramEditorPlugin.getInstance().logError(
+					"Unable to load resource: " + domainModelURI, ex); //$NON-NLS-1$
+		}
+		if (diagramRoot == null) {
+			MessageDialog.openError(getShell(),
+					Messages.InitDiagramFile_ResourceErrorDialogTitle,
+					Messages.InitDiagramFile_ResourceErrorDialogMessage);
+			return;
+		}
+		Wizard wizard = new SyncchartsNewDiagramFileWizard(domainModelURI,
+				diagramRoot, editingDomain);
+		wizard.setWindowTitle(NLS.bind(Messages.InitDiagramFile_WizardTitle,
+				RegionEditPart.MODEL_ID));
+		SyncchartsDiagramEditorUtil.runWizard(getShell(), wizard,
+				"InitDiagramFile"); //$NON-NLS-1$
+	}
 }
