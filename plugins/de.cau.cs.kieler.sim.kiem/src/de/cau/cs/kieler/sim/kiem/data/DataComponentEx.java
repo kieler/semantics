@@ -17,7 +17,6 @@ package de.cau.cs.kieler.sim.kiem.data;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 
@@ -335,10 +334,10 @@ public class DataComponentEx implements Serializable {
 	 * 
 	 * @return the filter keys
 	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#getFilterKeys()
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideFilterKeys()
 	 */
-	public String[] getFilterKeys() {
-		return this.component.getFilterKeys();
+	public String[] provideFilterKeys() {
+		return this.component.provideFilterKeys();
 	}
 	
 	//------------------------------------------------------------------------- 

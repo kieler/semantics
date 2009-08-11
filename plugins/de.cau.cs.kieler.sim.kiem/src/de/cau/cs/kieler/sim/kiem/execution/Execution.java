@@ -666,9 +666,9 @@ public class Execution implements Runnable {
 	 */
 	private JSONObject getInputData(DataComponentEx dataComponentEx)
 														 throws JSONException {
-		timeout.timeout(TIMEOUT, "getFilterKeys", dataComponentEx, this);
+		timeout.timeout(TIMEOUT, "provideFilterKeys", dataComponentEx, this);
 		String[] filterKeys = 
-			dataComponentEx.getFilterKeys();
+			dataComponentEx.provideFilterKeys();
 		timeout.abortTimeout();
 		
 		JSONObject oldData = null;

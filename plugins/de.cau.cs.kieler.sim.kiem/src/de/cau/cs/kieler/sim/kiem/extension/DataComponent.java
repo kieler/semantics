@@ -196,7 +196,7 @@ public abstract class DataComponent implements IDataComponent,
 	 * 
 	 * @return 	a String array with the keys of interest
 	 */
-	public String[] getFilterKeys() {
+	public String[] provideFilterKeys() {
 		return null;
 	}
 	
