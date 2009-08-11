@@ -4,7 +4,7 @@
 <product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.ui.product" application="org.eclipse.ui.ide.workbench" version="0.1.0" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="/de.cau.cs.kieler.core.ui/kieler-about-v1.png"/>
+      <image path="/de.cau.cs.kieler.core.ui/images/about.png"/>
       <text>
          KIELER - a research project on enhancing the model-based design of complex systems.
 
@@ -21,7 +21,7 @@ Copyright 2009 by Christian-Albrechts-University of Kiel, Department of Computer
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages/>
+   <windowImages i16="/de.cau.cs.kieler.core.ui/icons/kiel_16.gif" i32="/de.cau.cs.kieler.core.ui/icons/kiel_32.gif" i48="/de.cau.cs.kieler.core.ui/icons/kiel_48.gif" i64="/de.cau.cs.kieler.core.ui/icons/kiel_64.gif" i128="/de.cau.cs.kieler.core.ui/icons/kiel_128.gif"/>
 
    <splash
       location="de.cau.cs.kieler.core.ui"
@@ -29,6 +29,7 @@ Copyright 2009 by Christian-Albrechts-University of Kiel, Department of Computer
       startupMessageRect="10,287,480,20"
       startupForegroundColor="000000" />
    <launcher name="kieler">
+      <linux icon="/de.cau.cs.kieler.core.ui/icons/kiel_64.xpm"/>
       <solaris/>
       <win useIco="false">
          <bmp/>

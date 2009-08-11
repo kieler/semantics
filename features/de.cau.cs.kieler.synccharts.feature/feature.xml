@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.synccharts"
       label="KIELER SyncCharts Editor"
-      version="0.1.0"
+      version="0.1.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/Editors/Synccharts">

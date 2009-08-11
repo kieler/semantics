@@ -44,7 +44,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <category
-            description="Commands from the KIELER project"
+            description="%commands"
             id="de.cau.cs.kieler"
             name="KIELER">
       </category>
@@ -105,6 +105,7 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.ui.ide.workbench"
+            description="%productDescription"
             name="KIELER">
          <property
                name="aboutText"
@@ -112,7 +113,7 @@
          </property>
          <property
                name="aboutImage"
-               value="kieler-about-v1.png">
+               value="images/about.png">
          </property>
          <property
                name="appName"
@@ -133,6 +134,10 @@
          <property
                name="preferenceCustomization"
                value="plugin_customization.ini">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/kiel_16.gif,icons/kiel_32.gif,icons/kiel_48.gif,icons/kiel_64.gif,icons/kiel_128.gif">
          </property>
       </product>
    </extension>

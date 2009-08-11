@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.synccharts.model/src"
-    editDirectory="/de.cau.cs.kieler.synccharts.edit/src" editorDirectory="/de.cau.cs.kieler.synccharts.editor/src"
-    modelPluginID="de.cau.cs.kieler.synccharts.model" modelName="Synccharts" modelPluginClass=""
-    testsDirectory="/de.cau.cs.kieler.synccharts.tests/src" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.synccharts.edit"
-    editorPluginID="de.cau.cs.kieler.synccharts.editor" testsPluginID="de.cau.cs.kieler.synccharts.tests">
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="KIELER - Kiel Integrated Environment for Layout for the Eclipse RCP&#xA;&#xA;http://www.informatik.uni-kiel.de/rtsys/kieler/&#xA;&#xA;Copyright 2009 by&#xA;+ Christian-Albrechts-University of Kiel&#xA;  + Department of Computer Science&#xA;    + Real-Time and Embedded Systems Group&#xA;&#xA;This code is provided under the terms of the Eclipse Public License (EPL).&#xA;See the file epl-v10.html for the license text."
+    modelDirectory="/de.cau.cs.kieler.synccharts.model/src" editDirectory="/de.cau.cs.kieler.synccharts.edit/src"
+    editorDirectory="/de.cau.cs.kieler.synccharts.editor/src" modelPluginID="de.cau.cs.kieler.synccharts.model"
+    modelName="Synccharts" modelPluginClass="" testsDirectory="/de.cau.cs.kieler.synccharts.tests/src"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    editPluginID="de.cau.cs.kieler.synccharts.edit" editorPluginID="de.cau.cs.kieler.synccharts.editor"
+    testsPluginID="de.cau.cs.kieler.synccharts.tests">
   <foreignModel>synccharts.ecore</foreignModel>
   <genPackages prefix="Synccharts" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       ecorePackage="synccharts.ecore#/">
@@ -93,7 +94,7 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//Region/parentState"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Region/variables"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Region/signals"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Region/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Region/id"/>
     </genClasses>
     <genClasses ecoreClass="synccharts.ecore#//Signal">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Signal/value"/>
@@ -114,7 +115,7 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//SignalRenaming/parentState"/>
     </genClasses>
     <genClasses ecoreClass="synccharts.ecore#//State">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/label"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/signals"/>
@@ -126,7 +127,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/suspensionTrigger"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/outgoingTransitions"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//State/parentRegion"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/variables"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/isInitial"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/isFinal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/bodyText"/>
@@ -146,7 +146,6 @@
     </genClasses>
     <genClasses ecoreClass="synccharts.ecore#//Variable">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Variable/value"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//Variable/parentState"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//Variable/parentRegion"/>
     </genClasses>
     <genClasses ecoreClass="synccharts.ecore#//VariableReference">

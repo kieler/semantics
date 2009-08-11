@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SyncCharts Custom Code
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.custom; singleton:=true
-Bundle-Version: 0.1.0
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.custom.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.gmf.runtime.notation,
