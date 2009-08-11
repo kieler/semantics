@@ -30,11 +30,14 @@ Copyright 2009 by Christian-Albrechts-University of Kiel, Department of Computer
       startupForegroundColor="000000" />
    <launcher name="kieler">
       <linux icon="/de.cau.cs.kieler.core.ui/icons/kiel_64.xpm"/>
+      <macosx icon="/de.cau.cs.kieler.core.ui/icons/kieler.icns"/>
       <solaris/>
-      <win useIco="false">
+      <win useIco="true">
+         <ico path="/de.cau.cs.kieler.core.ui/icons/kieler.ico"/>
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>
