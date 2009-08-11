@@ -49,8 +49,8 @@ public abstract class DataComponent implements IDataComponent,
 	/** The configuration element for accessing the plug-in ID. */
 	private IConfigurationElement configEle;
 	
-	/** The global interface variables. This is filled by the execution mgr */
-	private String[] globalInterfaceVariables;
+	/** The global interface variable keys. Filled by the execution mgr */
+	private String[] globalInterfaceKeys;
 	
 	/** The history step. Indicates that the step is a history step, all
 	 *  produced data will not be considered. */
@@ -250,47 +250,47 @@ public abstract class DataComponent implements IDataComponent,
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Provide (local) interface variables. This is an optional method that will
-	 * provide some interface variables that can be used by other DataComponents
-	 * within and after the initialization phase every DataComponent may receive
-	 * the union of all those variables by calling the
-	 * getGlobalInterfaceVariables() method.
+	 * Provide (local) interface variable keys. This is an optional method that
+	 * will provide some interface variable keys that can be used by other 
+	 * DataComponents within and after the initialization phase every 
+	 * DataComponent may receive the union of all those variable keys by calling
+	 * the {@link #getInterfaceKeys()} method.
 	 * 
-	 * @return the local interface variables
+	 * @return the local interface variable keys
 	 */
-	public String[] provideInterfaceVariables() {
+	public String[] provideInterfaceKeys() {
 		return null;
 	}
 	
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * Sets the global interface variables. Is called by the execution manager
-	 * during the initialization phase.
+	 * Sets the global interface variable keys. Is called by the execution 
+	 * manager during the initialization phase.
 	 * 
-	 * @param globalInterfaceVariables the new global interface variables
+	 * @param globalInterfaceKeys the new global interface variable keys
 	 */
-	public final void setInterfaceVariables
-									(String[] globalInterfaceVariables) {
-		this.globalInterfaceVariables = globalInterfaceVariables;
+	public final void setInterfaceKeys
+									(String[] globalInterfaceKeys) {
+		this.globalInterfaceKeys = globalInterfaceKeys;
 	}
 	
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Gets the (global) interface variables. Is called by the execution
+	 * Gets the (global) interface variable keys. Is called by the execution
 	 * manager during the initialization phase.
 	 * 
 	 * @return the global interface variables
 	 */
-	protected final String[] getInterfaceVariables() {
-		if (globalInterfaceVariables == null) {
+	protected final String[] getInterfaceKeys() {
+		if (globalInterfaceKeys == null) {
 			//probably not initialized or there are no such
-			//variables
+			//variable keys
 			return null;
 		}
 		else
-			return globalInterfaceVariables;
+			return globalInterfaceKeys;
 	}
 
 	//-------------------------------------------------------------------------

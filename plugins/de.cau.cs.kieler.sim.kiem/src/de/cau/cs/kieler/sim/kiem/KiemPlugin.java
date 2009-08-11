@@ -519,29 +519,29 @@ public class KiemPlugin extends AbstractUIPlugin {
 			}
 		}
 		
-		//get all InterfaceVariables from (enabled) data producer 
-		//and combine them into globalInterfaceVariables
-		List<String> globalInterfaceVariables = new LinkedList<String>();
+		//get all InterfaceKeys from (enabled) data producer 
+		//and combine them into globalInterfaceKeys
+		List<String> globalInterfaceKeys = new LinkedList<String>();
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			if (dataComponentEx.isEnabled()) {
-			  String[] localInterfaceVariables = 
-			  dataComponentEx.provideInterfaceVariables();
-			  if (localInterfaceVariables != null) {
-				for (int cc = 0; cc < localInterfaceVariables.length; cc++) {
-				  String localInterfaceVariable = localInterfaceVariables[cc];
-				  globalInterfaceVariables.add(localInterfaceVariable);
+			  String[] localInterfaceKeys = 
+			  dataComponentEx.provideInterfaceKeys();
+			  if (localInterfaceKeys != null) {
+				for (int cc = 0; cc < localInterfaceKeys.length; cc++) {
+				  String localInterfaceVariable = localInterfaceKeys[cc];
+				  globalInterfaceKeys.add(localInterfaceVariable);
 				}//next cc
 			  }//end if not null
 			}//if enabled
 		}//next c
 		
-		//distribute union of InterfaceVariables to all enabled components
+		//distribute union of InterfaceKeys to all enabled components
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			if (dataComponentEx.isEnabled()) {
-				dataComponentEx.setInterfaceVariables
-				  ((String[])globalInterfaceVariables.toArray(new String [0]));
+				dataComponentEx.setInterfaceKeys
+				  ((String[])globalInterfaceKeys.toArray(new String [0]));
 			}//end if enabled
 		}//next c
 		

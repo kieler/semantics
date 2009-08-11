@@ -348,10 +348,10 @@ public class DataComponentEx implements Serializable {
 	 * 
 	 * @return the String[] array of interface variables
 	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideInterfaceVariables()
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideInterfaceKeys()
 	 */
-	public String[] provideInterfaceVariables() {
-		return this.component.provideInterfaceVariables(); 
+	public String[] provideInterfaceKeys() {
+		return this.component.provideInterfaceKeys(); 
 	}
 	
 	//------------------------------------------------------------------------- 
@@ -480,16 +480,16 @@ public class DataComponentEx implements Serializable {
 	//------------------------------------------------------------------------- 
 
 	/**
-	 * Sets the global interface variables. This method is called by the
-	 * execution manager after it collects the union of interface variables
+	 * Sets the global interface variable keys. This method is called by the
+	 * execution manager after it collects the union of interface variable keys
 	 * of all DataComponents.
 	 * 
-	 * @param globalInterfaceVariables all interface variables
+	 * @param globalInterfaceKeys all interface variable keys
 	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#setInterfaceVariables(String[])
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#setInterfaceKeys(String[])
 	 */
-	public void setInterfaceVariables(String[] globalInterfaceVariables) {
-		this.component.setInterfaceVariables(globalInterfaceVariables); 
+	public void setInterfaceKeys(String[] globalInterfaceKeys) {
+		this.component.setInterfaceKeys(globalInterfaceKeys); 
 	}
 	
 	//------------------------------------------------------------------------- 
