@@ -169,9 +169,9 @@ public class DataObserver extends JSONStringDataComponent implements
 	 */
 	public void initialize() {
 		//make an entry of all global interface variables/signals
-		String[] variables = this.getInterfaceVariables();
-		for (int c = 0; c < variables.length; c++) {
-			String key = variables[c];
+		String[] variableKeys = this.getInterfaceKeys();
+		for (int c = 0; c < variableKeys.length; c++) {
+			String key = variableKeys[c];
 			String value = "";
 			//add to list
 			TableDataList.getInstance().add(new TableData(

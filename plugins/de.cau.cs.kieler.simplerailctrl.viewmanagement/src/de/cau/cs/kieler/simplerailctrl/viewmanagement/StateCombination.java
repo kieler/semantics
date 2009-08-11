@@ -100,7 +100,7 @@ public class StateCombination extends ACombination {
         				&& !effects.containsKey(editPart)) {
         					HighlightEffect effect = new HighlightEffect();
         					effect.setTarget((ShapeEditPart)editPart);
-        					effect.setHighlightFigure(4, ColorConstants.orange);
+        					effect.setHighlightFigure(3, ColorConstants.red );
         					effects.put(editPart, effect);
         					return true;
        			} else {
@@ -122,7 +122,6 @@ public class StateCombination extends ACombination {
 	@Override
     public void execute() {
         for (HighlightEffect effect : effects.values()) {
-			effect.setHighlightFigure(4, ColorConstants.orange);
             effect.execute();
         }
     }

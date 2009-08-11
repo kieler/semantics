@@ -237,10 +237,10 @@ public class DataComponent extends JSONObjectDataComponent implements
 	//-------------------------------------------------------------------------
 
 	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideInterfaceVariables()
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideInterfaceKeys()
 	 */
 	@Override
-	public String[] provideInterfaceVariables() {
+	public String[] provideInterfaceKeys() {
 		String[] signals = {getProperties()[0].getValue(), 
 													"A", "B", "R", "O", "E"}; 
 		return signals;
