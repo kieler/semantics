@@ -126,7 +126,7 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
         }
         else if (type.equals(VAL_EXIT_ACTION)) {
             class1 = StateOnExitActionEditPart.class;
-            class2 = StateOnExitActionEditPart.class;
+            class2 = StateOnExitAction2EditPart.class;
             elementType = SyncchartsElementTypes.Action_3006;
         }
         else if (type.equals(VAL_INSIDE_ACTION)) {
@@ -144,12 +144,11 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
             class2 = StateSignal2EditPart.class;
             elementType = SyncchartsElementTypes.Signal_3003;
         }
-        /*
-        else if (type.equals(VAL_VARIABLE)) {
-            class1 = StateVariableCompartmentEditPart.class;
-            class2 = StateVariableCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Variable_3007;
-        }*/
+//        else if (type.equals(VAL_VARIABLE)) {
+//            class1 = StateVariableCompartmentEditPart.class;
+//            class2 = StateVariableCompartment2EditPart.class;
+//            elementType = SyncchartsElementTypes.Variable_3007;
+//        }
         else if (type.equals(VAL_SUSPENSION_TRIGGER)) {
             class1 = StateSuspendEditPart.class;
             class2 = StateSuspend2EditPart.class;
