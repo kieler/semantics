@@ -7,36 +7,36 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class SyncchartsNodeDescriptor {
 
-	/**
-	 * @generated
-	 */
-	private final EObject myModelElement;
+    /**
+     * @generated
+     */
+    private final EObject myModelElement;
 
-	/**
-	 * @generated
-	 */
-	private final int myVisualID;
+    /**
+     * @generated
+     */
+    private final int myVisualID;
 
-	/**
-	 * @generated
-	 */
-	public SyncchartsNodeDescriptor(EObject modelElement, int visualID) {
-		myModelElement = modelElement;
-		myVisualID = visualID;
-	}
+    /**
+     * @generated
+     */
+    public SyncchartsNodeDescriptor(EObject modelElement, int visualID) {
+        myModelElement = modelElement;
+        myVisualID = visualID;
+    }
 
-	/**
-	 * @generated
-	 */
-	public EObject getModelElement() {
-		return myModelElement;
-	}
+    /**
+     * @generated
+     */
+    public EObject getModelElement() {
+        return myModelElement;
+    }
 
-	/**
-	 * @generated
-	 */
-	public int getVisualID() {
-		return myVisualID;
-	}
+    /**
+     * @generated
+     */
+    public int getVisualID() {
+        return myVisualID;
+    }
 
 }

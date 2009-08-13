@@ -9,11 +9,10 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
  */
 public class DiagramGeneralPreferencePage extends DiagramsPreferencePage {
 
-	/**
-	 * @generated
-	 */
-	public DiagramGeneralPreferencePage() {
-		setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance()
-				.getPreferenceStore());
-	}
+    /**
+     * @generated
+     */
+    public DiagramGeneralPreferencePage() {
+        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore());
+    }
 }

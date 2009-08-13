@@ -34,147 +34,143 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
  */
 public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
 
-	/**
-	 * @generated
-	 */
-	private boolean myContribute;
+    /**
+     * @generated
+     */
+    private boolean myContribute;
 
-	/**
-	 * @generated
-	 */
-	private OpenDiagramAction myOpenDiagramAction;
+    /**
+     * @generated
+     */
+    private OpenDiagramAction myOpenDiagramAction;
 
-	/**
-	 * @generated
-	 */
-	public void init(ICommonActionExtensionSite aSite) {
-		super.init(aSite);
-		if (aSite.getViewSite() instanceof ICommonViewerWorkbenchSite) {
-			myContribute = true;
-			makeActions((ICommonViewerWorkbenchSite) aSite.getViewSite());
-		} else {
-			myContribute = false;
-		}
-	}
+    /**
+     * @generated
+     */
+    public void init(ICommonActionExtensionSite aSite) {
+        super.init(aSite);
+        if (aSite.getViewSite() instanceof ICommonViewerWorkbenchSite) {
+            myContribute = true;
+            makeActions((ICommonViewerWorkbenchSite) aSite.getViewSite());
+        }
+        else {
+            myContribute = false;
+        }
+    }
 
-	/**
-	 * @generated
-	 */
-	private void makeActions(ICommonViewerWorkbenchSite viewerSite) {
-		myOpenDiagramAction = new OpenDiagramAction(viewerSite);
-	}
+    /**
+     * @generated
+     */
+    private void makeActions(ICommonViewerWorkbenchSite viewerSite) {
+        myOpenDiagramAction = new OpenDiagramAction(viewerSite);
+    }
 
-	/**
-	 * @generated
-	 */
-	public void fillActionBars(IActionBars actionBars) {
-		if (!myContribute) {
-			return;
-		}
-		IStructuredSelection selection = (IStructuredSelection) getContext()
-				.getSelection();
-		myOpenDiagramAction.selectionChanged(selection);
-		if (myOpenDiagramAction.isEnabled()) {
-			actionBars.setGlobalActionHandler(ICommonActionConstants.OPEN,
-					myOpenDiagramAction);
-		}
-	}
+    /**
+     * @generated
+     */
+    public void fillActionBars(IActionBars actionBars) {
+        if (!myContribute) {
+            return;
+        }
+        IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
+        myOpenDiagramAction.selectionChanged(selection);
+        if (myOpenDiagramAction.isEnabled()) {
+            actionBars.setGlobalActionHandler(ICommonActionConstants.OPEN, myOpenDiagramAction);
+        }
+    }
 
-	/**
-	 * @generated
-	 */
-	public void fillContextMenu(IMenuManager menu) {
-	}
+    /**
+     * @generated
+     */
+    public void fillContextMenu(IMenuManager menu) {
+    }
 
-	/**
-	 * @generated
-	 */
-	private class OpenDiagramAction extends Action {
+    /**
+     * @generated
+     */
+    private class OpenDiagramAction extends Action {
 
-		/**
-		 * @generated
-		 */
-		private Diagram myDiagram;
+        /**
+         * @generated
+         */
+        private Diagram myDiagram;
 
-		/**
-		 * @generated
-		 */
-		private ICommonViewerWorkbenchSite myViewerSite;
+        /**
+         * @generated
+         */
+        private ICommonViewerWorkbenchSite myViewerSite;
 
-		/**
-		 * @generated
-		 */
-		public OpenDiagramAction(ICommonViewerWorkbenchSite viewerSite) {
-			super(Messages.NavigatorActionProvider_OpenDiagramActionName);
-			myViewerSite = viewerSite;
-		}
+        /**
+         * @generated
+         */
+        public OpenDiagramAction(ICommonViewerWorkbenchSite viewerSite) {
+            super(Messages.NavigatorActionProvider_OpenDiagramActionName);
+            myViewerSite = viewerSite;
+        }
 
-		/**
-		 * @generated
-		 */
-		public final void selectionChanged(IStructuredSelection selection) {
-			myDiagram = null;
-			if (selection.size() == 1) {
-				Object selectedElement = selection.getFirstElement();
-				if (selectedElement instanceof SyncchartsNavigatorItem) {
-					selectedElement = ((SyncchartsNavigatorItem) selectedElement)
-							.getView();
-				} else if (selectedElement instanceof IAdaptable) {
-					selectedElement = ((IAdaptable) selectedElement)
-							.getAdapter(View.class);
-				}
-				if (selectedElement instanceof Diagram) {
-					Diagram diagram = (Diagram) selectedElement;
-					if (RegionEditPart.MODEL_ID
-							.equals(SyncchartsVisualIDRegistry
-									.getModelID(diagram))) {
-						myDiagram = diagram;
-					}
-				}
-			}
-			setEnabled(myDiagram != null);
-		}
+        /**
+         * @generated
+         */
+        public final void selectionChanged(IStructuredSelection selection) {
+            myDiagram = null;
+            if (selection.size() == 1) {
+                Object selectedElement = selection.getFirstElement();
+                if (selectedElement instanceof SyncchartsNavigatorItem) {
+                    selectedElement = ((SyncchartsNavigatorItem) selectedElement).getView();
+                }
+                else if (selectedElement instanceof IAdaptable) {
+                    selectedElement = ((IAdaptable) selectedElement).getAdapter(View.class);
+                }
+                if (selectedElement instanceof Diagram) {
+                    Diagram diagram = (Diagram) selectedElement;
+                    if (RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
+                            .getModelID(diagram))) {
+                        myDiagram = diagram;
+                    }
+                }
+            }
+            setEnabled(myDiagram != null);
+        }
 
-		/**
-		 * @generated
-		 */
-		public void run() {
-			if (myDiagram == null || myDiagram.eResource() == null) {
-				return;
-			}
+        /**
+         * @generated
+         */
+        public void run() {
+            if (myDiagram == null || myDiagram.eResource() == null) {
+                return;
+            }
 
-			IEditorInput editorInput = getEditorInput();
-			IWorkbenchPage page = myViewerSite.getPage();
-			try {
-				page.openEditor(editorInput, SyncchartsDiagramEditor.ID);
-			} catch (PartInitException e) {
-				SyncchartsDiagramEditorPlugin.getInstance().logError(
-						"Exception while openning diagram", e); //$NON-NLS-1$
-			}
-		}
+            IEditorInput editorInput = getEditorInput();
+            IWorkbenchPage page = myViewerSite.getPage();
+            try {
+                page.openEditor(editorInput, SyncchartsDiagramEditor.ID);
+            }
+            catch (PartInitException e) {
+                SyncchartsDiagramEditorPlugin.getInstance().logError(
+                        "Exception while openning diagram", e); //$NON-NLS-1$
+            }
+        }
 
-		/**
-		 * @generated
-		 */
-		private IEditorInput getEditorInput() {
-			for (Iterator it = myDiagram.eResource().getContents().iterator(); it
-					.hasNext();) {
-				EObject nextEObject = (EObject) it.next();
-				if (nextEObject == myDiagram) {
-					return new FileEditorInput(WorkspaceSynchronizer
-							.getFile(myDiagram.eResource()));
-				}
-				if (nextEObject instanceof Diagram) {
-					break;
-				}
-			}
-			URI uri = EcoreUtil.getURI(myDiagram);
-			String editorName = uri.lastSegment()
-					+ "#" + myDiagram.eResource().getContents().indexOf(myDiagram); //$NON-NLS-1$
-			IEditorInput editorInput = new URIEditorInput(uri, editorName);
-			return editorInput;
-		}
+        /**
+         * @generated
+         */
+        private IEditorInput getEditorInput() {
+            for (Iterator it = myDiagram.eResource().getContents().iterator(); it.hasNext();) {
+                EObject nextEObject = (EObject) it.next();
+                if (nextEObject == myDiagram) {
+                    return new FileEditorInput(WorkspaceSynchronizer.getFile(myDiagram.eResource()));
+                }
+                if (nextEObject instanceof Diagram) {
+                    break;
+                }
+            }
+            URI uri = EcoreUtil.getURI(myDiagram);
+            String editorName = uri.lastSegment()
+                    + "#" + myDiagram.eResource().getContents().indexOf(myDiagram); //$NON-NLS-1$
+            IEditorInput editorInput = new URIEditorInput(uri, editorName);
+            return editorInput;
+        }
 
-	}
+    }
 
 }

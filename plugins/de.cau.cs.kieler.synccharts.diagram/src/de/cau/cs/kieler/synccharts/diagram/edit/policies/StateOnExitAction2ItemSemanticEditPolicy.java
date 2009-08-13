@@ -9,24 +9,23 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 /**
  * @generated
  */
-public class StateOnExitAction2ItemSemanticEditPolicy extends
-		SyncchartsBaseItemSemanticEditPolicy {
+public class StateOnExitAction2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEditPolicy {
 
-	/**
-	 * @generated
-	 */
-	public StateOnExitAction2ItemSemanticEditPolicy() {
-		super(SyncchartsElementTypes.State_3002);
-	}
+    /**
+     * @generated
+     */
+    public StateOnExitAction2ItemSemanticEditPolicy() {
+        super(SyncchartsElementTypes.State_3002);
+    }
 
-	/**
-	 * @generated
-	 */
-	protected Command getCreateCommand(CreateElementRequest req) {
-		if (SyncchartsElementTypes.Action_3006 == req.getElementType()) {
-			return getGEFWrapper(new Action3CreateCommand(req));
-		}
-		return super.getCreateCommand(req);
-	}
+    /**
+     * @generated
+     */
+    protected Command getCreateCommand(CreateElementRequest req) {
+        if (SyncchartsElementTypes.Action_3006 == req.getElementType()) {
+            return getGEFWrapper(new Action3CreateCommand(req));
+        }
+        return super.getCreateCommand(req);
+    }
 
 }

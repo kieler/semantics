@@ -4,13 +4,13 @@ Bundle-Name: SyncCharts Custom Code
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.custom; singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.custom.Activator
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.gmf.runtime.notation,
- org.eclipse.emf,
- org.eclipse.emf.common,
- org.eclipse.draw2d,
- org.eclipse.gmf.runtime.draw2d.ui,
- org.eclipse.gmf.runtime.diagram.ui,
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.4.0",
+ org.eclipse.emf;bundle-version="2.5.0",
+ org.eclipse.emf.common;bundle-version="2.5.0",
+ org.eclipse.draw2d;bundle-version="3.4.0",
+ org.eclipse.gmf.runtime.notation;bundle-version="1.1.0",
+ org.eclipse.gmf.runtime.draw2d.ui;bundle-version="1.1.0",
+ org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.1.0",
  de.cau.cs.kieler.synccharts.model,
  de.cau.cs.kieler.core
 Bundle-ActivationPolicy: lazy

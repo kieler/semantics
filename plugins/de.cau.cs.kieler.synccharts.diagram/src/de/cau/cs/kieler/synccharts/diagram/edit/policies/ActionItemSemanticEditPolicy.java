@@ -13,34 +13,34 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 /**
  * @generated
  */
-public class ActionItemSemanticEditPolicy extends
-		SyncchartsBaseItemSemanticEditPolicy {
+public class ActionItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEditPolicy {
 
-	/**
-	 * @generated
-	 */
-	public ActionItemSemanticEditPolicy() {
-		super(SyncchartsElementTypes.Action_3004);
-	}
+    /**
+     * @generated
+     */
+    public ActionItemSemanticEditPolicy() {
+        super(SyncchartsElementTypes.Action_3004);
+    }
 
-	/**
-	 * @generated
-	 */
-	protected Command getDestroyElementCommand(DestroyElementRequest req) {
-		View view = (View) getHost().getModel();
-		CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(
-				getEditingDomain(), null);
-		cmd.setTransactionNestingEnabled(false);
-		EAnnotation annotation = view.getEAnnotation("Shortcut"); //$NON-NLS-1$
-		if (annotation == null) {
-			// there are indirectly referenced children, need extra commands: false
-			addDestroyShortcutsCommand(cmd, view);
-			// delete host element
-			cmd.add(new DestroyElementCommand(req));
-		} else {
-			cmd.add(new DeleteCommand(getEditingDomain(), view));
-		}
-		return getGEFWrapper(cmd.reduce());
-	}
+    /**
+     * @generated
+     */
+    protected Command getDestroyElementCommand(DestroyElementRequest req) {
+        View view = (View) getHost().getModel();
+        CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(getEditingDomain(),
+                null);
+        cmd.setTransactionNestingEnabled(false);
+        EAnnotation annotation = view.getEAnnotation("Shortcut"); //$NON-NLS-1$
+        if (annotation == null) {
+            // there are indirectly referenced children, need extra commands: false
+            addDestroyShortcutsCommand(cmd, view);
+            // delete host element
+            cmd.add(new DestroyElementCommand(req));
+        }
+        else {
+            cmd.add(new DeleteCommand(getEditingDomain(), view));
+        }
+        return getGEFWrapper(cmd.reduce());
+    }
 
 }

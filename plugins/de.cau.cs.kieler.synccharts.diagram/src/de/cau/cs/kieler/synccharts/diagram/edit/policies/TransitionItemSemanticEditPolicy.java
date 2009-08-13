@@ -9,21 +9,20 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 /**
  * @generated
  */
-public class TransitionItemSemanticEditPolicy extends
-		SyncchartsBaseItemSemanticEditPolicy {
+public class TransitionItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEditPolicy {
 
-	/**
-	 * @generated
-	 */
-	public TransitionItemSemanticEditPolicy() {
-		super(SyncchartsElementTypes.Transition_4001);
-	}
+    /**
+     * @generated
+     */
+    public TransitionItemSemanticEditPolicy() {
+        super(SyncchartsElementTypes.Transition_4001);
+    }
 
-	/**
-	 * @generated
-	 */
-	protected Command getDestroyElementCommand(DestroyElementRequest req) {
-		return getGEFWrapper(new DestroyElementCommand(req));
-	}
+    /**
+     * @generated
+     */
+    protected Command getDestroyElementCommand(DestroyElementRequest req) {
+        return getGEFWrapper(new DestroyElementCommand(req));
+    }
 
 }
