@@ -407,6 +407,11 @@
             option="de.cau.cs.kieler.layout.options.expandNodes"
             value="true">
       </option>
+      <option
+            object="de.cau.cs.kieler.synccharts.diagram"
+            option="de.cau.cs.kieler.layout.options.minSpacing"
+            value="20.0">
+      </option>
    </extension>
 
 </plugin>

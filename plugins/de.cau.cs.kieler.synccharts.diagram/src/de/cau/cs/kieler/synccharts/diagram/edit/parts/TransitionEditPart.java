@@ -127,7 +127,7 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
         private void createContents() {
 
             fFigureTransitionTriggersAndEffectsFigure = new WrappingLabel();
-            fFigureTransitionTriggersAndEffectsFigure.setText("<...> / <...>");
+            fFigureTransitionTriggersAndEffectsFigure.setText("");
 
             fFigureTransitionTriggersAndEffectsFigure
                     .setFont(FFIGURETRANSITIONTRIGGERSANDEFFECTSFIGURE_FONT);

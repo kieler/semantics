@@ -36,11 +36,11 @@ Updating the gmfgen model:
   model/synccharts_gmfgen_customization.qvto
 1. right-click model/synccharts.gmfmap file
 2. select "Create generator model..."
-3. "next" to "Transformation Options"
-4. in that wizard page add a "Extra transformation *after* reconcile step"
+3. "Next" to "Specify transformation options"
+4. in that wizard page add a "Extra in-place transformation *after* reconcile step"
 5. set platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts_gmfgen_customization.qvto
    as file name
-6. OK
+6. Finish
 7. Check generated gmfgen file if the customizations have been applied
   - e.g. open Gen Plugin, see if new Wizard category is set to "de.cau.cs.kieler"
 

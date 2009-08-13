@@ -348,7 +348,7 @@ public class State2EditPart extends ShapeNodeEditPart {
         private void createContents() {
 
             fFigureStateNameFigure = new WrappingLabel();
-            fFigureStateNameFigure.setText("state");
+            fFigureStateNameFigure.setText("");
 
             fFigureStateNameFigure.setFont(FFIGURESTATENAMEFIGURE_FONT);
 
