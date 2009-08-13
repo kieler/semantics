@@ -692,13 +692,11 @@
             xsi:type="gmfgen:ToolEntry"
             title="State"
             description="Create new State"
-            smallIconPath="/de.cau.cs.kieler.synccharts/customIcons/state.gif"
             genNodes="//@diagram/@topLevelNodes.0 //@diagram/@childNodes.1"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="Transition"
             description="Create new Transition"
-            smallIconPath="/de.cau.cs.kieler.synccharts/customIcons/transition.gif"
             genLinks="//@diagram/@links.0"/>
       </groups>
     </palette>

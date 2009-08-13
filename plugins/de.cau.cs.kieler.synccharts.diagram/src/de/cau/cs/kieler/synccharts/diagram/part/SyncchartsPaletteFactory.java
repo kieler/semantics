@@ -47,8 +47,8 @@ public class SyncchartsPaletteFactory {
         NodeToolEntry entry = new NodeToolEntry(Messages.State1CreationTool_title,
                 Messages.State1CreationTool_desc, types);
         entry.setId("createState1CreationTool"); //$NON-NLS-1$
-        entry.setSmallIcon(SyncchartsDiagramEditorPlugin
-                .findImageDescriptor("/de.cau.cs.kieler.synccharts/customIcons/state.gif")); //$NON-NLS-1$
+        entry.setSmallIcon(SyncchartsElementTypes
+                .getImageDescriptor(SyncchartsElementTypes.State_2001));
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }
@@ -62,8 +62,8 @@ public class SyncchartsPaletteFactory {
         LinkToolEntry entry = new LinkToolEntry(Messages.Transition2CreationTool_title,
                 Messages.Transition2CreationTool_desc, types);
         entry.setId("createTransition2CreationTool"); //$NON-NLS-1$
-        entry.setSmallIcon(SyncchartsDiagramEditorPlugin
-                .findImageDescriptor("/de.cau.cs.kieler.synccharts/customIcons/transition.gif")); //$NON-NLS-1$
+        entry.setSmallIcon(SyncchartsElementTypes
+                .getImageDescriptor(SyncchartsElementTypes.Transition_4001));
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }

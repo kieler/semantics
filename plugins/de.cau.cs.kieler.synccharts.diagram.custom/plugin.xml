@@ -108,6 +108,7 @@
                mnemonic="A">
             <command
                   commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addEntryAction"
+                  icon="icons/obj16/Action.gif"
                   label="OnEntry Action"
                   mnemonic="t"
                   style="push"
@@ -125,6 +126,7 @@
             </command>
             <command
                   commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addInsideAction"
+                  icon="icons/obj16/Action.gif"
                   label="OnInside Action"
                   mnemonic="I"
                   style="push"
@@ -142,6 +144,7 @@
             </command>
             <command
                   commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addExitAction"
+                  icon="icons/obj16/Action.gif"
                   label="OnExit Action"
                   mnemonic="x"
                   style="push"
@@ -159,6 +162,7 @@
             </command>
             <command
                   commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addSignal"
+                  icon="icons/obj16/Signal.gif"
                   label="Signal"
                   mnemonic="S"
                   style="push"
@@ -176,6 +180,7 @@
             </command>
             <command
                   commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addSuspensionTrigger"
+                  icon="icons/obj16/Suspension.gif"
                   label="Suspension Trigger"
                   mnemonic="u"
                   style="push"
@@ -195,6 +200,7 @@
         
          <command
                commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addRegion"
+               icon="icons/obj16/Region.gif"
                label="Add Region"
                mnemonic="R"
                style="push"
@@ -212,6 +218,7 @@
          </command>
          <command
                commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addState"
+               icon="icons/obj16/State.gif"
                label="Add State"
                mnemonic="S"
                style="push"

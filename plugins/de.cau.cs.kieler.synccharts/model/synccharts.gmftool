@@ -11,21 +11,11 @@
       <tools
           xsi:type="gmftool:CreationTool"
           title="State"
-          description="Create new State">
-        <smallIcon
-            xsi:type="gmftool:BundleImage"
-            path="/customIcons/state.gif"
-            bundle="de.cau.cs.kieler.synccharts"/>
-      </tools>
+          description="Create new State"/>
       <tools
           xsi:type="gmftool:CreationTool"
           title="Transition"
-          description="Create new Transition">
-        <smallIcon
-            xsi:type="gmftool:BundleImage"
-            path="/customIcons/transition.gif"
-            bundle="de.cau.cs.kieler.synccharts"/>
-      </tools>
+          description="Create new Transition"/>
     </tools>
   </palette>
 </gmftool:ToolRegistry>
