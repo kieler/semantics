@@ -496,7 +496,7 @@
     </links>
     <compartments
         visualID="7024"
-        editPartClassName="StateSignalCompartmentEditPart"
+        editPartClassName="StateSignalEditPart"
         itemSemanticEditPolicyClassName="StateSignalCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="StateSignalCompartmentViewFactory"
         canonicalEditPolicyClassName="StateSignalCompartmentCanonicalEditPolicy"
@@ -514,7 +514,7 @@
         <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
       </viewmap>
     </compartments>
-    <compartments
+<!--    <compartments
         visualID="7031"
         editPartClassName="StateVariableCompartmentEditPart"
         itemSemanticEditPolicyClassName="StateVariableCompartmentItemSemanticEditPolicy"
@@ -533,10 +533,10 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.synccharts.custom.AttributeAwareStateFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;state&quot;);&#xA;&#xA;fFigureStateNameFigure.setFont(FFIGURESTATENAMEFIGURE_FONT);&#xA;&#xA;&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Font FFIGURESTATENAMEFIGURE_FONT = new org.eclipse.swt.graphics.Font(org.eclipse.swt.widgets.Display.getCurrent(), org.eclipse.swt.widgets.Display.getDefault().getSystemFont().getFontData()[0].getName(), 10, org.eclipse.swt.SWT.BOLD);&#xA;&#xA;">
         <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
       </viewmap>
-    </compartments>
+    </compartments>-->
     <compartments
         visualID="7033"
-        editPartClassName="StateEntryActionsCompartmentEditPart"
+        editPartClassName="StateOnEntryActionEditPart"
         itemSemanticEditPolicyClassName="StateEntryActionsCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="StateEntryActionsCompartmentViewFactory"
         canonicalEditPolicyClassName="StateEntryActionsCompartmentCanonicalEditPolicy"
@@ -556,7 +556,7 @@
     </compartments>
     <compartments
         visualID="7034"
-        editPartClassName="StateInnerActionsCompartmentEditPart"
+        editPartClassName="StateOnInsideActionEditPart"
         itemSemanticEditPolicyClassName="StateInnerActionsCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="StateInnerActionsCompartmentViewFactory"
         canonicalEditPolicyClassName="StateInnerActionsCompartmentCanonicalEditPolicy"
@@ -576,7 +576,7 @@
     </compartments>
     <compartments
         visualID="7035"
-        editPartClassName="StateExitActionsCompartmentEditPart"
+        editPartClassName="StateOnExitActionEditPart"
         itemSemanticEditPolicyClassName="StateExitActionsCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="StateExitActionsCompartmentViewFactory"
         canonicalEditPolicyClassName="StateExitActionsCompartmentCanonicalEditPolicy"
@@ -596,7 +596,7 @@
     </compartments>
     <compartments
         visualID="7039"
-        editPartClassName="StateSuspensionTriggerCompartmentEditPart"
+        editPartClassName="StateSuspendEditPart"
         itemSemanticEditPolicyClassName="StateSuspensionTriggerCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="StateSuspensionTriggerCompartmentViewFactory"
         canonicalEditPolicyClassName="StateSuspensionTriggerCompartmentCanonicalEditPolicy"
@@ -655,7 +655,7 @@
     </compartments>
     <compartments
         visualID="7030"
-        editPartClassName="StateSignalCompartment2EditPart"
+        editPartClassName="StateSignal2EditPart"
         itemSemanticEditPolicyClassName="StateSignalCompartment2ItemSemanticEditPolicy"
         notationViewFactoryClassName="StateSignalCompartment2ViewFactory"
         canonicalEditPolicyClassName="StateSignalCompartment2CanonicalEditPolicy"
@@ -673,7 +673,7 @@
         <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
       </viewmap>
     </compartments>
-    <compartments
+<!--    <compartments
         visualID="7032"
         editPartClassName="StateVariableCompartment2EditPart"
         itemSemanticEditPolicyClassName="StateVariableCompartment2ItemSemanticEditPolicy"
@@ -692,10 +692,10 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.synccharts.custom.AttributeAwareStateFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;state&quot;);&#xA;&#xA;fFigureStateNameFigure.setFont(FFIGURESTATENAMEFIGURE_FONT);&#xA;&#xA;&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Font FFIGURESTATENAMEFIGURE_FONT = new org.eclipse.swt.graphics.Font(org.eclipse.swt.widgets.Display.getCurrent(), org.eclipse.swt.widgets.Display.getDefault().getSystemFont().getFontData()[0].getName(), 10, org.eclipse.swt.SWT.BOLD);&#xA;&#xA;">
         <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
       </viewmap>
-    </compartments>
+    </compartments>-->
     <compartments
         visualID="7036"
-        editPartClassName="StateEntryActionsCompartment2EditPart"
+        editPartClassName="StateOnEntryAction2EditPart"
         itemSemanticEditPolicyClassName="StateEntryActionsCompartment2ItemSemanticEditPolicy"
         notationViewFactoryClassName="StateEntryActionsCompartment2ViewFactory"
         canonicalEditPolicyClassName="StateEntryActionsCompartment2CanonicalEditPolicy"
@@ -715,7 +715,7 @@
     </compartments>
     <compartments
         visualID="7037"
-        editPartClassName="StateInnerActionsCompartment2EditPart"
+        editPartClassName="StateOnInsideAction2EditPart"
         itemSemanticEditPolicyClassName="StateInnerActionsCompartment2ItemSemanticEditPolicy"
         notationViewFactoryClassName="StateInnerActionsCompartment2ViewFactory"
         canonicalEditPolicyClassName="StateInnerActionsCompartment2CanonicalEditPolicy"
@@ -735,7 +735,7 @@
     </compartments>
     <compartments
         visualID="7038"
-        editPartClassName="StateExitActionsCompartment2EditPart"
+        editPartClassName="StateOnExitAction2EditPart"
         itemSemanticEditPolicyClassName="StateExitActionsCompartment2ItemSemanticEditPolicy"
         notationViewFactoryClassName="StateExitActionsCompartment2ViewFactory"
         canonicalEditPolicyClassName="StateExitActionsCompartment2CanonicalEditPolicy"
@@ -755,7 +755,7 @@
     </compartments>
     <compartments
         visualID="7041"
-        editPartClassName="StateSuspensionTriggerCompartment2EditPart"
+        editPartClassName="StateSuspend2EditPart"
         itemSemanticEditPolicyClassName="StateSuspensionTriggerCompartment2ItemSemanticEditPolicy"
         notationViewFactoryClassName="StateSuspensionTriggerCompartment2ViewFactory"
         canonicalEditPolicyClassName="StateSuspensionTriggerCompartment2CanonicalEditPolicy"

@@ -49,22 +49,21 @@ mapping inout GenCompartment::compartmentSettings(){
 	// customize the title of the compartment according to its type	
 	self.needsTitle := false;
 	self.title := switch {
-		case (self.editPartClassName = "StateSignalCompartmentEditPart")  "Signal:";
-		case (self.editPartClassName = "StateSignalCompartment2EditPart") "Signal:";
-		case (self.editPartClassName = "StateVariableCompartmentEditPart")  "Variable:";
-		case (self.editPartClassName = "StateVariableCompartment2EditPart") "Variable:";
-		case (self.editPartClassName = "StateEntryActionsCompartmentEditPart")  "OnEntryAction:";
-		case (self.editPartClassName = "StateEntryActionsCompartment2EditPart") "OnEntryAction:";
-		case (self.editPartClassName = "StateInnerActionsCompartmentEditPart")  "OnInsideAction:";
-		case (self.editPartClassName = "StateInnerActionsCompartment2EditPart") "OnInsideAction:";
-		case (self.editPartClassName = "StateExitActionsCompartmentEditPart")  "OnExitAction:";
-		case (self.editPartClassName = "StateExitActionsCompartment2EditPart") "OnExitAction:";
-		case (self.editPartClassName = "StateSuspensionTriggerCompartmentEditPart")  "Suspend:";
-		case (self.editPartClassName = "StateSuspensionTriggerCompartment2EditPart") "Suspend:";
+		case (self.editPartClassName = "StateSignalEditPart")  "Signal:";
+		case (self.editPartClassName = "StateSignal2EditPart") "Signal:";
+//		case (self.editPartClassName = "StateVariableCompartmentEditPart")  "Variable:";
+//		case (self.editPartClassName = "StateVariableCompartment2EditPart") "Variable:";
+		case (self.editPartClassName = "StateOnEntryActionEditPart")  "OnEntryAction:";
+		case (self.editPartClassName = "StateOnEntryAction2EditPart") "OnEntryAction:";
+		case (self.editPartClassName = "StateOnInsideActionEditPart")  "OnInsideAction:";
+		case (self.editPartClassName = "StateOnInsideAction2EditPart") "OnInsideAction:";
+		case (self.editPartClassName = "StateOnExitActionEditPart")  "OnExitAction:";
+		case (self.editPartClassName = "StateOnExitAction2EditPart") "OnExitAction:";
+		case (self.editPartClassName = "StateSuspendEditPart")  "Suspend:";
+		case (self.editPartClassName = "StateSuspend2EditPart") "Suspend:";
 		case (self.editPartClassName = "StateRegionCompartmentEditPart")  "RegionCompartment";
 		case (self.editPartClassName = "StateRegionCompartment2EditPart") "RegionCompartment";
 		case (self.editPartClassName = "RegionStateCompartmentEditPart")  "StateCompartment";
-		case (self.editPartClassName = "RegionStateCompartment2EditPart") "StateCompartment";
 		else "";
 	};
 }

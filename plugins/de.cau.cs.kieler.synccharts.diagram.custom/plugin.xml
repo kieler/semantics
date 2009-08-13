@@ -240,10 +240,10 @@
 	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
 	             </instanceof>
 	             <instanceof
-	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateNameEditPart">
+	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart">
 	             </instanceof>
 	             <instanceof
-	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateName2EditPart">
+	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart">
 	             </instanceof>
 	             <instanceof
 	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart">
@@ -252,40 +252,34 @@
 	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart">
 	             </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionsCompartmentEditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnEntryActionEditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionsCompartment2EditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnEntryAction2EditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionsCompartmentEditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnExitActionEditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionsCompartment2EditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnExitAction2EditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionsCompartmentEditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnInsideActionEditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionsCompartment2EditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnInsideAction2EditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartmentEditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalEditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartment2EditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignal2EditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartmentEditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspendEditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartment2EditPart">
-              </instanceof>
-              <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateVariableCompartmentEditPart">
-              </instanceof>
-              <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateVariableCompartment2EditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspend2EditPart">
               </instanceof>
 	          </or>
 	       </iterate>
