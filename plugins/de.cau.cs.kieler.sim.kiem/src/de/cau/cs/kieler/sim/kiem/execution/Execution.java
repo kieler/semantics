@@ -68,6 +68,9 @@ public class Execution implements Runnable {
 	 * or INFINITY_STEPS in run mode or FORWARD_STEP / BACKWARD_STEP. */
 	private long steps;
 	
+	/** The step when to pause execution. -1 if never pause */
+	private long stepToPause;
+	
 	/** Indicates paused command. */
 	private boolean pausedCommand;
 	
@@ -98,9 +101,12 @@ public class Execution implements Runnable {
 	/** The step counter. Is advanced in {@link #FORWARD_STEP} */
 	private long stepCounter;
 	
-	/** The step counter max. By default this is equal to stepCounter-1.
-	 * In case of history steps: stepCount < stepCounterMax. */
+	/** The step counter max. By default this is equal to stepCounter.
+	 * In case of history steps: stepCount <= stepCounterMax. */
 	private long stepCounterMax;
+	
+	/** Remember whether last step was the most current step. */
+	private boolean lastStepIsMostCurrent;
 
 	/** The data pool. */
 	private JSONDataPool dataPool;
@@ -257,7 +263,7 @@ public class Execution implements Runnable {
 	 * @return the maximum step
 	 */
 	public long getMaximumSteps() {
-		return this.stepCounterMax+1;
+		return this.stepCounterMax;
 	}
 
 	//-------------------------------------------------------------------------
@@ -268,7 +274,10 @@ public class Execution implements Runnable {
 	 * @return true, if the current step is a history step
 	 */
 	public boolean isHistoryStep() {
-		return (this.stepCounter <= this.stepCounterMax);
+		if (lastStepIsMostCurrent) 
+			return (this.stepCounter < this.stepCounterMax);
+		else
+			return (this.stepCounter <= this.stepCounterMax);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -292,6 +301,55 @@ public class Execution implements Runnable {
 	 */
 	public int getAimedStepDuration() {
 		return this.aimedStepDuration;
+	}
+	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Step execution to the specific, user defined step number and pause. If
+	 * this is a step number in the future then run the execution until the
+	 * stepCounter has reached this number. If this is a step number in the
+	 * history, then just jump (backwards/forwards) to it.
+	 * 
+	 * @param step the step to jump/run to
+	 * 
+	 * @return true, if step is being processed
+	 */
+	public boolean stepExecutionPause(long step) {
+		//if invalid step number return false
+		if (step < 0) return false;
+		//if this is already the current step
+		if (step == this.stepCounter) return true;
+		if (step > this.stepCounterMax) {
+			//first go to most current step
+			if (this.stepCounter < this.stepCounterMax) {
+				this.stepCounter = this.stepCounterMax;
+			}
+			if (step == this.stepCounter+1) {
+				//if just one step to make
+				return this.stepExecutionSync();
+			}
+			else {
+				//run (forward steps) until step is reached
+				this.stepToPause = step;
+				this.runExecutionSync();
+				//update the GUI
+				KiemPlugin.getDefault().updateViewAsync();
+				return true;
+			}
+		}
+		else if (step == this.stepCounterMax) {
+			//this is the most current step
+			//walk until just before and then make a forward step
+			this.stepCounter = step-1;
+			return this.stepExecutionSync();
+		}
+		else {
+			//this is any step before the most current one
+			//walk just behind it and then make a backward step
+			this.stepCounter = step+1;
+			return this.stepBackExecutionSync();
+		}
 	}
 	
 	//-------------------------------------------------------------------------
@@ -458,6 +516,7 @@ public class Execution implements Runnable {
 		//not synchronized to stop immediately w/o queuing
 		this.steps = NO_STEPS;
 		this.stop = true;
+		this.stepToPause = -1;
 
 		synchronized(this) {
 			//notify components
@@ -645,8 +704,9 @@ public class Execution implements Runnable {
 		this.accumulatedStepDurations = 0;
 		this.accumulatedPlauseDurations = 0;
 		this.stepCounter = 0;
-		this.stepCounterMax = -1;
+		this.stepCounterMax = 0;
 		this.stepDuration = 0;
+		this.lastStepIsMostCurrent = true;
 	}
 	
 	//-------------------------------------------------------------------------
@@ -771,6 +831,16 @@ public class Execution implements Runnable {
 	 * this leads to a paused execution.
 	 */
 	private void checkForPauseFlag() {
+		//pause if pause step is reached
+		if (this.stepCounter == this.stepToPause) {
+			//cancel stepPause
+			this.stepToPause = -1;
+			this.pauseExecutionSync();
+			//update the GUI
+			KiemPlugin.getDefault().updateViewAsync();
+			return;
+		}
+
 		//test only if we have to make a step (1) or if we are 
 		//in running mode (-1)
 		if ((steps == INFINITY_STEPS)||(steps > NO_STEPS)) {
@@ -781,9 +851,13 @@ public class Execution implements Runnable {
 				timeout.timeout(TIMEOUT, "isEnabled, isPauseFlag", dataComponentEx, this);
 				if (   dataComponentEx.isEnabled()
 					&& dataComponentEx.isPauseFlag()) {
+					//cancel stepPause
+					this.stepToPause = -1;
 					this.pauseExecutionSync();
 					//update the GUI
 					KiemPlugin.getDefault().updateViewAsync();
+					timeout.abortTimeout();
+					return;
 				}
 				timeout.abortTimeout();
 			}
@@ -817,19 +891,23 @@ public class Execution implements Runnable {
 					
 					//make a step forward or backward according to steps
 					if ((steps == FORWARD_STEP)||(steps == INFINITY_STEPS)) {
-						//update stepCounterMax
-						if (this.stepCounter > this.stepCounterMax)
-							this.stepCounterMax = this.stepCounter;
+						if (this.stepCounter == this.stepCounterMax)
+							lastStepIsMostCurrent = true;
+						else
+							lastStepIsMostCurrent = false;
 						//make a step forward
 						this.stepCounter++;
 					}
 					else {
-						//update stepCounterMax
-						if (this.stepCounter  > this.stepCounterMax)
-							this.stepCounterMax = this.stepCounter;
+						lastStepIsMostCurrent = false;
 						//make a step backward
 						this.stepCounter--;
 					}
+
+					//update stepCounterMax
+					if (this.stepCounter > this.stepCounterMax)
+						this.stepCounterMax = this.stepCounter;
+
 					//--------------------------------------------------
 					
 					//update steps in kiem view
@@ -1037,7 +1115,7 @@ public class Execution implements Runnable {
 			
 			//escape if stopped
 			if (this.stop == true) return;
-
+			
 			//delay if time of step is left (in run mode only)
 			if (steps == INFINITY_STEPS) {
 				int timeToDelay = this.aimedStepDuration - this.stepDuration;
@@ -1066,6 +1144,11 @@ public class Execution implements Runnable {
 				}
 				
 			}	
+
+			if (steps == NO_STEPS) {
+				//cancel stepPause
+				this.stepToPause = -1;
+			}
 			
 			//escape if stopped
 			if (this.stop == true) return;

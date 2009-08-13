@@ -39,6 +39,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 
@@ -89,7 +90,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	/** The action to make an execution step. */
 	private Action actionStep;
 
-	/** The action to make an execution step. */
+	/** The action to make a user defined execution step. */
+	private Action actionStepUser;
+	
+	/** The action to make an execution step to the most current one. */
 	private Action actionStepFMC;
 	
 	/** The action to run the execution. */
@@ -238,7 +242,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 		viewer.setLabelProvider(new KiemLabelProvider(this));
 		viewer.setInput(KIEMInstance.getDataComponentExList());
 		
-		buildLocalToolBar();
+		//buildLocalToolBar(); // is done in checkForSingleEnabledMaster
 		hookContextMenu();
 		hookSelectionChangedAction();
 		hookTreeAction();
@@ -417,6 +421,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	private void buildLocalToolBar() {
 		IActionBars bars = getViewSite().getActionBars();
 		IToolBarManager manager = bars.getToolBarManager();
+		//first remove all entries
+		manager.removeAll();
+		
 		manager.add(getActionUp());
 		manager.add(getActionDown());
 		manager.add(new Separator());
@@ -425,11 +432,18 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 		manager.add(new Separator());
 		manager.add(getActionStepBack());
 
-		//add a drop down action
-		DropDownAction dn = new DropDownAction(getActionStep());
-		dn.add(new Separator());
-		dn.add(getActionStepFMC());
-		manager.add(dn);
+		if (this.currentMaster == null) {
+			//add a drop down action
+			DropDownAction dn = new DropDownAction(getActionStep());
+			dn.add(new Separator());
+			dn.add(getActionStepFMC());
+			dn.add(getActionStepUser());
+			manager.add(dn);
+		}
+		else {
+			//simple action iff master is present
+			manager.add(getActionStep());
+		}
 
 		//manager.add(getActionStep());
 
@@ -439,6 +453,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 		manager.add(getActionRun());
 		manager.add(getActionPause());
 		manager.add(getActionStop());
+		
+		//commit changes
+		bars.updateActionBars();
 	}
 	
 	//-------------------------------------------------------------------------
@@ -453,6 +470,35 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 		showMessage(Messages.ViewTitle,message);
 	}
 	
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Show an input dialog with the message, a default value and a specific
+	 * title.
+	 * 
+	 * @param title the title of the dialog
+	 * @param message the message to present
+	 * @param defaultValue the default value
+	 * 
+	 * @return the string value entered or null if aborted
+	 */
+	private String showInputDialog(String title, 
+								String message,
+								String defaultValue) {
+
+        InputDialog dlg = new InputDialog(this.getSite().getShell(),
+        								  title, 
+        								  message, 
+        								  defaultValue, 
+        								  null);
+        dlg.open();
+        if (dlg.getReturnCode() == InputDialog.OK) {
+        	return dlg.getValue();
+        }
+        else
+        	return null;
+	}
+
 	//-------------------------------------------------------------------------
 
 	/**
@@ -1074,27 +1120,27 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	//-------------------------------------------------------------------------	
 	
 	/**
-	 * Gets the action step. Triggers the execution to make a step.
-	 * If a master is present, the this functionality may be implemented
-	 * by him.
+	 * Gets the action step forward to the most current step. Triggers the 
+	 * execution to make a step forward to the most current one. This action is
+	 * only available if no master is present.
 	 * 
-	 * @return the action step
+	 * @return the action step FMC
 	 */
 	private Action getActionStepFMC() {
-		if (actionStepFMC != null) return actionStep;
+		if (actionStepFMC != null) return actionStepFMC;
 		actionStepFMC = new Action() {
 			public void run() {
 				//only update if first step in execution
 				boolean mustUpdate = (KIEMInstance.execution == null);
 				if ((currentMaster != null) 
 					&& currentMaster.isMasterImplementingGUI()) {
-					//if a master implements the action
-					currentMaster.masterGUIstep();
+					// unsupported
 				}
 				else {
 					//otherwise default implementation
 					if (KIEMInstance.initExecution()) {
-						KIEMInstance.execution.stepExecutionSync();
+						KIEMInstance.execution.stepExecutionPause(
+								KIEMInstance.execution.getMaximumSteps());
 					}
 				}
 				if (mustUpdate)
@@ -1109,6 +1155,50 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	}
 
 	//-------------------------------------------------------------------------	
+	
+	/**
+	 * Gets the action user defined step. Triggers the execution to make a
+	 * step forward or backward to the one that the user set in the dialog 
+	 * window. This action is only available if no master is present.
+	 * 
+	 * @return the user defined action step
+	 */
+	private Action getActionStepUser() {
+		if (actionStepUser != null) return actionStepUser;
+		actionStepUser = new Action() {
+			public void run() {
+				//only update if first step in execution
+				boolean mustUpdate = (KIEMInstance.execution == null);
+				if ((currentMaster != null) 
+					&& currentMaster.isMasterImplementingGUI()) {
+					// unsupported
+				}
+				else {
+					//otherwise default implementation
+					if (KIEMInstance.initExecution()) {
+						String value = showInputDialog(
+								Messages.ActionStepUserDialogTitle,
+								Messages.ActionStepUserDialogText,
+								""+KIEMInstance.execution.getSteps());
+						if (value != null) {
+							try {
+								long step = Long.parseLong(value);
+								KIEMInstance.execution
+										.stepExecutionPause(step);
+							}catch(Exception e){}
+						}
+					}
+				}
+				if (mustUpdate)
+					updateView(true);
+			}
+		};
+		actionStepUser.setText(Messages.ActionStepUser);
+		actionStepUser.setToolTipText(Messages.ActionHintStepUser);
+		actionStepUser.setImageDescriptor(KiemIcons.IMGDESCR_STEP);
+		actionStepUser.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
+		return actionStepUser;
+	}
 
 	//-------------------------------------------------------------------------	
 		
@@ -1418,6 +1508,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 		if (currentMaster != null) {
 		   currentMaster.getDataComponent().masterSetKIEMInstances(KIEMInstance, this);
 		}
+		//rebuild view toolbar buttons
+		buildLocalToolBar();
 	}
 	
 	//-------------------------------------------------------------------------

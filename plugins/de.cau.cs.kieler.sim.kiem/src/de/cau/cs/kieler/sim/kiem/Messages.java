@@ -140,6 +140,18 @@ public class Messages extends NLS {
 	
 	/** The Action hint step. */
 	public static String ActionHintStep;
+
+	/** The Action user defined step. */
+	public static String ActionStepUser;
+	
+	/** The Action hint user defined step. */
+	public static String ActionHintStepUser;
+
+	/** The Action step user dialog title. */
+	public static String ActionStepUserDialogTitle;
+	
+	/** The Action step user dialog text. */
+	public static String ActionStepUserDialogText;
 	
 	/** The Action step forward most current. */
 	public static String ActionStepFMC;
