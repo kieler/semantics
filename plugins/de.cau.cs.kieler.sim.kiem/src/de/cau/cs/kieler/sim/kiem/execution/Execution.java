@@ -321,22 +321,24 @@ public class Execution implements Runnable {
 		//if this is already the current step
 		if (step == this.stepCounter) return true;
 		if (step > this.stepCounterMax) {
-			//first go to most current step
-			if (this.stepCounter < this.stepCounterMax) {
-				this.stepCounter = this.stepCounterMax;
-			}
 			if (step == this.stepCounter+1) {
-				//if just one step to make
+				//if just one step to make and return
 				return this.stepExecutionSync();
 			}
-			else {
-				//run (forward steps) until step is reached
-				this.stepToPause = step;
-				this.runExecutionSync();
-				//update the GUI
-				KiemPlugin.getDefault().updateViewAsync();
-				return true;
+			
+			if (this.stepCounter < this.stepCounterMax) {
+				//first go to most current step
+				//do this so that delta observers do not get confused!
+				this.stepCounter = this.stepCounterMax-1;
+				this.stepExecutionSync();
+				this.steps = NO_STEPS;
 			}
+			//run (forward steps) until step is reached
+			this.stepToPause = step;
+			this.runExecutionSync();
+			//update the GUI
+			KiemPlugin.getDefault().updateViewAsync();
+			return true;
 		}
 		else if (step == this.stepCounterMax) {
 			//this is the most current step
@@ -345,6 +347,46 @@ public class Execution implements Runnable {
 			return this.stepExecutionSync();
 		}
 		else {
+			//this is any step before the most current one
+			//walk just behind it and then make a backward step
+			this.stepCounter = step+1;
+			return this.stepBackExecutionSync();
+		}
+	}
+	
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Run execution to the specific, user defined step number and pause. If
+	 * this is a step number in the future then run the execution until the
+	 * stepCounter has reached this number. If this is a step number back in 
+	 * the history, then just jump to it. If this is a step number forward in
+	 * the history, then also run to it.
+	 * 
+	 * @param step the step to jump/run to
+	 * 
+	 * @return true, if step is being processed
+	 */
+	public boolean runExecutionPause(long step) {
+		//if invalid step number return false
+		if (step < 0) return false;
+		//if this is already the current step
+		if (step == this.stepCounter) return true;
+		if (step > this.stepCounter) {
+			if (step == this.stepCounter+1) {
+				//if just one step to make and return
+				return this.stepExecutionSync();
+			}
+			
+			//run (forward steps) until step is reached
+			this.stepToPause = step;
+			this.runExecutionSync();
+			//update the GUI
+			KiemPlugin.getDefault().updateViewAsync();
+			return true;
+		}
+		else {
+			//JUMP backwards here because we cant run backwards
 			//this is any step before the most current one
 			//walk just behind it and then make a backward step
 			this.stepCounter = step+1;
@@ -781,6 +823,7 @@ public class Execution implements Runnable {
 		
 		//get the current input data according to the current step
 		oldData = getInputData(dataComponentEx);
+//System.out.println(dataComponentEx.getName() + ":" + oldData.toString());
 		
 		//decide to make a step depending on the type of component 
 		//(JSONString or JSONObject)
@@ -983,8 +1026,11 @@ public class Execution implements Runnable {
 							try {
 								//make a step
 								makeStepObserverProducer(dataComponentEx);
-								//save current pool index for next invokation
-								dataComponentEx.setDeltaIndex(this.dataPool.getPoolCounter());
+								//save current pool index for next invokation 
+								//only iff no history step
+								if (!this.isHistoryStep())
+									dataComponentEx.setDeltaIndex(
+													this.dataPool.getPoolCounter());
 							}catch(Exception e) {
 								if (!stop)
 									KiemPlugin.getDefault().showWarning(
@@ -1004,6 +1050,7 @@ public class Execution implements Runnable {
 								try {
 									//get the current input data according to the current step
 									JSONObject oldData = getInputData(dataComponentEx);
+//System.out.println(dataComponentEx.getName() + ": " + oldData.toString());
 									//set the oldData
 									observerExecutionArray[c].setData(oldData);
 								}catch(Exception e){
@@ -1020,7 +1067,10 @@ public class Execution implements Runnable {
 										// 		== component was not skipped
 										
 										//save current pool index for next invokation
-										dataComponentEx.setDeltaIndex(this.dataPool.getPoolCounter());
+										//only iff no history step
+										if (!this.isHistoryStep())
+											dataComponentEx.setDeltaIndex(
+													this.dataPool.getPoolCounter());
 									}
 								} catch(Exception e){
 									if (!stop)

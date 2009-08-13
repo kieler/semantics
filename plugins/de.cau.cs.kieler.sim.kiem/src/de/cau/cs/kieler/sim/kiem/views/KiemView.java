@@ -93,6 +93,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	/** The action to make a user defined execution step. */
 	private Action actionStepUser;
 	
+	/** The action run user. */
+	private Action actionRunUser;
+	
 	/** The action to make an execution step to the most current one. */
 	private Action actionStepFMC;
 	
@@ -450,7 +453,18 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 		//TODO: macro step implementation
 		//manager.add(getActionMacroStep());
 		
-		manager.add(getActionRun());
+		if (this.currentMaster == null) {
+			//add a drop down action
+			DropDownAction dn = new DropDownAction(getActionRun());
+			dn.add(new Separator());
+			dn.add(getActionStepUserRun());
+			manager.add(dn);
+		}
+		else {
+			//simple action iff master is present
+			manager.add(getActionRun());
+		}
+
 		manager.add(getActionPause());
 		manager.add(getActionStop());
 		
@@ -1179,7 +1193,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 						String value = showInputDialog(
 								Messages.ActionStepUserDialogTitle,
 								Messages.ActionStepUserDialogText,
-								""+KIEMInstance.execution.getSteps());
+								""+KIEMInstance.execution.getMaximumSteps());
 						if (value != null) {
 							try {
 								long step = Long.parseLong(value);
@@ -1202,6 +1216,52 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
 	//-------------------------------------------------------------------------	
 		
+	/**
+	 * Gets the action user run defined step. Triggers the execution to 
+	 * run forward or jump backward to the step that the user set in the dialog 
+	 * window. This action is only available if no master is present.
+	 * 
+	 * @return the user defined action step
+	 */
+	private Action getActionStepUserRun() {
+		if (actionRunUser != null) return actionRunUser;
+		actionRunUser = new Action() {
+			public void run() {
+				//only update if first step in execution
+				boolean mustUpdate = (KIEMInstance.execution == null);
+				if ((currentMaster != null) 
+					&& currentMaster.isMasterImplementingGUI()) {
+					// unsupported
+				}
+				else {
+					//otherwise default implementation
+					if (KIEMInstance.initExecution()) {
+						String value = showInputDialog(
+								Messages.ActionRunUserDialogTitle,
+								Messages.ActionRunUserDialogText,
+								""+KIEMInstance.execution.getMaximumSteps());
+						if (value != null) {
+							try {
+								long step = Long.parseLong(value);
+								KIEMInstance.execution
+										.runExecutionPause(step);
+							}catch(Exception e){}
+						}
+					}
+				}
+				if (mustUpdate)
+					updateView(true);
+			}
+		};
+		actionRunUser.setText(Messages.ActionRunUser);
+		actionRunUser.setToolTipText(Messages.ActionHintRunUser);
+		actionRunUser.setImageDescriptor(KiemIcons.IMGDESCR_STEP);
+		actionRunUser.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
+		return actionRunUser;
+	}
+
+	//-------------------------------------------------------------------------	
+
 	/**
 	 * Gets the action step. Triggers the execution to make a step.
 	 * If a master is present, the this functionality may be implemented
