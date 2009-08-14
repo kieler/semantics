@@ -139,7 +139,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </plugins>
 
    <features>
-      <feature id="de.cau.cs.kieler.core" version="0.1.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.core" version="0.1.0.vqualifier"/>
       <feature id="de.cau.cs.kieler.kiml" version="0.1.0.qualifier"/>
       <feature id="de.cau.cs.kieler.dataflow" version="0.1.0.qualifier"/>
       <feature id="de.cau.cs.kieler.synccharts" version="0.1.0.qualifier"/>
@@ -173,12 +173,6 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <feature id="org.eclipse.xtend.ui" version="0.7.0.v200906160952"/>
       <feature id="org.eclipse.xtext.runtime" version="0.7.0.v200906161042"/>
       <feature id="org.eclipse.zest" version="1.1.0.v20090422-2346-66-8yD4DH8G6N4DOO53733"/>
-      <feature id="org.openarchitectureware.core.feature" version="4.3.1.200905111041NGT"/>
-      <feature id="org.openarchitectureware.lib.feature" version="4.3.1.200905111041NGT"/>
-      <feature id="org.openarchitectureware.plugins.feature" version="4.3.1.200905111041NGT"/>
-      <feature id="org.openarchitectureware.util.stdlib.feature" version="4.3.1.200905111041NGT"/>
-      <feature id="org.openarchitectureware.xtext.feature" version="4.3.1.200905111041NGT"/>
-      <feature id="org.openarchitectureware.xtext.feature.source" version="4.3.1.200905111041NGT"/>
    </features>
 
 

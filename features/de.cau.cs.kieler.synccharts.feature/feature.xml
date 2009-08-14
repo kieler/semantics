@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.synccharts"
       label="KIELER SyncCharts Editor"
-      version="0.1.0.qualifier"
+      version="0.1.0.vqualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/Editors/Synccharts">
@@ -27,19 +27,18 @@ under the terms of the Eclipse Public License (EPL).
    </url>
 
    <requires>
-      <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.emf.ecore"/>
       <import plugin="org.eclipse.emf.edit"/>
-      <import plugin="org.eclipse.gmf.runtime.notation"/>
-      <import plugin="org.eclipse.emf"/>
-      <import plugin="org.eclipse.emf.common"/>
-      <import plugin="org.eclipse.draw2d"/>
-      <import plugin="org.eclipse.gmf.runtime.draw2d.ui"/>
-      <import plugin="org.eclipse.gmf.runtime.diagram.ui"/>
+      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf" version="2.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.common" version="2.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.draw2d" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.gmf.runtime.notation" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.gmf.runtime.draw2d.ui" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.1.0" match="greaterOrEqual"/>
       <import plugin="de.cau.cs.kieler.core"/>
       <import plugin="org.eclipse.gef"/>
       <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.core.expressions"/>
       <import plugin="org.eclipse.jface"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.views"/>
@@ -60,16 +59,8 @@ under the terms of the Eclipse Public License (EPL).
       <import plugin="org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide"/>
       <import plugin="org.eclipse.ocl.ecore"/>
       <import plugin="org.eclipse.emf.validation"/>
-      <import plugin="org.eclipse.gmf.runtime.common.ui" version="1.1.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.gef" version="3.4.1" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.1.2" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.gmf.runtime.diagram.ui.providers" version="1.1.2" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.expressions" version="3.4.1" match="greaterOrEqual"/>
-      <import plugin="de.cau.cs.kieler.kiml.layout" version="0.2.0" match="greaterOrEqual"/>
-      <import plugin="org.openarchitectureware.workflow" version="4.3.1" match="greaterOrEqual"/>
-      <import plugin="org.apache.commons.cli" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.apache.commons.logging" version="1.0.4" match="greaterOrEqual"/>
-      <import plugin="org.openarchitectureware.adapter.emf.check" version="4.3.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.expressions" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.kiml.layout"/>
    </requires>
 
    <plugin
@@ -102,13 +93,6 @@ under the terms of the Eclipse Public License (EPL).
 
    <plugin
          id="de.cau.cs.kieler.synccharts.diagram.custom"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.synccharts"
          download-size="0"
          install-size="0"
          version="0.0.0"
