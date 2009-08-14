@@ -46,6 +46,11 @@ import de.cau.cs.kieler.synccharts.dsl.services.RetypingSyncchartsGrammarAccess;
     protected Grammar getGrammar() {
     	return grammarAccess.getGrammar();
     }
+    
+    @Override
+    protected String getValueForTokenName(String tokenName) {
+    	return tokenName;
+    }
 
 }
 

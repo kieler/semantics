@@ -53,6 +53,7 @@ protected class ThisRootNode extends RootToken {
  *   isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
  *   isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
  *   =StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING?; 
+ * 
  * //StateList:
  * //	(states+=State)*
  * //;
@@ -63,10 +64,7 @@ protected class ThisRootNode extends RootToken {
  *    // you have to list all possible combinations seperately 
  *    // arbitrary positions for optional alternatives is not possible
  *    // or you have to use ((..)?(..)?)* and then validate them manually   
- *   
- *   
- *   	
- *   
+ *    	
  *   // n=3, k=1
  *      
  *     
@@ -93,7 +91,7 @@ protected class ThisRootNode extends RootToken {
  *      //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
  *     
  * //  (stateContent=StateContent)?
- *    //	(outgoingTransitions+=Transition)*
+ * //	(outgoingTransitions+=Transition)*
  *  
  * //StateContent:
  * //	'{'
@@ -122,10 +120,7 @@ protected class ThisRootNode extends RootToken {
 //    // you have to list all possible combinations seperately 
 //    // arbitrary positions for optional alternatives is not possible
 //    // or you have to use ((..)?(..)?)* and then validate them manually   
-//   
-//   
-//   	
-//   
+//    	
 //   // n=3, k=1
 //      
 //     
@@ -152,7 +147,7 @@ protected class ThisRootNode extends RootToken {
 //      //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 //     
 // //  (stateContent=StateContent)?
-//    //	(outgoingTransitions+=Transition)*
+// //	(outgoingTransitions+=Transition)*
 protected class State_Group extends GroupToken {
 	
 	public State_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -192,10 +187,7 @@ protected class State_Group extends GroupToken {
 //    // you have to list all possible combinations seperately 
 //    // arbitrary positions for optional alternatives is not possible
 //    // or you have to use ((..)?(..)?)* and then validate them manually   
-//   
-//   
-//   	
-//   
+//    	
 //   // n=3, k=1
 //      
 //     
@@ -1517,8 +1509,7 @@ protected class State_StateKeyword_1 extends KeywordToken  {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_Alternatives_0(parent, this, 0, inst);
-			default: return parent.createParentFollower(this, index, index - 1, inst);
+			default: return parent.createParentFollower(this, index, index, inst);
 		}	
 	}	
 		

@@ -114,6 +114,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//  isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
 		//  isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
 		//  =StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING?; 
+		//
 		////StateList:
 		////	(states+=State)*
 		////;
@@ -124,10 +125,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//   // you have to list all possible combinations seperately 
 		//   // arbitrary positions for optional alternatives is not possible
 		//   // or you have to use ((..)?(..)?)* and then validate them manually   
-		//  
-		//  
-		//  	
-		//  
+		//   	
 		//  // n=3, k=1
 		//     
 		//    
@@ -154,7 +152,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//     //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 		//    
 		////  (stateContent=StateContent)?
-		//   //	(outgoingTransitions+=Transition)*
+		////	(outgoingTransitions+=Transition)*
 		// 
 		////StateContent:
 		////	'{'
@@ -182,10 +180,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//   // you have to list all possible combinations seperately 
 		//   // arbitrary positions for optional alternatives is not possible
 		//   // or you have to use ((..)?(..)?)* and then validate them manually   
-		//  
-		//  
-		//  	
-		//  
+		//   	
 		//  // n=3, k=1
 		//     
 		//    
@@ -212,7 +207,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//     //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 		//    
 		////  (stateContent=StateContent)?
-		//   //	(outgoingTransitions+=Transition)*
+		////	(outgoingTransitions+=Transition)*
 		public Group getGroup() { return cGroup; }
 
 		//(isInitial?="init"|isFinal?="final"|stateKind=StateType|isInitial?="init" isFinal
@@ -228,10 +223,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//   // you have to list all possible combinations seperately 
 		//   // arbitrary positions for optional alternatives is not possible
 		//   // or you have to use ((..)?(..)?)* and then validate them manually   
-		//  
-		//  
-		//  	
-		//  
+		//   	
 		//  // n=3, k=1
 		//     
 		//    
@@ -835,6 +827,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	//  isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
 	//  isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
 	//  =StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING?; 
+	//
 	////StateList:
 	////	(states+=State)*
 	////;
@@ -845,10 +838,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	//   // you have to list all possible combinations seperately 
 	//   // arbitrary positions for optional alternatives is not possible
 	//   // or you have to use ((..)?(..)?)* and then validate them manually   
-	//  
-	//  
-	//  	
-	//  
+	//   	
 	//  // n=3, k=1
 	//     
 	//    
@@ -875,7 +865,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	//     //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 	//    
 	////  (stateContent=StateContent)?
-	//   //	(outgoingTransitions+=Transition)*
+	////	(outgoingTransitions+=Transition)*
 	// 
 	////StateContent:
 	////	'{'

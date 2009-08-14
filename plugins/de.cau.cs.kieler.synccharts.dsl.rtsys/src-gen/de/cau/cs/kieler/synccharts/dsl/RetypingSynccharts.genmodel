@@ -1,51 +1,31 @@
-<?xml version="1.0" encoding="ASCII"?>
-<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen" editDirectory="/de.cau.cs.kieler.synccharts.dsl.rtsys.edit/src" editorDirectory="/de.cau.cs.kieler.synccharts.dsl.rtsys.editor/src" modelPluginID="de.cau.cs.kieler.synccharts.dsl.rtsys" forceOverwrite="true" modelName="RetypingSynccharts" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.synccharts.dsl.rtsys.edit" editorPluginID="de.cau.cs.kieler.synccharts.dsl.rtsys.editor">
-  <genPackages prefix="RetypingSynccharts" basePackage="de.cau.cs.kieler.synccharts.dsl" disposableProviderFactory="true">
-    <ecorePackage href="RetypingSynccharts.ecore#/"/>
-    <genEnums typeSafeEnumCompatible="false">
-      <ecoreEnum href="RetypingSynccharts.ecore#//StateType"/>
-      <genEnumLiterals>
-        <ecoreEnumLiteral href="RetypingSynccharts.ecore#//StateType/NORMAL"/>
-      </genEnumLiterals>
-      <genEnumLiterals>
-        <ecoreEnumLiteral href="RetypingSynccharts.ecore#//StateType/PSEUDO"/>
-      </genEnumLiterals>
-      <genEnumLiterals>
-        <ecoreEnumLiteral href="RetypingSynccharts.ecore#//StateType/REFERENCE"/>
-      </genEnumLiterals>
-      <genEnumLiterals>
-        <ecoreEnumLiteral href="RetypingSynccharts.ecore#//StateType/TEXTUAL"/>
-      </genEnumLiterals>
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen"
+    editDirectory="/de.cau.cs.kieler.synccharts.dsl.rtsys.edit/src" editorDirectory="/de.cau.cs.kieler.synccharts.dsl.rtsys.editor/src"
+    modelPluginID="de.cau.cs.kieler.synccharts.dsl.rtsys" forceOverwrite="true" modelName="RetypingSynccharts"
+    updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.synccharts.dsl.rtsys.edit"
+    editorPluginID="de.cau.cs.kieler.synccharts.dsl.rtsys.editor">
+  <genPackages prefix="RetypingSynccharts" basePackage="de.cau.cs.kieler.synccharts.dsl"
+      disposableProviderFactory="true" ecorePackage="RetypingSynccharts.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="RetypingSynccharts.ecore#//StateType">
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//StateType/NORMAL"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//StateType/PSEUDO"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//StateType/REFERENCE"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//StateType/TEXTUAL"/>
     </genEnums>
-    <genClasses>
-      <ecoreClass href="RetypingSynccharts.ecore#//State"/>
-      <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="RetypingSynccharts.ecore#//State/isInitial"/>
-      </genFeatures>
-      <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="RetypingSynccharts.ecore#//State/isFinal"/>
-      </genFeatures>
-      <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="RetypingSynccharts.ecore#//State/stateKind"/>
-      </genFeatures>
-      <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="RetypingSynccharts.ecore#//State/stateName"/>
-      </genFeatures>
-      <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="RetypingSynccharts.ecore#//State/label"/>
-      </genFeatures>
+    <genClasses ecoreClass="RetypingSynccharts.ecore#//State">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/isInitial"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/isFinal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/stateKind"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/stateName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/label"/>
     </genClasses>
-    <genClasses>
-      <ecoreClass href="RetypingSynccharts.ecore#//Action"/>
-      <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="RetypingSynccharts.ecore#//Action/entryAction"/>
-      </genFeatures>
-      <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="RetypingSynccharts.ecore#//Action/exit"/>
-      </genFeatures>
-      <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="RetypingSynccharts.ecore#//Action/inner"/>
-      </genFeatures>
+    <genClasses ecoreClass="RetypingSynccharts.ecore#//Action">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/entryAction"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/exit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/inner"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
