@@ -38,7 +38,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
         public InternalRetypingSyncchartsParser(TokenStream input) {
             super(input);
-            ruleMemo = new HashMap[26+1];
+            ruleMemo = new HashMap[24+1];
          }
         
 
@@ -109,152 +109,93 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleState
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:82:1: ruleState returns [EObject current=null] : ( ( (lv_isInitial_0= 'init' ) | ( (lv_isInitial_1= 'init' ) (lv_isFinal_2= 'final' ) ) | ( (lv_isInitial_3= 'init' ) (lv_stateKind_4= ruleStateType ) ) | (lv_stateKind_5= ruleStateType ) | ( (lv_stateKind_6= ruleStateType ) (lv_isInitial_7= 'init' ) ) | ( (lv_stateKind_8= ruleStateType ) (lv_isFinal_9= 'final' ) ) | (lv_isFinal_10= 'final' ) | ( (lv_isFinal_11= 'final' ) (lv_isInitial_12= 'init' ) ) | ( (lv_isFinal_13= 'final' ) (lv_stateKind_14= ruleStateType ) ) | ( (lv_stateKind_15= ruleStateType ) (lv_isFinal_16= 'final' ) (lv_isInitial_17= 'init' ) ) | ( (lv_isInitial_18= 'init' ) (lv_isFinal_19= 'final' ) (lv_stateKind_20= ruleStateType ) ) | ( (lv_isInitial_21= 'init' ) (lv_isFinal_22= 'final' ) (lv_stateKind_23= ruleStateType ) ) | ( (lv_isInitial_24= 'init' ) (lv_stateKind_25= ruleStateType ) (lv_isFinal_26= 'final' ) ) | ( (lv_isFinal_27= 'final' ) (lv_isInitial_28= 'init' ) (lv_stateKind_29= ruleStateType ) ) | ( (lv_isFinal_30= 'final' ) (lv_stateKind_31= ruleStateType ) (lv_isInitial_32= 'init' ) ) | ( (lv_stateKind_33= ruleStateType ) (lv_isInitial_34= 'init' ) (lv_isFinal_35= 'final' ) ) | ( (lv_stateKind_36= ruleStateType ) (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) )? ( 'state' )? (lv_stateName_40= RULE_ID )? (lv_label_41= RULE_STRING )? ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:82:1: ruleState returns [EObject current=null] : ( ( (lv_isInitial_0= 'init' ) | (lv_isFinal_1= 'final' ) | (lv_stateKind_2= ruleStateType ) | ( (lv_isInitial_3= 'init' ) (lv_isFinal_4= 'final' ) ) | ( (lv_isInitial_5= 'init' ) (lv_stateKind_6= ruleStateType ) ) | ( (lv_isFinal_7= 'final' ) (lv_isInitial_8= 'init' ) ) | ( (lv_isFinal_9= 'final' ) (lv_stateKind_10= ruleStateType ) ) | ( (lv_stateKind_11= ruleStateType ) (lv_isInitial_12= 'init' ) ) | ( (lv_stateKind_13= ruleStateType ) (lv_isFinal_14= 'final' ) ) | ( (lv_isInitial_15= 'init' ) (lv_isFinal_16= 'final' ) (lv_stateKind_17= ruleStateType ) ) | ( (lv_isInitial_18= 'init' ) (lv_stateKind_19= ruleStateType ) (lv_isFinal_20= 'final' ) ) | ( (lv_isFinal_21= 'final' ) (lv_isInitial_22= 'init' ) (lv_stateKind_23= ruleStateType ) ) | ( (lv_isFinal_24= 'final' ) (lv_stateKind_25= ruleStateType ) (lv_isInitial_26= 'init' ) ) | ( (lv_stateKind_27= ruleStateType ) (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) | ( (lv_stateKind_30= ruleStateType ) (lv_isInitial_31= 'init' ) (lv_isFinal_32= 'final' ) ) )? ( 'state' )? (lv_stateName_34= RULE_ID )? (lv_label_35= RULE_STRING )? ) ;
     public final EObject ruleState() throws RecognitionException {
         EObject current = null;
 
         Token lv_isInitial_0=null;
-        Token lv_isInitial_1=null;
-        Token lv_isFinal_2=null;
+        Token lv_isFinal_1=null;
         Token lv_isInitial_3=null;
-        Token lv_isInitial_7=null;
+        Token lv_isFinal_4=null;
+        Token lv_isInitial_5=null;
+        Token lv_isFinal_7=null;
+        Token lv_isInitial_8=null;
         Token lv_isFinal_9=null;
-        Token lv_isFinal_10=null;
-        Token lv_isFinal_11=null;
         Token lv_isInitial_12=null;
-        Token lv_isFinal_13=null;
+        Token lv_isFinal_14=null;
+        Token lv_isInitial_15=null;
         Token lv_isFinal_16=null;
-        Token lv_isInitial_17=null;
         Token lv_isInitial_18=null;
-        Token lv_isFinal_19=null;
-        Token lv_isInitial_21=null;
-        Token lv_isFinal_22=null;
-        Token lv_isInitial_24=null;
-        Token lv_isFinal_26=null;
-        Token lv_isFinal_27=null;
-        Token lv_isInitial_28=null;
-        Token lv_isFinal_30=null;
-        Token lv_isInitial_32=null;
-        Token lv_isInitial_34=null;
-        Token lv_isFinal_35=null;
-        Token lv_isFinal_37=null;
-        Token lv_isInitial_38=null;
-        Token lv_stateName_40=null;
-        Token lv_label_41=null;
-        Enumerator lv_stateKind_4 = null;
-
-        Enumerator lv_stateKind_5 = null;
+        Token lv_isFinal_20=null;
+        Token lv_isFinal_21=null;
+        Token lv_isInitial_22=null;
+        Token lv_isFinal_24=null;
+        Token lv_isInitial_26=null;
+        Token lv_isFinal_28=null;
+        Token lv_isInitial_29=null;
+        Token lv_isInitial_31=null;
+        Token lv_isFinal_32=null;
+        Token lv_stateName_34=null;
+        Token lv_label_35=null;
+        Enumerator lv_stateKind_2 = null;
 
         Enumerator lv_stateKind_6 = null;
 
-        Enumerator lv_stateKind_8 = null;
+        Enumerator lv_stateKind_10 = null;
 
-        Enumerator lv_stateKind_14 = null;
+        Enumerator lv_stateKind_11 = null;
 
-        Enumerator lv_stateKind_15 = null;
+        Enumerator lv_stateKind_13 = null;
 
-        Enumerator lv_stateKind_20 = null;
+        Enumerator lv_stateKind_17 = null;
+
+        Enumerator lv_stateKind_19 = null;
 
         Enumerator lv_stateKind_23 = null;
 
         Enumerator lv_stateKind_25 = null;
 
-        Enumerator lv_stateKind_29 = null;
+        Enumerator lv_stateKind_27 = null;
 
-        Enumerator lv_stateKind_31 = null;
-
-        Enumerator lv_stateKind_33 = null;
-
-        Enumerator lv_stateKind_36 = null;
+        Enumerator lv_stateKind_30 = null;
 
 
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:87:6: ( ( ( (lv_isInitial_0= 'init' ) | ( (lv_isInitial_1= 'init' ) (lv_isFinal_2= 'final' ) ) | ( (lv_isInitial_3= 'init' ) (lv_stateKind_4= ruleStateType ) ) | (lv_stateKind_5= ruleStateType ) | ( (lv_stateKind_6= ruleStateType ) (lv_isInitial_7= 'init' ) ) | ( (lv_stateKind_8= ruleStateType ) (lv_isFinal_9= 'final' ) ) | (lv_isFinal_10= 'final' ) | ( (lv_isFinal_11= 'final' ) (lv_isInitial_12= 'init' ) ) | ( (lv_isFinal_13= 'final' ) (lv_stateKind_14= ruleStateType ) ) | ( (lv_stateKind_15= ruleStateType ) (lv_isFinal_16= 'final' ) (lv_isInitial_17= 'init' ) ) | ( (lv_isInitial_18= 'init' ) (lv_isFinal_19= 'final' ) (lv_stateKind_20= ruleStateType ) ) | ( (lv_isInitial_21= 'init' ) (lv_isFinal_22= 'final' ) (lv_stateKind_23= ruleStateType ) ) | ( (lv_isInitial_24= 'init' ) (lv_stateKind_25= ruleStateType ) (lv_isFinal_26= 'final' ) ) | ( (lv_isFinal_27= 'final' ) (lv_isInitial_28= 'init' ) (lv_stateKind_29= ruleStateType ) ) | ( (lv_isFinal_30= 'final' ) (lv_stateKind_31= ruleStateType ) (lv_isInitial_32= 'init' ) ) | ( (lv_stateKind_33= ruleStateType ) (lv_isInitial_34= 'init' ) (lv_isFinal_35= 'final' ) ) | ( (lv_stateKind_36= ruleStateType ) (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) )? ( 'state' )? (lv_stateName_40= RULE_ID )? (lv_label_41= RULE_STRING )? ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:1: ( ( (lv_isInitial_0= 'init' ) | ( (lv_isInitial_1= 'init' ) (lv_isFinal_2= 'final' ) ) | ( (lv_isInitial_3= 'init' ) (lv_stateKind_4= ruleStateType ) ) | (lv_stateKind_5= ruleStateType ) | ( (lv_stateKind_6= ruleStateType ) (lv_isInitial_7= 'init' ) ) | ( (lv_stateKind_8= ruleStateType ) (lv_isFinal_9= 'final' ) ) | (lv_isFinal_10= 'final' ) | ( (lv_isFinal_11= 'final' ) (lv_isInitial_12= 'init' ) ) | ( (lv_isFinal_13= 'final' ) (lv_stateKind_14= ruleStateType ) ) | ( (lv_stateKind_15= ruleStateType ) (lv_isFinal_16= 'final' ) (lv_isInitial_17= 'init' ) ) | ( (lv_isInitial_18= 'init' ) (lv_isFinal_19= 'final' ) (lv_stateKind_20= ruleStateType ) ) | ( (lv_isInitial_21= 'init' ) (lv_isFinal_22= 'final' ) (lv_stateKind_23= ruleStateType ) ) | ( (lv_isInitial_24= 'init' ) (lv_stateKind_25= ruleStateType ) (lv_isFinal_26= 'final' ) ) | ( (lv_isFinal_27= 'final' ) (lv_isInitial_28= 'init' ) (lv_stateKind_29= ruleStateType ) ) | ( (lv_isFinal_30= 'final' ) (lv_stateKind_31= ruleStateType ) (lv_isInitial_32= 'init' ) ) | ( (lv_stateKind_33= ruleStateType ) (lv_isInitial_34= 'init' ) (lv_isFinal_35= 'final' ) ) | ( (lv_stateKind_36= ruleStateType ) (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) )? ( 'state' )? (lv_stateName_40= RULE_ID )? (lv_label_41= RULE_STRING )? )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:87:6: ( ( ( (lv_isInitial_0= 'init' ) | (lv_isFinal_1= 'final' ) | (lv_stateKind_2= ruleStateType ) | ( (lv_isInitial_3= 'init' ) (lv_isFinal_4= 'final' ) ) | ( (lv_isInitial_5= 'init' ) (lv_stateKind_6= ruleStateType ) ) | ( (lv_isFinal_7= 'final' ) (lv_isInitial_8= 'init' ) ) | ( (lv_isFinal_9= 'final' ) (lv_stateKind_10= ruleStateType ) ) | ( (lv_stateKind_11= ruleStateType ) (lv_isInitial_12= 'init' ) ) | ( (lv_stateKind_13= ruleStateType ) (lv_isFinal_14= 'final' ) ) | ( (lv_isInitial_15= 'init' ) (lv_isFinal_16= 'final' ) (lv_stateKind_17= ruleStateType ) ) | ( (lv_isInitial_18= 'init' ) (lv_stateKind_19= ruleStateType ) (lv_isFinal_20= 'final' ) ) | ( (lv_isFinal_21= 'final' ) (lv_isInitial_22= 'init' ) (lv_stateKind_23= ruleStateType ) ) | ( (lv_isFinal_24= 'final' ) (lv_stateKind_25= ruleStateType ) (lv_isInitial_26= 'init' ) ) | ( (lv_stateKind_27= ruleStateType ) (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) | ( (lv_stateKind_30= ruleStateType ) (lv_isInitial_31= 'init' ) (lv_isFinal_32= 'final' ) ) )? ( 'state' )? (lv_stateName_34= RULE_ID )? (lv_label_35= RULE_STRING )? ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:1: ( ( (lv_isInitial_0= 'init' ) | (lv_isFinal_1= 'final' ) | (lv_stateKind_2= ruleStateType ) | ( (lv_isInitial_3= 'init' ) (lv_isFinal_4= 'final' ) ) | ( (lv_isInitial_5= 'init' ) (lv_stateKind_6= ruleStateType ) ) | ( (lv_isFinal_7= 'final' ) (lv_isInitial_8= 'init' ) ) | ( (lv_isFinal_9= 'final' ) (lv_stateKind_10= ruleStateType ) ) | ( (lv_stateKind_11= ruleStateType ) (lv_isInitial_12= 'init' ) ) | ( (lv_stateKind_13= ruleStateType ) (lv_isFinal_14= 'final' ) ) | ( (lv_isInitial_15= 'init' ) (lv_isFinal_16= 'final' ) (lv_stateKind_17= ruleStateType ) ) | ( (lv_isInitial_18= 'init' ) (lv_stateKind_19= ruleStateType ) (lv_isFinal_20= 'final' ) ) | ( (lv_isFinal_21= 'final' ) (lv_isInitial_22= 'init' ) (lv_stateKind_23= ruleStateType ) ) | ( (lv_isFinal_24= 'final' ) (lv_stateKind_25= ruleStateType ) (lv_isInitial_26= 'init' ) ) | ( (lv_stateKind_27= ruleStateType ) (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) | ( (lv_stateKind_30= ruleStateType ) (lv_isInitial_31= 'init' ) (lv_isFinal_32= 'final' ) ) )? ( 'state' )? (lv_stateName_34= RULE_ID )? (lv_label_35= RULE_STRING )? )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:1: ( ( (lv_isInitial_0= 'init' ) | ( (lv_isInitial_1= 'init' ) (lv_isFinal_2= 'final' ) ) | ( (lv_isInitial_3= 'init' ) (lv_stateKind_4= ruleStateType ) ) | (lv_stateKind_5= ruleStateType ) | ( (lv_stateKind_6= ruleStateType ) (lv_isInitial_7= 'init' ) ) | ( (lv_stateKind_8= ruleStateType ) (lv_isFinal_9= 'final' ) ) | (lv_isFinal_10= 'final' ) | ( (lv_isFinal_11= 'final' ) (lv_isInitial_12= 'init' ) ) | ( (lv_isFinal_13= 'final' ) (lv_stateKind_14= ruleStateType ) ) | ( (lv_stateKind_15= ruleStateType ) (lv_isFinal_16= 'final' ) (lv_isInitial_17= 'init' ) ) | ( (lv_isInitial_18= 'init' ) (lv_isFinal_19= 'final' ) (lv_stateKind_20= ruleStateType ) ) | ( (lv_isInitial_21= 'init' ) (lv_isFinal_22= 'final' ) (lv_stateKind_23= ruleStateType ) ) | ( (lv_isInitial_24= 'init' ) (lv_stateKind_25= ruleStateType ) (lv_isFinal_26= 'final' ) ) | ( (lv_isFinal_27= 'final' ) (lv_isInitial_28= 'init' ) (lv_stateKind_29= ruleStateType ) ) | ( (lv_isFinal_30= 'final' ) (lv_stateKind_31= ruleStateType ) (lv_isInitial_32= 'init' ) ) | ( (lv_stateKind_33= ruleStateType ) (lv_isInitial_34= 'init' ) (lv_isFinal_35= 'final' ) ) | ( (lv_stateKind_36= ruleStateType ) (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) )? ( 'state' )? (lv_stateName_40= RULE_ID )? (lv_label_41= RULE_STRING )? )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:2: ( (lv_isInitial_0= 'init' ) | ( (lv_isInitial_1= 'init' ) (lv_isFinal_2= 'final' ) ) | ( (lv_isInitial_3= 'init' ) (lv_stateKind_4= ruleStateType ) ) | (lv_stateKind_5= ruleStateType ) | ( (lv_stateKind_6= ruleStateType ) (lv_isInitial_7= 'init' ) ) | ( (lv_stateKind_8= ruleStateType ) (lv_isFinal_9= 'final' ) ) | (lv_isFinal_10= 'final' ) | ( (lv_isFinal_11= 'final' ) (lv_isInitial_12= 'init' ) ) | ( (lv_isFinal_13= 'final' ) (lv_stateKind_14= ruleStateType ) ) | ( (lv_stateKind_15= ruleStateType ) (lv_isFinal_16= 'final' ) (lv_isInitial_17= 'init' ) ) | ( (lv_isInitial_18= 'init' ) (lv_isFinal_19= 'final' ) (lv_stateKind_20= ruleStateType ) ) | ( (lv_isInitial_21= 'init' ) (lv_isFinal_22= 'final' ) (lv_stateKind_23= ruleStateType ) ) | ( (lv_isInitial_24= 'init' ) (lv_stateKind_25= ruleStateType ) (lv_isFinal_26= 'final' ) ) | ( (lv_isFinal_27= 'final' ) (lv_isInitial_28= 'init' ) (lv_stateKind_29= ruleStateType ) ) | ( (lv_isFinal_30= 'final' ) (lv_stateKind_31= ruleStateType ) (lv_isInitial_32= 'init' ) ) | ( (lv_stateKind_33= ruleStateType ) (lv_isInitial_34= 'init' ) (lv_isFinal_35= 'final' ) ) | ( (lv_stateKind_36= ruleStateType ) (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) )? ( 'state' )? (lv_stateName_40= RULE_ID )? (lv_label_41= RULE_STRING )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:1: ( ( (lv_isInitial_0= 'init' ) | (lv_isFinal_1= 'final' ) | (lv_stateKind_2= ruleStateType ) | ( (lv_isInitial_3= 'init' ) (lv_isFinal_4= 'final' ) ) | ( (lv_isInitial_5= 'init' ) (lv_stateKind_6= ruleStateType ) ) | ( (lv_isFinal_7= 'final' ) (lv_isInitial_8= 'init' ) ) | ( (lv_isFinal_9= 'final' ) (lv_stateKind_10= ruleStateType ) ) | ( (lv_stateKind_11= ruleStateType ) (lv_isInitial_12= 'init' ) ) | ( (lv_stateKind_13= ruleStateType ) (lv_isFinal_14= 'final' ) ) | ( (lv_isInitial_15= 'init' ) (lv_isFinal_16= 'final' ) (lv_stateKind_17= ruleStateType ) ) | ( (lv_isInitial_18= 'init' ) (lv_stateKind_19= ruleStateType ) (lv_isFinal_20= 'final' ) ) | ( (lv_isFinal_21= 'final' ) (lv_isInitial_22= 'init' ) (lv_stateKind_23= ruleStateType ) ) | ( (lv_isFinal_24= 'final' ) (lv_stateKind_25= ruleStateType ) (lv_isInitial_26= 'init' ) ) | ( (lv_stateKind_27= ruleStateType ) (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) | ( (lv_stateKind_30= ruleStateType ) (lv_isInitial_31= 'init' ) (lv_isFinal_32= 'final' ) ) )? ( 'state' )? (lv_stateName_34= RULE_ID )? (lv_label_35= RULE_STRING )? )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:2: ( (lv_isInitial_0= 'init' ) | (lv_isFinal_1= 'final' ) | (lv_stateKind_2= ruleStateType ) | ( (lv_isInitial_3= 'init' ) (lv_isFinal_4= 'final' ) ) | ( (lv_isInitial_5= 'init' ) (lv_stateKind_6= ruleStateType ) ) | ( (lv_isFinal_7= 'final' ) (lv_isInitial_8= 'init' ) ) | ( (lv_isFinal_9= 'final' ) (lv_stateKind_10= ruleStateType ) ) | ( (lv_stateKind_11= ruleStateType ) (lv_isInitial_12= 'init' ) ) | ( (lv_stateKind_13= ruleStateType ) (lv_isFinal_14= 'final' ) ) | ( (lv_isInitial_15= 'init' ) (lv_isFinal_16= 'final' ) (lv_stateKind_17= ruleStateType ) ) | ( (lv_isInitial_18= 'init' ) (lv_stateKind_19= ruleStateType ) (lv_isFinal_20= 'final' ) ) | ( (lv_isFinal_21= 'final' ) (lv_isInitial_22= 'init' ) (lv_stateKind_23= ruleStateType ) ) | ( (lv_isFinal_24= 'final' ) (lv_stateKind_25= ruleStateType ) (lv_isInitial_26= 'init' ) ) | ( (lv_stateKind_27= ruleStateType ) (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) | ( (lv_stateKind_30= ruleStateType ) (lv_isInitial_31= 'init' ) (lv_isFinal_32= 'final' ) ) )? ( 'state' )? (lv_stateName_34= RULE_ID )? (lv_label_35= RULE_STRING )?
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:2: ( (lv_isInitial_0= 'init' ) | ( (lv_isInitial_1= 'init' ) (lv_isFinal_2= 'final' ) ) | ( (lv_isInitial_3= 'init' ) (lv_stateKind_4= ruleStateType ) ) | (lv_stateKind_5= ruleStateType ) | ( (lv_stateKind_6= ruleStateType ) (lv_isInitial_7= 'init' ) ) | ( (lv_stateKind_8= ruleStateType ) (lv_isFinal_9= 'final' ) ) | (lv_isFinal_10= 'final' ) | ( (lv_isFinal_11= 'final' ) (lv_isInitial_12= 'init' ) ) | ( (lv_isFinal_13= 'final' ) (lv_stateKind_14= ruleStateType ) ) | ( (lv_stateKind_15= ruleStateType ) (lv_isFinal_16= 'final' ) (lv_isInitial_17= 'init' ) ) | ( (lv_isInitial_18= 'init' ) (lv_isFinal_19= 'final' ) (lv_stateKind_20= ruleStateType ) ) | ( (lv_isInitial_21= 'init' ) (lv_isFinal_22= 'final' ) (lv_stateKind_23= ruleStateType ) ) | ( (lv_isInitial_24= 'init' ) (lv_stateKind_25= ruleStateType ) (lv_isFinal_26= 'final' ) ) | ( (lv_isFinal_27= 'final' ) (lv_isInitial_28= 'init' ) (lv_stateKind_29= ruleStateType ) ) | ( (lv_isFinal_30= 'final' ) (lv_stateKind_31= ruleStateType ) (lv_isInitial_32= 'init' ) ) | ( (lv_stateKind_33= ruleStateType ) (lv_isInitial_34= 'init' ) (lv_isFinal_35= 'final' ) ) | ( (lv_stateKind_36= ruleStateType ) (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) )?
-            int alt1=18;
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:2: ( (lv_isInitial_0= 'init' ) | (lv_isFinal_1= 'final' ) | (lv_stateKind_2= ruleStateType ) | ( (lv_isInitial_3= 'init' ) (lv_isFinal_4= 'final' ) ) | ( (lv_isInitial_5= 'init' ) (lv_stateKind_6= ruleStateType ) ) | ( (lv_isFinal_7= 'final' ) (lv_isInitial_8= 'init' ) ) | ( (lv_isFinal_9= 'final' ) (lv_stateKind_10= ruleStateType ) ) | ( (lv_stateKind_11= ruleStateType ) (lv_isInitial_12= 'init' ) ) | ( (lv_stateKind_13= ruleStateType ) (lv_isFinal_14= 'final' ) ) | ( (lv_isInitial_15= 'init' ) (lv_isFinal_16= 'final' ) (lv_stateKind_17= ruleStateType ) ) | ( (lv_isInitial_18= 'init' ) (lv_stateKind_19= ruleStateType ) (lv_isFinal_20= 'final' ) ) | ( (lv_isFinal_21= 'final' ) (lv_isInitial_22= 'init' ) (lv_stateKind_23= ruleStateType ) ) | ( (lv_isFinal_24= 'final' ) (lv_stateKind_25= ruleStateType ) (lv_isInitial_26= 'init' ) ) | ( (lv_stateKind_27= ruleStateType ) (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) | ( (lv_stateKind_30= ruleStateType ) (lv_isInitial_31= 'init' ) (lv_isFinal_32= 'final' ) ) )?
+            int alt1=16;
             switch ( input.LA(1) ) {
                 case 11:
                     {
                     switch ( input.LA(2) ) {
                         case 12:
                             {
-                            switch ( input.LA(3) ) {
-                                case EOF:
-                                case RULE_ID:
-                                case RULE_STRING:
-                                case 13:
-                                    {
-                                    alt1=2;
-                                    }
-                                    break;
-                                case 14:
-                                    {
-                                    int LA1_24 = input.LA(4);
+                            int LA1_8 = input.LA(3);
 
-                                    if ( (synpred11()) ) {
-                                        alt1=11;
-                                    }
-                                    else if ( (synpred12()) ) {
-                                        alt1=12;
-                                    }
-                                    }
-                                    break;
-                                case 15:
-                                    {
-                                    int LA1_25 = input.LA(4);
-
-                                    if ( (synpred11()) ) {
-                                        alt1=11;
-                                    }
-                                    else if ( (synpred12()) ) {
-                                        alt1=12;
-                                    }
-                                    }
-                                    break;
-                                case 16:
-                                    {
-                                    int LA1_26 = input.LA(4);
-
-                                    if ( (synpred11()) ) {
-                                        alt1=11;
-                                    }
-                                    else if ( (synpred12()) ) {
-                                        alt1=12;
-                                    }
-                                    }
-                                    break;
-                                case 17:
-                                    {
-                                    int LA1_27 = input.LA(4);
-
-                                    if ( (synpred11()) ) {
-                                        alt1=11;
-                                    }
-                                    else if ( (synpred12()) ) {
-                                        alt1=12;
-                                    }
-                                    }
-                                    break;
+                            if ( ((LA1_8>=14 && LA1_8<=17)) ) {
+                                alt1=10;
                             }
-
+                            else if ( (LA1_8==EOF||(LA1_8>=RULE_ID && LA1_8<=RULE_STRING)||LA1_8==13) ) {
+                                alt1=4;
+                            }
                             }
                             break;
                         case 14:
                             {
                             int LA1_9 = input.LA(3);
 
-                            if ( (LA1_9==EOF||(LA1_9>=RULE_ID && LA1_9<=RULE_STRING)||LA1_9==13) ) {
-                                alt1=3;
+                            if ( (LA1_9==12) ) {
+                                alt1=11;
                             }
-                            else if ( (LA1_9==12) ) {
-                                alt1=13;
+                            else if ( (LA1_9==EOF||(LA1_9>=RULE_ID && LA1_9<=RULE_STRING)||LA1_9==13) ) {
+                                alt1=5;
                             }
                             }
                             break;
@@ -262,11 +203,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             {
                             int LA1_10 = input.LA(3);
 
-                            if ( (LA1_10==12) ) {
-                                alt1=13;
+                            if ( (LA1_10==EOF||(LA1_10>=RULE_ID && LA1_10<=RULE_STRING)||LA1_10==13) ) {
+                                alt1=5;
                             }
-                            else if ( (LA1_10==EOF||(LA1_10>=RULE_ID && LA1_10<=RULE_STRING)||LA1_10==13) ) {
-                                alt1=3;
+                            else if ( (LA1_10==12) ) {
+                                alt1=11;
                             }
                             }
                             break;
@@ -275,10 +216,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             int LA1_11 = input.LA(3);
 
                             if ( (LA1_11==12) ) {
-                                alt1=13;
+                                alt1=11;
                             }
                             else if ( (LA1_11==EOF||(LA1_11>=RULE_ID && LA1_11<=RULE_STRING)||LA1_11==13) ) {
-                                alt1=3;
+                                alt1=5;
                             }
                             }
                             break;
@@ -287,10 +228,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             int LA1_12 = input.LA(3);
 
                             if ( (LA1_12==12) ) {
-                                alt1=13;
+                                alt1=11;
                             }
                             else if ( (LA1_12==EOF||(LA1_12>=RULE_ID && LA1_12<=RULE_STRING)||LA1_12==13) ) {
-                                alt1=3;
+                                alt1=5;
                             }
                             }
                             break;
@@ -306,36 +247,17 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
                     break;
-                case 14:
+                case 12:
                     {
                     switch ( input.LA(2) ) {
                         case 11:
                             {
                             int LA1_14 = input.LA(3);
 
-                            if ( (LA1_14==12) ) {
-                                alt1=16;
+                            if ( ((LA1_14>=14 && LA1_14<=17)) ) {
+                                alt1=12;
                             }
                             else if ( (LA1_14==EOF||(LA1_14>=RULE_ID && LA1_14<=RULE_STRING)||LA1_14==13) ) {
-                                alt1=5;
-                            }
-                            }
-                            break;
-                        case 12:
-                            {
-                            int LA1_15 = input.LA(3);
-
-                            if ( (LA1_15==11) ) {
-                                int LA1_32 = input.LA(4);
-
-                                if ( (synpred10()) ) {
-                                    alt1=10;
-                                }
-                                else if ( (synpred17()) ) {
-                                    alt1=17;
-                                }
-                            }
-                            else if ( (LA1_15==EOF||(LA1_15>=RULE_ID && LA1_15<=RULE_STRING)||LA1_15==13) ) {
                                 alt1=6;
                             }
                             }
@@ -345,7 +267,94 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         case RULE_STRING:
                         case 13:
                             {
-                            alt1=4;
+                            alt1=2;
+                            }
+                            break;
+                        case 14:
+                            {
+                            int LA1_16 = input.LA(3);
+
+                            if ( (LA1_16==11) ) {
+                                alt1=13;
+                            }
+                            else if ( (LA1_16==EOF||(LA1_16>=RULE_ID && LA1_16<=RULE_STRING)||LA1_16==13) ) {
+                                alt1=7;
+                            }
+                            }
+                            break;
+                        case 15:
+                            {
+                            int LA1_17 = input.LA(3);
+
+                            if ( (LA1_17==EOF||(LA1_17>=RULE_ID && LA1_17<=RULE_STRING)||LA1_17==13) ) {
+                                alt1=7;
+                            }
+                            else if ( (LA1_17==11) ) {
+                                alt1=13;
+                            }
+                            }
+                            break;
+                        case 16:
+                            {
+                            int LA1_18 = input.LA(3);
+
+                            if ( (LA1_18==11) ) {
+                                alt1=13;
+                            }
+                            else if ( (LA1_18==EOF||(LA1_18>=RULE_ID && LA1_18<=RULE_STRING)||LA1_18==13) ) {
+                                alt1=7;
+                            }
+                            }
+                            break;
+                        case 17:
+                            {
+                            int LA1_19 = input.LA(3);
+
+                            if ( (LA1_19==11) ) {
+                                alt1=13;
+                            }
+                            else if ( (LA1_19==EOF||(LA1_19>=RULE_ID && LA1_19<=RULE_STRING)||LA1_19==13) ) {
+                                alt1=7;
+                            }
+                            }
+                            break;
+                    }
+
+                    }
+                    break;
+                case 14:
+                    {
+                    switch ( input.LA(2) ) {
+                        case 12:
+                            {
+                            int LA1_20 = input.LA(3);
+
+                            if ( (LA1_20==11) ) {
+                                alt1=14;
+                            }
+                            else if ( (LA1_20==EOF||(LA1_20>=RULE_ID && LA1_20<=RULE_STRING)||LA1_20==13) ) {
+                                alt1=9;
+                            }
+                            }
+                            break;
+                        case 11:
+                            {
+                            int LA1_21 = input.LA(3);
+
+                            if ( (LA1_21==12) ) {
+                                alt1=15;
+                            }
+                            else if ( (LA1_21==EOF||(LA1_21>=RULE_ID && LA1_21<=RULE_STRING)||LA1_21==13) ) {
+                                alt1=8;
+                            }
+                            }
+                            break;
+                        case EOF:
+                        case RULE_ID:
+                        case RULE_STRING:
+                        case 13:
+                            {
+                            alt1=3;
                             }
                             break;
                     }
@@ -355,34 +364,15 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 case 15:
                     {
                     switch ( input.LA(2) ) {
-                        case 12:
-                            {
-                            int LA1_15 = input.LA(3);
-
-                            if ( (LA1_15==11) ) {
-                                int LA1_32 = input.LA(4);
-
-                                if ( (synpred10()) ) {
-                                    alt1=10;
-                                }
-                                else if ( (synpred17()) ) {
-                                    alt1=17;
-                                }
-                            }
-                            else if ( (LA1_15==EOF||(LA1_15>=RULE_ID && LA1_15<=RULE_STRING)||LA1_15==13) ) {
-                                alt1=6;
-                            }
-                            }
-                            break;
                         case 11:
                             {
-                            int LA1_14 = input.LA(3);
+                            int LA1_21 = input.LA(3);
 
-                            if ( (LA1_14==12) ) {
-                                alt1=16;
+                            if ( (LA1_21==12) ) {
+                                alt1=15;
                             }
-                            else if ( (LA1_14==EOF||(LA1_14>=RULE_ID && LA1_14<=RULE_STRING)||LA1_14==13) ) {
-                                alt1=5;
+                            else if ( (LA1_21==EOF||(LA1_21>=RULE_ID && LA1_21<=RULE_STRING)||LA1_21==13) ) {
+                                alt1=8;
                             }
                             }
                             break;
@@ -391,7 +381,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         case RULE_STRING:
                         case 13:
                             {
-                            alt1=4;
+                            alt1=3;
+                            }
+                            break;
+                        case 12:
+                            {
+                            int LA1_20 = input.LA(3);
+
+                            if ( (LA1_20==11) ) {
+                                alt1=14;
+                            }
+                            else if ( (LA1_20==EOF||(LA1_20>=RULE_ID && LA1_20<=RULE_STRING)||LA1_20==13) ) {
+                                alt1=9;
+                            }
                             }
                             break;
                     }
@@ -401,43 +403,36 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 case 16:
                     {
                     switch ( input.LA(2) ) {
-                        case 12:
-                            {
-                            int LA1_15 = input.LA(3);
-
-                            if ( (LA1_15==11) ) {
-                                int LA1_32 = input.LA(4);
-
-                                if ( (synpred10()) ) {
-                                    alt1=10;
-                                }
-                                else if ( (synpred17()) ) {
-                                    alt1=17;
-                                }
-                            }
-                            else if ( (LA1_15==EOF||(LA1_15>=RULE_ID && LA1_15<=RULE_STRING)||LA1_15==13) ) {
-                                alt1=6;
-                            }
-                            }
-                            break;
-                        case 11:
-                            {
-                            int LA1_14 = input.LA(3);
-
-                            if ( (LA1_14==12) ) {
-                                alt1=16;
-                            }
-                            else if ( (LA1_14==EOF||(LA1_14>=RULE_ID && LA1_14<=RULE_STRING)||LA1_14==13) ) {
-                                alt1=5;
-                            }
-                            }
-                            break;
                         case EOF:
                         case RULE_ID:
                         case RULE_STRING:
                         case 13:
                             {
-                            alt1=4;
+                            alt1=3;
+                            }
+                            break;
+                        case 12:
+                            {
+                            int LA1_20 = input.LA(3);
+
+                            if ( (LA1_20==11) ) {
+                                alt1=14;
+                            }
+                            else if ( (LA1_20==EOF||(LA1_20>=RULE_ID && LA1_20<=RULE_STRING)||LA1_20==13) ) {
+                                alt1=9;
+                            }
+                            }
+                            break;
+                        case 11:
+                            {
+                            int LA1_21 = input.LA(3);
+
+                            if ( (LA1_21==12) ) {
+                                alt1=15;
+                            }
+                            else if ( (LA1_21==EOF||(LA1_21>=RULE_ID && LA1_21<=RULE_STRING)||LA1_21==13) ) {
+                                alt1=8;
+                            }
                             }
                             break;
                     }
@@ -449,58 +444,24 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     switch ( input.LA(2) ) {
                         case 12:
                             {
-                            int LA1_15 = input.LA(3);
+                            int LA1_20 = input.LA(3);
 
-                            if ( (LA1_15==11) ) {
-                                int LA1_32 = input.LA(4);
-
-                                if ( (synpred10()) ) {
-                                    alt1=10;
-                                }
-                                else if ( (synpred17()) ) {
-                                    alt1=17;
-                                }
-                            }
-                            else if ( (LA1_15==EOF||(LA1_15>=RULE_ID && LA1_15<=RULE_STRING)||LA1_15==13) ) {
-                                alt1=6;
-                            }
-                            }
-                            break;
-                        case 11:
-                            {
-                            int LA1_14 = input.LA(3);
-
-                            if ( (LA1_14==12) ) {
-                                alt1=16;
-                            }
-                            else if ( (LA1_14==EOF||(LA1_14>=RULE_ID && LA1_14<=RULE_STRING)||LA1_14==13) ) {
-                                alt1=5;
-                            }
-                            }
-                            break;
-                        case EOF:
-                        case RULE_ID:
-                        case RULE_STRING:
-                        case 13:
-                            {
-                            alt1=4;
-                            }
-                            break;
-                    }
-
-                    }
-                    break;
-                case 12:
-                    {
-                    switch ( input.LA(2) ) {
-                        case 11:
-                            {
-                            int LA1_17 = input.LA(3);
-
-                            if ( ((LA1_17>=14 && LA1_17<=17)) ) {
+                            if ( (LA1_20==11) ) {
                                 alt1=14;
                             }
-                            else if ( (LA1_17==EOF||(LA1_17>=RULE_ID && LA1_17<=RULE_STRING)||LA1_17==13) ) {
+                            else if ( (LA1_20==EOF||(LA1_20>=RULE_ID && LA1_20<=RULE_STRING)||LA1_20==13) ) {
+                                alt1=9;
+                            }
+                            }
+                            break;
+                        case 11:
+                            {
+                            int LA1_21 = input.LA(3);
+
+                            if ( (LA1_21==12) ) {
+                                alt1=15;
+                            }
+                            else if ( (LA1_21==EOF||(LA1_21>=RULE_ID && LA1_21<=RULE_STRING)||LA1_21==13) ) {
                                 alt1=8;
                             }
                             }
@@ -510,55 +471,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         case RULE_STRING:
                         case 13:
                             {
-                            alt1=7;
-                            }
-                            break;
-                        case 14:
-                            {
-                            int LA1_19 = input.LA(3);
-
-                            if ( (LA1_19==EOF||(LA1_19>=RULE_ID && LA1_19<=RULE_STRING)||LA1_19==13) ) {
-                                alt1=9;
-                            }
-                            else if ( (LA1_19==11) ) {
-                                alt1=15;
-                            }
-                            }
-                            break;
-                        case 15:
-                            {
-                            int LA1_20 = input.LA(3);
-
-                            if ( (LA1_20==EOF||(LA1_20>=RULE_ID && LA1_20<=RULE_STRING)||LA1_20==13) ) {
-                                alt1=9;
-                            }
-                            else if ( (LA1_20==11) ) {
-                                alt1=15;
-                            }
-                            }
-                            break;
-                        case 16:
-                            {
-                            int LA1_21 = input.LA(3);
-
-                            if ( (LA1_21==11) ) {
-                                alt1=15;
-                            }
-                            else if ( (LA1_21==EOF||(LA1_21>=RULE_ID && LA1_21<=RULE_STRING)||LA1_21==13) ) {
-                                alt1=9;
-                            }
-                            }
-                            break;
-                        case 17:
-                            {
-                            int LA1_22 = input.LA(3);
-
-                            if ( (LA1_22==EOF||(LA1_22>=RULE_ID && LA1_22<=RULE_STRING)||LA1_22==13) ) {
-                                alt1=9;
-                            }
-                            else if ( (LA1_22==11) ) {
-                                alt1=15;
-                            }
+                            alt1=3;
                             }
                             break;
                     }
@@ -602,19 +515,88 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:110:6: ( (lv_isInitial_1= 'init' ) (lv_isFinal_2= 'final' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:110:6: (lv_isFinal_1= 'final' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:110:6: ( (lv_isInitial_1= 'init' ) (lv_isFinal_2= 'final' ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:110:7: (lv_isInitial_1= 'init' ) (lv_isFinal_2= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:110:6: (lv_isFinal_1= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:112:6: lv_isFinal_1= 'final'
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:110:7: (lv_isInitial_1= 'init' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:112:6: lv_isInitial_1= 'init'
-                    {
-                    lv_isInitial_1=(Token)input.LT(1);
-                    match(input,11,FOLLOW_11_in_ruleState177); if (failed) return current;
+                    lv_isFinal_1=(Token)input.LT(1);
+                    match(input,12,FOLLOW_12_in_ruleState176); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_1_0_0(), "isInitial"); 
+                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_1_0(), "isFinal"); 
+                          
+                    }
+                    if ( backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
+                      	            associateNodeWithAstElement(currentNode, current);
+                      	        }
+                      	        
+                      	        try {
+                      	       		set(current, "isFinal", true, "final", lastConsumedNode);
+                      	        } catch (ValueConverterException vce) {
+                      				handleValueConverterException(vce);
+                      	        }
+                      	    
+                    }
+
+                    }
+
+
+                    }
+                    break;
+                case 3 :
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:132:6: (lv_stateKind_2= ruleStateType )
+                    {
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:132:6: (lv_stateKind_2= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:135:6: lv_stateKind_2= ruleStateType
+                    {
+                    if ( backtracking==0 ) {
+                       
+                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_2_0(), currentNode); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_ruleStateType_in_ruleState229);
+                    lv_stateKind_2=ruleStateType();
+                    _fsp--;
+                    if (failed) return current;
+                    if ( backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
+                      	            associateNodeWithAstElement(currentNode.getParent(), current);
+                      	        }
+                      	        
+                      	        try {
+                      	       		set(current, "stateKind", lv_stateKind_2, "StateType", lastConsumedNode);
+                      	        } catch (ValueConverterException vce) {
+                      				handleValueConverterException(vce);
+                      	        }
+                      	        currentNode = currentNode.getParent();
+                      	    
+                    }
+
+                    }
+
+
+                    }
+                    break;
+                case 4 :
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:154:6: ( (lv_isInitial_3= 'init' ) (lv_isFinal_4= 'final' ) )
+                    {
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:154:6: ( (lv_isInitial_3= 'init' ) (lv_isFinal_4= 'final' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:154:7: (lv_isInitial_3= 'init' ) (lv_isFinal_4= 'final' )
+                    {
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:154:7: (lv_isInitial_3= 'init' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:156:6: lv_isInitial_3= 'init'
+                    {
+                    lv_isInitial_3=(Token)input.LT(1);
+                    match(input,11,FOLLOW_11_in_ruleState261); if (failed) return current;
+                    if ( backtracking==0 ) {
+
+                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_3_0_0(), "isInitial"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -634,14 +616,14 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:131:2: (lv_isFinal_2= 'final' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:133:6: lv_isFinal_2= 'final'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:175:2: (lv_isFinal_4= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:177:6: lv_isFinal_4= 'final'
                     {
-                    lv_isFinal_2=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState211); if (failed) return current;
+                    lv_isFinal_4=(Token)input.LT(1);
+                    match(input,12,FOLLOW_12_in_ruleState295); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_1_1_0(), "isFinal"); 
+                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_3_1_0(), "isFinal"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -667,20 +649,20 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
                     break;
-                case 3 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:153:6: ( (lv_isInitial_3= 'init' ) (lv_stateKind_4= ruleStateType ) )
+                case 5 :
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:197:6: ( (lv_isInitial_5= 'init' ) (lv_stateKind_6= ruleStateType ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:153:6: ( (lv_isInitial_3= 'init' ) (lv_stateKind_4= ruleStateType ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:153:7: (lv_isInitial_3= 'init' ) (lv_stateKind_4= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:197:6: ( (lv_isInitial_5= 'init' ) (lv_stateKind_6= ruleStateType ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:197:7: (lv_isInitial_5= 'init' ) (lv_stateKind_6= ruleStateType )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:153:7: (lv_isInitial_3= 'init' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:155:6: lv_isInitial_3= 'init'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:197:7: (lv_isInitial_5= 'init' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:199:6: lv_isInitial_5= 'init'
                     {
-                    lv_isInitial_3=(Token)input.LT(1);
-                    match(input,11,FOLLOW_11_in_ruleState253); if (failed) return current;
+                    lv_isInitial_5=(Token)input.LT(1);
+                    match(input,11,FOLLOW_11_in_ruleState337); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_2_0_0(), "isInitial"); 
+                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_4_0_0(), "isInitial"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -700,93 +682,15 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:174:2: (lv_stateKind_4= ruleStateType )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:177:6: lv_stateKind_4= ruleStateType
-                    {
-                    if ( backtracking==0 ) {
-                       
-                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_2_1_0(), currentNode); 
-                      	    
-                    }
-                    pushFollow(FOLLOW_ruleStateType_in_ruleState300);
-                    lv_stateKind_4=ruleStateType();
-                    _fsp--;
-                    if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode.getParent(), current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "stateKind", lv_stateKind_4, "StateType", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	        currentNode = currentNode.getParent();
-                      	    
-                    }
-
-                    }
-
-
-                    }
-
-
-                    }
-                    break;
-                case 4 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:196:6: (lv_stateKind_5= ruleStateType )
-                    {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:196:6: (lv_stateKind_5= ruleStateType )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:199:6: lv_stateKind_5= ruleStateType
-                    {
-                    if ( backtracking==0 ) {
-                       
-                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_3_0(), currentNode); 
-                      	    
-                    }
-                    pushFollow(FOLLOW_ruleStateType_in_ruleState345);
-                    lv_stateKind_5=ruleStateType();
-                    _fsp--;
-                    if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode.getParent(), current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "stateKind", lv_stateKind_5, "StateType", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	        currentNode = currentNode.getParent();
-                      	    
-                    }
-
-                    }
-
-
-                    }
-                    break;
-                case 5 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:218:6: ( (lv_stateKind_6= ruleStateType ) (lv_isInitial_7= 'init' ) )
-                    {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:218:6: ( (lv_stateKind_6= ruleStateType ) (lv_isInitial_7= 'init' ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:218:7: (lv_stateKind_6= ruleStateType ) (lv_isInitial_7= 'init' )
-                    {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:218:7: (lv_stateKind_6= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:218:2: (lv_stateKind_6= ruleStateType )
                     // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:221:6: lv_stateKind_6= ruleStateType
                     {
                     if ( backtracking==0 ) {
                        
-                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_4_0_0(), currentNode); 
+                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_4_1_0(), currentNode); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleStateType_in_ruleState390);
+                    pushFollow(FOLLOW_ruleStateType_in_ruleState384);
                     lv_stateKind_6=ruleStateType();
                     _fsp--;
                     if (failed) return current;
@@ -808,14 +712,53 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:239:2: (lv_isInitial_7= 'init' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:241:6: lv_isInitial_7= 'init'
+
+                    }
+
+
+                    }
+                    break;
+                case 6 :
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:240:6: ( (lv_isFinal_7= 'final' ) (lv_isInitial_8= 'init' ) )
                     {
-                    lv_isInitial_7=(Token)input.LT(1);
-                    match(input,11,FOLLOW_11_in_ruleState415); if (failed) return current;
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:240:6: ( (lv_isFinal_7= 'final' ) (lv_isInitial_8= 'init' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:240:7: (lv_isFinal_7= 'final' ) (lv_isInitial_8= 'init' )
+                    {
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:240:7: (lv_isFinal_7= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:242:6: lv_isFinal_7= 'final'
+                    {
+                    lv_isFinal_7=(Token)input.LT(1);
+                    match(input,12,FOLLOW_12_in_ruleState417); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_4_1_0(), "isInitial"); 
+                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_5_0_0(), "isFinal"); 
+                          
+                    }
+                    if ( backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
+                      	            associateNodeWithAstElement(currentNode, current);
+                      	        }
+                      	        
+                      	        try {
+                      	       		set(current, "isFinal", true, "final", lastConsumedNode);
+                      	        } catch (ValueConverterException vce) {
+                      				handleValueConverterException(vce);
+                      	        }
+                      	    
+                    }
+
+                    }
+
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:261:2: (lv_isInitial_8= 'init' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:263:6: lv_isInitial_8= 'init'
+                    {
+                    lv_isInitial_8=(Token)input.LT(1);
+                    match(input,11,FOLLOW_11_in_ruleState451); if (failed) return current;
+                    if ( backtracking==0 ) {
+
+                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_5_1_0(), "isInitial"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -841,22 +784,49 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
                     break;
-                case 6 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:261:6: ( (lv_stateKind_8= ruleStateType ) (lv_isFinal_9= 'final' ) )
+                case 7 :
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:283:6: ( (lv_isFinal_9= 'final' ) (lv_stateKind_10= ruleStateType ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:261:6: ( (lv_stateKind_8= ruleStateType ) (lv_isFinal_9= 'final' ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:261:7: (lv_stateKind_8= ruleStateType ) (lv_isFinal_9= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:283:6: ( (lv_isFinal_9= 'final' ) (lv_stateKind_10= ruleStateType ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:283:7: (lv_isFinal_9= 'final' ) (lv_stateKind_10= ruleStateType )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:261:7: (lv_stateKind_8= ruleStateType )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:264:6: lv_stateKind_8= ruleStateType
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:283:7: (lv_isFinal_9= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:285:6: lv_isFinal_9= 'final'
+                    {
+                    lv_isFinal_9=(Token)input.LT(1);
+                    match(input,12,FOLLOW_12_in_ruleState493); if (failed) return current;
+                    if ( backtracking==0 ) {
+
+                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_6_0_0(), "isFinal"); 
+                          
+                    }
+                    if ( backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
+                      	            associateNodeWithAstElement(currentNode, current);
+                      	        }
+                      	        
+                      	        try {
+                      	       		set(current, "isFinal", true, "final", lastConsumedNode);
+                      	        } catch (ValueConverterException vce) {
+                      				handleValueConverterException(vce);
+                      	        }
+                      	    
+                    }
+
+                    }
+
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:304:2: (lv_stateKind_10= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:307:6: lv_stateKind_10= ruleStateType
                     {
                     if ( backtracking==0 ) {
                        
-                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_5_0_0(), currentNode); 
+                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_6_1_0(), currentNode); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleStateType_in_ruleState470);
-                    lv_stateKind_8=ruleStateType();
+                    pushFollow(FOLLOW_ruleStateType_in_ruleState540);
+                    lv_stateKind_10=ruleStateType();
                     _fsp--;
                     if (failed) return current;
                     if ( backtracking==0 ) {
@@ -867,7 +837,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                       	        }
                       	        
                       	        try {
-                      	       		set(current, "stateKind", lv_stateKind_8, "StateType", lastConsumedNode);
+                      	       		set(current, "stateKind", lv_stateKind_10, "StateType", lastConsumedNode);
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
@@ -877,66 +847,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:282:2: (lv_isFinal_9= 'final' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:284:6: lv_isFinal_9= 'final'
-                    {
-                    lv_isFinal_9=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState495); if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_5_1_0(), "isFinal"); 
-                          
-                    }
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode, current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "isFinal", true, "final", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	    
-                    }
-
-                    }
-
-
-                    }
-
-
-                    }
-                    break;
-                case 7 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:304:6: (lv_isFinal_10= 'final' )
-                    {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:304:6: (lv_isFinal_10= 'final' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:306:6: lv_isFinal_10= 'final'
-                    {
-                    lv_isFinal_10=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState536); if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_6_0(), "isFinal"); 
-                          
-                    }
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode, current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "isFinal", true, "final", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	    
-                    }
 
                     }
 
@@ -944,33 +854,36 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 8 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:326:6: ( (lv_isFinal_11= 'final' ) (lv_isInitial_12= 'init' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:326:6: ( (lv_stateKind_11= ruleStateType ) (lv_isInitial_12= 'init' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:326:6: ( (lv_isFinal_11= 'final' ) (lv_isInitial_12= 'init' ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:326:7: (lv_isFinal_11= 'final' ) (lv_isInitial_12= 'init' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:326:6: ( (lv_stateKind_11= ruleStateType ) (lv_isInitial_12= 'init' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:326:7: (lv_stateKind_11= ruleStateType ) (lv_isInitial_12= 'init' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:326:7: (lv_isFinal_11= 'final' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:328:6: lv_isFinal_11= 'final'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:326:7: (lv_stateKind_11= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:329:6: lv_stateKind_11= ruleStateType
                     {
-                    lv_isFinal_11=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState577); if (failed) return current;
                     if ( backtracking==0 ) {
-
-                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_7_0_0(), "isFinal"); 
-                          
+                       
+                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_7_0_0(), currentNode); 
+                      	    
                     }
+                    pushFollow(FOLLOW_ruleStateType_in_ruleState586);
+                    lv_stateKind_11=ruleStateType();
+                    _fsp--;
+                    if (failed) return current;
                     if ( backtracking==0 ) {
 
                       	        if (current==null) {
                       	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode, current);
+                      	            associateNodeWithAstElement(currentNode.getParent(), current);
                       	        }
                       	        
                       	        try {
-                      	       		set(current, "isFinal", true, "final", lastConsumedNode);
+                      	       		set(current, "stateKind", lv_stateKind_11, "StateType", lastConsumedNode);
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
+                      	        currentNode = currentNode.getParent();
                       	    
                     }
 
@@ -1010,19 +923,49 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 9 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:369:6: ( (lv_isFinal_13= 'final' ) (lv_stateKind_14= ruleStateType ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:369:6: ( (lv_stateKind_13= ruleStateType ) (lv_isFinal_14= 'final' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:369:6: ( (lv_isFinal_13= 'final' ) (lv_stateKind_14= ruleStateType ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:369:7: (lv_isFinal_13= 'final' ) (lv_stateKind_14= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:369:6: ( (lv_stateKind_13= ruleStateType ) (lv_isFinal_14= 'final' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:369:7: (lv_stateKind_13= ruleStateType ) (lv_isFinal_14= 'final' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:369:7: (lv_isFinal_13= 'final' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:371:6: lv_isFinal_13= 'final'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:369:7: (lv_stateKind_13= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:372:6: lv_stateKind_13= ruleStateType
                     {
-                    lv_isFinal_13=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState653); if (failed) return current;
+                    if ( backtracking==0 ) {
+                       
+                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_8_0_0(), currentNode); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_ruleStateType_in_ruleState666);
+                    lv_stateKind_13=ruleStateType();
+                    _fsp--;
+                    if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_8_0_0(), "isFinal"); 
+                      	        if (current==null) {
+                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
+                      	            associateNodeWithAstElement(currentNode.getParent(), current);
+                      	        }
+                      	        
+                      	        try {
+                      	       		set(current, "stateKind", lv_stateKind_13, "StateType", lastConsumedNode);
+                      	        } catch (ValueConverterException vce) {
+                      				handleValueConverterException(vce);
+                      	        }
+                      	        currentNode = currentNode.getParent();
+                      	    
+                    }
+
+                    }
+
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:390:2: (lv_isFinal_14= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:392:6: lv_isFinal_14= 'final'
+                    {
+                    lv_isFinal_14=(Token)input.LT(1);
+                    match(input,12,FOLLOW_12_in_ruleState691); if (failed) return current;
+                    if ( backtracking==0 ) {
+
+                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_8_1_0(), "isFinal"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -1042,36 +985,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:390:2: (lv_stateKind_14= ruleStateType )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:393:6: lv_stateKind_14= ruleStateType
-                    {
-                    if ( backtracking==0 ) {
-                       
-                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_8_1_0(), currentNode); 
-                      	    
-                    }
-                    pushFollow(FOLLOW_ruleStateType_in_ruleState700);
-                    lv_stateKind_14=ruleStateType();
-                    _fsp--;
-                    if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode.getParent(), current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "stateKind", lv_stateKind_14, "StateType", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	        currentNode = currentNode.getParent();
-                      	    
-                    }
-
-                    }
-
 
                     }
 
@@ -1079,36 +992,33 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 10 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:6: ( (lv_stateKind_15= ruleStateType ) (lv_isFinal_16= 'final' ) (lv_isInitial_17= 'init' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:6: ( (lv_isInitial_15= 'init' ) (lv_isFinal_16= 'final' ) (lv_stateKind_17= ruleStateType ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:6: ( (lv_stateKind_15= ruleStateType ) (lv_isFinal_16= 'final' ) (lv_isInitial_17= 'init' ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:7: (lv_stateKind_15= ruleStateType ) (lv_isFinal_16= 'final' ) (lv_isInitial_17= 'init' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:6: ( (lv_isInitial_15= 'init' ) (lv_isFinal_16= 'final' ) (lv_stateKind_17= ruleStateType ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:7: (lv_isInitial_15= 'init' ) (lv_isFinal_16= 'final' ) (lv_stateKind_17= ruleStateType )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:7: (lv_stateKind_15= ruleStateType )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:415:6: lv_stateKind_15= ruleStateType
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:7: (lv_isInitial_15= 'init' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:414:6: lv_isInitial_15= 'init'
                     {
+                    lv_isInitial_15=(Token)input.LT(1);
+                    match(input,11,FOLLOW_11_in_ruleState733); if (failed) return current;
                     if ( backtracking==0 ) {
-                       
-                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_9_0_0(), currentNode); 
-                      	    
+
+                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_9_0_0(), "isInitial"); 
+                          
                     }
-                    pushFollow(FOLLOW_ruleStateType_in_ruleState746);
-                    lv_stateKind_15=ruleStateType();
-                    _fsp--;
-                    if (failed) return current;
                     if ( backtracking==0 ) {
 
                       	        if (current==null) {
                       	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode.getParent(), current);
+                      	            associateNodeWithAstElement(currentNode, current);
                       	        }
                       	        
                       	        try {
-                      	       		set(current, "stateKind", lv_stateKind_15, "StateType", lastConsumedNode);
+                      	       		set(current, "isInitial", true, "init", lastConsumedNode);
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
-                      	        currentNode = currentNode.getParent();
                       	    
                     }
 
@@ -1118,7 +1028,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:435:6: lv_isFinal_16= 'final'
                     {
                     lv_isFinal_16=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState771); if (failed) return current;
+                    match(input,12,FOLLOW_12_in_ruleState767); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_9_1_0(), "isFinal"); 
@@ -1141,28 +1051,31 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:454:2: (lv_isInitial_17= 'init' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:456:6: lv_isInitial_17= 'init'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:454:2: (lv_stateKind_17= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:457:6: lv_stateKind_17= ruleStateType
                     {
-                    lv_isInitial_17=(Token)input.LT(1);
-                    match(input,11,FOLLOW_11_in_ruleState805); if (failed) return current;
                     if ( backtracking==0 ) {
-
-                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_9_2_0(), "isInitial"); 
-                          
+                       
+                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_9_2_0(), currentNode); 
+                      	    
                     }
+                    pushFollow(FOLLOW_ruleStateType_in_ruleState814);
+                    lv_stateKind_17=ruleStateType();
+                    _fsp--;
+                    if (failed) return current;
                     if ( backtracking==0 ) {
 
                       	        if (current==null) {
                       	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode, current);
+                      	            associateNodeWithAstElement(currentNode.getParent(), current);
                       	        }
                       	        
                       	        try {
-                      	       		set(current, "isInitial", true, "init", lastConsumedNode);
+                      	       		set(current, "stateKind", lv_stateKind_17, "StateType", lastConsumedNode);
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
+                      	        currentNode = currentNode.getParent();
                       	    
                     }
 
@@ -1175,10 +1088,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 11 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:476:6: ( (lv_isInitial_18= 'init' ) (lv_isFinal_19= 'final' ) (lv_stateKind_20= ruleStateType ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:476:6: ( (lv_isInitial_18= 'init' ) (lv_stateKind_19= ruleStateType ) (lv_isFinal_20= 'final' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:476:6: ( (lv_isInitial_18= 'init' ) (lv_isFinal_19= 'final' ) (lv_stateKind_20= ruleStateType ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:476:7: (lv_isInitial_18= 'init' ) (lv_isFinal_19= 'final' ) (lv_stateKind_20= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:476:6: ( (lv_isInitial_18= 'init' ) (lv_stateKind_19= ruleStateType ) (lv_isFinal_20= 'final' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:476:7: (lv_isInitial_18= 'init' ) (lv_stateKind_19= ruleStateType ) (lv_isFinal_20= 'final' )
                     {
                     // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:476:7: (lv_isInitial_18= 'init' )
                     // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:478:6: lv_isInitial_18= 'init'
@@ -1207,14 +1120,44 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:497:2: (lv_isFinal_19= 'final' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:499:6: lv_isFinal_19= 'final'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:497:2: (lv_stateKind_19= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:500:6: lv_stateKind_19= ruleStateType
                     {
-                    lv_isFinal_19=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState881); if (failed) return current;
+                    if ( backtracking==0 ) {
+                       
+                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_10_1_0(), currentNode); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_ruleStateType_in_ruleState894);
+                    lv_stateKind_19=ruleStateType();
+                    _fsp--;
+                    if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_10_1_0(), "isFinal"); 
+                      	        if (current==null) {
+                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
+                      	            associateNodeWithAstElement(currentNode.getParent(), current);
+                      	        }
+                      	        
+                      	        try {
+                      	       		set(current, "stateKind", lv_stateKind_19, "StateType", lastConsumedNode);
+                      	        } catch (ValueConverterException vce) {
+                      				handleValueConverterException(vce);
+                      	        }
+                      	        currentNode = currentNode.getParent();
+                      	    
+                    }
+
+                    }
+
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:518:2: (lv_isFinal_20= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:520:6: lv_isFinal_20= 'final'
+                    {
+                    lv_isFinal_20=(Token)input.LT(1);
+                    match(input,12,FOLLOW_12_in_ruleState919); if (failed) return current;
+                    if ( backtracking==0 ) {
+
+                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_10_2_0(), "isFinal"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -1229,36 +1172,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
-                      	    
-                    }
-
-                    }
-
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:518:2: (lv_stateKind_20= ruleStateType )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:521:6: lv_stateKind_20= ruleStateType
-                    {
-                    if ( backtracking==0 ) {
-                       
-                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_10_2_0(), currentNode); 
-                      	    
-                    }
-                    pushFollow(FOLLOW_ruleStateType_in_ruleState928);
-                    lv_stateKind_20=ruleStateType();
-                    _fsp--;
-                    if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode.getParent(), current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "stateKind", lv_stateKind_20, "StateType", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	        currentNode = currentNode.getParent();
                       	    
                     }
 
@@ -1271,46 +1184,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 12 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:6: ( (lv_isInitial_21= 'init' ) (lv_isFinal_22= 'final' ) (lv_stateKind_23= ruleStateType ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:6: ( (lv_isFinal_21= 'final' ) (lv_isInitial_22= 'init' ) (lv_stateKind_23= ruleStateType ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:6: ( (lv_isInitial_21= 'init' ) (lv_isFinal_22= 'final' ) (lv_stateKind_23= ruleStateType ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:7: (lv_isInitial_21= 'init' ) (lv_isFinal_22= 'final' ) (lv_stateKind_23= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:6: ( (lv_isFinal_21= 'final' ) (lv_isInitial_22= 'init' ) (lv_stateKind_23= ruleStateType ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:7: (lv_isFinal_21= 'final' ) (lv_isInitial_22= 'init' ) (lv_stateKind_23= ruleStateType )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:7: (lv_isInitial_21= 'init' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:542:6: lv_isInitial_21= 'init'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:7: (lv_isFinal_21= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:542:6: lv_isFinal_21= 'final'
                     {
-                    lv_isInitial_21=(Token)input.LT(1);
-                    match(input,11,FOLLOW_11_in_ruleState961); if (failed) return current;
+                    lv_isFinal_21=(Token)input.LT(1);
+                    match(input,12,FOLLOW_12_in_ruleState961); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_11_0_0(), "isInitial"); 
-                          
-                    }
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode, current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "isInitial", true, "init", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	    
-                    }
-
-                    }
-
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:561:2: (lv_isFinal_22= 'final' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:563:6: lv_isFinal_22= 'final'
-                    {
-                    lv_isFinal_22=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState995); if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_11_1_0(), "isFinal"); 
+                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_11_0_0(), "isFinal"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -1322,6 +1208,33 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                       	        
                       	        try {
                       	       		set(current, "isFinal", true, "final", lastConsumedNode);
+                      	        } catch (ValueConverterException vce) {
+                      				handleValueConverterException(vce);
+                      	        }
+                      	    
+                    }
+
+                    }
+
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:561:2: (lv_isInitial_22= 'init' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:563:6: lv_isInitial_22= 'init'
+                    {
+                    lv_isInitial_22=(Token)input.LT(1);
+                    match(input,11,FOLLOW_11_in_ruleState995); if (failed) return current;
+                    if ( backtracking==0 ) {
+
+                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_11_1_0(), "isInitial"); 
+                          
+                    }
+                    if ( backtracking==0 ) {
+
+                      	        if (current==null) {
+                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
+                      	            associateNodeWithAstElement(currentNode, current);
+                      	        }
+                      	        
+                      	        try {
+                      	       		set(current, "isInitial", true, "init", lastConsumedNode);
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
@@ -1367,19 +1280,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 13 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:604:6: ( (lv_isInitial_24= 'init' ) (lv_stateKind_25= ruleStateType ) (lv_isFinal_26= 'final' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:604:6: ( (lv_isFinal_24= 'final' ) (lv_stateKind_25= ruleStateType ) (lv_isInitial_26= 'init' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:604:6: ( (lv_isInitial_24= 'init' ) (lv_stateKind_25= ruleStateType ) (lv_isFinal_26= 'final' ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:604:7: (lv_isInitial_24= 'init' ) (lv_stateKind_25= ruleStateType ) (lv_isFinal_26= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:604:6: ( (lv_isFinal_24= 'final' ) (lv_stateKind_25= ruleStateType ) (lv_isInitial_26= 'init' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:604:7: (lv_isFinal_24= 'final' ) (lv_stateKind_25= ruleStateType ) (lv_isInitial_26= 'init' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:604:7: (lv_isInitial_24= 'init' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:606:6: lv_isInitial_24= 'init'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:604:7: (lv_isFinal_24= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:606:6: lv_isFinal_24= 'final'
                     {
-                    lv_isInitial_24=(Token)input.LT(1);
-                    match(input,11,FOLLOW_11_in_ruleState1075); if (failed) return current;
+                    lv_isFinal_24=(Token)input.LT(1);
+                    match(input,12,FOLLOW_12_in_ruleState1075); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_12_0_0(), "isInitial"); 
+                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_12_0_0(), "isFinal"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -1390,7 +1303,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                       	        }
                       	        
                       	        try {
-                      	       		set(current, "isInitial", true, "init", lastConsumedNode);
+                      	       		set(current, "isFinal", true, "final", lastConsumedNode);
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
@@ -1429,14 +1342,14 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:646:2: (lv_isFinal_26= 'final' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:648:6: lv_isFinal_26= 'final'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:646:2: (lv_isInitial_26= 'init' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:648:6: lv_isInitial_26= 'init'
                     {
-                    lv_isFinal_26=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState1147); if (failed) return current;
+                    lv_isInitial_26=(Token)input.LT(1);
+                    match(input,11,FOLLOW_11_in_ruleState1147); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_12_2_0(), "isFinal"); 
+                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_12_2_0(), "isInitial"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -1447,7 +1360,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                       	        }
                       	        
                       	        try {
-                      	       		set(current, "isFinal", true, "final", lastConsumedNode);
+                      	       		set(current, "isInitial", true, "init", lastConsumedNode);
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
@@ -1463,19 +1376,49 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 14 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:668:6: ( (lv_isFinal_27= 'final' ) (lv_isInitial_28= 'init' ) (lv_stateKind_29= ruleStateType ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:668:6: ( (lv_stateKind_27= ruleStateType ) (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:668:6: ( (lv_isFinal_27= 'final' ) (lv_isInitial_28= 'init' ) (lv_stateKind_29= ruleStateType ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:668:7: (lv_isFinal_27= 'final' ) (lv_isInitial_28= 'init' ) (lv_stateKind_29= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:668:6: ( (lv_stateKind_27= ruleStateType ) (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:668:7: (lv_stateKind_27= ruleStateType ) (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:668:7: (lv_isFinal_27= 'final' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:670:6: lv_isFinal_27= 'final'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:668:7: (lv_stateKind_27= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:671:6: lv_stateKind_27= ruleStateType
                     {
-                    lv_isFinal_27=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState1189); if (failed) return current;
+                    if ( backtracking==0 ) {
+                       
+                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_13_0_0(), currentNode); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_ruleStateType_in_ruleState1202);
+                    lv_stateKind_27=ruleStateType();
+                    _fsp--;
+                    if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_13_0_0(), "isFinal"); 
+                      	        if (current==null) {
+                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
+                      	            associateNodeWithAstElement(currentNode.getParent(), current);
+                      	        }
+                      	        
+                      	        try {
+                      	       		set(current, "stateKind", lv_stateKind_27, "StateType", lastConsumedNode);
+                      	        } catch (ValueConverterException vce) {
+                      				handleValueConverterException(vce);
+                      	        }
+                      	        currentNode = currentNode.getParent();
+                      	    
+                    }
+
+                    }
+
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:689:2: (lv_isFinal_28= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:691:6: lv_isFinal_28= 'final'
+                    {
+                    lv_isFinal_28=(Token)input.LT(1);
+                    match(input,12,FOLLOW_12_in_ruleState1227); if (failed) return current;
+                    if ( backtracking==0 ) {
+
+                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_13_1_0(), "isFinal"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -1495,14 +1438,14 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:689:2: (lv_isInitial_28= 'init' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:691:6: lv_isInitial_28= 'init'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:710:2: (lv_isInitial_29= 'init' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:712:6: lv_isInitial_29= 'init'
                     {
-                    lv_isInitial_28=(Token)input.LT(1);
-                    match(input,11,FOLLOW_11_in_ruleState1223); if (failed) return current;
+                    lv_isInitial_29=(Token)input.LT(1);
+                    match(input,11,FOLLOW_11_in_ruleState1261); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_13_1_0(), "isInitial"); 
+                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_13_2_0(), "isInitial"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -1517,36 +1460,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
-                      	    
-                    }
-
-                    }
-
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:710:2: (lv_stateKind_29= ruleStateType )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:713:6: lv_stateKind_29= ruleStateType
-                    {
-                    if ( backtracking==0 ) {
-                       
-                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_13_2_0(), currentNode); 
-                      	    
-                    }
-                    pushFollow(FOLLOW_ruleStateType_in_ruleState1270);
-                    lv_stateKind_29=ruleStateType();
-                    _fsp--;
-                    if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode.getParent(), current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "stateKind", lv_stateKind_29, "StateType", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	        currentNode = currentNode.getParent();
                       	    
                     }
 
@@ -1559,48 +1472,21 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 15 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:732:6: ( (lv_isFinal_30= 'final' ) (lv_stateKind_31= ruleStateType ) (lv_isInitial_32= 'init' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:732:6: ( (lv_stateKind_30= ruleStateType ) (lv_isInitial_31= 'init' ) (lv_isFinal_32= 'final' ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:732:6: ( (lv_isFinal_30= 'final' ) (lv_stateKind_31= ruleStateType ) (lv_isInitial_32= 'init' ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:732:7: (lv_isFinal_30= 'final' ) (lv_stateKind_31= ruleStateType ) (lv_isInitial_32= 'init' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:732:6: ( (lv_stateKind_30= ruleStateType ) (lv_isInitial_31= 'init' ) (lv_isFinal_32= 'final' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:732:7: (lv_stateKind_30= ruleStateType ) (lv_isInitial_31= 'init' ) (lv_isFinal_32= 'final' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:732:7: (lv_isFinal_30= 'final' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:734:6: lv_isFinal_30= 'final'
-                    {
-                    lv_isFinal_30=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState1303); if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_14_0_0(), "isFinal"); 
-                          
-                    }
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode, current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "isFinal", true, "final", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	    
-                    }
-
-                    }
-
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:753:2: (lv_stateKind_31= ruleStateType )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:756:6: lv_stateKind_31= ruleStateType
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:732:7: (lv_stateKind_30= ruleStateType )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:735:6: lv_stateKind_30= ruleStateType
                     {
                     if ( backtracking==0 ) {
                        
-                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_14_1_0(), currentNode); 
+                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_14_0_0(), currentNode); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleStateType_in_ruleState1350);
-                    lv_stateKind_31=ruleStateType();
+                    pushFollow(FOLLOW_ruleStateType_in_ruleState1316);
+                    lv_stateKind_30=ruleStateType();
                     _fsp--;
                     if (failed) return current;
                     if ( backtracking==0 ) {
@@ -1611,7 +1497,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                       	        }
                       	        
                       	        try {
-                      	       		set(current, "stateKind", lv_stateKind_31, "StateType", lastConsumedNode);
+                      	       		set(current, "stateKind", lv_stateKind_30, "StateType", lastConsumedNode);
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
@@ -1621,14 +1507,14 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:774:2: (lv_isInitial_32= 'init' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:776:6: lv_isInitial_32= 'init'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:753:2: (lv_isInitial_31= 'init' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:755:6: lv_isInitial_31= 'init'
                     {
-                    lv_isInitial_32=(Token)input.LT(1);
-                    match(input,11,FOLLOW_11_in_ruleState1375); if (failed) return current;
+                    lv_isInitial_31=(Token)input.LT(1);
+                    match(input,11,FOLLOW_11_in_ruleState1341); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_14_2_0(), "isInitial"); 
+                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_14_1_0(), "isInitial"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -1648,83 +1534,14 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-
-                    }
-
-
-                    }
-                    break;
-                case 16 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:796:6: ( (lv_stateKind_33= ruleStateType ) (lv_isInitial_34= 'init' ) (lv_isFinal_35= 'final' ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:774:2: (lv_isFinal_32= 'final' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:776:6: lv_isFinal_32= 'final'
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:796:6: ( (lv_stateKind_33= ruleStateType ) (lv_isInitial_34= 'init' ) (lv_isFinal_35= 'final' ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:796:7: (lv_stateKind_33= ruleStateType ) (lv_isInitial_34= 'init' ) (lv_isFinal_35= 'final' )
-                    {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:796:7: (lv_stateKind_33= ruleStateType )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:799:6: lv_stateKind_33= ruleStateType
-                    {
-                    if ( backtracking==0 ) {
-                       
-                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_15_0_0(), currentNode); 
-                      	    
-                    }
-                    pushFollow(FOLLOW_ruleStateType_in_ruleState1430);
-                    lv_stateKind_33=ruleStateType();
-                    _fsp--;
-                    if (failed) return current;
+                    lv_isFinal_32=(Token)input.LT(1);
+                    match(input,12,FOLLOW_12_in_ruleState1375); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode.getParent(), current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "stateKind", lv_stateKind_33, "StateType", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	        currentNode = currentNode.getParent();
-                      	    
-                    }
-
-                    }
-
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:817:2: (lv_isInitial_34= 'init' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:819:6: lv_isInitial_34= 'init'
-                    {
-                    lv_isInitial_34=(Token)input.LT(1);
-                    match(input,11,FOLLOW_11_in_ruleState1455); if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_15_1_0(), "isInitial"); 
-                          
-                    }
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode, current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "isInitial", true, "init", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	    
-                    }
-
-                    }
-
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:838:2: (lv_isFinal_35= 'final' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:840:6: lv_isFinal_35= 'final'
-                    {
-                    lv_isFinal_35=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState1489); if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_15_2_0(), "isFinal"); 
+                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_14_2_0(), "isFinal"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -1736,102 +1553,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                       	        
                       	        try {
                       	       		set(current, "isFinal", true, "final", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	    
-                    }
-
-                    }
-
-
-                    }
-
-
-                    }
-                    break;
-                case 17 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:860:6: ( (lv_stateKind_36= ruleStateType ) (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) )
-                    {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:860:6: ( (lv_stateKind_36= ruleStateType ) (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:860:7: (lv_stateKind_36= ruleStateType ) (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' )
-                    {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:860:7: (lv_stateKind_36= ruleStateType )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:863:6: lv_stateKind_36= ruleStateType
-                    {
-                    if ( backtracking==0 ) {
-                       
-                      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_16_0_0(), currentNode); 
-                      	    
-                    }
-                    pushFollow(FOLLOW_ruleStateType_in_ruleState1544);
-                    lv_stateKind_36=ruleStateType();
-                    _fsp--;
-                    if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode.getParent(), current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "stateKind", lv_stateKind_36, "StateType", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	        currentNode = currentNode.getParent();
-                      	    
-                    }
-
-                    }
-
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:881:2: (lv_isFinal_37= 'final' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:883:6: lv_isFinal_37= 'final'
-                    {
-                    lv_isFinal_37=(Token)input.LT(1);
-                    match(input,12,FOLLOW_12_in_ruleState1569); if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                              createLeafNode(grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_16_1_0(), "isFinal"); 
-                          
-                    }
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode, current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "isFinal", true, "final", lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	    
-                    }
-
-                    }
-
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:902:2: (lv_isInitial_38= 'init' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:904:6: lv_isInitial_38= 'init'
-                    {
-                    lv_isInitial_38=(Token)input.LT(1);
-                    match(input,11,FOLLOW_11_in_ruleState1603); if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                              createLeafNode(grammarAccess.getStateAccess().getIsInitialInitKeyword_0_16_2_0(), "isInitial"); 
-                          
-                    }
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode, current);
-                      	        }
-                      	        
-                      	        try {
-                      	       		set(current, "isInitial", true, "init", lastConsumedNode);
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
@@ -1849,7 +1570,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:923:5: ( 'state' )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:795:5: ( 'state' )?
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -1858,9 +1579,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt2) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:923:6: 'state'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:795:6: 'state'
                     {
-                    match(input,13,FOLLOW_13_in_ruleState1629); if (failed) return current;
+                    match(input,13,FOLLOW_13_in_ruleState1401); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getStateAccess().getStateKeyword_1(), null); 
@@ -1872,7 +1593,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:927:3: (lv_stateName_40= RULE_ID )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:799:3: (lv_stateName_34= RULE_ID )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -1881,10 +1602,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt3) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:929:6: lv_stateName_40= RULE_ID
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:801:6: lv_stateName_34= RULE_ID
                     {
-                    lv_stateName_40=(Token)input.LT(1);
-                    match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleState1653); if (failed) return current;
+                    lv_stateName_34=(Token)input.LT(1);
+                    match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleState1425); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		createLeafNode(grammarAccess.getStateAccess().getStateNameIDTerminalRuleCall_2_0(), "stateName"); 
@@ -1898,7 +1619,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                       	        }
                       	        
                       	        try {
-                      	       		set(current, "stateName", lv_stateName_40, "ID", lastConsumedNode);
+                      	       		set(current, "stateName", lv_stateName_34, "ID", lastConsumedNode);
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
@@ -1910,7 +1631,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:947:3: (lv_label_41= RULE_STRING )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:819:3: (lv_label_35= RULE_STRING )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -1919,10 +1640,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt4) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:949:6: lv_label_41= RULE_STRING
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:821:6: lv_label_35= RULE_STRING
                     {
-                    lv_label_41=(Token)input.LT(1);
-                    match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleState1684); if (failed) return current;
+                    lv_label_35=(Token)input.LT(1);
+                    match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleState1456); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		createLeafNode(grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_3_0(), "label"); 
@@ -1936,7 +1657,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                       	        }
                       	        
                       	        try {
-                      	       		set(current, "label", lv_label_41, "STRING", lastConsumedNode);
+                      	       		set(current, "label", lv_label_35, "STRING", lastConsumedNode);
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
@@ -1973,16 +1694,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleStateType
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:980:1: ruleStateType returns [Enumerator current=null] : ( ( 'NORMAL' ) | ( 'cond' ) | ( 'reference' ) | ( 'textual' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:852:1: ruleStateType returns [Enumerator current=null] : ( ( 'NORMAL' ) | ( 'cond' ) | ( 'reference' ) | ( 'textual' ) ) ;
     public final Enumerator ruleStateType() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:984:6: ( ( ( 'NORMAL' ) | ( 'cond' ) | ( 'reference' ) | ( 'textual' ) ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:985:1: ( ( 'NORMAL' ) | ( 'cond' ) | ( 'reference' ) | ( 'textual' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:856:6: ( ( ( 'NORMAL' ) | ( 'cond' ) | ( 'reference' ) | ( 'textual' ) ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:857:1: ( ( 'NORMAL' ) | ( 'cond' ) | ( 'reference' ) | ( 'textual' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:985:1: ( ( 'NORMAL' ) | ( 'cond' ) | ( 'reference' ) | ( 'textual' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:857:1: ( ( 'NORMAL' ) | ( 'cond' ) | ( 'reference' ) | ( 'textual' ) )
             int alt5=4;
             switch ( input.LA(1) ) {
             case 14:
@@ -2008,19 +1729,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("985:1: ( ( 'NORMAL' ) | ( 'cond' ) | ( 'reference' ) | ( 'textual' ) )", 5, 0, input);
+                    new NoViableAltException("857:1: ( ( 'NORMAL' ) | ( 'cond' ) | ( 'reference' ) | ( 'textual' ) )", 5, 0, input);
 
                 throw nvae;
             }
 
             switch (alt5) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:985:2: ( 'NORMAL' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:857:2: ( 'NORMAL' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:985:2: ( 'NORMAL' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:985:4: 'NORMAL'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:857:2: ( 'NORMAL' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:857:4: 'NORMAL'
                     {
-                    match(input,14,FOLLOW_14_in_ruleStateType1746); if (failed) return current;
+                    match(input,14,FOLLOW_14_in_ruleStateType1518); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getNORMALEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -2034,12 +1755,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:991:6: ( 'cond' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:863:6: ( 'cond' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:991:6: ( 'cond' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:991:8: 'cond'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:863:6: ( 'cond' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:863:8: 'cond'
                     {
-                    match(input,15,FOLLOW_15_in_ruleStateType1761); if (failed) return current;
+                    match(input,15,FOLLOW_15_in_ruleStateType1533); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getPSEUDOEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -2053,12 +1774,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:997:6: ( 'reference' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:869:6: ( 'reference' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:997:6: ( 'reference' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:997:8: 'reference'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:869:6: ( 'reference' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:869:8: 'reference'
                     {
-                    match(input,16,FOLLOW_16_in_ruleStateType1776); if (failed) return current;
+                    match(input,16,FOLLOW_16_in_ruleStateType1548); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getREFERENCEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -2072,12 +1793,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1003:6: ( 'textual' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:875:6: ( 'textual' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1003:6: ( 'textual' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1003:8: 'textual'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:875:6: ( 'textual' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:875:8: 'textual'
                     {
-                    match(input,17,FOLLOW_17_in_ruleStateType1791); if (failed) return current;
+                    match(input,17,FOLLOW_17_in_ruleStateType1563); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getTEXTUALEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -2113,305 +1834,50 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     }
     // $ANTLR end ruleStateType
 
-    // $ANTLR start synpred10
-    public final void synpred10_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:6: ( ( ( ruleStateType ) ( 'final' ) ( 'init' ) ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:6: ( ( ruleStateType ) ( 'final' ) ( 'init' ) )
-        {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:6: ( ( ruleStateType ) ( 'final' ) ( 'init' ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:7: ( ruleStateType ) ( 'final' ) ( 'init' )
-        {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:412:7: ( ruleStateType )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:415:6: ruleStateType
-        {
-        if ( backtracking==0 ) {
-           
-          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_9_0_0(), currentNode); 
-          	    
-        }
-        pushFollow(FOLLOW_ruleStateType_in_synpred10746);
-        ruleStateType();
-        _fsp--;
-        if (failed) return ;
-
-        }
-
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:433:2: ( 'final' )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:435:6: 'final'
-        {
-        match(input,12,FOLLOW_12_in_synpred10771); if (failed) return ;
-
-        }
-
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:454:2: ( 'init' )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:456:6: 'init'
-        {
-        match(input,11,FOLLOW_11_in_synpred10805); if (failed) return ;
-
-        }
-
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred10
-
-    // $ANTLR start synpred11
-    public final void synpred11_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:476:6: ( ( ( 'init' ) ( 'final' ) ( ruleStateType ) ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:476:6: ( ( 'init' ) ( 'final' ) ( ruleStateType ) )
-        {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:476:6: ( ( 'init' ) ( 'final' ) ( ruleStateType ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:476:7: ( 'init' ) ( 'final' ) ( ruleStateType )
-        {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:476:7: ( 'init' )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:478:6: 'init'
-        {
-        match(input,11,FOLLOW_11_in_synpred11847); if (failed) return ;
-
-        }
-
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:497:2: ( 'final' )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:499:6: 'final'
-        {
-        match(input,12,FOLLOW_12_in_synpred11881); if (failed) return ;
-
-        }
-
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:518:2: ( ruleStateType )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:521:6: ruleStateType
-        {
-        if ( backtracking==0 ) {
-           
-          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_10_2_0(), currentNode); 
-          	    
-        }
-        pushFollow(FOLLOW_ruleStateType_in_synpred11928);
-        ruleStateType();
-        _fsp--;
-        if (failed) return ;
-
-        }
-
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred11
-
-    // $ANTLR start synpred12
-    public final void synpred12_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:6: ( ( ( 'init' ) ( 'final' ) ( ruleStateType ) ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:6: ( ( 'init' ) ( 'final' ) ( ruleStateType ) )
-        {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:6: ( ( 'init' ) ( 'final' ) ( ruleStateType ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:7: ( 'init' ) ( 'final' ) ( ruleStateType )
-        {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:540:7: ( 'init' )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:542:6: 'init'
-        {
-        match(input,11,FOLLOW_11_in_synpred12961); if (failed) return ;
-
-        }
-
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:561:2: ( 'final' )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:563:6: 'final'
-        {
-        match(input,12,FOLLOW_12_in_synpred12995); if (failed) return ;
-
-        }
-
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:582:2: ( ruleStateType )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:585:6: ruleStateType
-        {
-        if ( backtracking==0 ) {
-           
-          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_11_2_0(), currentNode); 
-          	    
-        }
-        pushFollow(FOLLOW_ruleStateType_in_synpred121042);
-        ruleStateType();
-        _fsp--;
-        if (failed) return ;
-
-        }
-
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred12
-
-    // $ANTLR start synpred17
-    public final void synpred17_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:860:6: ( ( ( ruleStateType ) ( 'final' ) ( 'init' ) ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:860:6: ( ( ruleStateType ) ( 'final' ) ( 'init' ) )
-        {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:860:6: ( ( ruleStateType ) ( 'final' ) ( 'init' ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:860:7: ( ruleStateType ) ( 'final' ) ( 'init' )
-        {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:860:7: ( ruleStateType )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:863:6: ruleStateType
-        {
-        if ( backtracking==0 ) {
-           
-          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_16_0_0(), currentNode); 
-          	    
-        }
-        pushFollow(FOLLOW_ruleStateType_in_synpred171544);
-        ruleStateType();
-        _fsp--;
-        if (failed) return ;
-
-        }
-
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:881:2: ( 'final' )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:883:6: 'final'
-        {
-        match(input,12,FOLLOW_12_in_synpred171569); if (failed) return ;
-
-        }
-
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:902:2: ( 'init' )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:904:6: 'init'
-        {
-        match(input,11,FOLLOW_11_in_synpred171603); if (failed) return ;
-
-        }
-
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred17
-
-    public final boolean synpred17() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred17_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred10() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred10_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred11() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred11_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred12() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred12_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-
 
  
 
     public static final BitSet FOLLOW_ruleState_in_entryRuleState79 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleState89 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_11_in_ruleState136 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_11_in_ruleState177 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState211 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_11_in_ruleState253 = new BitSet(new long[]{0x000000000003C000L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState300 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState345 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState390 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleState415 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState470 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState495 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_12_in_ruleState536 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_12_in_ruleState577 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_12_in_ruleState176 = new BitSet(new long[]{0x0000000000002032L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState229 = new BitSet(new long[]{0x0000000000002032L});
+    public static final BitSet FOLLOW_11_in_ruleState261 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_ruleState295 = new BitSet(new long[]{0x0000000000002032L});
+    public static final BitSet FOLLOW_11_in_ruleState337 = new BitSet(new long[]{0x000000000003C000L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState384 = new BitSet(new long[]{0x0000000000002032L});
+    public static final BitSet FOLLOW_12_in_ruleState417 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_ruleState451 = new BitSet(new long[]{0x0000000000002032L});
+    public static final BitSet FOLLOW_12_in_ruleState493 = new BitSet(new long[]{0x000000000003C000L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState540 = new BitSet(new long[]{0x0000000000002032L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState586 = new BitSet(new long[]{0x0000000000000800L});
     public static final BitSet FOLLOW_11_in_ruleState611 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_12_in_ruleState653 = new BitSet(new long[]{0x000000000003C000L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState700 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState746 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState771 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleState805 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_11_in_ruleState847 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState881 = new BitSet(new long[]{0x000000000003C000L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState928 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_11_in_ruleState961 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState995 = new BitSet(new long[]{0x000000000003C000L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState666 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_ruleState691 = new BitSet(new long[]{0x0000000000002032L});
+    public static final BitSet FOLLOW_11_in_ruleState733 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_ruleState767 = new BitSet(new long[]{0x000000000003C000L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState814 = new BitSet(new long[]{0x0000000000002032L});
+    public static final BitSet FOLLOW_11_in_ruleState847 = new BitSet(new long[]{0x000000000003C000L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState894 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_ruleState919 = new BitSet(new long[]{0x0000000000002032L});
+    public static final BitSet FOLLOW_12_in_ruleState961 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_ruleState995 = new BitSet(new long[]{0x000000000003C000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState1042 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_11_in_ruleState1075 = new BitSet(new long[]{0x000000000003C000L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState1122 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState1147 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_12_in_ruleState1189 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleState1223 = new BitSet(new long[]{0x000000000003C000L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState1270 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_12_in_ruleState1303 = new BitSet(new long[]{0x000000000003C000L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState1350 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleState1375 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState1430 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleState1455 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState1489 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState1544 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState1569 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleState1603 = new BitSet(new long[]{0x0000000000002032L});
-    public static final BitSet FOLLOW_13_in_ruleState1629 = new BitSet(new long[]{0x0000000000000032L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleState1653 = new BitSet(new long[]{0x0000000000000022L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleState1684 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_14_in_ruleStateType1746 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_ruleStateType1761 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_ruleStateType1776 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_17_in_ruleStateType1791 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStateType_in_synpred10746 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_synpred10771 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_synpred10805 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_11_in_synpred11847 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_synpred11881 = new BitSet(new long[]{0x000000000003C000L});
-    public static final BitSet FOLLOW_ruleStateType_in_synpred11928 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_11_in_synpred12961 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_synpred12995 = new BitSet(new long[]{0x000000000003C000L});
-    public static final BitSet FOLLOW_ruleStateType_in_synpred121042 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStateType_in_synpred171544 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_synpred171569 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_synpred171603 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_12_in_ruleState1075 = new BitSet(new long[]{0x000000000003C000L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState1122 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_ruleState1147 = new BitSet(new long[]{0x0000000000002032L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState1202 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_ruleState1227 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_ruleState1261 = new BitSet(new long[]{0x0000000000002032L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState1316 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_ruleState1341 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_ruleState1375 = new BitSet(new long[]{0x0000000000002032L});
+    public static final BitSet FOLLOW_13_in_ruleState1401 = new BitSet(new long[]{0x0000000000000032L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleState1425 = new BitSet(new long[]{0x0000000000000022L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleState1456 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_14_in_ruleStateType1518 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_15_in_ruleStateType1533 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_ruleStateType1548 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_ruleStateType1563 = new BitSet(new long[]{0x0000000000000002L});
 
 }

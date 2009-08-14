@@ -23,96 +23,82 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
 		private final Assignment cIsInitialAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
 		private final Keyword cIsInitialInitKeyword_0_0_0 = (Keyword)cIsInitialAssignment_0_0.eContents().get(0);
-		private final Group cGroup_0_1 = (Group)cAlternatives_0.eContents().get(1);
-		private final Assignment cIsInitialAssignment_0_1_0 = (Assignment)cGroup_0_1.eContents().get(0);
-		private final Keyword cIsInitialInitKeyword_0_1_0_0 = (Keyword)cIsInitialAssignment_0_1_0.eContents().get(0);
-		private final Assignment cIsFinalAssignment_0_1_1 = (Assignment)cGroup_0_1.eContents().get(1);
-		private final Keyword cIsFinalFinalKeyword_0_1_1_0 = (Keyword)cIsFinalAssignment_0_1_1.eContents().get(0);
-		private final Group cGroup_0_2 = (Group)cAlternatives_0.eContents().get(2);
-		private final Assignment cIsInitialAssignment_0_2_0 = (Assignment)cGroup_0_2.eContents().get(0);
-		private final Keyword cIsInitialInitKeyword_0_2_0_0 = (Keyword)cIsInitialAssignment_0_2_0.eContents().get(0);
-		private final Assignment cStateKindAssignment_0_2_1 = (Assignment)cGroup_0_2.eContents().get(1);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_0_2_1_0 = (RuleCall)cStateKindAssignment_0_2_1.eContents().get(0);
-		private final Assignment cStateKindAssignment_0_3 = (Assignment)cAlternatives_0.eContents().get(3);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_0_3_0 = (RuleCall)cStateKindAssignment_0_3.eContents().get(0);
+		private final Assignment cIsFinalAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_0_1_0 = (Keyword)cIsFinalAssignment_0_1.eContents().get(0);
+		private final Assignment cStateKindAssignment_0_2 = (Assignment)cAlternatives_0.eContents().get(2);
+		private final RuleCall cStateKindStateTypeEnumRuleCall_0_2_0 = (RuleCall)cStateKindAssignment_0_2.eContents().get(0);
+		private final Group cGroup_0_3 = (Group)cAlternatives_0.eContents().get(3);
+		private final Assignment cIsInitialAssignment_0_3_0 = (Assignment)cGroup_0_3.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_0_3_0_0 = (Keyword)cIsInitialAssignment_0_3_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_0_3_1 = (Assignment)cGroup_0_3.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_0_3_1_0 = (Keyword)cIsFinalAssignment_0_3_1.eContents().get(0);
 		private final Group cGroup_0_4 = (Group)cAlternatives_0.eContents().get(4);
-		private final Assignment cStateKindAssignment_0_4_0 = (Assignment)cGroup_0_4.eContents().get(0);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_0_4_0_0 = (RuleCall)cStateKindAssignment_0_4_0.eContents().get(0);
-		private final Assignment cIsInitialAssignment_0_4_1 = (Assignment)cGroup_0_4.eContents().get(1);
-		private final Keyword cIsInitialInitKeyword_0_4_1_0 = (Keyword)cIsInitialAssignment_0_4_1.eContents().get(0);
+		private final Assignment cIsInitialAssignment_0_4_0 = (Assignment)cGroup_0_4.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_0_4_0_0 = (Keyword)cIsInitialAssignment_0_4_0.eContents().get(0);
+		private final Assignment cStateKindAssignment_0_4_1 = (Assignment)cGroup_0_4.eContents().get(1);
+		private final RuleCall cStateKindStateTypeEnumRuleCall_0_4_1_0 = (RuleCall)cStateKindAssignment_0_4_1.eContents().get(0);
 		private final Group cGroup_0_5 = (Group)cAlternatives_0.eContents().get(5);
-		private final Assignment cStateKindAssignment_0_5_0 = (Assignment)cGroup_0_5.eContents().get(0);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_0_5_0_0 = (RuleCall)cStateKindAssignment_0_5_0.eContents().get(0);
-		private final Assignment cIsFinalAssignment_0_5_1 = (Assignment)cGroup_0_5.eContents().get(1);
-		private final Keyword cIsFinalFinalKeyword_0_5_1_0 = (Keyword)cIsFinalAssignment_0_5_1.eContents().get(0);
-		private final Assignment cIsFinalAssignment_0_6 = (Assignment)cAlternatives_0.eContents().get(6);
-		private final Keyword cIsFinalFinalKeyword_0_6_0 = (Keyword)cIsFinalAssignment_0_6.eContents().get(0);
+		private final Assignment cIsFinalAssignment_0_5_0 = (Assignment)cGroup_0_5.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_0_5_0_0 = (Keyword)cIsFinalAssignment_0_5_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_0_5_1 = (Assignment)cGroup_0_5.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_0_5_1_0 = (Keyword)cIsInitialAssignment_0_5_1.eContents().get(0);
+		private final Group cGroup_0_6 = (Group)cAlternatives_0.eContents().get(6);
+		private final Assignment cIsFinalAssignment_0_6_0 = (Assignment)cGroup_0_6.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_0_6_0_0 = (Keyword)cIsFinalAssignment_0_6_0.eContents().get(0);
+		private final Assignment cStateKindAssignment_0_6_1 = (Assignment)cGroup_0_6.eContents().get(1);
+		private final RuleCall cStateKindStateTypeEnumRuleCall_0_6_1_0 = (RuleCall)cStateKindAssignment_0_6_1.eContents().get(0);
 		private final Group cGroup_0_7 = (Group)cAlternatives_0.eContents().get(7);
-		private final Assignment cIsFinalAssignment_0_7_0 = (Assignment)cGroup_0_7.eContents().get(0);
-		private final Keyword cIsFinalFinalKeyword_0_7_0_0 = (Keyword)cIsFinalAssignment_0_7_0.eContents().get(0);
+		private final Assignment cStateKindAssignment_0_7_0 = (Assignment)cGroup_0_7.eContents().get(0);
+		private final RuleCall cStateKindStateTypeEnumRuleCall_0_7_0_0 = (RuleCall)cStateKindAssignment_0_7_0.eContents().get(0);
 		private final Assignment cIsInitialAssignment_0_7_1 = (Assignment)cGroup_0_7.eContents().get(1);
 		private final Keyword cIsInitialInitKeyword_0_7_1_0 = (Keyword)cIsInitialAssignment_0_7_1.eContents().get(0);
 		private final Group cGroup_0_8 = (Group)cAlternatives_0.eContents().get(8);
-		private final Assignment cIsFinalAssignment_0_8_0 = (Assignment)cGroup_0_8.eContents().get(0);
-		private final Keyword cIsFinalFinalKeyword_0_8_0_0 = (Keyword)cIsFinalAssignment_0_8_0.eContents().get(0);
-		private final Assignment cStateKindAssignment_0_8_1 = (Assignment)cGroup_0_8.eContents().get(1);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_0_8_1_0 = (RuleCall)cStateKindAssignment_0_8_1.eContents().get(0);
+		private final Assignment cStateKindAssignment_0_8_0 = (Assignment)cGroup_0_8.eContents().get(0);
+		private final RuleCall cStateKindStateTypeEnumRuleCall_0_8_0_0 = (RuleCall)cStateKindAssignment_0_8_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_0_8_1 = (Assignment)cGroup_0_8.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_0_8_1_0 = (Keyword)cIsFinalAssignment_0_8_1.eContents().get(0);
 		private final Group cGroup_0_9 = (Group)cAlternatives_0.eContents().get(9);
-		private final Assignment cStateKindAssignment_0_9_0 = (Assignment)cGroup_0_9.eContents().get(0);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_0_9_0_0 = (RuleCall)cStateKindAssignment_0_9_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_0_9_0 = (Assignment)cGroup_0_9.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_0_9_0_0 = (Keyword)cIsInitialAssignment_0_9_0.eContents().get(0);
 		private final Assignment cIsFinalAssignment_0_9_1 = (Assignment)cGroup_0_9.eContents().get(1);
 		private final Keyword cIsFinalFinalKeyword_0_9_1_0 = (Keyword)cIsFinalAssignment_0_9_1.eContents().get(0);
-		private final Assignment cIsInitialAssignment_0_9_2 = (Assignment)cGroup_0_9.eContents().get(2);
-		private final Keyword cIsInitialInitKeyword_0_9_2_0 = (Keyword)cIsInitialAssignment_0_9_2.eContents().get(0);
+		private final Assignment cStateKindAssignment_0_9_2 = (Assignment)cGroup_0_9.eContents().get(2);
+		private final RuleCall cStateKindStateTypeEnumRuleCall_0_9_2_0 = (RuleCall)cStateKindAssignment_0_9_2.eContents().get(0);
 		private final Group cGroup_0_10 = (Group)cAlternatives_0.eContents().get(10);
 		private final Assignment cIsInitialAssignment_0_10_0 = (Assignment)cGroup_0_10.eContents().get(0);
 		private final Keyword cIsInitialInitKeyword_0_10_0_0 = (Keyword)cIsInitialAssignment_0_10_0.eContents().get(0);
-		private final Assignment cIsFinalAssignment_0_10_1 = (Assignment)cGroup_0_10.eContents().get(1);
-		private final Keyword cIsFinalFinalKeyword_0_10_1_0 = (Keyword)cIsFinalAssignment_0_10_1.eContents().get(0);
-		private final Assignment cStateKindAssignment_0_10_2 = (Assignment)cGroup_0_10.eContents().get(2);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_0_10_2_0 = (RuleCall)cStateKindAssignment_0_10_2.eContents().get(0);
+		private final Assignment cStateKindAssignment_0_10_1 = (Assignment)cGroup_0_10.eContents().get(1);
+		private final RuleCall cStateKindStateTypeEnumRuleCall_0_10_1_0 = (RuleCall)cStateKindAssignment_0_10_1.eContents().get(0);
+		private final Assignment cIsFinalAssignment_0_10_2 = (Assignment)cGroup_0_10.eContents().get(2);
+		private final Keyword cIsFinalFinalKeyword_0_10_2_0 = (Keyword)cIsFinalAssignment_0_10_2.eContents().get(0);
 		private final Group cGroup_0_11 = (Group)cAlternatives_0.eContents().get(11);
-		private final Assignment cIsInitialAssignment_0_11_0 = (Assignment)cGroup_0_11.eContents().get(0);
-		private final Keyword cIsInitialInitKeyword_0_11_0_0 = (Keyword)cIsInitialAssignment_0_11_0.eContents().get(0);
-		private final Assignment cIsFinalAssignment_0_11_1 = (Assignment)cGroup_0_11.eContents().get(1);
-		private final Keyword cIsFinalFinalKeyword_0_11_1_0 = (Keyword)cIsFinalAssignment_0_11_1.eContents().get(0);
+		private final Assignment cIsFinalAssignment_0_11_0 = (Assignment)cGroup_0_11.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_0_11_0_0 = (Keyword)cIsFinalAssignment_0_11_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_0_11_1 = (Assignment)cGroup_0_11.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_0_11_1_0 = (Keyword)cIsInitialAssignment_0_11_1.eContents().get(0);
 		private final Assignment cStateKindAssignment_0_11_2 = (Assignment)cGroup_0_11.eContents().get(2);
 		private final RuleCall cStateKindStateTypeEnumRuleCall_0_11_2_0 = (RuleCall)cStateKindAssignment_0_11_2.eContents().get(0);
 		private final Group cGroup_0_12 = (Group)cAlternatives_0.eContents().get(12);
-		private final Assignment cIsInitialAssignment_0_12_0 = (Assignment)cGroup_0_12.eContents().get(0);
-		private final Keyword cIsInitialInitKeyword_0_12_0_0 = (Keyword)cIsInitialAssignment_0_12_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_0_12_0 = (Assignment)cGroup_0_12.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_0_12_0_0 = (Keyword)cIsFinalAssignment_0_12_0.eContents().get(0);
 		private final Assignment cStateKindAssignment_0_12_1 = (Assignment)cGroup_0_12.eContents().get(1);
 		private final RuleCall cStateKindStateTypeEnumRuleCall_0_12_1_0 = (RuleCall)cStateKindAssignment_0_12_1.eContents().get(0);
-		private final Assignment cIsFinalAssignment_0_12_2 = (Assignment)cGroup_0_12.eContents().get(2);
-		private final Keyword cIsFinalFinalKeyword_0_12_2_0 = (Keyword)cIsFinalAssignment_0_12_2.eContents().get(0);
+		private final Assignment cIsInitialAssignment_0_12_2 = (Assignment)cGroup_0_12.eContents().get(2);
+		private final Keyword cIsInitialInitKeyword_0_12_2_0 = (Keyword)cIsInitialAssignment_0_12_2.eContents().get(0);
 		private final Group cGroup_0_13 = (Group)cAlternatives_0.eContents().get(13);
-		private final Assignment cIsFinalAssignment_0_13_0 = (Assignment)cGroup_0_13.eContents().get(0);
-		private final Keyword cIsFinalFinalKeyword_0_13_0_0 = (Keyword)cIsFinalAssignment_0_13_0.eContents().get(0);
-		private final Assignment cIsInitialAssignment_0_13_1 = (Assignment)cGroup_0_13.eContents().get(1);
-		private final Keyword cIsInitialInitKeyword_0_13_1_0 = (Keyword)cIsInitialAssignment_0_13_1.eContents().get(0);
-		private final Assignment cStateKindAssignment_0_13_2 = (Assignment)cGroup_0_13.eContents().get(2);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_0_13_2_0 = (RuleCall)cStateKindAssignment_0_13_2.eContents().get(0);
+		private final Assignment cStateKindAssignment_0_13_0 = (Assignment)cGroup_0_13.eContents().get(0);
+		private final RuleCall cStateKindStateTypeEnumRuleCall_0_13_0_0 = (RuleCall)cStateKindAssignment_0_13_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_0_13_1 = (Assignment)cGroup_0_13.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_0_13_1_0 = (Keyword)cIsFinalAssignment_0_13_1.eContents().get(0);
+		private final Assignment cIsInitialAssignment_0_13_2 = (Assignment)cGroup_0_13.eContents().get(2);
+		private final Keyword cIsInitialInitKeyword_0_13_2_0 = (Keyword)cIsInitialAssignment_0_13_2.eContents().get(0);
 		private final Group cGroup_0_14 = (Group)cAlternatives_0.eContents().get(14);
-		private final Assignment cIsFinalAssignment_0_14_0 = (Assignment)cGroup_0_14.eContents().get(0);
-		private final Keyword cIsFinalFinalKeyword_0_14_0_0 = (Keyword)cIsFinalAssignment_0_14_0.eContents().get(0);
-		private final Assignment cStateKindAssignment_0_14_1 = (Assignment)cGroup_0_14.eContents().get(1);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_0_14_1_0 = (RuleCall)cStateKindAssignment_0_14_1.eContents().get(0);
-		private final Assignment cIsInitialAssignment_0_14_2 = (Assignment)cGroup_0_14.eContents().get(2);
-		private final Keyword cIsInitialInitKeyword_0_14_2_0 = (Keyword)cIsInitialAssignment_0_14_2.eContents().get(0);
-		private final Group cGroup_0_15 = (Group)cAlternatives_0.eContents().get(15);
-		private final Assignment cStateKindAssignment_0_15_0 = (Assignment)cGroup_0_15.eContents().get(0);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_0_15_0_0 = (RuleCall)cStateKindAssignment_0_15_0.eContents().get(0);
-		private final Assignment cIsInitialAssignment_0_15_1 = (Assignment)cGroup_0_15.eContents().get(1);
-		private final Keyword cIsInitialInitKeyword_0_15_1_0 = (Keyword)cIsInitialAssignment_0_15_1.eContents().get(0);
-		private final Assignment cIsFinalAssignment_0_15_2 = (Assignment)cGroup_0_15.eContents().get(2);
-		private final Keyword cIsFinalFinalKeyword_0_15_2_0 = (Keyword)cIsFinalAssignment_0_15_2.eContents().get(0);
-		private final Group cGroup_0_16 = (Group)cAlternatives_0.eContents().get(16);
-		private final Assignment cStateKindAssignment_0_16_0 = (Assignment)cGroup_0_16.eContents().get(0);
-		private final RuleCall cStateKindStateTypeEnumRuleCall_0_16_0_0 = (RuleCall)cStateKindAssignment_0_16_0.eContents().get(0);
-		private final Assignment cIsFinalAssignment_0_16_1 = (Assignment)cGroup_0_16.eContents().get(1);
-		private final Keyword cIsFinalFinalKeyword_0_16_1_0 = (Keyword)cIsFinalAssignment_0_16_1.eContents().get(0);
-		private final Assignment cIsInitialAssignment_0_16_2 = (Assignment)cGroup_0_16.eContents().get(2);
-		private final Keyword cIsInitialInitKeyword_0_16_2_0 = (Keyword)cIsInitialAssignment_0_16_2.eContents().get(0);
+		private final Assignment cStateKindAssignment_0_14_0 = (Assignment)cGroup_0_14.eContents().get(0);
+		private final RuleCall cStateKindStateTypeEnumRuleCall_0_14_0_0 = (RuleCall)cStateKindAssignment_0_14_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_0_14_1 = (Assignment)cGroup_0_14.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_0_14_1_0 = (Keyword)cIsInitialAssignment_0_14_1.eContents().get(0);
+		private final Assignment cIsFinalAssignment_0_14_2 = (Assignment)cGroup_0_14.eContents().get(2);
+		private final Keyword cIsFinalFinalKeyword_0_14_2_0 = (Keyword)cIsFinalAssignment_0_14_2.eContents().get(0);
 		private final Keyword cStateKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cStateNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cStateNameIDTerminalRuleCall_2_0 = (RuleCall)cStateNameAssignment_2.eContents().get(0);
@@ -120,16 +106,14 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final RuleCall cLabelSTRINGTerminalRuleCall_3_0 = (RuleCall)cLabelAssignment_3.eContents().get(0);
 		
 		//State:
-		//  (isInitial?="init"|isInitial?="init" isFinal?="final"|isInitial?="init" stateKind=
-		//  StateType|stateKind=StateType|stateKind=StateType isInitial?="init"|stateKind=
-		//  StateType isFinal?="final"|isFinal?="final"|isFinal?="final" isInitial?="init"|
-		//  isFinal?="final" stateKind=StateType|stateKind=StateType isFinal?="final" isInitial
-		//  ?="init"|isInitial?="init" isFinal?="final" stateKind=StateType|isInitial?="init"
-		//  isFinal?="final" stateKind=StateType|isInitial?="init" stateKind=StateType isFinal
-		//  ?="final"|isFinal?="final" isInitial?="init" stateKind=StateType|isFinal?="final"
-		//  stateKind=StateType isInitial?="init"|stateKind=StateType isInitial?="init" isFinal
-		//  ?="final"|stateKind=StateType isFinal?="final" isInitial?="init")? "state"?
-		//  stateName=ID? label=STRING?; 
+		//  (isInitial?="init"|isFinal?="final"|stateKind=StateType|isInitial?="init" isFinal
+		//  ?="final"|isInitial?="init" stateKind=StateType|isFinal?="final" isInitial?="init"
+		//  |isFinal?="final" stateKind=StateType|stateKind=StateType isInitial?="init"|
+		//  stateKind=StateType isFinal?="final"|isInitial?="init" isFinal?="final" stateKind=
+		//  StateType|isInitial?="init" stateKind=StateType isFinal?="final"|isFinal?="final"
+		//  isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
+		//  isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
+		//  =StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING?; 
 		////StateList:
 		////	(states+=State)*
 		////;
@@ -140,18 +124,25 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//   // you have to list all possible combinations seperately 
 		//   // arbitrary positions for optional alternatives is not possible
 		//   // or you have to use ((..)?(..)?)* and then validate them manually   
-		//   	 
-		//       
+		//  
+		//  
+		//  	
+		//  
+		//  // n=3, k=1
+		//     
+		//    
+		//    
+		//  
+		//  // n=3, k=2
+		//          
 		//      
-		//    
 		//       
 		//       
-		//    
 		//       
 		//       
-		//         
-		//        
-		//        
+		//
+		//  // n=3, k=3
+		//           
 		//        
 		//        
 		//         
@@ -178,33 +169,38 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		////;
 		public ParserRule getRule() { return rule; }
 
-		//(isInitial?="init"|isInitial?="init" isFinal?="final"|isInitial?="init" stateKind=
-		//StateType|stateKind=StateType|stateKind=StateType isInitial?="init"|stateKind=
-		//StateType isFinal?="final"|isFinal?="final"|isFinal?="final" isInitial?="init"|
-		//isFinal?="final" stateKind=StateType|stateKind=StateType isFinal?="final" isInitial
-		//?="init"|isInitial?="init" isFinal?="final" stateKind=StateType|isInitial?="init"
-		//isFinal?="final" stateKind=StateType|isInitial?="init" stateKind=StateType isFinal
-		//?="final"|isFinal?="final" isInitial?="init" stateKind=StateType|isFinal?="final"
-		//stateKind=StateType isInitial?="init"|stateKind=StateType isInitial?="init" isFinal
-		//?="final"|stateKind=StateType isFinal?="final" isInitial?="init")? "state"?
-		//stateName=ID? label=STRING? 
+		//(isInitial?="init"|isFinal?="final"|stateKind=StateType|isInitial?="init" isFinal
+		//?="final"|isInitial?="init" stateKind=StateType|isFinal?="final" isInitial?="init"
+		//|isFinal?="final" stateKind=StateType|stateKind=StateType isInitial?="init"|
+		//stateKind=StateType isFinal?="final"|isInitial?="init" isFinal?="final" stateKind=
+		//StateType|isInitial?="init" stateKind=StateType isFinal?="final"|isFinal?="final"
+		//isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
+		//isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
+		//=StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING? 
 		////!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
 		//   //((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*
 		//   // you have to list all possible combinations seperately 
 		//   // arbitrary positions for optional alternatives is not possible
 		//   // or you have to use ((..)?(..)?)* and then validate them manually   
-		//   	 
-		//       
+		//  
+		//  
+		//  	
+		//  
+		//  // n=3, k=1
+		//     
+		//    
+		//    
+		//  
+		//  // n=3, k=2
+		//          
 		//      
-		//    
 		//       
 		//       
-		//    
 		//       
 		//       
-		//         
-		//        
-		//        
+		//
+		//  // n=3, k=3
+		//           
 		//        
 		//        
 		//         
@@ -219,20 +215,37 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//   //	(outgoingTransitions+=Transition)*
 		public Group getGroup() { return cGroup; }
 
-		//(isInitial?="init"|isInitial?="init" isFinal?="final"|isInitial?="init" stateKind=
-		//StateType|stateKind=StateType|stateKind=StateType isInitial?="init"|stateKind=
-		//StateType isFinal?="final"|isFinal?="final"|isFinal?="final" isInitial?="init"|
-		//isFinal?="final" stateKind=StateType|stateKind=StateType isFinal?="final" isInitial
-		//?="init"|isInitial?="init" isFinal?="final" stateKind=StateType|isInitial?="init"
-		//isFinal?="final" stateKind=StateType|isInitial?="init" stateKind=StateType isFinal
-		//?="final"|isFinal?="final" isInitial?="init" stateKind=StateType|isFinal?="final"
-		//stateKind=StateType isInitial?="init"|stateKind=StateType isInitial?="init" isFinal
-		//?="final"|stateKind=StateType isFinal?="final" isInitial?="init")? 
+		//(isInitial?="init"|isFinal?="final"|stateKind=StateType|isInitial?="init" isFinal
+		//?="final"|isInitial?="init" stateKind=StateType|isFinal?="final" isInitial?="init"
+		//|isFinal?="final" stateKind=StateType|stateKind=StateType isInitial?="init"|
+		//stateKind=StateType isFinal?="final"|isInitial?="init" isFinal?="final" stateKind=
+		//StateType|isInitial?="init" stateKind=StateType isFinal?="final"|isFinal?="final"
+		//isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
+		//isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
+		//=StateType isInitial?="init" isFinal?="final")? 
 		////!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
 		//   //((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*
 		//   // you have to list all possible combinations seperately 
 		//   // arbitrary positions for optional alternatives is not possible
-		//   // or you have to use ((..)?(..)?)* and then validate them manually
+		//   // or you have to use ((..)?(..)?)* and then validate them manually   
+		//  
+		//  
+		//  	
+		//  
+		//  // n=3, k=1
+		//     
+		//    
+		//    
+		//  
+		//  // n=3, k=2
+		//          
+		//      
+		//       
+		//       
+		//       
+		//       
+		//
+		//  // n=3, k=3
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//isInitial?="init"
@@ -241,86 +254,86 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//"init"
 		public Keyword getIsInitialInitKeyword_0_0_0() { return cIsInitialInitKeyword_0_0_0; }
 
-		//isInitial?="init" isFinal?="final"
-		public Group getGroup_0_1() { return cGroup_0_1; }
-
-		//isInitial?="init"
-		public Assignment getIsInitialAssignment_0_1_0() { return cIsInitialAssignment_0_1_0; }
-
-		//"init"
-		public Keyword getIsInitialInitKeyword_0_1_0_0() { return cIsInitialInitKeyword_0_1_0_0; }
-
 		//isFinal?="final"
-		public Assignment getIsFinalAssignment_0_1_1() { return cIsFinalAssignment_0_1_1; }
+		public Assignment getIsFinalAssignment_0_1() { return cIsFinalAssignment_0_1; }
 
 		//"final"
-		public Keyword getIsFinalFinalKeyword_0_1_1_0() { return cIsFinalFinalKeyword_0_1_1_0; }
+		public Keyword getIsFinalFinalKeyword_0_1_0() { return cIsFinalFinalKeyword_0_1_0; }
+
+		//stateKind=StateType
+		public Assignment getStateKindAssignment_0_2() { return cStateKindAssignment_0_2; }
+
+		//StateType
+		public RuleCall getStateKindStateTypeEnumRuleCall_0_2_0() { return cStateKindStateTypeEnumRuleCall_0_2_0; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_0_3() { return cGroup_0_3; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_0_3_0() { return cIsInitialAssignment_0_3_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_0_3_0_0() { return cIsInitialInitKeyword_0_3_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_0_3_1() { return cIsFinalAssignment_0_3_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_0_3_1_0() { return cIsFinalFinalKeyword_0_3_1_0; }
 
 		//isInitial?="init" stateKind=StateType
-		public Group getGroup_0_2() { return cGroup_0_2; }
-
-		//isInitial?="init"
-		public Assignment getIsInitialAssignment_0_2_0() { return cIsInitialAssignment_0_2_0; }
-
-		//"init"
-		public Keyword getIsInitialInitKeyword_0_2_0_0() { return cIsInitialInitKeyword_0_2_0_0; }
-
-		//stateKind=StateType
-		public Assignment getStateKindAssignment_0_2_1() { return cStateKindAssignment_0_2_1; }
-
-		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_0_2_1_0() { return cStateKindStateTypeEnumRuleCall_0_2_1_0; }
-
-		//stateKind=StateType
-		public Assignment getStateKindAssignment_0_3() { return cStateKindAssignment_0_3; }
-
-		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_0_3_0() { return cStateKindStateTypeEnumRuleCall_0_3_0; }
-
-		//stateKind=StateType isInitial?="init"
 		public Group getGroup_0_4() { return cGroup_0_4; }
 
-		//stateKind=StateType
-		public Assignment getStateKindAssignment_0_4_0() { return cStateKindAssignment_0_4_0; }
-
-		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_0_4_0_0() { return cStateKindStateTypeEnumRuleCall_0_4_0_0; }
-
 		//isInitial?="init"
-		public Assignment getIsInitialAssignment_0_4_1() { return cIsInitialAssignment_0_4_1; }
+		public Assignment getIsInitialAssignment_0_4_0() { return cIsInitialAssignment_0_4_0; }
 
 		//"init"
-		public Keyword getIsInitialInitKeyword_0_4_1_0() { return cIsInitialInitKeyword_0_4_1_0; }
-
-		//stateKind=StateType isFinal?="final"
-		public Group getGroup_0_5() { return cGroup_0_5; }
+		public Keyword getIsInitialInitKeyword_0_4_0_0() { return cIsInitialInitKeyword_0_4_0_0; }
 
 		//stateKind=StateType
-		public Assignment getStateKindAssignment_0_5_0() { return cStateKindAssignment_0_5_0; }
+		public Assignment getStateKindAssignment_0_4_1() { return cStateKindAssignment_0_4_1; }
 
 		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_0_5_0_0() { return cStateKindStateTypeEnumRuleCall_0_5_0_0; }
-
-		//isFinal?="final"
-		public Assignment getIsFinalAssignment_0_5_1() { return cIsFinalAssignment_0_5_1; }
-
-		//"final"
-		public Keyword getIsFinalFinalKeyword_0_5_1_0() { return cIsFinalFinalKeyword_0_5_1_0; }
-
-		//isFinal?="final"
-		public Assignment getIsFinalAssignment_0_6() { return cIsFinalAssignment_0_6; }
-
-		//"final"
-		public Keyword getIsFinalFinalKeyword_0_6_0() { return cIsFinalFinalKeyword_0_6_0; }
+		public RuleCall getStateKindStateTypeEnumRuleCall_0_4_1_0() { return cStateKindStateTypeEnumRuleCall_0_4_1_0; }
 
 		//isFinal?="final" isInitial?="init"
-		public Group getGroup_0_7() { return cGroup_0_7; }
+		public Group getGroup_0_5() { return cGroup_0_5; }
 
 		//isFinal?="final"
-		public Assignment getIsFinalAssignment_0_7_0() { return cIsFinalAssignment_0_7_0; }
+		public Assignment getIsFinalAssignment_0_5_0() { return cIsFinalAssignment_0_5_0; }
 
 		//"final"
-		public Keyword getIsFinalFinalKeyword_0_7_0_0() { return cIsFinalFinalKeyword_0_7_0_0; }
+		public Keyword getIsFinalFinalKeyword_0_5_0_0() { return cIsFinalFinalKeyword_0_5_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_0_5_1() { return cIsInitialAssignment_0_5_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_0_5_1_0() { return cIsInitialInitKeyword_0_5_1_0; }
+
+		//isFinal?="final" stateKind=StateType
+		public Group getGroup_0_6() { return cGroup_0_6; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_0_6_0() { return cIsFinalAssignment_0_6_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_0_6_0_0() { return cIsFinalFinalKeyword_0_6_0_0; }
+
+		//stateKind=StateType
+		public Assignment getStateKindAssignment_0_6_1() { return cStateKindAssignment_0_6_1; }
+
+		//StateType
+		public RuleCall getStateKindStateTypeEnumRuleCall_0_6_1_0() { return cStateKindStateTypeEnumRuleCall_0_6_1_0; }
+
+		//stateKind=StateType isInitial?="init"
+		public Group getGroup_0_7() { return cGroup_0_7; }
+
+		//stateKind=StateType
+		public Assignment getStateKindAssignment_0_7_0() { return cStateKindAssignment_0_7_0; }
+
+		//StateType
+		public RuleCall getStateKindStateTypeEnumRuleCall_0_7_0_0() { return cStateKindStateTypeEnumRuleCall_0_7_0_0; }
 
 		//isInitial?="init"
 		public Assignment getIsInitialAssignment_0_7_1() { return cIsInitialAssignment_0_7_1; }
@@ -328,29 +341,29 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//"init"
 		public Keyword getIsInitialInitKeyword_0_7_1_0() { return cIsInitialInitKeyword_0_7_1_0; }
 
-		//isFinal?="final" stateKind=StateType
+		//stateKind=StateType isFinal?="final"
 		public Group getGroup_0_8() { return cGroup_0_8; }
 
+		//stateKind=StateType
+		public Assignment getStateKindAssignment_0_8_0() { return cStateKindAssignment_0_8_0; }
+
+		//StateType
+		public RuleCall getStateKindStateTypeEnumRuleCall_0_8_0_0() { return cStateKindStateTypeEnumRuleCall_0_8_0_0; }
+
 		//isFinal?="final"
-		public Assignment getIsFinalAssignment_0_8_0() { return cIsFinalAssignment_0_8_0; }
+		public Assignment getIsFinalAssignment_0_8_1() { return cIsFinalAssignment_0_8_1; }
 
 		//"final"
-		public Keyword getIsFinalFinalKeyword_0_8_0_0() { return cIsFinalFinalKeyword_0_8_0_0; }
+		public Keyword getIsFinalFinalKeyword_0_8_1_0() { return cIsFinalFinalKeyword_0_8_1_0; }
 
-		//stateKind=StateType
-		public Assignment getStateKindAssignment_0_8_1() { return cStateKindAssignment_0_8_1; }
-
-		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_0_8_1_0() { return cStateKindStateTypeEnumRuleCall_0_8_1_0; }
-
-		//stateKind=StateType isFinal?="final" isInitial?="init"
+		//isInitial?="init" isFinal?="final" stateKind=StateType
 		public Group getGroup_0_9() { return cGroup_0_9; }
 
-		//stateKind=StateType
-		public Assignment getStateKindAssignment_0_9_0() { return cStateKindAssignment_0_9_0; }
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_0_9_0() { return cIsInitialAssignment_0_9_0; }
 
-		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_0_9_0_0() { return cStateKindStateTypeEnumRuleCall_0_9_0_0; }
+		//"init"
+		public Keyword getIsInitialInitKeyword_0_9_0_0() { return cIsInitialInitKeyword_0_9_0_0; }
 
 		//isFinal?="final"
 		public Assignment getIsFinalAssignment_0_9_1() { return cIsFinalAssignment_0_9_1; }
@@ -358,13 +371,13 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//"final"
 		public Keyword getIsFinalFinalKeyword_0_9_1_0() { return cIsFinalFinalKeyword_0_9_1_0; }
 
-		//isInitial?="init"
-		public Assignment getIsInitialAssignment_0_9_2() { return cIsInitialAssignment_0_9_2; }
+		//stateKind=StateType
+		public Assignment getStateKindAssignment_0_9_2() { return cStateKindAssignment_0_9_2; }
 
-		//"init"
-		public Keyword getIsInitialInitKeyword_0_9_2_0() { return cIsInitialInitKeyword_0_9_2_0; }
+		//StateType
+		public RuleCall getStateKindStateTypeEnumRuleCall_0_9_2_0() { return cStateKindStateTypeEnumRuleCall_0_9_2_0; }
 
-		//isInitial?="init" isFinal?="final" stateKind=StateType
+		//isInitial?="init" stateKind=StateType isFinal?="final"
 		public Group getGroup_0_10() { return cGroup_0_10; }
 
 		//isInitial?="init"
@@ -373,32 +386,32 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//"init"
 		public Keyword getIsInitialInitKeyword_0_10_0_0() { return cIsInitialInitKeyword_0_10_0_0; }
 
-		//isFinal?="final"
-		public Assignment getIsFinalAssignment_0_10_1() { return cIsFinalAssignment_0_10_1; }
-
-		//"final"
-		public Keyword getIsFinalFinalKeyword_0_10_1_0() { return cIsFinalFinalKeyword_0_10_1_0; }
-
 		//stateKind=StateType
-		public Assignment getStateKindAssignment_0_10_2() { return cStateKindAssignment_0_10_2; }
+		public Assignment getStateKindAssignment_0_10_1() { return cStateKindAssignment_0_10_1; }
 
 		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_0_10_2_0() { return cStateKindStateTypeEnumRuleCall_0_10_2_0; }
-
-		//isInitial?="init" isFinal?="final" stateKind=StateType
-		public Group getGroup_0_11() { return cGroup_0_11; }
-
-		//isInitial?="init"
-		public Assignment getIsInitialAssignment_0_11_0() { return cIsInitialAssignment_0_11_0; }
-
-		//"init"
-		public Keyword getIsInitialInitKeyword_0_11_0_0() { return cIsInitialInitKeyword_0_11_0_0; }
+		public RuleCall getStateKindStateTypeEnumRuleCall_0_10_1_0() { return cStateKindStateTypeEnumRuleCall_0_10_1_0; }
 
 		//isFinal?="final"
-		public Assignment getIsFinalAssignment_0_11_1() { return cIsFinalAssignment_0_11_1; }
+		public Assignment getIsFinalAssignment_0_10_2() { return cIsFinalAssignment_0_10_2; }
 
 		//"final"
-		public Keyword getIsFinalFinalKeyword_0_11_1_0() { return cIsFinalFinalKeyword_0_11_1_0; }
+		public Keyword getIsFinalFinalKeyword_0_10_2_0() { return cIsFinalFinalKeyword_0_10_2_0; }
+
+		//isFinal?="final" isInitial?="init" stateKind=StateType
+		public Group getGroup_0_11() { return cGroup_0_11; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_0_11_0() { return cIsFinalAssignment_0_11_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_0_11_0_0() { return cIsFinalFinalKeyword_0_11_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_0_11_1() { return cIsInitialAssignment_0_11_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_0_11_1_0() { return cIsInitialInitKeyword_0_11_1_0; }
 
 		//stateKind=StateType
 		public Assignment getStateKindAssignment_0_11_2() { return cStateKindAssignment_0_11_2; }
@@ -406,14 +419,14 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//StateType
 		public RuleCall getStateKindStateTypeEnumRuleCall_0_11_2_0() { return cStateKindStateTypeEnumRuleCall_0_11_2_0; }
 
-		//isInitial?="init" stateKind=StateType isFinal?="final"
+		//isFinal?="final" stateKind=StateType isInitial?="init"
 		public Group getGroup_0_12() { return cGroup_0_12; }
 
-		//isInitial?="init"
-		public Assignment getIsInitialAssignment_0_12_0() { return cIsInitialAssignment_0_12_0; }
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_0_12_0() { return cIsFinalAssignment_0_12_0; }
 
-		//"init"
-		public Keyword getIsInitialInitKeyword_0_12_0_0() { return cIsInitialInitKeyword_0_12_0_0; }
+		//"final"
+		public Keyword getIsFinalFinalKeyword_0_12_0_0() { return cIsFinalFinalKeyword_0_12_0_0; }
 
 		//stateKind=StateType
 		public Assignment getStateKindAssignment_0_12_1() { return cStateKindAssignment_0_12_1; }
@@ -421,95 +434,53 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//StateType
 		public RuleCall getStateKindStateTypeEnumRuleCall_0_12_1_0() { return cStateKindStateTypeEnumRuleCall_0_12_1_0; }
 
-		//isFinal?="final"
-		public Assignment getIsFinalAssignment_0_12_2() { return cIsFinalAssignment_0_12_2; }
-
-		//"final"
-		public Keyword getIsFinalFinalKeyword_0_12_2_0() { return cIsFinalFinalKeyword_0_12_2_0; }
-
-		//isFinal?="final" isInitial?="init" stateKind=StateType
-		public Group getGroup_0_13() { return cGroup_0_13; }
-
-		//isFinal?="final"
-		public Assignment getIsFinalAssignment_0_13_0() { return cIsFinalAssignment_0_13_0; }
-
-		//"final"
-		public Keyword getIsFinalFinalKeyword_0_13_0_0() { return cIsFinalFinalKeyword_0_13_0_0; }
-
 		//isInitial?="init"
-		public Assignment getIsInitialAssignment_0_13_1() { return cIsInitialAssignment_0_13_1; }
+		public Assignment getIsInitialAssignment_0_12_2() { return cIsInitialAssignment_0_12_2; }
 
 		//"init"
-		public Keyword getIsInitialInitKeyword_0_13_1_0() { return cIsInitialInitKeyword_0_13_1_0; }
-
-		//stateKind=StateType
-		public Assignment getStateKindAssignment_0_13_2() { return cStateKindAssignment_0_13_2; }
-
-		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_0_13_2_0() { return cStateKindStateTypeEnumRuleCall_0_13_2_0; }
-
-		//isFinal?="final" stateKind=StateType isInitial?="init"
-		public Group getGroup_0_14() { return cGroup_0_14; }
-
-		//isFinal?="final"
-		public Assignment getIsFinalAssignment_0_14_0() { return cIsFinalAssignment_0_14_0; }
-
-		//"final"
-		public Keyword getIsFinalFinalKeyword_0_14_0_0() { return cIsFinalFinalKeyword_0_14_0_0; }
-
-		//stateKind=StateType
-		public Assignment getStateKindAssignment_0_14_1() { return cStateKindAssignment_0_14_1; }
-
-		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_0_14_1_0() { return cStateKindStateTypeEnumRuleCall_0_14_1_0; }
-
-		//isInitial?="init"
-		public Assignment getIsInitialAssignment_0_14_2() { return cIsInitialAssignment_0_14_2; }
-
-		//"init"
-		public Keyword getIsInitialInitKeyword_0_14_2_0() { return cIsInitialInitKeyword_0_14_2_0; }
-
-		//stateKind=StateType isInitial?="init" isFinal?="final"
-		public Group getGroup_0_15() { return cGroup_0_15; }
-
-		//stateKind=StateType
-		public Assignment getStateKindAssignment_0_15_0() { return cStateKindAssignment_0_15_0; }
-
-		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_0_15_0_0() { return cStateKindStateTypeEnumRuleCall_0_15_0_0; }
-
-		//isInitial?="init"
-		public Assignment getIsInitialAssignment_0_15_1() { return cIsInitialAssignment_0_15_1; }
-
-		//"init"
-		public Keyword getIsInitialInitKeyword_0_15_1_0() { return cIsInitialInitKeyword_0_15_1_0; }
-
-		//isFinal?="final"
-		public Assignment getIsFinalAssignment_0_15_2() { return cIsFinalAssignment_0_15_2; }
-
-		//"final"
-		public Keyword getIsFinalFinalKeyword_0_15_2_0() { return cIsFinalFinalKeyword_0_15_2_0; }
+		public Keyword getIsInitialInitKeyword_0_12_2_0() { return cIsInitialInitKeyword_0_12_2_0; }
 
 		//stateKind=StateType isFinal?="final" isInitial?="init"
-		public Group getGroup_0_16() { return cGroup_0_16; }
+		public Group getGroup_0_13() { return cGroup_0_13; }
 
 		//stateKind=StateType
-		public Assignment getStateKindAssignment_0_16_0() { return cStateKindAssignment_0_16_0; }
+		public Assignment getStateKindAssignment_0_13_0() { return cStateKindAssignment_0_13_0; }
 
 		//StateType
-		public RuleCall getStateKindStateTypeEnumRuleCall_0_16_0_0() { return cStateKindStateTypeEnumRuleCall_0_16_0_0; }
+		public RuleCall getStateKindStateTypeEnumRuleCall_0_13_0_0() { return cStateKindStateTypeEnumRuleCall_0_13_0_0; }
 
 		//isFinal?="final"
-		public Assignment getIsFinalAssignment_0_16_1() { return cIsFinalAssignment_0_16_1; }
+		public Assignment getIsFinalAssignment_0_13_1() { return cIsFinalAssignment_0_13_1; }
 
 		//"final"
-		public Keyword getIsFinalFinalKeyword_0_16_1_0() { return cIsFinalFinalKeyword_0_16_1_0; }
+		public Keyword getIsFinalFinalKeyword_0_13_1_0() { return cIsFinalFinalKeyword_0_13_1_0; }
 
 		//isInitial?="init"
-		public Assignment getIsInitialAssignment_0_16_2() { return cIsInitialAssignment_0_16_2; }
+		public Assignment getIsInitialAssignment_0_13_2() { return cIsInitialAssignment_0_13_2; }
 
 		//"init"
-		public Keyword getIsInitialInitKeyword_0_16_2_0() { return cIsInitialInitKeyword_0_16_2_0; }
+		public Keyword getIsInitialInitKeyword_0_13_2_0() { return cIsInitialInitKeyword_0_13_2_0; }
+
+		//stateKind=StateType isInitial?="init" isFinal?="final"
+		public Group getGroup_0_14() { return cGroup_0_14; }
+
+		//stateKind=StateType
+		public Assignment getStateKindAssignment_0_14_0() { return cStateKindAssignment_0_14_0; }
+
+		//StateType
+		public RuleCall getStateKindStateTypeEnumRuleCall_0_14_0_0() { return cStateKindStateTypeEnumRuleCall_0_14_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_0_14_1() { return cIsInitialAssignment_0_14_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_0_14_1_0() { return cIsInitialInitKeyword_0_14_1_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_0_14_2() { return cIsFinalAssignment_0_14_2; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_0_14_2_0() { return cIsFinalFinalKeyword_0_14_2_0; }
 
 		//"state"?
 		public Keyword getStateKeyword_1() { return cStateKeyword_1; }
@@ -856,16 +827,14 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 
 	
 	//State:
-	//  (isInitial?="init"|isInitial?="init" isFinal?="final"|isInitial?="init" stateKind=
-	//  StateType|stateKind=StateType|stateKind=StateType isInitial?="init"|stateKind=
-	//  StateType isFinal?="final"|isFinal?="final"|isFinal?="final" isInitial?="init"|
-	//  isFinal?="final" stateKind=StateType|stateKind=StateType isFinal?="final" isInitial
-	//  ?="init"|isInitial?="init" isFinal?="final" stateKind=StateType|isInitial?="init"
-	//  isFinal?="final" stateKind=StateType|isInitial?="init" stateKind=StateType isFinal
-	//  ?="final"|isFinal?="final" isInitial?="init" stateKind=StateType|isFinal?="final"
-	//  stateKind=StateType isInitial?="init"|stateKind=StateType isInitial?="init" isFinal
-	//  ?="final"|stateKind=StateType isFinal?="final" isInitial?="init")? "state"?
-	//  stateName=ID? label=STRING?; 
+	//  (isInitial?="init"|isFinal?="final"|stateKind=StateType|isInitial?="init" isFinal
+	//  ?="final"|isInitial?="init" stateKind=StateType|isFinal?="final" isInitial?="init"
+	//  |isFinal?="final" stateKind=StateType|stateKind=StateType isInitial?="init"|
+	//  stateKind=StateType isFinal?="final"|isInitial?="init" isFinal?="final" stateKind=
+	//  StateType|isInitial?="init" stateKind=StateType isFinal?="final"|isFinal?="final"
+	//  isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
+	//  isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
+	//  =StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING?; 
 	////StateList:
 	////	(states+=State)*
 	////;
@@ -876,18 +845,25 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	//   // you have to list all possible combinations seperately 
 	//   // arbitrary positions for optional alternatives is not possible
 	//   // or you have to use ((..)?(..)?)* and then validate them manually   
-	//   	 
-	//       
+	//  
+	//  
+	//  	
+	//  
+	//  // n=3, k=1
+	//     
+	//    
+	//    
+	//  
+	//  // n=3, k=2
+	//          
 	//      
-	//    
 	//       
 	//       
-	//    
 	//       
 	//       
-	//         
-	//        
-	//        
+	//
+	//  // n=3, k=3
+	//           
 	//        
 	//        
 	//         

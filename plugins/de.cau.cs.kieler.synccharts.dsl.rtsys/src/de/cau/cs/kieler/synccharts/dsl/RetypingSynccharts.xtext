@@ -13,24 +13,20 @@
  ******************************************************************************//******************************************************************************
  * Namenueberlegungen fuer die neue Sprache:
  * RTSYS - ReTyped Synccharts
- * RTSYS - ReTouched Synccharts
  * RTSYS - ReTentive Language for Synccharts
  * RTSYS - RevisiTing Synccharts
  * RTSYS - Rational Text for Synccharts // alle anderen waren irrational:p
- * RTSYS - Recasting Synccharts (ReKasting fuer KIEL?) //unsmypatisch
+ * RTSYS - Recasting Synccharts (ReKasting fuer KIEL?) //doof
  * RTSYS - Recapulated Synccharts (ReKapulated fuer KIEL?) //uebertrieben
- * RVH - Rational and Visionary Handling of Synccharts //Vision find ich passend:) 
+ * RVH - Rational and Visionary Handling of Synccharts //Vision ist passend:) 
  * SEWINCH -Simple Way of Editing Synccharts // Sevinc halam -- DA Name?
  * KITTY - KIeler TexTual sYnccharts // ssssuessss 
- ******************************************************************************/grammar
-de.cau.cs.kieler.synccharts.dsl.RetypingSynccharts with org.eclipse.xtext.common.
-Terminals
-
-generate retypingSynccharts
-"http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts" //import "platform:/resource/de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/TransitionLabel.ecore" as transitionlabel
-
-
+ ******************************************************************************/
+grammar de.cau.cs.kieler.synccharts.dsl.RetypingSynccharts with org.eclipse.xtext.common.Terminals
+generate retypingSynccharts "http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts" 
+//import "platform:/resource/de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/TransitionLabel.ecore" as transitionlabel
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
 //StateList:
 //	(states+=State)*
 //;
@@ -41,30 +37,34 @@ State:
   // you have to list all possible combinations seperately 
   // arbitrary positions for optional alternatives is not possible
   // or you have to use ((..)?(..)?)* and then validate them manually   
-  (	(isInitial?='init')
-  | (isInitial?='init' isFinal?='final') 
-  | (isInitial?='init' stateKind=StateType)
-  | (stateKind=StateType)
-  | (stateKind=StateType isInitial?='init') 
-  | (stateKind=StateType isFinal?='final') 
+  (	
+  // n=3, k=1
+    (isInitial?='init')
   | (isFinal?='final')
+  | (stateKind=StateType)
+  
+  // n=3, k=2
+  | (isInitial?='init' isFinal?='final')   
+  | (isInitial?='init' stateKind=StateType)
   | (isFinal?='final' isInitial?='init') 
   | (isFinal?='final' stateKind=StateType) 
+  | (stateKind=StateType isInitial?='init') 
+  | (stateKind=StateType isFinal?='final') 
+
+  // n=3, k=3
+  | (isInitial?='init' isFinal?='final' stateKind=StateType)  
+  | (isInitial?='init' stateKind=StateType isFinal?='final')
+  | (isFinal?='final' isInitial?='init' stateKind=StateType)
+  | (isFinal?='final' stateKind=StateType isInitial?='init') 
   | (stateKind=StateType isFinal?='final' isInitial?='init') 
-  | (isInitial?='init' isFinal?='final' (stateKind=StateType))
-  | (isInitial?='init' isFinal?='final' (stateKind=StateType))
-  | (isInitial?='init' (stateKind=StateType) isFinal?='final')
-  | (isFinal?='final' isInitial?='init' (stateKind=StateType))
-  | (isFinal?='final' (stateKind=StateType) isInitial?='init') 
-  | ((stateKind=StateType) isInitial?='init' isFinal?='final') 
-  | ((stateKind=StateType)  isFinal?='final' isInitial?='init')
+  | (stateKind=StateType isInitial?='init' isFinal?='final') 
   )?
   
   ('state')? // optional keyword, cf.Meeting_TextualSyntax-II
   (stateName=ID)? //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
   (label=STRING)? 
 //  (stateContent=StateContent)?
-  //	(outgoingTransitions+=Transition)*
+//	(outgoingTransitions+=Transition)*
 ; 
 //StateContent:
 //	'{'

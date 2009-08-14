@@ -16,26 +16,45 @@
           <groups xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
             <terminal xsi:type="xtext:Keyword" value="init"/>
           </groups>
-          <groups xsi:type="xtext:Group">
-            <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="init"/>
-            </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="final"/>
-            </tokens>
-          </groups>
-          <groups xsi:type="xtext:Group">
-            <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="init"/>
-            </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
-            </tokens>
+          <groups xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
+            <terminal xsi:type="xtext:Keyword" value="final"/>
           </groups>
           <groups xsi:type="xtext:Assignment" feature="stateKind" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
           </groups>
           <groups xsi:type="xtext:Group">
+            <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="init"/>
+            </tokens>
+            <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="final"/>
+            </tokens>
+          </groups>
+          <groups xsi:type="xtext:Group">
+            <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="init"/>
+            </tokens>
+            <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+            </tokens>
+          </groups>
+          <groups xsi:type="xtext:Group">
+            <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="final"/>
+            </tokens>
+            <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="init"/>
+            </tokens>
+          </groups>
+          <groups xsi:type="xtext:Group">
+            <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="final"/>
+            </tokens>
+            <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+            </tokens>
+          </groups>
+          <groups xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
             </tokens>
@@ -49,47 +68,6 @@
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
               <terminal xsi:type="xtext:Keyword" value="final"/>
-            </tokens>
-          </groups>
-          <groups xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
-            <terminal xsi:type="xtext:Keyword" value="final"/>
-          </groups>
-          <groups xsi:type="xtext:Group">
-            <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="final"/>
-            </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="init"/>
-            </tokens>
-          </groups>
-          <groups xsi:type="xtext:Group">
-            <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="final"/>
-            </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
-            </tokens>
-          </groups>
-          <groups xsi:type="xtext:Group">
-            <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
-            </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="final"/>
-            </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="init"/>
-            </tokens>
-          </groups>
-          <groups xsi:type="xtext:Group">
-            <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="init"/>
-            </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="final"/>
-            </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
             </tokens>
           </groups>
           <groups xsi:type="xtext:Group">
@@ -140,22 +118,22 @@
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
             </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="init"/>
-            </tokens>
             <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
               <terminal xsi:type="xtext:Keyword" value="final"/>
+            </tokens>
+            <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="init"/>
             </tokens>
           </groups>
           <groups xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
             </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="final"/>
-            </tokens>
             <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
               <terminal xsi:type="xtext:Keyword" value="init"/>
+            </tokens>
+            <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="final"/>
             </tokens>
           </groups>
         </tokens>

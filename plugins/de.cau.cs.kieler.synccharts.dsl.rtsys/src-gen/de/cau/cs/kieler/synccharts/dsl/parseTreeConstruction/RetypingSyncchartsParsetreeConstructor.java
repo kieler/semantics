@@ -45,16 +45,14 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule State ****************
  *
  * State:
- *   (isInitial?="init"|isInitial?="init" isFinal?="final"|isInitial?="init" stateKind=
- *   StateType|stateKind=StateType|stateKind=StateType isInitial?="init"|stateKind=
- *   StateType isFinal?="final"|isFinal?="final"|isFinal?="final" isInitial?="init"|
- *   isFinal?="final" stateKind=StateType|stateKind=StateType isFinal?="final" isInitial
- *   ?="init"|isInitial?="init" isFinal?="final" stateKind=StateType|isInitial?="init"
- *   isFinal?="final" stateKind=StateType|isInitial?="init" stateKind=StateType isFinal
- *   ?="final"|isFinal?="final" isInitial?="init" stateKind=StateType|isFinal?="final"
- *   stateKind=StateType isInitial?="init"|stateKind=StateType isInitial?="init" isFinal
- *   ?="final"|stateKind=StateType isFinal?="final" isInitial?="init")? "state"?
- *   stateName=ID? label=STRING?; 
+ *   (isInitial?="init"|isFinal?="final"|stateKind=StateType|isInitial?="init" isFinal
+ *   ?="final"|isInitial?="init" stateKind=StateType|isFinal?="final" isInitial?="init"
+ *   |isFinal?="final" stateKind=StateType|stateKind=StateType isInitial?="init"|
+ *   stateKind=StateType isFinal?="final"|isInitial?="init" isFinal?="final" stateKind=
+ *   StateType|isInitial?="init" stateKind=StateType isFinal?="final"|isFinal?="final"
+ *   isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
+ *   isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
+ *   =StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING?; 
  * //StateList:
  * //	(states+=State)*
  * //;
@@ -65,18 +63,25 @@ protected class ThisRootNode extends RootToken {
  *    // you have to list all possible combinations seperately 
  *    // arbitrary positions for optional alternatives is not possible
  *    // or you have to use ((..)?(..)?)* and then validate them manually   
- *    	 
- *        
+ *   
+ *   
+ *   	
+ *   
+ *   // n=3, k=1
+ *      
+ *     
+ *     
+ *   
+ *   // n=3, k=2
+ *           
  *       
- *     
  *        
  *        
- *     
  *        
  *        
- *          
- *         
- *         
+ * 
+ *   // n=3, k=3
+ *            
  *         
  *         
  *          
@@ -104,33 +109,38 @@ protected class ThisRootNode extends RootToken {
  *
  **/
 
-// (isInitial?="init"|isInitial?="init" isFinal?="final"|isInitial?="init" stateKind=
-// StateType|stateKind=StateType|stateKind=StateType isInitial?="init"|stateKind=
-// StateType isFinal?="final"|isFinal?="final"|isFinal?="final" isInitial?="init"|
-// isFinal?="final" stateKind=StateType|stateKind=StateType isFinal?="final" isInitial
-// ?="init"|isInitial?="init" isFinal?="final" stateKind=StateType|isInitial?="init"
-// isFinal?="final" stateKind=StateType|isInitial?="init" stateKind=StateType isFinal
-// ?="final"|isFinal?="final" isInitial?="init" stateKind=StateType|isFinal?="final"
-// stateKind=StateType isInitial?="init"|stateKind=StateType isInitial?="init" isFinal
-// ?="final"|stateKind=StateType isFinal?="final" isInitial?="init")? "state"?
-// stateName=ID? label=STRING? 
+// (isInitial?="init"|isFinal?="final"|stateKind=StateType|isInitial?="init" isFinal
+// ?="final"|isInitial?="init" stateKind=StateType|isFinal?="final" isInitial?="init"
+// |isFinal?="final" stateKind=StateType|stateKind=StateType isInitial?="init"|
+// stateKind=StateType isFinal?="final"|isInitial?="init" isFinal?="final" stateKind=
+// StateType|isInitial?="init" stateKind=StateType isFinal?="final"|isFinal?="final"
+// isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
+// isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
+// =StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING? 
 // //!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
 //    //((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*
 //    // you have to list all possible combinations seperately 
 //    // arbitrary positions for optional alternatives is not possible
 //    // or you have to use ((..)?(..)?)* and then validate them manually   
-//    	 
-//        
+//   
+//   
+//   	
+//   
+//   // n=3, k=1
+//      
+//     
+//     
+//   
+//   // n=3, k=2
+//           
 //       
-//     
 //        
 //        
-//     
 //        
 //        
-//          
-//         
-//         
+// 
+//   // n=3, k=3
+//            
 //         
 //         
 //          
@@ -169,20 +179,37 @@ protected class State_Group extends GroupToken {
 	}
 }
 
-// (isInitial?="init"|isInitial?="init" isFinal?="final"|isInitial?="init" stateKind=
-// StateType|stateKind=StateType|stateKind=StateType isInitial?="init"|stateKind=
-// StateType isFinal?="final"|isFinal?="final"|isFinal?="final" isInitial?="init"|
-// isFinal?="final" stateKind=StateType|stateKind=StateType isFinal?="final" isInitial
-// ?="init"|isInitial?="init" isFinal?="final" stateKind=StateType|isInitial?="init"
-// isFinal?="final" stateKind=StateType|isInitial?="init" stateKind=StateType isFinal
-// ?="final"|isFinal?="final" isInitial?="init" stateKind=StateType|isFinal?="final"
-// stateKind=StateType isInitial?="init"|stateKind=StateType isInitial?="init" isFinal
-// ?="final"|stateKind=StateType isFinal?="final" isInitial?="init")? 
+// (isInitial?="init"|isFinal?="final"|stateKind=StateType|isInitial?="init" isFinal
+// ?="final"|isInitial?="init" stateKind=StateType|isFinal?="final" isInitial?="init"
+// |isFinal?="final" stateKind=StateType|stateKind=StateType isInitial?="init"|
+// stateKind=StateType isFinal?="final"|isInitial?="init" isFinal?="final" stateKind=
+// StateType|isInitial?="init" stateKind=StateType isFinal?="final"|isFinal?="final"
+// isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
+// isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
+// =StateType isInitial?="init" isFinal?="final")? 
 // //!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
 //    //((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*
 //    // you have to list all possible combinations seperately 
 //    // arbitrary positions for optional alternatives is not possible
-//    // or you have to use ((..)?(..)?)* and then validate them manually
+//    // or you have to use ((..)?(..)?)* and then validate them manually   
+//   
+//   
+//   	
+//   
+//   // n=3, k=1
+//      
+//     
+//     
+//   
+//   // n=3, k=2
+//           
+//       
+//        
+//        
+//        
+//        
+// 
+//   // n=3, k=3
 protected class State_Alternatives_0 extends AlternativesToken {
 
 	public State_Alternatives_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -196,12 +223,12 @@ protected class State_Alternatives_0 extends AlternativesToken {
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new State_IsInitialAssignment_0_0(parent, this, 0, inst);
-			case 1: return new State_Group_0_1(parent, this, 1, inst);
-			case 2: return new State_Group_0_2(parent, this, 2, inst);
-			case 3: return new State_StateKindAssignment_0_3(parent, this, 3, inst);
+			case 1: return new State_IsFinalAssignment_0_1(parent, this, 1, inst);
+			case 2: return new State_StateKindAssignment_0_2(parent, this, 2, inst);
+			case 3: return new State_Group_0_3(parent, this, 3, inst);
 			case 4: return new State_Group_0_4(parent, this, 4, inst);
 			case 5: return new State_Group_0_5(parent, this, 5, inst);
-			case 6: return new State_IsFinalAssignment_0_6(parent, this, 6, inst);
+			case 6: return new State_Group_0_6(parent, this, 6, inst);
 			case 7: return new State_Group_0_7(parent, this, 7, inst);
 			case 8: return new State_Group_0_8(parent, this, 8, inst);
 			case 9: return new State_Group_0_9(parent, this, 9, inst);
@@ -210,8 +237,6 @@ protected class State_Alternatives_0 extends AlternativesToken {
 			case 12: return new State_Group_0_12(parent, this, 12, inst);
 			case 13: return new State_Group_0_13(parent, this, 13, inst);
 			case 14: return new State_Group_0_14(parent, this, 14, inst);
-			case 15: return new State_Group_0_15(parent, this, 15, inst);
-			case 16: return new State_Group_0_16(parent, this, 16, inst);
 			default: return null;
 		}	
 	}	
@@ -248,20 +273,80 @@ protected class State_IsInitialAssignment_0_0 extends AssignmentToken  {
 
 }
 
-// isInitial?="init" isFinal?="final"
-protected class State_Group_0_1 extends GroupToken {
+// isFinal?="final"
+protected class State_IsFinalAssignment_0_1 extends AssignmentToken  {
 	
-	public State_Group_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsFinalAssignment_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
-	public Group getGrammarElement() {
-		return grammarAccess.getStateAccess().getGroup_0_1();
+	public Assignment getGrammarElement() {
+		return grammarAccess.getStateAccess().getIsFinalAssignment_0_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsFinalAssignment_0_1_1(parent, this, 0, inst);
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("isFinal",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isFinal");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// stateKind=StateType
+protected class State_StateKindAssignment_0_2 extends AssignmentToken  {
+	
+	public State_StateKindAssignment_0_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Assignment getGrammarElement() {
+		return grammarAccess.getStateAccess().getStateKindAssignment_0_2();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("stateKind",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("stateKind");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_2_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// isInitial?="init" isFinal?="final"
+protected class State_Group_0_3 extends GroupToken {
+	
+	public State_Group_0_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Group getGrammarElement() {
+		return grammarAccess.getStateAccess().getGroup_0_3();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new State_IsFinalAssignment_0_3_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -269,14 +354,14 @@ protected class State_Group_0_1 extends GroupToken {
 }
 
 // isInitial?="init"
-protected class State_IsInitialAssignment_0_1_0 extends AssignmentToken  {
+protected class State_IsInitialAssignment_0_3_0 extends AssignmentToken  {
 	
-	public State_IsInitialAssignment_0_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsInitialAssignment_0_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsInitialAssignment_0_1_0();
+		return grammarAccess.getStateAccess().getIsInitialAssignment_0_3_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -290,7 +375,7 @@ protected class State_IsInitialAssignment_0_1_0 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("isInitial");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_1_0_0();
+			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_3_0_0();
 			return obj;
 		}
 		return null;
@@ -299,19 +384,19 @@ protected class State_IsInitialAssignment_0_1_0 extends AssignmentToken  {
 }
 
 // isFinal?="final"
-protected class State_IsFinalAssignment_0_1_1 extends AssignmentToken  {
+protected class State_IsFinalAssignment_0_3_1 extends AssignmentToken  {
 	
-	public State_IsFinalAssignment_0_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsFinalAssignment_0_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsFinalAssignment_0_1_1();
+		return grammarAccess.getStateAccess().getIsFinalAssignment_0_3_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsInitialAssignment_0_1_0(parent, this, 0, inst);
+			case 0: return new State_IsInitialAssignment_0_3_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -321,7 +406,7 @@ protected class State_IsFinalAssignment_0_1_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("isFinal");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_1_1_0();
+			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_3_1_0();
 			return obj;
 		}
 		return null;
@@ -331,118 +416,6 @@ protected class State_IsFinalAssignment_0_1_1 extends AssignmentToken  {
 
 
 // isInitial?="init" stateKind=StateType
-protected class State_Group_0_2 extends GroupToken {
-	
-	public State_Group_0_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Group getGrammarElement() {
-		return grammarAccess.getStateAccess().getGroup_0_2();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_StateKindAssignment_0_2_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// isInitial?="init"
-protected class State_IsInitialAssignment_0_2_0 extends AssignmentToken  {
-	
-	public State_IsInitialAssignment_0_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsInitialAssignment_0_2_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isInitial",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isInitial");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_2_0_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// stateKind=StateType
-protected class State_StateKindAssignment_0_2_1 extends AssignmentToken  {
-	
-	public State_StateKindAssignment_0_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateKindAssignment_0_2_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_IsInitialAssignment_0_2_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("stateKind",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("stateKind");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.ERC;
-			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_2_1_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-
-// stateKind=StateType
-protected class State_StateKindAssignment_0_3 extends AssignmentToken  {
-	
-	public State_StateKindAssignment_0_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateKindAssignment_0_3();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("stateKind",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("stateKind");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.ERC;
-			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_3_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// stateKind=StateType isInitial?="init"
 protected class State_Group_0_4 extends GroupToken {
 	
 	public State_Group_0_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -455,22 +428,22 @@ protected class State_Group_0_4 extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsInitialAssignment_0_4_1(parent, this, 0, inst);
+			case 0: return new State_StateKindAssignment_0_4_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 }
 
-// stateKind=StateType
-protected class State_StateKindAssignment_0_4_0 extends AssignmentToken  {
+// isInitial?="init"
+protected class State_IsInitialAssignment_0_4_0 extends AssignmentToken  {
 	
-	public State_StateKindAssignment_0_4_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsInitialAssignment_0_4_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateKindAssignment_0_4_0();
+		return grammarAccess.getStateAccess().getIsInitialAssignment_0_4_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -480,11 +453,11 @@ protected class State_StateKindAssignment_0_4_0 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("stateKind",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("stateKind");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.ERC;
-			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_4_0_0();
+		if((value = current.getConsumable("isInitial",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isInitial");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_4_0_0();
 			return obj;
 		}
 		return null;
@@ -492,30 +465,30 @@ protected class State_StateKindAssignment_0_4_0 extends AssignmentToken  {
 
 }
 
-// isInitial?="init"
-protected class State_IsInitialAssignment_0_4_1 extends AssignmentToken  {
+// stateKind=StateType
+protected class State_StateKindAssignment_0_4_1 extends AssignmentToken  {
 	
-	public State_IsInitialAssignment_0_4_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_StateKindAssignment_0_4_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsInitialAssignment_0_4_1();
+		return grammarAccess.getStateAccess().getStateKindAssignment_0_4_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_StateKindAssignment_0_4_0(parent, this, 0, inst);
+			case 0: return new State_IsInitialAssignment_0_4_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isInitial",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isInitial");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_4_1_0();
+		if((value = current.getConsumable("stateKind",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("stateKind");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_4_1_0();
 			return obj;
 		}
 		return null;
@@ -524,7 +497,7 @@ protected class State_IsInitialAssignment_0_4_1 extends AssignmentToken  {
 }
 
 
-// stateKind=StateType isFinal?="final"
+// isFinal?="final" isInitial?="init"
 protected class State_Group_0_5 extends GroupToken {
 	
 	public State_Group_0_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -537,27 +510,140 @@ protected class State_Group_0_5 extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsFinalAssignment_0_5_1(parent, this, 0, inst);
+			case 0: return new State_IsInitialAssignment_0_5_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 }
 
-// stateKind=StateType
-protected class State_StateKindAssignment_0_5_0 extends AssignmentToken  {
+// isFinal?="final"
+protected class State_IsFinalAssignment_0_5_0 extends AssignmentToken  {
 	
-	public State_StateKindAssignment_0_5_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsFinalAssignment_0_5_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateKindAssignment_0_5_0();
+		return grammarAccess.getStateAccess().getIsFinalAssignment_0_5_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("isFinal",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isFinal");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_5_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// isInitial?="init"
+protected class State_IsInitialAssignment_0_5_1 extends AssignmentToken  {
+	
+	public State_IsInitialAssignment_0_5_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Assignment getGrammarElement() {
+		return grammarAccess.getStateAccess().getIsInitialAssignment_0_5_1();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new State_IsFinalAssignment_0_5_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("isInitial",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isInitial");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_5_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// isFinal?="final" stateKind=StateType
+protected class State_Group_0_6 extends GroupToken {
+	
+	public State_Group_0_6(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Group getGrammarElement() {
+		return grammarAccess.getStateAccess().getGroup_0_6();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new State_StateKindAssignment_0_6_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// isFinal?="final"
+protected class State_IsFinalAssignment_0_6_0 extends AssignmentToken  {
+	
+	public State_IsFinalAssignment_0_6_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Assignment getGrammarElement() {
+		return grammarAccess.getStateAccess().getIsFinalAssignment_0_6_0();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("isFinal",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isFinal");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_6_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// stateKind=StateType
+protected class State_StateKindAssignment_0_6_1 extends AssignmentToken  {
+	
+	public State_StateKindAssignment_0_6_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Assignment getGrammarElement() {
+		return grammarAccess.getStateAccess().getStateKindAssignment_0_6_1();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new State_IsFinalAssignment_0_6_0(parent, this, 0, inst);
+			default: return null;
 		}	
 	}	
 		
@@ -566,38 +652,7 @@ protected class State_StateKindAssignment_0_5_0 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("stateKind");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.ERC;
-			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_5_0_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// isFinal?="final"
-protected class State_IsFinalAssignment_0_5_1 extends AssignmentToken  {
-	
-	public State_IsFinalAssignment_0_5_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsFinalAssignment_0_5_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_StateKindAssignment_0_5_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isFinal",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isFinal");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_5_1_0();
+			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_6_1_0();
 			return obj;
 		}
 		return null;
@@ -606,37 +661,7 @@ protected class State_IsFinalAssignment_0_5_1 extends AssignmentToken  {
 }
 
 
-// isFinal?="final"
-protected class State_IsFinalAssignment_0_6 extends AssignmentToken  {
-	
-	public State_IsFinalAssignment_0_6(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsFinalAssignment_0_6();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isFinal",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isFinal");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_6_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// isFinal?="final" isInitial?="init"
+// stateKind=StateType isInitial?="init"
 protected class State_Group_0_7 extends GroupToken {
 	
 	public State_Group_0_7(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -656,15 +681,15 @@ protected class State_Group_0_7 extends GroupToken {
 		
 }
 
-// isFinal?="final"
-protected class State_IsFinalAssignment_0_7_0 extends AssignmentToken  {
+// stateKind=StateType
+protected class State_StateKindAssignment_0_7_0 extends AssignmentToken  {
 	
-	public State_IsFinalAssignment_0_7_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_StateKindAssignment_0_7_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsFinalAssignment_0_7_0();
+		return grammarAccess.getStateAccess().getStateKindAssignment_0_7_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -674,11 +699,11 @@ protected class State_IsFinalAssignment_0_7_0 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isFinal",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isFinal");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_7_0_0();
+		if((value = current.getConsumable("stateKind",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("stateKind");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_7_0_0();
 			return obj;
 		}
 		return null;
@@ -699,7 +724,7 @@ protected class State_IsInitialAssignment_0_7_1 extends AssignmentToken  {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsFinalAssignment_0_7_0(parent, this, 0, inst);
+			case 0: return new State_StateKindAssignment_0_7_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -718,7 +743,7 @@ protected class State_IsInitialAssignment_0_7_1 extends AssignmentToken  {
 }
 
 
-// isFinal?="final" stateKind=StateType
+// stateKind=StateType isFinal?="final"
 protected class State_Group_0_8 extends GroupToken {
 	
 	public State_Group_0_8(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -731,22 +756,22 @@ protected class State_Group_0_8 extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_StateKindAssignment_0_8_1(parent, this, 0, inst);
+			case 0: return new State_IsFinalAssignment_0_8_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 }
 
-// isFinal?="final"
-protected class State_IsFinalAssignment_0_8_0 extends AssignmentToken  {
+// stateKind=StateType
+protected class State_StateKindAssignment_0_8_0 extends AssignmentToken  {
 	
-	public State_IsFinalAssignment_0_8_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_StateKindAssignment_0_8_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsFinalAssignment_0_8_0();
+		return grammarAccess.getStateAccess().getStateKindAssignment_0_8_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -756,11 +781,11 @@ protected class State_IsFinalAssignment_0_8_0 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isFinal",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isFinal");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_8_0_0();
+		if((value = current.getConsumable("stateKind",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("stateKind");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_8_0_0();
 			return obj;
 		}
 		return null;
@@ -768,30 +793,30 @@ protected class State_IsFinalAssignment_0_8_0 extends AssignmentToken  {
 
 }
 
-// stateKind=StateType
-protected class State_StateKindAssignment_0_8_1 extends AssignmentToken  {
+// isFinal?="final"
+protected class State_IsFinalAssignment_0_8_1 extends AssignmentToken  {
 	
-	public State_StateKindAssignment_0_8_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsFinalAssignment_0_8_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateKindAssignment_0_8_1();
+		return grammarAccess.getStateAccess().getIsFinalAssignment_0_8_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsFinalAssignment_0_8_0(parent, this, 0, inst);
+			case 0: return new State_StateKindAssignment_0_8_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("stateKind",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("stateKind");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.ERC;
-			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_8_1_0();
+		if((value = current.getConsumable("isFinal",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isFinal");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_8_1_0();
 			return obj;
 		}
 		return null;
@@ -800,7 +825,7 @@ protected class State_StateKindAssignment_0_8_1 extends AssignmentToken  {
 }
 
 
-// stateKind=StateType isFinal?="final" isInitial?="init"
+// isInitial?="init" isFinal?="final" stateKind=StateType
 protected class State_Group_0_9 extends GroupToken {
 	
 	public State_Group_0_9(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -813,22 +838,22 @@ protected class State_Group_0_9 extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsInitialAssignment_0_9_2(parent, this, 0, inst);
+			case 0: return new State_StateKindAssignment_0_9_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 }
 
-// stateKind=StateType
-protected class State_StateKindAssignment_0_9_0 extends AssignmentToken  {
+// isInitial?="init"
+protected class State_IsInitialAssignment_0_9_0 extends AssignmentToken  {
 	
-	public State_StateKindAssignment_0_9_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsInitialAssignment_0_9_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateKindAssignment_0_9_0();
+		return grammarAccess.getStateAccess().getIsInitialAssignment_0_9_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -838,11 +863,11 @@ protected class State_StateKindAssignment_0_9_0 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("stateKind",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("stateKind");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.ERC;
-			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_9_0_0();
+		if((value = current.getConsumable("isInitial",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isInitial");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_9_0_0();
 			return obj;
 		}
 		return null;
@@ -863,7 +888,7 @@ protected class State_IsFinalAssignment_0_9_1 extends AssignmentToken  {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_StateKindAssignment_0_9_0(parent, this, 0, inst);
+			case 0: return new State_IsInitialAssignment_0_9_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -881,15 +906,15 @@ protected class State_IsFinalAssignment_0_9_1 extends AssignmentToken  {
 
 }
 
-// isInitial?="init"
-protected class State_IsInitialAssignment_0_9_2 extends AssignmentToken  {
+// stateKind=StateType
+protected class State_StateKindAssignment_0_9_2 extends AssignmentToken  {
 	
-	public State_IsInitialAssignment_0_9_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_StateKindAssignment_0_9_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsInitialAssignment_0_9_2();
+		return grammarAccess.getStateAccess().getStateKindAssignment_0_9_2();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -900,11 +925,11 @@ protected class State_IsInitialAssignment_0_9_2 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isInitial",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isInitial");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_9_2_0();
+		if((value = current.getConsumable("stateKind",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("stateKind");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_9_2_0();
 			return obj;
 		}
 		return null;
@@ -913,7 +938,7 @@ protected class State_IsInitialAssignment_0_9_2 extends AssignmentToken  {
 }
 
 
-// isInitial?="init" isFinal?="final" stateKind=StateType
+// isInitial?="init" stateKind=StateType isFinal?="final"
 protected class State_Group_0_10 extends GroupToken {
 	
 	public State_Group_0_10(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -926,7 +951,7 @@ protected class State_Group_0_10 extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_StateKindAssignment_0_10_2(parent, this, 0, inst);
+			case 0: return new State_IsFinalAssignment_0_10_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -963,15 +988,15 @@ protected class State_IsInitialAssignment_0_10_0 extends AssignmentToken  {
 
 }
 
-// isFinal?="final"
-protected class State_IsFinalAssignment_0_10_1 extends AssignmentToken  {
+// stateKind=StateType
+protected class State_StateKindAssignment_0_10_1 extends AssignmentToken  {
 	
-	public State_IsFinalAssignment_0_10_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_StateKindAssignment_0_10_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsFinalAssignment_0_10_1();
+		return grammarAccess.getStateAccess().getStateKindAssignment_0_10_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -982,11 +1007,11 @@ protected class State_IsFinalAssignment_0_10_1 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isFinal",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isFinal");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_10_1_0();
+		if((value = current.getConsumable("stateKind",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("stateKind");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_10_1_0();
 			return obj;
 		}
 		return null;
@@ -994,30 +1019,30 @@ protected class State_IsFinalAssignment_0_10_1 extends AssignmentToken  {
 
 }
 
-// stateKind=StateType
-protected class State_StateKindAssignment_0_10_2 extends AssignmentToken  {
+// isFinal?="final"
+protected class State_IsFinalAssignment_0_10_2 extends AssignmentToken  {
 	
-	public State_StateKindAssignment_0_10_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsFinalAssignment_0_10_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateKindAssignment_0_10_2();
+		return grammarAccess.getStateAccess().getIsFinalAssignment_0_10_2();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsFinalAssignment_0_10_1(parent, this, 0, inst);
+			case 0: return new State_StateKindAssignment_0_10_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("stateKind",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("stateKind");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.ERC;
-			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_10_2_0();
+		if((value = current.getConsumable("isFinal",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isFinal");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_10_2_0();
 			return obj;
 		}
 		return null;
@@ -1026,7 +1051,7 @@ protected class State_StateKindAssignment_0_10_2 extends AssignmentToken  {
 }
 
 
-// isInitial?="init" isFinal?="final" stateKind=StateType
+// isFinal?="final" isInitial?="init" stateKind=StateType
 protected class State_Group_0_11 extends GroupToken {
 	
 	public State_Group_0_11(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1046,15 +1071,15 @@ protected class State_Group_0_11 extends GroupToken {
 		
 }
 
-// isInitial?="init"
-protected class State_IsInitialAssignment_0_11_0 extends AssignmentToken  {
+// isFinal?="final"
+protected class State_IsFinalAssignment_0_11_0 extends AssignmentToken  {
 	
-	public State_IsInitialAssignment_0_11_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsFinalAssignment_0_11_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsInitialAssignment_0_11_0();
+		return grammarAccess.getStateAccess().getIsFinalAssignment_0_11_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -1064,11 +1089,11 @@ protected class State_IsInitialAssignment_0_11_0 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isInitial",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isInitial");
+		if((value = current.getConsumable("isFinal",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isFinal");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_11_0_0();
+			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_11_0_0();
 			return obj;
 		}
 		return null;
@@ -1076,30 +1101,30 @@ protected class State_IsInitialAssignment_0_11_0 extends AssignmentToken  {
 
 }
 
-// isFinal?="final"
-protected class State_IsFinalAssignment_0_11_1 extends AssignmentToken  {
+// isInitial?="init"
+protected class State_IsInitialAssignment_0_11_1 extends AssignmentToken  {
 	
-	public State_IsFinalAssignment_0_11_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsInitialAssignment_0_11_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsFinalAssignment_0_11_1();
+		return grammarAccess.getStateAccess().getIsInitialAssignment_0_11_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsInitialAssignment_0_11_0(parent, this, 0, inst);
+			case 0: return new State_IsFinalAssignment_0_11_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isFinal",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isFinal");
+		if((value = current.getConsumable("isInitial",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isInitial");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_11_1_0();
+			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_11_1_0();
 			return obj;
 		}
 		return null;
@@ -1120,7 +1145,7 @@ protected class State_StateKindAssignment_0_11_2 extends AssignmentToken  {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsFinalAssignment_0_11_1(parent, this, 0, inst);
+			case 0: return new State_IsInitialAssignment_0_11_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1139,7 +1164,7 @@ protected class State_StateKindAssignment_0_11_2 extends AssignmentToken  {
 }
 
 
-// isInitial?="init" stateKind=StateType isFinal?="final"
+// isFinal?="final" stateKind=StateType isInitial?="init"
 protected class State_Group_0_12 extends GroupToken {
 	
 	public State_Group_0_12(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1152,22 +1177,22 @@ protected class State_Group_0_12 extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsFinalAssignment_0_12_2(parent, this, 0, inst);
+			case 0: return new State_IsInitialAssignment_0_12_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 }
 
-// isInitial?="init"
-protected class State_IsInitialAssignment_0_12_0 extends AssignmentToken  {
+// isFinal?="final"
+protected class State_IsFinalAssignment_0_12_0 extends AssignmentToken  {
 	
-	public State_IsInitialAssignment_0_12_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsFinalAssignment_0_12_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsInitialAssignment_0_12_0();
+		return grammarAccess.getStateAccess().getIsFinalAssignment_0_12_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -1177,11 +1202,11 @@ protected class State_IsInitialAssignment_0_12_0 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isInitial",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isInitial");
+		if((value = current.getConsumable("isFinal",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isFinal");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_12_0_0();
+			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_12_0_0();
 			return obj;
 		}
 		return null;
@@ -1202,7 +1227,7 @@ protected class State_StateKindAssignment_0_12_1 extends AssignmentToken  {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsInitialAssignment_0_12_0(parent, this, 0, inst);
+			case 0: return new State_IsFinalAssignment_0_12_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1220,15 +1245,15 @@ protected class State_StateKindAssignment_0_12_1 extends AssignmentToken  {
 
 }
 
-// isFinal?="final"
-protected class State_IsFinalAssignment_0_12_2 extends AssignmentToken  {
+// isInitial?="init"
+protected class State_IsInitialAssignment_0_12_2 extends AssignmentToken  {
 	
-	public State_IsFinalAssignment_0_12_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsInitialAssignment_0_12_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsFinalAssignment_0_12_2();
+		return grammarAccess.getStateAccess().getIsInitialAssignment_0_12_2();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -1239,11 +1264,11 @@ protected class State_IsFinalAssignment_0_12_2 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isFinal",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isFinal");
+		if((value = current.getConsumable("isInitial",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isInitial");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_12_2_0();
+			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_12_2_0();
 			return obj;
 		}
 		return null;
@@ -1252,7 +1277,7 @@ protected class State_IsFinalAssignment_0_12_2 extends AssignmentToken  {
 }
 
 
-// isFinal?="final" isInitial?="init" stateKind=StateType
+// stateKind=StateType isFinal?="final" isInitial?="init"
 protected class State_Group_0_13 extends GroupToken {
 	
 	public State_Group_0_13(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1265,22 +1290,22 @@ protected class State_Group_0_13 extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_StateKindAssignment_0_13_2(parent, this, 0, inst);
+			case 0: return new State_IsInitialAssignment_0_13_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 }
 
-// isFinal?="final"
-protected class State_IsFinalAssignment_0_13_0 extends AssignmentToken  {
+// stateKind=StateType
+protected class State_StateKindAssignment_0_13_0 extends AssignmentToken  {
 	
-	public State_IsFinalAssignment_0_13_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_StateKindAssignment_0_13_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsFinalAssignment_0_13_0();
+		return grammarAccess.getStateAccess().getStateKindAssignment_0_13_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -1290,11 +1315,42 @@ protected class State_IsFinalAssignment_0_13_0 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("stateKind",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("stateKind");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_13_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// isFinal?="final"
+protected class State_IsFinalAssignment_0_13_1 extends AssignmentToken  {
+	
+	public State_IsFinalAssignment_0_13_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Assignment getGrammarElement() {
+		return grammarAccess.getStateAccess().getIsFinalAssignment_0_13_1();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new State_StateKindAssignment_0_13_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("isFinal",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("isFinal");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_13_0_0();
+			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_13_1_0();
 			return obj;
 		}
 		return null;
@@ -1303,19 +1359,19 @@ protected class State_IsFinalAssignment_0_13_0 extends AssignmentToken  {
 }
 
 // isInitial?="init"
-protected class State_IsInitialAssignment_0_13_1 extends AssignmentToken  {
+protected class State_IsInitialAssignment_0_13_2 extends AssignmentToken  {
 	
-	public State_IsInitialAssignment_0_13_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsInitialAssignment_0_13_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsInitialAssignment_0_13_1();
+		return grammarAccess.getStateAccess().getIsInitialAssignment_0_13_2();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsFinalAssignment_0_13_0(parent, this, 0, inst);
+			case 0: return new State_IsFinalAssignment_0_13_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1325,38 +1381,7 @@ protected class State_IsInitialAssignment_0_13_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("isInitial");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_13_1_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// stateKind=StateType
-protected class State_StateKindAssignment_0_13_2 extends AssignmentToken  {
-	
-	public State_StateKindAssignment_0_13_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateKindAssignment_0_13_2();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_IsInitialAssignment_0_13_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("stateKind",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("stateKind");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.ERC;
-			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_13_2_0();
+			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_13_2_0();
 			return obj;
 		}
 		return null;
@@ -1365,7 +1390,7 @@ protected class State_StateKindAssignment_0_13_2 extends AssignmentToken  {
 }
 
 
-// isFinal?="final" stateKind=StateType isInitial?="init"
+// stateKind=StateType isInitial?="init" isFinal?="final"
 protected class State_Group_0_14 extends GroupToken {
 	
 	public State_Group_0_14(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1378,120 +1403,7 @@ protected class State_Group_0_14 extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsInitialAssignment_0_14_2(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// isFinal?="final"
-protected class State_IsFinalAssignment_0_14_0 extends AssignmentToken  {
-	
-	public State_IsFinalAssignment_0_14_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsFinalAssignment_0_14_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isFinal",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isFinal");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_14_0_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// stateKind=StateType
-protected class State_StateKindAssignment_0_14_1 extends AssignmentToken  {
-	
-	public State_StateKindAssignment_0_14_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateKindAssignment_0_14_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_IsFinalAssignment_0_14_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("stateKind",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("stateKind");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.ERC;
-			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_14_1_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// isInitial?="init"
-protected class State_IsInitialAssignment_0_14_2 extends AssignmentToken  {
-	
-	public State_IsInitialAssignment_0_14_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsInitialAssignment_0_14_2();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_StateKindAssignment_0_14_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isInitial",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isInitial");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_14_2_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-
-// stateKind=StateType isInitial?="init" isFinal?="final"
-protected class State_Group_0_15 extends GroupToken {
-	
-	public State_Group_0_15(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Group getGrammarElement() {
-		return grammarAccess.getStateAccess().getGroup_0_15();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_IsFinalAssignment_0_15_2(parent, this, 0, inst);
+			case 0: return new State_IsFinalAssignment_0_14_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1499,14 +1411,14 @@ protected class State_Group_0_15 extends GroupToken {
 }
 
 // stateKind=StateType
-protected class State_StateKindAssignment_0_15_0 extends AssignmentToken  {
+protected class State_StateKindAssignment_0_14_0 extends AssignmentToken  {
 	
-	public State_StateKindAssignment_0_15_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_StateKindAssignment_0_14_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateKindAssignment_0_15_0();
+		return grammarAccess.getStateAccess().getStateKindAssignment_0_14_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -1520,7 +1432,7 @@ protected class State_StateKindAssignment_0_15_0 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("stateKind");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.ERC;
-			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_15_0_0();
+			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_14_0_0();
 			return obj;
 		}
 		return null;
@@ -1529,19 +1441,19 @@ protected class State_StateKindAssignment_0_15_0 extends AssignmentToken  {
 }
 
 // isInitial?="init"
-protected class State_IsInitialAssignment_0_15_1 extends AssignmentToken  {
+protected class State_IsInitialAssignment_0_14_1 extends AssignmentToken  {
 	
-	public State_IsInitialAssignment_0_15_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsInitialAssignment_0_14_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsInitialAssignment_0_15_1();
+		return grammarAccess.getStateAccess().getIsInitialAssignment_0_14_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_StateKindAssignment_0_15_0(parent, this, 0, inst);
+			case 0: return new State_StateKindAssignment_0_14_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1551,7 +1463,7 @@ protected class State_IsInitialAssignment_0_15_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("isInitial");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_15_1_0();
+			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_14_1_0();
 			return obj;
 		}
 		return null;
@@ -1560,19 +1472,19 @@ protected class State_IsInitialAssignment_0_15_1 extends AssignmentToken  {
 }
 
 // isFinal?="final"
-protected class State_IsFinalAssignment_0_15_2 extends AssignmentToken  {
+protected class State_IsFinalAssignment_0_14_2 extends AssignmentToken  {
 	
-	public State_IsFinalAssignment_0_15_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_IsFinalAssignment_0_14_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsFinalAssignment_0_15_2();
+		return grammarAccess.getStateAccess().getIsFinalAssignment_0_14_2();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_IsInitialAssignment_0_15_1(parent, this, 0, inst);
+			case 0: return new State_IsInitialAssignment_0_14_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1582,120 +1494,7 @@ protected class State_IsFinalAssignment_0_15_2 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("isFinal");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_15_2_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-
-// stateKind=StateType isFinal?="final" isInitial?="init"
-protected class State_Group_0_16 extends GroupToken {
-	
-	public State_Group_0_16(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Group getGrammarElement() {
-		return grammarAccess.getStateAccess().getGroup_0_16();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_IsInitialAssignment_0_16_2(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// stateKind=StateType
-protected class State_StateKindAssignment_0_16_0 extends AssignmentToken  {
-	
-	public State_StateKindAssignment_0_16_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateKindAssignment_0_16_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("stateKind",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("stateKind");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.ERC;
-			element = grammarAccess.getStateAccess().getStateKindStateTypeEnumRuleCall_0_16_0_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// isFinal?="final"
-protected class State_IsFinalAssignment_0_16_1 extends AssignmentToken  {
-	
-	public State_IsFinalAssignment_0_16_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsFinalAssignment_0_16_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_StateKindAssignment_0_16_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isFinal",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isFinal");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_16_1_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// isInitial?="init"
-protected class State_IsInitialAssignment_0_16_2 extends AssignmentToken  {
-	
-	public State_IsInitialAssignment_0_16_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getIsInitialAssignment_0_16_2();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_IsFinalAssignment_0_16_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isInitial",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isInitial");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getStateAccess().getIsInitialInitKeyword_0_16_2_0();
+			element = grammarAccess.getStateAccess().getIsFinalFinalKeyword_0_14_2_0();
 			return obj;
 		}
 		return null;
