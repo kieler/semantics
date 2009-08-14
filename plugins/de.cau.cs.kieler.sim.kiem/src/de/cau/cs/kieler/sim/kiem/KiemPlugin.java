@@ -623,7 +623,17 @@ public class KiemPlugin extends AbstractUIPlugin {
 		List<DataComponent> list = this.getDataComponentList();
 		List<DataComponentEx> returnList = 
 							new LinkedList<DataComponentEx>();
-		//first add pure producer
+		//first add initialization components
+		for (int c = 0; c < list.size(); c ++) {
+			DataComponent dataComponent = (DataComponent)list.get(c);
+			DataComponentEx dataComponentEx = 
+				new DataComponentEx(dataComponent);
+			if ((!dataComponentEx.isProducer())
+				  &&!dataComponentEx.isObserver()){
+				returnList.add(dataComponentEx);
+			}
+		}
+		//then add pure producer
 		for (int c = 0; c < list.size(); c ++) {
 			DataComponent dataComponent = (DataComponent)list.get(c);
 			DataComponentEx dataComponentEx = 

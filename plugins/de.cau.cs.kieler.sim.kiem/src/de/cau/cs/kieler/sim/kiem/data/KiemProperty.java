@@ -32,13 +32,13 @@ public class KiemProperty implements Serializable {
 	private static final long serialVersionUID = -6897758298476417410L;
 	
 	/** The String key of the KiemProperty. */
-	String key;
+	protected String key;
 	
 	/** The String value of the KiemProperty. */
-	String value;
+	protected String value;
 	
 	/** The KiemPropertyType of the KiemProperty. */
-	KiemPropertyType type;
+	protected KiemPropertyType type;
 	
 	//-------------------------------------------------------------------------
 

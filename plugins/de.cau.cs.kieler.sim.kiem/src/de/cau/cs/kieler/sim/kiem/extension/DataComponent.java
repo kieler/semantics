@@ -521,13 +521,12 @@ public abstract class DataComponent implements IDataComponent,
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.stepExecutionSync();
 				KIEMViewInstance.updateViewAsync();
+				return;
 			}
 		}
 		throw new KiemMasterException(Messages.ErrorKiemMasterException);
 	}
 	
-	//-------------------------------------------------------------------------
-
 	//-------------------------------------------------------------------------
 
 	/**
@@ -548,11 +547,14 @@ public abstract class DataComponent implements IDataComponent,
 			if ((KIEMInstance != null)&&(KIEMInstance.execution != null)) {
 				KIEMInstance.execution.macroStepExecutionSync();
 				KIEMViewInstance.updateViewAsync();
+				return;
 			}
 		}
 		throw new KiemMasterException(Messages.ErrorKiemMasterException);
 	}
 	
+	//-------------------------------------------------------------------------
+
 	/**
 	 * Master stop execution. If this is a master it can stop the execution.
 	 * <BR><BR>

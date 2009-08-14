@@ -22,6 +22,7 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.Messages;
@@ -69,7 +70,22 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 		if (textfield == null) return;
-		this.textfield.setEnabled(enabled);
+		if (enabled) {
+			Display.getDefault().asyncExec(
+					  new Runnable() {
+					    public void run(){
+							textfield.setEnabled(true);
+					    }
+			});		
+		}
+		else {
+			Display.getDefault().asyncExec(
+					  new Runnable() {
+					    public void run(){
+							textfield.setEnabled(false);
+					    }
+			});		
+		}
 	}
 	
 	//-------------------------------------------------------------------------

@@ -737,7 +737,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 							getStepTextField().updateTextfield(steps);
 							//update StepBackButton
 							if ((KIEMInstance.execution.getSteps() > 0)
-								&& (!KIEMInstance.execution.isRunning()))
+								&& (!KIEMInstance.execution.isRunning()) 
+								&& (getActionStep().isEnabled()))
 								getActionStepBack().setEnabled(true);
 							else
 								getActionStepBack().setEnabled(false);
@@ -1566,7 +1567,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 			}
 		}
 		if (currentMaster != null) {
-		   currentMaster.getDataComponent().masterSetKIEMInstances(KIEMInstance, this);
+			currentMaster.getDataComponent().masterSetKIEMInstances(KIEMInstance, this);
 		}
 		//rebuild view toolbar buttons
 		buildLocalToolBar();

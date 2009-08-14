@@ -129,6 +129,7 @@ public class Execution implements Runnable {
 		this.stop = false;
 		this.pausedCommand = false;
 		this.steps = NO_STEPS; // == paused
+		this.stepToPause = -1;
 		this.dataComponentExList = dataComponentExList;
 		this.dataPool = new JSONDataPool();
 		//start the timeout worker thread
@@ -512,7 +513,6 @@ public class Execution implements Runnable {
 				}
 				timeout.abortTimeout();
 			}
-
 			this.steps = NO_STEPS;
 		}
 	}
@@ -930,6 +930,7 @@ public class Execution implements Runnable {
 
 				//test if we have to make a step (1) or if we are 
 				//in running mode (-1)
+//System.out.println("steps = "+steps);
 				if ((steps == INFINITY_STEPS)||(steps != NO_STEPS)) {
 					
 					//make a step forward or backward according to steps
