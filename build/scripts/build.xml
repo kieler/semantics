@@ -54,7 +54,7 @@
 	</target>
 
 	<target name="build.feature" if="eclipse.running">
-		<property name="elementPath" value="${basedir}/features/${feature}" />
+		<!--  property name="elementPath" value="${basedir}/features/${feature}" /-->
 
 		<mkdir dir="${basedir}/update-site/features" />
 		<mkdir dir="${basedir}/update-site/plugins" />
@@ -69,18 +69,27 @@
 			<target name="generate"/>
 		</ant>
 		
-		<ant antfile="build.xml" dir="${elementPath}" target="build.update.jar">
+		<ant antfile="build.xml" dir="${basedir}/features/${feature}" target="build.update.jar">
 			<property name="feature.destination" value="${basedir}/update-site/features"/>
 			<property name="plugin.destination" value="${basedir}/update-site/plugins"/>
 		</ant>
-		<ant antfile="build.xml" dir="${elementPath}" target="gather.bin.parts">
+		<ant antfile="build.xml" dir="${basedir}/features/${feature}" target="gather.bin.parts">
 			<property name="feature.base" value="${basedir}/update-site/"/>
 			<property name="updateJar.omitRootfiles" value="true"/>
 		</ant>
 	</target>
 	
 	<target name="build.rca" if="eclipse.running">
-		<ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/productBuild/productBuild.xml" />
+		<property name="product" value="${basedir}/kieler.product" />
+		<property name="runPackager" value="true" />
+		<property name="generate.p2.metadata" value="true" />
+
+		<delete dir="${buildLabel}"/>
+		<copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/kieler.product"
+			  tofile="${basedir}/kieler.product" overwrite="true" />
+		
+		<!-- ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/productBuild/productBuild.xml" / -->
+		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
 	</target>
 	
 	<target name="clean">
