@@ -138,10 +138,10 @@
           </groups>
         </tokens>
         <tokens xsi:type="xtext:Keyword" cardinality="?" value="state"/>
-        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="stateName" operator="=">
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="stateID" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
         </tokens>
-        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="label" operator="=">
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="stateLabel" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
         </tokens>
       </alternatives>

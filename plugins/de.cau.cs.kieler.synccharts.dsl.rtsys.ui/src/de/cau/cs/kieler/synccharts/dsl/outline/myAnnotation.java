@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { METHOD })
-public @interface fuckYou {
+public @interface myAnnotation {
 	String aStringValue() default "ozgun";
 }

@@ -97,22 +97,22 @@ public interface RetypingSyncchartsPackage extends EPackage
   int STATE__STATE_KIND = 2;
 
   /**
-   * The feature id for the '<em><b>State Name</b></em>' attribute.
+   * The feature id for the '<em><b>State ID</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__STATE_NAME = 3;
+  int STATE__STATE_ID = 3;
 
   /**
-   * The feature id for the '<em><b>Label</b></em>' attribute.
+   * The feature id for the '<em><b>State Label</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__LABEL = 4;
+  int STATE__STATE_LABEL = 4;
 
   /**
    * The number of structural features of the '<em>State</em>' class.
@@ -224,26 +224,26 @@ public interface RetypingSyncchartsPackage extends EPackage
   EAttribute getState_StateKind();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateName <em>State Name</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateID <em>State ID</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>State Name</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateName()
+   * @return the meta object for the attribute '<em>State ID</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateID()
    * @see #getState()
    * @generated
    */
-  EAttribute getState_StateName();
+  EAttribute getState_StateID();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getLabel <em>Label</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateLabel <em>State Label</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Label</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getLabel()
+   * @return the meta object for the attribute '<em>State Label</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateLabel()
    * @see #getState()
    * @generated
    */
-  EAttribute getState_Label();
+  EAttribute getState_StateLabel();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action <em>Action</em>}'.
@@ -356,20 +356,20 @@ public interface RetypingSyncchartsPackage extends EPackage
     EAttribute STATE__STATE_KIND = eINSTANCE.getState_StateKind();
 
     /**
-     * The meta object literal for the '<em><b>State Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>State ID</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STATE__STATE_NAME = eINSTANCE.getState_StateName();
+    EAttribute STATE__STATE_ID = eINSTANCE.getState_StateID();
 
     /**
-     * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>State Label</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STATE__LABEL = eINSTANCE.getState_Label();
+    EAttribute STATE__STATE_LABEL = eINSTANCE.getState_StateLabel();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl <em>Action</em>}' class.

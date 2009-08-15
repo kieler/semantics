@@ -93,8 +93,8 @@ public class RetypingSyncchartsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getStateKindAssignment_0_14_0(), "rule__State__StateKindAssignment_0_14_0");
 					put(grammarAccess.getStateAccess().getIsInitialAssignment_0_14_1(), "rule__State__IsInitialAssignment_0_14_1");
 					put(grammarAccess.getStateAccess().getIsFinalAssignment_0_14_2(), "rule__State__IsFinalAssignment_0_14_2");
-					put(grammarAccess.getStateAccess().getStateNameAssignment_2(), "rule__State__StateNameAssignment_2");
-					put(grammarAccess.getStateAccess().getLabelAssignment_3(), "rule__State__LabelAssignment_3");
+					put(grammarAccess.getStateAccess().getStateIDAssignment_2(), "rule__State__StateIDAssignment_2");
+					put(grammarAccess.getStateAccess().getStateLabelAssignment_3(), "rule__State__StateLabelAssignment_3");
 					put(grammarAccess.getEntryActionAccess().getEntryActionAssignment_1(), "rule__EntryAction__EntryActionAssignment_1");
 					put(grammarAccess.getExitActionAccess().getExitAssignment_1(), "rule__ExitAction__ExitAssignment_1");
 					put(grammarAccess.getInnerActionAccess().getInnerAssignment_1(), "rule__InnerAction__InnerAssignment_1");

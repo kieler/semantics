@@ -4,11 +4,21 @@
  * At generation time they will be executed as well.
  *
  * Example:
- *
- * import myDsl;
- *
- * context Class WARNING "Name should start with a capital" :
- *    name.toFirstUpper() == name;
  */
+//import retypingSynccharts;
+
+//context State ERROR
+//	"State identifiers must not be Ozgun"
+//:
+//	stateID != "Ozgun"
+//;
  
+
+
+	
+	
+	
+ 
+ 
+  
 

@@ -26,8 +26,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#isIsInitial <em>Is Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#isIsFinal <em>Is Final</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getStateKind <em>State Kind</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getStateName <em>State Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getStateID <em>State ID</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getStateLabel <em>State Label</em>}</li>
  * </ul>
  * </p>
  *
@@ -96,44 +96,44 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   protected StateType stateKind = STATE_KIND_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getStateName() <em>State Name</em>}' attribute.
+   * The default value of the '{@link #getStateID() <em>State ID</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStateName()
+   * @see #getStateID()
    * @generated
    * @ordered
    */
-  protected static final String STATE_NAME_EDEFAULT = null;
+  protected static final String STATE_ID_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getStateName() <em>State Name</em>}' attribute.
+   * The cached value of the '{@link #getStateID() <em>State ID</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStateName()
+   * @see #getStateID()
    * @generated
    * @ordered
    */
-  protected String stateName = STATE_NAME_EDEFAULT;
+  protected String stateID = STATE_ID_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+   * The default value of the '{@link #getStateLabel() <em>State Label</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getLabel()
+   * @see #getStateLabel()
    * @generated
    * @ordered
    */
-  protected static final String LABEL_EDEFAULT = null;
+  protected static final String STATE_LABEL_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+   * The cached value of the '{@link #getStateLabel() <em>State Label</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getLabel()
+   * @see #getStateLabel()
    * @generated
    * @ordered
    */
-  protected String label = LABEL_EDEFAULT;
+  protected String stateLabel = STATE_LABEL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -230,9 +230,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getStateName()
+  public String getStateID()
   {
-    return stateName;
+    return stateID;
   }
 
   /**
@@ -240,12 +240,12 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setStateName(String newStateName)
+  public void setStateID(String newStateID)
   {
-    String oldStateName = stateName;
-    stateName = newStateName;
+    String oldStateID = stateID;
+    stateID = newStateID;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.STATE__STATE_NAME, oldStateName, stateName));
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.STATE__STATE_ID, oldStateID, stateID));
   }
 
   /**
@@ -253,9 +253,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getLabel()
+  public String getStateLabel()
   {
-    return label;
+    return stateLabel;
   }
 
   /**
@@ -263,12 +263,12 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setLabel(String newLabel)
+  public void setStateLabel(String newStateLabel)
   {
-    String oldLabel = label;
-    label = newLabel;
+    String oldStateLabel = stateLabel;
+    stateLabel = newStateLabel;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.STATE__LABEL, oldLabel, label));
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.STATE__STATE_LABEL, oldStateLabel, stateLabel));
   }
 
   /**
@@ -287,10 +287,10 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return isIsFinal();
       case RetypingSyncchartsPackage.STATE__STATE_KIND:
         return getStateKind();
-      case RetypingSyncchartsPackage.STATE__STATE_NAME:
-        return getStateName();
-      case RetypingSyncchartsPackage.STATE__LABEL:
-        return getLabel();
+      case RetypingSyncchartsPackage.STATE__STATE_ID:
+        return getStateID();
+      case RetypingSyncchartsPackage.STATE__STATE_LABEL:
+        return getStateLabel();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -314,11 +314,11 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case RetypingSyncchartsPackage.STATE__STATE_KIND:
         setStateKind((StateType)newValue);
         return;
-      case RetypingSyncchartsPackage.STATE__STATE_NAME:
-        setStateName((String)newValue);
+      case RetypingSyncchartsPackage.STATE__STATE_ID:
+        setStateID((String)newValue);
         return;
-      case RetypingSyncchartsPackage.STATE__LABEL:
-        setLabel((String)newValue);
+      case RetypingSyncchartsPackage.STATE__STATE_LABEL:
+        setStateLabel((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -343,11 +343,11 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case RetypingSyncchartsPackage.STATE__STATE_KIND:
         setStateKind(STATE_KIND_EDEFAULT);
         return;
-      case RetypingSyncchartsPackage.STATE__STATE_NAME:
-        setStateName(STATE_NAME_EDEFAULT);
+      case RetypingSyncchartsPackage.STATE__STATE_ID:
+        setStateID(STATE_ID_EDEFAULT);
         return;
-      case RetypingSyncchartsPackage.STATE__LABEL:
-        setLabel(LABEL_EDEFAULT);
+      case RetypingSyncchartsPackage.STATE__STATE_LABEL:
+        setStateLabel(STATE_LABEL_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -369,10 +369,10 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return isFinal != IS_FINAL_EDEFAULT;
       case RetypingSyncchartsPackage.STATE__STATE_KIND:
         return stateKind != STATE_KIND_EDEFAULT;
-      case RetypingSyncchartsPackage.STATE__STATE_NAME:
-        return STATE_NAME_EDEFAULT == null ? stateName != null : !STATE_NAME_EDEFAULT.equals(stateName);
-      case RetypingSyncchartsPackage.STATE__LABEL:
-        return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+      case RetypingSyncchartsPackage.STATE__STATE_ID:
+        return STATE_ID_EDEFAULT == null ? stateID != null : !STATE_ID_EDEFAULT.equals(stateID);
+      case RetypingSyncchartsPackage.STATE__STATE_LABEL:
+        return STATE_LABEL_EDEFAULT == null ? stateLabel != null : !STATE_LABEL_EDEFAULT.equals(stateLabel);
     }
     return super.eIsSet(featureID);
   }
@@ -394,10 +394,10 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     result.append(isFinal);
     result.append(", stateKind: ");
     result.append(stateKind);
-    result.append(", stateName: ");
-    result.append(stateName);
-    result.append(", label: ");
-    result.append(label);
+    result.append(", stateID: ");
+    result.append(stateID);
+    result.append(", stateLabel: ");
+    result.append(stateLabel);
     result.append(')');
     return result.toString();
   }

@@ -52,7 +52,8 @@ protected class ThisRootNode extends RootToken {
  *   StateType|isInitial?="init" stateKind=StateType isFinal?="final"|isFinal?="final"
  *   isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
  *   isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
- *   =StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING?; 
+ *   =StateType isInitial?="init" isFinal?="final")? "state"? stateID=ID? stateLabel=
+ *   STRING?; 
  * 
  * //StateList:
  * //	(states+=State)*
@@ -88,18 +89,18 @@ protected class ThisRootNode extends RootToken {
  *   
  *   
  *     // optional keyword, cf.Meeting_TextualSyntax-II
- *      //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+ *      // optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
  *     
  * //  (stateContent=StateContent)?
  * //	(outgoingTransitions+=Transition)*
  *  
  * //StateContent:
  * //	'{'
- * ////	(regions+=Region)*
+ * //	(regions+=Region)*
  * //	(		(exitActions+=ExitAction )
  * //		| 	(entryActions+=EntryAction)
  * //		| 	(innerAction+=InnerAction)
- * ////		| 	(signalsAndVariables+=ValuedObject)?
+ * //		| 	(signalsAndVariables+=ValuedObject)?
  * //		|	(innerStates+=State	('||' parallelStates+=State)*)
  * //	)+	
  * //	'}'
@@ -114,7 +115,8 @@ protected class ThisRootNode extends RootToken {
 // StateType|isInitial?="init" stateKind=StateType isFinal?="final"|isFinal?="final"
 // isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
 // isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
-// =StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING? 
+// =StateType isInitial?="init" isFinal?="final")? "state"? stateID=ID? stateLabel=
+// STRING? 
 // //!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
 //    //((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*
 //    // you have to list all possible combinations seperately 
@@ -144,7 +146,7 @@ protected class ThisRootNode extends RootToken {
 //   
 //   
 //     // optional keyword, cf.Meeting_TextualSyntax-II
-//      //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+//      // optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 //     
 // //  (stateContent=StateContent)?
 // //	(outgoingTransitions+=Transition)*
@@ -160,8 +162,8 @@ protected class State_Group extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_LabelAssignment_3(parent, this, 0, inst);
-			case 1: return new State_StateNameAssignment_2(parent, this, 1, inst);
+			case 0: return new State_StateLabelAssignment_3(parent, this, 0, inst);
+			case 1: return new State_StateIDAssignment_2(parent, this, 1, inst);
 			case 2: return new State_StateKeyword_1(parent, this, 2, inst);
 			case 3: return new State_Alternatives_0(parent, this, 3, inst);
 			default: return null;
@@ -1515,15 +1517,15 @@ protected class State_StateKeyword_1 extends KeywordToken  {
 		
 }
 
-// stateName=ID?
-protected class State_StateNameAssignment_2 extends AssignmentToken  {
+// stateID=ID?
+protected class State_StateIDAssignment_2 extends AssignmentToken  {
 	
-	public State_StateNameAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_StateIDAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateNameAssignment_2();
+		return grammarAccess.getStateAccess().getStateIDAssignment_2();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -1535,11 +1537,11 @@ protected class State_StateNameAssignment_2 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("stateName",false)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("stateName");
+		if((value = current.getConsumable("stateID",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("stateID");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getStateAccess().getStateNameIDTerminalRuleCall_2_0();
+			element = grammarAccess.getStateAccess().getStateIDIDTerminalRuleCall_2_0();
 			return obj;
 		}
 		return null;
@@ -1547,20 +1549,20 @@ protected class State_StateNameAssignment_2 extends AssignmentToken  {
 
 }
 
-// label=STRING?
-protected class State_LabelAssignment_3 extends AssignmentToken  {
+// stateLabel=STRING?
+protected class State_StateLabelAssignment_3 extends AssignmentToken  {
 	
-	public State_LabelAssignment_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_StateLabelAssignment_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getLabelAssignment_3();
+		return grammarAccess.getStateAccess().getStateLabelAssignment_3();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_StateNameAssignment_2(parent, this, 0, inst);
+			case 0: return new State_StateIDAssignment_2(parent, this, 0, inst);
 			case 1: return new State_StateKeyword_1(parent, this, 1, inst);
 			case 2: return new State_Alternatives_0(parent, this, 2, inst);
 			default: return parent.createParentFollower(this, index, index - 3, inst);
@@ -1568,11 +1570,11 @@ protected class State_LabelAssignment_3 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("label",false)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("label");
+		if((value = current.getConsumable("stateLabel",false)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("stateLabel");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_3_0();
+			element = grammarAccess.getStateAccess().getStateLabelSTRINGTerminalRuleCall_3_0();
 			return obj;
 		}
 		return null;
@@ -1588,11 +1590,14 @@ protected class State_LabelAssignment_3 extends AssignmentToken  {
  *
  * EntryAction returns Action:
  *   "onentry" entryAction=STRING;  
- * //////Effect:
- * //////	effectID=STRING
- * //////;
+ * //Effect:
+ * //	effectID=STRING
+ * //;
  *     // transitionlabel::Action :
- * 	   //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  //do we need both in one list: triggersAndEffects?
+ * 	   
+ * 
+ * //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  
+ * //do we need both in one list: triggersAndEffects?
  *
  **/
 
@@ -1677,10 +1682,13 @@ protected class EntryAction_EntryActionAssignment_1 extends AssignmentToken  {
 /************ begin Rule ExitAction ****************
  *
  * ExitAction returns Action:
- *   "onexit" exit=STRING; //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  //do we need both in one list: triggersAndEffects?
- * 
+ *   "onexit" exit=STRING; 
+ * //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  
+ * //do we need both in one list: triggersAndEffects?
  *       
- * 	  //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
+ * 	  
+ * 
+ * //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
  *
  **/
 
@@ -1765,10 +1773,12 @@ protected class ExitAction_ExitAssignment_1 extends AssignmentToken  {
 /************ begin Rule InnerAction ****************
  *
  * InnerAction returns Action:
- *   "oninner" inner=STRING; //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
- * 
+ *   "oninner" inner=STRING; 
+ * //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
  *       
- * 	  //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+ * 	  
+ * 
+ * //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
  * 
  * //ValuedObject:
  * //	Signal | Variable

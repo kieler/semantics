@@ -155,7 +155,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getState_StateName()
+  public EAttribute getState_StateID()
   {
     return (EAttribute)stateEClass.getEStructuralFeatures().get(3);
   }
@@ -165,7 +165,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getState_Label()
+  public EAttribute getState_StateLabel()
   {
     return (EAttribute)stateEClass.getEStructuralFeatures().get(4);
   }
@@ -254,8 +254,8 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     createEAttribute(stateEClass, STATE__IS_INITIAL);
     createEAttribute(stateEClass, STATE__IS_FINAL);
     createEAttribute(stateEClass, STATE__STATE_KIND);
-    createEAttribute(stateEClass, STATE__STATE_NAME);
-    createEAttribute(stateEClass, STATE__LABEL);
+    createEAttribute(stateEClass, STATE__STATE_ID);
+    createEAttribute(stateEClass, STATE__STATE_LABEL);
 
     actionEClass = createEClass(ACTION);
     createEAttribute(actionEClass, ACTION__ENTRY_ACTION);
@@ -301,8 +301,8 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     initEAttribute(getState_IsInitial(), ecorePackage.getEBoolean(), "isInitial", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_IsFinal(), ecorePackage.getEBoolean(), "isFinal", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_StateKind(), this.getStateType(), "stateKind", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getState_StateName(), ecorePackage.getEString(), "stateName", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getState_Label(), ecorePackage.getEString(), "label", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getState_StateID(), ecorePackage.getEString(), "stateID", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getState_StateLabel(), ecorePackage.getEString(), "stateLabel", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAction_EntryAction(), ecorePackage.getEString(), "entryAction", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

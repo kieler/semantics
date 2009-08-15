@@ -1404,22 +1404,22 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
 
 
     // $ANTLR start rule__State__Group__2
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:291:1: rule__State__Group__2 : ( ( rule__State__StateNameAssignment_2 )? ) rule__State__Group__3 ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:291:1: rule__State__Group__2 : ( ( rule__State__StateIDAssignment_2 )? ) rule__State__Group__3 ;
     public final void rule__State__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:295:1: ( ( ( rule__State__StateNameAssignment_2 )? ) rule__State__Group__3 )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:296:1: ( ( rule__State__StateNameAssignment_2 )? ) rule__State__Group__3
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:295:1: ( ( ( rule__State__StateIDAssignment_2 )? ) rule__State__Group__3 )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:296:1: ( ( rule__State__StateIDAssignment_2 )? ) rule__State__Group__3
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:296:1: ( ( rule__State__StateNameAssignment_2 )? )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:297:1: ( rule__State__StateNameAssignment_2 )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:296:1: ( ( rule__State__StateIDAssignment_2 )? )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:297:1: ( rule__State__StateIDAssignment_2 )?
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getStateAccess().getStateNameAssignment_2()); 
+               before(grammarAccess.getStateAccess().getStateIDAssignment_2()); 
             }
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:298:1: ( rule__State__StateNameAssignment_2 )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:298:1: ( rule__State__StateIDAssignment_2 )?
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -1428,10 +1428,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
             }
             switch (alt5) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:298:2: rule__State__StateNameAssignment_2
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:298:2: rule__State__StateIDAssignment_2
                     {
-                    pushFollow(FOLLOW_rule__State__StateNameAssignment_2_in_rule__State__Group__2644);
-                    rule__State__StateNameAssignment_2();
+                    pushFollow(FOLLOW_rule__State__StateIDAssignment_2_in_rule__State__Group__2644);
+                    rule__State__StateIDAssignment_2();
                     _fsp--;
                     if (failed) return ;
 
@@ -1441,7 +1441,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
             }
 
             if ( backtracking==0 ) {
-               after(grammarAccess.getStateAccess().getStateNameAssignment_2()); 
+               after(grammarAccess.getStateAccess().getStateIDAssignment_2()); 
             }
 
             }
@@ -1469,22 +1469,22 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
 
 
     // $ANTLR start rule__State__Group__3
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:309:1: rule__State__Group__3 : ( ( rule__State__LabelAssignment_3 )? ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:309:1: rule__State__Group__3 : ( ( rule__State__StateLabelAssignment_3 )? ) ;
     public final void rule__State__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:313:1: ( ( ( rule__State__LabelAssignment_3 )? ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:314:1: ( ( rule__State__LabelAssignment_3 )? )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:313:1: ( ( ( rule__State__StateLabelAssignment_3 )? ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:314:1: ( ( rule__State__StateLabelAssignment_3 )? )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:314:1: ( ( rule__State__LabelAssignment_3 )? )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:315:1: ( rule__State__LabelAssignment_3 )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:314:1: ( ( rule__State__StateLabelAssignment_3 )? )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:315:1: ( rule__State__StateLabelAssignment_3 )?
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getStateAccess().getLabelAssignment_3()); 
+               before(grammarAccess.getStateAccess().getStateLabelAssignment_3()); 
             }
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:316:1: ( rule__State__LabelAssignment_3 )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:316:1: ( rule__State__StateLabelAssignment_3 )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -1493,10 +1493,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
             }
             switch (alt6) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:316:2: rule__State__LabelAssignment_3
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:316:2: rule__State__StateLabelAssignment_3
                     {
-                    pushFollow(FOLLOW_rule__State__LabelAssignment_3_in_rule__State__Group__3682);
-                    rule__State__LabelAssignment_3();
+                    pushFollow(FOLLOW_rule__State__StateLabelAssignment_3_in_rule__State__Group__3682);
+                    rule__State__StateLabelAssignment_3();
                     _fsp--;
                     if (failed) return ;
 
@@ -1506,7 +1506,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
             }
 
             if ( backtracking==0 ) {
-               after(grammarAccess.getStateAccess().getLabelAssignment_3()); 
+               after(grammarAccess.getStateAccess().getStateLabelAssignment_3()); 
             }
 
             }
@@ -4751,9 +4751,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
     // $ANTLR end rule__State__IsFinalAssignment_0_14_2
 
 
-    // $ANTLR start rule__State__StateNameAssignment_2
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:1596:1: rule__State__StateNameAssignment_2 : ( RULE_ID ) ;
-    public final void rule__State__StateNameAssignment_2() throws RecognitionException {
+    // $ANTLR start rule__State__StateIDAssignment_2
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:1596:1: rule__State__StateIDAssignment_2 : ( RULE_ID ) ;
+    public final void rule__State__StateIDAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -4765,11 +4765,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
             // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:1602:1: RULE_ID
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getStateAccess().getStateNameIDTerminalRuleCall_2_0()); 
+               before(grammarAccess.getStateAccess().getStateIDIDTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__State__StateNameAssignment_23171); if (failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__State__StateIDAssignment_23171); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getStateAccess().getStateNameIDTerminalRuleCall_2_0()); 
+               after(grammarAccess.getStateAccess().getStateIDIDTerminalRuleCall_2_0()); 
             }
 
             }
@@ -4789,12 +4789,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
         }
         return ;
     }
-    // $ANTLR end rule__State__StateNameAssignment_2
+    // $ANTLR end rule__State__StateIDAssignment_2
 
 
-    // $ANTLR start rule__State__LabelAssignment_3
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:1611:1: rule__State__LabelAssignment_3 : ( RULE_STRING ) ;
-    public final void rule__State__LabelAssignment_3() throws RecognitionException {
+    // $ANTLR start rule__State__StateLabelAssignment_3
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:1611:1: rule__State__StateLabelAssignment_3 : ( RULE_STRING ) ;
+    public final void rule__State__StateLabelAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -4806,11 +4806,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
             // ../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g:1617:1: RULE_STRING
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_3_0()); 
+               before(grammarAccess.getStateAccess().getStateLabelSTRINGTerminalRuleCall_3_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__State__LabelAssignment_33202); if (failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__State__StateLabelAssignment_33202); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_3_0()); 
+               after(grammarAccess.getStateAccess().getStateLabelSTRINGTerminalRuleCall_3_0()); 
             }
 
             }
@@ -4830,7 +4830,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
         }
         return ;
     }
-    // $ANTLR end rule__State__LabelAssignment_3
+    // $ANTLR end rule__State__StateLabelAssignment_3
 
 
  
@@ -4862,9 +4862,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
     public static final BitSet FOLLOW_rule__State__Group__1_in_rule__State__Group__0574 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_15_in_rule__State__Group__1604 = new BitSet(new long[]{0x0000000000000032L});
     public static final BitSet FOLLOW_rule__State__Group__2_in_rule__State__Group__1616 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__State__StateNameAssignment_2_in_rule__State__Group__2644 = new BitSet(new long[]{0x0000000000000022L});
+    public static final BitSet FOLLOW_rule__State__StateIDAssignment_2_in_rule__State__Group__2644 = new BitSet(new long[]{0x0000000000000022L});
     public static final BitSet FOLLOW_rule__State__Group__3_in_rule__State__Group__2654 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__State__LabelAssignment_3_in_rule__State__Group__3682 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__State__StateLabelAssignment_3_in_rule__State__Group__3682 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__State__IsInitialAssignment_0_3_0_in_rule__State__Group_0_3__0725 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_rule__State__Group_0_3__1_in_rule__State__Group_0_3__0734 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__State__IsFinalAssignment_0_3_1_in_rule__State__Group_0_3__1762 = new BitSet(new long[]{0x0000000000000002L});
@@ -4946,7 +4946,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalContentAss
     public static final BitSet FOLLOW_ruleStateType_in_rule__State__StateKindAssignment_0_14_03052 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_16_in_rule__State__IsInitialAssignment_0_14_13088 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_17_in_rule__State__IsFinalAssignment_0_14_23132 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__State__StateNameAssignment_23171 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__State__LabelAssignment_33202 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__State__StateIDAssignment_23171 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__State__StateLabelAssignment_33202 = new BitSet(new long[]{0x0000000000000002L});
 
 }

@@ -798,9 +798,9 @@ ruleState returns [EObject current=null]
     }
 )?(	
 	
-	    lv_stateName_34=	RULE_ID
+	    lv_stateID_34=	RULE_ID
 	{
-		createLeafNode(grammarAccess.getStateAccess().getStateNameIDTerminalRuleCall_2_0(), "stateName"); 
+		createLeafNode(grammarAccess.getStateAccess().getStateIDIDTerminalRuleCall_2_0(), "stateID"); 
 	}
  
 	    {
@@ -810,7 +810,7 @@ ruleState returns [EObject current=null]
 	        }
 	        
 	        try {
-	       		set($current, "stateName", lv_stateName_34, "ID", lastConsumedNode);
+	       		set($current, "stateID", lv_stateID_34, "ID", lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
@@ -818,9 +818,9 @@ ruleState returns [EObject current=null]
 	
 )?(	
 	
-	    lv_label_35=	RULE_STRING
+	    lv_stateLabel_35=	RULE_STRING
 	{
-		createLeafNode(grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_3_0(), "label"); 
+		createLeafNode(grammarAccess.getStateAccess().getStateLabelSTRINGTerminalRuleCall_3_0(), "stateLabel"); 
 	}
  
 	    {
@@ -830,7 +830,7 @@ ruleState returns [EObject current=null]
 	        }
 	        
 	        try {
-	       		set($current, "label", lv_label_35, "STRING", lastConsumedNode);
+	       		set($current, "stateLabel", lv_stateLabel_35, "STRING", lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }

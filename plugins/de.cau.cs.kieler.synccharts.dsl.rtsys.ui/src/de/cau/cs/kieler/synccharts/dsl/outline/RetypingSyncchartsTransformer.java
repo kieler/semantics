@@ -65,11 +65,11 @@ public class RetypingSyncchartsTransformer extends
 		if (semanticState.getStateKind() != null) {
 			myStateType = semanticState.getStateKind().getLiteral();
 		}
-		if (semanticState.getStateName() != null) {
-			myStateName = semanticState.getStateName();
+		if (semanticState.getStateID() != null) {
+			myStateName = semanticState.getStateID();
 		}
-		if (semanticState.getLabel() != null) {
-			myStateLabel = semanticState.getLabel();
+		if (semanticState.getStateLabel() != null) {
+			myStateLabel = semanticState.getStateLabel();
 		}
 
 		node.setLabel(myStateType + " " + myStateName + ": \" " + myStateLabel

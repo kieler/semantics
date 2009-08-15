@@ -13,7 +13,7 @@ public class AnnotationTest {
 			this.var = that;
 		}
 
-		@fuckYou
+		@myAnnotation
 		void aClassMethod(int param) {
 		}
 	}

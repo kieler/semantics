@@ -61,37 +61,41 @@ State:
   )?
   
   ('state')? // optional keyword, cf.Meeting_TextualSyntax-II
-  (stateName=ID)? //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
-  (label=STRING)? 
-//  (stateContent=StateContent)?
+  (stateID=ID)? // optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+  (stateLabel=STRING)? 
+  (stateContent=StateContent)?
 //	(outgoingTransitions+=Transition)*
 ; 
-//StateContent:
-//	'{'
-////	(regions+=Region)*
+StateContent:
+	'{'
+//	(regions+=Region)*
 //	(		(exitActions+=ExitAction )
 //		| 	(entryActions+=EntryAction)
 //		| 	(innerAction+=InnerAction)
-////		| 	(signalsAndVariables+=ValuedObject)?
+//		| 	(signalsAndVariables+=ValuedObject)?
 //		|	(innerStates+=State	('||' parallelStates+=State)*)
 //	)+	
-//	'}'
-//;
-
-
+	'}'
+;
 enum StateType:
-  NORMAL | PSEUDO='cond' | REFERENCE='reference' | TEXTUAL='textual'; 
-//////Effect:
-//////	effectID=STRING
-//////;
+  NORMAL | PSEUDO='cond' | REFERENCE='reference' | TEXTUAL='textual'
+; 
+//Effect:
+//	effectID=STRING
+//;
 EntryAction returns Action:// transitionlabel::Action :
-	'onentry' entryAction=STRING;//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  //do we need both in one list: triggersAndEffects?
-
+	'onentry' entryAction=STRING
+;
+//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  
+//do we need both in one list: triggersAndEffects?
 ExitAction returns Action :
-	'onexit' exit=STRING;//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
-
+	'onexit' exit=STRING
+;
+//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
 InnerAction returns Action :
-	'oninner' inner=STRING;//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+	'oninner' inner=STRING
+;
+//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
 
 //ValuedObject:
 //	Signal | Variable

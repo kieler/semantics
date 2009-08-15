@@ -13,3 +13,44 @@ SYNTAX (Xtext editor intern)
 User changes the label						 	--> the name will be set to the new value if it is unique
 User skips the state ID , label defined 		--> set the ID to the label
 User skips the state label 						--> label is deliberately skipped thus will remain empty 
+
+
+
+
+Valid State Declarations
+============================================================================================================
+The following declarations are followed by an 
+ . OPTIONAL "state" keyword
+ . OPTIONAL state ID (which is a valid Java identifier)
+ . OPTIONAL state label (which is any string and is embraced by quotes)
+
+init 
+final
+cond*
+
+init final
+init cond*
+final init
+final cond*
+cond* init
+cond* final
+ 
+init cond final
+final cond init
+
+init final cond*
+init cond* final
+final init cond*
+final cond* init
+cond* init final
+cond* final init
+
+Thus these are also valid models: 
+ . init state final myState "S1"
+ . init "S0" // note that in this case, the state ID will be set to the state label, i.e. stateID:=S0 (IF THIS IS A UNIQUE ID) 
+ . cond* myStateID ""
+ . myStateID
+ . "aLabel"
+
+---
+*: "cond" is just on example for a state type. A state can also be reference, textual or NORMAL. See the enumeration StateType in the grammar description.

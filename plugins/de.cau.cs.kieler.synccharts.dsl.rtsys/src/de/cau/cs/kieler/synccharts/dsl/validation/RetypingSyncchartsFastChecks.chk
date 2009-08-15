@@ -5,9 +5,19 @@
  * At generation time they will be executed as well.
  *  
  * Example:
- *
- * import myDsl;
- *
- * context Class WARNING "Name should start with a capital" :
- *    name.toFirstUpper() == name;
  */
+import retypingSynccharts;
+   
+context State WARNING 
+	"I have set the state ID " + this.stateID + " to the state label: " + this.stateLabel 
+:
+	(this.stateID == null || this.stateID.length==0) && this.stateLabel != null ? (this.setStateID(this.stateLabel) -> false) : true
+;
+
+// entgegengesetzter Fall
+//context State WARNING 
+//	"My ID is: " + this.stateID + " and my label is: " + this.stateLabel 
+//:
+//	(this.stateID == null || this.stateID.length==0) && this.stateLabel != null ? true : false
+//;
+  

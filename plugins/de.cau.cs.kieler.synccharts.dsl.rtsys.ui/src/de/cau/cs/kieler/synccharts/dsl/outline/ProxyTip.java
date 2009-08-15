@@ -4,6 +4,11 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+/**
+ * 
+ * @author oba
+ * Proxy test
+ */
 public class ProxyTip {
 	public static void main(String args[]) throws Exception {
 		String className = args[0];

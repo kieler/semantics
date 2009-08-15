@@ -100,10 +100,10 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final Assignment cIsFinalAssignment_0_14_2 = (Assignment)cGroup_0_14.eContents().get(2);
 		private final Keyword cIsFinalFinalKeyword_0_14_2_0 = (Keyword)cIsFinalAssignment_0_14_2.eContents().get(0);
 		private final Keyword cStateKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cStateNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cStateNameIDTerminalRuleCall_2_0 = (RuleCall)cStateNameAssignment_2.eContents().get(0);
-		private final Assignment cLabelAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cLabelSTRINGTerminalRuleCall_3_0 = (RuleCall)cLabelAssignment_3.eContents().get(0);
+		private final Assignment cStateIDAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cStateIDIDTerminalRuleCall_2_0 = (RuleCall)cStateIDAssignment_2.eContents().get(0);
+		private final Assignment cStateLabelAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cStateLabelSTRINGTerminalRuleCall_3_0 = (RuleCall)cStateLabelAssignment_3.eContents().get(0);
 		
 		//State:
 		//  (isInitial?="init"|isFinal?="final"|stateKind=StateType|isInitial?="init" isFinal
@@ -113,7 +113,8 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//  StateType|isInitial?="init" stateKind=StateType isFinal?="final"|isFinal?="final"
 		//  isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
 		//  isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
-		//  =StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING?; 
+		//  =StateType isInitial?="init" isFinal?="final")? "state"? stateID=ID? stateLabel=
+		//  STRING?; 
 		//
 		////StateList:
 		////	(states+=State)*
@@ -149,18 +150,18 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//  
 		//  
 		//    // optional keyword, cf.Meeting_TextualSyntax-II
-		//     //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+		//     // optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 		//    
 		////  (stateContent=StateContent)?
 		////	(outgoingTransitions+=Transition)*
 		// 
 		////StateContent:
 		////	'{'
-		//////	(regions+=Region)*
+		////	(regions+=Region)*
 		////	(		(exitActions+=ExitAction )
 		////		| 	(entryActions+=EntryAction)
 		////		| 	(innerAction+=InnerAction)
-		//////		| 	(signalsAndVariables+=ValuedObject)?
+		////		| 	(signalsAndVariables+=ValuedObject)?
 		////		|	(innerStates+=State	('||' parallelStates+=State)*)
 		////	)+	
 		////	'}'
@@ -174,7 +175,8 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//StateType|isInitial?="init" stateKind=StateType isFinal?="final"|isFinal?="final"
 		//isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
 		//isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
-		//=StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING? 
+		//=StateType isInitial?="init" isFinal?="final")? "state"? stateID=ID? stateLabel=
+		//STRING? 
 		////!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
 		//   //((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*
 		//   // you have to list all possible combinations seperately 
@@ -204,7 +206,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//  
 		//  
 		//    // optional keyword, cf.Meeting_TextualSyntax-II
-		//     //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+		//     // optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 		//    
 		////  (stateContent=StateContent)?
 		////	(outgoingTransitions+=Transition)*
@@ -477,17 +479,17 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//"state"?
 		public Keyword getStateKeyword_1() { return cStateKeyword_1; }
 
-		//stateName=ID?
-		public Assignment getStateNameAssignment_2() { return cStateNameAssignment_2; }
+		//stateID=ID?
+		public Assignment getStateIDAssignment_2() { return cStateIDAssignment_2; }
 
 		//ID
-		public RuleCall getStateNameIDTerminalRuleCall_2_0() { return cStateNameIDTerminalRuleCall_2_0; }
+		public RuleCall getStateIDIDTerminalRuleCall_2_0() { return cStateIDIDTerminalRuleCall_2_0; }
 
-		//label=STRING?
-		public Assignment getLabelAssignment_3() { return cLabelAssignment_3; }
+		//stateLabel=STRING?
+		public Assignment getStateLabelAssignment_3() { return cStateLabelAssignment_3; }
 
 		//STRING
-		public RuleCall getLabelSTRINGTerminalRuleCall_3_0() { return cLabelSTRINGTerminalRuleCall_3_0; }
+		public RuleCall getStateLabelSTRINGTerminalRuleCall_3_0() { return cStateLabelSTRINGTerminalRuleCall_3_0; }
 	}
 
 	public class EntryActionElements implements IParserRuleAccess {
@@ -499,11 +501,14 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		
 		//EntryAction returns Action:
 		//  "onentry" entryAction=STRING;  
-		////////Effect:
-		////////	effectID=STRING
-		////////;
+		////Effect:
+		////	effectID=STRING
+		////;
 		//    // transitionlabel::Action :
-		//	   //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  //do we need both in one list: triggersAndEffects?
+		//	   
+		//
+		////(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  
+		////do we need both in one list: triggersAndEffects?
 		public ParserRule getRule() { return rule; }
 
 		//"onentry" entryAction=STRING // transitionlabel::Action :
@@ -527,10 +532,13 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final RuleCall cExitSTRINGTerminalRuleCall_1_0 = (RuleCall)cExitAssignment_1.eContents().get(0);
 		
 		//ExitAction returns Action:
-		//  "onexit" exit=STRING; //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  //do we need both in one list: triggersAndEffects?
-		//
+		//  "onexit" exit=STRING; 
+		////(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  
+		////do we need both in one list: triggersAndEffects?
 		//      
-		//	  //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
+		//	  
+		//
+		////(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
 
 		//"onexit" exit=STRING
@@ -554,10 +562,12 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final RuleCall cInnerSTRINGTerminalRuleCall_1_0 = (RuleCall)cInnerAssignment_1.eContents().get(0);
 		
 		//InnerAction returns Action:
-		//  "oninner" inner=STRING; //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
-		//
+		//  "oninner" inner=STRING; 
+		////(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
 		//      
-		//	  //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+		//	  
+		//
+		////(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
 		//
 		////ValuedObject:
 		////	Signal | Variable
@@ -727,43 +737,41 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//  NORMAL | PSEUDO="cond" | REFERENCE="reference" | TEXTUAL="textual";  
 		////StateContent:
 		////	'{'
-		//////	(regions+=Region)*
+		////	(regions+=Region)*
 		////	(		(exitActions+=ExitAction )
 		////		| 	(entryActions+=EntryAction)
 		////		| 	(innerAction+=InnerAction)
-		//////		| 	(signalsAndVariables+=ValuedObject)?
+		////		| 	(signalsAndVariables+=ValuedObject)?
 		////		|	(innerStates+=State	('||' parallelStates+=State)*)
 		////	)+	
 		////	'}'
 		////;
-		//
-		//
 		//  
-		//               
-		////////Effect:
-		////////	effectID=STRING
-		////////;
+		//              
+		// 
+		////Effect:
+		////	effectID=STRING
+		////;
 		public EnumRule getRule() { return rule; }
 
 		//NORMAL | PSEUDO="cond" | REFERENCE="reference" | TEXTUAL="textual"  
 		////StateContent:
 		////	'{'
-		//////	(regions+=Region)*
+		////	(regions+=Region)*
 		////	(		(exitActions+=ExitAction )
 		////		| 	(entryActions+=EntryAction)
 		////		| 	(innerAction+=InnerAction)
-		//////		| 	(signalsAndVariables+=ValuedObject)?
+		////		| 	(signalsAndVariables+=ValuedObject)?
 		////		|	(innerStates+=State	('||' parallelStates+=State)*)
 		////	)+	
 		////	'}'
 		////;
-		//
-		//
 		//  
-		//               
-		////////Effect:
-		////////	effectID=STRING
-		////////;
+		//              
+		// 
+		////Effect:
+		////	effectID=STRING
+		////;
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//NORMAL
@@ -826,7 +834,8 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	//  StateType|isInitial?="init" stateKind=StateType isFinal?="final"|isFinal?="final"
 	//  isInitial?="init" stateKind=StateType|isFinal?="final" stateKind=StateType
 	//  isInitial?="init"|stateKind=StateType isFinal?="final" isInitial?="init"|stateKind
-	//  =StateType isInitial?="init" isFinal?="final")? "state"? stateName=ID? label=STRING?; 
+	//  =StateType isInitial?="init" isFinal?="final")? "state"? stateID=ID? stateLabel=
+	//  STRING?; 
 	//
 	////StateList:
 	////	(states+=State)*
@@ -862,18 +871,18 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	//  
 	//  
 	//    // optional keyword, cf.Meeting_TextualSyntax-II
-	//     //optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
+	//     // optionale ID (Remember: "Kein ID ist auch ein eindeutiges ID!!")
 	//    
 	////  (stateContent=StateContent)?
 	////	(outgoingTransitions+=Transition)*
 	// 
 	////StateContent:
 	////	'{'
-	//////	(regions+=Region)*
+	////	(regions+=Region)*
 	////	(		(exitActions+=ExitAction )
 	////		| 	(entryActions+=EntryAction)
 	////		| 	(innerAction+=InnerAction)
-	//////		| 	(signalsAndVariables+=ValuedObject)?
+	////		| 	(signalsAndVariables+=ValuedObject)?
 	////		|	(innerStates+=State	('||' parallelStates+=State)*)
 	////	)+	
 	////	'}'
@@ -890,22 +899,21 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	//  NORMAL | PSEUDO="cond" | REFERENCE="reference" | TEXTUAL="textual";  
 	////StateContent:
 	////	'{'
-	//////	(regions+=Region)*
+	////	(regions+=Region)*
 	////	(		(exitActions+=ExitAction )
 	////		| 	(entryActions+=EntryAction)
 	////		| 	(innerAction+=InnerAction)
-	//////		| 	(signalsAndVariables+=ValuedObject)?
+	////		| 	(signalsAndVariables+=ValuedObject)?
 	////		|	(innerStates+=State	('||' parallelStates+=State)*)
 	////	)+	
 	////	'}'
 	////;
-	//
-	//
 	//  
-	//               
-	////////Effect:
-	////////	effectID=STRING
-	////////;
+	//              
+	// 
+	////Effect:
+	////	effectID=STRING
+	////;
 	public StateTypeElements getStateTypeAccess() {
 		return (unknownRuleStateType != null) ? unknownRuleStateType : (unknownRuleStateType = new StateTypeElements());
 	}
@@ -916,11 +924,14 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 
 	//EntryAction returns Action:
 	//  "onentry" entryAction=STRING;  
-	////////Effect:
-	////////	effectID=STRING
-	////////;
+	////Effect:
+	////	effectID=STRING
+	////;
 	//    // transitionlabel::Action :
-	//	   //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  //do we need both in one list: triggersAndEffects?
+	//	   
+	//
+	////(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  
+	////do we need both in one list: triggersAndEffects?
 	public EntryActionElements getEntryActionAccess() {
 		return (pEntryAction != null) ? pEntryAction : (pEntryAction = new EntryActionElements());
 	}
@@ -930,10 +941,13 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	}
 
 	//ExitAction returns Action:
-	//  "onexit" exit=STRING; //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  //do we need both in one list: triggersAndEffects?
-	//
+	//  "onexit" exit=STRING; 
+	////(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  
+	////do we need both in one list: triggersAndEffects?
 	//      
-	//	  //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
+	//	  
+	//
+	////(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
 	public ExitActionElements getExitActionAccess() {
 		return (pExitAction != null) ? pExitAction : (pExitAction = new ExitActionElements());
 	}
@@ -943,10 +957,12 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	}
 
 	//InnerAction returns Action:
-	//  "oninner" inner=STRING; //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
-	//
+	//  "oninner" inner=STRING; 
+	////(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
 	//      
-	//	  //(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+	//	  
+	//
+	////(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
 	//
 	////ValuedObject:
 	////	Signal | Variable
