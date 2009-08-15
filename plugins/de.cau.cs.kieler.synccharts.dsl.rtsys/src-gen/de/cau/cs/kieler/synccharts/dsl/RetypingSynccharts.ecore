@@ -9,6 +9,16 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateKind" eType="#//StateType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateLabel" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateContent" eType="#//StateContent"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StateContent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exitActions" upperBound="-1"
+        eType="#//Action" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entryActions" upperBound="-1"
+        eType="#//Action" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="innerAction" upperBound="-1"
+        eType="#//Action" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="StateType">
     <eLiterals name="NORMAL" literal="NORMAL"/>
@@ -17,8 +27,8 @@
     <eLiterals name="TEXTUAL" value="3" literal="textual"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Action">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="entryAction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="exit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

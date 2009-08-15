@@ -43,6 +43,7 @@ public class RetypingSyncchartsParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				{
 					put(grammarAccess.getStateAccess().getAlternatives_0(), "rule__State__Alternatives_0");
+					put(grammarAccess.getStateContentAccess().getAlternatives_1(), "rule__StateContent__Alternatives_1");
 					put(grammarAccess.getStateTypeAccess().getAlternatives(), "rule__StateType__Alternatives");
 					put(grammarAccess.getStateAccess().getGroup(), "rule__State__Group__0");
 					put(grammarAccess.getStateAccess().getGroup_0_3(), "rule__State__Group_0_3__0");
@@ -57,9 +58,10 @@ public class RetypingSyncchartsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getGroup_0_12(), "rule__State__Group_0_12__0");
 					put(grammarAccess.getStateAccess().getGroup_0_13(), "rule__State__Group_0_13__0");
 					put(grammarAccess.getStateAccess().getGroup_0_14(), "rule__State__Group_0_14__0");
+					put(grammarAccess.getStateContentAccess().getGroup(), "rule__StateContent__Group__0");
+					put(grammarAccess.getInnerActionAccess().getGroup(), "rule__InnerAction__Group__0");
 					put(grammarAccess.getEntryActionAccess().getGroup(), "rule__EntryAction__Group__0");
 					put(grammarAccess.getExitActionAccess().getGroup(), "rule__ExitAction__Group__0");
-					put(grammarAccess.getInnerActionAccess().getGroup(), "rule__InnerAction__Group__0");
 					put(grammarAccess.getStateAccess().getIsInitialAssignment_0_0(), "rule__State__IsInitialAssignment_0_0");
 					put(grammarAccess.getStateAccess().getIsFinalAssignment_0_1(), "rule__State__IsFinalAssignment_0_1");
 					put(grammarAccess.getStateAccess().getStateKindAssignment_0_2(), "rule__State__StateKindAssignment_0_2");
@@ -95,9 +97,13 @@ public class RetypingSyncchartsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getIsFinalAssignment_0_14_2(), "rule__State__IsFinalAssignment_0_14_2");
 					put(grammarAccess.getStateAccess().getStateIDAssignment_2(), "rule__State__StateIDAssignment_2");
 					put(grammarAccess.getStateAccess().getStateLabelAssignment_3(), "rule__State__StateLabelAssignment_3");
+					put(grammarAccess.getStateAccess().getStateContentAssignment_4(), "rule__State__StateContentAssignment_4");
+					put(grammarAccess.getStateContentAccess().getExitActionsAssignment_1_0(), "rule__StateContent__ExitActionsAssignment_1_0");
+					put(grammarAccess.getStateContentAccess().getEntryActionsAssignment_1_1(), "rule__StateContent__EntryActionsAssignment_1_1");
+					put(grammarAccess.getStateContentAccess().getInnerActionAssignment_1_2(), "rule__StateContent__InnerActionAssignment_1_2");
+					put(grammarAccess.getInnerActionAccess().getInnerAssignment_1(), "rule__InnerAction__InnerAssignment_1");
 					put(grammarAccess.getEntryActionAccess().getEntryActionAssignment_1(), "rule__EntryAction__EntryActionAssignment_1");
 					put(grammarAccess.getExitActionAccess().getExitAssignment_1(), "rule__ExitAction__ExitAssignment_1");
-					put(grammarAccess.getInnerActionAccess().getInnerAssignment_1(), "rule__InnerAction__InnerAssignment_1");
 				}
 			};
 		}

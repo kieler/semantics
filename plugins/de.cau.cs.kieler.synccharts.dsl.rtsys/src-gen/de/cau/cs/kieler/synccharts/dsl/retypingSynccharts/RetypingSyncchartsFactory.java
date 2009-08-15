@@ -35,6 +35,15 @@ public interface RetypingSyncchartsFactory extends EFactory
   State createState();
 
   /**
+   * Returns a new object of class '<em>State Content</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>State Content</em>'.
+   * @generated
+   */
+  StateContent createStateContent();
+
+  /**
    * Returns a new object of class '<em>Action</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

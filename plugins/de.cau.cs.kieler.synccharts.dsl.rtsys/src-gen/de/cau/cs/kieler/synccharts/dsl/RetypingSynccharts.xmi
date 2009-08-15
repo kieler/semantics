@@ -20,7 +20,7 @@
             <terminal xsi:type="xtext:Keyword" value="final"/>
           </groups>
           <groups xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
           </groups>
           <groups xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
@@ -35,7 +35,7 @@
               <terminal xsi:type="xtext:Keyword" value="init"/>
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
             </tokens>
           </groups>
           <groups xsi:type="xtext:Group">
@@ -51,12 +51,12 @@
               <terminal xsi:type="xtext:Keyword" value="final"/>
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
             </tokens>
           </groups>
           <groups xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
               <terminal xsi:type="xtext:Keyword" value="init"/>
@@ -64,7 +64,7 @@
           </groups>
           <groups xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
               <terminal xsi:type="xtext:Keyword" value="final"/>
@@ -78,7 +78,7 @@
               <terminal xsi:type="xtext:Keyword" value="final"/>
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
             </tokens>
           </groups>
           <groups xsi:type="xtext:Group">
@@ -86,7 +86,7 @@
               <terminal xsi:type="xtext:Keyword" value="init"/>
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
               <terminal xsi:type="xtext:Keyword" value="final"/>
@@ -100,7 +100,7 @@
               <terminal xsi:type="xtext:Keyword" value="init"/>
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
             </tokens>
           </groups>
           <groups xsi:type="xtext:Group">
@@ -108,7 +108,7 @@
               <terminal xsi:type="xtext:Keyword" value="final"/>
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
               <terminal xsi:type="xtext:Keyword" value="init"/>
@@ -116,7 +116,7 @@
           </groups>
           <groups xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
               <terminal xsi:type="xtext:Keyword" value="final"/>
@@ -127,7 +127,7 @@
           </groups>
           <groups xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Assignment" feature="stateKind" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
             </tokens>
             <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
               <terminal xsi:type="xtext:Keyword" value="init"/>
@@ -144,6 +144,29 @@
         <tokens xsi:type="xtext:Assignment" cardinality="?" feature="stateLabel" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
         </tokens>
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="stateContent" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="StateContent">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts#//StateContent"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" value="{"/>
+        <tokens xsi:type="xtext:Alternatives" cardinality="+">
+          <groups xsi:type="xtext:Assignment" feature="exitActions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
+          </groups>
+          <groups xsi:type="xtext:Assignment" feature="entryActions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+          </groups>
+          <groups xsi:type="xtext:Assignment" feature="innerAction" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+          </groups>
+        </tokens>
+        <tokens xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="StateType">
@@ -169,6 +192,17 @@
         </groups>
       </alternatives>
     </rules>
+    <rules xsi:type="xtext:ParserRule" name="InnerAction">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts#//Action"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" value="oninner"/>
+        <tokens xsi:type="xtext:Assignment" feature="inner" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        </tokens>
+      </alternatives>
+    </rules>
     <rules xsi:type="xtext:ParserRule" name="EntryAction">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts#//Action"/>
@@ -187,17 +221,6 @@
       <alternatives xsi:type="xtext:Group">
         <tokens xsi:type="xtext:Keyword" value="onexit"/>
         <tokens xsi:type="xtext:Assignment" feature="exit" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
-        </tokens>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="InnerAction">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts#//Action"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="oninner"/>
-        <tokens xsi:type="xtext:Assignment" feature="inner" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
         </tokens>
       </alternatives>

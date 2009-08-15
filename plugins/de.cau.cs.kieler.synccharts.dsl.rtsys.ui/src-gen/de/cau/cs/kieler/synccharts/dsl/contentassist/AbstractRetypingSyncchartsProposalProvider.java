@@ -59,6 +59,46 @@ public class AbstractRetypingSyncchartsProposalProvider extends TerminalsProposa
 		}
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
+	public void completeState_StateContent(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("completeState_StateContent feature '" + assignment.getFeature() + "' terminal '"
+					+ assignment.getTerminal() + "' cardinality '" + assignment.getCardinality() + "' and prefix '"
+					+ context.getPrefix() + "'");
+		}
+		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
+	}
+	public void completeStateContent_ExitActions(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("completeStateContent_ExitActions feature '" + assignment.getFeature() + "' terminal '"
+					+ assignment.getTerminal() + "' cardinality '" + assignment.getCardinality() + "' and prefix '"
+					+ context.getPrefix() + "'");
+		}
+		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
+	}
+	public void completeStateContent_EntryActions(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("completeStateContent_EntryActions feature '" + assignment.getFeature() + "' terminal '"
+					+ assignment.getTerminal() + "' cardinality '" + assignment.getCardinality() + "' and prefix '"
+					+ context.getPrefix() + "'");
+		}
+		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
+	}
+	public void completeStateContent_InnerAction(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("completeStateContent_InnerAction feature '" + assignment.getFeature() + "' terminal '"
+					+ assignment.getTerminal() + "' cardinality '" + assignment.getCardinality() + "' and prefix '"
+					+ context.getPrefix() + "'");
+		}
+		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
+	}
+	public void completeInnerAction_Inner(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("completeInnerAction_Inner feature '" + assignment.getFeature() + "' terminal '"
+					+ assignment.getTerminal() + "' cardinality '" + assignment.getCardinality() + "' and prefix '"
+					+ context.getPrefix() + "'");
+		}
+		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
+	}
 	public void completeEntryAction_EntryAction(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("completeEntryAction_EntryAction feature '" + assignment.getFeature() + "' terminal '"
@@ -75,14 +115,6 @@ public class AbstractRetypingSyncchartsProposalProvider extends TerminalsProposa
 		}
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
-	public void completeInnerAction_Inner(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("completeInnerAction_Inner feature '" + assignment.getFeature() + "' terminal '"
-					+ assignment.getTerminal() + "' cardinality '" + assignment.getCardinality() + "' and prefix '"
-					+ context.getPrefix() + "'");
-		}
-		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
-	}
     
 	public void complete_State(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (logger.isDebugEnabled()) {
@@ -91,9 +123,23 @@ public class AbstractRetypingSyncchartsProposalProvider extends TerminalsProposa
 		}
 		// subclasses may override
 	}
+	public void complete_StateContent(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("complete_StateContent '" + ruleCall.getRule().getName() + "' cardinality '" + ruleCall.getCardinality()
+					+ "' for model '" + context.getCurrentModel() + "' and prefix '" + context.getPrefix() + "'");
+		}
+		// subclasses may override
+	}
 	public void complete_StateType(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("complete_StateType '" + ruleCall.getRule().getName() + "' cardinality '" + ruleCall.getCardinality()
+					+ "' for model '" + context.getCurrentModel() + "' and prefix '" + context.getPrefix() + "'");
+		}
+		// subclasses may override
+	}
+	public void complete_InnerAction(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("complete_InnerAction '" + ruleCall.getRule().getName() + "' cardinality '" + ruleCall.getCardinality()
 					+ "' for model '" + context.getCurrentModel() + "' and prefix '" + context.getPrefix() + "'");
 		}
 		// subclasses may override
@@ -108,13 +154,6 @@ public class AbstractRetypingSyncchartsProposalProvider extends TerminalsProposa
 	public void complete_ExitAction(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("complete_ExitAction '" + ruleCall.getRule().getName() + "' cardinality '" + ruleCall.getCardinality()
-					+ "' for model '" + context.getCurrentModel() + "' and prefix '" + context.getPrefix() + "'");
-		}
-		// subclasses may override
-	}
-	public void complete_InnerAction(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("complete_InnerAction '" + ruleCall.getRule().getName() + "' cardinality '" + ruleCall.getCardinality()
 					+ "' for model '" + context.getCurrentModel() + "' and prefix '" + context.getPrefix() + "'");
 		}
 		// subclasses may override

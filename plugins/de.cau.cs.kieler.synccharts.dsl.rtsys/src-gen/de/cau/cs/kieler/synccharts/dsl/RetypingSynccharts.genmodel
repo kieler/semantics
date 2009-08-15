@@ -21,11 +21,17 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/stateKind"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/stateID"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/stateLabel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/stateContent"/>
+    </genClasses>
+    <genClasses ecoreClass="RetypingSynccharts.ecore#//StateContent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//StateContent/exitActions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//StateContent/entryActions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//StateContent/innerAction"/>
     </genClasses>
     <genClasses ecoreClass="RetypingSynccharts.ecore#//Action">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/inner"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/entryAction"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/exit"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/inner"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

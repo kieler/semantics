@@ -7,11 +7,14 @@ package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl;
 
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -28,6 +31,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getStateKind <em>State Kind</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getStateID <em>State ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getStateLabel <em>State Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getStateContent <em>State Content</em>}</li>
  * </ul>
  * </p>
  *
@@ -134,6 +138,16 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * @ordered
    */
   protected String stateLabel = STATE_LABEL_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getStateContent() <em>State Content</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getStateContent()
+   * @generated
+   * @ordered
+   */
+  protected StateContent stateContent;
 
   /**
    * <!-- begin-user-doc -->
@@ -276,6 +290,70 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
+  public StateContent getStateContent()
+  {
+    return stateContent;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetStateContent(StateContent newStateContent, NotificationChain msgs)
+  {
+    StateContent oldStateContent = stateContent;
+    stateContent = newStateContent;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.STATE__STATE_CONTENT, oldStateContent, newStateContent);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setStateContent(StateContent newStateContent)
+  {
+    if (newStateContent != stateContent)
+    {
+      NotificationChain msgs = null;
+      if (stateContent != null)
+        msgs = ((InternalEObject)stateContent).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RetypingSyncchartsPackage.STATE__STATE_CONTENT, null, msgs);
+      if (newStateContent != null)
+        msgs = ((InternalEObject)newStateContent).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RetypingSyncchartsPackage.STATE__STATE_CONTENT, null, msgs);
+      msgs = basicSetStateContent(newStateContent, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.STATE__STATE_CONTENT, newStateContent, newStateContent));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case RetypingSyncchartsPackage.STATE__STATE_CONTENT:
+        return basicSetStateContent(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -291,6 +369,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return getStateID();
       case RetypingSyncchartsPackage.STATE__STATE_LABEL:
         return getStateLabel();
+      case RetypingSyncchartsPackage.STATE__STATE_CONTENT:
+        return getStateContent();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -319,6 +399,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return;
       case RetypingSyncchartsPackage.STATE__STATE_LABEL:
         setStateLabel((String)newValue);
+        return;
+      case RetypingSyncchartsPackage.STATE__STATE_CONTENT:
+        setStateContent((StateContent)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -349,6 +432,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case RetypingSyncchartsPackage.STATE__STATE_LABEL:
         setStateLabel(STATE_LABEL_EDEFAULT);
         return;
+      case RetypingSyncchartsPackage.STATE__STATE_CONTENT:
+        setStateContent((StateContent)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -373,6 +459,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return STATE_ID_EDEFAULT == null ? stateID != null : !STATE_ID_EDEFAULT.equals(stateID);
       case RetypingSyncchartsPackage.STATE__STATE_LABEL:
         return STATE_LABEL_EDEFAULT == null ? stateLabel != null : !STATE_LABEL_EDEFAULT.equals(stateLabel);
+      case RetypingSyncchartsPackage.STATE__STATE_CONTENT:
+        return stateContent != null;
     }
     return super.eIsSet(featureID);
   }

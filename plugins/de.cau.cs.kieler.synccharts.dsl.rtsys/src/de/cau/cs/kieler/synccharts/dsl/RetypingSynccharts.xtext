@@ -69,9 +69,10 @@ State:
 StateContent:
 	'{'
 //	(regions+=Region)*
-//	(		(exitActions+=ExitAction )
-//		| 	(entryActions+=EntryAction)
-//		| 	(innerAction+=InnerAction)
+	(		(exitActions+=ExitAction )
+		| 	(entryActions+=EntryAction)
+		| 	(innerAction+=InnerAction)
+	)+
 //		| 	(signalsAndVariables+=ValuedObject)?
 //		|	(innerStates+=State	('||' parallelStates+=State)*)
 //	)+	
@@ -83,19 +84,17 @@ enum StateType:
 //Effect:
 //	effectID=STRING
 //;
-EntryAction returns Action:// transitionlabel::Action :
-	'onentry' entryAction=STRING
-;
-//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  
-//do we need both in one list: triggersAndEffects?
-ExitAction returns Action :
-	'onexit' exit=STRING
-;
-//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
 InnerAction returns Action :
 	'oninner' inner=STRING
 ;
-//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 
+EntryAction returns Action:// transitionlabel::Action :
+	'onentry' entryAction=STRING
+;
+ExitAction returns Action :
+	'onexit' exit=STRING
+;
+//(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;  
+//do we need both in one list: triggersAndEffects?
 
 //ValuedObject:
 //	Signal | Variable
