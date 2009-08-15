@@ -55,6 +55,7 @@
 
 	<target name="build.feature" if="eclipse.running">
 		<!--  property name="elementPath" value="${basedir}/features/${feature}" /-->
+		<property name="p2.gathering" value="true" />
 
 		<mkdir dir="${basedir}/update-site/features" />
 		<mkdir dir="${basedir}/update-site/plugins" />
@@ -81,7 +82,7 @@
 	<target name="build.rca" if="eclipse.running">
 		<property name="product" value="${basedir}/kieler.product" />
 		<property name="runPackager" value="true" />
-		<property name="p2.gathering" value="true" />
+		<!-- property name="p2.gathering" value="true" / -->
 
 		<delete dir="${buildLabel}"/>
 		<copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/kieler.product"
