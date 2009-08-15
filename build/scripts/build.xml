@@ -81,7 +81,7 @@
 	<target name="build.rca" if="eclipse.running">
 		<property name="product" value="${basedir}/kieler.product" />
 		<property name="runPackager" value="true" />
-		<!-- property name="generate.p2.metadata" value="true" /-->
+		<property name="p2.gathering" value="true" />
 
 		<delete dir="${buildLabel}"/>
 		<copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/kieler.product"
@@ -90,7 +90,7 @@
 		<!-- ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/productBuild/productBuild.xml" / -->
 		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
 
-		<p2.publish.product
+		<!-- p2.publish.product
 		    metadataRepository="${p2.metadata.repo}Prod"
 		    artifactRepository="${p2.artifact.repo}Prod"
 		    publishArtifacts="true"
@@ -98,14 +98,14 @@
 		    flavor="tooling"
 		    executables="${baseLocation}/deltaPack/eclipse/features/org.eclipse.equinox.executable_${equinoxExecutableFeatureVersion}"
 		    productFile="${product}">
-			<!-- config ws="win32" os="win32" arch="x86" />
+			<config ws="win32" os="win32" arch="x86" />
 			<config ws="win32" os="win32" arch="x86_64" />
-			<config ws="gtk" os="linux" arch="x86" / -->
+			<config ws="gtk" os="linux" arch="x86" />
 	        <config ws="gtk" os="linux" arch="x86_64" />
-	        <!-- config ws="cocoa" os="linux" arch="x86" />
+	        <config ws="cocoa" os="linux" arch="x86" />
 	        <config ws="cocoa" os="linux" arch="x86_64" />
-	        <config ws="gtk" os="solaris" arch="sparc" / -->
-		  </p2.publish.product>
+	        <config ws="gtk" os="solaris" arch="sparc" />
+		  </p2.publish.product -->
 	</target>
 	
 	<target name="clean">
