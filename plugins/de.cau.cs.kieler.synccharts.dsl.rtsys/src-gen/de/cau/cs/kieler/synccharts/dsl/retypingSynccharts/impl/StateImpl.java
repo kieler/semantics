@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getStateKind <em>State Kind</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getStateID <em>State ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getStateLabel <em>State Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getStateContent <em>State Content</em>}</li>
  * </ul>
  * </p>
@@ -138,6 +139,26 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * @ordered
    */
   protected String stateLabel = STATE_LABEL_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getBodyText() <em>Body Text</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getBodyText()
+   * @generated
+   * @ordered
+   */
+  protected static final String BODY_TEXT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getBodyText() <em>Body Text</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getBodyText()
+   * @generated
+   * @ordered
+   */
+  protected String bodyText = BODY_TEXT_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getStateContent() <em>State Content</em>}' containment reference.
@@ -290,6 +311,29 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getBodyText()
+  {
+    return bodyText;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setBodyText(String newBodyText)
+  {
+    String oldBodyText = bodyText;
+    bodyText = newBodyText;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.STATE__BODY_TEXT, oldBodyText, bodyText));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public StateContent getStateContent()
   {
     return stateContent;
@@ -369,6 +413,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return getStateID();
       case RetypingSyncchartsPackage.STATE__STATE_LABEL:
         return getStateLabel();
+      case RetypingSyncchartsPackage.STATE__BODY_TEXT:
+        return getBodyText();
       case RetypingSyncchartsPackage.STATE__STATE_CONTENT:
         return getStateContent();
     }
@@ -399,6 +445,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return;
       case RetypingSyncchartsPackage.STATE__STATE_LABEL:
         setStateLabel((String)newValue);
+        return;
+      case RetypingSyncchartsPackage.STATE__BODY_TEXT:
+        setBodyText((String)newValue);
         return;
       case RetypingSyncchartsPackage.STATE__STATE_CONTENT:
         setStateContent((StateContent)newValue);
@@ -432,6 +481,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case RetypingSyncchartsPackage.STATE__STATE_LABEL:
         setStateLabel(STATE_LABEL_EDEFAULT);
         return;
+      case RetypingSyncchartsPackage.STATE__BODY_TEXT:
+        setBodyText(BODY_TEXT_EDEFAULT);
+        return;
       case RetypingSyncchartsPackage.STATE__STATE_CONTENT:
         setStateContent((StateContent)null);
         return;
@@ -459,6 +511,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return STATE_ID_EDEFAULT == null ? stateID != null : !STATE_ID_EDEFAULT.equals(stateID);
       case RetypingSyncchartsPackage.STATE__STATE_LABEL:
         return STATE_LABEL_EDEFAULT == null ? stateLabel != null : !STATE_LABEL_EDEFAULT.equals(stateLabel);
+      case RetypingSyncchartsPackage.STATE__BODY_TEXT:
+        return BODY_TEXT_EDEFAULT == null ? bodyText != null : !BODY_TEXT_EDEFAULT.equals(bodyText);
       case RetypingSyncchartsPackage.STATE__STATE_CONTENT:
         return stateContent != null;
     }
@@ -486,6 +540,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     result.append(stateID);
     result.append(", stateLabel: ");
     result.append(stateLabel);
+    result.append(", bodyText: ");
+    result.append(bodyText);
     result.append(')');
     return result.toString();
   }

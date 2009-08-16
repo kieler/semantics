@@ -9,16 +9,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateKind" eType="#//StateType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateLabel" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bodyText" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="stateContent" eType="#//StateContent"
         containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StateContent">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="exitActions" upperBound="-1"
-        eType="#//Action" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="entryActions" upperBound="-1"
-        eType="#//Action" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="innerAction" upperBound="-1"
-        eType="#//Action" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="StateType">
     <eLiterals name="NORMAL" literal="NORMAL"/>
@@ -26,9 +19,58 @@
     <eLiterals name="REFERENCE" value="2" literal="reference"/>
     <eLiterals name="TEXTUAL" value="3" literal="textual"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StateContent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entryActions" upperBound="-1"
+        eType="#//Action" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="innerAction" upperBound="-1"
+        eType="#//Action" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exitActions" upperBound="-1"
+        eType="#//Action" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="suspensionTrigger" eType="#//Action"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
+        eType="#//Signal" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="newStateID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="referencedState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signalRenamings" upperBound="-1"
+        eType="#//SignalRenaming" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SignalRenaming">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oldSignal" eType="#//Signal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newSignal" eType="#//Signal"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Action">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="entryAction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="exit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="innerAction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="exitAction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="suspensionTrigger" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValuedObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="initialValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ValueType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Signal" eSuperTypes="#//ValuedObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isLocal" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOutput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="combineOperator" eType="#//CombineOperator"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hostCombineOperator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="CombineOperator">
+    <eLiterals name="NONE" literal="NONE"/>
+    <eLiterals name="ADD" value="1" literal="+"/>
+    <eLiterals name="MULT" value="2" literal="*"/>
+    <eLiterals name="HOST" value="3" literal="host"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//ValuedObject"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="ValueType">
+    <eLiterals name="PURE" literal="PURE"/>
+    <eLiterals name="BOOL" value="1" literal="boolean"/>
+    <eLiterals name="UNSIGNED" value="2" literal="unsigned"/>
+    <eLiterals name="INTEGER" value="3" literal="integer"/>
+    <eLiterals name="DOUBLE" value="4" literal="double"/>
+    <eLiterals name="FLOAT" value="5" literal="float"/>
+    <eLiterals name="HOST" value="6" literal="host"/>
   </eClassifiers>
 </ecore:EPackage>

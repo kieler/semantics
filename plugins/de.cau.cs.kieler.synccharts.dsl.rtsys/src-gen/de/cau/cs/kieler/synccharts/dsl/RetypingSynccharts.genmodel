@@ -15,23 +15,62 @@
       <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//StateType/REFERENCE"/>
       <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//StateType/TEXTUAL"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="RetypingSynccharts.ecore#//CombineOperator">
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//CombineOperator/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//CombineOperator/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//CombineOperator/MULT"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//CombineOperator/HOST"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="RetypingSynccharts.ecore#//ValueType">
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/PURE"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/BOOL"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/UNSIGNED"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/INTEGER"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/DOUBLE"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/FLOAT"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/HOST"/>
+    </genEnums>
     <genClasses ecoreClass="RetypingSynccharts.ecore#//State">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/isInitial"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/isFinal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/stateKind"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/stateID"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/stateLabel"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/bodyText"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/stateContent"/>
     </genClasses>
     <genClasses ecoreClass="RetypingSynccharts.ecore#//StateContent">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//StateContent/exitActions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//StateContent/entryActions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//StateContent/innerAction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//StateContent/exitActions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//StateContent/suspensionTrigger"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//StateContent/signals"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//StateContent/newStateID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//StateContent/referencedState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//StateContent/signalRenamings"/>
+    </genClasses>
+    <genClasses ecoreClass="RetypingSynccharts.ecore#//SignalRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//SignalRenaming/oldSignal"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//SignalRenaming/newSignal"/>
     </genClasses>
     <genClasses ecoreClass="RetypingSynccharts.ecore#//Action">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/inner"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/entryAction"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/exit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/innerAction"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/exitAction"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/suspensionTrigger"/>
     </genClasses>
+    <genClasses ecoreClass="RetypingSynccharts.ecore#//ValuedObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//ValuedObject/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//ValuedObject/initialValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//ValuedObject/type"/>
+    </genClasses>
+    <genClasses ecoreClass="RetypingSynccharts.ecore#//Signal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Signal/isLocal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Signal/isInput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Signal/isOutput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Signal/combineOperator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Signal/hostCombineOperator"/>
+    </genClasses>
+    <genClasses ecoreClass="RetypingSynccharts.ecore#//Variable"/>
   </genPackages>
 </genmodel:GenModel>

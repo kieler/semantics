@@ -15,9 +15,10 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getInner <em>Inner</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getEntryAction <em>Entry Action</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getExit <em>Exit</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getInnerAction <em>Inner Action</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getExitAction <em>Exit Action</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
  * </ul>
  * </p>
  *
@@ -27,32 +28,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Action extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Inner</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Inner</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Inner</em>' attribute.
-   * @see #setInner(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_Inner()
-   * @model
-   * @generated
-   */
-  String getInner();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getInner <em>Inner</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Inner</em>' attribute.
-   * @see #getInner()
-   * @generated
-   */
-  void setInner(String value);
-
   /**
    * Returns the value of the '<em><b>Entry Action</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -80,29 +55,81 @@ public interface Action extends EObject
   void setEntryAction(String value);
 
   /**
-   * Returns the value of the '<em><b>Exit</b></em>' attribute.
+   * Returns the value of the '<em><b>Inner Action</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Exit</em>' attribute isn't clear,
+   * If the meaning of the '<em>Inner Action</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Exit</em>' attribute.
-   * @see #setExit(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_Exit()
+   * @return the value of the '<em>Inner Action</em>' attribute.
+   * @see #setInnerAction(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_InnerAction()
    * @model
    * @generated
    */
-  String getExit();
+  String getInnerAction();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getExit <em>Exit</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getInnerAction <em>Inner Action</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Exit</em>' attribute.
-   * @see #getExit()
+   * @param value the new value of the '<em>Inner Action</em>' attribute.
+   * @see #getInnerAction()
    * @generated
    */
-  void setExit(String value);
+  void setInnerAction(String value);
+
+  /**
+   * Returns the value of the '<em><b>Exit Action</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Exit Action</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Exit Action</em>' attribute.
+   * @see #setExitAction(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_ExitAction()
+   * @model
+   * @generated
+   */
+  String getExitAction();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getExitAction <em>Exit Action</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Exit Action</em>' attribute.
+   * @see #getExitAction()
+   * @generated
+   */
+  void setExitAction(String value);
+
+  /**
+   * Returns the value of the '<em><b>Suspension Trigger</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Suspension Trigger</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Suspension Trigger</em>' attribute.
+   * @see #setSuspensionTrigger(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_SuspensionTrigger()
+   * @model
+   * @generated
+   */
+  String getSuspensionTrigger();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getSuspensionTrigger <em>Suspension Trigger</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Suspension Trigger</em>' attribute.
+   * @see #getSuspensionTrigger()
+   * @generated
+   */
+  void setSuspensionTrigger(String value);
 
 } // Action

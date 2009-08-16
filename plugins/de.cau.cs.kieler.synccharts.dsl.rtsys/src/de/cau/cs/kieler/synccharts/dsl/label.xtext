@@ -1,0 +1,90 @@
+grammar de.cau.cs.kieler.synccharts.TransitionLabel with org.eclipse.xtext.common.Terminals
+generate transitionlabel "http://kieler.cs.cau.de/synccharts/actionlabel"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+//import "http://kieler.cs.cau.de/synccharts" as synccharts
+
+Action:
+	isImmediate?='#' (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect)*)?; 		
+//----------------------------------EFFFECT----------------------------------//
+Effect : 
+	Emission | Assignment | HostCode;
+		
+Emission :
+	signal=[Signal] ("(" newValue=PrimaryExpression ")")?;
+
+Assignment :
+	variable=[Variable] ":=" expression=PrimaryExpression;
+
+SignalReference :
+	signal = [Signal];
+
+VariableReference :
+	variable = [Variable];
+
+IntValue: 
+	value=INT;
+FloatValue:
+    value=Float;
+BooleanValue:
+    value=Boolean;
+Value:
+	IntValue | FloatValue | BooleanValue;
+
+// make sure the Float rule does not shadow the built-in INT rule
+terminal Float returns ecore::EDouble : ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
+terminal Boolean returns ecore::EBoolean : "true" | "false";
+
+HostCode :
+	code=STRING; 	
+	
+ValOperation :
+	operator=ValOperator subExpressions+=SignalReference;
+
+ValueExpression :
+	IntValue | FloatValue | ValOperation | VariableReference;
+
+CompareOperation :
+	ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
+
+NotOperation :
+	operator=NotOperator subExpressions+=BooleanExpression;
+
+NotOrNormalExpression :
+	NotOperation | BooleanExpression;
+
+AndOperation :
+	NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd subExpression+=NotOrNormalExpression)*;
+
+OrOperation :
+	AndOperation ({Operation.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
+
+// TODO: get rid of parentheses
+BooleanExpression :
+	BooleanValue | SignalReference | CompareOperation | "("OrOperation")" ;
+
+PrimaryExpression :
+	BooleanExpression;
+Signal:
+	"signal" name = ID;
+	
+Variable:
+	"variable" name = ID;
+	
+	
+enum OperatorType :
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre";
+
+enum ValOperator :
+	VAL="?";
+
+enum CompareOperator :
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
+	
+enum NotOperator :
+	NOT="not";
+
+enum OperatorOr :
+	OR="or";
+
+enum OperatorAnd :
+	AND="and";

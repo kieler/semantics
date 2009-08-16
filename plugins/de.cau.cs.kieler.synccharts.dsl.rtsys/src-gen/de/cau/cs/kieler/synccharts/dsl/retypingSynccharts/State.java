@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateKind <em>State Kind</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateID <em>State ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateLabel <em>State Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateContent <em>State Content</em>}</li>
  * </ul>
  * </p>
@@ -162,6 +163,32 @@ public interface State extends EObject
    * @generated
    */
   void setStateLabel(String value);
+
+  /**
+   * Returns the value of the '<em><b>Body Text</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Body Text</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Body Text</em>' attribute.
+   * @see #setBodyText(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_BodyText()
+   * @model
+   * @generated
+   */
+  String getBodyText();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getBodyText <em>Body Text</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Body Text</em>' attribute.
+   * @see #getBodyText()
+   * @generated
+   */
+  void setBodyText(String value);
 
   /**
    * Returns the value of the '<em><b>State Content</b></em>' containment reference.

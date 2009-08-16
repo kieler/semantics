@@ -109,10 +109,40 @@ public class RetypingSyncchartsSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case RetypingSyncchartsPackage.SIGNAL_RENAMING:
+      {
+        SignalRenaming signalRenaming = (SignalRenaming)theEObject;
+        T result = caseSignalRenaming(signalRenaming);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case RetypingSyncchartsPackage.ACTION:
       {
         Action action = (Action)theEObject;
         T result = caseAction(action);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case RetypingSyncchartsPackage.VALUED_OBJECT:
+      {
+        ValuedObject valuedObject = (ValuedObject)theEObject;
+        T result = caseValuedObject(valuedObject);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case RetypingSyncchartsPackage.SIGNAL:
+      {
+        Signal signal = (Signal)theEObject;
+        T result = caseSignal(signal);
+        if (result == null) result = caseValuedObject(signal);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case RetypingSyncchartsPackage.VARIABLE:
+      {
+        Variable variable = (Variable)theEObject;
+        T result = caseVariable(variable);
+        if (result == null) result = caseValuedObject(variable);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -153,6 +183,22 @@ public class RetypingSyncchartsSwitch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Signal Renaming</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Signal Renaming</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSignalRenaming(SignalRenaming object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Action</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -164,6 +210,54 @@ public class RetypingSyncchartsSwitch<T>
    * @generated
    */
   public T caseAction(Action object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Valued Object</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Valued Object</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseValuedObject(ValuedObject object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Signal</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Signal</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSignal(Signal object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Variable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVariable(Variable object)
   {
     return null;
   }

@@ -22,9 +22,10 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#getInner <em>Inner</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#getEntryAction <em>Entry Action</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#getExit <em>Exit</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#getInnerAction <em>Inner Action</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#getExitAction <em>Exit Action</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
  * </ul>
  * </p>
  *
@@ -32,26 +33,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class ActionImpl extends MinimalEObjectImpl.Container implements Action
 {
-  /**
-   * The default value of the '{@link #getInner() <em>Inner</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getInner()
-   * @generated
-   * @ordered
-   */
-  protected static final String INNER_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getInner() <em>Inner</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getInner()
-   * @generated
-   * @ordered
-   */
-  protected String inner = INNER_EDEFAULT;
-
   /**
    * The default value of the '{@link #getEntryAction() <em>Entry Action</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -73,24 +54,64 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   protected String entryAction = ENTRY_ACTION_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getExit() <em>Exit</em>}' attribute.
+   * The default value of the '{@link #getInnerAction() <em>Inner Action</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExit()
+   * @see #getInnerAction()
    * @generated
    * @ordered
    */
-  protected static final String EXIT_EDEFAULT = null;
+  protected static final String INNER_ACTION_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getExit() <em>Exit</em>}' attribute.
+   * The cached value of the '{@link #getInnerAction() <em>Inner Action</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExit()
+   * @see #getInnerAction()
    * @generated
    * @ordered
    */
-  protected String exit = EXIT_EDEFAULT;
+  protected String innerAction = INNER_ACTION_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getExitAction() <em>Exit Action</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExitAction()
+   * @generated
+   * @ordered
+   */
+  protected static final String EXIT_ACTION_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getExitAction() <em>Exit Action</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExitAction()
+   * @generated
+   * @ordered
+   */
+  protected String exitAction = EXIT_ACTION_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getSuspensionTrigger() <em>Suspension Trigger</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSuspensionTrigger()
+   * @generated
+   * @ordered
+   */
+  protected static final String SUSPENSION_TRIGGER_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getSuspensionTrigger() <em>Suspension Trigger</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSuspensionTrigger()
+   * @generated
+   * @ordered
+   */
+  protected String suspensionTrigger = SUSPENSION_TRIGGER_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -111,29 +132,6 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   protected EClass eStaticClass()
   {
     return RetypingSyncchartsPackage.Literals.ACTION;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getInner()
-  {
-    return inner;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setInner(String newInner)
-  {
-    String oldInner = inner;
-    inner = newInner;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.ACTION__INNER, oldInner, inner));
   }
 
   /**
@@ -164,9 +162,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getExit()
+  public String getInnerAction()
   {
-    return exit;
+    return innerAction;
   }
 
   /**
@@ -174,12 +172,58 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExit(String newExit)
+  public void setInnerAction(String newInnerAction)
   {
-    String oldExit = exit;
-    exit = newExit;
+    String oldInnerAction = innerAction;
+    innerAction = newInnerAction;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.ACTION__EXIT, oldExit, exit));
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.ACTION__INNER_ACTION, oldInnerAction, innerAction));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getExitAction()
+  {
+    return exitAction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setExitAction(String newExitAction)
+  {
+    String oldExitAction = exitAction;
+    exitAction = newExitAction;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.ACTION__EXIT_ACTION, oldExitAction, exitAction));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getSuspensionTrigger()
+  {
+    return suspensionTrigger;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setSuspensionTrigger(String newSuspensionTrigger)
+  {
+    String oldSuspensionTrigger = suspensionTrigger;
+    suspensionTrigger = newSuspensionTrigger;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.ACTION__SUSPENSION_TRIGGER, oldSuspensionTrigger, suspensionTrigger));
   }
 
   /**
@@ -192,12 +236,14 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.ACTION__INNER:
-        return getInner();
       case RetypingSyncchartsPackage.ACTION__ENTRY_ACTION:
         return getEntryAction();
-      case RetypingSyncchartsPackage.ACTION__EXIT:
-        return getExit();
+      case RetypingSyncchartsPackage.ACTION__INNER_ACTION:
+        return getInnerAction();
+      case RetypingSyncchartsPackage.ACTION__EXIT_ACTION:
+        return getExitAction();
+      case RetypingSyncchartsPackage.ACTION__SUSPENSION_TRIGGER:
+        return getSuspensionTrigger();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -212,14 +258,17 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.ACTION__INNER:
-        setInner((String)newValue);
-        return;
       case RetypingSyncchartsPackage.ACTION__ENTRY_ACTION:
         setEntryAction((String)newValue);
         return;
-      case RetypingSyncchartsPackage.ACTION__EXIT:
-        setExit((String)newValue);
+      case RetypingSyncchartsPackage.ACTION__INNER_ACTION:
+        setInnerAction((String)newValue);
+        return;
+      case RetypingSyncchartsPackage.ACTION__EXIT_ACTION:
+        setExitAction((String)newValue);
+        return;
+      case RetypingSyncchartsPackage.ACTION__SUSPENSION_TRIGGER:
+        setSuspensionTrigger((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -235,14 +284,17 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.ACTION__INNER:
-        setInner(INNER_EDEFAULT);
-        return;
       case RetypingSyncchartsPackage.ACTION__ENTRY_ACTION:
         setEntryAction(ENTRY_ACTION_EDEFAULT);
         return;
-      case RetypingSyncchartsPackage.ACTION__EXIT:
-        setExit(EXIT_EDEFAULT);
+      case RetypingSyncchartsPackage.ACTION__INNER_ACTION:
+        setInnerAction(INNER_ACTION_EDEFAULT);
+        return;
+      case RetypingSyncchartsPackage.ACTION__EXIT_ACTION:
+        setExitAction(EXIT_ACTION_EDEFAULT);
+        return;
+      case RetypingSyncchartsPackage.ACTION__SUSPENSION_TRIGGER:
+        setSuspensionTrigger(SUSPENSION_TRIGGER_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -258,12 +310,14 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.ACTION__INNER:
-        return INNER_EDEFAULT == null ? inner != null : !INNER_EDEFAULT.equals(inner);
       case RetypingSyncchartsPackage.ACTION__ENTRY_ACTION:
         return ENTRY_ACTION_EDEFAULT == null ? entryAction != null : !ENTRY_ACTION_EDEFAULT.equals(entryAction);
-      case RetypingSyncchartsPackage.ACTION__EXIT:
-        return EXIT_EDEFAULT == null ? exit != null : !EXIT_EDEFAULT.equals(exit);
+      case RetypingSyncchartsPackage.ACTION__INNER_ACTION:
+        return INNER_ACTION_EDEFAULT == null ? innerAction != null : !INNER_ACTION_EDEFAULT.equals(innerAction);
+      case RetypingSyncchartsPackage.ACTION__EXIT_ACTION:
+        return EXIT_ACTION_EDEFAULT == null ? exitAction != null : !EXIT_ACTION_EDEFAULT.equals(exitAction);
+      case RetypingSyncchartsPackage.ACTION__SUSPENSION_TRIGGER:
+        return SUSPENSION_TRIGGER_EDEFAULT == null ? suspensionTrigger != null : !SUSPENSION_TRIGGER_EDEFAULT.equals(suspensionTrigger);
     }
     return super.eIsSet(featureID);
   }
@@ -279,12 +333,14 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (inner: ");
-    result.append(inner);
-    result.append(", entryAction: ");
+    result.append(" (entryAction: ");
     result.append(entryAction);
-    result.append(", exit: ");
-    result.append(exit);
+    result.append(", innerAction: ");
+    result.append(innerAction);
+    result.append(", exitAction: ");
+    result.append(exitAction);
+    result.append(", suspensionTrigger: ");
+    result.append(suspensionTrigger);
     result.append(')');
     return result.toString();
   }

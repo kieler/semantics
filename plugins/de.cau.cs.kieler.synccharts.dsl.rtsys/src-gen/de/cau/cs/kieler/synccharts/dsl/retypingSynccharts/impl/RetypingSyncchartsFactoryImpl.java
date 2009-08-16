@@ -70,7 +70,11 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
     {
       case RetypingSyncchartsPackage.STATE: return createState();
       case RetypingSyncchartsPackage.STATE_CONTENT: return createStateContent();
+      case RetypingSyncchartsPackage.SIGNAL_RENAMING: return createSignalRenaming();
       case RetypingSyncchartsPackage.ACTION: return createAction();
+      case RetypingSyncchartsPackage.VALUED_OBJECT: return createValuedObject();
+      case RetypingSyncchartsPackage.SIGNAL: return createSignal();
+      case RetypingSyncchartsPackage.VARIABLE: return createVariable();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -88,6 +92,10 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
     {
       case RetypingSyncchartsPackage.STATE_TYPE:
         return createStateTypeFromString(eDataType, initialValue);
+      case RetypingSyncchartsPackage.COMBINE_OPERATOR:
+        return createCombineOperatorFromString(eDataType, initialValue);
+      case RetypingSyncchartsPackage.VALUE_TYPE:
+        return createValueTypeFromString(eDataType, initialValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -105,6 +113,10 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
     {
       case RetypingSyncchartsPackage.STATE_TYPE:
         return convertStateTypeToString(eDataType, instanceValue);
+      case RetypingSyncchartsPackage.COMBINE_OPERATOR:
+        return convertCombineOperatorToString(eDataType, instanceValue);
+      case RetypingSyncchartsPackage.VALUE_TYPE:
+        return convertValueTypeToString(eDataType, instanceValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -137,10 +149,54 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
+  public SignalRenaming createSignalRenaming()
+  {
+    SignalRenamingImpl signalRenaming = new SignalRenamingImpl();
+    return signalRenaming;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Action createAction()
   {
     ActionImpl action = new ActionImpl();
     return action;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ValuedObject createValuedObject()
+  {
+    ValuedObjectImpl valuedObject = new ValuedObjectImpl();
+    return valuedObject;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Signal createSignal()
+  {
+    SignalImpl signal = new SignalImpl();
+    return signal;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Variable createVariable()
+  {
+    VariableImpl variable = new VariableImpl();
+    return variable;
   }
 
   /**
@@ -161,6 +217,50 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
    * @generated
    */
   public String convertStateTypeToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CombineOperator createCombineOperatorFromString(EDataType eDataType, String initialValue)
+  {
+    CombineOperator result = CombineOperator.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertCombineOperatorToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ValueType createValueTypeFromString(EDataType eDataType, String initialValue)
+  {
+    ValueType result = ValueType.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertValueTypeToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
