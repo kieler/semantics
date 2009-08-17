@@ -3,10 +3,19 @@
    <description url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite">
       KIELER Update Site
    </description>
-   <feature url="features/de.cau.cs.kieler.synccharts.feature_0.1.0.jar" id="de.cau.cs.kieler.synccharts.feature" version="0.1.0">
-      <category name="kieler"/>
+   <feature url="features/de.cau.cs.kieler.core_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.core" version="0.1.0.vqualifier">
+      <category name="KIELER"/>
    </feature>
-   <category-def name="kieler" label="KIELER">
+   <feature url="features/de.cau.cs.kieler.kiml_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.kiml" version="0.1.0.vqualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.dataflow_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.dataflow" version="0.1.0.vqualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.synccharts_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.synccharts" version="0.1.0.vqualifier">
+      <category name="KIELER"/>
+   </feature>
+   <category-def name="KIELER" label="KIELER">
       <description>
          Kiel Integrated Environment for Layout for the Eclipse RichClientPlatform
       </description>
