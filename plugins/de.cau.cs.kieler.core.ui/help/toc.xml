@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="KIELER Guide">
+   <topic href="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/" label="Online Documentation">
+   </topic>
+	<topic label="API Reference"  href="http://rtsys.informatik.uni-kiel.de/~kieler/doc/overview-summary.html"> 
+	</topic>
+</toc>

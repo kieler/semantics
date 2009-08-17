@@ -50,6 +50,13 @@
       </category>
    </extension>
    <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="de.cau.cs.kieler"
+            name="KIELER">
+      </category>
+   </extension>
+   <extension
          point="org.eclipse.core.expressions.definitions">
       <definition
             id="de.cau.cs.kieler.expression.gmfDiagram">
@@ -94,13 +101,6 @@
       </definition>
    </extension>
    <extension
-         point="org.eclipse.ui.newWizards">
-      <category
-            id="de.cau.cs.kieler"
-            name="KIELER">
-      </category>
-   </extension>
-   <extension
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
@@ -140,6 +140,13 @@
                value="icons/kiel_16.gif,icons/kiel_32.gif,icons/kiel_48.gif,icons/kiel_64.gif,icons/kiel_128.gif">
          </property>
       </product>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="help/toc.xml"
+            primary="true">
+      </toc>
    </extension>
 
 </plugin>
