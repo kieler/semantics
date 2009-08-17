@@ -4,9 +4,9 @@
 	<property name="scriptdir" location="."/>
 	<property file="${scriptdir}/build.properties" />
 
-	<property name="eclipseLocation"  location="tmp/eclipse_64/eclipse" />
-	<property name="eclipseConfig"    location="${scriptdir}/.eclipse"/>
-	<property name="eclipseWorkspace" location="${scriptdir}/.eclipseWorkspace"/>
+	<property name="eclipseLocation"  location="/tmp/eclipse_64/eclipse" />
+	<property name="eclipseConfig"    location="${scriptdir}/.eclipse" />
+	<property name="eclipseWorkspace" location="${scriptdir}/.eclipseWorkspace" />
 	
 	<!-- default definitions: should be overwritten while calling this script -->	
 	<property name="target"  value="noTargetInfo"/>
@@ -54,21 +54,18 @@
 	</target>
 
 	<target name="build.feature" if="eclipse.running">
-		<!--  property name="elementPath" value="${basedir}/features/${feature}" /-->
 		<property name="p2.gathering" value="true" />
 		<property name="configs"      value="${feature.configs}" />
 
 		<mkdir dir="${basedir}/update-site/features" />
 		<mkdir dir="${basedir}/update-site/plugins" />
 		
-		<!-- delete file="${basedir}/update-site/features/${feature}/feature.xml"/ -->
 		<delete includeemptydirs="true">
 		    <fileset dir="${basedir}/update-site/features/" includes="**/*"/>
 			<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
 		</delete>
 		
 		<echo message="basedir: ${basedir}" />
-		<!-- ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml" -->
 		<ant antfile="${eclipse.pdebuild.scripts}/build.xml" target="generate"/>
 		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}" target="build.update.jar">
@@ -85,34 +82,16 @@
 	</target>
 	
 	<target name="build.rca" if="eclipse.running">
-		<property name="product" value="${basedir}/kieler.product" />
+		<property name="p2.gathering" value="true" />
 		<property name="configs" value="${product.configs}" />
+		<property name="product" value="${basedir}/kieler.product" />
 		<property name="runPackager" value="true" />
-		<!-- property name="p2.gathering" value="true" / -->
 
 		<delete dir="${buildLabel}"/>
 		<copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/kieler.product"
 			  tofile="${basedir}/kieler.product" overwrite="true" />
 		
-		<!-- ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/productBuild/productBuild.xml" / -->
 		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
-
-		<!-- p2.publish.product
-		    metadataRepository="${p2.metadata.repo}Prod"
-		    artifactRepository="${p2.artifact.repo}Prod"
-		    publishArtifacts="true"
-		    compress="true"
-		    flavor="tooling"
-		    executables="${baseLocation}/deltaPack/eclipse/features/org.eclipse.equinox.executable_${equinoxExecutableFeatureVersion}"
-		    productFile="${product}">
-			<config ws="win32" os="win32" arch="x86" />
-			<config ws="win32" os="win32" arch="x86_64" />
-			<config ws="gtk" os="linux" arch="x86" />
-	        <config ws="gtk" os="linux" arch="x86_64" />
-	        <config ws="cocoa" os="linux" arch="x86" />
-	        <config ws="cocoa" os="linux" arch="x86_64" />
-	        <config ws="gtk" os="solaris" arch="sparc" />
-		  </p2.publish.product -->
 	</target>
 	
 	<target name="clean">
