@@ -4,7 +4,7 @@
 	<property name="scriptdir" location="."/>
 	<property file="${scriptdir}/build.properties" />
 
-	<property name="eclipseLocation"  location="${baseLocation}" /> <!-- /tmp/eclipse_64/eclipse -->
+	<property name="eclipseLocation"  location="tmp/eclipse_64/eclipse" />
 	<property name="eclipseConfig"    location="${scriptdir}/.eclipse"/>
 	<property name="eclipseWorkspace" location="${scriptdir}/.eclipseWorkspace"/>
 	
@@ -56,7 +56,7 @@
 	<target name="build.feature" if="eclipse.running">
 		<!--  property name="elementPath" value="${basedir}/features/${feature}" /-->
 		<property name="p2.gathering" value="true" />
-		<property name="configs" value="${feature.configs}" />
+		<property name="configs"      value="${feature.configs}" />
 
 		<mkdir dir="${basedir}/update-site/features" />
 		<mkdir dir="${basedir}/update-site/plugins" />
