@@ -56,6 +56,7 @@
 	<target name="build.feature" if="eclipse.running">
 		<!--  property name="elementPath" value="${basedir}/features/${feature}" /-->
 		<property name="p2.gathering" value="true" />
+		<property name="configs" value="${feature.configs}" />
 
 		<mkdir dir="${basedir}/update-site/features" />
 		<mkdir dir="${basedir}/update-site/plugins" />
@@ -66,6 +67,7 @@
 			<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
 		</delete>
 		
+		<echo message="basedir: ${basedir}" />
 		<!-- ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml" -->
 		<ant antfile="${eclipse.pdebuild.scripts}/build.xml" target="generate"/>
 		
@@ -77,10 +79,14 @@
 			<property name="feature.base" value="${basedir}/update-site/"/>
 			<property name="updateJar.omitRootfiles" value="true"/>
 		</ant>
+		
+		<echo message="STARTING p2 stuff" />
+		<ant antfile="assemble.${feature}.p2.xml" />
 	</target>
 	
 	<target name="build.rca" if="eclipse.running">
 		<property name="product" value="${basedir}/kieler.product" />
+		<property name="configs" value="${product.configs}" />
 		<property name="runPackager" value="true" />
 		<!-- property name="p2.gathering" value="true" / -->
 
