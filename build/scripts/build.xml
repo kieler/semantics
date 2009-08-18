@@ -7,6 +7,7 @@
 	<property name="eclipseLocation"  location="/tmp/eclipse_64/eclipse" />
 	<property name="eclipseConfig"    location="${scriptdir}/.eclipse" />
 	<property name="eclipseWorkspace" location="${scriptdir}/.eclipseWorkspace" />
+	<property name="p2.director.workspace" location="${scriptdir}/.p2Workspace" />
 	
 	<!-- default definitions: should be overwritten while calling this script -->	
 	<property name="target"  value="noTargetInfo"/>
