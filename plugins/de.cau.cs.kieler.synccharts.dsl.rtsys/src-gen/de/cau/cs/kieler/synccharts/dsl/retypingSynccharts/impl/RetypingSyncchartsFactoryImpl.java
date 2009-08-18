@@ -72,6 +72,7 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
       case RetypingSyncchartsPackage.RENAMING: return createRenaming();
       case RetypingSyncchartsPackage.REGION: return createRegion();
       case RetypingSyncchartsPackage.ACTION: return createAction();
+      case RetypingSyncchartsPackage.TRANSITION: return createTransition();
       case RetypingSyncchartsPackage.VALUED_OBJECT: return createValuedObject();
       case RetypingSyncchartsPackage.VARIABLE: return createVariable();
       case RetypingSyncchartsPackage.SIGNAL: return createSignal();
@@ -96,6 +97,8 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
         return createCombineOperatorFromString(eDataType, initialValue);
       case RetypingSyncchartsPackage.VALUE_TYPE:
         return createValueTypeFromString(eDataType, initialValue);
+      case RetypingSyncchartsPackage.TRANSITION_TYPE:
+        return createTransitionTypeFromString(eDataType, initialValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -117,6 +120,8 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
         return convertCombineOperatorToString(eDataType, instanceValue);
       case RetypingSyncchartsPackage.VALUE_TYPE:
         return convertValueTypeToString(eDataType, instanceValue);
+      case RetypingSyncchartsPackage.TRANSITION_TYPE:
+        return convertTransitionTypeToString(eDataType, instanceValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -164,6 +169,17 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
   {
     ActionImpl action = new ActionImpl();
     return action;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Transition createTransition()
+  {
+    TransitionImpl transition = new TransitionImpl();
+    return transition;
   }
 
   /**
@@ -261,6 +277,28 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
    * @generated
    */
   public String convertValueTypeToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TransitionType createTransitionTypeFromString(EDataType eDataType, String initialValue)
+  {
+    TransitionType result = TransitionType.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertTransitionTypeToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }

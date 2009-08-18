@@ -23,44 +23,55 @@ T23 : 'boolean' ;
 T24 : 'unsigned' ;
 T25 : 'integer' ;
 T26 : 'float' ;
-T27 : '{' ;
-T28 : '}' ;
-T29 : 'onentry' ;
-T30 : 'oninner' ;
-T31 : 'onexit' ;
-T32 : 'suspension' ;
-T33 : '||' ;
-T34 : 'region' ;
-T35 : ':= ' ;
-T36 : ': ' ;
-T37 : 'combine' ;
-T38 : 'with' ;
-T39 : 'init' ;
-T40 : 'final' ;
-T41 : '#' ;
-T42 : 'local' ;
-T43 : 'input' ;
-T44 : 'output' ;
+T27 : '-->' ;
+T28 : 'o->' ;
+T29 : '>->' ;
+T30 : '[' ;
+T31 : ']' ;
+T32 : ',' ;
+T33 : '{' ;
+T34 : '}' ;
+T35 : 'onentry' ;
+T36 : 'oninner' ;
+T37 : 'onexit' ;
+T38 : 'suspension' ;
+T39 : '||' ;
+T40 : '/' ;
+T41 : '@' ;
+T42 : 'region' ;
+T43 : ';' ;
+T44 : 'with ' ;
+T45 : ':= ' ;
+T46 : ': ' ;
+T47 : 'combine' ;
+T48 : 'with' ;
+T49 : 'init' ;
+T50 : 'final' ;
+T51 : '#' ;
+T52 : ' history' ;
+T53 : 'local' ;
+T54 : 'input' ;
+T55 : 'output' ;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 6359
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7181
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 6361
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7183
 RULE_INT : ('0'..'9')+;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 6363
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7185
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 6365
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7187
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 6367
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7189
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 6369
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7191
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 6371
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7193
 RULE_ANY_OTHER : .;
 
 

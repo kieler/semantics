@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RenamingImpl#getOldID <em>Old ID</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RenamingImpl#getOldObject <em>Old Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RenamingImpl#getNewID <em>New ID</em>}</li>
  * </ul>
  * </p>
@@ -32,24 +32,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class RenamingImpl extends MinimalEObjectImpl.Container implements Renaming
 {
   /**
-   * The default value of the '{@link #getOldID() <em>Old ID</em>}' attribute.
+   * The default value of the '{@link #getOldObject() <em>Old Object</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOldID()
+   * @see #getOldObject()
    * @generated
    * @ordered
    */
-  protected static final String OLD_ID_EDEFAULT = null;
+  protected static final String OLD_OBJECT_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getOldID() <em>Old ID</em>}' attribute.
+   * The cached value of the '{@link #getOldObject() <em>Old Object</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOldID()
+   * @see #getOldObject()
    * @generated
    * @ordered
    */
-  protected String oldID = OLD_ID_EDEFAULT;
+  protected String oldObject = OLD_OBJECT_EDEFAULT;
 
   /**
    * The default value of the '{@link #getNewID() <em>New ID</em>}' attribute.
@@ -97,9 +97,9 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getOldID()
+  public String getOldObject()
   {
-    return oldID;
+    return oldObject;
   }
 
   /**
@@ -107,12 +107,12 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOldID(String newOldID)
+  public void setOldObject(String newOldObject)
   {
-    String oldOldID = oldID;
-    oldID = newOldID;
+    String oldOldObject = oldObject;
+    oldObject = newOldObject;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.RENAMING__OLD_ID, oldOldID, oldID));
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.RENAMING__OLD_OBJECT, oldOldObject, oldObject));
   }
 
   /**
@@ -148,8 +148,8 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.RENAMING__OLD_ID:
-        return getOldID();
+      case RetypingSyncchartsPackage.RENAMING__OLD_OBJECT:
+        return getOldObject();
       case RetypingSyncchartsPackage.RENAMING__NEW_ID:
         return getNewID();
     }
@@ -166,8 +166,8 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.RENAMING__OLD_ID:
-        setOldID((String)newValue);
+      case RetypingSyncchartsPackage.RENAMING__OLD_OBJECT:
+        setOldObject((String)newValue);
         return;
       case RetypingSyncchartsPackage.RENAMING__NEW_ID:
         setNewID((String)newValue);
@@ -186,8 +186,8 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.RENAMING__OLD_ID:
-        setOldID(OLD_ID_EDEFAULT);
+      case RetypingSyncchartsPackage.RENAMING__OLD_OBJECT:
+        setOldObject(OLD_OBJECT_EDEFAULT);
         return;
       case RetypingSyncchartsPackage.RENAMING__NEW_ID:
         setNewID(NEW_ID_EDEFAULT);
@@ -206,8 +206,8 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.RENAMING__OLD_ID:
-        return OLD_ID_EDEFAULT == null ? oldID != null : !OLD_ID_EDEFAULT.equals(oldID);
+      case RetypingSyncchartsPackage.RENAMING__OLD_OBJECT:
+        return OLD_OBJECT_EDEFAULT == null ? oldObject != null : !OLD_OBJECT_EDEFAULT.equals(oldObject);
       case RetypingSyncchartsPackage.RENAMING__NEW_ID:
         return NEW_ID_EDEFAULT == null ? newID != null : !NEW_ID_EDEFAULT.equals(newID);
     }
@@ -225,8 +225,8 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (oldID: ");
-    result.append(oldID);
+    result.append(" (oldObject: ");
+    result.append(oldObject);
     result.append(", newID: ");
     result.append(newID);
     result.append(')');

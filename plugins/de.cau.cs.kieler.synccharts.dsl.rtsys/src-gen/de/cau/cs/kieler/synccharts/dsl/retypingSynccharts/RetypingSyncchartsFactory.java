@@ -62,6 +62,15 @@ public interface RetypingSyncchartsFactory extends EFactory
   Action createAction();
 
   /**
+   * Returns a new object of class '<em>Transition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Transition</em>'.
+   * @generated
+   */
+  Transition createTransition();
+
+  /**
    * Returns a new object of class '<em>Valued Object</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

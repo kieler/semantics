@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getLabel <em>Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSignalRenamings <em>Signal Renamings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getEntryActions <em>Entry Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getInnerActions <em>Inner Actions</em>}</li>
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSignals <em>Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getRegions <em>Regions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  * </ul>
  * </p>
  *
@@ -172,6 +174,22 @@ public interface State extends EObject
   void setLabel(String value);
 
   /**
+   * Returns the value of the '<em><b>Signal Renamings</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Signal Renamings</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Signal Renamings</em>' containment reference list.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_SignalRenamings()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Renaming> getSignalRenamings();
+
+  /**
    * Returns the value of the '<em><b>Body Text</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
@@ -302,5 +320,21 @@ public interface State extends EObject
    * @generated
    */
   EList<Region> getRegions();
+
+  /**
+   * Returns the value of the '<em><b>Outgoing Transitions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Outgoing Transitions</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Outgoing Transitions</em>' containment reference list.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_OutgoingTransitions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Transition> getOutgoingTransitions();
 
 } // State

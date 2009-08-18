@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming#getOldID <em>Old ID</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming#getOldObject <em>Old Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming#getNewID <em>New ID</em>}</li>
  * </ul>
  * </p>
@@ -27,30 +27,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface Renaming extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Old ID</b></em>' attribute.
+   * Returns the value of the '<em><b>Old Object</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Old ID</em>' attribute isn't clear,
+   * If the meaning of the '<em>Old Object</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Old ID</em>' attribute.
-   * @see #setOldID(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getRenaming_OldID()
+   * @return the value of the '<em>Old Object</em>' attribute.
+   * @see #setOldObject(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getRenaming_OldObject()
    * @model
    * @generated
    */
-  String getOldID();
+  String getOldObject();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming#getOldID <em>Old ID</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming#getOldObject <em>Old Object</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Old ID</em>' attribute.
-   * @see #getOldID()
+   * @param value the new value of the '<em>Old Object</em>' attribute.
+   * @see #getOldObject()
    * @generated
    */
-  void setOldID(String value);
+  void setOldObject(String value);
 
   /**
    * Returns the value of the '<em><b>New ID</b></em>' attribute.

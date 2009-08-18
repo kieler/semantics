@@ -16,8 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#isIsImmediate <em>Is Immediate</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getTriggersAndEfects <em>Triggers And Efects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getTriggersAndEffects <em>Triggers And Effects</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,32 +54,6 @@ public interface Action extends EObject
   void setIsImmediate(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Triggers And Efects</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Triggers And Efects</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Triggers And Efects</em>' attribute.
-   * @see #setTriggersAndEfects(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_TriggersAndEfects()
-   * @model
-   * @generated
-   */
-  String getTriggersAndEfects();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getTriggersAndEfects <em>Triggers And Efects</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Triggers And Efects</em>' attribute.
-   * @see #getTriggersAndEfects()
-   * @generated
-   */
-  void setTriggersAndEfects(String value);
-
-  /**
    * Returns the value of the '<em><b>Delay</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
@@ -104,5 +78,31 @@ public interface Action extends EObject
    * @generated
    */
   void setDelay(int value);
+
+  /**
+   * Returns the value of the '<em><b>Triggers And Effects</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Triggers And Effects</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Triggers And Effects</em>' attribute.
+   * @see #setTriggersAndEffects(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_TriggersAndEffects()
+   * @model
+   * @generated
+   */
+  String getTriggersAndEffects();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getTriggersAndEffects <em>Triggers And Effects</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Triggers And Effects</em>' attribute.
+   * @see #getTriggersAndEffects()
+   * @generated
+   */
+  void setTriggersAndEffects(String value);
 
 } // Action

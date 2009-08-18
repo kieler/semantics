@@ -98,6 +98,11 @@ public class RetypingSyncchartsAdapterFactory extends AdapterFactoryImpl
         return createActionAdapter();
       }
       @Override
+      public Adapter caseTransition(Transition object)
+      {
+        return createTransitionAdapter();
+      }
+      @Override
       public Adapter caseValuedObject(ValuedObject object)
       {
         return createValuedObjectAdapter();
@@ -190,6 +195,21 @@ public class RetypingSyncchartsAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createActionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition <em>Transition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition
+   * @generated
+   */
+  public Adapter createTransitionAdapter()
   {
     return null;
   }

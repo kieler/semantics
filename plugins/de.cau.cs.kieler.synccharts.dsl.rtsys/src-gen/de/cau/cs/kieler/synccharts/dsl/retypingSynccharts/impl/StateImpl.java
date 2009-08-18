@@ -7,10 +7,12 @@ package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl;
 
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition;
 
 import java.util.Collection;
 
@@ -40,6 +42,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getSignalRenamings <em>Signal Renamings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getEntryActions <em>Entry Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getInnerActions <em>Inner Actions</em>}</li>
@@ -47,6 +50,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getSignals <em>Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getRegions <em>Regions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  * </ul>
  * </p>
  *
@@ -155,6 +159,16 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   protected String label = LABEL_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getSignalRenamings() <em>Signal Renamings</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSignalRenamings()
+   * @generated
+   * @ordered
+   */
+  protected EList<Renaming> signalRenamings;
+
+  /**
    * The default value of the '{@link #getBodyText() <em>Body Text</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -233,6 +247,16 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * @ordered
    */
   protected EList<Region> regions;
+
+  /**
+   * The cached value of the '{@link #getOutgoingTransitions() <em>Outgoing Transitions</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOutgoingTransitions()
+   * @generated
+   * @ordered
+   */
+  protected EList<Transition> outgoingTransitions;
 
   /**
    * <!-- begin-user-doc -->
@@ -368,6 +392,20 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     label = newLabel;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.STATE__LABEL, oldLabel, label));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Renaming> getSignalRenamings()
+  {
+    if (signalRenamings == null)
+    {
+      signalRenamings = new EObjectContainmentEList<Renaming>(Renaming.class, this, RetypingSyncchartsPackage.STATE__SIGNAL_RENAMINGS);
+    }
+    return signalRenamings;
   }
 
   /**
@@ -516,11 +554,27 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Transition> getOutgoingTransitions()
+  {
+    if (outgoingTransitions == null)
+    {
+      outgoingTransitions = new EObjectContainmentEList<Transition>(Transition.class, this, RetypingSyncchartsPackage.STATE__OUTGOING_TRANSITIONS);
+    }
+    return outgoingTransitions;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
+      case RetypingSyncchartsPackage.STATE__SIGNAL_RENAMINGS:
+        return ((InternalEList<?>)getSignalRenamings()).basicRemove(otherEnd, msgs);
       case RetypingSyncchartsPackage.STATE__ENTRY_ACTIONS:
         return ((InternalEList<?>)getEntryActions()).basicRemove(otherEnd, msgs);
       case RetypingSyncchartsPackage.STATE__INNER_ACTIONS:
@@ -533,6 +587,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
       case RetypingSyncchartsPackage.STATE__REGIONS:
         return ((InternalEList<?>)getRegions()).basicRemove(otherEnd, msgs);
+      case RetypingSyncchartsPackage.STATE__OUTGOING_TRANSITIONS:
+        return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -557,6 +613,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return getId();
       case RetypingSyncchartsPackage.STATE__LABEL:
         return getLabel();
+      case RetypingSyncchartsPackage.STATE__SIGNAL_RENAMINGS:
+        return getSignalRenamings();
       case RetypingSyncchartsPackage.STATE__BODY_TEXT:
         return getBodyText();
       case RetypingSyncchartsPackage.STATE__ENTRY_ACTIONS:
@@ -571,6 +629,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return getSignals();
       case RetypingSyncchartsPackage.STATE__REGIONS:
         return getRegions();
+      case RetypingSyncchartsPackage.STATE__OUTGOING_TRANSITIONS:
+        return getOutgoingTransitions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -601,6 +661,10 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case RetypingSyncchartsPackage.STATE__LABEL:
         setLabel((String)newValue);
         return;
+      case RetypingSyncchartsPackage.STATE__SIGNAL_RENAMINGS:
+        getSignalRenamings().clear();
+        getSignalRenamings().addAll((Collection<? extends Renaming>)newValue);
+        return;
       case RetypingSyncchartsPackage.STATE__BODY_TEXT:
         setBodyText((String)newValue);
         return;
@@ -626,6 +690,10 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case RetypingSyncchartsPackage.STATE__REGIONS:
         getRegions().clear();
         getRegions().addAll((Collection<? extends Region>)newValue);
+        return;
+      case RetypingSyncchartsPackage.STATE__OUTGOING_TRANSITIONS:
+        getOutgoingTransitions().clear();
+        getOutgoingTransitions().addAll((Collection<? extends Transition>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -656,6 +724,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case RetypingSyncchartsPackage.STATE__LABEL:
         setLabel(LABEL_EDEFAULT);
         return;
+      case RetypingSyncchartsPackage.STATE__SIGNAL_RENAMINGS:
+        getSignalRenamings().clear();
+        return;
       case RetypingSyncchartsPackage.STATE__BODY_TEXT:
         setBodyText(BODY_TEXT_EDEFAULT);
         return;
@@ -676,6 +747,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return;
       case RetypingSyncchartsPackage.STATE__REGIONS:
         getRegions().clear();
+        return;
+      case RetypingSyncchartsPackage.STATE__OUTGOING_TRANSITIONS:
+        getOutgoingTransitions().clear();
         return;
     }
     super.eUnset(featureID);
@@ -701,6 +775,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
       case RetypingSyncchartsPackage.STATE__LABEL:
         return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+      case RetypingSyncchartsPackage.STATE__SIGNAL_RENAMINGS:
+        return signalRenamings != null && !signalRenamings.isEmpty();
       case RetypingSyncchartsPackage.STATE__BODY_TEXT:
         return BODY_TEXT_EDEFAULT == null ? bodyText != null : !BODY_TEXT_EDEFAULT.equals(bodyText);
       case RetypingSyncchartsPackage.STATE__ENTRY_ACTIONS:
@@ -715,6 +791,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return signals != null && !signals.isEmpty();
       case RetypingSyncchartsPackage.STATE__REGIONS:
         return regions != null && !regions.isEmpty();
+      case RetypingSyncchartsPackage.STATE__OUTGOING_TRANSITIONS:
+        return outgoingTransitions != null && !outgoingTransitions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

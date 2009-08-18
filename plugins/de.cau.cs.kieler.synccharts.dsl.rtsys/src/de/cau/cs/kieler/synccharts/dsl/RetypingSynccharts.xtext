@@ -1,79 +1,83 @@
 grammar de.cau.cs.kieler.synccharts.dsl.RetypingSynccharts with org.eclipse.xtext.common.Terminals
 generate retypingSynccharts "http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts" 
 
-	//========================================================================================
-	//===  									    STATE						               ===
-	//========================================================================================
+//========================================================================================
+//===  									    STATE						               ===
+//========================================================================================
 
 State:
 
-	( ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' id=ID
+	( ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' id=FullStateID
 	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
-	| ((isInitial?='init')(isFinal?='final')) (type=StateType) id=ID
-	| ((isInitial?='init')(isFinal?='final')) 'state' id=ID
+	| ((isInitial?='init')(isFinal?='final')) (type=StateType) id=FullStateID
+	| ((isInitial?='init')(isFinal?='final')) 'state' id=FullStateID
 	| ((isInitial?='init')(isFinal?='final')) (type=StateType)
 	| ((isInitial?='init')(isFinal?='final')) 'state'
-	| ((isInitial?='init')(isFinal?='final')) id=ID
+	| ((isInitial?='init')(isFinal?='final')) id=FullStateID
 	| ((isInitial?='init')(isFinal?='final'))
 	
-	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' id=ID
+	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' id=FullStateID
 	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state'
-	| ((isFinal?='final')(isInitial?='init')) (type=StateType) id=ID
-	| ((isFinal?='final')(isInitial?='init')) 'state' id=ID
+	| ((isFinal?='final')(isInitial?='init')) (type=StateType) id=FullStateID
+	| ((isFinal?='final')(isInitial?='init')) 'state' id=FullStateID
 	| ((isFinal?='final')(isInitial?='init')) (type=StateType)
 	| ((isFinal?='final')(isInitial?='init')) 'state'
-	| ((isFinal?='final')(isInitial?='init')) id=ID
+	| ((isFinal?='final')(isInitial?='init')) id=FullStateID
 	| ((isFinal?='final')(isInitial?='init'))
 	
-	| (isInitial?='init') (type=StateType) 'state' id=ID
+	| (isInitial?='init') (type=StateType) 'state' id=FullStateID
 	| (isInitial?='init') (type=StateType) 'state'
-	| (isInitial?='init') (type=StateType) id=ID  
-	| (isInitial?='init') 'state' id=ID
+	| (isInitial?='init') (type=StateType) id=FullStateID  
+	| (isInitial?='init') 'state' id=FullStateID
 	| (isInitial?='init') (type=StateType) 
 	| (isInitial?='init') 'state'
-	| (isInitial?='init') id=ID
+	| (isInitial?='init') id=FullStateID
 	| (isInitial?='init')
 	
-	| (isFinal?='final')  (type=StateType) 'state' id=ID
+	| (isFinal?='final')  (type=StateType) 'state' id=FullStateID
 	| (isFinal?='final')  (type=StateType) 'state' 
-	| (isFinal?='final')  (type=StateType) id=ID
-	| (isFinal?='final')  'state' id=ID
+	| (isFinal?='final')  (type=StateType) id=FullStateID
+	| (isFinal?='final')  'state' id=FullStateID
 	| (isFinal?='final')  (type=StateType)
-	| (isFinal?='final')  'state' id=ID
-	| (isFinal?='final')  id=ID
+	| (isFinal?='final')  'state' id=FullStateID
+	| (isFinal?='final')  id=FullStateID
 	| (isFinal?='final')
 	
-	| (type=StateType) 'state' id=ID
+	| (type=StateType) 'state' id=FullStateID
 	| (type=StateType) 'state'
-	| (type=StateType) id=ID
+	| (type=StateType) id=FullStateID
 	| (type=StateType)
 	
-	| 'state' id=ID
+	| 'state' id=FullStateID
 	| 'state'
 		
-	| id=ID
+	| id=FullStateID
 	)
 	
 	(label=STRING)?
+	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
 	(bodyText=STRING)?
 	
 ('{'	
 	(	 	('onentry' entryActions+=Action) 
 		| 	('oninner' innerActions+=Action) 
 		|   ('onexit' exitActions+=Action ) 
-		| 	('suspension' suspensionTrigger=Action) 
+		| 	('suspension' suspensionTrigger=Action) // kein effect, kein delay, kein immediate
 		| 	(signals+=Signal) 
 		|	((regions+=Region '||' )* regions+=Region)
 	)+	
 	'}'
+	
+	(outgoingTransitions+=Transition)*
 )? 
 ;
 Renaming:
-	oldID=STRING'/'newID=STRING
+	oldObject=STRING'/'newID=STRING
 ;
-	//========================================================================================
-	//===  									    REGION  					               ===
-	//========================================================================================
+FullStateID : ((ID'@')?ID);
+//========================================================================================
+//===  									    REGION  					               ===
+//========================================================================================
 Region:
 	('region')? (id=STRING)? 
 
@@ -92,16 +96,23 @@ Region:
 	//===  									    ACTIONS  					               ===
 	//========================================================================================
 Action:
-	((isImmediate?='#')? (triggersAndEfects=STRING) (delay=INT)?)
-	//| Transition
+	((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))
+| 
+	Transition
 	
 ;
 	//========================================================================================
 	//===  									    TRANSITION 					               ===
 	//========================================================================================
-//Transition:
-//	
-//;
+
+Transition:
+	(sourceState=[State|ID])? 
+	type=TransitionType
+	targetState=[State|ID]
+	('with ' triggersAndEffects=STRING)?
+	(isHistory?=' history')?
+	';'
+;
 	//========================================================================================
 	//===  									    VAR,SIG  					               ===
 	//========================================================================================
@@ -130,3 +141,4 @@ TICK returns Signal	: 'tick' ;
 enum StateType		:  NORMAL | PSEUDO='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
 enum CombineOperator: NONE | ADD='+' | MULT='*' | AND='AND'|OR='OR' |HOST='host';
 enum ValueType		:	PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='host';	
+enum TransitionType : WEAKABORT='-->' |  STRONGABORT='o->' | NORMALTERMINATION='>->' ;

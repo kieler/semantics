@@ -31,12 +31,18 @@
       <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/FLOAT"/>
       <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/HOST"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="RetypingSynccharts.ecore#//TransitionType">
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//TransitionType/WEAKABORT"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//TransitionType/STRONGABORT"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//TransitionType/NORMALTERMINATION"/>
+    </genEnums>
     <genClasses ecoreClass="RetypingSynccharts.ecore#//State">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/isInitial"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/isFinal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/label"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/signalRenamings"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/bodyText"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/entryActions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/innerActions"/>
@@ -44,9 +50,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/suspensionTrigger"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/signals"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/regions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/outgoingTransitions"/>
     </genClasses>
     <genClasses ecoreClass="RetypingSynccharts.ecore#//Renaming">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Renaming/oldID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Renaming/oldObject"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Renaming/newID"/>
     </genClasses>
     <genClasses ecoreClass="RetypingSynccharts.ecore#//Region">
@@ -57,8 +64,14 @@
     </genClasses>
     <genClasses ecoreClass="RetypingSynccharts.ecore#//Action">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/isImmediate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/triggersAndEfects"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/delay"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Action/triggersAndEffects"/>
+    </genClasses>
+    <genClasses ecoreClass="RetypingSynccharts.ecore#//Transition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//Transition/sourceState"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Transition/type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//Transition/targetState"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Transition/isHistory"/>
     </genClasses>
     <genClasses ecoreClass="RetypingSynccharts.ecore#//ValuedObject">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//ValuedObject/name"/>
