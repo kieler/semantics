@@ -15,10 +15,9 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getEntryAction <em>Entry Action</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getInnerAction <em>Inner Action</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getExitAction <em>Exit Action</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#isIsImmediate <em>Is Immediate</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getTriggersAndEfects <em>Triggers And Efects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getDelay <em>Delay</em>}</li>
  * </ul>
  * </p>
  *
@@ -29,107 +28,81 @@ import org.eclipse.emf.ecore.EObject;
 public interface Action extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Entry Action</b></em>' attribute.
+   * Returns the value of the '<em><b>Is Immediate</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Entry Action</em>' attribute isn't clear,
+   * If the meaning of the '<em>Is Immediate</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Entry Action</em>' attribute.
-   * @see #setEntryAction(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_EntryAction()
+   * @return the value of the '<em>Is Immediate</em>' attribute.
+   * @see #setIsImmediate(boolean)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_IsImmediate()
    * @model
    * @generated
    */
-  String getEntryAction();
+  boolean isIsImmediate();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getEntryAction <em>Entry Action</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#isIsImmediate <em>Is Immediate</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Entry Action</em>' attribute.
-   * @see #getEntryAction()
+   * @param value the new value of the '<em>Is Immediate</em>' attribute.
+   * @see #isIsImmediate()
    * @generated
    */
-  void setEntryAction(String value);
+  void setIsImmediate(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Inner Action</b></em>' attribute.
+   * Returns the value of the '<em><b>Triggers And Efects</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Inner Action</em>' attribute isn't clear,
+   * If the meaning of the '<em>Triggers And Efects</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Inner Action</em>' attribute.
-   * @see #setInnerAction(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_InnerAction()
+   * @return the value of the '<em>Triggers And Efects</em>' attribute.
+   * @see #setTriggersAndEfects(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_TriggersAndEfects()
    * @model
    * @generated
    */
-  String getInnerAction();
+  String getTriggersAndEfects();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getInnerAction <em>Inner Action</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getTriggersAndEfects <em>Triggers And Efects</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Inner Action</em>' attribute.
-   * @see #getInnerAction()
+   * @param value the new value of the '<em>Triggers And Efects</em>' attribute.
+   * @see #getTriggersAndEfects()
    * @generated
    */
-  void setInnerAction(String value);
+  void setTriggersAndEfects(String value);
 
   /**
-   * Returns the value of the '<em><b>Exit Action</b></em>' attribute.
+   * Returns the value of the '<em><b>Delay</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Exit Action</em>' attribute isn't clear,
+   * If the meaning of the '<em>Delay</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Exit Action</em>' attribute.
-   * @see #setExitAction(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_ExitAction()
+   * @return the value of the '<em>Delay</em>' attribute.
+   * @see #setDelay(int)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_Delay()
    * @model
    * @generated
    */
-  String getExitAction();
+  int getDelay();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getExitAction <em>Exit Action</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getDelay <em>Delay</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Exit Action</em>' attribute.
-   * @see #getExitAction()
+   * @param value the new value of the '<em>Delay</em>' attribute.
+   * @see #getDelay()
    * @generated
    */
-  void setExitAction(String value);
-
-  /**
-   * Returns the value of the '<em><b>Suspension Trigger</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Suspension Trigger</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Suspension Trigger</em>' attribute.
-   * @see #setSuspensionTrigger(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getAction_SuspensionTrigger()
-   * @model
-   * @generated
-   */
-  String getSuspensionTrigger();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getSuspensionTrigger <em>Suspension Trigger</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Suspension Trigger</em>' attribute.
-   * @see #getSuspensionTrigger()
-   * @generated
-   */
-  void setSuspensionTrigger(String value);
+  void setDelay(int value);
 
 } // Action

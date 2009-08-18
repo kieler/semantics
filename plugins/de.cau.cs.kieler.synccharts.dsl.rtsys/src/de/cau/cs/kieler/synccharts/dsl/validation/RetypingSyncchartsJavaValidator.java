@@ -26,10 +26,10 @@ public class RetypingSyncchartsJavaValidator extends
 
 	@Check
 	public void checkStateID(State state) {
-		if ((RetypingSyncchartsPackage.eINSTANCE.getState_StateID() == null)
-				&& (RetypingSyncchartsPackage.eINSTANCE.getState_StateLabel() != null)) {
+		if ((RetypingSyncchartsPackage.eINSTANCE.getState_Id() == null)
+				&& (RetypingSyncchartsPackage.eINSTANCE.getState_Label() != null)) {
 			System.out.println("I work!!");
-			warning ("I AM AN ANGRY WARNING", RetypingSyncchartsPackage.STATE__STATE_ID);
+			warning ("I AM AN ANGRY WARNING", RetypingSyncchartsPackage.STATE__ID);
 		} else {
 			System.out.println("I don't work!!");
 		}
@@ -43,6 +43,11 @@ public class RetypingSyncchartsJavaValidator extends
 		// }
 
 	}
+//	@Check(CheckType.FAST)
+//	public void CheckExistenceOfAtLeastOneInitialState(State state){
+//		RetypingSyncchartsPackage.eINSTANCE.eAllContents().getClass().
+//		
+//	}
 }
 
 // @Check

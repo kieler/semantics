@@ -1,7 +1,0 @@
-process(xtext::GeneratedMetamodel this) :
-  //process(ePackage)
-;
- 
-process(ecore::EPackage this) :
- //
-;

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.ValuedObject#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.ValuedObject#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.ValuedObject#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.ValuedObject#getHostType <em>Host Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,12 +63,12 @@ public interface ValuedObject extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Initial Value</em>' attribute.
-   * @see #setInitialValue(String)
+   * @see #setInitialValue(int)
    * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getValuedObject_InitialValue()
    * @model
    * @generated
    */
-  String getInitialValue();
+  int getInitialValue();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.ValuedObject#getInitialValue <em>Initial Value</em>}' attribute.
@@ -77,7 +78,7 @@ public interface ValuedObject extends EObject
    * @see #getInitialValue()
    * @generated
    */
-  void setInitialValue(String value);
+  void setInitialValue(int value);
 
   /**
    * Returns the value of the '<em><b>Type</b></em>' attribute.
@@ -107,5 +108,31 @@ public interface ValuedObject extends EObject
    * @generated
    */
   void setType(ValueType value);
+
+  /**
+   * Returns the value of the '<em><b>Host Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Host Type</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Host Type</em>' attribute.
+   * @see #setHostType(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getValuedObject_HostType()
+   * @model
+   * @generated
+   */
+  String getHostType();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.ValuedObject#getHostType <em>Host Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Host Type</em>' attribute.
+   * @see #getHostType()
+   * @generated
+   */
+  void setHostType(String value);
 
 } // ValuedObject

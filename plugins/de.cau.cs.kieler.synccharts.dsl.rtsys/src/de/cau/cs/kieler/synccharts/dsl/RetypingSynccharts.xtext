@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- ******************************************************************************//******************************************************************************
+ ******************************************************************************
  * Namenueberlegungen fuer die neue Sprache:
  * RTSYS - ReTyped Synccharts
  * RTSYS - ReTentive Language for Synccharts
@@ -27,233 +27,135 @@ generate retypingSynccharts "http://www.cau.de/cs/kieler/synccharts/dsl/Retyping
 //import "platform:/resource/de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/TransitionLabel.ecore" as transitionlabel
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
+	//========================================================================================
+	//===  									    STATE						               ===
+	//========================================================================================
+
 State:
-//!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
-  //((isInitial?='init')|(isFinal?='final')|(stateKind=StateType)?)*
+  //!!!!!!!!!! DO NOT USE THE FOLLOWING RULE !!!!!!!!!! //
+  //  ((isInitial?='init')|(isFinal?='final')|(type=StateType)?)+
   // you have to list all possible combinations seperately 
   // arbitrary positions for optional alternatives is not possible
   // or you have to use ((..)?(..)?)* and then validate them manually   
-  (	
-  // n=3, k=1
-    (isInitial?='init')
-  | (isFinal?='final')
-  | (stateKind=StateType)
-  
-  // n=3, k=2
-  | (isInitial?='init' isFinal?='final')   
-  | (isInitial?='init' stateKind=StateType)
-  | (isFinal?='final' isInitial?='init') 
-  | (isFinal?='final' stateKind=StateType) 
-  | (stateKind=StateType isInitial?='init') 
-  | (stateKind=StateType isFinal?='final') 
 
-  // n=3, k=3
-  | (isInitial?='init' isFinal?='final' stateKind=StateType)  
-  | (isInitial?='init' stateKind=StateType isFinal?='final')
-  | (isFinal?='final' isInitial?='init' stateKind=StateType)
-  | (isFinal?='final' stateKind=StateType isInitial?='init') 
-  | (stateKind=StateType isFinal?='final' isInitial?='init') 
-  | (stateKind=StateType isInitial?='init' isFinal?='final') 
-  )?
-  
-  ('state')? // optional keyword, cf.Meeting_TextualSyntax-II
-  
-//  (
-	  ((stateID=ID)? //*** CHECK : State_2 ***// [optionale ID aber erinnere dich: "keine ID ist auch eine eindeutige ID"!!]
-	  (stateLabel=STRING)?
-	  (bodyText=STRING)? //*** CHECK : State_3 ***//
-	  (stateContent=StateContent)?)  // actions, suspensiontrigger, signals, signal renamings, regions 
-//  | 
-//	((newStateID=ID '@')? referencedStateID=ID signalRenamings=SignalRenaming) 	
-//  )
-;
-enum StateType:
-  NORMAL | PSEUDO='cond' | REFERENCE='reference' | TEXTUAL='textual'
-; 
-StateContent:
-	'{'	
-	(	 	(entryActions+=EntryAction) //0..*
-		| 	(innerAction+=InnerAction) //0..*
-		|   (exitActions+=ExitAction ) //0..*
-		| 	(suspensionTrigger=Suspension) // 0..1
-		| 	(signals+=Signal)? //0..* 
-	)+ 
+(	(	  (	
+			  // n=3, k=1
+			    (isInitial?='init')
+			  | (isFinal?='final')
+			  | (type=StateType)
+			  
+			  // n=3, k=2
+			  | (isInitial?='init' isFinal?='final')   
+			  | (isInitial?='init' type=StateType)
+			  | (isFinal?='final' isInitial?='init') 
+			  | (isFinal?='final' type=StateType) 
+			  | (type=StateType isInitial?='init') 
+			  | (type=StateType isFinal?='final') 
+			
+			  // n=3, k=3
+			  | (isInitial?='init' isFinal?='final' type=StateType)  
+			  | (isInitial?='init' type=StateType isFinal?='final')
+			  | (isFinal?='final' isInitial?='init' type=StateType)
+			  | (isFinal?='final' type=StateType isInitial?='init') 
+			  | (type=StateType isFinal?='final' isInitial?='init') 
+			  | (type=StateType isInitial?='init' isFinal?='final') 
+		  )?
+ 
+	 	 ('state') // optional keyword, cf.Meeting_TextualSyntax-II
 	
-	//========================================================================================
-	//===       optional referenced state //*** CHECK : StateContent_1 ***//               ===
-	//===       e.g.: aNewNameForTheReferencedState @ aStateID [A1/a,A2/b]                 ===
-	//========================================================================================
-	( (newStateID=ID '@')? referencedState=ID '[' (signalRenamings+=SignalRenaming',')* signalRenamings+=SignalRenaming ']' )?
-	'}'
+		 (id=ID)? //*** CHECK : State_2 ***// [optionale ID aber erinnere dich: "keine ID ist auch eine eindeutige ID"!!]
+	
+		 (label=STRING)?
+		
+		 (bodyText=STRING)? //*** CHECK : State_3 ***//
+	)
+|
+	(	//===  aNewNameForTheReferencedState @ aStateID [A1/a,A2/b]   ===//
+		(newStateID=ID '@')? referencedState=[State|ID] '[' (signalRenamings+=SignalRenaming',')* signalRenamings+=SignalRenaming ']' 
+	)
+)
+	
+    ('{'	
+		(	 	('onentry' entryActions+=Action) //0..*
+			| 	('oninner' innerActions+=Action) //0..*
+			|   ('onexit' exitActions+=Action ) //0..*
+			| 	('suspension' suspensionTrigger=Action) // 0..1
+			| 	(signals+=Signal) //0..*
+			|	((regions+=Region '||' )* regions+=Region)
+		)+	
+	 '}'
+	)? 
 ;
 SignalRenaming:
 	oldSignal=[Signal|ID]'/'newSignal=[Signal|ID]
 ;
-EntryAction returns Action:
-	'onentry' entryAction=STRING
+	//========================================================================================
+	//===  									    REGION  					               ===
+	//========================================================================================
+Region:
+	('region')? (id=STRING)? 
+
+	(		(variables+=Variable)
+		|	(signals+=Signal)
+		|   (innerStates+=State)
+	)+
+	//========================================================================================
+	//===       optional referenced state //*** CHECK : StateContent_1 ***//               ===
+	//===       e.g.: aNewNameForTheReferencedState @ aStateID [A1/a,A2/b]                 ===
+	//========================================================================================
+	//( (newStateID=ID '@')? referencedState=[State|ID] '[' (signalRenamings+=SignalRenaming',')* signalRenamings+=SignalRenaming ']' )?
+	
 ;
-InnerAction returns Action :
-	'oninner' innerAction=STRING
+	//========================================================================================
+	//===  									    ACTIONS  					               ===
+	//========================================================================================
+Action:
+	(isImmediate?='#' (triggersAndEfects=STRING) (delay=INT)?)
+	//| Transition
+	
 ;
-ExitAction returns Action :
-	'onexit' exitAction=STRING
-;
-Suspension returns Action:
-	'suspension' suspensionTrigger=STRING
-; 
+	//========================================================================================
+	//===  									    TRANSITION 					               ===
+	//========================================================================================
+//Transition:
+//	
+//;
+	//========================================================================================
+	//===  									    VAR,SIG  					               ===
+	//========================================================================================
 ValuedObject:
 	Signal | Variable
 ;
-
-//---------------------------------------------------------------------------//
-//                         SIGNAL DECLARATION EXAMPLES
-//---------------------------------------------------------------------------//
-// inout mySignal                                -- default signal type is PURE 
-// input mySignal : integer
-// input mySignal := 0 : integer
-// input mySignal := 0 : combine integer with +
-// input mySignal : combine integer with +
-//---------------------------------------------------------------------------//
-Signal:
-	PredefinedSignal | UserDefinedSignal
-;
-PredefinedSignal returns Signal:
-	name='tick' 
-; 
-UserDefinedSignal returns Signal:
-	isLocal?='local' isInput?='input' isOutput?='output'
-	name=ID 
-	(':=' initialValue=ID)? 
-	(':' ('combine')? type=ValueType ('with' combineOperator=CombineOperator)? )? //*** CHECK : Signal_1 && Signal_2 ***//
-	(hostCombineOperator=STRING)? //*** CHECK : Signal_3 ***//
-	 
-;
-enum CombineOperator :
-NONE | ADD='+' | MULT='*' | HOST='host'//hostCombineOperator
-;
 Variable:
-	type=ValueType name=ID (':=' initialValue=ID)? 
+	//'var' brauche ich nicht, denn Signale fangen mit (input|output|local) an 
+	name=ID (':= ' initialValue=INT)? (': ' (type=ValueType| hostType=STRING))? 
+;
+Signal:
+ 	
+		(isLocal?='local' | isInput?='input' | isOutput?='output')
+		
+		name=ID 
+		
+		(':=' initialValue=INT)? 
+		
+		(	(': ' (type=ValueType|hostType=STRING) )
+		| 	(': ' 'combine' (type=ValueType|hostType=STRING) 'with' (combineOperator=CombineOperator | hostCombineOperator=STRING)) //*** CHECK : Signal_1 && Signal_2 ***//
+		)?//*** CHECK : Signal_3 ***//	
+;
+	//========================================================================================
+	//===  								 ENUMS, DATATYPES etc      			               ===
+	//========================================================================================
+TICK returns Signal:
+	'tick' // wie sind die flags von diesem "Signal Element" definiert usw? muss noch getestet werden, verzichte darauf, wenn es nicht etwas einfaches ist.
+; 
+enum StateType:
+  NORMAL | PSEUDO='cond' | REFERENCE='reference' | TEXTUAL='textual'
+; 
+enum CombineOperator :
+NONE | ADD='+' | MULT='*' | HOST='host' //hostCombineOperator
 ;
 enum ValueType:
-	PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | DOUBLE='double' | FLOAT='float'| HOST='host'
+	PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | DOUBLE='double' | HOST='host' //| FLOAT='float'
 ;	
 
-//Transition:
-//	(sourceStateName=ID)? 
-//	transitionType=TransitionType 
-//	(targetStateName=ID | declaredTargetState=declaredTargetState)  
-//	('with' transitionLabel=[Action])?
-////			(isHistory?='history')?
-////			
-////		( 	(delay=INT) (trigger=ID)
-//////		|	(delay=INT) ('/'effects+=ID)				
-////		| 	(delay=INT) (trigger=ID)('/'effects+=ID)
-////		|	(isImmediate?='#') (trigger=ID)? ('/'effects+=ID)?
-////		|   ((trigger=ID) | ('/'effects+=ID))
-////		| 	(trigger=ID) ('/'effects+=ID)
-////		)	
-////)?
-//;
-//enum TransitionType :
-//	STRONGABORT='o->' | WEAKABORT='-->' | NORMALTERMINATION='>->'
-//;	
-//declaredTargetState returns State:
-//	(isInitial?='init')? (isFinal?='final')? 'state' 
-//	(declaredStateType=StateType)? declaredStateName=ID
-//;
-//
-////=======================================================================================================//
-//Action :
-//	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
-//	(trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?; 		
-//
-//Effect : 
-//	Emission | Assignment | HostCode;
-//
-//Emission :
-//	signal=[Signal] ("(" newValue=PrimaryExpression ")")?;
-//
-//Assignment :
-//	variable=[Variable] ":=" expression=PrimaryExpression;
-//
-//SignalReference:
-//	reference = [Signal];
-//	
-//VariableReference:
-//	reference = [Variable];
-//ValuedObject:
-//	Signal | Variable
-//;
-//Signal:
-//	"input" name = ID (':=' initialValue=ID)?";";
-//
-//Variable:
-//	"var" name = ID (':=' initialValue=ID)?";";
-//
-//IntValue: 
-//	value=INT;
-//FloatValue:
-//    value=Float;
-//BooleanValue:
-//    value=Boolean;
-//Value:
-//	IntValue | FloatValue | BooleanValue;
-//
-//// make sure the Float rule does not shadow the built-in INT rule
-//terminal Float returns ecore::EDouble : ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
-//terminal Boolean returns ecore::EBoolean : "true" | "false";
-//
-//HostCode:
-//	//"'"code=STRING"'";
-//	//("(" type=ID ")")? 
-//	code=STRING; 	
-//	
-//Operator :
-//	operatorKind=OperatorKind;
-//
-//ValOperation returns Expression:
-//	operator=ValOperator subExpressions+=SignalReference;
-//
-//ValueExpression returns Expression:
-//	IntValue | FloatValue | ValOperation | VariableReference;
-//
-//CompareOperation returns Expression:
-//	ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
-//
-//NotOperation returns Operations:
-//	operators=NotOperator subExpressions+=BooleanExpression;
-//
-//NotOrNormalExpression returns Expression:
-//	NotOperation | BooleanExpression;
-//
-//AndOperation returns Expression:
-//	NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd subExpression+=NotOrNormalExpression)*;
-//
-//OrOperation returns Expression:
-//	AndOperation ({Operation.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
-//
-//// TODO: get rid of parentheses
-//BooleanExpression returns Expression:
-//	BooleanValue | SignalReference | CompareOperation | "("OrOperation")" ;
-//
-//PrimaryExpression returns Expression:
-//	//ValueExpression | BooleanExpression;
-//	BooleanExpression;
-//	
-//enum OperatorKind :
-//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre";
-//
-//enum ValOperator returns OperatorKind:
-//	VAL="?";
-//
-//enum CompareOperator returns OperatorKind:
-//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
-//	
-//enum NotOperator returns OperatorKind:
-//	NOT="not";
-//
-//enum OperatorOr returns OperatorKind:
-//	OR="or";
-//
-//enum OperatorAnd returns OperatorKind:
-//	AND="and";
+

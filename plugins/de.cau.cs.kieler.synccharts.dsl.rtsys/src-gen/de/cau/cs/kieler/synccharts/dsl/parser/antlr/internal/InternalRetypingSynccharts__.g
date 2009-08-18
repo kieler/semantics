@@ -10,59 +10,61 @@ import org.eclipse.xtext.parser.antlr.Lexer;
 T11 : 'init' ;
 T12 : 'final' ;
 T13 : 'state' ;
-T14 : '{' ;
-T15 : '@' ;
-T16 : '[' ;
-T17 : ',' ;
-T18 : ']' ;
-T19 : '}' ;
-T20 : '/' ;
-T21 : 'onentry' ;
-T22 : 'oninner' ;
-T23 : 'onexit' ;
-T24 : 'suspension' ;
-T25 : 'tick' ;
-T26 : 'local' ;
-T27 : 'input' ;
-T28 : 'output' ;
-T29 : ':=' ;
-T30 : ':' ;
-T31 : 'combine' ;
-T32 : 'with' ;
-T33 : 'NORMAL' ;
-T34 : 'cond' ;
-T35 : 'reference' ;
-T36 : 'textual' ;
-T37 : 'NONE' ;
-T38 : '+' ;
-T39 : '*' ;
-T40 : 'host' ;
-T41 : 'PURE' ;
-T42 : 'boolean' ;
-T43 : 'unsigned' ;
-T44 : 'integer' ;
-T45 : 'double' ;
-T46 : 'float' ;
+T14 : '@' ;
+T15 : '[' ;
+T16 : ',' ;
+T17 : ']' ;
+T18 : '{' ;
+T19 : 'onentry' ;
+T20 : 'oninner' ;
+T21 : 'onexit' ;
+T22 : 'suspension' ;
+T23 : '||' ;
+T24 : '}' ;
+T25 : '/' ;
+T26 : 'region' ;
+T27 : '#' ;
+T28 : ':= ' ;
+T29 : ': ' ;
+T30 : 'local' ;
+T31 : 'input' ;
+T32 : 'output' ;
+T33 : ':=' ;
+T34 : 'combine' ;
+T35 : 'with' ;
+T36 : 'NORMAL' ;
+T37 : 'cond' ;
+T38 : 'reference' ;
+T39 : 'textual' ;
+T40 : 'NONE' ;
+T41 : '+' ;
+T42 : '*' ;
+T43 : 'host' ;
+T44 : 'PURE' ;
+T45 : 'boolean' ;
+T46 : 'unsigned' ;
+T47 : 'integer' ;
+T48 : 'double' ;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1848
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1888
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1850
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1890
 RULE_INT : ('0'..'9')+;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1852
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1892
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1854
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1894
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1856
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1896
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1858
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1898
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1860
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g" 1900
 RULE_ANY_OTHER : .;
 
 

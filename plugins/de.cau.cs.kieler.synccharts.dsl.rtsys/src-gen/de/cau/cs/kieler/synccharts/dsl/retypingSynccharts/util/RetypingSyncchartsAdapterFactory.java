@@ -83,14 +83,14 @@ public class RetypingSyncchartsAdapterFactory extends AdapterFactoryImpl
         return createStateAdapter();
       }
       @Override
-      public Adapter caseStateContent(StateContent object)
-      {
-        return createStateContentAdapter();
-      }
-      @Override
       public Adapter caseSignalRenaming(SignalRenaming object)
       {
         return createSignalRenamingAdapter();
+      }
+      @Override
+      public Adapter caseRegion(Region object)
+      {
+        return createRegionAdapter();
       }
       @Override
       public Adapter caseAction(Action object)
@@ -103,14 +103,14 @@ public class RetypingSyncchartsAdapterFactory extends AdapterFactoryImpl
         return createValuedObjectAdapter();
       }
       @Override
-      public Adapter caseSignal(Signal object)
-      {
-        return createSignalAdapter();
-      }
-      @Override
       public Adapter caseVariable(Variable object)
       {
         return createVariableAdapter();
+      }
+      @Override
+      public Adapter caseSignal(Signal object)
+      {
+        return createSignalAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -150,21 +150,6 @@ public class RetypingSyncchartsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent <em>State Content</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent
-   * @generated
-   */
-  public Adapter createStateContentAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.SignalRenaming <em>Signal Renaming</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -175,6 +160,21 @@ public class RetypingSyncchartsAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSignalRenamingAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region <em>Region</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region
+   * @generated
+   */
+  public Adapter createRegionAdapter()
   {
     return null;
   }
@@ -210,21 +210,6 @@ public class RetypingSyncchartsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal <em>Signal</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal
-   * @generated
-   */
-  public Adapter createSignalAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Variable <em>Variable</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -235,6 +220,21 @@ public class RetypingSyncchartsAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVariableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal <em>Signal</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal
+   * @generated
+   */
+  public Adapter createSignalAdapter()
   {
     return null;
   }

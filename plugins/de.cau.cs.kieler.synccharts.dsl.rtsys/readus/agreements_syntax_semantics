@@ -13,9 +13,11 @@ SYNTAX (Xtext editor intern)
 User changes the label						 	--> the name will be set to the new value if it is unique
 User skips the state ID , label defined 		--> set the ID to the label
 User skips the state label 						--> label is deliberately skipped thus will remain empty 
-
-
-
+*!* The keyword 'state' is obligatory because states can contain other states, 
+so if a state can be defined by an empty string (by typing nothing) then the parser gets in an infinite loop.
+Making at least one of the alternatives obligatory also does not work, because this way I have to put the alternatives
+into a group, which I repeat +-times, so "init init init...init" would be a valid model then. Additionally the editor gets
+all confused, but I do not know why exactly. 
 
 Valid State Declarations
 ============================================================================================================

@@ -102,17 +102,17 @@ public class RetypingSyncchartsSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case RetypingSyncchartsPackage.STATE_CONTENT:
-      {
-        StateContent stateContent = (StateContent)theEObject;
-        T result = caseStateContent(stateContent);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case RetypingSyncchartsPackage.SIGNAL_RENAMING:
       {
         SignalRenaming signalRenaming = (SignalRenaming)theEObject;
         T result = caseSignalRenaming(signalRenaming);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case RetypingSyncchartsPackage.REGION:
+      {
+        Region region = (Region)theEObject;
+        T result = caseRegion(region);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -130,19 +130,19 @@ public class RetypingSyncchartsSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case RetypingSyncchartsPackage.SIGNAL:
-      {
-        Signal signal = (Signal)theEObject;
-        T result = caseSignal(signal);
-        if (result == null) result = caseValuedObject(signal);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case RetypingSyncchartsPackage.VARIABLE:
       {
         Variable variable = (Variable)theEObject;
         T result = caseVariable(variable);
         if (result == null) result = caseValuedObject(variable);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case RetypingSyncchartsPackage.SIGNAL:
+      {
+        Signal signal = (Signal)theEObject;
+        T result = caseSignal(signal);
+        if (result == null) result = caseValuedObject(signal);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -167,22 +167,6 @@ public class RetypingSyncchartsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>State Content</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>State Content</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStateContent(StateContent object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Signal Renaming</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -194,6 +178,22 @@ public class RetypingSyncchartsSwitch<T>
    * @generated
    */
   public T caseSignalRenaming(SignalRenaming object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Region</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Region</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRegion(Region object)
   {
     return null;
   }
@@ -231,22 +231,6 @@ public class RetypingSyncchartsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Signal</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signal</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSignal(Signal object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -258,6 +242,22 @@ public class RetypingSyncchartsSwitch<T>
    * @generated
    */
   public T caseVariable(Variable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Signal</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Signal</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSignal(Signal object)
   {
     return null;
   }

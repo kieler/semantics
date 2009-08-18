@@ -22,10 +22,9 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#getEntryAction <em>Entry Action</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#getInnerAction <em>Inner Action</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#getExitAction <em>Exit Action</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#isIsImmediate <em>Is Immediate</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#getTriggersAndEfects <em>Triggers And Efects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl#getDelay <em>Delay</em>}</li>
  * </ul>
  * </p>
  *
@@ -34,84 +33,64 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class ActionImpl extends MinimalEObjectImpl.Container implements Action
 {
   /**
-   * The default value of the '{@link #getEntryAction() <em>Entry Action</em>}' attribute.
+   * The default value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEntryAction()
+   * @see #isIsImmediate()
    * @generated
    * @ordered
    */
-  protected static final String ENTRY_ACTION_EDEFAULT = null;
+  protected static final boolean IS_IMMEDIATE_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #getEntryAction() <em>Entry Action</em>}' attribute.
+   * The cached value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEntryAction()
+   * @see #isIsImmediate()
    * @generated
    * @ordered
    */
-  protected String entryAction = ENTRY_ACTION_EDEFAULT;
+  protected boolean isImmediate = IS_IMMEDIATE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getInnerAction() <em>Inner Action</em>}' attribute.
+   * The default value of the '{@link #getTriggersAndEfects() <em>Triggers And Efects</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInnerAction()
+   * @see #getTriggersAndEfects()
    * @generated
    * @ordered
    */
-  protected static final String INNER_ACTION_EDEFAULT = null;
+  protected static final String TRIGGERS_AND_EFECTS_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getInnerAction() <em>Inner Action</em>}' attribute.
+   * The cached value of the '{@link #getTriggersAndEfects() <em>Triggers And Efects</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInnerAction()
+   * @see #getTriggersAndEfects()
    * @generated
    * @ordered
    */
-  protected String innerAction = INNER_ACTION_EDEFAULT;
+  protected String triggersAndEfects = TRIGGERS_AND_EFECTS_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getExitAction() <em>Exit Action</em>}' attribute.
+   * The default value of the '{@link #getDelay() <em>Delay</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExitAction()
+   * @see #getDelay()
    * @generated
    * @ordered
    */
-  protected static final String EXIT_ACTION_EDEFAULT = null;
+  protected static final int DELAY_EDEFAULT = 0;
 
   /**
-   * The cached value of the '{@link #getExitAction() <em>Exit Action</em>}' attribute.
+   * The cached value of the '{@link #getDelay() <em>Delay</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExitAction()
+   * @see #getDelay()
    * @generated
    * @ordered
    */
-  protected String exitAction = EXIT_ACTION_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getSuspensionTrigger() <em>Suspension Trigger</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSuspensionTrigger()
-   * @generated
-   * @ordered
-   */
-  protected static final String SUSPENSION_TRIGGER_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getSuspensionTrigger() <em>Suspension Trigger</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSuspensionTrigger()
-   * @generated
-   * @ordered
-   */
-  protected String suspensionTrigger = SUSPENSION_TRIGGER_EDEFAULT;
+  protected int delay = DELAY_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -139,9 +118,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getEntryAction()
+  public boolean isIsImmediate()
   {
-    return entryAction;
+    return isImmediate;
   }
 
   /**
@@ -149,12 +128,12 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setEntryAction(String newEntryAction)
+  public void setIsImmediate(boolean newIsImmediate)
   {
-    String oldEntryAction = entryAction;
-    entryAction = newEntryAction;
+    boolean oldIsImmediate = isImmediate;
+    isImmediate = newIsImmediate;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.ACTION__ENTRY_ACTION, oldEntryAction, entryAction));
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.ACTION__IS_IMMEDIATE, oldIsImmediate, isImmediate));
   }
 
   /**
@@ -162,9 +141,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getInnerAction()
+  public String getTriggersAndEfects()
   {
-    return innerAction;
+    return triggersAndEfects;
   }
 
   /**
@@ -172,12 +151,12 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setInnerAction(String newInnerAction)
+  public void setTriggersAndEfects(String newTriggersAndEfects)
   {
-    String oldInnerAction = innerAction;
-    innerAction = newInnerAction;
+    String oldTriggersAndEfects = triggersAndEfects;
+    triggersAndEfects = newTriggersAndEfects;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.ACTION__INNER_ACTION, oldInnerAction, innerAction));
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.ACTION__TRIGGERS_AND_EFECTS, oldTriggersAndEfects, triggersAndEfects));
   }
 
   /**
@@ -185,9 +164,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getExitAction()
+  public int getDelay()
   {
-    return exitAction;
+    return delay;
   }
 
   /**
@@ -195,35 +174,12 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExitAction(String newExitAction)
+  public void setDelay(int newDelay)
   {
-    String oldExitAction = exitAction;
-    exitAction = newExitAction;
+    int oldDelay = delay;
+    delay = newDelay;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.ACTION__EXIT_ACTION, oldExitAction, exitAction));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getSuspensionTrigger()
-  {
-    return suspensionTrigger;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setSuspensionTrigger(String newSuspensionTrigger)
-  {
-    String oldSuspensionTrigger = suspensionTrigger;
-    suspensionTrigger = newSuspensionTrigger;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.ACTION__SUSPENSION_TRIGGER, oldSuspensionTrigger, suspensionTrigger));
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.ACTION__DELAY, oldDelay, delay));
   }
 
   /**
@@ -236,14 +192,12 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.ACTION__ENTRY_ACTION:
-        return getEntryAction();
-      case RetypingSyncchartsPackage.ACTION__INNER_ACTION:
-        return getInnerAction();
-      case RetypingSyncchartsPackage.ACTION__EXIT_ACTION:
-        return getExitAction();
-      case RetypingSyncchartsPackage.ACTION__SUSPENSION_TRIGGER:
-        return getSuspensionTrigger();
+      case RetypingSyncchartsPackage.ACTION__IS_IMMEDIATE:
+        return isIsImmediate();
+      case RetypingSyncchartsPackage.ACTION__TRIGGERS_AND_EFECTS:
+        return getTriggersAndEfects();
+      case RetypingSyncchartsPackage.ACTION__DELAY:
+        return getDelay();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -258,17 +212,14 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.ACTION__ENTRY_ACTION:
-        setEntryAction((String)newValue);
+      case RetypingSyncchartsPackage.ACTION__IS_IMMEDIATE:
+        setIsImmediate((Boolean)newValue);
         return;
-      case RetypingSyncchartsPackage.ACTION__INNER_ACTION:
-        setInnerAction((String)newValue);
+      case RetypingSyncchartsPackage.ACTION__TRIGGERS_AND_EFECTS:
+        setTriggersAndEfects((String)newValue);
         return;
-      case RetypingSyncchartsPackage.ACTION__EXIT_ACTION:
-        setExitAction((String)newValue);
-        return;
-      case RetypingSyncchartsPackage.ACTION__SUSPENSION_TRIGGER:
-        setSuspensionTrigger((String)newValue);
+      case RetypingSyncchartsPackage.ACTION__DELAY:
+        setDelay((Integer)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -284,17 +235,14 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.ACTION__ENTRY_ACTION:
-        setEntryAction(ENTRY_ACTION_EDEFAULT);
+      case RetypingSyncchartsPackage.ACTION__IS_IMMEDIATE:
+        setIsImmediate(IS_IMMEDIATE_EDEFAULT);
         return;
-      case RetypingSyncchartsPackage.ACTION__INNER_ACTION:
-        setInnerAction(INNER_ACTION_EDEFAULT);
+      case RetypingSyncchartsPackage.ACTION__TRIGGERS_AND_EFECTS:
+        setTriggersAndEfects(TRIGGERS_AND_EFECTS_EDEFAULT);
         return;
-      case RetypingSyncchartsPackage.ACTION__EXIT_ACTION:
-        setExitAction(EXIT_ACTION_EDEFAULT);
-        return;
-      case RetypingSyncchartsPackage.ACTION__SUSPENSION_TRIGGER:
-        setSuspensionTrigger(SUSPENSION_TRIGGER_EDEFAULT);
+      case RetypingSyncchartsPackage.ACTION__DELAY:
+        setDelay(DELAY_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -310,14 +258,12 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.ACTION__ENTRY_ACTION:
-        return ENTRY_ACTION_EDEFAULT == null ? entryAction != null : !ENTRY_ACTION_EDEFAULT.equals(entryAction);
-      case RetypingSyncchartsPackage.ACTION__INNER_ACTION:
-        return INNER_ACTION_EDEFAULT == null ? innerAction != null : !INNER_ACTION_EDEFAULT.equals(innerAction);
-      case RetypingSyncchartsPackage.ACTION__EXIT_ACTION:
-        return EXIT_ACTION_EDEFAULT == null ? exitAction != null : !EXIT_ACTION_EDEFAULT.equals(exitAction);
-      case RetypingSyncchartsPackage.ACTION__SUSPENSION_TRIGGER:
-        return SUSPENSION_TRIGGER_EDEFAULT == null ? suspensionTrigger != null : !SUSPENSION_TRIGGER_EDEFAULT.equals(suspensionTrigger);
+      case RetypingSyncchartsPackage.ACTION__IS_IMMEDIATE:
+        return isImmediate != IS_IMMEDIATE_EDEFAULT;
+      case RetypingSyncchartsPackage.ACTION__TRIGGERS_AND_EFECTS:
+        return TRIGGERS_AND_EFECTS_EDEFAULT == null ? triggersAndEfects != null : !TRIGGERS_AND_EFECTS_EDEFAULT.equals(triggersAndEfects);
+      case RetypingSyncchartsPackage.ACTION__DELAY:
+        return delay != DELAY_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -333,14 +279,12 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (entryAction: ");
-    result.append(entryAction);
-    result.append(", innerAction: ");
-    result.append(innerAction);
-    result.append(", exitAction: ");
-    result.append(exitAction);
-    result.append(", suspensionTrigger: ");
-    result.append(suspensionTrigger);
+    result.append(" (isImmediate: ");
+    result.append(isImmediate);
+    result.append(", triggersAndEfects: ");
+    result.append(triggersAndEfects);
+    result.append(", delay: ");
+    result.append(delay);
     result.append(')');
     return result.toString();
   }

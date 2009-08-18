@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ValuedObjectImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ValuedObjectImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ValuedObjectImpl#getHostType <em>Host Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -61,7 +62,7 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * @generated
    * @ordered
    */
-  protected static final String INITIAL_VALUE_EDEFAULT = null;
+  protected static final int INITIAL_VALUE_EDEFAULT = 0;
 
   /**
    * The cached value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
@@ -71,7 +72,7 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * @generated
    * @ordered
    */
-  protected String initialValue = INITIAL_VALUE_EDEFAULT;
+  protected int initialValue = INITIAL_VALUE_EDEFAULT;
 
   /**
    * The default value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -92,6 +93,26 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * @ordered
    */
   protected ValueType type = TYPE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getHostType() <em>Host Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getHostType()
+   * @generated
+   * @ordered
+   */
+  protected static final String HOST_TYPE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getHostType() <em>Host Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getHostType()
+   * @generated
+   * @ordered
+   */
+  protected String hostType = HOST_TYPE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -142,7 +163,7 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getInitialValue()
+  public int getInitialValue()
   {
     return initialValue;
   }
@@ -152,9 +173,9 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setInitialValue(String newInitialValue)
+  public void setInitialValue(int newInitialValue)
   {
-    String oldInitialValue = initialValue;
+    int oldInitialValue = initialValue;
     initialValue = newInitialValue;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE, oldInitialValue, initialValue));
@@ -188,6 +209,29 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getHostType()
+  {
+    return hostType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setHostType(String newHostType)
+  {
+    String oldHostType = hostType;
+    hostType = newHostType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.VALUED_OBJECT__HOST_TYPE, oldHostType, hostType));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -199,6 +243,8 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
         return getInitialValue();
       case RetypingSyncchartsPackage.VALUED_OBJECT__TYPE:
         return getType();
+      case RetypingSyncchartsPackage.VALUED_OBJECT__HOST_TYPE:
+        return getHostType();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -217,10 +263,13 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
         setName((String)newValue);
         return;
       case RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
-        setInitialValue((String)newValue);
+        setInitialValue((Integer)newValue);
         return;
       case RetypingSyncchartsPackage.VALUED_OBJECT__TYPE:
         setType((ValueType)newValue);
+        return;
+      case RetypingSyncchartsPackage.VALUED_OBJECT__HOST_TYPE:
+        setHostType((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -245,6 +294,9 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
       case RetypingSyncchartsPackage.VALUED_OBJECT__TYPE:
         setType(TYPE_EDEFAULT);
         return;
+      case RetypingSyncchartsPackage.VALUED_OBJECT__HOST_TYPE:
+        setHostType(HOST_TYPE_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -262,9 +314,11 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
       case RetypingSyncchartsPackage.VALUED_OBJECT__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
-        return INITIAL_VALUE_EDEFAULT == null ? initialValue != null : !INITIAL_VALUE_EDEFAULT.equals(initialValue);
+        return initialValue != INITIAL_VALUE_EDEFAULT;
       case RetypingSyncchartsPackage.VALUED_OBJECT__TYPE:
         return type != TYPE_EDEFAULT;
+      case RetypingSyncchartsPackage.VALUED_OBJECT__HOST_TYPE:
+        return HOST_TYPE_EDEFAULT == null ? hostType != null : !HOST_TYPE_EDEFAULT.equals(hostType);
     }
     return super.eIsSet(featureID);
   }
@@ -286,6 +340,8 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
     result.append(initialValue);
     result.append(", type: ");
     result.append(type);
+    result.append(", hostType: ");
+    result.append(hostType);
     result.append(')');
     return result.toString();
   }

@@ -69,12 +69,12 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
     switch (eClass.getClassifierID())
     {
       case RetypingSyncchartsPackage.STATE: return createState();
-      case RetypingSyncchartsPackage.STATE_CONTENT: return createStateContent();
       case RetypingSyncchartsPackage.SIGNAL_RENAMING: return createSignalRenaming();
+      case RetypingSyncchartsPackage.REGION: return createRegion();
       case RetypingSyncchartsPackage.ACTION: return createAction();
       case RetypingSyncchartsPackage.VALUED_OBJECT: return createValuedObject();
-      case RetypingSyncchartsPackage.SIGNAL: return createSignal();
       case RetypingSyncchartsPackage.VARIABLE: return createVariable();
+      case RetypingSyncchartsPackage.SIGNAL: return createSignal();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -138,10 +138,10 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public StateContent createStateContent()
+  public SignalRenaming createSignalRenaming()
   {
-    StateContentImpl stateContent = new StateContentImpl();
-    return stateContent;
+    SignalRenamingImpl signalRenaming = new SignalRenamingImpl();
+    return signalRenaming;
   }
 
   /**
@@ -149,10 +149,10 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public SignalRenaming createSignalRenaming()
+  public Region createRegion()
   {
-    SignalRenamingImpl signalRenaming = new SignalRenamingImpl();
-    return signalRenaming;
+    RegionImpl region = new RegionImpl();
+    return region;
   }
 
   /**
@@ -182,10 +182,10 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal createSignal()
+  public Variable createVariable()
   {
-    SignalImpl signal = new SignalImpl();
-    return signal;
+    VariableImpl variable = new VariableImpl();
+    return variable;
   }
 
   /**
@@ -193,10 +193,10 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable createVariable()
+  public Signal createSignal()
   {
-    VariableImpl variable = new VariableImpl();
-    return variable;
+    SignalImpl signal = new SignalImpl();
+    return signal;
   }
 
   /**

@@ -5,6 +5,8 @@
  */
 package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -17,11 +19,19 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#isIsInitial <em>Is Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#isIsFinal <em>Is Final</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateKind <em>State Kind</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateID <em>State ID</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateLabel <em>State Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getId <em>Id</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getBodyText <em>Body Text</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateContent <em>State Content</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getNewStateID <em>New State ID</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getReferencedState <em>Referenced State</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSignalRenamings <em>Signal Renamings</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getEntryActions <em>Entry Actions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getInnerActions <em>Inner Actions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getExitActions <em>Exit Actions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSignals <em>Signals</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getRegions <em>Regions</em>}</li>
  * </ul>
  * </p>
  *
@@ -84,85 +94,85 @@ public interface State extends EObject
   void setIsFinal(boolean value);
 
   /**
-   * Returns the value of the '<em><b>State Kind</b></em>' attribute.
+   * Returns the value of the '<em><b>Type</b></em>' attribute.
    * The literals are from the enumeration {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>State Kind</em>' attribute isn't clear,
+   * If the meaning of the '<em>Type</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>State Kind</em>' attribute.
+   * @return the value of the '<em>Type</em>' attribute.
    * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType
-   * @see #setStateKind(StateType)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_StateKind()
+   * @see #setType(StateType)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_Type()
    * @model
    * @generated
    */
-  StateType getStateKind();
+  StateType getType();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateKind <em>State Kind</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getType <em>Type</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>State Kind</em>' attribute.
+   * @param value the new value of the '<em>Type</em>' attribute.
    * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType
-   * @see #getStateKind()
+   * @see #getType()
    * @generated
    */
-  void setStateKind(StateType value);
+  void setType(StateType value);
 
   /**
-   * Returns the value of the '<em><b>State ID</b></em>' attribute.
+   * Returns the value of the '<em><b>Id</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>State ID</em>' attribute isn't clear,
+   * If the meaning of the '<em>Id</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>State ID</em>' attribute.
-   * @see #setStateID(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_StateID()
+   * @return the value of the '<em>Id</em>' attribute.
+   * @see #setId(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_Id()
    * @model
    * @generated
    */
-  String getStateID();
+  String getId();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateID <em>State ID</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getId <em>Id</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>State ID</em>' attribute.
-   * @see #getStateID()
+   * @param value the new value of the '<em>Id</em>' attribute.
+   * @see #getId()
    * @generated
    */
-  void setStateID(String value);
+  void setId(String value);
 
   /**
-   * Returns the value of the '<em><b>State Label</b></em>' attribute.
+   * Returns the value of the '<em><b>Label</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>State Label</em>' attribute isn't clear,
+   * If the meaning of the '<em>Label</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>State Label</em>' attribute.
-   * @see #setStateLabel(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_StateLabel()
+   * @return the value of the '<em>Label</em>' attribute.
+   * @see #setLabel(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_Label()
    * @model
    * @generated
    */
-  String getStateLabel();
+  String getLabel();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateLabel <em>State Label</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getLabel <em>Label</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>State Label</em>' attribute.
-   * @see #getStateLabel()
+   * @param value the new value of the '<em>Label</em>' attribute.
+   * @see #getLabel()
    * @generated
    */
-  void setStateLabel(String value);
+  void setLabel(String value);
 
   /**
    * Returns the value of the '<em><b>Body Text</b></em>' attribute.
@@ -191,29 +201,177 @@ public interface State extends EObject
   void setBodyText(String value);
 
   /**
-   * Returns the value of the '<em><b>State Content</b></em>' containment reference.
+   * Returns the value of the '<em><b>New State ID</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>State Content</em>' containment reference isn't clear,
+   * If the meaning of the '<em>New State ID</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>State Content</em>' containment reference.
-   * @see #setStateContent(StateContent)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_StateContent()
+   * @return the value of the '<em>New State ID</em>' attribute.
+   * @see #setNewStateID(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_NewStateID()
+   * @model
+   * @generated
+   */
+  String getNewStateID();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getNewStateID <em>New State ID</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>New State ID</em>' attribute.
+   * @see #getNewStateID()
+   * @generated
+   */
+  void setNewStateID(String value);
+
+  /**
+   * Returns the value of the '<em><b>Referenced State</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Referenced State</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Referenced State</em>' reference.
+   * @see #setReferencedState(State)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_ReferencedState()
+   * @model
+   * @generated
+   */
+  State getReferencedState();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getReferencedState <em>Referenced State</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Referenced State</em>' reference.
+   * @see #getReferencedState()
+   * @generated
+   */
+  void setReferencedState(State value);
+
+  /**
+   * Returns the value of the '<em><b>Signal Renamings</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.SignalRenaming}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Signal Renamings</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Signal Renamings</em>' containment reference list.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_SignalRenamings()
    * @model containment="true"
    * @generated
    */
-  StateContent getStateContent();
+  EList<SignalRenaming> getSignalRenamings();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateContent <em>State Content</em>}' containment reference.
+   * Returns the value of the '<em><b>Entry Actions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action}.
    * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Entry Actions</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>State Content</em>' containment reference.
-   * @see #getStateContent()
+   * @return the value of the '<em>Entry Actions</em>' containment reference list.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_EntryActions()
+   * @model containment="true"
    * @generated
    */
-  void setStateContent(StateContent value);
+  EList<Action> getEntryActions();
+
+  /**
+   * Returns the value of the '<em><b>Inner Actions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Inner Actions</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Inner Actions</em>' containment reference list.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_InnerActions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Action> getInnerActions();
+
+  /**
+   * Returns the value of the '<em><b>Exit Actions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Exit Actions</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Exit Actions</em>' containment reference list.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_ExitActions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Action> getExitActions();
+
+  /**
+   * Returns the value of the '<em><b>Suspension Trigger</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Suspension Trigger</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Suspension Trigger</em>' containment reference.
+   * @see #setSuspensionTrigger(Action)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_SuspensionTrigger()
+   * @model containment="true"
+   * @generated
+   */
+  Action getSuspensionTrigger();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSuspensionTrigger <em>Suspension Trigger</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Suspension Trigger</em>' containment reference.
+   * @see #getSuspensionTrigger()
+   * @generated
+   */
+  void setSuspensionTrigger(Action value);
+
+  /**
+   * Returns the value of the '<em><b>Signals</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Signals</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Signals</em>' containment reference list.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_Signals()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Signal> getSignals();
+
+  /**
+   * Returns the value of the '<em><b>Regions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Regions</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Regions</em>' containment reference list.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_Regions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Region> getRegions();
 
 } // State

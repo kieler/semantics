@@ -89,31 +89,31 @@ public interface RetypingSyncchartsPackage extends EPackage
   int STATE__IS_FINAL = 1;
 
   /**
-   * The feature id for the '<em><b>State Kind</b></em>' attribute.
+   * The feature id for the '<em><b>Type</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__STATE_KIND = 2;
+  int STATE__TYPE = 2;
 
   /**
-   * The feature id for the '<em><b>State ID</b></em>' attribute.
+   * The feature id for the '<em><b>Id</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__STATE_ID = 3;
+  int STATE__ID = 3;
 
   /**
-   * The feature id for the '<em><b>State Label</b></em>' attribute.
+   * The feature id for the '<em><b>Label</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__STATE_LABEL = 4;
+  int STATE__LABEL = 4;
 
   /**
    * The feature id for the '<em><b>Body Text</b></em>' attribute.
@@ -125,95 +125,22 @@ public interface RetypingSyncchartsPackage extends EPackage
   int STATE__BODY_TEXT = 5;
 
   /**
-   * The feature id for the '<em><b>State Content</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE__STATE_CONTENT = 6;
-
-  /**
-   * The number of structural features of the '<em>State</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_FEATURE_COUNT = 7;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateContentImpl <em>State Content</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateContentImpl
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getStateContent()
-   * @generated
-   */
-  int STATE_CONTENT = 1;
-
-  /**
-   * The feature id for the '<em><b>Entry Actions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_CONTENT__ENTRY_ACTIONS = 0;
-
-  /**
-   * The feature id for the '<em><b>Inner Action</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_CONTENT__INNER_ACTION = 1;
-
-  /**
-   * The feature id for the '<em><b>Exit Actions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_CONTENT__EXIT_ACTIONS = 2;
-
-  /**
-   * The feature id for the '<em><b>Suspension Trigger</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_CONTENT__SUSPENSION_TRIGGER = 3;
-
-  /**
-   * The feature id for the '<em><b>Signals</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_CONTENT__SIGNALS = 4;
-
-  /**
    * The feature id for the '<em><b>New State ID</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE_CONTENT__NEW_STATE_ID = 5;
+  int STATE__NEW_STATE_ID = 6;
 
   /**
-   * The feature id for the '<em><b>Referenced State</b></em>' attribute.
+   * The feature id for the '<em><b>Referenced State</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE_CONTENT__REFERENCED_STATE = 6;
+  int STATE__REFERENCED_STATE = 7;
 
   /**
    * The feature id for the '<em><b>Signal Renamings</b></em>' containment reference list.
@@ -222,16 +149,70 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE_CONTENT__SIGNAL_RENAMINGS = 7;
+  int STATE__SIGNAL_RENAMINGS = 8;
 
   /**
-   * The number of structural features of the '<em>State Content</em>' class.
+   * The feature id for the '<em><b>Entry Actions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE_CONTENT_FEATURE_COUNT = 8;
+  int STATE__ENTRY_ACTIONS = 9;
+
+  /**
+   * The feature id for the '<em><b>Inner Actions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE__INNER_ACTIONS = 10;
+
+  /**
+   * The feature id for the '<em><b>Exit Actions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE__EXIT_ACTIONS = 11;
+
+  /**
+   * The feature id for the '<em><b>Suspension Trigger</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE__SUSPENSION_TRIGGER = 12;
+
+  /**
+   * The feature id for the '<em><b>Signals</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE__SIGNALS = 13;
+
+  /**
+   * The feature id for the '<em><b>Regions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE__REGIONS = 14;
+
+  /**
+   * The number of structural features of the '<em>State</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_FEATURE_COUNT = 15;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalRenamingImpl <em>Signal Renaming</em>}' class.
@@ -241,7 +222,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getSignalRenaming()
    * @generated
    */
-  int SIGNAL_RENAMING = 2;
+  int SIGNAL_RENAMING = 1;
 
   /**
    * The feature id for the '<em><b>Old Signal</b></em>' reference.
@@ -271,6 +252,61 @@ public interface RetypingSyncchartsPackage extends EPackage
   int SIGNAL_RENAMING_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RegionImpl <em>Region</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RegionImpl
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getRegion()
+   * @generated
+   */
+  int REGION = 2;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REGION__ID = 0;
+
+  /**
+   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REGION__VARIABLES = 1;
+
+  /**
+   * The feature id for the '<em><b>Signals</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REGION__SIGNALS = 2;
+
+  /**
+   * The feature id for the '<em><b>Inner States</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REGION__INNER_STATES = 3;
+
+  /**
+   * The number of structural features of the '<em>Region</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REGION_FEATURE_COUNT = 4;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl <em>Action</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -281,40 +317,31 @@ public interface RetypingSyncchartsPackage extends EPackage
   int ACTION = 3;
 
   /**
-   * The feature id for the '<em><b>Entry Action</b></em>' attribute.
+   * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__ENTRY_ACTION = 0;
+  int ACTION__IS_IMMEDIATE = 0;
 
   /**
-   * The feature id for the '<em><b>Inner Action</b></em>' attribute.
+   * The feature id for the '<em><b>Triggers And Efects</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__INNER_ACTION = 1;
+  int ACTION__TRIGGERS_AND_EFECTS = 1;
 
   /**
-   * The feature id for the '<em><b>Exit Action</b></em>' attribute.
+   * The feature id for the '<em><b>Delay</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__EXIT_ACTION = 2;
-
-  /**
-   * The feature id for the '<em><b>Suspension Trigger</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTION__SUSPENSION_TRIGGER = 3;
+  int ACTION__DELAY = 2;
 
   /**
    * The number of structural features of the '<em>Action</em>' class.
@@ -323,7 +350,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTION_FEATURE_COUNT = 4;
+  int ACTION_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ValuedObjectImpl <em>Valued Object</em>}' class.
@@ -363,13 +390,77 @@ public interface RetypingSyncchartsPackage extends EPackage
   int VALUED_OBJECT__TYPE = 2;
 
   /**
+   * The feature id for the '<em><b>Host Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUED_OBJECT__HOST_TYPE = 3;
+
+  /**
    * The number of structural features of the '<em>Valued Object</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VALUED_OBJECT_FEATURE_COUNT = 3;
+  int VALUED_OBJECT_FEATURE_COUNT = 4;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.VariableImpl <em>Variable</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.VariableImpl
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getVariable()
+   * @generated
+   */
+  int VARIABLE = 5;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE__NAME = VALUED_OBJECT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Initial Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE__INITIAL_VALUE = VALUED_OBJECT__INITIAL_VALUE;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE__TYPE = VALUED_OBJECT__TYPE;
+
+  /**
+   * The feature id for the '<em><b>Host Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE__HOST_TYPE = VALUED_OBJECT__HOST_TYPE;
+
+  /**
+   * The number of structural features of the '<em>Variable</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_FEATURE_COUNT = VALUED_OBJECT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalImpl <em>Signal</em>}' class.
@@ -379,7 +470,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getSignal()
    * @generated
    */
-  int SIGNAL = 5;
+  int SIGNAL = 6;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -407,6 +498,15 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @ordered
    */
   int SIGNAL__TYPE = VALUED_OBJECT__TYPE;
+
+  /**
+   * The feature id for the '<em><b>Host Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNAL__HOST_TYPE = VALUED_OBJECT__HOST_TYPE;
 
   /**
    * The feature id for the '<em><b>Is Local</b></em>' attribute.
@@ -461,52 +561,6 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @ordered
    */
   int SIGNAL_FEATURE_COUNT = VALUED_OBJECT_FEATURE_COUNT + 5;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.VariableImpl <em>Variable</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.VariableImpl
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getVariable()
-   * @generated
-   */
-  int VARIABLE = 6;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE__NAME = VALUED_OBJECT__NAME;
-
-  /**
-   * The feature id for the '<em><b>Initial Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE__INITIAL_VALUE = VALUED_OBJECT__INITIAL_VALUE;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE__TYPE = VALUED_OBJECT__TYPE;
-
-  /**
-   * The number of structural features of the '<em>Variable</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_FEATURE_COUNT = VALUED_OBJECT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType <em>State Type</em>}' enum.
@@ -572,37 +626,37 @@ public interface RetypingSyncchartsPackage extends EPackage
   EAttribute getState_IsFinal();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateKind <em>State Kind</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getType <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>State Kind</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateKind()
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getType()
    * @see #getState()
    * @generated
    */
-  EAttribute getState_StateKind();
+  EAttribute getState_Type();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateID <em>State ID</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getId <em>Id</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>State ID</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateID()
+   * @return the meta object for the attribute '<em>Id</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getId()
    * @see #getState()
    * @generated
    */
-  EAttribute getState_StateID();
+  EAttribute getState_Id();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateLabel <em>State Label</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getLabel <em>Label</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>State Label</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateLabel()
+   * @return the meta object for the attribute '<em>Label</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getLabel()
    * @see #getState()
    * @generated
    */
-  EAttribute getState_StateLabel();
+  EAttribute getState_Label();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getBodyText <em>Body Text</em>}'.
@@ -616,113 +670,103 @@ public interface RetypingSyncchartsPackage extends EPackage
   EAttribute getState_BodyText();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateContent <em>State Content</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>State Content</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getStateContent()
-   * @see #getState()
-   * @generated
-   */
-  EReference getState_StateContent();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent <em>State Content</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>State Content</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent
-   * @generated
-   */
-  EClass getStateContent();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getEntryActions <em>Entry Actions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Entry Actions</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getEntryActions()
-   * @see #getStateContent()
-   * @generated
-   */
-  EReference getStateContent_EntryActions();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getInnerAction <em>Inner Action</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Inner Action</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getInnerAction()
-   * @see #getStateContent()
-   * @generated
-   */
-  EReference getStateContent_InnerAction();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getExitActions <em>Exit Actions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Exit Actions</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getExitActions()
-   * @see #getStateContent()
-   * @generated
-   */
-  EReference getStateContent_ExitActions();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getSuspensionTrigger <em>Suspension Trigger</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Suspension Trigger</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getSuspensionTrigger()
-   * @see #getStateContent()
-   * @generated
-   */
-  EReference getStateContent_SuspensionTrigger();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getSignals <em>Signals</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Signals</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getSignals()
-   * @see #getStateContent()
-   * @generated
-   */
-  EReference getStateContent_Signals();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getNewStateID <em>New State ID</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getNewStateID <em>New State ID</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>New State ID</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getNewStateID()
-   * @see #getStateContent()
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getNewStateID()
+   * @see #getState()
    * @generated
    */
-  EAttribute getStateContent_NewStateID();
+  EAttribute getState_NewStateID();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getReferencedState <em>Referenced State</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getReferencedState <em>Referenced State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Referenced State</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getReferencedState()
-   * @see #getStateContent()
+   * @return the meta object for the reference '<em>Referenced State</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getReferencedState()
+   * @see #getState()
    * @generated
    */
-  EAttribute getStateContent_ReferencedState();
+  EReference getState_ReferencedState();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getSignalRenamings <em>Signal Renamings</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSignalRenamings <em>Signal Renamings</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Signal Renamings</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateContent#getSignalRenamings()
-   * @see #getStateContent()
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSignalRenamings()
+   * @see #getState()
    * @generated
    */
-  EReference getStateContent_SignalRenamings();
+  EReference getState_SignalRenamings();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getEntryActions <em>Entry Actions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Entry Actions</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getEntryActions()
+   * @see #getState()
+   * @generated
+   */
+  EReference getState_EntryActions();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getInnerActions <em>Inner Actions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Inner Actions</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getInnerActions()
+   * @see #getState()
+   * @generated
+   */
+  EReference getState_InnerActions();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getExitActions <em>Exit Actions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Exit Actions</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getExitActions()
+   * @see #getState()
+   * @generated
+   */
+  EReference getState_ExitActions();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSuspensionTrigger <em>Suspension Trigger</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Suspension Trigger</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSuspensionTrigger()
+   * @see #getState()
+   * @generated
+   */
+  EReference getState_SuspensionTrigger();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSignals <em>Signals</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Signals</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSignals()
+   * @see #getState()
+   * @generated
+   */
+  EReference getState_Signals();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getRegions <em>Regions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Regions</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getRegions()
+   * @see #getState()
+   * @generated
+   */
+  EReference getState_Regions();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.SignalRenaming <em>Signal Renaming</em>}'.
@@ -757,6 +801,60 @@ public interface RetypingSyncchartsPackage extends EPackage
   EReference getSignalRenaming_NewSignal();
 
   /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region <em>Region</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Region</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region
+   * @generated
+   */
+  EClass getRegion();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getId <em>Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Id</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getId()
+   * @see #getRegion()
+   * @generated
+   */
+  EAttribute getRegion_Id();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getVariables <em>Variables</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Variables</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getVariables()
+   * @see #getRegion()
+   * @generated
+   */
+  EReference getRegion_Variables();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getSignals <em>Signals</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Signals</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getSignals()
+   * @see #getRegion()
+   * @generated
+   */
+  EReference getRegion_Signals();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getInnerStates <em>Inner States</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Inner States</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getInnerStates()
+   * @see #getRegion()
+   * @generated
+   */
+  EReference getRegion_InnerStates();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action <em>Action</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -767,48 +865,37 @@ public interface RetypingSyncchartsPackage extends EPackage
   EClass getAction();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getEntryAction <em>Entry Action</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#isIsImmediate <em>Is Immediate</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Entry Action</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getEntryAction()
+   * @return the meta object for the attribute '<em>Is Immediate</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#isIsImmediate()
    * @see #getAction()
    * @generated
    */
-  EAttribute getAction_EntryAction();
+  EAttribute getAction_IsImmediate();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getInnerAction <em>Inner Action</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getTriggersAndEfects <em>Triggers And Efects</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Inner Action</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getInnerAction()
+   * @return the meta object for the attribute '<em>Triggers And Efects</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getTriggersAndEfects()
    * @see #getAction()
    * @generated
    */
-  EAttribute getAction_InnerAction();
+  EAttribute getAction_TriggersAndEfects();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getExitAction <em>Exit Action</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getDelay <em>Delay</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Exit Action</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getExitAction()
+   * @return the meta object for the attribute '<em>Delay</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getDelay()
    * @see #getAction()
    * @generated
    */
-  EAttribute getAction_ExitAction();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getSuspensionTrigger <em>Suspension Trigger</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Suspension Trigger</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action#getSuspensionTrigger()
-   * @see #getAction()
-   * @generated
-   */
-  EAttribute getAction_SuspensionTrigger();
+  EAttribute getAction_Delay();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.ValuedObject <em>Valued Object</em>}'.
@@ -852,6 +939,27 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    */
   EAttribute getValuedObject_Type();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.ValuedObject#getHostType <em>Host Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Host Type</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.ValuedObject#getHostType()
+   * @see #getValuedObject()
+   * @generated
+   */
+  EAttribute getValuedObject_HostType();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Variable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Variable</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Variable
+   * @generated
+   */
+  EClass getVariable();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal <em>Signal</em>}'.
@@ -917,16 +1025,6 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    */
   EAttribute getSignal_HostCombineOperator();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Variable <em>Variable</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Variable</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Variable
-   * @generated
-   */
-  EClass getVariable();
 
   /**
    * Returns the meta object for enum '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType <em>State Type</em>}'.
@@ -1008,28 +1106,28 @@ public interface RetypingSyncchartsPackage extends EPackage
     EAttribute STATE__IS_FINAL = eINSTANCE.getState_IsFinal();
 
     /**
-     * The meta object literal for the '<em><b>State Kind</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STATE__STATE_KIND = eINSTANCE.getState_StateKind();
+    EAttribute STATE__TYPE = eINSTANCE.getState_Type();
 
     /**
-     * The meta object literal for the '<em><b>State ID</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STATE__STATE_ID = eINSTANCE.getState_StateID();
+    EAttribute STATE__ID = eINSTANCE.getState_Id();
 
     /**
-     * The meta object literal for the '<em><b>State Label</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STATE__STATE_LABEL = eINSTANCE.getState_StateLabel();
+    EAttribute STATE__LABEL = eINSTANCE.getState_Label();
 
     /**
      * The meta object literal for the '<em><b>Body Text</b></em>' attribute feature.
@@ -1040,78 +1138,20 @@ public interface RetypingSyncchartsPackage extends EPackage
     EAttribute STATE__BODY_TEXT = eINSTANCE.getState_BodyText();
 
     /**
-     * The meta object literal for the '<em><b>State Content</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE__STATE_CONTENT = eINSTANCE.getState_StateContent();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateContentImpl <em>State Content</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateContentImpl
-     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getStateContent()
-     * @generated
-     */
-    EClass STATE_CONTENT = eINSTANCE.getStateContent();
-
-    /**
-     * The meta object literal for the '<em><b>Entry Actions</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_CONTENT__ENTRY_ACTIONS = eINSTANCE.getStateContent_EntryActions();
-
-    /**
-     * The meta object literal for the '<em><b>Inner Action</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_CONTENT__INNER_ACTION = eINSTANCE.getStateContent_InnerAction();
-
-    /**
-     * The meta object literal for the '<em><b>Exit Actions</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_CONTENT__EXIT_ACTIONS = eINSTANCE.getStateContent_ExitActions();
-
-    /**
-     * The meta object literal for the '<em><b>Suspension Trigger</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_CONTENT__SUSPENSION_TRIGGER = eINSTANCE.getStateContent_SuspensionTrigger();
-
-    /**
-     * The meta object literal for the '<em><b>Signals</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_CONTENT__SIGNALS = eINSTANCE.getStateContent_Signals();
-
-    /**
      * The meta object literal for the '<em><b>New State ID</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STATE_CONTENT__NEW_STATE_ID = eINSTANCE.getStateContent_NewStateID();
+    EAttribute STATE__NEW_STATE_ID = eINSTANCE.getState_NewStateID();
 
     /**
-     * The meta object literal for the '<em><b>Referenced State</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Referenced State</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STATE_CONTENT__REFERENCED_STATE = eINSTANCE.getStateContent_ReferencedState();
+    EReference STATE__REFERENCED_STATE = eINSTANCE.getState_ReferencedState();
 
     /**
      * The meta object literal for the '<em><b>Signal Renamings</b></em>' containment reference list feature.
@@ -1119,7 +1159,55 @@ public interface RetypingSyncchartsPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference STATE_CONTENT__SIGNAL_RENAMINGS = eINSTANCE.getStateContent_SignalRenamings();
+    EReference STATE__SIGNAL_RENAMINGS = eINSTANCE.getState_SignalRenamings();
+
+    /**
+     * The meta object literal for the '<em><b>Entry Actions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE__ENTRY_ACTIONS = eINSTANCE.getState_EntryActions();
+
+    /**
+     * The meta object literal for the '<em><b>Inner Actions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE__INNER_ACTIONS = eINSTANCE.getState_InnerActions();
+
+    /**
+     * The meta object literal for the '<em><b>Exit Actions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE__EXIT_ACTIONS = eINSTANCE.getState_ExitActions();
+
+    /**
+     * The meta object literal for the '<em><b>Suspension Trigger</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE__SUSPENSION_TRIGGER = eINSTANCE.getState_SuspensionTrigger();
+
+    /**
+     * The meta object literal for the '<em><b>Signals</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE__SIGNALS = eINSTANCE.getState_Signals();
+
+    /**
+     * The meta object literal for the '<em><b>Regions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE__REGIONS = eINSTANCE.getState_Regions();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalRenamingImpl <em>Signal Renaming</em>}' class.
@@ -1148,6 +1236,48 @@ public interface RetypingSyncchartsPackage extends EPackage
     EReference SIGNAL_RENAMING__NEW_SIGNAL = eINSTANCE.getSignalRenaming_NewSignal();
 
     /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RegionImpl <em>Region</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RegionImpl
+     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getRegion()
+     * @generated
+     */
+    EClass REGION = eINSTANCE.getRegion();
+
+    /**
+     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute REGION__ID = eINSTANCE.getRegion_Id();
+
+    /**
+     * The meta object literal for the '<em><b>Variables</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REGION__VARIABLES = eINSTANCE.getRegion_Variables();
+
+    /**
+     * The meta object literal for the '<em><b>Signals</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REGION__SIGNALS = eINSTANCE.getRegion_Signals();
+
+    /**
+     * The meta object literal for the '<em><b>Inner States</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REGION__INNER_STATES = eINSTANCE.getRegion_InnerStates();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl <em>Action</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1158,36 +1288,28 @@ public interface RetypingSyncchartsPackage extends EPackage
     EClass ACTION = eINSTANCE.getAction();
 
     /**
-     * The meta object literal for the '<em><b>Entry Action</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Is Immediate</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ACTION__ENTRY_ACTION = eINSTANCE.getAction_EntryAction();
+    EAttribute ACTION__IS_IMMEDIATE = eINSTANCE.getAction_IsImmediate();
 
     /**
-     * The meta object literal for the '<em><b>Inner Action</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Triggers And Efects</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ACTION__INNER_ACTION = eINSTANCE.getAction_InnerAction();
+    EAttribute ACTION__TRIGGERS_AND_EFECTS = eINSTANCE.getAction_TriggersAndEfects();
 
     /**
-     * The meta object literal for the '<em><b>Exit Action</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Delay</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ACTION__EXIT_ACTION = eINSTANCE.getAction_ExitAction();
-
-    /**
-     * The meta object literal for the '<em><b>Suspension Trigger</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ACTION__SUSPENSION_TRIGGER = eINSTANCE.getAction_SuspensionTrigger();
+    EAttribute ACTION__DELAY = eINSTANCE.getAction_Delay();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ValuedObjectImpl <em>Valued Object</em>}' class.
@@ -1222,6 +1344,24 @@ public interface RetypingSyncchartsPackage extends EPackage
      * @generated
      */
     EAttribute VALUED_OBJECT__TYPE = eINSTANCE.getValuedObject_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Host Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VALUED_OBJECT__HOST_TYPE = eINSTANCE.getValuedObject_HostType();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.VariableImpl <em>Variable</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.VariableImpl
+     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getVariable()
+     * @generated
+     */
+    EClass VARIABLE = eINSTANCE.getVariable();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalImpl <em>Signal</em>}' class.
@@ -1272,16 +1412,6 @@ public interface RetypingSyncchartsPackage extends EPackage
      * @generated
      */
     EAttribute SIGNAL__HOST_COMBINE_OPERATOR = eINSTANCE.getSignal_HostCombineOperator();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.VariableImpl <em>Variable</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.VariableImpl
-     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getVariable()
-     * @generated
-     */
-    EClass VARIABLE = eINSTANCE.getVariable();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType <em>State Type</em>}' enum.

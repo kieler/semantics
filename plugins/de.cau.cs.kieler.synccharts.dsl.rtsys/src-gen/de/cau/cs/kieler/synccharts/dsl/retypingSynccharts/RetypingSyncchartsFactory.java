@@ -35,15 +35,6 @@ public interface RetypingSyncchartsFactory extends EFactory
   State createState();
 
   /**
-   * Returns a new object of class '<em>State Content</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>State Content</em>'.
-   * @generated
-   */
-  StateContent createStateContent();
-
-  /**
    * Returns a new object of class '<em>Signal Renaming</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -51,6 +42,15 @@ public interface RetypingSyncchartsFactory extends EFactory
    * @generated
    */
   SignalRenaming createSignalRenaming();
+
+  /**
+   * Returns a new object of class '<em>Region</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Region</em>'.
+   * @generated
+   */
+  Region createRegion();
 
   /**
    * Returns a new object of class '<em>Action</em>'.
@@ -71,15 +71,6 @@ public interface RetypingSyncchartsFactory extends EFactory
   ValuedObject createValuedObject();
 
   /**
-   * Returns a new object of class '<em>Signal</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Signal</em>'.
-   * @generated
-   */
-  Signal createSignal();
-
-  /**
    * Returns a new object of class '<em>Variable</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -87,6 +78,15 @@ public interface RetypingSyncchartsFactory extends EFactory
    * @generated
    */
   Variable createVariable();
+
+  /**
+   * Returns a new object of class '<em>Signal</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Signal</em>'.
+   * @generated
+   */
+  Signal createSignal();
 
   /**
    * Returns the package supported by this factory.
