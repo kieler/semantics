@@ -54,4 +54,11 @@ under the terms of the Eclipse Public License (EPL).
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.eclipse.xtend.util.stdlib"
+         download-size="0"
+         install-size="0"
+         version="0.7.2"
+         unpack="false"/>
+
 </feature>
