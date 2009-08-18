@@ -31,9 +31,11 @@
     <eLiterals name="NONE" literal="NONE"/>
     <eLiterals name="ADD" value="1" literal="ADD"/>
     <eLiterals name="MULT" value="2" literal="MULT"/>
-    <eLiterals name="HOST"/>
-    <eLiterals name="AND"/>
-    <eLiterals name="OR"/>
+    <eLiterals name="AND" value="3"/>
+    <eLiterals name="OR" value="4"/>
+    <eLiterals name="MIN" value="5"/>
+    <eLiterals name="MAX" value="6"/>
+    <eLiterals name="HOST" value="7"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ComplexExpression" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subExpressions" lowerBound="1"
