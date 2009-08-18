@@ -56,3 +56,26 @@ Thus these are also valid models:
 
 ---
 *: "cond" is just on example for a state type. A state can also be reference, textual or NORMAL. See the enumeration StateType in the grammar description.
+
+
+State References
+============================================================================================================
+ ___________
+|           |
+|```````````|
+|           |
+|___________|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
