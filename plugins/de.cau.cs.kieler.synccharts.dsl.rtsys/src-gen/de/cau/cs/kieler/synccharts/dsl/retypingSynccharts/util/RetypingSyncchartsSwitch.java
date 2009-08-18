@@ -102,10 +102,10 @@ public class RetypingSyncchartsSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case RetypingSyncchartsPackage.SIGNAL_RENAMING:
+      case RetypingSyncchartsPackage.RENAMING:
       {
-        SignalRenaming signalRenaming = (SignalRenaming)theEObject;
-        T result = caseSignalRenaming(signalRenaming);
+        Renaming renaming = (Renaming)theEObject;
+        T result = caseRenaming(renaming);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -167,17 +167,17 @@ public class RetypingSyncchartsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Signal Renaming</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Renaming</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signal Renaming</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Renaming</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseSignalRenaming(SignalRenaming object)
+  public T caseRenaming(Renaming object)
   {
     return null;
   }

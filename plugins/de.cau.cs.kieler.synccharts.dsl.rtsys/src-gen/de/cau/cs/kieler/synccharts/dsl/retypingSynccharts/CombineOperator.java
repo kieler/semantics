@@ -53,6 +53,26 @@ public enum CombineOperator implements Enumerator
   MULT(2, "MULT", "*"),
 
   /**
+   * The '<em><b>AND</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #AND_VALUE
+   * @generated
+   * @ordered
+   */
+  AND(3, "AND", "AND"),
+
+  /**
+   * The '<em><b>OR</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #OR_VALUE
+   * @generated
+   * @ordered
+   */
+  OR(4, "OR", "OR"),
+
+  /**
    * The '<em><b>HOST</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -60,7 +80,7 @@ public enum CombineOperator implements Enumerator
    * @generated
    * @ordered
    */
-  HOST(3, "HOST", "host");
+  HOST(5, "HOST", "host");
 
   /**
    * The '<em><b>NONE</b></em>' literal value.
@@ -108,6 +128,36 @@ public enum CombineOperator implements Enumerator
   public static final int MULT_VALUE = 2;
 
   /**
+   * The '<em><b>AND</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>AND</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #AND
+   * @model
+   * @generated
+   * @ordered
+   */
+  public static final int AND_VALUE = 3;
+
+  /**
+   * The '<em><b>OR</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>OR</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #OR
+   * @model
+   * @generated
+   * @ordered
+   */
+  public static final int OR_VALUE = 4;
+
+  /**
    * The '<em><b>HOST</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <p>
@@ -120,7 +170,7 @@ public enum CombineOperator implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int HOST_VALUE = 3;
+  public static final int HOST_VALUE = 5;
 
   /**
    * An array of all the '<em><b>Combine Operator</b></em>' enumerators.
@@ -134,6 +184,8 @@ public enum CombineOperator implements Enumerator
       NONE,
       ADD,
       MULT,
+      AND,
+      OR,
       HOST,
     };
 
@@ -196,6 +248,8 @@ public enum CombineOperator implements Enumerator
       case NONE_VALUE: return NONE;
       case ADD_VALUE: return ADD;
       case MULT_VALUE: return MULT;
+      case AND_VALUE: return AND;
+      case OR_VALUE: return OR;
       case HOST_VALUE: return HOST;
     }
     return null;

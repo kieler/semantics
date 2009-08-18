@@ -33,7 +33,7 @@ public class RetypingSyncchartsLabelProvider extends DefaultLabelProvider {
 			/*myStateLabelImage = "initState2.png";*/
 			myStateLabelImage = "import.gif";
 		}
-		if (s.getStateKind().equals(StateType.PSEUDO)){
+		if (s.getType().equals(StateType.PSEUDO)){
 			myStateLabelImage = "rule.gif";
 		}
 		return myStateLabelImage;

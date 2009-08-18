@@ -9,7 +9,6 @@ import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal;
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.SignalRenaming;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
 
@@ -42,9 +41,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getBodyText <em>Body Text</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getNewStateID <em>New State ID</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getReferencedState <em>Referenced State</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getSignalRenamings <em>Signal Renamings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getEntryActions <em>Entry Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getInnerActions <em>Inner Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.StateImpl#getExitActions <em>Exit Actions</em>}</li>
@@ -177,46 +173,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * @ordered
    */
   protected String bodyText = BODY_TEXT_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getNewStateID() <em>New State ID</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getNewStateID()
-   * @generated
-   * @ordered
-   */
-  protected static final String NEW_STATE_ID_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getNewStateID() <em>New State ID</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getNewStateID()
-   * @generated
-   * @ordered
-   */
-  protected String newStateID = NEW_STATE_ID_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getReferencedState() <em>Referenced State</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getReferencedState()
-   * @generated
-   * @ordered
-   */
-  protected State referencedState;
-
-  /**
-   * The cached value of the '{@link #getSignalRenamings() <em>Signal Renamings</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSignalRenamings()
-   * @generated
-   * @ordered
-   */
-  protected EList<SignalRenaming> signalRenamings;
 
   /**
    * The cached value of the '{@link #getEntryActions() <em>Entry Actions</em>}' containment reference list.
@@ -442,86 +398,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getNewStateID()
-  {
-    return newStateID;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setNewStateID(String newNewStateID)
-  {
-    String oldNewStateID = newStateID;
-    newStateID = newNewStateID;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.STATE__NEW_STATE_ID, oldNewStateID, newStateID));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public State getReferencedState()
-  {
-    if (referencedState != null && referencedState.eIsProxy())
-    {
-      InternalEObject oldReferencedState = (InternalEObject)referencedState;
-      referencedState = (State)eResolveProxy(oldReferencedState);
-      if (referencedState != oldReferencedState)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, RetypingSyncchartsPackage.STATE__REFERENCED_STATE, oldReferencedState, referencedState));
-      }
-    }
-    return referencedState;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public State basicGetReferencedState()
-  {
-    return referencedState;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setReferencedState(State newReferencedState)
-  {
-    State oldReferencedState = referencedState;
-    referencedState = newReferencedState;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.STATE__REFERENCED_STATE, oldReferencedState, referencedState));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<SignalRenaming> getSignalRenamings()
-  {
-    if (signalRenamings == null)
-    {
-      signalRenamings = new EObjectContainmentEList<SignalRenaming>(SignalRenaming.class, this, RetypingSyncchartsPackage.STATE__SIGNAL_RENAMINGS);
-    }
-    return signalRenamings;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<Action> getEntryActions()
   {
     if (entryActions == null)
@@ -645,8 +521,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.STATE__SIGNAL_RENAMINGS:
-        return ((InternalEList<?>)getSignalRenamings()).basicRemove(otherEnd, msgs);
       case RetypingSyncchartsPackage.STATE__ENTRY_ACTIONS:
         return ((InternalEList<?>)getEntryActions()).basicRemove(otherEnd, msgs);
       case RetypingSyncchartsPackage.STATE__INNER_ACTIONS:
@@ -685,13 +559,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return getLabel();
       case RetypingSyncchartsPackage.STATE__BODY_TEXT:
         return getBodyText();
-      case RetypingSyncchartsPackage.STATE__NEW_STATE_ID:
-        return getNewStateID();
-      case RetypingSyncchartsPackage.STATE__REFERENCED_STATE:
-        if (resolve) return getReferencedState();
-        return basicGetReferencedState();
-      case RetypingSyncchartsPackage.STATE__SIGNAL_RENAMINGS:
-        return getSignalRenamings();
       case RetypingSyncchartsPackage.STATE__ENTRY_ACTIONS:
         return getEntryActions();
       case RetypingSyncchartsPackage.STATE__INNER_ACTIONS:
@@ -736,16 +603,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return;
       case RetypingSyncchartsPackage.STATE__BODY_TEXT:
         setBodyText((String)newValue);
-        return;
-      case RetypingSyncchartsPackage.STATE__NEW_STATE_ID:
-        setNewStateID((String)newValue);
-        return;
-      case RetypingSyncchartsPackage.STATE__REFERENCED_STATE:
-        setReferencedState((State)newValue);
-        return;
-      case RetypingSyncchartsPackage.STATE__SIGNAL_RENAMINGS:
-        getSignalRenamings().clear();
-        getSignalRenamings().addAll((Collection<? extends SignalRenaming>)newValue);
         return;
       case RetypingSyncchartsPackage.STATE__ENTRY_ACTIONS:
         getEntryActions().clear();
@@ -802,15 +659,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case RetypingSyncchartsPackage.STATE__BODY_TEXT:
         setBodyText(BODY_TEXT_EDEFAULT);
         return;
-      case RetypingSyncchartsPackage.STATE__NEW_STATE_ID:
-        setNewStateID(NEW_STATE_ID_EDEFAULT);
-        return;
-      case RetypingSyncchartsPackage.STATE__REFERENCED_STATE:
-        setReferencedState((State)null);
-        return;
-      case RetypingSyncchartsPackage.STATE__SIGNAL_RENAMINGS:
-        getSignalRenamings().clear();
-        return;
       case RetypingSyncchartsPackage.STATE__ENTRY_ACTIONS:
         getEntryActions().clear();
         return;
@@ -855,12 +703,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
       case RetypingSyncchartsPackage.STATE__BODY_TEXT:
         return BODY_TEXT_EDEFAULT == null ? bodyText != null : !BODY_TEXT_EDEFAULT.equals(bodyText);
-      case RetypingSyncchartsPackage.STATE__NEW_STATE_ID:
-        return NEW_STATE_ID_EDEFAULT == null ? newStateID != null : !NEW_STATE_ID_EDEFAULT.equals(newStateID);
-      case RetypingSyncchartsPackage.STATE__REFERENCED_STATE:
-        return referencedState != null;
-      case RetypingSyncchartsPackage.STATE__SIGNAL_RENAMINGS:
-        return signalRenamings != null && !signalRenamings.isEmpty();
       case RetypingSyncchartsPackage.STATE__ENTRY_ACTIONS:
         return entryActions != null && !entryActions.isEmpty();
       case RetypingSyncchartsPackage.STATE__INNER_ACTIONS:
@@ -900,8 +742,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     result.append(label);
     result.append(", bodyText: ");
     result.append(bodyText);
-    result.append(", newStateID: ");
-    result.append(newStateID);
     result.append(')');
     return result.toString();
   }

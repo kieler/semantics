@@ -69,7 +69,7 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
     switch (eClass.getClassifierID())
     {
       case RetypingSyncchartsPackage.STATE: return createState();
-      case RetypingSyncchartsPackage.SIGNAL_RENAMING: return createSignalRenaming();
+      case RetypingSyncchartsPackage.RENAMING: return createRenaming();
       case RetypingSyncchartsPackage.REGION: return createRegion();
       case RetypingSyncchartsPackage.ACTION: return createAction();
       case RetypingSyncchartsPackage.VALUED_OBJECT: return createValuedObject();
@@ -138,10 +138,10 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public SignalRenaming createSignalRenaming()
+  public Renaming createRenaming()
   {
-    SignalRenamingImpl signalRenaming = new SignalRenamingImpl();
-    return signalRenaming;
+    RenamingImpl renaming = new RenamingImpl();
+    return renaming;
   }
 
   /**

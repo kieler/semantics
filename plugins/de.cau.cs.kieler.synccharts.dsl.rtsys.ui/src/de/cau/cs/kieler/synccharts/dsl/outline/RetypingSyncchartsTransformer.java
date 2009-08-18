@@ -28,6 +28,7 @@ import org.eclipse.jface.text.Region;
 
 import com.google.inject.Provider;
 
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
 
@@ -62,14 +63,14 @@ public class RetypingSyncchartsTransformer extends
 		/**
 		 * init myState "myStateLabel" --> init myState:"myStateLabel"
 		 */
-		if (semanticState.getStateKind() != null) {
-			myStateType = semanticState.getStateKind().getLiteral();
+		if (semanticState.getType() != null) {
+			myStateType = semanticState.getType().getLiteral();
 		}
-		if (semanticState.getStateID() != null) {
-			myStateName = semanticState.getStateID();
+		if (semanticState.getId() != null) {
+			myStateName = semanticState.getId();
 		}
-		if (semanticState.getStateLabel() != null) {
-			myStateLabel = semanticState.getStateLabel();
+		if (semanticState.getLabel() != null) {
+			myStateLabel = semanticState.getLabel();
 		}
 
 		node.setLabel(myStateType + " " + myStateName + ": \" " + myStateLabel
@@ -94,6 +95,22 @@ public class RetypingSyncchartsTransformer extends
 //		}
 		return node;
 	}
+//	public ContentOutlineNode createNode(Action semanticAction,
+//			ContentOutlineNode parentNode) {
+//		ContentOutlineNode node = super.newOutlineNode(semanticAction,
+//				parentNode);
+//		
+//		String actionKeyword = null;
+//		/**
+//		 * onexit "anExitAction" --> onexit: anExitAction
+//		 */
+//		if (semanticAction.getEntryAction() != null) {
+//			actionKeyword = semanticAction.getEntryAction().toString();
+//		}
+//
+//		node.setLabel(actionKeyword);
+//		return node;
+//	}
 
 	/**
 	 * This method will be called by naming convention: - method name must be

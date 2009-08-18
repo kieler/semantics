@@ -8,10 +8,10 @@ package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.CombineOperator;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsFactory;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal;
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.SignalRenaming;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.ValueType;
@@ -46,7 +46,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass signalRenamingEClass = null;
+  private EClass renamingEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -242,39 +242,9 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getState_NewStateID()
-  {
-    return (EAttribute)stateEClass.getEStructuralFeatures().get(6);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getState_ReferencedState()
-  {
-    return (EReference)stateEClass.getEStructuralFeatures().get(7);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getState_SignalRenamings()
-  {
-    return (EReference)stateEClass.getEStructuralFeatures().get(8);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getState_EntryActions()
   {
-    return (EReference)stateEClass.getEStructuralFeatures().get(9);
+    return (EReference)stateEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -284,7 +254,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    */
   public EReference getState_InnerActions()
   {
-    return (EReference)stateEClass.getEStructuralFeatures().get(10);
+    return (EReference)stateEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -294,7 +264,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    */
   public EReference getState_ExitActions()
   {
-    return (EReference)stateEClass.getEStructuralFeatures().get(11);
+    return (EReference)stateEClass.getEStructuralFeatures().get(8);
   }
 
   /**
@@ -304,7 +274,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    */
   public EReference getState_SuspensionTrigger()
   {
-    return (EReference)stateEClass.getEStructuralFeatures().get(12);
+    return (EReference)stateEClass.getEStructuralFeatures().get(9);
   }
 
   /**
@@ -314,7 +284,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    */
   public EReference getState_Signals()
   {
-    return (EReference)stateEClass.getEStructuralFeatures().get(13);
+    return (EReference)stateEClass.getEStructuralFeatures().get(10);
   }
 
   /**
@@ -324,7 +294,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    */
   public EReference getState_Regions()
   {
-    return (EReference)stateEClass.getEStructuralFeatures().get(14);
+    return (EReference)stateEClass.getEStructuralFeatures().get(11);
   }
 
   /**
@@ -332,9 +302,9 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSignalRenaming()
+  public EClass getRenaming()
   {
-    return signalRenamingEClass;
+    return renamingEClass;
   }
 
   /**
@@ -342,9 +312,9 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSignalRenaming_OldSignal()
+  public EAttribute getRenaming_OldID()
   {
-    return (EReference)signalRenamingEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)renamingEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -352,9 +322,9 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSignalRenaming_NewSignal()
+  public EAttribute getRenaming_NewID()
   {
-    return (EReference)signalRenamingEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)renamingEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -634,9 +604,6 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     createEAttribute(stateEClass, STATE__ID);
     createEAttribute(stateEClass, STATE__LABEL);
     createEAttribute(stateEClass, STATE__BODY_TEXT);
-    createEAttribute(stateEClass, STATE__NEW_STATE_ID);
-    createEReference(stateEClass, STATE__REFERENCED_STATE);
-    createEReference(stateEClass, STATE__SIGNAL_RENAMINGS);
     createEReference(stateEClass, STATE__ENTRY_ACTIONS);
     createEReference(stateEClass, STATE__INNER_ACTIONS);
     createEReference(stateEClass, STATE__EXIT_ACTIONS);
@@ -644,9 +611,9 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     createEReference(stateEClass, STATE__SIGNALS);
     createEReference(stateEClass, STATE__REGIONS);
 
-    signalRenamingEClass = createEClass(SIGNAL_RENAMING);
-    createEReference(signalRenamingEClass, SIGNAL_RENAMING__OLD_SIGNAL);
-    createEReference(signalRenamingEClass, SIGNAL_RENAMING__NEW_SIGNAL);
+    renamingEClass = createEClass(RENAMING);
+    createEAttribute(renamingEClass, RENAMING__OLD_ID);
+    createEAttribute(renamingEClass, RENAMING__NEW_ID);
 
     regionEClass = createEClass(REGION);
     createEAttribute(regionEClass, REGION__ID);
@@ -720,9 +687,6 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     initEAttribute(getState_Id(), ecorePackage.getEString(), "id", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_Label(), ecorePackage.getEString(), "label", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_BodyText(), ecorePackage.getEString(), "bodyText", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getState_NewStateID(), ecorePackage.getEString(), "newStateID", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getState_ReferencedState(), this.getState(), null, "referencedState", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getState_SignalRenamings(), this.getSignalRenaming(), null, "signalRenamings", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_EntryActions(), this.getAction(), null, "entryActions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_InnerActions(), this.getAction(), null, "innerActions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_ExitActions(), this.getAction(), null, "exitActions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -730,9 +694,9 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     initEReference(getState_Signals(), this.getSignal(), null, "signals", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_Regions(), this.getRegion(), null, "regions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(signalRenamingEClass, SignalRenaming.class, "SignalRenaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSignalRenaming_OldSignal(), this.getSignal(), null, "oldSignal", null, 0, 1, SignalRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSignalRenaming_NewSignal(), this.getSignal(), null, "newSignal", null, 0, 1, SignalRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(renamingEClass, Renaming.class, "Renaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRenaming_OldID(), ecorePackage.getEString(), "oldID", null, 0, 1, Renaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRenaming_NewID(), ecorePackage.getEString(), "newID", null, 0, 1, Renaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(regionEClass, Region.class, "Region", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRegion_Id(), ecorePackage.getEString(), "id", null, 0, 1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -771,6 +735,8 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     addEEnumLiteral(combineOperatorEEnum, CombineOperator.NONE);
     addEEnumLiteral(combineOperatorEEnum, CombineOperator.ADD);
     addEEnumLiteral(combineOperatorEEnum, CombineOperator.MULT);
+    addEEnumLiteral(combineOperatorEEnum, CombineOperator.AND);
+    addEEnumLiteral(combineOperatorEEnum, CombineOperator.OR);
     addEEnumLiteral(combineOperatorEEnum, CombineOperator.HOST);
 
     initEEnum(valueTypeEEnum, ValueType.class, "ValueType");
@@ -778,7 +744,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     addEEnumLiteral(valueTypeEEnum, ValueType.BOOL);
     addEEnumLiteral(valueTypeEEnum, ValueType.UNSIGNED);
     addEEnumLiteral(valueTypeEEnum, ValueType.INTEGER);
-    addEEnumLiteral(valueTypeEEnum, ValueType.DOUBLE);
+    addEEnumLiteral(valueTypeEEnum, ValueType.FLOAT);
     addEEnumLiteral(valueTypeEEnum, ValueType.HOST);
 
     // Create resource

@@ -10,10 +10,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="bodyText" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="newStateID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedState" eType="#//State"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="signalRenamings" upperBound="-1"
-        eType="#//SignalRenaming" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="entryActions" upperBound="-1"
         eType="#//Action" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="innerActions" upperBound="-1"
@@ -27,9 +23,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
         eType="#//Region" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SignalRenaming">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="oldSignal" eType="#//Signal"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="newSignal" eType="#//Signal"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Renaming">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="oldID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="newID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Region">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -62,21 +58,23 @@
   <eClassifiers xsi:type="ecore:EEnum" name="StateType">
     <eLiterals name="NORMAL" literal="NORMAL"/>
     <eLiterals name="PSEUDO" value="1" literal="cond"/>
-    <eLiterals name="REFERENCE" value="2" literal="reference"/>
+    <eLiterals name="REFERENCE" value="2" literal="ref"/>
     <eLiterals name="TEXTUAL" value="3" literal="textual"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="CombineOperator">
     <eLiterals name="NONE" literal="NONE"/>
     <eLiterals name="ADD" value="1" literal="+"/>
     <eLiterals name="MULT" value="2" literal="*"/>
-    <eLiterals name="HOST" value="3" literal="host"/>
+    <eLiterals name="AND" value="3" literal="AND"/>
+    <eLiterals name="OR" value="4" literal="OR"/>
+    <eLiterals name="HOST" value="5" literal="host"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ValueType">
     <eLiterals name="PURE" literal="PURE"/>
     <eLiterals name="BOOL" value="1" literal="boolean"/>
     <eLiterals name="UNSIGNED" value="2" literal="unsigned"/>
     <eLiterals name="INTEGER" value="3" literal="integer"/>
-    <eLiterals name="DOUBLE" value="4" literal="double"/>
+    <eLiterals name="FLOAT" value="4" literal="float"/>
     <eLiterals name="HOST" value="5" literal="host"/>
   </eClassifiers>
 </ecore:EPackage>

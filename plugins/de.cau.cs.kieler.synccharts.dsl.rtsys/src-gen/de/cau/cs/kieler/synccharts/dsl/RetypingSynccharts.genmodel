@@ -19,6 +19,8 @@
       <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//CombineOperator/NONE"/>
       <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//CombineOperator/ADD"/>
       <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//CombineOperator/MULT"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//CombineOperator/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//CombineOperator/OR"/>
       <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//CombineOperator/HOST"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="RetypingSynccharts.ecore#//ValueType">
@@ -26,7 +28,7 @@
       <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/BOOL"/>
       <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/UNSIGNED"/>
       <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/INTEGER"/>
-      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/DOUBLE"/>
+      <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/FLOAT"/>
       <genEnumLiterals ecoreEnumLiteral="RetypingSynccharts.ecore#//ValueType/HOST"/>
     </genEnums>
     <genClasses ecoreClass="RetypingSynccharts.ecore#//State">
@@ -36,9 +38,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/label"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/bodyText"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//State/newStateID"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/referencedState"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/signalRenamings"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/entryActions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/innerActions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/exitActions"/>
@@ -46,9 +45,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/signals"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//State/regions"/>
     </genClasses>
-    <genClasses ecoreClass="RetypingSynccharts.ecore#//SignalRenaming">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//SignalRenaming/oldSignal"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//SignalRenaming/newSignal"/>
+    <genClasses ecoreClass="RetypingSynccharts.ecore#//Renaming">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Renaming/oldID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Renaming/newID"/>
     </genClasses>
     <genClasses ecoreClass="RetypingSynccharts.ecore#//Region">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Region/id"/>

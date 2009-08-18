@@ -35,13 +35,13 @@ public interface RetypingSyncchartsFactory extends EFactory
   State createState();
 
   /**
-   * Returns a new object of class '<em>Signal Renaming</em>'.
+   * Returns a new object of class '<em>Renaming</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Signal Renaming</em>'.
+   * @return a new object of class '<em>Renaming</em>'.
    * @generated
    */
-  SignalRenaming createSignalRenaming();
+  Renaming createRenaming();
 
   /**
    * Returns a new object of class '<em>Region</em>'.

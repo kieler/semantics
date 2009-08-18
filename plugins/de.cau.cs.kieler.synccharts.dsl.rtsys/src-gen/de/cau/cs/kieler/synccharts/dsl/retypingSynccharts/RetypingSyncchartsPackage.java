@@ -125,40 +125,13 @@ public interface RetypingSyncchartsPackage extends EPackage
   int STATE__BODY_TEXT = 5;
 
   /**
-   * The feature id for the '<em><b>New State ID</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE__NEW_STATE_ID = 6;
-
-  /**
-   * The feature id for the '<em><b>Referenced State</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE__REFERENCED_STATE = 7;
-
-  /**
-   * The feature id for the '<em><b>Signal Renamings</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE__SIGNAL_RENAMINGS = 8;
-
-  /**
    * The feature id for the '<em><b>Entry Actions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__ENTRY_ACTIONS = 9;
+  int STATE__ENTRY_ACTIONS = 6;
 
   /**
    * The feature id for the '<em><b>Inner Actions</b></em>' containment reference list.
@@ -167,7 +140,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE__INNER_ACTIONS = 10;
+  int STATE__INNER_ACTIONS = 7;
 
   /**
    * The feature id for the '<em><b>Exit Actions</b></em>' containment reference list.
@@ -176,7 +149,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE__EXIT_ACTIONS = 11;
+  int STATE__EXIT_ACTIONS = 8;
 
   /**
    * The feature id for the '<em><b>Suspension Trigger</b></em>' containment reference.
@@ -185,7 +158,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE__SUSPENSION_TRIGGER = 12;
+  int STATE__SUSPENSION_TRIGGER = 9;
 
   /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
@@ -194,7 +167,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE__SIGNALS = 13;
+  int STATE__SIGNALS = 10;
 
   /**
    * The feature id for the '<em><b>Regions</b></em>' containment reference list.
@@ -203,7 +176,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE__REGIONS = 14;
+  int STATE__REGIONS = 11;
 
   /**
    * The number of structural features of the '<em>State</em>' class.
@@ -212,44 +185,44 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE_FEATURE_COUNT = 15;
+  int STATE_FEATURE_COUNT = 12;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalRenamingImpl <em>Signal Renaming</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RenamingImpl <em>Renaming</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalRenamingImpl
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getSignalRenaming()
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RenamingImpl
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getRenaming()
    * @generated
    */
-  int SIGNAL_RENAMING = 1;
+  int RENAMING = 1;
 
   /**
-   * The feature id for the '<em><b>Old Signal</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNAL_RENAMING__OLD_SIGNAL = 0;
-
-  /**
-   * The feature id for the '<em><b>New Signal</b></em>' reference.
+   * The feature id for the '<em><b>Old ID</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SIGNAL_RENAMING__NEW_SIGNAL = 1;
+  int RENAMING__OLD_ID = 0;
 
   /**
-   * The number of structural features of the '<em>Signal Renaming</em>' class.
+   * The feature id for the '<em><b>New ID</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SIGNAL_RENAMING_FEATURE_COUNT = 2;
+  int RENAMING__NEW_ID = 1;
+
+  /**
+   * The number of structural features of the '<em>Renaming</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RENAMING_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RegionImpl <em>Region</em>}' class.
@@ -670,39 +643,6 @@ public interface RetypingSyncchartsPackage extends EPackage
   EAttribute getState_BodyText();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getNewStateID <em>New State ID</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>New State ID</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getNewStateID()
-   * @see #getState()
-   * @generated
-   */
-  EAttribute getState_NewStateID();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getReferencedState <em>Referenced State</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Referenced State</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getReferencedState()
-   * @see #getState()
-   * @generated
-   */
-  EReference getState_ReferencedState();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSignalRenamings <em>Signal Renamings</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Signal Renamings</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSignalRenamings()
-   * @see #getState()
-   * @generated
-   */
-  EReference getState_SignalRenamings();
-
-  /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getEntryActions <em>Entry Actions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -769,36 +709,36 @@ public interface RetypingSyncchartsPackage extends EPackage
   EReference getState_Regions();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.SignalRenaming <em>Signal Renaming</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming <em>Renaming</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Signal Renaming</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.SignalRenaming
+   * @return the meta object for class '<em>Renaming</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming
    * @generated
    */
-  EClass getSignalRenaming();
+  EClass getRenaming();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.SignalRenaming#getOldSignal <em>Old Signal</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming#getOldID <em>Old ID</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Old Signal</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.SignalRenaming#getOldSignal()
-   * @see #getSignalRenaming()
+   * @return the meta object for the attribute '<em>Old ID</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming#getOldID()
+   * @see #getRenaming()
    * @generated
    */
-  EReference getSignalRenaming_OldSignal();
+  EAttribute getRenaming_OldID();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.SignalRenaming#getNewSignal <em>New Signal</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming#getNewID <em>New ID</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>New Signal</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.SignalRenaming#getNewSignal()
-   * @see #getSignalRenaming()
+   * @return the meta object for the attribute '<em>New ID</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Renaming#getNewID()
+   * @see #getRenaming()
    * @generated
    */
-  EReference getSignalRenaming_NewSignal();
+  EAttribute getRenaming_NewID();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region <em>Region</em>}'.
@@ -1138,30 +1078,6 @@ public interface RetypingSyncchartsPackage extends EPackage
     EAttribute STATE__BODY_TEXT = eINSTANCE.getState_BodyText();
 
     /**
-     * The meta object literal for the '<em><b>New State ID</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute STATE__NEW_STATE_ID = eINSTANCE.getState_NewStateID();
-
-    /**
-     * The meta object literal for the '<em><b>Referenced State</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE__REFERENCED_STATE = eINSTANCE.getState_ReferencedState();
-
-    /**
-     * The meta object literal for the '<em><b>Signal Renamings</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE__SIGNAL_RENAMINGS = eINSTANCE.getState_SignalRenamings();
-
-    /**
      * The meta object literal for the '<em><b>Entry Actions</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1210,30 +1126,30 @@ public interface RetypingSyncchartsPackage extends EPackage
     EReference STATE__REGIONS = eINSTANCE.getState_Regions();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalRenamingImpl <em>Signal Renaming</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RenamingImpl <em>Renaming</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalRenamingImpl
-     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getSignalRenaming()
+     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RenamingImpl
+     * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RetypingSyncchartsPackageImpl#getRenaming()
      * @generated
      */
-    EClass SIGNAL_RENAMING = eINSTANCE.getSignalRenaming();
+    EClass RENAMING = eINSTANCE.getRenaming();
 
     /**
-     * The meta object literal for the '<em><b>Old Signal</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Old ID</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SIGNAL_RENAMING__OLD_SIGNAL = eINSTANCE.getSignalRenaming_OldSignal();
+    EAttribute RENAMING__OLD_ID = eINSTANCE.getRenaming_OldID();
 
     /**
-     * The meta object literal for the '<em><b>New Signal</b></em>' reference feature.
+     * The meta object literal for the '<em><b>New ID</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SIGNAL_RENAMING__NEW_SIGNAL = eINSTANCE.getSignalRenaming_NewSignal();
+    EAttribute RENAMING__NEW_ID = eINSTANCE.getRenaming_NewID();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RegionImpl <em>Region</em>}' class.

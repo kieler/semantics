@@ -50,7 +50,7 @@ public enum StateType implements Enumerator
    * @generated
    * @ordered
    */
-  REFERENCE(2, "REFERENCE", "reference"),
+  REFERENCE(2, "REFERENCE", "ref"),
 
   /**
    * The '<em><b>TEXTUAL</b></em>' literal object.
@@ -101,7 +101,7 @@ public enum StateType implements Enumerator
    * </p>
    * <!-- end-user-doc -->
    * @see #REFERENCE
-   * @model literal="reference"
+   * @model literal="ref"
    * @generated
    * @ordered
    */

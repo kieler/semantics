@@ -23,9 +23,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getBodyText <em>Body Text</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getNewStateID <em>New State ID</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getReferencedState <em>Referenced State</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getSignalRenamings <em>Signal Renamings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getEntryActions <em>Entry Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getInnerActions <em>Inner Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getExitActions <em>Exit Actions</em>}</li>
@@ -199,74 +196,6 @@ public interface State extends EObject
    * @generated
    */
   void setBodyText(String value);
-
-  /**
-   * Returns the value of the '<em><b>New State ID</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>New State ID</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>New State ID</em>' attribute.
-   * @see #setNewStateID(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_NewStateID()
-   * @model
-   * @generated
-   */
-  String getNewStateID();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getNewStateID <em>New State ID</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>New State ID</em>' attribute.
-   * @see #getNewStateID()
-   * @generated
-   */
-  void setNewStateID(String value);
-
-  /**
-   * Returns the value of the '<em><b>Referenced State</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Referenced State</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Referenced State</em>' reference.
-   * @see #setReferencedState(State)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_ReferencedState()
-   * @model
-   * @generated
-   */
-  State getReferencedState();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State#getReferencedState <em>Referenced State</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Referenced State</em>' reference.
-   * @see #getReferencedState()
-   * @generated
-   */
-  void setReferencedState(State value);
-
-  /**
-   * Returns the value of the '<em><b>Signal Renamings</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.SignalRenaming}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Signal Renamings</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Signal Renamings</em>' containment reference list.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getState_SignalRenamings()
-   * @model containment="true"
-   * @generated
-   */
-  EList<SignalRenaming> getSignalRenamings();
 
   /**
    * Returns the value of the '<em><b>Entry Actions</b></em>' containment reference list.
