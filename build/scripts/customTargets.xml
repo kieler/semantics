@@ -134,10 +134,12 @@
 	
 	<!-- added by CHSCH for setting up a qualifier v<<DATE>> instead of <<DATE>> -->
 	<target name="update.p2.xml" if="p2.xml.present">
-		 <replaceregexp file="${p2.xml}"
+		<replaceregexp file="${p2.xml}"
 		                match="&lt;property name=&quot;p2.product.qualifier&quot; value=&quot;"
 		                replace="&lt;property name=&quot;p2.product.qualifier&quot; value=&quot;v"
-		                byline="true"/>
+		                byline="true">
+			<fileset dir="${basedir}" includes="*.xml"/>
+		</replaceregexp>
 	</target>
 
 	<!-- ===================================================================== -->
