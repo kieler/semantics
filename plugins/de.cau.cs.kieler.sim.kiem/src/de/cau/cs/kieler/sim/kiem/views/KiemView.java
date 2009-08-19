@@ -17,8 +17,6 @@ package de.cau.cs.kieler.sim.kiem.views;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.ObjectStreamClass;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.swt.events.KeyEvent;
@@ -972,6 +970,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 					DataComponentEx dataComponentEx = (DataComponentEx)
 													selection.toArray()[c];
 					if (KIEMInstance.getDataComponentExList().contains(dataComponentEx)) {
+						dataComponentEx.getDataComponent()._DataComponent();
 						KIEMInstance.getDataComponentExList().remove(dataComponentEx);
 						 setDirty(true);
  						 //call garbage collector
@@ -1566,7 +1565,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 								.replace("%COMPONENTNAME", dataComponentTemp.getName()));
 					//disable it//
 					dataComponentTemp.setEnabled(false);
-					setDirty(true);
+					//if this method is called during initial loading
+					//then we do not want to set the dirty flag
+					if (!silent)
+						setDirty(true);
 					this.viewer.refresh();
 					this.refreshEnabledDisabledTextColors();
 				}

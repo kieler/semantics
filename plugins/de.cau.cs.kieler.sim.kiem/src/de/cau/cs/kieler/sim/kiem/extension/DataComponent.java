@@ -879,4 +879,25 @@ public abstract class DataComponent implements IDataComponent,
 		return false;
 	}
 		
+   	//-------------------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#finalize()
+	 */
+	protected final void finalize() throws Throwable {
+		_DataComponent();
+    }
+	
+   	//-------------------------------------------------------------------------
+
+	/**
+	  * _dataComponent is a destructor of the DataComponent that is called by
+	  * the execution manager before the DataComponent instance is removed
+	  * from the list. If the DataComponent needs to free any resources 
+	  * immediately (e.g., closing socket streams) this can be done here.
+	  */
+	public void _DataComponent() {
+		//noop
+	}
+	
 }

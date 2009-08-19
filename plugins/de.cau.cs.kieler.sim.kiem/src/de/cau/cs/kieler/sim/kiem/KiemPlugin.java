@@ -17,7 +17,6 @@ package de.cau.cs.kieler.sim.kiem;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectStreamClass;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,7 +43,6 @@ import org.osgi.framework.BundleContext;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.data.KiemPropertyType;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
@@ -85,9 +83,6 @@ public class KiemPlugin extends AbstractUIPlugin {
 	/** List of available dataProducers and dataObservers. */
 	private List<DataComponent> dataComponentList;
 	
-	/** List of available propertyTypes. */
-	private List<KiemPropertyType> propertyTypeList;
-
 	/** List of selected dataComponentEx's (modified by KiemView). */
 	private List<DataComponentEx> dataComponentExList;
 	
@@ -193,7 +188,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 
 					if (KIEMViewInstance.promptToSaveOnClose()
 							== ISaveablePart2.NO) {
-						dataComponentExList.clear();
+						//safely clear (w/ calling DataComponent destructors)
+						clearDataComponentExList();
 						//temporary list only
 						List<DataComponentEx> dataComponentExListTemp = null;
 						//try to load the components into a temporary list
@@ -251,6 +247,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 								((IFileEditorInput)editorInputToOpen)
 								.getFile().getFullPath());
 						KIEMViewInstance.setDirty(false);
+						KIEMViewInstance.checkForSingleEnabledMaster(false);
 					}
 			    }
 		  });
@@ -697,6 +694,22 @@ public class KiemPlugin extends AbstractUIPlugin {
 		return returnList;
 	}
 
+	//-------------------------------------------------------------------------
+
+	/**
+	 * Safely clear DataComponentExList and call DataComponent destructors.
+	 */
+	public void clearDataComponentExList() {
+		if (this.dataComponentExList == null) return;
+		while (this.dataComponentExList.size() > 0) {
+			DataComponentEx dataComponentEx = dataComponentExList.get(0);
+			dataComponentEx.getDataComponent()._DataComponent();
+			dataComponentExList.remove(dataComponentEx);
+		}
+		//call garbage collector
+		System.gc();
+	}
+	
 	//-------------------------------------------------------------------------
 
 	/**
