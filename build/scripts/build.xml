@@ -4,9 +4,9 @@
 	<property name="scriptdir" location="."/>
 	<property file="${scriptdir}/build.properties" />
 
-	<property name="eclipseLocation"  location="/tmp/eclipse_64/eclipse" />
-	<property name="eclipseConfig"    location="${scriptdir}/.eclipse" />
-	<property name="eclipseWorkspace" location="${scriptdir}/.eclipseWorkspace" />
+	<property name="eclipseLocation"       location="/tmp/eclipse_64/eclipse" />
+	<property name="eclipseConfig"         location="${scriptdir}/.eclipse" />
+	<property name="eclipseWorkspace"      location="${scriptdir}/.eclipseWorkspace" />
 	<property name="p2.director.workspace" location="${scriptdir}/.p2Workspace" />
 	
 	<!-- default definitions: should be overwritten while calling this script -->	
@@ -89,6 +89,7 @@
 		<property name="configs"       value="${product.configs}" />
 		<property name="product"       value="${basedir}/kieler.product" />
 		<property name="runPackager"   value="true" />
+		<property name="customTargets"  location="${scriptdir}/customTargets.xml"/>
 		<property name="genericTargets" location="${scriptdir}/genericTargets.xml"/>
 
 		<delete dir="${buildLabel}"/>
