@@ -41,6 +41,7 @@ public class KiemProperty implements Serializable {
 	protected transient KiemPropertyType type;
 	
 	/** The propertyType id of the component for deserialization */
+	@SuppressWarnings("unused")
 	private String propertyTypeId;
 
 	//-------------------------------------------------------------------------

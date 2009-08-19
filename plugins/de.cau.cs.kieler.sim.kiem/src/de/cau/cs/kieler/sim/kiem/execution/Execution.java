@@ -954,6 +954,13 @@ public class Execution implements Runnable {
 
 					//--------------------------------------------------
 					
+					//motify about steps
+					for (int c=0; c < this.dataComponentExList.size(); c++) {
+						dataComponentExList.get(c).getDataComponent().
+							notifyStep(this.stepCounter, this.stepCounterMax);
+					}
+					
+					
 					//update steps in kiem view
 					KiemPlugin.getDefault().updateStepsAsync();
 					

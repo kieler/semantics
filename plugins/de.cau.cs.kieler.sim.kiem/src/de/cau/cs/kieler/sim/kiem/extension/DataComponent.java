@@ -880,15 +880,15 @@ public abstract class DataComponent implements IDataComponent,
 	}
 		
    	//-------------------------------------------------------------------------
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#finalize()
-	 */
-	protected final void finalize() throws Throwable {
-		_DataComponent();
-    }
-	
-   	//-------------------------------------------------------------------------
+//
+//	/* (non-Javadoc)
+//	 * @see java.lang.Object#finalize()
+//	 */
+//	protected void finalize() throws Throwable {
+//		_DataComponent();
+//    }
+//	
+//   	//-------------------------------------------------------------------------
 
 	/**
 	  * _dataComponent is a destructor of the DataComponent that is called by
@@ -897,7 +897,28 @@ public abstract class DataComponent implements IDataComponent,
 	  * immediately (e.g., closing socket streams) this can be done here.
 	  */
 	public void _DataComponent() {
-		//noop
+	}
+	
+   	//-------------------------------------------------------------------------
+	
+	/**
+	 * This method is called whenever the user enables or disables the 
+	 * DataComponent in the user interface list.
+	 * 
+	 * @param enabled true, if the DataComponent was enabled, false otherwise
+	 */
+	public void notifyEnabled(boolean enabled) {
+	}
+	
+   	//-------------------------------------------------------------------------
+	
+	/**
+	  * This method is called during execution, whenever the steps changed.
+	  * 
+	  * @param currentStep the current step
+	  * @param totalSteps the total steps
+	  */
+	public void notifyStep(long currentStep, long totalSteps) {
 	}
 	
 }

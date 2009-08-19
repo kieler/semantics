@@ -184,6 +184,8 @@ public class DataComponentEx implements Serializable {
 	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+		//notify the DataComponent
+		this.component.notifyEnabled(enabled);
 	}
 	
 	//------------------------------------------------------------------------- 

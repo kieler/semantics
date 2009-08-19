@@ -14,8 +14,6 @@
 
 package de.cau.cs.kieler.sim.kiem.data;
 
-import java.io.Serializable;
-
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.graphics.Image;
