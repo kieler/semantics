@@ -17,6 +17,7 @@ package de.cau.cs.kieler.sim.kiem;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectStreamClass;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,6 +44,7 @@ import org.osgi.framework.BundleContext;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyType;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
@@ -83,6 +85,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 	/** List of available dataProducers and dataObservers. */
 	private List<DataComponent> dataComponentList;
 	
+	/** List of available propertyTypes. */
+	private List<KiemPropertyType> propertyTypeList;
+
 	/** List of selected dataComponentEx's (modified by KiemView). */
 	private List<DataComponentEx> dataComponentExList;
 	
@@ -201,6 +206,20 @@ public class KiemPlugin extends AbstractUIPlugin {
 				            		.getFile().getFullPath().toFile());
 				            ObjectInputStream in = new ObjectInputStream(fileIn);
 			            	Object object;
+//			            	List<ObjectStreamClass> oscList;
+//							try {
+//								object = in.readObject();
+//				            	if (object instanceof List<?>) {
+//				            		oscList = 
+//					            		(List<ObjectStreamClass>)object;
+//				            	}
+//							} catch (ClassNotFoundException e) {
+//								e.printStackTrace();
+//							}
+//							//resolve serialized classes for loading them...
+//							for (int c = 0; c < oscList.size(); c++){
+//								in.
+//							}
 							try {
 								object = in.readObject();
 				            	if (object instanceof List<?>) {
@@ -217,8 +236,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 				            //temporary list, this for example contains
 				            //no component because these are transient
 				            //and not serializable
-				            restoreDataComponentListEx(
-				            		dataComponentExListTemp);
+				            if (dataComponentExListTemp != null)
+				            	restoreDataComponentListEx(
+				            			dataComponentExListTemp);
 				        } catch (IOException e) {
 				            e.printStackTrace();
 				        }		
@@ -358,6 +378,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 				String vglComponentId = dataComponent.getDataComponentId(); 
 				
 				if (vglComponentId.equals(componentId)) {
+					//restore KIEM property type first
+					for (int ccc = 0; ccc < properties.length; ccc++) {
+						properties[ccc].setType(
+							dataComponent.getProperties()[ccc].getType());
+					}
 					//we found the component ... now restore it
 					DataComponentEx addedDataComponentEx
 						= this.addTodataComponentExList(dataComponent);
@@ -400,7 +425,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 	public List<DataComponent>getDataComponentList(){
 		if(dataComponentList != null)
 			return dataComponentList;
-				
+		//call garbage collector
+		System.gc();
 		// get the available interfaces and initialize them
 		IConfigurationElement[] jsonComponents = 
 				Platform.getExtensionRegistry()
@@ -586,6 +612,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 	 */
 	public DataComponentEx
 				addTodataComponentExList(DataComponent component) {
+		//call garbage collector
+		System.gc();
 		IConfigurationElement componentConfigEle = 
 								component.getConfigurationElement();
 		DataComponent componentClone;
@@ -620,6 +648,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 	 * @return the default DataComponentExList
 	 */
 	public List<DataComponentEx> getDefaultComponentExList() {
+		//call garbage collector
+		System.gc();
 		List<DataComponent> list = this.getDataComponentList();
 		List<DataComponentEx> returnList = 
 							new LinkedList<DataComponentEx>();

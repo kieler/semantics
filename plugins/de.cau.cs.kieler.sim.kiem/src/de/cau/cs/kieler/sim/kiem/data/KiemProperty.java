@@ -38,8 +38,11 @@ public class KiemProperty implements Serializable {
 	protected String value;
 	
 	/** The KiemPropertyType of the KiemProperty. */
-	protected KiemPropertyType type;
+	protected transient KiemPropertyType type;
 	
+	/** The propertyType id of the component for deserialization */
+	private String propertyTypeId;
+
 	//-------------------------------------------------------------------------
 
 	/**
@@ -53,8 +56,9 @@ public class KiemProperty implements Serializable {
 		this.key = key;
 		this.value = value;
 		this.type = type; 
+		this.propertyTypeId = type.getId();
 	}
-	
+
 	//-------------------------------------------------------------------------
 
 	/**
@@ -174,6 +178,17 @@ public class KiemProperty implements Serializable {
 	
 	//-------------------------------------------------------------------------
 
+	/**
+	 * Sets the KIEM property type.
+	 * 
+	 * @param type the new property type
+	 */
+	public void setType(KiemPropertyType type) {
+		this.type = type;
+	}
+	
+	//-------------------------------------------------------------------------
+	
 	/**
 	 * Sets the value of the KiemPorperty.
 	 * 

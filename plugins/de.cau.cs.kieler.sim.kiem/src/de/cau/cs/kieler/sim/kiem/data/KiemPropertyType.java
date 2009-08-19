@@ -35,14 +35,10 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public abstract class KiemPropertyType implements Serializable,
-												  IKiemPropertyType {
-	
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 3312580956244391881L;
+public abstract class KiemPropertyType implements  IKiemPropertyType {
 	
 	/** The cell editor. */
-	protected transient CellEditor cellEditor;
+	protected CellEditor cellEditor;
 	
 	/** The Constant PROPERTY_DEFAULT. */
 	private static final Image PROPERTY_DEFAULT = AbstractUIPlugin
@@ -62,6 +58,17 @@ public abstract class KiemPropertyType implements Serializable,
 
 	//-------------------------------------------------------------------------
 	
+	/**
+	 * Gets the id of the property type.
+	 * 
+	 * @return the id
+	 */
+	public  final String getId() {
+		return (this.getClass().getPackage() + this.getClass().getName());
+	}
+
+	//-------------------------------------------------------------------------
+
 	/**
 	 * Provides a cell editor of this KiemPropertyType. This method may be
 	 * overridden by implementing classes. By default it provides a

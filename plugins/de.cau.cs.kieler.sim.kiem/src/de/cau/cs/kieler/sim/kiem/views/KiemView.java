@@ -17,6 +17,8 @@ package de.cau.cs.kieler.sim.kiem.views;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.ObjectStreamClass;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.swt.events.KeyEvent;
@@ -962,6 +964,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 		if (actionDelete != null) return actionDelete;
 		actionDelete = new Action() {
 			public void run() {
+				//do nothing if execution
+				if (KIEMInstance.execution != null) return;
 				IStructuredSelection selection =
 					(org.eclipse.jface.viewers.StructuredSelection)viewer.getSelection();
 				for (int c = 0; c < selection.size(); c++) {
@@ -970,6 +974,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 					if (KIEMInstance.getDataComponentExList().contains(dataComponentEx)) {
 						KIEMInstance.getDataComponentExList().remove(dataComponentEx);
 						 setDirty(true);
+ 						 //call garbage collector
+						 System.gc();
 					}
 				}
 				updateView(true);
@@ -1591,6 +1597,27 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             FileOutputStream fileOut = new FileOutputStream(
             				workspaceFolder + currentFile.toOSString());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
+//            List<ObjectStreamClass> oscList = 
+//            						new LinkedList<ObjectStreamClass>();
+//            for (int c = 0; c < KiemPlugin.getDefault()
+//            					.getDataComponentExList().size(); c++) {
+//            	DataComponentEx dataComponentEx = 
+//            		KiemPlugin.getDefault()
+//            		.getDataComponentExList().get(c);
+//            	KiemProperty[] properties = dataComponentEx
+//            							.getDataComponent().getProperties();
+//            	if (properties != null) {
+//                	for (int cc = 0; cc < properties.length; cc++){
+//                		KiemProperty property = properties[cc];
+//                        ObjectStreamClass osc = 
+//                        	java.io.ObjectStreamClass.lookup(property.getClass());
+//                        oscList.add(osc);
+//                	}
+//            	}
+//            }
+//            
+//            out.writeObject(oscList);
 
             out.writeObject(KiemPlugin.getDefault()
             		.getDataComponentExList());
