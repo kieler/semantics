@@ -227,7 +227,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 					            		(List<DataComponentEx>)object;
 				            	}
 							} catch (ClassNotFoundException e) {
-								e.printStackTrace();
+								showError(null, null, e);
+								//e.printStackTrace();
 							}
 				            in.close();
 				            fileIn.close();
@@ -240,6 +241,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 				            	restoreDataComponentListEx(
 				            			dataComponentExListTemp);
 				        } catch (IOException e) {
+							showError(null, null, e);
 				            e.printStackTrace();
 				        }		
 				        //update the KiemView table
@@ -379,9 +381,11 @@ public class KiemPlugin extends AbstractUIPlugin {
 				
 				if (vglComponentId.equals(componentId)) {
 					//restore KIEM property type first
-					for (int ccc = 0; ccc < properties.length; ccc++) {
-						properties[ccc].setType(
-							dataComponent.getProperties()[ccc].getType());
+					if (properties != null) {
+						for (int ccc = 0; ccc < properties.length; ccc++) {
+							properties[ccc].setType(
+								dataComponent.getProperties()[ccc].getType());
+						}
 					}
 					//we found the component ... now restore it
 					DataComponentEx addedDataComponentEx
