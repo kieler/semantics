@@ -318,7 +318,7 @@ public class Execution implements Runnable {
 	 */
 	public boolean stepExecutionPause(long step) {
 		//if invalid step number return false
-		if (step < 0) return false;
+		if (step < 1) return false;
 		//if this is already the current step
 		if (step == this.stepCounter) return true;
 		if (step > this.stepCounterMax) {
@@ -409,7 +409,7 @@ public class Execution implements Runnable {
 	 */
 	public boolean stepBackExecutionSync() {
 		//cannot make steps back in this case
-		if (this.getSteps() <= 0) return false;
+		if (this.getSteps() <= 1) return false;
 		
 		//do not block if currently doing step
 		if (this.steps != NO_STEPS) 
