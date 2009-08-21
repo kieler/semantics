@@ -89,8 +89,9 @@
 		<property name="configs"       value="${product.configs}" />
 		<property name="product"       value="${basedir}/kieler.product" />
 		<property name="runPackager"   value="true" />
-		<property name="customTargets"  location="${scriptdir}/customTargets.xml"/>
-		<property name="genericTargets" location="${scriptdir}/genericTargets.xml"/>
+		<property name="customTargets"   location="${scriptdir}/customTargets.xml"/>
+		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
+		<property name="allElementsFile" location="${scriptdir}/allElements.xml"/>
 
 		<delete dir="${buildLabel}"/>
 		<copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/kieler.product"
