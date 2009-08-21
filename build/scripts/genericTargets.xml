@@ -199,19 +199,18 @@ set here?
 <!-- ===================================================================== -->
 <!-- Assemble one build element -->
 <!-- ===================================================================== -->
-<target name="assembleElement" description="Assembling the build..." depends="init">
-	<condition property="no.qualifier">
+<target name="assembleElement" description="Assembling the build..." depends="init, load.product.qualifier">
+	<!-- condition property="no.qualifier">
 		<istrue value="${runPackager}" />
 	</condition>
-	<antcall target="load.product.qualifier" />
+	<antcall target="load.product.qualifier" / -->
 	<ant antfile="assemble.${id}.all.xml" dir="${buildDirectory}"/>
 </target>
 
 <!-- ===================================================================== -->
 <!-- Package one build element -->
 <!-- ===================================================================== -->
-<target name="packageElement" description="Packaging the build..." depends="init">
-	<antcall target="load.product.qualifier" />
+<target name="packageElement" description="Packaging the build..." depends="init, load.product.qualifier">
 	<ant antfile="package.${id}.all.xml" dir="${buildDirectory}"/>
 </target>
 
