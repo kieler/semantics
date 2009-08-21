@@ -179,9 +179,31 @@ set here?
 </target>
 
 <!-- ===================================================================== -->
+<!-- extract the generated product qualifier                               -->
+<!-- added by CHSCH                                                        -->
+<!-- ===================================================================== -->
+<target name="load.product.qualifier" unless="no.qualifier">
+	<loadfile property="p2.product.qualifier" srcfile="assemble.org.eclipse.pde.build.container.feature.p2.xml">
+		<filterchain>
+			<linecontainsregexp>
+				<regexp pattern="&quot;p2.product.qualifier&quot;"/>
+			</linecontainsregexp>
+			<tokenfilter>
+			    <stringtokenizer delims="&quot;" suppressdelims="true" />
+				<containsregex pattern="v\d{12}" flags="i"/>
+			</tokenfilter>
+		</filterchain>
+	</loadfile>
+</target>
+
+<!-- ===================================================================== -->
 <!-- Assemble one build element -->
 <!-- ===================================================================== -->
 <target name="assembleElement" description="Assembling the build..." depends="init">
+	<condition property="no.qualifier">
+		<istrue value="${runPackager}" />
+	</condition>
+	<antcall target="load.product.qualifier" />
 	<ant antfile="assemble.${id}.all.xml" dir="${buildDirectory}"/>
 </target>
 
@@ -189,6 +211,7 @@ set here?
 <!-- Package one build element -->
 <!-- ===================================================================== -->
 <target name="packageElement" description="Packaging the build..." depends="init">
+	<antcall target="load.product.qualifier" />
 	<ant antfile="package.${id}.all.xml" dir="${buildDirectory}"/>
 </target>
 

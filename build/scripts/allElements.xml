@@ -58,7 +58,6 @@
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.win32.win32.x86" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.win32.win32.x86">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-win32.win32.x86.zip"/>
 		</ant>
@@ -66,7 +65,6 @@
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.win32.win32.x86_64" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.win32.win32.x86_64">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-win32.win32.x86_64.zip"/>
 		</ant>
@@ -74,7 +72,6 @@
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.ppc" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.ppc">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-linux.gtk.ppc.zip"/>
 		</ant>
@@ -82,7 +79,6 @@
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.x86" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.x86">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-linux.gtk.x86.zip"/>
 		</ant>
@@ -90,7 +86,6 @@
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.x86_64" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.x86_64">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-linux.gtk.x86_64.zip"/>
 		</ant>
@@ -98,7 +93,6 @@
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.linux.motif.x86" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.linux.motif.x86">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-linux.motif.x86.zip"/>
 		</ant>
@@ -106,7 +100,6 @@
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.solaris.motif.sparc" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.solaris.motif.sparc">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-solaris.motif.sparc.zip"/>
 		</ant>
@@ -114,7 +107,6 @@
  		
 	<property name="assemble.org.eclipse.pde.build.container.feature.solaris.gtk.sparc" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.solaris.gtk.sparc">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-solaris.gtk.sparc.zip"/>
 		</ant>
@@ -122,7 +114,6 @@
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.aix.motif.ppc" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.aix.motif.ppc">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-aix.motif.ppc.zip"/>
 		</ant>
@@ -130,7 +121,6 @@
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.hpux.motif.PA_RISC" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.hpux.motif.PA_RISC">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-hpux.motif.PA_RISC.zip"/>
 		</ant>
@@ -138,7 +128,6 @@
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.macosx.carbon.ppc" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.macosx.carbon.ppc">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-macosx.carbon.ppc.zip"/>
 		</ant>
@@ -146,7 +135,6 @@
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.macosx.carbon.x86" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.macosx.carbon.x86">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-macosx.carbon.x86.zip"/>
 		</ant>
@@ -154,7 +142,6 @@
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.group.group.group" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.group.group.group">
-		<property name="p2.product.qualifier" value="kieler.p2.qualifier" />
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-group.zip"/>
 		</ant>
