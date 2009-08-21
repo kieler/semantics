@@ -141,7 +141,7 @@
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.macosx.cocoa.x86" value="true" />
- 	<target name="assemble.org.eclipse.pde.build.container.feature.macos.cocoa.x86">
+ 	<target name="assemble.org.eclipse.pde.build.container.feature.macosx.cocoa.x86">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
  			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-macosx.cocoa.x86.zip"/>
 		</ant>
