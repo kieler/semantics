@@ -50,7 +50,7 @@
  	</target>
 	
 	<!-- CHSCH: archiveName changed in the following targets,
-				default value of ${p2.product.qualifier} added
+				default value of ${p2.product.version} added
 				(within the target as it is not known before running the first assemble script,
 				 considering assemble....p2.xml is the first but doesn't exhibit a archive
 				 we should be safe)
@@ -59,105 +59,105 @@
 	<property name="assemble.org.eclipse.pde.build.container.feature.win32.win32.x86" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.win32.win32.x86">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-win32.win32.x86.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-win32.win32.x86.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.win32.win32.x86_64" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.win32.win32.x86_64">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-win32.win32.x86_64.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-win32.win32.x86_64.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.ppc" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.ppc">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-linux.gtk.ppc.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-linux.gtk.ppc.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.x86" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.x86">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-linux.gtk.x86.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-linux.gtk.x86.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.x86_64" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.x86_64">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-linux.gtk.x86_64.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-linux.gtk.x86_64.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.linux.motif.x86" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.linux.motif.x86">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-linux.motif.x86.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-linux.motif.x86.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.solaris.motif.sparc" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.solaris.motif.sparc">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-solaris.motif.sparc.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-solaris.motif.sparc.zip"/>
 		</ant>
  	</target>
  		
 	<property name="assemble.org.eclipse.pde.build.container.feature.solaris.gtk.sparc" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.solaris.gtk.sparc">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-solaris.gtk.sparc.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-solaris.gtk.sparc.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.aix.motif.ppc" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.aix.motif.ppc">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-aix.motif.ppc.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-aix.motif.ppc.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.hpux.motif.PA_RISC" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.hpux.motif.PA_RISC">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-hpux.motif.PA_RISC.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-hpux.motif.PA_RISC.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.macosx.carbon.ppc" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.macosx.carbon.ppc">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-macosx.carbon.ppc.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-macosx.carbon.ppc.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.macosx.carbon.x86" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.macosx.carbon.x86">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-macosx.carbon.x86.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-macosx.carbon.x86.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.macosx.cocoa.x86" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.macosx.cocoa.x86">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-macosx.cocoa.x86.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-macosx.cocoa.x86.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.macosx.cocoa.x86_64" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.macosx.cocoa.x86_64">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-macosx.cocoa.x86_64.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-macosx.cocoa.x86_64.zip"/>
 		</ant>
  	</target>
 	
 	<property name="assemble.org.eclipse.pde.build.container.feature.group.group.group" value="true" />
  	<target name="assemble.org.eclipse.pde.build.container.feature.group.group.group">
  		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.qualifier}-group.zip"/>
+ 			<property name="archiveName" value="${archiveNamePrefix}_${p2.product.version}-group.zip"/>
 		</ant>
  	</target>
 </project>

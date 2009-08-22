@@ -182,16 +182,28 @@ set here?
 <!-- extract the generated product qualifier                               -->
 <!-- added by CHSCH                                                        -->
 <!-- ===================================================================== -->
-<target name="load.product.qualifier" unless="no.qualifier">
+<target name="load.product.version" unless="no.version">
 	<loadfile property="p2.product.qualifier" srcfile="assemble.org.eclipse.pde.build.container.feature.p2.xml">
 		<filterchain>
 			<linecontainsregexp>
-				<regexp pattern="&quot;p2.product.qualifier&quot;"/>
+				<regexp pattern="&quot;p2.product.qualifier&quot;" />
 			</linecontainsregexp>
 			<tokenfilter>
 			    <stringtokenizer delims="&quot;" suppressdelims="true" />
-				<containsregex pattern="v\d{12}" flags="i"/>
+				<containsregex pattern="v\d{12}" flags="i" />
 			</tokenfilter>
+		</filterchain>
+	</loadfile>
+	<loadfile property="p2.product.version" srcfile="assemble.org.eclipse.pde.build.container.feature.p2.xml">
+		<filterchain>
+			<linecontainsregexp>
+				<regexp pattern="&lt;iu" />
+			</linecontainsregexp>
+			<tokenfilter>
+			    <stringtokenizer delims="&quot;" suppressdelims="true" />
+				<containsregex pattern="\d.\d.\d." flags="i" />
+			</tokenfilter>
+			<expandproperties />
 		</filterchain>
 	</loadfile>
 </target>
@@ -199,18 +211,14 @@ set here?
 <!-- ===================================================================== -->
 <!-- Assemble one build element -->
 <!-- ===================================================================== -->
-<target name="assembleElement" description="Assembling the build..." depends="init, load.product.qualifier">
-	<!-- condition property="no.qualifier">
-		<istrue value="${runPackager}" />
-	</condition>
-	<antcall target="load.product.qualifier" / -->
+<target name="assembleElement" description="Assembling the build..." depends="init, load.product.version">
 	<ant antfile="assemble.${id}.all.xml" dir="${buildDirectory}"/>
 </target>
 
 <!-- ===================================================================== -->
 <!-- Package one build element -->
 <!-- ===================================================================== -->
-<target name="packageElement" description="Packaging the build..." depends="init, load.product.qualifier">
+<target name="packageElement" description="Packaging the build..." depends="init, load.product.version">
 	<ant antfile="package.${id}.all.xml" dir="${buildDirectory}"/>
 </target>
 
