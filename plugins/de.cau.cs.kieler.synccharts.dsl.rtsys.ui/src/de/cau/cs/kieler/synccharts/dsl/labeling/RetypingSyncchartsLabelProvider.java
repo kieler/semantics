@@ -38,5 +38,6 @@ public class RetypingSyncchartsLabelProvider extends DefaultLabelProvider {
 		}
 		return myStateLabelImage;
 	}
+	
 
 }

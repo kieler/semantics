@@ -1625,8 +1625,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cTypeTransitionTypeEnumRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
 		private final Assignment cTargetStateAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final CrossReference cTargetStateStateCrossReference_2_0 = (CrossReference)cTargetStateAssignment_2.eContents().get(0);
-		private final RuleCall cTargetStateStateIDTerminalRuleCall_2_0_1 = (RuleCall)cTargetStateStateCrossReference_2_0.eContents().get(1);
+		private final RuleCall cTargetStateIDTerminalRuleCall_2_0 = (RuleCall)cTargetStateAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cWithKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cTriggersAndEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -1636,8 +1635,8 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//Transition:
-		//  sourceState=[State]? type=TransitionType targetState=[State] ("with "
-		//  triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
+		//  sourceState=[State]? type=TransitionType targetState=ID ("with " triggersAndEffects=
+		//  STRING)? isHistory?=" history"? ";"; 
 		//	//========================================================================================
 		//	 //===  									    TRANSITION 					               ===
 		//	 //========================================================================================
@@ -1655,8 +1654,8 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//	 //========================================================================================
 		public ParserRule getRule() { return rule; }
 
-		//sourceState=[State]? type=TransitionType targetState=[State] ("with "
-		//triggersAndEffects=STRING)? isHistory?=" history"? ";"
+		//sourceState=[State]? type=TransitionType targetState=ID ("with " triggersAndEffects=
+		//STRING)? isHistory?=" history"? ";"
 		public Group getGroup() { return cGroup; }
 
 		//sourceState=[State]?
@@ -1674,14 +1673,11 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//TransitionType
 		public RuleCall getTypeTransitionTypeEnumRuleCall_1_0() { return cTypeTransitionTypeEnumRuleCall_1_0; }
 
-		//targetState=[State]
+		//targetState=ID
 		public Assignment getTargetStateAssignment_2() { return cTargetStateAssignment_2; }
 
-		//[State]
-		public CrossReference getTargetStateStateCrossReference_2_0() { return cTargetStateStateCrossReference_2_0; }
-
 		//ID
-		public RuleCall getTargetStateStateIDTerminalRuleCall_2_0_1() { return cTargetStateStateIDTerminalRuleCall_2_0_1; }
+		public RuleCall getTargetStateIDTerminalRuleCall_2_0() { return cTargetStateIDTerminalRuleCall_2_0; }
 
 		//("with " triggersAndEffects=STRING)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -2408,8 +2404,8 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	}
 
 	//Transition:
-	//  sourceState=[State]? type=TransitionType targetState=[State] ("with "
-	//  triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
+	//  sourceState=[State]? type=TransitionType targetState=ID ("with " triggersAndEffects=
+	//  STRING)? isHistory?=" history"? ";"; 
 	//	//========================================================================================
 	//	 //===  									    TRANSITION 					               ===
 	//	 //========================================================================================

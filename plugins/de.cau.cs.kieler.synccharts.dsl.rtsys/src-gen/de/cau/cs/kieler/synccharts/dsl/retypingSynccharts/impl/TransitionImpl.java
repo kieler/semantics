@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl;
 
@@ -66,14 +67,24 @@ public class TransitionImpl extends ActionImpl implements Transition
   protected TransitionType type = TYPE_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getTargetState() <em>Target State</em>}' reference.
+   * The default value of the '{@link #getTargetState() <em>Target State</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getTargetState()
    * @generated
    * @ordered
    */
-  protected State targetState;
+  protected static final String TARGET_STATE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getTargetState() <em>Target State</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTargetState()
+   * @generated
+   * @ordered
+   */
+  protected String targetState = TARGET_STATE_EDEFAULT;
 
   /**
    * The default value of the '{@link #isIsHistory() <em>Is History</em>}' attribute.
@@ -187,27 +198,7 @@ public class TransitionImpl extends ActionImpl implements Transition
    * <!-- end-user-doc -->
    * @generated
    */
-  public State getTargetState()
-  {
-    if (targetState != null && targetState.eIsProxy())
-    {
-      InternalEObject oldTargetState = (InternalEObject)targetState;
-      targetState = (State)eResolveProxy(oldTargetState);
-      if (targetState != oldTargetState)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, RetypingSyncchartsPackage.TRANSITION__TARGET_STATE, oldTargetState, targetState));
-      }
-    }
-    return targetState;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public State basicGetTargetState()
+  public String getTargetState()
   {
     return targetState;
   }
@@ -217,9 +208,9 @@ public class TransitionImpl extends ActionImpl implements Transition
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTargetState(State newTargetState)
+  public void setTargetState(String newTargetState)
   {
-    State oldTargetState = targetState;
+    String oldTargetState = targetState;
     targetState = newTargetState;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.TRANSITION__TARGET_STATE, oldTargetState, targetState));
@@ -264,8 +255,7 @@ public class TransitionImpl extends ActionImpl implements Transition
       case RetypingSyncchartsPackage.TRANSITION__TYPE:
         return getType();
       case RetypingSyncchartsPackage.TRANSITION__TARGET_STATE:
-        if (resolve) return getTargetState();
-        return basicGetTargetState();
+        return getTargetState();
       case RetypingSyncchartsPackage.TRANSITION__IS_HISTORY:
         return isIsHistory();
     }
@@ -289,7 +279,7 @@ public class TransitionImpl extends ActionImpl implements Transition
         setType((TransitionType)newValue);
         return;
       case RetypingSyncchartsPackage.TRANSITION__TARGET_STATE:
-        setTargetState((State)newValue);
+        setTargetState((String)newValue);
         return;
       case RetypingSyncchartsPackage.TRANSITION__IS_HISTORY:
         setIsHistory((Boolean)newValue);
@@ -315,7 +305,7 @@ public class TransitionImpl extends ActionImpl implements Transition
         setType(TYPE_EDEFAULT);
         return;
       case RetypingSyncchartsPackage.TRANSITION__TARGET_STATE:
-        setTargetState((State)null);
+        setTargetState(TARGET_STATE_EDEFAULT);
         return;
       case RetypingSyncchartsPackage.TRANSITION__IS_HISTORY:
         setIsHistory(IS_HISTORY_EDEFAULT);
@@ -339,7 +329,7 @@ public class TransitionImpl extends ActionImpl implements Transition
       case RetypingSyncchartsPackage.TRANSITION__TYPE:
         return type != TYPE_EDEFAULT;
       case RetypingSyncchartsPackage.TRANSITION__TARGET_STATE:
-        return targetState != null;
+        return TARGET_STATE_EDEFAULT == null ? targetState != null : !TARGET_STATE_EDEFAULT.equals(targetState);
       case RetypingSyncchartsPackage.TRANSITION__IS_HISTORY:
         return isHistory != IS_HISTORY_EDEFAULT;
     }
@@ -359,6 +349,8 @@ public class TransitionImpl extends ActionImpl implements Transition
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (type: ");
     result.append(type);
+    result.append(", targetState: ");
+    result.append(targetState);
     result.append(", isHistory: ");
     result.append(isHistory);
     result.append(')');

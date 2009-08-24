@@ -7,6 +7,7 @@ package de.cau.cs.kieler.synccharts.dsl.outline;
 
 import java.util.List;
 
+import org.eclipse.xtext.parsetree.NodeUtil;
 import org.eclipse.xtext.ui.common.editor.outline.ContentOutlineNode;
 import org.eclipse.xtext.ui.common.editor.outline.transformer.AbstractDeclarativeSemanticModelTransformer;
 import org.eclipse.xtext.ui.core.ILocationInFileProvider;
@@ -31,6 +32,8 @@ import com.google.inject.Provider;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.TransitionType;
 
 /**
  * customization of the default outline structure
@@ -95,22 +98,40 @@ public class RetypingSyncchartsTransformer extends
 //		}
 		return node;
 	}
-//	public ContentOutlineNode createNode(Action semanticAction,
-//			ContentOutlineNode parentNode) {
-//		ContentOutlineNode node = super.newOutlineNode(semanticAction,
-//				parentNode);
-//		
-//		String actionKeyword = null;
-//		/**
-//		 * onexit "anExitAction" --> onexit: anExitAction
-//		 */
-//		if (semanticAction.getEntryAction() != null) {
-//			actionKeyword = semanticAction.getEntryAction().toString();
-//		}
-//
-//		node.setLabel(actionKeyword);
-//		return node;
-//	}
+	
+	public ContentOutlineNode createNode(Action semanticAction,
+			ContentOutlineNode parentNode) {
+		ContentOutlineNode node = super.newOutlineNode(semanticAction,
+				parentNode);
+		
+		String actionKeyword = null;
+		//onexit "anExitAction" --> onexit: anExitAction
+		if (true){
+			actionKeyword = NodeUtil.getNodeAdapter(semanticAction).getParserNode().getLeafNodes().toString();
+			//actionKeyword = "onEntry: " + semanticAction.getTriggersAndEffects();
+			
+		}
+		 
+		if (semanticAction.isIsImmediate()) {
+			actionKeyword = "# " + actionKeyword;
+		}
+
+		node.setLabel(actionKeyword);
+		return node;
+	}
+	public ContentOutlineNode createNode(Transition semanticTransition,
+			ContentOutlineNode parentNode) {
+		ContentOutlineNode node = super.newOutlineNode(semanticTransition,
+				parentNode);
+		
+		String transitionLabel = null;
+		if (semanticTransition.getType()!=null)
+			transitionLabel = semanticTransition.getType().toString() + " " + semanticTransition.getTargetState().toString();
+			
+		node.setLabel(transitionLabel);
+		return node;
+	}
+	
 
 	/**
 	 * This method will be called by naming convention: - method name must be

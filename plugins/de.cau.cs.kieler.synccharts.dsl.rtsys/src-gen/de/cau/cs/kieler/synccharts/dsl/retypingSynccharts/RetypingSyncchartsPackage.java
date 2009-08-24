@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts;
 
@@ -399,7 +400,7 @@ public interface RetypingSyncchartsPackage extends EPackage
   int TRANSITION__TYPE = ACTION_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Target State</b></em>' reference.
+   * The feature id for the '<em><b>Target State</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1002,15 +1003,15 @@ public interface RetypingSyncchartsPackage extends EPackage
   EAttribute getTransition_Type();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getTargetState <em>Target State</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getTargetState <em>Target State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Target State</em>'.
+   * @return the meta object for the attribute '<em>Target State</em>'.
    * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getTargetState()
    * @see #getTransition()
    * @generated
    */
-  EReference getTransition_TargetState();
+  EAttribute getTransition_TargetState();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#isIsHistory <em>Is History</em>}'.
@@ -1466,12 +1467,12 @@ public interface RetypingSyncchartsPackage extends EPackage
     EAttribute TRANSITION__TYPE = eINSTANCE.getTransition_Type();
 
     /**
-     * The meta object literal for the '<em><b>Target State</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Target State</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TRANSITION__TARGET_STATE = eINSTANCE.getTransition_TargetState();
+    EAttribute TRANSITION__TARGET_STATE = eINSTANCE.getTransition_TargetState();
 
     /**
      * The meta object literal for the '<em><b>Is History</b></em>' attribute feature.

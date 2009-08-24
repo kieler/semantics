@@ -108,7 +108,7 @@ Action:
 Transition:
 	(sourceState=[State])? 
 	type=TransitionType
-	targetState=[State]
+	targetState=ID
 	('with ' triggersAndEffects=STRING)?
 	(isHistory?=' history')?
 	';'

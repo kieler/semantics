@@ -2741,19 +2741,23 @@ ruleTransition returns [EObject current=null]
 	
 )(	
 	
-		
-		{
-			if ($current==null) {
+	    lv_targetState_2=	RULE_ID
+	{
+		createLeafNode(grammarAccess.getTransitionAccess().getTargetStateIDTerminalRuleCall_2_0(), "targetState"); 
+	}
+ 
+	    {
+	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode, $current);
 	        }
-        }
-	RULE_ID
-	{
-		createLeafNode(grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_2_0(), "targetState"); 
-	}
-
-		// TODO assign feature to currentNode
+	        
+	        try {
+	       		set($current, "targetState", lv_targetState_2, "ID", lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
 	
 )('with ' 
     {
