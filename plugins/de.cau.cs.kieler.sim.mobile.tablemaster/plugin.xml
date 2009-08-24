@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.string.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sim.mobile.tablemaster.DataComponentMaster"
+            id="de.cau.cs.kieler.sim.mobile.tablemaster"
+            name="Mobile Data Table Connector">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.string.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sim.mobile.tablemaster.DataComponentObserver"
+            id="de.cau.cs.kieler.sim.mobile.tablemaster"
+            name="Mobile Data Table">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.string.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sim.mobile.tablemaster.DataComponentProducer"
+            id="de.cau.cs.kieler.sim.mobile.tablemaster"
+            name="Mobile Data Table">
+      </content>
+   </extension>
+
+</plugin>
