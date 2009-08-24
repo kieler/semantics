@@ -309,8 +309,8 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final Assignment cRegionsAssignment_4_1_5_1 = (Assignment)cGroup_4_1_5.eContents().get(1);
 		private final RuleCall cRegionsRegionParserRuleCall_4_1_5_1_0 = (RuleCall)cRegionsAssignment_4_1_5_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
-		private final Assignment cOutgoingTransitionsAssignment_4_3 = (Assignment)cGroup_4.eContents().get(3);
-		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_4_3_0 = (RuleCall)cOutgoingTransitionsAssignment_4_3.eContents().get(0);
+		private final Assignment cOutgoingTransitionsAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_5_0 = (RuleCall)cOutgoingTransitionsAssignment_5.eContents().get(0);
 		
 		//State:
 		//  ((isInitial?="init" isFinal?="final") type=StateType "state" id=FullStateID|(
@@ -337,7 +337,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//  ",")* signalRenamings+=Renaming "]")? bodyText=STRING? ("{" ("onentry" entryActions+=
 		//  Action|"oninner" innerActions+=Action|"onexit" exitActions+=Action|"suspension"
 		//  suspensionTrigger=Action|signals+=Signal|(regions+=Region "||")* regions+=Region)+
-		//  "}" outgoingTransitions+=Transition*)?;  
+		//  "}")? outgoingTransitions+=Transition*;  
 		//
 		////========================================================================================
 		////===  									    STATE						               ===
@@ -427,7 +427,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//",")* signalRenamings+=Renaming "]")? bodyText=STRING? ("{" ("onentry" entryActions+=
 		//Action|"oninner" innerActions+=Action|"onexit" exitActions+=Action|"suspension"
 		//suspensionTrigger=Action|signals+=Signal|(regions+=Region "||")* regions+=Region)+
-		//"}" outgoingTransitions+=Transition*)? 
+		//"}")? outgoingTransitions+=Transition* 
 		//
 		//	        
 		//	      
@@ -1289,7 +1289,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 
 		//("{" ("onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit"
 		//exitActions+=Action|"suspension" suspensionTrigger=Action|signals+=Signal|(
-		//regions+=Region "||")* regions+=Region)+ "}" outgoingTransitions+=Transition*)? 	
+		//regions+=Region "||")* regions+=Region)+ "}")? 	
 		//		 	    
 		//		 	    
 		//		         
@@ -1387,10 +1387,10 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		public Keyword getRightCurlyBracketKeyword_4_2() { return cRightCurlyBracketKeyword_4_2; }
 
 		//outgoingTransitions+=Transition*
-		public Assignment getOutgoingTransitionsAssignment_4_3() { return cOutgoingTransitionsAssignment_4_3; }
+		public Assignment getOutgoingTransitionsAssignment_5() { return cOutgoingTransitionsAssignment_5; }
 
 		//Transition
-		public RuleCall getOutgoingTransitionsTransitionParserRuleCall_4_3_0() { return cOutgoingTransitionsTransitionParserRuleCall_4_3_0; }
+		public RuleCall getOutgoingTransitionsTransitionParserRuleCall_5_0() { return cOutgoingTransitionsTransitionParserRuleCall_5_0; }
 	}
 
 	public class RenamingElements implements IParserRuleAccess {
@@ -1798,50 +1798,51 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	public class SignalElements implements IParserRuleAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Assignment cIsLocalAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
-		private final Keyword cIsLocalLocalKeyword_0_0_0 = (Keyword)cIsLocalAssignment_0_0.eContents().get(0);
-		private final Assignment cIsInputAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
-		private final Keyword cIsInputInputKeyword_0_1_0 = (Keyword)cIsInputAssignment_0_1.eContents().get(0);
-		private final Assignment cIsOutputAssignment_0_2 = (Assignment)cAlternatives_0.eContents().get(2);
-		private final Keyword cIsOutputOutputKeyword_0_2_0 = (Keyword)cIsOutputAssignment_0_2.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cColonEqualsSignSpaceKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cInitialValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cInitialValueINTTerminalRuleCall_2_1_0 = (RuleCall)cInitialValueAssignment_2_1.eContents().get(0);
-		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
-		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
-		private final Keyword cColonSpaceKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
-		private final Alternatives cAlternatives_3_0_1 = (Alternatives)cGroup_3_0.eContents().get(1);
-		private final Assignment cTypeAssignment_3_0_1_0 = (Assignment)cAlternatives_3_0_1.eContents().get(0);
-		private final RuleCall cTypeValueTypeEnumRuleCall_3_0_1_0_0 = (RuleCall)cTypeAssignment_3_0_1_0.eContents().get(0);
-		private final Assignment cHostTypeAssignment_3_0_1_1 = (Assignment)cAlternatives_3_0_1.eContents().get(1);
-		private final RuleCall cHostTypeSTRINGTerminalRuleCall_3_0_1_1_0 = (RuleCall)cHostTypeAssignment_3_0_1_1.eContents().get(0);
-		private final Group cGroup_3_1 = (Group)cAlternatives_3.eContents().get(1);
-		private final Keyword cColonSpaceKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
-		private final Keyword cCombineKeyword_3_1_1 = (Keyword)cGroup_3_1.eContents().get(1);
-		private final Alternatives cAlternatives_3_1_2 = (Alternatives)cGroup_3_1.eContents().get(2);
-		private final Assignment cTypeAssignment_3_1_2_0 = (Assignment)cAlternatives_3_1_2.eContents().get(0);
-		private final RuleCall cTypeValueTypeEnumRuleCall_3_1_2_0_0 = (RuleCall)cTypeAssignment_3_1_2_0.eContents().get(0);
-		private final Assignment cHostTypeAssignment_3_1_2_1 = (Assignment)cAlternatives_3_1_2.eContents().get(1);
-		private final RuleCall cHostTypeSTRINGTerminalRuleCall_3_1_2_1_0 = (RuleCall)cHostTypeAssignment_3_1_2_1.eContents().get(0);
-		private final Keyword cWithKeyword_3_1_3 = (Keyword)cGroup_3_1.eContents().get(3);
-		private final Alternatives cAlternatives_3_1_4 = (Alternatives)cGroup_3_1.eContents().get(4);
-		private final Assignment cCombineOperatorAssignment_3_1_4_0 = (Assignment)cAlternatives_3_1_4.eContents().get(0);
-		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_3_1_4_0_0 = (RuleCall)cCombineOperatorAssignment_3_1_4_0.eContents().get(0);
-		private final Assignment cHostCombineOperatorAssignment_3_1_4_1 = (Assignment)cAlternatives_3_1_4.eContents().get(1);
-		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_3_1_4_1_0 = (RuleCall)cHostCombineOperatorAssignment_3_1_4_1.eContents().get(0);
+		private final Assignment cIsLocalAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cIsLocalLocalKeyword_0_0 = (Keyword)cIsLocalAssignment_0.eContents().get(0);
+		private final Assignment cIsInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cIsInputInputKeyword_1_0 = (Keyword)cIsInputAssignment_1.eContents().get(0);
+		private final Assignment cIsOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cIsOutputOutputKeyword_2_0 = (Keyword)cIsOutputAssignment_2.eContents().get(0);
+		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cNameIDTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cColonEqualsSignSpaceKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cInitialValueAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cInitialValueINTTerminalRuleCall_4_1_0 = (RuleCall)cInitialValueAssignment_4_1.eContents().get(0);
+		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
+		private final Group cGroup_5_0 = (Group)cAlternatives_5.eContents().get(0);
+		private final Keyword cColonSpaceKeyword_5_0_0 = (Keyword)cGroup_5_0.eContents().get(0);
+		private final Alternatives cAlternatives_5_0_1 = (Alternatives)cGroup_5_0.eContents().get(1);
+		private final Assignment cTypeAssignment_5_0_1_0 = (Assignment)cAlternatives_5_0_1.eContents().get(0);
+		private final RuleCall cTypeValueTypeEnumRuleCall_5_0_1_0_0 = (RuleCall)cTypeAssignment_5_0_1_0.eContents().get(0);
+		private final Assignment cHostTypeAssignment_5_0_1_1 = (Assignment)cAlternatives_5_0_1.eContents().get(1);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_5_0_1_1_0 = (RuleCall)cHostTypeAssignment_5_0_1_1.eContents().get(0);
+		private final Group cGroup_5_1 = (Group)cAlternatives_5.eContents().get(1);
+		private final Keyword cColonSpaceKeyword_5_1_0 = (Keyword)cGroup_5_1.eContents().get(0);
+		private final Keyword cCombineKeyword_5_1_1 = (Keyword)cGroup_5_1.eContents().get(1);
+		private final Alternatives cAlternatives_5_1_2 = (Alternatives)cGroup_5_1.eContents().get(2);
+		private final Assignment cTypeAssignment_5_1_2_0 = (Assignment)cAlternatives_5_1_2.eContents().get(0);
+		private final RuleCall cTypeValueTypeEnumRuleCall_5_1_2_0_0 = (RuleCall)cTypeAssignment_5_1_2_0.eContents().get(0);
+		private final Assignment cHostTypeAssignment_5_1_2_1 = (Assignment)cAlternatives_5_1_2.eContents().get(1);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_5_1_2_1_0 = (RuleCall)cHostTypeAssignment_5_1_2_1.eContents().get(0);
+		private final Keyword cWithKeyword_5_1_3 = (Keyword)cGroup_5_1.eContents().get(3);
+		private final Alternatives cAlternatives_5_1_4 = (Alternatives)cGroup_5_1.eContents().get(4);
+		private final Assignment cCombineOperatorAssignment_5_1_4_0 = (Assignment)cAlternatives_5_1_4.eContents().get(0);
+		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_5_1_4_0_0 = (RuleCall)cCombineOperatorAssignment_5_1_4_0.eContents().get(0);
+		private final Assignment cHostCombineOperatorAssignment_5_1_4_1 = (Assignment)cAlternatives_5_1_4.eContents().get(1);
+		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_5_1_4_1_0 = (RuleCall)cHostCombineOperatorAssignment_5_1_4_1.eContents().get(0);
 		
 		//Signal:
-		//  (isLocal?="local"|isInput?="input"|isOutput?="output") name=ID (":= " initialValue=
+		//  isLocal?="local"? isInput?="input"? isOutput?="output"? name=ID (":= " initialValue=
 		//  INT)? (": " (type=ValueType|hostType=STRING)|": " "combine" (type=ValueType|hostType
 		//  =STRING) "with" (combineOperator=CombineOperator|hostCombineOperator=STRING))?; 
 		//
 		// 	
-		//		        
+		//		  
+		//		 
 		//		
+		//				
 		//		 
 		//		
 		//		   
@@ -1855,12 +1856,14 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//	 //========================================================================================
 		public ParserRule getRule() { return rule; }
 
-		//(isLocal?="local"|isInput?="input"|isOutput?="output") name=ID (":= " initialValue=
+		//isLocal?="local"? isInput?="input"? isOutput?="output"? name=ID (":= " initialValue=
 		//INT)? (": " (type=ValueType|hostType=STRING)|": " "combine" (type=ValueType|hostType
 		//=STRING) "with" (combineOperator=CombineOperator|hostCombineOperator=STRING))? 
 		// 	
-		//		        
+		//		  
+		//		 
 		//		
+		//				
 		//		 
 		//		
 		//		   
@@ -1869,115 +1872,112 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//		 	               // *** CHECK : Signal_1 && Signal_2 *** //
 		public Group getGroup() { return cGroup; }
 
-		//isLocal?="local"|isInput?="input"|isOutput?="output"
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
-
-		//isLocal?="local"
-		public Assignment getIsLocalAssignment_0_0() { return cIsLocalAssignment_0_0; }
+		//isLocal?="local"?
+		public Assignment getIsLocalAssignment_0() { return cIsLocalAssignment_0; }
 
 		//"local"
-		public Keyword getIsLocalLocalKeyword_0_0_0() { return cIsLocalLocalKeyword_0_0_0; }
+		public Keyword getIsLocalLocalKeyword_0_0() { return cIsLocalLocalKeyword_0_0; }
 
-		//isInput?="input"
-		public Assignment getIsInputAssignment_0_1() { return cIsInputAssignment_0_1; }
+		//isInput?="input"?
+		public Assignment getIsInputAssignment_1() { return cIsInputAssignment_1; }
 
 		//"input"
-		public Keyword getIsInputInputKeyword_0_1_0() { return cIsInputInputKeyword_0_1_0; }
+		public Keyword getIsInputInputKeyword_1_0() { return cIsInputInputKeyword_1_0; }
 
-		//isOutput?="output"
-		public Assignment getIsOutputAssignment_0_2() { return cIsOutputAssignment_0_2; }
+		//isOutput?="output"?
+		public Assignment getIsOutputAssignment_2() { return cIsOutputAssignment_2; }
 
 		//"output"
-		public Keyword getIsOutputOutputKeyword_0_2_0() { return cIsOutputOutputKeyword_0_2_0; }
+		public Keyword getIsOutputOutputKeyword_2_0() { return cIsOutputOutputKeyword_2_0; }
 
 		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		public RuleCall getNameIDTerminalRuleCall_3_0() { return cNameIDTerminalRuleCall_3_0; }
 
 		//(":= " initialValue=INT)?
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_4() { return cGroup_4; }
 
 		//":= "
-		public Keyword getColonEqualsSignSpaceKeyword_2_0() { return cColonEqualsSignSpaceKeyword_2_0; }
+		public Keyword getColonEqualsSignSpaceKeyword_4_0() { return cColonEqualsSignSpaceKeyword_4_0; }
 
 		//initialValue=INT
-		public Assignment getInitialValueAssignment_2_1() { return cInitialValueAssignment_2_1; }
+		public Assignment getInitialValueAssignment_4_1() { return cInitialValueAssignment_4_1; }
 
 		//INT
-		public RuleCall getInitialValueINTTerminalRuleCall_2_1_0() { return cInitialValueINTTerminalRuleCall_2_1_0; }
+		public RuleCall getInitialValueINTTerminalRuleCall_4_1_0() { return cInitialValueINTTerminalRuleCall_4_1_0; }
 
 		//(": " (type=ValueType|hostType=STRING)|": " "combine" (type=ValueType|hostType=
 		//STRING) "with" (combineOperator=CombineOperator|hostCombineOperator=STRING))?  
 		//		
 		//			     
 		//		 	               // *** CHECK : Signal_1 && Signal_2 *** //
-		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 
 		//": " (type=ValueType|hostType=STRING)
-		public Group getGroup_3_0() { return cGroup_3_0; }
+		public Group getGroup_5_0() { return cGroup_5_0; }
 
 		//": "
-		public Keyword getColonSpaceKeyword_3_0_0() { return cColonSpaceKeyword_3_0_0; }
+		public Keyword getColonSpaceKeyword_5_0_0() { return cColonSpaceKeyword_5_0_0; }
 
 		//type=ValueType|hostType=STRING
-		public Alternatives getAlternatives_3_0_1() { return cAlternatives_3_0_1; }
+		public Alternatives getAlternatives_5_0_1() { return cAlternatives_5_0_1; }
 
 		//type=ValueType
-		public Assignment getTypeAssignment_3_0_1_0() { return cTypeAssignment_3_0_1_0; }
+		public Assignment getTypeAssignment_5_0_1_0() { return cTypeAssignment_5_0_1_0; }
 
 		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_3_0_1_0_0() { return cTypeValueTypeEnumRuleCall_3_0_1_0_0; }
+		public RuleCall getTypeValueTypeEnumRuleCall_5_0_1_0_0() { return cTypeValueTypeEnumRuleCall_5_0_1_0_0; }
 
 		//hostType=STRING
-		public Assignment getHostTypeAssignment_3_0_1_1() { return cHostTypeAssignment_3_0_1_1; }
+		public Assignment getHostTypeAssignment_5_0_1_1() { return cHostTypeAssignment_5_0_1_1; }
 
 		//STRING
-		public RuleCall getHostTypeSTRINGTerminalRuleCall_3_0_1_1_0() { return cHostTypeSTRINGTerminalRuleCall_3_0_1_1_0; }
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_5_0_1_1_0() { return cHostTypeSTRINGTerminalRuleCall_5_0_1_1_0; }
 
 		//": " "combine" (type=ValueType|hostType=STRING) "with" (combineOperator=
 		//CombineOperator|hostCombineOperator=STRING)
-		public Group getGroup_3_1() { return cGroup_3_1; }
+		public Group getGroup_5_1() { return cGroup_5_1; }
 
 		//": "
-		public Keyword getColonSpaceKeyword_3_1_0() { return cColonSpaceKeyword_3_1_0; }
+		public Keyword getColonSpaceKeyword_5_1_0() { return cColonSpaceKeyword_5_1_0; }
 
 		//"combine"
-		public Keyword getCombineKeyword_3_1_1() { return cCombineKeyword_3_1_1; }
+		public Keyword getCombineKeyword_5_1_1() { return cCombineKeyword_5_1_1; }
 
 		//type=ValueType|hostType=STRING
-		public Alternatives getAlternatives_3_1_2() { return cAlternatives_3_1_2; }
+		public Alternatives getAlternatives_5_1_2() { return cAlternatives_5_1_2; }
 
 		//type=ValueType
-		public Assignment getTypeAssignment_3_1_2_0() { return cTypeAssignment_3_1_2_0; }
+		public Assignment getTypeAssignment_5_1_2_0() { return cTypeAssignment_5_1_2_0; }
 
 		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_3_1_2_0_0() { return cTypeValueTypeEnumRuleCall_3_1_2_0_0; }
+		public RuleCall getTypeValueTypeEnumRuleCall_5_1_2_0_0() { return cTypeValueTypeEnumRuleCall_5_1_2_0_0; }
 
 		//hostType=STRING
-		public Assignment getHostTypeAssignment_3_1_2_1() { return cHostTypeAssignment_3_1_2_1; }
+		public Assignment getHostTypeAssignment_5_1_2_1() { return cHostTypeAssignment_5_1_2_1; }
 
 		//STRING
-		public RuleCall getHostTypeSTRINGTerminalRuleCall_3_1_2_1_0() { return cHostTypeSTRINGTerminalRuleCall_3_1_2_1_0; }
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_5_1_2_1_0() { return cHostTypeSTRINGTerminalRuleCall_5_1_2_1_0; }
 
 		//"with"
-		public Keyword getWithKeyword_3_1_3() { return cWithKeyword_3_1_3; }
+		public Keyword getWithKeyword_5_1_3() { return cWithKeyword_5_1_3; }
 
 		//combineOperator=CombineOperator|hostCombineOperator=STRING
-		public Alternatives getAlternatives_3_1_4() { return cAlternatives_3_1_4; }
+		public Alternatives getAlternatives_5_1_4() { return cAlternatives_5_1_4; }
 
 		//combineOperator=CombineOperator
-		public Assignment getCombineOperatorAssignment_3_1_4_0() { return cCombineOperatorAssignment_3_1_4_0; }
+		public Assignment getCombineOperatorAssignment_5_1_4_0() { return cCombineOperatorAssignment_5_1_4_0; }
 
 		//CombineOperator
-		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_3_1_4_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_3_1_4_0_0; }
+		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_5_1_4_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_5_1_4_0_0; }
 
 		//hostCombineOperator=STRING
-		public Assignment getHostCombineOperatorAssignment_3_1_4_1() { return cHostCombineOperatorAssignment_3_1_4_1; }
+		public Assignment getHostCombineOperatorAssignment_5_1_4_1() { return cHostCombineOperatorAssignment_5_1_4_1; }
 
 		//STRING
-		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_3_1_4_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_3_1_4_1_0; }
+		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_5_1_4_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_5_1_4_1_0; }
 	}
 
 	public class TICKElements implements IParserRuleAccess {
@@ -2000,7 +2000,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "StateType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cNORMALEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cNORMALNORMALKeyword_0_0 = (Keyword)cNORMALEnumLiteralDeclaration_0.eContents().get(0);
+		private final Keyword cNORMALStateKeyword_0_0 = (Keyword)cNORMALEnumLiteralDeclaration_0.eContents().get(0);
 		private final EnumLiteralDeclaration cPSEUDOEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
 		private final Keyword cPSEUDOCondKeyword_1_0 = (Keyword)cPSEUDOEnumLiteralDeclaration_1.eContents().get(0);
 		private final EnumLiteralDeclaration cREFERENCEEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
@@ -2009,17 +2009,17 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final Keyword cTEXTUALTextualKeyword_3_0 = (Keyword)cTEXTUALEnumLiteralDeclaration_3.eContents().get(0);
 		
 		//enum StateType:
-		//  NORMAL | PSEUDO="cond" | REFERENCE="ref" | TEXTUAL="textual";
+		//  NORMAL="state" | PSEUDO="cond" | REFERENCE="ref" | TEXTUAL="textual";
 		public EnumRule getRule() { return rule; }
 
-		//NORMAL | PSEUDO="cond" | REFERENCE="ref" | TEXTUAL="textual"
+		//NORMAL="state" | PSEUDO="cond" | REFERENCE="ref" | TEXTUAL="textual"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//NORMAL
+		//NORMAL="state"
 		public EnumLiteralDeclaration getNORMALEnumLiteralDeclaration_0() { return cNORMALEnumLiteralDeclaration_0; }
 
-		//"NORMAL"
-		public Keyword getNORMALNORMALKeyword_0_0() { return cNORMALNORMALKeyword_0_0; }
+		//"state"
+		public Keyword getNORMALStateKeyword_0_0() { return cNORMALStateKeyword_0_0; }
 
 		//PSEUDO="cond"
 		public EnumLiteralDeclaration getPSEUDOEnumLiteralDeclaration_1() { return cPSEUDOEnumLiteralDeclaration_1; }
@@ -2259,7 +2259,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	//  ",")* signalRenamings+=Renaming "]")? bodyText=STRING? ("{" ("onentry" entryActions+=
 	//  Action|"oninner" innerActions+=Action|"onexit" exitActions+=Action|"suspension"
 	//  suspensionTrigger=Action|signals+=Signal|(regions+=Region "||")* regions+=Region)+
-	//  "}" outgoingTransitions+=Transition*)?;  
+	//  "}")? outgoingTransitions+=Transition*;  
 	//
 	////========================================================================================
 	////===  									    STATE						               ===
@@ -2457,13 +2457,15 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	}
 
 	//Signal:
-	//  (isLocal?="local"|isInput?="input"|isOutput?="output") name=ID (":= " initialValue=
+	//  isLocal?="local"? isInput?="input"? isOutput?="output"? name=ID (":= " initialValue=
 	//  INT)? (": " (type=ValueType|hostType=STRING)|": " "combine" (type=ValueType|hostType
 	//  =STRING) "with" (combineOperator=CombineOperator|hostCombineOperator=STRING))?; 
 	//
 	// 	
-	//		        
+	//		  
+	//		 
 	//		
+	//				
 	//		 
 	//		
 	//		   
@@ -2497,7 +2499,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	}
 
 	//enum StateType:
-	//  NORMAL | PSEUDO="cond" | REFERENCE="ref" | TEXTUAL="textual";
+	//  NORMAL="state" | PSEUDO="cond" | REFERENCE="ref" | TEXTUAL="textual";
 	public StateTypeElements getStateTypeAccess() {
 		return (unknownRuleStateType != null) ? unknownRuleStateType : (unknownRuleStateType = new StateTypeElements());
 	}

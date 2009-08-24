@@ -2346,11 +2346,11 @@ ruleState returns [EObject current=null]
     {
         createLeafNode(grammarAccess.getStateAccess().getRightCurlyBracketKeyword_4_2(), null); 
     }
-(	
+)?(	
 	
 	    
 	    { 
-	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getOutgoingTransitionsTransitionParserRuleCall_4_3_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getOutgoingTransitionsTransitionParserRuleCall_5_0(), currentNode); 
 	    }
 	    lv_outgoingTransitions_130=ruleTransition 
 	    {
@@ -2367,7 +2367,7 @@ ruleState returns [EObject current=null]
 	        currentNode = currentNode.getParent();
 	    }
 	
-)*)?);
+)*);
 
 
 
@@ -2938,11 +2938,11 @@ ruleSignal returns [EObject current=null]
     @after { resetLookahead(); 
     	lastConsumedNode = currentNode;
     }:
-(((	
+((	
 	
 	    lv_isLocal_0='local' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getIsLocalLocalKeyword_0_0_0(), "isLocal"); 
+        createLeafNode(grammarAccess.getSignalAccess().getIsLocalLocalKeyword_0_0(), "isLocal"); 
     }
 
  
@@ -2959,12 +2959,11 @@ ruleSignal returns [EObject current=null]
 	        }
 	    }
 	
-)
-    |(	
+)?(	
 	
 	    lv_isInput_1='input' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getIsInputInputKeyword_0_1_0(), "isInput"); 
+        createLeafNode(grammarAccess.getSignalAccess().getIsInputInputKeyword_1_0(), "isInput"); 
     }
 
  
@@ -2981,12 +2980,11 @@ ruleSignal returns [EObject current=null]
 	        }
 	    }
 	
-)
-    |(	
+)?(	
 	
 	    lv_isOutput_2='output' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getIsOutputOutputKeyword_0_2_0(), "isOutput"); 
+        createLeafNode(grammarAccess.getSignalAccess().getIsOutputOutputKeyword_2_0(), "isOutput"); 
     }
 
  
@@ -3003,11 +3001,11 @@ ruleSignal returns [EObject current=null]
 	        }
 	    }
 	
-))(	
+)?(	
 	
 	    lv_name_3=	RULE_ID
 	{
-		createLeafNode(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
+		createLeafNode(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_3_0(), "name"); 
 	}
  
 	    {
@@ -3025,13 +3023,13 @@ ruleSignal returns [EObject current=null]
 	
 )(':= ' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getColonEqualsSignSpaceKeyword_2_0(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getColonEqualsSignSpaceKeyword_4_0(), null); 
     }
 (	
 	
 	    lv_initialValue_5=	RULE_INT
 	{
-		createLeafNode(grammarAccess.getSignalAccess().getInitialValueINTTerminalRuleCall_2_1_0(), "initialValue"); 
+		createLeafNode(grammarAccess.getSignalAccess().getInitialValueINTTerminalRuleCall_4_1_0(), "initialValue"); 
 	}
  
 	    {
@@ -3049,13 +3047,13 @@ ruleSignal returns [EObject current=null]
 	
 ))?((': ' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getColonSpaceKeyword_3_0_0(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getColonSpaceKeyword_5_0_0(), null); 
     }
 ((	
 	
 	    
 	    { 
-	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_3_0_1_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_5_0_1_0_0(), currentNode); 
 	    }
 	    lv_type_7=ruleValueType 
 	    {
@@ -3077,7 +3075,7 @@ ruleSignal returns [EObject current=null]
 	
 	    lv_hostType_8=	RULE_STRING
 	{
-		createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_3_0_1_1_0(), "hostType"); 
+		createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_0_1_1_0(), "hostType"); 
 	}
  
 	    {
@@ -3096,17 +3094,17 @@ ruleSignal returns [EObject current=null]
 )))
     |(': ' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getColonSpaceKeyword_3_1_0(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getColonSpaceKeyword_5_1_0(), null); 
     }
 'combine' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_3_1_1(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_5_1_1(), null); 
     }
 ((	
 	
 	    
 	    { 
-	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_3_1_2_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_5_1_2_0_0(), currentNode); 
 	    }
 	    lv_type_11=ruleValueType 
 	    {
@@ -3128,7 +3126,7 @@ ruleSignal returns [EObject current=null]
 	
 	    lv_hostType_12=	RULE_STRING
 	{
-		createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_3_1_2_1_0(), "hostType"); 
+		createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_1_2_1_0(), "hostType"); 
 	}
  
 	    {
@@ -3146,13 +3144,13 @@ ruleSignal returns [EObject current=null]
 	
 ))'with' 
     {
-        createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_3_1_3(), null); 
+        createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_5_1_3(), null); 
     }
 ((	
 	
 	    
 	    { 
-	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_3_1_4_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_5_1_4_0_0(), currentNode); 
 	    }
 	    lv_combineOperator_14=ruleCombineOperator 
 	    {
@@ -3174,7 +3172,7 @@ ruleSignal returns [EObject current=null]
 	
 	    lv_hostCombineOperator_15=	RULE_STRING
 	{
-		createLeafNode(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_3_1_4_1_0(), "hostCombineOperator"); 
+		createLeafNode(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_5_1_4_1_0(), "hostCombineOperator"); 
 	}
  
 	    {
@@ -3204,7 +3202,7 @@ ruleStateType returns [Enumerator current=null]
     @after { resetLookahead(); 
     	lastConsumedNode = currentNode;
     }:
-((	'NORMAL' 
+((	'state' 
 	{
         $current = grammarAccess.getStateTypeAccess().getNORMALEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
         createLeafNode(grammarAccess.getStateTypeAccess().getNORMALEnumLiteralDeclaration_0(), null); 

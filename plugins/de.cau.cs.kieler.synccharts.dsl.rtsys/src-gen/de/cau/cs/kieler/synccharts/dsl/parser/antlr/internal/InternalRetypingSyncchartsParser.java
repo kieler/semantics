@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.HashMap;
 public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'init'", "'final'", "'state'", "'['", "','", "']'", "'{'", "'onentry'", "'oninner'", "'onexit'", "'suspension'", "'||'", "'}'", "'/'", "'@'", "'region'", "'#'", "';'", "'with '", "' history'", "':= '", "': '", "'local'", "'input'", "'output'", "'combine'", "'with'", "'NORMAL'", "'cond'", "'ref'", "'textual'", "'NONE'", "'+'", "'*'", "'AND'", "'OR'", "'host'", "'PURE'", "'boolean'", "'unsigned'", "'integer'", "'float'", "'-->'", "'o->'", "'>->'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'init'", "'final'", "'state'", "'['", "','", "']'", "'{'", "'onentry'", "'oninner'", "'onexit'", "'suspension'", "'||'", "'}'", "'/'", "'@'", "'region'", "'#'", "';'", "'with '", "' history'", "':= '", "': '", "'local'", "'input'", "'output'", "'combine'", "'with'", "'cond'", "'ref'", "'textual'", "'NONE'", "'+'", "'*'", "'AND'", "'OR'", "'host'", "'PURE'", "'boolean'", "'unsigned'", "'integer'", "'float'", "'-->'", "'o->'", "'>->'"
     };
     public static final int RULE_ID=5;
     public static final int RULE_STRING=4;
@@ -38,7 +38,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
         public InternalRetypingSyncchartsParser(TokenStream input) {
             super(input);
-            ruleMemo = new HashMap[109+1];
+            ruleMemo = new HashMap[110+1];
          }
         
 
@@ -109,7 +109,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleState
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:82:1: ruleState returns [EObject current=null] : ( ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) ) (lv_label_109= RULE_STRING )? ( '[' ( (lv_signalRenamings_111= ruleRenaming ) ',' )* (lv_signalRenamings_113= ruleRenaming ) ']' )? (lv_bodyText_115= RULE_STRING )? ( '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' (lv_outgoingTransitions_130= ruleTransition )* )? ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:82:1: ruleState returns [EObject current=null] : ( ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) ) (lv_label_109= RULE_STRING )? ( '[' ( (lv_signalRenamings_111= ruleRenaming ) ',' )* (lv_signalRenamings_113= ruleRenaming ) ']' )? (lv_bodyText_115= RULE_STRING )? ( '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' )? (lv_outgoingTransitions_130= ruleTransition )* ) ;
     public final EObject ruleState() throws RecognitionException {
         EObject current = null;
 
@@ -269,11 +269,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:87:6: ( ( ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) ) (lv_label_109= RULE_STRING )? ( '[' ( (lv_signalRenamings_111= ruleRenaming ) ',' )* (lv_signalRenamings_113= ruleRenaming ) ']' )? (lv_bodyText_115= RULE_STRING )? ( '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' (lv_outgoingTransitions_130= ruleTransition )* )? ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:1: ( ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) ) (lv_label_109= RULE_STRING )? ( '[' ( (lv_signalRenamings_111= ruleRenaming ) ',' )* (lv_signalRenamings_113= ruleRenaming ) ']' )? (lv_bodyText_115= RULE_STRING )? ( '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' (lv_outgoingTransitions_130= ruleTransition )* )? )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:87:6: ( ( ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) ) (lv_label_109= RULE_STRING )? ( '[' ( (lv_signalRenamings_111= ruleRenaming ) ',' )* (lv_signalRenamings_113= ruleRenaming ) ']' )? (lv_bodyText_115= RULE_STRING )? ( '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' )? (lv_outgoingTransitions_130= ruleTransition )* ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:1: ( ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) ) (lv_label_109= RULE_STRING )? ( '[' ( (lv_signalRenamings_111= ruleRenaming ) ',' )* (lv_signalRenamings_113= ruleRenaming ) ']' )? (lv_bodyText_115= RULE_STRING )? ( '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' )? (lv_outgoingTransitions_130= ruleTransition )* )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:1: ( ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) ) (lv_label_109= RULE_STRING )? ( '[' ( (lv_signalRenamings_111= ruleRenaming ) ',' )* (lv_signalRenamings_113= ruleRenaming ) ']' )? (lv_bodyText_115= RULE_STRING )? ( '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' (lv_outgoingTransitions_130= ruleTransition )* )? )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) ) (lv_label_109= RULE_STRING )? ( '[' ( (lv_signalRenamings_111= ruleRenaming ) ',' )* (lv_signalRenamings_113= ruleRenaming ) ']' )? (lv_bodyText_115= RULE_STRING )? ( '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' (lv_outgoingTransitions_130= ruleTransition )* )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:1: ( ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) ) (lv_label_109= RULE_STRING )? ( '[' ( (lv_signalRenamings_111= ruleRenaming ) ',' )* (lv_signalRenamings_113= ruleRenaming ) ']' )? (lv_bodyText_115= RULE_STRING )? ( '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' )? (lv_outgoingTransitions_130= ruleTransition )* )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) ) (lv_label_109= RULE_STRING )? ( '[' ( (lv_signalRenamings_111= ruleRenaming ) ',' )* (lv_signalRenamings_113= ruleRenaming ) ']' )? (lv_bodyText_115= RULE_STRING )? ( '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' )? (lv_outgoingTransitions_130= ruleTransition )*
             {
             // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )
             int alt1=39;
@@ -283,10 +283,58 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 switch ( input.LA(2) ) {
                 case 13:
                     {
-                    int LA1_9 = input.LA(3);
+                    int LA1_8 = input.LA(3);
 
-                    if ( (LA1_9==RULE_ID) ) {
-                        alt1=20;
+                    if ( (LA1_8==RULE_ID) ) {
+                        int LA1_29 = input.LA(4);
+
+                        if ( (synpred19()) ) {
+                            alt1=19;
+                        }
+                        else if ( (synpred20()) ) {
+                            alt1=20;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 29, input);
+
+                            throw nvae;
+                        }
+                    }
+                    else if ( (LA1_8==13) ) {
+                        int LA1_30 = input.LA(4);
+
+                        if ( (LA1_30==EOF||LA1_30==RULE_STRING||(LA1_30>=11 && LA1_30<=14)||(LA1_30>=17 && LA1_30<=23)||LA1_30==26||(LA1_30>=33 && LA1_30<=35)||(LA1_30>=38 && LA1_30<=40)||(LA1_30>=52 && LA1_30<=54)) ) {
+                            alt1=18;
+                        }
+                        else if ( (LA1_30==RULE_ID) ) {
+                            int LA1_60 = input.LA(5);
+
+                            if ( (synpred17()) ) {
+                                alt1=17;
+                            }
+                            else if ( (synpred18()) ) {
+                                alt1=18;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 60, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 30, input);
+
+                            throw nvae;
+                        }
+                    }
+                    else if ( (synpred21()) ) {
+                        alt1=21;
                     }
                     else if ( (synpred22()) ) {
                         alt1=22;
@@ -297,7 +345,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 9, input);
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 8, input);
 
                         throw nvae;
                     }
@@ -305,50 +353,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     break;
                 case 12:
                     {
-                    int LA1_10 = input.LA(3);
+                    int LA1_9 = input.LA(3);
 
-                    if ( (LA1_10==13) ) {
-                        int LA1_32 = input.LA(4);
+                    if ( (LA1_9==13) ) {
+                        int LA1_33 = input.LA(4);
 
-                        if ( (LA1_32==RULE_ID) ) {
-                            int LA1_59 = input.LA(5);
-
-                            if ( (synpred4()) ) {
-                                alt1=4;
-                            }
-                            else if ( (synpred6()) ) {
-                                alt1=6;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 59, input);
-
-                                throw nvae;
-                            }
-                        }
-                        else if ( (LA1_32==EOF||LA1_32==RULE_STRING||(LA1_32>=11 && LA1_32<=14)||(LA1_32>=17 && LA1_32<=23)||LA1_32==26||(LA1_32>=33 && LA1_32<=35)||(LA1_32>=38 && LA1_32<=41)) ) {
-                            alt1=6;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 32, input);
-
-                            throw nvae;
-                        }
-                    }
-                    else if ( (LA1_10==38) ) {
-                        switch ( input.LA(4) ) {
-                        case RULE_ID:
-                            {
+                        if ( (LA1_33==RULE_ID) ) {
                             int LA1_61 = input.LA(5);
 
                             if ( (synpred3()) ) {
                                 alt1=3;
                             }
-                            else if ( (synpred5()) ) {
-                                alt1=5;
+                            else if ( (synpred4()) ) {
+                                alt1=4;
                             }
                             else {
                                 if (backtracking>0) {failed=true; return current;}
@@ -357,70 +374,59 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                                 throw nvae;
                             }
-                            }
-                            break;
-                        case EOF:
-                        case RULE_STRING:
-                        case 11:
-                        case 12:
-                        case 14:
-                        case 17:
-                        case 18:
-                        case 19:
-                        case 20:
-                        case 21:
-                        case 22:
-                        case 23:
-                        case 26:
-                        case 33:
-                        case 34:
-                        case 35:
-                        case 38:
-                        case 39:
-                        case 40:
-                        case 41:
-                            {
-                            alt1=5;
-                            }
-                            break;
-                        case 13:
-                            {
-                            int LA1_63 = input.LA(5);
+                        }
+                        else if ( (LA1_33==13) ) {
+                            int LA1_62 = input.LA(5);
 
-                            if ( (LA1_63==RULE_ID) ) {
-                                alt1=1;
+                            if ( (LA1_62==RULE_ID) ) {
+                                int LA1_82 = input.LA(6);
+
+                                if ( (synpred1()) ) {
+                                    alt1=1;
+                                }
+                                else if ( (synpred2()) ) {
+                                    alt1=2;
+                                }
+                                else {
+                                    if (backtracking>0) {failed=true; return current;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 82, input);
+
+                                    throw nvae;
+                                }
                             }
-                            else if ( (synpred2()) ) {
+                            else if ( (LA1_62==EOF||LA1_62==RULE_STRING||(LA1_62>=11 && LA1_62<=14)||(LA1_62>=17 && LA1_62<=23)||LA1_62==26||(LA1_62>=33 && LA1_62<=35)||(LA1_62>=38 && LA1_62<=40)||(LA1_62>=52 && LA1_62<=54)) ) {
                                 alt1=2;
-                            }
-                            else if ( (synpred5()) ) {
-                                alt1=5;
                             }
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 63, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 62, input);
 
                                 throw nvae;
                             }
-                            }
-                            break;
-                        default:
+                        }
+                        else if ( (synpred5()) ) {
+                            alt1=5;
+                        }
+                        else if ( (synpred6()) ) {
+                            alt1=6;
+                        }
+                        else {
                             if (backtracking>0) {failed=true; return current;}
                             NoViableAltException nvae =
                                 new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 33, input);
 
                             throw nvae;
                         }
-
                     }
-                    else if ( (LA1_10==39) ) {
+                    else if ( (LA1_9==38) ) {
                         switch ( input.LA(4) ) {
                         case 13:
                             {
-                            int LA1_63 = input.LA(5);
+                            int LA1_65 = input.LA(5);
 
-                            if ( (LA1_63==RULE_ID) ) {
+                            if ( (LA1_65==RULE_ID) ) {
                                 alt1=1;
                             }
                             else if ( (synpred2()) ) {
@@ -432,7 +438,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 63, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 65, input);
 
                                 throw nvae;
                             }
@@ -440,7 +446,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             break;
                         case RULE_ID:
                             {
-                            int LA1_61 = input.LA(5);
+                            int LA1_66 = input.LA(5);
 
                             if ( (synpred3()) ) {
                                 alt1=3;
@@ -451,7 +457,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 61, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 66, input);
 
                                 throw nvae;
                             }
@@ -476,7 +482,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         case 38:
                         case 39:
                         case 40:
-                        case 41:
+                        case 52:
+                        case 53:
+                        case 54:
                             {
                             alt1=5;
                             }
@@ -490,13 +498,32 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         }
 
                     }
-                    else if ( (LA1_10==40) ) {
+                    else if ( (LA1_9==39) ) {
                         switch ( input.LA(4) ) {
+                        case RULE_ID:
+                            {
+                            int LA1_66 = input.LA(5);
+
+                            if ( (synpred3()) ) {
+                                alt1=3;
+                            }
+                            else if ( (synpred5()) ) {
+                                alt1=5;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 66, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
                         case 13:
                             {
-                            int LA1_63 = input.LA(5);
+                            int LA1_65 = input.LA(5);
 
-                            if ( (LA1_63==RULE_ID) ) {
+                            if ( (LA1_65==RULE_ID) ) {
                                 alt1=1;
                             }
                             else if ( (synpred2()) ) {
@@ -508,7 +535,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 63, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 65, input);
 
                                 throw nvae;
                             }
@@ -533,28 +560,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         case 38:
                         case 39:
                         case 40:
-                        case 41:
+                        case 52:
+                        case 53:
+                        case 54:
                             {
                             alt1=5;
-                            }
-                            break;
-                        case RULE_ID:
-                            {
-                            int LA1_61 = input.LA(5);
-
-                            if ( (synpred3()) ) {
-                                alt1=3;
-                            }
-                            else if ( (synpred5()) ) {
-                                alt1=5;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 61, input);
-
-                                throw nvae;
-                            }
                             }
                             break;
                         default:
@@ -566,13 +576,13 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         }
 
                     }
-                    else if ( (LA1_10==41) ) {
+                    else if ( (LA1_9==40) ) {
                         switch ( input.LA(4) ) {
                         case 13:
                             {
-                            int LA1_63 = input.LA(5);
+                            int LA1_65 = input.LA(5);
 
-                            if ( (LA1_63==RULE_ID) ) {
+                            if ( (LA1_65==RULE_ID) ) {
                                 alt1=1;
                             }
                             else if ( (synpred2()) ) {
@@ -584,7 +594,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 63, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 65, input);
 
                                 throw nvae;
                             }
@@ -592,7 +602,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             break;
                         case RULE_ID:
                             {
-                            int LA1_61 = input.LA(5);
+                            int LA1_66 = input.LA(5);
 
                             if ( (synpred3()) ) {
                                 alt1=3;
@@ -603,7 +613,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 61, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 66, input);
 
                                 throw nvae;
                             }
@@ -628,7 +638,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         case 38:
                         case 39:
                         case 40:
-                        case 41:
+                        case 52:
+                        case 53:
+                        case 54:
                             {
                             alt1=5;
                             }
@@ -642,11 +654,64 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         }
 
                     }
-                    else if ( (LA1_10==RULE_ID) ) {
+                    else if ( (LA1_9==RULE_ID) ) {
                         alt1=7;
                     }
                     else if ( (synpred8()) ) {
                         alt1=8;
+                    }
+                    else if ( (synpred24()) ) {
+                        alt1=24;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 9, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
+                case 38:
+                    {
+                    int LA1_10 = input.LA(3);
+
+                    if ( (LA1_10==RULE_ID) ) {
+                        alt1=19;
+                    }
+                    else if ( (LA1_10==13) ) {
+                        int LA1_30 = input.LA(4);
+
+                        if ( (LA1_30==EOF||LA1_30==RULE_STRING||(LA1_30>=11 && LA1_30<=14)||(LA1_30>=17 && LA1_30<=23)||LA1_30==26||(LA1_30>=33 && LA1_30<=35)||(LA1_30>=38 && LA1_30<=40)||(LA1_30>=52 && LA1_30<=54)) ) {
+                            alt1=18;
+                        }
+                        else if ( (LA1_30==RULE_ID) ) {
+                            int LA1_60 = input.LA(5);
+
+                            if ( (synpred17()) ) {
+                                alt1=17;
+                            }
+                            else if ( (synpred18()) ) {
+                                alt1=18;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 60, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 30, input);
+
+                            throw nvae;
+                        }
+                    }
+                    else if ( (synpred21()) ) {
+                        alt1=21;
                     }
                     else if ( (synpred24()) ) {
                         alt1=24;
@@ -660,18 +725,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     }
                     break;
-                case 38:
+                case 39:
                     {
                     int LA1_11 = input.LA(3);
 
                     if ( (LA1_11==13) ) {
-                        int LA1_39 = input.LA(4);
+                        int LA1_30 = input.LA(4);
 
-                        if ( (LA1_39==EOF||LA1_39==RULE_STRING||(LA1_39>=11 && LA1_39<=14)||(LA1_39>=17 && LA1_39<=23)||LA1_39==26||(LA1_39>=33 && LA1_39<=35)||(LA1_39>=38 && LA1_39<=41)) ) {
+                        if ( (LA1_30==EOF||LA1_30==RULE_STRING||(LA1_30>=11 && LA1_30<=14)||(LA1_30>=17 && LA1_30<=23)||LA1_30==26||(LA1_30>=33 && LA1_30<=35)||(LA1_30>=38 && LA1_30<=40)||(LA1_30>=52 && LA1_30<=54)) ) {
                             alt1=18;
                         }
-                        else if ( (LA1_39==RULE_ID) ) {
-                            int LA1_65 = input.LA(5);
+                        else if ( (LA1_30==RULE_ID) ) {
+                            int LA1_60 = input.LA(5);
 
                             if ( (synpred17()) ) {
                                 alt1=17;
@@ -682,7 +747,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 65, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 60, input);
 
                                 throw nvae;
                             }
@@ -690,7 +755,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         else {
                             if (backtracking>0) {failed=true; return current;}
                             NoViableAltException nvae =
-                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 39, input);
+                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 30, input);
 
                             throw nvae;
                         }
@@ -713,21 +778,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     }
                     break;
-                case 39:
+                case 40:
                     {
                     int LA1_12 = input.LA(3);
 
-                    if ( (LA1_12==RULE_ID) ) {
-                        alt1=19;
-                    }
-                    else if ( (LA1_12==13) ) {
-                        int LA1_39 = input.LA(4);
+                    if ( (LA1_12==13) ) {
+                        int LA1_30 = input.LA(4);
 
-                        if ( (LA1_39==EOF||LA1_39==RULE_STRING||(LA1_39>=11 && LA1_39<=14)||(LA1_39>=17 && LA1_39<=23)||LA1_39==26||(LA1_39>=33 && LA1_39<=35)||(LA1_39>=38 && LA1_39<=41)) ) {
+                        if ( (LA1_30==EOF||LA1_30==RULE_STRING||(LA1_30>=11 && LA1_30<=14)||(LA1_30>=17 && LA1_30<=23)||LA1_30==26||(LA1_30>=33 && LA1_30<=35)||(LA1_30>=38 && LA1_30<=40)||(LA1_30>=52 && LA1_30<=54)) ) {
                             alt1=18;
                         }
-                        else if ( (LA1_39==RULE_ID) ) {
-                            int LA1_65 = input.LA(5);
+                        else if ( (LA1_30==RULE_ID) ) {
+                            int LA1_60 = input.LA(5);
 
                             if ( (synpred17()) ) {
                                 alt1=17;
@@ -738,7 +800,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 65, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 60, input);
 
                                 throw nvae;
                             }
@@ -746,10 +808,13 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         else {
                             if (backtracking>0) {failed=true; return current;}
                             NoViableAltException nvae =
-                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 39, input);
+                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 30, input);
 
                             throw nvae;
                         }
+                    }
+                    else if ( (LA1_12==RULE_ID) ) {
+                        alt1=19;
                     }
                     else if ( (synpred21()) ) {
                         alt1=21;
@@ -766,115 +831,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     }
                     break;
-                case 40:
-                    {
-                    int LA1_13 = input.LA(3);
-
-                    if ( (LA1_13==RULE_ID) ) {
-                        alt1=19;
-                    }
-                    else if ( (LA1_13==13) ) {
-                        int LA1_39 = input.LA(4);
-
-                        if ( (LA1_39==EOF||LA1_39==RULE_STRING||(LA1_39>=11 && LA1_39<=14)||(LA1_39>=17 && LA1_39<=23)||LA1_39==26||(LA1_39>=33 && LA1_39<=35)||(LA1_39>=38 && LA1_39<=41)) ) {
-                            alt1=18;
-                        }
-                        else if ( (LA1_39==RULE_ID) ) {
-                            int LA1_65 = input.LA(5);
-
-                            if ( (synpred17()) ) {
-                                alt1=17;
-                            }
-                            else if ( (synpred18()) ) {
-                                alt1=18;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 65, input);
-
-                                throw nvae;
-                            }
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 39, input);
-
-                            throw nvae;
-                        }
-                    }
-                    else if ( (synpred21()) ) {
-                        alt1=21;
-                    }
-                    else if ( (synpred24()) ) {
-                        alt1=24;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 13, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
-                case 41:
-                    {
-                    int LA1_14 = input.LA(3);
-
-                    if ( (LA1_14==13) ) {
-                        int LA1_39 = input.LA(4);
-
-                        if ( (LA1_39==EOF||LA1_39==RULE_STRING||(LA1_39>=11 && LA1_39<=14)||(LA1_39>=17 && LA1_39<=23)||LA1_39==26||(LA1_39>=33 && LA1_39<=35)||(LA1_39>=38 && LA1_39<=41)) ) {
-                            alt1=18;
-                        }
-                        else if ( (LA1_39==RULE_ID) ) {
-                            int LA1_65 = input.LA(5);
-
-                            if ( (synpred17()) ) {
-                                alt1=17;
-                            }
-                            else if ( (synpred18()) ) {
-                                alt1=18;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 65, input);
-
-                                throw nvae;
-                            }
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 39, input);
-
-                            throw nvae;
-                        }
-                    }
-                    else if ( (LA1_14==RULE_ID) ) {
-                        alt1=19;
-                    }
-                    else if ( (synpred21()) ) {
-                        alt1=21;
-                    }
-                    else if ( (synpred24()) ) {
-                        alt1=24;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 14, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
                 case RULE_ID:
                     {
-                    int LA1_15 = input.LA(3);
+                    int LA1_13 = input.LA(3);
 
                     if ( (synpred23()) ) {
                         alt1=23;
@@ -885,7 +844,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 15, input);
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 13, input);
 
                         throw nvae;
                     }
@@ -906,6 +865,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 case 33:
                 case 34:
                 case 35:
+                case 52:
+                case 53:
+                case 54:
                     {
                     alt1=24;
                     }
@@ -925,55 +887,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 switch ( input.LA(2) ) {
                 case 13:
                     {
-                    int LA1_17 = input.LA(3);
+                    int LA1_15 = input.LA(3);
 
-                    if ( (LA1_17==EOF||LA1_17==RULE_STRING||(LA1_17>=11 && LA1_17<=14)||(LA1_17>=17 && LA1_17<=23)||LA1_17==26||(LA1_17>=33 && LA1_17<=35)||(LA1_17>=38 && LA1_17<=41)) ) {
-                        alt1=32;
-                    }
-                    else if ( (LA1_17==RULE_ID) ) {
-                        int LA1_43 = input.LA(4);
+                    if ( (LA1_15==13) ) {
+                        int LA1_41 = input.LA(4);
 
-                        if ( (synpred28()) ) {
-                            alt1=28;
-                        }
-                        else if ( (synpred30()) ) {
-                            alt1=30;
-                        }
-                        else if ( (synpred32()) ) {
-                            alt1=32;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 43, input);
-
-                            throw nvae;
-                        }
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 17, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
-                case 11:
-                    {
-                    int LA1_18 = input.LA(3);
-
-                    if ( (LA1_18==13) ) {
-                        int LA1_44 = input.LA(4);
-
-                        if ( (LA1_44==RULE_ID) ) {
+                        if ( (LA1_41==RULE_ID) ) {
                             int LA1_68 = input.LA(5);
 
-                            if ( (synpred12()) ) {
-                                alt1=12;
+                            if ( (synpred25()) ) {
+                                alt1=25;
                             }
-                            else if ( (synpred14()) ) {
-                                alt1=14;
+                            else if ( (synpred26()) ) {
+                                alt1=26;
                             }
                             else {
                                 if (backtracking>0) {failed=true; return current;}
@@ -983,7 +909,111 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                                 throw nvae;
                             }
                         }
-                        else if ( (LA1_44==EOF||LA1_44==RULE_STRING||(LA1_44>=11 && LA1_44<=14)||(LA1_44>=17 && LA1_44<=23)||LA1_44==26||(LA1_44>=33 && LA1_44<=35)||(LA1_44>=38 && LA1_44<=41)) ) {
+                        else if ( (LA1_41==EOF||LA1_41==RULE_STRING||(LA1_41>=11 && LA1_41<=14)||(LA1_41>=17 && LA1_41<=23)||LA1_41==26||(LA1_41>=33 && LA1_41<=35)||(LA1_41>=38 && LA1_41<=40)||(LA1_41>=52 && LA1_41<=54)) ) {
+                            alt1=26;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 41, input);
+
+                            throw nvae;
+                        }
+                    }
+                    else if ( (LA1_15==RULE_ID) ) {
+                        int LA1_42 = input.LA(4);
+
+                        if ( (synpred27()) ) {
+                            alt1=27;
+                        }
+                        else if ( (synpred28()) ) {
+                            alt1=28;
+                        }
+                        else if ( (synpred30()) ) {
+                            alt1=30;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 42, input);
+
+                            throw nvae;
+                        }
+                    }
+                    else if ( (synpred29()) ) {
+                        alt1=29;
+                    }
+                    else if ( (synpred32()) ) {
+                        alt1=32;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 15, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
+                case 11:
+                    {
+                    int LA1_16 = input.LA(3);
+
+                    if ( (LA1_16==13) ) {
+                        int LA1_44 = input.LA(4);
+
+                        if ( (LA1_44==13) ) {
+                            int LA1_72 = input.LA(5);
+
+                            if ( (LA1_72==EOF||LA1_72==RULE_STRING||(LA1_72>=11 && LA1_72<=14)||(LA1_72>=17 && LA1_72<=23)||LA1_72==26||(LA1_72>=33 && LA1_72<=35)||(LA1_72>=38 && LA1_72<=40)||(LA1_72>=52 && LA1_72<=54)) ) {
+                                alt1=10;
+                            }
+                            else if ( (LA1_72==RULE_ID) ) {
+                                int LA1_87 = input.LA(6);
+
+                                if ( (synpred9()) ) {
+                                    alt1=9;
+                                }
+                                else if ( (synpred10()) ) {
+                                    alt1=10;
+                                }
+                                else {
+                                    if (backtracking>0) {failed=true; return current;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 87, input);
+
+                                    throw nvae;
+                                }
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 72, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else if ( (LA1_44==RULE_ID) ) {
+                            int LA1_73 = input.LA(5);
+
+                            if ( (synpred11()) ) {
+                                alt1=11;
+                            }
+                            else if ( (synpred12()) ) {
+                                alt1=12;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 73, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else if ( (synpred13()) ) {
+                            alt1=13;
+                        }
+                        else if ( (synpred14()) ) {
                             alt1=14;
                         }
                         else {
@@ -994,16 +1024,13 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             throw nvae;
                         }
                     }
-                    else if ( (LA1_18==RULE_ID) ) {
-                        alt1=15;
-                    }
-                    else if ( (LA1_18==38) ) {
+                    else if ( (LA1_16==38) ) {
                         switch ( input.LA(4) ) {
                         case 13:
                             {
-                            int LA1_70 = input.LA(5);
+                            int LA1_76 = input.LA(5);
 
-                            if ( (LA1_70==RULE_ID) ) {
+                            if ( (LA1_76==RULE_ID) ) {
                                 alt1=9;
                             }
                             else if ( (synpred10()) ) {
@@ -1015,7 +1042,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 70, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 76, input);
 
                                 throw nvae;
                             }
@@ -1040,14 +1067,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         case 38:
                         case 39:
                         case 40:
-                        case 41:
+                        case 52:
+                        case 53:
+                        case 54:
                             {
                             alt1=13;
                             }
                             break;
                         case RULE_ID:
                             {
-                            int LA1_72 = input.LA(5);
+                            int LA1_78 = input.LA(5);
 
                             if ( (synpred11()) ) {
                                 alt1=11;
@@ -1058,7 +1087,85 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 72, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 78, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        default:
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 45, input);
+
+                            throw nvae;
+                        }
+
+                    }
+                    else if ( (LA1_16==39) ) {
+                        switch ( input.LA(4) ) {
+                        case EOF:
+                        case RULE_STRING:
+                        case 11:
+                        case 12:
+                        case 14:
+                        case 17:
+                        case 18:
+                        case 19:
+                        case 20:
+                        case 21:
+                        case 22:
+                        case 23:
+                        case 26:
+                        case 33:
+                        case 34:
+                        case 35:
+                        case 38:
+                        case 39:
+                        case 40:
+                        case 52:
+                        case 53:
+                        case 54:
+                            {
+                            alt1=13;
+                            }
+                            break;
+                        case RULE_ID:
+                            {
+                            int LA1_78 = input.LA(5);
+
+                            if ( (synpred11()) ) {
+                                alt1=11;
+                            }
+                            else if ( (synpred13()) ) {
+                                alt1=13;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 78, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 13:
+                            {
+                            int LA1_76 = input.LA(5);
+
+                            if ( (LA1_76==RULE_ID) ) {
+                                alt1=9;
+                            }
+                            else if ( (synpred10()) ) {
+                                alt1=10;
+                            }
+                            else if ( (synpred13()) ) {
+                                alt1=13;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 76, input);
 
                                 throw nvae;
                             }
@@ -1073,7 +1180,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         }
 
                     }
-                    else if ( (LA1_18==39) ) {
+                    else if ( (LA1_16==40) ) {
                         switch ( input.LA(4) ) {
                         case EOF:
                         case RULE_STRING:
@@ -1094,14 +1201,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         case 38:
                         case 39:
                         case 40:
-                        case 41:
+                        case 52:
+                        case 53:
+                        case 54:
                             {
                             alt1=13;
                             }
                             break;
                         case RULE_ID:
                             {
-                            int LA1_72 = input.LA(5);
+                            int LA1_78 = input.LA(5);
 
                             if ( (synpred11()) ) {
                                 alt1=11;
@@ -1112,7 +1221,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 72, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 78, input);
 
                                 throw nvae;
                             }
@@ -1120,9 +1229,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             break;
                         case 13:
                             {
-                            int LA1_70 = input.LA(5);
+                            int LA1_76 = input.LA(5);
 
-                            if ( (LA1_70==RULE_ID) ) {
+                            if ( (LA1_76==RULE_ID) ) {
                                 alt1=9;
                             }
                             else if ( (synpred10()) ) {
@@ -1134,7 +1243,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 70, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 76, input);
 
                                 throw nvae;
                             }
@@ -1149,160 +1258,117 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         }
 
                     }
-                    else if ( (LA1_18==40) ) {
-                        switch ( input.LA(4) ) {
-                        case RULE_ID:
-                            {
-                            int LA1_72 = input.LA(5);
-
-                            if ( (synpred11()) ) {
-                                alt1=11;
-                            }
-                            else if ( (synpred13()) ) {
-                                alt1=13;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 72, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 13:
-                            {
-                            int LA1_70 = input.LA(5);
-
-                            if ( (LA1_70==RULE_ID) ) {
-                                alt1=9;
-                            }
-                            else if ( (synpred10()) ) {
-                                alt1=10;
-                            }
-                            else if ( (synpred13()) ) {
-                                alt1=13;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 70, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case EOF:
-                        case RULE_STRING:
-                        case 11:
-                        case 12:
-                        case 14:
-                        case 17:
-                        case 18:
-                        case 19:
-                        case 20:
-                        case 21:
-                        case 22:
-                        case 23:
-                        case 26:
-                        case 33:
-                        case 34:
-                        case 35:
-                        case 38:
-                        case 39:
-                        case 40:
-                        case 41:
-                            {
-                            alt1=13;
-                            }
-                            break;
-                        default:
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 48, input);
-
-                            throw nvae;
-                        }
-
-                    }
-                    else if ( (LA1_18==41) ) {
-                        switch ( input.LA(4) ) {
-                        case EOF:
-                        case RULE_STRING:
-                        case 11:
-                        case 12:
-                        case 14:
-                        case 17:
-                        case 18:
-                        case 19:
-                        case 20:
-                        case 21:
-                        case 22:
-                        case 23:
-                        case 26:
-                        case 33:
-                        case 34:
-                        case 35:
-                        case 38:
-                        case 39:
-                        case 40:
-                        case 41:
-                            {
-                            alt1=13;
-                            }
-                            break;
-                        case RULE_ID:
-                            {
-                            int LA1_72 = input.LA(5);
-
-                            if ( (synpred11()) ) {
-                                alt1=11;
-                            }
-                            else if ( (synpred13()) ) {
-                                alt1=13;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 72, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 13:
-                            {
-                            int LA1_70 = input.LA(5);
-
-                            if ( (LA1_70==RULE_ID) ) {
-                                alt1=9;
-                            }
-                            else if ( (synpred10()) ) {
-                                alt1=10;
-                            }
-                            else if ( (synpred13()) ) {
-                                alt1=13;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 70, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        default:
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 49, input);
-
-                            throw nvae;
-                        }
-
+                    else if ( (LA1_16==RULE_ID) ) {
+                        alt1=15;
                     }
                     else if ( (synpred16()) ) {
                         alt1=16;
+                    }
+                    else if ( (synpred32()) ) {
+                        alt1=32;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 16, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
+                case 38:
+                    {
+                    int LA1_17 = input.LA(3);
+
+                    if ( (LA1_17==RULE_ID) ) {
+                        alt1=27;
+                    }
+                    else if ( (LA1_17==13) ) {
+                        int LA1_41 = input.LA(4);
+
+                        if ( (LA1_41==RULE_ID) ) {
+                            int LA1_68 = input.LA(5);
+
+                            if ( (synpred25()) ) {
+                                alt1=25;
+                            }
+                            else if ( (synpred26()) ) {
+                                alt1=26;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 68, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else if ( (LA1_41==EOF||LA1_41==RULE_STRING||(LA1_41>=11 && LA1_41<=14)||(LA1_41>=17 && LA1_41<=23)||LA1_41==26||(LA1_41>=33 && LA1_41<=35)||(LA1_41>=38 && LA1_41<=40)||(LA1_41>=52 && LA1_41<=54)) ) {
+                            alt1=26;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 41, input);
+
+                            throw nvae;
+                        }
+                    }
+                    else if ( (synpred29()) ) {
+                        alt1=29;
+                    }
+                    else if ( (synpred32()) ) {
+                        alt1=32;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 17, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
+                case 39:
+                    {
+                    int LA1_18 = input.LA(3);
+
+                    if ( (LA1_18==13) ) {
+                        int LA1_41 = input.LA(4);
+
+                        if ( (LA1_41==RULE_ID) ) {
+                            int LA1_68 = input.LA(5);
+
+                            if ( (synpred25()) ) {
+                                alt1=25;
+                            }
+                            else if ( (synpred26()) ) {
+                                alt1=26;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 68, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else if ( (LA1_41==EOF||LA1_41==RULE_STRING||(LA1_41>=11 && LA1_41<=14)||(LA1_41>=17 && LA1_41<=23)||LA1_41==26||(LA1_41>=33 && LA1_41<=35)||(LA1_41>=38 && LA1_41<=40)||(LA1_41>=52 && LA1_41<=54)) ) {
+                            alt1=26;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 41, input);
+
+                            throw nvae;
+                        }
+                    }
+                    else if ( (LA1_18==RULE_ID) ) {
+                        alt1=27;
+                    }
+                    else if ( (synpred29()) ) {
+                        alt1=29;
                     }
                     else if ( (synpred32()) ) {
                         alt1=32;
@@ -1316,18 +1382,15 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     }
                     break;
-                case 38:
+                case 40:
                     {
                     int LA1_19 = input.LA(3);
 
-                    if ( (LA1_19==RULE_ID) ) {
-                        alt1=27;
-                    }
-                    else if ( (LA1_19==13) ) {
-                        int LA1_52 = input.LA(4);
+                    if ( (LA1_19==13) ) {
+                        int LA1_41 = input.LA(4);
 
-                        if ( (LA1_52==RULE_ID) ) {
-                            int LA1_73 = input.LA(5);
+                        if ( (LA1_41==RULE_ID) ) {
+                            int LA1_68 = input.LA(5);
 
                             if ( (synpred25()) ) {
                                 alt1=25;
@@ -1338,21 +1401,24 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 73, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 68, input);
 
                                 throw nvae;
                             }
                         }
-                        else if ( (LA1_52==EOF||LA1_52==RULE_STRING||(LA1_52>=11 && LA1_52<=14)||(LA1_52>=17 && LA1_52<=23)||LA1_52==26||(LA1_52>=33 && LA1_52<=35)||(LA1_52>=38 && LA1_52<=41)) ) {
+                        else if ( (LA1_41==EOF||LA1_41==RULE_STRING||(LA1_41>=11 && LA1_41<=14)||(LA1_41>=17 && LA1_41<=23)||LA1_41==26||(LA1_41>=33 && LA1_41<=35)||(LA1_41>=38 && LA1_41<=40)||(LA1_41>=52 && LA1_41<=54)) ) {
                             alt1=26;
                         }
                         else {
                             if (backtracking>0) {failed=true; return current;}
                             NoViableAltException nvae =
-                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 52, input);
+                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 41, input);
 
                             throw nvae;
                         }
+                    }
+                    else if ( (LA1_19==RULE_ID) ) {
+                        alt1=27;
                     }
                     else if ( (synpred29()) ) {
                         alt1=29;
@@ -1369,165 +1435,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     }
                     break;
-                case 39:
-                    {
-                    int LA1_20 = input.LA(3);
-
-                    if ( (LA1_20==13) ) {
-                        int LA1_52 = input.LA(4);
-
-                        if ( (LA1_52==RULE_ID) ) {
-                            int LA1_73 = input.LA(5);
-
-                            if ( (synpred25()) ) {
-                                alt1=25;
-                            }
-                            else if ( (synpred26()) ) {
-                                alt1=26;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 73, input);
-
-                                throw nvae;
-                            }
-                        }
-                        else if ( (LA1_52==EOF||LA1_52==RULE_STRING||(LA1_52>=11 && LA1_52<=14)||(LA1_52>=17 && LA1_52<=23)||LA1_52==26||(LA1_52>=33 && LA1_52<=35)||(LA1_52>=38 && LA1_52<=41)) ) {
-                            alt1=26;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 52, input);
-
-                            throw nvae;
-                        }
-                    }
-                    else if ( (LA1_20==RULE_ID) ) {
-                        alt1=27;
-                    }
-                    else if ( (synpred29()) ) {
-                        alt1=29;
-                    }
-                    else if ( (synpred32()) ) {
-                        alt1=32;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 20, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
-                case 40:
-                    {
-                    int LA1_21 = input.LA(3);
-
-                    if ( (LA1_21==RULE_ID) ) {
-                        alt1=27;
-                    }
-                    else if ( (LA1_21==13) ) {
-                        int LA1_52 = input.LA(4);
-
-                        if ( (LA1_52==RULE_ID) ) {
-                            int LA1_73 = input.LA(5);
-
-                            if ( (synpred25()) ) {
-                                alt1=25;
-                            }
-                            else if ( (synpred26()) ) {
-                                alt1=26;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 73, input);
-
-                                throw nvae;
-                            }
-                        }
-                        else if ( (LA1_52==EOF||LA1_52==RULE_STRING||(LA1_52>=11 && LA1_52<=14)||(LA1_52>=17 && LA1_52<=23)||LA1_52==26||(LA1_52>=33 && LA1_52<=35)||(LA1_52>=38 && LA1_52<=41)) ) {
-                            alt1=26;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 52, input);
-
-                            throw nvae;
-                        }
-                    }
-                    else if ( (synpred29()) ) {
-                        alt1=29;
-                    }
-                    else if ( (synpred32()) ) {
-                        alt1=32;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 21, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
-                case 41:
-                    {
-                    int LA1_22 = input.LA(3);
-
-                    if ( (LA1_22==RULE_ID) ) {
-                        alt1=27;
-                    }
-                    else if ( (LA1_22==13) ) {
-                        int LA1_52 = input.LA(4);
-
-                        if ( (LA1_52==RULE_ID) ) {
-                            int LA1_73 = input.LA(5);
-
-                            if ( (synpred25()) ) {
-                                alt1=25;
-                            }
-                            else if ( (synpred26()) ) {
-                                alt1=26;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 73, input);
-
-                                throw nvae;
-                            }
-                        }
-                        else if ( (LA1_52==EOF||LA1_52==RULE_STRING||(LA1_52>=11 && LA1_52<=14)||(LA1_52>=17 && LA1_52<=23)||LA1_52==26||(LA1_52>=33 && LA1_52<=35)||(LA1_52>=38 && LA1_52<=41)) ) {
-                            alt1=26;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 52, input);
-
-                            throw nvae;
-                        }
-                    }
-                    else if ( (synpred29()) ) {
-                        alt1=29;
-                    }
-                    else if ( (synpred32()) ) {
-                        alt1=32;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 22, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
                 case EOF:
                 case RULE_STRING:
                 case 12:
@@ -1543,13 +1450,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 case 33:
                 case 34:
                 case 35:
+                case 52:
+                case 53:
+                case 54:
                     {
                     alt1=32;
                     }
                     break;
                 case RULE_ID:
                     {
-                    int LA1_24 = input.LA(3);
+                    int LA1_21 = input.LA(3);
 
                     if ( (synpred31()) ) {
                         alt1=31;
@@ -1560,7 +1470,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 24, input);
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 21, input);
 
                         throw nvae;
                     }
@@ -1576,106 +1486,76 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                 }
                 break;
-            case 38:
+            case 13:
                 {
-                switch ( input.LA(2) ) {
-                case 13:
-                    {
-                    int LA1_25 = input.LA(3);
+                int LA1_3 = input.LA(2);
 
-                    if ( (LA1_25==RULE_ID) ) {
-                        alt1=33;
-                    }
-                    else if ( (synpred34()) ) {
-                        alt1=34;
-                    }
-                    else if ( (synpred36()) ) {
-                        alt1=36;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 25, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
-                case EOF:
-                case RULE_STRING:
-                case 11:
-                case 12:
-                case 14:
-                case 17:
-                case 18:
-                case 19:
-                case 20:
-                case 21:
-                case 22:
-                case 23:
-                case 26:
-                case 33:
-                case 34:
-                case 35:
-                case 38:
-                case 39:
-                case 40:
-                case 41:
-                    {
-                    alt1=36;
-                    }
-                    break;
-                case RULE_ID:
-                    {
-                    int LA1_27 = input.LA(3);
+                if ( (LA1_3==RULE_ID) ) {
+                    int LA1_22 = input.LA(3);
 
                     if ( (synpred35()) ) {
                         alt1=35;
                     }
-                    else if ( (synpred36()) ) {
-                        alt1=36;
+                    else if ( (synpred37()) ) {
+                        alt1=37;
                     }
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 27, input);
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 22, input);
 
                         throw nvae;
                     }
+                }
+                else if ( (LA1_3==13) ) {
+                    int LA1_23 = input.LA(3);
+
+                    if ( (LA1_23==RULE_ID) ) {
+                        int LA1_54 = input.LA(4);
+
+                        if ( (synpred33()) ) {
+                            alt1=33;
+                        }
+                        else if ( (synpred34()) ) {
+                            alt1=34;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 54, input);
+
+                            throw nvae;
+                        }
                     }
-                    break;
-                default:
+                    else if ( (LA1_23==EOF||LA1_23==RULE_STRING||(LA1_23>=11 && LA1_23<=14)||(LA1_23>=17 && LA1_23<=23)||LA1_23==26||(LA1_23>=33 && LA1_23<=35)||(LA1_23>=38 && LA1_23<=40)||(LA1_23>=52 && LA1_23<=54)) ) {
+                        alt1=34;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 23, input);
+
+                        throw nvae;
+                    }
+                }
+                else if ( (synpred36()) ) {
+                    alt1=36;
+                }
+                else if ( (synpred38()) ) {
+                    alt1=38;
+                }
+                else {
                     if (backtracking>0) {failed=true; return current;}
                     NoViableAltException nvae =
                         new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 3, input);
 
                     throw nvae;
                 }
-
                 }
                 break;
-            case 39:
+            case 38:
                 {
                 switch ( input.LA(2) ) {
-                case RULE_ID:
-                    {
-                    int LA1_27 = input.LA(3);
-
-                    if ( (synpred35()) ) {
-                        alt1=35;
-                    }
-                    else if ( (synpred36()) ) {
-                        alt1=36;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 27, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
                 case EOF:
                 case RULE_STRING:
                 case 11:
@@ -1695,16 +1575,37 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 case 38:
                 case 39:
                 case 40:
-                case 41:
+                case 52:
+                case 53:
+                case 54:
                     {
                     alt1=36;
                     }
                     break;
+                case RULE_ID:
+                    {
+                    int LA1_27 = input.LA(3);
+
+                    if ( (synpred35()) ) {
+                        alt1=35;
+                    }
+                    else if ( (synpred36()) ) {
+                        alt1=36;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 27, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
                 case 13:
                     {
-                    int LA1_25 = input.LA(3);
+                    int LA1_28 = input.LA(3);
 
-                    if ( (LA1_25==RULE_ID) ) {
+                    if ( (LA1_28==RULE_ID) ) {
                         alt1=33;
                     }
                     else if ( (synpred34()) ) {
@@ -1716,7 +1617,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 25, input);
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 28, input);
 
                         throw nvae;
                     }
@@ -1732,9 +1633,31 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                 }
                 break;
-            case 40:
+            case 39:
                 {
                 switch ( input.LA(2) ) {
+                case 13:
+                    {
+                    int LA1_28 = input.LA(3);
+
+                    if ( (LA1_28==RULE_ID) ) {
+                        alt1=33;
+                    }
+                    else if ( (synpred34()) ) {
+                        alt1=34;
+                    }
+                    else if ( (synpred36()) ) {
+                        alt1=36;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 28, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
                 case EOF:
                 case RULE_STRING:
                 case 11:
@@ -1754,7 +1677,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 case 38:
                 case 39:
                 case 40:
-                case 41:
+                case 52:
+                case 53:
+                case 54:
                     {
                     alt1=36;
                     }
@@ -1773,28 +1698,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
                             new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 27, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
-                case 13:
-                    {
-                    int LA1_25 = input.LA(3);
-
-                    if ( (LA1_25==RULE_ID) ) {
-                        alt1=33;
-                    }
-                    else if ( (synpred34()) ) {
-                        alt1=34;
-                    }
-                    else if ( (synpred36()) ) {
-                        alt1=36;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 25, input);
 
                         throw nvae;
                     }
@@ -1810,33 +1713,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                 }
                 break;
-            case 41:
+            case 40:
                 {
                 switch ( input.LA(2) ) {
-                case EOF:
-                case RULE_STRING:
-                case 11:
-                case 12:
-                case 14:
-                case 17:
-                case 18:
-                case 19:
-                case 20:
-                case 21:
-                case 22:
-                case 23:
-                case 26:
-                case 33:
-                case 34:
-                case 35:
-                case 38:
-                case 39:
-                case 40:
-                case 41:
-                    {
-                    alt1=36;
-                    }
-                    break;
                 case RULE_ID:
                     {
                     int LA1_27 = input.LA(3);
@@ -1856,11 +1735,37 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     }
                     break;
+                case EOF:
+                case RULE_STRING:
+                case 11:
+                case 12:
+                case 14:
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                case 21:
+                case 22:
+                case 23:
+                case 26:
+                case 33:
+                case 34:
+                case 35:
+                case 38:
+                case 39:
+                case 40:
+                case 52:
+                case 53:
+                case 54:
+                    {
+                    alt1=36;
+                    }
+                    break;
                 case 13:
                     {
-                    int LA1_25 = input.LA(3);
+                    int LA1_28 = input.LA(3);
 
-                    if ( (LA1_25==RULE_ID) ) {
+                    if ( (LA1_28==RULE_ID) ) {
                         alt1=33;
                     }
                     else if ( (synpred34()) ) {
@@ -1872,7 +1777,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 25, input);
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 28, input);
 
                         throw nvae;
                     }
@@ -1886,39 +1791,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     throw nvae;
                 }
 
-                }
-                break;
-            case 13:
-                {
-                int LA1_7 = input.LA(2);
-
-                if ( (LA1_7==RULE_ID) ) {
-                    int LA1_28 = input.LA(3);
-
-                    if ( (synpred37()) ) {
-                        alt1=37;
-                    }
-                    else if ( (synpred38()) ) {
-                        alt1=38;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 28, input);
-
-                        throw nvae;
-                    }
-                }
-                else if ( (LA1_7==EOF||LA1_7==RULE_STRING||(LA1_7>=11 && LA1_7<=14)||(LA1_7>=17 && LA1_7<=23)||LA1_7==26||(LA1_7>=33 && LA1_7<=35)||(LA1_7>=38 && LA1_7<=41)) ) {
-                    alt1=38;
-                }
-                else {
-                    if (backtracking>0) {failed=true; return current;}
-                    NoViableAltException nvae =
-                        new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= ruleFullStateID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= ruleFullStateID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= ruleFullStateID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= ruleFullStateID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= ruleFullStateID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= ruleFullStateID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= ruleFullStateID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= ruleFullStateID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= ruleFullStateID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= ruleFullStateID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= ruleFullStateID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= ruleFullStateID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= ruleFullStateID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= ruleFullStateID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= ruleFullStateID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= ruleFullStateID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= ruleFullStateID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= ruleFullStateID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= ruleFullStateID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= ruleFullStateID ) ) | 'state' | (lv_id_108= ruleFullStateID ) )", 1, 7, input);
-
-                    throw nvae;
-                }
                 }
                 break;
             case RULE_ID:
@@ -5327,16 +5199,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2169:3: ( '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' (lv_outgoingTransitions_130= ruleTransition )* )?
-            int alt9=2;
-            int LA9_0 = input.LA(1);
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2169:3: ( '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' )?
+            int alt8=2;
+            int LA8_0 = input.LA(1);
 
-            if ( (LA9_0==17) ) {
-                alt9=1;
+            if ( (LA8_0==17) ) {
+                alt8=1;
             }
-            switch (alt9) {
+            switch (alt8) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2169:4: '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}' (lv_outgoingTransitions_130= ruleTransition )*
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2169:4: '{' ( ( 'onentry' (lv_entryActions_118= ruleAction ) ) | ( 'oninner' (lv_innerActions_120= ruleAction ) ) | ( 'onexit' (lv_exitActions_122= ruleAction ) ) | ( 'suspension' (lv_suspensionTrigger_124= ruleAction ) ) | (lv_signals_125= ruleSignal ) | ( ( (lv_regions_126= ruleRegion ) '||' )* (lv_regions_128= ruleRegion ) ) )+ '}'
                     {
                     match(input,17,FOLLOW_17_in_ruleState3991); if (failed) return current;
                     if ( backtracking==0 ) {
@@ -5372,10 +5244,68 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             break;
                         case 33:
                             {
-                            int LA7_6 = input.LA(2);
+                            switch ( input.LA(2) ) {
+                            case 34:
+                                {
+                                int LA7_7 = input.LA(3);
 
-                            if ( (LA7_6==RULE_ID) ) {
-                                int LA7_10 = input.LA(3);
+                                if ( (LA7_7==35) ) {
+                                    int LA7_8 = input.LA(4);
+
+                                    if ( (LA7_8==RULE_ID) ) {
+                                        int LA7_11 = input.LA(5);
+
+                                        if ( (synpred47()) ) {
+                                            alt7=5;
+                                        }
+                                        else if ( (synpred49()) ) {
+                                            alt7=6;
+                                        }
+
+
+                                    }
+
+
+                                }
+                                else if ( (LA7_7==RULE_ID) ) {
+                                    int LA7_11 = input.LA(4);
+
+                                    if ( (synpred47()) ) {
+                                        alt7=5;
+                                    }
+                                    else if ( (synpred49()) ) {
+                                        alt7=6;
+                                    }
+
+
+                                }
+
+
+                                }
+                                break;
+                            case 35:
+                                {
+                                int LA7_8 = input.LA(3);
+
+                                if ( (LA7_8==RULE_ID) ) {
+                                    int LA7_11 = input.LA(4);
+
+                                    if ( (synpred47()) ) {
+                                        alt7=5;
+                                    }
+                                    else if ( (synpred49()) ) {
+                                        alt7=6;
+                                    }
+
+
+                                }
+
+
+                                }
+                                break;
+                            case RULE_ID:
+                                {
+                                int LA7_11 = input.LA(3);
 
                                 if ( (synpred47()) ) {
                                     alt7=5;
@@ -5385,8 +5315,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                                 }
 
 
-                            }
+                                }
+                                break;
 
+                            }
 
                             }
                             break;
@@ -5394,8 +5326,26 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             {
                             int LA7_7 = input.LA(2);
 
-                            if ( (LA7_7==RULE_ID) ) {
-                                int LA7_10 = input.LA(3);
+                            if ( (LA7_7==35) ) {
+                                int LA7_8 = input.LA(3);
+
+                                if ( (LA7_8==RULE_ID) ) {
+                                    int LA7_11 = input.LA(4);
+
+                                    if ( (synpred47()) ) {
+                                        alt7=5;
+                                    }
+                                    else if ( (synpred49()) ) {
+                                        alt7=6;
+                                    }
+
+
+                                }
+
+
+                            }
+                            else if ( (LA7_7==RULE_ID) ) {
+                                int LA7_11 = input.LA(3);
 
                                 if ( (synpred47()) ) {
                                     alt7=5;
@@ -5415,7 +5365,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             int LA7_8 = input.LA(2);
 
                             if ( (LA7_8==RULE_ID) ) {
-                                int LA7_10 = input.LA(3);
+                                int LA7_11 = input.LA(3);
 
                                 if ( (synpred47()) ) {
                                     alt7=5;
@@ -5430,8 +5380,21 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                             }
                             break;
-                        case RULE_STRING:
                         case RULE_ID:
+                            {
+                            int LA7_9 = input.LA(2);
+
+                            if ( (synpred47()) ) {
+                                alt7=5;
+                            }
+                            else if ( (synpred49()) ) {
+                                alt7=6;
+                            }
+
+
+                            }
+                            break;
+                        case RULE_STRING:
                         case 11:
                         case 12:
                         case 13:
@@ -5439,7 +5402,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         case 38:
                         case 39:
                         case 40:
-                        case 41:
                             {
                             alt7=6;
                             }
@@ -5706,18 +5668,69 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	                    break;
                     	                case 33:
                     	                    {
-                    	                    int LA6_4 = input.LA(4);
+                    	                    switch ( input.LA(4) ) {
+                    	                    case 34:
+                    	                        {
+                    	                        int LA6_5 = input.LA(5);
 
-                    	                    if ( (LA6_4==RULE_ID) ) {
-                    	                        int LA6_16 = input.LA(5);
+                    	                        if ( (LA6_5==35) ) {
+                    	                            int LA6_6 = input.LA(6);
+
+                    	                            if ( (LA6_6==RULE_ID) ) {
+                    	                                int LA6_15 = input.LA(7);
+
+                    	                                if ( (synpred48()) ) {
+                    	                                    alt6=1;
+                    	                                }
+
+
+                    	                            }
+
+
+                    	                        }
+                    	                        else if ( (LA6_5==RULE_ID) ) {
+                    	                            int LA6_15 = input.LA(6);
+
+                    	                            if ( (synpred48()) ) {
+                    	                                alt6=1;
+                    	                            }
+
+
+                    	                        }
+
+
+                    	                        }
+                    	                        break;
+                    	                    case 35:
+                    	                        {
+                    	                        int LA6_6 = input.LA(5);
+
+                    	                        if ( (LA6_6==RULE_ID) ) {
+                    	                            int LA6_15 = input.LA(6);
+
+                    	                            if ( (synpred48()) ) {
+                    	                                alt6=1;
+                    	                            }
+
+
+                    	                        }
+
+
+                    	                        }
+                    	                        break;
+                    	                    case RULE_ID:
+                    	                        {
+                    	                        int LA6_15 = input.LA(5);
 
                     	                        if ( (synpred48()) ) {
                     	                            alt6=1;
                     	                        }
 
 
-                    	                    }
+                    	                        }
+                    	                        break;
 
+                    	                    }
 
                     	                    }
                     	                    break;
@@ -5725,8 +5738,23 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	                    {
                     	                    int LA6_5 = input.LA(4);
 
-                    	                    if ( (LA6_5==RULE_ID) ) {
-                    	                        int LA6_16 = input.LA(5);
+                    	                    if ( (LA6_5==35) ) {
+                    	                        int LA6_6 = input.LA(5);
+
+                    	                        if ( (LA6_6==RULE_ID) ) {
+                    	                            int LA6_15 = input.LA(6);
+
+                    	                            if ( (synpred48()) ) {
+                    	                                alt6=1;
+                    	                            }
+
+
+                    	                        }
+
+
+                    	                    }
+                    	                    else if ( (LA6_5==RULE_ID) ) {
+                    	                        int LA6_15 = input.LA(5);
 
                     	                        if ( (synpred48()) ) {
                     	                            alt6=1;
@@ -5743,7 +5771,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	                    int LA6_6 = input.LA(4);
 
                     	                    if ( (LA6_6==RULE_ID) ) {
-                    	                        int LA6_16 = input.LA(5);
+                    	                        int LA6_15 = input.LA(5);
 
                     	                        if ( (synpred48()) ) {
                     	                            alt6=1;
@@ -5777,7 +5805,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	                    }
                     	                    break;
-                    	                case 38:
+                    	                case 13:
                     	                    {
                     	                    int LA6_9 = input.LA(4);
 
@@ -5788,7 +5816,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	                    }
                     	                    break;
-                    	                case 39:
+                    	                case 38:
                     	                    {
                     	                    int LA6_10 = input.LA(4);
 
@@ -5799,7 +5827,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	                    }
                     	                    break;
-                    	                case 40:
+                    	                case 39:
                     	                    {
                     	                    int LA6_11 = input.LA(4);
 
@@ -5810,20 +5838,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	                    }
                     	                    break;
-                    	                case 41:
+                    	                case 40:
                     	                    {
                     	                    int LA6_12 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case 13:
-                    	                    {
-                    	                    int LA6_13 = input.LA(4);
 
                     	                    if ( (synpred48()) ) {
                     	                        alt6=1;
@@ -5850,18 +5867,69 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	                break;
                     	            case 33:
                     	                {
-                    	                int LA6_4 = input.LA(3);
+                    	                switch ( input.LA(3) ) {
+                    	                case 34:
+                    	                    {
+                    	                    int LA6_5 = input.LA(4);
 
-                    	                if ( (LA6_4==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
+                    	                    if ( (LA6_5==35) ) {
+                    	                        int LA6_6 = input.LA(5);
+
+                    	                        if ( (LA6_6==RULE_ID) ) {
+                    	                            int LA6_15 = input.LA(6);
+
+                    	                            if ( (synpred48()) ) {
+                    	                                alt6=1;
+                    	                            }
+
+
+                    	                        }
+
+
+                    	                    }
+                    	                    else if ( (LA6_5==RULE_ID) ) {
+                    	                        int LA6_15 = input.LA(5);
+
+                    	                        if ( (synpred48()) ) {
+                    	                            alt6=1;
+                    	                        }
+
+
+                    	                    }
+
+
+                    	                    }
+                    	                    break;
+                    	                case 35:
+                    	                    {
+                    	                    int LA6_6 = input.LA(4);
+
+                    	                    if ( (LA6_6==RULE_ID) ) {
+                    	                        int LA6_15 = input.LA(5);
+
+                    	                        if ( (synpred48()) ) {
+                    	                            alt6=1;
+                    	                        }
+
+
+                    	                    }
+
+
+                    	                    }
+                    	                    break;
+                    	                case RULE_ID:
+                    	                    {
+                    	                    int LA6_15 = input.LA(4);
 
                     	                    if ( (synpred48()) ) {
                     	                        alt6=1;
                     	                    }
 
 
-                    	                }
+                    	                    }
+                    	                    break;
 
+                    	                }
 
                     	                }
                     	                break;
@@ -5869,8 +5937,23 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	                {
                     	                int LA6_5 = input.LA(3);
 
-                    	                if ( (LA6_5==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
+                    	                if ( (LA6_5==35) ) {
+                    	                    int LA6_6 = input.LA(4);
+
+                    	                    if ( (LA6_6==RULE_ID) ) {
+                    	                        int LA6_15 = input.LA(5);
+
+                    	                        if ( (synpred48()) ) {
+                    	                            alt6=1;
+                    	                        }
+
+
+                    	                    }
+
+
+                    	                }
+                    	                else if ( (LA6_5==RULE_ID) ) {
+                    	                    int LA6_15 = input.LA(4);
 
                     	                    if ( (synpred48()) ) {
                     	                        alt6=1;
@@ -5887,7 +5970,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	                int LA6_6 = input.LA(3);
 
                     	                if ( (LA6_6==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
+                    	                    int LA6_15 = input.LA(4);
 
                     	                    if ( (synpred48()) ) {
                     	                        alt6=1;
@@ -5921,7 +6004,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	                }
                     	                break;
-                    	            case 38:
+                    	            case 13:
                     	                {
                     	                int LA6_9 = input.LA(3);
 
@@ -5932,7 +6015,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	                }
                     	                break;
-                    	            case 39:
+                    	            case 38:
                     	                {
                     	                int LA6_10 = input.LA(3);
 
@@ -5943,7 +6026,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	                }
                     	                break;
-                    	            case 40:
+                    	            case 39:
                     	                {
                     	                int LA6_11 = input.LA(3);
 
@@ -5954,20 +6037,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	                }
                     	                break;
-                    	            case 41:
+                    	            case 40:
                     	                {
                     	                int LA6_12 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 13:
-                    	                {
-                    	                int LA6_13 = input.LA(3);
 
                     	                if ( (synpred48()) ) {
                     	                    alt6=1;
@@ -5997,18 +6069,69 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	                break;
                     	            case 33:
                     	                {
-                    	                int LA6_4 = input.LA(3);
+                    	                switch ( input.LA(3) ) {
+                    	                case 34:
+                    	                    {
+                    	                    int LA6_5 = input.LA(4);
 
-                    	                if ( (LA6_4==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
+                    	                    if ( (LA6_5==35) ) {
+                    	                        int LA6_6 = input.LA(5);
+
+                    	                        if ( (LA6_6==RULE_ID) ) {
+                    	                            int LA6_15 = input.LA(6);
+
+                    	                            if ( (synpred48()) ) {
+                    	                                alt6=1;
+                    	                            }
+
+
+                    	                        }
+
+
+                    	                    }
+                    	                    else if ( (LA6_5==RULE_ID) ) {
+                    	                        int LA6_15 = input.LA(5);
+
+                    	                        if ( (synpred48()) ) {
+                    	                            alt6=1;
+                    	                        }
+
+
+                    	                    }
+
+
+                    	                    }
+                    	                    break;
+                    	                case 35:
+                    	                    {
+                    	                    int LA6_6 = input.LA(4);
+
+                    	                    if ( (LA6_6==RULE_ID) ) {
+                    	                        int LA6_15 = input.LA(5);
+
+                    	                        if ( (synpred48()) ) {
+                    	                            alt6=1;
+                    	                        }
+
+
+                    	                    }
+
+
+                    	                    }
+                    	                    break;
+                    	                case RULE_ID:
+                    	                    {
+                    	                    int LA6_15 = input.LA(4);
 
                     	                    if ( (synpred48()) ) {
                     	                        alt6=1;
                     	                    }
 
 
-                    	                }
+                    	                    }
+                    	                    break;
 
+                    	                }
 
                     	                }
                     	                break;
@@ -6016,8 +6139,23 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	                {
                     	                int LA6_5 = input.LA(3);
 
-                    	                if ( (LA6_5==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
+                    	                if ( (LA6_5==35) ) {
+                    	                    int LA6_6 = input.LA(4);
+
+                    	                    if ( (LA6_6==RULE_ID) ) {
+                    	                        int LA6_15 = input.LA(5);
+
+                    	                        if ( (synpred48()) ) {
+                    	                            alt6=1;
+                    	                        }
+
+
+                    	                    }
+
+
+                    	                }
+                    	                else if ( (LA6_5==RULE_ID) ) {
+                    	                    int LA6_15 = input.LA(4);
 
                     	                    if ( (synpred48()) ) {
                     	                        alt6=1;
@@ -6034,7 +6172,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	                int LA6_6 = input.LA(3);
 
                     	                if ( (LA6_6==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
+                    	                    int LA6_15 = input.LA(4);
 
                     	                    if ( (synpred48()) ) {
                     	                        alt6=1;
@@ -6068,7 +6206,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	                }
                     	                break;
-                    	            case 38:
+                    	            case 13:
                     	                {
                     	                int LA6_9 = input.LA(3);
 
@@ -6079,7 +6217,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	                }
                     	                break;
-                    	            case 39:
+                    	            case 38:
                     	                {
                     	                int LA6_10 = input.LA(3);
 
@@ -6090,7 +6228,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	                }
                     	                break;
-                    	            case 40:
+                    	            case 39:
                     	                {
                     	                int LA6_11 = input.LA(3);
 
@@ -6101,20 +6239,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	                }
                     	                break;
-                    	            case 41:
+                    	            case 40:
                     	                {
                     	                int LA6_12 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 13:
-                    	                {
-                    	                int LA6_13 = input.LA(3);
 
                     	                if ( (synpred48()) ) {
                     	                    alt6=1;
@@ -6141,18 +6268,69 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	            break;
                     	        case 33:
                     	            {
-                    	            int LA6_4 = input.LA(2);
+                    	            switch ( input.LA(2) ) {
+                    	            case 34:
+                    	                {
+                    	                int LA6_5 = input.LA(3);
 
-                    	            if ( (LA6_4==RULE_ID) ) {
-                    	                int LA6_16 = input.LA(3);
+                    	                if ( (LA6_5==35) ) {
+                    	                    int LA6_6 = input.LA(4);
+
+                    	                    if ( (LA6_6==RULE_ID) ) {
+                    	                        int LA6_15 = input.LA(5);
+
+                    	                        if ( (synpred48()) ) {
+                    	                            alt6=1;
+                    	                        }
+
+
+                    	                    }
+
+
+                    	                }
+                    	                else if ( (LA6_5==RULE_ID) ) {
+                    	                    int LA6_15 = input.LA(4);
+
+                    	                    if ( (synpred48()) ) {
+                    	                        alt6=1;
+                    	                    }
+
+
+                    	                }
+
+
+                    	                }
+                    	                break;
+                    	            case 35:
+                    	                {
+                    	                int LA6_6 = input.LA(3);
+
+                    	                if ( (LA6_6==RULE_ID) ) {
+                    	                    int LA6_15 = input.LA(4);
+
+                    	                    if ( (synpred48()) ) {
+                    	                        alt6=1;
+                    	                    }
+
+
+                    	                }
+
+
+                    	                }
+                    	                break;
+                    	            case RULE_ID:
+                    	                {
+                    	                int LA6_15 = input.LA(3);
 
                     	                if ( (synpred48()) ) {
                     	                    alt6=1;
                     	                }
 
 
-                    	            }
+                    	                }
+                    	                break;
 
+                    	            }
 
                     	            }
                     	            break;
@@ -6160,8 +6338,23 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	            {
                     	            int LA6_5 = input.LA(2);
 
-                    	            if ( (LA6_5==RULE_ID) ) {
-                    	                int LA6_16 = input.LA(3);
+                    	            if ( (LA6_5==35) ) {
+                    	                int LA6_6 = input.LA(3);
+
+                    	                if ( (LA6_6==RULE_ID) ) {
+                    	                    int LA6_15 = input.LA(4);
+
+                    	                    if ( (synpred48()) ) {
+                    	                        alt6=1;
+                    	                    }
+
+
+                    	                }
+
+
+                    	            }
+                    	            else if ( (LA6_5==RULE_ID) ) {
+                    	                int LA6_15 = input.LA(3);
 
                     	                if ( (synpred48()) ) {
                     	                    alt6=1;
@@ -6178,7 +6371,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	            int LA6_6 = input.LA(2);
 
                     	            if ( (LA6_6==RULE_ID) ) {
-                    	                int LA6_16 = input.LA(3);
+                    	                int LA6_15 = input.LA(3);
 
                     	                if ( (synpred48()) ) {
                     	                    alt6=1;
@@ -6212,7 +6405,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	            }
                     	            break;
-                    	        case 38:
+                    	        case 13:
                     	            {
                     	            int LA6_9 = input.LA(2);
 
@@ -6223,7 +6416,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	            }
                     	            break;
-                    	        case 39:
+                    	        case 38:
                     	            {
                     	            int LA6_10 = input.LA(2);
 
@@ -6234,7 +6427,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	            }
                     	            break;
-                    	        case 40:
+                    	        case 39:
                     	            {
                     	            int LA6_11 = input.LA(2);
 
@@ -6245,20 +6438,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     	            }
                     	            break;
-                    	        case 41:
+                    	        case 40:
                     	            {
                     	            int LA6_12 = input.LA(2);
-
-                    	            if ( (synpred48()) ) {
-                    	                alt6=1;
-                    	            }
-
-
-                    	            }
-                    	            break;
-                    	        case 13:
-                    	            {
-                    	            int LA6_13 = input.LA(2);
 
                     	            if ( (synpred48()) ) {
                     	                alt6=1;
@@ -6372,68 +6554,68 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                               createLeafNode(grammarAccess.getStateAccess().getRightCurlyBracketKeyword_4_2(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2349:1: (lv_outgoingTransitions_130= ruleTransition )*
-                    loop8:
-                    do {
-                        int alt8=2;
-                        int LA8_0 = input.LA(1);
-
-                        if ( (LA8_0==RULE_ID) ) {
-                            int LA8_2 = input.LA(2);
-
-                            if ( ((LA8_2>=53 && LA8_2<=55)) ) {
-                                alt8=1;
-                            }
-
-
-                        }
-                        else if ( ((LA8_0>=53 && LA8_0<=55)) ) {
-                            alt8=1;
-                        }
-
-
-                        switch (alt8) {
-                    	case 1 :
-                    	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2352:6: lv_outgoingTransitions_130= ruleTransition
-                    	    {
-                    	    if ( backtracking==0 ) {
-                    	       
-                    	      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getOutgoingTransitionsTransitionParserRuleCall_4_3_0(), currentNode); 
-                    	      	    
-                    	    }
-                    	    pushFollow(FOLLOW_ruleTransition_in_ruleState4391);
-                    	    lv_outgoingTransitions_130=ruleTransition();
-                    	    _fsp--;
-                    	    if (failed) return current;
-                    	    if ( backtracking==0 ) {
-
-                    	      	        if (current==null) {
-                    	      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-                    	      	            associateNodeWithAstElement(currentNode.getParent(), current);
-                    	      	        }
-                    	      	        
-                    	      	        try {
-                    	      	       		add(current, "outgoingTransitions", lv_outgoingTransitions_130, "Transition", currentNode);
-                    	      	        } catch (ValueConverterException vce) {
-                    	      				handleValueConverterException(vce);
-                    	      	        }
-                    	      	        currentNode = currentNode.getParent();
-                    	      	    
-                    	    }
-
-                    	    }
-                    	    break;
-
-                    	default :
-                    	    break loop8;
-                        }
-                    } while (true);
-
 
                     }
                     break;
 
             }
+
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2349:3: (lv_outgoingTransitions_130= ruleTransition )*
+            loop9:
+            do {
+                int alt9=2;
+                int LA9_0 = input.LA(1);
+
+                if ( (LA9_0==RULE_ID) ) {
+                    int LA9_2 = input.LA(2);
+
+                    if ( (synpred51()) ) {
+                        alt9=1;
+                    }
+
+
+                }
+                else if ( ((LA9_0>=52 && LA9_0<=54)) ) {
+                    alt9=1;
+                }
+
+
+                switch (alt9) {
+            	case 1 :
+            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2352:6: lv_outgoingTransitions_130= ruleTransition
+            	    {
+            	    if ( backtracking==0 ) {
+            	       
+            	      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getOutgoingTransitionsTransitionParserRuleCall_5_0(), currentNode); 
+            	      	    
+            	    }
+            	    pushFollow(FOLLOW_ruleTransition_in_ruleState4393);
+            	    lv_outgoingTransitions_130=ruleTransition();
+            	    _fsp--;
+            	    if (failed) return current;
+            	    if ( backtracking==0 ) {
+
+            	      	        if (current==null) {
+            	      	            current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
+            	      	            associateNodeWithAstElement(currentNode.getParent(), current);
+            	      	        }
+            	      	        
+            	      	        try {
+            	      	       		add(current, "outgoingTransitions", lv_outgoingTransitions_130, "Transition", currentNode);
+            	      	        } catch (ValueConverterException vce) {
+            	      				handleValueConverterException(vce);
+            	      	        }
+            	      	        currentNode = currentNode.getParent();
+            	      	    
+            	    }
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop9;
+                }
+            } while (true);
 
 
             }
@@ -6902,6 +7084,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     if ( (synpred55()) ) {
                         alt13=1;
                     }
+                    else if ( (synpred56()) ) {
+                        alt13=2;
+                    }
                     else if ( (synpred57()) ) {
                         alt13=3;
                     }
@@ -6931,7 +7116,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
                     break;
-                case 38:
+                case 13:
                     {
                     int LA13_8 = input.LA(2);
 
@@ -6942,7 +7127,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
                     break;
-                case 39:
+                case 38:
                     {
                     int LA13_9 = input.LA(2);
 
@@ -6953,7 +7138,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
                     break;
-                case 40:
+                case 39:
                     {
                     int LA13_10 = input.LA(2);
 
@@ -6964,20 +7149,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
                     break;
-                case 41:
+                case 40:
                     {
                     int LA13_11 = input.LA(2);
-
-                    if ( (synpred57()) ) {
-                        alt13=3;
-                    }
-
-
-                    }
-                    break;
-                case 13:
-                    {
-                    int LA13_12 = input.LA(2);
 
                     if ( (synpred57()) ) {
                         alt13=3;
@@ -7196,7 +7370,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             if ( (LA16_0==RULE_STRING||LA16_0==RULE_INT||LA16_0==27) ) {
                 alt16=1;
             }
-            else if ( (LA16_0==RULE_ID||(LA16_0>=53 && LA16_0<=55)) ) {
+            else if ( (LA16_0==RULE_ID||(LA16_0>=52 && LA16_0<=54)) ) {
                 alt16=2;
             }
             else {
@@ -7793,7 +7967,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     int alt21=2;
                     int LA21_0 = input.LA(1);
 
-                    if ( ((LA21_0>=47 && LA21_0<=52)) ) {
+                    if ( ((LA21_0>=46 && LA21_0<=51)) ) {
                         alt21=1;
                     }
                     else if ( (LA21_0==RULE_STRING) ) {
@@ -7949,7 +8123,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleSignal
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2935:1: ruleSignal returns [EObject current=null] : ( ( (lv_isLocal_0= 'local' ) | (lv_isInput_1= 'input' ) | (lv_isOutput_2= 'output' ) ) (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2935:1: ruleSignal returns [EObject current=null] : ( (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? ) ;
     public final EObject ruleSignal() throws RecognitionException {
         EObject current = null;
 
@@ -7971,50 +8145,28 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2940:6: ( ( ( (lv_isLocal_0= 'local' ) | (lv_isInput_1= 'input' ) | (lv_isOutput_2= 'output' ) ) (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2941:1: ( ( (lv_isLocal_0= 'local' ) | (lv_isInput_1= 'input' ) | (lv_isOutput_2= 'output' ) ) (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2940:6: ( ( (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2941:1: ( (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2941:1: ( ( (lv_isLocal_0= 'local' ) | (lv_isInput_1= 'input' ) | (lv_isOutput_2= 'output' ) ) (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2941:2: ( (lv_isLocal_0= 'local' ) | (lv_isInput_1= 'input' ) | (lv_isOutput_2= 'output' ) ) (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2941:1: ( (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2941:2: (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )?
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2941:2: ( (lv_isLocal_0= 'local' ) | (lv_isInput_1= 'input' ) | (lv_isOutput_2= 'output' ) )
-            int alt23=3;
-            switch ( input.LA(1) ) {
-            case 33:
-                {
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2941:2: (lv_isLocal_0= 'local' )?
+            int alt23=2;
+            int LA23_0 = input.LA(1);
+
+            if ( (LA23_0==33) ) {
                 alt23=1;
-                }
-                break;
-            case 34:
-                {
-                alt23=2;
-                }
-                break;
-            case 35:
-                {
-                alt23=3;
-                }
-                break;
-            default:
-                if (backtracking>0) {failed=true; return current;}
-                NoViableAltException nvae =
-                    new NoViableAltException("2941:2: ( (lv_isLocal_0= 'local' ) | (lv_isInput_1= 'input' ) | (lv_isOutput_2= 'output' ) )", 23, 0, input);
-
-                throw nvae;
             }
-
             switch (alt23) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2941:3: (lv_isLocal_0= 'local' )
-                    {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2941:3: (lv_isLocal_0= 'local' )
                     // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2943:6: lv_isLocal_0= 'local'
                     {
                     lv_isLocal_0=(Token)input.LT(1);
-                    match(input,33,FOLLOW_33_in_ruleSignal5673); if (failed) return current;
+                    match(input,33,FOLLOW_33_in_ruleSignal5672); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getSignalAccess().getIsLocalLocalKeyword_0_0_0(), "isLocal"); 
+                              createLeafNode(grammarAccess.getSignalAccess().getIsLocalLocalKeyword_0_0(), "isLocal"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -8033,21 +8185,26 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
 
                     }
-
-
-                    }
                     break;
-                case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2963:6: (lv_isInput_1= 'input' )
-                    {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2963:6: (lv_isInput_1= 'input' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2965:6: lv_isInput_1= 'input'
+
+            }
+
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2962:3: (lv_isInput_1= 'input' )?
+            int alt24=2;
+            int LA24_0 = input.LA(1);
+
+            if ( (LA24_0==34) ) {
+                alt24=1;
+            }
+            switch (alt24) {
+                case 1 :
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2964:6: lv_isInput_1= 'input'
                     {
                     lv_isInput_1=(Token)input.LT(1);
-                    match(input,34,FOLLOW_34_in_ruleSignal5713); if (failed) return current;
+                    match(input,34,FOLLOW_34_in_ruleSignal5707); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getSignalAccess().getIsInputInputKeyword_0_1_0(), "isInput"); 
+                              createLeafNode(grammarAccess.getSignalAccess().getIsInputInputKeyword_1_0(), "isInput"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -8066,21 +8223,26 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
 
                     }
-
-
-                    }
                     break;
-                case 3 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2985:6: (lv_isOutput_2= 'output' )
-                    {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2985:6: (lv_isOutput_2= 'output' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2987:6: lv_isOutput_2= 'output'
+
+            }
+
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2983:3: (lv_isOutput_2= 'output' )?
+            int alt25=2;
+            int LA25_0 = input.LA(1);
+
+            if ( (LA25_0==35) ) {
+                alt25=1;
+            }
+            switch (alt25) {
+                case 1 :
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2985:6: lv_isOutput_2= 'output'
                     {
                     lv_isOutput_2=(Token)input.LT(1);
-                    match(input,35,FOLLOW_35_in_ruleSignal5753); if (failed) return current;
+                    match(input,35,FOLLOW_35_in_ruleSignal5742); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getSignalAccess().getIsOutputOutputKeyword_0_2_0(), "isOutput"); 
+                              createLeafNode(grammarAccess.getSignalAccess().getIsOutputOutputKeyword_2_0(), "isOutput"); 
                           
                     }
                     if ( backtracking==0 ) {
@@ -8099,21 +8261,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
 
                     }
-
-
-                    }
                     break;
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3006:3: (lv_name_3= RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3008:6: lv_name_3= RULE_ID
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3004:3: (lv_name_3= RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3006:6: lv_name_3= RULE_ID
             {
             lv_name_3=(Token)input.LT(1);
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleSignal5789); if (failed) return current;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleSignal5778); if (failed) return current;
             if ( backtracking==0 ) {
 
-              		createLeafNode(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
+              		createLeafNode(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_3_0(), "name"); 
               	
             }
             if ( backtracking==0 ) {
@@ -8133,31 +8292,31 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3026:2: ( ':= ' (lv_initialValue_5= RULE_INT ) )?
-            int alt24=2;
-            int LA24_0 = input.LA(1);
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3024:2: ( ':= ' (lv_initialValue_5= RULE_INT ) )?
+            int alt26=2;
+            int LA26_0 = input.LA(1);
 
-            if ( (LA24_0==31) ) {
-                alt24=1;
+            if ( (LA26_0==31) ) {
+                alt26=1;
             }
-            switch (alt24) {
+            switch (alt26) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3026:3: ':= ' (lv_initialValue_5= RULE_INT )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3024:3: ':= ' (lv_initialValue_5= RULE_INT )
                     {
-                    match(input,31,FOLLOW_31_in_ruleSignal5807); if (failed) return current;
+                    match(input,31,FOLLOW_31_in_ruleSignal5796); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getSignalAccess().getColonEqualsSignSpaceKeyword_2_0(), null); 
+                              createLeafNode(grammarAccess.getSignalAccess().getColonEqualsSignSpaceKeyword_4_0(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3030:1: (lv_initialValue_5= RULE_INT )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3032:6: lv_initialValue_5= RULE_INT
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3028:1: (lv_initialValue_5= RULE_INT )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3030:6: lv_initialValue_5= RULE_INT
                     {
                     lv_initialValue_5=(Token)input.LT(1);
-                    match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleSignal5829); if (failed) return current;
+                    match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleSignal5818); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                      		createLeafNode(grammarAccess.getSignalAccess().getInitialValueINTTerminalRuleCall_2_1_0(), "initialValue"); 
+                      		createLeafNode(grammarAccess.getSignalAccess().getInitialValueINTTerminalRuleCall_4_1_0(), "initialValue"); 
                       	
                     }
                     if ( backtracking==0 ) {
@@ -8183,63 +8342,63 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3050:4: ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )?
-            int alt28=3;
-            int LA28_0 = input.LA(1);
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3048:4: ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )?
+            int alt30=3;
+            int LA30_0 = input.LA(1);
 
-            if ( (LA28_0==32) ) {
-                int LA28_1 = input.LA(2);
+            if ( (LA30_0==32) ) {
+                int LA30_1 = input.LA(2);
 
-                if ( (LA28_1==36) ) {
-                    alt28=2;
+                if ( (LA30_1==36) ) {
+                    alt30=2;
                 }
-                else if ( (LA28_1==RULE_STRING||(LA28_1>=47 && LA28_1<=52)) ) {
-                    alt28=1;
+                else if ( (LA30_1==RULE_STRING||(LA30_1>=46 && LA30_1<=51)) ) {
+                    alt30=1;
                 }
             }
-            switch (alt28) {
+            switch (alt30) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3050:5: ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3048:5: ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3050:5: ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3050:6: ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3048:5: ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3048:6: ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) )
                     {
-                    match(input,32,FOLLOW_32_in_ruleSignal5850); if (failed) return current;
+                    match(input,32,FOLLOW_32_in_ruleSignal5839); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getSignalAccess().getColonSpaceKeyword_3_0_0(), null); 
+                              createLeafNode(grammarAccess.getSignalAccess().getColonSpaceKeyword_5_0_0(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3054:1: ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) )
-                    int alt25=2;
-                    int LA25_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3052:1: ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) )
+                    int alt27=2;
+                    int LA27_0 = input.LA(1);
 
-                    if ( ((LA25_0>=47 && LA25_0<=52)) ) {
-                        alt25=1;
+                    if ( ((LA27_0>=46 && LA27_0<=51)) ) {
+                        alt27=1;
                     }
-                    else if ( (LA25_0==RULE_STRING) ) {
-                        alt25=2;
+                    else if ( (LA27_0==RULE_STRING) ) {
+                        alt27=2;
                     }
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("3054:1: ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) )", 25, 0, input);
+                            new NoViableAltException("3052:1: ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) )", 27, 0, input);
 
                         throw nvae;
                     }
-                    switch (alt25) {
+                    switch (alt27) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3054:2: (lv_type_7= ruleValueType )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3052:2: (lv_type_7= ruleValueType )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3054:2: (lv_type_7= ruleValueType )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3057:6: lv_type_7= ruleValueType
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3052:2: (lv_type_7= ruleValueType )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3055:6: lv_type_7= ruleValueType
                             {
                             if ( backtracking==0 ) {
                                
-                              	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_3_0_1_0_0(), currentNode); 
+                              	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_5_0_1_0_0(), currentNode); 
                               	    
                             }
-                            pushFollow(FOLLOW_ruleValueType_in_ruleSignal5885);
+                            pushFollow(FOLLOW_ruleValueType_in_ruleSignal5874);
                             lv_type_7=ruleValueType();
                             _fsp--;
                             if (failed) return current;
@@ -8265,16 +8424,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             }
                             break;
                         case 2 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3076:6: (lv_hostType_8= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3074:6: (lv_hostType_8= RULE_STRING )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3076:6: (lv_hostType_8= RULE_STRING )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3078:6: lv_hostType_8= RULE_STRING
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3074:6: (lv_hostType_8= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3076:6: lv_hostType_8= RULE_STRING
                             {
                             lv_hostType_8=(Token)input.LT(1);
-                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSignal5917); if (failed) return current;
+                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSignal5906); if (failed) return current;
                             if ( backtracking==0 ) {
 
-                              		createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_3_0_1_1_0(), "hostType"); 
+                              		createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_0_1_1_0(), "hostType"); 
                               	
                             }
                             if ( backtracking==0 ) {
@@ -8307,53 +8466,53 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3097:6: ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3095:6: ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3097:6: ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3097:7: ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3095:6: ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3095:7: ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) )
                     {
-                    match(input,32,FOLLOW_32_in_ruleSignal5943); if (failed) return current;
+                    match(input,32,FOLLOW_32_in_ruleSignal5932); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getSignalAccess().getColonSpaceKeyword_3_1_0(), null); 
+                              createLeafNode(grammarAccess.getSignalAccess().getColonSpaceKeyword_5_1_0(), null); 
                           
                     }
-                    match(input,36,FOLLOW_36_in_ruleSignal5952); if (failed) return current;
+                    match(input,36,FOLLOW_36_in_ruleSignal5941); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_3_1_1(), null); 
+                              createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_5_1_1(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3105:1: ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) )
-                    int alt26=2;
-                    int LA26_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3103:1: ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) )
+                    int alt28=2;
+                    int LA28_0 = input.LA(1);
 
-                    if ( ((LA26_0>=47 && LA26_0<=52)) ) {
-                        alt26=1;
+                    if ( ((LA28_0>=46 && LA28_0<=51)) ) {
+                        alt28=1;
                     }
-                    else if ( (LA26_0==RULE_STRING) ) {
-                        alt26=2;
+                    else if ( (LA28_0==RULE_STRING) ) {
+                        alt28=2;
                     }
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("3105:1: ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) )", 26, 0, input);
+                            new NoViableAltException("3103:1: ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) )", 28, 0, input);
 
                         throw nvae;
                     }
-                    switch (alt26) {
+                    switch (alt28) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3105:2: (lv_type_11= ruleValueType )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3103:2: (lv_type_11= ruleValueType )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3105:2: (lv_type_11= ruleValueType )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3108:6: lv_type_11= ruleValueType
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3103:2: (lv_type_11= ruleValueType )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3106:6: lv_type_11= ruleValueType
                             {
                             if ( backtracking==0 ) {
                                
-                              	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_3_1_2_0_0(), currentNode); 
+                              	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_5_1_2_0_0(), currentNode); 
                               	    
                             }
-                            pushFollow(FOLLOW_ruleValueType_in_ruleSignal5987);
+                            pushFollow(FOLLOW_ruleValueType_in_ruleSignal5976);
                             lv_type_11=ruleValueType();
                             _fsp--;
                             if (failed) return current;
@@ -8379,16 +8538,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             }
                             break;
                         case 2 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3127:6: (lv_hostType_12= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3125:6: (lv_hostType_12= RULE_STRING )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3127:6: (lv_hostType_12= RULE_STRING )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3129:6: lv_hostType_12= RULE_STRING
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3125:6: (lv_hostType_12= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3127:6: lv_hostType_12= RULE_STRING
                             {
                             lv_hostType_12=(Token)input.LT(1);
-                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSignal6019); if (failed) return current;
+                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSignal6008); if (failed) return current;
                             if ( backtracking==0 ) {
 
-                              		createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_3_1_2_1_0(), "hostType"); 
+                              		createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_1_2_1_0(), "hostType"); 
                               	
                             }
                             if ( backtracking==0 ) {
@@ -8414,42 +8573,42 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    match(input,37,FOLLOW_37_in_ruleSignal6037); if (failed) return current;
+                    match(input,37,FOLLOW_37_in_ruleSignal6026); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_3_1_3(), null); 
+                              createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_5_1_3(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3151:1: ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) )
-                    int alt27=2;
-                    int LA27_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3149:1: ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) )
+                    int alt29=2;
+                    int LA29_0 = input.LA(1);
 
-                    if ( ((LA27_0>=42 && LA27_0<=47)) ) {
-                        alt27=1;
+                    if ( ((LA29_0>=41 && LA29_0<=46)) ) {
+                        alt29=1;
                     }
-                    else if ( (LA27_0==RULE_STRING) ) {
-                        alt27=2;
+                    else if ( (LA29_0==RULE_STRING) ) {
+                        alt29=2;
                     }
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("3151:1: ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) )", 27, 0, input);
+                            new NoViableAltException("3149:1: ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) )", 29, 0, input);
 
                         throw nvae;
                     }
-                    switch (alt27) {
+                    switch (alt29) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3151:2: (lv_combineOperator_14= ruleCombineOperator )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3149:2: (lv_combineOperator_14= ruleCombineOperator )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3151:2: (lv_combineOperator_14= ruleCombineOperator )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3154:6: lv_combineOperator_14= ruleCombineOperator
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3149:2: (lv_combineOperator_14= ruleCombineOperator )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3152:6: lv_combineOperator_14= ruleCombineOperator
                             {
                             if ( backtracking==0 ) {
                                
-                              	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_3_1_4_0_0(), currentNode); 
+                              	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_5_1_4_0_0(), currentNode); 
                               	    
                             }
-                            pushFollow(FOLLOW_ruleCombineOperator_in_ruleSignal6072);
+                            pushFollow(FOLLOW_ruleCombineOperator_in_ruleSignal6061);
                             lv_combineOperator_14=ruleCombineOperator();
                             _fsp--;
                             if (failed) return current;
@@ -8475,16 +8634,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             }
                             break;
                         case 2 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3173:6: (lv_hostCombineOperator_15= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3171:6: (lv_hostCombineOperator_15= RULE_STRING )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3173:6: (lv_hostCombineOperator_15= RULE_STRING )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3175:6: lv_hostCombineOperator_15= RULE_STRING
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3171:6: (lv_hostCombineOperator_15= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3173:6: lv_hostCombineOperator_15= RULE_STRING
                             {
                             lv_hostCombineOperator_15=(Token)input.LT(1);
-                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSignal6104); if (failed) return current;
+                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSignal6093); if (failed) return current;
                             if ( backtracking==0 ) {
 
-                              		createLeafNode(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_3_1_4_1_0(), "hostCombineOperator"); 
+                              		createLeafNode(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_5_1_4_1_0(), "hostCombineOperator"); 
                               	
                             }
                             if ( backtracking==0 ) {
@@ -8544,54 +8703,54 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleStateType
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3202:1: ruleStateType returns [Enumerator current=null] : ( ( 'NORMAL' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3200:1: ruleStateType returns [Enumerator current=null] : ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) ) ;
     public final Enumerator ruleStateType() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3206:6: ( ( ( 'NORMAL' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3207:1: ( ( 'NORMAL' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3204:6: ( ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3205:1: ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3207:1: ( ( 'NORMAL' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) )
-            int alt29=4;
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3205:1: ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) )
+            int alt31=4;
             switch ( input.LA(1) ) {
+            case 13:
+                {
+                alt31=1;
+                }
+                break;
             case 38:
                 {
-                alt29=1;
+                alt31=2;
                 }
                 break;
             case 39:
                 {
-                alt29=2;
+                alt31=3;
                 }
                 break;
             case 40:
                 {
-                alt29=3;
-                }
-                break;
-            case 41:
-                {
-                alt29=4;
+                alt31=4;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("3207:1: ( ( 'NORMAL' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) )", 29, 0, input);
+                    new NoViableAltException("3205:1: ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) )", 31, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt29) {
+            switch (alt31) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3207:2: ( 'NORMAL' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3205:2: ( 'state' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3207:2: ( 'NORMAL' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3207:4: 'NORMAL'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3205:2: ( 'state' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3205:4: 'state'
                     {
-                    match(input,38,FOLLOW_38_in_ruleStateType6165); if (failed) return current;
+                    match(input,13,FOLLOW_13_in_ruleStateType6154); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getNORMALEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -8605,12 +8764,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3213:6: ( 'cond' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3211:6: ( 'cond' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3213:6: ( 'cond' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3213:8: 'cond'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3211:6: ( 'cond' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3211:8: 'cond'
                     {
-                    match(input,39,FOLLOW_39_in_ruleStateType6180); if (failed) return current;
+                    match(input,38,FOLLOW_38_in_ruleStateType6169); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getPSEUDOEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -8624,12 +8783,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3219:6: ( 'ref' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3217:6: ( 'ref' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3219:6: ( 'ref' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3219:8: 'ref'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3217:6: ( 'ref' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3217:8: 'ref'
                     {
-                    match(input,40,FOLLOW_40_in_ruleStateType6195); if (failed) return current;
+                    match(input,39,FOLLOW_39_in_ruleStateType6184); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getREFERENCEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -8643,12 +8802,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3225:6: ( 'textual' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3223:6: ( 'textual' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3225:6: ( 'textual' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3225:8: 'textual'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3223:6: ( 'textual' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3223:8: 'textual'
                     {
-                    match(input,41,FOLLOW_41_in_ruleStateType6210); if (failed) return current;
+                    match(input,40,FOLLOW_40_in_ruleStateType6199); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getTEXTUALEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -8686,64 +8845,64 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleCombineOperator
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3235:1: ruleCombineOperator returns [Enumerator current=null] : ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3233:1: ruleCombineOperator returns [Enumerator current=null] : ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) ) ;
     public final Enumerator ruleCombineOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3239:6: ( ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3240:1: ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3237:6: ( ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3238:1: ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3240:1: ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) )
-            int alt30=6;
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3238:1: ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) )
+            int alt32=6;
             switch ( input.LA(1) ) {
+            case 41:
+                {
+                alt32=1;
+                }
+                break;
             case 42:
                 {
-                alt30=1;
+                alt32=2;
                 }
                 break;
             case 43:
                 {
-                alt30=2;
+                alt32=3;
                 }
                 break;
             case 44:
                 {
-                alt30=3;
+                alt32=4;
                 }
                 break;
             case 45:
                 {
-                alt30=4;
+                alt32=5;
                 }
                 break;
             case 46:
                 {
-                alt30=5;
-                }
-                break;
-            case 47:
-                {
-                alt30=6;
+                alt32=6;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("3240:1: ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) )", 30, 0, input);
+                    new NoViableAltException("3238:1: ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) )", 32, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt30) {
+            switch (alt32) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3240:2: ( 'NONE' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3238:2: ( 'NONE' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3240:2: ( 'NONE' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3240:4: 'NONE'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3238:2: ( 'NONE' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3238:4: 'NONE'
                     {
-                    match(input,42,FOLLOW_42_in_ruleCombineOperator6253); if (failed) return current;
+                    match(input,41,FOLLOW_41_in_ruleCombineOperator6242); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getNONEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -8757,12 +8916,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3246:6: ( '+' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3244:6: ( '+' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3246:6: ( '+' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3246:8: '+'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3244:6: ( '+' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3244:8: '+'
                     {
-                    match(input,43,FOLLOW_43_in_ruleCombineOperator6268); if (failed) return current;
+                    match(input,42,FOLLOW_42_in_ruleCombineOperator6257); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getADDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -8776,12 +8935,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3252:6: ( '*' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3250:6: ( '*' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3252:6: ( '*' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3252:8: '*'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3250:6: ( '*' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3250:8: '*'
                     {
-                    match(input,44,FOLLOW_44_in_ruleCombineOperator6283); if (failed) return current;
+                    match(input,43,FOLLOW_43_in_ruleCombineOperator6272); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMULTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -8795,12 +8954,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3258:6: ( 'AND' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3256:6: ( 'AND' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3258:6: ( 'AND' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3258:8: 'AND'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3256:6: ( 'AND' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3256:8: 'AND'
                     {
-                    match(input,45,FOLLOW_45_in_ruleCombineOperator6298); if (failed) return current;
+                    match(input,44,FOLLOW_44_in_ruleCombineOperator6287); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getANDEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -8814,12 +8973,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3264:6: ( 'OR' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3262:6: ( 'OR' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3264:6: ( 'OR' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3264:8: 'OR'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3262:6: ( 'OR' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3262:8: 'OR'
                     {
-                    match(input,46,FOLLOW_46_in_ruleCombineOperator6313); if (failed) return current;
+                    match(input,45,FOLLOW_45_in_ruleCombineOperator6302); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getOREnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -8833,12 +8992,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3270:6: ( 'host' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3268:6: ( 'host' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3270:6: ( 'host' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3270:8: 'host'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3268:6: ( 'host' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3268:8: 'host'
                     {
-                    match(input,47,FOLLOW_47_in_ruleCombineOperator6328); if (failed) return current;
+                    match(input,46,FOLLOW_46_in_ruleCombineOperator6317); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getHOSTEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -8876,64 +9035,64 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleValueType
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3280:1: ruleValueType returns [Enumerator current=null] : ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3278:1: ruleValueType returns [Enumerator current=null] : ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) ) ;
     public final Enumerator ruleValueType() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3284:6: ( ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3285:1: ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3282:6: ( ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3283:1: ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3285:1: ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) )
-            int alt31=6;
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3283:1: ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) )
+            int alt33=6;
             switch ( input.LA(1) ) {
+            case 47:
+                {
+                alt33=1;
+                }
+                break;
             case 48:
                 {
-                alt31=1;
+                alt33=2;
                 }
                 break;
             case 49:
                 {
-                alt31=2;
+                alt33=3;
                 }
                 break;
             case 50:
                 {
-                alt31=3;
+                alt33=4;
                 }
                 break;
             case 51:
                 {
-                alt31=4;
+                alt33=5;
                 }
                 break;
-            case 52:
+            case 46:
                 {
-                alt31=5;
-                }
-                break;
-            case 47:
-                {
-                alt31=6;
+                alt33=6;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("3285:1: ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) )", 31, 0, input);
+                    new NoViableAltException("3283:1: ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) )", 33, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt31) {
+            switch (alt33) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3285:2: ( 'PURE' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3283:2: ( 'PURE' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3285:2: ( 'PURE' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3285:4: 'PURE'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3283:2: ( 'PURE' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3283:4: 'PURE'
                     {
-                    match(input,48,FOLLOW_48_in_ruleValueType6371); if (failed) return current;
+                    match(input,47,FOLLOW_47_in_ruleValueType6360); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getPUREEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -8947,12 +9106,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3291:6: ( 'boolean' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3289:6: ( 'boolean' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3291:6: ( 'boolean' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3291:8: 'boolean'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3289:6: ( 'boolean' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3289:8: 'boolean'
                     {
-                    match(input,49,FOLLOW_49_in_ruleValueType6386); if (failed) return current;
+                    match(input,48,FOLLOW_48_in_ruleValueType6375); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -8966,12 +9125,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3297:6: ( 'unsigned' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3295:6: ( 'unsigned' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3297:6: ( 'unsigned' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3297:8: 'unsigned'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3295:6: ( 'unsigned' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3295:8: 'unsigned'
                     {
-                    match(input,50,FOLLOW_50_in_ruleValueType6401); if (failed) return current;
+                    match(input,49,FOLLOW_49_in_ruleValueType6390); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getUNSIGNEDEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -8985,12 +9144,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3303:6: ( 'integer' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3301:6: ( 'integer' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3303:6: ( 'integer' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3303:8: 'integer'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3301:6: ( 'integer' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3301:8: 'integer'
                     {
-                    match(input,51,FOLLOW_51_in_ruleValueType6416); if (failed) return current;
+                    match(input,50,FOLLOW_50_in_ruleValueType6405); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getINTEGEREnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -9004,12 +9163,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3309:6: ( 'float' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3307:6: ( 'float' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3309:6: ( 'float' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3309:8: 'float'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3307:6: ( 'float' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3307:8: 'float'
                     {
-                    match(input,52,FOLLOW_52_in_ruleValueType6431); if (failed) return current;
+                    match(input,51,FOLLOW_51_in_ruleValueType6420); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -9023,12 +9182,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3315:6: ( 'host' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3313:6: ( 'host' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3315:6: ( 'host' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3315:8: 'host'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3313:6: ( 'host' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3313:8: 'host'
                     {
-                    match(input,47,FOLLOW_47_in_ruleValueType6446); if (failed) return current;
+                    match(input,46,FOLLOW_46_in_ruleValueType6435); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getHOSTEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -9066,49 +9225,49 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleTransitionType
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3325:1: ruleTransitionType returns [Enumerator current=null] : ( ( '-->' ) | ( 'o->' ) | ( '>->' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3323:1: ruleTransitionType returns [Enumerator current=null] : ( ( '-->' ) | ( 'o->' ) | ( '>->' ) ) ;
     public final Enumerator ruleTransitionType() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3329:6: ( ( ( '-->' ) | ( 'o->' ) | ( '>->' ) ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3330:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3327:6: ( ( ( '-->' ) | ( 'o->' ) | ( '>->' ) ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3328:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3330:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )
-            int alt32=3;
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3328:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )
+            int alt34=3;
             switch ( input.LA(1) ) {
+            case 52:
+                {
+                alt34=1;
+                }
+                break;
             case 53:
                 {
-                alt32=1;
+                alt34=2;
                 }
                 break;
             case 54:
                 {
-                alt32=2;
-                }
-                break;
-            case 55:
-                {
-                alt32=3;
+                alt34=3;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("3330:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )", 32, 0, input);
+                    new NoViableAltException("3328:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )", 34, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt32) {
+            switch (alt34) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3330:2: ( '-->' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3328:2: ( '-->' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3330:2: ( '-->' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3330:4: '-->'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3328:2: ( '-->' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3328:4: '-->'
                     {
-                    match(input,53,FOLLOW_53_in_ruleTransitionType6489); if (failed) return current;
+                    match(input,52,FOLLOW_52_in_ruleTransitionType6478); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getTransitionTypeAccess().getWEAKABORTEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -9122,12 +9281,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3336:6: ( 'o->' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3334:6: ( 'o->' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3336:6: ( 'o->' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3336:8: 'o->'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3334:6: ( 'o->' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3334:8: 'o->'
                     {
-                    match(input,54,FOLLOW_54_in_ruleTransitionType6504); if (failed) return current;
+                    match(input,53,FOLLOW_53_in_ruleTransitionType6493); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getTransitionTypeAccess().getSTRONGABORTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -9141,12 +9300,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3342:6: ( '>->' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3340:6: ( '>->' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3342:6: ( '>->' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3342:8: '>->'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3340:6: ( '>->' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3340:8: '>->'
                     {
-                    match(input,55,FOLLOW_55_in_ruleTransitionType6519); if (failed) return current;
+                    match(input,54,FOLLOW_54_in_ruleTransitionType6508); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getTransitionTypeAccess().getNORMALTERMINATIONEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -9181,6 +9340,73 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         return current;
     }
     // $ANTLR end ruleTransitionType
+
+    // $ANTLR start synpred1
+    public final void synpred1_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:3: ( ( ( ( 'init' ) ( 'final' ) ) ( ruleStateType ) 'state' ( ruleFullStateID ) ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:3: ( ( ( 'init' ) ( 'final' ) ) ( ruleStateType ) 'state' ( ruleFullStateID ) )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:3: ( ( ( 'init' ) ( 'final' ) ) ( ruleStateType ) 'state' ( ruleFullStateID ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:4: ( ( 'init' ) ( 'final' ) ) ( ruleStateType ) 'state' ( ruleFullStateID )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:4: ( ( 'init' ) ( 'final' ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:5: ( 'init' ) ( 'final' )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:88:5: ( 'init' )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:90:6: 'init'
+        {
+        match(input,11,FOLLOW_11_in_synpred1138); if (failed) return ;
+
+        }
+
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:109:2: ( 'final' )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:111:6: 'final'
+        {
+        match(input,12,FOLLOW_12_in_synpred1172); if (failed) return ;
+
+        }
+
+
+        }
+
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:130:3: ( ruleStateType )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:133:6: ruleStateType
+        {
+        if ( backtracking==0 ) {
+           
+          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getTypeStateTypeEnumRuleCall_0_0_1_0(), currentNode); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleStateType_in_synpred1220);
+        ruleStateType();
+        _fsp--;
+        if (failed) return ;
+
+        }
+
+        match(input,13,FOLLOW_13_in_synpred1233); if (failed) return ;
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:155:1: ( ruleFullStateID )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:158:6: ruleFullStateID
+        {
+        if ( backtracking==0 ) {
+           
+          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_0_3_0(), currentNode); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleFullStateID_in_synpred1267);
+        ruleFullStateID();
+        _fsp--;
+        if (failed) return ;
+
+        }
+
+
+        }
+
+
+        }
+    }
+    // $ANTLR end synpred1
 
     // $ANTLR start synpred2
     public final void synpred2_fragment() throws RecognitionException {   
@@ -9469,6 +9695,73 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         }
     }
     // $ANTLR end synpred8
+
+    // $ANTLR start synpred9
+    public final void synpred9_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:616:6: ( ( ( ( 'final' ) ( 'init' ) ) ( ruleStateType ) 'state' ( ruleFullStateID ) ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:616:6: ( ( ( 'final' ) ( 'init' ) ) ( ruleStateType ) 'state' ( ruleFullStateID ) )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:616:6: ( ( ( 'final' ) ( 'init' ) ) ( ruleStateType ) 'state' ( ruleFullStateID ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:616:7: ( ( 'final' ) ( 'init' ) ) ( ruleStateType ) 'state' ( ruleFullStateID )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:616:7: ( ( 'final' ) ( 'init' ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:616:8: ( 'final' ) ( 'init' )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:616:8: ( 'final' )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:618:6: 'final'
+        {
+        match(input,12,FOLLOW_12_in_synpred91100); if (failed) return ;
+
+        }
+
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:637:2: ( 'init' )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:639:6: 'init'
+        {
+        match(input,11,FOLLOW_11_in_synpred91134); if (failed) return ;
+
+        }
+
+
+        }
+
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:658:3: ( ruleStateType )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:661:6: ruleStateType
+        {
+        if ( backtracking==0 ) {
+           
+          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getTypeStateTypeEnumRuleCall_0_8_1_0(), currentNode); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleStateType_in_synpred91182);
+        ruleStateType();
+        _fsp--;
+        if (failed) return ;
+
+        }
+
+        match(input,13,FOLLOW_13_in_synpred91195); if (failed) return ;
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:683:1: ( ruleFullStateID )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:686:6: ruleFullStateID
+        {
+        if ( backtracking==0 ) {
+           
+          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_8_3_0(), currentNode); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleFullStateID_in_synpred91229);
+        ruleFullStateID();
+        _fsp--;
+        if (failed) return ;
+
+        }
+
+
+        }
+
+
+        }
+    }
+    // $ANTLR end synpred9
 
     // $ANTLR start synpred10
     public final void synpred10_fragment() throws RecognitionException {   
@@ -9851,6 +10144,98 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     }
     // $ANTLR end synpred18
 
+    // $ANTLR start synpred19
+    public final void synpred19_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1259:6: ( ( ( 'init' ) ( ruleStateType ) ( ruleFullStateID ) ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1259:6: ( ( 'init' ) ( ruleStateType ) ( ruleFullStateID ) )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1259:6: ( ( 'init' ) ( ruleStateType ) ( ruleFullStateID ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1259:7: ( 'init' ) ( ruleStateType ) ( ruleFullStateID )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1259:7: ( 'init' )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1261:6: 'init'
+        {
+        match(input,11,FOLLOW_11_in_synpred192277); if (failed) return ;
+
+        }
+
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1280:2: ( ruleStateType )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1283:6: ruleStateType
+        {
+        if ( backtracking==0 ) {
+           
+          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getTypeStateTypeEnumRuleCall_0_18_1_0(), currentNode); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleStateType_in_synpred192324);
+        ruleStateType();
+        _fsp--;
+        if (failed) return ;
+
+        }
+
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1301:2: ( ruleFullStateID )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1304:6: ruleFullStateID
+        {
+        if ( backtracking==0 ) {
+           
+          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_18_2_0(), currentNode); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleFullStateID_in_synpred192362);
+        ruleFullStateID();
+        _fsp--;
+        if (failed) return ;
+
+        }
+
+
+        }
+
+
+        }
+    }
+    // $ANTLR end synpred19
+
+    // $ANTLR start synpred20
+    public final void synpred20_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1323:6: ( ( ( 'init' ) 'state' ( ruleFullStateID ) ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1323:6: ( ( 'init' ) 'state' ( ruleFullStateID ) )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1323:6: ( ( 'init' ) 'state' ( ruleFullStateID ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1323:7: ( 'init' ) 'state' ( ruleFullStateID )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1323:7: ( 'init' )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1325:6: 'init'
+        {
+        match(input,11,FOLLOW_11_in_synpred202395); if (failed) return ;
+
+        }
+
+        match(input,13,FOLLOW_13_in_synpred202417); if (failed) return ;
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1348:1: ( ruleFullStateID )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1351:6: ruleFullStateID
+        {
+        if ( backtracking==0 ) {
+           
+          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_19_2_0(), currentNode); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleFullStateID_in_synpred202451);
+        ruleFullStateID();
+        _fsp--;
+        if (failed) return ;
+
+        }
+
+
+        }
+
+
+        }
+    }
+    // $ANTLR end synpred20
+
     // $ANTLR start synpred21
     public final void synpred21_fragment() throws RecognitionException {   
         // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1370:6: ( ( ( 'init' ) ( ruleStateType ) ) )
@@ -10061,6 +10446,59 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     }
     // $ANTLR end synpred26
 
+    // $ANTLR start synpred27
+    public final void synpred27_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1619:6: ( ( ( 'final' ) ( ruleStateType ) ( ruleFullStateID ) ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1619:6: ( ( 'final' ) ( ruleStateType ) ( ruleFullStateID ) )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1619:6: ( ( 'final' ) ( ruleStateType ) ( ruleFullStateID ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1619:7: ( 'final' ) ( ruleStateType ) ( ruleFullStateID )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1619:7: ( 'final' )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1621:6: 'final'
+        {
+        match(input,12,FOLLOW_12_in_synpred272951); if (failed) return ;
+
+        }
+
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1640:2: ( ruleStateType )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1643:6: ruleStateType
+        {
+        if ( backtracking==0 ) {
+           
+          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getTypeStateTypeEnumRuleCall_0_26_1_0(), currentNode); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleStateType_in_synpred272998);
+        ruleStateType();
+        _fsp--;
+        if (failed) return ;
+
+        }
+
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1661:2: ( ruleFullStateID )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1664:6: ruleFullStateID
+        {
+        if ( backtracking==0 ) {
+           
+          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_26_2_0(), currentNode); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleFullStateID_in_synpred273036);
+        ruleFullStateID();
+        _fsp--;
+        if (failed) return ;
+
+        }
+
+
+        }
+
+
+        }
+    }
+    // $ANTLR end synpred27
+
     // $ANTLR start synpred28
     public final void synpred28_fragment() throws RecognitionException {   
         // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1683:6: ( ( ( 'final' ) 'state' ( ruleFullStateID ) ) )
@@ -10231,6 +10669,53 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         }
     }
     // $ANTLR end synpred32
+
+    // $ANTLR start synpred33
+    public final void synpred33_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1885:6: ( ( ( ruleStateType ) 'state' ( ruleFullStateID ) ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1885:6: ( ( ruleStateType ) 'state' ( ruleFullStateID ) )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1885:6: ( ( ruleStateType ) 'state' ( ruleFullStateID ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1885:7: ( ruleStateType ) 'state' ( ruleFullStateID )
+        {
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1885:7: ( ruleStateType )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1888:6: ruleStateType
+        {
+        if ( backtracking==0 ) {
+           
+          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getTypeStateTypeEnumRuleCall_0_32_0_0(), currentNode); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleStateType_in_synpred333460);
+        ruleStateType();
+        _fsp--;
+        if (failed) return ;
+
+        }
+
+        match(input,13,FOLLOW_13_in_synpred333473); if (failed) return ;
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1910:1: ( ruleFullStateID )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:1913:6: ruleFullStateID
+        {
+        if ( backtracking==0 ) {
+           
+          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_32_2_0(), currentNode); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleFullStateID_in_synpred333507);
+        ruleFullStateID();
+        _fsp--;
+        if (failed) return ;
+
+        }
+
+
+        }
+
+
+        }
+    }
+    // $ANTLR end synpred33
 
     // $ANTLR start synpred34
     public final void synpred34_fragment() throws RecognitionException {   
@@ -10460,16 +10945,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2299:7: ( ( ruleRegion ) '||' )* ( ruleRegion )
         {
         // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2299:7: ( ( ruleRegion ) '||' )*
-        loop34:
+        loop36:
         do {
-            int alt34=2;
+            int alt36=2;
             switch ( input.LA(1) ) {
             case 26:
                 {
-                int LA34_1 = input.LA(2);
+                int LA36_1 = input.LA(2);
 
                 if ( (synpred48()) ) {
-                    alt34=1;
+                    alt36=1;
                 }
 
 
@@ -10477,10 +10962,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 break;
             case RULE_STRING:
                 {
-                int LA34_2 = input.LA(2);
+                int LA36_2 = input.LA(2);
 
                 if ( (synpred48()) ) {
-                    alt34=1;
+                    alt36=1;
                 }
 
 
@@ -10488,10 +10973,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 break;
             case RULE_ID:
                 {
-                int LA34_3 = input.LA(2);
+                int LA36_3 = input.LA(2);
 
                 if ( (synpred48()) ) {
-                    alt34=1;
+                    alt36=1;
                 }
 
 
@@ -10499,10 +10984,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 break;
             case 33:
                 {
-                int LA34_4 = input.LA(2);
+                int LA36_4 = input.LA(2);
 
                 if ( (synpred48()) ) {
-                    alt34=1;
+                    alt36=1;
                 }
 
 
@@ -10510,10 +10995,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 break;
             case 34:
                 {
-                int LA34_5 = input.LA(2);
+                int LA36_5 = input.LA(2);
 
                 if ( (synpred48()) ) {
-                    alt34=1;
+                    alt36=1;
                 }
 
 
@@ -10521,10 +11006,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 break;
             case 35:
                 {
-                int LA34_6 = input.LA(2);
+                int LA36_6 = input.LA(2);
 
                 if ( (synpred48()) ) {
-                    alt34=1;
+                    alt36=1;
                 }
 
 
@@ -10532,10 +11017,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 break;
             case 11:
                 {
-                int LA34_7 = input.LA(2);
+                int LA36_7 = input.LA(2);
 
                 if ( (synpred48()) ) {
-                    alt34=1;
+                    alt36=1;
                 }
 
 
@@ -10543,54 +11028,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 break;
             case 12:
                 {
-                int LA34_8 = input.LA(2);
+                int LA36_8 = input.LA(2);
 
                 if ( (synpred48()) ) {
-                    alt34=1;
-                }
-
-
-                }
-                break;
-            case 38:
-                {
-                int LA34_9 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt34=1;
-                }
-
-
-                }
-                break;
-            case 39:
-                {
-                int LA34_10 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt34=1;
-                }
-
-
-                }
-                break;
-            case 40:
-                {
-                int LA34_11 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt34=1;
-                }
-
-
-                }
-                break;
-            case 41:
-                {
-                int LA34_12 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt34=1;
+                    alt36=1;
                 }
 
 
@@ -10598,10 +11039,43 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 break;
             case 13:
                 {
-                int LA34_13 = input.LA(2);
+                int LA36_9 = input.LA(2);
 
                 if ( (synpred48()) ) {
-                    alt34=1;
+                    alt36=1;
+                }
+
+
+                }
+                break;
+            case 38:
+                {
+                int LA36_10 = input.LA(2);
+
+                if ( (synpred48()) ) {
+                    alt36=1;
+                }
+
+
+                }
+                break;
+            case 39:
+                {
+                int LA36_11 = input.LA(2);
+
+                if ( (synpred48()) ) {
+                    alt36=1;
+                }
+
+
+                }
+                break;
+            case 40:
+                {
+                int LA36_12 = input.LA(2);
+
+                if ( (synpred48()) ) {
+                    alt36=1;
                 }
 
 
@@ -10610,7 +11084,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            switch (alt34) {
+            switch (alt36) {
         	case 1 :
         	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2299:8: ( ruleRegion ) '||'
         	    {
@@ -10635,7 +11109,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         	    break;
 
         	default :
-        	    break loop34;
+        	    break loop36;
             }
         } while (true);
 
@@ -10661,6 +11135,25 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         }
     }
     // $ANTLR end synpred49
+
+    // $ANTLR start synpred51
+    public final void synpred51_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2352:6: ( ruleTransition )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2352:6: ruleTransition
+        {
+        if ( backtracking==0 ) {
+           
+          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getOutgoingTransitionsTransitionParserRuleCall_5_0(), currentNode); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleTransition_in_synpred514393);
+        ruleTransition();
+        _fsp--;
+        if (failed) return ;
+
+        }
+    }
+    // $ANTLR end synpred51
 
     // $ANTLR start synpred55
     public final void synpred55_fragment() throws RecognitionException {   
@@ -10807,6 +11300,34 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         failed=false;
         return success;
     }
+    public final boolean synpred20() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred20_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred27() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred27_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
     public final boolean synpred28() {
         backtracking++;
         int start = input.mark();
@@ -10933,6 +11454,20 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         failed=false;
         return success;
     }
+    public final boolean synpred33() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred33_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
     public final boolean synpred32() {
         backtracking++;
         int start = input.mark();
@@ -10975,6 +11510,20 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         failed=false;
         return success;
     }
+    public final boolean synpred19() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred19_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
     public final boolean synpred56() {
         backtracking++;
         int start = input.mark();
@@ -10989,11 +11538,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         failed=false;
         return success;
     }
-    public final boolean synpred38() {
+    public final boolean synpred18() {
         backtracking++;
         int start = input.mark();
         try {
-            synpred38_fragment(); // can never throw exception
+            synpred18_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -11003,11 +11552,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         failed=false;
         return success;
     }
-    public final boolean synpred18() {
+    public final boolean synpred38() {
         backtracking++;
         int start = input.mark();
         try {
-            synpred18_fragment(); // can never throw exception
+            synpred38_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -11087,11 +11636,39 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         failed=false;
         return success;
     }
+    public final boolean synpred51() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred51_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
     public final boolean synpred8() {
         backtracking++;
         int start = input.mark();
         try {
             synpred8_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred1() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred1_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -11115,11 +11692,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         failed=false;
         return success;
     }
-    public final boolean synpred30() {
+    public final boolean synpred2() {
         backtracking++;
         int start = input.mark();
         try {
-            synpred30_fragment(); // can never throw exception
+            synpred2_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -11129,11 +11706,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         failed=false;
         return success;
     }
-    public final boolean synpred2() {
+    public final boolean synpred30() {
         backtracking++;
         int start = input.mark();
         try {
-            synpred2_fragment(); // can never throw exception
+            synpred30_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -11162,6 +11739,20 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         int start = input.mark();
         try {
             synpred4_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred9() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred9_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -11276,136 +11867,136 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     public static final BitSet FOLLOW_ruleState_in_entryRuleState79 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleState89 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_11_in_ruleState138 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState172 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_12_in_ruleState172 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState220 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_ruleState233 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState267 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState267 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_11_in_ruleState301 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState335 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_12_in_ruleState335 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState383 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_ruleState396 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_13_in_ruleState396 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_11_in_ruleState426 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState460 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_12_in_ruleState460 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState508 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState546 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState546 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_11_in_ruleState580 = new BitSet(new long[]{0x0000000000001000L});
     public static final BitSet FOLLOW_12_in_ruleState614 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_ruleState637 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState671 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState671 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_11_in_ruleState705 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState739 = new BitSet(new long[]{0x000003C000000000L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState787 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_12_in_ruleState739 = new BitSet(new long[]{0x000001C000002000L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState787 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_11_in_ruleState821 = new BitSet(new long[]{0x0000000000001000L});
     public static final BitSet FOLLOW_12_in_ruleState855 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_ruleState878 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_13_in_ruleState878 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_11_in_ruleState908 = new BitSet(new long[]{0x0000000000001000L});
     public static final BitSet FOLLOW_12_in_ruleState942 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState990 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState990 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_11_in_ruleState1023 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleState1057 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_12_in_ruleState1057 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_12_in_ruleState1100 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleState1134 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_11_in_ruleState1134 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState1182 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_ruleState1195 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState1229 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState1229 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_12_in_ruleState1263 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleState1297 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_11_in_ruleState1297 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState1345 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_ruleState1358 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_13_in_ruleState1358 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_12_in_ruleState1388 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleState1422 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_11_in_ruleState1422 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState1470 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState1508 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState1508 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_12_in_ruleState1542 = new BitSet(new long[]{0x0000000000000800L});
     public static final BitSet FOLLOW_11_in_ruleState1576 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_ruleState1599 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState1633 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState1633 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_12_in_ruleState1667 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleState1701 = new BitSet(new long[]{0x000003C000000000L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState1749 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_11_in_ruleState1701 = new BitSet(new long[]{0x000001C000002000L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState1749 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_12_in_ruleState1783 = new BitSet(new long[]{0x0000000000000800L});
     public static final BitSet FOLLOW_11_in_ruleState1817 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_ruleState1840 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_13_in_ruleState1840 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_12_in_ruleState1870 = new BitSet(new long[]{0x0000000000000800L});
     public static final BitSet FOLLOW_11_in_ruleState1904 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState1952 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState1952 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_12_in_ruleState1985 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleState2019 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_11_in_ruleState2061 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_11_in_ruleState2019 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_11_in_ruleState2061 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState2108 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_ruleState2121 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState2155 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_11_in_ruleState2188 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState2155 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_11_in_ruleState2188 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState2235 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_ruleState2248 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_11_in_ruleState2277 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_13_in_ruleState2248 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_11_in_ruleState2277 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState2324 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState2362 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState2362 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_11_in_ruleState2395 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_ruleState2417 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState2451 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_11_in_ruleState2484 = new BitSet(new long[]{0x000003C000000000L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState2531 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState2451 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_11_in_ruleState2484 = new BitSet(new long[]{0x000001C000002000L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState2531 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_11_in_ruleState2564 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_ruleState2586 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_13_in_ruleState2586 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_11_in_ruleState2615 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState2662 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_11_in_ruleState2694 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_12_in_ruleState2735 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState2662 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_11_in_ruleState2694 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_12_in_ruleState2735 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState2782 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_ruleState2795 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState2829 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_12_in_ruleState2862 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState2829 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_12_in_ruleState2862 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState2909 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_ruleState2922 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_12_in_ruleState2951 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_13_in_ruleState2922 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_12_in_ruleState2951 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState2998 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3036 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3036 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_12_in_ruleState3069 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_ruleState3091 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3125 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_12_in_ruleState3158 = new BitSet(new long[]{0x000003C000000000L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState3205 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3125 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_12_in_ruleState3158 = new BitSet(new long[]{0x000001C000002000L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState3205 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_12_in_ruleState3238 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_ruleState3260 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3294 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3294 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_12_in_ruleState3327 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3374 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_12_in_ruleState3406 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3374 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_12_in_ruleState3406 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState3460 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_ruleState3473 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3507 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3507 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState3553 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_ruleState3566 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_13_in_ruleState3566 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_ruleStateType_in_ruleState3608 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3646 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_ruleStateType_in_ruleState3691 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3646 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_ruleStateType_in_ruleState3691 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_13_in_ruleState3711 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3745 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_13_in_ruleState3765 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3805 = new BitSet(new long[]{0x0000000000024012L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleState3832 = new BitSet(new long[]{0x0000000000024012L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3745 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_13_in_ruleState3765 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_ruleState3805 = new BitSet(new long[]{0x0070000000024032L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleState3832 = new BitSet(new long[]{0x0070000000024032L});
     public static final BitSet FOLLOW_14_in_ruleState3851 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_ruleRenaming_in_ruleState3886 = new BitSet(new long[]{0x0000000000008000L});
     public static final BitSet FOLLOW_15_in_ruleState3899 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_ruleRenaming_in_ruleState3935 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_ruleState3948 = new BitSet(new long[]{0x0000000000020012L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleState3972 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_17_in_ruleState3991 = new BitSet(new long[]{0x000003CE043C3830L});
-    public static final BitSet FOLLOW_18_in_ruleState4002 = new BitSet(new long[]{0x00E0000008000070L});
-    public static final BitSet FOLLOW_ruleAction_in_ruleState4036 = new BitSet(new long[]{0x000003CE04BC3830L});
-    public static final BitSet FOLLOW_19_in_ruleState4057 = new BitSet(new long[]{0x00E0000008000070L});
-    public static final BitSet FOLLOW_ruleAction_in_ruleState4091 = new BitSet(new long[]{0x000003CE04BC3830L});
-    public static final BitSet FOLLOW_20_in_ruleState4112 = new BitSet(new long[]{0x00E0000008000070L});
-    public static final BitSet FOLLOW_ruleAction_in_ruleState4146 = new BitSet(new long[]{0x000003CE04BC3830L});
-    public static final BitSet FOLLOW_21_in_ruleState4167 = new BitSet(new long[]{0x00E0000008000070L});
-    public static final BitSet FOLLOW_ruleAction_in_ruleState4201 = new BitSet(new long[]{0x000003CE04BC3830L});
-    public static final BitSet FOLLOW_ruleSignal_in_ruleState4246 = new BitSet(new long[]{0x000003CE04BC3830L});
+    public static final BitSet FOLLOW_16_in_ruleState3948 = new BitSet(new long[]{0x0070000000020032L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleState3972 = new BitSet(new long[]{0x0070000000020022L});
+    public static final BitSet FOLLOW_17_in_ruleState3991 = new BitSet(new long[]{0x000001CE043C3830L});
+    public static final BitSet FOLLOW_18_in_ruleState4002 = new BitSet(new long[]{0x0070000008000070L});
+    public static final BitSet FOLLOW_ruleAction_in_ruleState4036 = new BitSet(new long[]{0x000001CE04BC3830L});
+    public static final BitSet FOLLOW_19_in_ruleState4057 = new BitSet(new long[]{0x0070000008000070L});
+    public static final BitSet FOLLOW_ruleAction_in_ruleState4091 = new BitSet(new long[]{0x000001CE04BC3830L});
+    public static final BitSet FOLLOW_20_in_ruleState4112 = new BitSet(new long[]{0x0070000008000070L});
+    public static final BitSet FOLLOW_ruleAction_in_ruleState4146 = new BitSet(new long[]{0x000001CE04BC3830L});
+    public static final BitSet FOLLOW_21_in_ruleState4167 = new BitSet(new long[]{0x0070000008000070L});
+    public static final BitSet FOLLOW_ruleAction_in_ruleState4201 = new BitSet(new long[]{0x000001CE04BC3830L});
+    public static final BitSet FOLLOW_ruleSignal_in_ruleState4246 = new BitSet(new long[]{0x000001CE04BC3830L});
     public static final BitSet FOLLOW_ruleRegion_in_ruleState4292 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_22_in_ruleState4305 = new BitSet(new long[]{0x000003CE04003830L});
-    public static final BitSet FOLLOW_ruleRegion_in_ruleState4341 = new BitSet(new long[]{0x000003CE04BC3830L});
-    public static final BitSet FOLLOW_23_in_ruleState4357 = new BitSet(new long[]{0x00E0000000000022L});
-    public static final BitSet FOLLOW_ruleTransition_in_ruleState4391 = new BitSet(new long[]{0x00E0000000000022L});
+    public static final BitSet FOLLOW_22_in_ruleState4305 = new BitSet(new long[]{0x000001CE04003830L});
+    public static final BitSet FOLLOW_ruleRegion_in_ruleState4341 = new BitSet(new long[]{0x000001CE04BC3830L});
+    public static final BitSet FOLLOW_23_in_ruleState4357 = new BitSet(new long[]{0x0070000000000022L});
+    public static final BitSet FOLLOW_ruleTransition_in_ruleState4393 = new BitSet(new long[]{0x0070000000000022L});
     public static final BitSet FOLLOW_ruleRenaming_in_entryRuleRenaming4431 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleRenaming4441 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleRenaming4488 = new BitSet(new long[]{0x0000000001000000L});
@@ -11418,11 +12009,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     public static final BitSet FOLLOW_RULE_ID_in_ruleFullStateID4656 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleRegion_in_entryRuleRegion4699 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleRegion4709 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_26_in_ruleRegion4744 = new BitSet(new long[]{0x000003CE00003830L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleRegion4768 = new BitSet(new long[]{0x000003CE00003820L});
-    public static final BitSet FOLLOW_ruleVariable_in_ruleRegion4812 = new BitSet(new long[]{0x000003CE00003822L});
-    public static final BitSet FOLLOW_ruleSignal_in_ruleRegion4856 = new BitSet(new long[]{0x000003CE00003822L});
-    public static final BitSet FOLLOW_ruleState_in_ruleRegion4900 = new BitSet(new long[]{0x000003CE00003822L});
+    public static final BitSet FOLLOW_26_in_ruleRegion4744 = new BitSet(new long[]{0x000001CE00003830L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleRegion4768 = new BitSet(new long[]{0x000001CE00003820L});
+    public static final BitSet FOLLOW_ruleVariable_in_ruleRegion4812 = new BitSet(new long[]{0x000001CE00003822L});
+    public static final BitSet FOLLOW_ruleSignal_in_ruleRegion4856 = new BitSet(new long[]{0x000001CE00003822L});
+    public static final BitSet FOLLOW_ruleState_in_ruleRegion4900 = new BitSet(new long[]{0x000001CE00003822L});
     public static final BitSet FOLLOW_ruleAction_in_entryRuleAction4939 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAction4949 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_27_in_ruleAction4996 = new BitSet(new long[]{0x0000000000000050L});
@@ -11432,7 +12023,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     public static final BitSet FOLLOW_ruleTransition_in_ruleAction5111 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleTransition_in_entryRuleTransition5143 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleTransition5153 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleTransition5200 = new BitSet(new long[]{0x00E0000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleTransition5200 = new BitSet(new long[]{0x0070000000000000L});
     public static final BitSet FOLLOW_ruleTransitionType_in_ruleTransition5238 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleTransition5264 = new BitSet(new long[]{0x0000000070000000L});
     public static final BitSet FOLLOW_29_in_ruleTransition5277 = new BitSet(new long[]{0x0000000000000010L});
@@ -11444,52 +12035,57 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     public static final BitSet FOLLOW_RULE_ID_in_ruleVariable5445 = new BitSet(new long[]{0x0000000180000002L});
     public static final BitSet FOLLOW_31_in_ruleVariable5463 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_RULE_INT_in_ruleVariable5485 = new BitSet(new long[]{0x0000000100000002L});
-    public static final BitSet FOLLOW_32_in_ruleVariable5505 = new BitSet(new long[]{0x001F800000000010L});
+    public static final BitSet FOLLOW_32_in_ruleVariable5505 = new BitSet(new long[]{0x000FC00000000010L});
     public static final BitSet FOLLOW_ruleValueType_in_ruleVariable5540 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleVariable5572 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSignal_in_entryRuleSignal5616 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSignal5626 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_ruleSignal5673 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_34_in_ruleSignal5713 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_35_in_ruleSignal5753 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleSignal5789 = new BitSet(new long[]{0x0000000180000002L});
-    public static final BitSet FOLLOW_31_in_ruleSignal5807 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleSignal5829 = new BitSet(new long[]{0x0000000100000002L});
-    public static final BitSet FOLLOW_32_in_ruleSignal5850 = new BitSet(new long[]{0x001F800000000010L});
-    public static final BitSet FOLLOW_ruleValueType_in_ruleSignal5885 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleSignal5917 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_ruleSignal5943 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_36_in_ruleSignal5952 = new BitSet(new long[]{0x001F800000000010L});
-    public static final BitSet FOLLOW_ruleValueType_in_ruleSignal5987 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleSignal6019 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_ruleSignal6037 = new BitSet(new long[]{0x0000FC0000000010L});
-    public static final BitSet FOLLOW_ruleCombineOperator_in_ruleSignal6072 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleSignal6104 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_38_in_ruleStateType6165 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_39_in_ruleStateType6180 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_ruleStateType6195 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_41_in_ruleStateType6210 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_ruleCombineOperator6253 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_43_in_ruleCombineOperator6268 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_44_in_ruleCombineOperator6283 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_45_in_ruleCombineOperator6298 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_ruleCombineOperator6313 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_ruleCombineOperator6328 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_48_in_ruleValueType6371 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_49_in_ruleValueType6386 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_50_in_ruleValueType6401 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_51_in_ruleValueType6416 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_52_in_ruleValueType6431 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_ruleValueType6446 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_ruleTransitionType6489 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_54_in_ruleTransitionType6504 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_55_in_ruleTransitionType6519 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_ruleSignal5672 = new BitSet(new long[]{0x0000000C00000020L});
+    public static final BitSet FOLLOW_34_in_ruleSignal5707 = new BitSet(new long[]{0x0000000800000020L});
+    public static final BitSet FOLLOW_35_in_ruleSignal5742 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleSignal5778 = new BitSet(new long[]{0x0000000180000002L});
+    public static final BitSet FOLLOW_31_in_ruleSignal5796 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleSignal5818 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_32_in_ruleSignal5839 = new BitSet(new long[]{0x000FC00000000010L});
+    public static final BitSet FOLLOW_ruleValueType_in_ruleSignal5874 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleSignal5906 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_ruleSignal5932 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_36_in_ruleSignal5941 = new BitSet(new long[]{0x000FC00000000010L});
+    public static final BitSet FOLLOW_ruleValueType_in_ruleSignal5976 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleSignal6008 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_37_in_ruleSignal6026 = new BitSet(new long[]{0x00007E0000000010L});
+    public static final BitSet FOLLOW_ruleCombineOperator_in_ruleSignal6061 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleSignal6093 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_13_in_ruleStateType6154 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_38_in_ruleStateType6169 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_39_in_ruleStateType6184 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_40_in_ruleStateType6199 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_41_in_ruleCombineOperator6242 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_ruleCombineOperator6257 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_43_in_ruleCombineOperator6272 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_44_in_ruleCombineOperator6287 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_45_in_ruleCombineOperator6302 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_ruleCombineOperator6317 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_ruleValueType6360 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_48_in_ruleValueType6375 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_49_in_ruleValueType6390 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_50_in_ruleValueType6405 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_51_in_ruleValueType6420 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_ruleValueType6435 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_52_in_ruleTransitionType6478 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_ruleTransitionType6493 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_54_in_ruleTransitionType6508 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_11_in_synpred1138 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_synpred1172 = new BitSet(new long[]{0x000001C000002000L});
+    public static final BitSet FOLLOW_ruleStateType_in_synpred1220 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_synpred1233 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_synpred1267 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_11_in_synpred2301 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_synpred2335 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_12_in_synpred2335 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred2383 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred2396 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_11_in_synpred3426 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_synpred3460 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_12_in_synpred3460 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred3508 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_ruleFullStateID_in_synpred3546 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_11_in_synpred4580 = new BitSet(new long[]{0x0000000000001000L});
@@ -11497,19 +12093,24 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     public static final BitSet FOLLOW_13_in_synpred4637 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_ruleFullStateID_in_synpred4671 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_11_in_synpred5705 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_synpred5739 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_12_in_synpred5739 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred5787 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_11_in_synpred6821 = new BitSet(new long[]{0x0000000000001000L});
     public static final BitSet FOLLOW_12_in_synpred6855 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred6878 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_11_in_synpred81023 = new BitSet(new long[]{0x0000000000001000L});
     public static final BitSet FOLLOW_12_in_synpred81057 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_12_in_synpred91100 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_synpred91134 = new BitSet(new long[]{0x000001C000002000L});
+    public static final BitSet FOLLOW_ruleStateType_in_synpred91182 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_synpred91195 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_synpred91229 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_12_in_synpred101263 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_synpred101297 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_11_in_synpred101297 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred101345 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred101358 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_12_in_synpred111388 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_synpred111422 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_11_in_synpred111422 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred111470 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_ruleFullStateID_in_synpred111508 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_12_in_synpred121542 = new BitSet(new long[]{0x0000000000000800L});
@@ -11517,38 +12118,47 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     public static final BitSet FOLLOW_13_in_synpred121599 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_ruleFullStateID_in_synpred121633 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_12_in_synpred131667 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_synpred131701 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_11_in_synpred131701 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred131749 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_12_in_synpred141783 = new BitSet(new long[]{0x0000000000000800L});
     public static final BitSet FOLLOW_11_in_synpred141817 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred141840 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_12_in_synpred161985 = new BitSet(new long[]{0x0000000000000800L});
     public static final BitSet FOLLOW_11_in_synpred162019 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_11_in_synpred172061 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_11_in_synpred172061 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred172108 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred172121 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_ruleFullStateID_in_synpred172155 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_11_in_synpred182188 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_11_in_synpred182188 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred182235 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred182248 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_11_in_synpred212484 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_11_in_synpred192277 = new BitSet(new long[]{0x000001C000002000L});
+    public static final BitSet FOLLOW_ruleStateType_in_synpred192324 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_synpred192362 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_11_in_synpred202395 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_synpred202417 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_synpred202451 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_11_in_synpred212484 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred212531 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_11_in_synpred222564 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred222586 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_11_in_synpred232615 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_ruleFullStateID_in_synpred232662 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_11_in_synpred242694 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_12_in_synpred252735 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_12_in_synpred252735 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred252782 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred252795 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_ruleFullStateID_in_synpred252829 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_12_in_synpred262862 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_12_in_synpred262862 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred262909 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred262922 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_12_in_synpred272951 = new BitSet(new long[]{0x000001C000002000L});
+    public static final BitSet FOLLOW_ruleStateType_in_synpred272998 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_synpred273036 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_12_in_synpred283069 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred283091 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_ruleFullStateID_in_synpred283125 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_12_in_synpred293158 = new BitSet(new long[]{0x000003C000000000L});
+    public static final BitSet FOLLOW_12_in_synpred293158 = new BitSet(new long[]{0x000001C000002000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred293205 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_12_in_synpred303238 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred303260 = new BitSet(new long[]{0x0000000000000020L});
@@ -11556,6 +12166,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     public static final BitSet FOLLOW_12_in_synpred313327 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_ruleFullStateID_in_synpred313374 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_12_in_synpred323406 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStateType_in_synpred333460 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_synpred333473 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_synpred333507 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred343553 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred343566 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred353608 = new BitSet(new long[]{0x0000000000000020L});
@@ -11570,8 +12183,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     public static final BitSet FOLLOW_ruleRegion_in_synpred484292 = new BitSet(new long[]{0x0000000000400000L});
     public static final BitSet FOLLOW_22_in_synpred484305 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleRegion_in_synpred494292 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_22_in_synpred494305 = new BitSet(new long[]{0x000003CE04003830L});
+    public static final BitSet FOLLOW_22_in_synpred494305 = new BitSet(new long[]{0x000001CE04003830L});
     public static final BitSet FOLLOW_ruleRegion_in_synpred494341 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTransition_in_synpred514393 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleVariable_in_synpred554812 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSignal_in_synpred564856 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleState_in_synpred574900 = new BitSet(new long[]{0x0000000000000002L});

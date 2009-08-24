@@ -66,10 +66,10 @@ State:
 		| 	(signals+=Signal) 
 		|	((regions+=Region '||' )* regions+=Region)
 	)+	
-	'}'
+	'}')?
 	
 	(outgoingTransitions+=Transition)*
-)? 
+
 ;
 Renaming:
 	oldObject=STRING'/'newID=STRING
@@ -106,9 +106,9 @@ Action:
 	//========================================================================================
 
 Transition:
-	(sourceState=[State|ID])? 
+	(sourceState=[State])? 
 	type=TransitionType
-	targetState=[State|ID]
+	targetState=[State]
 	('with ' triggersAndEffects=STRING)?
 	(isHistory?=' history')?
 	';'
@@ -124,8 +124,10 @@ Variable:
 ;
 Signal:
  	
-		(isLocal?='local' | isInput?='input' | isOutput?='output')
-		
+		(isLocal?='local')?  
+		(isInput?='input')? 
+		(isOutput?='output')?
+				
 		name=ID 
 		
 		(':= ' initialValue=INT)? 
@@ -138,7 +140,7 @@ Signal:
 	//===  								 ENUMS, DATATYPES etc      			               ===
 	//========================================================================================
 TICK returns Signal	: 'tick' ; 
-enum StateType		:  NORMAL | PSEUDO='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
+enum StateType		:  NORMAL='state' | PSEUDO='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
 enum CombineOperator: NONE | ADD='+' | MULT='*' | AND='AND'|OR='OR' |HOST='host';
 enum ValueType		:	PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='host';	
 enum TransitionType : WEAKABORT='-->' |  STRONGABORT='o->' | NORMALTERMINATION='>->' ;

@@ -456,9 +456,9 @@
             </groups>
           </tokens>
           <tokens xsi:type="xtext:Keyword" value="}"/>
-          <tokens xsi:type="xtext:Assignment" cardinality="*" feature="outgoingTransitions" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
-          </tokens>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" cardinality="*" feature="outgoingTransitions" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
         </tokens>
       </alternatives>
     </rules>
@@ -609,16 +609,14 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts#//Signal"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Alternatives">
-          <groups xsi:type="xtext:Assignment" feature="isLocal" operator="?=">
-            <terminal xsi:type="xtext:Keyword" value="local"/>
-          </groups>
-          <groups xsi:type="xtext:Assignment" feature="isInput" operator="?=">
-            <terminal xsi:type="xtext:Keyword" value="input"/>
-          </groups>
-          <groups xsi:type="xtext:Assignment" feature="isOutput" operator="?=">
-            <terminal xsi:type="xtext:Keyword" value="output"/>
-          </groups>
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="isLocal" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="local"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="isInput" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="input"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="isOutput" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="output"/>
         </tokens>
         <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
@@ -678,7 +676,7 @@
       <alternatives xsi:type="xtext:Alternatives">
         <groups xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts#//StateType/NORMAL"/>
-          <literal value="NORMAL"/>
+          <literal value="state"/>
         </groups>
         <groups xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts#//StateType/PSEUDO"/>

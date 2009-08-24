@@ -30,7 +30,7 @@ public enum StateType implements Enumerator
    * @generated
    * @ordered
    */
-  NORMAL(0, "NORMAL", "NORMAL"),
+  NORMAL(0, "NORMAL", "state"),
 
   /**
    * The '<em><b>PSEUDO</b></em>' literal object.
@@ -71,7 +71,7 @@ public enum StateType implements Enumerator
    * </p>
    * <!-- end-user-doc -->
    * @see #NORMAL
-   * @model
+   * @model literal="state"
    * @generated
    * @ordered
    */

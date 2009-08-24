@@ -66,7 +66,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hostCombineOperator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="StateType">
-    <eLiterals name="NORMAL" literal="NORMAL"/>
+    <eLiterals name="NORMAL" literal="state"/>
     <eLiterals name="PSEUDO" value="1" literal="cond"/>
     <eLiterals name="REFERENCE" value="2" literal="ref"/>
     <eLiterals name="TEXTUAL" value="3" literal="textual"/>
