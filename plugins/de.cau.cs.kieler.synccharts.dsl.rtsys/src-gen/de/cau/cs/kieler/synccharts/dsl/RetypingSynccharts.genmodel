@@ -37,9 +37,6 @@
       <genEnumLiterals>
         <ecoreEnumLiteral href="RetypingSynccharts.ecore#//CombineOperator/HOST"/>
       </genEnumLiterals>
-      <genEnumLiterals>
-        <ecoreEnumLiteral href="RetypingSynccharts.ecore#//CombineOperator/NULL"/>
-      </genEnumLiterals>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false">
       <ecoreEnum href="RetypingSynccharts.ecore#//ValueType"/>
@@ -130,6 +127,9 @@
     </genClasses>
     <genClasses>
       <ecoreClass href="RetypingSynccharts.ecore#//Region"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="RetypingSynccharts.ecore#//Region/parentState"/>
+      </genFeatures>
       <genFeatures createChild="false">
         <ecoreFeature xsi:type="ecore:EAttribute" href="RetypingSynccharts.ecore#//Region/id"/>
       </genFeatures>

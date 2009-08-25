@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RegionImpl#getParentState <em>Parent State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RegionImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RegionImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.RegionImpl#getSignals <em>Signals</em>}</li>
@@ -46,6 +47,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class RegionImpl extends MinimalEObjectImpl.Container implements Region
 {
+  /**
+   * The cached value of the '{@link #getParentState() <em>Parent State</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getParentState()
+   * @generated
+   * @ordered
+   */
+  protected State parentState;
+
   /**
    * The default value of the '{@link #getId() <em>Id</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -115,6 +126,54 @@ public class RegionImpl extends MinimalEObjectImpl.Container implements Region
   protected EClass eStaticClass()
   {
     return RetypingSyncchartsPackage.Literals.REGION;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public State getParentState()
+  {
+    return parentState;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetParentState(State newParentState, NotificationChain msgs)
+  {
+    State oldParentState = parentState;
+    parentState = newParentState;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.REGION__PARENT_STATE, oldParentState, newParentState);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setParentState(State newParentState)
+  {
+    if (newParentState != parentState)
+    {
+      NotificationChain msgs = null;
+      if (parentState != null)
+        msgs = ((InternalEObject)parentState).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RetypingSyncchartsPackage.REGION__PARENT_STATE, null, msgs);
+      if (newParentState != null)
+        msgs = ((InternalEObject)newParentState).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RetypingSyncchartsPackage.REGION__PARENT_STATE, null, msgs);
+      msgs = basicSetParentState(newParentState, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.REGION__PARENT_STATE, newParentState, newParentState));
   }
 
   /**
@@ -192,6 +251,8 @@ public class RegionImpl extends MinimalEObjectImpl.Container implements Region
   {
     switch (featureID)
     {
+      case RetypingSyncchartsPackage.REGION__PARENT_STATE:
+        return basicSetParentState(null, msgs);
       case RetypingSyncchartsPackage.REGION__VARIABLES:
         return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
       case RetypingSyncchartsPackage.REGION__SIGNALS:
@@ -212,6 +273,8 @@ public class RegionImpl extends MinimalEObjectImpl.Container implements Region
   {
     switch (featureID)
     {
+      case RetypingSyncchartsPackage.REGION__PARENT_STATE:
+        return getParentState();
       case RetypingSyncchartsPackage.REGION__ID:
         return getId();
       case RetypingSyncchartsPackage.REGION__VARIABLES:
@@ -235,6 +298,9 @@ public class RegionImpl extends MinimalEObjectImpl.Container implements Region
   {
     switch (featureID)
     {
+      case RetypingSyncchartsPackage.REGION__PARENT_STATE:
+        setParentState((State)newValue);
+        return;
       case RetypingSyncchartsPackage.REGION__ID:
         setId((String)newValue);
         return;
@@ -264,6 +330,9 @@ public class RegionImpl extends MinimalEObjectImpl.Container implements Region
   {
     switch (featureID)
     {
+      case RetypingSyncchartsPackage.REGION__PARENT_STATE:
+        setParentState((State)null);
+        return;
       case RetypingSyncchartsPackage.REGION__ID:
         setId(ID_EDEFAULT);
         return;
@@ -290,6 +359,8 @@ public class RegionImpl extends MinimalEObjectImpl.Container implements Region
   {
     switch (featureID)
     {
+      case RetypingSyncchartsPackage.REGION__PARENT_STATE:
+        return parentState != null;
       case RetypingSyncchartsPackage.REGION__ID:
         return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
       case RetypingSyncchartsPackage.REGION__VARIABLES:

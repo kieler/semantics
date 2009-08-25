@@ -32,6 +32,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="newID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Region">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
         eType="#//Variable" containment="true"/>
@@ -78,7 +80,6 @@
     <eLiterals name="AND" value="3" literal="AND"/>
     <eLiterals name="OR" value="4" literal="OR"/>
     <eLiterals name="HOST" value="5" literal="host"/>
-    <eLiterals name="NULL" value="6" literal="null"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ValueType">
     <eLiterals name="PURE" literal="PURE"/>

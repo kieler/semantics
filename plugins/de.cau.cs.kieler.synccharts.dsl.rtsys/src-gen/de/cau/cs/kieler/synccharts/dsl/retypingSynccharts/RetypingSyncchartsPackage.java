@@ -254,13 +254,22 @@ public interface RetypingSyncchartsPackage extends EPackage
   int REGION = 2;
 
   /**
+   * The feature id for the '<em><b>Parent State</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REGION__PARENT_STATE = 0;
+
+  /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REGION__ID = 0;
+  int REGION__ID = 1;
 
   /**
    * The feature id for the '<em><b>Variables</b></em>' containment reference list.
@@ -269,7 +278,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REGION__VARIABLES = 1;
+  int REGION__VARIABLES = 2;
 
   /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
@@ -278,7 +287,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REGION__SIGNALS = 2;
+  int REGION__SIGNALS = 3;
 
   /**
    * The feature id for the '<em><b>Inner States</b></em>' containment reference list.
@@ -287,7 +296,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REGION__INNER_STATES = 3;
+  int REGION__INNER_STATES = 4;
 
   /**
    * The number of structural features of the '<em>Region</em>' class.
@@ -296,7 +305,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REGION_FEATURE_COUNT = 4;
+  int REGION_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ActionImpl <em>Action</em>}' class.
@@ -884,6 +893,17 @@ public interface RetypingSyncchartsPackage extends EPackage
   EClass getRegion();
 
   /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getParentState <em>Parent State</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Parent State</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getParentState()
+   * @see #getRegion()
+   * @generated
+   */
+  EReference getRegion_ParentState();
+
+  /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getId <em>Id</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1373,6 +1393,14 @@ public interface RetypingSyncchartsPackage extends EPackage
      * @generated
      */
     EClass REGION = eINSTANCE.getRegion();
+
+    /**
+     * The meta object literal for the '<em><b>Parent State</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REGION__PARENT_STATE = eINSTANCE.getRegion_ParentState();
 
     /**
      * The meta object literal for the '<em><b>Id</b></em>' attribute feature.

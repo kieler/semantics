@@ -105,13 +105,16 @@ public class RetypingSyncchartsTransformer extends
 				parentNode);
 		
 		String actionKeyword = null;
-		//onexit "anExitAction" --> onexit: anExitAction
-		if (true){
-			actionKeyword = NodeUtil.getNodeAdapter(semanticAction).getParserNode().getLeafNodes().toString();
-			//actionKeyword = "onEntry: " + semanticAction.getTriggersAndEffects();
-			
+		//onexit "anExitAction" --> onExit : anExitAction
+		if (semanticAction.eContainingFeature().getName() == "entryActions"){
+			actionKeyword = "onEntry : " + semanticAction.getTriggersAndEffects();		
 		}
-		 
+		if (semanticAction.eContainingFeature().getName() == "exitActions"){
+			actionKeyword = "onExit : " + semanticAction.getTriggersAndEffects();		
+		}
+		if (semanticAction.eContainingFeature().getName() == "innerActions"){
+			actionKeyword = "onInner : " + semanticAction.getTriggersAndEffects();		
+		}		 
 		if (semanticAction.isIsImmediate()) {
 			actionKeyword = "# " + actionKeyword;
 		}
@@ -126,7 +129,7 @@ public class RetypingSyncchartsTransformer extends
 		
 		String transitionLabel = null;
 		if (semanticTransition.getType()!=null)
-			transitionLabel = semanticTransition.getType().toString() + " " + semanticTransition.getTargetState().toString();
+			transitionLabel = semanticTransition.getType().toString() + " " + semanticTransition.getTargetState().getId();
 			
 		node.setLabel(transitionLabel);
 		return node;

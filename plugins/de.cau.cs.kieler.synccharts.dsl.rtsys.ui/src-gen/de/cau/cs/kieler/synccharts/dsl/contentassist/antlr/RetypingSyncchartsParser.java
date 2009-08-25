@@ -44,7 +44,7 @@ public class RetypingSyncchartsParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getStateAccess().getAlternatives_0(), "rule__State__Alternatives_0");
 					put(grammarAccess.getStateAccess().getAlternatives_4_1(), "rule__State__Alternatives_4_1");
-					put(grammarAccess.getRegionAccess().getAlternatives_2(), "rule__Region__Alternatives_2");
+					put(grammarAccess.getRegionAccess().getAlternatives_3(), "rule__Region__Alternatives_3");
 					put(grammarAccess.getActionAccess().getAlternatives(), "rule__Action__Alternatives");
 					put(grammarAccess.getValuedObjectAccess().getAlternatives(), "rule__ValuedObject__Alternatives");
 					put(grammarAccess.getVariableAccess().getAlternatives_2_1(), "rule__Variable__Alternatives_2_1");
@@ -115,8 +115,6 @@ public class RetypingSyncchartsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getGroup_4_1_5(), "rule__State__Group_4_1_5__0");
 					put(grammarAccess.getStateAccess().getGroup_4_1_5_0(), "rule__State__Group_4_1_5_0__0");
 					put(grammarAccess.getRenamingAccess().getGroup(), "rule__Renaming__Group__0");
-					put(grammarAccess.getFullStateIDAccess().getGroup(), "rule__FullStateID__Group__0");
-					put(grammarAccess.getFullStateIDAccess().getGroup_0(), "rule__FullStateID__Group_0__0");
 					put(grammarAccess.getRegionAccess().getGroup(), "rule__Region__Group__0");
 					put(grammarAccess.getActionAccess().getGroup_0(), "rule__Action__Group_0__0");
 					put(grammarAccess.getActionAccess().getGroup_0_1(), "rule__Action__Group_0_1__0");
@@ -232,10 +230,11 @@ public class RetypingSyncchartsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getOutgoingTransitionsAssignment_5(), "rule__State__OutgoingTransitionsAssignment_5");
 					put(grammarAccess.getRenamingAccess().getOldObjectAssignment_0(), "rule__Renaming__OldObjectAssignment_0");
 					put(grammarAccess.getRenamingAccess().getNewIDAssignment_2(), "rule__Renaming__NewIDAssignment_2");
-					put(grammarAccess.getRegionAccess().getIdAssignment_1(), "rule__Region__IdAssignment_1");
-					put(grammarAccess.getRegionAccess().getVariablesAssignment_2_0(), "rule__Region__VariablesAssignment_2_0");
-					put(grammarAccess.getRegionAccess().getSignalsAssignment_2_1(), "rule__Region__SignalsAssignment_2_1");
-					put(grammarAccess.getRegionAccess().getInnerStatesAssignment_2_2(), "rule__Region__InnerStatesAssignment_2_2");
+					put(grammarAccess.getRegionAccess().getParentStateAssignment_0(), "rule__Region__ParentStateAssignment_0");
+					put(grammarAccess.getRegionAccess().getIdAssignment_2(), "rule__Region__IdAssignment_2");
+					put(grammarAccess.getRegionAccess().getVariablesAssignment_3_0(), "rule__Region__VariablesAssignment_3_0");
+					put(grammarAccess.getRegionAccess().getSignalsAssignment_3_1(), "rule__Region__SignalsAssignment_3_1");
+					put(grammarAccess.getRegionAccess().getInnerStatesAssignment_3_2(), "rule__Region__InnerStatesAssignment_3_2");
 					put(grammarAccess.getActionAccess().getIsImmediateAssignment_0_0(), "rule__Action__IsImmediateAssignment_0_0");
 					put(grammarAccess.getActionAccess().getDelayAssignment_0_1_0(), "rule__Action__DelayAssignment_0_1_0");
 					put(grammarAccess.getActionAccess().getTriggersAndEffectsAssignment_0_2(), "rule__Action__TriggersAndEffectsAssignment_0_2");

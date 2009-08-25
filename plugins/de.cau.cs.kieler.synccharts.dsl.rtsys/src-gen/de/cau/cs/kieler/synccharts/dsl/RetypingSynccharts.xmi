@@ -493,6 +493,9 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts#//Region"/>
       </type>
       <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Assignment" feature="parentState" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+        </tokens>
         <tokens xsi:type="xtext:Keyword" cardinality="?" value="region"/>
         <tokens xsi:type="xtext:Assignment" cardinality="?" feature="id" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>

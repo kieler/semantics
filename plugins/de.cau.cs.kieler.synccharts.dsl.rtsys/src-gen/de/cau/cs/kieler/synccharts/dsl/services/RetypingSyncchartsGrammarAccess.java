@@ -1479,22 +1479,26 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	public class RegionElements implements IParserRuleAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Region");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cRegionKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cIdSTRINGTerminalRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
-		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Assignment cVariablesAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
-		private final RuleCall cVariablesVariableParserRuleCall_2_0_0 = (RuleCall)cVariablesAssignment_2_0.eContents().get(0);
-		private final Assignment cSignalsAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
-		private final RuleCall cSignalsSignalParserRuleCall_2_1_0 = (RuleCall)cSignalsAssignment_2_1.eContents().get(0);
-		private final Assignment cInnerStatesAssignment_2_2 = (Assignment)cAlternatives_2.eContents().get(2);
-		private final RuleCall cInnerStatesStateParserRuleCall_2_2_0 = (RuleCall)cInnerStatesAssignment_2_2.eContents().get(0);
+		private final Assignment cParentStateAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cParentStateStateParserRuleCall_0_0 = (RuleCall)cParentStateAssignment_0.eContents().get(0);
+		private final Keyword cRegionKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cIdAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cIdSTRINGTerminalRuleCall_2_0 = (RuleCall)cIdAssignment_2.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Assignment cVariablesAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final RuleCall cVariablesVariableParserRuleCall_3_0_0 = (RuleCall)cVariablesAssignment_3_0.eContents().get(0);
+		private final Assignment cSignalsAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
+		private final RuleCall cSignalsSignalParserRuleCall_3_1_0 = (RuleCall)cSignalsAssignment_3_1.eContents().get(0);
+		private final Assignment cInnerStatesAssignment_3_2 = (Assignment)cAlternatives_3.eContents().get(2);
+		private final RuleCall cInnerStatesStateParserRuleCall_3_2_0 = (RuleCall)cInnerStatesAssignment_3_2.eContents().get(0);
 		
 		//Region:
-		//  "region"? id=STRING? (variables+=Variable|signals+=Signal|innerStates+=State)+; 
+		//  parentState=State "region"? id=STRING? (variables+=Variable|signals+=Signal|
+		//  innerStates+=State)+; 
 		////========================================================================================
 		////===  									    REGION  					               ===
 		////========================================================================================
+		//
 		//
 		//	   
 		//
@@ -1513,7 +1517,9 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//	 //========================================================================================
 		public ParserRule getRule() { return rule; }
 
-		//"region"? id=STRING? (variables+=Variable|signals+=Signal|innerStates+=State)+ 
+		//parentState=State "region"? id=STRING? (variables+=Variable|signals+=Signal|
+		//innerStates+=State)+ 
+		//
 		//	   
 		//
 		//			 
@@ -1526,35 +1532,41 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//	 //========================================================================================
 		public Group getGroup() { return cGroup; }
 
-		//"region"?
-		public Keyword getRegionKeyword_0() { return cRegionKeyword_0; }
-
-		//id=STRING?
-		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
-
-		//STRING
-		public RuleCall getIdSTRINGTerminalRuleCall_1_0() { return cIdSTRINGTerminalRuleCall_1_0; }
-
-		//(variables+=Variable|signals+=Signal|innerStates+=State)+
-		public Alternatives getAlternatives_2() { return cAlternatives_2; }
-
-		//variables+=Variable
-		public Assignment getVariablesAssignment_2_0() { return cVariablesAssignment_2_0; }
-
-		//Variable
-		public RuleCall getVariablesVariableParserRuleCall_2_0_0() { return cVariablesVariableParserRuleCall_2_0_0; }
-
-		//signals+=Signal
-		public Assignment getSignalsAssignment_2_1() { return cSignalsAssignment_2_1; }
-
-		//Signal
-		public RuleCall getSignalsSignalParserRuleCall_2_1_0() { return cSignalsSignalParserRuleCall_2_1_0; }
-
-		//innerStates+=State
-		public Assignment getInnerStatesAssignment_2_2() { return cInnerStatesAssignment_2_2; }
+		//parentState=State
+		public Assignment getParentStateAssignment_0() { return cParentStateAssignment_0; }
 
 		//State
-		public RuleCall getInnerStatesStateParserRuleCall_2_2_0() { return cInnerStatesStateParserRuleCall_2_2_0; }
+		public RuleCall getParentStateStateParserRuleCall_0_0() { return cParentStateStateParserRuleCall_0_0; }
+
+		//"region"?
+		public Keyword getRegionKeyword_1() { return cRegionKeyword_1; }
+
+		//id=STRING?
+		public Assignment getIdAssignment_2() { return cIdAssignment_2; }
+
+		//STRING
+		public RuleCall getIdSTRINGTerminalRuleCall_2_0() { return cIdSTRINGTerminalRuleCall_2_0; }
+
+		//(variables+=Variable|signals+=Signal|innerStates+=State)+
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+
+		//variables+=Variable
+		public Assignment getVariablesAssignment_3_0() { return cVariablesAssignment_3_0; }
+
+		//Variable
+		public RuleCall getVariablesVariableParserRuleCall_3_0_0() { return cVariablesVariableParserRuleCall_3_0_0; }
+
+		//signals+=Signal
+		public Assignment getSignalsAssignment_3_1() { return cSignalsAssignment_3_1; }
+
+		//Signal
+		public RuleCall getSignalsSignalParserRuleCall_3_1_0() { return cSignalsSignalParserRuleCall_3_1_0; }
+
+		//innerStates+=State
+		public Assignment getInnerStatesAssignment_3_2() { return cInnerStatesAssignment_3_2; }
+
+		//State
+		public RuleCall getInnerStatesStateParserRuleCall_3_2_0() { return cInnerStatesStateParserRuleCall_3_2_0; }
 	}
 
 	public class ActionElements implements IParserRuleAccess {
@@ -1660,6 +1672,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//	 //========================================================================================
 		//
 		//
+		//
 		//	 
 		//	
 		//	//(priority=INT)
@@ -1675,6 +1688,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 
 		//sourceState=[State|FullStateID]? type=TransitionType targetState=[State|
 		//FullStateID] ("with " triggersAndEffects=STRING)? isHistory?=" history"? ";" 
+		//
 		//	 
 		//	
 		//	//(priority=INT)
@@ -2380,10 +2394,12 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	} 
 
 	//Region:
-	//  "region"? id=STRING? (variables+=Variable|signals+=Signal|innerStates+=State)+; 
+	//  parentState=State "region"? id=STRING? (variables+=Variable|signals+=Signal|
+	//  innerStates+=State)+; 
 	////========================================================================================
 	////===  									    REGION  					               ===
 	////========================================================================================
+	//
 	//
 	//	   
 	//
@@ -2436,6 +2452,7 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	//	//========================================================================================
 	//	 //===  									    TRANSITION 					               ===
 	//	 //========================================================================================
+	//
 	//
 	//
 	//	 

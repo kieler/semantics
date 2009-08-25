@@ -2432,15 +2432,36 @@ ruleRegion returns [EObject current=null]
     @after { resetLookahead(); 
     	lastConsumedNode = currentNode;
     }:
-(('region' 
+((	
+	
+	    
+	    { 
+	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getParentStateStateParserRuleCall_0_0(), currentNode); 
+	    }
+	    lv_parentState_0=ruleState 
+	    {
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        
+	        try {
+	       		set($current, "parentState", lv_parentState_0, "State", currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+	
+)('region' 
     {
-        createLeafNode(grammarAccess.getRegionAccess().getRegionKeyword_0(), null); 
+        createLeafNode(grammarAccess.getRegionAccess().getRegionKeyword_1(), null); 
     }
 )?(	
 	
-	    lv_id_1=	RULE_STRING
+	    lv_id_2=	RULE_STRING
 	{
-		createLeafNode(grammarAccess.getRegionAccess().getIdSTRINGTerminalRuleCall_1_0(), "id"); 
+		createLeafNode(grammarAccess.getRegionAccess().getIdSTRINGTerminalRuleCall_2_0(), "id"); 
 	}
  
 	    {
@@ -2450,7 +2471,7 @@ ruleRegion returns [EObject current=null]
 	        }
 	        
 	        try {
-	       		set($current, "id", lv_id_1, "STRING", lastConsumedNode);
+	       		set($current, "id", lv_id_2, "STRING", lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
@@ -2460,9 +2481,9 @@ ruleRegion returns [EObject current=null]
 	
 	    
 	    { 
-	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getVariablesVariableParserRuleCall_2_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getVariablesVariableParserRuleCall_3_0_0(), currentNode); 
 	    }
-	    lv_variables_2=ruleVariable 
+	    lv_variables_3=ruleVariable 
 	    {
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
@@ -2470,7 +2491,7 @@ ruleRegion returns [EObject current=null]
 	        }
 	        
 	        try {
-	       		add($current, "variables", lv_variables_2, "Variable", currentNode);
+	       		add($current, "variables", lv_variables_3, "Variable", currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
@@ -2482,9 +2503,9 @@ ruleRegion returns [EObject current=null]
 	
 	    
 	    { 
-	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getSignalsSignalParserRuleCall_2_1_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getSignalsSignalParserRuleCall_3_1_0(), currentNode); 
 	    }
-	    lv_signals_3=ruleSignal 
+	    lv_signals_4=ruleSignal 
 	    {
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
@@ -2492,7 +2513,7 @@ ruleRegion returns [EObject current=null]
 	        }
 	        
 	        try {
-	       		add($current, "signals", lv_signals_3, "Signal", currentNode);
+	       		add($current, "signals", lv_signals_4, "Signal", currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
@@ -2504,9 +2525,9 @@ ruleRegion returns [EObject current=null]
 	
 	    
 	    { 
-	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getInnerStatesStateParserRuleCall_2_2_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getInnerStatesStateParserRuleCall_3_2_0(), currentNode); 
 	    }
-	    lv_innerStates_4=ruleState 
+	    lv_innerStates_5=ruleState 
 	    {
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
@@ -2514,7 +2535,7 @@ ruleRegion returns [EObject current=null]
 	        }
 	        
 	        try {
-	       		add($current, "innerStates", lv_innerStates_4, "State", currentNode);
+	       		add($current, "innerStates", lv_innerStates_5, "State", currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }

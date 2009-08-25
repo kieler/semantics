@@ -80,6 +80,7 @@ terminal FullStateID : ((ID'@')?ID);
 //===  									    REGION  					               ===
 //========================================================================================
 Region:
+parentState=State
 	('region')? (id=STRING)? 
 
 	(		(variables+=Variable)
@@ -106,6 +107,7 @@ Action:
 	//========================================================================================
 
 Transition:
+
 	(sourceState=[State|FullStateID])? 
 	type=TransitionType
 	//(priority=INT)

@@ -288,7 +288,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         int LA1_30 = input.LA(4);
 
                         if ( (LA1_30==RULE_FULLSTATEID) ) {
-                            int LA1_58 = input.LA(5);
+                            int LA1_57 = input.LA(5);
 
                             if ( (synpred3()) ) {
                                 alt1=3;
@@ -299,16 +299,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 58, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 57, input);
 
                                 throw nvae;
                             }
                         }
                         else if ( (LA1_30==14) ) {
-                            int LA1_59 = input.LA(5);
+                            int LA1_58 = input.LA(5);
 
-                            if ( (LA1_59==RULE_FULLSTATEID) ) {
-                                int LA1_81 = input.LA(6);
+                            if ( (LA1_58==RULE_FULLSTATEID) ) {
+                                int LA1_80 = input.LA(6);
 
                                 if ( (synpred1()) ) {
                                     alt1=1;
@@ -319,18 +319,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                                 else {
                                     if (backtracking>0) {failed=true; return current;}
                                     NoViableAltException nvae =
-                                        new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 81, input);
+                                        new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 80, input);
 
                                     throw nvae;
                                 }
                             }
-                            else if ( (LA1_59==EOF||LA1_59==RULE_STRING||LA1_59==RULE_ID||(LA1_59>=12 && LA1_59<=15)||(LA1_59>=18 && LA1_59<=24)||LA1_59==26||(LA1_59>=33 && LA1_59<=35)||(LA1_59>=38 && LA1_59<=40)||(LA1_59>=52 && LA1_59<=54)) ) {
+                            else if ( (LA1_58==EOF||LA1_58==RULE_STRING||LA1_58==RULE_ID||(LA1_58>=12 && LA1_58<=15)||(LA1_58>=18 && LA1_58<=24)||LA1_58==26||(LA1_58>=33 && LA1_58<=35)||(LA1_58>=38 && LA1_58<=40)||(LA1_58>=52 && LA1_58<=54)) ) {
                                 alt1=2;
                             }
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 59, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 58, input);
 
                                 throw nvae;
                             }
@@ -354,30 +354,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     else if ( (LA1_9==38) ) {
                         switch ( input.LA(4) ) {
-                        case RULE_FULLSTATEID:
-                            {
-                            int LA1_62 = input.LA(5);
-
-                            if ( (synpred3()) ) {
-                                alt1=3;
-                            }
-                            else if ( (synpred5()) ) {
-                                alt1=5;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 62, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
                         case 14:
                             {
-                            int LA1_63 = input.LA(5);
+                            int LA1_61 = input.LA(5);
 
-                            if ( (LA1_63==RULE_FULLSTATEID) ) {
+                            if ( (LA1_61==RULE_FULLSTATEID) ) {
                                 alt1=1;
                             }
                             else if ( (synpred2()) ) {
@@ -389,7 +370,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 63, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 61, input);
 
                                 throw nvae;
                             }
@@ -420,6 +401,25 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         case 54:
                             {
                             alt1=5;
+                            }
+                            break;
+                        case RULE_FULLSTATEID:
+                            {
+                            int LA1_63 = input.LA(5);
+
+                            if ( (synpred3()) ) {
+                                alt1=3;
+                            }
+                            else if ( (synpred5()) ) {
+                                alt1=5;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 63, input);
+
+                                throw nvae;
+                            }
                             }
                             break;
                         default:
@@ -435,9 +435,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         switch ( input.LA(4) ) {
                         case 14:
                             {
-                            int LA1_63 = input.LA(5);
+                            int LA1_61 = input.LA(5);
 
-                            if ( (LA1_63==RULE_FULLSTATEID) ) {
+                            if ( (LA1_61==RULE_FULLSTATEID) ) {
                                 alt1=1;
                             }
                             else if ( (synpred2()) ) {
@@ -449,7 +449,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 63, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 61, input);
 
                                 throw nvae;
                             }
@@ -484,7 +484,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             break;
                         case RULE_FULLSTATEID:
                             {
-                            int LA1_62 = input.LA(5);
+                            int LA1_63 = input.LA(5);
 
                             if ( (synpred3()) ) {
                                 alt1=3;
@@ -495,7 +495,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 62, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 63, input);
 
                                 throw nvae;
                             }
@@ -514,9 +514,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         switch ( input.LA(4) ) {
                         case 14:
                             {
-                            int LA1_63 = input.LA(5);
+                            int LA1_61 = input.LA(5);
 
-                            if ( (LA1_63==RULE_FULLSTATEID) ) {
+                            if ( (LA1_61==RULE_FULLSTATEID) ) {
                                 alt1=1;
                             }
                             else if ( (synpred2()) ) {
@@ -528,7 +528,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 63, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 61, input);
 
                                 throw nvae;
                             }
@@ -536,7 +536,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             break;
                         case RULE_FULLSTATEID:
                             {
-                            int LA1_62 = input.LA(5);
+                            int LA1_63 = input.LA(5);
 
                             if ( (synpred3()) ) {
                                 alt1=3;
@@ -547,7 +547,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 62, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 63, input);
 
                                 throw nvae;
                             }
@@ -629,7 +629,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         int LA1_37 = input.LA(4);
 
                         if ( (LA1_37==RULE_FULLSTATEID) ) {
-                            int LA1_66 = input.LA(5);
+                            int LA1_65 = input.LA(5);
 
                             if ( (synpred17()) ) {
                                 alt1=17;
@@ -640,7 +640,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 66, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 65, input);
 
                                 throw nvae;
                             }
@@ -678,11 +678,14 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     {
                     int LA1_11 = input.LA(3);
 
-                    if ( (LA1_11==14) ) {
+                    if ( (LA1_11==RULE_FULLSTATEID) ) {
+                        alt1=19;
+                    }
+                    else if ( (LA1_11==14) ) {
                         int LA1_37 = input.LA(4);
 
                         if ( (LA1_37==RULE_FULLSTATEID) ) {
-                            int LA1_66 = input.LA(5);
+                            int LA1_65 = input.LA(5);
 
                             if ( (synpred17()) ) {
                                 alt1=17;
@@ -693,7 +696,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 66, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 65, input);
 
                                 throw nvae;
                             }
@@ -708,9 +711,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                             throw nvae;
                         }
-                    }
-                    else if ( (LA1_11==RULE_FULLSTATEID) ) {
-                        alt1=19;
                     }
                     else if ( (synpred21()) ) {
                         alt1=21;
@@ -738,7 +738,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         int LA1_37 = input.LA(4);
 
                         if ( (LA1_37==RULE_FULLSTATEID) ) {
-                            int LA1_66 = input.LA(5);
+                            int LA1_65 = input.LA(5);
 
                             if ( (synpred17()) ) {
                                 alt1=17;
@@ -749,7 +749,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 66, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 65, input);
 
                                 throw nvae;
                             }
@@ -784,14 +784,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     {
                     int LA1_13 = input.LA(3);
 
-                    if ( (LA1_13==RULE_FULLSTATEID) ) {
-                        alt1=19;
-                    }
-                    else if ( (LA1_13==14) ) {
+                    if ( (LA1_13==14) ) {
                         int LA1_37 = input.LA(4);
 
                         if ( (LA1_37==RULE_FULLSTATEID) ) {
-                            int LA1_66 = input.LA(5);
+                            int LA1_65 = input.LA(5);
 
                             if ( (synpred17()) ) {
                                 alt1=17;
@@ -802,7 +799,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 66, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 65, input);
 
                                 throw nvae;
                             }
@@ -817,6 +814,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                             throw nvae;
                         }
+                    }
+                    else if ( (LA1_13==RULE_FULLSTATEID) ) {
+                        alt1=19;
                     }
                     else if ( (synpred21()) ) {
                         alt1=21;
@@ -877,7 +877,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         int LA1_41 = input.LA(4);
 
                         if ( (LA1_41==RULE_FULLSTATEID) ) {
-                            int LA1_68 = input.LA(5);
+                            int LA1_67 = input.LA(5);
 
                             if ( (synpred11()) ) {
                                 alt1=11;
@@ -888,16 +888,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 68, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 67, input);
 
                                 throw nvae;
                             }
                         }
                         else if ( (LA1_41==14) ) {
-                            int LA1_69 = input.LA(5);
+                            int LA1_68 = input.LA(5);
 
-                            if ( (LA1_69==RULE_FULLSTATEID) ) {
-                                int LA1_88 = input.LA(6);
+                            if ( (LA1_68==RULE_FULLSTATEID) ) {
+                                int LA1_87 = input.LA(6);
 
                                 if ( (synpred9()) ) {
                                     alt1=9;
@@ -908,18 +908,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                                 else {
                                     if (backtracking>0) {failed=true; return current;}
                                     NoViableAltException nvae =
-                                        new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 88, input);
+                                        new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 87, input);
 
                                     throw nvae;
                                 }
                             }
-                            else if ( (LA1_69==EOF||LA1_69==RULE_STRING||LA1_69==RULE_ID||(LA1_69>=12 && LA1_69<=15)||(LA1_69>=18 && LA1_69<=24)||LA1_69==26||(LA1_69>=33 && LA1_69<=35)||(LA1_69>=38 && LA1_69<=40)||(LA1_69>=52 && LA1_69<=54)) ) {
+                            else if ( (LA1_68==EOF||LA1_68==RULE_STRING||LA1_68==RULE_ID||(LA1_68>=12 && LA1_68<=15)||(LA1_68>=18 && LA1_68<=24)||LA1_68==26||(LA1_68>=33 && LA1_68<=35)||(LA1_68>=38 && LA1_68<=40)||(LA1_68>=52 && LA1_68<=54)) ) {
                                 alt1=10;
                             }
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 69, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 68, input);
 
                                 throw nvae;
                             }
@@ -945,9 +945,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         switch ( input.LA(4) ) {
                         case 14:
                             {
-                            int LA1_72 = input.LA(5);
+                            int LA1_71 = input.LA(5);
 
-                            if ( (LA1_72==RULE_FULLSTATEID) ) {
+                            if ( (LA1_71==RULE_FULLSTATEID) ) {
                                 alt1=9;
                             }
                             else if ( (synpred10()) ) {
@@ -959,7 +959,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 72, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 71, input);
 
                                 throw nvae;
                             }
@@ -967,7 +967,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             break;
                         case RULE_FULLSTATEID:
                             {
-                            int LA1_73 = input.LA(5);
+                            int LA1_72 = input.LA(5);
 
                             if ( (synpred11()) ) {
                                 alt1=11;
@@ -978,7 +978,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 73, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 72, input);
 
                                 throw nvae;
                             }
@@ -1022,12 +1022,15 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     else if ( (LA1_15==39) ) {
                         switch ( input.LA(4) ) {
-                        case RULE_FULLSTATEID:
+                        case 14:
                             {
-                            int LA1_73 = input.LA(5);
+                            int LA1_71 = input.LA(5);
 
-                            if ( (synpred11()) ) {
-                                alt1=11;
+                            if ( (LA1_71==RULE_FULLSTATEID) ) {
+                                alt1=9;
+                            }
+                            else if ( (synpred10()) ) {
+                                alt1=10;
                             }
                             else if ( (synpred13()) ) {
                                 alt1=13;
@@ -1035,21 +1038,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 73, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 71, input);
 
                                 throw nvae;
                             }
                             }
                             break;
-                        case 14:
+                        case RULE_FULLSTATEID:
                             {
                             int LA1_72 = input.LA(5);
 
-                            if ( (LA1_72==RULE_FULLSTATEID) ) {
-                                alt1=9;
-                            }
-                            else if ( (synpred10()) ) {
-                                alt1=10;
+                            if ( (synpred11()) ) {
+                                alt1=11;
                             }
                             else if ( (synpred13()) ) {
                                 alt1=13;
@@ -1103,7 +1103,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         switch ( input.LA(4) ) {
                         case RULE_FULLSTATEID:
                             {
-                            int LA1_73 = input.LA(5);
+                            int LA1_72 = input.LA(5);
 
                             if ( (synpred11()) ) {
                                 alt1=11;
@@ -1114,7 +1114,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 73, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 72, input);
 
                                 throw nvae;
                             }
@@ -1122,9 +1122,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             break;
                         case 14:
                             {
-                            int LA1_72 = input.LA(5);
+                            int LA1_71 = input.LA(5);
 
-                            if ( (LA1_72==RULE_FULLSTATEID) ) {
+                            if ( (LA1_71==RULE_FULLSTATEID) ) {
                                 alt1=9;
                             }
                             else if ( (synpred10()) ) {
@@ -1136,7 +1136,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 72, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 71, input);
 
                                 throw nvae;
                             }
@@ -1221,7 +1221,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         int LA1_48 = input.LA(4);
 
                         if ( (LA1_48==RULE_FULLSTATEID) ) {
-                            int LA1_77 = input.LA(5);
+                            int LA1_76 = input.LA(5);
 
                             if ( (synpred25()) ) {
                                 alt1=25;
@@ -1232,7 +1232,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 77, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 76, input);
 
                                 throw nvae;
                             }
@@ -1286,11 +1286,14 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     {
                     int LA1_18 = input.LA(3);
 
-                    if ( (LA1_18==14) ) {
+                    if ( (LA1_18==RULE_FULLSTATEID) ) {
+                        alt1=27;
+                    }
+                    else if ( (LA1_18==14) ) {
                         int LA1_48 = input.LA(4);
 
                         if ( (LA1_48==RULE_FULLSTATEID) ) {
-                            int LA1_77 = input.LA(5);
+                            int LA1_76 = input.LA(5);
 
                             if ( (synpred25()) ) {
                                 alt1=25;
@@ -1301,7 +1304,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 77, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 76, input);
 
                                 throw nvae;
                             }
@@ -1316,9 +1319,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                             throw nvae;
                         }
-                    }
-                    else if ( (LA1_18==RULE_FULLSTATEID) ) {
-                        alt1=27;
                     }
                     else if ( (synpred29()) ) {
                         alt1=29;
@@ -1339,14 +1339,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     {
                     int LA1_19 = input.LA(3);
 
-                    if ( (LA1_19==RULE_FULLSTATEID) ) {
-                        alt1=27;
-                    }
-                    else if ( (LA1_19==14) ) {
+                    if ( (LA1_19==14) ) {
                         int LA1_48 = input.LA(4);
 
                         if ( (LA1_48==RULE_FULLSTATEID) ) {
-                            int LA1_77 = input.LA(5);
+                            int LA1_76 = input.LA(5);
 
                             if ( (synpred25()) ) {
                                 alt1=25;
@@ -1357,7 +1354,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 77, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 76, input);
 
                                 throw nvae;
                             }
@@ -1372,6 +1369,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                             throw nvae;
                         }
+                    }
+                    else if ( (LA1_19==RULE_FULLSTATEID) ) {
+                        alt1=27;
                     }
                     else if ( (synpred29()) ) {
                         alt1=29;
@@ -1396,7 +1396,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                         int LA1_48 = input.LA(4);
 
                         if ( (LA1_48==RULE_FULLSTATEID) ) {
-                            int LA1_77 = input.LA(5);
+                            int LA1_76 = input.LA(5);
 
                             if ( (synpred25()) ) {
                                 alt1=25;
@@ -1407,7 +1407,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 77, input);
+                                    new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 76, input);
 
                                 throw nvae;
                             }
@@ -1544,28 +1544,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             case 38:
                 {
                 switch ( input.LA(2) ) {
-                case 14:
-                    {
-                    int LA1_26 = input.LA(3);
-
-                    if ( (LA1_26==RULE_FULLSTATEID) ) {
-                        alt1=33;
-                    }
-                    else if ( (synpred34()) ) {
-                        alt1=34;
-                    }
-                    else if ( (synpred36()) ) {
-                        alt1=36;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 26, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
                 case EOF:
                 case RULE_STRING:
                 case RULE_ID:
@@ -1595,10 +1573,32 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     break;
                 case RULE_FULLSTATEID:
                     {
-                    int LA1_28 = input.LA(3);
+                    int LA1_27 = input.LA(3);
 
                     if ( (synpred35()) ) {
                         alt1=35;
+                    }
+                    else if ( (synpred36()) ) {
+                        alt1=36;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 27, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
+                case 14:
+                    {
+                    int LA1_28 = input.LA(3);
+
+                    if ( (LA1_28==RULE_FULLSTATEID) ) {
+                        alt1=33;
+                    }
+                    else if ( (synpred34()) ) {
+                        alt1=34;
                     }
                     else if ( (synpred36()) ) {
                         alt1=36;
@@ -1654,7 +1654,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     break;
                 case RULE_FULLSTATEID:
                     {
-                    int LA1_28 = input.LA(3);
+                    int LA1_27 = input.LA(3);
 
                     if ( (synpred35()) ) {
                         alt1=35;
@@ -1665,7 +1665,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 28, input);
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 27, input);
 
                         throw nvae;
                     }
@@ -1673,9 +1673,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     break;
                 case 14:
                     {
-                    int LA1_26 = input.LA(3);
+                    int LA1_28 = input.LA(3);
 
-                    if ( (LA1_26==RULE_FULLSTATEID) ) {
+                    if ( (LA1_28==RULE_FULLSTATEID) ) {
                         alt1=33;
                     }
                     else if ( (synpred34()) ) {
@@ -1687,7 +1687,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 26, input);
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 28, input);
 
                         throw nvae;
                     }
@@ -1706,6 +1706,47 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             case 40:
                 {
                 switch ( input.LA(2) ) {
+                case 14:
+                    {
+                    int LA1_28 = input.LA(3);
+
+                    if ( (LA1_28==RULE_FULLSTATEID) ) {
+                        alt1=33;
+                    }
+                    else if ( (synpred34()) ) {
+                        alt1=34;
+                    }
+                    else if ( (synpred36()) ) {
+                        alt1=36;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 28, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
+                case RULE_FULLSTATEID:
+                    {
+                    int LA1_27 = input.LA(3);
+
+                    if ( (synpred35()) ) {
+                        alt1=35;
+                    }
+                    else if ( (synpred36()) ) {
+                        alt1=36;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 27, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
                 case EOF:
                 case RULE_STRING:
                 case RULE_ID:
@@ -1731,47 +1772,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 case 54:
                     {
                     alt1=36;
-                    }
-                    break;
-                case RULE_FULLSTATEID:
-                    {
-                    int LA1_28 = input.LA(3);
-
-                    if ( (synpred35()) ) {
-                        alt1=35;
-                    }
-                    else if ( (synpred36()) ) {
-                        alt1=36;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 28, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
-                case 14:
-                    {
-                    int LA1_26 = input.LA(3);
-
-                    if ( (LA1_26==RULE_FULLSTATEID) ) {
-                        alt1=33;
-                    }
-                    else if ( (synpred34()) ) {
-                        alt1=34;
-                    }
-                    else if ( (synpred36()) ) {
-                        alt1=36;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("88:2: ( ( ( (lv_isInitial_0= 'init' ) (lv_isFinal_1= 'final' ) ) (lv_type_2= ruleStateType ) 'state' (lv_id_4= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_5= 'init' ) (lv_isFinal_6= 'final' ) ) (lv_type_7= ruleStateType ) 'state' ) | ( ( (lv_isInitial_9= 'init' ) (lv_isFinal_10= 'final' ) ) (lv_type_11= ruleStateType ) (lv_id_12= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_13= 'init' ) (lv_isFinal_14= 'final' ) ) 'state' (lv_id_16= RULE_FULLSTATEID ) ) | ( ( (lv_isInitial_17= 'init' ) (lv_isFinal_18= 'final' ) ) (lv_type_19= ruleStateType ) ) | ( ( (lv_isInitial_20= 'init' ) (lv_isFinal_21= 'final' ) ) 'state' ) | ( ( (lv_isInitial_23= 'init' ) (lv_isFinal_24= 'final' ) ) (lv_id_25= RULE_FULLSTATEID ) ) | ( (lv_isInitial_26= 'init' ) (lv_isFinal_27= 'final' ) ) | ( ( (lv_isFinal_28= 'final' ) (lv_isInitial_29= 'init' ) ) (lv_type_30= ruleStateType ) 'state' (lv_id_32= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_33= 'final' ) (lv_isInitial_34= 'init' ) ) (lv_type_35= ruleStateType ) 'state' ) | ( ( (lv_isFinal_37= 'final' ) (lv_isInitial_38= 'init' ) ) (lv_type_39= ruleStateType ) (lv_id_40= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_41= 'final' ) (lv_isInitial_42= 'init' ) ) 'state' (lv_id_44= RULE_FULLSTATEID ) ) | ( ( (lv_isFinal_45= 'final' ) (lv_isInitial_46= 'init' ) ) (lv_type_47= ruleStateType ) ) | ( ( (lv_isFinal_48= 'final' ) (lv_isInitial_49= 'init' ) ) 'state' ) | ( ( (lv_isFinal_51= 'final' ) (lv_isInitial_52= 'init' ) ) (lv_id_53= RULE_FULLSTATEID ) ) | ( (lv_isFinal_54= 'final' ) (lv_isInitial_55= 'init' ) ) | ( (lv_isInitial_56= 'init' ) (lv_type_57= ruleStateType ) 'state' (lv_id_59= RULE_FULLSTATEID ) ) | ( (lv_isInitial_60= 'init' ) (lv_type_61= ruleStateType ) 'state' ) | ( (lv_isInitial_63= 'init' ) (lv_type_64= ruleStateType ) (lv_id_65= RULE_FULLSTATEID ) ) | ( (lv_isInitial_66= 'init' ) 'state' (lv_id_68= RULE_FULLSTATEID ) ) | ( (lv_isInitial_69= 'init' ) (lv_type_70= ruleStateType ) ) | ( (lv_isInitial_71= 'init' ) 'state' ) | ( (lv_isInitial_73= 'init' ) (lv_id_74= RULE_FULLSTATEID ) ) | (lv_isInitial_75= 'init' ) | ( (lv_isFinal_76= 'final' ) (lv_type_77= ruleStateType ) 'state' (lv_id_79= RULE_FULLSTATEID ) ) | ( (lv_isFinal_80= 'final' ) (lv_type_81= ruleStateType ) 'state' ) | ( (lv_isFinal_83= 'final' ) (lv_type_84= ruleStateType ) (lv_id_85= RULE_FULLSTATEID ) ) | ( (lv_isFinal_86= 'final' ) 'state' (lv_id_88= RULE_FULLSTATEID ) ) | ( (lv_isFinal_89= 'final' ) (lv_type_90= ruleStateType ) ) | ( (lv_isFinal_91= 'final' ) 'state' (lv_id_93= RULE_FULLSTATEID ) ) | ( (lv_isFinal_94= 'final' ) (lv_id_95= RULE_FULLSTATEID ) ) | (lv_isFinal_96= 'final' ) | ( (lv_type_97= ruleStateType ) 'state' (lv_id_99= RULE_FULLSTATEID ) ) | ( (lv_type_100= ruleStateType ) 'state' ) | ( (lv_type_102= ruleStateType ) (lv_id_103= RULE_FULLSTATEID ) ) | (lv_type_104= ruleStateType ) | ( 'state' (lv_id_106= RULE_FULLSTATEID ) ) | 'state' | (lv_id_108= RULE_FULLSTATEID ) )", 1, 26, input);
-
-                        throw nvae;
-                    }
                     }
                     break;
                 default:
@@ -5170,164 +5170,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             alt7=4;
                             }
                             break;
+                        case RULE_ID:
                         case 33:
-                            {
-                            switch ( input.LA(2) ) {
-                            case 34:
-                                {
-                                int LA7_7 = input.LA(3);
-
-                                if ( (LA7_7==35) ) {
-                                    int LA7_8 = input.LA(4);
-
-                                    if ( (LA7_8==RULE_ID) ) {
-                                        int LA7_11 = input.LA(5);
-
-                                        if ( (synpred47()) ) {
-                                            alt7=5;
-                                        }
-                                        else if ( (synpred49()) ) {
-                                            alt7=6;
-                                        }
-
-
-                                    }
-
-
-                                }
-                                else if ( (LA7_7==RULE_ID) ) {
-                                    int LA7_11 = input.LA(4);
-
-                                    if ( (synpred47()) ) {
-                                        alt7=5;
-                                    }
-                                    else if ( (synpred49()) ) {
-                                        alt7=6;
-                                    }
-
-
-                                }
-
-
-                                }
-                                break;
-                            case 35:
-                                {
-                                int LA7_8 = input.LA(3);
-
-                                if ( (LA7_8==RULE_ID) ) {
-                                    int LA7_11 = input.LA(4);
-
-                                    if ( (synpred47()) ) {
-                                        alt7=5;
-                                    }
-                                    else if ( (synpred49()) ) {
-                                        alt7=6;
-                                    }
-
-
-                                }
-
-
-                                }
-                                break;
-                            case RULE_ID:
-                                {
-                                int LA7_11 = input.LA(3);
-
-                                if ( (synpred47()) ) {
-                                    alt7=5;
-                                }
-                                else if ( (synpred49()) ) {
-                                    alt7=6;
-                                }
-
-
-                                }
-                                break;
-
-                            }
-
-                            }
-                            break;
                         case 34:
-                            {
-                            int LA7_7 = input.LA(2);
-
-                            if ( (LA7_7==35) ) {
-                                int LA7_8 = input.LA(3);
-
-                                if ( (LA7_8==RULE_ID) ) {
-                                    int LA7_11 = input.LA(4);
-
-                                    if ( (synpred47()) ) {
-                                        alt7=5;
-                                    }
-                                    else if ( (synpred49()) ) {
-                                        alt7=6;
-                                    }
-
-
-                                }
-
-
-                            }
-                            else if ( (LA7_7==RULE_ID) ) {
-                                int LA7_11 = input.LA(3);
-
-                                if ( (synpred47()) ) {
-                                    alt7=5;
-                                }
-                                else if ( (synpred49()) ) {
-                                    alt7=6;
-                                }
-
-
-                            }
-
-
-                            }
-                            break;
                         case 35:
                             {
-                            int LA7_8 = input.LA(2);
-
-                            if ( (LA7_8==RULE_ID) ) {
-                                int LA7_11 = input.LA(3);
-
-                                if ( (synpred47()) ) {
-                                    alt7=5;
-                                }
-                                else if ( (synpred49()) ) {
-                                    alt7=6;
-                                }
-
-
-                            }
-
-
-                            }
-                            break;
-                        case RULE_ID:
-                            {
-                            int LA7_9 = input.LA(2);
-
-                            if ( (synpred47()) ) {
-                                alt7=5;
-                            }
-                            else if ( (synpred49()) ) {
-                                alt7=6;
-                            }
-
-
+                            alt7=5;
                             }
                             break;
                         case RULE_FULLSTATEID:
-                        case RULE_STRING:
                         case 12:
                         case 13:
                         case 14:
-                        case 26:
                         case 38:
                         case 39:
                         case 40:
@@ -5578,776 +5432,9 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	    do {
                     	        int alt6=2;
                     	        switch ( input.LA(1) ) {
-                    	        case 26:
-                    	            {
-                    	            switch ( input.LA(2) ) {
-                    	            case RULE_STRING:
-                    	                {
-                    	                switch ( input.LA(3) ) {
-                    	                case RULE_ID:
-                    	                    {
-                    	                    int LA6_3 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case 33:
-                    	                    {
-                    	                    switch ( input.LA(4) ) {
-                    	                    case 34:
-                    	                        {
-                    	                        int LA6_5 = input.LA(5);
-
-                    	                        if ( (LA6_5==35) ) {
-                    	                            int LA6_6 = input.LA(6);
-
-                    	                            if ( (LA6_6==RULE_ID) ) {
-                    	                                int LA6_16 = input.LA(7);
-
-                    	                                if ( (synpred48()) ) {
-                    	                                    alt6=1;
-                    	                                }
-
-
-                    	                            }
-
-
-                    	                        }
-                    	                        else if ( (LA6_5==RULE_ID) ) {
-                    	                            int LA6_16 = input.LA(6);
-
-                    	                            if ( (synpred48()) ) {
-                    	                                alt6=1;
-                    	                            }
-
-
-                    	                        }
-
-
-                    	                        }
-                    	                        break;
-                    	                    case 35:
-                    	                        {
-                    	                        int LA6_6 = input.LA(5);
-
-                    	                        if ( (LA6_6==RULE_ID) ) {
-                    	                            int LA6_16 = input.LA(6);
-
-                    	                            if ( (synpred48()) ) {
-                    	                                alt6=1;
-                    	                            }
-
-
-                    	                        }
-
-
-                    	                        }
-                    	                        break;
-                    	                    case RULE_ID:
-                    	                        {
-                    	                        int LA6_16 = input.LA(5);
-
-                    	                        if ( (synpred48()) ) {
-                    	                            alt6=1;
-                    	                        }
-
-
-                    	                        }
-                    	                        break;
-
-                    	                    }
-
-                    	                    }
-                    	                    break;
-                    	                case 34:
-                    	                    {
-                    	                    int LA6_5 = input.LA(4);
-
-                    	                    if ( (LA6_5==35) ) {
-                    	                        int LA6_6 = input.LA(5);
-
-                    	                        if ( (LA6_6==RULE_ID) ) {
-                    	                            int LA6_16 = input.LA(6);
-
-                    	                            if ( (synpred48()) ) {
-                    	                                alt6=1;
-                    	                            }
-
-
-                    	                        }
-
-
-                    	                    }
-                    	                    else if ( (LA6_5==RULE_ID) ) {
-                    	                        int LA6_16 = input.LA(5);
-
-                    	                        if ( (synpred48()) ) {
-                    	                            alt6=1;
-                    	                        }
-
-
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case 35:
-                    	                    {
-                    	                    int LA6_6 = input.LA(4);
-
-                    	                    if ( (LA6_6==RULE_ID) ) {
-                    	                        int LA6_16 = input.LA(5);
-
-                    	                        if ( (synpred48()) ) {
-                    	                            alt6=1;
-                    	                        }
-
-
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case 12:
-                    	                    {
-                    	                    int LA6_7 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case 13:
-                    	                    {
-                    	                    int LA6_8 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case 14:
-                    	                    {
-                    	                    int LA6_9 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case 38:
-                    	                    {
-                    	                    int LA6_10 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case 39:
-                    	                    {
-                    	                    int LA6_11 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case 40:
-                    	                    {
-                    	                    int LA6_12 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case RULE_FULLSTATEID:
-                    	                    {
-                    	                    int LA6_13 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-
-                    	                }
-
-                    	                }
-                    	                break;
-                    	            case RULE_ID:
-                    	                {
-                    	                int LA6_3 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 33:
-                    	                {
-                    	                switch ( input.LA(3) ) {
-                    	                case 34:
-                    	                    {
-                    	                    int LA6_5 = input.LA(4);
-
-                    	                    if ( (LA6_5==35) ) {
-                    	                        int LA6_6 = input.LA(5);
-
-                    	                        if ( (LA6_6==RULE_ID) ) {
-                    	                            int LA6_16 = input.LA(6);
-
-                    	                            if ( (synpred48()) ) {
-                    	                                alt6=1;
-                    	                            }
-
-
-                    	                        }
-
-
-                    	                    }
-                    	                    else if ( (LA6_5==RULE_ID) ) {
-                    	                        int LA6_16 = input.LA(5);
-
-                    	                        if ( (synpred48()) ) {
-                    	                            alt6=1;
-                    	                        }
-
-
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case 35:
-                    	                    {
-                    	                    int LA6_6 = input.LA(4);
-
-                    	                    if ( (LA6_6==RULE_ID) ) {
-                    	                        int LA6_16 = input.LA(5);
-
-                    	                        if ( (synpred48()) ) {
-                    	                            alt6=1;
-                    	                        }
-
-
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case RULE_ID:
-                    	                    {
-                    	                    int LA6_16 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-
-                    	                }
-
-                    	                }
-                    	                break;
-                    	            case 34:
-                    	                {
-                    	                int LA6_5 = input.LA(3);
-
-                    	                if ( (LA6_5==35) ) {
-                    	                    int LA6_6 = input.LA(4);
-
-                    	                    if ( (LA6_6==RULE_ID) ) {
-                    	                        int LA6_16 = input.LA(5);
-
-                    	                        if ( (synpred48()) ) {
-                    	                            alt6=1;
-                    	                        }
-
-
-                    	                    }
-
-
-                    	                }
-                    	                else if ( (LA6_5==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 35:
-                    	                {
-                    	                int LA6_6 = input.LA(3);
-
-                    	                if ( (LA6_6==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 12:
-                    	                {
-                    	                int LA6_7 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 13:
-                    	                {
-                    	                int LA6_8 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 14:
-                    	                {
-                    	                int LA6_9 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 38:
-                    	                {
-                    	                int LA6_10 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 39:
-                    	                {
-                    	                int LA6_11 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 40:
-                    	                {
-                    	                int LA6_12 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case RULE_FULLSTATEID:
-                    	                {
-                    	                int LA6_13 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-
-                    	            }
-
-                    	            }
-                    	            break;
-                    	        case RULE_STRING:
-                    	            {
-                    	            switch ( input.LA(2) ) {
-                    	            case RULE_ID:
-                    	                {
-                    	                int LA6_3 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 33:
-                    	                {
-                    	                switch ( input.LA(3) ) {
-                    	                case 34:
-                    	                    {
-                    	                    int LA6_5 = input.LA(4);
-
-                    	                    if ( (LA6_5==35) ) {
-                    	                        int LA6_6 = input.LA(5);
-
-                    	                        if ( (LA6_6==RULE_ID) ) {
-                    	                            int LA6_16 = input.LA(6);
-
-                    	                            if ( (synpred48()) ) {
-                    	                                alt6=1;
-                    	                            }
-
-
-                    	                        }
-
-
-                    	                    }
-                    	                    else if ( (LA6_5==RULE_ID) ) {
-                    	                        int LA6_16 = input.LA(5);
-
-                    	                        if ( (synpred48()) ) {
-                    	                            alt6=1;
-                    	                        }
-
-
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case 35:
-                    	                    {
-                    	                    int LA6_6 = input.LA(4);
-
-                    	                    if ( (LA6_6==RULE_ID) ) {
-                    	                        int LA6_16 = input.LA(5);
-
-                    	                        if ( (synpred48()) ) {
-                    	                            alt6=1;
-                    	                        }
-
-
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-                    	                case RULE_ID:
-                    	                    {
-                    	                    int LA6_16 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                    }
-                    	                    break;
-
-                    	                }
-
-                    	                }
-                    	                break;
-                    	            case 34:
-                    	                {
-                    	                int LA6_5 = input.LA(3);
-
-                    	                if ( (LA6_5==35) ) {
-                    	                    int LA6_6 = input.LA(4);
-
-                    	                    if ( (LA6_6==RULE_ID) ) {
-                    	                        int LA6_16 = input.LA(5);
-
-                    	                        if ( (synpred48()) ) {
-                    	                            alt6=1;
-                    	                        }
-
-
-                    	                    }
-
-
-                    	                }
-                    	                else if ( (LA6_5==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 35:
-                    	                {
-                    	                int LA6_6 = input.LA(3);
-
-                    	                if ( (LA6_6==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 12:
-                    	                {
-                    	                int LA6_7 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 13:
-                    	                {
-                    	                int LA6_8 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 14:
-                    	                {
-                    	                int LA6_9 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 38:
-                    	                {
-                    	                int LA6_10 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 39:
-                    	                {
-                    	                int LA6_11 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 40:
-                    	                {
-                    	                int LA6_12 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case RULE_FULLSTATEID:
-                    	                {
-                    	                int LA6_13 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-
-                    	            }
-
-                    	            }
-                    	            break;
-                    	        case RULE_ID:
-                    	            {
-                    	            int LA6_3 = input.LA(2);
-
-                    	            if ( (synpred48()) ) {
-                    	                alt6=1;
-                    	            }
-
-
-                    	            }
-                    	            break;
-                    	        case 33:
-                    	            {
-                    	            switch ( input.LA(2) ) {
-                    	            case 34:
-                    	                {
-                    	                int LA6_5 = input.LA(3);
-
-                    	                if ( (LA6_5==35) ) {
-                    	                    int LA6_6 = input.LA(4);
-
-                    	                    if ( (LA6_6==RULE_ID) ) {
-                    	                        int LA6_16 = input.LA(5);
-
-                    	                        if ( (synpred48()) ) {
-                    	                            alt6=1;
-                    	                        }
-
-
-                    	                    }
-
-
-                    	                }
-                    	                else if ( (LA6_5==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case 35:
-                    	                {
-                    	                int LA6_6 = input.LA(3);
-
-                    	                if ( (LA6_6==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                }
-
-
-                    	                }
-                    	                break;
-                    	            case RULE_ID:
-                    	                {
-                    	                int LA6_16 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	                }
-                    	                break;
-
-                    	            }
-
-                    	            }
-                    	            break;
-                    	        case 34:
-                    	            {
-                    	            int LA6_5 = input.LA(2);
-
-                    	            if ( (LA6_5==35) ) {
-                    	                int LA6_6 = input.LA(3);
-
-                    	                if ( (LA6_6==RULE_ID) ) {
-                    	                    int LA6_16 = input.LA(4);
-
-                    	                    if ( (synpred48()) ) {
-                    	                        alt6=1;
-                    	                    }
-
-
-                    	                }
-
-
-                    	            }
-                    	            else if ( (LA6_5==RULE_ID) ) {
-                    	                int LA6_16 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	            }
-
-
-                    	            }
-                    	            break;
-                    	        case 35:
-                    	            {
-                    	            int LA6_6 = input.LA(2);
-
-                    	            if ( (LA6_6==RULE_ID) ) {
-                    	                int LA6_16 = input.LA(3);
-
-                    	                if ( (synpred48()) ) {
-                    	                    alt6=1;
-                    	                }
-
-
-                    	            }
-
-
-                    	            }
-                    	            break;
                     	        case 12:
                     	            {
-                    	            int LA6_7 = input.LA(2);
+                    	            int LA6_1 = input.LA(2);
 
                     	            if ( (synpred48()) ) {
                     	                alt6=1;
@@ -6358,7 +5445,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	            break;
                     	        case 13:
                     	            {
-                    	            int LA6_8 = input.LA(2);
+                    	            int LA6_2 = input.LA(2);
 
                     	            if ( (synpred48()) ) {
                     	                alt6=1;
@@ -6369,7 +5456,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	            break;
                     	        case 14:
                     	            {
-                    	            int LA6_9 = input.LA(2);
+                    	            int LA6_3 = input.LA(2);
 
                     	            if ( (synpred48()) ) {
                     	                alt6=1;
@@ -6380,7 +5467,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	            break;
                     	        case 38:
                     	            {
-                    	            int LA6_10 = input.LA(2);
+                    	            int LA6_4 = input.LA(2);
 
                     	            if ( (synpred48()) ) {
                     	                alt6=1;
@@ -6391,7 +5478,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	            break;
                     	        case 39:
                     	            {
-                    	            int LA6_11 = input.LA(2);
+                    	            int LA6_5 = input.LA(2);
 
                     	            if ( (synpred48()) ) {
                     	                alt6=1;
@@ -6402,7 +5489,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	            break;
                     	        case 40:
                     	            {
-                    	            int LA6_12 = input.LA(2);
+                    	            int LA6_6 = input.LA(2);
 
                     	            if ( (synpred48()) ) {
                     	                alt6=1;
@@ -6413,7 +5500,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     	            break;
                     	        case RULE_FULLSTATEID:
                     	            {
-                    	            int LA6_13 = input.LA(2);
+                    	            int LA6_7 = input.LA(2);
 
                     	            if ( (synpred48()) ) {
                     	                alt6=1;
@@ -6794,28 +5881,60 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleRegion
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2429:1: ruleRegion returns [EObject current=null] : ( ( 'region' )? (lv_id_1= RULE_STRING )? ( (lv_variables_2= ruleVariable ) | (lv_signals_3= ruleSignal ) | (lv_innerStates_4= ruleState ) )+ ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2429:1: ruleRegion returns [EObject current=null] : ( (lv_parentState_0= ruleState ) ( 'region' )? (lv_id_2= RULE_STRING )? ( (lv_variables_3= ruleVariable ) | (lv_signals_4= ruleSignal ) | (lv_innerStates_5= ruleState ) )+ ) ;
     public final EObject ruleRegion() throws RecognitionException {
         EObject current = null;
 
-        Token lv_id_1=null;
-        EObject lv_variables_2 = null;
+        Token lv_id_2=null;
+        EObject lv_parentState_0 = null;
 
-        EObject lv_signals_3 = null;
+        EObject lv_variables_3 = null;
 
-        EObject lv_innerStates_4 = null;
+        EObject lv_signals_4 = null;
+
+        EObject lv_innerStates_5 = null;
 
 
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2434:6: ( ( ( 'region' )? (lv_id_1= RULE_STRING )? ( (lv_variables_2= ruleVariable ) | (lv_signals_3= ruleSignal ) | (lv_innerStates_4= ruleState ) )+ ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2435:1: ( ( 'region' )? (lv_id_1= RULE_STRING )? ( (lv_variables_2= ruleVariable ) | (lv_signals_3= ruleSignal ) | (lv_innerStates_4= ruleState ) )+ )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2434:6: ( ( (lv_parentState_0= ruleState ) ( 'region' )? (lv_id_2= RULE_STRING )? ( (lv_variables_3= ruleVariable ) | (lv_signals_4= ruleSignal ) | (lv_innerStates_5= ruleState ) )+ ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2435:1: ( (lv_parentState_0= ruleState ) ( 'region' )? (lv_id_2= RULE_STRING )? ( (lv_variables_3= ruleVariable ) | (lv_signals_4= ruleSignal ) | (lv_innerStates_5= ruleState ) )+ )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2435:1: ( ( 'region' )? (lv_id_1= RULE_STRING )? ( (lv_variables_2= ruleVariable ) | (lv_signals_3= ruleSignal ) | (lv_innerStates_4= ruleState ) )+ )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2435:2: ( 'region' )? (lv_id_1= RULE_STRING )? ( (lv_variables_2= ruleVariable ) | (lv_signals_3= ruleSignal ) | (lv_innerStates_4= ruleState ) )+
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2435:1: ( (lv_parentState_0= ruleState ) ( 'region' )? (lv_id_2= RULE_STRING )? ( (lv_variables_3= ruleVariable ) | (lv_signals_4= ruleSignal ) | (lv_innerStates_5= ruleState ) )+ )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2435:2: (lv_parentState_0= ruleState ) ( 'region' )? (lv_id_2= RULE_STRING )? ( (lv_variables_3= ruleVariable ) | (lv_signals_4= ruleSignal ) | (lv_innerStates_5= ruleState ) )+
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2435:2: ( 'region' )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2435:2: (lv_parentState_0= ruleState )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2438:6: lv_parentState_0= ruleState
+            {
+            if ( backtracking==0 ) {
+               
+              	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getParentStateStateParserRuleCall_0_0(), currentNode); 
+              	    
+            }
+            pushFollow(FOLLOW_ruleState_in_ruleRegion4469);
+            lv_parentState_0=ruleState();
+            _fsp--;
+            if (failed) return current;
+            if ( backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode.getParent(), current);
+              	        }
+              	        
+              	        try {
+              	       		set(current, "parentState", lv_parentState_0, "State", currentNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	        currentNode = currentNode.getParent();
+              	    
+            }
+
+            }
+
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2456:2: ( 'region' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -6824,12 +5943,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt10) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2435:3: 'region'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2456:3: 'region'
                     {
-                    match(input,26,FOLLOW_26_in_ruleRegion4445); if (failed) return current;
+                    match(input,26,FOLLOW_26_in_ruleRegion4483); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                              createLeafNode(grammarAccess.getRegionAccess().getRegionKeyword_0(), null); 
+                              createLeafNode(grammarAccess.getRegionAccess().getRegionKeyword_1(), null); 
                           
                     }
 
@@ -6838,7 +5957,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2439:3: (lv_id_1= RULE_STRING )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2460:3: (lv_id_2= RULE_STRING )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -6847,13 +5966,13 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt11) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2441:6: lv_id_1= RULE_STRING
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2462:6: lv_id_2= RULE_STRING
                     {
-                    lv_id_1=(Token)input.LT(1);
-                    match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleRegion4469); if (failed) return current;
+                    lv_id_2=(Token)input.LT(1);
+                    match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleRegion4507); if (failed) return current;
                     if ( backtracking==0 ) {
 
-                      		createLeafNode(grammarAccess.getRegionAccess().getIdSTRINGTerminalRuleCall_1_0(), "id"); 
+                      		createLeafNode(grammarAccess.getRegionAccess().getIdSTRINGTerminalRuleCall_2_0(), "id"); 
                       	
                     }
                     if ( backtracking==0 ) {
@@ -6864,7 +5983,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                       	        }
                       	        
                       	        try {
-                      	       		set(current, "id", lv_id_1, "STRING", lastConsumedNode);
+                      	       		set(current, "id", lv_id_2, "STRING", lastConsumedNode);
                       	        } catch (ValueConverterException vce) {
                       				handleValueConverterException(vce);
                       	        }
@@ -6876,7 +5995,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2459:3: ( (lv_variables_2= ruleVariable ) | (lv_signals_3= ruleSignal ) | (lv_innerStates_4= ruleState ) )+
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2480:3: ( (lv_variables_3= ruleVariable ) | (lv_signals_4= ruleSignal ) | (lv_innerStates_5= ruleState ) )+
             int cnt12=0;
             loop12:
             do {
@@ -6884,12 +6003,69 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                 switch ( input.LA(1) ) {
                 case 33:
                     {
-                    int LA12_2 = input.LA(2);
+                    switch ( input.LA(2) ) {
+                    case 34:
+                        {
+                        int LA12_3 = input.LA(3);
 
-                    if ( (synpred55()) ) {
-                        alt12=2;
+                        if ( (LA12_3==35) ) {
+                            int LA12_4 = input.LA(4);
+
+                            if ( (LA12_4==RULE_ID) ) {
+                                int LA12_13 = input.LA(5);
+
+                                if ( (synpred55()) ) {
+                                    alt12=2;
+                                }
+
+
+                            }
+
+
+                        }
+                        else if ( (LA12_3==RULE_ID) ) {
+                            int LA12_13 = input.LA(4);
+
+                            if ( (synpred55()) ) {
+                                alt12=2;
+                            }
+
+
+                        }
+
+
+                        }
+                        break;
+                    case 35:
+                        {
+                        int LA12_4 = input.LA(3);
+
+                        if ( (LA12_4==RULE_ID) ) {
+                            int LA12_13 = input.LA(4);
+
+                            if ( (synpred55()) ) {
+                                alt12=2;
+                            }
+
+
+                        }
+
+
+                        }
+                        break;
+                    case RULE_ID:
+                        {
+                        int LA12_13 = input.LA(3);
+
+                        if ( (synpred55()) ) {
+                            alt12=2;
+                        }
+
+
+                        }
+                        break;
+
                     }
-
 
                     }
                     break;
@@ -6897,8 +6073,29 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     {
                     int LA12_3 = input.LA(2);
 
-                    if ( (synpred55()) ) {
-                        alt12=2;
+                    if ( (LA12_3==35) ) {
+                        int LA12_4 = input.LA(3);
+
+                        if ( (LA12_4==RULE_ID) ) {
+                            int LA12_13 = input.LA(4);
+
+                            if ( (synpred55()) ) {
+                                alt12=2;
+                            }
+
+
+                        }
+
+
+                    }
+                    else if ( (LA12_3==RULE_ID) ) {
+                        int LA12_13 = input.LA(3);
+
+                        if ( (synpred55()) ) {
+                            alt12=2;
+                        }
+
+
                     }
 
 
@@ -6908,8 +6105,14 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     {
                     int LA12_4 = input.LA(2);
 
-                    if ( (synpred55()) ) {
-                        alt12=2;
+                    if ( (LA12_4==RULE_ID) ) {
+                        int LA12_13 = input.LA(3);
+
+                        if ( (synpred55()) ) {
+                            alt12=2;
+                        }
+
+
                     }
 
 
@@ -7011,18 +6214,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                 switch (alt12) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2459:4: (lv_variables_2= ruleVariable )
+            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2480:4: (lv_variables_3= ruleVariable )
             	    {
-            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2459:4: (lv_variables_2= ruleVariable )
-            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2462:6: lv_variables_2= ruleVariable
+            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2480:4: (lv_variables_3= ruleVariable )
+            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2483:6: lv_variables_3= ruleVariable
             	    {
             	    if ( backtracking==0 ) {
             	       
-            	      	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getVariablesVariableParserRuleCall_2_0_0(), currentNode); 
+            	      	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getVariablesVariableParserRuleCall_3_0_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleVariable_in_ruleRegion4513);
-            	    lv_variables_2=ruleVariable();
+            	    pushFollow(FOLLOW_ruleVariable_in_ruleRegion4551);
+            	    lv_variables_3=ruleVariable();
             	    _fsp--;
             	    if (failed) return current;
             	    if ( backtracking==0 ) {
@@ -7033,7 +6236,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             	      	        }
             	      	        
             	      	        try {
-            	      	       		add(current, "variables", lv_variables_2, "Variable", currentNode);
+            	      	       		add(current, "variables", lv_variables_3, "Variable", currentNode);
             	      	        } catch (ValueConverterException vce) {
             	      				handleValueConverterException(vce);
             	      	        }
@@ -7047,18 +6250,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2481:6: (lv_signals_3= ruleSignal )
+            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2502:6: (lv_signals_4= ruleSignal )
             	    {
-            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2481:6: (lv_signals_3= ruleSignal )
-            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2484:6: lv_signals_3= ruleSignal
+            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2502:6: (lv_signals_4= ruleSignal )
+            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2505:6: lv_signals_4= ruleSignal
             	    {
             	    if ( backtracking==0 ) {
             	       
-            	      	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getSignalsSignalParserRuleCall_2_1_0(), currentNode); 
+            	      	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getSignalsSignalParserRuleCall_3_1_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleSignal_in_ruleRegion4557);
-            	    lv_signals_3=ruleSignal();
+            	    pushFollow(FOLLOW_ruleSignal_in_ruleRegion4595);
+            	    lv_signals_4=ruleSignal();
             	    _fsp--;
             	    if (failed) return current;
             	    if ( backtracking==0 ) {
@@ -7069,7 +6272,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             	      	        }
             	      	        
             	      	        try {
-            	      	       		add(current, "signals", lv_signals_3, "Signal", currentNode);
+            	      	       		add(current, "signals", lv_signals_4, "Signal", currentNode);
             	      	        } catch (ValueConverterException vce) {
             	      				handleValueConverterException(vce);
             	      	        }
@@ -7083,18 +6286,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             	    }
             	    break;
             	case 3 :
-            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2503:6: (lv_innerStates_4= ruleState )
+            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2524:6: (lv_innerStates_5= ruleState )
             	    {
-            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2503:6: (lv_innerStates_4= ruleState )
-            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2506:6: lv_innerStates_4= ruleState
+            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2524:6: (lv_innerStates_5= ruleState )
+            	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2527:6: lv_innerStates_5= ruleState
             	    {
             	    if ( backtracking==0 ) {
             	       
-            	      	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getInnerStatesStateParserRuleCall_2_2_0(), currentNode); 
+            	      	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getInnerStatesStateParserRuleCall_3_2_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleState_in_ruleRegion4601);
-            	    lv_innerStates_4=ruleState();
+            	    pushFollow(FOLLOW_ruleState_in_ruleRegion4639);
+            	    lv_innerStates_5=ruleState();
             	    _fsp--;
             	    if (failed) return current;
             	    if ( backtracking==0 ) {
@@ -7105,7 +6308,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             	      	        }
             	      	        
             	      	        try {
-            	      	       		add(current, "innerStates", lv_innerStates_4, "State", currentNode);
+            	      	       		add(current, "innerStates", lv_innerStates_5, "State", currentNode);
             	      	        } catch (ValueConverterException vce) {
             	      				handleValueConverterException(vce);
             	      	        }
@@ -7154,7 +6357,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start entryRuleAction
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2531:1: entryRuleAction returns [EObject current=null] : iv_ruleAction= ruleAction EOF ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2552:1: entryRuleAction returns [EObject current=null] : iv_ruleAction= ruleAction EOF ;
     public final EObject entryRuleAction() throws RecognitionException {
         EObject current = null;
 
@@ -7162,20 +6365,20 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2531:48: (iv_ruleAction= ruleAction EOF )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2532:2: iv_ruleAction= ruleAction EOF
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2552:48: (iv_ruleAction= ruleAction EOF )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2553:2: iv_ruleAction= ruleAction EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getActionRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleAction_in_entryRuleAction4640);
+            pushFollow(FOLLOW_ruleAction_in_entryRuleAction4678);
             iv_ruleAction=ruleAction();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleAction; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleAction4650); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleAction4688); if (failed) return current;
 
             }
 
@@ -7193,7 +6396,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleAction
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2539:1: ruleAction returns [EObject current=null] : ( ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) ) | this_Transition_4= ruleTransition ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2560:1: ruleAction returns [EObject current=null] : ( ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) ) | this_Transition_4= ruleTransition ) ;
     public final EObject ruleAction() throws RecognitionException {
         EObject current = null;
 
@@ -7206,10 +6409,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2544:6: ( ( ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) ) | this_Transition_4= ruleTransition ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2545:1: ( ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) ) | this_Transition_4= ruleTransition )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2565:6: ( ( ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) ) | this_Transition_4= ruleTransition ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2566:1: ( ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) ) | this_Transition_4= ruleTransition )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2545:1: ( ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) ) | this_Transition_4= ruleTransition )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2566:1: ( ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) ) | this_Transition_4= ruleTransition )
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -7222,18 +6425,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             else {
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("2545:1: ( ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) ) | this_Transition_4= ruleTransition )", 15, 0, input);
+                    new NoViableAltException("2566:1: ( ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) ) | this_Transition_4= ruleTransition )", 15, 0, input);
 
                 throw nvae;
             }
             switch (alt15) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2545:2: ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2566:2: ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2545:2: ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2545:3: (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2566:2: ( (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2566:3: (lv_isImmediate_0= '#' )? ( (lv_delay_1= RULE_INT ) ';' )? (lv_triggersAndEffects_3= RULE_STRING )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2545:3: (lv_isImmediate_0= '#' )?
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2566:3: (lv_isImmediate_0= '#' )?
                     int alt13=2;
                     int LA13_0 = input.LA(1);
 
@@ -7242,10 +6445,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     switch (alt13) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2547:6: lv_isImmediate_0= '#'
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2568:6: lv_isImmediate_0= '#'
                             {
                             lv_isImmediate_0=(Token)input.LT(1);
-                            match(input,27,FOLLOW_27_in_ruleAction4697); if (failed) return current;
+                            match(input,27,FOLLOW_27_in_ruleAction4735); if (failed) return current;
                             if ( backtracking==0 ) {
 
                                       createLeafNode(grammarAccess.getActionAccess().getIsImmediateNumberSignKeyword_0_0_0(), "isImmediate"); 
@@ -7271,7 +6474,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2566:3: ( (lv_delay_1= RULE_INT ) ';' )?
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2587:3: ( (lv_delay_1= RULE_INT ) ';' )?
                     int alt14=2;
                     int LA14_0 = input.LA(1);
 
@@ -7280,13 +6483,13 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     switch (alt14) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2566:4: (lv_delay_1= RULE_INT ) ';'
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2587:4: (lv_delay_1= RULE_INT ) ';'
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2566:4: (lv_delay_1= RULE_INT )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2568:6: lv_delay_1= RULE_INT
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2587:4: (lv_delay_1= RULE_INT )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2589:6: lv_delay_1= RULE_INT
                             {
                             lv_delay_1=(Token)input.LT(1);
-                            match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleAction4734); if (failed) return current;
+                            match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleAction4772); if (failed) return current;
                             if ( backtracking==0 ) {
 
                               		createLeafNode(grammarAccess.getActionAccess().getDelayINTTerminalRuleCall_0_1_0_0(), "delay"); 
@@ -7309,7 +6512,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                             }
 
-                            match(input,28,FOLLOW_28_in_ruleAction4751); if (failed) return current;
+                            match(input,28,FOLLOW_28_in_ruleAction4789); if (failed) return current;
                             if ( backtracking==0 ) {
 
                                       createLeafNode(grammarAccess.getActionAccess().getSemicolonKeyword_0_1_1(), null); 
@@ -7321,11 +6524,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2590:3: (lv_triggersAndEffects_3= RULE_STRING )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2592:6: lv_triggersAndEffects_3= RULE_STRING
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2611:3: (lv_triggersAndEffects_3= RULE_STRING )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2613:6: lv_triggersAndEffects_3= RULE_STRING
                     {
                     lv_triggersAndEffects_3=(Token)input.LT(1);
-                    match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleAction4775); if (failed) return current;
+                    match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleAction4813); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		createLeafNode(grammarAccess.getActionAccess().getTriggersAndEffectsSTRINGTerminalRuleCall_0_2_0(), "triggersAndEffects"); 
@@ -7355,14 +6558,14 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2612:5: this_Transition_4= ruleTransition
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2633:5: this_Transition_4= ruleTransition
                     {
                     if ( backtracking==0 ) {
                        
                               currentNode=createCompositeNode(grammarAccess.getActionAccess().getTransitionParserRuleCall_1(), currentNode); 
                           
                     }
-                    pushFollow(FOLLOW_ruleTransition_in_ruleAction4812);
+                    pushFollow(FOLLOW_ruleTransition_in_ruleAction4850);
                     this_Transition_4=ruleTransition();
                     _fsp--;
                     if (failed) return current;
@@ -7400,7 +6603,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start entryRuleTransition
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2627:1: entryRuleTransition returns [EObject current=null] : iv_ruleTransition= ruleTransition EOF ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2648:1: entryRuleTransition returns [EObject current=null] : iv_ruleTransition= ruleTransition EOF ;
     public final EObject entryRuleTransition() throws RecognitionException {
         EObject current = null;
 
@@ -7408,20 +6611,20 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2627:52: (iv_ruleTransition= ruleTransition EOF )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2628:2: iv_ruleTransition= ruleTransition EOF
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2648:52: (iv_ruleTransition= ruleTransition EOF )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2649:2: iv_ruleTransition= ruleTransition EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getTransitionRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleTransition_in_entryRuleTransition4844);
+            pushFollow(FOLLOW_ruleTransition_in_entryRuleTransition4882);
             iv_ruleTransition=ruleTransition();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleTransition; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTransition4854); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTransition4892); if (failed) return current;
 
             }
 
@@ -7439,7 +6642,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleTransition
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2635:1: ruleTransition returns [EObject current=null] : ( ( RULE_FULLSTATEID )? (lv_type_1= ruleTransitionType ) ( RULE_FULLSTATEID ) ( 'with ' (lv_triggersAndEffects_4= RULE_STRING ) )? (lv_isHistory_5= ' history' )? ';' ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2656:1: ruleTransition returns [EObject current=null] : ( ( RULE_FULLSTATEID )? (lv_type_1= ruleTransitionType ) ( RULE_FULLSTATEID ) ( 'with ' (lv_triggersAndEffects_4= RULE_STRING ) )? (lv_isHistory_5= ' history' )? ';' ) ;
     public final EObject ruleTransition() throws RecognitionException {
         EObject current = null;
 
@@ -7451,13 +6654,13 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2640:6: ( ( ( RULE_FULLSTATEID )? (lv_type_1= ruleTransitionType ) ( RULE_FULLSTATEID ) ( 'with ' (lv_triggersAndEffects_4= RULE_STRING ) )? (lv_isHistory_5= ' history' )? ';' ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2641:1: ( ( RULE_FULLSTATEID )? (lv_type_1= ruleTransitionType ) ( RULE_FULLSTATEID ) ( 'with ' (lv_triggersAndEffects_4= RULE_STRING ) )? (lv_isHistory_5= ' history' )? ';' )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2661:6: ( ( ( RULE_FULLSTATEID )? (lv_type_1= ruleTransitionType ) ( RULE_FULLSTATEID ) ( 'with ' (lv_triggersAndEffects_4= RULE_STRING ) )? (lv_isHistory_5= ' history' )? ';' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2662:1: ( ( RULE_FULLSTATEID )? (lv_type_1= ruleTransitionType ) ( RULE_FULLSTATEID ) ( 'with ' (lv_triggersAndEffects_4= RULE_STRING ) )? (lv_isHistory_5= ' history' )? ';' )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2641:1: ( ( RULE_FULLSTATEID )? (lv_type_1= ruleTransitionType ) ( RULE_FULLSTATEID ) ( 'with ' (lv_triggersAndEffects_4= RULE_STRING ) )? (lv_isHistory_5= ' history' )? ';' )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2641:2: ( RULE_FULLSTATEID )? (lv_type_1= ruleTransitionType ) ( RULE_FULLSTATEID ) ( 'with ' (lv_triggersAndEffects_4= RULE_STRING ) )? (lv_isHistory_5= ' history' )? ';'
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2662:1: ( ( RULE_FULLSTATEID )? (lv_type_1= ruleTransitionType ) ( RULE_FULLSTATEID ) ( 'with ' (lv_triggersAndEffects_4= RULE_STRING ) )? (lv_isHistory_5= ' history' )? ';' )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2662:2: ( RULE_FULLSTATEID )? (lv_type_1= ruleTransitionType ) ( RULE_FULLSTATEID ) ( 'with ' (lv_triggersAndEffects_4= RULE_STRING ) )? (lv_isHistory_5= ' history' )? ';'
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2641:2: ( RULE_FULLSTATEID )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2662:2: ( RULE_FULLSTATEID )?
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -7466,7 +6669,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt16) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2644:3: RULE_FULLSTATEID
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2665:3: RULE_FULLSTATEID
                     {
                     if ( backtracking==0 ) {
 
@@ -7476,7 +6679,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                       	        }
                               
                     }
-                    match(input,RULE_FULLSTATEID,FOLLOW_RULE_FULLSTATEID_in_ruleTransition4901); if (failed) return current;
+                    match(input,RULE_FULLSTATEID,FOLLOW_RULE_FULLSTATEID_in_ruleTransition4939); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		createLeafNode(grammarAccess.getTransitionAccess().getSourceStateStateCrossReference_0_0(), "sourceState"); 
@@ -7488,15 +6691,15 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2657:3: (lv_type_1= ruleTransitionType )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2660:6: lv_type_1= ruleTransitionType
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2678:3: (lv_type_1= ruleTransitionType )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2681:6: lv_type_1= ruleTransitionType
             {
             if ( backtracking==0 ) {
                
               	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_1_0(), currentNode); 
               	    
             }
-            pushFollow(FOLLOW_ruleTransitionType_in_ruleTransition4939);
+            pushFollow(FOLLOW_ruleTransitionType_in_ruleTransition4977);
             lv_type_1=ruleTransitionType();
             _fsp--;
             if (failed) return current;
@@ -7518,8 +6721,8 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2678:2: ( RULE_FULLSTATEID )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2681:3: RULE_FULLSTATEID
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2699:2: ( RULE_FULLSTATEID )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2702:3: RULE_FULLSTATEID
             {
             if ( backtracking==0 ) {
 
@@ -7529,7 +6732,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
               	        }
                       
             }
-            match(input,RULE_FULLSTATEID,FOLLOW_RULE_FULLSTATEID_in_ruleTransition4965); if (failed) return current;
+            match(input,RULE_FULLSTATEID,FOLLOW_RULE_FULLSTATEID_in_ruleTransition5003); if (failed) return current;
             if ( backtracking==0 ) {
 
               		createLeafNode(grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_2_0(), "targetState"); 
@@ -7538,7 +6741,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2694:2: ( 'with ' (lv_triggersAndEffects_4= RULE_STRING ) )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2715:2: ( 'with ' (lv_triggersAndEffects_4= RULE_STRING ) )?
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -7547,19 +6750,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt17) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2694:3: 'with ' (lv_triggersAndEffects_4= RULE_STRING )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2715:3: 'with ' (lv_triggersAndEffects_4= RULE_STRING )
                     {
-                    match(input,29,FOLLOW_29_in_ruleTransition4978); if (failed) return current;
+                    match(input,29,FOLLOW_29_in_ruleTransition5016); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getTransitionAccess().getWithKeyword_3_0(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2698:1: (lv_triggersAndEffects_4= RULE_STRING )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2700:6: lv_triggersAndEffects_4= RULE_STRING
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2719:1: (lv_triggersAndEffects_4= RULE_STRING )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2721:6: lv_triggersAndEffects_4= RULE_STRING
                     {
                     lv_triggersAndEffects_4=(Token)input.LT(1);
-                    match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleTransition5000); if (failed) return current;
+                    match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleTransition5038); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		createLeafNode(grammarAccess.getTransitionAccess().getTriggersAndEffectsSTRINGTerminalRuleCall_3_1_0(), "triggersAndEffects"); 
@@ -7588,7 +6791,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2718:4: (lv_isHistory_5= ' history' )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2739:4: (lv_isHistory_5= ' history' )?
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -7597,10 +6800,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt18) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2720:6: lv_isHistory_5= ' history'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2741:6: lv_isHistory_5= ' history'
                     {
                     lv_isHistory_5=(Token)input.LT(1);
-                    match(input,30,FOLLOW_30_in_ruleTransition5031); if (failed) return current;
+                    match(input,30,FOLLOW_30_in_ruleTransition5069); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_4_0(), "isHistory"); 
@@ -7626,7 +6829,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            match(input,28,FOLLOW_28_in_ruleTransition5054); if (failed) return current;
+            match(input,28,FOLLOW_28_in_ruleTransition5092); if (failed) return current;
             if ( backtracking==0 ) {
 
                       createLeafNode(grammarAccess.getTransitionAccess().getSemicolonKeyword_5(), null); 
@@ -7657,7 +6860,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start entryRuleVariable
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2752:1: entryRuleVariable returns [EObject current=null] : iv_ruleVariable= ruleVariable EOF ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2773:1: entryRuleVariable returns [EObject current=null] : iv_ruleVariable= ruleVariable EOF ;
     public final EObject entryRuleVariable() throws RecognitionException {
         EObject current = null;
 
@@ -7665,20 +6868,20 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2752:50: (iv_ruleVariable= ruleVariable EOF )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2753:2: iv_ruleVariable= ruleVariable EOF
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2773:50: (iv_ruleVariable= ruleVariable EOF )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2774:2: iv_ruleVariable= ruleVariable EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getVariableRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleVariable_in_entryRuleVariable5089);
+            pushFollow(FOLLOW_ruleVariable_in_entryRuleVariable5127);
             iv_ruleVariable=ruleVariable();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleVariable; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleVariable5099); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleVariable5137); if (failed) return current;
 
             }
 
@@ -7696,7 +6899,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleVariable
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2760:1: ruleVariable returns [EObject current=null] : ( (lv_name_0= RULE_ID ) ( ':= ' (lv_initialValue_2= RULE_INT ) )? ( ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) ) )? ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2781:1: ruleVariable returns [EObject current=null] : ( (lv_name_0= RULE_ID ) ( ':= ' (lv_initialValue_2= RULE_INT ) )? ( ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) ) )? ) ;
     public final EObject ruleVariable() throws RecognitionException {
         EObject current = null;
 
@@ -7709,17 +6912,17 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2765:6: ( ( (lv_name_0= RULE_ID ) ( ':= ' (lv_initialValue_2= RULE_INT ) )? ( ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) ) )? ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2766:1: ( (lv_name_0= RULE_ID ) ( ':= ' (lv_initialValue_2= RULE_INT ) )? ( ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) ) )? )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2786:6: ( ( (lv_name_0= RULE_ID ) ( ':= ' (lv_initialValue_2= RULE_INT ) )? ( ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) ) )? ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2787:1: ( (lv_name_0= RULE_ID ) ( ':= ' (lv_initialValue_2= RULE_INT ) )? ( ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) ) )? )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2766:1: ( (lv_name_0= RULE_ID ) ( ':= ' (lv_initialValue_2= RULE_INT ) )? ( ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) ) )? )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2766:2: (lv_name_0= RULE_ID ) ( ':= ' (lv_initialValue_2= RULE_INT ) )? ( ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) ) )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2787:1: ( (lv_name_0= RULE_ID ) ( ':= ' (lv_initialValue_2= RULE_INT ) )? ( ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) ) )? )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2787:2: (lv_name_0= RULE_ID ) ( ':= ' (lv_initialValue_2= RULE_INT ) )? ( ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) ) )?
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2766:2: (lv_name_0= RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2768:6: lv_name_0= RULE_ID
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2787:2: (lv_name_0= RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2789:6: lv_name_0= RULE_ID
             {
             lv_name_0=(Token)input.LT(1);
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleVariable5146); if (failed) return current;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleVariable5184); if (failed) return current;
             if ( backtracking==0 ) {
 
               		createLeafNode(grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_0_0(), "name"); 
@@ -7742,7 +6945,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2786:2: ( ':= ' (lv_initialValue_2= RULE_INT ) )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2807:2: ( ':= ' (lv_initialValue_2= RULE_INT ) )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -7751,19 +6954,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt19) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2786:3: ':= ' (lv_initialValue_2= RULE_INT )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2807:3: ':= ' (lv_initialValue_2= RULE_INT )
                     {
-                    match(input,31,FOLLOW_31_in_ruleVariable5164); if (failed) return current;
+                    match(input,31,FOLLOW_31_in_ruleVariable5202); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getVariableAccess().getColonEqualsSignSpaceKeyword_1_0(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2790:1: (lv_initialValue_2= RULE_INT )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2792:6: lv_initialValue_2= RULE_INT
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2811:1: (lv_initialValue_2= RULE_INT )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2813:6: lv_initialValue_2= RULE_INT
                     {
                     lv_initialValue_2=(Token)input.LT(1);
-                    match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleVariable5186); if (failed) return current;
+                    match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleVariable5224); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		createLeafNode(grammarAccess.getVariableAccess().getInitialValueINTTerminalRuleCall_1_1_0(), "initialValue"); 
@@ -7792,7 +6995,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2810:4: ( ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) ) )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2831:4: ( ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) ) )?
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -7801,15 +7004,15 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt21) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2810:5: ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2831:5: ': ' ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) )
                     {
-                    match(input,32,FOLLOW_32_in_ruleVariable5206); if (failed) return current;
+                    match(input,32,FOLLOW_32_in_ruleVariable5244); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getVariableAccess().getColonSpaceKeyword_2_0(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2814:1: ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2835:1: ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) )
                     int alt20=2;
                     int LA20_0 = input.LA(1);
 
@@ -7822,23 +7025,23 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("2814:1: ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) )", 20, 0, input);
+                            new NoViableAltException("2835:1: ( (lv_type_4= ruleValueType ) | (lv_hostType_5= RULE_STRING ) )", 20, 0, input);
 
                         throw nvae;
                     }
                     switch (alt20) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2814:2: (lv_type_4= ruleValueType )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2835:2: (lv_type_4= ruleValueType )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2814:2: (lv_type_4= ruleValueType )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2817:6: lv_type_4= ruleValueType
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2835:2: (lv_type_4= ruleValueType )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2838:6: lv_type_4= ruleValueType
                             {
                             if ( backtracking==0 ) {
                                
                               	        currentNode=createCompositeNode(grammarAccess.getVariableAccess().getTypeValueTypeEnumRuleCall_2_1_0_0(), currentNode); 
                               	    
                             }
-                            pushFollow(FOLLOW_ruleValueType_in_ruleVariable5241);
+                            pushFollow(FOLLOW_ruleValueType_in_ruleVariable5279);
                             lv_type_4=ruleValueType();
                             _fsp--;
                             if (failed) return current;
@@ -7864,13 +7067,13 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             }
                             break;
                         case 2 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2836:6: (lv_hostType_5= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2857:6: (lv_hostType_5= RULE_STRING )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2836:6: (lv_hostType_5= RULE_STRING )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2838:6: lv_hostType_5= RULE_STRING
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2857:6: (lv_hostType_5= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2859:6: lv_hostType_5= RULE_STRING
                             {
                             lv_hostType_5=(Token)input.LT(1);
-                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleVariable5273); if (failed) return current;
+                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleVariable5311); if (failed) return current;
                             if ( backtracking==0 ) {
 
                               		createLeafNode(grammarAccess.getVariableAccess().getHostTypeSTRINGTerminalRuleCall_2_1_1_0(), "hostType"); 
@@ -7930,7 +7133,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start entryRuleSignal
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2863:1: entryRuleSignal returns [EObject current=null] : iv_ruleSignal= ruleSignal EOF ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2884:1: entryRuleSignal returns [EObject current=null] : iv_ruleSignal= ruleSignal EOF ;
     public final EObject entryRuleSignal() throws RecognitionException {
         EObject current = null;
 
@@ -7938,20 +7141,20 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2863:48: (iv_ruleSignal= ruleSignal EOF )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2864:2: iv_ruleSignal= ruleSignal EOF
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2884:48: (iv_ruleSignal= ruleSignal EOF )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2885:2: iv_ruleSignal= ruleSignal EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getSignalRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleSignal_in_entryRuleSignal5317);
+            pushFollow(FOLLOW_ruleSignal_in_entryRuleSignal5355);
             iv_ruleSignal=ruleSignal();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleSignal; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleSignal5327); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleSignal5365); if (failed) return current;
 
             }
 
@@ -7969,7 +7172,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleSignal
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2871:1: ruleSignal returns [EObject current=null] : ( (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2892:1: ruleSignal returns [EObject current=null] : ( (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? ) ;
     public final EObject ruleSignal() throws RecognitionException {
         EObject current = null;
 
@@ -7991,13 +7194,13 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2876:6: ( ( (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2877:1: ( (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2897:6: ( ( (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2898:1: ( (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2877:1: ( (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2877:2: (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2898:1: ( (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )? )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2898:2: (lv_isLocal_0= 'local' )? (lv_isInput_1= 'input' )? (lv_isOutput_2= 'output' )? (lv_name_3= RULE_ID ) ( ':= ' (lv_initialValue_5= RULE_INT ) )? ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )?
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2877:2: (lv_isLocal_0= 'local' )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2898:2: (lv_isLocal_0= 'local' )?
             int alt22=2;
             int LA22_0 = input.LA(1);
 
@@ -8006,10 +7209,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt22) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2879:6: lv_isLocal_0= 'local'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2900:6: lv_isLocal_0= 'local'
                     {
                     lv_isLocal_0=(Token)input.LT(1);
-                    match(input,33,FOLLOW_33_in_ruleSignal5373); if (failed) return current;
+                    match(input,33,FOLLOW_33_in_ruleSignal5411); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getSignalAccess().getIsLocalLocalKeyword_0_0(), "isLocal"); 
@@ -8035,7 +7238,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2898:3: (lv_isInput_1= 'input' )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2919:3: (lv_isInput_1= 'input' )?
             int alt23=2;
             int LA23_0 = input.LA(1);
 
@@ -8044,10 +7247,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt23) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2900:6: lv_isInput_1= 'input'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2921:6: lv_isInput_1= 'input'
                     {
                     lv_isInput_1=(Token)input.LT(1);
-                    match(input,34,FOLLOW_34_in_ruleSignal5408); if (failed) return current;
+                    match(input,34,FOLLOW_34_in_ruleSignal5446); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getSignalAccess().getIsInputInputKeyword_1_0(), "isInput"); 
@@ -8073,7 +7276,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2919:3: (lv_isOutput_2= 'output' )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2940:3: (lv_isOutput_2= 'output' )?
             int alt24=2;
             int LA24_0 = input.LA(1);
 
@@ -8082,10 +7285,10 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt24) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2921:6: lv_isOutput_2= 'output'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2942:6: lv_isOutput_2= 'output'
                     {
                     lv_isOutput_2=(Token)input.LT(1);
-                    match(input,35,FOLLOW_35_in_ruleSignal5443); if (failed) return current;
+                    match(input,35,FOLLOW_35_in_ruleSignal5481); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getSignalAccess().getIsOutputOutputKeyword_2_0(), "isOutput"); 
@@ -8111,11 +7314,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2940:3: (lv_name_3= RULE_ID )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2942:6: lv_name_3= RULE_ID
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2961:3: (lv_name_3= RULE_ID )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2963:6: lv_name_3= RULE_ID
             {
             lv_name_3=(Token)input.LT(1);
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleSignal5479); if (failed) return current;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleSignal5517); if (failed) return current;
             if ( backtracking==0 ) {
 
               		createLeafNode(grammarAccess.getSignalAccess().getNameIDTerminalRuleCall_3_0(), "name"); 
@@ -8138,7 +7341,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2960:2: ( ':= ' (lv_initialValue_5= RULE_INT ) )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2981:2: ( ':= ' (lv_initialValue_5= RULE_INT ) )?
             int alt25=2;
             int LA25_0 = input.LA(1);
 
@@ -8147,19 +7350,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt25) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2960:3: ':= ' (lv_initialValue_5= RULE_INT )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2981:3: ':= ' (lv_initialValue_5= RULE_INT )
                     {
-                    match(input,31,FOLLOW_31_in_ruleSignal5497); if (failed) return current;
+                    match(input,31,FOLLOW_31_in_ruleSignal5535); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getSignalAccess().getColonEqualsSignSpaceKeyword_4_0(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2964:1: (lv_initialValue_5= RULE_INT )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2966:6: lv_initialValue_5= RULE_INT
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2985:1: (lv_initialValue_5= RULE_INT )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2987:6: lv_initialValue_5= RULE_INT
                     {
                     lv_initialValue_5=(Token)input.LT(1);
-                    match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleSignal5519); if (failed) return current;
+                    match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleSignal5557); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		createLeafNode(grammarAccess.getSignalAccess().getInitialValueINTTerminalRuleCall_4_1_0(), "initialValue"); 
@@ -8188,7 +7391,7 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2984:4: ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )?
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3005:4: ( ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) ) | ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) ) )?
             int alt29=3;
             int LA29_0 = input.LA(1);
 
@@ -8204,18 +7407,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             }
             switch (alt29) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2984:5: ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3005:5: ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2984:5: ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2984:6: ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3005:5: ( ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3005:6: ': ' ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) )
                     {
-                    match(input,32,FOLLOW_32_in_ruleSignal5540); if (failed) return current;
+                    match(input,32,FOLLOW_32_in_ruleSignal5578); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getSignalAccess().getColonSpaceKeyword_5_0_0(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2988:1: ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3009:1: ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) )
                     int alt26=2;
                     int LA26_0 = input.LA(1);
 
@@ -8228,23 +7431,23 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("2988:1: ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) )", 26, 0, input);
+                            new NoViableAltException("3009:1: ( (lv_type_7= ruleValueType ) | (lv_hostType_8= RULE_STRING ) )", 26, 0, input);
 
                         throw nvae;
                     }
                     switch (alt26) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2988:2: (lv_type_7= ruleValueType )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3009:2: (lv_type_7= ruleValueType )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2988:2: (lv_type_7= ruleValueType )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2991:6: lv_type_7= ruleValueType
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3009:2: (lv_type_7= ruleValueType )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3012:6: lv_type_7= ruleValueType
                             {
                             if ( backtracking==0 ) {
                                
                               	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_5_0_1_0_0(), currentNode); 
                               	    
                             }
-                            pushFollow(FOLLOW_ruleValueType_in_ruleSignal5575);
+                            pushFollow(FOLLOW_ruleValueType_in_ruleSignal5613);
                             lv_type_7=ruleValueType();
                             _fsp--;
                             if (failed) return current;
@@ -8270,13 +7473,13 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             }
                             break;
                         case 2 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3010:6: (lv_hostType_8= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3031:6: (lv_hostType_8= RULE_STRING )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3010:6: (lv_hostType_8= RULE_STRING )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3012:6: lv_hostType_8= RULE_STRING
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3031:6: (lv_hostType_8= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3033:6: lv_hostType_8= RULE_STRING
                             {
                             lv_hostType_8=(Token)input.LT(1);
-                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSignal5607); if (failed) return current;
+                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSignal5645); if (failed) return current;
                             if ( backtracking==0 ) {
 
                               		createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_0_1_1_0(), "hostType"); 
@@ -8312,24 +7515,24 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3031:6: ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3052:6: ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3031:6: ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3031:7: ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3052:6: ( ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3052:7: ': ' 'combine' ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) ) 'with' ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) )
                     {
-                    match(input,32,FOLLOW_32_in_ruleSignal5633); if (failed) return current;
+                    match(input,32,FOLLOW_32_in_ruleSignal5671); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getSignalAccess().getColonSpaceKeyword_5_1_0(), null); 
                           
                     }
-                    match(input,36,FOLLOW_36_in_ruleSignal5642); if (failed) return current;
+                    match(input,36,FOLLOW_36_in_ruleSignal5680); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getSignalAccess().getCombineKeyword_5_1_1(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3039:1: ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3060:1: ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) )
                     int alt27=2;
                     int LA27_0 = input.LA(1);
 
@@ -8342,23 +7545,23 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("3039:1: ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) )", 27, 0, input);
+                            new NoViableAltException("3060:1: ( (lv_type_11= ruleValueType ) | (lv_hostType_12= RULE_STRING ) )", 27, 0, input);
 
                         throw nvae;
                     }
                     switch (alt27) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3039:2: (lv_type_11= ruleValueType )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3060:2: (lv_type_11= ruleValueType )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3039:2: (lv_type_11= ruleValueType )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3042:6: lv_type_11= ruleValueType
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3060:2: (lv_type_11= ruleValueType )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3063:6: lv_type_11= ruleValueType
                             {
                             if ( backtracking==0 ) {
                                
                               	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_5_1_2_0_0(), currentNode); 
                               	    
                             }
-                            pushFollow(FOLLOW_ruleValueType_in_ruleSignal5677);
+                            pushFollow(FOLLOW_ruleValueType_in_ruleSignal5715);
                             lv_type_11=ruleValueType();
                             _fsp--;
                             if (failed) return current;
@@ -8384,13 +7587,13 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             }
                             break;
                         case 2 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3061:6: (lv_hostType_12= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3082:6: (lv_hostType_12= RULE_STRING )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3061:6: (lv_hostType_12= RULE_STRING )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3063:6: lv_hostType_12= RULE_STRING
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3082:6: (lv_hostType_12= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3084:6: lv_hostType_12= RULE_STRING
                             {
                             lv_hostType_12=(Token)input.LT(1);
-                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSignal5709); if (failed) return current;
+                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSignal5747); if (failed) return current;
                             if ( backtracking==0 ) {
 
                               		createLeafNode(grammarAccess.getSignalAccess().getHostTypeSTRINGTerminalRuleCall_5_1_2_1_0(), "hostType"); 
@@ -8419,13 +7622,13 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
                     }
 
-                    match(input,37,FOLLOW_37_in_ruleSignal5727); if (failed) return current;
+                    match(input,37,FOLLOW_37_in_ruleSignal5765); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getSignalAccess().getWithKeyword_5_1_3(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3085:1: ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3106:1: ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) )
                     int alt28=2;
                     int LA28_0 = input.LA(1);
 
@@ -8438,23 +7641,23 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     else {
                         if (backtracking>0) {failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("3085:1: ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) )", 28, 0, input);
+                            new NoViableAltException("3106:1: ( (lv_combineOperator_14= ruleCombineOperator ) | (lv_hostCombineOperator_15= RULE_STRING ) )", 28, 0, input);
 
                         throw nvae;
                     }
                     switch (alt28) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3085:2: (lv_combineOperator_14= ruleCombineOperator )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3106:2: (lv_combineOperator_14= ruleCombineOperator )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3085:2: (lv_combineOperator_14= ruleCombineOperator )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3088:6: lv_combineOperator_14= ruleCombineOperator
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3106:2: (lv_combineOperator_14= ruleCombineOperator )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3109:6: lv_combineOperator_14= ruleCombineOperator
                             {
                             if ( backtracking==0 ) {
                                
                               	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_5_1_4_0_0(), currentNode); 
                               	    
                             }
-                            pushFollow(FOLLOW_ruleCombineOperator_in_ruleSignal5762);
+                            pushFollow(FOLLOW_ruleCombineOperator_in_ruleSignal5800);
                             lv_combineOperator_14=ruleCombineOperator();
                             _fsp--;
                             if (failed) return current;
@@ -8480,13 +7683,13 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                             }
                             break;
                         case 2 :
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3107:6: (lv_hostCombineOperator_15= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3128:6: (lv_hostCombineOperator_15= RULE_STRING )
                             {
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3107:6: (lv_hostCombineOperator_15= RULE_STRING )
-                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3109:6: lv_hostCombineOperator_15= RULE_STRING
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3128:6: (lv_hostCombineOperator_15= RULE_STRING )
+                            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3130:6: lv_hostCombineOperator_15= RULE_STRING
                             {
                             lv_hostCombineOperator_15=(Token)input.LT(1);
-                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSignal5794); if (failed) return current;
+                            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSignal5832); if (failed) return current;
                             if ( backtracking==0 ) {
 
                               		createLeafNode(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_5_1_4_1_0(), "hostCombineOperator"); 
@@ -8549,16 +7752,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleStateType
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3136:1: ruleStateType returns [Enumerator current=null] : ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3157:1: ruleStateType returns [Enumerator current=null] : ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) ) ;
     public final Enumerator ruleStateType() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3140:6: ( ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3141:1: ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3161:6: ( ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3162:1: ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3141:1: ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3162:1: ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) )
             int alt30=4;
             switch ( input.LA(1) ) {
             case 14:
@@ -8584,19 +7787,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("3141:1: ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) )", 30, 0, input);
+                    new NoViableAltException("3162:1: ( ( 'state' ) | ( 'cond' ) | ( 'ref' ) | ( 'textual' ) )", 30, 0, input);
 
                 throw nvae;
             }
 
             switch (alt30) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3141:2: ( 'state' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3162:2: ( 'state' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3141:2: ( 'state' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3141:4: 'state'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3162:2: ( 'state' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3162:4: 'state'
                     {
-                    match(input,14,FOLLOW_14_in_ruleStateType5855); if (failed) return current;
+                    match(input,14,FOLLOW_14_in_ruleStateType5893); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getNORMALEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -8610,12 +7813,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3147:6: ( 'cond' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3168:6: ( 'cond' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3147:6: ( 'cond' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3147:8: 'cond'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3168:6: ( 'cond' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3168:8: 'cond'
                     {
-                    match(input,38,FOLLOW_38_in_ruleStateType5870); if (failed) return current;
+                    match(input,38,FOLLOW_38_in_ruleStateType5908); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getPSEUDOEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -8629,12 +7832,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3153:6: ( 'ref' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3174:6: ( 'ref' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3153:6: ( 'ref' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3153:8: 'ref'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3174:6: ( 'ref' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3174:8: 'ref'
                     {
-                    match(input,39,FOLLOW_39_in_ruleStateType5885); if (failed) return current;
+                    match(input,39,FOLLOW_39_in_ruleStateType5923); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getREFERENCEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -8648,12 +7851,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3159:6: ( 'textual' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3180:6: ( 'textual' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3159:6: ( 'textual' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3159:8: 'textual'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3180:6: ( 'textual' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3180:8: 'textual'
                     {
-                    match(input,40,FOLLOW_40_in_ruleStateType5900); if (failed) return current;
+                    match(input,40,FOLLOW_40_in_ruleStateType5938); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getTEXTUALEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -8691,16 +7894,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleCombineOperator
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3169:1: ruleCombineOperator returns [Enumerator current=null] : ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3190:1: ruleCombineOperator returns [Enumerator current=null] : ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) ) ;
     public final Enumerator ruleCombineOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3173:6: ( ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3174:1: ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3194:6: ( ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3195:1: ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3174:1: ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3195:1: ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) )
             int alt31=6;
             switch ( input.LA(1) ) {
             case 41:
@@ -8736,19 +7939,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("3174:1: ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) )", 31, 0, input);
+                    new NoViableAltException("3195:1: ( ( 'NONE' ) | ( '+' ) | ( '*' ) | ( 'AND' ) | ( 'OR' ) | ( 'host' ) )", 31, 0, input);
 
                 throw nvae;
             }
 
             switch (alt31) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3174:2: ( 'NONE' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3195:2: ( 'NONE' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3174:2: ( 'NONE' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3174:4: 'NONE'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3195:2: ( 'NONE' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3195:4: 'NONE'
                     {
-                    match(input,41,FOLLOW_41_in_ruleCombineOperator5943); if (failed) return current;
+                    match(input,41,FOLLOW_41_in_ruleCombineOperator5981); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getNONEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -8762,12 +7965,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3180:6: ( '+' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3201:6: ( '+' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3180:6: ( '+' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3180:8: '+'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3201:6: ( '+' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3201:8: '+'
                     {
-                    match(input,42,FOLLOW_42_in_ruleCombineOperator5958); if (failed) return current;
+                    match(input,42,FOLLOW_42_in_ruleCombineOperator5996); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getADDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -8781,12 +7984,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3186:6: ( '*' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3207:6: ( '*' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3186:6: ( '*' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3186:8: '*'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3207:6: ( '*' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3207:8: '*'
                     {
-                    match(input,43,FOLLOW_43_in_ruleCombineOperator5973); if (failed) return current;
+                    match(input,43,FOLLOW_43_in_ruleCombineOperator6011); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMULTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -8800,12 +8003,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3192:6: ( 'AND' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3213:6: ( 'AND' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3192:6: ( 'AND' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3192:8: 'AND'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3213:6: ( 'AND' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3213:8: 'AND'
                     {
-                    match(input,44,FOLLOW_44_in_ruleCombineOperator5988); if (failed) return current;
+                    match(input,44,FOLLOW_44_in_ruleCombineOperator6026); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getANDEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -8819,12 +8022,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3198:6: ( 'OR' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3219:6: ( 'OR' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3198:6: ( 'OR' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3198:8: 'OR'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3219:6: ( 'OR' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3219:8: 'OR'
                     {
-                    match(input,45,FOLLOW_45_in_ruleCombineOperator6003); if (failed) return current;
+                    match(input,45,FOLLOW_45_in_ruleCombineOperator6041); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getOREnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -8838,12 +8041,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3204:6: ( 'host' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3225:6: ( 'host' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3204:6: ( 'host' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3204:8: 'host'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3225:6: ( 'host' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3225:8: 'host'
                     {
-                    match(input,46,FOLLOW_46_in_ruleCombineOperator6018); if (failed) return current;
+                    match(input,46,FOLLOW_46_in_ruleCombineOperator6056); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getHOSTEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -8881,16 +8084,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleValueType
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3214:1: ruleValueType returns [Enumerator current=null] : ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3235:1: ruleValueType returns [Enumerator current=null] : ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) ) ;
     public final Enumerator ruleValueType() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3218:6: ( ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3219:1: ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3239:6: ( ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3240:1: ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3219:1: ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3240:1: ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) )
             int alt32=6;
             switch ( input.LA(1) ) {
             case 47:
@@ -8926,19 +8129,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("3219:1: ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) )", 32, 0, input);
+                    new NoViableAltException("3240:1: ( ( 'PURE' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'host' ) )", 32, 0, input);
 
                 throw nvae;
             }
 
             switch (alt32) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3219:2: ( 'PURE' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3240:2: ( 'PURE' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3219:2: ( 'PURE' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3219:4: 'PURE'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3240:2: ( 'PURE' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3240:4: 'PURE'
                     {
-                    match(input,47,FOLLOW_47_in_ruleValueType6061); if (failed) return current;
+                    match(input,47,FOLLOW_47_in_ruleValueType6099); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getPUREEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -8952,12 +8155,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3225:6: ( 'boolean' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3246:6: ( 'boolean' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3225:6: ( 'boolean' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3225:8: 'boolean'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3246:6: ( 'boolean' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3246:8: 'boolean'
                     {
-                    match(input,48,FOLLOW_48_in_ruleValueType6076); if (failed) return current;
+                    match(input,48,FOLLOW_48_in_ruleValueType6114); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -8971,12 +8174,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3231:6: ( 'unsigned' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3252:6: ( 'unsigned' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3231:6: ( 'unsigned' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3231:8: 'unsigned'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3252:6: ( 'unsigned' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3252:8: 'unsigned'
                     {
-                    match(input,49,FOLLOW_49_in_ruleValueType6091); if (failed) return current;
+                    match(input,49,FOLLOW_49_in_ruleValueType6129); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getUNSIGNEDEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -8990,12 +8193,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3237:6: ( 'integer' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3258:6: ( 'integer' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3237:6: ( 'integer' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3237:8: 'integer'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3258:6: ( 'integer' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3258:8: 'integer'
                     {
-                    match(input,50,FOLLOW_50_in_ruleValueType6106); if (failed) return current;
+                    match(input,50,FOLLOW_50_in_ruleValueType6144); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getINTEGEREnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -9009,12 +8212,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3243:6: ( 'float' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3264:6: ( 'float' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3243:6: ( 'float' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3243:8: 'float'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3264:6: ( 'float' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3264:8: 'float'
                     {
-                    match(input,51,FOLLOW_51_in_ruleValueType6121); if (failed) return current;
+                    match(input,51,FOLLOW_51_in_ruleValueType6159); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -9028,12 +8231,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3249:6: ( 'host' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3270:6: ( 'host' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3249:6: ( 'host' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3249:8: 'host'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3270:6: ( 'host' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3270:8: 'host'
                     {
-                    match(input,46,FOLLOW_46_in_ruleValueType6136); if (failed) return current;
+                    match(input,46,FOLLOW_46_in_ruleValueType6174); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getHOSTEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -9071,16 +8274,16 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
 
     // $ANTLR start ruleTransitionType
-    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3259:1: ruleTransitionType returns [Enumerator current=null] : ( ( '-->' ) | ( 'o->' ) | ( '>->' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3280:1: ruleTransitionType returns [Enumerator current=null] : ( ( '-->' ) | ( 'o->' ) | ( '>->' ) ) ;
     public final Enumerator ruleTransitionType() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3263:6: ( ( ( '-->' ) | ( 'o->' ) | ( '>->' ) ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3264:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3284:6: ( ( ( '-->' ) | ( 'o->' ) | ( '>->' ) ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3285:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3264:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3285:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )
             int alt33=3;
             switch ( input.LA(1) ) {
             case 52:
@@ -9101,19 +8304,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("3264:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )", 33, 0, input);
+                    new NoViableAltException("3285:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )", 33, 0, input);
 
                 throw nvae;
             }
 
             switch (alt33) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3264:2: ( '-->' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3285:2: ( '-->' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3264:2: ( '-->' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3264:4: '-->'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3285:2: ( '-->' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3285:4: '-->'
                     {
-                    match(input,52,FOLLOW_52_in_ruleTransitionType6179); if (failed) return current;
+                    match(input,52,FOLLOW_52_in_ruleTransitionType6217); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getTransitionTypeAccess().getWEAKABORTEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -9127,12 +8330,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3270:6: ( 'o->' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3291:6: ( 'o->' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3270:6: ( 'o->' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3270:8: 'o->'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3291:6: ( 'o->' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3291:8: 'o->'
                     {
-                    match(input,53,FOLLOW_53_in_ruleTransitionType6194); if (failed) return current;
+                    match(input,53,FOLLOW_53_in_ruleTransitionType6232); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getTransitionTypeAccess().getSTRONGABORTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -9146,12 +8349,12 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3276:6: ( '>->' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3297:6: ( '>->' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3276:6: ( '>->' )
-                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3276:8: '>->'
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3297:6: ( '>->' )
+                    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:3297:8: '>->'
                     {
-                    match(input,54,FOLLOW_54_in_ruleTransitionType6209); if (failed) return current;
+                    match(input,54,FOLLOW_54_in_ruleTransitionType6247); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getTransitionTypeAccess().getNORMALTERMINATIONEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -10587,31 +9790,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     }
     // $ANTLR end synpred42
 
-    // $ANTLR start synpred47
-    public final void synpred47_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2256:6: ( ( ruleSignal ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2256:6: ( ruleSignal )
-        {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2256:6: ( ruleSignal )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2259:6: ruleSignal
-        {
-        if ( backtracking==0 ) {
-           
-          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getSignalsSignalParserRuleCall_4_1_4_0(), currentNode); 
-          	    
-        }
-        pushFollow(FOLLOW_ruleSignal_in_synpred474078);
-        ruleSignal();
-        _fsp--;
-        if (failed) return ;
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred47
-
     // $ANTLR start synpred48
     public final void synpred48_fragment() throws RecognitionException {   
         // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2278:8: ( ( ruleRegion ) '||' )
@@ -10638,217 +9816,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     }
     // $ANTLR end synpred48
 
-    // $ANTLR start synpred49
-    public final void synpred49_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2278:6: ( ( ( ( ruleRegion ) '||' )* ( ruleRegion ) ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2278:6: ( ( ( ruleRegion ) '||' )* ( ruleRegion ) )
-        {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2278:6: ( ( ( ruleRegion ) '||' )* ( ruleRegion ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2278:7: ( ( ruleRegion ) '||' )* ( ruleRegion )
-        {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2278:7: ( ( ruleRegion ) '||' )*
-        loop35:
-        do {
-            int alt35=2;
-            switch ( input.LA(1) ) {
-            case 26:
-                {
-                int LA35_1 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-            case RULE_STRING:
-                {
-                int LA35_2 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-            case RULE_ID:
-                {
-                int LA35_3 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-            case 33:
-                {
-                int LA35_4 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-            case 34:
-                {
-                int LA35_5 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-            case 35:
-                {
-                int LA35_6 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-            case 12:
-                {
-                int LA35_7 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-            case 13:
-                {
-                int LA35_8 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-            case 14:
-                {
-                int LA35_9 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-            case 38:
-                {
-                int LA35_10 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-            case 39:
-                {
-                int LA35_11 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-            case 40:
-                {
-                int LA35_12 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-            case RULE_FULLSTATEID:
-                {
-                int LA35_13 = input.LA(2);
-
-                if ( (synpred48()) ) {
-                    alt35=1;
-                }
-
-
-                }
-                break;
-
-            }
-
-            switch (alt35) {
-        	case 1 :
-        	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2278:8: ( ruleRegion ) '||'
-        	    {
-        	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2278:8: ( ruleRegion )
-        	    // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2281:6: ruleRegion
-        	    {
-        	    if ( backtracking==0 ) {
-        	       
-        	      	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_4_1_5_0_0_0(), currentNode); 
-        	      	    
-        	    }
-        	    pushFollow(FOLLOW_ruleRegion_in_synpred494124);
-        	    ruleRegion();
-        	    _fsp--;
-        	    if (failed) return ;
-
-        	    }
-
-        	    match(input,23,FOLLOW_23_in_synpred494137); if (failed) return ;
-
-        	    }
-        	    break;
-
-        	default :
-        	    break loop35;
-            }
-        } while (true);
-
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2303:3: ( ruleRegion )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2306:6: ruleRegion
-        {
-        if ( backtracking==0 ) {
-           
-          	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_4_1_5_1_0(), currentNode); 
-          	    
-        }
-        pushFollow(FOLLOW_ruleRegion_in_synpred494173);
-        ruleRegion();
-        _fsp--;
-        if (failed) return ;
-
-        }
-
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred49
-
     // $ANTLR start synpred51
     public final void synpred51_fragment() throws RecognitionException {   
         // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2331:6: ( ruleTransition )
@@ -10870,18 +9837,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
     // $ANTLR start synpred54
     public final void synpred54_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2459:4: ( ( ruleVariable ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2459:4: ( ruleVariable )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2480:4: ( ( ruleVariable ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2480:4: ( ruleVariable )
         {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2459:4: ( ruleVariable )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2462:6: ruleVariable
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2480:4: ( ruleVariable )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2483:6: ruleVariable
         {
         if ( backtracking==0 ) {
            
-          	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getVariablesVariableParserRuleCall_2_0_0(), currentNode); 
+          	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getVariablesVariableParserRuleCall_3_0_0(), currentNode); 
           	    
         }
-        pushFollow(FOLLOW_ruleVariable_in_synpred544513);
+        pushFollow(FOLLOW_ruleVariable_in_synpred544551);
         ruleVariable();
         _fsp--;
         if (failed) return ;
@@ -10895,18 +9862,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
     // $ANTLR start synpred55
     public final void synpred55_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2481:6: ( ( ruleSignal ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2481:6: ( ruleSignal )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2502:6: ( ( ruleSignal ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2502:6: ( ruleSignal )
         {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2481:6: ( ruleSignal )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2484:6: ruleSignal
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2502:6: ( ruleSignal )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2505:6: ruleSignal
         {
         if ( backtracking==0 ) {
            
-          	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getSignalsSignalParserRuleCall_2_1_0(), currentNode); 
+          	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getSignalsSignalParserRuleCall_3_1_0(), currentNode); 
           	    
         }
-        pushFollow(FOLLOW_ruleSignal_in_synpred554557);
+        pushFollow(FOLLOW_ruleSignal_in_synpred554595);
         ruleSignal();
         _fsp--;
         if (failed) return ;
@@ -10920,18 +9887,18 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
 
     // $ANTLR start synpred56
     public final void synpred56_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2503:6: ( ( ruleState ) )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2503:6: ( ruleState )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2524:6: ( ( ruleState ) )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2524:6: ( ruleState )
         {
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2503:6: ( ruleState )
-        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2506:6: ruleState
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2524:6: ( ruleState )
+        // ../de.cau.cs.kieler.synccharts.dsl.rtsys/src-gen/de/cau/cs/kieler/synccharts/dsl/parser/antlr/internal/InternalRetypingSynccharts.g:2527:6: ruleState
         {
         if ( backtracking==0 ) {
            
-          	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getInnerStatesStateParserRuleCall_2_2_0(), currentNode); 
+          	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getInnerStatesStateParserRuleCall_3_2_0(), currentNode); 
           	    
         }
-        pushFollow(FOLLOW_ruleState_in_synpred564601);
+        pushFollow(FOLLOW_ruleState_in_synpred564639);
         ruleState();
         _fsp--;
         if (failed) return ;
@@ -10948,34 +9915,6 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
         int start = input.mark();
         try {
             synpred48_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred47() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred47_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred49() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred49_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -11695,19 +10634,19 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     public static final BitSet FOLLOW_ruleRenaming_in_ruleState3767 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_17_in_ruleState3780 = new BitSet(new long[]{0x0070000000040032L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleState3804 = new BitSet(new long[]{0x0070000000040012L});
-    public static final BitSet FOLLOW_18_in_ruleState3823 = new BitSet(new long[]{0x000001CE047870B0L});
+    public static final BitSet FOLLOW_18_in_ruleState3823 = new BitSet(new long[]{0x000001CE00787090L});
     public static final BitSet FOLLOW_19_in_ruleState3834 = new BitSet(new long[]{0x0070000008000070L});
-    public static final BitSet FOLLOW_ruleAction_in_ruleState3868 = new BitSet(new long[]{0x000001CE057870B0L});
+    public static final BitSet FOLLOW_ruleAction_in_ruleState3868 = new BitSet(new long[]{0x000001CE01787090L});
     public static final BitSet FOLLOW_20_in_ruleState3889 = new BitSet(new long[]{0x0070000008000070L});
-    public static final BitSet FOLLOW_ruleAction_in_ruleState3923 = new BitSet(new long[]{0x000001CE057870B0L});
+    public static final BitSet FOLLOW_ruleAction_in_ruleState3923 = new BitSet(new long[]{0x000001CE01787090L});
     public static final BitSet FOLLOW_21_in_ruleState3944 = new BitSet(new long[]{0x0070000008000070L});
-    public static final BitSet FOLLOW_ruleAction_in_ruleState3978 = new BitSet(new long[]{0x000001CE057870B0L});
+    public static final BitSet FOLLOW_ruleAction_in_ruleState3978 = new BitSet(new long[]{0x000001CE01787090L});
     public static final BitSet FOLLOW_22_in_ruleState3999 = new BitSet(new long[]{0x0070000008000070L});
-    public static final BitSet FOLLOW_ruleAction_in_ruleState4033 = new BitSet(new long[]{0x000001CE057870B0L});
-    public static final BitSet FOLLOW_ruleSignal_in_ruleState4078 = new BitSet(new long[]{0x000001CE057870B0L});
+    public static final BitSet FOLLOW_ruleAction_in_ruleState4033 = new BitSet(new long[]{0x000001CE01787090L});
+    public static final BitSet FOLLOW_ruleSignal_in_ruleState4078 = new BitSet(new long[]{0x000001CE01787090L});
     public static final BitSet FOLLOW_ruleRegion_in_ruleState4124 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ruleState4137 = new BitSet(new long[]{0x000001CE040070B0L});
-    public static final BitSet FOLLOW_ruleRegion_in_ruleState4173 = new BitSet(new long[]{0x000001CE057870B0L});
+    public static final BitSet FOLLOW_23_in_ruleState4137 = new BitSet(new long[]{0x000001C000007010L});
+    public static final BitSet FOLLOW_ruleRegion_in_ruleState4173 = new BitSet(new long[]{0x000001CE01787090L});
     public static final BitSet FOLLOW_24_in_ruleState4189 = new BitSet(new long[]{0x0070000000000012L});
     public static final BitSet FOLLOW_ruleTransition_in_ruleState4225 = new BitSet(new long[]{0x0070000000000012L});
     public static final BitSet FOLLOW_ruleRenaming_in_entryRuleRenaming4263 = new BitSet(new long[]{0x0000000000000000L});
@@ -11717,72 +10656,73 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     public static final BitSet FOLLOW_RULE_STRING_in_ruleRenaming4359 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleRegion_in_entryRuleRegion4400 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleRegion4410 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_26_in_ruleRegion4445 = new BitSet(new long[]{0x000001CE000070B0L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleRegion4469 = new BitSet(new long[]{0x000001CE00007090L});
-    public static final BitSet FOLLOW_ruleVariable_in_ruleRegion4513 = new BitSet(new long[]{0x000001CE00007092L});
-    public static final BitSet FOLLOW_ruleSignal_in_ruleRegion4557 = new BitSet(new long[]{0x000001CE00007092L});
-    public static final BitSet FOLLOW_ruleState_in_ruleRegion4601 = new BitSet(new long[]{0x000001CE00007092L});
-    public static final BitSet FOLLOW_ruleAction_in_entryRuleAction4640 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleAction4650 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_ruleAction4697 = new BitSet(new long[]{0x0000000000000060L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleAction4734 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_ruleAction4751 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleAction4775 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTransition_in_ruleAction4812 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTransition_in_entryRuleTransition4844 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTransition4854 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_FULLSTATEID_in_ruleTransition4901 = new BitSet(new long[]{0x0070000000000000L});
-    public static final BitSet FOLLOW_ruleTransitionType_in_ruleTransition4939 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_FULLSTATEID_in_ruleTransition4965 = new BitSet(new long[]{0x0000000070000000L});
-    public static final BitSet FOLLOW_29_in_ruleTransition4978 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleTransition5000 = new BitSet(new long[]{0x0000000050000000L});
-    public static final BitSet FOLLOW_30_in_ruleTransition5031 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_ruleTransition5054 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariable_in_entryRuleVariable5089 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleVariable5099 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleVariable5146 = new BitSet(new long[]{0x0000000180000002L});
-    public static final BitSet FOLLOW_31_in_ruleVariable5164 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleVariable5186 = new BitSet(new long[]{0x0000000100000002L});
-    public static final BitSet FOLLOW_32_in_ruleVariable5206 = new BitSet(new long[]{0x000FC00000000020L});
-    public static final BitSet FOLLOW_ruleValueType_in_ruleVariable5241 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleVariable5273 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_entryRuleSignal5317 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleSignal5327 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_ruleSignal5373 = new BitSet(new long[]{0x0000000C00000080L});
-    public static final BitSet FOLLOW_34_in_ruleSignal5408 = new BitSet(new long[]{0x0000000800000080L});
-    public static final BitSet FOLLOW_35_in_ruleSignal5443 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleSignal5479 = new BitSet(new long[]{0x0000000180000002L});
-    public static final BitSet FOLLOW_31_in_ruleSignal5497 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleSignal5519 = new BitSet(new long[]{0x0000000100000002L});
-    public static final BitSet FOLLOW_32_in_ruleSignal5540 = new BitSet(new long[]{0x000FC00000000020L});
-    public static final BitSet FOLLOW_ruleValueType_in_ruleSignal5575 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleSignal5607 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_ruleSignal5633 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_36_in_ruleSignal5642 = new BitSet(new long[]{0x000FC00000000020L});
-    public static final BitSet FOLLOW_ruleValueType_in_ruleSignal5677 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleSignal5709 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_ruleSignal5727 = new BitSet(new long[]{0x00007E0000000020L});
-    public static final BitSet FOLLOW_ruleCombineOperator_in_ruleSignal5762 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleSignal5794 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_14_in_ruleStateType5855 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_38_in_ruleStateType5870 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_39_in_ruleStateType5885 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_ruleStateType5900 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_41_in_ruleCombineOperator5943 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_ruleCombineOperator5958 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_43_in_ruleCombineOperator5973 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_44_in_ruleCombineOperator5988 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_45_in_ruleCombineOperator6003 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_ruleCombineOperator6018 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_ruleValueType6061 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_48_in_ruleValueType6076 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_49_in_ruleValueType6091 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_50_in_ruleValueType6106 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_51_in_ruleValueType6121 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_ruleValueType6136 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_52_in_ruleTransitionType6179 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_ruleTransitionType6194 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_54_in_ruleTransitionType6209 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleState_in_ruleRegion4469 = new BitSet(new long[]{0x000001CE040070B0L});
+    public static final BitSet FOLLOW_26_in_ruleRegion4483 = new BitSet(new long[]{0x000001CE000070B0L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleRegion4507 = new BitSet(new long[]{0x000001CE00007090L});
+    public static final BitSet FOLLOW_ruleVariable_in_ruleRegion4551 = new BitSet(new long[]{0x000001CE00007092L});
+    public static final BitSet FOLLOW_ruleSignal_in_ruleRegion4595 = new BitSet(new long[]{0x000001CE00007092L});
+    public static final BitSet FOLLOW_ruleState_in_ruleRegion4639 = new BitSet(new long[]{0x000001CE00007092L});
+    public static final BitSet FOLLOW_ruleAction_in_entryRuleAction4678 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleAction4688 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_ruleAction4735 = new BitSet(new long[]{0x0000000000000060L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleAction4772 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_28_in_ruleAction4789 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleAction4813 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTransition_in_ruleAction4850 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTransition_in_entryRuleTransition4882 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTransition4892 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_FULLSTATEID_in_ruleTransition4939 = new BitSet(new long[]{0x0070000000000000L});
+    public static final BitSet FOLLOW_ruleTransitionType_in_ruleTransition4977 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_FULLSTATEID_in_ruleTransition5003 = new BitSet(new long[]{0x0000000070000000L});
+    public static final BitSet FOLLOW_29_in_ruleTransition5016 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleTransition5038 = new BitSet(new long[]{0x0000000050000000L});
+    public static final BitSet FOLLOW_30_in_ruleTransition5069 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_28_in_ruleTransition5092 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleVariable_in_entryRuleVariable5127 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleVariable5137 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleVariable5184 = new BitSet(new long[]{0x0000000180000002L});
+    public static final BitSet FOLLOW_31_in_ruleVariable5202 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleVariable5224 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_32_in_ruleVariable5244 = new BitSet(new long[]{0x000FC00000000020L});
+    public static final BitSet FOLLOW_ruleValueType_in_ruleVariable5279 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleVariable5311 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_entryRuleSignal5355 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleSignal5365 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_ruleSignal5411 = new BitSet(new long[]{0x0000000C00000080L});
+    public static final BitSet FOLLOW_34_in_ruleSignal5446 = new BitSet(new long[]{0x0000000800000080L});
+    public static final BitSet FOLLOW_35_in_ruleSignal5481 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleSignal5517 = new BitSet(new long[]{0x0000000180000002L});
+    public static final BitSet FOLLOW_31_in_ruleSignal5535 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleSignal5557 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_32_in_ruleSignal5578 = new BitSet(new long[]{0x000FC00000000020L});
+    public static final BitSet FOLLOW_ruleValueType_in_ruleSignal5613 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleSignal5645 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_ruleSignal5671 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_36_in_ruleSignal5680 = new BitSet(new long[]{0x000FC00000000020L});
+    public static final BitSet FOLLOW_ruleValueType_in_ruleSignal5715 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleSignal5747 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_37_in_ruleSignal5765 = new BitSet(new long[]{0x00007E0000000020L});
+    public static final BitSet FOLLOW_ruleCombineOperator_in_ruleSignal5800 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleSignal5832 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_14_in_ruleStateType5893 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_38_in_ruleStateType5908 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_39_in_ruleStateType5923 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_40_in_ruleStateType5938 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_41_in_ruleCombineOperator5981 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_ruleCombineOperator5996 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_43_in_ruleCombineOperator6011 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_44_in_ruleCombineOperator6026 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_45_in_ruleCombineOperator6041 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_ruleCombineOperator6056 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_ruleValueType6099 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_48_in_ruleValueType6114 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_49_in_ruleValueType6129 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_50_in_ruleValueType6144 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_51_in_ruleValueType6159 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_ruleValueType6174 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_52_in_ruleTransitionType6217 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_ruleTransitionType6232 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_54_in_ruleTransitionType6247 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_12_in_synpred1138 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_synpred1172 = new BitSet(new long[]{0x000001C000004000L});
     public static final BitSet FOLLOW_ruleStateType_in_synpred1220 = new BitSet(new long[]{0x0000000000004000L});
@@ -11887,15 +10827,11 @@ public class InternalRetypingSyncchartsParser extends AbstractInternalAntlrParse
     public static final BitSet FOLLOW_14_in_synpred383605 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_STRING_in_synpred393664 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_STRING_in_synpred423804 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_synpred474078 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleRegion_in_synpred484124 = new BitSet(new long[]{0x0000000000800000L});
     public static final BitSet FOLLOW_23_in_synpred484137 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleRegion_in_synpred494124 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_synpred494137 = new BitSet(new long[]{0x000001CE040070B0L});
-    public static final BitSet FOLLOW_ruleRegion_in_synpred494173 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleTransition_in_synpred514225 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariable_in_synpred544513 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_synpred554557 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleState_in_synpred564601 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleVariable_in_synpred544551 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_synpred554595 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleState_in_synpred564639 = new BitSet(new long[]{0x0000000000000002L});
 
 }
