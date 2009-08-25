@@ -129,7 +129,8 @@ protected class ThisRootNode extends RootToken {
  * 	  
  * 	
  * 	
- * 	
+ * 	//name=ID
+ * 	 
  * 	    
  * 	
  * 	
@@ -214,7 +215,8 @@ protected class ThisRootNode extends RootToken {
 // 	  
 // 	
 // 	
-// 	
+// 	//name=ID
+// 	 
 // 	    
 // 	
 // 	
@@ -271,7 +273,56 @@ protected class State_Group extends GroupToken {
 // isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID|isFinal?=
 // "final" id=FullStateID|isFinal?="final"|type=StateType "state" id=FullStateID|type=
 // StateType "state"|type=StateType id=FullStateID|type=StateType|"state" id=
-// FullStateID|"state"|id=FullStateID
+// FullStateID|"state"|id=FullStateID 
+// 
+// 	        
+// 	      
+// 	      
+// 	      
+// 	    
+// 	    
+// 	    
+// 	  
+// 	
+// 	        
+// 	      
+// 	      
+// 	      
+// 	    
+// 	    
+// 	    
+// 	  
+// 	
+// 	        
+// 	      
+// 	        
+// 	      
+// 	     
+// 	    
+// 	    
+// 	  
+// 	
+// 	         
+// 	        
+// 	       
+// 	       
+// 	     
+// 	       
+// 	     
+// 	  
+// 	
+// 	      
+// 	    
+// 	    
+// 	  
+// 	
+// 	    
+// 	  
+// 		
+// 	  
+// 	
+// 	
+// 	//name=ID
 protected class State_Alternatives_0 extends AlternativesToken {
 
 	public State_Alternatives_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -503,9 +554,9 @@ protected class State_IdAssignment_0_0_3 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_0_3_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_0_3_0();
 			return obj;
 		}
 		return null;
@@ -822,9 +873,9 @@ protected class State_IdAssignment_0_2_2 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_2_2_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_2_2_0();
 			return obj;
 		}
 		return null;
@@ -976,9 +1027,9 @@ protected class State_IdAssignment_0_3_2 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_3_2_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_3_2_0();
 			return obj;
 		}
 		return null;
@@ -1367,9 +1418,9 @@ protected class State_IdAssignment_0_6_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_6_1_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_6_1_0();
 			return obj;
 		}
 		return null;
@@ -1634,9 +1685,9 @@ protected class State_IdAssignment_0_8_3 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_8_3_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_8_3_0();
 			return obj;
 		}
 		return null;
@@ -1953,9 +2004,9 @@ protected class State_IdAssignment_0_10_2 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_10_2_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_10_2_0();
 			return obj;
 		}
 		return null;
@@ -2107,9 +2158,9 @@ protected class State_IdAssignment_0_11_2 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_11_2_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_11_2_0();
 			return obj;
 		}
 		return null;
@@ -2498,9 +2549,9 @@ protected class State_IdAssignment_0_14_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_14_1_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_14_1_0();
 			return obj;
 		}
 		return null;
@@ -2713,9 +2764,9 @@ protected class State_IdAssignment_0_16_3 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_16_3_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_16_3_0();
 			return obj;
 		}
 		return null;
@@ -2928,9 +2979,9 @@ protected class State_IdAssignment_0_18_2 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_18_2_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_18_2_0();
 			return obj;
 		}
 		return null;
@@ -3030,9 +3081,9 @@ protected class State_IdAssignment_0_19_2 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_19_2_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_19_2_0();
 			return obj;
 		}
 		return null;
@@ -3265,9 +3316,9 @@ protected class State_IdAssignment_0_22_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_22_1_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_22_1_0();
 			return obj;
 		}
 		return null;
@@ -3428,9 +3479,9 @@ protected class State_IdAssignment_0_24_3 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_24_3_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_24_3_0();
 			return obj;
 		}
 		return null;
@@ -3643,9 +3694,9 @@ protected class State_IdAssignment_0_26_2 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_26_2_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_26_2_0();
 			return obj;
 		}
 		return null;
@@ -3745,9 +3796,9 @@ protected class State_IdAssignment_0_27_2 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_27_2_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_27_2_0();
 			return obj;
 		}
 		return null;
@@ -3929,9 +3980,9 @@ protected class State_IdAssignment_0_29_2 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_29_2_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_29_2_0();
 			return obj;
 		}
 		return null;
@@ -4011,9 +4062,9 @@ protected class State_IdAssignment_0_30_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_30_1_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_30_1_0();
 			return obj;
 		}
 		return null;
@@ -4143,9 +4194,9 @@ protected class State_IdAssignment_0_32_2 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_32_2_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_32_2_0();
 			return obj;
 		}
 		return null;
@@ -4296,9 +4347,9 @@ protected class State_IdAssignment_0_34_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_34_1_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_34_1_0();
 			return obj;
 		}
 		return null;
@@ -4397,9 +4448,9 @@ protected class State_IdAssignment_0_36_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_36_1_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_36_1_0();
 			return obj;
 		}
 		return null;
@@ -4447,9 +4498,9 @@ protected class State_IdAssignment_0_38 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("id",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
-			type = AssignmentType.DRC;
-			element = grammarAccess.getStateAccess().getIdFullStateIDParserRuleCall_0_38_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getStateAccess().getIdFullStateIDTerminalRuleCall_0_38_0();
 			return obj;
 		}
 		return null;
@@ -5509,7 +5560,6 @@ protected class Renaming_NewIDAssignment_2 extends AssignmentToken  {
 /************ end Rule Renaming ****************/
 
 
-
 /************ begin Rule Region ****************
  *
  * Region:
@@ -5528,7 +5578,6 @@ protected class Renaming_NewIDAssignment_2 extends AssignmentToken  {
  * 	 //===       optional referenced state // *** CHECK : StateContent_1 *** //               ===
  * 	 //===       e.g.: aNewNameForTheReferencedState @ aStateID [A1/a,A2/b]                 ===
  * 	 //========================================================================================
- * 	 //( (newStateID=ID '@')? referencedState=[State|ID] '[' (signalRenamings+=SignalRenaming',')* signalRenamings+=SignalRenaming ']' )?
  * 	
  * 
  * 	//========================================================================================
@@ -5548,7 +5597,6 @@ protected class Renaming_NewIDAssignment_2 extends AssignmentToken  {
 // 	 //===       optional referenced state // *** CHECK : StateContent_1 *** //               ===
 // 	 //===       e.g.: aNewNameForTheReferencedState @ aStateID [A1/a,A2/b]                 ===
 // 	 //========================================================================================
-// 	 //( (newStateID=ID '@')? referencedState=[State|ID] '[' (signalRenamings+=SignalRenaming',')* signalRenamings+=SignalRenaming ']' )?
 protected class Region_Group extends GroupToken {
 	
 	public Region_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -5572,6 +5620,25 @@ protected class Region_Group extends GroupToken {
 	}
 }
 
+// "region"?
+protected class Region_RegionKeyword_0 extends KeywordToken  {
+	
+	public Region_RegionKeyword_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Keyword getGrammarElement() {
+		return grammarAccess.getRegionAccess().getRegionKeyword_0();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+}
+
 // id=STRING?
 protected class Region_IdAssignment_1 extends AssignmentToken  {
 	
@@ -5585,7 +5652,8 @@ protected class Region_IdAssignment_1 extends AssignmentToken  {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
+			case 0: return new Region_RegionKeyword_0(parent, this, 0, inst);
+			default: return parent.createParentFollower(this, index, index - 1, inst);
 		}	
 	}	
 		
@@ -5662,7 +5730,8 @@ protected class Region_VariablesAssignment_2_0 extends AssignmentToken  {
 		switch(index) {
 			case 0: return new Region_Alternatives_2(parent, next, actIndex, consumed);
 			case 1: return new Region_IdAssignment_1(parent, next, actIndex, consumed);
-			default: return parent.createParentFollower(next, actIndex , index - 2, consumed);
+			case 2: return new Region_RegionKeyword_0(parent, next, actIndex, consumed);
+			default: return parent.createParentFollower(next, actIndex , index - 3, consumed);
 		}	
 	}	
 }
@@ -5705,7 +5774,8 @@ protected class Region_SignalsAssignment_2_1 extends AssignmentToken  {
 		switch(index) {
 			case 0: return new Region_Alternatives_2(parent, next, actIndex, consumed);
 			case 1: return new Region_IdAssignment_1(parent, next, actIndex, consumed);
-			default: return parent.createParentFollower(next, actIndex , index - 2, consumed);
+			case 2: return new Region_RegionKeyword_0(parent, next, actIndex, consumed);
+			default: return parent.createParentFollower(next, actIndex , index - 3, consumed);
 		}	
 	}	
 }
@@ -5748,7 +5818,8 @@ protected class Region_InnerStatesAssignment_2_2 extends AssignmentToken  {
 		switch(index) {
 			case 0: return new Region_Alternatives_2(parent, next, actIndex, consumed);
 			case 1: return new Region_IdAssignment_1(parent, next, actIndex, consumed);
-			default: return parent.createParentFollower(next, actIndex , index - 2, consumed);
+			case 2: return new Region_RegionKeyword_0(parent, next, actIndex, consumed);
+			default: return parent.createParentFollower(next, actIndex , index - 3, consumed);
 		}	
 	}	
 }
@@ -6007,17 +6078,17 @@ protected class Action_TransitionParserRuleCall_1 extends RuleCallToken {
 /************ begin Rule Transition ****************
  *
  * Transition:
- *   sourceState=ID? type=TransitionType priority=INT targetState=ID ("with "
- *   triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
+ *   sourceState=[State|FullStateID]? type=TransitionType targetState=[State|
+ *   FullStateID] ("with " triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
  * 	//========================================================================================
  * 	 //===  									    TRANSITION 					               ===
  * 	 //========================================================================================
  * 
  * 
- * 	//[State])? 
  * 	 
  * 	
- * 	//[State|FullStateID]
+ * 	//(priority=INT)
+ * 	 //|FullStateID]
  * 	   
  * 	
  * 	
@@ -6028,12 +6099,12 @@ protected class Action_TransitionParserRuleCall_1 extends RuleCallToken {
  *
  **/
 
-// sourceState=ID? type=TransitionType priority=INT targetState=ID ("with "
-// triggersAndEffects=STRING)? isHistory?=" history"? ";" 
-// 	//[State])? 
+// sourceState=[State|FullStateID]? type=TransitionType targetState=[State|
+// FullStateID] ("with " triggersAndEffects=STRING)? isHistory?=" history"? ";" 
 // 	 
 // 	
-// 	//[State|FullStateID]
+// 	//(priority=INT)
+// 	 //|FullStateID]
 protected class Transition_Group extends GroupToken {
 	
 	public Transition_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -6046,7 +6117,7 @@ protected class Transition_Group extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_SemicolonKeyword_6(parent, this, 0, inst);
+			case 0: return new Transition_SemicolonKeyword_5(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -6057,7 +6128,7 @@ protected class Transition_Group extends GroupToken {
 	}
 }
 
-// sourceState=ID?
+// sourceState=[State|FullStateID]?
 protected class Transition_SourceStateAssignment_0 extends AssignmentToken  {
 	
 	public Transition_SourceStateAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -6077,17 +6148,22 @@ protected class Transition_SourceStateAssignment_0 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("sourceState",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("sourceState");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
-			type = AssignmentType.LRC;
-			element = grammarAccess.getTransitionAccess().getSourceStateIDTerminalRuleCall_0_0();
-			return obj;
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getTransitionAccess().getSourceStateStateCrossReference_0_0().getType().getClassifier())) {
+				type = AssignmentType.CR;
+				element = grammarAccess.getTransitionAccess().getSourceStateStateCrossReference_0_0(); 
+				return obj;
+			}
 		}
 		return null;
 	}
 
 }
 
-// type=TransitionType //[State])?
+// type=TransitionType  
+// 	
+// 	//(priority=INT)
 protected class Transition_TypeAssignment_1 extends AssignmentToken  {
 	
 	public Transition_TypeAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -6118,15 +6194,17 @@ protected class Transition_TypeAssignment_1 extends AssignmentToken  {
 
 }
 
-// priority=INT
-protected class Transition_PriorityAssignment_2 extends AssignmentToken  {
+// targetState=[State|FullStateID] 
+// 	//(priority=INT)
+// 	 //|FullStateID]
+protected class Transition_TargetStateAssignment_2 extends AssignmentToken  {
 	
-	public Transition_PriorityAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_TargetStateAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getPriorityAssignment_2();
+		return grammarAccess.getTransitionAccess().getTargetStateAssignment_2();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -6137,44 +6215,15 @@ protected class Transition_PriorityAssignment_2 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("priority",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("priority");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
-			type = AssignmentType.LRC;
-			element = grammarAccess.getTransitionAccess().getPriorityINTTerminalRuleCall_2_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// targetState=ID 
-// 	//[State|FullStateID]
-protected class Transition_TargetStateAssignment_3 extends AssignmentToken  {
-	
-	public Transition_TargetStateAssignment_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getTargetStateAssignment_3();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Transition_PriorityAssignment_2(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("targetState",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("targetState");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
-			type = AssignmentType.LRC;
-			element = grammarAccess.getTransitionAccess().getTargetStateIDTerminalRuleCall_3_0();
-			return obj;
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_2_0().getType().getClassifier())) {
+				type = AssignmentType.CR;
+				element = grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_2_0(); 
+				return obj;
+			}
 		}
 		return null;
 	}
@@ -6182,19 +6231,19 @@ protected class Transition_TargetStateAssignment_3 extends AssignmentToken  {
 }
 
 // ("with " triggersAndEffects=STRING)?
-protected class Transition_Group_4 extends GroupToken {
+protected class Transition_Group_3 extends GroupToken {
 	
-	public Transition_Group_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_Group_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Group getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getGroup_4();
+		return grammarAccess.getTransitionAccess().getGroup_3();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_TriggersAndEffectsAssignment_4_1(parent, this, 0, inst);
+			case 0: return new Transition_TriggersAndEffectsAssignment_3_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -6202,19 +6251,19 @@ protected class Transition_Group_4 extends GroupToken {
 }
 
 // "with "
-protected class Transition_WithKeyword_4_0 extends KeywordToken  {
+protected class Transition_WithKeyword_3_0 extends KeywordToken  {
 	
-	public Transition_WithKeyword_4_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_WithKeyword_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Keyword getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getWithKeyword_4_0();
+		return grammarAccess.getTransitionAccess().getWithKeyword_3_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_TargetStateAssignment_3(parent, this, 0, inst);
+			case 0: return new Transition_TargetStateAssignment_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -6222,19 +6271,19 @@ protected class Transition_WithKeyword_4_0 extends KeywordToken  {
 }
 
 // triggersAndEffects=STRING
-protected class Transition_TriggersAndEffectsAssignment_4_1 extends AssignmentToken  {
+protected class Transition_TriggersAndEffectsAssignment_3_1 extends AssignmentToken  {
 	
-	public Transition_TriggersAndEffectsAssignment_4_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_TriggersAndEffectsAssignment_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getTriggersAndEffectsAssignment_4_1();
+		return grammarAccess.getTransitionAccess().getTriggersAndEffectsAssignment_3_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_WithKeyword_4_0(parent, this, 0, inst);
+			case 0: return new Transition_WithKeyword_3_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -6244,7 +6293,7 @@ protected class Transition_TriggersAndEffectsAssignment_4_1 extends AssignmentTo
 		IInstanceDescription obj = current.cloneAndConsume("triggersAndEffects");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getTransitionAccess().getTriggersAndEffectsSTRINGTerminalRuleCall_4_1_0();
+			element = grammarAccess.getTransitionAccess().getTriggersAndEffectsSTRINGTerminalRuleCall_3_1_0();
 			return obj;
 		}
 		return null;
@@ -6254,20 +6303,20 @@ protected class Transition_TriggersAndEffectsAssignment_4_1 extends AssignmentTo
 
 
 // isHistory?=" history"?
-protected class Transition_IsHistoryAssignment_5 extends AssignmentToken  {
+protected class Transition_IsHistoryAssignment_4 extends AssignmentToken  {
 	
-	public Transition_IsHistoryAssignment_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_IsHistoryAssignment_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getIsHistoryAssignment_5();
+		return grammarAccess.getTransitionAccess().getIsHistoryAssignment_4();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_Group_4(parent, this, 0, inst);
-			case 1: return new Transition_TargetStateAssignment_3(parent, this, 1, inst);
+			case 0: return new Transition_Group_3(parent, this, 0, inst);
+			case 1: return new Transition_TargetStateAssignment_2(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -6277,7 +6326,7 @@ protected class Transition_IsHistoryAssignment_5 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("isHistory");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_5_0();
+			element = grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_4_0();
 			return obj;
 		}
 		return null;
@@ -6286,21 +6335,21 @@ protected class Transition_IsHistoryAssignment_5 extends AssignmentToken  {
 }
 
 // ";"
-protected class Transition_SemicolonKeyword_6 extends KeywordToken  {
+protected class Transition_SemicolonKeyword_5 extends KeywordToken  {
 	
-	public Transition_SemicolonKeyword_6(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_SemicolonKeyword_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Keyword getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getSemicolonKeyword_6();
+		return grammarAccess.getTransitionAccess().getSemicolonKeyword_5();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_IsHistoryAssignment_5(parent, this, 0, inst);
-			case 1: return new Transition_Group_4(parent, this, 1, inst);
-			case 2: return new Transition_TargetStateAssignment_3(parent, this, 2, inst);
+			case 0: return new Transition_IsHistoryAssignment_4(parent, this, 0, inst);
+			case 1: return new Transition_Group_3(parent, this, 1, inst);
+			case 2: return new Transition_TargetStateAssignment_2(parent, this, 2, inst);
 			default: return null;
 		}	
 	}	

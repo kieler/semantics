@@ -1,0 +1,24 @@
+/*
+ * This check file is used to specify constraints for the derived metamodels.
+ * They will be executed by the editor when the user saves a file.
+ * At generation time they will be executed as well.
+ *
+ * Example:
+ */
+//import retypingSynccharts;
+
+//context State ERROR
+//	"State identifiers must not be Ozgun"
+//:
+//	stateID != "Ozgun"
+//;
+ 
+
+
+	
+	
+	
+ 
+ 
+  
+

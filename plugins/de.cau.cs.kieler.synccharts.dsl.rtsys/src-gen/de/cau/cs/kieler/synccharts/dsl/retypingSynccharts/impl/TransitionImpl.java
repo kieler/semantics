@@ -2,16 +2,19 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl;
 
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.TransitionType;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
@@ -24,7 +27,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.TransitionImpl#getSourceState <em>Source State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.TransitionImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.TransitionImpl#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.TransitionImpl#getTargetState <em>Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.TransitionImpl#isIsHistory <em>Is History</em>}</li>
  * </ul>
@@ -35,24 +37,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class TransitionImpl extends ActionImpl implements Transition
 {
   /**
-   * The default value of the '{@link #getSourceState() <em>Source State</em>}' attribute.
+   * The cached value of the '{@link #getSourceState() <em>Source State</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getSourceState()
    * @generated
    * @ordered
    */
-  protected static final String SOURCE_STATE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getSourceState() <em>Source State</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSourceState()
-   * @generated
-   * @ordered
-   */
-  protected String sourceState = SOURCE_STATE_EDEFAULT;
+  protected State sourceState;
 
   /**
    * The default value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -75,44 +67,14 @@ public class TransitionImpl extends ActionImpl implements Transition
   protected TransitionType type = TYPE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getPriority() <em>Priority</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPriority()
-   * @generated
-   * @ordered
-   */
-  protected static final int PRIORITY_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getPriority() <em>Priority</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPriority()
-   * @generated
-   * @ordered
-   */
-  protected int priority = PRIORITY_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getTargetState() <em>Target State</em>}' attribute.
+   * The cached value of the '{@link #getTargetState() <em>Target State</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getTargetState()
    * @generated
    * @ordered
    */
-  protected static final String TARGET_STATE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getTargetState() <em>Target State</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTargetState()
-   * @generated
-   * @ordered
-   */
-  protected String targetState = TARGET_STATE_EDEFAULT;
+  protected State targetState;
 
   /**
    * The default value of the '{@link #isIsHistory() <em>Is History</em>}' attribute.
@@ -160,7 +122,27 @@ public class TransitionImpl extends ActionImpl implements Transition
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getSourceState()
+  public State getSourceState()
+  {
+    if (sourceState != null && sourceState.eIsProxy())
+    {
+      InternalEObject oldSourceState = (InternalEObject)sourceState;
+      sourceState = (State)eResolveProxy(oldSourceState);
+      if (sourceState != oldSourceState)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, RetypingSyncchartsPackage.TRANSITION__SOURCE_STATE, oldSourceState, sourceState));
+      }
+    }
+    return sourceState;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public State basicGetSourceState()
   {
     return sourceState;
   }
@@ -170,9 +152,9 @@ public class TransitionImpl extends ActionImpl implements Transition
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSourceState(String newSourceState)
+  public void setSourceState(State newSourceState)
   {
-    String oldSourceState = sourceState;
+    State oldSourceState = sourceState;
     sourceState = newSourceState;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.TRANSITION__SOURCE_STATE, oldSourceState, sourceState));
@@ -206,9 +188,19 @@ public class TransitionImpl extends ActionImpl implements Transition
    * <!-- end-user-doc -->
    * @generated
    */
-  public int getPriority()
+  public State getTargetState()
   {
-    return priority;
+    if (targetState != null && targetState.eIsProxy())
+    {
+      InternalEObject oldTargetState = (InternalEObject)targetState;
+      targetState = (State)eResolveProxy(oldTargetState);
+      if (targetState != oldTargetState)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, RetypingSyncchartsPackage.TRANSITION__TARGET_STATE, oldTargetState, targetState));
+      }
+    }
+    return targetState;
   }
 
   /**
@@ -216,20 +208,7 @@ public class TransitionImpl extends ActionImpl implements Transition
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setPriority(int newPriority)
-  {
-    int oldPriority = priority;
-    priority = newPriority;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.TRANSITION__PRIORITY, oldPriority, priority));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getTargetState()
+  public State basicGetTargetState()
   {
     return targetState;
   }
@@ -239,9 +218,9 @@ public class TransitionImpl extends ActionImpl implements Transition
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTargetState(String newTargetState)
+  public void setTargetState(State newTargetState)
   {
-    String oldTargetState = targetState;
+    State oldTargetState = targetState;
     targetState = newTargetState;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.TRANSITION__TARGET_STATE, oldTargetState, targetState));
@@ -281,13 +260,13 @@ public class TransitionImpl extends ActionImpl implements Transition
     switch (featureID)
     {
       case RetypingSyncchartsPackage.TRANSITION__SOURCE_STATE:
-        return getSourceState();
+        if (resolve) return getSourceState();
+        return basicGetSourceState();
       case RetypingSyncchartsPackage.TRANSITION__TYPE:
         return getType();
-      case RetypingSyncchartsPackage.TRANSITION__PRIORITY:
-        return getPriority();
       case RetypingSyncchartsPackage.TRANSITION__TARGET_STATE:
-        return getTargetState();
+        if (resolve) return getTargetState();
+        return basicGetTargetState();
       case RetypingSyncchartsPackage.TRANSITION__IS_HISTORY:
         return isIsHistory();
     }
@@ -305,16 +284,13 @@ public class TransitionImpl extends ActionImpl implements Transition
     switch (featureID)
     {
       case RetypingSyncchartsPackage.TRANSITION__SOURCE_STATE:
-        setSourceState((String)newValue);
+        setSourceState((State)newValue);
         return;
       case RetypingSyncchartsPackage.TRANSITION__TYPE:
         setType((TransitionType)newValue);
         return;
-      case RetypingSyncchartsPackage.TRANSITION__PRIORITY:
-        setPriority((Integer)newValue);
-        return;
       case RetypingSyncchartsPackage.TRANSITION__TARGET_STATE:
-        setTargetState((String)newValue);
+        setTargetState((State)newValue);
         return;
       case RetypingSyncchartsPackage.TRANSITION__IS_HISTORY:
         setIsHistory((Boolean)newValue);
@@ -334,16 +310,13 @@ public class TransitionImpl extends ActionImpl implements Transition
     switch (featureID)
     {
       case RetypingSyncchartsPackage.TRANSITION__SOURCE_STATE:
-        setSourceState(SOURCE_STATE_EDEFAULT);
+        setSourceState((State)null);
         return;
       case RetypingSyncchartsPackage.TRANSITION__TYPE:
         setType(TYPE_EDEFAULT);
         return;
-      case RetypingSyncchartsPackage.TRANSITION__PRIORITY:
-        setPriority(PRIORITY_EDEFAULT);
-        return;
       case RetypingSyncchartsPackage.TRANSITION__TARGET_STATE:
-        setTargetState(TARGET_STATE_EDEFAULT);
+        setTargetState((State)null);
         return;
       case RetypingSyncchartsPackage.TRANSITION__IS_HISTORY:
         setIsHistory(IS_HISTORY_EDEFAULT);
@@ -363,13 +336,11 @@ public class TransitionImpl extends ActionImpl implements Transition
     switch (featureID)
     {
       case RetypingSyncchartsPackage.TRANSITION__SOURCE_STATE:
-        return SOURCE_STATE_EDEFAULT == null ? sourceState != null : !SOURCE_STATE_EDEFAULT.equals(sourceState);
+        return sourceState != null;
       case RetypingSyncchartsPackage.TRANSITION__TYPE:
         return type != TYPE_EDEFAULT;
-      case RetypingSyncchartsPackage.TRANSITION__PRIORITY:
-        return priority != PRIORITY_EDEFAULT;
       case RetypingSyncchartsPackage.TRANSITION__TARGET_STATE:
-        return TARGET_STATE_EDEFAULT == null ? targetState != null : !TARGET_STATE_EDEFAULT.equals(targetState);
+        return targetState != null;
       case RetypingSyncchartsPackage.TRANSITION__IS_HISTORY:
         return isHistory != IS_HISTORY_EDEFAULT;
     }
@@ -387,14 +358,8 @@ public class TransitionImpl extends ActionImpl implements Transition
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (sourceState: ");
-    result.append(sourceState);
-    result.append(", type: ");
+    result.append(" (type: ");
     result.append(type);
-    result.append(", priority: ");
-    result.append(priority);
-    result.append(", targetState: ");
-    result.append(targetState);
     result.append(", isHistory: ");
     result.append(isHistory);
     result.append(')');
