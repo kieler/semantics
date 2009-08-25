@@ -1620,32 +1620,34 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Transition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cSourceStateAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cSourceStateStateCrossReference_0_0 = (CrossReference)cSourceStateAssignment_0.eContents().get(0);
-		private final RuleCall cSourceStateStateIDTerminalRuleCall_0_0_1 = (RuleCall)cSourceStateStateCrossReference_0_0.eContents().get(1);
+		private final RuleCall cSourceStateIDTerminalRuleCall_0_0 = (RuleCall)cSourceStateAssignment_0.eContents().get(0);
 		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cTypeTransitionTypeEnumRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
-		private final Assignment cTargetStateAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cTargetStateIDTerminalRuleCall_2_0 = (RuleCall)cTargetStateAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cWithKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cTriggersAndEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cTriggersAndEffectsSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cTriggersAndEffectsAssignment_3_1.eContents().get(0);
-		private final Assignment cIsHistoryAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Keyword cIsHistoryHistoryKeyword_4_0 = (Keyword)cIsHistoryAssignment_4.eContents().get(0);
-		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cPriorityAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cPriorityINTTerminalRuleCall_2_0 = (RuleCall)cPriorityAssignment_2.eContents().get(0);
+		private final Assignment cTargetStateAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTargetStateIDTerminalRuleCall_3_0 = (RuleCall)cTargetStateAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cWithKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cTriggersAndEffectsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cTriggersAndEffectsSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cTriggersAndEffectsAssignment_4_1.eContents().get(0);
+		private final Assignment cIsHistoryAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final Keyword cIsHistoryHistoryKeyword_5_0 = (Keyword)cIsHistoryAssignment_5.eContents().get(0);
+		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Transition:
-		//  sourceState=[State]? type=TransitionType targetState=ID ("with " triggersAndEffects=
-		//  STRING)? isHistory?=" history"? ";"; 
+		//  sourceState=ID? type=TransitionType priority=INT targetState=ID ("with "
+		//  triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
 		//	//========================================================================================
 		//	 //===  									    TRANSITION 					               ===
 		//	 //========================================================================================
 		//
 		//
+		//	//[State])? 
 		//	 
 		//	
-		//	
-		//	  
+		//	//[State|FullStateID]
+		//	   
 		//	
 		//	
 		//
@@ -1654,51 +1656,59 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//	 //========================================================================================
 		public ParserRule getRule() { return rule; }
 
-		//sourceState=[State]? type=TransitionType targetState=ID ("with " triggersAndEffects=
-		//STRING)? isHistory?=" history"? ";"
+		//sourceState=ID? type=TransitionType priority=INT targetState=ID ("with "
+		//triggersAndEffects=STRING)? isHistory?=" history"? ";" 
+		//	//[State])? 
+		//	 
+		//	
+		//	//[State|FullStateID]
 		public Group getGroup() { return cGroup; }
 
-		//sourceState=[State]?
+		//sourceState=ID?
 		public Assignment getSourceStateAssignment_0() { return cSourceStateAssignment_0; }
 
-		//[State]
-		public CrossReference getSourceStateStateCrossReference_0_0() { return cSourceStateStateCrossReference_0_0; }
-
 		//ID
-		public RuleCall getSourceStateStateIDTerminalRuleCall_0_0_1() { return cSourceStateStateIDTerminalRuleCall_0_0_1; }
+		public RuleCall getSourceStateIDTerminalRuleCall_0_0() { return cSourceStateIDTerminalRuleCall_0_0; }
 
-		//type=TransitionType
+		//type=TransitionType //[State])?
 		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
 
 		//TransitionType
 		public RuleCall getTypeTransitionTypeEnumRuleCall_1_0() { return cTypeTransitionTypeEnumRuleCall_1_0; }
 
-		//targetState=ID
-		public Assignment getTargetStateAssignment_2() { return cTargetStateAssignment_2; }
+		//priority=INT
+		public Assignment getPriorityAssignment_2() { return cPriorityAssignment_2; }
 
-		//ID
-		public RuleCall getTargetStateIDTerminalRuleCall_2_0() { return cTargetStateIDTerminalRuleCall_2_0; }
+		//INT
+		public RuleCall getPriorityINTTerminalRuleCall_2_0() { return cPriorityINTTerminalRuleCall_2_0; }
+
+		//targetState=ID 
+		//	//[State|FullStateID]
+		public Assignment getTargetStateAssignment_3() { return cTargetStateAssignment_3; }
+
+		//ID //[State|FullStateID]
+		public RuleCall getTargetStateIDTerminalRuleCall_3_0() { return cTargetStateIDTerminalRuleCall_3_0; }
 
 		//("with " triggersAndEffects=STRING)?
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_4() { return cGroup_4; }
 
 		//"with "
-		public Keyword getWithKeyword_3_0() { return cWithKeyword_3_0; }
+		public Keyword getWithKeyword_4_0() { return cWithKeyword_4_0; }
 
 		//triggersAndEffects=STRING
-		public Assignment getTriggersAndEffectsAssignment_3_1() { return cTriggersAndEffectsAssignment_3_1; }
+		public Assignment getTriggersAndEffectsAssignment_4_1() { return cTriggersAndEffectsAssignment_4_1; }
 
 		//STRING
-		public RuleCall getTriggersAndEffectsSTRINGTerminalRuleCall_3_1_0() { return cTriggersAndEffectsSTRINGTerminalRuleCall_3_1_0; }
+		public RuleCall getTriggersAndEffectsSTRINGTerminalRuleCall_4_1_0() { return cTriggersAndEffectsSTRINGTerminalRuleCall_4_1_0; }
 
 		//isHistory?=" history"?
-		public Assignment getIsHistoryAssignment_4() { return cIsHistoryAssignment_4; }
+		public Assignment getIsHistoryAssignment_5() { return cIsHistoryAssignment_5; }
 
 		//" history"
-		public Keyword getIsHistoryHistoryKeyword_4_0() { return cIsHistoryHistoryKeyword_4_0; }
+		public Keyword getIsHistoryHistoryKeyword_5_0() { return cIsHistoryHistoryKeyword_5_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
 	}
 
 	public class ValuedObjectElements implements IParserRuleAccess {
@@ -2404,17 +2414,18 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	}
 
 	//Transition:
-	//  sourceState=[State]? type=TransitionType targetState=ID ("with " triggersAndEffects=
-	//  STRING)? isHistory?=" history"? ";"; 
+	//  sourceState=ID? type=TransitionType priority=INT targetState=ID ("with "
+	//  triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
 	//	//========================================================================================
 	//	 //===  									    TRANSITION 					               ===
 	//	 //========================================================================================
 	//
 	//
+	//	//[State])? 
 	//	 
 	//	
-	//	
-	//	  
+	//	//[State|FullStateID]
+	//	   
 	//	
 	//	
 	//

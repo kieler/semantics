@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl;
 
@@ -469,9 +468,9 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTransition_SourceState()
+  public EAttribute getTransition_SourceState()
   {
-    return (EReference)transitionEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)transitionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -489,7 +488,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getTransition_TargetState()
+  public EAttribute getTransition_Priority()
   {
     return (EAttribute)transitionEClass.getEStructuralFeatures().get(2);
   }
@@ -499,9 +498,19 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getTransition_IsHistory()
+  public EAttribute getTransition_TargetState()
   {
     return (EAttribute)transitionEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTransition_IsHistory()
+  {
+    return (EAttribute)transitionEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -726,8 +735,9 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     createEAttribute(actionEClass, ACTION__TRIGGERS_AND_EFFECTS);
 
     transitionEClass = createEClass(TRANSITION);
-    createEReference(transitionEClass, TRANSITION__SOURCE_STATE);
+    createEAttribute(transitionEClass, TRANSITION__SOURCE_STATE);
     createEAttribute(transitionEClass, TRANSITION__TYPE);
+    createEAttribute(transitionEClass, TRANSITION__PRIORITY);
     createEAttribute(transitionEClass, TRANSITION__TARGET_STATE);
     createEAttribute(transitionEClass, TRANSITION__IS_HISTORY);
 
@@ -819,8 +829,9 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     initEAttribute(getAction_TriggersAndEffects(), ecorePackage.getEString(), "triggersAndEffects", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTransition_SourceState(), this.getState(), null, "sourceState", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTransition_SourceState(), ecorePackage.getEString(), "sourceState", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_Type(), this.getTransitionType(), "type", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTransition_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_TargetState(), ecorePackage.getEString(), "targetState", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_IsHistory(), ecorePackage.getEBoolean(), "isHistory", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -853,6 +864,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     addEEnumLiteral(combineOperatorEEnum, CombineOperator.AND);
     addEEnumLiteral(combineOperatorEEnum, CombineOperator.OR);
     addEEnumLiteral(combineOperatorEEnum, CombineOperator.HOST);
+    addEEnumLiteral(combineOperatorEEnum, CombineOperator.NULL);
 
     initEEnum(valueTypeEEnum, ValueType.class, "ValueType");
     addEEnumLiteral(valueTypeEEnum, ValueType.PURE);

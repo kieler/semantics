@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts;
 
@@ -17,6 +16,7 @@ package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getSourceState <em>Source State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getTargetState <em>Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#isIsHistory <em>Is History</em>}</li>
  * </ul>
@@ -29,30 +29,30 @@ package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts;
 public interface Transition extends Action
 {
   /**
-   * Returns the value of the '<em><b>Source State</b></em>' reference.
+   * Returns the value of the '<em><b>Source State</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Source State</em>' reference isn't clear,
+   * If the meaning of the '<em>Source State</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Source State</em>' reference.
-   * @see #setSourceState(State)
+   * @return the value of the '<em>Source State</em>' attribute.
+   * @see #setSourceState(String)
    * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getTransition_SourceState()
    * @model
    * @generated
    */
-  State getSourceState();
+  String getSourceState();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getSourceState <em>Source State</em>}' reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getSourceState <em>Source State</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Source State</em>' reference.
+   * @param value the new value of the '<em>Source State</em>' attribute.
    * @see #getSourceState()
    * @generated
    */
-  void setSourceState(State value);
+  void setSourceState(String value);
 
   /**
    * Returns the value of the '<em><b>Type</b></em>' attribute.
@@ -82,6 +82,32 @@ public interface Transition extends Action
    * @generated
    */
   void setType(TransitionType value);
+
+  /**
+   * Returns the value of the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Priority</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Priority</em>' attribute.
+   * @see #setPriority(int)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getTransition_Priority()
+   * @model
+   * @generated
+   */
+  int getPriority();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getPriority <em>Priority</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Priority</em>' attribute.
+   * @see #getPriority()
+   * @generated
+   */
+  void setPriority(int value);
 
   /**
    * Returns the value of the '<em><b>Target State</b></em>' attribute.

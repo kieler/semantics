@@ -5572,25 +5572,6 @@ protected class Region_Group extends GroupToken {
 	}
 }
 
-// "region"?
-protected class Region_RegionKeyword_0 extends KeywordToken  {
-	
-	public Region_RegionKeyword_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getRegionAccess().getRegionKeyword_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-}
-
 // id=STRING?
 protected class Region_IdAssignment_1 extends AssignmentToken  {
 	
@@ -5604,8 +5585,7 @@ protected class Region_IdAssignment_1 extends AssignmentToken  {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Region_RegionKeyword_0(parent, this, 0, inst);
-			default: return parent.createParentFollower(this, index, index - 1, inst);
+			default: return parent.createParentFollower(this, index, index, inst);
 		}	
 	}	
 		
@@ -5682,8 +5662,7 @@ protected class Region_VariablesAssignment_2_0 extends AssignmentToken  {
 		switch(index) {
 			case 0: return new Region_Alternatives_2(parent, next, actIndex, consumed);
 			case 1: return new Region_IdAssignment_1(parent, next, actIndex, consumed);
-			case 2: return new Region_RegionKeyword_0(parent, next, actIndex, consumed);
-			default: return parent.createParentFollower(next, actIndex , index - 3, consumed);
+			default: return parent.createParentFollower(next, actIndex , index - 2, consumed);
 		}	
 	}	
 }
@@ -5726,8 +5705,7 @@ protected class Region_SignalsAssignment_2_1 extends AssignmentToken  {
 		switch(index) {
 			case 0: return new Region_Alternatives_2(parent, next, actIndex, consumed);
 			case 1: return new Region_IdAssignment_1(parent, next, actIndex, consumed);
-			case 2: return new Region_RegionKeyword_0(parent, next, actIndex, consumed);
-			default: return parent.createParentFollower(next, actIndex , index - 3, consumed);
+			default: return parent.createParentFollower(next, actIndex , index - 2, consumed);
 		}	
 	}	
 }
@@ -5770,8 +5748,7 @@ protected class Region_InnerStatesAssignment_2_2 extends AssignmentToken  {
 		switch(index) {
 			case 0: return new Region_Alternatives_2(parent, next, actIndex, consumed);
 			case 1: return new Region_IdAssignment_1(parent, next, actIndex, consumed);
-			case 2: return new Region_RegionKeyword_0(parent, next, actIndex, consumed);
-			default: return parent.createParentFollower(next, actIndex , index - 3, consumed);
+			default: return parent.createParentFollower(next, actIndex , index - 2, consumed);
 		}	
 	}	
 }
@@ -6030,17 +6007,18 @@ protected class Action_TransitionParserRuleCall_1 extends RuleCallToken {
 /************ begin Rule Transition ****************
  *
  * Transition:
- *   sourceState=[State]? type=TransitionType targetState=ID ("with " triggersAndEffects=
- *   STRING)? isHistory?=" history"? ";"; 
+ *   sourceState=ID? type=TransitionType priority=INT targetState=ID ("with "
+ *   triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
  * 	//========================================================================================
  * 	 //===  									    TRANSITION 					               ===
  * 	 //========================================================================================
  * 
  * 
+ * 	//[State])? 
  * 	 
  * 	
- * 	
- * 	  
+ * 	//[State|FullStateID]
+ * 	   
  * 	
  * 	
  * 
@@ -6050,8 +6028,12 @@ protected class Action_TransitionParserRuleCall_1 extends RuleCallToken {
  *
  **/
 
-// sourceState=[State]? type=TransitionType targetState=ID ("with " triggersAndEffects=
-// STRING)? isHistory?=" history"? ";"
+// sourceState=ID? type=TransitionType priority=INT targetState=ID ("with "
+// triggersAndEffects=STRING)? isHistory?=" history"? ";" 
+// 	//[State])? 
+// 	 
+// 	
+// 	//[State|FullStateID]
 protected class Transition_Group extends GroupToken {
 	
 	public Transition_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -6064,7 +6046,7 @@ protected class Transition_Group extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_SemicolonKeyword_5(parent, this, 0, inst);
+			case 0: return new Transition_SemicolonKeyword_6(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -6075,7 +6057,7 @@ protected class Transition_Group extends GroupToken {
 	}
 }
 
-// sourceState=[State]?
+// sourceState=ID?
 protected class Transition_SourceStateAssignment_0 extends AssignmentToken  {
 	
 	public Transition_SourceStateAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -6095,20 +6077,17 @@ protected class Transition_SourceStateAssignment_0 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("sourceState",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("sourceState");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getTransitionAccess().getSourceStateStateCrossReference_0_0().getType().getClassifier())) {
-				type = AssignmentType.CR;
-				element = grammarAccess.getTransitionAccess().getSourceStateStateCrossReference_0_0(); 
-				return obj;
-			}
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getTransitionAccess().getSourceStateIDTerminalRuleCall_0_0();
+			return obj;
 		}
 		return null;
 	}
 
 }
 
-// type=TransitionType
+// type=TransitionType //[State])?
 protected class Transition_TypeAssignment_1 extends AssignmentToken  {
 	
 	public Transition_TypeAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -6139,15 +6118,15 @@ protected class Transition_TypeAssignment_1 extends AssignmentToken  {
 
 }
 
-// targetState=ID
-protected class Transition_TargetStateAssignment_2 extends AssignmentToken  {
+// priority=INT
+protected class Transition_PriorityAssignment_2 extends AssignmentToken  {
 	
-	public Transition_TargetStateAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_PriorityAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getTargetStateAssignment_2();
+		return grammarAccess.getTransitionAccess().getPriorityAssignment_2();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -6158,11 +6137,43 @@ protected class Transition_TargetStateAssignment_2 extends AssignmentToken  {
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("priority",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("priority");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
+			type = AssignmentType.LRC;
+			element = grammarAccess.getTransitionAccess().getPriorityINTTerminalRuleCall_2_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// targetState=ID 
+// 	//[State|FullStateID]
+protected class Transition_TargetStateAssignment_3 extends AssignmentToken  {
+	
+	public Transition_TargetStateAssignment_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTransitionAccess().getTargetStateAssignment_3();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new Transition_PriorityAssignment_2(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("targetState",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("targetState");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getTransitionAccess().getTargetStateIDTerminalRuleCall_2_0();
+			element = grammarAccess.getTransitionAccess().getTargetStateIDTerminalRuleCall_3_0();
 			return obj;
 		}
 		return null;
@@ -6171,19 +6182,19 @@ protected class Transition_TargetStateAssignment_2 extends AssignmentToken  {
 }
 
 // ("with " triggersAndEffects=STRING)?
-protected class Transition_Group_3 extends GroupToken {
+protected class Transition_Group_4 extends GroupToken {
 	
-	public Transition_Group_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_Group_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Group getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getGroup_3();
+		return grammarAccess.getTransitionAccess().getGroup_4();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_TriggersAndEffectsAssignment_3_1(parent, this, 0, inst);
+			case 0: return new Transition_TriggersAndEffectsAssignment_4_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -6191,19 +6202,19 @@ protected class Transition_Group_3 extends GroupToken {
 }
 
 // "with "
-protected class Transition_WithKeyword_3_0 extends KeywordToken  {
+protected class Transition_WithKeyword_4_0 extends KeywordToken  {
 	
-	public Transition_WithKeyword_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_WithKeyword_4_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Keyword getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getWithKeyword_3_0();
+		return grammarAccess.getTransitionAccess().getWithKeyword_4_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_TargetStateAssignment_2(parent, this, 0, inst);
+			case 0: return new Transition_TargetStateAssignment_3(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -6211,19 +6222,19 @@ protected class Transition_WithKeyword_3_0 extends KeywordToken  {
 }
 
 // triggersAndEffects=STRING
-protected class Transition_TriggersAndEffectsAssignment_3_1 extends AssignmentToken  {
+protected class Transition_TriggersAndEffectsAssignment_4_1 extends AssignmentToken  {
 	
-	public Transition_TriggersAndEffectsAssignment_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_TriggersAndEffectsAssignment_4_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getTriggersAndEffectsAssignment_3_1();
+		return grammarAccess.getTransitionAccess().getTriggersAndEffectsAssignment_4_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_WithKeyword_3_0(parent, this, 0, inst);
+			case 0: return new Transition_WithKeyword_4_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -6233,7 +6244,7 @@ protected class Transition_TriggersAndEffectsAssignment_3_1 extends AssignmentTo
 		IInstanceDescription obj = current.cloneAndConsume("triggersAndEffects");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getTransitionAccess().getTriggersAndEffectsSTRINGTerminalRuleCall_3_1_0();
+			element = grammarAccess.getTransitionAccess().getTriggersAndEffectsSTRINGTerminalRuleCall_4_1_0();
 			return obj;
 		}
 		return null;
@@ -6243,20 +6254,20 @@ protected class Transition_TriggersAndEffectsAssignment_3_1 extends AssignmentTo
 
 
 // isHistory?=" history"?
-protected class Transition_IsHistoryAssignment_4 extends AssignmentToken  {
+protected class Transition_IsHistoryAssignment_5 extends AssignmentToken  {
 	
-	public Transition_IsHistoryAssignment_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_IsHistoryAssignment_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getIsHistoryAssignment_4();
+		return grammarAccess.getTransitionAccess().getIsHistoryAssignment_5();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_Group_3(parent, this, 0, inst);
-			case 1: return new Transition_TargetStateAssignment_2(parent, this, 1, inst);
+			case 0: return new Transition_Group_4(parent, this, 0, inst);
+			case 1: return new Transition_TargetStateAssignment_3(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -6266,7 +6277,7 @@ protected class Transition_IsHistoryAssignment_4 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("isHistory");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_4_0();
+			element = grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_5_0();
 			return obj;
 		}
 		return null;
@@ -6275,21 +6286,21 @@ protected class Transition_IsHistoryAssignment_4 extends AssignmentToken  {
 }
 
 // ";"
-protected class Transition_SemicolonKeyword_5 extends KeywordToken  {
+protected class Transition_SemicolonKeyword_6 extends KeywordToken  {
 	
-	public Transition_SemicolonKeyword_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Transition_SemicolonKeyword_6(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Keyword getGrammarElement() {
-		return grammarAccess.getTransitionAccess().getSemicolonKeyword_5();
+		return grammarAccess.getTransitionAccess().getSemicolonKeyword_6();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Transition_IsHistoryAssignment_4(parent, this, 0, inst);
-			case 1: return new Transition_Group_3(parent, this, 1, inst);
-			case 2: return new Transition_TargetStateAssignment_2(parent, this, 2, inst);
+			case 0: return new Transition_IsHistoryAssignment_5(parent, this, 0, inst);
+			case 1: return new Transition_Group_4(parent, this, 1, inst);
+			case 2: return new Transition_TargetStateAssignment_3(parent, this, 2, inst);
 			default: return null;
 		}	
 	}	

@@ -1,0 +1,37 @@
+import ecore;
+process(xtext::GeneratedMetamodel this) :
+  process(ePackage)
+;
+
+process(xtext::GeneratedMetamodel this) :
+     ePackage.process()
+;
+ 
+process(EPackage this) :
+     eClassifiers.process()
+;
+ 
+process(EClassifier this) : 
+     null
+;
+ 
+process(EClass this) :
+     eStructuralFeatures.process()
+;
+//add a new literal
+process(EEnum this) :
+     if name == 'CombineOperator' then eLiterals.add(newLiteral('null', 'NULL', eLiterals.size))
+;
+//create the new literal
+create EEnumLiteral newLiteral(String literal, String name, int value) :
+     setLiteral(literal) -> setName(name) -> setValue(value)
+;
+process(EStructuralFeature this) :
+     null
+;
+process(EReference this) :
+    if name == 'regions' then eOpposite.setEOpposite(this)
+;
+ 
+
+

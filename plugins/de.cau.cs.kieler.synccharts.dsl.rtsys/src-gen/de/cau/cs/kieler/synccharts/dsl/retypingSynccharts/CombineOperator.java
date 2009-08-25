@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts;
 
@@ -81,7 +80,17 @@ public enum CombineOperator implements Enumerator
    * @generated
    * @ordered
    */
-  HOST(5, "HOST", "host");
+  HOST(5, "HOST", "host"),
+
+  /**
+   * The '<em><b>NULL</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #NULL_VALUE
+   * @generated
+   * @ordered
+   */
+  NULL(6, "NULL", "null");
 
   /**
    * The '<em><b>NONE</b></em>' literal value.
@@ -174,6 +183,21 @@ public enum CombineOperator implements Enumerator
   public static final int HOST_VALUE = 5;
 
   /**
+   * The '<em><b>NULL</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>NULL</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #NULL
+   * @model literal="null"
+   * @generated
+   * @ordered
+   */
+  public static final int NULL_VALUE = 6;
+
+  /**
    * An array of all the '<em><b>Combine Operator</b></em>' enumerators.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -188,6 +212,7 @@ public enum CombineOperator implements Enumerator
       AND,
       OR,
       HOST,
+      NULL,
     };
 
   /**
@@ -252,6 +277,7 @@ public enum CombineOperator implements Enumerator
       case AND_VALUE: return AND;
       case OR_VALUE: return OR;
       case HOST_VALUE: return HOST;
+      case NULL_VALUE: return NULL;
     }
     return null;
   }

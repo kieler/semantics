@@ -46,8 +46,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="triggersAndEffects" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Action">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceState" eType="#//State"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//TransitionType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isHistory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
@@ -78,6 +79,7 @@
     <eLiterals name="AND" value="3" literal="AND"/>
     <eLiterals name="OR" value="4" literal="OR"/>
     <eLiterals name="HOST" value="5" literal="host"/>
+    <eLiterals name="NULL" value="6" literal="null"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ValueType">
     <eLiterals name="PURE" literal="PURE"/>

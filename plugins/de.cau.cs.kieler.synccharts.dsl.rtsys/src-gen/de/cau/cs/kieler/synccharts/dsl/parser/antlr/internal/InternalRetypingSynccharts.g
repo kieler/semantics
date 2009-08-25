@@ -2704,19 +2704,23 @@ ruleTransition returns [EObject current=null]
     }:
 ((	
 	
-		
-		{
-			if ($current==null) {
+	    lv_sourceState_0=	RULE_ID
+	{
+		createLeafNode(grammarAccess.getTransitionAccess().getSourceStateIDTerminalRuleCall_0_0(), "sourceState"); 
+	}
+ 
+	    {
+	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode, $current);
 	        }
-        }
-	RULE_ID
-	{
-		createLeafNode(grammarAccess.getTransitionAccess().getSourceStateStateCrossReference_0_0(), "sourceState"); 
-	}
-
-		// TODO assign feature to currentNode
+	        
+	        try {
+	       		set($current, "sourceState", lv_sourceState_0, "ID", lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
 	
 )?(	
 	
@@ -2741,9 +2745,9 @@ ruleTransition returns [EObject current=null]
 	
 )(	
 	
-	    lv_targetState_2=	RULE_ID
+	    lv_priority_2=	RULE_INT
 	{
-		createLeafNode(grammarAccess.getTransitionAccess().getTargetStateIDTerminalRuleCall_2_0(), "targetState"); 
+		createLeafNode(grammarAccess.getTransitionAccess().getPriorityINTTerminalRuleCall_2_0(), "priority"); 
 	}
  
 	    {
@@ -2753,7 +2757,27 @@ ruleTransition returns [EObject current=null]
 	        }
 	        
 	        try {
-	       		set($current, "targetState", lv_targetState_2, "ID", lastConsumedNode);
+	       		set($current, "priority", lv_priority_2, "INT", lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
+	
+)(	
+	
+	    lv_targetState_3=	RULE_ID
+	{
+		createLeafNode(grammarAccess.getTransitionAccess().getTargetStateIDTerminalRuleCall_3_0(), "targetState"); 
+	}
+ 
+	    {
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        
+	        try {
+	       		set($current, "targetState", lv_targetState_3, "ID", lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
@@ -2761,13 +2785,13 @@ ruleTransition returns [EObject current=null]
 	
 )('with ' 
     {
-        createLeafNode(grammarAccess.getTransitionAccess().getWithKeyword_3_0(), null); 
+        createLeafNode(grammarAccess.getTransitionAccess().getWithKeyword_4_0(), null); 
     }
 (	
 	
-	    lv_triggersAndEffects_4=	RULE_STRING
+	    lv_triggersAndEffects_5=	RULE_STRING
 	{
-		createLeafNode(grammarAccess.getTransitionAccess().getTriggersAndEffectsSTRINGTerminalRuleCall_3_1_0(), "triggersAndEffects"); 
+		createLeafNode(grammarAccess.getTransitionAccess().getTriggersAndEffectsSTRINGTerminalRuleCall_4_1_0(), "triggersAndEffects"); 
 	}
  
 	    {
@@ -2777,7 +2801,7 @@ ruleTransition returns [EObject current=null]
 	        }
 	        
 	        try {
-	       		set($current, "triggersAndEffects", lv_triggersAndEffects_4, "STRING", lastConsumedNode);
+	       		set($current, "triggersAndEffects", lv_triggersAndEffects_5, "STRING", lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
@@ -2785,9 +2809,9 @@ ruleTransition returns [EObject current=null]
 	
 ))?(	
 	
-	    lv_isHistory_5=' history' 
+	    lv_isHistory_6=' history' 
     {
-        createLeafNode(grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_4_0(), "isHistory"); 
+        createLeafNode(grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_5_0(), "isHistory"); 
     }
 
  
@@ -2806,7 +2830,7 @@ ruleTransition returns [EObject current=null]
 	
 )?';' 
     {
-        createLeafNode(grammarAccess.getTransitionAccess().getSemicolonKeyword_5(), null); 
+        createLeafNode(grammarAccess.getTransitionAccess().getSemicolonKeyword_6(), null); 
     }
 );
 

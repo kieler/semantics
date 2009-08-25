@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts;
 
@@ -382,7 +381,7 @@ public interface RetypingSyncchartsPackage extends EPackage
   int TRANSITION__TRIGGERS_AND_EFFECTS = ACTION__TRIGGERS_AND_EFFECTS;
 
   /**
-   * The feature id for the '<em><b>Source State</b></em>' reference.
+   * The feature id for the '<em><b>Source State</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -400,13 +399,22 @@ public interface RetypingSyncchartsPackage extends EPackage
   int TRANSITION__TYPE = ACTION_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRANSITION__PRIORITY = ACTION_FEATURE_COUNT + 2;
+
+  /**
    * The feature id for the '<em><b>Target State</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TRANSITION__TARGET_STATE = ACTION_FEATURE_COUNT + 2;
+  int TRANSITION__TARGET_STATE = ACTION_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Is History</b></em>' attribute.
@@ -415,7 +423,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION__IS_HISTORY = ACTION_FEATURE_COUNT + 3;
+  int TRANSITION__IS_HISTORY = ACTION_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Transition</em>' class.
@@ -424,7 +432,7 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 4;
+  int TRANSITION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ValuedObjectImpl <em>Valued Object</em>}' class.
@@ -981,15 +989,15 @@ public interface RetypingSyncchartsPackage extends EPackage
   EClass getTransition();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getSourceState <em>Source State</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getSourceState <em>Source State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Source State</em>'.
+   * @return the meta object for the attribute '<em>Source State</em>'.
    * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getSourceState()
    * @see #getTransition()
    * @generated
    */
-  EReference getTransition_SourceState();
+  EAttribute getTransition_SourceState();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getType <em>Type</em>}'.
@@ -1001,6 +1009,17 @@ public interface RetypingSyncchartsPackage extends EPackage
    * @generated
    */
   EAttribute getTransition_Type();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getPriority <em>Priority</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Priority</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getPriority()
+   * @see #getTransition()
+   * @generated
+   */
+  EAttribute getTransition_Priority();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getTargetState <em>Target State</em>}'.
@@ -1451,12 +1470,12 @@ public interface RetypingSyncchartsPackage extends EPackage
     EClass TRANSITION = eINSTANCE.getTransition();
 
     /**
-     * The meta object literal for the '<em><b>Source State</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Source State</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TRANSITION__SOURCE_STATE = eINSTANCE.getTransition_SourceState();
+    EAttribute TRANSITION__SOURCE_STATE = eINSTANCE.getTransition_SourceState();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
@@ -1465,6 +1484,14 @@ public interface RetypingSyncchartsPackage extends EPackage
      * @generated
      */
     EAttribute TRANSITION__TYPE = eINSTANCE.getTransition_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TRANSITION__PRIORITY = eINSTANCE.getTransition_Priority();
 
     /**
      * The meta object literal for the '<em><b>Target State</b></em>' attribute feature.

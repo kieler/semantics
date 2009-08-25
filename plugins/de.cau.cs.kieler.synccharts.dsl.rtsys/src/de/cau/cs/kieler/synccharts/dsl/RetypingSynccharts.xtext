@@ -106,9 +106,10 @@ Action:
 	//========================================================================================
 
 Transition:
-	(sourceState=[State])? 
+	(sourceState=ID)?//[State])? 
 	type=TransitionType
-	targetState=ID
+	priority=INT
+	targetState=ID//[State|FullStateID]
 	('with ' triggersAndEffects=STRING)?
 	(isHistory?=' history')?
 	';'
