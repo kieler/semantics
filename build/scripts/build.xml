@@ -127,7 +127,7 @@
 		<touch>
 			<fileset dir="${basedir}/${buildLabel}/${platform}" />
 		</touch>
-		<zip destfile="${basedir}/${buildLabel}/${zipfile}" update="true">
+		<zip destfile="${zipfile}" update="true">
 			<zipfileset dir="${basedir}/${buildLabel}/${platform}" filemode="755" />
 		</zip>
 		<delete dir="${basedir}/${buildLabel}/${platform}" />
