@@ -21,12 +21,12 @@ Set[EReference] allReferences(ecore::EClass this):
          result
 ;
 //make it cached : the reference will be computed only once for each element
-cached EReference getReference(Set[EReference] this, String typeName, String refName):
-	select(e|((e.eType.name == typeName) && (e.name == refName))).flatten().get(0)
+cached EReference getReference(Set[EReference] this, /*String typeName,*/ String refName):
+	select(e|/*((e.eType.name == typeName) && */(e.name == refName)).flatten().get(0) 
 ;
 addEOpposites(ecore::EPackage this, Set[EReference] features):
-let thisSide = features.getReference("Region","regions") :
-  let otherSide = features.getReference("State","parentState") :
+let thisSide = features.getReference(/*"Region",*/"regions") :
+  let otherSide = features.getReference(/*"State",*/"parentState") :
     thisSide.setEOpposite(otherSide) ->
     otherSide.setEOpposite(thisSide) -> Void
 ;
