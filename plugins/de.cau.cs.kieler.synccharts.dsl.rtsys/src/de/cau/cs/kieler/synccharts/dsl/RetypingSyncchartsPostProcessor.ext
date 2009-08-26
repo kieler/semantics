@@ -1,34 +1,36 @@
 import ecore;
 import retypingSynccharts;
 
+//process(xtext::GeneratedMetamodel this) :
+  //process(ePackage)
+//;
 process(ecore::EPackage this):
-	addEOpposites(allReferences())
+		//let ref2 = ((EReference)((EClass)this.getEClassifier('Region')).getEStructuralFeature('parentState')) :
+			addEOpposites(getReference('State','regions'),getReference('Region','parentState'))
 ;
-/**
-* @param result all references of all classes in the package
-*/
-Set[EReference] allReferences(ecore::EPackage this):
-   let result = {}.toSet() :
-   		 this.eAllContents.typeSelect(EClass).collect(e| result.addAll(e.allReferences()) ) ->
-         result
+//get the reference, defined by its and the containing class' name
+ getReference(ecore::EPackage this, String className, String referenceName):
+	((EReference)((EClass)this.getEClassifier(className)).getEStructuralFeature(referenceName))
 ;
-/**
-* @param result all references of all classes
-*/
-Set[EReference] allReferences(ecore::EClass this):
-     let result = {}.toSet() :
-         eReferences.collect(e|result.add(e)) ->
-         result
-;
-//make it cached : the reference will be computed only once for each element
-cached EReference getReference(Set[EReference] this, /*String typeName,*/ String refName):
-	select(e|/*((e.eType.name == typeName) && */(e.name == refName)).flatten().get(0) 
-;
-addEOpposites(ecore::EPackage this, Set[EReference] features):
-let thisSide = features.getReference(/*"Region",*/"regions") :
-  let otherSide = features.getReference(/*"State",*/"parentState") :
+addEOpposites(ecore::EPackage this, EReference thisSide, EReference otherSide):
     thisSide.setEOpposite(otherSide) ->
-    otherSide.setEOpposite(thisSide) -> Void
+    otherSide.setEOpposite(thisSide) -> 
+    Void
 ;
+//create the new literal
+//create EEnumLiteral newLiteral(String literal, String name, int value) :
+ //    setLiteral(literal) -> setName(name) -> setValue(value)
+//;
+//process(EStructuralFeature this) :
+ //    null
+//;
+//create EReference newEReference(String name, EClass type) :
+//	setName(name) -> setEType(type) -> setContainment(true)
+//;
+//process(EReference this) :
+ //   if name == 'regions' then eOpposite.setEOpposite(newEReference('parentState',eClass()))
+//;
+
+
  
 
