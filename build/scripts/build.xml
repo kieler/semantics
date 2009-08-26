@@ -58,9 +58,9 @@
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
 		<property name="configs"       value="${feature.configs}" />
-		<property name="customTargets"   location="${eclipse.pdebuild.templates}/headless-build/customTargets.xml"/>
+		<!-- property name="customTargets"   location="${eclipse.pdebuild.templates}/headless-build/customTargets.xml"/ -->
 		<property name="genericTargets"  location="${eclipse.pdebuild.scripts}/genericTargets.xml"/>
-		<property name="allElementsFile" location="${eclipse.pdebuild.templates}/headless-build/allElements.xml"/>
+		<!-- property name="allElementsFile" location="${eclipse.pdebuild.templates}/headless-build/allElements.xml"/ -->
 
 		<mkdir dir="${basedir}/update-site/features" />
 		<mkdir dir="${basedir}/update-site/plugins" />
@@ -70,8 +70,12 @@
 			<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
 		</delete>
 		
-		<echo message="basedir: ${basedir}" />
-		<ant antfile="${eclipse.pdebuild.scripts}/build.xml" target="generate"/>
+		<!-- echo message="basedir: ${basedir}" / -->
+		<!-- ant antfile="${eclipse.pdebuild.scripts}/build.xml" target="generate"/ -->
+		<ant antfile="${genericTargets}" target="generateScript">
+			<property name="type" value="feature"/>
+			<property name="id" value="${feature}"/>
+		</ant>
 		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}" target="build.update.jar">
 			<property name="feature.destination" value="${basedir}/update-site/features"/>
@@ -92,17 +96,40 @@
 		<property name="configs"       value="${product.configs}" />
 		<property name="product"       value="${basedir}/kieler.product" />
 		<property name="runPackager"   value="true" />
-		<property name="customTargets"   location="${scriptdir}/customTargets.xml"/>
+		<!-- property name="customTargets"   location="${scriptdir}/customTargets.xml"/ -->
 		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
-		<property name="allElementsFile" location="${scriptdir}/allElements.xml"/>
+		<!-- property name="allElementsFile" location="${scriptdir}/allElements.xml"/ -->
 
 		<delete dir="${buildLabel}"/>
 		<copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/kieler.product"
 			  tofile="${basedir}/kieler.product" overwrite="true" />
 		
 		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
+		
+		<!-- setting the executable flag on launcher binaries -->
+		<path id="products">
+			<fileset dir="${buildLabel}" includes="*.zip" excludes="*win32*" />
+		</path>
+		<foreach param="zipfile" target="update.launcher">
+			<path refid="products" />
+		</foreach>
 	</target>
 	
+	<target name="update.launcher">
+		<basename file="${zipfile}" property="platform" suffix="zip" />
+		<unzip dest="${basedir}/${buildLabel}/${platform}" src="${zipfile}">
+			<patternset includes="kieler/kieler.app/Contents/MacOS/kieler" />
+			<patternset includes="kieler/kieler" />
+		</unzip>
+		<touch>
+			<fileset dir="${basedir}/${buildLabel}/${platform}" />
+		</touch>
+		<zip destfile="${basedir}/${buildLabel}/${zipfile}" update="true">
+			<zipfileset dir="${basedir}/${buildLabel}/${platform}" filemode="755" />
+		</zip>
+		<delete dir="${basedir}/${buildLabel}/${platform}" />
+	</target>
+
 	<target name="clean">
 		<available file="${elementPath}/build.xml" property="buildFilePresent"/>
 	    <antcall target="cleanUp" />
