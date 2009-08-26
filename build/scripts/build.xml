@@ -12,6 +12,8 @@
 	<!-- default definitions: should be overwritten while calling this script -->	
 	<property name="target"  value="noTargetInfo"/>
 	<property name="feature" value=" "/>
+	
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="/home/kieler/ant-contrib/lib/ant-contrib.jar" />
 
 	<target name="call.antRunner">
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
@@ -106,7 +108,8 @@
 		
 		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
 		
-		<!-- setting the executable flag on launcher binaries -->
+		<!-- setting the executable flag on launcher binaries
+			 CAUTION: foreach is a ant-contrib task declared above! -->
 		<path id="products">
 			<fileset dir="${buildLabel}" includes="*.zip" excludes="*win32*" />
 		</path>
