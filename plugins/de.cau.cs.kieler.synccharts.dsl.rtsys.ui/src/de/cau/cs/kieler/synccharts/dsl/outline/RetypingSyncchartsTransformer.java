@@ -7,33 +7,14 @@ package de.cau.cs.kieler.synccharts.dsl.outline;
 
 import java.util.List;
 
-import org.eclipse.xtext.parsetree.NodeUtil;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.ui.common.editor.outline.ContentOutlineNode;
 import org.eclipse.xtext.ui.common.editor.outline.transformer.AbstractDeclarativeSemanticModelTransformer;
-import org.eclipse.xtext.ui.core.ILocationInFileProvider;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EAnnotation;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.jface.text.Region;
-
-import com.google.inject.Provider;
 
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition;
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.TransitionType;
 
 /**
  * customization of the default outline structure
@@ -59,82 +40,98 @@ public class RetypingSyncchartsTransformer extends
 			ContentOutlineNode parentNode) {
 		ContentOutlineNode node = super.newOutlineNode(semanticState,
 				parentNode);
-		String myStateType = "";
-		String myStateName = "";
-		String myStateLabel = "";
+		String myStateType = null;
+		String myStateName = null;
+		String myStateLabel = null;
+		String nodeLabel = "";
 
 		/**
 		 * init myState "myStateLabel" --> init myState:"myStateLabel"
 		 */
-		if (semanticState.getType() != null) {
-			myStateType = semanticState.getType().getLiteral();
+		if (semanticState.getType() != null
+				&& semanticState.getType().getName() != "NORMAL") {
+			myStateType = semanticState.getType().getName();
+			nodeLabel = myStateType + " state";
 		}
-		if (semanticState.getId() != null) {
-			myStateName = semanticState.getId();
-		}
+		if (semanticState.getName() != null) {
+			myStateName = semanticState.getName();
+			nodeLabel= nodeLabel + myStateName;}
+			else {
+				myStateName = "anonymous state";
+				nodeLabel= nodeLabel + myStateName;
+			}
+		
+
 		if (semanticState.getLabel() != null) {
 			myStateLabel = semanticState.getLabel();
+			nodeLabel = nodeLabel + ": \" " + myStateLabel + "\"";
 		}
-
-		node.setLabel(myStateType + " " + myStateName + ": \" " + myStateLabel
-				+ "\"");
-
-//		if (semanticState.isIsFinal()) {
-//			// create a content outline node via ContentOutlineNodeProvider
-//			// MyContentOutlineNodeProvider myContentOutlineNodeProvider = new
-//			// MyContentOutlineNodeProvider();
-//			if (contentOutlineNodeprovider != null) {
-//				ContentOutlineNode myContentOutlineNode = contentOutlineNodeprovider
-//						.get();
-//				myContentOutlineNodes.add(myContentOutlineNode);
-//				myContentOutlineNode = myContentOutlineNodes.get(0);
-//				myContentOutlineNode.setLabel("isFinal");
-//				node.setChildren(myContentOutlineNodes);
-//				// set the region
-//				Region location = locationProvider.getLocation(semanticState);
-//				myContentOutlineNode.setSelectionOffset(location.getOffset());
-//				myContentOutlineNode.setSelectionLength(location.getLength());
-//			}
-//		}
+		node.setLabel(nodeLabel);
 		return node;
 	}
-	
+
 	public ContentOutlineNode createNode(Action semanticAction,
 			ContentOutlineNode parentNode) {
 		ContentOutlineNode node = super.newOutlineNode(semanticAction,
 				parentNode);
-		
+
 		String actionKeyword = null;
-		//onexit "anExitAction" --> onExit : anExitAction
-		if (semanticAction.eContainingFeature().getName() == "entryActions"){
-			actionKeyword = "onEntry : " + semanticAction.getTriggersAndEffects();		
+		// onexit "anExitAction" --> onExit : anExitAction
+		if (semanticAction.eContainingFeature().getName() == "entryActions") {
+			actionKeyword = "onEntry : "
+					+ semanticAction.getTriggersAndEffects();
 		}
-		if (semanticAction.eContainingFeature().getName() == "exitActions"){
-			actionKeyword = "onExit : " + semanticAction.getTriggersAndEffects();		
+		if (semanticAction.eContainingFeature().getName() == "exitActions") {
+			actionKeyword = "onExit : "
+					+ semanticAction.getTriggersAndEffects();
 		}
-		if (semanticAction.eContainingFeature().getName() == "innerActions"){
-			actionKeyword = "onInner : " + semanticAction.getTriggersAndEffects();		
-		}		 
+		if (semanticAction.eContainingFeature().getName() == "innerActions") {
+			actionKeyword = "onInner : "
+					+ semanticAction.getTriggersAndEffects();
+		}
+		if (semanticAction.eContainingFeature().getName() == "suspensionTrigger") {
+			actionKeyword = "suspended when : "
+					+ semanticAction.getTriggersAndEffects();
+		}
 		if (semanticAction.isIsImmediate()) {
 			actionKeyword = "# " + actionKeyword;
 		}
-
 		node.setLabel(actionKeyword);
 		return node;
 	}
+
 	public ContentOutlineNode createNode(Transition semanticTransition,
 			ContentOutlineNode parentNode) {
 		ContentOutlineNode node = super.newOutlineNode(semanticTransition,
 				parentNode);
-		
+
 		String transitionLabel = null;
-		if (semanticTransition.getType()!=null)
-			transitionLabel = semanticTransition.getType().toString() + " " + semanticTransition.getTargetState().getId();
-			
+		if (semanticTransition.getType() != null)
+			transitionLabel = //semanticTransition.getType().toString() + " " +
+					semanticTransition.getTargetState().getName();
+
 		node.setLabel(transitionLabel);
 		return node;
 	}
-	
+
+	public ContentOutlineNode createNode(Signal semanticSignal,
+			ContentOutlineNode parentNode) {
+		ContentOutlineNode node = super.newOutlineNode(semanticSignal,
+				parentNode);
+
+		String signalLabel = null;
+		if (semanticSignal.isIsInput()) {
+			signalLabel = "input " + semanticSignal.getName();
+		}
+		if (semanticSignal.isIsOutput()) {
+			signalLabel = "output " + semanticSignal.getName();
+		}
+		if (semanticSignal.isIsInputOutput()) {
+			signalLabel = "input output " + semanticSignal.getName();
+		}
+		node.setLabel(signalLabel);
+		return node;
+	}
 
 	/**
 	 * This method will be called by naming convention: - method name must be

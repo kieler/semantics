@@ -81,7 +81,7 @@ public enum CombineOperator implements Enumerator
    * @generated
    * @ordered
    */
-  HOST(5, "HOST", "host");
+  HOST(5, "HOST", "hostCombineOperator");
 
   /**
    * The '<em><b>NONE</b></em>' literal value.
@@ -167,7 +167,7 @@ public enum CombineOperator implements Enumerator
    * </p>
    * <!-- end-user-doc -->
    * @see #HOST
-   * @model literal="host"
+   * @model literal="hostCombineOperator"
    * @generated
    * @ordered
    */

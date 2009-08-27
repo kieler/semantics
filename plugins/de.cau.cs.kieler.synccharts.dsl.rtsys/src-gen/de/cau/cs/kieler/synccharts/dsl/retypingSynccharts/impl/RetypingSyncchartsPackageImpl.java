@@ -56,14 +56,14 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass regionEClass = null;
+  private EClass actionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass actionEClass = null;
+  private EClass regionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -229,7 +229,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getState_Id()
+  public EAttribute getState_Name()
   {
     return (EAttribute)stateEClass.getEStructuralFeatures().get(3);
   }
@@ -269,7 +269,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getState_EntryActions()
+  public EReference getState_OutgoingTransitions()
   {
     return (EReference)stateEClass.getEStructuralFeatures().get(7);
   }
@@ -279,7 +279,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getState_InnerActions()
+  public EReference getState_EntryActions()
   {
     return (EReference)stateEClass.getEStructuralFeatures().get(8);
   }
@@ -289,7 +289,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getState_ExitActions()
+  public EReference getState_InnerActions()
   {
     return (EReference)stateEClass.getEStructuralFeatures().get(9);
   }
@@ -299,7 +299,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getState_SuspensionTrigger()
+  public EReference getState_ExitActions()
   {
     return (EReference)stateEClass.getEStructuralFeatures().get(10);
   }
@@ -309,7 +309,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getState_Signals()
+  public EReference getState_SuspensionTrigger()
   {
     return (EReference)stateEClass.getEStructuralFeatures().get(11);
   }
@@ -319,7 +319,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getState_Regions()
+  public EReference getState_Signals()
   {
     return (EReference)stateEClass.getEStructuralFeatures().get(12);
   }
@@ -329,7 +329,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getState_OutgoingTransitions()
+  public EReference getState_Regions()
   {
     return (EReference)stateEClass.getEStructuralFeatures().get(13);
   }
@@ -362,66 +362,6 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
   public EAttribute getRenaming_NewID()
   {
     return (EAttribute)renamingEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getRegion()
-  {
-    return regionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getRegion_ParentState()
-  {
-    return (EReference)regionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getRegion_Id()
-  {
-    return (EAttribute)regionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getRegion_Variables()
-  {
-    return (EReference)regionEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getRegion_Signals()
-  {
-    return (EReference)regionEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getRegion_InnerStates()
-  {
-    return (EReference)regionEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -462,6 +402,46 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
   public EAttribute getAction_TriggersAndEffects()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getRegion()
+  {
+    return regionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRegion_Variables()
+  {
+    return (EReference)regionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRegion_InnerStates()
+  {
+    return (EReference)regionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRegion_Signals()
+  {
+    return (EReference)regionEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -539,7 +519,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getValuedObject_InitialValue()
+  public EAttribute getValuedObject_Type()
   {
     return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(1);
   }
@@ -549,19 +529,9 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getValuedObject_Type()
+  public EAttribute getValuedObject_InitialValue()
   {
     return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getValuedObject_HostType()
-  {
-    return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -589,7 +559,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSignal_IsLocal()
+  public EAttribute getSignal_IsInputOutput()
   {
     return (EAttribute)signalEClass.getEStructuralFeatures().get(0);
   }
@@ -708,33 +678,31 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     createEAttribute(stateEClass, STATE__IS_INITIAL);
     createEAttribute(stateEClass, STATE__IS_FINAL);
     createEAttribute(stateEClass, STATE__TYPE);
-    createEAttribute(stateEClass, STATE__ID);
+    createEAttribute(stateEClass, STATE__NAME);
     createEAttribute(stateEClass, STATE__LABEL);
     createEReference(stateEClass, STATE__SIGNAL_RENAMINGS);
     createEAttribute(stateEClass, STATE__BODY_TEXT);
+    createEReference(stateEClass, STATE__OUTGOING_TRANSITIONS);
     createEReference(stateEClass, STATE__ENTRY_ACTIONS);
     createEReference(stateEClass, STATE__INNER_ACTIONS);
     createEReference(stateEClass, STATE__EXIT_ACTIONS);
     createEReference(stateEClass, STATE__SUSPENSION_TRIGGER);
     createEReference(stateEClass, STATE__SIGNALS);
     createEReference(stateEClass, STATE__REGIONS);
-    createEReference(stateEClass, STATE__OUTGOING_TRANSITIONS);
 
     renamingEClass = createEClass(RENAMING);
     createEAttribute(renamingEClass, RENAMING__OLD_OBJECT);
     createEAttribute(renamingEClass, RENAMING__NEW_ID);
 
-    regionEClass = createEClass(REGION);
-    createEReference(regionEClass, REGION__PARENT_STATE);
-    createEAttribute(regionEClass, REGION__ID);
-    createEReference(regionEClass, REGION__VARIABLES);
-    createEReference(regionEClass, REGION__SIGNALS);
-    createEReference(regionEClass, REGION__INNER_STATES);
-
     actionEClass = createEClass(ACTION);
     createEAttribute(actionEClass, ACTION__IS_IMMEDIATE);
     createEAttribute(actionEClass, ACTION__DELAY);
     createEAttribute(actionEClass, ACTION__TRIGGERS_AND_EFFECTS);
+
+    regionEClass = createEClass(REGION);
+    createEReference(regionEClass, REGION__VARIABLES);
+    createEReference(regionEClass, REGION__INNER_STATES);
+    createEReference(regionEClass, REGION__SIGNALS);
 
     transitionEClass = createEClass(TRANSITION);
     createEReference(transitionEClass, TRANSITION__SOURCE_STATE);
@@ -744,14 +712,13 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
 
     valuedObjectEClass = createEClass(VALUED_OBJECT);
     createEAttribute(valuedObjectEClass, VALUED_OBJECT__NAME);
-    createEAttribute(valuedObjectEClass, VALUED_OBJECT__INITIAL_VALUE);
     createEAttribute(valuedObjectEClass, VALUED_OBJECT__TYPE);
-    createEAttribute(valuedObjectEClass, VALUED_OBJECT__HOST_TYPE);
+    createEAttribute(valuedObjectEClass, VALUED_OBJECT__INITIAL_VALUE);
 
     variableEClass = createEClass(VARIABLE);
 
     signalEClass = createEClass(SIGNAL);
-    createEAttribute(signalEClass, SIGNAL__IS_LOCAL);
+    createEAttribute(signalEClass, SIGNAL__IS_INPUT_OUTPUT);
     createEAttribute(signalEClass, SIGNAL__IS_INPUT);
     createEAttribute(signalEClass, SIGNAL__IS_OUTPUT);
     createEAttribute(signalEClass, SIGNAL__COMBINE_OPERATOR);
@@ -802,33 +769,31 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     initEAttribute(getState_IsInitial(), ecorePackage.getEBoolean(), "isInitial", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_IsFinal(), ecorePackage.getEBoolean(), "isFinal", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_Type(), this.getStateType(), "type", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getState_Id(), ecorePackage.getEString(), "id", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getState_Name(), ecorePackage.getEString(), "name", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_Label(), ecorePackage.getEString(), "label", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_SignalRenamings(), this.getRenaming(), null, "signalRenamings", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_BodyText(), ecorePackage.getEString(), "bodyText", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getState_OutgoingTransitions(), this.getTransition(), null, "outgoingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_EntryActions(), this.getAction(), null, "entryActions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_InnerActions(), this.getAction(), null, "innerActions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_ExitActions(), this.getAction(), null, "exitActions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_SuspensionTrigger(), this.getAction(), null, "suspensionTrigger", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_Signals(), this.getSignal(), null, "signals", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_Regions(), this.getRegion(), null, "regions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getState_OutgoingTransitions(), this.getTransition(), null, "outgoingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(renamingEClass, Renaming.class, "Renaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRenaming_OldObject(), ecorePackage.getEString(), "oldObject", null, 0, 1, Renaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getRenaming_NewID(), ecorePackage.getEString(), "newID", null, 0, 1, Renaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(regionEClass, Region.class, "Region", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRegion_ParentState(), this.getState(), null, "parentState", null, 0, 1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getRegion_Id(), ecorePackage.getEString(), "id", null, 0, 1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRegion_Variables(), this.getVariable(), null, "variables", null, 0, -1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRegion_Signals(), this.getSignal(), null, "signals", null, 0, -1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRegion_InnerStates(), this.getState(), null, "innerStates", null, 0, -1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAction_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_TriggersAndEffects(), ecorePackage.getEString(), "triggersAndEffects", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(regionEClass, Region.class, "Region", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRegion_Variables(), this.getVariable(), null, "variables", null, 0, -1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRegion_InnerStates(), this.getState(), null, "innerStates", null, 0, -1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRegion_Signals(), this.getSignal(), null, "signals", null, 0, -1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTransition_SourceState(), this.getState(), null, "sourceState", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -838,14 +803,13 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
 
     initEClass(valuedObjectEClass, ValuedObject.class, "ValuedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getValuedObject_Name(), ecorePackage.getEString(), "name", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getValuedObject_InitialValue(), ecorePackage.getEInt(), "initialValue", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getValuedObject_Type(), this.getValueType(), "type", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getValuedObject_HostType(), ecorePackage.getEString(), "hostType", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getValuedObject_InitialValue(), ecorePackage.getEInt(), "initialValue", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(variableEClass, Variable.class, "Variable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(signalEClass, Signal.class, "Signal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSignal_IsLocal(), ecorePackage.getEBoolean(), "isLocal", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSignal_IsInputOutput(), ecorePackage.getEBoolean(), "isInputOutput", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSignal_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSignal_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSignal_CombineOperator(), this.getCombineOperator(), "combineOperator", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

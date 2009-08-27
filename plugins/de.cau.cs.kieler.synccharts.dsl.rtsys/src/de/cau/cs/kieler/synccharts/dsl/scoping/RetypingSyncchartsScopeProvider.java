@@ -49,7 +49,7 @@ public class RetypingSyncchartsScopeProvider extends
 			// ArrayList<IScopedElement>(state.size());
 			// elements.add(ScopedElement.create(state.getId(), state));
 			// return new SimpleScope(elements);
-			return (IScope) ScopedElement.create(state.getId(), state);
+			return (IScope) ScopedElement.create(state.getName(), state);
 		}
 	}
 }

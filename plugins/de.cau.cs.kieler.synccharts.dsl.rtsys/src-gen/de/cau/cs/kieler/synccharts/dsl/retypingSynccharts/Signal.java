@@ -15,7 +15,7 @@ package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal#isIsLocal <em>Is Local</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal#isIsInputOutput <em>Is Input Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal#isIsInput <em>Is Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal#isIsOutput <em>Is Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal#getCombineOperator <em>Combine Operator</em>}</li>
@@ -30,30 +30,30 @@ package de.cau.cs.kieler.synccharts.dsl.retypingSynccharts;
 public interface Signal extends ValuedObject
 {
   /**
-   * Returns the value of the '<em><b>Is Local</b></em>' attribute.
+   * Returns the value of the '<em><b>Is Input Output</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Is Local</em>' attribute isn't clear,
+   * If the meaning of the '<em>Is Input Output</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Is Local</em>' attribute.
-   * @see #setIsLocal(boolean)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getSignal_IsLocal()
+   * @return the value of the '<em>Is Input Output</em>' attribute.
+   * @see #setIsInputOutput(boolean)
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getSignal_IsInputOutput()
    * @model
    * @generated
    */
-  boolean isIsLocal();
+  boolean isIsInputOutput();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal#isIsLocal <em>Is Local</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal#isIsInputOutput <em>Is Input Output</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Is Local</em>' attribute.
-   * @see #isIsLocal()
+   * @param value the new value of the '<em>Is Input Output</em>' attribute.
+   * @see #isIsInputOutput()
    * @generated
    */
-  void setIsLocal(boolean value);
+  void setIsInputOutput(boolean value);
 
   /**
    * Returns the value of the '<em><b>Is Input</b></em>' attribute.

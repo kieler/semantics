@@ -18,11 +18,9 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getParentState <em>Parent State</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getVariables <em>Variables</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getSignals <em>Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getInnerStates <em>Inner States</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getSignals <em>Signals</em>}</li>
  * </ul>
  * </p>
  *
@@ -32,58 +30,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Region extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Parent State</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Parent State</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Parent State</em>' containment reference.
-   * @see #setParentState(State)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getRegion_ParentState()
-   * @model containment="true"
-   * @generated
-   */
-  State getParentState();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getParentState <em>Parent State</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Parent State</em>' containment reference.
-   * @see #getParentState()
-   * @generated
-   */
-  void setParentState(State value);
-
-  /**
-   * Returns the value of the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Id</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Id</em>' attribute.
-   * @see #setId(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getRegion_Id()
-   * @model
-   * @generated
-   */
-  String getId();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region#getId <em>Id</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Id</em>' attribute.
-   * @see #getId()
-   * @generated
-   */
-  void setId(String value);
-
   /**
    * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Variable}.
@@ -101,22 +47,6 @@ public interface Region extends EObject
   EList<Variable> getVariables();
 
   /**
-   * Returns the value of the '<em><b>Signals</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Signals</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Signals</em>' containment reference list.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getRegion_Signals()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Signal> getSignals();
-
-  /**
    * Returns the value of the '<em><b>Inner States</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State}.
    * <!-- begin-user-doc -->
@@ -131,5 +61,21 @@ public interface Region extends EObject
    * @generated
    */
   EList<State> getInnerStates();
+
+  /**
+   * Returns the value of the '<em><b>Signals</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Signals</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Signals</em>' containment reference list.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage#getRegion_Signals()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Signal> getSignals();
 
 } // Region

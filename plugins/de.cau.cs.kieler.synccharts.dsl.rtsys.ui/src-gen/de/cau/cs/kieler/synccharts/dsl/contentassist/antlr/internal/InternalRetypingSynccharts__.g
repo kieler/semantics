@@ -7,21 +7,22 @@ package de.cau.cs.kieler.synccharts.dsl.contentassist.antlr.internal;
 import org.eclipse.xtext.ui.common.editor.contentassist.antlr.internal.Lexer;
 }
 
-T12 : 'state' ;
-T13 : 'cond' ;
-T14 : 'ref' ;
-T15 : 'textual' ;
-T16 : 'NONE' ;
-T17 : '+' ;
-T18 : '*' ;
-T19 : 'AND' ;
-T20 : 'OR' ;
-T21 : 'host' ;
-T22 : 'PURE' ;
-T23 : 'boolean' ;
-T24 : 'unsigned' ;
-T25 : 'integer' ;
-T26 : 'float' ;
+T11 : 'state' ;
+T12 : 'cond' ;
+T13 : 'ref' ;
+T14 : 'textual' ;
+T15 : 'NONE' ;
+T16 : '+' ;
+T17 : '*' ;
+T18 : 'AND' ;
+T19 : 'OR' ;
+T20 : 'hostCombineOperator' ;
+T21 : 'PURE' ;
+T22 : 'boolean' ;
+T23 : 'unsigned' ;
+T24 : 'integer' ;
+T25 : 'float' ;
+T26 : 'hostType' ;
 T27 : '-->' ;
 T28 : 'o->' ;
 T29 : '>->' ;
@@ -36,43 +37,40 @@ T37 : 'onexit' ;
 T38 : 'suspension' ;
 T39 : '||' ;
 T40 : '/' ;
-T41 : 'region' ;
+T41 : '@' ;
 T42 : ';' ;
-T43 : 'with ' ;
-T44 : ':= ' ;
+T43 : 'with' ;
+T44 : 'var' ;
 T45 : ': ' ;
-T46 : 'combine' ;
-T47 : 'with' ;
+T46 : ':=' ;
+T47 : ': combine' ;
 T48 : 'init' ;
 T49 : 'final' ;
 T50 : '#' ;
 T51 : ' history' ;
-T52 : 'local' ;
+T52 : 'inputoutput' ;
 T53 : 'input' ;
 T54 : 'output' ;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7116
-RULE_FULLSTATEID : (RULE_ID '@')? RULE_ID;
-
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7118
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7361
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7120
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7363
 RULE_INT : ('0'..'9')+;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7122
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7365
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7124
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7367
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7126
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7369
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7128
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7371
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7130
+// $ANTLR src "../de.cau.cs.kieler.synccharts.dsl.rtsys.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalRetypingSynccharts.g" 7373
 RULE_ANY_OTHER : .;
 
 

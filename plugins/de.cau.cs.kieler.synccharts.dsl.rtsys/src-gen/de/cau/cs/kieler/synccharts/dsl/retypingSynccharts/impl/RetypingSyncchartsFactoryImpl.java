@@ -71,8 +71,8 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
     {
       case RetypingSyncchartsPackage.STATE: return createState();
       case RetypingSyncchartsPackage.RENAMING: return createRenaming();
-      case RetypingSyncchartsPackage.REGION: return createRegion();
       case RetypingSyncchartsPackage.ACTION: return createAction();
+      case RetypingSyncchartsPackage.REGION: return createRegion();
       case RetypingSyncchartsPackage.TRANSITION: return createTransition();
       case RetypingSyncchartsPackage.VALUED_OBJECT: return createValuedObject();
       case RetypingSyncchartsPackage.VARIABLE: return createVariable();
@@ -155,10 +155,10 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public Region createRegion()
+  public Action createAction()
   {
-    RegionImpl region = new RegionImpl();
-    return region;
+    ActionImpl action = new ActionImpl();
+    return action;
   }
 
   /**
@@ -166,10 +166,10 @@ public class RetypingSyncchartsFactoryImpl extends EFactoryImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public Action createAction()
+  public Region createRegion()
   {
-    ActionImpl action = new ActionImpl();
-    return action;
+    RegionImpl region = new RegionImpl();
+    return region;
   }
 
   /**

@@ -89,14 +89,14 @@ public class RetypingSyncchartsAdapterFactory extends AdapterFactoryImpl
         return createRenamingAdapter();
       }
       @Override
-      public Adapter caseRegion(Region object)
-      {
-        return createRegionAdapter();
-      }
-      @Override
       public Adapter caseAction(Action object)
       {
         return createActionAdapter();
+      }
+      @Override
+      public Adapter caseRegion(Region object)
+      {
+        return createRegionAdapter();
       }
       @Override
       public Adapter caseTransition(Transition object)
@@ -171,21 +171,6 @@ public class RetypingSyncchartsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region <em>Region</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region
-   * @generated
-   */
-  public Adapter createRegionAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action <em>Action</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -196,6 +181,21 @@ public class RetypingSyncchartsAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createActionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region <em>Region</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region
+   * @generated
+   */
+  public Adapter createRegionAdapter()
   {
     return null;
   }

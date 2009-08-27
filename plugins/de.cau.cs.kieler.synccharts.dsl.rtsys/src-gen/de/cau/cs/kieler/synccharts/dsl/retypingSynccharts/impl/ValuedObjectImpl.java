@@ -25,9 +25,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ValuedObjectImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ValuedObjectImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ValuedObjectImpl#getHostType <em>Host Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -56,26 +55,6 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getInitialValue()
-   * @generated
-   * @ordered
-   */
-  protected static final int INITIAL_VALUE_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getInitialValue()
-   * @generated
-   * @ordered
-   */
-  protected int initialValue = INITIAL_VALUE_EDEFAULT;
-
-  /**
    * The default value of the '{@link #getType() <em>Type</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -96,24 +75,24 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
   protected ValueType type = TYPE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getHostType() <em>Host Type</em>}' attribute.
+   * The default value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getHostType()
+   * @see #getInitialValue()
    * @generated
    * @ordered
    */
-  protected static final String HOST_TYPE_EDEFAULT = null;
+  protected static final int INITIAL_VALUE_EDEFAULT = 0;
 
   /**
-   * The cached value of the '{@link #getHostType() <em>Host Type</em>}' attribute.
+   * The cached value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getHostType()
+   * @see #getInitialValue()
    * @generated
    * @ordered
    */
-  protected String hostType = HOST_TYPE_EDEFAULT;
+  protected int initialValue = INITIAL_VALUE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -164,29 +143,6 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * <!-- end-user-doc -->
    * @generated
    */
-  public int getInitialValue()
-  {
-    return initialValue;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setInitialValue(int newInitialValue)
-  {
-    int oldInitialValue = initialValue;
-    initialValue = newInitialValue;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE, oldInitialValue, initialValue));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public ValueType getType()
   {
     return type;
@@ -210,9 +166,9 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getHostType()
+  public int getInitialValue()
   {
-    return hostType;
+    return initialValue;
   }
 
   /**
@@ -220,12 +176,12 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setHostType(String newHostType)
+  public void setInitialValue(int newInitialValue)
   {
-    String oldHostType = hostType;
-    hostType = newHostType;
+    int oldInitialValue = initialValue;
+    initialValue = newInitialValue;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.VALUED_OBJECT__HOST_TYPE, oldHostType, hostType));
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE, oldInitialValue, initialValue));
   }
 
   /**
@@ -240,12 +196,10 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
     {
       case RetypingSyncchartsPackage.VALUED_OBJECT__NAME:
         return getName();
-      case RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
-        return getInitialValue();
       case RetypingSyncchartsPackage.VALUED_OBJECT__TYPE:
         return getType();
-      case RetypingSyncchartsPackage.VALUED_OBJECT__HOST_TYPE:
-        return getHostType();
+      case RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
+        return getInitialValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -263,14 +217,11 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
       case RetypingSyncchartsPackage.VALUED_OBJECT__NAME:
         setName((String)newValue);
         return;
-      case RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
-        setInitialValue((Integer)newValue);
-        return;
       case RetypingSyncchartsPackage.VALUED_OBJECT__TYPE:
         setType((ValueType)newValue);
         return;
-      case RetypingSyncchartsPackage.VALUED_OBJECT__HOST_TYPE:
-        setHostType((String)newValue);
+      case RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
+        setInitialValue((Integer)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -289,14 +240,11 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
       case RetypingSyncchartsPackage.VALUED_OBJECT__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
-        setInitialValue(INITIAL_VALUE_EDEFAULT);
-        return;
       case RetypingSyncchartsPackage.VALUED_OBJECT__TYPE:
         setType(TYPE_EDEFAULT);
         return;
-      case RetypingSyncchartsPackage.VALUED_OBJECT__HOST_TYPE:
-        setHostType(HOST_TYPE_EDEFAULT);
+      case RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
+        setInitialValue(INITIAL_VALUE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -314,12 +262,10 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
     {
       case RetypingSyncchartsPackage.VALUED_OBJECT__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
-        return initialValue != INITIAL_VALUE_EDEFAULT;
       case RetypingSyncchartsPackage.VALUED_OBJECT__TYPE:
         return type != TYPE_EDEFAULT;
-      case RetypingSyncchartsPackage.VALUED_OBJECT__HOST_TYPE:
-        return HOST_TYPE_EDEFAULT == null ? hostType != null : !HOST_TYPE_EDEFAULT.equals(hostType);
+      case RetypingSyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
+        return initialValue != INITIAL_VALUE_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -337,12 +283,10 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", initialValue: ");
-    result.append(initialValue);
     result.append(", type: ");
     result.append(type);
-    result.append(", hostType: ");
-    result.append(hostType);
+    result.append(", initialValue: ");
+    result.append(initialValue);
     result.append(')');
     return result.toString();
   }

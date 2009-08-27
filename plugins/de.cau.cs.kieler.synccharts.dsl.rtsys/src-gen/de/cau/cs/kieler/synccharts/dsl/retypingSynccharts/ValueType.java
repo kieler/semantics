@@ -81,7 +81,7 @@ public enum ValueType implements Enumerator
    * @generated
    * @ordered
    */
-  HOST(5, "HOST", "host");
+  HOST(5, "HOST", "hostType");
 
   /**
    * The '<em><b>PURE</b></em>' literal value.
@@ -167,7 +167,7 @@ public enum ValueType implements Enumerator
    * </p>
    * <!-- end-user-doc -->
    * @see #HOST
-   * @model literal="host"
+   * @model literal="hostType"
    * @generated
    * @ordered
    */

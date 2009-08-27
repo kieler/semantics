@@ -23,32 +23,33 @@ import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.*;
 
 public class RetypingSyncchartsJavaValidator extends
 		AbstractRetypingSyncchartsJavaValidator {
-
-	@Check
-	public void checkStateID(State state) {
-		if ((RetypingSyncchartsPackage.eINSTANCE.getState_Id() == null)
-				&& (RetypingSyncchartsPackage.eINSTANCE.getState_Label() != null)) {
-			System.out.println("I work!!");
-			warning ("I AM AN ANGRY WARNING", RetypingSyncchartsPackage.STATE__ID);
-		} else {
-			System.out.println("I don't work!!");
-		}
-		System.out.println("the method was over");
-
-		// @Check
-		// public void checkTypeNameStartsWithCapital(Type type) {
-		// if (!Character.isUpperCase(type.getName().charAt(0))) {
-		// warning("Name should start with a capital", MyDslPackage.TYPE__NAME);
-		// }
-		// }
-
-	}
-//	@Check(CheckType.FAST)
-//	public void CheckExistenceOfAtLeastOneInitialState(State state){
-//		RetypingSyncchartsPackage.eINSTANCE.eAllContents().getClass().
-//		
-//	}
 }
+
+// @Check
+// public void checkStateID(State state) {
+// if ((RetypingSyncchartsPackage.eINSTANCE.getState_Id() == null)
+// && (RetypingSyncchartsPackage.eINSTANCE.getState_Label() != null)) {
+// System.out.println("I work!!");
+// warning ("I AM AN ANGRY WARNING", RetypingSyncchartsPackage.STATE__ID);
+// } else {
+// System.out.println("I don't work!!");
+// }
+// System.out.println("the method was over");
+//
+// // @Check
+// // public void checkTypeNameStartsWithCapital(Type type) {
+// // if (!Character.isUpperCase(type.getName().charAt(0))) {
+// // warning("Name should start with a capital", MyDslPackage.TYPE__NAME);
+// // }
+// // }
+//
+// }
+// // @Check(CheckType.FAST)
+// // public void CheckExistenceOfAtLeastOneInitialState(State state){
+// // RetypingSyncchartsPackage.eINSTANCE.eAllContents().getClass().
+// //
+// // }
+// }
 
 // @Check
 // public void checkUniqueStateID (State state){

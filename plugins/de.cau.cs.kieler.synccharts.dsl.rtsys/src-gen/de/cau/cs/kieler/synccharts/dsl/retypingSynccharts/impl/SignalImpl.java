@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalImpl#isIsLocal <em>Is Local</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalImpl#isIsInputOutput <em>Is Input Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalImpl#isIsInput <em>Is Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalImpl#isIsOutput <em>Is Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.SignalImpl#getCombineOperator <em>Combine Operator</em>}</li>
@@ -36,24 +36,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class SignalImpl extends ValuedObjectImpl implements Signal
 {
   /**
-   * The default value of the '{@link #isIsLocal() <em>Is Local</em>}' attribute.
+   * The default value of the '{@link #isIsInputOutput() <em>Is Input Output</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isIsLocal()
+   * @see #isIsInputOutput()
    * @generated
    * @ordered
    */
-  protected static final boolean IS_LOCAL_EDEFAULT = false;
+  protected static final boolean IS_INPUT_OUTPUT_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isIsLocal() <em>Is Local</em>}' attribute.
+   * The cached value of the '{@link #isIsInputOutput() <em>Is Input Output</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isIsLocal()
+   * @see #isIsInputOutput()
    * @generated
    * @ordered
    */
-  protected boolean isLocal = IS_LOCAL_EDEFAULT;
+  protected boolean isInputOutput = IS_INPUT_OUTPUT_EDEFAULT;
 
   /**
    * The default value of the '{@link #isIsInput() <em>Is Input</em>}' attribute.
@@ -161,9 +161,9 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isIsLocal()
+  public boolean isIsInputOutput()
   {
-    return isLocal;
+    return isInputOutput;
   }
 
   /**
@@ -171,12 +171,12 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setIsLocal(boolean newIsLocal)
+  public void setIsInputOutput(boolean newIsInputOutput)
   {
-    boolean oldIsLocal = isLocal;
-    isLocal = newIsLocal;
+    boolean oldIsInputOutput = isInputOutput;
+    isInputOutput = newIsInputOutput;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.SIGNAL__IS_LOCAL, oldIsLocal, isLocal));
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.SIGNAL__IS_INPUT_OUTPUT, oldIsInputOutput, isInputOutput));
   }
 
   /**
@@ -281,8 +281,8 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.SIGNAL__IS_LOCAL:
-        return isIsLocal();
+      case RetypingSyncchartsPackage.SIGNAL__IS_INPUT_OUTPUT:
+        return isIsInputOutput();
       case RetypingSyncchartsPackage.SIGNAL__IS_INPUT:
         return isIsInput();
       case RetypingSyncchartsPackage.SIGNAL__IS_OUTPUT:
@@ -305,8 +305,8 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.SIGNAL__IS_LOCAL:
-        setIsLocal((Boolean)newValue);
+      case RetypingSyncchartsPackage.SIGNAL__IS_INPUT_OUTPUT:
+        setIsInputOutput((Boolean)newValue);
         return;
       case RetypingSyncchartsPackage.SIGNAL__IS_INPUT:
         setIsInput((Boolean)newValue);
@@ -334,8 +334,8 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.SIGNAL__IS_LOCAL:
-        setIsLocal(IS_LOCAL_EDEFAULT);
+      case RetypingSyncchartsPackage.SIGNAL__IS_INPUT_OUTPUT:
+        setIsInputOutput(IS_INPUT_OUTPUT_EDEFAULT);
         return;
       case RetypingSyncchartsPackage.SIGNAL__IS_INPUT:
         setIsInput(IS_INPUT_EDEFAULT);
@@ -363,8 +363,8 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.SIGNAL__IS_LOCAL:
-        return isLocal != IS_LOCAL_EDEFAULT;
+      case RetypingSyncchartsPackage.SIGNAL__IS_INPUT_OUTPUT:
+        return isInputOutput != IS_INPUT_OUTPUT_EDEFAULT;
       case RetypingSyncchartsPackage.SIGNAL__IS_INPUT:
         return isInput != IS_INPUT_EDEFAULT;
       case RetypingSyncchartsPackage.SIGNAL__IS_OUTPUT:
@@ -388,8 +388,8 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (isLocal: ");
-    result.append(isLocal);
+    result.append(" (isInputOutput: ");
+    result.append(isInputOutput);
     result.append(", isInput: ");
     result.append(isInput);
     result.append(", isOutput: ");

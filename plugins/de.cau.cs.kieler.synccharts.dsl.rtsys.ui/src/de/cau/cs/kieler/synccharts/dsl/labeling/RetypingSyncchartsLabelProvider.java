@@ -3,11 +3,14 @@
  */
 package de.cau.cs.kieler.synccharts.dsl.labeling;
 
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.xtext.ui.core.DefaultLabelProvider;
-
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition;
+import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Variable;
 
 /**
  * see
@@ -15,28 +18,45 @@ import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
  */
 public class RetypingSyncchartsLabelProvider extends DefaultLabelProvider {
 
-	// Labels and icons can be computed like this:
-
-	// String text(MyModel ele) {
-	// return "my "+ele.getName();
-	// }
-
 	String image(State s) {
-		String myStateLabelImage = "keyword.gif"; // getImage(s.getLabel());
-		if (s.isIsFinal()) {
-			/*myStateLabelImage = "happybirds2XSmall.png";*/
-			/*myStateLabelImage = "finalCircle.png";*/
-			myStateLabelImage = "finalState.png";
-		}
+		String myStateLabelImage = "State.gif";
 		if (s.isIsInitial()) {
-			/*myStateLabelImage = "happybirds1XSmall.png";*/
-			/*myStateLabelImage = "initState2.png";*/
-			myStateLabelImage = "import.gif";
+			myStateLabelImage = "InitialState.gif";
 		}
-		if (s.getType().equals(StateType.PSEUDO)){
-			myStateLabelImage = "rule.gif";
+		if (s.isIsFinal()) {
+			myStateLabelImage = "FinalState.gif";
+		}
+		if (s.getType().equals(StateType.PSEUDO)) {
+			myStateLabelImage = "State.gif";
 		}
 		return myStateLabelImage;
+	}
+
+	 String image(Transition t) {
+		 String transitionLabelImage = "Transition2.gif";
+		 return transitionLabelImage;
+	 }
+	String image(Action a) {
+		String image = "Action.gif";
+		if (a.eContainingFeature().getName() == "suspensionTrigger") {
+			image = "SuspensionSD.gif";
+		}
+		if (a.eContainingFeature().getName() == "entryActions") {
+			image = "EntryAction.gif";
+		}
+		return image;
+	}
+	String image(Region r) {
+		String image = "Region.gif";
+		return image;
+	}
+	String image(Signal r) {
+		String image = "Signal.gif";
+		return image;
+	}
+	String image(Variable v) {
+		String image = "Variable.gif";
+		return image;
 	}
 	
 

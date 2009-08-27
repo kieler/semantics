@@ -45,15 +45,6 @@ public interface RetypingSyncchartsFactory extends EFactory
   Renaming createRenaming();
 
   /**
-   * Returns a new object of class '<em>Region</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Region</em>'.
-   * @generated
-   */
-  Region createRegion();
-
-  /**
    * Returns a new object of class '<em>Action</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -61,6 +52,15 @@ public interface RetypingSyncchartsFactory extends EFactory
    * @generated
    */
   Action createAction();
+
+  /**
+   * Returns a new object of class '<em>Region</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Region</em>'.
+   * @generated
+   */
+  Region createRegion();
 
   /**
    * Returns a new object of class '<em>Transition</em>'.
