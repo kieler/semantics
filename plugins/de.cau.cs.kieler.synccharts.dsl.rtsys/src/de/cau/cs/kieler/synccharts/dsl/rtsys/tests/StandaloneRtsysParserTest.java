@@ -10,8 +10,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
-import org.eclipse.xtend.typesystem.emf.Setup;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic; //import org.eclipse.xtend.typesystem.emf.Setup;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.parsetree.reconstr.SerializerUtil;
 import org.eclipse.xtext.resource.XtextResource;
@@ -35,24 +34,17 @@ public class StandaloneRtsysParserTest {
 		try {
 			testParser1();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// setUpParserAndSerializer();
 	}
 
 	// @Before
-	// public static void setUpParserAndSerializer() throws Exception {
-	// // MyDslPackage m = MyDslPackage.eINSTANCE;
-	//
-	// }
-
 	// @Test
 	public static void testParser1() throws IOException {
 		EObject parsedObject = parseAndSerialize("example.mydsl");
 		// VarDeclList model = (VarDeclList) parsedObject;
 		// String serializedString = serializerUtil.serialize(model.getVar()
-		// .get(0)); // a
+		// .get(0));
 		// System.out.println(serializedString);
 	}
 
@@ -61,9 +53,8 @@ public class StandaloneRtsysParserTest {
 		// parse and serialize the contents of the given file
 		EObject parsedObject = parseFile(inputFileName);
 		String serializedString = serializerUtil.serialize(parsedObject);
-		//what was in the file?
-		String fileContent = readFile("/home/oba/Desktop/workspaces/RTSYS/org.xtext.example.mydsl/models/"
-				+ inputFileName);
+		// what was in the file?
+		String fileContent = readFile(getModelFolder() + inputFileName);
 		// is the file content equal to the serialized string at the end?
 		if (fileContent.equals(serializedString)) {
 			System.out.println("parseAndSerialize::Serialized String: "
@@ -78,6 +69,21 @@ public class StandaloneRtsysParserTest {
 		return parsedObject;
 	}
 
+	/**
+	 * change this path if you change the model folder!! this sucks
+	 * 
+	 * @return the path to the folder that contains the models
+	 * 
+	 */
+	private static String getModelFolder() {
+		String modelFolder = "/home/oba/Desktop/Link to shared/kieler/trunk/plugins/de.cau.cs.kieler.synccharts.dsl.rtsys/examplemodels/";
+		return modelFolder;
+	}
+/**
+ * 
+ * @param file simple file name, without path etc
+ * @return what has been parsed
+ */
 	private static EObject parseFile(String file) {
 		new org.eclipse.emf.mwe.utils.StandaloneSetup().setPlatformUri("../");
 
@@ -116,7 +122,12 @@ public class StandaloneRtsysParserTest {
 		}
 
 	}
-
+/**
+ * 
+ * @param filename
+ * @return contents of the given file, I need this to compare the parseResult with the urspruenglichen file content
+ * @throws IOException
+ */
 	private static String readFile(String filename) throws IOException {
 		// String lineSep = System.getProperty("line.separator");
 		// BufferedReader br = new BufferedReader(new FileReader(filename));
