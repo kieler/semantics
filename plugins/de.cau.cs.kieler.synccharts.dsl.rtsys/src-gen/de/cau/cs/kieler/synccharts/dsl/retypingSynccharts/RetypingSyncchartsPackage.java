@@ -373,13 +373,13 @@ public interface RetypingSyncchartsPackage extends EPackage
   int TRANSITION__TRIGGERS_AND_EFFECTS = ACTION__TRIGGERS_AND_EFFECTS;
 
   /**
-   * The feature id for the '<em><b>Source State</b></em>' reference.
+   * The feature id for the '<em><b>New Source State</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TRANSITION__SOURCE_STATE = ACTION_FEATURE_COUNT + 0;
+  int TRANSITION__NEW_SOURCE_STATE = ACTION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -934,15 +934,15 @@ public interface RetypingSyncchartsPackage extends EPackage
   EClass getTransition();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getSourceState <em>Source State</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getNewSourceState <em>New Source State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Source State</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getSourceState()
+   * @return the meta object for the containment reference '<em>New Source State</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getNewSourceState()
    * @see #getTransition()
    * @generated
    */
-  EReference getTransition_SourceState();
+  EReference getTransition_NewSourceState();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition#getType <em>Type</em>}'.
@@ -1385,12 +1385,12 @@ public interface RetypingSyncchartsPackage extends EPackage
     EClass TRANSITION = eINSTANCE.getTransition();
 
     /**
-     * The meta object literal for the '<em><b>Source State</b></em>' reference feature.
+     * The meta object literal for the '<em><b>New Source State</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TRANSITION__SOURCE_STATE = eINSTANCE.getTransition_SourceState();
+    EReference TRANSITION__NEW_SOURCE_STATE = eINSTANCE.getTransition_NewSourceState();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' attribute feature.

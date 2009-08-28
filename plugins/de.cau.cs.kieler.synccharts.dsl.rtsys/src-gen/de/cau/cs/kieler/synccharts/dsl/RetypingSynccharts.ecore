@@ -45,7 +45,8 @@
         eType="#//Signal" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Action">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceState" eType="#//State"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newSourceState" eType="#//State"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//TransitionType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="targetState" eType="#//State"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isHistory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>

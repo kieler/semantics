@@ -1644,9 +1644,8 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	public class TransitionElements implements IParserRuleAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Transition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cSourceStateAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cSourceStateStateCrossReference_0_0 = (CrossReference)cSourceStateAssignment_0.eContents().get(0);
-		private final RuleCall cSourceStateStateFullStateIDParserRuleCall_0_0_1 = (RuleCall)cSourceStateStateCrossReference_0_0.eContents().get(1);
+		private final Assignment cNewSourceStateAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNewSourceStateTransitionStateParserRuleCall_0_0 = (RuleCall)cNewSourceStateAssignment_0.eContents().get(0);
 		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cTypeTransitionTypeEnumRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
 		private final Assignment cTargetStateAssignment_2 = (Assignment)cGroup.eContents().get(2);
@@ -1661,8 +1660,8 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//Transition:
-		//  sourceState=[State|FullStateID]? type=TransitionType targetState=[State|
-		//  FullStateID] ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 	
+		//  newSourceState=TransitionState type=TransitionType targetState=[State|FullStateID]
+		//  ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 	
 		//
 		//	//========================================================================================
 		//	 //===  									    TRANSITION 					               ===
@@ -1670,43 +1669,30 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//	
 		//
 		//
-		//	
+		//	//((sourceState=[State|FullStateID]))? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 		//	 
-		////	| 
-		////	 ( newSourceState=FullStateID {TransitionState.name=current} )
-		//	  //newSourceState=TransitionState 
-		//	   //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 		//	
-		//	
-		//	
-		//	  //| newTargetState=TransitionState )
+		//	//|newTargetState=TransitionState )
 		public ParserRule getRule() { return rule; }
 
-		//sourceState=[State|FullStateID]? type=TransitionType targetState=[State|
-		//FullStateID] ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";" 
+		//newSourceState=TransitionState type=TransitionType targetState=[State|FullStateID]
+		//("with" triggersAndEffects=STRING)? isHistory?=" history"? ";" 
 		//
-		//	
+		//	//((sourceState=[State|FullStateID]))? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 		//	 
-		////	| 
-		////	 ( newSourceState=FullStateID {TransitionState.name=current} )
-		//	  //newSourceState=TransitionState 
-		//	   //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 		//	
-		//	
-		//	
-		//	  //| newTargetState=TransitionState )
+		//	//|newTargetState=TransitionState )
 		public Group getGroup() { return cGroup; }
 
-		//sourceState=[State|FullStateID]?
-		public Assignment getSourceStateAssignment_0() { return cSourceStateAssignment_0; }
+		//newSourceState=TransitionState 
+		//
+		//	//((sourceState=[State|FullStateID]))? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+		public Assignment getNewSourceStateAssignment_0() { return cNewSourceStateAssignment_0; }
 
-		//[State|FullStateID]
-		public CrossReference getSourceStateStateCrossReference_0_0() { return cSourceStateStateCrossReference_0_0; }
+		//TransitionState
+		public RuleCall getNewSourceStateTransitionStateParserRuleCall_0_0() { return cNewSourceStateTransitionStateParserRuleCall_0_0; }
 
-		//FullStateID
-		public RuleCall getSourceStateStateFullStateIDParserRuleCall_0_0_1() { return cSourceStateStateFullStateIDParserRuleCall_0_0_1; }
-
-		//type=TransitionType   //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+		//type=TransitionType
 		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
 
 		//TransitionType
@@ -1745,12 +1731,323 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 
 	public class TransitionStateElements implements IParserRuleAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TransitionState");
-		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cNameFullStateIDParserRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Group cGroup_0_0 = (Group)cGroup_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_0_0_0 = (Assignment)cGroup_0_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_0_0_0_0 = (Keyword)cIsInitialAssignment_0_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_0_0_1 = (Assignment)cGroup_0_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_0_0_1_0 = (Keyword)cIsFinalAssignment_0_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_0_1_0 = (RuleCall)cTypeAssignment_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
+		private final Assignment cNameAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final RuleCall cNameFullStateIDParserRuleCall_0_3_0 = (RuleCall)cNameAssignment_0_3.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cGroup_1.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_0_0 = (Assignment)cGroup_1_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_0_0_0 = (Keyword)cIsInitialAssignment_1_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_0_1_0 = (Keyword)cIsFinalAssignment_1_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_1_0 = (RuleCall)cTypeAssignment_1_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cGroup_2.eContents().get(0);
+		private final Assignment cIsInitialAssignment_2_0_0 = (Assignment)cGroup_2_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_2_0_0_0 = (Keyword)cIsInitialAssignment_2_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_2_0_1_0 = (Keyword)cIsFinalAssignment_2_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_2_1_0 = (RuleCall)cTypeAssignment_2_1.eContents().get(0);
+		private final Assignment cNameAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final RuleCall cNameFullStateIDParserRuleCall_2_2_0 = (RuleCall)cNameAssignment_2_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
+		private final Group cGroup_3_0 = (Group)cGroup_3.eContents().get(0);
+		private final Assignment cIsInitialAssignment_3_0_0 = (Assignment)cGroup_3_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_3_0_0_0 = (Keyword)cIsInitialAssignment_3_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_3_0_1_0 = (Keyword)cIsFinalAssignment_3_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
+		private final Assignment cNameAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cNameFullStateIDParserRuleCall_3_2_0 = (RuleCall)cNameAssignment_3_2.eContents().get(0);
+		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
+		private final Group cGroup_4_0 = (Group)cGroup_4.eContents().get(0);
+		private final Assignment cIsInitialAssignment_4_0_0 = (Assignment)cGroup_4_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_4_0_0_0 = (Keyword)cIsInitialAssignment_4_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_4_0_1 = (Assignment)cGroup_4_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_4_0_1_0 = (Keyword)cIsFinalAssignment_4_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_4_1_0 = (RuleCall)cTypeAssignment_4_1.eContents().get(0);
+		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
+		private final Group cGroup_5_0 = (Group)cGroup_5.eContents().get(0);
+		private final Assignment cIsInitialAssignment_5_0_0 = (Assignment)cGroup_5_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_5_0_0_0 = (Keyword)cIsInitialAssignment_5_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_5_0_1 = (Assignment)cGroup_5_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_5_0_1_0 = (Keyword)cIsFinalAssignment_5_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
+		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
+		private final Group cGroup_6_0 = (Group)cGroup_6.eContents().get(0);
+		private final Assignment cIsInitialAssignment_6_0_0 = (Assignment)cGroup_6_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_6_0_0_0 = (Keyword)cIsInitialAssignment_6_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_6_0_1 = (Assignment)cGroup_6_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_6_0_1_0 = (Keyword)cIsFinalAssignment_6_0_1.eContents().get(0);
+		private final Assignment cNameAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cNameFullStateIDParserRuleCall_6_1_0 = (RuleCall)cNameAssignment_6_1.eContents().get(0);
+		private final Group cGroup_7 = (Group)cAlternatives.eContents().get(7);
+		private final Assignment cIsInitialAssignment_7_0 = (Assignment)cGroup_7.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_7_0_0 = (Keyword)cIsInitialAssignment_7_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_7_1_0 = (Keyword)cIsFinalAssignment_7_1.eContents().get(0);
+		private final Group cGroup_8 = (Group)cAlternatives.eContents().get(8);
+		private final Group cGroup_8_0 = (Group)cGroup_8.eContents().get(0);
+		private final Assignment cIsFinalAssignment_8_0_0 = (Assignment)cGroup_8_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_8_0_0_0 = (Keyword)cIsFinalAssignment_8_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_8_0_1 = (Assignment)cGroup_8_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_8_0_1_0 = (Keyword)cIsInitialAssignment_8_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_8_1_0 = (RuleCall)cTypeAssignment_8_1.eContents().get(0);
+		private final Keyword cStateKeyword_8_2 = (Keyword)cGroup_8.eContents().get(2);
+		private final Assignment cNameAssignment_8_3 = (Assignment)cGroup_8.eContents().get(3);
+		private final RuleCall cNameFullStateIDParserRuleCall_8_3_0 = (RuleCall)cNameAssignment_8_3.eContents().get(0);
+		private final Group cGroup_9 = (Group)cAlternatives.eContents().get(9);
+		private final Group cGroup_9_0 = (Group)cGroup_9.eContents().get(0);
+		private final Assignment cIsFinalAssignment_9_0_0 = (Assignment)cGroup_9_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_9_0_0_0 = (Keyword)cIsFinalAssignment_9_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_9_0_1 = (Assignment)cGroup_9_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_9_0_1_0 = (Keyword)cIsInitialAssignment_9_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_9_1_0 = (RuleCall)cTypeAssignment_9_1.eContents().get(0);
+		private final Keyword cStateKeyword_9_2 = (Keyword)cGroup_9.eContents().get(2);
+		private final Group cGroup_10 = (Group)cAlternatives.eContents().get(10);
+		private final Group cGroup_10_0 = (Group)cGroup_10.eContents().get(0);
+		private final Assignment cIsFinalAssignment_10_0_0 = (Assignment)cGroup_10_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_10_0_0_0 = (Keyword)cIsFinalAssignment_10_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_10_0_1 = (Assignment)cGroup_10_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_10_0_1_0 = (Keyword)cIsInitialAssignment_10_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_10_1_0 = (RuleCall)cTypeAssignment_10_1.eContents().get(0);
+		private final Assignment cNameAssignment_10_2 = (Assignment)cGroup_10.eContents().get(2);
+		private final RuleCall cNameFullStateIDParserRuleCall_10_2_0 = (RuleCall)cNameAssignment_10_2.eContents().get(0);
+		private final Group cGroup_11 = (Group)cAlternatives.eContents().get(11);
+		private final Group cGroup_11_0 = (Group)cGroup_11.eContents().get(0);
+		private final Assignment cIsFinalAssignment_11_0_0 = (Assignment)cGroup_11_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_11_0_0_0 = (Keyword)cIsFinalAssignment_11_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_11_0_1 = (Assignment)cGroup_11_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_11_0_1_0 = (Keyword)cIsInitialAssignment_11_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_11_1 = (Keyword)cGroup_11.eContents().get(1);
+		private final Assignment cNameAssignment_11_2 = (Assignment)cGroup_11.eContents().get(2);
+		private final RuleCall cNameFullStateIDParserRuleCall_11_2_0 = (RuleCall)cNameAssignment_11_2.eContents().get(0);
+		private final Group cGroup_12 = (Group)cAlternatives.eContents().get(12);
+		private final Group cGroup_12_0 = (Group)cGroup_12.eContents().get(0);
+		private final Assignment cIsFinalAssignment_12_0_0 = (Assignment)cGroup_12_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_12_0_0_0 = (Keyword)cIsFinalAssignment_12_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_12_0_1 = (Assignment)cGroup_12_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_12_0_1_0 = (Keyword)cIsInitialAssignment_12_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_12_1 = (Assignment)cGroup_12.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_12_1_0 = (RuleCall)cTypeAssignment_12_1.eContents().get(0);
+		private final Group cGroup_13 = (Group)cAlternatives.eContents().get(13);
+		private final Group cGroup_13_0 = (Group)cGroup_13.eContents().get(0);
+		private final Assignment cIsFinalAssignment_13_0_0 = (Assignment)cGroup_13_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_13_0_0_0 = (Keyword)cIsFinalAssignment_13_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_13_0_1 = (Assignment)cGroup_13_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_13_0_1_0 = (Keyword)cIsInitialAssignment_13_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_13_1 = (Keyword)cGroup_13.eContents().get(1);
+		private final Group cGroup_14 = (Group)cAlternatives.eContents().get(14);
+		private final Group cGroup_14_0 = (Group)cGroup_14.eContents().get(0);
+		private final Assignment cIsFinalAssignment_14_0_0 = (Assignment)cGroup_14_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_14_0_0_0 = (Keyword)cIsFinalAssignment_14_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_14_0_1 = (Assignment)cGroup_14_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_14_0_1_0 = (Keyword)cIsInitialAssignment_14_0_1.eContents().get(0);
+		private final Assignment cNameAssignment_14_1 = (Assignment)cGroup_14.eContents().get(1);
+		private final RuleCall cNameFullStateIDParserRuleCall_14_1_0 = (RuleCall)cNameAssignment_14_1.eContents().get(0);
+		private final Group cGroup_15 = (Group)cAlternatives.eContents().get(15);
+		private final Assignment cIsFinalAssignment_15_0 = (Assignment)cGroup_15.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_15_0_0 = (Keyword)cIsFinalAssignment_15_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_15_1 = (Assignment)cGroup_15.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_15_1_0 = (Keyword)cIsInitialAssignment_15_1.eContents().get(0);
+		private final Group cGroup_16 = (Group)cAlternatives.eContents().get(16);
+		private final Assignment cIsInitialAssignment_16_0 = (Assignment)cGroup_16.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_16_0_0 = (Keyword)cIsInitialAssignment_16_0.eContents().get(0);
+		private final Assignment cTypeAssignment_16_1 = (Assignment)cGroup_16.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_16_1_0 = (RuleCall)cTypeAssignment_16_1.eContents().get(0);
+		private final Keyword cStateKeyword_16_2 = (Keyword)cGroup_16.eContents().get(2);
+		private final Assignment cNameAssignment_16_3 = (Assignment)cGroup_16.eContents().get(3);
+		private final RuleCall cNameFullStateIDParserRuleCall_16_3_0 = (RuleCall)cNameAssignment_16_3.eContents().get(0);
+		private final Group cGroup_17 = (Group)cAlternatives.eContents().get(17);
+		private final Assignment cIsInitialAssignment_17_0 = (Assignment)cGroup_17.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_17_0_0 = (Keyword)cIsInitialAssignment_17_0.eContents().get(0);
+		private final Assignment cTypeAssignment_17_1 = (Assignment)cGroup_17.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_17_1_0 = (RuleCall)cTypeAssignment_17_1.eContents().get(0);
+		private final Keyword cStateKeyword_17_2 = (Keyword)cGroup_17.eContents().get(2);
+		private final Group cGroup_18 = (Group)cAlternatives.eContents().get(18);
+		private final Assignment cIsInitialAssignment_18_0 = (Assignment)cGroup_18.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_18_0_0 = (Keyword)cIsInitialAssignment_18_0.eContents().get(0);
+		private final Assignment cTypeAssignment_18_1 = (Assignment)cGroup_18.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_18_1_0 = (RuleCall)cTypeAssignment_18_1.eContents().get(0);
+		private final Assignment cNameAssignment_18_2 = (Assignment)cGroup_18.eContents().get(2);
+		private final RuleCall cNameFullStateIDParserRuleCall_18_2_0 = (RuleCall)cNameAssignment_18_2.eContents().get(0);
+		private final Group cGroup_19 = (Group)cAlternatives.eContents().get(19);
+		private final Assignment cIsInitialAssignment_19_0 = (Assignment)cGroup_19.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_19_0_0 = (Keyword)cIsInitialAssignment_19_0.eContents().get(0);
+		private final Keyword cStateKeyword_19_1 = (Keyword)cGroup_19.eContents().get(1);
+		private final Assignment cNameAssignment_19_2 = (Assignment)cGroup_19.eContents().get(2);
+		private final RuleCall cNameFullStateIDParserRuleCall_19_2_0 = (RuleCall)cNameAssignment_19_2.eContents().get(0);
+		private final Group cGroup_20 = (Group)cAlternatives.eContents().get(20);
+		private final Assignment cIsInitialAssignment_20_0 = (Assignment)cGroup_20.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_20_0_0 = (Keyword)cIsInitialAssignment_20_0.eContents().get(0);
+		private final Assignment cTypeAssignment_20_1 = (Assignment)cGroup_20.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_20_1_0 = (RuleCall)cTypeAssignment_20_1.eContents().get(0);
+		private final Group cGroup_21 = (Group)cAlternatives.eContents().get(21);
+		private final Assignment cIsInitialAssignment_21_0 = (Assignment)cGroup_21.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_21_0_0 = (Keyword)cIsInitialAssignment_21_0.eContents().get(0);
+		private final Keyword cStateKeyword_21_1 = (Keyword)cGroup_21.eContents().get(1);
+		private final Group cGroup_22 = (Group)cAlternatives.eContents().get(22);
+		private final Assignment cIsInitialAssignment_22_0 = (Assignment)cGroup_22.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_22_0_0 = (Keyword)cIsInitialAssignment_22_0.eContents().get(0);
+		private final Assignment cNameAssignment_22_1 = (Assignment)cGroup_22.eContents().get(1);
+		private final RuleCall cNameFullStateIDParserRuleCall_22_1_0 = (RuleCall)cNameAssignment_22_1.eContents().get(0);
+		private final Assignment cIsInitialAssignment_23 = (Assignment)cAlternatives.eContents().get(23);
+		private final Keyword cIsInitialInitKeyword_23_0 = (Keyword)cIsInitialAssignment_23.eContents().get(0);
+		private final Group cGroup_24 = (Group)cAlternatives.eContents().get(24);
+		private final Assignment cIsFinalAssignment_24_0 = (Assignment)cGroup_24.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_24_0_0 = (Keyword)cIsFinalAssignment_24_0.eContents().get(0);
+		private final Assignment cTypeAssignment_24_1 = (Assignment)cGroup_24.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_24_1_0 = (RuleCall)cTypeAssignment_24_1.eContents().get(0);
+		private final Keyword cStateKeyword_24_2 = (Keyword)cGroup_24.eContents().get(2);
+		private final Assignment cNameAssignment_24_3 = (Assignment)cGroup_24.eContents().get(3);
+		private final RuleCall cNameFullStateIDParserRuleCall_24_3_0 = (RuleCall)cNameAssignment_24_3.eContents().get(0);
+		private final Group cGroup_25 = (Group)cAlternatives.eContents().get(25);
+		private final Assignment cIsFinalAssignment_25_0 = (Assignment)cGroup_25.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_25_0_0 = (Keyword)cIsFinalAssignment_25_0.eContents().get(0);
+		private final Assignment cTypeAssignment_25_1 = (Assignment)cGroup_25.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_25_1_0 = (RuleCall)cTypeAssignment_25_1.eContents().get(0);
+		private final Keyword cStateKeyword_25_2 = (Keyword)cGroup_25.eContents().get(2);
+		private final Group cGroup_26 = (Group)cAlternatives.eContents().get(26);
+		private final Assignment cIsFinalAssignment_26_0 = (Assignment)cGroup_26.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_26_0_0 = (Keyword)cIsFinalAssignment_26_0.eContents().get(0);
+		private final Assignment cTypeAssignment_26_1 = (Assignment)cGroup_26.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_26_1_0 = (RuleCall)cTypeAssignment_26_1.eContents().get(0);
+		private final Assignment cNameAssignment_26_2 = (Assignment)cGroup_26.eContents().get(2);
+		private final RuleCall cNameFullStateIDParserRuleCall_26_2_0 = (RuleCall)cNameAssignment_26_2.eContents().get(0);
+		private final Group cGroup_27 = (Group)cAlternatives.eContents().get(27);
+		private final Assignment cIsFinalAssignment_27_0 = (Assignment)cGroup_27.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_27_0_0 = (Keyword)cIsFinalAssignment_27_0.eContents().get(0);
+		private final Keyword cStateKeyword_27_1 = (Keyword)cGroup_27.eContents().get(1);
+		private final Assignment cNameAssignment_27_2 = (Assignment)cGroup_27.eContents().get(2);
+		private final RuleCall cNameFullStateIDParserRuleCall_27_2_0 = (RuleCall)cNameAssignment_27_2.eContents().get(0);
+		private final Group cGroup_28 = (Group)cAlternatives.eContents().get(28);
+		private final Assignment cIsFinalAssignment_28_0 = (Assignment)cGroup_28.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_28_0_0 = (Keyword)cIsFinalAssignment_28_0.eContents().get(0);
+		private final Assignment cTypeAssignment_28_1 = (Assignment)cGroup_28.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_28_1_0 = (RuleCall)cTypeAssignment_28_1.eContents().get(0);
+		private final Group cGroup_29 = (Group)cAlternatives.eContents().get(29);
+		private final Assignment cIsFinalAssignment_29_0 = (Assignment)cGroup_29.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_29_0_0 = (Keyword)cIsFinalAssignment_29_0.eContents().get(0);
+		private final Keyword cStateKeyword_29_1 = (Keyword)cGroup_29.eContents().get(1);
+		private final Assignment cNameAssignment_29_2 = (Assignment)cGroup_29.eContents().get(2);
+		private final RuleCall cNameFullStateIDParserRuleCall_29_2_0 = (RuleCall)cNameAssignment_29_2.eContents().get(0);
+		private final Group cGroup_30 = (Group)cAlternatives.eContents().get(30);
+		private final Assignment cIsFinalAssignment_30_0 = (Assignment)cGroup_30.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_30_0_0 = (Keyword)cIsFinalAssignment_30_0.eContents().get(0);
+		private final Assignment cNameAssignment_30_1 = (Assignment)cGroup_30.eContents().get(1);
+		private final RuleCall cNameFullStateIDParserRuleCall_30_1_0 = (RuleCall)cNameAssignment_30_1.eContents().get(0);
+		private final Assignment cIsFinalAssignment_31 = (Assignment)cAlternatives.eContents().get(31);
+		private final Keyword cIsFinalFinalKeyword_31_0 = (Keyword)cIsFinalAssignment_31.eContents().get(0);
+		private final Group cGroup_32 = (Group)cAlternatives.eContents().get(32);
+		private final Assignment cTypeAssignment_32_0 = (Assignment)cGroup_32.eContents().get(0);
+		private final RuleCall cTypeStateTypeEnumRuleCall_32_0_0 = (RuleCall)cTypeAssignment_32_0.eContents().get(0);
+		private final Keyword cStateKeyword_32_1 = (Keyword)cGroup_32.eContents().get(1);
+		private final Assignment cNameAssignment_32_2 = (Assignment)cGroup_32.eContents().get(2);
+		private final RuleCall cNameFullStateIDParserRuleCall_32_2_0 = (RuleCall)cNameAssignment_32_2.eContents().get(0);
+		private final Group cGroup_33 = (Group)cAlternatives.eContents().get(33);
+		private final Assignment cTypeAssignment_33_0 = (Assignment)cGroup_33.eContents().get(0);
+		private final RuleCall cTypeStateTypeEnumRuleCall_33_0_0 = (RuleCall)cTypeAssignment_33_0.eContents().get(0);
+		private final Keyword cStateKeyword_33_1 = (Keyword)cGroup_33.eContents().get(1);
+		private final Group cGroup_34 = (Group)cAlternatives.eContents().get(34);
+		private final Assignment cTypeAssignment_34_0 = (Assignment)cGroup_34.eContents().get(0);
+		private final RuleCall cTypeStateTypeEnumRuleCall_34_0_0 = (RuleCall)cTypeAssignment_34_0.eContents().get(0);
+		private final Assignment cNameAssignment_34_1 = (Assignment)cGroup_34.eContents().get(1);
+		private final RuleCall cNameFullStateIDParserRuleCall_34_1_0 = (RuleCall)cNameAssignment_34_1.eContents().get(0);
+		private final Assignment cTypeAssignment_35 = (Assignment)cAlternatives.eContents().get(35);
+		private final RuleCall cTypeStateTypeEnumRuleCall_35_0 = (RuleCall)cTypeAssignment_35.eContents().get(0);
+		private final Group cGroup_36 = (Group)cAlternatives.eContents().get(36);
+		private final Keyword cStateKeyword_36_0 = (Keyword)cGroup_36.eContents().get(0);
+		private final Assignment cNameAssignment_36_1 = (Assignment)cGroup_36.eContents().get(1);
+		private final RuleCall cNameFullStateIDParserRuleCall_36_1_0 = (RuleCall)cNameAssignment_36_1.eContents().get(0);
+		private final Keyword cStateKeyword_37 = (Keyword)cAlternatives.eContents().get(37);
+		private final Assignment cNameAssignment_38 = (Assignment)cAlternatives.eContents().get(38);
+		private final RuleCall cNameFullStateIDParserRuleCall_38_0 = (RuleCall)cNameAssignment_38.eContents().get(0);
 		
 		//TransitionState returns State:
-		//  name=FullStateID; 
+		//  (isInitial?="init" isFinal?="final") type=StateType "state" name=FullStateID|(
+		//  isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial?="init"
+		//  isFinal?="final") type=StateType name=FullStateID|(isInitial?="init" isFinal?=
+		//  "final") "state" name=FullStateID|(isInitial?="init" isFinal?="final") type=
+		//  StateType|(isInitial?="init" isFinal?="final") "state"|(isInitial?="init" isFinal?=
+		//  "final") name=FullStateID|isInitial?="init" isFinal?="final"|(isFinal?="final"
+		//  isInitial?="init") type=StateType "state" name=FullStateID|(isFinal?="final"
+		//  isInitial?="init") type=StateType "state"|(isFinal?="final" isInitial?="init") type=
+		//  StateType name=FullStateID|(isFinal?="final" isInitial?="init") "state" name=
+		//  FullStateID|(isFinal?="final" isInitial?="init") type=StateType|(isFinal?="final"
+		//  isInitial?="init") "state"|(isFinal?="final" isInitial?="init") name=FullStateID|
+		//  isFinal?="final" isInitial?="init"|isInitial?="init" type=StateType "state" name=
+		//  FullStateID|isInitial?="init" type=StateType "state"|isInitial?="init" type=
+		//  StateType name=FullStateID|isInitial?="init" "state" name=FullStateID|isInitial?=
+		//  "init" type=StateType|isInitial?="init" "state"|isInitial?="init" name=FullStateID|
+		//  isInitial?="init"|isFinal?="final" type=StateType "state" name=FullStateID|isFinal
+		//  ?="final" type=StateType "state"|isFinal?="final" type=StateType name=FullStateID|
+		//  isFinal?="final" "state" name=FullStateID|isFinal?="final" type=StateType|isFinal?=
+		//  "final" "state" name=FullStateID|isFinal?="final" name=FullStateID|isFinal?="final"
+		//  |type=StateType "state" name=FullStateID|type=StateType "state"|type=StateType name=
+		//  FullStateID|type=StateType|"state" name=FullStateID|"state"|name=FullStateID; 
 		//    
+		//	//name=FullStateID
+		//	         
+		//	      
+		//	      
+		//	      
+		//	    
+		//	    
+		//	    
+		//	  
+		//	
+		//	        
+		//	      
+		//	      
+		//	      
+		//	    
+		//	    
+		//	    
+		//	  
+		//	
+		//	        
+		//	      
+		//	        
+		//	      
+		//	     
+		//	    
+		//	    
+		//	  
+		//	
+		//	         
+		//	        
+		//	       
+		//	       
+		//	     
+		//	       
+		//	     
+		//	  
+		//	
+		//	      
+		//	    
+		//	    
+		//	  
+		//	
+		//	    
+		//	  
+		//		
+		//	  
 		//	 
 		//	
 		//
@@ -1759,11 +2056,767 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 		//	 //========================================================================================
 		public ParserRule getRule() { return rule; }
 
+		//(isInitial?="init" isFinal?="final") type=StateType "state" name=FullStateID|(
+		//isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial?="init"
+		//isFinal?="final") type=StateType name=FullStateID|(isInitial?="init" isFinal?=
+		//"final") "state" name=FullStateID|(isInitial?="init" isFinal?="final") type=
+		//StateType|(isInitial?="init" isFinal?="final") "state"|(isInitial?="init" isFinal?=
+		//"final") name=FullStateID|isInitial?="init" isFinal?="final"|(isFinal?="final"
+		//isInitial?="init") type=StateType "state" name=FullStateID|(isFinal?="final"
+		//isInitial?="init") type=StateType "state"|(isFinal?="final" isInitial?="init") type=
+		//StateType name=FullStateID|(isFinal?="final" isInitial?="init") "state" name=
+		//FullStateID|(isFinal?="final" isInitial?="init") type=StateType|(isFinal?="final"
+		//isInitial?="init") "state"|(isFinal?="final" isInitial?="init") name=FullStateID|
+		//isFinal?="final" isInitial?="init"|isInitial?="init" type=StateType "state" name=
+		//FullStateID|isInitial?="init" type=StateType "state"|isInitial?="init" type=
+		//StateType name=FullStateID|isInitial?="init" "state" name=FullStateID|isInitial?=
+		//"init" type=StateType|isInitial?="init" "state"|isInitial?="init" name=FullStateID|
+		//isInitial?="init"|isFinal?="final" type=StateType "state" name=FullStateID|isFinal
+		//?="final" type=StateType "state"|isFinal?="final" type=StateType name=FullStateID|
+		//isFinal?="final" "state" name=FullStateID|isFinal?="final" type=StateType|isFinal?=
+		//"final" "state" name=FullStateID|isFinal?="final" name=FullStateID|isFinal?="final"
+		//|type=StateType "state" name=FullStateID|type=StateType "state"|type=StateType name=
+		//FullStateID|type=StateType|"state" name=FullStateID|"state"|name=FullStateID 
+		//	//name=FullStateID
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType "state" name=FullStateID
+		public Group getGroup_0() { return cGroup_0; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_0_0() { return cGroup_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_0_0_0() { return cIsInitialAssignment_0_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_0_0_0_0() { return cIsInitialInitKeyword_0_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_0_0_1() { return cIsFinalAssignment_0_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_0_0_1_0() { return cIsFinalFinalKeyword_0_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_0_1() { return cTypeAssignment_0_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_0_1_0() { return cTypeStateTypeEnumRuleCall_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_0_2() { return cStateKeyword_0_2; }
+
 		//name=FullStateID
-		public Assignment getNameAssignment() { return cNameAssignment; }
+		public Assignment getNameAssignment_0_3() { return cNameAssignment_0_3; }
 
 		//FullStateID
-		public RuleCall getNameFullStateIDParserRuleCall_0() { return cNameFullStateIDParserRuleCall_0; }
+		public RuleCall getNameFullStateIDParserRuleCall_0_3_0() { return cNameFullStateIDParserRuleCall_0_3_0; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType "state"
+		public Group getGroup_1() { return cGroup_1; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_0() { return cGroup_1_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_0_0() { return cIsInitialAssignment_1_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_0_0_0() { return cIsInitialInitKeyword_1_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_0_1() { return cIsFinalAssignment_1_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_0_1_0() { return cIsFinalFinalKeyword_1_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_1() { return cTypeAssignment_1_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_1_0() { return cTypeStateTypeEnumRuleCall_1_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_2() { return cStateKeyword_1_2; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType name=FullStateID
+		public Group getGroup_2() { return cGroup_2; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_2_0() { return cGroup_2_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_2_0_0() { return cIsInitialAssignment_2_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_2_0_0_0() { return cIsInitialInitKeyword_2_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_2_0_1() { return cIsFinalAssignment_2_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_2_0_1_0() { return cIsFinalFinalKeyword_2_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_2_1() { return cTypeAssignment_2_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_2_1_0() { return cTypeStateTypeEnumRuleCall_2_1_0; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_2_2() { return cNameAssignment_2_2; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_2_2_0() { return cNameFullStateIDParserRuleCall_2_2_0; }
+
+		//(isInitial?="init" isFinal?="final") "state" name=FullStateID
+		public Group getGroup_3() { return cGroup_3; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_3_0() { return cGroup_3_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_3_0_0() { return cIsInitialAssignment_3_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_3_0_0_0() { return cIsInitialInitKeyword_3_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_3_0_1() { return cIsFinalAssignment_3_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_3_0_1_0() { return cIsFinalFinalKeyword_3_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_3_1() { return cStateKeyword_3_1; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_3_2() { return cNameAssignment_3_2; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_3_2_0() { return cNameFullStateIDParserRuleCall_3_2_0; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType
+		public Group getGroup_4() { return cGroup_4; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_4_0() { return cGroup_4_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_4_0_0() { return cIsInitialAssignment_4_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_4_0_0_0() { return cIsInitialInitKeyword_4_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_4_0_1() { return cIsFinalAssignment_4_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_4_0_1_0() { return cIsFinalFinalKeyword_4_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_4_1() { return cTypeAssignment_4_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_4_1_0() { return cTypeStateTypeEnumRuleCall_4_1_0; }
+
+		//(isInitial?="init" isFinal?="final") "state"
+		public Group getGroup_5() { return cGroup_5; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_5_0() { return cGroup_5_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_5_0_0() { return cIsInitialAssignment_5_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_5_0_0_0() { return cIsInitialInitKeyword_5_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_5_0_1() { return cIsFinalAssignment_5_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_5_0_1_0() { return cIsFinalFinalKeyword_5_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_5_1() { return cStateKeyword_5_1; }
+
+		//(isInitial?="init" isFinal?="final") name=FullStateID
+		public Group getGroup_6() { return cGroup_6; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_6_0() { return cGroup_6_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_6_0_0() { return cIsInitialAssignment_6_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_6_0_0_0() { return cIsInitialInitKeyword_6_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_6_0_1() { return cIsFinalAssignment_6_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_6_0_1_0() { return cIsFinalFinalKeyword_6_0_1_0; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_6_1() { return cNameAssignment_6_1; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_6_1_0() { return cNameFullStateIDParserRuleCall_6_1_0; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_7() { return cGroup_7; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_7_0() { return cIsInitialAssignment_7_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_7_0_0() { return cIsInitialInitKeyword_7_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_7_1() { return cIsFinalAssignment_7_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_7_1_0() { return cIsFinalFinalKeyword_7_1_0; }
+
+		//(isFinal?="final" isInitial?="init") type=StateType "state" name=FullStateID
+		public Group getGroup_8() { return cGroup_8; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_8_0() { return cGroup_8_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_8_0_0() { return cIsFinalAssignment_8_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_8_0_0_0() { return cIsFinalFinalKeyword_8_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_8_0_1() { return cIsInitialAssignment_8_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_8_0_1_0() { return cIsInitialInitKeyword_8_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_8_1() { return cTypeAssignment_8_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_8_1_0() { return cTypeStateTypeEnumRuleCall_8_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_8_2() { return cStateKeyword_8_2; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_8_3() { return cNameAssignment_8_3; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_8_3_0() { return cNameFullStateIDParserRuleCall_8_3_0; }
+
+		//(isFinal?="final" isInitial?="init") type=StateType "state"
+		public Group getGroup_9() { return cGroup_9; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_9_0() { return cGroup_9_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_9_0_0() { return cIsFinalAssignment_9_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_9_0_0_0() { return cIsFinalFinalKeyword_9_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_9_0_1() { return cIsInitialAssignment_9_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_9_0_1_0() { return cIsInitialInitKeyword_9_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_9_1() { return cTypeAssignment_9_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_9_1_0() { return cTypeStateTypeEnumRuleCall_9_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_9_2() { return cStateKeyword_9_2; }
+
+		//(isFinal?="final" isInitial?="init") type=StateType name=FullStateID
+		public Group getGroup_10() { return cGroup_10; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_10_0() { return cGroup_10_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_10_0_0() { return cIsFinalAssignment_10_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_10_0_0_0() { return cIsFinalFinalKeyword_10_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_10_0_1() { return cIsInitialAssignment_10_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_10_0_1_0() { return cIsInitialInitKeyword_10_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_10_1() { return cTypeAssignment_10_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_10_1_0() { return cTypeStateTypeEnumRuleCall_10_1_0; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_10_2() { return cNameAssignment_10_2; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_10_2_0() { return cNameFullStateIDParserRuleCall_10_2_0; }
+
+		//(isFinal?="final" isInitial?="init") "state" name=FullStateID
+		public Group getGroup_11() { return cGroup_11; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_11_0() { return cGroup_11_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_11_0_0() { return cIsFinalAssignment_11_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_11_0_0_0() { return cIsFinalFinalKeyword_11_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_11_0_1() { return cIsInitialAssignment_11_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_11_0_1_0() { return cIsInitialInitKeyword_11_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_11_1() { return cStateKeyword_11_1; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_11_2() { return cNameAssignment_11_2; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_11_2_0() { return cNameFullStateIDParserRuleCall_11_2_0; }
+
+		//(isFinal?="final" isInitial?="init") type=StateType
+		public Group getGroup_12() { return cGroup_12; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_12_0() { return cGroup_12_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_12_0_0() { return cIsFinalAssignment_12_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_12_0_0_0() { return cIsFinalFinalKeyword_12_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_12_0_1() { return cIsInitialAssignment_12_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_12_0_1_0() { return cIsInitialInitKeyword_12_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_12_1() { return cTypeAssignment_12_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_12_1_0() { return cTypeStateTypeEnumRuleCall_12_1_0; }
+
+		//(isFinal?="final" isInitial?="init") "state"
+		public Group getGroup_13() { return cGroup_13; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_13_0() { return cGroup_13_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_13_0_0() { return cIsFinalAssignment_13_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_13_0_0_0() { return cIsFinalFinalKeyword_13_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_13_0_1() { return cIsInitialAssignment_13_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_13_0_1_0() { return cIsInitialInitKeyword_13_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_13_1() { return cStateKeyword_13_1; }
+
+		//(isFinal?="final" isInitial?="init") name=FullStateID
+		public Group getGroup_14() { return cGroup_14; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_14_0() { return cGroup_14_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_14_0_0() { return cIsFinalAssignment_14_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_14_0_0_0() { return cIsFinalFinalKeyword_14_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_14_0_1() { return cIsInitialAssignment_14_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_14_0_1_0() { return cIsInitialInitKeyword_14_0_1_0; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_14_1() { return cNameAssignment_14_1; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_14_1_0() { return cNameFullStateIDParserRuleCall_14_1_0; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_15() { return cGroup_15; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_15_0() { return cIsFinalAssignment_15_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_15_0_0() { return cIsFinalFinalKeyword_15_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_15_1() { return cIsInitialAssignment_15_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_15_1_0() { return cIsInitialInitKeyword_15_1_0; }
+
+		//isInitial?="init" type=StateType "state" name=FullStateID
+		public Group getGroup_16() { return cGroup_16; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_16_0() { return cIsInitialAssignment_16_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_16_0_0() { return cIsInitialInitKeyword_16_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_16_1() { return cTypeAssignment_16_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_16_1_0() { return cTypeStateTypeEnumRuleCall_16_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_16_2() { return cStateKeyword_16_2; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_16_3() { return cNameAssignment_16_3; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_16_3_0() { return cNameFullStateIDParserRuleCall_16_3_0; }
+
+		//isInitial?="init" type=StateType "state"
+		public Group getGroup_17() { return cGroup_17; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_17_0() { return cIsInitialAssignment_17_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_17_0_0() { return cIsInitialInitKeyword_17_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_17_1() { return cTypeAssignment_17_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_17_1_0() { return cTypeStateTypeEnumRuleCall_17_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_17_2() { return cStateKeyword_17_2; }
+
+		//isInitial?="init" type=StateType name=FullStateID
+		public Group getGroup_18() { return cGroup_18; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_18_0() { return cIsInitialAssignment_18_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_18_0_0() { return cIsInitialInitKeyword_18_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_18_1() { return cTypeAssignment_18_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_18_1_0() { return cTypeStateTypeEnumRuleCall_18_1_0; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_18_2() { return cNameAssignment_18_2; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_18_2_0() { return cNameFullStateIDParserRuleCall_18_2_0; }
+
+		//isInitial?="init" "state" name=FullStateID
+		public Group getGroup_19() { return cGroup_19; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_19_0() { return cIsInitialAssignment_19_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_19_0_0() { return cIsInitialInitKeyword_19_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_19_1() { return cStateKeyword_19_1; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_19_2() { return cNameAssignment_19_2; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_19_2_0() { return cNameFullStateIDParserRuleCall_19_2_0; }
+
+		//isInitial?="init" type=StateType
+		public Group getGroup_20() { return cGroup_20; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_20_0() { return cIsInitialAssignment_20_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_20_0_0() { return cIsInitialInitKeyword_20_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_20_1() { return cTypeAssignment_20_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_20_1_0() { return cTypeStateTypeEnumRuleCall_20_1_0; }
+
+		//isInitial?="init" "state"
+		public Group getGroup_21() { return cGroup_21; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_21_0() { return cIsInitialAssignment_21_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_21_0_0() { return cIsInitialInitKeyword_21_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_21_1() { return cStateKeyword_21_1; }
+
+		//isInitial?="init" name=FullStateID
+		public Group getGroup_22() { return cGroup_22; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_22_0() { return cIsInitialAssignment_22_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_22_0_0() { return cIsInitialInitKeyword_22_0_0; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_22_1() { return cNameAssignment_22_1; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_22_1_0() { return cNameFullStateIDParserRuleCall_22_1_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_23() { return cIsInitialAssignment_23; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_23_0() { return cIsInitialInitKeyword_23_0; }
+
+		//isFinal?="final" type=StateType "state" name=FullStateID
+		public Group getGroup_24() { return cGroup_24; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_24_0() { return cIsFinalAssignment_24_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_24_0_0() { return cIsFinalFinalKeyword_24_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_24_1() { return cTypeAssignment_24_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_24_1_0() { return cTypeStateTypeEnumRuleCall_24_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_24_2() { return cStateKeyword_24_2; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_24_3() { return cNameAssignment_24_3; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_24_3_0() { return cNameFullStateIDParserRuleCall_24_3_0; }
+
+		//isFinal?="final" type=StateType "state"
+		public Group getGroup_25() { return cGroup_25; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_25_0() { return cIsFinalAssignment_25_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_25_0_0() { return cIsFinalFinalKeyword_25_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_25_1() { return cTypeAssignment_25_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_25_1_0() { return cTypeStateTypeEnumRuleCall_25_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_25_2() { return cStateKeyword_25_2; }
+
+		//isFinal?="final" type=StateType name=FullStateID
+		public Group getGroup_26() { return cGroup_26; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_26_0() { return cIsFinalAssignment_26_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_26_0_0() { return cIsFinalFinalKeyword_26_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_26_1() { return cTypeAssignment_26_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_26_1_0() { return cTypeStateTypeEnumRuleCall_26_1_0; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_26_2() { return cNameAssignment_26_2; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_26_2_0() { return cNameFullStateIDParserRuleCall_26_2_0; }
+
+		//isFinal?="final" "state" name=FullStateID
+		public Group getGroup_27() { return cGroup_27; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_27_0() { return cIsFinalAssignment_27_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_27_0_0() { return cIsFinalFinalKeyword_27_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_27_1() { return cStateKeyword_27_1; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_27_2() { return cNameAssignment_27_2; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_27_2_0() { return cNameFullStateIDParserRuleCall_27_2_0; }
+
+		//isFinal?="final" type=StateType
+		public Group getGroup_28() { return cGroup_28; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_28_0() { return cIsFinalAssignment_28_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_28_0_0() { return cIsFinalFinalKeyword_28_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_28_1() { return cTypeAssignment_28_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_28_1_0() { return cTypeStateTypeEnumRuleCall_28_1_0; }
+
+		//isFinal?="final" "state" name=FullStateID
+		public Group getGroup_29() { return cGroup_29; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_29_0() { return cIsFinalAssignment_29_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_29_0_0() { return cIsFinalFinalKeyword_29_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_29_1() { return cStateKeyword_29_1; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_29_2() { return cNameAssignment_29_2; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_29_2_0() { return cNameFullStateIDParserRuleCall_29_2_0; }
+
+		//isFinal?="final" name=FullStateID
+		public Group getGroup_30() { return cGroup_30; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_30_0() { return cIsFinalAssignment_30_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_30_0_0() { return cIsFinalFinalKeyword_30_0_0; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_30_1() { return cNameAssignment_30_1; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_30_1_0() { return cNameFullStateIDParserRuleCall_30_1_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_31() { return cIsFinalAssignment_31; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_31_0() { return cIsFinalFinalKeyword_31_0; }
+
+		//type=StateType "state" name=FullStateID
+		public Group getGroup_32() { return cGroup_32; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_32_0() { return cTypeAssignment_32_0; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_32_0_0() { return cTypeStateTypeEnumRuleCall_32_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_32_1() { return cStateKeyword_32_1; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_32_2() { return cNameAssignment_32_2; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_32_2_0() { return cNameFullStateIDParserRuleCall_32_2_0; }
+
+		//type=StateType "state"
+		public Group getGroup_33() { return cGroup_33; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_33_0() { return cTypeAssignment_33_0; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_33_0_0() { return cTypeStateTypeEnumRuleCall_33_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_33_1() { return cStateKeyword_33_1; }
+
+		//type=StateType name=FullStateID
+		public Group getGroup_34() { return cGroup_34; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_34_0() { return cTypeAssignment_34_0; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_34_0_0() { return cTypeStateTypeEnumRuleCall_34_0_0; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_34_1() { return cNameAssignment_34_1; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_34_1_0() { return cNameFullStateIDParserRuleCall_34_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_35() { return cTypeAssignment_35; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_35_0() { return cTypeStateTypeEnumRuleCall_35_0; }
+
+		//"state" name=FullStateID
+		public Group getGroup_36() { return cGroup_36; }
+
+		//"state"
+		public Keyword getStateKeyword_36_0() { return cStateKeyword_36_0; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_36_1() { return cNameAssignment_36_1; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_36_1_0() { return cNameFullStateIDParserRuleCall_36_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_37() { return cStateKeyword_37; }
+
+		//name=FullStateID
+		public Assignment getNameAssignment_38() { return cNameAssignment_38; }
+
+		//FullStateID
+		public RuleCall getNameFullStateIDParserRuleCall_38_0() { return cNameFullStateIDParserRuleCall_38_0; }
 	}
 
 	public class ValuedObjectElements implements IParserRuleAccess {
@@ -2535,8 +3588,8 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	}
 
 	//Transition:
-	//  sourceState=[State|FullStateID]? type=TransitionType targetState=[State|
-	//  FullStateID] ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 	
+	//  newSourceState=TransitionState type=TransitionType targetState=[State|FullStateID]
+	//  ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 	
 	//
 	//	//========================================================================================
 	//	 //===  									    TRANSITION 					               ===
@@ -2544,16 +3597,10 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	//	
 	//
 	//
-	//	
+	//	//((sourceState=[State|FullStateID]))? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 	//	 
-	////	| 
-	////	 ( newSourceState=FullStateID {TransitionState.name=current} )
-	//	  //newSourceState=TransitionState 
-	//	   //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 	//	
-	//	
-	//	
-	//	  //| newTargetState=TransitionState )
+	//	//|newTargetState=TransitionState )
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}
@@ -2563,8 +3610,74 @@ public class RetypingSyncchartsGrammarAccess implements IGrammarAccess {
 	}
 
 	//TransitionState returns State:
-	//  name=FullStateID; 
+	//  (isInitial?="init" isFinal?="final") type=StateType "state" name=FullStateID|(
+	//  isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial?="init"
+	//  isFinal?="final") type=StateType name=FullStateID|(isInitial?="init" isFinal?=
+	//  "final") "state" name=FullStateID|(isInitial?="init" isFinal?="final") type=
+	//  StateType|(isInitial?="init" isFinal?="final") "state"|(isInitial?="init" isFinal?=
+	//  "final") name=FullStateID|isInitial?="init" isFinal?="final"|(isFinal?="final"
+	//  isInitial?="init") type=StateType "state" name=FullStateID|(isFinal?="final"
+	//  isInitial?="init") type=StateType "state"|(isFinal?="final" isInitial?="init") type=
+	//  StateType name=FullStateID|(isFinal?="final" isInitial?="init") "state" name=
+	//  FullStateID|(isFinal?="final" isInitial?="init") type=StateType|(isFinal?="final"
+	//  isInitial?="init") "state"|(isFinal?="final" isInitial?="init") name=FullStateID|
+	//  isFinal?="final" isInitial?="init"|isInitial?="init" type=StateType "state" name=
+	//  FullStateID|isInitial?="init" type=StateType "state"|isInitial?="init" type=
+	//  StateType name=FullStateID|isInitial?="init" "state" name=FullStateID|isInitial?=
+	//  "init" type=StateType|isInitial?="init" "state"|isInitial?="init" name=FullStateID|
+	//  isInitial?="init"|isFinal?="final" type=StateType "state" name=FullStateID|isFinal
+	//  ?="final" type=StateType "state"|isFinal?="final" type=StateType name=FullStateID|
+	//  isFinal?="final" "state" name=FullStateID|isFinal?="final" type=StateType|isFinal?=
+	//  "final" "state" name=FullStateID|isFinal?="final" name=FullStateID|isFinal?="final"
+	//  |type=StateType "state" name=FullStateID|type=StateType "state"|type=StateType name=
+	//  FullStateID|type=StateType|"state" name=FullStateID|"state"|name=FullStateID; 
 	//    
+	//	//name=FullStateID
+	//	         
+	//	      
+	//	      
+	//	      
+	//	    
+	//	    
+	//	    
+	//	  
+	//	
+	//	        
+	//	      
+	//	      
+	//	      
+	//	    
+	//	    
+	//	    
+	//	  
+	//	
+	//	        
+	//	      
+	//	        
+	//	      
+	//	     
+	//	    
+	//	    
+	//	  
+	//	
+	//	         
+	//	        
+	//	       
+	//	       
+	//	     
+	//	       
+	//	     
+	//	  
+	//	
+	//	      
+	//	    
+	//	    
+	//	  
+	//	
+	//	    
+	//	  
+	//		
+	//	  
 	//	 
 	//	
 	//

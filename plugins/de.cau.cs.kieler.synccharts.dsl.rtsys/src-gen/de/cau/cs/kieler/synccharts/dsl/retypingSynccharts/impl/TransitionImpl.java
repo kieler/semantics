@@ -12,6 +12,7 @@ import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition;
 import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.TransitionType;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -25,7 +26,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.TransitionImpl#getSourceState <em>Source State</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.TransitionImpl#getNewSourceState <em>New Source State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.TransitionImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.TransitionImpl#getTargetState <em>Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.impl.TransitionImpl#isIsHistory <em>Is History</em>}</li>
@@ -37,14 +38,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class TransitionImpl extends ActionImpl implements Transition
 {
   /**
-   * The cached value of the '{@link #getSourceState() <em>Source State</em>}' reference.
+   * The cached value of the '{@link #getNewSourceState() <em>New Source State</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSourceState()
+   * @see #getNewSourceState()
    * @generated
    * @ordered
    */
-  protected State sourceState;
+  protected State newSourceState;
 
   /**
    * The default value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -122,19 +123,9 @@ public class TransitionImpl extends ActionImpl implements Transition
    * <!-- end-user-doc -->
    * @generated
    */
-  public State getSourceState()
+  public State getNewSourceState()
   {
-    if (sourceState != null && sourceState.eIsProxy())
-    {
-      InternalEObject oldSourceState = (InternalEObject)sourceState;
-      sourceState = (State)eResolveProxy(oldSourceState);
-      if (sourceState != oldSourceState)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, RetypingSyncchartsPackage.TRANSITION__SOURCE_STATE, oldSourceState, sourceState));
-      }
-    }
-    return sourceState;
+    return newSourceState;
   }
 
   /**
@@ -142,22 +133,37 @@ public class TransitionImpl extends ActionImpl implements Transition
    * <!-- end-user-doc -->
    * @generated
    */
-  public State basicGetSourceState()
+  public NotificationChain basicSetNewSourceState(State newNewSourceState, NotificationChain msgs)
   {
-    return sourceState;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setSourceState(State newSourceState)
-  {
-    State oldSourceState = sourceState;
-    sourceState = newSourceState;
+    State oldNewSourceState = newSourceState;
+    newSourceState = newNewSourceState;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.TRANSITION__SOURCE_STATE, oldSourceState, sourceState));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.TRANSITION__NEW_SOURCE_STATE, oldNewSourceState, newNewSourceState);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setNewSourceState(State newNewSourceState)
+  {
+    if (newNewSourceState != newSourceState)
+    {
+      NotificationChain msgs = null;
+      if (newSourceState != null)
+        msgs = ((InternalEObject)newSourceState).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RetypingSyncchartsPackage.TRANSITION__NEW_SOURCE_STATE, null, msgs);
+      if (newNewSourceState != null)
+        msgs = ((InternalEObject)newNewSourceState).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RetypingSyncchartsPackage.TRANSITION__NEW_SOURCE_STATE, null, msgs);
+      msgs = basicSetNewSourceState(newNewSourceState, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, RetypingSyncchartsPackage.TRANSITION__NEW_SOURCE_STATE, newNewSourceState, newNewSourceState));
   }
 
   /**
@@ -255,13 +261,28 @@ public class TransitionImpl extends ActionImpl implements Transition
    * @generated
    */
   @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case RetypingSyncchartsPackage.TRANSITION__NEW_SOURCE_STATE:
+        return basicSetNewSourceState(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.TRANSITION__SOURCE_STATE:
-        if (resolve) return getSourceState();
-        return basicGetSourceState();
+      case RetypingSyncchartsPackage.TRANSITION__NEW_SOURCE_STATE:
+        return getNewSourceState();
       case RetypingSyncchartsPackage.TRANSITION__TYPE:
         return getType();
       case RetypingSyncchartsPackage.TRANSITION__TARGET_STATE:
@@ -283,8 +304,8 @@ public class TransitionImpl extends ActionImpl implements Transition
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.TRANSITION__SOURCE_STATE:
-        setSourceState((State)newValue);
+      case RetypingSyncchartsPackage.TRANSITION__NEW_SOURCE_STATE:
+        setNewSourceState((State)newValue);
         return;
       case RetypingSyncchartsPackage.TRANSITION__TYPE:
         setType((TransitionType)newValue);
@@ -309,8 +330,8 @@ public class TransitionImpl extends ActionImpl implements Transition
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.TRANSITION__SOURCE_STATE:
-        setSourceState((State)null);
+      case RetypingSyncchartsPackage.TRANSITION__NEW_SOURCE_STATE:
+        setNewSourceState((State)null);
         return;
       case RetypingSyncchartsPackage.TRANSITION__TYPE:
         setType(TYPE_EDEFAULT);
@@ -335,8 +356,8 @@ public class TransitionImpl extends ActionImpl implements Transition
   {
     switch (featureID)
     {
-      case RetypingSyncchartsPackage.TRANSITION__SOURCE_STATE:
-        return sourceState != null;
+      case RetypingSyncchartsPackage.TRANSITION__NEW_SOURCE_STATE:
+        return newSourceState != null;
       case RetypingSyncchartsPackage.TRANSITION__TYPE:
         return type != TYPE_EDEFAULT;
       case RetypingSyncchartsPackage.TRANSITION__TARGET_STATE:

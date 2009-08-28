@@ -67,7 +67,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//Region/signals"/>
     </genClasses>
     <genClasses ecoreClass="RetypingSynccharts.ecore#//Transition">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//Transition/sourceState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//Transition/newSourceState"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Transition/type"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference RetypingSynccharts.ecore#//Transition/targetState"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RetypingSynccharts.ecore#//Transition/isHistory"/>

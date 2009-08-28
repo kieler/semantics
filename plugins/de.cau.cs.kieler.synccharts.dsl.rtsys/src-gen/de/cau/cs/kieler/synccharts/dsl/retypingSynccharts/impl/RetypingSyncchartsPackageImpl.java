@@ -459,7 +459,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTransition_SourceState()
+  public EReference getTransition_NewSourceState()
   {
     return (EReference)transitionEClass.getEStructuralFeatures().get(0);
   }
@@ -705,7 +705,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     createEReference(regionEClass, REGION__SIGNALS);
 
     transitionEClass = createEClass(TRANSITION);
-    createEReference(transitionEClass, TRANSITION__SOURCE_STATE);
+    createEReference(transitionEClass, TRANSITION__NEW_SOURCE_STATE);
     createEAttribute(transitionEClass, TRANSITION__TYPE);
     createEReference(transitionEClass, TRANSITION__TARGET_STATE);
     createEAttribute(transitionEClass, TRANSITION__IS_HISTORY);
@@ -796,7 +796,7 @@ public class RetypingSyncchartsPackageImpl extends EPackageImpl implements Retyp
     initEReference(getRegion_Signals(), this.getSignal(), null, "signals", null, 0, -1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTransition_SourceState(), this.getState(), null, "sourceState", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTransition_NewSourceState(), this.getState(), null, "newSourceState", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_Type(), this.getTransitionType(), "type", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTransition_TargetState(), this.getState(), null, "targetState", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_IsHistory(), ecorePackage.getEBoolean(), "isHistory", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
