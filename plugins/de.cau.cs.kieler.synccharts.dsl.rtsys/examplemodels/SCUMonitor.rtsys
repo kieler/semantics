@@ -1,0 +1,63 @@
+state SCU_Monitor{
+	init state power_off    
+    o-> operational with "notRESET"
+    
+    state operational{		
+		init state active{			
+			init state hold_mode{				
+				init state init_hold
+				o-> activehold with FAIL_BRAKE
+				o-> brake with MS100
+				
+				state brake{
+					init state brake_monitor
+					o-> fail_act_brake with preFAIL_ACTUATORandEXCEED                                                        
+					o-> final state acthold with EXCEED_AorEXCEED_B
+					
+					state fail_act_brake{ 
+						onentry "EMERGENCE" 
+					}
+				} //brake
+				brake >-> activehold
+				state activehold{
+					init state wait4motors
+					o-> unspecified_failure with MS500
+					o-> activehold_monitor with notEXCEED
+					
+					state activehold_monitor 
+					o-> cond2 with EXCEED
+					
+					pseudo state cond2
+					--> motor_fault_b with EXCEED_BandpreEXCEED_A
+					--> motor_fault_a with EXCEED_AandpreEXCEED_B
+					--> cs_breakage
+					
+					state cs_breakage{ 
+						onentry "EMERGENCE" 
+					}
+					
+					state motor_fault_b{ 
+						onentry "EMERGENCE"  
+					}
+					
+					state motor_fault_a{ 
+						onentry "EMERGENCE"  
+					}
+					
+					state unspecified_failure{ 
+						onentry "EMERGENCE" 
+					}
+				} //activehold
+			}//hold_mode
+			o-> drive_hold with DRIVE
+			
+			drive_mode 
+				//{ Inhalt von drive_mode } 
+			o-> hold_mode with HOLD
+		}//active
+		--> emergency with EMERGENCY                                          
+	}//operational
+	o-> power_off with RESET
+}//SCU_Monitor
+
+

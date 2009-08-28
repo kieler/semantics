@@ -1,0 +1,8 @@
+
+init cond state outerState "myLabel" {     
+	final state innerState { 
+	  variableName := 0 : integer 
+	 } 
+	}
+	innerState --> outerState
+	

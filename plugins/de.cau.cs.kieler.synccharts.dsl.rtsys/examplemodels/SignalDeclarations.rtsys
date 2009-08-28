@@ -1,0 +1,10 @@
+//---------------------------------------------------------------------------//
+//                         SIGNAL DECLARATION EXAMPLES
+//---------------------------------------------------------------------------//
+// inout mySignal                                -- default signal type is PURE 
+// input mySignal : integer
+// input mySignal := 0 : integer
+// input mySignal := 0 : combine integer with +
+// input mySignal : combine integer with +
+//---------------------------------------------------------------------------//
+
