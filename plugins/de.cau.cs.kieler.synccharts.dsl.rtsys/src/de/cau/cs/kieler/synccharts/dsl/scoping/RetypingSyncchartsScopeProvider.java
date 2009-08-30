@@ -13,8 +13,7 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.ScopedElement;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition;
+
 
 /**
  * This class contains custom scoping description.
@@ -28,12 +27,12 @@ public class RetypingSyncchartsScopeProvider extends
 
 	public class ScopingScopeProvider extends AbstractDeclarativeScopeProvider {
 
-		public IScope scope_Transition_targetState(Transition context,
-				EReference reference) {
-			State owner = org.eclipse.xtext.EcoreUtil2.getContainerOfType(
-					context, State.class);
-			return createScope(owner);
-		}
+//		public IScope scope_Transition_targetState(Transition context,
+//				EReference reference) {
+//			State owner = org.eclipse.xtext.EcoreUtil2.getContainerOfType(
+//					context, State.class);
+//			return createScope(owner);
+//		}
 
 		/*
 		 * public IScope scope_ReferenceValue_value(NestedReferenceValue
@@ -43,13 +42,13 @@ public class RetypingSyncchartsScopeProvider extends
 		 * }
 		 */
 
-		private IScope createScope(State state) {
-			// can be written more functional with google collections
-			// List<IScopedElement> elements = new
-			// ArrayList<IScopedElement>(state.size());
-			// elements.add(ScopedElement.create(state.getId(), state));
-			// return new SimpleScope(elements);
-			return (IScope) ScopedElement.create(state.getName(), state);
-		}
+//		private IScope createScope(State state) {
+//			// can be written more functional with google collections
+//			// List<IScopedElement> elements = new
+//			// ArrayList<IScopedElement>(state.size());
+//			// elements.add(ScopedElement.create(state.getId(), state));
+//			// return new SimpleScope(elements);
+//			return (IScope) ScopedElement.create(state.getId(), state);
+//		}
 	}
 }

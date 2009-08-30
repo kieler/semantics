@@ -29,11 +29,9 @@ public class RetypingSyncchartsStandaloneSetup implements ISetup {
 	}
 	
 	public void register(Injector injector) {
-	if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts")) {
-		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts", de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.RetypingSyncchartsPackage.eINSTANCE);
-	}
 
 		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("synccharts", resourceFactory);
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("rtsys", resourceFactory);
 		
 	//TODO registration of EValidators should be added here, too

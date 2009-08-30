@@ -1,195 +1,200 @@
-grammar de.cau.cs.kieler.synccharts.dsl.RetypingSynccharts with org.eclipse.xtext.common.Terminals
-generate retypingSynccharts "http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts" 
+grammar de.cau.cs.kieler.synccharts.dsl.RetypingSynccharts with org.eclipse.xtext.
+common.Terminals
+
+import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as
+sync //import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+//generate retypingSynccharts "http://www.cau.de/cs/kieler/synccharts/dsl/RetypingSynccharts" 
 //========================================================================================
 //===  									    STATE						               ===
 //========================================================================================
 
-State:
-	
-		( ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' name=FullStateID
-	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
-	| ((isInitial?='init')(isFinal?='final')) (type=StateType) name=FullStateID
-	| ((isInitial?='init')(isFinal?='final')) 'state' name=FullStateID
-	| ((isInitial?='init')(isFinal?='final')) (type=StateType)
-	| ((isInitial?='init')(isFinal?='final')) 'state'
-	| ((isInitial?='init')(isFinal?='final')) name=FullStateID
-	| ((isInitial?='init')(isFinal?='final'))
-	
-	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' name=FullStateID
-	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state'
-	| ((isFinal?='final')(isInitial?='init')) (type=StateType) name=FullStateID
-	| ((isFinal?='final')(isInitial?='init')) 'state' name=FullStateID
-	| ((isFinal?='final')(isInitial?='init')) (type=StateType)
-	| ((isFinal?='final')(isInitial?='init')) 'state'
-	| ((isFinal?='final')(isInitial?='init')) name=FullStateID
-	| ((isFinal?='final')(isInitial?='init'))
-	
-	| (isInitial?='init') (type=StateType) 'state' name=FullStateID
-	| (isInitial?='init') (type=StateType) 'state'
-	| (isInitial?='init') (type=StateType) name=FullStateID  
-	| (isInitial?='init') 'state' name=FullStateID
-	| (isInitial?='init') (type=StateType) 
-	| (isInitial?='init') 'state'
-	| (isInitial?='init') name=FullStateID
-	| (isInitial?='init')
-	
-	| (isFinal?='final')  (type=StateType) 'state' name=FullStateID
-	| (isFinal?='final')  (type=StateType) 'state' 
-	| (isFinal?='final')  (type=StateType) name=FullStateID
-	| (isFinal?='final')  'state' name=FullStateID
-	| (isFinal?='final')  (type=StateType)
-	| (isFinal?='final')  'state' name=FullStateID
-	| (isFinal?='final')  name=FullStateID
-	| (isFinal?='final')
-	
-	| (type=StateType) 'state' name=FullStateID
-	| (type=StateType) 'state'
-	| (type=StateType) name=FullStateID
-	| (type=StateType)
-	
-	| 'state' name=FullStateID
-	| 'state'
-		
-	| name=FullStateID
-	)
-	(label=STRING)?
-	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
-	(bodyText=STRING)?
-	
-(	(outgoingTransitions+=Transition)*
-|	
-	('{'	
-		(	 	('onentry' entryActions+=Action) 
-			| 	('oninner' innerActions+=Action) 
-			|   ('onexit' exitActions+=Action ) 
-			| 	('suspension' suspensionTrigger=Action) // kein effect, kein delay, kein immediate
-			| 	(signals+=Signal) 
-			|	(regions+=Region ('||' regions+=Region)*)
-		)+	
-		'}')?	
-	(outgoingTransitions+=Transition)*
-) // this is another big OR because if my state has a content (the curly brackets) then its transition have to come after the curly brackets 
-;
-Renaming:
-	oldObject=STRING'/'newID=STRING
-;
-FullStateID : ((ID'@')?ID);
 
-	//========================================================================================
-	//===  									    ACTIONS  					               ===
-	//========================================================================================
-Action:
-	((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))
-| 
-	Transition
-	
+Region returns sync::Region:
+//'region' id=ID
+  (innerStates+=State) // the first state because the GMF editors root element is of type synch::Region
+  //  (innerStates+=State)*
 ;
-	//========================================================================================
-	//===  									    REGIONS  					               ===
-	//========================================================================================
-Region:
-	(	variables+=Variable
-	|	innerStates+=State
-	|	signals+=Signal
-	)+
-;	
 
-	//========================================================================================
-	//===  									    TRANSITION 					               ===
-	//========================================================================================
-	
-Transition:
-
-	//((sourceState=[State|FullStateID]))? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-	newSourceState=TransitionState
-	type=TransitionType
-	(targetState=[State|FullStateID])//|newTargetState=TransitionState )
-	( 'with' triggersAndEffects=STRING)?
-	(isHistory?=' history')?
-	';'
+State returns sync::State:
+//		( ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' name=FullStateID
+  //	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
+  //	| ((isInitial?='init')(isFinal?='final')) (type=StateType) name=FullStateID
+  //	| ((isInitial?='init')(isFinal?='final')) 'state' name=FullStateID
+  //	| ((isInitial?='init')(isFinal?='final')) (type=StateType)
+  //	| ((isInitial?='init')(isFinal?='final')) 'state'
+  //	| ((isInitial?='init')(isFinal?='final')) name=FullStateID
+  //	| ((isInitial?='init')(isFinal?='final'))
+  //	
+  //	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' name=FullStateID
+  //	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state'
+  //	| ((isFinal?='final')(isInitial?='init')) (type=StateType) name=FullStateID
+  //	| ((isFinal?='final')(isInitial?='init')) 'state' name=FullStateID
+  //	| ((isFinal?='final')(isInitial?='init')) (type=StateType)
+  //	| ((isFinal?='final')(isInitial?='init')) 'state'
+  //	| ((isFinal?='final')(isInitial?='init')) name=FullStateID
+  //	| ((isFinal?='final')(isInitial?='init'))
+  //	
+  //	| (isInitial?='init') (type=StateType) 'state' name=FullStateID
+  //	| (isInitial?='init') (type=StateType) 'state'
+  //	| (isInitial?='init') (type=StateType) name=FullStateID  
+  //	| (isInitial?='init') 'state' name=FullStateID
+  //	| (isInitial?='init') (type=StateType) 
+  //	| (isInitial?='init') 'state'
+  //	| (isInitial?='init') name=FullStateID
+  //	| (isInitial?='init')
+  //	
+  //	| (isFinal?='final')  (type=StateType) 'state' name=FullStateID
+  //	| (isFinal?='final')  (type=StateType) 'state' 
+  //	| (isFinal?='final')  (type=StateType) name=FullStateID
+  //	| (isFinal?='final')  'state' name=FullStateID
+  //	| (isFinal?='final')  (type=StateType)
+  //	| (isFinal?='final')  'state' name=FullStateID
+  //	| (isFinal?='final')  name=FullStateID
+  //	| (isFinal?='final')
+  //	
+  //	| (type=StateType) 'state' name=FullStateID
+  //	| (type=StateType) 'state'
+  //	| (type=StateType) name=FullStateID
+  //	| (type=StateType)
+  //	
+  //	| 'state' name=FullStateID
+  //	| 'state'
+  //		
+  //	| name=FullStateID
+  //	)
+  id=ID //FullStateID
+  (label=STRING)? //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
+  (bodyText=STRING)? //(	(outgoingTransitions+=Transition)*
+  //|	
+  // ('{' //		(	 	('onentry' entryActions+=Action) 
+  //			| 	('oninner' innerActions+=Action) 
+  //			|   ('onexit' exitActions+=Action ) 
+  //			| 	('suspension' suspensionTrigger=Action) // kein effect, kein delay, kein immediate
+  //			| 	(signals+=Signal) 
+  // (regions+=Region ('||' regions+=Region)*) //		)+	
+  //  '}')? //	(outgoingTransitions+=Transition)*
+  //) // this is another big OR because if my state has a content (the curly brackets) then its transition have to come after the curly brackets 
 ;
-TransitionState returns State:
-	//name=FullStateID
-	( ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' name=FullStateID
-	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
-	| ((isInitial?='init')(isFinal?='final')) (type=StateType) name=FullStateID
-	| ((isInitial?='init')(isFinal?='final')) 'state' name=FullStateID
-	| ((isInitial?='init')(isFinal?='final')) (type=StateType)
-	| ((isInitial?='init')(isFinal?='final')) 'state'
-	| ((isInitial?='init')(isFinal?='final')) name=FullStateID
-	| ((isInitial?='init')(isFinal?='final'))
-	
-	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' name=FullStateID
-	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state'
-	| ((isFinal?='final')(isInitial?='init')) (type=StateType) name=FullStateID
-	| ((isFinal?='final')(isInitial?='init')) 'state' name=FullStateID
-	| ((isFinal?='final')(isInitial?='init')) (type=StateType)
-	| ((isFinal?='final')(isInitial?='init')) 'state'
-	| ((isFinal?='final')(isInitial?='init')) name=FullStateID
-	| ((isFinal?='final')(isInitial?='init'))
-	
-	| (isInitial?='init') (type=StateType) 'state' name=FullStateID
-	| (isInitial?='init') (type=StateType) 'state'
-	| (isInitial?='init') (type=StateType) name=FullStateID  
-	| (isInitial?='init') 'state' name=FullStateID
-	| (isInitial?='init') (type=StateType) 
-	| (isInitial?='init') 'state'
-	| (isInitial?='init') name=FullStateID
-	| (isInitial?='init')
-	
-	| (isFinal?='final')  (type=StateType) 'state' name=FullStateID
-	| (isFinal?='final')  (type=StateType) 'state' 
-	| (isFinal?='final')  (type=StateType) name=FullStateID
-	| (isFinal?='final')  'state' name=FullStateID
-	| (isFinal?='final')  (type=StateType)
-	| (isFinal?='final')  'state' name=FullStateID
-	| (isFinal?='final')  name=FullStateID
-	| (isFinal?='final')
-	
-	| (type=StateType) 'state' name=FullStateID
-	| (type=StateType) 'state'
-	| (type=StateType) name=FullStateID
-	| (type=StateType)
-	
-	| 'state' name=FullStateID
-	| 'state'
-		
-	| name=FullStateID
-	) 
-	
-;
- 	//========================================================================================
-	//===  									    VAR,SIG  					               ===
-	//========================================================================================
-ValuedObject:
-	Signal | Variable
-;
-Variable:
-	'var' name=ID 
-	( 
-	  (': ' type=ValueType)//or type only, type being either pre-defined or hostcode
-	| (':=' initialValue=INT ': ' type=ValueType) // either initial value and type 
-	)  
-;
-Signal:
- 	
-		//(isLocal?='local')? this does not make any sense anymore, does it?
-		( (isInputOutput?='inputoutput')
-		| (isInput?='input')
-		| (isOutput?='output')
-		)		
-		name=ID 
-		( 
-		  (': ' type=ValueType) //or type only, type being either pre-defined or hostcode
-		| (': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING))//or combine type only
-		| (':=' initialValue=INT ': ' type=ValueType) // either initial value and type
-		| (':=' initialValue=INT ': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING)) //or initial value and combine type
-		)? 
-;
-	//========================================================================================
-	//===  								 ENUMS, DATATYPES etc      			               ===
-	//========================================================================================
-enum StateType		: NORMAL='state' | PSEUDO='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
-enum CombineOperator: NONE | ADD='+' | MULT='*' | AND='AND'| OR='OR' |HOST='hostCombineOperator';
-enum ValueType		: PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='hostType';	
-enum TransitionType : WEAKABORT='-->' |  STRONGABORT='o->' | NORMALTERMINATION='>->' ;
+//Renaming: // returns sync::SignalRenaming:
+//	oldID=STRING'/'newID=STRING
+//;
+//FullStateID : ((ID'@')?ID);
+//
+//	//========================================================================================
+//	//===  									    ACTIONS  					               ===
+//	//========================================================================================
+//Action:
+//	((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))
+//| 
+//	Transition
+//	
+//;
+//	//========================================================================================
+//	//===  									    REGIONS  					               ===
+//	//========================================================================================
+//Region returns sync::Region :
+//	(	variables+=Variable
+//	|	innerStates+=State
+//	|	signals+=Signal
+//	) +
+//;	
+//
+//	//========================================================================================
+//	//===  									    TRANSITION 					               ===
+//	//========================================================================================
+//	
+//Transition:
+//
+//	//((sourceState=[State|FullStateID]))? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+//	newSourceState=TransitionState
+//	type=TransitionType
+//	(targetState=[sync::State|FullStateID])//|newTargetState=TransitionState )
+//	( 'with' triggersAndEffects=STRING)?
+//	(isHistory?=' history')?
+//	';'
+//;
+//TransitionState:// returns State:
+//	//name=FullStateID
+//	( ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' name=FullStateID
+//	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
+//	| ((isInitial?='init')(isFinal?='final')) (type=StateType) name=FullStateID
+//	| ((isInitial?='init')(isFinal?='final')) 'state' name=FullStateID
+//	| ((isInitial?='init')(isFinal?='final')) (type=StateType)
+//	| ((isInitial?='init')(isFinal?='final')) 'state'
+//	| ((isInitial?='init')(isFinal?='final')) name=FullStateID
+//	| ((isInitial?='init')(isFinal?='final'))
+//	
+//	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' name=FullStateID
+//	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state'
+//	| ((isFinal?='final')(isInitial?='init')) (type=StateType) name=FullStateID
+//	| ((isFinal?='final')(isInitial?='init')) 'state' name=FullStateID
+//	| ((isFinal?='final')(isInitial?='init')) (type=StateType)
+//	| ((isFinal?='final')(isInitial?='init')) 'state'
+//	| ((isFinal?='final')(isInitial?='init')) name=FullStateID
+//	| ((isFinal?='final')(isInitial?='init'))
+//	
+//	| (isInitial?='init') (type=StateType) 'state' name=FullStateID
+//	| (isInitial?='init') (type=StateType) 'state'
+//	| (isInitial?='init') (type=StateType) name=FullStateID  
+//	| (isInitial?='init') 'state' name=FullStateID
+//	| (isInitial?='init') (type=StateType) 
+//	| (isInitial?='init') 'state'
+//	| (isInitial?='init') name=FullStateID
+//	| (isInitial?='init')
+//	
+//	| (isFinal?='final')  (type=StateType) 'state' name=FullStateID
+//	| (isFinal?='final')  (type=StateType) 'state' 
+//	| (isFinal?='final')  (type=StateType) name=FullStateID
+//	| (isFinal?='final')  'state' name=FullStateID
+//	| (isFinal?='final')  (type=StateType)
+//	| (isFinal?='final')  'state' name=FullStateID
+//	| (isFinal?='final')  name=FullStateID
+//	| (isFinal?='final')
+//	
+//	| (type=StateType) 'state' name=FullStateID
+//	| (type=StateType) 'state'
+//	| (type=StateType) name=FullStateID
+//	| (type=StateType)
+//	
+//	| 'state' name=FullStateID
+//	| 'state'
+//		
+//	| name=FullStateID
+//	) 
+//	
+//;
+// 	//========================================================================================
+//	//===  									    VAR,SIG  					               ===
+//	//========================================================================================
+//ValuedObject:
+//	Signal | Variable
+//;
+//Variable:
+//	'var' name=ID 
+//	( 
+//	  (': ' type=ValueType)//or type only, type being either pre-defined or hostcode
+//	| (':=' initialValue=INT ': ' type=ValueType) // either initial value and type 
+//	)  
+//;
+//Signal:
+// 	
+//		//(isLocal?='local')? this does not make any sense anymore, does it?
+//		( (isInputOutput?='inputoutput')
+//		| (isInput?='input')
+//		| (isOutput?='output')
+//		)		
+//		name=ID 
+//		( 
+//		  (': ' type=ValueType) //or type only, type being either pre-defined or hostcode
+//		| (': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING))//or combine type only
+//		| (':=' initialValue=INT ': ' type=ValueType) // either initial value and type
+//		| (':=' initialValue=INT ': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING)) //or initial value and combine type
+//		)? 
+//;
+//	//========================================================================================
+//	//===  								 ENUMS, DATATYPES etc      			               ===
+//	//========================================================================================
+//enum StateType		: NORMAL='state' | PSEUDO='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
+//enum CombineOperator: NONE | ADD='+' | MULT='*' | AND='AND'| OR='OR' |HOST='hostCombineOperator';
+//enum ValueType: PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='hostType';	
+//enum TransitionType : WEAKABORT='-->' |  STRONGABORT='o->' | NORMALTERMINATION='>->' ;

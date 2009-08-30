@@ -40,7 +40,7 @@ public class RetypingSyncchartsParser extends org.eclipse.xtext.parser.antlr.Abs
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "State";
+		return "Region";
 	}
 	
 	public RetypingSyncchartsGrammarAccess getGrammarAccess() {

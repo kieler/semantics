@@ -4,60 +4,53 @@
 package de.cau.cs.kieler.synccharts.dsl.labeling;
 
 import org.eclipse.xtext.ui.core.DefaultLabelProvider;
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Action;
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Region;
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Signal;
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.State;
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.StateType;
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Transition;
-import de.cau.cs.kieler.synccharts.dsl.retypingSynccharts.Variable;
 
 /**
  * see
  * http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
 public class RetypingSyncchartsLabelProvider extends DefaultLabelProvider {
-
-	String image(State s) {
-		String myStateLabelImage = "State.gif";
-		if (s.isIsInitial()) {
-			myStateLabelImage = "InitialState.gif";
-		}
-		if (s.isIsFinal()) {
-			myStateLabelImage = "FinalState.gif";
-		}
-		if (s.getType().equals(StateType.PSEUDO)) {
-			myStateLabelImage = "State.gif";
-		}
-		return myStateLabelImage;
-	}
-
-	 String image(Transition t) {
-		 String transitionLabelImage = "Transition2.gif";
-		 return transitionLabelImage;
-	 }
-	String image(Action a) {
-		String image = "Action.gif";
-		if (a.eContainingFeature().getName() == "suspensionTrigger") {
-			image = "SuspensionSD.gif";
-		}
-		if (a.eContainingFeature().getName() == "entryActions") {
-			image = "EntryAction.gif";
-		}
-		return image;
-	}
-	String image(Region r) {
-		String image = "Region.gif";
-		return image;
-	}
-	String image(Signal r) {
-		String image = "Signal.gif";
-		return image;
-	}
-	String image(Variable v) {
-		String image = "Variable.gif";
-		return image;
-	}
-	
+//
+//	String image(State s) {
+//		String myStateLabelImage = "State.gif";
+//		if (s.isIsInitial()) {
+//			myStateLabelImage = "InitialState.gif";
+//		}
+//		if (s.isIsFinal()) {
+//			myStateLabelImage = "FinalState.gif";
+//		}
+//		if (s.getType().equals(StateType.PSEUDO)) {
+//			myStateLabelImage = "State.gif";
+//		}
+//		return myStateLabelImage;
+//	}
+//
+//	 String image(Transition t) {
+//		 String transitionLabelImage = "Transition.gif";
+//		 return transitionLabelImage;
+//	 }
+//	String image(Action a) {
+//		String image = "Action.gif";
+//		if (a.eContainingFeature().getName() == "suspensionTrigger") {
+//			image = "SuspensionSD.gif";
+//		}
+//		if (a.eContainingFeature().getName() == "entryActions") {
+//			image = "EntryAction.gif";
+//		}
+//		return image;
+//	}
+//	String image(Region r) {
+//		String image = "Region.gif";
+//		return image;
+//	}
+//	String image(Signal r) {
+//		String image = "Signal.gif";
+//		return image;
+//	}
+//	String image(Variable v) {
+//		String image = "Variable.gif";
+//		return image;
+//	}
+//	
 
 }

@@ -1,0 +1,8 @@
+#Sun Aug 30 16:36:01 CEST 2009
+eclipse.preferences.version=1
+gmf_dashboard/domainGenerationModel=platform\:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel
+gmf_dashboard/domainModel=platform\:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore
+gmf_dashboard/generationModel=platform\:/resource/de.cau.cs.kieler.synccharts/model/synccharts.gmfgen
+gmf_dashboard/graphicalDefinitionModel=platform\:/resource/de.cau.cs.kieler.synccharts/model/synccharts.gmfgraph
+gmf_dashboard/mappingModel=platform\:/resource/de.cau.cs.kieler.synccharts/model/synccharts.gmfmap
+gmf_dashboard/toolingDefinitionModel=platform\:/resource/de.cau.cs.kieler.synccharts/model/synccharts.gmftool
