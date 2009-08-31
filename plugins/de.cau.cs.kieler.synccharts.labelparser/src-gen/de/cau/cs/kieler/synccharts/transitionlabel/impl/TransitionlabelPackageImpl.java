@@ -236,16 +236,6 @@ public class TransitionlabelPackageImpl extends EPackageImpl implements Transiti
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getOperation_SubExpression()
-  {
-    return (EReference)operationEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public TransitionlabelFactory getTransitionlabelFactory()
   {
     return (TransitionlabelFactory)getEFactoryInstance();
@@ -285,7 +275,6 @@ public class TransitionlabelPackageImpl extends EPackageImpl implements Transiti
     operationEClass = createEClass(OPERATION);
     createEReference(operationEClass, OPERATION__SUB_EXPRESSIONS);
     createEAttribute(operationEClass, OPERATION__OPERATOR);
-    createEReference(operationEClass, OPERATION__SUB_EXPRESSION);
   }
 
   /**
@@ -343,7 +332,6 @@ public class TransitionlabelPackageImpl extends EPackageImpl implements Transiti
     initEClass(operationEClass, Operation.class, "Operation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getOperation_SubExpressions(), theSyncchartsPackage.getExpression(), null, "subExpressions", null, 0, -1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getOperation_Operator(), theSyncchartsPackage.getOperatorType(), "operator", null, 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getOperation_SubExpression(), theSyncchartsPackage.getExpression(), null, "subExpression", null, 0, -1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

@@ -7,40 +7,37 @@ import "http://kieler.cs.cau.de/synccharts" as synccharts
 //import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
 //import "synccharts" as synchcharts
 
-//dummy rule to test the language in an editor
-//Model : 
-//	((signals+=Signal | variables+=Variable))* (actions+=Action ";")*;
+//==============================================================================
+// Basic Actions
+//==============================================================================
 
 Action returns synccharts::Action:
-	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
-	isImmediate?='#' (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect)*)?;// (";" parentStateEntryAction=[synccharts::State]? ";" parentStateExitAction=[synccharts::State]? ";" parentStateInnerAction=[synccharts::State]?)? ; 		
-
-// dummy rule that will never be parsed. However, the serializer might get
-// a transition instead of an action and needs to know how to serialize it
-// here we define, that the textual representation will only hold the elements
-// of an action. This is only meaningful for the graphical editor. If you need
-// a proper textual representation of a Transition, you should override this 
-// rule!
-//Transition returns synccharts::Transition:
-//	Action;
+	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?; 		
 
 Effect returns synccharts::Effect: 
 	Emission | Assignment | HostCode;
 		
 Emission returns synccharts::Emission:
-	signal=[synccharts::Signal] ("(" newValue=PrimaryExpression ")")?;
+	signal=[synccharts::Signal] ("(" newValue=ValueExpression ")")?;
 
 Assignment returns synccharts::Assignment:
-	variable=[synccharts::Variable] ":=" expression=PrimaryExpression;
+	variable=[synccharts::Variable] ":=" expression=ValueExpression;
 
 SignalReference returns synccharts::SignalReference:
 	signal = [synccharts::Signal];
 
-//SignalReference :
-//	signal = [Signal];
-	
 VariableReference returns synccharts::VariableReference:
 	variable = [synccharts::Variable];
+
+Signal returns synccharts::Signal:
+	name=ID;
+	
+Variable returns synccharts::Variable:
+	name=ID;
+
+//==============================================================================
+// Values
+//==============================================================================
 
 IntValue: 
 	value=INT;
@@ -51,49 +48,54 @@ BooleanValue:
 Value:
 	IntValue | FloatValue | BooleanValue;
 
-//Signal:
-//	"signal" name = ID;
-	
-//Variable:
-//	"variable" name = ID;
-
 // make sure the Float rule does not shadow the built-in INT rule
 terminal Float returns ecore::EDouble : ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
 terminal Boolean returns ecore::EBoolean : "true" | "false";
 
-HostCode returns synccharts::HostCode:
-	//"'"code=STRING"'";
-	//("(" type=ID ")")? 
-	code=STRING; 	
-	
+//==============================================================================
+// Expressions
+//==============================================================================
+
+// Example: ?A	
 ValOperation returns synccharts::ComplexExpression:
 	operator=ValOperator subExpressions+=SignalReference;
 
+// Example: 42, ?A, var1
 ValueExpression returns synccharts::Expression:
 	IntValue | FloatValue | ValOperation | VariableReference;
 
+// Example: 42 <= ?A
 CompareOperation returns synccharts::Expression:
 	ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
 
+// Example: not A, not false, not (A or B)
+// at the latter we need the parans to indicate the right binding
 NotOperation returns synccharts::ComplexExpression:
-	operator=NotOperator subExpressions+=BooleanExpression;
+	operator=NotOperator subExpressions+=ParanthesedBooleanExpression;
 
+// Example: either negated or normal expression (with parantheses) 
 NotOrNormalExpression returns synccharts::Expression:
-	NotOperation | BooleanExpression;
+	NotOperation | ParanthesedBooleanExpression;
 
+// Example: A and B, not C and 42 <= ?D
 AndOperation returns synccharts::Expression:
-	NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd subExpression+=NotOrNormalExpression)*;
+	NotOrNormalExpression ({Operation.subExpressions+=current} operator=OperatorAnd subExpressions+=NotOrNormalExpression)*;
 
+// Example: A or B, C and B or D and not E 
 OrOperation returns synccharts::Expression:
 	AndOperation ({Operation.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
 
-// TODO: get rid of parentheses
-BooleanExpression returns synccharts::Expression:
-	BooleanValue | SignalReference | CompareOperation | "("OrOperation")" ;
+// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+ParanthesedBooleanExpression returns synccharts::Expression:
+    BooleanValue | SignalReference | CompareOperation | '('OrOperation')' ;
 
-PrimaryExpression returns synccharts::Expression:
-	//ValueExpression | BooleanExpression;
-	BooleanExpression;
+// Example: not D and C or ?E = 42 or not (A and (B or C))
+BooleanExpression returns synccharts::Expression:
+	OrOperation ;
+
+//==============================================================================
+// Operators
+//==============================================================================
 	
 enum OperatorType returns synccharts::OperatorType:
 	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre";
@@ -112,3 +114,12 @@ enum OperatorOr returns synccharts::OperatorType:
 
 enum OperatorAnd returns synccharts::OperatorType:
 	AND="and";
+
+//==============================================================================
+// Misc
+//==============================================================================
+	
+HostCode returns synccharts::HostCode:
+	//"'"code=STRING"'";
+	code=STRING ("(" type=ID ")")?; 	
+	

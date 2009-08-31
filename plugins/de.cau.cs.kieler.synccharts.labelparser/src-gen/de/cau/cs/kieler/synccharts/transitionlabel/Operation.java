@@ -20,7 +20,6 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.Operation#getSubExpressions <em>Sub Expressions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.Operation#getOperator <em>Operator</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.Operation#getSubExpression <em>Sub Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -74,21 +73,5 @@ public interface Operation extends Expression
    * @generated
    */
   void setOperator(OperatorType value);
-
-  /**
-   * Returns the value of the '<em><b>Sub Expression</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.synccharts.Expression}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Sub Expression</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Sub Expression</em>' containment reference list.
-   * @see de.cau.cs.kieler.synccharts.transitionlabel.TransitionlabelPackage#getOperation_SubExpression()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Expression> getSubExpression();
 
 } // Operation

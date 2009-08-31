@@ -17,7 +17,5 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="subExpressions" upperBound="-1"
         eType="ecore:EClass http://kieler.cs.cau.de/synccharts#//Expression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="ecore:EEnum http://kieler.cs.cau.de/synccharts#//OperatorType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subExpression" upperBound="-1"
-        eType="ecore:EClass http://kieler.cs.cau.de/synccharts#//Expression" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

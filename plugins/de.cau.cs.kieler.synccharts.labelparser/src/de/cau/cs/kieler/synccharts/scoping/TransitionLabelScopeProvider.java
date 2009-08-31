@@ -16,6 +16,7 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 
 import com.google.inject.Scope;
 
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Variable;
@@ -23,115 +24,155 @@ import de.cau.cs.kieler.synccharts.Variable;
 /**
  * This class contains custom scoping description.
  * 
- * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping
- * on how and when to use it 
- *
+ * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping on
+ * how and when to use it
+ * 
  */
-public class TransitionLabelScopeProvider extends AbstractDeclarativeScopeProvider {
-    
-    public static State parent;
-    
-    /* (non-Javadoc)
-     * @see org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider#getScope(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EClass)
+public class TransitionLabelScopeProvider extends
+        AbstractDeclarativeScopeProvider {
+
+    public static EObject parent;
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider#getScope
+     * (org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EClass)
      */
     @Override
     public IScope getScope(EObject context, EClass type) {
-        if(parent != null)
+        if (parent != null)
             return new ExternalScope(parent);
         return super.getScope(context, type);
     }
-    
-    /* (non-Javadoc)
-     * @see org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider#getScope(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference)
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider#getScope
+     * (org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference)
      */
     @Override
     public IScope getScope(EObject context, EReference reference) {
-        if(parent != null)
+        if (parent != null)
             return new ExternalScope(parent);
         return super.getScope(context, reference);
     }
-    
-    class ExternalScope implements IScope{
-        
-        State parentState;
+
+    class ExternalScope implements IScope {
+
+        EObject parent;
         List<IScopedElement> scopedElements;
-        
-        public ExternalScope(State parentState) {
-            this.parentState = parentState; 
+
+        public ExternalScope(EObject parent) {
+            this.parent = parent;
             this.scopedElements = new ArrayList<IScopedElement>();
             // State scopedState = parentState;
-           // while(scopedState != null){
-                List<Signal> signals = parentState.getSignals();
+            // while(scopedState != null){
+            if (this.parent != null && this.parent instanceof Region) {
+                List<Signal> signals = ((Region) parent).getSignals();
                 for (Signal signal : signals) {
-                    scopedElements.add(new ExternalScopedElement(signal, signal.getName()));
+                    scopedElements.add(new ExternalScopedElement(signal, signal
+                            .getName()));
                 }
-                List<Variable> variables = parentState.getVariables();
+                List<Variable> variables = ((Region) parent).getVariables();
                 for (Variable variable : variables) {
-                    scopedElements.add(new ExternalScopedElement(variable, variable.getName()));
+                    scopedElements.add(new ExternalScopedElement(variable,
+                            variable.getName()));
                 }
-            //    if(scopedState.getParentRegion() != null)
-            //        scopedState = scopedState.getParentRegion().getParentState();
-           // }
+            } else if (this.parent != null && this.parent instanceof State) {
+                    List<Signal> signals = ((State)parent).getSignals();
+                    for (Signal signal : signals) {
+                        scopedElements.add(new ExternalScopedElement(signal,
+                                signal.getName()));
+                    }
+            }
+            // if(scopedState.getParentRegion() != null)
+            // scopedState = scopedState.getParentRegion().getParentState();
+            // }
         }
-        
-        /* (non-Javadoc)
+
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.eclipse.xtext.scoping.IScope#getAllContents()
          */
         public Iterable<IScopedElement> getAllContents() {
             List<IScopedElement> elements = new ArrayList<IScopedElement>();
-            elements.addAll(elements);
+            elements.addAll(scopedElements);
             IScope outerScope = this.getOuterScope();
-            elements.addAll((Collection<? extends IScopedElement>) outerScope.getContents());
+            elements.addAll((Collection<? extends IScopedElement>) outerScope
+                    .getContents());
             return elements;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.eclipse.xtext.scoping.IScope#getContents()
          */
         public Iterable<IScopedElement> getContents() {
-             return scopedElements;
+            return scopedElements;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.eclipse.xtext.scoping.IScope#getOuterScope()
          */
         public IScope getOuterScope() {
-            if(parentState.getParentRegion() != null && parentState.getParentRegion().getParentState() != null)
-                return new ExternalScope(parentState.getParentRegion().getParentState());
+            if(parent instanceof Region){            
+                if (((Region) parent).getParentState() != null)
+                    return new ExternalScope(((Region) parent).getParentState());
+            }
+                else
+                    if(parent instanceof State){            
+                        if (((Signal) parent).getParentRegion() != null)
+                            return new ExternalScope(((Signal) parent).getParentRegion());
+                    }
             return IScope.NULLSCOPE;
         }
-        
-        class ExternalScopedElement implements IScopedElement{
+
+        class ExternalScopedElement implements IScopedElement {
 
             EObject object;
             String name;
-            
+
             public ExternalScopedElement(EObject o, String n) {
                 object = o;
                 name = n;
             }
-            
-            /* (non-Javadoc)
-             * @see org.eclipse.xtext.scoping.IScopedElement#additionalInformation()
+
+            /*
+             * (non-Javadoc)
+             * 
+             * @see
+             * org.eclipse.xtext.scoping.IScopedElement#additionalInformation()
              */
             public Object additionalInformation() {
                 return null;
             }
 
-            /* (non-Javadoc)
+            /*
+             * (non-Javadoc)
+             * 
              * @see org.eclipse.xtext.scoping.IScopedElement#element()
              */
             public EObject element() {
                 return object;
             }
 
-            /* (non-Javadoc)
+            /*
+             * (non-Javadoc)
+             * 
              * @see org.eclipse.xtext.scoping.IScopedElement#name()
              */
             public String name() {
                 return name;
             }
-            
+
         }
     }
 }

@@ -28,38 +28,31 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final RuleCall cTriggerBooleanExpressionParserRuleCall_2_0 = (RuleCall)cTriggerAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cSolidusKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_3_1_0 = (RuleCall)cEffectsAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
+		private final Assignment cEffectsAssignment_3_1_0 = (Assignment)cGroup_3_1.eContents().get(0);
+		private final RuleCall cEffectsEffectParserRuleCall_3_1_0_0 = (RuleCall)cEffectsAssignment_3_1_0.eContents().get(0);
+		private final Keyword cCommaKeyword_3_1_1 = (Keyword)cGroup_3_1.eContents().get(1);
 		
 		//Action returns synccharts::Action:
-		//  isImmediate?="#" delay=INT? trigger=BooleanExpression? ("/" effects+=Effect*)?; 
+		//  isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)
+		//  ?; 
 		////import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
 		////import "synccharts" as synchcharts
 		//
 		////dummy rule to test the language in an editor
 		////Model : 
-		////	((signals+=Signal | variables+=Variable))* (actions+=Action ";")*;
+		////	((("sig" signals+=Signal) | ("var" variables+=Variable)))* ';' (actions+=Action ";")*;
 		//
-		//    
-		//	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
-		//	         // (";" parentStateEntryAction=[synccharts::State]? ";" parentStateExitAction=[synccharts::State]? ";" parentStateInnerAction=[synccharts::State]?)? ; 		
-		//
-		//// dummy rule that will never be parsed. However, the serializer might get
-		//// a transition instead of an action and needs to know how to serialize it
-		//// here we define, that the textual representation will only hold the elements
-		//// of an action. This is only meaningful for the graphical editor. If you need
-		//// a proper textual representation of a Transition, you should override this 
-		//// rule!
-		////Transition returns synccharts::Transition:
-		////	Action;
+		////==============================================================================
+		//// Basic Actions
+		////==============================================================================
 		public ParserRule getRule() { return rule; }
 
-		//isImmediate?="#" delay=INT? trigger=BooleanExpression? ("/" effects+=Effect*)? 
-		//	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
+		//isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)
+		//?
 		public Group getGroup() { return cGroup; }
 
-		//isImmediate?="#" 
-		//	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
+		//isImmediate?="#"?
 		public Assignment getIsImmediateAssignment_0() { return cIsImmediateAssignment_0; }
 
 		//"#"
@@ -77,17 +70,23 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//BooleanExpression
 		public RuleCall getTriggerBooleanExpressionParserRuleCall_2_0() { return cTriggerBooleanExpressionParserRuleCall_2_0; }
 
-		//("/" effects+=Effect*)?
+		//("/" (effects+=Effect ","?)*)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//"/"
 		public Keyword getSolidusKeyword_3_0() { return cSolidusKeyword_3_0; }
 
-		//effects+=Effect*
-		public Assignment getEffectsAssignment_3_1() { return cEffectsAssignment_3_1; }
+		//(effects+=Effect ","?)*
+		public Group getGroup_3_1() { return cGroup_3_1; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_3_1_0() { return cEffectsAssignment_3_1_0; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_3_1_0() { return cEffectsEffectParserRuleCall_3_1_0; }
+		public RuleCall getEffectsEffectParserRuleCall_3_1_0_0() { return cEffectsEffectParserRuleCall_3_1_0_0; }
+
+		//","?
+		public Keyword getCommaKeyword_3_1_1() { return cCommaKeyword_3_1_1; }
 	}
 
 	public class EffectElements implements IParserRuleAccess {
@@ -98,28 +97,10 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final RuleCall cHostCodeParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//Effect returns synccharts::Effect:
-		//  Emission|Assignment|HostCode; // (";" parentStateEntryAction=[synccharts::State]? ";" parentStateExitAction=[synccharts::State]? ";" parentStateInnerAction=[synccharts::State]?)? ; 		
-		//
-		//// dummy rule that will never be parsed. However, the serializer might get
-		//// a transition instead of an action and needs to know how to serialize it
-		//// here we define, that the textual representation will only hold the elements
-		//// of an action. This is only meaningful for the graphical editor. If you need
-		//// a proper textual representation of a Transition, you should override this 
-		//// rule!
-		////Transition returns synccharts::Transition:
-		////	Action;
+		//  Emission|Assignment|HostCode;
 		public ParserRule getRule() { return rule; }
 
-		//Emission|Assignment|HostCode // (";" parentStateEntryAction=[synccharts::State]? ";" parentStateExitAction=[synccharts::State]? ";" parentStateInnerAction=[synccharts::State]?)? ; 		
-		//
-		//// dummy rule that will never be parsed. However, the serializer might get
-		//// a transition instead of an action and needs to know how to serialize it
-		//// here we define, that the textual representation will only hold the elements
-		//// of an action. This is only meaningful for the graphical editor. If you need
-		//// a proper textual representation of a Transition, you should override this 
-		//// rule!
-		////Transition returns synccharts::Transition:
-		////	Action;
+		//Emission|Assignment|HostCode
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Emission
@@ -141,14 +122,14 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cNewValueAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cNewValuePrimaryExpressionParserRuleCall_1_1_0 = (RuleCall)cNewValueAssignment_1_1.eContents().get(0);
+		private final RuleCall cNewValueValueExpressionParserRuleCall_1_1_0 = (RuleCall)cNewValueAssignment_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//Emission returns synccharts::Emission:
-		//  signal=[synccharts::Signal] ("(" newValue=PrimaryExpression ")")?;
+		//  signal=[synccharts::Signal] ("(" newValue=ValueExpression ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//signal=[synccharts::Signal] ("(" newValue=PrimaryExpression ")")?
+		//signal=[synccharts::Signal] ("(" newValue=ValueExpression ")")?
 		public Group getGroup() { return cGroup; }
 
 		//signal=[synccharts::Signal]
@@ -160,17 +141,17 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//ID
 		public RuleCall getSignalSignalIDTerminalRuleCall_0_0_1() { return cSignalSignalIDTerminalRuleCall_0_0_1; }
 
-		//("(" newValue=PrimaryExpression ")")?
+		//("(" newValue=ValueExpression ")")?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
 
-		//newValue=PrimaryExpression
+		//newValue=ValueExpression
 		public Assignment getNewValueAssignment_1_1() { return cNewValueAssignment_1_1; }
 
-		//PrimaryExpression
-		public RuleCall getNewValuePrimaryExpressionParserRuleCall_1_1_0() { return cNewValuePrimaryExpressionParserRuleCall_1_1_0; }
+		//ValueExpression
+		public RuleCall getNewValueValueExpressionParserRuleCall_1_1_0() { return cNewValueValueExpressionParserRuleCall_1_1_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
@@ -184,13 +165,13 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final RuleCall cVariableVariableIDTerminalRuleCall_0_0_1 = (RuleCall)cVariableVariableCrossReference_0_0.eContents().get(1);
 		private final Keyword cColonEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cExpressionPrimaryExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
+		private final RuleCall cExpressionValueExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
 		
 		//Assignment returns synccharts::Assignment:
-		//  variable=[synccharts::Variable] ":=" expression=PrimaryExpression;
+		//  variable=[synccharts::Variable] ":=" expression=ValueExpression;
 		public ParserRule getRule() { return rule; }
 
-		//variable=[synccharts::Variable] ":=" expression=PrimaryExpression
+		//variable=[synccharts::Variable] ":=" expression=ValueExpression
 		public Group getGroup() { return cGroup; }
 
 		//variable=[synccharts::Variable]
@@ -205,11 +186,11 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//":="
 		public Keyword getColonEqualsSignKeyword_1() { return cColonEqualsSignKeyword_1; }
 
-		//expression=PrimaryExpression
+		//expression=ValueExpression
 		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
 
-		//PrimaryExpression
-		public RuleCall getExpressionPrimaryExpressionParserRuleCall_2_0() { return cExpressionPrimaryExpressionParserRuleCall_2_0; }
+		//ValueExpression
+		public RuleCall getExpressionValueExpressionParserRuleCall_2_0() { return cExpressionValueExpressionParserRuleCall_2_0; }
 	}
 
 	public class SignalReferenceElements implements IParserRuleAccess {
@@ -219,13 +200,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final RuleCall cSignalSignalIDTerminalRuleCall_0_1 = (RuleCall)cSignalSignalCrossReference_0.eContents().get(1);
 		
 		//SignalReference returns synccharts::SignalReference:
-		//  signal=[synccharts::Signal]; 
-		//
-		//    
-		//	    
-		//
-		////SignalReference :
-		////	signal = [Signal];
+		//  signal=[synccharts::Signal];
 		public ParserRule getRule() { return rule; }
 
 		//signal=[synccharts::Signal]
@@ -245,10 +220,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final RuleCall cVariableVariableIDTerminalRuleCall_0_1 = (RuleCall)cVariableVariableCrossReference_0.eContents().get(1);
 		
 		//VariableReference returns synccharts::VariableReference:
-		//  variable=[synccharts::Variable]; 
-		//
-		////SignalReference :
-		////	signal = [Signal];
+		//  variable=[synccharts::Variable];
 		public ParserRule getRule() { return rule; }
 
 		//variable=[synccharts::Variable]
@@ -261,13 +233,56 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		public RuleCall getVariableVariableIDTerminalRuleCall_0_1() { return cVariableVariableIDTerminalRuleCall_0_1; }
 	}
 
+	public class SignalElements implements IParserRuleAccess {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
+		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
+		
+		//Signal returns synccharts::Signal:
+		//  name=ID;
+		public ParserRule getRule() { return rule; }
+
+		//name=ID
+		public Assignment getNameAssignment() { return cNameAssignment; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_0() { return cNameIDTerminalRuleCall_0; }
+	}
+
+	public class VariableElements implements IParserRuleAccess {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Variable");
+		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
+		
+		//Variable returns synccharts::Variable:
+		//  name=ID; 
+		//	
+		//    
+		//	
+		//
+		////==============================================================================
+		//// Values
+		////==============================================================================
+		public ParserRule getRule() { return rule; }
+
+		//name=ID
+		public Assignment getNameAssignment() { return cNameAssignment; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_0() { return cNameIDTerminalRuleCall_0; }
+	}
+
 	public class IntValueElements implements IParserRuleAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IntValue");
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueINTTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
 		//IntValue:
-		//  value=INT;
+		//  value=INT; 
+		//
+		////==============================================================================
+		//// Values
+		////==============================================================================
 		public ParserRule getRule() { return rule; }
 
 		//value=INT
@@ -321,24 +336,12 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//
 		//	        
 		//
-		////Signal:
-		////	"signal" name = ID;
-		//	
-		////Variable:
-		////	"variable" name = ID;
-		//
 		//// make sure the Float rule does not shadow the built-in INT rule
 		public ParserRule getRule() { return rule; }
 
 		//IntValue|FloatValue|BooleanValue 
 		//
 		//	        
-		//
-		////Signal:
-		////	"signal" name = ID;
-		//	
-		////Variable:
-		////	"variable" name = ID;
 		//
 		//// make sure the Float rule does not shadow the built-in INT rule
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -353,28 +356,6 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		public RuleCall getBooleanValueParserRuleCall_2() { return cBooleanValueParserRuleCall_2; }
 	}
 
-	public class HostCodeElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "HostCode");
-		private final Assignment cCodeAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cCodeSTRINGTerminalRuleCall_0 = (RuleCall)cCodeAssignment.eContents().get(0);
-		
-		//HostCode returns synccharts::HostCode:
-		//  code=STRING; 
-		//
-		//    
-		//	//"'"code=STRING"'";
-		//	 //("(" type=ID ")")?
-		public ParserRule getRule() { return rule; }
-
-		//code=STRING 
-		//	//"'"code=STRING"'";
-		//	 //("(" type=ID ")")?
-		public Assignment getCodeAssignment() { return cCodeAssignment; }
-
-		//STRING
-		public RuleCall getCodeSTRINGTerminalRuleCall_0() { return cCodeSTRINGTerminalRuleCall_0; }
-	}
-
 	public class ValOperationElements implements IParserRuleAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValOperation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -384,7 +365,17 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final RuleCall cSubExpressionsSignalReferenceParserRuleCall_1_0 = (RuleCall)cSubExpressionsAssignment_1.eContents().get(0);
 		
 		//ValOperation returns synccharts::ComplexExpression:
-		//  operator=ValOperator subExpressions+=SignalReference;
+		//  operator=ValOperator subExpressions+=SignalReference; 
+		//
+		////==============================================================================
+		//// Expressions
+		////==============================================================================
+		//
+		//// Example: ?A	
+		//    
+		//	  
+		//
+		//// Example: 42, ?A, var1
 		public ParserRule getRule() { return rule; }
 
 		//operator=ValOperator subExpressions+=SignalReference
@@ -412,10 +403,22 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final RuleCall cVariableReferenceParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//ValueExpression returns synccharts::Expression:
-		//  IntValue|FloatValue|ValOperation|VariableReference;
+		//  IntValue|FloatValue|ValOperation|VariableReference; 
+		//
+		//// Example: 42, ?A, var1
+		//    
+		//	            
+		//
+		//// Example: 42 <= ?A
 		public ParserRule getRule() { return rule; }
 
-		//IntValue|FloatValue|ValOperation|VariableReference
+		//IntValue|FloatValue|ValOperation|VariableReference 
+		//
+		//// Example: 42, ?A, var1
+		//    
+		//	            
+		//
+		//// Example: 42 <= ?A
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//IntValue
@@ -444,7 +447,14 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		
 		//CompareOperation returns synccharts::Expression:
 		//  ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator
-		//  subExpressions+=ValueExpression);
+		//  subExpressions+=ValueExpression); 
+		//
+		//// Example: 42 <= ?A
+		//    
+		//	        	
+		//
+		//// Example: not A, not false, not (A or B)
+		//// at the latter we need the parans to indicate the right binding
 		public ParserRule getRule() { return rule; }
 
 		//ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator
@@ -480,13 +490,20 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final Assignment cOperatorAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cOperatorNotOperatorEnumRuleCall_0_0 = (RuleCall)cOperatorAssignment_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cSubExpressionsBooleanExpressionParserRuleCall_1_0 = (RuleCall)cSubExpressionsAssignment_1.eContents().get(0);
+		private final RuleCall cSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0 = (RuleCall)cSubExpressionsAssignment_1.eContents().get(0);
 		
 		//NotOperation returns synccharts::ComplexExpression:
-		//  operator=NotOperator subExpressions+=BooleanExpression;
+		//  operator=NotOperator subExpressions+=ParanthesedBooleanExpression;   	
+		//
+		//// Example: not A, not false, not (A or B)
+		//// at the latter we need the parans to indicate the right binding
+		//    
+		//	  
+		//
+		//// Example: either negated or normal expression (with parantheses)
 		public ParserRule getRule() { return rule; }
 
-		//operator=NotOperator subExpressions+=BooleanExpression
+		//operator=NotOperator subExpressions+=ParanthesedBooleanExpression
 		public Group getGroup() { return cGroup; }
 
 		//operator=NotOperator
@@ -495,31 +512,43 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//NotOperator
 		public RuleCall getOperatorNotOperatorEnumRuleCall_0_0() { return cOperatorNotOperatorEnumRuleCall_0_0; }
 
-		//subExpressions+=BooleanExpression
+		//subExpressions+=ParanthesedBooleanExpression
 		public Assignment getSubExpressionsAssignment_1() { return cSubExpressionsAssignment_1; }
 
-		//BooleanExpression
-		public RuleCall getSubExpressionsBooleanExpressionParserRuleCall_1_0() { return cSubExpressionsBooleanExpressionParserRuleCall_1_0; }
+		//ParanthesedBooleanExpression
+		public RuleCall getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0() { return cSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0; }
 	}
 
 	public class NotOrNormalExpressionElements implements IParserRuleAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "NotOrNormalExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cNotOperationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cBooleanExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cParanthesedBooleanExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//NotOrNormalExpression returns synccharts::Expression:
-		//  NotOperation|BooleanExpression;
+		//  NotOperation|ParanthesedBooleanExpression; 
+		//
+		//// Example: either negated or normal expression (with parantheses) 
+		//    
+		//	    
+		//
+		//// Example: A and B, not C and 42 <= ?D
 		public ParserRule getRule() { return rule; }
 
-		//NotOperation|BooleanExpression
+		//NotOperation|ParanthesedBooleanExpression 
+		//
+		//// Example: either negated or normal expression (with parantheses) 
+		//    
+		//	    
+		//
+		//// Example: A and B, not C and 42 <= ?D
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//NotOperation
 		public RuleCall getNotOperationParserRuleCall_0() { return cNotOperationParserRuleCall_0; }
 
-		//BooleanExpression
-		public RuleCall getBooleanExpressionParserRuleCall_1() { return cBooleanExpressionParserRuleCall_1; }
+		//ParanthesedBooleanExpression
+		public RuleCall getParanthesedBooleanExpressionParserRuleCall_1() { return cParanthesedBooleanExpressionParserRuleCall_1; }
 	}
 
 	public class AndOperationElements implements IParserRuleAccess {
@@ -527,30 +556,36 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cNotOrNormalExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cOperationSubExpressionAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Action cOperationSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cOperatorOperatorAndEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionNotOrNormalExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionAssignment_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsNotOrNormalExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
 		//AndOperation returns synccharts::Expression:
-		//  NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd
-		//  subExpression+=NotOrNormalExpression)*;
+		//  NotOrNormalExpression ({Operation.subExpressions+=current} operator=OperatorAnd
+		//  subExpressions+=NotOrNormalExpression)*; 
+		//
+		//// Example: A and B, not C and 42 <= ?D
+		//    
+		//	      
+		//
+		//// Example: A or B, C and B or D and not E
 		public ParserRule getRule() { return rule; }
 
-		//NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd
-		//subExpression+=NotOrNormalExpression)*
+		//NotOrNormalExpression ({Operation.subExpressions+=current} operator=OperatorAnd
+		//subExpressions+=NotOrNormalExpression)*
 		public Group getGroup() { return cGroup; }
 
 		//NotOrNormalExpression
 		public RuleCall getNotOrNormalExpressionParserRuleCall_0() { return cNotOrNormalExpressionParserRuleCall_0; }
 
-		//({Operation.subExpression+=current} operator=OperatorAnd subExpression+=
+		//({Operation.subExpressions+=current} operator=OperatorAnd subExpressions+=
 		//NotOrNormalExpression)*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{Operation.subExpression+=current}
-		public Action getOperationSubExpressionAction_1_0() { return cOperationSubExpressionAction_1_0; }
+		//{Operation.subExpressions+=current}
+		public Action getOperationSubExpressionsAction_1_0() { return cOperationSubExpressionsAction_1_0; }
 
 		//operator=OperatorAnd
 		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
@@ -558,11 +593,11 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//OperatorAnd
 		public RuleCall getOperatorOperatorAndEnumRuleCall_1_1_0() { return cOperatorOperatorAndEnumRuleCall_1_1_0; }
 
-		//subExpression+=NotOrNormalExpression
-		public Assignment getSubExpressionAssignment_1_2() { return cSubExpressionAssignment_1_2; }
+		//subExpressions+=NotOrNormalExpression
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
 
 		//NotOrNormalExpression
-		public RuleCall getSubExpressionNotOrNormalExpressionParserRuleCall_1_2_0() { return cSubExpressionNotOrNormalExpressionParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsNotOrNormalExpressionParserRuleCall_1_2_0() { return cSubExpressionsNotOrNormalExpressionParserRuleCall_1_2_0; }
 	}
 
 	public class OrOperationElements implements IParserRuleAccess {
@@ -580,10 +615,11 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//  AndOperation ({Operation.subExpressions+=current} operator=OperatorOr
 		//  subExpressions+=AndOperation)*; 
 		//
+		//// Example: A or B, C and B or D and not E 
 		//    
 		//	      
 		//
-		//// TODO: get rid of parentheses
+		//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
 		public ParserRule getRule() { return rule; }
 
 		//AndOperation ({Operation.subExpressions+=current} operator=OperatorOr
@@ -613,8 +649,8 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		public RuleCall getSubExpressionsAndOperationParserRuleCall_1_2_0() { return cSubExpressionsAndOperationParserRuleCall_1_2_0; }
 	}
 
-	public class BooleanExpressionElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanExpression");
+	public class ParanthesedBooleanExpressionElements implements IParserRuleAccess {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ParanthesedBooleanExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cBooleanValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cSignalReferenceParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
@@ -624,15 +660,23 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final RuleCall cOrOperationParserRuleCall_3_1 = (RuleCall)cGroup_3.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
-		//BooleanExpression returns synccharts::Expression:
+		//ParanthesedBooleanExpression returns synccharts::Expression:
 		//  BooleanValue|SignalReference|CompareOperation|"(" OrOperation ")"; 
 		//
-		//// TODO: get rid of parentheses
+		//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+		//    
+		//                  
+		//
+		//// Example: not D and C or ?E = 42 or not (A and (B or C))
 		public ParserRule getRule() { return rule; }
 
 		//BooleanValue|SignalReference|CompareOperation|"(" OrOperation ")" 
 		//
-		//// TODO: get rid of parentheses
+		//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+		//    
+		//                  
+		//
+		//// Example: not D and C or ?E = 42 or not (A and (B or C))
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//BooleanValue
@@ -657,20 +701,73 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
 	}
 
-	public class PrimaryExpressionElements implements IParserRuleAccess {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PrimaryExpression");
-		private final RuleCall cBooleanExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
+	public class BooleanExpressionElements implements IParserRuleAccess {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanExpression");
+		private final RuleCall cOrOperationParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//PrimaryExpression returns synccharts::Expression:
-		//  BooleanExpression; 
+		//BooleanExpression returns synccharts::Expression:
+		//  OrOperation; 
 		//
+		//// Example: not D and C or ?E = 42 or not (A and (B or C))
 		//    
-		//	//ValueExpression | BooleanExpression;
+		//	  
+		//
+		////==============================================================================
+		//// Operators
+		////==============================================================================
 		public ParserRule getRule() { return rule; }
 
-		//BooleanExpression 
-		//	//ValueExpression | BooleanExpression;
-		public RuleCall getBooleanExpressionParserRuleCall() { return cBooleanExpressionParserRuleCall; }
+		//OrOperation
+		public RuleCall getOrOperationParserRuleCall() { return cOrOperationParserRuleCall; }
+	}
+
+	public class HostCodeElements implements IParserRuleAccess {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "HostCode");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cCodeAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cCodeSTRINGTerminalRuleCall_0_0 = (RuleCall)cCodeAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cTypeIDTerminalRuleCall_1_1_0 = (RuleCall)cTypeAssignment_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		
+		//HostCode returns synccharts::HostCode:
+		//  code=STRING ("(" type=ID ")")?; 
+		//
+		////==============================================================================
+		//// Misc
+		////==============================================================================
+		//	
+		//    
+		//	//"'"code=STRING"'";
+		public ParserRule getRule() { return rule; }
+
+		//code=STRING ("(" type=ID ")")? 
+		//	//"'"code=STRING"'";
+		public Group getGroup() { return cGroup; }
+
+		//code=STRING 
+		//	//"'"code=STRING"'";
+		public Assignment getCodeAssignment_0() { return cCodeAssignment_0; }
+
+		//STRING
+		public RuleCall getCodeSTRINGTerminalRuleCall_0_0() { return cCodeSTRINGTerminalRuleCall_0_0; }
+
+		//("(" type=ID ")")?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+
+		//type=ID
+		public Assignment getTypeAssignment_1_1() { return cTypeAssignment_1_1; }
+
+		//ID
+		public RuleCall getTypeIDTerminalRuleCall_1_1_0() { return cTypeIDTerminalRuleCall_1_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
 	}
 	
 	
@@ -710,11 +807,19 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		
 		//enum OperatorType returns synccharts::OperatorType:
 		//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | AND="and" | OR="or" | ADD="+" | SUB=
-		//  "-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre";
+		//  "-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre"; 
+		//
+		////==============================================================================
+		//// Operators
+		////==============================================================================
 		public EnumRule getRule() { return rule; }
 
 		//EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | AND="and" | OR="or" | ADD="+" | SUB=
-		//"-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre"
+		//"-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre" 
+		//
+		////==============================================================================
+		//// Operators
+		////==============================================================================
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//EQ="="
@@ -914,7 +1019,14 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final Keyword cANDAndKeyword_0 = (Keyword)cANDEnumLiteralDeclaration.eContents().get(0);
 		
 		//enum OperatorAnd returns synccharts::OperatorType:
-		//  AND="and";
+		//  AND="and"; 
+		//
+		//      
+		//	
+		//
+		////==============================================================================
+		//// Misc
+		////==============================================================================
 		public EnumRule getRule() { return rule; }
 
 		//AND="and"
@@ -930,13 +1042,14 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	private AssignmentElements pAssignment;
 	private SignalReferenceElements pSignalReference;
 	private VariableReferenceElements pVariableReference;
+	private SignalElements pSignal;
+	private VariableElements pVariable;
 	private IntValueElements pIntValue;
 	private FloatValueElements pFloatValue;
 	private BooleanValueElements pBooleanValue;
 	private ValueElements pValue;
 	private TerminalRule tFloat;
 	private TerminalRule tBoolean;
-	private HostCodeElements pHostCode;
 	private ValOperationElements pValOperation;
 	private ValueExpressionElements pValueExpression;
 	private CompareOperationElements pCompareOperation;
@@ -944,14 +1057,15 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	private NotOrNormalExpressionElements pNotOrNormalExpression;
 	private AndOperationElements pAndOperation;
 	private OrOperationElements pOrOperation;
+	private ParanthesedBooleanExpressionElements pParanthesedBooleanExpression;
 	private BooleanExpressionElements pBooleanExpression;
-	private PrimaryExpressionElements pPrimaryExpression;
 	private OperatorTypeElements unknownRuleOperatorType;
 	private ValOperatorElements unknownRuleValOperator;
 	private CompareOperatorElements unknownRuleCompareOperator;
 	private NotOperatorElements unknownRuleNotOperator;
 	private OperatorOrElements unknownRuleOperatorOr;
 	private OperatorAndElements unknownRuleOperatorAnd;
+	private HostCodeElements pHostCode;
 	
 	private final GrammarProvider grammarProvider;
 
@@ -975,26 +1089,18 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 
 	
 	//Action returns synccharts::Action:
-	//  isImmediate?="#" delay=INT? trigger=BooleanExpression? ("/" effects+=Effect*)?; 
+	//  isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)
+	//  ?; 
 	////import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
 	////import "synccharts" as synchcharts
 	//
 	////dummy rule to test the language in an editor
 	////Model : 
-	////	((signals+=Signal | variables+=Variable))* (actions+=Action ";")*;
+	////	((("sig" signals+=Signal) | ("var" variables+=Variable)))* ';' (actions+=Action ";")*;
 	//
-	//    
-	//	//(isImmediate?='#' | delay=INT)? (trigger=PrimaryExpression)? ("/" (effects+=Effect)*)?;
-	//	         // (";" parentStateEntryAction=[synccharts::State]? ";" parentStateExitAction=[synccharts::State]? ";" parentStateInnerAction=[synccharts::State]?)? ; 		
-	//
-	//// dummy rule that will never be parsed. However, the serializer might get
-	//// a transition instead of an action and needs to know how to serialize it
-	//// here we define, that the textual representation will only hold the elements
-	//// of an action. This is only meaningful for the graphical editor. If you need
-	//// a proper textual representation of a Transition, you should override this 
-	//// rule!
-	////Transition returns synccharts::Transition:
-	////	Action;
+	////==============================================================================
+	//// Basic Actions
+	////==============================================================================
 	public ActionElements getActionAccess() {
 		return (pAction != null) ? pAction : (pAction = new ActionElements());
 	}
@@ -1004,16 +1110,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//Effect returns synccharts::Effect:
-	//  Emission|Assignment|HostCode; // (";" parentStateEntryAction=[synccharts::State]? ";" parentStateExitAction=[synccharts::State]? ";" parentStateInnerAction=[synccharts::State]?)? ; 		
-	//
-	//// dummy rule that will never be parsed. However, the serializer might get
-	//// a transition instead of an action and needs to know how to serialize it
-	//// here we define, that the textual representation will only hold the elements
-	//// of an action. This is only meaningful for the graphical editor. If you need
-	//// a proper textual representation of a Transition, you should override this 
-	//// rule!
-	////Transition returns synccharts::Transition:
-	////	Action;
+	//  Emission|Assignment|HostCode;
 	public EffectElements getEffectAccess() {
 		return (pEffect != null) ? pEffect : (pEffect = new EffectElements());
 	}
@@ -1023,7 +1120,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//Emission returns synccharts::Emission:
-	//  signal=[synccharts::Signal] ("(" newValue=PrimaryExpression ")")?;
+	//  signal=[synccharts::Signal] ("(" newValue=ValueExpression ")")?;
 	public EmissionElements getEmissionAccess() {
 		return (pEmission != null) ? pEmission : (pEmission = new EmissionElements());
 	}
@@ -1033,7 +1130,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//Assignment returns synccharts::Assignment:
-	//  variable=[synccharts::Variable] ":=" expression=PrimaryExpression;
+	//  variable=[synccharts::Variable] ":=" expression=ValueExpression;
 	public AssignmentElements getAssignmentAccess() {
 		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
 	}
@@ -1043,13 +1140,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//SignalReference returns synccharts::SignalReference:
-	//  signal=[synccharts::Signal]; 
-	//
-	//    
-	//	    
-	//
-	////SignalReference :
-	////	signal = [Signal];
+	//  signal=[synccharts::Signal];
 	public SignalReferenceElements getSignalReferenceAccess() {
 		return (pSignalReference != null) ? pSignalReference : (pSignalReference = new SignalReferenceElements());
 	}
@@ -1059,10 +1150,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//VariableReference returns synccharts::VariableReference:
-	//  variable=[synccharts::Variable]; 
-	//
-	////SignalReference :
-	////	signal = [Signal];
+	//  variable=[synccharts::Variable];
 	public VariableReferenceElements getVariableReferenceAccess() {
 		return (pVariableReference != null) ? pVariableReference : (pVariableReference = new VariableReferenceElements());
 	}
@@ -1071,8 +1159,39 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		return getVariableReferenceAccess().getRule();
 	}
 
+	//Signal returns synccharts::Signal:
+	//  name=ID;
+	public SignalElements getSignalAccess() {
+		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
+	}
+	
+	public ParserRule getSignalRule() {
+		return getSignalAccess().getRule();
+	}
+
+	//Variable returns synccharts::Variable:
+	//  name=ID; 
+	//	
+	//    
+	//	
+	//
+	////==============================================================================
+	//// Values
+	////==============================================================================
+	public VariableElements getVariableAccess() {
+		return (pVariable != null) ? pVariable : (pVariable = new VariableElements());
+	}
+	
+	public ParserRule getVariableRule() {
+		return getVariableAccess().getRule();
+	}
+
 	//IntValue:
-	//  value=INT;
+	//  value=INT; 
+	//
+	////==============================================================================
+	//// Values
+	////==============================================================================
 	public IntValueElements getIntValueAccess() {
 		return (pIntValue != null) ? pIntValue : (pIntValue = new IntValueElements());
 	}
@@ -1106,12 +1225,6 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	//
 	//	        
 	//
-	////Signal:
-	////	"signal" name = ID;
-	//	
-	////Variable:
-	////	"variable" name = ID;
-	//
 	//// make sure the Float rule does not shadow the built-in INT rule
 	public ValueElements getValueAccess() {
 		return (pValue != null) ? pValue : (pValue = new ValueElements());
@@ -1124,39 +1237,36 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	//terminal Float returns ecore::EDouble:
 	//  (INT "." INT | INT ("." INT)? ("e" | "E") ("-" | "+")? INT) "f"? | INT "f"; 
 	//
-	////Signal:
-	////	"signal" name = ID;
-	//	
-	////Variable:
-	////	"variable" name = ID;
-	//
 	//// make sure the Float rule does not shadow the built-in INT rule
 	public TerminalRule getFloatRule() {
 		return (tFloat != null) ? tFloat : (tFloat = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Float"));
 	} 
 
 	//terminal Boolean returns ecore::EBoolean:
-	//  "true" | "false";
+	//  "true" | "false"; 
+	//              
+	//
+	////==============================================================================
+	//// Expressions
+	////==============================================================================
+	//
+	//// Example: ?A
 	public TerminalRule getBooleanRule() {
 		return (tBoolean != null) ? tBoolean : (tBoolean = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Boolean"));
 	} 
 
-	//HostCode returns synccharts::HostCode:
-	//  code=STRING; 
-	//
-	//    
-	//	//"'"code=STRING"'";
-	//	 //("(" type=ID ")")?
-	public HostCodeElements getHostCodeAccess() {
-		return (pHostCode != null) ? pHostCode : (pHostCode = new HostCodeElements());
-	}
-	
-	public ParserRule getHostCodeRule() {
-		return getHostCodeAccess().getRule();
-	}
-
 	//ValOperation returns synccharts::ComplexExpression:
-	//  operator=ValOperator subExpressions+=SignalReference;
+	//  operator=ValOperator subExpressions+=SignalReference; 
+	//
+	////==============================================================================
+	//// Expressions
+	////==============================================================================
+	//
+	//// Example: ?A	
+	//    
+	//	  
+	//
+	//// Example: 42, ?A, var1
 	public ValOperationElements getValOperationAccess() {
 		return (pValOperation != null) ? pValOperation : (pValOperation = new ValOperationElements());
 	}
@@ -1166,7 +1276,13 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//ValueExpression returns synccharts::Expression:
-	//  IntValue|FloatValue|ValOperation|VariableReference;
+	//  IntValue|FloatValue|ValOperation|VariableReference; 
+	//
+	//// Example: 42, ?A, var1
+	//    
+	//	            
+	//
+	//// Example: 42 <= ?A
 	public ValueExpressionElements getValueExpressionAccess() {
 		return (pValueExpression != null) ? pValueExpression : (pValueExpression = new ValueExpressionElements());
 	}
@@ -1177,7 +1293,14 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 
 	//CompareOperation returns synccharts::Expression:
 	//  ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator
-	//  subExpressions+=ValueExpression);
+	//  subExpressions+=ValueExpression); 
+	//
+	//// Example: 42 <= ?A
+	//    
+	//	        	
+	//
+	//// Example: not A, not false, not (A or B)
+	//// at the latter we need the parans to indicate the right binding
 	public CompareOperationElements getCompareOperationAccess() {
 		return (pCompareOperation != null) ? pCompareOperation : (pCompareOperation = new CompareOperationElements());
 	}
@@ -1187,7 +1310,14 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//NotOperation returns synccharts::ComplexExpression:
-	//  operator=NotOperator subExpressions+=BooleanExpression;
+	//  operator=NotOperator subExpressions+=ParanthesedBooleanExpression;   	
+	//
+	//// Example: not A, not false, not (A or B)
+	//// at the latter we need the parans to indicate the right binding
+	//    
+	//	  
+	//
+	//// Example: either negated or normal expression (with parantheses)
 	public NotOperationElements getNotOperationAccess() {
 		return (pNotOperation != null) ? pNotOperation : (pNotOperation = new NotOperationElements());
 	}
@@ -1197,7 +1327,13 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//NotOrNormalExpression returns synccharts::Expression:
-	//  NotOperation|BooleanExpression;
+	//  NotOperation|ParanthesedBooleanExpression; 
+	//
+	//// Example: either negated or normal expression (with parantheses) 
+	//    
+	//	    
+	//
+	//// Example: A and B, not C and 42 <= ?D
 	public NotOrNormalExpressionElements getNotOrNormalExpressionAccess() {
 		return (pNotOrNormalExpression != null) ? pNotOrNormalExpression : (pNotOrNormalExpression = new NotOrNormalExpressionElements());
 	}
@@ -1207,8 +1343,14 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//AndOperation returns synccharts::Expression:
-	//  NotOrNormalExpression ({Operation.subExpression+=current} operator=OperatorAnd
-	//  subExpression+=NotOrNormalExpression)*;
+	//  NotOrNormalExpression ({Operation.subExpressions+=current} operator=OperatorAnd
+	//  subExpressions+=NotOrNormalExpression)*; 
+	//
+	//// Example: A and B, not C and 42 <= ?D
+	//    
+	//	      
+	//
+	//// Example: A or B, C and B or D and not E
 	public AndOperationElements getAndOperationAccess() {
 		return (pAndOperation != null) ? pAndOperation : (pAndOperation = new AndOperationElements());
 	}
@@ -1221,10 +1363,11 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	//  AndOperation ({Operation.subExpressions+=current} operator=OperatorOr
 	//  subExpressions+=AndOperation)*; 
 	//
+	//// Example: A or B, C and B or D and not E 
 	//    
 	//	      
 	//
-	//// TODO: get rid of parentheses
+	//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
 	public OrOperationElements getOrOperationAccess() {
 		return (pOrOperation != null) ? pOrOperation : (pOrOperation = new OrOperationElements());
 	}
@@ -1233,10 +1376,32 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		return getOrOperationAccess().getRule();
 	}
 
-	//BooleanExpression returns synccharts::Expression:
+	//ParanthesedBooleanExpression returns synccharts::Expression:
 	//  BooleanValue|SignalReference|CompareOperation|"(" OrOperation ")"; 
 	//
-	//// TODO: get rid of parentheses
+	//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+	//    
+	//                  
+	//
+	//// Example: not D and C or ?E = 42 or not (A and (B or C))
+	public ParanthesedBooleanExpressionElements getParanthesedBooleanExpressionAccess() {
+		return (pParanthesedBooleanExpression != null) ? pParanthesedBooleanExpression : (pParanthesedBooleanExpression = new ParanthesedBooleanExpressionElements());
+	}
+	
+	public ParserRule getParanthesedBooleanExpressionRule() {
+		return getParanthesedBooleanExpressionAccess().getRule();
+	}
+
+	//BooleanExpression returns synccharts::Expression:
+	//  OrOperation; 
+	//
+	//// Example: not D and C or ?E = 42 or not (A and (B or C))
+	//    
+	//	  
+	//
+	////==============================================================================
+	//// Operators
+	////==============================================================================
 	public BooleanExpressionElements getBooleanExpressionAccess() {
 		return (pBooleanExpression != null) ? pBooleanExpression : (pBooleanExpression = new BooleanExpressionElements());
 	}
@@ -1245,22 +1410,13 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		return getBooleanExpressionAccess().getRule();
 	}
 
-	//PrimaryExpression returns synccharts::Expression:
-	//  BooleanExpression; 
-	//
-	//    
-	//	//ValueExpression | BooleanExpression;
-	public PrimaryExpressionElements getPrimaryExpressionAccess() {
-		return (pPrimaryExpression != null) ? pPrimaryExpression : (pPrimaryExpression = new PrimaryExpressionElements());
-	}
-	
-	public ParserRule getPrimaryExpressionRule() {
-		return getPrimaryExpressionAccess().getRule();
-	}
-
 	//enum OperatorType returns synccharts::OperatorType:
 	//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | AND="and" | OR="or" | ADD="+" | SUB=
-	//  "-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre";
+	//  "-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre"; 
+	//
+	////==============================================================================
+	//// Operators
+	////==============================================================================
 	public OperatorTypeElements getOperatorTypeAccess() {
 		return (unknownRuleOperatorType != null) ? unknownRuleOperatorType : (unknownRuleOperatorType = new OperatorTypeElements());
 	}
@@ -1310,13 +1466,37 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//enum OperatorAnd returns synccharts::OperatorType:
-	//  AND="and";
+	//  AND="and"; 
+	//
+	//      
+	//	
+	//
+	////==============================================================================
+	//// Misc
+	////==============================================================================
 	public OperatorAndElements getOperatorAndAccess() {
 		return (unknownRuleOperatorAnd != null) ? unknownRuleOperatorAnd : (unknownRuleOperatorAnd = new OperatorAndElements());
 	}
 	
 	public EnumRule getOperatorAndRule() {
 		return getOperatorAndAccess().getRule();
+	}
+
+	//HostCode returns synccharts::HostCode:
+	//  code=STRING ("(" type=ID ")")?; 
+	//
+	////==============================================================================
+	//// Misc
+	////==============================================================================
+	//	
+	//    
+	//	//"'"code=STRING"'";
+	public HostCodeElements getHostCodeAccess() {
+		return (pHostCode != null) ? pHostCode : (pHostCode = new HostCodeElements());
+	}
+	
+	public ParserRule getHostCodeRule() {
+		return getHostCodeAccess().getRule();
 	}
 
 	//terminal ID:

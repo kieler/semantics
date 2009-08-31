@@ -1,40 +1,27 @@
-<?xml version="1.0" encoding="ASCII"?>
-<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.synccharts.labelparser/src-gen" editDirectory="/de.cau.cs.kieler.synccharts.labelparser.edit/src" editorDirectory="/de.cau.cs.kieler.synccharts.labelparser.editor/src" modelPluginID="de.cau.cs.kieler.synccharts.labelparser" forceOverwrite="true" modelName="TransitionLabel" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.synccharts.labelparser.edit" editorPluginID="de.cau.cs.kieler.synccharts.labelparser.editor">
-  <genPackages prefix="Transitionlabel" basePackage="de.cau.cs.kieler.synccharts" disposableProviderFactory="true">
-    <ecorePackage href="TransitionLabel.ecore#/"/>
-    <genClasses>
-      <ecoreClass href="TransitionLabel.ecore#//IntValue"/>
-      <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//IntValue/value"/>
-      </genFeatures>
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.synccharts.labelparser/src-gen"
+    editDirectory="/de.cau.cs.kieler.synccharts.labelparser.edit/src" editorDirectory="/de.cau.cs.kieler.synccharts.labelparser.editor/src"
+    modelPluginID="de.cau.cs.kieler.synccharts.labelparser" forceOverwrite="true"
+    modelName="TransitionLabel" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.synccharts.labelparser.edit"
+    editorPluginID="de.cau.cs.kieler.synccharts.labelparser.editor" usedGenPackages="platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel#//synccharts">
+  <genPackages prefix="Transitionlabel" basePackage="de.cau.cs.kieler.synccharts"
+      disposableProviderFactory="true" ecorePackage="TransitionLabel.ecore#/">
+    <genClasses ecoreClass="TransitionLabel.ecore#//IntValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TransitionLabel.ecore#//IntValue/value"/>
     </genClasses>
-    <genClasses>
-      <ecoreClass href="TransitionLabel.ecore#//FloatValue"/>
-      <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//FloatValue/value"/>
-      </genFeatures>
+    <genClasses ecoreClass="TransitionLabel.ecore#//FloatValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TransitionLabel.ecore#//FloatValue/value"/>
     </genClasses>
-    <genClasses>
-      <ecoreClass href="TransitionLabel.ecore#//BooleanValue"/>
-      <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//BooleanValue/value"/>
-      </genFeatures>
+    <genClasses ecoreClass="TransitionLabel.ecore#//BooleanValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TransitionLabel.ecore#//BooleanValue/value"/>
     </genClasses>
-    <genClasses>
-      <ecoreClass href="TransitionLabel.ecore#//Value"/>
-    </genClasses>
-    <genClasses>
-      <ecoreClass href="TransitionLabel.ecore#//Operation"/>
-      <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Operation/subExpressions"/>
-      </genFeatures>
-      <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="TransitionLabel.ecore#//Operation/operator"/>
-      </genFeatures>
-      <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="TransitionLabel.ecore#//Operation/subExpression"/>
-      </genFeatures>
+    <genClasses ecoreClass="TransitionLabel.ecore#//Value"/>
+    <genClasses ecoreClass="TransitionLabel.ecore#//Operation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TransitionLabel.ecore#//Operation/subExpressions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TransitionLabel.ecore#//Operation/operator"/>
     </genClasses>
   </genPackages>
-  <usedGenPackages href="platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel#//synccharts"/>
 </genmodel:GenModel>

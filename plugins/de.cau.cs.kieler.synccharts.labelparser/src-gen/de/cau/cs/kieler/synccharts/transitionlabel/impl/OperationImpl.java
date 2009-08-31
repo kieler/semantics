@@ -37,7 +37,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.impl.OperationImpl#getSubExpressions <em>Sub Expressions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.impl.OperationImpl#getOperator <em>Operator</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.transitionlabel.impl.OperationImpl#getSubExpression <em>Sub Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -74,16 +73,6 @@ public class OperationImpl extends ExpressionImpl implements Operation
    * @ordered
    */
   protected OperatorType operator = OPERATOR_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getSubExpression() <em>Sub Expression</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSubExpression()
-   * @generated
-   * @ordered
-   */
-  protected EList<Expression> subExpression;
 
   /**
    * <!-- begin-user-doc -->
@@ -148,20 +137,6 @@ public class OperationImpl extends ExpressionImpl implements Operation
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Expression> getSubExpression()
-  {
-    if (subExpression == null)
-    {
-      subExpression = new EObjectContainmentEList<Expression>(Expression.class, this, TransitionlabelPackage.OPERATION__SUB_EXPRESSION);
-    }
-    return subExpression;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -169,8 +144,6 @@ public class OperationImpl extends ExpressionImpl implements Operation
     {
       case TransitionlabelPackage.OPERATION__SUB_EXPRESSIONS:
         return ((InternalEList<?>)getSubExpressions()).basicRemove(otherEnd, msgs);
-      case TransitionlabelPackage.OPERATION__SUB_EXPRESSION:
-        return ((InternalEList<?>)getSubExpression()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -189,8 +162,6 @@ public class OperationImpl extends ExpressionImpl implements Operation
         return getSubExpressions();
       case TransitionlabelPackage.OPERATION__OPERATOR:
         return getOperator();
-      case TransitionlabelPackage.OPERATION__SUB_EXPRESSION:
-        return getSubExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -213,10 +184,6 @@ public class OperationImpl extends ExpressionImpl implements Operation
       case TransitionlabelPackage.OPERATION__OPERATOR:
         setOperator((OperatorType)newValue);
         return;
-      case TransitionlabelPackage.OPERATION__SUB_EXPRESSION:
-        getSubExpression().clear();
-        getSubExpression().addAll((Collection<? extends Expression>)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -237,9 +204,6 @@ public class OperationImpl extends ExpressionImpl implements Operation
       case TransitionlabelPackage.OPERATION__OPERATOR:
         setOperator(OPERATOR_EDEFAULT);
         return;
-      case TransitionlabelPackage.OPERATION__SUB_EXPRESSION:
-        getSubExpression().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -258,8 +222,6 @@ public class OperationImpl extends ExpressionImpl implements Operation
         return subExpressions != null && !subExpressions.isEmpty();
       case TransitionlabelPackage.OPERATION__OPERATOR:
         return operator != OPERATOR_EDEFAULT;
-      case TransitionlabelPackage.OPERATION__SUB_EXPRESSION:
-        return subExpression != null && !subExpression.isEmpty();
     }
     return super.eIsSet(featureID);
   }
