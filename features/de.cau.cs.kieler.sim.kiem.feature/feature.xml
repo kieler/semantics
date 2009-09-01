@@ -219,6 +219,19 @@ Each party waives its rights to a jury trial in any resulting
 litigation.
    </license>
 
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="de.cau.cs.kieler.sim.kiem" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core" version="0.1.2" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core.ui" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.common.ui"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui.views.log" version="1.0.100" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.editors"/>
+   </requires>
+
    <plugin
          id="de.cau.cs.kieler.sim.abro"
          download-size="0"
