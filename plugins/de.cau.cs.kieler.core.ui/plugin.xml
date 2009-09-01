@@ -40,6 +40,13 @@
             id="de.cau.cs.kieler"
             name="KIELER">
       </page>
+      <page
+            category="org.eclipse.ui.preferencePages.Workbench"
+            class="org.eclipse.ui.intro.universal.ExtensionFactory:welcomeCustomization"
+            id="com.example.intro.introCustomization"
+            name="%introCustomizationPreference.name">
+            <keywordReference id="org.eclipse.ui.ide.appearance"/>
+      </page>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -139,6 +146,18 @@
                name="windowImages"
                value="icons/kiel_16.gif,icons/kiel_32.gif,icons/kiel_48.gif,icons/kiel_64.gif,icons/kiel_128.gif">
          </property>
+         <property
+               name="introTitle"
+               value="KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client">
+         </property>
+         <property
+               name="introBrandingImage"
+               value="product:icons/kiel_64.gif">
+         </property>
+         <property
+               name="introBrandingImageText"
+               value="KIELER by Christian-Albrechts-Universität zu Kiel">
+         </property>
       </product>
    </extension>
    <extension
@@ -148,5 +167,30 @@
             primary="true">
       </toc>
    </extension>
-
+   <extension
+         point="org.eclipse.ui.intro">
+      <introProductBinding
+            introId="org.eclipse.ui.intro.universal"
+            productId="de.cau.cs.kieler.core.ui.product">
+      </introProductBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.intro.configExtension">
+      <configExtension
+            configId="org.eclipse.ui.intro.universalConfig"
+            content="help/introContent.xml">
+      </configExtension>
+   </extension>
+ <!--  <extension
+         point="org.eclipse.ui.intro.config">
+      <config
+            content="help/introContent.xml"
+            id="de.cau.cs.kieler.intro.config"
+            introId="org.eclipse.ui.intro.universal">
+         <presentation
+               home-page-id="root">
+         </presentation>
+      </config>
+   </extension>
+-->
 </plugin>
