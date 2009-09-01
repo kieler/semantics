@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="de.cau.cs.kieler.core"
-      label="KIELER Core"
+      label="Core"
       version="0.1.0.vqualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
@@ -23,7 +23,7 @@ under the terms of the Eclipse Public License (EPL).
    </license>
 
    <url>
-      <update label="KIELER Update Site" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite"/>
+      <update label="KIELER nightly builds Update Site" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/"/>
    </url>
 
    <requires>

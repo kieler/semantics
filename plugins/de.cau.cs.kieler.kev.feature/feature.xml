@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="edu.unikiel.rtsys.kev.feature"
-      label="KIEL Environment Visualization Feature"
-      version="1.0.0"
+      label="Environment Visualization"
+      version="0.1.0.vqualifier"
       provider-name="Christian-Albrechts-Universitär zu Kiel">
 
    <description url="http://www.example.com/description">
@@ -16,6 +16,10 @@
    <license url="http://www.example.com/license">
       [Enter License Description here.]
    </license>
+
+   <url>
+      <update label="KIELER nightly builds Update Site" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/"/>
+   </url>
 
    <requires>
       <import plugin="org.eclipse.ui" version="3.4.0" match="greaterOrEqual"/>
