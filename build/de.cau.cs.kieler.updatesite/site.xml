@@ -21,7 +21,7 @@
    <feature url="features/de.cau.cs.kieler.viewmanagement_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.viewmanagement" version="0.1.0.vqualifier">
       <category name="KIELER"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.sim.kiem_0.1.0.200909011402.jar" id="de.cau.cs.kieler.sim.kiem" version="0.1.0.200909011402">
+   <feature url="features/de.cau.cs.kieler.sim.kiem_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.sim.kiem" version="0.1.0.vqualifier">
       <category name="KIELER"/>
    </feature>
    <category-def name="KIELER" label="KIELER">
