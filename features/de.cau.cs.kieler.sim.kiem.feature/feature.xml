@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="de.cau.cs.kieler.sim.kiem"
-      label="Kieler Execution Manager"
-      version="0.1.0.qualifier"
+      label="Execution Manager"
+      version="0.1.0.vqualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler/">
@@ -236,28 +236,28 @@ litigation.
          id="de.cau.cs.kieler.sim.abro"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.1.0.vqualifier"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.sim.kiem"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.1.0.vqualifier"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.sim.syncsignalreset"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.1.0.vqualifier"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.sim.table"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.1.0.vqualifier"
          unpack="false"/>
 
 </feature>
