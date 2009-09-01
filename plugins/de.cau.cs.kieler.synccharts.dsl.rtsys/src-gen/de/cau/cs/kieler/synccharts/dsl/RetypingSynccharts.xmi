@@ -4,6 +4,9 @@
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="sync">
       <ePackage href="http://kieler.cs.cau.de/synccharts#/"/>
     </metamodelDeclarations>
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
+      <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+    </metamodelDeclarations>
     <rules xsi:type="xtext:ParserRule" name="Region">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//Region"/>

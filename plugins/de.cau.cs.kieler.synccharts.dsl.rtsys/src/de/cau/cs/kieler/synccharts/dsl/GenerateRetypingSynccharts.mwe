@@ -3,10 +3,10 @@
 	
 	<property name="runtimeProject" value="../${projectName}"/>
 	
-	<bean class="org.eclipse.emf.mwe.utils.StandaloneSetup" platformUri="${runtimeProject}/.."/>
-	<!-- @modified (oba) register the synccharts metamodel for it will be imported using its package-nsURI -->
-		<!--registerGeneratedEPackage value="kieler.cs.cau.de/synccharts"/> -->
-	<!--/bean-->
+	<bean class="org.eclipse.emf.mwe.utils.StandaloneSetup">
+		<registerGeneratedEPackage value="de.cau.cs.kieler.synccharts.SyncchartsPackage"/>
+		<platformUri value="${runtimeProject}/.."/>
+	</bean>
 	
 	<component class="org.eclipse.emf.mwe.utils.DirectoryCleaner" directory="${runtimeProject}/src-gen"/>
 	<component class="org.eclipse.emf.mwe.utils.DirectoryCleaner" directory="${runtimeProject}.ui/src-gen"/>
@@ -21,8 +21,10 @@
 			<!-- Java API to access grammar elements (required by several other fragments) -->
 			<fragment class="org.eclipse.xtext.generator.grammarAccess.GrammarAccessFragment"/>
 			
+			
 			<!-- generates Java API for the generated EPackages -->
-			<fragment class="org.eclipse.xtext.generator.ecore.EcoreGeneratorFragment"/>
+			<fragment class="org.eclipse.xtext.generator.ecore.EcoreGeneratorFragment"
+					genModels="platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel"/>
 			
 			<!-- the serialization component -->
 			<fragment class="org.eclipse.xtext.generator.parseTreeConstructor.ParseTreeConstructorFragment"/>
