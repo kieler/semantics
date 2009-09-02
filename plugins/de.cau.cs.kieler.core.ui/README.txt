@@ -19,3 +19,10 @@ p2.inf:
   see http://wiki.eclipse.org/Equinox/p2/Engine/Touchpoint_Instructions
   Defines the kieler update site to be available in the RCP application so
   automatic updates are possible.
+  
+plugin_customizations.ini:
+  Config file read by eclipse from multiple different parts, e.g.
+  - activation of splash screen progress bar
+  - filename for intro page data
+  
+  

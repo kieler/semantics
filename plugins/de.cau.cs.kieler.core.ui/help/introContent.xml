@@ -1,5 +1,5 @@
 <introContent>
-    <extensionContent id="overview" name="KIELER Overview" path="overview/@" alt-style="css/swt.properties" style="css/overview.css">
+    <extensionContent id="de.cau.cs.kieler.overview" name="KIELER Overview" path="overview/@" alt-style="css/swt.properties" style="css/overview.css">
         <text>The KIELER project aims at enhancing the pragmatics of graphical model-based system design, i.e.
               the way the user works with graphical models. Basic goals are to improve editing and analysis
               of complex models while increasing productivity.</text>
