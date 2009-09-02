@@ -8,3 +8,14 @@ for the most important UI contributions, e.g. commands or views.
 
 Other plug-ins should import this only if they contain UI code and are not
 meant to be exported for a stand-alone application or library.
+
+Files:
+
+help/
+  contents for eclipse internal help and the welcome page
+
+p2.inf:
+  Equinox/p2/Engine/Touchpoint Instructions
+  see http://wiki.eclipse.org/Equinox/p2/Engine/Touchpoint_Instructions
+  Defines the kieler update site to be available in the RCP application so
+  automatic updates are possible.
