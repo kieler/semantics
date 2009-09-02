@@ -54,6 +54,10 @@
 				<pathelement location="${eclipseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
 		</java>
+		
+		<delete dir="${eclipseConfig}" />
+		<delete dir="${eclipseWorkspace}" />
+		<delete dir="${p2.director.workspace}" />
 	</target>
 
 	<target name="build.feature" if="eclipse.running">
@@ -100,7 +104,7 @@
 		<property name="runPackager"   value="true" />
 		<!-- property name="customTargets"   location="${scriptdir}/customTargets.xml"/ -->
 		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
-		<!-- property name="allElementsFile" location="${scriptdir}/allElements.xml"/ -->
+		<property name="allElementsFile" location="${scriptdir}/allElements.xml"/>
 
 		<delete dir="${buildLabel}"/>
 		<copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/kieler.product"
