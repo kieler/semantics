@@ -1,6 +1,0 @@
-instructions.configure=\
-  addRepository(type:0,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly);\
-  addRepository(type:1,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly);
-instructions.configure.import= \
-    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository
-     
