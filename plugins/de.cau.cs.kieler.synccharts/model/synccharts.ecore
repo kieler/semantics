@@ -31,6 +31,10 @@
     <eLiterals name="NONE" literal="NONE"/>
     <eLiterals name="ADD" value="1" literal="ADD"/>
     <eLiterals name="MULT" value="2" literal="MULT"/>
+    <eLiterals name="MAX" value="5"/>
+    <eLiterals name="MIN" value="6"/>
+    <eLiterals name="OR" value="4"/>
+    <eLiterals name="AND" value="3"/>
     <eLiterals name="HOST"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ComplexExpression" eSuperTypes="#//Expression">
@@ -112,13 +116,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" lowerBound="1"
         eType="#//Signal"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SignalRenaming">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="oldSignal" lowerBound="1"
-        eType="#//Signal"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="newSignal" lowerBound="1"
-        eType="#//Signal"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Renaming">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" lowerBound="1"
-        eType="#//State" eOpposite="#//State/signalRenamings"/>
+        eType="#//State" eOpposite="#//State/renamings"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="oldID" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="newID" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="State">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -134,8 +136,8 @@
         eType="#//Action" containment="true" eOpposite="#//Action/parentStateInnerAction"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exitActions" upperBound="-1"
         eType="#//Action" containment="true" eOpposite="#//Action/parentStateExitAction"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="signalRenamings" upperBound="-1"
-        eType="#//SignalRenaming" containment="true" eOpposite="#//SignalRenaming/parentState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="renamings" upperBound="-1"
+        eType="#//Renaming" containment="true" eOpposite="#//Renaming/parentState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="suspensionTrigger" eType="#//Action"
         containment="true" eOpposite="#//Action/parentStateSuspension"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions" upperBound="-1"
@@ -178,7 +180,7 @@
     <eLiterals name="BOOL" value="1"/>
     <eLiterals name="UNSIGNED" value="2"/>
     <eLiterals name="INTEGER" value="3"/>
-    <eLiterals name="DOUBLE" value="4"/>
+    <eLiterals name="FLOAT" value="4"/>
     <eLiterals name="HOST"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//ValuedObject">
