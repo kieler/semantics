@@ -99,27 +99,26 @@
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${basedir}/buildrepo" />
 		<property name="configs"       value="${product.configs}" />
-		<property name="product"       value="${basedir}/kieler.product" />
+		<property name="product"       value="${basedir}/plugins/de.cau.cs.kieler.core.ui/product/kieler.product" />
 		<property name="runPackager"   value="true" />
 		<!-- property name="customTargets"   location="${scriptdir}/customTargets.xml"/ -->
 		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
 		<property name="allElementsFile" location="${scriptdir}/allElements.xml"/>
 
 		<delete dir="${buildLabel}"/>
-		<copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/kieler.product"
+		<!-- copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/kieler.product"
 			  tofile="${basedir}/kieler.product" overwrite="true" />
 		<copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/p2.inf"
-			  tofile="${basedir}/p2.inf" overwrite="true" />
+			  tofile="${basedir}/p2.inf" overwrite="true" / -->
 		
 		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
 		
 		<!-- setting the executable flag on launcher binaries
 			 CAUTION: foreach is a ant-contrib task declared above! -->
-		<path id="products">
-			<fileset dir="${buildLabel}" includes="*.zip" excludes="*win32*" />
-		</path>
 		<foreach param="zipfile" target="update.launcher">
-			<path refid="products" />
+			<path id="products">
+				<fileset dir="${buildLabel}" includes="*.zip" excludes="*win32*" />
+			</path>
 		</foreach>
 	</target>
 	

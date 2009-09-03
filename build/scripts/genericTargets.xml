@@ -78,6 +78,7 @@
 <target name="generateScript" description="Generating build scripts..." depends="init">
 	<eclipse.buildScript
 		elements="${type}@${id}"
+		children="true"
 		buildDirectory="${buildDirectory}"
 		configInfo="${configs}"
 		baseLocation="${baseLocation}"
