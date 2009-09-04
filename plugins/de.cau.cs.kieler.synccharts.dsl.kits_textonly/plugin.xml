@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.cau.de/cs/kieler/synccharts/dsl/Kits_textonly" 
+       class = "de.cau.cs.kieler.synccharts.dsl.kits_textonly.Kits_textonlyPackage"
+       genModel = "de/cau/cs/kieler/synccharts/dsl/Kits_textonly.genmodel" /> 
+	
+  </extension>
+
+
+
+
+</plugin>
