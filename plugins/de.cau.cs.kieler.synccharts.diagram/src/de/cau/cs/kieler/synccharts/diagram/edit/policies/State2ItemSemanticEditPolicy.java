@@ -36,7 +36,8 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 /**
  * @generated
  */
-public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEditPolicy {
+public class State2ItemSemanticEditPolicy extends
+        SyncchartsBaseItemSemanticEditPolicy {
 
     /**
      * @generated
@@ -50,14 +51,14 @@ public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
      */
     protected Command getDestroyElementCommand(DestroyElementRequest req) {
         View view = (View) getHost().getModel();
-        CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(getEditingDomain(),
-                null);
+        CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(
+                getEditingDomain(), null);
         cmd.setTransactionNestingEnabled(false);
         for (Iterator it = view.getTargetEdges().iterator(); it.hasNext();) {
             Edge incomingLink = (Edge) it.next();
             if (SyncchartsVisualIDRegistry.getVisualID(incomingLink) == TransitionEditPart.VISUAL_ID) {
-                DestroyElementRequest r = new DestroyElementRequest(incomingLink.getElement(),
-                        false);
+                DestroyElementRequest r = new DestroyElementRequest(
+                        incomingLink.getElement(), false);
                 cmd.add(new DestroyElementCommand(r));
                 cmd.add(new DeleteCommand(getEditingDomain(), incomingLink));
                 continue;
@@ -66,8 +67,8 @@ public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
         for (Iterator it = view.getSourceEdges().iterator(); it.hasNext();) {
             Edge outgoingLink = (Edge) it.next();
             if (SyncchartsVisualIDRegistry.getVisualID(outgoingLink) == TransitionEditPart.VISUAL_ID) {
-                DestroyElementRequest r = new DestroyElementRequest(outgoingLink.getElement(),
-                        false);
+                DestroyElementRequest r = new DestroyElementRequest(
+                        outgoingLink.getElement(), false);
                 cmd.add(new DestroyElementCommand(r));
                 cmd.add(new DeleteCommand(getEditingDomain(), outgoingLink));
                 continue;
@@ -80,8 +81,7 @@ public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
             addDestroyShortcutsCommand(cmd, view);
             // delete host element
             cmd.add(new DestroyElementCommand(req));
-        }
-        else {
+        } else {
             cmd.add(new DeleteCommand(getEditingDomain(), view));
         }
         return getGEFWrapper(cmd.reduce());
@@ -96,12 +96,14 @@ public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
             Node node = (Node) nit.next();
             switch (SyncchartsVisualIDRegistry.getVisualID(node)) {
             case StateSignal2EditPart.VISUAL_ID:
-                for (Iterator cit = node.getChildren().iterator(); cit.hasNext();) {
+                for (Iterator cit = node.getChildren().iterator(); cit
+                        .hasNext();) {
                     Node cnode = (Node) cit.next();
                     switch (SyncchartsVisualIDRegistry.getVisualID(cnode)) {
                     case SignalEditPart.VISUAL_ID:
-                        cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-                                getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
+                        cmd.add(new DestroyElementCommand(
+                                new DestroyElementRequest(getEditingDomain(),
+                                        cnode.getElement(), false))); // directlyOwned: true
                         // don't need explicit deletion of cnode as parent's view deletion would clean child views as well 
                         // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
                         break;
@@ -109,12 +111,14 @@ public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
                 }
                 break;
             case StateOnEntryAction2EditPart.VISUAL_ID:
-                for (Iterator cit = node.getChildren().iterator(); cit.hasNext();) {
+                for (Iterator cit = node.getChildren().iterator(); cit
+                        .hasNext();) {
                     Node cnode = (Node) cit.next();
                     switch (SyncchartsVisualIDRegistry.getVisualID(cnode)) {
                     case ActionEditPart.VISUAL_ID:
-                        cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-                                getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
+                        cmd.add(new DestroyElementCommand(
+                                new DestroyElementRequest(getEditingDomain(),
+                                        cnode.getElement(), false))); // directlyOwned: true
                         // don't need explicit deletion of cnode as parent's view deletion would clean child views as well 
                         // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
                         break;
@@ -122,12 +126,14 @@ public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
                 }
                 break;
             case StateOnInsideAction2EditPart.VISUAL_ID:
-                for (Iterator cit = node.getChildren().iterator(); cit.hasNext();) {
+                for (Iterator cit = node.getChildren().iterator(); cit
+                        .hasNext();) {
                     Node cnode = (Node) cit.next();
                     switch (SyncchartsVisualIDRegistry.getVisualID(cnode)) {
                     case Action2EditPart.VISUAL_ID:
-                        cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-                                getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
+                        cmd.add(new DestroyElementCommand(
+                                new DestroyElementRequest(getEditingDomain(),
+                                        cnode.getElement(), false))); // directlyOwned: true
                         // don't need explicit deletion of cnode as parent's view deletion would clean child views as well 
                         // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
                         break;
@@ -135,12 +141,14 @@ public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
                 }
                 break;
             case StateOnExitAction2EditPart.VISUAL_ID:
-                for (Iterator cit = node.getChildren().iterator(); cit.hasNext();) {
+                for (Iterator cit = node.getChildren().iterator(); cit
+                        .hasNext();) {
                     Node cnode = (Node) cit.next();
                     switch (SyncchartsVisualIDRegistry.getVisualID(cnode)) {
                     case Action3EditPart.VISUAL_ID:
-                        cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-                                getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
+                        cmd.add(new DestroyElementCommand(
+                                new DestroyElementRequest(getEditingDomain(),
+                                        cnode.getElement(), false))); // directlyOwned: true
                         // don't need explicit deletion of cnode as parent's view deletion would clean child views as well 
                         // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
                         break;
@@ -148,12 +156,14 @@ public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
                 }
                 break;
             case StateSuspend2EditPart.VISUAL_ID:
-                for (Iterator cit = node.getChildren().iterator(); cit.hasNext();) {
+                for (Iterator cit = node.getChildren().iterator(); cit
+                        .hasNext();) {
                     Node cnode = (Node) cit.next();
                     switch (SyncchartsVisualIDRegistry.getVisualID(cnode)) {
                     case Action4EditPart.VISUAL_ID:
-                        cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-                                getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
+                        cmd.add(new DestroyElementCommand(
+                                new DestroyElementRequest(getEditingDomain(),
+                                        cnode.getElement(), false))); // directlyOwned: true
                         // don't need explicit deletion of cnode as parent's view deletion would clean child views as well 
                         // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
                         break;
@@ -161,12 +171,14 @@ public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
                 }
                 break;
             case StateRegionCompartment2EditPart.VISUAL_ID:
-                for (Iterator cit = node.getChildren().iterator(); cit.hasNext();) {
+                for (Iterator cit = node.getChildren().iterator(); cit
+                        .hasNext();) {
                     Node cnode = (Node) cit.next();
                     switch (SyncchartsVisualIDRegistry.getVisualID(cnode)) {
                     case Region2EditPart.VISUAL_ID:
-                        cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-                                getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
+                        cmd.add(new DestroyElementCommand(
+                                new DestroyElementRequest(getEditingDomain(),
+                                        cnode.getElement(), false))); // directlyOwned: true
                         // don't need explicit deletion of cnode as parent's view deletion would clean child views as well 
                         // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
                         break;
@@ -183,15 +195,18 @@ public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
     protected Command getCreateRelationshipCommand(CreateRelationshipRequest req) {
         Command command = req.getTarget() == null ? getStartCreateRelationshipCommand(req)
                 : getCompleteCreateRelationshipCommand(req);
-        return command != null ? command : super.getCreateRelationshipCommand(req);
+        return command != null ? command : super
+                .getCreateRelationshipCommand(req);
     }
 
     /**
      * @generated
      */
-    protected Command getStartCreateRelationshipCommand(CreateRelationshipRequest req) {
+    protected Command getStartCreateRelationshipCommand(
+            CreateRelationshipRequest req) {
         if (SyncchartsElementTypes.Transition_4001 == req.getElementType()) {
-            return getGEFWrapper(new TransitionCreateCommand(req, req.getSource(), req.getTarget()));
+            return getGEFWrapper(new TransitionCreateCommand(req, req
+                    .getSource(), req.getTarget()));
         }
         return null;
     }
@@ -199,9 +214,11 @@ public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
     /**
      * @generated
      */
-    protected Command getCompleteCreateRelationshipCommand(CreateRelationshipRequest req) {
+    protected Command getCompleteCreateRelationshipCommand(
+            CreateRelationshipRequest req) {
         if (SyncchartsElementTypes.Transition_4001 == req.getElementType()) {
-            return getGEFWrapper(new TransitionCreateCommand(req, req.getSource(), req.getTarget()));
+            return getGEFWrapper(new TransitionCreateCommand(req, req
+                    .getSource(), req.getTarget()));
         }
         return null;
     }
@@ -212,7 +229,8 @@ public class State2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
      * 
      * @generated
      */
-    protected Command getReorientRelationshipCommand(ReorientRelationshipRequest req) {
+    protected Command getReorientRelationshipCommand(
+            ReorientRelationshipRequest req) {
         switch (getVisualID(req)) {
         case TransitionEditPart.VISUAL_ID:
             return getGEFWrapper(new TransitionReorientCommand(req));

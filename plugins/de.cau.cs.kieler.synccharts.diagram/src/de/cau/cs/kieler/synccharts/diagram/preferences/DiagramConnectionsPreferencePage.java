@@ -13,6 +13,7 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
      * @generated
      */
     public DiagramConnectionsPreferencePage() {
-        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore());
+        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance()
+                .getPreferenceStore());
     }
 }

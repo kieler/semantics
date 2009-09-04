@@ -4,13 +4,13 @@
 
    <extension point="org.eclipse.team.core.fileTypes" id="repo-ftype">
       <?gmfgen generated="true"?>
-      <fileTypes type="text" extension="synccharts_diagram"/>
+      <fileTypes type="text" extension="kids"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser" id="resource-factory">
       <?gmfgen generated="true"?>
       <parser
-         type="synccharts_diagram"
+         type="kids"
          class="org.eclipse.gmf.runtime.emf.core.resources.GMFResourceFactory">
       </parser>
    </extension>
@@ -21,7 +21,7 @@
          id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
          name="%editorName"
          icon="icons/obj16/SyncchartsDiagramFile.gif"
-         extensions="synccharts_diagram"
+         extensions="kids"
          default="true"
          class="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor"
          matchingStrategy="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsMatchingStrategy"
@@ -55,7 +55,7 @@
       <?gmfgen generated="true"?>
       <objectContribution
             id="de.cau.cs.kieler.synccharts.diagram.InitDiagram"
-            nameFilter="*.synccharts"
+            nameFilter="*.kits"
             objectClass="org.eclipse.core.resources.IFile">
          <action
                label="%initDiagramActionLabel"
@@ -462,7 +462,7 @@
             <or>
 	           <and>
     	          <instanceof value="org.eclipse.core.resources.IFile"/>
-        	      <test property="org.eclipse.core.resources.extension" value="synccharts_diagram"/>
+        	      <test property="org.eclipse.core.resources.extension" value="kids"/>
                </and>
                <instanceof value="de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsAbstractNavigatorItem"/>
             </or>
@@ -479,7 +479,7 @@
                <or>
 	              <and>
     	             <instanceof value="org.eclipse.core.resources.IFile"/>
-        	         <test property="org.eclipse.core.resources.extension" value="synccharts_diagram"/>
+        	         <test property="org.eclipse.core.resources.extension" value="kids"/>
                   </and>
                   <instanceof value="de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsAbstractNavigatorItem"/>
                </or>
@@ -498,7 +498,7 @@
             <or>
 	           <and>
     	          <instanceof value="org.eclipse.core.resources.IFile"/>
-        	      <test property="org.eclipse.core.resources.extension" value="synccharts"/>
+        	      <test property="org.eclipse.core.resources.extension" value="kits"/>
                </and>
                <instanceof value="de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem"/>
             </or>

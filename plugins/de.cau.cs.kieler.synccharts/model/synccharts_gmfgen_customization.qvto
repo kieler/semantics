@@ -9,7 +9,10 @@ main() {
 	// certain special features such as attribute aware figures 
 	model.dynamicTemplates :=true;
 	model.templateDirectory := "de.cau.cs.kieler.synccharts/gmf-templates";
-	model.sameFileForDiagramAndModel := true;
+	model.sameFileForDiagramAndModel := false;
+	
+	model.domainFileExtension := "kits"; // kieler textual syntax for SyncCharts
+	model.diagramFileExtension := "kids"; // kieler diagram syntax for SyncCharts
 	
 	// some general plugin settings	
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.custom";

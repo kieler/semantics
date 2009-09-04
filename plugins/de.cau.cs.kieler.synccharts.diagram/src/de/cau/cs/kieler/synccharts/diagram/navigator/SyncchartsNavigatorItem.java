@@ -16,21 +16,24 @@ public class SyncchartsNavigatorItem extends SyncchartsAbstractNavigatorItem {
      */
     static {
         final Class[] supportedTypes = new Class[] { View.class, EObject.class };
-        Platform.getAdapterManager().registerAdapters(new IAdapterFactory() {
+        Platform.getAdapterManager().registerAdapters(
+                new IAdapterFactory() {
 
-            public Object getAdapter(Object adaptableObject, Class adapterType) {
-                if (adaptableObject instanceof de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorItem
-                        && (adapterType == View.class || adapterType == EObject.class)) {
-                    return ((de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorItem) adaptableObject)
-                            .getView();
-                }
-                return null;
-            }
+                    public Object getAdapter(Object adaptableObject,
+                            Class adapterType) {
+                        if (adaptableObject instanceof de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorItem
+                                && (adapterType == View.class || adapterType == EObject.class)) {
+                            return ((de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorItem) adaptableObject)
+                                    .getView();
+                        }
+                        return null;
+                    }
 
-            public Class[] getAdapterList() {
-                return supportedTypes;
-            }
-        }, de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorItem.class);
+                    public Class[] getAdapterList() {
+                        return supportedTypes;
+                    }
+                },
+                de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorItem.class);
     }
 
     /**

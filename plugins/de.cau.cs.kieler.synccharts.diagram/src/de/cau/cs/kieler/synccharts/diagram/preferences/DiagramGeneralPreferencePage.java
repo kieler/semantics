@@ -13,6 +13,7 @@ public class DiagramGeneralPreferencePage extends DiagramsPreferencePage {
      * @generated
      */
     public DiagramGeneralPreferencePage() {
-        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore());
+        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance()
+                .getPreferenceStore());
     }
 }

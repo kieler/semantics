@@ -57,9 +57,12 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
     protected List getSemanticChildrenList() {
         View viewObject = (View) getHost().getModel();
         List result = new LinkedList();
-        for (Iterator it = SyncchartsDiagramUpdater.getRegion_1000SemanticChildren(viewObject)
-                .iterator(); it.hasNext();) {
-            result.add(((SyncchartsNodeDescriptor) it.next()).getModelElement());
+        for (Iterator it = SyncchartsDiagramUpdater
+                .getRegion_1000SemanticChildren(viewObject).iterator(); it
+                .hasNext();) {
+            result
+                    .add(((SyncchartsNodeDescriptor) it.next())
+                            .getModelElement());
         }
         return result;
     }
@@ -98,7 +101,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
     protected Set getFeaturesToSynchronize() {
         if (myFeaturesToSynchronize == null) {
             myFeaturesToSynchronize = new HashSet();
-            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE.getRegion_InnerStates());
+            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE
+                    .getRegion_InnerStates());
         }
         return myFeaturesToSynchronize;
     }
@@ -127,7 +131,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
     /**
      * @generated
      */
-    protected boolean shouldIncludeConnection(Edge connector, Collection children) {
+    protected boolean shouldIncludeConnection(Edge connector,
+            Collection children) {
         return false;
     }
 
@@ -143,8 +148,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
 
         if (createdViews.size() > 1) {
             // perform a layout of the container
-            DeferredLayoutCommand layoutCmd = new DeferredLayoutCommand(host().getEditingDomain(),
-                    createdViews, host());
+            DeferredLayoutCommand layoutCmd = new DeferredLayoutCommand(host()
+                    .getEditingDomain(), createdViews, host());
             executeCommand(new ICommandProxy(layoutCmd));
         }
 
@@ -164,13 +169,17 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
      */
     private Collection refreshConnections() {
         Map domain2NotationMap = new HashMap();
-        Collection linkDescriptors = collectAllLinks(getDiagram(), domain2NotationMap);
+        Collection linkDescriptors = collectAllLinks(getDiagram(),
+                domain2NotationMap);
         Collection existingLinks = new LinkedList(getDiagram().getEdges());
-        for (Iterator linksIterator = existingLinks.iterator(); linksIterator.hasNext();) {
+        for (Iterator linksIterator = existingLinks.iterator(); linksIterator
+                .hasNext();) {
             Edge nextDiagramLink = (Edge) linksIterator.next();
-            int diagramLinkVisualID = SyncchartsVisualIDRegistry.getVisualID(nextDiagramLink);
+            int diagramLinkVisualID = SyncchartsVisualIDRegistry
+                    .getVisualID(nextDiagramLink);
             if (diagramLinkVisualID == -1) {
-                if (nextDiagramLink.getSource() != null && nextDiagramLink.getTarget() != null) {
+                if (nextDiagramLink.getSource() != null
+                        && nextDiagramLink.getTarget() != null) {
                     linksIterator.remove();
                 }
                 continue;
@@ -184,8 +193,10 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
                         .next();
                 if (diagramLinkObject == nextLinkDescriptor.getModelElement()
                         && diagramLinkSrc == nextLinkDescriptor.getSource()
-                        && diagramLinkDst == nextLinkDescriptor.getDestination()
-                        && diagramLinkVisualID == nextLinkDescriptor.getVisualID()) {
+                        && diagramLinkDst == nextLinkDescriptor
+                                .getDestination()
+                        && diagramLinkVisualID == nextLinkDescriptor
+                                .getVisualID()) {
                     linksIterator.remove();
                     linkDescriptorsIterator.remove();
                     break;
@@ -200,14 +211,16 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
      * @generated
      */
     private Collection collectAllLinks(View view, Map domain2NotationMap) {
-        if (!RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry.getModelID(view))) {
+        if (!RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
+                .getModelID(view))) {
             return Collections.EMPTY_LIST;
         }
         Collection result = new LinkedList();
         switch (SyncchartsVisualIDRegistry.getVisualID(view)) {
         case RegionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getRegion_1000ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater
+                        .getRegion_1000ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -217,7 +230,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
         }
         case StateEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getState_2001ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater
+                        .getState_2001ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -227,7 +241,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
         }
         case Region2EditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getRegion_3001ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater
+                        .getRegion_3001ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -237,7 +252,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
         }
         case State2EditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getState_3002ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater
+                        .getState_3002ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -247,7 +263,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
         }
         case SignalEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getSignal_3003ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater
+                        .getSignal_3003ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -257,7 +274,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
         }
         case ActionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getAction_3004ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater
+                        .getAction_3004ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -267,7 +285,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
         }
         case Action2EditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getAction_3005ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater
+                        .getAction_3005ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -277,7 +296,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
         }
         case Action3EditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getAction_3006ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater
+                        .getAction_3006ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -287,7 +307,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
         }
         case Action4EditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getAction_3008ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater
+                        .getAction_3008ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -297,7 +318,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
         }
         case TransitionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getTransition_4001ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater
+                        .getTransition_4001ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -306,11 +328,14 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
             break;
         }
         }
-        for (Iterator children = view.getChildren().iterator(); children.hasNext();) {
-            result.addAll(collectAllLinks((View) children.next(), domain2NotationMap));
+        for (Iterator children = view.getChildren().iterator(); children
+                .hasNext();) {
+            result.addAll(collectAllLinks((View) children.next(),
+                    domain2NotationMap));
         }
         for (Iterator edges = view.getSourceEdges().iterator(); edges.hasNext();) {
-            result.addAll(collectAllLinks((View) edges.next(), domain2NotationMap));
+            result.addAll(collectAllLinks((View) edges.next(),
+                    domain2NotationMap));
         }
         return result;
     }
@@ -318,23 +343,26 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
     /**
      * @generated
      */
-    private Collection createConnections(Collection linkDescriptors, Map domain2NotationMap) {
+    private Collection createConnections(Collection linkDescriptors,
+            Map domain2NotationMap) {
         List adapters = new LinkedList();
         for (Iterator linkDescriptorsIterator = linkDescriptors.iterator(); linkDescriptorsIterator
                 .hasNext();) {
             final SyncchartsLinkDescriptor nextLinkDescriptor = (SyncchartsLinkDescriptor) linkDescriptorsIterator
                     .next();
-            EditPart sourceEditPart = getEditPart(nextLinkDescriptor.getSource(),
-                    domain2NotationMap);
-            EditPart targetEditPart = getEditPart(nextLinkDescriptor.getDestination(),
-                    domain2NotationMap);
+            EditPart sourceEditPart = getEditPart(nextLinkDescriptor
+                    .getSource(), domain2NotationMap);
+            EditPart targetEditPart = getEditPart(nextLinkDescriptor
+                    .getDestination(), domain2NotationMap);
             if (sourceEditPart == null || targetEditPart == null) {
                 continue;
             }
             CreateConnectionViewRequest.ConnectionViewDescriptor descriptor = new CreateConnectionViewRequest.ConnectionViewDescriptor(
-                    nextLinkDescriptor.getSemanticAdapter(), null, ViewUtil.APPEND, false,
-                    ((IGraphicalEditPart) getHost()).getDiagramPreferencesHint());
-            CreateConnectionViewRequest ccr = new CreateConnectionViewRequest(descriptor);
+                    nextLinkDescriptor.getSemanticAdapter(), null,
+                    ViewUtil.APPEND, false, ((IGraphicalEditPart) getHost())
+                            .getDiagramPreferencesHint());
+            CreateConnectionViewRequest ccr = new CreateConnectionViewRequest(
+                    descriptor);
             ccr.setType(RequestConstants.REQ_CONNECTION_START);
             ccr.setSourceEditPart(sourceEditPart);
             sourceEditPart.getCommand(ccr);
@@ -355,10 +383,12 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
     /**
      * @generated
      */
-    private EditPart getEditPart(EObject domainModelElement, Map domain2NotationMap) {
+    private EditPart getEditPart(EObject domainModelElement,
+            Map domain2NotationMap) {
         View view = (View) domain2NotationMap.get(domainModelElement);
         if (view != null) {
-            return (EditPart) getHost().getViewer().getEditPartRegistry().get(view);
+            return (EditPart) getHost().getViewer().getEditPartRegistry().get(
+                    view);
         }
         return null;
     }

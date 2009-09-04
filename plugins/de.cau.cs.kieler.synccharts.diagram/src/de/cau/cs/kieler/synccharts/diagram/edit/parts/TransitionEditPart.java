@@ -17,7 +17,8 @@ import de.cau.cs.kieler.synccharts.diagram.edit.policies.TransitionItemSemanticE
 /**
  * @generated
  */
-public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeBranchEditPart {
+public class TransitionEditPart extends ConnectionNodeEditPart implements
+        ITreeBranchEditPart {
 
     /**
      * @generated
@@ -36,7 +37,8 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new TransitionItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
+                new TransitionItemSemanticEditPolicy());
     }
 
     /**
@@ -44,8 +46,9 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
      */
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof TransitionTriggersAndEffectsEditPart) {
-            ((TransitionTriggersAndEffectsEditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureTransitionTriggersAndEffectsFigure());
+            ((TransitionTriggersAndEffectsEditPart) childEditPart)
+                    .setLabel(getPrimaryShape()
+                            .getFigureTransitionTriggersAndEffectsFigure());
             return true;
         }
         return false;
@@ -167,8 +170,8 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
     /**
      * @generated
      */
-    static final Font FFIGURETRANSITIONTRIGGERSANDEFFECTSFIGURE_FONT = new Font(Display
-            .getCurrent(), Display.getDefault().getSystemFont().getFontData()[0].getName(), 10,
-            SWT.BOLD);
+    static final Font FFIGURETRANSITIONTRIGGERSANDEFFECTSFIGURE_FONT = new Font(
+            Display.getCurrent(), Display.getDefault().getSystemFont()
+                    .getFontData()[0].getName(), 10, SWT.BOLD);
 
 }

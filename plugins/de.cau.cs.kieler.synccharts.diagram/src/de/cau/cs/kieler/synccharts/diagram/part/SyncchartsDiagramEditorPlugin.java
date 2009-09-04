@@ -35,7 +35,8 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     /**
      * @generated
      */
-    public static final PreferencesHint DIAGRAM_PREFERENCES_HINT = new PreferencesHint(ID);
+    public static final PreferencesHint DIAGRAM_PREFERENCES_HINT = new PreferencesHint(
+            ID);
 
     /**
      * @generated
@@ -64,7 +65,8 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     public void start(BundleContext context) throws Exception {
         super.start(context);
         instance = this;
-        PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT, getPreferenceStore());
+        PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT,
+                getPreferenceStore());
         adapterFactory = createAdapterFactory();
     }
 
@@ -114,8 +116,8 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
      * @generated
      */
     public ImageDescriptor getItemImageDescriptor(Object item) {
-        IItemLabelProvider labelProvider = (IItemLabelProvider) adapterFactory.adapt(item,
-                IItemLabelProvider.class);
+        IItemLabelProvider labelProvider = (IItemLabelProvider) adapterFactory
+                .adapt(item, IItemLabelProvider.class);
         if (labelProvider != null) {
             return ExtendedImageRegistry.getInstance().getImageDescriptor(
                     labelProvider.getImage(item));
@@ -149,8 +151,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
         if (p.isAbsolute() && p.segmentCount() > 1) {
             return AbstractUIPlugin.imageDescriptorFromPlugin(p.segment(0), p
                     .removeFirstSegments(1).makeAbsolute().toString());
-        }
-        else {
+        } else {
             return getBundledImageDescriptor(p.makeAbsolute().toString());
         }
     }
@@ -206,8 +207,8 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
             error = throwable.getMessage();
         }
         getLog().log(
-                new Status(IStatus.ERROR, SyncchartsDiagramEditorPlugin.ID, IStatus.OK, error,
-                        throwable));
+                new Status(IStatus.ERROR, SyncchartsDiagramEditorPlugin.ID,
+                        IStatus.OK, error, throwable));
         debug(error, throwable);
     }
 
@@ -226,8 +227,8 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
             message = throwable.getMessage();
         }
         getLog().log(
-                new Status(IStatus.INFO, SyncchartsDiagramEditorPlugin.ID, IStatus.OK, message,
-                        throwable));
+                new Status(IStatus.INFO, SyncchartsDiagramEditorPlugin.ID,
+                        IStatus.OK, message, throwable));
         debug(message, throwable);
     }
 

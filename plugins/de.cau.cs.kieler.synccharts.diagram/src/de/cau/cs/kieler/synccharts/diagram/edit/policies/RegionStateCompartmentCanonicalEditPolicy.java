@@ -19,7 +19,8 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 /**
  * @generated
  */
-public class RegionStateCompartmentCanonicalEditPolicy extends CanonicalEditPolicy {
+public class RegionStateCompartmentCanonicalEditPolicy extends
+        CanonicalEditPolicy {
 
     /**
      * @generated
@@ -32,9 +33,12 @@ public class RegionStateCompartmentCanonicalEditPolicy extends CanonicalEditPoli
     protected List getSemanticChildrenList() {
         View viewObject = (View) getHost().getModel();
         List result = new LinkedList();
-        for (Iterator it = SyncchartsDiagramUpdater.getRegionStateCompartment_7008SemanticChildren(
-                viewObject).iterator(); it.hasNext();) {
-            result.add(((SyncchartsNodeDescriptor) it.next()).getModelElement());
+        for (Iterator it = SyncchartsDiagramUpdater
+                .getRegionStateCompartment_7008SemanticChildren(viewObject)
+                .iterator(); it.hasNext();) {
+            result
+                    .add(((SyncchartsNodeDescriptor) it.next())
+                            .getModelElement());
         }
         return result;
     }
@@ -66,7 +70,8 @@ public class RegionStateCompartmentCanonicalEditPolicy extends CanonicalEditPoli
     protected Set getFeaturesToSynchronize() {
         if (myFeaturesToSynchronize == null) {
             myFeaturesToSynchronize = new HashSet();
-            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE.getRegion_InnerStates());
+            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE
+                    .getRegion_InnerStates());
         }
         return myFeaturesToSynchronize;
     }

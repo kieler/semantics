@@ -28,7 +28,8 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 /**
  * @generated
  */
-public class SyncchartsParserProvider extends AbstractProvider implements IParserProvider {
+public class SyncchartsParserProvider extends AbstractProvider implements
+        IParserProvider {
 
     /**
      * @generated
@@ -40,7 +41,8 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
      */
     private IParser getStateLabel_5008Parser() {
         if (stateLabel_5008Parser == null) {
-            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE.getState_Label() };
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
+                    .getState_Label() };
             MessageFormatParser parser = new MessageFormatParser(features);
             stateLabel_5008Parser = parser;
         }
@@ -57,7 +59,8 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
      */
     private IParser getStateLabel_5007Parser() {
         if (stateLabel_5007Parser == null) {
-            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE.getState_Label() };
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
+                    .getState_Label() };
             MessageFormatParser parser = new MessageFormatParser(features);
             stateLabel_5007Parser = parser;
         }
@@ -204,8 +207,10 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
      * Utility method that consults ParserService
      * @generated
      */
-    public static IParser getParser(IElementType type, EObject object, String parserHint) {
-        return ParserService.getInstance().getParser(new HintAdapter(type, object, parserHint));
+    public static IParser getParser(IElementType type, EObject object,
+            String parserHint) {
+        return ParserService.getInstance().getParser(
+                new HintAdapter(type, object, parserHint));
     }
 
     /**

@@ -66,7 +66,8 @@ public class State2EditPart extends ShapeNodeEditPart {
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new State2ItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
+                new State2ItemSemanticEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -79,7 +80,8 @@ public class State2EditPart extends ShapeNodeEditPart {
         LayoutEditPolicy lep = new LayoutEditPolicy() {
 
             protected EditPolicy createChildEditPolicy(EditPart child) {
-                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                EditPolicy result = child
+                        .getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
                 if (result == null) {
                     result = new NonResizableEditPolicy();
                 }
@@ -352,8 +354,9 @@ public class State2EditPart extends ShapeNodeEditPart {
 
             fFigureStateNameFigure.setFont(FFIGURESTATENAMEFIGURE_FONT);
 
-            fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5), getMapMode()
-                    .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+            fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode()
+                    .DPtoLP(5), getMapMode().DPtoLP(10),
+                    getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureStateNameFigure);
 
@@ -390,7 +393,9 @@ public class State2EditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    static final Font FFIGURESTATENAMEFIGURE_FONT = new Font(Display.getCurrent(), Display
-            .getDefault().getSystemFont().getFontData()[0].getName(), 10, SWT.BOLD);
+    static final Font FFIGURESTATENAMEFIGURE_FONT = new Font(Display
+            .getCurrent(),
+            Display.getDefault().getSystemFont().getFontData()[0].getName(),
+            10, SWT.BOLD);
 
 }

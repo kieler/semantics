@@ -122,7 +122,8 @@ public class SyncchartsEditPartProvider extends AbstractEditPartProvider {
     public synchronized boolean provides(IOperation operation) {
         if (operation instanceof CreateGraphicEditPartOperation) {
             View view = ((IEditPartOperation) operation).getView();
-            if (!RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry.getModelID(view))) {
+            if (!RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
+                    .getModelID(view))) {
                 return false;
             }
             if (isAllowCaching() && getCachedPart(view) != null) {

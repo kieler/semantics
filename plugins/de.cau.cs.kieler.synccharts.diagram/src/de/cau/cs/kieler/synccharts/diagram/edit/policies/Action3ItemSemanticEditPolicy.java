@@ -13,7 +13,8 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 /**
  * @generated
  */
-public class Action3ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEditPolicy {
+public class Action3ItemSemanticEditPolicy extends
+        SyncchartsBaseItemSemanticEditPolicy {
 
     /**
      * @generated
@@ -27,8 +28,8 @@ public class Action3ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdi
      */
     protected Command getDestroyElementCommand(DestroyElementRequest req) {
         View view = (View) getHost().getModel();
-        CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(getEditingDomain(),
-                null);
+        CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(
+                getEditingDomain(), null);
         cmd.setTransactionNestingEnabled(false);
         EAnnotation annotation = view.getEAnnotation("Shortcut"); //$NON-NLS-1$
         if (annotation == null) {
@@ -36,8 +37,7 @@ public class Action3ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdi
             addDestroyShortcutsCommand(cmd, view);
             // delete host element
             cmd.add(new DestroyElementCommand(req));
-        }
-        else {
+        } else {
             cmd.add(new DeleteCommand(getEditingDomain(), view));
         }
         return getGEFWrapper(cmd.reduce());

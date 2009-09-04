@@ -20,7 +20,8 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 /**
  * @generated
  */
-public class SyncchartsTextNonResizableEditPolicy extends NonResizableEditPolicyEx {
+public class SyncchartsTextNonResizableEditPolicy extends
+        NonResizableEditPolicyEx {
 
     /**
      * @generated
@@ -44,8 +45,7 @@ public class SyncchartsTextNonResizableEditPolicy extends NonResizableEditPolicy
         if (getHostFigure() instanceof WrappingLabel) {
             ((WrappingLabel) getHostFigure()).setSelected(true);
             ((WrappingLabel) getHostFigure()).setFocus(true);
-        }
-        else {
+        } else {
             showSelection();
             showFocus();
         }
@@ -58,8 +58,7 @@ public class SyncchartsTextNonResizableEditPolicy extends NonResizableEditPolicy
         if (getHostFigure() instanceof WrappingLabel) {
             ((WrappingLabel) getHostFigure()).setSelected(true);
             ((WrappingLabel) getHostFigure()).setFocus(false);
-        }
-        else {
+        } else {
             hideSelection();
             addFeedback(selectionFeedbackFigure = createSelectionFeedbackFigure());
             getHostFigure().addFigureListener(getHostPositionListener());
@@ -75,8 +74,7 @@ public class SyncchartsTextNonResizableEditPolicy extends NonResizableEditPolicy
         if (getHostFigure() instanceof WrappingLabel) {
             ((WrappingLabel) getHostFigure()).setSelected(false);
             ((WrappingLabel) getHostFigure()).setFocus(false);
-        }
-        else {
+        } else {
             if (selectionFeedbackFigure != null) {
                 removeFeedback(selectionFeedbackFigure);
                 getHostFigure().removeFigureListener(getHostPositionListener());
@@ -92,8 +90,7 @@ public class SyncchartsTextNonResizableEditPolicy extends NonResizableEditPolicy
     protected void showFocus() {
         if (getHostFigure() instanceof WrappingLabel) {
             ((WrappingLabel) getHostFigure()).setFocus(true);
-        }
-        else {
+        } else {
             hideFocus();
             addFeedback(focusFeedbackFigure = createFocusFeedbackFigure());
             refreshFocusFeedback();
@@ -106,8 +103,7 @@ public class SyncchartsTextNonResizableEditPolicy extends NonResizableEditPolicy
     protected void hideFocus() {
         if (getHostFigure() instanceof WrappingLabel) {
             ((WrappingLabel) getHostFigure()).setFocus(false);
-        }
-        else {
+        } else {
             if (focusFeedbackFigure != null) {
                 removeFeedback(focusFeedbackFigure);
                 focusFeedbackFigure = null;
@@ -123,8 +119,7 @@ public class SyncchartsTextNonResizableEditPolicy extends NonResizableEditPolicy
         if (getHostFigure() instanceof Label) {
             bounds = ((Label) getHostFigure()).getTextBounds();
             bounds.intersect(getHostFigure().getBounds());
-        }
-        else {
+        } else {
             bounds = getHostFigure().getBounds().getCopy();
         }
         getHostFigure().getParent().translateToAbsolute(bounds);
@@ -139,11 +134,12 @@ public class SyncchartsTextNonResizableEditPolicy extends NonResizableEditPolicy
         if (getHostFigure() instanceof Label) {
             Label feedbackFigure = new Label();
             feedbackFigure.setOpaque(true);
-            feedbackFigure.setBackgroundColor(ColorConstants.menuBackgroundSelected);
-            feedbackFigure.setForegroundColor(ColorConstants.menuForegroundSelected);
+            feedbackFigure
+                    .setBackgroundColor(ColorConstants.menuBackgroundSelected);
+            feedbackFigure
+                    .setForegroundColor(ColorConstants.menuForegroundSelected);
             return feedbackFigure;
-        }
-        else {
+        } else {
             RectangleFigure feedbackFigure = new RectangleFigure();
             feedbackFigure.setFill(false);
             return feedbackFigure;
@@ -180,9 +176,9 @@ public class SyncchartsTextNonResizableEditPolicy extends NonResizableEditPolicy
             if (selectionFeedbackFigure instanceof Label) {
                 updateLabel((Label) selectionFeedbackFigure);
                 selectionFeedbackFigure.setBounds(getFeedbackBounds());
-            }
-            else {
-                selectionFeedbackFigure.setBounds(getFeedbackBounds().expand(5, 5));
+            } else {
+                selectionFeedbackFigure.setBounds(getFeedbackBounds().expand(5,
+                        5));
             }
         }
     }

@@ -38,6 +38,16 @@ public class Messages extends NLS {
     /**
      * @generated
      */
+    public static String SyncchartsCreationWizard_DomainModelFilePageTitle;
+
+    /**
+     * @generated
+     */
+    public static String SyncchartsCreationWizard_DomainModelFilePageDescription;
+
+    /**
+     * @generated
+     */
     public static String SyncchartsCreationWizardOpenEditorError;
 
     /**
