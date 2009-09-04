@@ -20,7 +20,6 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.dsl,
  de.cau.cs.kieler.synccharts.dsl.services,
  de.cau.cs.kieler.synccharts.dsl.kits_textonly,

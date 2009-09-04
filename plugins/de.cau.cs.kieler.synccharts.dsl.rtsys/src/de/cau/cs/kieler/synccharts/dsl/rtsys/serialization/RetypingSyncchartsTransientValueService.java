@@ -28,7 +28,6 @@ public class RetypingSyncchartsTransientValueService implements
 	 * org.eclipse.xtext.parsetree.reconstr.ITransientValueService#isMixedList
 	 * (org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature)
 	 */
-	//@Override
 	public boolean isMixedList(EObject owner, EStructuralFeature feature) {
 		if ((owner instanceof State && (
 				   feature.equals(SyncchartsPackage.eINSTANCE.getState_ParentRegion()))))
