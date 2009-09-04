@@ -1,0 +1,10 @@
+grammar de.cau.cs.kieler.synccharts.dsl.Kits with org.eclipse.xtext.common.Terminals
+//generate kits "http://www.cau.de/cs/kieler/synccharts/dsl/Kits"
+import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as sync
+
+Region returns sync::Region :
+	(innerStates+=State)
+;
+State returns sync::State:
+	label=ID (id=STRING)?(bodyText=STRING)?
+;
