@@ -11,6 +11,9 @@ import de.cau.cs.kieler.synccharts.Expression;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Variable;
 
+import org.eclipse.core.internal.registry.ConfigurationElement;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 

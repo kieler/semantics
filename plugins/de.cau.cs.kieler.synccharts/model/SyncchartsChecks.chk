@@ -20,8 +20,8 @@ context State if (type == StateType::PSEUDO) ERROR "pseudo states must not conta
 	suspensionTrigger == null;
 // ================================================================================================
 // Reference States 
-context State if (type != StateType::REFERENCE) ERROR "only reference states may contain signal renamings!" :
-	(signalRenamings == null) || (signalRenamings.size == 0);
+//context State if (type != StateType::REFERENCE) ERROR "only reference states may contain signal renamings!" :
+//	(renamings == null) || (renamings.size == 0);
 
 context State if (type != StateType::REFERENCE || type!= StateType::TEXTUAL) ERROR "Only textual or reference states may contain body text!" :
 	(bodyText == null) || (bodyText.matches("\\s*"));

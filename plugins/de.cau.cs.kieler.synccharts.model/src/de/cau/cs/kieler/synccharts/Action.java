@@ -92,7 +92,7 @@ public interface Action extends EObject {
      * @return the value of the '<em>Triggers And Effects</em>' attribute.
      * @see #setTriggersAndEffects(String)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getAction_TriggersAndEffects()
-     * @model required="true"
+     * @model
      * @generated
      */
     String getTriggersAndEffects();
@@ -120,7 +120,7 @@ public interface Action extends EObject {
      * @see #setParentStateEntryAction(State)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getAction_ParentStateEntryAction()
      * @see de.cau.cs.kieler.synccharts.State#getEntryActions
-     * @model opposite="entryActions" required="true" transient="false"
+     * @model opposite="entryActions" transient="false"
      * @generated
      */
     State getParentStateEntryAction();
@@ -148,7 +148,7 @@ public interface Action extends EObject {
      * @see #setParentStateInnerAction(State)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getAction_ParentStateInnerAction()
      * @see de.cau.cs.kieler.synccharts.State#getInnerActions
-     * @model opposite="innerActions" required="true" transient="false"
+     * @model opposite="innerActions" transient="false"
      * @generated
      */
     State getParentStateInnerAction();
@@ -176,7 +176,7 @@ public interface Action extends EObject {
      * @see #setParentStateExitAction(State)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getAction_ParentStateExitAction()
      * @see de.cau.cs.kieler.synccharts.State#getExitActions
-     * @model opposite="exitActions" required="true" transient="false"
+     * @model opposite="exitActions" transient="false"
      * @generated
      */
     State getParentStateExitAction();
@@ -256,7 +256,7 @@ public interface Action extends EObject {
      * @see #setParentStateSuspension(State)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getAction_ParentStateSuspension()
      * @see de.cau.cs.kieler.synccharts.State#getSuspensionTrigger
-     * @model opposite="suspensionTrigger" required="true" transient="false"
+     * @model opposite="suspensionTrigger" transient="false"
      * @generated
      */
     State getParentStateSuspension();

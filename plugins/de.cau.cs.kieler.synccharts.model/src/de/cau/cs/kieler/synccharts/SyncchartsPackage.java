@@ -801,32 +801,14 @@ public interface SyncchartsPackage extends EPackage {
     int SIGNAL_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.synccharts.impl.SignalRenamingImpl <em>Signal Renaming</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.synccharts.impl.RenamingImpl <em>Renaming</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.synccharts.impl.SignalRenamingImpl
-     * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getSignalRenaming()
+     * @see de.cau.cs.kieler.synccharts.impl.RenamingImpl
+     * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getRenaming()
      * @generated
      */
-    int SIGNAL_RENAMING = 10;
-
-    /**
-     * The feature id for the '<em><b>Old Signal</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SIGNAL_RENAMING__OLD_SIGNAL = 0;
-
-    /**
-     * The feature id for the '<em><b>New Signal</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SIGNAL_RENAMING__NEW_SIGNAL = 1;
+    int RENAMING = 10;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -835,16 +817,34 @@ public interface SyncchartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SIGNAL_RENAMING__PARENT_STATE = 2;
+    int RENAMING__PARENT_STATE = 0;
 
     /**
-     * The number of structural features of the '<em>Signal Renaming</em>' class.
+     * The feature id for the '<em><b>Old ID</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SIGNAL_RENAMING_FEATURE_COUNT = 3;
+    int RENAMING__OLD_ID = 1;
+
+    /**
+     * The feature id for the '<em><b>New ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RENAMING__NEW_ID = 2;
+
+    /**
+     * The number of structural features of the '<em>Renaming</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RENAMING_FEATURE_COUNT = 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.synccharts.impl.StateImpl <em>State</em>}' class.
@@ -929,13 +929,13 @@ public interface SyncchartsPackage extends EPackage {
     int STATE__EXIT_ACTIONS = 7;
 
     /**
-     * The feature id for the '<em><b>Signal Renamings</b></em>' containment reference list.
+     * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__SIGNAL_RENAMINGS = 8;
+    int STATE__RENAMINGS = 8;
 
     /**
      * The feature id for the '<em><b>Suspension Trigger</b></em>' containment reference.
@@ -1830,47 +1830,47 @@ public interface SyncchartsPackage extends EPackage {
     EReference getSignalReference_Signal();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.SignalRenaming <em>Signal Renaming</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.Renaming <em>Renaming</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Signal Renaming</em>'.
-     * @see de.cau.cs.kieler.synccharts.SignalRenaming
+     * @return the meta object for class '<em>Renaming</em>'.
+     * @see de.cau.cs.kieler.synccharts.Renaming
      * @generated
      */
-    EClass getSignalRenaming();
+    EClass getRenaming();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.SignalRenaming#getOldSignal <em>Old Signal</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Old Signal</em>'.
-     * @see de.cau.cs.kieler.synccharts.SignalRenaming#getOldSignal()
-     * @see #getSignalRenaming()
-     * @generated
-     */
-    EReference getSignalRenaming_OldSignal();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.SignalRenaming#getNewSignal <em>New Signal</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>New Signal</em>'.
-     * @see de.cau.cs.kieler.synccharts.SignalRenaming#getNewSignal()
-     * @see #getSignalRenaming()
-     * @generated
-     */
-    EReference getSignalRenaming_NewSignal();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.synccharts.SignalRenaming#getParentState <em>Parent State</em>}'.
+     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.synccharts.Renaming#getParentState <em>Parent State</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Parent State</em>'.
-     * @see de.cau.cs.kieler.synccharts.SignalRenaming#getParentState()
-     * @see #getSignalRenaming()
+     * @see de.cau.cs.kieler.synccharts.Renaming#getParentState()
+     * @see #getRenaming()
      * @generated
      */
-    EReference getSignalRenaming_ParentState();
+    EReference getRenaming_ParentState();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.Renaming#getOldID <em>Old ID</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Old ID</em>'.
+     * @see de.cau.cs.kieler.synccharts.Renaming#getOldID()
+     * @see #getRenaming()
+     * @generated
+     */
+    EAttribute getRenaming_OldID();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.Renaming#getNewID <em>New ID</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>New ID</em>'.
+     * @see de.cau.cs.kieler.synccharts.Renaming#getNewID()
+     * @see #getRenaming()
+     * @generated
+     */
+    EAttribute getRenaming_NewID();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.State <em>State</em>}'.
@@ -1971,15 +1971,15 @@ public interface SyncchartsPackage extends EPackage {
     EReference getState_ExitActions();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.State#getSignalRenamings <em>Signal Renamings</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.State#getRenamings <em>Renamings</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Signal Renamings</em>'.
-     * @see de.cau.cs.kieler.synccharts.State#getSignalRenamings()
+     * @return the meta object for the containment reference list '<em>Renamings</em>'.
+     * @see de.cau.cs.kieler.synccharts.State#getRenamings()
      * @see #getState()
      * @generated
      */
-    EReference getState_SignalRenamings();
+    EReference getState_Renamings();
 
     /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.State#getSuspensionTrigger <em>Suspension Trigger</em>}'.
@@ -2680,30 +2680,14 @@ public interface SyncchartsPackage extends EPackage {
         EReference SIGNAL_REFERENCE__SIGNAL = eINSTANCE.getSignalReference_Signal();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.impl.SignalRenamingImpl <em>Signal Renaming</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.impl.RenamingImpl <em>Renaming</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.synccharts.impl.SignalRenamingImpl
-         * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getSignalRenaming()
+         * @see de.cau.cs.kieler.synccharts.impl.RenamingImpl
+         * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getRenaming()
          * @generated
          */
-        EClass SIGNAL_RENAMING = eINSTANCE.getSignalRenaming();
-
-        /**
-         * The meta object literal for the '<em><b>Old Signal</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SIGNAL_RENAMING__OLD_SIGNAL = eINSTANCE.getSignalRenaming_OldSignal();
-
-        /**
-         * The meta object literal for the '<em><b>New Signal</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SIGNAL_RENAMING__NEW_SIGNAL = eINSTANCE.getSignalRenaming_NewSignal();
+        EClass RENAMING = eINSTANCE.getRenaming();
 
         /**
          * The meta object literal for the '<em><b>Parent State</b></em>' container reference feature.
@@ -2711,7 +2695,23 @@ public interface SyncchartsPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference SIGNAL_RENAMING__PARENT_STATE = eINSTANCE.getSignalRenaming_ParentState();
+        EReference RENAMING__PARENT_STATE = eINSTANCE.getRenaming_ParentState();
+
+        /**
+         * The meta object literal for the '<em><b>Old ID</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute RENAMING__OLD_ID = eINSTANCE.getRenaming_OldID();
+
+        /**
+         * The meta object literal for the '<em><b>New ID</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute RENAMING__NEW_ID = eINSTANCE.getRenaming_NewID();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.impl.StateImpl <em>State</em>}' class.
@@ -2788,12 +2788,12 @@ public interface SyncchartsPackage extends EPackage {
         EReference STATE__EXIT_ACTIONS = eINSTANCE.getState_ExitActions();
 
         /**
-         * The meta object literal for the '<em><b>Signal Renamings</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Renamings</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference STATE__SIGNAL_RENAMINGS = eINSTANCE.getState_SignalRenamings();
+        EReference STATE__RENAMINGS = eINSTANCE.getState_Renamings();
 
         /**
          * The meta object literal for the '<em><b>Suspension Trigger</b></em>' containment reference feature.

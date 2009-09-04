@@ -8,6 +8,7 @@ package de.cau.cs.kieler.synccharts.impl;
 
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.Renaming;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.SignalRenaming;
 import de.cau.cs.kieler.synccharts.State;
@@ -47,7 +48,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.StateImpl#getEntryActions <em>Entry Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.StateImpl#getInnerActions <em>Inner Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.StateImpl#getExitActions <em>Exit Actions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.impl.StateImpl#getSignalRenamings <em>Signal Renamings</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.impl.StateImpl#getRenamings <em>Renamings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.StateImpl#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.StateImpl#getParentRegion <em>Parent Region</em>}</li>
@@ -171,14 +172,14 @@ public class StateImpl extends EObjectImpl implements State {
     protected EList<Action> exitActions;
 
     /**
-     * The cached value of the '{@link #getSignalRenamings() <em>Signal Renamings</em>}' containment reference list.
+     * The cached value of the '{@link #getRenamings() <em>Renamings</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getSignalRenamings()
+     * @see #getRenamings()
      * @generated
      * @ordered
      */
-    protected EList<SignalRenaming> signalRenamings;
+    protected EList<Renaming> renamings;
 
     /**
      * The cached value of the '{@link #getSuspensionTrigger() <em>Suspension Trigger</em>}' containment reference.
@@ -407,11 +408,11 @@ public class StateImpl extends EObjectImpl implements State {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<SignalRenaming> getSignalRenamings() {
-        if (signalRenamings == null) {
-            signalRenamings = new EObjectContainmentWithInverseEList<SignalRenaming>(SignalRenaming.class, this, SyncchartsPackage.STATE__SIGNAL_RENAMINGS, SyncchartsPackage.SIGNAL_RENAMING__PARENT_STATE);
+    public EList<Renaming> getRenamings() {
+        if (renamings == null) {
+            renamings = new EObjectContainmentWithInverseEList<Renaming>(Renaming.class, this, SyncchartsPackage.STATE__RENAMINGS, SyncchartsPackage.RENAMING__PARENT_STATE);
         }
-        return signalRenamings;
+        return renamings;
     }
 
     /**
@@ -592,8 +593,8 @@ public class StateImpl extends EObjectImpl implements State {
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getInnerActions()).basicAdd(otherEnd, msgs);
             case SyncchartsPackage.STATE__EXIT_ACTIONS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getExitActions()).basicAdd(otherEnd, msgs);
-            case SyncchartsPackage.STATE__SIGNAL_RENAMINGS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getSignalRenamings()).basicAdd(otherEnd, msgs);
+            case SyncchartsPackage.STATE__RENAMINGS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getRenamings()).basicAdd(otherEnd, msgs);
             case SyncchartsPackage.STATE__SUSPENSION_TRIGGER:
                 if (suspensionTrigger != null)
                     msgs = ((InternalEObject)suspensionTrigger).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.STATE__SUSPENSION_TRIGGER, null, msgs);
@@ -626,8 +627,8 @@ public class StateImpl extends EObjectImpl implements State {
                 return ((InternalEList<?>)getInnerActions()).basicRemove(otherEnd, msgs);
             case SyncchartsPackage.STATE__EXIT_ACTIONS:
                 return ((InternalEList<?>)getExitActions()).basicRemove(otherEnd, msgs);
-            case SyncchartsPackage.STATE__SIGNAL_RENAMINGS:
-                return ((InternalEList<?>)getSignalRenamings()).basicRemove(otherEnd, msgs);
+            case SyncchartsPackage.STATE__RENAMINGS:
+                return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
             case SyncchartsPackage.STATE__SUSPENSION_TRIGGER:
                 return basicSetSuspensionTrigger(null, msgs);
             case SyncchartsPackage.STATE__OUTGOING_TRANSITIONS:
@@ -676,8 +677,8 @@ public class StateImpl extends EObjectImpl implements State {
                 return getInnerActions();
             case SyncchartsPackage.STATE__EXIT_ACTIONS:
                 return getExitActions();
-            case SyncchartsPackage.STATE__SIGNAL_RENAMINGS:
-                return getSignalRenamings();
+            case SyncchartsPackage.STATE__RENAMINGS:
+                return getRenamings();
             case SyncchartsPackage.STATE__SUSPENSION_TRIGGER:
                 return getSuspensionTrigger();
             case SyncchartsPackage.STATE__OUTGOING_TRANSITIONS:
@@ -732,9 +733,9 @@ public class StateImpl extends EObjectImpl implements State {
                 getExitActions().clear();
                 getExitActions().addAll((Collection<? extends Action>)newValue);
                 return;
-            case SyncchartsPackage.STATE__SIGNAL_RENAMINGS:
-                getSignalRenamings().clear();
-                getSignalRenamings().addAll((Collection<? extends SignalRenaming>)newValue);
+            case SyncchartsPackage.STATE__RENAMINGS:
+                getRenamings().clear();
+                getRenamings().addAll((Collection<? extends Renaming>)newValue);
                 return;
             case SyncchartsPackage.STATE__SUSPENSION_TRIGGER:
                 setSuspensionTrigger((Action)newValue);
@@ -791,8 +792,8 @@ public class StateImpl extends EObjectImpl implements State {
             case SyncchartsPackage.STATE__EXIT_ACTIONS:
                 getExitActions().clear();
                 return;
-            case SyncchartsPackage.STATE__SIGNAL_RENAMINGS:
-                getSignalRenamings().clear();
+            case SyncchartsPackage.STATE__RENAMINGS:
+                getRenamings().clear();
                 return;
             case SyncchartsPackage.STATE__SUSPENSION_TRIGGER:
                 setSuspensionTrigger((Action)null);
@@ -840,8 +841,8 @@ public class StateImpl extends EObjectImpl implements State {
                 return innerActions != null && !innerActions.isEmpty();
             case SyncchartsPackage.STATE__EXIT_ACTIONS:
                 return exitActions != null && !exitActions.isEmpty();
-            case SyncchartsPackage.STATE__SIGNAL_RENAMINGS:
-                return signalRenamings != null && !signalRenamings.isEmpty();
+            case SyncchartsPackage.STATE__RENAMINGS:
+                return renamings != null && !renamings.isEmpty();
             case SyncchartsPackage.STATE__SUSPENSION_TRIGGER:
                 return suspensionTrigger != null;
             case SyncchartsPackage.STATE__OUTGOING_TRANSITIONS:

@@ -107,13 +107,13 @@ public interface SyncchartsFactory extends EFactory {
     SignalReference createSignalReference();
 
     /**
-     * Returns a new object of class '<em>Signal Renaming</em>'.
+     * Returns a new object of class '<em>Renaming</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Signal Renaming</em>'.
+     * @return a new object of class '<em>Renaming</em>'.
      * @generated
      */
-    SignalRenaming createSignalRenaming();
+    Renaming createRenaming();
 
     /**
      * Returns a new object of class '<em>State</em>'.

@@ -41,7 +41,7 @@ public interface Expression extends EObject {
      * @see #setParentAction(Action)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getExpression_ParentAction()
      * @see de.cau.cs.kieler.synccharts.Action#getTrigger
-     * @model opposite="trigger" required="true" transient="false"
+     * @model opposite="trigger" transient="false"
      * @generated
      */
     Action getParentAction();
@@ -69,7 +69,7 @@ public interface Expression extends EObject {
      * @see #setParentEmisson(Emission)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getExpression_ParentEmisson()
      * @see de.cau.cs.kieler.synccharts.Emission#getNewValue
-     * @model opposite="newValue" required="true" transient="false"
+     * @model opposite="newValue" transient="false"
      * @generated
      */
     Emission getParentEmisson();
@@ -97,7 +97,7 @@ public interface Expression extends EObject {
      * @see #setParentAssignment(Assignment)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getExpression_ParentAssignment()
      * @see de.cau.cs.kieler.synccharts.Assignment#getExpression
-     * @model opposite="expression" required="true" transient="false"
+     * @model opposite="expression" transient="false"
      * @generated
      */
     Assignment getParentAssignment();
@@ -125,7 +125,7 @@ public interface Expression extends EObject {
      * @see #setParentExpression(ComplexExpression)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getExpression_ParentExpression()
      * @see de.cau.cs.kieler.synccharts.ComplexExpression#getSubExpressions
-     * @model opposite="subExpressions" required="true" transient="false"
+     * @model opposite="subExpressions" transient="false"
      * @generated
      */
     ComplexExpression getParentExpression();

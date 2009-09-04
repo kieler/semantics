@@ -16,6 +16,7 @@ import de.cau.cs.kieler.synccharts.Expression;
 import de.cau.cs.kieler.synccharts.HostCode;
 import de.cau.cs.kieler.synccharts.OperatorType;
 import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.Renaming;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.SignalReference;
 import de.cau.cs.kieler.synccharts.SignalRenaming;
@@ -120,7 +121,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass signalRenamingEClass = null;
+    private EClass renamingEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -672,8 +673,8 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getSignalRenaming() {
-        return signalRenamingEClass;
+    public EClass getRenaming() {
+        return renamingEClass;
     }
 
     /**
@@ -681,8 +682,8 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getSignalRenaming_OldSignal() {
-        return (EReference)signalRenamingEClass.getEStructuralFeatures().get(0);
+    public EReference getRenaming_ParentState() {
+        return (EReference)renamingEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -690,8 +691,8 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getSignalRenaming_NewSignal() {
-        return (EReference)signalRenamingEClass.getEStructuralFeatures().get(1);
+    public EAttribute getRenaming_OldID() {
+        return (EAttribute)renamingEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -699,8 +700,8 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getSignalRenaming_ParentState() {
-        return (EReference)signalRenamingEClass.getEStructuralFeatures().get(2);
+    public EAttribute getRenaming_NewID() {
+        return (EAttribute)renamingEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -789,7 +790,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getState_SignalRenamings() {
+    public EReference getState_Renamings() {
         return (EReference)stateEClass.getEStructuralFeatures().get(8);
     }
 
@@ -1120,10 +1121,10 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         signalReferenceEClass = createEClass(SIGNAL_REFERENCE);
         createEReference(signalReferenceEClass, SIGNAL_REFERENCE__SIGNAL);
 
-        signalRenamingEClass = createEClass(SIGNAL_RENAMING);
-        createEReference(signalRenamingEClass, SIGNAL_RENAMING__OLD_SIGNAL);
-        createEReference(signalRenamingEClass, SIGNAL_RENAMING__NEW_SIGNAL);
-        createEReference(signalRenamingEClass, SIGNAL_RENAMING__PARENT_STATE);
+        renamingEClass = createEClass(RENAMING);
+        createEReference(renamingEClass, RENAMING__PARENT_STATE);
+        createEAttribute(renamingEClass, RENAMING__OLD_ID);
+        createEAttribute(renamingEClass, RENAMING__NEW_ID);
 
         stateEClass = createEClass(STATE);
         createEAttribute(stateEClass, STATE__ID);
@@ -1134,7 +1135,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         createEReference(stateEClass, STATE__ENTRY_ACTIONS);
         createEReference(stateEClass, STATE__INNER_ACTIONS);
         createEReference(stateEClass, STATE__EXIT_ACTIONS);
-        createEReference(stateEClass, STATE__SIGNAL_RENAMINGS);
+        createEReference(stateEClass, STATE__RENAMINGS);
         createEReference(stateEClass, STATE__SUSPENSION_TRIGGER);
         createEReference(stateEClass, STATE__OUTGOING_TRANSITIONS);
         createEReference(stateEClass, STATE__PARENT_REGION);
@@ -1213,13 +1214,13 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getAction_Effects(), this.getEffect(), this.getEffect_ParentEAction(), "effects", null, 0, -1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getAction_Trigger(), this.getExpression(), this.getExpression_ParentAction(), "trigger", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getAction_TriggersAndEffects(), ecorePackage.getEString(), "triggersAndEffects", null, 1, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getAction_ParentStateEntryAction(), this.getState(), this.getState_EntryActions(), "parentStateEntryAction", null, 1, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getAction_ParentStateInnerAction(), this.getState(), this.getState_InnerActions(), "parentStateInnerAction", null, 1, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getAction_ParentStateExitAction(), this.getState(), this.getState_ExitActions(), "parentStateExitAction", null, 1, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getAction_TriggersAndEffects(), ecorePackage.getEString(), "triggersAndEffects", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAction_ParentStateEntryAction(), this.getState(), this.getState_EntryActions(), "parentStateEntryAction", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAction_ParentStateInnerAction(), this.getState(), this.getState_InnerActions(), "parentStateInnerAction", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAction_ParentStateExitAction(), this.getState(), this.getState_ExitActions(), "parentStateExitAction", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAction_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAction_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getAction_ParentStateSuspension(), this.getState(), this.getState_SuspensionTrigger(), "parentStateSuspension", null, 1, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAction_ParentStateSuspension(), this.getState(), this.getState_SuspensionTrigger(), "parentStateSuspension", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getAssignment_Variable(), this.getVariable(), null, "variable", null, 1, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1237,10 +1238,10 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         initEReference(getEmission_NewValue(), this.getExpression(), this.getExpression_ParentEmisson(), "newValue", null, 0, 1, Emission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getExpression_ParentAction(), this.getAction(), this.getAction_Trigger(), "parentAction", null, 1, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getExpression_ParentEmisson(), this.getEmission(), this.getEmission_NewValue(), "parentEmisson", null, 1, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getExpression_ParentAssignment(), this.getAssignment(), this.getAssignment_Expression(), "parentAssignment", null, 1, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getExpression_ParentExpression(), this.getComplexExpression(), this.getComplexExpression_SubExpressions(), "parentExpression", null, 1, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getExpression_ParentAction(), this.getAction(), this.getAction_Trigger(), "parentAction", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getExpression_ParentEmisson(), this.getEmission(), this.getEmission_NewValue(), "parentEmisson", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getExpression_ParentAssignment(), this.getAssignment(), this.getAssignment_Expression(), "parentAssignment", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getExpression_ParentExpression(), this.getComplexExpression(), this.getComplexExpression_SubExpressions(), "parentExpression", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(hostCodeEClass, HostCode.class, "HostCode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getHostCode_Code(), ecorePackage.getEString(), "code", null, 1, 1, HostCode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1255,7 +1256,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
 
         initEClass(signalEClass, Signal.class, "Signal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSignal_Value(), ecorePackage.getEObject(), null, "value", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSignal_ParentState(), this.getState(), this.getState_Signals(), "parentState", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSignal_ParentState(), this.getState(), this.getState_Signals(), "parentState", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSignal_IsLocal(), ecorePackage.getEBoolean(), "isLocal", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSignal_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSignal_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1266,13 +1267,13 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         initEClass(signalReferenceEClass, SignalReference.class, "SignalReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSignalReference_Signal(), this.getSignal(), null, "signal", null, 1, 1, SignalReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(signalRenamingEClass, SignalRenaming.class, "SignalRenaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getSignalRenaming_OldSignal(), this.getSignal(), null, "oldSignal", null, 1, 1, SignalRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSignalRenaming_NewSignal(), this.getSignal(), null, "newSignal", null, 1, 1, SignalRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSignalRenaming_ParentState(), this.getState(), this.getState_SignalRenamings(), "parentState", null, 1, 1, SignalRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(renamingEClass, Renaming.class, "Renaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getRenaming_ParentState(), this.getState(), this.getState_Renamings(), "parentState", null, 1, 1, Renaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getRenaming_OldID(), ecorePackage.getEString(), "oldID", null, 1, 1, Renaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getRenaming_NewID(), ecorePackage.getEString(), "newID", null, 1, 1, Renaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(stateEClass, State.class, "State", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getState_Id(), ecorePackage.getEString(), "id", null, 1, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getState_Id(), ecorePackage.getEString(), "id", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getState_Label(), ecorePackage.getEString(), "label", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getState_Type(), this.getStateType(), "type", null, 1, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_Signals(), this.getSignal(), this.getSignal_ParentState(), "signals", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1280,7 +1281,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         initEReference(getState_EntryActions(), this.getAction(), this.getAction_ParentStateEntryAction(), "entryActions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_InnerActions(), this.getAction(), this.getAction_ParentStateInnerAction(), "innerActions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_ExitActions(), this.getAction(), this.getAction_ParentStateExitAction(), "exitActions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getState_SignalRenamings(), this.getSignalRenaming(), this.getSignalRenaming_ParentState(), "signalRenamings", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getState_Renamings(), this.getRenaming(), this.getRenaming_ParentState(), "renamings", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_SuspensionTrigger(), this.getAction(), this.getAction_ParentStateSuspension(), "suspensionTrigger", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_OutgoingTransitions(), this.getTransition(), this.getTransition_SourceState(), "outgoingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_ParentRegion(), this.getRegion(), this.getRegion_InnerStates(), "parentRegion", null, 1, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1296,7 +1297,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         initEAttribute(getTransition_IsHistory(), ecorePackage.getEBoolean(), "isHistory", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(valuedObjectEClass, ValuedObject.class, "ValuedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getValuedObject_Name(), ecorePackage.getEString(), "name", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getValuedObject_Name(), ecorePackage.getEString(), "name", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_Type(), this.getValueType(), "type", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_InitialValue(), ecorePackage.getEString(), "initialValue", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_HostType(), ecorePackage.getEString(), "hostType", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1313,6 +1314,10 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         addEEnumLiteral(combineOperatorEEnum, CombineOperator.NONE);
         addEEnumLiteral(combineOperatorEEnum, CombineOperator.ADD);
         addEEnumLiteral(combineOperatorEEnum, CombineOperator.MULT);
+        addEEnumLiteral(combineOperatorEEnum, CombineOperator.MAX);
+        addEEnumLiteral(combineOperatorEEnum, CombineOperator.MIN);
+        addEEnumLiteral(combineOperatorEEnum, CombineOperator.OR);
+        addEEnumLiteral(combineOperatorEEnum, CombineOperator.AND);
         addEEnumLiteral(combineOperatorEEnum, CombineOperator.HOST);
 
         initEEnum(operatorTypeEEnum, OperatorType.class, "OperatorType");
@@ -1348,7 +1353,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         addEEnumLiteral(valueTypeEEnum, ValueType.BOOL);
         addEEnumLiteral(valueTypeEEnum, ValueType.UNSIGNED);
         addEEnumLiteral(valueTypeEEnum, ValueType.INTEGER);
-        addEEnumLiteral(valueTypeEEnum, ValueType.DOUBLE);
+        addEEnumLiteral(valueTypeEEnum, ValueType.FLOAT);
         addEEnumLiteral(valueTypeEEnum, ValueType.HOST);
 
         // Create resource

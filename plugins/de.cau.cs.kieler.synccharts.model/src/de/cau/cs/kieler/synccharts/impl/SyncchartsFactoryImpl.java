@@ -70,7 +70,7 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
             case SyncchartsPackage.REGION: return createRegion();
             case SyncchartsPackage.SIGNAL: return createSignal();
             case SyncchartsPackage.SIGNAL_REFERENCE: return createSignalReference();
-            case SyncchartsPackage.SIGNAL_RENAMING: return createSignalRenaming();
+            case SyncchartsPackage.RENAMING: return createRenaming();
             case SyncchartsPackage.STATE: return createState();
             case SyncchartsPackage.TRANSITION: return createTransition();
             case SyncchartsPackage.VALUED_OBJECT: return createValuedObject();
@@ -222,9 +222,9 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
      * <!-- end-user-doc -->
      * @generated
      */
-    public SignalRenaming createSignalRenaming() {
-        SignalRenamingImpl signalRenaming = new SignalRenamingImpl();
-        return signalRenaming;
+    public Renaming createRenaming() {
+        RenamingImpl renaming = new RenamingImpl();
+        return renaming;
     }
 
     /**

@@ -112,8 +112,8 @@ public class SyncchartsAdapterFactory extends AdapterFactoryImpl {
                 return createSignalReferenceAdapter();
             }
             @Override
-            public Adapter caseSignalRenaming(SignalRenaming object) {
-                return createSignalRenamingAdapter();
+            public Adapter caseRenaming(Renaming object) {
+                return createRenamingAdapter();
             }
             @Override
             public Adapter caseState(State object) {
@@ -296,16 +296,16 @@ public class SyncchartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.SignalRenaming <em>Signal Renaming</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.Renaming <em>Renaming</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.synccharts.SignalRenaming
+     * @see de.cau.cs.kieler.synccharts.Renaming
      * @generated
      */
-    public Adapter createSignalRenamingAdapter() {
+    public Adapter createRenamingAdapter() {
         return null;
     }
 

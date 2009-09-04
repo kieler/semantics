@@ -8,18 +8,17 @@
         eType="#//Effect" containment="true" eOpposite="#//Effect/parentEAction"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="#//Expression"
         containment="true" eOpposite="#//Expression/parentAction"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="triggersAndEffects" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="triggersAndEffects" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentStateEntryAction"
-        lowerBound="1" eType="#//State" eOpposite="#//State/entryActions"/>
+        eType="#//State" eOpposite="#//State/entryActions"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentStateInnerAction"
-        lowerBound="1" eType="#//State" eOpposite="#//State/innerActions"/>
+        eType="#//State" eOpposite="#//State/innerActions"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentStateExitAction"
-        lowerBound="1" eType="#//State" eOpposite="#//State/exitActions"/>
+        eType="#//State" eOpposite="#//State/exitActions"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImmediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentStateSuspension"
-        lowerBound="1" eType="#//State" eOpposite="#//State/suspensionTrigger"/>
+        eType="#//State" eOpposite="#//State/suspensionTrigger"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Effect">
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
@@ -54,14 +53,14 @@
         containment="true" eOpposite="#//Expression/parentEmisson"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Expression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parentAction" lowerBound="1"
-        eType="#//Action" eOpposite="#//Action/trigger"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parentEmisson" lowerBound="1"
-        eType="#//Emission" eOpposite="#//Emission/newValue"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parentAssignment" lowerBound="1"
-        eType="#//Assignment" eOpposite="#//Assignment/expression"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parentExpression" lowerBound="1"
-        eType="#//ComplexExpression" eOpposite="#//ComplexExpression/subExpressions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentAction" eType="#//Action"
+        eOpposite="#//Action/trigger"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentEmisson" eType="#//Emission"
+        eOpposite="#//Emission/newValue"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentAssignment" eType="#//Assignment"
+        eOpposite="#//Assignment/expression"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentExpression" eType="#//ComplexExpression"
+        eOpposite="#//ComplexExpression/subExpressions"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HostCode" eSuperTypes="#//Effect #//Expression">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -98,8 +97,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Signal" eSuperTypes="#//ValuedObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" lowerBound="1"
-        eType="#//State" eOpposite="#//State/signals"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"
+        eOpposite="#//State/signals"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isLocal" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInput" lowerBound="1"
@@ -123,7 +122,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="newID" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="State">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//StateType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
@@ -169,7 +168,8 @@
     <eLiterals name="NORMALTERMINATION" value="2" literal="NORMALTERMINATION"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObject">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ValueType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="initialValue" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

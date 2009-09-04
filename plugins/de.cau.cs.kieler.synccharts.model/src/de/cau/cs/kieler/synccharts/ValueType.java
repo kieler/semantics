@@ -63,16 +63,14 @@ public enum ValueType implements Enumerator {
     INTEGER(3, "INTEGER", "INTEGER"),
 
     /**
-     * The '<em><b>DOUBLE</b></em>' literal object.
+     * The '<em><b>FLOAT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #DOUBLE_VALUE
+     * @see #FLOAT_VALUE
      * @generated
      * @ordered
      */
-    DOUBLE(4, "DOUBLE", "DOUBLE"),
-
-    /**
+    FLOAT(4, "FLOAT", "FLOAT"), /**
      * The '<em><b>HOST</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -143,19 +141,19 @@ public enum ValueType implements Enumerator {
     public static final int INTEGER_VALUE = 3;
 
     /**
-     * The '<em><b>DOUBLE</b></em>' literal value.
+     * The '<em><b>FLOAT</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of '<em><b>DOUBLE</b></em>' literal object isn't clear,
+     * If the meaning of '<em><b>FLOAT</b></em>' literal object isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @see #DOUBLE
+     * @see #FLOAT
      * @model
      * @generated
      * @ordered
      */
-    public static final int DOUBLE_VALUE = 4;
+    public static final int FLOAT_VALUE = 4;
 
     /**
      * The '<em><b>HOST</b></em>' literal value.
@@ -184,7 +182,7 @@ public enum ValueType implements Enumerator {
             BOOL,
             UNSIGNED,
             INTEGER,
-            DOUBLE,
+            FLOAT,
             HOST,
         };
 
@@ -240,7 +238,7 @@ public enum ValueType implements Enumerator {
             case BOOL_VALUE: return BOOL;
             case UNSIGNED_VALUE: return UNSIGNED;
             case INTEGER_VALUE: return INTEGER;
-            case DOUBLE_VALUE: return DOUBLE;
+            case FLOAT_VALUE: return FLOAT;
         }
         return null;
     }

@@ -71,7 +71,7 @@ public interface Signal extends ValuedObject {
      * @see #setParentState(State)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getSignal_ParentState()
      * @see de.cau.cs.kieler.synccharts.State#getSignals
-     * @model opposite="signals" required="true" transient="false"
+     * @model opposite="signals" transient="false"
      * @generated
      */
     State getParentState();

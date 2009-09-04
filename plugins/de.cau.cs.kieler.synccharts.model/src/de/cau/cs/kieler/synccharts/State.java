@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.synccharts.State#getEntryActions <em>Entry Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.State#getInnerActions <em>Inner Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.State#getExitActions <em>Exit Actions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.State#getSignalRenamings <em>Signal Renamings</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.State#getRenamings <em>Renamings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.State#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.State#getParentRegion <em>Parent Region</em>}</li>
@@ -52,7 +52,7 @@ public interface State extends EObject {
      * @return the value of the '<em>Id</em>' attribute.
      * @see #setId(String)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getState_Id()
-     * @model required="true"
+     * @model
      * @generated
      */
     String getId();
@@ -213,22 +213,22 @@ public interface State extends EObject {
     EList<Action> getExitActions();
 
     /**
-     * Returns the value of the '<em><b>Signal Renamings</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.synccharts.SignalRenaming}.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.SignalRenaming#getParentState <em>Parent State</em>}'.
+     * Returns the value of the '<em><b>Renamings</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.synccharts.Renaming}.
+     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.Renaming#getParentState <em>Parent State</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Signal Renamings</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Renamings</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Signal Renamings</em>' containment reference list.
-     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getState_SignalRenamings()
-     * @see de.cau.cs.kieler.synccharts.SignalRenaming#getParentState
+     * @return the value of the '<em>Renamings</em>' containment reference list.
+     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getState_Renamings()
+     * @see de.cau.cs.kieler.synccharts.Renaming#getParentState
      * @model opposite="parentState" containment="true"
      * @generated
      */
-    EList<SignalRenaming> getSignalRenamings();
+    EList<Renaming> getRenamings();
 
     /**
      * Returns the value of the '<em><b>Suspension Trigger</b></em>' containment reference.

@@ -39,7 +39,7 @@ public interface ValuedObject extends EObject {
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getValuedObject_Name()
-     * @model required="true"
+     * @model id="true" required="true"
      * @generated
      */
     String getName();
