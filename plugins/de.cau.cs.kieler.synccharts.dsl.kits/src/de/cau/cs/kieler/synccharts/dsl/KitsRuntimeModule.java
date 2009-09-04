@@ -3,9 +3,22 @@
  */
 package de.cau.cs.kieler.synccharts.dsl;
 
+import org.eclipse.xtext.resource.IFragmentProvider;
+
+import de.cau.cs.kieler.synccharts.dsl.kits.resource.KitsFragmentProvider;
+
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class KitsRuntimeModule extends de.cau.cs.kieler.synccharts.dsl.AbstractKitsRuntimeModule {
+public class KitsRuntimeModule extends
+		de.cau.cs.kieler.synccharts.dsl.AbstractKitsRuntimeModule {
+	@Override
+	/**
+	 * bind the fragment provider
+	 * it is used for the Glue code -oba
+	 */
+	public Class<? extends IFragmentProvider> bindIFragmentProvider() {
+		return KitsFragmentProvider.class;
+	}
 
 }
