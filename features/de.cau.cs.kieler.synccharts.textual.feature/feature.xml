@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.synccharts.dsl.textual"
+      id="de.cau.cs.kieler.synccharts.textual"
       label="Textual Editing"
       version="0.1.0.vqualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
