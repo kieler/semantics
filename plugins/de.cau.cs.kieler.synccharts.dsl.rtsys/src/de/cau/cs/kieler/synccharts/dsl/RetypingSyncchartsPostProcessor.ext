@@ -14,7 +14,7 @@ import synccharts;
 //;
 
 cached getClass_Feature(ecore::EPackage this, String className, String featureName) :
-	this.getEClassifier(className)).getEStructuralFeature(featureName))
+	((ecore::EClass)this.getEClassifier(className)).getEStructuralFeature(featureName)
 	
 ;
 //setFeature2Feature(ecore::EStructuralFeature feature, ecore::EStructuralFeature feature) :
