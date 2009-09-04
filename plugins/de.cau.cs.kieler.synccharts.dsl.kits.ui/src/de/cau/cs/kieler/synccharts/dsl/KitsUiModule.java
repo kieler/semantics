@@ -6,6 +6,15 @@ package de.cau.cs.kieler.synccharts.dsl;
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class KitsUiModule extends de.cau.cs.kieler.synccharts.dsl.AbstractKitsUiModule {
+public class KitsUiModule extends
+		de.cau.cs.kieler.synccharts.dsl.AbstractKitsUiModule {
+	/*
+	 * // contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
+	 * public Class<? extends
+	 * org.eclipse.xtext.ui.core.editor.contentassist.IContentProposalProvider>
+	 * bindIProposalProvider() { return
+	 * de.cau.cs.kieler.synccharts.dsl.contentassist
+	 * .AbstractRetypingSyncchartsProposalProvider.class; }
+	 */
 
 }
