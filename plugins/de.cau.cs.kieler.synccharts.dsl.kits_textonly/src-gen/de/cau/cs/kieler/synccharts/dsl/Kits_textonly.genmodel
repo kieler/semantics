@@ -54,7 +54,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//State/exitActions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//State/suspensionTrigger"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//State/signals"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//State/regions"/>
     </genClasses>
     <genClasses ecoreClass="Kits_textonly.ecore#//Renaming">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Renaming/oldID"/>

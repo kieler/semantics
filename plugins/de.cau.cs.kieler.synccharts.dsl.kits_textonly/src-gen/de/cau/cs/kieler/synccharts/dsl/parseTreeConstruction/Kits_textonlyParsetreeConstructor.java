@@ -351,7 +351,7 @@ protected class Region_InnerStatesAssignment_1_2 extends AssignmentToken  {
  *   FullStateID|type=StateType|"state" name=FullStateID|"state"|name=FullStateID)
  *   label=STRING? bodyText=STRING? ("{" ("onentry" entryActions+=Action|"oninner"
  *   innerActions+=Action|"onexit" exitActions+=Action|"suspension" suspensionTrigger=
- *   Action|signals+=Signal)+ (regions+=Region ("||" regions+=Region)*) "}")?; 
+ *   Action|signals+=Signal)+ "}")?; 
  * //========================================================================================
  * //===  									    STATES  					               ===
  * //========================================================================================
@@ -413,8 +413,8 @@ protected class Region_InnerStatesAssignment_1_2 extends AssignmentToken  {
  *   		 	     // kein effect, kein delay, kein immediate
  *   		  	  
  *   	
- *    	    
- *    	
+ *   // 	(regions+=Region ('||' regions+=Region)*)
+ *    	 
  *    	
  *    	//(outgoingTransitions+=Transition)*
  *
@@ -443,7 +443,7 @@ protected class Region_InnerStatesAssignment_1_2 extends AssignmentToken  {
 // FullStateID|type=StateType|"state" name=FullStateID|"state"|name=FullStateID)
 // label=STRING? bodyText=STRING? ("{" ("onentry" entryActions+=Action|"oninner"
 // innerActions+=Action|"onexit" exitActions+=Action|"suspension" suspensionTrigger=
-// Action|signals+=Signal)+ (regions+=Region ("||" regions+=Region)*) "}")? 
+// Action|signals+=Signal)+ "}")? 
 // 		        
 //   	      
 //   	      
@@ -501,8 +501,8 @@ protected class Region_InnerStatesAssignment_1_2 extends AssignmentToken  {
 //   		 	     // kein effect, kein delay, kein immediate
 //   		  	  
 //   	
-//    	    
-//    	
+//   // 	(regions+=Region ('||' regions+=Region)*)
+//    	 
 //    	
 //    	//(outgoingTransitions+=Transition)*
 protected class State_Group extends GroupToken {
@@ -4802,12 +4802,14 @@ protected class State_BodyTextAssignment_2 extends AssignmentToken  {
 }
 
 // ("{" ("onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit"
-// exitActions+=Action|"suspension" suspensionTrigger=Action|signals+=Signal)+ (
-// regions+=Region ("||" regions+=Region)*) "}")? 
+// exitActions+=Action|"suspension" suspensionTrigger=Action|signals+=Signal)+ "}")? 
 //     	 	    
 //   		 	    
 //   		         
 //   		 	     // kein effect, kein delay, kein immediate
+//   		  	  
+//   	
+//   // 	(regions+=Region ('||' regions+=Region)*)
 protected class State_Group_3 extends GroupToken {
 	
 	public State_Group_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4820,7 +4822,7 @@ protected class State_Group_3 extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_RightCurlyBracketKeyword_3_3(parent, this, 0, inst);
+			case 0: return new State_RightCurlyBracketKeyword_3_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -5258,168 +5260,21 @@ protected class State_SignalsAssignment_3_1_4 extends AssignmentToken  {
 }
 
 
-// regions+=Region ("||" regions+=Region)*
-protected class State_Group_3_2 extends GroupToken {
+// "}" 
+//   // 	(regions+=Region ('||' regions+=Region)*)
+protected class State_RightCurlyBracketKeyword_3_2 extends KeywordToken  {
 	
-	public State_Group_3_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Group getGrammarElement() {
-		return grammarAccess.getStateAccess().getGroup_3_2();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_Group_3_2_1(parent, this, 0, inst);
-			case 1: return new State_RegionsAssignment_3_2_0(parent, this, 1, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// regions+=Region
-protected class State_RegionsAssignment_3_2_0 extends AssignmentToken  {
-	
-	public State_RegionsAssignment_3_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getRegionsAssignment_3_2_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Region_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("regions",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("regions");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getRegionRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_3_2_0_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new State_Alternatives_3_1(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-// ("||" regions+=Region)*
-protected class State_Group_3_2_1 extends GroupToken {
-	
-	public State_Group_3_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Group getGrammarElement() {
-		return grammarAccess.getStateAccess().getGroup_3_2_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_RegionsAssignment_3_2_1_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// "||"
-protected class State_VerticalLineVerticalLineKeyword_3_2_1_0 extends KeywordToken  {
-	
-	public State_VerticalLineVerticalLineKeyword_3_2_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public State_RightCurlyBracketKeyword_3_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Keyword getGrammarElement() {
-		return grammarAccess.getStateAccess().getVerticalLineVerticalLineKeyword_3_2_1_0();
+		return grammarAccess.getStateAccess().getRightCurlyBracketKeyword_3_2();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new State_Group_3_2_1(parent, this, 0, inst);
-			case 1: return new State_RegionsAssignment_3_2_0(parent, this, 1, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// regions+=Region
-protected class State_RegionsAssignment_3_2_1_1 extends AssignmentToken  {
-	
-	public State_RegionsAssignment_3_2_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getStateAccess().getRegionsAssignment_3_2_1_1();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Region_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("regions",false)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("regions");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getRegionRule().getType().getClassifier())) {
-				type = AssignmentType.PRC;
-				element = grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_3_2_1_1_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
-		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new State_VerticalLineVerticalLineKeyword_3_2_1_0(parent, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-
-
-// "}"
-protected class State_RightCurlyBracketKeyword_3_3 extends KeywordToken  {
-	
-	public State_RightCurlyBracketKeyword_3_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getStateAccess().getRightCurlyBracketKeyword_3_3();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new State_Group_3_2(parent, this, 0, inst);
+			case 0: return new State_Alternatives_3_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	

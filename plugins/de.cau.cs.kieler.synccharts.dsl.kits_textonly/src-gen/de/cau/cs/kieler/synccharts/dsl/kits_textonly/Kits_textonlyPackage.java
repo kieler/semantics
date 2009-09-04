@@ -225,22 +225,13 @@ public interface Kits_textonlyPackage extends EPackage
   int STATE__SIGNALS = 10;
 
   /**
-   * The feature id for the '<em><b>Regions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE__REGIONS = 11;
-
-  /**
    * The number of structural features of the '<em>State</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE_FEATURE_COUNT = 12;
+  int STATE_FEATURE_COUNT = 11;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.RenamingImpl <em>Renaming</em>}' class.
@@ -872,17 +863,6 @@ public interface Kits_textonlyPackage extends EPackage
   EReference getState_Signals();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getRegions <em>Regions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Regions</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getRegions()
-   * @see #getState()
-   * @generated
-   */
-  EReference getState_Regions();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Renaming <em>Renaming</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1385,14 +1365,6 @@ public interface Kits_textonlyPackage extends EPackage
      * @generated
      */
     EReference STATE__SIGNALS = eINSTANCE.getState_Signals();
-
-    /**
-     * The meta object literal for the '<em><b>Regions</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE__REGIONS = eINSTANCE.getState_Regions();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.RenamingImpl <em>Renaming</em>}' class.

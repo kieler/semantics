@@ -2351,55 +2351,9 @@ ruleState returns [EObject current=null]
 	        currentNode = currentNode.getParent();
 	    }
 	
-))+((	
-	
-	    
-	    { 
-	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_3_2_0_0(), currentNode); 
-	    }
-	    lv_regions_121=ruleRegion 
-	    {
-	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode.getParent(), $current);
-	        }
-	        
-	        try {
-	       		add($current, "regions", lv_regions_121, "Region", currentNode);
-	        } catch (ValueConverterException vce) {
-				handleValueConverterException(vce);
-	        }
-	        currentNode = currentNode.getParent();
-	    }
-	
-)('||' 
+))+'}' 
     {
-        createLeafNode(grammarAccess.getStateAccess().getVerticalLineVerticalLineKeyword_3_2_1_0(), null); 
-    }
-(	
-	
-	    
-	    { 
-	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_3_2_1_1_0(), currentNode); 
-	    }
-	    lv_regions_123=ruleRegion 
-	    {
-	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode.getParent(), $current);
-	        }
-	        
-	        try {
-	       		add($current, "regions", lv_regions_123, "Region", currentNode);
-	        } catch (ValueConverterException vce) {
-				handleValueConverterException(vce);
-	        }
-	        currentNode = currentNode.getParent();
-	    }
-	
-))*)'}' 
-    {
-        createLeafNode(grammarAccess.getStateAccess().getRightCurlyBracketKeyword_3_3(), null); 
+        createLeafNode(grammarAccess.getStateAccess().getRightCurlyBracketKeyword_3_2(), null); 
     }
 )?);
 

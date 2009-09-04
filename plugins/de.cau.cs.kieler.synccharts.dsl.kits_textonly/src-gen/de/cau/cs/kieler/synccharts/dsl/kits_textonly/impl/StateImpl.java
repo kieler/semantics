@@ -7,7 +7,6 @@ package de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl;
 
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Action;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Kits_textonlyPackage;
-import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Region;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Signal;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.State;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.StateType;
@@ -46,7 +45,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.StateImpl#getExitActions <em>Exit Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.StateImpl#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.StateImpl#getSignals <em>Signals</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.StateImpl#getRegions <em>Regions</em>}</li>
  * </ul>
  * </p>
  *
@@ -223,16 +221,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * @ordered
    */
   protected EList<Signal> signals;
-
-  /**
-   * The cached value of the '{@link #getRegions() <em>Regions</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getRegions()
-   * @generated
-   * @ordered
-   */
-  protected EList<Region> regions;
 
   /**
    * <!-- begin-user-doc -->
@@ -502,20 +490,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Region> getRegions()
-  {
-    if (regions == null)
-    {
-      regions = new EObjectContainmentEList<Region>(Region.class, this, Kits_textonlyPackage.STATE__REGIONS);
-    }
-    return regions;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -531,8 +505,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return basicSetSuspensionTrigger(null, msgs);
       case Kits_textonlyPackage.STATE__SIGNALS:
         return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
-      case Kits_textonlyPackage.STATE__REGIONS:
-        return ((InternalEList<?>)getRegions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -569,8 +541,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return getSuspensionTrigger();
       case Kits_textonlyPackage.STATE__SIGNALS:
         return getSignals();
-      case Kits_textonlyPackage.STATE__REGIONS:
-        return getRegions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -623,10 +593,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         getSignals().clear();
         getSignals().addAll((Collection<? extends Signal>)newValue);
         return;
-      case Kits_textonlyPackage.STATE__REGIONS:
-        getRegions().clear();
-        getRegions().addAll((Collection<? extends Region>)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -674,9 +640,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case Kits_textonlyPackage.STATE__SIGNALS:
         getSignals().clear();
         return;
-      case Kits_textonlyPackage.STATE__REGIONS:
-        getRegions().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -713,8 +676,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return suspensionTrigger != null;
       case Kits_textonlyPackage.STATE__SIGNALS:
         return signals != null && !signals.isEmpty();
-      case Kits_textonlyPackage.STATE__REGIONS:
-        return regions != null && !regions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

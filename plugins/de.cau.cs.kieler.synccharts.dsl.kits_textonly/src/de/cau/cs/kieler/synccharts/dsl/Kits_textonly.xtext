@@ -78,7 +78,7 @@ State :
   		| 	('suspension' suspensionTrigger=Action) // kein effect, kein delay, kein immediate
   		| 	(signals+=Signal) 
   	)+
-   	(regions+=Region ('||' regions+=Region)*)
+  // 	(regions+=Region ('||' regions+=Region)*)
    	'}'
    	)?
    	//(outgoingTransitions+=Transition)* 

@@ -366,16 +366,6 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getState_Regions()
-  {
-    return (EReference)stateEClass.getEStructuralFeatures().get(11);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getRenaming()
   {
     return renamingEClass;
@@ -739,7 +729,6 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
     createEReference(stateEClass, STATE__EXIT_ACTIONS);
     createEReference(stateEClass, STATE__SUSPENSION_TRIGGER);
     createEReference(stateEClass, STATE__SIGNALS);
-    createEReference(stateEClass, STATE__REGIONS);
 
     renamingEClass = createEClass(RENAMING);
     createEAttribute(renamingEClass, RENAMING__OLD_ID);
@@ -835,7 +824,6 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
     initEReference(getState_ExitActions(), this.getAction(), null, "exitActions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_SuspensionTrigger(), this.getAction(), null, "suspensionTrigger", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_Signals(), this.getSignal(), null, "signals", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getState_Regions(), this.getRegion(), null, "regions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(renamingEClass, Renaming.class, "Renaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRenaming_OldID(), ecorePackage.getEString(), "oldID", null, 0, 1, Renaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

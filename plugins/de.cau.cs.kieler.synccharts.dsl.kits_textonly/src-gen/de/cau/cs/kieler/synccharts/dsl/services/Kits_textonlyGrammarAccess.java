@@ -368,14 +368,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		private final RuleCall cSuspensionTriggerActionParserRuleCall_3_1_3_1_0 = (RuleCall)cSuspensionTriggerAssignment_3_1_3_1.eContents().get(0);
 		private final Assignment cSignalsAssignment_3_1_4 = (Assignment)cAlternatives_3_1.eContents().get(4);
 		private final RuleCall cSignalsSignalParserRuleCall_3_1_4_0 = (RuleCall)cSignalsAssignment_3_1_4.eContents().get(0);
-		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
-		private final Assignment cRegionsAssignment_3_2_0 = (Assignment)cGroup_3_2.eContents().get(0);
-		private final RuleCall cRegionsRegionParserRuleCall_3_2_0_0 = (RuleCall)cRegionsAssignment_3_2_0.eContents().get(0);
-		private final Group cGroup_3_2_1 = (Group)cGroup_3_2.eContents().get(1);
-		private final Keyword cVerticalLineVerticalLineKeyword_3_2_1_0 = (Keyword)cGroup_3_2_1.eContents().get(0);
-		private final Assignment cRegionsAssignment_3_2_1_1 = (Assignment)cGroup_3_2_1.eContents().get(1);
-		private final RuleCall cRegionsRegionParserRuleCall_3_2_1_1_0 = (RuleCall)cRegionsAssignment_3_2_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		private final Keyword cRightCurlyBracketKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
 		//State:
 		//  ((isInitial?="init" isFinal?="final") type=StateType "state" name=FullStateID|(
@@ -401,7 +394,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		//  FullStateID|type=StateType|"state" name=FullStateID|"state"|name=FullStateID)
 		//  label=STRING? bodyText=STRING? ("{" ("onentry" entryActions+=Action|"oninner"
 		//  innerActions+=Action|"onexit" exitActions+=Action|"suspension" suspensionTrigger=
-		//  Action|signals+=Signal)+ (regions+=Region ("||" regions+=Region)*) "}")?; 
+		//  Action|signals+=Signal)+ "}")?; 
 		////========================================================================================
 		////===  									    STATES  					               ===
 		////========================================================================================
@@ -463,8 +456,8 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		//  		 	     // kein effect, kein delay, kein immediate
 		//  		  	  
 		//  	
-		//   	    
-		//   	
+		//  // 	(regions+=Region ('||' regions+=Region)*)
+		//   	 
 		//   	
 		//   	//(outgoingTransitions+=Transition)*
 		public ParserRule getRule() { return rule; }
@@ -492,7 +485,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		//FullStateID|type=StateType|"state" name=FullStateID|"state"|name=FullStateID)
 		//label=STRING? bodyText=STRING? ("{" ("onentry" entryActions+=Action|"oninner"
 		//innerActions+=Action|"onexit" exitActions+=Action|"suspension" suspensionTrigger=
-		//Action|signals+=Signal)+ (regions+=Region ("||" regions+=Region)*) "}")? 
+		//Action|signals+=Signal)+ "}")? 
 		//		        
 		//  	      
 		//  	      
@@ -550,8 +543,8 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		//  		 	     // kein effect, kein delay, kein immediate
 		//  		  	  
 		//  	
-		//   	    
-		//   	
+		//  // 	(regions+=Region ('||' regions+=Region)*)
+		//   	 
 		//   	
 		//   	//(outgoingTransitions+=Transition)*
 		public Group getGroup() { return cGroup; }
@@ -1330,12 +1323,14 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		public RuleCall getBodyTextSTRINGTerminalRuleCall_2_0() { return cBodyTextSTRINGTerminalRuleCall_2_0; }
 
 		//("{" ("onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit"
-		//exitActions+=Action|"suspension" suspensionTrigger=Action|signals+=Signal)+ (
-		//regions+=Region ("||" regions+=Region)*) "}")? 
+		//exitActions+=Action|"suspension" suspensionTrigger=Action|signals+=Signal)+ "}")? 
 		//    	 	    
 		//  		 	    
 		//  		         
 		//  		 	     // kein effect, kein delay, kein immediate
+		//  		  	  
+		//  	
+		//  // 	(regions+=Region ('||' regions+=Region)*)
 		public Group getGroup_3() { return cGroup_3; }
 
 		//"{"
@@ -1403,29 +1398,9 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		//Signal
 		public RuleCall getSignalsSignalParserRuleCall_3_1_4_0() { return cSignalsSignalParserRuleCall_3_1_4_0; }
 
-		//regions+=Region ("||" regions+=Region)*
-		public Group getGroup_3_2() { return cGroup_3_2; }
-
-		//regions+=Region
-		public Assignment getRegionsAssignment_3_2_0() { return cRegionsAssignment_3_2_0; }
-
-		//Region
-		public RuleCall getRegionsRegionParserRuleCall_3_2_0_0() { return cRegionsRegionParserRuleCall_3_2_0_0; }
-
-		//("||" regions+=Region)*
-		public Group getGroup_3_2_1() { return cGroup_3_2_1; }
-
-		//"||"
-		public Keyword getVerticalLineVerticalLineKeyword_3_2_1_0() { return cVerticalLineVerticalLineKeyword_3_2_1_0; }
-
-		//regions+=Region
-		public Assignment getRegionsAssignment_3_2_1_1() { return cRegionsAssignment_3_2_1_1; }
-
-		//Region
-		public RuleCall getRegionsRegionParserRuleCall_3_2_1_1_0() { return cRegionsRegionParserRuleCall_3_2_1_1_0; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_3_3() { return cRightCurlyBracketKeyword_3_3; }
+		//"}" 
+		//  // 	(regions+=Region ('||' regions+=Region)*)
+		public Keyword getRightCurlyBracketKeyword_3_2() { return cRightCurlyBracketKeyword_3_2; }
 	}
 
 	public class RenamingElements implements IParserRuleAccess {
@@ -3398,7 +3373,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 	//  FullStateID|type=StateType|"state" name=FullStateID|"state"|name=FullStateID)
 	//  label=STRING? bodyText=STRING? ("{" ("onentry" entryActions+=Action|"oninner"
 	//  innerActions+=Action|"onexit" exitActions+=Action|"suspension" suspensionTrigger=
-	//  Action|signals+=Signal)+ (regions+=Region ("||" regions+=Region)*) "}")?; 
+	//  Action|signals+=Signal)+ "}")?; 
 	////========================================================================================
 	////===  									    STATES  					               ===
 	////========================================================================================
@@ -3460,8 +3435,8 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 	//  		 	     // kein effect, kein delay, kein immediate
 	//  		  	  
 	//  	
-	//   	    
-	//   	
+	//  // 	(regions+=Region ('||' regions+=Region)*)
+	//   	 
 	//   	
 	//   	//(outgoingTransitions+=Transition)*
 	public StateElements getStateAccess() {
