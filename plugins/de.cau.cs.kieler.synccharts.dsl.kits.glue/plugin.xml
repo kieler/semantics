@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="de.cau.cs.kieler.synccharts.dsl.kits.glue.objectContribution1"
+            objectClass="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+         <action
+               class="de.cau.cs.kieler.synccharts.dsl.kits.glue.actions.GoToDeclaration"
+               id="de.cau.cs.kieler.synccharts.dsl.kits.glue.action1"
+               label="Open in KITS textual editor">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.synccharts.dsl.kits.glue.Initializer"></startup>
+   </extension>
+
+</plugin>

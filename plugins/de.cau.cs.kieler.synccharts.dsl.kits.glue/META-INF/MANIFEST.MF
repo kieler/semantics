@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Synchronized Text Editor - Glue
+Bundle-SymbolicName: de.cau.cs.kieler.synccharts.dsl.kits.glue;singleton:=true
+Bundle-Version: 0.1.0.vqualifier
+Bundle-Activator: de.cau.cs.kieler.synccharts.dsl.kits.glue.Activator
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.xtext;bundle-version="0.7.0",
+ org.eclipse.core.resources;bundle-version="3.5.0",
+ org.eclipse.ui.workbench.texteditor;bundle-version="3.5.0",
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.jface.text;bundle-version="3.5.0",
+ org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.0",
+ org.eclipse.xtext.ui.core;bundle-version="0.7.0",
+ org.eclipse.gmf.runtime.diagram.ui.resources.editor;bundle-version="1.2.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
