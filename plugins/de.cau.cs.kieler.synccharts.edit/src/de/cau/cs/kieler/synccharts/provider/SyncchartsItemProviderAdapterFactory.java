@@ -283,26 +283,26 @@ public class SyncchartsItemProviderAdapterFactory extends SyncchartsAdapterFacto
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.SignalRenaming} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Renaming} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected SignalRenamingItemProvider signalRenamingItemProvider;
+    protected RenamingItemProvider renamingItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.SignalRenaming}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Renaming}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public Adapter createSignalRenamingAdapter() {
-        if (signalRenamingItemProvider == null) {
-            signalRenamingItemProvider = new SignalRenamingItemProvider(this);
+    public Adapter createRenamingAdapter() {
+        if (renamingItemProvider == null) {
+            renamingItemProvider = new RenamingItemProvider(this);
         }
 
-        return signalRenamingItemProvider;
+        return renamingItemProvider;
     }
 
     /**
@@ -528,7 +528,7 @@ public class SyncchartsItemProviderAdapterFactory extends SyncchartsAdapterFacto
         if (regionItemProvider != null) regionItemProvider.dispose();
         if (signalItemProvider != null) signalItemProvider.dispose();
         if (signalReferenceItemProvider != null) signalReferenceItemProvider.dispose();
-        if (signalRenamingItemProvider != null) signalRenamingItemProvider.dispose();
+        if (renamingItemProvider != null) renamingItemProvider.dispose();
         if (stateItemProvider != null) stateItemProvider.dispose();
         if (transitionItemProvider != null) transitionItemProvider.dispose();
         if (valuedObjectItemProvider != null) valuedObjectItemProvider.dispose();

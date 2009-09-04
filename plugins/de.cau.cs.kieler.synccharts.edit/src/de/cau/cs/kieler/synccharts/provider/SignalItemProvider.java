@@ -328,7 +328,7 @@ public class SignalItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SIGNAL__VALUE,
-                 SyncchartsFactory.eINSTANCE.createSignalRenaming()));
+                 SyncchartsFactory.eINSTANCE.createRenaming()));
 
         newChildDescriptors.add
             (createChildParameter

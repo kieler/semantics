@@ -226,7 +226,7 @@ public class StateItemProvider
             childrenFeatures.add(SyncchartsPackage.Literals.STATE__ENTRY_ACTIONS);
             childrenFeatures.add(SyncchartsPackage.Literals.STATE__INNER_ACTIONS);
             childrenFeatures.add(SyncchartsPackage.Literals.STATE__EXIT_ACTIONS);
-            childrenFeatures.add(SyncchartsPackage.Literals.STATE__SIGNAL_RENAMINGS);
+            childrenFeatures.add(SyncchartsPackage.Literals.STATE__RENAMINGS);
             childrenFeatures.add(SyncchartsPackage.Literals.STATE__SUSPENSION_TRIGGER);
             childrenFeatures.add(SyncchartsPackage.Literals.STATE__OUTGOING_TRANSITIONS);
         }
@@ -296,7 +296,7 @@ public class StateItemProvider
             case SyncchartsPackage.STATE__ENTRY_ACTIONS:
             case SyncchartsPackage.STATE__INNER_ACTIONS:
             case SyncchartsPackage.STATE__EXIT_ACTIONS:
-            case SyncchartsPackage.STATE__SIGNAL_RENAMINGS:
+            case SyncchartsPackage.STATE__RENAMINGS:
             case SyncchartsPackage.STATE__SUSPENSION_TRIGGER:
             case SyncchartsPackage.STATE__OUTGOING_TRANSITIONS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
@@ -358,8 +358,8 @@ public class StateItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (SyncchartsPackage.Literals.STATE__SIGNAL_RENAMINGS,
-                 SyncchartsFactory.eINSTANCE.createSignalRenaming()));
+                (SyncchartsPackage.Literals.STATE__RENAMINGS,
+                 SyncchartsFactory.eINSTANCE.createRenaming()));
 
         newChildDescriptors.add
             (createChildParameter

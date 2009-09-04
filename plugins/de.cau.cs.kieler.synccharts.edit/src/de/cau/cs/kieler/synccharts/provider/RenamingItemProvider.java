@@ -1,12 +1,22 @@
 /**
- * <copyright>
- * </copyright>
+ * KIELER - Kiel Integrated Environment for Layout for the Eclipse RCP
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  *
  * $Id$
  */
 package de.cau.cs.kieler.synccharts.provider;
 
 
+import de.cau.cs.kieler.synccharts.Renaming;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 import java.util.Collection;
@@ -24,15 +34,17 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.synccharts.SignalRenaming} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.synccharts.Renaming} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class SignalRenamingItemProvider
+public class RenamingItemProvider
     extends ItemProviderAdapter
     implements
         IEditingDomainItemProvider,
@@ -46,7 +58,7 @@ public class SignalRenamingItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public SignalRenamingItemProvider(AdapterFactory adapterFactory) {
+    public RenamingItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -61,65 +73,65 @@ public class SignalRenamingItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addOldSignalPropertyDescriptor(object);
-            addNewSignalPropertyDescriptor(object);
+            addOldIDPropertyDescriptor(object);
+            addNewIDPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Old Signal feature.
+     * This adds a property descriptor for the Old ID feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addOldSignalPropertyDescriptor(Object object) {
+    protected void addOldIDPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_SignalRenaming_oldSignal_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_SignalRenaming_oldSignal_feature", "_UI_SignalRenaming_type"),
-                 SyncchartsPackage.Literals.SIGNAL_RENAMING__OLD_SIGNAL,
+                 getString("_UI_Renaming_oldID_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Renaming_oldID_feature", "_UI_Renaming_type"),
+                 SyncchartsPackage.Literals.RENAMING__OLD_ID,
                  true,
                  false,
-                 true,
-                 null,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
     }
 
     /**
-     * This adds a property descriptor for the New Signal feature.
+     * This adds a property descriptor for the New ID feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addNewSignalPropertyDescriptor(Object object) {
+    protected void addNewIDPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_SignalRenaming_newSignal_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_SignalRenaming_newSignal_feature", "_UI_SignalRenaming_type"),
-                 SyncchartsPackage.Literals.SIGNAL_RENAMING__NEW_SIGNAL,
+                 getString("_UI_Renaming_newID_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Renaming_newID_feature", "_UI_Renaming_type"),
+                 SyncchartsPackage.Literals.RENAMING__NEW_ID,
                  true,
                  false,
-                 true,
-                 null,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
     }
 
     /**
-     * This returns SignalRenaming.gif.
+     * This returns Renaming.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/SignalRenaming"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/Renaming"));
     }
 
     /**
@@ -130,7 +142,10 @@ public class SignalRenamingItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_SignalRenaming_type");
+        String label = ((Renaming)object).getOldID();
+        return label == null || label.length() == 0 ?
+            getString("_UI_Renaming_type") :
+            getString("_UI_Renaming_type") + " " + label;
     }
 
     /**
@@ -143,6 +158,13 @@ public class SignalRenamingItemProvider
     @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
+
+        switch (notification.getFeatureID(Renaming.class)) {
+            case SyncchartsPackage.RENAMING__OLD_ID:
+            case SyncchartsPackage.RENAMING__NEW_ID:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+        }
         super.notifyChanged(notification);
     }
 

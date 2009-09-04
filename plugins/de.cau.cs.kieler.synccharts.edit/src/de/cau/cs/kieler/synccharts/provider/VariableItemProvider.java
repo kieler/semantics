@@ -204,7 +204,7 @@ public class VariableItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.VARIABLE__VALUE,
-                 SyncchartsFactory.eINSTANCE.createSignalRenaming()));
+                 SyncchartsFactory.eINSTANCE.createRenaming()));
 
         newChildDescriptors.add
             (createChildParameter
