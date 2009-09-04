@@ -1,0 +1,21 @@
+init
+{
+        init
+        {
+                //state content
+                entry "entryAction"
+                input int mySignal := 0
+
+                        //parallel regions
+                        region WAITA ""
+                        init
+                        --> final with A
+                ||
+                        region WAITB ""
+                        init
+                        --> final with B
+        }
+        >-> final with /O
+}
+o-> init with R // anonymous state, which is unique in the region
+

@@ -1,0 +1,24 @@
+Interruption{
+	inputoutput susp
+	init aTask {
+		suspension # 'susp'
+||
+	
+	init I 
+	o-> ItHandler # with irq
+	
+	ItHandler{
+		inputoutput resume
+		init {
+			onentry 'susp'		
+		}
+		o-> final with 'resume'
+	||
+		init ISR
+		>-> final with '/resume'
+	}
+	
+	}
+
+
+}

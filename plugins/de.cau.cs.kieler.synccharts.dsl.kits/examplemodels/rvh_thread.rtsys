@@ -1,0 +1,28 @@
+Thread{
+ input frkd;
+ input joined;
+ input iClk;
+ input sched;
+ input startTick;
+ input delay;
+ {
+  init disabld;
+  disabld->enabld[label="frkd"];
+  enabld->disabld[type=sa;label="joined";];
+  enabld{
+   active{
+    preemptd o->running with "iClk and sched";
+    running -->preemptd with "iClk and not sched";
+    init preemptd;
+   };
+  ||
+    ->inactive;
+    inactive->semiEnd;
+    semiEnd[type=final];
+  };
+
+
+  
+ };
+};
+
