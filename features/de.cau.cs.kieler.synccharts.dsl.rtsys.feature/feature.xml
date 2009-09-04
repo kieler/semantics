@@ -5,14 +5,17 @@
       version="0.1.0.vqualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
-   <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KiText">
-      KIELER Textual Editing Framework for Synccharts
+   <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KiTEF">
+      KIELER Textual Editing Framework
+---------------------------------------------------------------------
 This framework provides a textual editor, developed with TMF
 Xtext for an underlying metamodel that is shared with a graphical
 GMF editor to allow users modeling diagrams also textually. 
-As an example, an editor which supports a textual language (RTSYS),
+As an example, an editor which supports a textual language (KITS),
 developed in the scope of the KIELER project for Synccharts,
-is provided.
+is provided. 
+Using analogous methods should allow developers to connect any
+GMF editor with a corresponding Xtext editor.
    </description>
 
    <copyright url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KiText">
@@ -45,28 +48,6 @@ under the terms of the Eclipse Public License (EPL).
       <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.1.0" match="greaterOrEqual"/>
       <import plugin="de.cau.cs.kieler.core"/>
       <import plugin="org.eclipse.gef"/>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.core.expressions"/>
-      <import plugin="org.eclipse.jface"/>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.ui.views"/>
-      <import plugin="org.eclipse.ui.navigator"/>
-      <import plugin="org.eclipse.ui.navigator.resources"/>
-      <import plugin="org.eclipse.emf.ecore.xmi"/>
-      <import plugin="org.eclipse.emf.edit.ui"/>
-      <import plugin="org.eclipse.gmf.runtime.emf.core"/>
-      <import plugin="org.eclipse.gmf.runtime.emf.commands.core"/>
-      <import plugin="org.eclipse.gmf.runtime.emf.ui.properties"/>
-      <import plugin="org.eclipse.gmf.runtime.diagram.ui.printing"/>
-      <import plugin="org.eclipse.gmf.runtime.diagram.ui.printing.render"/>
-      <import plugin="org.eclipse.gmf.runtime.diagram.ui.properties"/>
-      <import plugin="org.eclipse.gmf.runtime.diagram.ui.providers"/>
-      <import plugin="org.eclipse.gmf.runtime.diagram.ui.providers.ide"/>
-      <import plugin="org.eclipse.gmf.runtime.diagram.ui.render"/>
-      <import plugin="org.eclipse.gmf.runtime.diagram.ui.resources.editor"/>
-      <import plugin="org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide"/>
-      <import plugin="org.eclipse.ocl.ecore"/>
-      <import plugin="org.eclipse.emf.validation"/>
       <import plugin="org.eclipse.core.expressions" version="3.4.0" match="greaterOrEqual"/>
       <import plugin="de.cau.cs.kieler.kiml.layout"/>
       <import plugin="org.eclipse.xtext"/>
@@ -95,6 +76,7 @@ under the terms of the Eclipse Public License (EPL).
       <import plugin="org.eclipse.emf.common.ui" version="2.4.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.gmf.runtime.diagram.core" version="1.1.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.gmf.runtime.diagram.ui.resources.editor" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
@@ -162,6 +144,20 @@ under the terms of the Eclipse Public License (EPL).
 
    <plugin
          id="de.itemis.gmf.runtime.extensions"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.synccharts.dsl.kits_textonly"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.synccharts.dsl.kits_textonly.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
