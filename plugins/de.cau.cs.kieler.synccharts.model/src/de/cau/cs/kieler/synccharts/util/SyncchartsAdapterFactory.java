@@ -136,6 +136,22 @@ public class SyncchartsAdapterFactory extends AdapterFactoryImpl {
                 return createVariableReferenceAdapter();
             }
             @Override
+            public Adapter caseValue(Value object) {
+                return createValueAdapter();
+            }
+            @Override
+            public Adapter caseIntValue(IntValue object) {
+                return createIntValueAdapter();
+            }
+            @Override
+            public Adapter caseFloatValue(FloatValue object) {
+                return createFloatValueAdapter();
+            }
+            @Override
+            public Adapter caseBooleanValue(BooleanValue object) {
+                return createBooleanValueAdapter();
+            }
+            @Override
             public Adapter defaultCase(EObject object) {
                 return createEObjectAdapter();
             }
@@ -376,6 +392,62 @@ public class SyncchartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createVariableReferenceAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.Value <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.synccharts.Value
+     * @generated
+     */
+    public Adapter createValueAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.IntValue <em>Int Value</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.synccharts.IntValue
+     * @generated
+     */
+    public Adapter createIntValueAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.FloatValue <em>Float Value</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.synccharts.FloatValue
+     * @generated
+     */
+    public Adapter createFloatValueAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.BooleanValue <em>Boolean Value</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.synccharts.BooleanValue
+     * @generated
+     */
+    public Adapter createBooleanValueAdapter() {
         return null;
     }
 

@@ -1283,6 +1283,253 @@ public interface SyncchartsPackage extends EPackage {
     int VARIABLE_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.synccharts.impl.ValueImpl <em>Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.synccharts.impl.ValueImpl
+     * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getValue()
+     * @generated
+     */
+    int VALUE = 16;
+
+    /**
+     * The feature id for the '<em><b>Parent Action</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUE__PARENT_ACTION = EXPRESSION__PARENT_ACTION;
+
+    /**
+     * The feature id for the '<em><b>Parent Emisson</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUE__PARENT_EMISSON = EXPRESSION__PARENT_EMISSON;
+
+    /**
+     * The feature id for the '<em><b>Parent Assignment</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUE__PARENT_ASSIGNMENT = EXPRESSION__PARENT_ASSIGNMENT;
+
+    /**
+     * The feature id for the '<em><b>Parent Expression</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUE__PARENT_EXPRESSION = EXPRESSION__PARENT_EXPRESSION;
+
+    /**
+     * The number of structural features of the '<em>Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.synccharts.impl.IntValueImpl <em>Int Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.synccharts.impl.IntValueImpl
+     * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getIntValue()
+     * @generated
+     */
+    int INT_VALUE = 17;
+
+    /**
+     * The feature id for the '<em><b>Parent Action</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_VALUE__PARENT_ACTION = VALUE__PARENT_ACTION;
+
+    /**
+     * The feature id for the '<em><b>Parent Emisson</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_VALUE__PARENT_EMISSON = VALUE__PARENT_EMISSON;
+
+    /**
+     * The feature id for the '<em><b>Parent Assignment</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_VALUE__PARENT_ASSIGNMENT = VALUE__PARENT_ASSIGNMENT;
+
+    /**
+     * The feature id for the '<em><b>Parent Expression</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_VALUE__PARENT_EXPRESSION = VALUE__PARENT_EXPRESSION;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_VALUE__VALUE = VALUE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Int Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.synccharts.impl.FloatValueImpl <em>Float Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.synccharts.impl.FloatValueImpl
+     * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getFloatValue()
+     * @generated
+     */
+    int FLOAT_VALUE = 18;
+
+    /**
+     * The feature id for the '<em><b>Parent Action</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_VALUE__PARENT_ACTION = VALUE__PARENT_ACTION;
+
+    /**
+     * The feature id for the '<em><b>Parent Emisson</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_VALUE__PARENT_EMISSON = VALUE__PARENT_EMISSON;
+
+    /**
+     * The feature id for the '<em><b>Parent Assignment</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_VALUE__PARENT_ASSIGNMENT = VALUE__PARENT_ASSIGNMENT;
+
+    /**
+     * The feature id for the '<em><b>Parent Expression</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_VALUE__PARENT_EXPRESSION = VALUE__PARENT_EXPRESSION;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_VALUE__VALUE = VALUE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Float Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.synccharts.impl.BooleanValueImpl <em>Boolean Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.synccharts.impl.BooleanValueImpl
+     * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getBooleanValue()
+     * @generated
+     */
+    int BOOLEAN_VALUE = 19;
+
+    /**
+     * The feature id for the '<em><b>Parent Action</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOLEAN_VALUE__PARENT_ACTION = VALUE__PARENT_ACTION;
+
+    /**
+     * The feature id for the '<em><b>Parent Emisson</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOLEAN_VALUE__PARENT_EMISSON = VALUE__PARENT_EMISSON;
+
+    /**
+     * The feature id for the '<em><b>Parent Assignment</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOLEAN_VALUE__PARENT_ASSIGNMENT = VALUE__PARENT_ASSIGNMENT;
+
+    /**
+     * The feature id for the '<em><b>Parent Expression</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOLEAN_VALUE__PARENT_EXPRESSION = VALUE__PARENT_EXPRESSION;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOLEAN_VALUE__VALUE = VALUE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Boolean Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOLEAN_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.synccharts.CombineOperator <em>Combine Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1290,7 +1537,7 @@ public interface SyncchartsPackage extends EPackage {
      * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 16;
+    int COMBINE_OPERATOR = 20;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.synccharts.OperatorType <em>Operator Type</em>}' enum.
@@ -1300,7 +1547,7 @@ public interface SyncchartsPackage extends EPackage {
      * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 17;
+    int OPERATOR_TYPE = 21;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.synccharts.StateType <em>State Type</em>}' enum.
@@ -1310,7 +1557,7 @@ public interface SyncchartsPackage extends EPackage {
      * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getStateType()
      * @generated
      */
-    int STATE_TYPE = 18;
+    int STATE_TYPE = 22;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.synccharts.TransitionType <em>Transition Type</em>}' enum.
@@ -1320,7 +1567,7 @@ public interface SyncchartsPackage extends EPackage {
      * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getTransitionType()
      * @generated
      */
-    int TRANSITION_TYPE = 19;
+    int TRANSITION_TYPE = 23;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.synccharts.ValueType <em>Value Type</em>}' enum.
@@ -1330,7 +1577,7 @@ public interface SyncchartsPackage extends EPackage {
      * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 20;
+    int VALUE_TYPE = 24;
 
 
     /**
@@ -2220,6 +2467,79 @@ public interface SyncchartsPackage extends EPackage {
     EReference getVariableReference_Variable();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.Value <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Value</em>'.
+     * @see de.cau.cs.kieler.synccharts.Value
+     * @generated
+     */
+    EClass getValue();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.IntValue <em>Int Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Int Value</em>'.
+     * @see de.cau.cs.kieler.synccharts.IntValue
+     * @generated
+     */
+    EClass getIntValue();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.IntValue#getValue <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Value</em>'.
+     * @see de.cau.cs.kieler.synccharts.IntValue#getValue()
+     * @see #getIntValue()
+     * @generated
+     */
+    EAttribute getIntValue_Value();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.FloatValue <em>Float Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Float Value</em>'.
+     * @see de.cau.cs.kieler.synccharts.FloatValue
+     * @generated
+     */
+    EClass getFloatValue();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.FloatValue#getValue <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Value</em>'.
+     * @see de.cau.cs.kieler.synccharts.FloatValue#getValue()
+     * @see #getFloatValue()
+     * @generated
+     */
+    EAttribute getFloatValue_Value();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.BooleanValue <em>Boolean Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Boolean Value</em>'.
+     * @see de.cau.cs.kieler.synccharts.BooleanValue
+     * @generated
+     */
+    EClass getBooleanValue();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.BooleanValue#getValue <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Value</em>'.
+     * @see de.cau.cs.kieler.synccharts.BooleanValue#getValue()
+     * @see #getBooleanValue()
+     * @generated
+     */
+    EAttribute getBooleanValue_Value();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.synccharts.CombineOperator <em>Combine Operator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2978,6 +3298,70 @@ public interface SyncchartsPackage extends EPackage {
          * @generated
          */
         EReference VARIABLE_REFERENCE__VARIABLE = eINSTANCE.getVariableReference_Variable();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.impl.ValueImpl <em>Value</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.synccharts.impl.ValueImpl
+         * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getValue()
+         * @generated
+         */
+        EClass VALUE = eINSTANCE.getValue();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.impl.IntValueImpl <em>Int Value</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.synccharts.impl.IntValueImpl
+         * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getIntValue()
+         * @generated
+         */
+        EClass INT_VALUE = eINSTANCE.getIntValue();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INT_VALUE__VALUE = eINSTANCE.getIntValue_Value();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.impl.FloatValueImpl <em>Float Value</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.synccharts.impl.FloatValueImpl
+         * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getFloatValue()
+         * @generated
+         */
+        EClass FLOAT_VALUE = eINSTANCE.getFloatValue();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute FLOAT_VALUE__VALUE = eINSTANCE.getFloatValue_Value();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.impl.BooleanValueImpl <em>Boolean Value</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.synccharts.impl.BooleanValueImpl
+         * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getBooleanValue()
+         * @generated
+         */
+        EClass BOOLEAN_VALUE = eINSTANCE.getBooleanValue();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute BOOLEAN_VALUE__VALUE = eINSTANCE.getBooleanValue_Value();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.CombineOperator <em>Combine Operator</em>}' enum.

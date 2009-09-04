@@ -196,6 +196,26 @@ public class EmissionItemProvider
             (createChildParameter
                 (SyncchartsPackage.Literals.EMISSION__NEW_VALUE,
                  SyncchartsFactory.eINSTANCE.createVariableReference()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.EMISSION__NEW_VALUE,
+                 SyncchartsFactory.eINSTANCE.createValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.EMISSION__NEW_VALUE,
+                 SyncchartsFactory.eINSTANCE.createIntValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.EMISSION__NEW_VALUE,
+                 SyncchartsFactory.eINSTANCE.createFloatValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.EMISSION__NEW_VALUE,
+                 SyncchartsFactory.eINSTANCE.createBooleanValue()));
     }
 
 }

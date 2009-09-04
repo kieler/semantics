@@ -349,6 +349,26 @@ public class SignalItemProvider
             (createChildParameter
                 (SyncchartsPackage.Literals.SIGNAL__VALUE,
                  SyncchartsFactory.eINSTANCE.createVariableReference()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SIGNAL__VALUE,
+                 SyncchartsFactory.eINSTANCE.createValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SIGNAL__VALUE,
+                 SyncchartsFactory.eINSTANCE.createIntValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SIGNAL__VALUE,
+                 SyncchartsFactory.eINSTANCE.createFloatValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SIGNAL__VALUE,
+                 SyncchartsFactory.eINSTANCE.createBooleanValue()));
     }
 
 }

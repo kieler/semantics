@@ -76,6 +76,10 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
             case SyncchartsPackage.VALUED_OBJECT: return createValuedObject();
             case SyncchartsPackage.VARIABLE: return createVariable();
             case SyncchartsPackage.VARIABLE_REFERENCE: return createVariableReference();
+            case SyncchartsPackage.VALUE: return createValue();
+            case SyncchartsPackage.INT_VALUE: return createIntValue();
+            case SyncchartsPackage.FLOAT_VALUE: return createFloatValue();
+            case SyncchartsPackage.BOOLEAN_VALUE: return createBooleanValue();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -275,6 +279,46 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
     public VariableReference createVariableReference() {
         VariableReferenceImpl variableReference = new VariableReferenceImpl();
         return variableReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Value createValue() {
+        ValueImpl value = new ValueImpl();
+        return value;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IntValue createIntValue() {
+        IntValueImpl intValue = new IntValueImpl();
+        return intValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public FloatValue createFloatValue() {
+        FloatValueImpl floatValue = new FloatValueImpl();
+        return floatValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public BooleanValue createBooleanValue() {
+        BooleanValueImpl booleanValue = new BooleanValueImpl();
+        return booleanValue;
     }
 
     /**

@@ -421,6 +421,98 @@ public class SyncchartsItemProviderAdapterFactory extends SyncchartsAdapterFacto
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Value} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ValueItemProvider valueItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Value}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createValueAdapter() {
+        if (valueItemProvider == null) {
+            valueItemProvider = new ValueItemProvider(this);
+        }
+
+        return valueItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.IntValue} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected IntValueItemProvider intValueItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.IntValue}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createIntValueAdapter() {
+        if (intValueItemProvider == null) {
+            intValueItemProvider = new IntValueItemProvider(this);
+        }
+
+        return intValueItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.FloatValue} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected FloatValueItemProvider floatValueItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.FloatValue}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createFloatValueAdapter() {
+        if (floatValueItemProvider == null) {
+            floatValueItemProvider = new FloatValueItemProvider(this);
+        }
+
+        return floatValueItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.BooleanValue} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected BooleanValueItemProvider booleanValueItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.BooleanValue}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createBooleanValueAdapter() {
+        if (booleanValueItemProvider == null) {
+            booleanValueItemProvider = new BooleanValueItemProvider(this);
+        }
+
+        return booleanValueItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -534,6 +626,10 @@ public class SyncchartsItemProviderAdapterFactory extends SyncchartsAdapterFacto
         if (valuedObjectItemProvider != null) valuedObjectItemProvider.dispose();
         if (variableItemProvider != null) variableItemProvider.dispose();
         if (variableReferenceItemProvider != null) variableReferenceItemProvider.dispose();
+        if (valueItemProvider != null) valueItemProvider.dispose();
+        if (intValueItemProvider != null) intValueItemProvider.dispose();
+        if (floatValueItemProvider != null) floatValueItemProvider.dispose();
+        if (booleanValueItemProvider != null) booleanValueItemProvider.dispose();
     }
 
 }

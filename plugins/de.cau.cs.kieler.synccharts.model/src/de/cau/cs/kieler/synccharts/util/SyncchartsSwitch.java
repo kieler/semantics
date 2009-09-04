@@ -193,6 +193,37 @@ public class SyncchartsSwitch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SyncchartsPackage.VALUE: {
+                Value value = (Value)theEObject;
+                T result = caseValue(value);
+                if (result == null) result = caseExpression(value);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SyncchartsPackage.INT_VALUE: {
+                IntValue intValue = (IntValue)theEObject;
+                T result = caseIntValue(intValue);
+                if (result == null) result = caseValue(intValue);
+                if (result == null) result = caseExpression(intValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SyncchartsPackage.FLOAT_VALUE: {
+                FloatValue floatValue = (FloatValue)theEObject;
+                T result = caseFloatValue(floatValue);
+                if (result == null) result = caseValue(floatValue);
+                if (result == null) result = caseExpression(floatValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SyncchartsPackage.BOOLEAN_VALUE: {
+                BooleanValue booleanValue = (BooleanValue)theEObject;
+                T result = caseBooleanValue(booleanValue);
+                if (result == null) result = caseValue(booleanValue);
+                if (result == null) result = caseExpression(booleanValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -434,6 +465,66 @@ public class SyncchartsSwitch<T> {
      * @generated
      */
     public T caseVariableReference(VariableReference object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseValue(Value object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Int Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Int Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIntValue(IntValue object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Float Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Float Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseFloatValue(FloatValue object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Boolean Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Boolean Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseBooleanValue(BooleanValue object) {
         return null;
     }
 

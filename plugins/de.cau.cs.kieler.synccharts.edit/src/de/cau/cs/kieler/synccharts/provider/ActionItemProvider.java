@@ -271,6 +271,26 @@ public class ActionItemProvider
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
                  SyncchartsFactory.eINSTANCE.createVariableReference()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.ACTION__TRIGGER,
+                 SyncchartsFactory.eINSTANCE.createValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.ACTION__TRIGGER,
+                 SyncchartsFactory.eINSTANCE.createIntValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.ACTION__TRIGGER,
+                 SyncchartsFactory.eINSTANCE.createFloatValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.ACTION__TRIGGER,
+                 SyncchartsFactory.eINSTANCE.createBooleanValue()));
     }
 
     /**

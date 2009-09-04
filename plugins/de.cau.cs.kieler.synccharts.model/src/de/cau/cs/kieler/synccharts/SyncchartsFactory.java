@@ -161,6 +161,42 @@ public interface SyncchartsFactory extends EFactory {
     VariableReference createVariableReference();
 
     /**
+     * Returns a new object of class '<em>Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Value</em>'.
+     * @generated
+     */
+    Value createValue();
+
+    /**
+     * Returns a new object of class '<em>Int Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Int Value</em>'.
+     * @generated
+     */
+    IntValue createIntValue();
+
+    /**
+     * Returns a new object of class '<em>Float Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Float Value</em>'.
+     * @generated
+     */
+    FloatValue createFloatValue();
+
+    /**
+     * Returns a new object of class '<em>Boolean Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Boolean Value</em>'.
+     * @generated
+     */
+    BooleanValue createBooleanValue();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

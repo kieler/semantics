@@ -184,6 +184,26 @@ public class ComplexExpressionItemProvider
 
         newChildDescriptors.add
             (createChildParameter
+                (SyncchartsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                 SyncchartsFactory.eINSTANCE.createValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                 SyncchartsFactory.eINSTANCE.createIntValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                 SyncchartsFactory.eINSTANCE.createFloatValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                 SyncchartsFactory.eINSTANCE.createBooleanValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
                 (SyncchartsPackage.Literals.COMPLEX_EXPRESSION__OPERATOR,
                  OperatorType.EQ));
     }

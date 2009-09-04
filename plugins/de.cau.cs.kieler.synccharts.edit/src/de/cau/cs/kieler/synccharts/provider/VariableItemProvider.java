@@ -225,6 +225,26 @@ public class VariableItemProvider
             (createChildParameter
                 (SyncchartsPackage.Literals.VARIABLE__VALUE,
                  SyncchartsFactory.eINSTANCE.createVariableReference()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.VARIABLE__VALUE,
+                 SyncchartsFactory.eINSTANCE.createValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.VARIABLE__VALUE,
+                 SyncchartsFactory.eINSTANCE.createIntValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.VARIABLE__VALUE,
+                 SyncchartsFactory.eINSTANCE.createFloatValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.VARIABLE__VALUE,
+                 SyncchartsFactory.eINSTANCE.createBooleanValue()));
     }
 
 }

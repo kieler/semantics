@@ -8,12 +8,15 @@ package de.cau.cs.kieler.synccharts.impl;
 
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Assignment;
+import de.cau.cs.kieler.synccharts.BooleanValue;
 import de.cau.cs.kieler.synccharts.CombineOperator;
 import de.cau.cs.kieler.synccharts.ComplexExpression;
 import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Expression;
+import de.cau.cs.kieler.synccharts.FloatValue;
 import de.cau.cs.kieler.synccharts.HostCode;
+import de.cau.cs.kieler.synccharts.IntValue;
 import de.cau.cs.kieler.synccharts.OperatorType;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Renaming;
@@ -26,6 +29,7 @@ import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.TransitionType;
+import de.cau.cs.kieler.synccharts.Value;
 import de.cau.cs.kieler.synccharts.ValueType;
 import de.cau.cs.kieler.synccharts.ValuedObject;
 import de.cau.cs.kieler.synccharts.Variable;
@@ -157,6 +161,34 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * @generated
      */
     private EClass variableReferenceEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass valueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass intValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass floatValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass booleanValueEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -997,6 +1029,69 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getValue() {
+        return valueEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getIntValue() {
+        return intValueEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getIntValue_Value() {
+        return (EAttribute)intValueEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getFloatValue() {
+        return floatValueEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getFloatValue_Value() {
+        return (EAttribute)floatValueEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getBooleanValue() {
+        return booleanValueEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBooleanValue_Value() {
+        return (EAttribute)booleanValueEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getCombineOperator() {
         return combineOperatorEEnum;
     }
@@ -1163,6 +1258,17 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         variableReferenceEClass = createEClass(VARIABLE_REFERENCE);
         createEReference(variableReferenceEClass, VARIABLE_REFERENCE__VARIABLE);
 
+        valueEClass = createEClass(VALUE);
+
+        intValueEClass = createEClass(INT_VALUE);
+        createEAttribute(intValueEClass, INT_VALUE__VALUE);
+
+        floatValueEClass = createEClass(FLOAT_VALUE);
+        createEAttribute(floatValueEClass, FLOAT_VALUE__VALUE);
+
+        booleanValueEClass = createEClass(BOOLEAN_VALUE);
+        createEAttribute(booleanValueEClass, BOOLEAN_VALUE__VALUE);
+
         // Create enums
         combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
         operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
@@ -1209,6 +1315,10 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         transitionEClass.getESuperTypes().add(this.getAction());
         variableEClass.getESuperTypes().add(this.getValuedObject());
         variableReferenceEClass.getESuperTypes().add(this.getExpression());
+        valueEClass.getESuperTypes().add(this.getExpression());
+        intValueEClass.getESuperTypes().add(this.getValue());
+        floatValueEClass.getESuperTypes().add(this.getValue());
+        booleanValueEClass.getESuperTypes().add(this.getValue());
 
         // Initialize classes and features; add operations and parameters
         initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1308,6 +1418,17 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
 
         initEClass(variableReferenceEClass, VariableReference.class, "VariableReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getVariableReference_Variable(), this.getVariable(), null, "variable", null, 1, 1, VariableReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(valueEClass, Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(intValueEClass, IntValue.class, "IntValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIntValue_Value(), ecorePackage.getEIntegerObject(), "value", null, 1, 1, IntValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(floatValueEClass, FloatValue.class, "FloatValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getFloatValue_Value(), ecorePackage.getEFloatObject(), "value", null, 1, 1, FloatValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(booleanValueEClass, BooleanValue.class, "BooleanValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getBooleanValue_Value(), ecorePackage.getEBooleanObject(), "value", null, 1, 1, BooleanValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");
