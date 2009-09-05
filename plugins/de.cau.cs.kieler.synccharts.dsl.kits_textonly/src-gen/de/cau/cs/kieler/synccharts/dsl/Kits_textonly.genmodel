@@ -54,6 +54,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//State/exitActions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//State/suspensionTrigger"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//State/signals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//State/regions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//State/outgoingTransitions"/>
     </genClasses>
     <genClasses ecoreClass="Kits_textonly.ecore#//Renaming">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Renaming/oldID"/>
@@ -65,7 +67,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Action/triggersAndEffects"/>
     </genClasses>
     <genClasses ecoreClass="Kits_textonly.ecore#//Transition">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//Transition/newSourceState"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//Transition/sourceState"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Transition/type"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//Transition/targetState"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Transition/isHistory"/>

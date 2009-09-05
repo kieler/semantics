@@ -225,13 +225,31 @@ public interface Kits_textonlyPackage extends EPackage
   int STATE__SIGNALS = 10;
 
   /**
+   * The feature id for the '<em><b>Regions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE__REGIONS = 11;
+
+  /**
+   * The feature id for the '<em><b>Outgoing Transitions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE__OUTGOING_TRANSITIONS = 12;
+
+  /**
    * The number of structural features of the '<em>State</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE_FEATURE_COUNT = 11;
+  int STATE_FEATURE_COUNT = 13;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.RenamingImpl <em>Renaming</em>}' class.
@@ -354,13 +372,13 @@ public interface Kits_textonlyPackage extends EPackage
   int TRANSITION__TRIGGERS_AND_EFFECTS = ACTION__TRIGGERS_AND_EFFECTS;
 
   /**
-   * The feature id for the '<em><b>New Source State</b></em>' containment reference.
+   * The feature id for the '<em><b>Source State</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TRANSITION__NEW_SOURCE_STATE = ACTION_FEATURE_COUNT + 0;
+  int TRANSITION__SOURCE_STATE = ACTION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -863,6 +881,28 @@ public interface Kits_textonlyPackage extends EPackage
   EReference getState_Signals();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getRegions <em>Regions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Regions</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getRegions()
+   * @see #getState()
+   * @generated
+   */
+  EReference getState_Regions();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Outgoing Transitions</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getOutgoingTransitions()
+   * @see #getState()
+   * @generated
+   */
+  EReference getState_OutgoingTransitions();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Renaming <em>Renaming</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -948,15 +988,15 @@ public interface Kits_textonlyPackage extends EPackage
   EClass getTransition();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getNewSourceState <em>New Source State</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getSourceState <em>Source State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>New Source State</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getNewSourceState()
+   * @return the meta object for the reference '<em>Source State</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getSourceState()
    * @see #getTransition()
    * @generated
    */
-  EReference getTransition_NewSourceState();
+  EReference getTransition_SourceState();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getType <em>Type</em>}'.
@@ -1367,6 +1407,22 @@ public interface Kits_textonlyPackage extends EPackage
     EReference STATE__SIGNALS = eINSTANCE.getState_Signals();
 
     /**
+     * The meta object literal for the '<em><b>Regions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE__REGIONS = eINSTANCE.getState_Regions();
+
+    /**
+     * The meta object literal for the '<em><b>Outgoing Transitions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE__OUTGOING_TRANSITIONS = eINSTANCE.getState_OutgoingTransitions();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.RenamingImpl <em>Renaming</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1437,12 +1493,12 @@ public interface Kits_textonlyPackage extends EPackage
     EClass TRANSITION = eINSTANCE.getTransition();
 
     /**
-     * The meta object literal for the '<em><b>New Source State</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Source State</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TRANSITION__NEW_SOURCE_STATE = eINSTANCE.getTransition_NewSourceState();
+    EReference TRANSITION__SOURCE_STATE = eINSTANCE.getTransition_SourceState();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' attribute feature.

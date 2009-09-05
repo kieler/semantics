@@ -29,6 +29,10 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
         eType="#//Signal" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
+        eType="#//Region" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions" upperBound="-1"
+        eType="#//Transition" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Renaming">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="oldID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -40,8 +44,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="triggersAndEffects" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Action">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="newSourceState" eType="#//TransitionState"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceState" eType="#//State"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//TransitionType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="targetState" eType="#//State"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isHistory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -55,7 +58,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ValueType"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="initialValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="initialValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//ValuedObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="Signal" eSuperTypes="#//ValuedObject">

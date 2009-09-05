@@ -91,12 +91,12 @@ public interface ValuedObject extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Initial Value</em>' attribute.
-   * @see #setInitialValue(int)
+   * @see #setInitialValue(String)
    * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Kits_textonlyPackage#getValuedObject_InitialValue()
    * @model
    * @generated
    */
-  int getInitialValue();
+  String getInitialValue();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValuedObject#getInitialValue <em>Initial Value</em>}' attribute.
@@ -106,6 +106,6 @@ public interface ValuedObject extends EObject
    * @see #getInitialValue()
    * @generated
    */
-  void setInitialValue(int value);
+  void setInitialValue(String value);
 
 } // ValuedObject

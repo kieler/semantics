@@ -71,17 +71,16 @@ State :
   (label=STRING)? //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
   (bodyText=STRING)? 
   
-   ('{'
-    (	 	('onentry' entryActions+=Action) 
-  		| 	('oninner' innerActions+=Action) 
-  		|   ('onexit' exitActions+=Action ) 
-  		| 	('suspension' suspensionTrigger=Action) // kein effect, kein delay, kein immediate
-  		| 	(signals+=Signal) 
-  	)+
-  // 	(regions+=Region ('||' regions+=Region)*)
-   	'}'
-   	)?
-   	//(outgoingTransitions+=Transition)* 
+   ('{' 
+	    (	 	('onentry' entryActions+=Action) 
+	  		| 	('oninner' innerActions+=Action) 
+	  		|   ('onexit' exitActions+=Action ) 
+	  		| 	('suspension' suspensionTrigger=Action) // kein effect, kein delay, kein immediate
+	  		| 	(signals+=Signal) 
+	  		|   (regions+=Region ('||' regions+=Region)*)
+	  	)+
+   	'}')?
+   	(outgoingTransitions+=Transition)* 
 ;
 Renaming	:oldID=STRING'/'newID=STRING;
 FullStateID : ((ID'@')?ID);
@@ -102,8 +101,8 @@ Action:
 	
 Transition:
 
-	//((sourceState=[State|FullStateID]))? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-	newSourceState=TransitionState
+	(sourceState=[State|FullStateID])? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+	//newSourceState=TransitionState
 	type=TransitionType
 	(targetState=[State|FullStateID])//|newTargetState=TransitionState )
 	( 'with' triggersAndEffects=STRING)?
@@ -170,7 +169,7 @@ Variable:
 	'var' name=ID 
 	( 
 	  (': ' type=ValueType)//or type only, type being either pre-defined or hostcode
-	| (':=' initialValue=INT ': ' type=ValueType) // either initial value and type 
+	| (':=' initialValue=ID ': ' type=ValueType) // either initial value and type 
 	)  
 ;
 Signal:
@@ -184,8 +183,8 @@ Signal:
 		( 
 		  (': ' type=ValueType) //or type only, type being either pre-defined or hostcode
 		| (': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING))//or combine type only
-		| (':=' initialValue=INT ': ' type=ValueType) // either initial value and type
-		| (':=' initialValue=INT ': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING)) //or initial value and combine type
+		| (':=' initialValue=ID ': ' type=ValueType) // either initial value and type
+		| (':=' initialValue=ID ': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING)) //or initial value and combine type
 		)? 
 ;
 	//========================================================================================

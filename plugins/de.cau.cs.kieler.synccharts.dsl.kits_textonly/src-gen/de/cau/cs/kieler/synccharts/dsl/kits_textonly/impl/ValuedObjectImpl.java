@@ -81,7 +81,7 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * @generated
    * @ordered
    */
-  protected static final int INITIAL_VALUE_EDEFAULT = 0;
+  protected static final String INITIAL_VALUE_EDEFAULT = null;
 
   /**
    * The cached value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
@@ -91,7 +91,7 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * @generated
    * @ordered
    */
-  protected int initialValue = INITIAL_VALUE_EDEFAULT;
+  protected String initialValue = INITIAL_VALUE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -165,7 +165,7 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * <!-- end-user-doc -->
    * @generated
    */
-  public int getInitialValue()
+  public String getInitialValue()
   {
     return initialValue;
   }
@@ -175,9 +175,9 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setInitialValue(int newInitialValue)
+  public void setInitialValue(String newInitialValue)
   {
-    int oldInitialValue = initialValue;
+    String oldInitialValue = initialValue;
     initialValue = newInitialValue;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, Kits_textonlyPackage.VALUED_OBJECT__INITIAL_VALUE, oldInitialValue, initialValue));
@@ -220,7 +220,7 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
         setType((ValueType)newValue);
         return;
       case Kits_textonlyPackage.VALUED_OBJECT__INITIAL_VALUE:
-        setInitialValue((Integer)newValue);
+        setInitialValue((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -264,7 +264,7 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
       case Kits_textonlyPackage.VALUED_OBJECT__TYPE:
         return type != TYPE_EDEFAULT;
       case Kits_textonlyPackage.VALUED_OBJECT__INITIAL_VALUE:
-        return initialValue != INITIAL_VALUE_EDEFAULT;
+        return INITIAL_VALUE_EDEFAULT == null ? initialValue != null : !INITIAL_VALUE_EDEFAULT.equals(initialValue);
     }
     return super.eIsSet(featureID);
   }

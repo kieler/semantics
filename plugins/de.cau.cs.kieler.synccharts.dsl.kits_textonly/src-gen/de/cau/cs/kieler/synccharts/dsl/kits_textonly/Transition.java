@@ -14,7 +14,7 @@ package de.cau.cs.kieler.synccharts.dsl.kits_textonly;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getNewSourceState <em>New Source State</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getSourceState <em>Source State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getTargetState <em>Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#isIsHistory <em>Is History</em>}</li>
@@ -28,30 +28,30 @@ package de.cau.cs.kieler.synccharts.dsl.kits_textonly;
 public interface Transition extends Action
 {
   /**
-   * Returns the value of the '<em><b>New Source State</b></em>' containment reference.
+   * Returns the value of the '<em><b>Source State</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>New Source State</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Source State</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>New Source State</em>' containment reference.
-   * @see #setNewSourceState(TransitionState)
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Kits_textonlyPackage#getTransition_NewSourceState()
-   * @model containment="true"
+   * @return the value of the '<em>Source State</em>' reference.
+   * @see #setSourceState(State)
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Kits_textonlyPackage#getTransition_SourceState()
+   * @model
    * @generated
    */
-  TransitionState getNewSourceState();
+  State getSourceState();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getNewSourceState <em>New Source State</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getSourceState <em>Source State</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>New Source State</em>' containment reference.
-   * @see #getNewSourceState()
+   * @param value the new value of the '<em>Source State</em>' reference.
+   * @see #getSourceState()
    * @generated
    */
-  void setNewSourceState(TransitionState value);
+  void setSourceState(State value);
 
   /**
    * Returns the value of the '<em><b>Type</b></em>' attribute.

@@ -8,11 +8,9 @@ package de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Kits_textonlyPackage;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.State;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition;
-import de.cau.cs.kieler.synccharts.dsl.kits_textonly.TransitionState;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.TransitionType;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -26,7 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.TransitionImpl#getNewSourceState <em>New Source State</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.TransitionImpl#getSourceState <em>Source State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.TransitionImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.TransitionImpl#getTargetState <em>Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.TransitionImpl#isIsHistory <em>Is History</em>}</li>
@@ -38,14 +36,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class TransitionImpl extends ActionImpl implements Transition
 {
   /**
-   * The cached value of the '{@link #getNewSourceState() <em>New Source State</em>}' containment reference.
+   * The cached value of the '{@link #getSourceState() <em>Source State</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getNewSourceState()
+   * @see #getSourceState()
    * @generated
    * @ordered
    */
-  protected TransitionState newSourceState;
+  protected State sourceState;
 
   /**
    * The default value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -123,9 +121,19 @@ public class TransitionImpl extends ActionImpl implements Transition
    * <!-- end-user-doc -->
    * @generated
    */
-  public TransitionState getNewSourceState()
+  public State getSourceState()
   {
-    return newSourceState;
+    if (sourceState != null && sourceState.eIsProxy())
+    {
+      InternalEObject oldSourceState = (InternalEObject)sourceState;
+      sourceState = (State)eResolveProxy(oldSourceState);
+      if (sourceState != oldSourceState)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Kits_textonlyPackage.TRANSITION__SOURCE_STATE, oldSourceState, sourceState));
+      }
+    }
+    return sourceState;
   }
 
   /**
@@ -133,37 +141,22 @@ public class TransitionImpl extends ActionImpl implements Transition
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetNewSourceState(TransitionState newNewSourceState, NotificationChain msgs)
+  public State basicGetSourceState()
   {
-    TransitionState oldNewSourceState = newSourceState;
-    newSourceState = newNewSourceState;
+    return sourceState;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setSourceState(State newSourceState)
+  {
+    State oldSourceState = sourceState;
+    sourceState = newSourceState;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Kits_textonlyPackage.TRANSITION__NEW_SOURCE_STATE, oldNewSourceState, newNewSourceState);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setNewSourceState(TransitionState newNewSourceState)
-  {
-    if (newNewSourceState != newSourceState)
-    {
-      NotificationChain msgs = null;
-      if (newSourceState != null)
-        msgs = ((InternalEObject)newSourceState).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Kits_textonlyPackage.TRANSITION__NEW_SOURCE_STATE, null, msgs);
-      if (newNewSourceState != null)
-        msgs = ((InternalEObject)newNewSourceState).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Kits_textonlyPackage.TRANSITION__NEW_SOURCE_STATE, null, msgs);
-      msgs = basicSetNewSourceState(newNewSourceState, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Kits_textonlyPackage.TRANSITION__NEW_SOURCE_STATE, newNewSourceState, newNewSourceState));
+      eNotify(new ENotificationImpl(this, Notification.SET, Kits_textonlyPackage.TRANSITION__SOURCE_STATE, oldSourceState, sourceState));
   }
 
   /**
@@ -261,28 +254,13 @@ public class TransitionImpl extends ActionImpl implements Transition
    * @generated
    */
   @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case Kits_textonlyPackage.TRANSITION__NEW_SOURCE_STATE:
-        return basicSetNewSourceState(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
-      case Kits_textonlyPackage.TRANSITION__NEW_SOURCE_STATE:
-        return getNewSourceState();
+      case Kits_textonlyPackage.TRANSITION__SOURCE_STATE:
+        if (resolve) return getSourceState();
+        return basicGetSourceState();
       case Kits_textonlyPackage.TRANSITION__TYPE:
         return getType();
       case Kits_textonlyPackage.TRANSITION__TARGET_STATE:
@@ -304,8 +282,8 @@ public class TransitionImpl extends ActionImpl implements Transition
   {
     switch (featureID)
     {
-      case Kits_textonlyPackage.TRANSITION__NEW_SOURCE_STATE:
-        setNewSourceState((TransitionState)newValue);
+      case Kits_textonlyPackage.TRANSITION__SOURCE_STATE:
+        setSourceState((State)newValue);
         return;
       case Kits_textonlyPackage.TRANSITION__TYPE:
         setType((TransitionType)newValue);
@@ -330,8 +308,8 @@ public class TransitionImpl extends ActionImpl implements Transition
   {
     switch (featureID)
     {
-      case Kits_textonlyPackage.TRANSITION__NEW_SOURCE_STATE:
-        setNewSourceState((TransitionState)null);
+      case Kits_textonlyPackage.TRANSITION__SOURCE_STATE:
+        setSourceState((State)null);
         return;
       case Kits_textonlyPackage.TRANSITION__TYPE:
         setType(TYPE_EDEFAULT);
@@ -356,8 +334,8 @@ public class TransitionImpl extends ActionImpl implements Transition
   {
     switch (featureID)
     {
-      case Kits_textonlyPackage.TRANSITION__NEW_SOURCE_STATE:
-        return newSourceState != null;
+      case Kits_textonlyPackage.TRANSITION__SOURCE_STATE:
+        return sourceState != null;
       case Kits_textonlyPackage.TRANSITION__TYPE:
         return type != TYPE_EDEFAULT;
       case Kits_textonlyPackage.TRANSITION__TARGET_STATE:
