@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#isIsInitial <em>Is Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#isIsFinal <em>Is Final</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getEntryActions <em>Entry Actions</em>}</li>
@@ -121,30 +121,30 @@ public interface State extends EObject
   void setType(StateType value);
 
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Id</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
+   * If the meaning of the '<em>Id</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute.
-   * @see #setName(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Kits_textonlyPackage#getState_Name()
+   * @return the value of the '<em>Id</em>' attribute.
+   * @see #setId(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Kits_textonlyPackage#getState_Id()
    * @model
    * @generated
    */
-  String getName();
+  String getId();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getName <em>Name</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getId <em>Id</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
-   * @see #getName()
+   * @param value the new value of the '<em>Id</em>' attribute.
+   * @see #getId()
    * @generated
    */
-  void setName(String value);
+  void setId(String value);
 
   /**
    * Returns the value of the '<em><b>Label</b></em>' attribute.

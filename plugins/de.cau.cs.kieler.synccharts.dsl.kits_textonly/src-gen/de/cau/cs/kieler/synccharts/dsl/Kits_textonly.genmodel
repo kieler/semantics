@@ -46,7 +46,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/isInitial"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/isFinal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/label"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/bodyText"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//State/entryActions"/>

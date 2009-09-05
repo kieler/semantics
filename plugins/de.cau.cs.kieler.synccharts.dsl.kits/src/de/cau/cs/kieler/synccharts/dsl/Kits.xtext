@@ -1,10 +1,126 @@
 grammar de.cau.cs.kieler.synccharts.dsl.Kits with org.eclipse.xtext.common.Terminals
-//generate kits "http://www.cau.de/cs/kieler/synccharts/dsl/Kits"
+generate kits "http://www.cau.de/cs/kieler/synccharts/dsl/Kits"
 import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as sync
 
-Region returns sync::Region :
-	(innerStates+=State)
+Region ://returns sync::Region :
+	('region' id=ID)?
+	
+	(	variables+=Variable
+	|	signals+=Signal
+	|	innerStates+=State //[sync::State]
+	) +
 ;
-State returns sync::State:
-	label=ID (id=STRING)?(bodyText=STRING)?
+State ://returns sync::State:
+	////label=ID (id=STRING)?(bodyText=STRING)?
+	( ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' name=FullStateID
+  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
+  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) name=FullStateID
+  	| ((isInitial?='init')(isFinal?='final')) 'state' name=FullStateID
+  	| ((isInitial?='init')(isFinal?='final')) (type=StateType)
+  	| ((isInitial?='init')(isFinal?='final')) 'state'
+  	| ((isInitial?='init')(isFinal?='final')) name=FullStateID
+  	| ((isInitial?='init')(isFinal?='final'))
+  	
+  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' name=FullStateID
+  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state'
+  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) name=FullStateID
+  	| ((isFinal?='final')(isInitial?='init')) 'state' name=FullStateID
+  	| ((isFinal?='final')(isInitial?='init')) (type=StateType)
+  	| ((isFinal?='final')(isInitial?='init')) 'state'
+  	| ((isFinal?='final')(isInitial?='init')) name=FullStateID
+  	| ((isFinal?='final')(isInitial?='init'))
+  	
+  	| (isInitial?='init') (type=StateType) 'state' name=FullStateID
+  	| (isInitial?='init') (type=StateType) 'state'
+  	| (isInitial?='init') (type=StateType) name=FullStateID  
+  	| (isInitial?='init') 'state' name=FullStateID
+  	| (isInitial?='init') (type=StateType) 
+  	| (isInitial?='init') 'state'
+  	| (isInitial?='init') name=FullStateID
+  	| (isInitial?='init')
+  	
+  	| (isFinal?='final')  (type=StateType) 'state' name=FullStateID
+  	| (isFinal?='final')  (type=StateType) 'state' 
+  	| (isFinal?='final')  (type=StateType) name=FullStateID
+  	| (isFinal?='final')  'state' name=FullStateID
+  	| (isFinal?='final')  (type=StateType)
+  	| (isFinal?='final')  'state' name=FullStateID
+  	| (isFinal?='final')  name=FullStateID
+  	| (isFinal?='final')
+  	
+  	| (type=StateType) 'state' name=FullStateID
+  	| (type=StateType) 'state'
+  	| (type=StateType) name=FullStateID
+  	| (type=StateType)
+  	
+  	| 'state' name=FullStateID
+  	| 'state'
+  		
+  	| name=FullStateID
+  	)
+
+  (label=STRING)? //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
+  (bodyText=STRING)? 
+  
+   ('{' 
+	    (	 	('onentry' entryActions+=Action) 
+	  		| 	('oninner' innerActions+=Action) 
+	  		|   ('onexit' exitActions+=Action ) 
+	  		| 	('suspension' suspensionTrigger=Action) // kein effect, kein delay, kein immediate
+	  		| 	(signals+=Signal) 
+	  		|   (regions+=Region ('||' regions+=Region)*)
+	  	)+
+   	'}')?
+   	(outgoingTransitions+=Transition)* 
 ;
+Action returns sync::Action:
+	((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))
+| 
+	Transition
+	
+;
+ValuedObject returns sync::ValuedObject:
+	Signal | Variable
+;
+Variable returns sync::Variable:
+	'var' name=ID 
+	( 
+	  (': ' type=ValueType)//or type only, type being either pre-defined or hostcode
+	| (':=' initialValue=ID ': ' type=ValueType) // either initial value and type 
+	)  
+;
+Signal returns sync::Signal:
+ 	
+		//(isLocal?='local')? this does not make any sense anymore, does it?
+		( //(isInputOutput?='inputoutput') |
+		 (isInput?='input')
+		| (isOutput?='output')
+		)		
+		name=ID 
+		( 
+		  (': ' type=ValueType) //or type only, type being either pre-defined or hostcode
+		| (': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING))//or combine type only
+		| (':=' initialValue=ID ': ' type=ValueType) // either initial value and type
+		| (':=' initialValue=ID ': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING)) //or initial value and combine type
+		)? 
+;
+
+	//========================================================================================
+	//===  									    TRANSITION 					               ===
+	//========================================================================================
+	
+Transition returns sync::Transition:
+
+	(sourceState=[sync::State|FullStateID])? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+	//newSourceState=TransitionState
+	type=TransitionType
+	(targetState=[sync::State|FullStateID])//|newTargetState=TransitionState )
+	( 'with' triggersAndEffects=STRING)?
+	(isHistory?=' history')?
+	';'
+;
+FullStateID : ((ID'@')?ID);
+enum StateType	returns sync::StateType	: NORMAL='state' | PSEUDO='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
+enum CombineOperator returns sync::CombineOperator: NONE | ADD='+' | MULT='*' | AND='AND'| OR='OR' |HOST='hostCombineOperator';
+enum ValueType returns sync::ValueType: PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='hostType';	
+enum TransitionType returns sync::TransitionType: WEAKABORT='-->' |  STRONGABORT='o->' | NORMALTERMINATION='>->' ;

@@ -286,7 +286,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getState_Name()
+  public EAttribute getState_Id()
   {
     return (EAttribute)stateEClass.getEStructuralFeatures().get(3);
   }
@@ -741,7 +741,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
     createEAttribute(stateEClass, STATE__IS_INITIAL);
     createEAttribute(stateEClass, STATE__IS_FINAL);
     createEAttribute(stateEClass, STATE__TYPE);
-    createEAttribute(stateEClass, STATE__NAME);
+    createEAttribute(stateEClass, STATE__ID);
     createEAttribute(stateEClass, STATE__LABEL);
     createEAttribute(stateEClass, STATE__BODY_TEXT);
     createEReference(stateEClass, STATE__ENTRY_ACTIONS);
@@ -838,7 +838,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
     initEAttribute(getState_IsInitial(), ecorePackage.getEBoolean(), "isInitial", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_IsFinal(), ecorePackage.getEBoolean(), "isFinal", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_Type(), this.getStateType(), "type", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getState_Name(), ecorePackage.getEString(), "name", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getState_Id(), ecorePackage.getEString(), "id", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_Label(), ecorePackage.getEString(), "label", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_BodyText(), ecorePackage.getEString(), "bodyText", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_EntryActions(), this.getAction(), null, "entryActions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

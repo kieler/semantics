@@ -1,0 +1,28 @@
+import kits;
+import xtext;
+import ecore;
+
+process(xtext::GeneratedMetamodel this) :
+   ePackage.process()
+;
+process(EPackage this):
+	eClassifiers.process()
+;
+
+process(EClassifier this) :
+    null
+;
+
+process(EClass this) :
+   if this.name == "State" then this.getNameAttribute()
+;
+Void createSnycID (String id) :
+	JAVA de.cau.cs.kieler.synccharts.dsl.CreateStateWithId.createNewState(java.lang.String)
+;
+cached getNameAttribute(EClass x):
+		if x.getEStructuralFeature("name")!=null then createSnycID("dolly")//x.getEStructuralFeature("name").createSnycID()
+;	
+
+cached toID(EStructuralFeature e) :
+	e.setName("id")	
+;

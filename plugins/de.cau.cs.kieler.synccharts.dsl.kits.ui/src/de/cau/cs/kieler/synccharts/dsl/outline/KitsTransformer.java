@@ -3,7 +3,15 @@
  */
 package de.cau.cs.kieler.synccharts.dsl.outline;
 
+import java.util.List;
+
+import org.eclipse.xtext.ui.common.editor.outline.ContentOutlineNode;
 import org.eclipse.xtext.ui.common.editor.outline.transformer.AbstractDeclarativeSemanticModelTransformer;
+import org.eclipse.xtext.ui.core.ILocationInFileProvider;
+
+import com.google.inject.Provider;
+
+import de.cau.cs.kieler.synccharts.State;
 
 /**
  * customization of the default outline structure
@@ -14,10 +22,9 @@ public class KitsTransformer extends
 	/**
 	 * @modified oba
 	 */
-	// private Provider<ContentOutlineNode> contentOutlineNodeprovider =
-	// getOutlineNodeProvider();
-	// List<ContentOutlineNode> myContentOutlineNodes;
-	// private ILocationInFileProvider locationProvider;
+	private Provider<ContentOutlineNode> contentOutlineNodeprovider = getOutlineNodeProvider();
+	List<ContentOutlineNode> myContentOutlineNodes;
+	private ILocationInFileProvider locationProvider;
 
 	/**
 	 * This method will be called by naming convention: - method name must be
@@ -25,40 +32,39 @@ public class KitsTransformer extends
 	 * ContentOutlineNode
 	 * 
 	 */
-	// public ContentOutlineNode createNode(State semanticState,
-	// ContentOutlineNode parentNode) {
-	// ContentOutlineNode node = super.newOutlineNode(semanticState,
-	// parentNode);
-	// String myStateType = null;
-	// String myStateName = null;
-	// String myStateLabel = null;
-	// String nodeLabel = "";
-	//
-	// /**
-	// * init myState "myStateLabel" --> init myState:"myStateLabel"
-	// */
-	// if (semanticState.getType() != null
-	// && semanticState.getType().getName() != "NORMAL") {
-	// myStateType = semanticState.getType().getName();
-	// nodeLabel = myStateType + " state";
-	// }
-	// if (semanticState.getName() != null) {
-	// myStateName = semanticState.getName();
-	// nodeLabel= nodeLabel + myStateName;}
-	// else {
-	// myStateName = "anonymous state";
-	// nodeLabel= nodeLabel + myStateName;
-	// }
-	//		
-	//
-	// if (semanticState.getLabel() != null) {
-	// myStateLabel = semanticState.getLabel();
-	// nodeLabel = nodeLabel + ": \" " + myStateLabel + "\"";
-	// }
-	// node.setLabel(nodeLabel);
-	// return node;
-	// }
-	//
+//	public ContentOutlineNode createNode(State semanticState,
+//			ContentOutlineNode parentNode) {
+//		ContentOutlineNode node = super.newOutlineNode(semanticState,
+//				parentNode);
+//		String myStateType = null;
+//		String myStateName = null;
+//		String myStateLabel = null;
+//		String nodeLabel = "";
+//
+//		/**
+//		 * init myState "myStateLabel" --> init myState:"myStateLabel"
+//		 */
+//		if (semanticState.getType() != null
+//				&& semanticState.getType().getName() != "NORMAL") {
+//			myStateType = semanticState.getType().getName();
+//			nodeLabel = myStateType + " state";
+//		}
+//		if (semanticState.getName() != null) {
+//			myStateName = semanticState.getName();
+//			nodeLabel = nodeLabel + myStateName;
+//		} else {
+//			myStateName = "anonymous state";
+//			nodeLabel = nodeLabel + myStateName;
+//		}
+//
+//		if (semanticState.getLabel() != null) {
+//			myStateLabel = semanticState.getLabel();
+//			nodeLabel = nodeLabel + ": \" " + myStateLabel + "\"";
+//		}
+//		node.setLabel(nodeLabel);
+//		return node;
+//	}
+
 	// public ContentOutlineNode createNode(Action semanticAction,
 	// ContentOutlineNode parentNode) {
 	// ContentOutlineNode node = super.newOutlineNode(semanticAction,

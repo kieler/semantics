@@ -19,7 +19,9 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.util,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
- org.antlr.runtime
+ org.antlr.runtime,
+ de.cau.cs.kieler.synccharts.model;bundle-version="0.1.0",
+ de.cau.cs.kieler.synccharts;bundle-version="0.1.0"
 Export-Package: de.cau.cs.kieler.synccharts.dsl,
  de.cau.cs.kieler.synccharts.dsl.services,
  de.cau.cs.kieler.synccharts.dsl.kits_textonly,

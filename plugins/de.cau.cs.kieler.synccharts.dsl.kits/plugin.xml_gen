@@ -3,6 +3,14 @@
 
 <plugin>
 
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.cau.de/cs/kieler/synccharts/dsl/Kits" 
+       class = "de.cau.cs.kieler.synccharts.dsl.kits.KitsPackage"
+       genModel = "de/cau/cs/kieler/synccharts/dsl/Kits.genmodel" /> 
+	
+  </extension>
+
 
 
 

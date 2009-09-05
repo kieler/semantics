@@ -24,11 +24,8 @@ public class KitsTransientValueService implements ITransientValueService {
 	 * (org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature)
 	 */
 	public boolean isMixedList(EObject owner, EStructuralFeature feature) {
-		if ((owner instanceof State && (feature
-				.equals(SyncchartsPackage.eINSTANCE.getState_ParentRegion()))))
-			return true;
-		else
-			return false;
+
+		return false;
 	}
 
 	/*
@@ -41,8 +38,11 @@ public class KitsTransientValueService implements ITransientValueService {
 	 */
 	public boolean isTransient(EObject owner, EStructuralFeature feature,
 			int index) {
-		// TODO Auto-generated method stub
-		return false;
+		if ((owner instanceof State && (feature
+				.equals(SyncchartsPackage.eINSTANCE.getState_ParentRegion()))))
+			return true;
+		else
+			return false;
 	}
 
 }

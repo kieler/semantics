@@ -21,6 +21,7 @@ public class KitsCheckValidator extends org.eclipse.xtext.check.AbstractCheckVal
 	@Override
 	protected List<? extends EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>();
+	    result.add(de.cau.cs.kieler.synccharts.dsl.kits.KitsPackage.eINSTANCE);
 		return result;
 	}
 	

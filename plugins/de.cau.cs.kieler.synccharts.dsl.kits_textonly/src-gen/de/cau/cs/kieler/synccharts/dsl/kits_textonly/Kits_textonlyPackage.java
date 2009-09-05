@@ -153,13 +153,13 @@ public interface Kits_textonlyPackage extends EPackage
   int STATE__TYPE = 2;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Id</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__NAME = 3;
+  int STATE__ID = 3;
 
   /**
    * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -793,15 +793,15 @@ public interface Kits_textonlyPackage extends EPackage
   EAttribute getState_Type();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getName <em>Name</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getId <em>Id</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getName()
+   * @return the meta object for the attribute '<em>Id</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getId()
    * @see #getState()
    * @generated
    */
-  EAttribute getState_Name();
+  EAttribute getState_Id();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.State#getLabel <em>Label</em>}'.
@@ -1343,12 +1343,12 @@ public interface Kits_textonlyPackage extends EPackage
     EAttribute STATE__TYPE = eINSTANCE.getState_Type();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STATE__NAME = eINSTANCE.getState_Name();
+    EAttribute STATE__ID = eINSTANCE.getState_Id();
 
     /**
      * The meta object literal for the '<em><b>Label</b></em>' attribute feature.

@@ -3,9 +3,11 @@
  */
 package de.cau.cs.kieler.synccharts.dsl;
 
+import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.resource.IFragmentProvider;
 
 import de.cau.cs.kieler.synccharts.dsl.kits.resource.KitsFragmentProvider;
+import de.cau.cs.kieler.synccharts.dsl.kits.serialization.KitsTransientValueService;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -19,6 +21,18 @@ public class KitsRuntimeModule extends
 	 */
 	public Class<? extends IFragmentProvider> bindIFragmentProvider() {
 		return KitsFragmentProvider.class;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.xtext.service.DefaultRuntimeModule#bindITransientValueService
+	 * ()
+	 */
+	@Override
+	public Class<? extends ITransientValueService> bindITransientValueService() {
+		return KitsTransientValueService.class;
 	}
 
 }

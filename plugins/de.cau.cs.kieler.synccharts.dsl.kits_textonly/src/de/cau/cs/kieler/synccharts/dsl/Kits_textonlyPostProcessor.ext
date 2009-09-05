@@ -1,0 +1,24 @@
+import kits_textonly;
+import xtext;
+import ecore;
+
+process(GeneratedMetamodel this) :
+   ePackage.process()
+;
+process(EPackage this):
+	eClassifiers.process()
+;
+
+process(EClassifier this) :
+    null
+;
+
+process(EClass this) :
+   if this.name == "State" then this.getNameAttribute()
+;
+cached getNameAttribute(EClass x):
+		if x.getEStructuralFeature("name")!=null then x.getEStructuralFeature("name").toID()
+;	
+cached toID(EStructuralFeature e) :
+	e.setName("id")	
+;

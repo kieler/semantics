@@ -29,6 +29,9 @@ public class KitsStandaloneSetup implements ISetup {
 	}
 	
 	public void register(Injector injector) {
+	if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/synccharts/dsl/Kits")) {
+		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/synccharts/dsl/Kits", de.cau.cs.kieler.synccharts.dsl.kits.KitsPackage.eINSTANCE);
+	}
 
 		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("kits", resourceFactory);
