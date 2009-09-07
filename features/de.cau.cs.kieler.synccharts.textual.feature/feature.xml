@@ -93,11 +93,6 @@ under the terms of the Eclipse Public License (EPL).
       <import plugin="org.eclipse.xtend"/>
       <import plugin="de.cau.cs.kieler.synccharts.diagram.custom" version="0.1.0" match="greaterOrEqual"/>
       <import plugin="de.cau.cs.kieler.synccharts.custom" version="0.1.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xtext" version="0.7.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.resources" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.workbench.texteditor" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jface.text" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.2.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtext.ui.core" version="0.7.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.gmf.runtime.diagram.ui.resources.editor" version="1.2.0" match="greaterOrEqual"/>
    </requires>
