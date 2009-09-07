@@ -3,15 +3,15 @@ grammar de.cau.cs.kieler.synccharts.dsl.Kits with org.eclipse.xtext.common.Termi
 import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as sync
 
 Region returns sync::Region :
-	('region' id=ID)
+	('region' id=ID)?
 	
-	(	//variables+=Variable
-	//|	//signals+=Signal |
-		innerStates+=State //[sync::State]
-	) 
+	(	variables+=Variable
+	|	signals+=Signal
+	|	innerStates+=State
+	)+
 ;
 State returns sync::State:
-	id=ID 
+	
 (	  ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' id=FullStateID
   	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
   	| ((isInitial?='init')(isFinal?='final')) (type=StateType) id=FullStateID
@@ -73,36 +73,16 @@ State returns sync::State:
    	'}')?
    	(outgoingTransitions+=Transition)* 
 ;
+Renaming returns sync::Renaming	:oldID=STRING'/'newID=STRING;
+FullStateID : ((ID'@')?ID);
+	//========================================================================================
+	//===  									    ACTIONS  					               ===
+	//========================================================================================
 Action returns sync::Action:
 	((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))
 | 
 	Transition
 	
-;
-ValuedObject returns sync::ValuedObject:
-	Signal | Variable
-;
-Variable returns sync::Variable:
-	'var' name=ID 
-	( 
-	  (': ' type=ValueType)//or type only, type being either pre-defined or hostcode
-	| (':=' initialValue=ID ': ' type=ValueType) // either initial value and type 
-	)  
-;
-Signal returns sync::Signal:
- 	
-		//(isLocal?='local')? this does not make any sense anymore, does it?
-		( //(isInputOutput?='inputoutput') |
-		 (isInput?='input')
-		| (isOutput?='output')
-		)		
-		name=ID 
-		( 
-		  (': ' type=ValueType) //or type only, type being either pre-defined or hostcode
-		| (': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING))//or combine type only
-		| (':=' initialValue=ID ': ' type=ValueType) // either initial value and type
-		| (':=' initialValue=ID ': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING)) //or initial value and combine type
-		)? 
 ;
 
 	//========================================================================================
@@ -114,12 +94,95 @@ Transition returns sync::Transition:
 	(sourceState=[sync::State|FullStateID])? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 	//newSourceState=TransitionState
 	type=TransitionType
-	(targetState=[sync::State|FullStateID])//|newTargetState=TransitionState )
+	(targetState=[sync::State|FullStateID])
+	//|newTargetState=TransitionState )
 	( 'with' triggersAndEffects=STRING)?
 	(isHistory?=' history')?
 	';'
 ;
-FullStateID : ((ID'@')?ID);
+TransitionState returns sync::State:
+	(	  ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' id=FullStateID
+  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
+  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) id=FullStateID
+  	| ((isInitial?='init')(isFinal?='final')) 'state' id=FullStateID
+  	| ((isInitial?='init')(isFinal?='final')) (type=StateType)
+  	| ((isInitial?='init')(isFinal?='final')) 'state'
+  	| ((isInitial?='init')(isFinal?='final')) id=FullStateID
+  	| ((isInitial?='init')(isFinal?='final'))
+  	
+  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' id=FullStateID
+  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state'
+  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) id=FullStateID
+  	| ((isFinal?='final')(isInitial?='init')) 'state' id=FullStateID
+  	| ((isFinal?='final')(isInitial?='init')) (type=StateType)
+  	| ((isFinal?='final')(isInitial?='init')) 'state'
+  	| ((isFinal?='final')(isInitial?='init')) id=FullStateID
+  	| ((isFinal?='final')(isInitial?='init'))
+  	
+  	| (isInitial?='init') (type=StateType) 'state' id=FullStateID
+  	| (isInitial?='init') (type=StateType) 'state'
+  	| (isInitial?='init') (type=StateType) id=FullStateID  
+  	| (isInitial?='init') 'state' id=FullStateID
+  	| (isInitial?='init') (type=StateType) 
+  	| (isInitial?='init') 'state'
+  	| (isInitial?='init') id=FullStateID
+  	| (isInitial?='init')
+  	
+  	| (isFinal?='final')  (type=StateType) 'state' id=FullStateID
+  	| (isFinal?='final')  (type=StateType) 'state' 
+  	| (isFinal?='final')  (type=StateType) id=FullStateID
+  	| (isFinal?='final')  'state' id=FullStateID
+  	| (isFinal?='final')  (type=StateType)
+  	| (isFinal?='final')  'state' id=FullStateID
+  	| (isFinal?='final')  id=FullStateID
+  	| (isFinal?='final')
+  	
+  	| (type=StateType) 'state' id=FullStateID
+  	| (type=StateType) 'state'
+  	| (type=StateType) id=FullStateID
+  	| (type=StateType)
+  	
+  	| 'state' id=FullStateID
+  	| 'state'
+  		
+  	| id=FullStateID
+  )
+	
+;
+ 	//========================================================================================
+	//===  									    VAR,SIG  					               ===
+	//========================================================================================
+
+ValuedObject returns sync::ValuedObject:
+	Signal | Variable
+;
+Variable returns sync::Variable:
+	'var' name=ID 
+	( 
+	  (': ' type=ValueType)//or type only, type being either pre-defined or hostcode
+	| (':=' initialValue=ID ': ' type=ValueType) // either initial value and type 
+	)  
+;
+Signal returns sync::Signal:
+ 	//a signal is EITHER local OR (input or output or both)
+	(	(isLocal?='local')
+	| 
+		(	(isInput?='input')
+		|
+		 	(isOutput?='output')
+		|
+		 	((isInput?='input')(isOutput?='output'))
+		 )		
+	)
+	name=ID 
+	
+	(':=' initialValue=ID)? 
+	
+	( 
+		(': ' type=ValueType) // either initial value and type
+	| 	(': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING)) //or initial value and combine type
+	) 
+;
 enum StateType	returns sync::StateType	: NORMAL='state' | PSEUDO='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
 enum CombineOperator returns sync::CombineOperator: NONE | ADD='+' | MULT='*' | AND='AND'| OR='OR' |HOST='hostCombineOperator';
 enum ValueType returns sync::ValueType: PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='hostType';	
