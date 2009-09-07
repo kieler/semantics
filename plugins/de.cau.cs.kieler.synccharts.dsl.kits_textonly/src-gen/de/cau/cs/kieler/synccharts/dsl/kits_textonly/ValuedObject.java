@@ -16,8 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValuedObject#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValuedObject#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValuedObject#getInitialValue <em>Initial Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValuedObject#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,6 +54,32 @@ public interface ValuedObject extends EObject
   void setName(String value);
 
   /**
+   * Returns the value of the '<em><b>Initial Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Initial Value</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Initial Value</em>' attribute.
+   * @see #setInitialValue(String)
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Kits_textonlyPackage#getValuedObject_InitialValue()
+   * @model
+   * @generated
+   */
+  String getInitialValue();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValuedObject#getInitialValue <em>Initial Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Initial Value</em>' attribute.
+   * @see #getInitialValue()
+   * @generated
+   */
+  void setInitialValue(String value);
+
+  /**
    * Returns the value of the '<em><b>Type</b></em>' attribute.
    * The literals are from the enumeration {@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValueType}.
    * <!-- begin-user-doc -->
@@ -81,31 +107,5 @@ public interface ValuedObject extends EObject
    * @generated
    */
   void setType(ValueType value);
-
-  /**
-   * Returns the value of the '<em><b>Initial Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Initial Value</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Initial Value</em>' attribute.
-   * @see #setInitialValue(String)
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Kits_textonlyPackage#getValuedObject_InitialValue()
-   * @model
-   * @generated
-   */
-  String getInitialValue();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValuedObject#getInitialValue <em>Initial Value</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Initial Value</em>' attribute.
-   * @see #getInitialValue()
-   * @generated
-   */
-  void setInitialValue(String value);
 
 } // ValuedObject

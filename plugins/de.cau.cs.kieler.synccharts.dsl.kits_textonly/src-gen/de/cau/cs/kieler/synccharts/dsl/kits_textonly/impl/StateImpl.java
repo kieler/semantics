@@ -39,7 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.StateImpl#isIsInitial <em>Is Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.StateImpl#isIsFinal <em>Is Final</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.StateImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.StateImpl#getId <em>Id</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.StateImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.StateImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.StateImpl#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.StateImpl#getEntryActions <em>Entry Actions</em>}</li>
@@ -117,24 +117,24 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   protected StateType type = TYPE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getId()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected static final String ID_EDEFAULT = null;
+  protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getId()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected String id = ID_EDEFAULT;
+  protected String name = NAME_EDEFAULT;
 
   /**
    * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
@@ -341,9 +341,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getId()
+  public String getName()
   {
-    return id;
+    return name;
   }
 
   /**
@@ -351,12 +351,12 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setId(String newId)
+  public void setName(String newName)
   {
-    String oldId = id;
-    id = newId;
+    String oldName = name;
+    name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Kits_textonlyPackage.STATE__ID, oldId, id));
+      eNotify(new ENotificationImpl(this, Notification.SET, Kits_textonlyPackage.STATE__NAME, oldName, name));
   }
 
   /**
@@ -581,8 +581,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return isIsFinal();
       case Kits_textonlyPackage.STATE__TYPE:
         return getType();
-      case Kits_textonlyPackage.STATE__ID:
-        return getId();
+      case Kits_textonlyPackage.STATE__NAME:
+        return getName();
       case Kits_textonlyPackage.STATE__LABEL:
         return getLabel();
       case Kits_textonlyPackage.STATE__BODY_TEXT:
@@ -625,8 +625,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case Kits_textonlyPackage.STATE__TYPE:
         setType((StateType)newValue);
         return;
-      case Kits_textonlyPackage.STATE__ID:
-        setId((String)newValue);
+      case Kits_textonlyPackage.STATE__NAME:
+        setName((String)newValue);
         return;
       case Kits_textonlyPackage.STATE__LABEL:
         setLabel((String)newValue);
@@ -684,8 +684,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case Kits_textonlyPackage.STATE__TYPE:
         setType(TYPE_EDEFAULT);
         return;
-      case Kits_textonlyPackage.STATE__ID:
-        setId(ID_EDEFAULT);
+      case Kits_textonlyPackage.STATE__NAME:
+        setName(NAME_EDEFAULT);
         return;
       case Kits_textonlyPackage.STATE__LABEL:
         setLabel(LABEL_EDEFAULT);
@@ -734,8 +734,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return isFinal != IS_FINAL_EDEFAULT;
       case Kits_textonlyPackage.STATE__TYPE:
         return type != TYPE_EDEFAULT;
-      case Kits_textonlyPackage.STATE__ID:
-        return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+      case Kits_textonlyPackage.STATE__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case Kits_textonlyPackage.STATE__LABEL:
         return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
       case Kits_textonlyPackage.STATE__BODY_TEXT:
@@ -775,8 +775,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     result.append(isFinal);
     result.append(", type: ");
     result.append(type);
-    result.append(", id: ");
-    result.append(id);
+    result.append(", name: ");
+    result.append(name);
     result.append(", label: ");
     result.append(label);
     result.append(", bodyText: ");

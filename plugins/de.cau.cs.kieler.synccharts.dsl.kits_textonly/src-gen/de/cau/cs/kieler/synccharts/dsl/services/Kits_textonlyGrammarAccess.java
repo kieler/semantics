@@ -48,7 +48,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		//	
 		//		 
 		//		 
-		//		 
+		//	    
 		//	  
 		//
 		////========================================================================================
@@ -408,7 +408,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		////========================================================================================
 		////===  									    STATES  					               ===
 		////========================================================================================
-		//  
+		//  	
 		//		        
 		//  	      
 		//  	      
@@ -490,7 +490,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		//label=STRING? bodyText=STRING? ("{" ("onentry" entryActions+=Action|"oninner"
 		//innerActions+=Action|"onexit" exitActions+=Action|"suspension" suspensionTrigger=
 		//Action|signals+=Signal|regions+=Region ("||" regions+=Region)*)+ "}")?
-		//outgoingTransitions+=Transition* 
+		//outgoingTransitions+=Transition* 	
 		//		        
 		//  	      
 		//  	      
@@ -1580,9 +1580,8 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		private final RuleCall cSourceStateStateFullStateIDParserRuleCall_0_0_1 = (RuleCall)cSourceStateStateCrossReference_0_0.eContents().get(1);
 		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cTypeTransitionTypeEnumRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
-		private final Assignment cTargetStateAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final CrossReference cTargetStateStateCrossReference_2_0 = (CrossReference)cTargetStateAssignment_2.eContents().get(0);
-		private final RuleCall cTargetStateStateFullStateIDParserRuleCall_2_0_1 = (RuleCall)cTargetStateStateCrossReference_2_0.eContents().get(1);
+		private final Assignment cNewTargetStateAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNewTargetStateTransitionStateParserRuleCall_2_0 = (RuleCall)cNewTargetStateAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cWithKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cTriggersAndEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -1592,8 +1591,8 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//Transition:
-		//  sourceState=[State|FullStateID]? type=TransitionType targetState=[State|
-		//  FullStateID] ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
+		//  sourceState=[State|FullStateID]? type=TransitionType newTargetState=
+		//  TransitionState ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
 		//
 		//	//========================================================================================
 		//	 //===  									    TRANSITION 					               ===
@@ -1604,16 +1603,16 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		//	  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 		//	 //newSourceState=TransitionState
 		//	 
-		//	//|newTargetState=TransitionState )
+		//	//(targetState=[State|FullStateID] |
 		public ParserRule getRule() { return rule; }
 
-		//sourceState=[State|FullStateID]? type=TransitionType targetState=[State|
-		//FullStateID] ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";" 
+		//sourceState=[State|FullStateID]? type=TransitionType newTargetState=
+		//TransitionState ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";" 
 		//
 		//	  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 		//	 //newSourceState=TransitionState
 		//	 
-		//	//|newTargetState=TransitionState )
+		//	//(targetState=[State|FullStateID] |
 		public Group getGroup() { return cGroup; }
 
 		//sourceState=[State|FullStateID]?
@@ -1627,19 +1626,20 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 
 		//type=TransitionType   //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 		//	 //newSourceState=TransitionState
+		//	 
+		//	//(targetState=[State|FullStateID] |
 		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
 
-		//TransitionType
+		//TransitionType 
+		//	//(targetState=[State|FullStateID] |
 		public RuleCall getTypeTransitionTypeEnumRuleCall_1_0() { return cTypeTransitionTypeEnumRuleCall_1_0; }
 
-		//targetState=[State|FullStateID]
-		public Assignment getTargetStateAssignment_2() { return cTargetStateAssignment_2; }
+		//newTargetState=TransitionState 
+		//	//(targetState=[State|FullStateID] |
+		public Assignment getNewTargetStateAssignment_2() { return cNewTargetStateAssignment_2; }
 
-		//[State|FullStateID]
-		public CrossReference getTargetStateStateCrossReference_2_0() { return cTargetStateStateCrossReference_2_0; }
-
-		//FullStateID
-		public RuleCall getTargetStateStateFullStateIDParserRuleCall_2_0_1() { return cTargetStateStateFullStateIDParserRuleCall_2_0_1; }
+		//TransitionState
+		public RuleCall getNewTargetStateTransitionStateParserRuleCall_2_0() { return cNewTargetStateTransitionStateParserRuleCall_2_0; }
 
 		//("with" triggersAndEffects=STRING)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -1913,7 +1913,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		private final Assignment cNameAssignment_38 = (Assignment)cAlternatives.eContents().get(38);
 		private final RuleCall cNameFullStateIDParserRuleCall_38_0 = (RuleCall)cNameAssignment_38.eContents().get(0);
 		
-		//TransitionState:
+		//TransitionState returns State:
 		//  (isInitial?="init" isFinal?="final") type=StateType "state" name=FullStateID|(
 		//  isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial?="init"
 		//  isFinal?="final") type=StateType name=FullStateID|(isInitial?="init" isFinal?=
@@ -1935,8 +1935,8 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		//  "final" "state" name=FullStateID|isFinal?="final" name=FullStateID|isFinal?="final"
 		//  |type=StateType "state" name=FullStateID|type=StateType "state"|type=StateType name=
 		//  FullStateID|type=StateType|"state" name=FullStateID|"state"|name=FullStateID; 
-		//// returns State:
-		//	 //name=FullStateID
+		//    
+		//	//name=FullStateID
 		//	         
 		//	      
 		//	      
@@ -2010,8 +2010,8 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		//isFinal?="final" "state" name=FullStateID|isFinal?="final" type=StateType|isFinal?=
 		//"final" "state" name=FullStateID|isFinal?="final" name=FullStateID|isFinal?="final"
 		//|type=StateType "state" name=FullStateID|type=StateType "state"|type=StateType name=
-		//FullStateID|type=StateType|"state" name=FullStateID|"state"|name=FullStateID // returns State:
-		//	 //name=FullStateID
+		//FullStateID|type=StateType|"state" name=FullStateID|"state"|name=FullStateID 
+		//	//name=FullStateID
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//(isInitial?="init" isFinal?="final") type=StateType "state" name=FullStateID
@@ -2867,117 +2867,131 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Assignment cIsInputOutputAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
-		private final Keyword cIsInputOutputInputoutputKeyword_0_0_0 = (Keyword)cIsInputOutputAssignment_0_0.eContents().get(0);
-		private final Assignment cIsInputAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
-		private final Keyword cIsInputInputKeyword_0_1_0 = (Keyword)cIsInputAssignment_0_1.eContents().get(0);
-		private final Assignment cIsOutputAssignment_0_2 = (Assignment)cAlternatives_0.eContents().get(2);
-		private final Keyword cIsOutputOutputKeyword_0_2_0 = (Keyword)cIsOutputAssignment_0_2.eContents().get(0);
+		private final Assignment cIsLocalAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
+		private final Keyword cIsLocalLocalKeyword_0_0_0 = (Keyword)cIsLocalAssignment_0_0.eContents().get(0);
+		private final Alternatives cAlternatives_0_1 = (Alternatives)cAlternatives_0.eContents().get(1);
+		private final Assignment cIsInputAssignment_0_1_0 = (Assignment)cAlternatives_0_1.eContents().get(0);
+		private final Keyword cIsInputInputKeyword_0_1_0_0 = (Keyword)cIsInputAssignment_0_1_0.eContents().get(0);
+		private final Assignment cIsOutputAssignment_0_1_1 = (Assignment)cAlternatives_0_1.eContents().get(1);
+		private final Keyword cIsOutputOutputKeyword_0_1_1_0 = (Keyword)cIsOutputAssignment_0_1_1.eContents().get(0);
+		private final Group cGroup_0_1_2 = (Group)cAlternatives_0_1.eContents().get(2);
+		private final Assignment cIsInputAssignment_0_1_2_0 = (Assignment)cGroup_0_1_2.eContents().get(0);
+		private final Keyword cIsInputInputKeyword_0_1_2_0_0 = (Keyword)cIsInputAssignment_0_1_2_0.eContents().get(0);
+		private final Assignment cIsOutputAssignment_0_1_2_1 = (Assignment)cGroup_0_1_2.eContents().get(1);
+		private final Keyword cIsOutputOutputKeyword_0_1_2_1_0 = (Keyword)cIsOutputAssignment_0_1_2_1.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
-		private final Keyword cColonSpaceKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
-		private final Assignment cTypeAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
-		private final RuleCall cTypeValueTypeEnumRuleCall_2_0_1_0 = (RuleCall)cTypeAssignment_2_0_1.eContents().get(0);
-		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
-		private final Keyword cCombineKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
-		private final Assignment cTypeAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
-		private final RuleCall cTypeValueTypeEnumRuleCall_2_1_1_0 = (RuleCall)cTypeAssignment_2_1_1.eContents().get(0);
-		private final Keyword cWithKeyword_2_1_2 = (Keyword)cGroup_2_1.eContents().get(2);
-		private final Alternatives cAlternatives_2_1_3 = (Alternatives)cGroup_2_1.eContents().get(3);
-		private final Assignment cCombineOperatorAssignment_2_1_3_0 = (Assignment)cAlternatives_2_1_3.eContents().get(0);
-		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_2_1_3_0_0 = (RuleCall)cCombineOperatorAssignment_2_1_3_0.eContents().get(0);
-		private final Assignment cHostCombineOperatorAssignment_2_1_3_1 = (Assignment)cAlternatives_2_1_3.eContents().get(1);
-		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_2_1_3_1_0 = (RuleCall)cHostCombineOperatorAssignment_2_1_3_1.eContents().get(0);
-		private final Group cGroup_2_2 = (Group)cAlternatives_2.eContents().get(2);
-		private final Keyword cColonEqualsSignKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
-		private final Assignment cInitialValueAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cInitialValueIDTerminalRuleCall_2_2_1_0 = (RuleCall)cInitialValueAssignment_2_2_1.eContents().get(0);
-		private final Keyword cColonSpaceKeyword_2_2_2 = (Keyword)cGroup_2_2.eContents().get(2);
-		private final Assignment cTypeAssignment_2_2_3 = (Assignment)cGroup_2_2.eContents().get(3);
-		private final RuleCall cTypeValueTypeEnumRuleCall_2_2_3_0 = (RuleCall)cTypeAssignment_2_2_3.eContents().get(0);
-		private final Group cGroup_2_3 = (Group)cAlternatives_2.eContents().get(3);
-		private final Keyword cColonEqualsSignKeyword_2_3_0 = (Keyword)cGroup_2_3.eContents().get(0);
-		private final Assignment cInitialValueAssignment_2_3_1 = (Assignment)cGroup_2_3.eContents().get(1);
-		private final RuleCall cInitialValueIDTerminalRuleCall_2_3_1_0 = (RuleCall)cInitialValueAssignment_2_3_1.eContents().get(0);
-		private final Keyword cCombineKeyword_2_3_2 = (Keyword)cGroup_2_3.eContents().get(2);
-		private final Assignment cTypeAssignment_2_3_3 = (Assignment)cGroup_2_3.eContents().get(3);
-		private final RuleCall cTypeValueTypeEnumRuleCall_2_3_3_0 = (RuleCall)cTypeAssignment_2_3_3.eContents().get(0);
-		private final Keyword cWithKeyword_2_3_4 = (Keyword)cGroup_2_3.eContents().get(4);
-		private final Alternatives cAlternatives_2_3_5 = (Alternatives)cGroup_2_3.eContents().get(5);
-		private final Assignment cCombineOperatorAssignment_2_3_5_0 = (Assignment)cAlternatives_2_3_5.eContents().get(0);
-		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_2_3_5_0_0 = (RuleCall)cCombineOperatorAssignment_2_3_5_0.eContents().get(0);
-		private final Assignment cHostCombineOperatorAssignment_2_3_5_1 = (Assignment)cAlternatives_2_3_5.eContents().get(1);
-		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_2_3_5_1_0 = (RuleCall)cHostCombineOperatorAssignment_2_3_5_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cColonEqualsSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cInitialValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cInitialValueIDTerminalRuleCall_2_1_0 = (RuleCall)cInitialValueAssignment_2_1.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
+		private final Keyword cColonSpaceKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
+		private final Assignment cTypeAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_3_0_1_0 = (RuleCall)cTypeAssignment_3_0_1.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cAlternatives_3.eContents().get(1);
+		private final Keyword cCombineKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
+		private final Assignment cTypeAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_3_1_1_0 = (RuleCall)cTypeAssignment_3_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_3_1_2 = (Keyword)cGroup_3_1.eContents().get(2);
+		private final Alternatives cAlternatives_3_1_3 = (Alternatives)cGroup_3_1.eContents().get(3);
+		private final Assignment cCombineOperatorAssignment_3_1_3_0 = (Assignment)cAlternatives_3_1_3.eContents().get(0);
+		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_3_1_3_0_0 = (RuleCall)cCombineOperatorAssignment_3_1_3_0.eContents().get(0);
+		private final Assignment cHostCombineOperatorAssignment_3_1_3_1 = (Assignment)cAlternatives_3_1_3.eContents().get(1);
+		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_3_1_3_1_0 = (RuleCall)cHostCombineOperatorAssignment_3_1_3_1.eContents().get(0);
 		
 		//Signal:
-		//  (isInputOutput?="inputoutput"|isInput?="input"|isOutput?="output") name=ID (": "
-		//  type=ValueType|": combine" type=ValueType "with" (combineOperator=CombineOperator|
-		//  hostCombineOperator=STRING)|":=" initialValue=ID ": " type=ValueType|":="
-		//  initialValue=ID ": combine" type=ValueType "with" (combineOperator=CombineOperator|
-		//  hostCombineOperator=STRING))?; 
+		//  (isLocal?="local"|(isInput?="input"|isOutput?="output"|isInput?="input" isOutput
+		//  ?="output")) name=ID (":=" initialValue=ID)? (": " type=ValueType|": combine" type=
+		//  ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)); 
 		//
-		// 	
-		//		//(isLocal?='local')? this does not make any sense anymore, does it?
-		//		   
-		//		  
-		//		  
-		//				
-		//		 
-		//		 
-		//		      //or type only, type being either pre-defined or hostcode
-		//		         //or combine type only
-		//		           // either initial value and type
-		//		               //or initial value and combine type
-		//		  
+		// 	//a signal is EITHER local OR (input or output or both)
+		//	 	 
+		//	 
+		//			 
+		//		
+		//		 	
+		//		
+		//		 	
+		//		 		
+		//	
+		//	 
+		//	
+		//	   
+		//	
+		//	 
+		//		    // either initial value and type
+		//	  	         //or initial value and combine type
+		//	  
 		//
 		//	//========================================================================================
 		//	 //===  								 ENUMS, DATATYPES etc      			               ===
 		//	 //========================================================================================
 		public ParserRule getRule() { return rule; }
 
-		//(isInputOutput?="inputoutput"|isInput?="input"|isOutput?="output") name=ID (": "
-		//type=ValueType|": combine" type=ValueType "with" (combineOperator=CombineOperator|
-		//hostCombineOperator=STRING)|":=" initialValue=ID ": " type=ValueType|":="
-		//initialValue=ID ": combine" type=ValueType "with" (combineOperator=CombineOperator|
-		//hostCombineOperator=STRING))? 
-		// 	
-		//		//(isLocal?='local')? this does not make any sense anymore, does it?
-		//		   
-		//		  
-		//		  
-		//				
-		//		 
-		//		 
-		//		      //or type only, type being either pre-defined or hostcode
-		//		         //or combine type only
-		//		           // either initial value and type
-		//		               //or initial value and combine type
+		//(isLocal?="local"|(isInput?="input"|isOutput?="output"|isInput?="input" isOutput
+		//?="output")) name=ID (":=" initialValue=ID)? (": " type=ValueType|": combine" type=
+		//ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)) 
+		// 	//a signal is EITHER local OR (input or output or both)
+		//	 	 
+		//	 
+		//			 
+		//		
+		//		 	
+		//		
+		//		 	
+		//		 		
+		//	
+		//	 
+		//	
+		//	   
+		//	
+		//	 
+		//		    // either initial value and type
+		//	  	         //or initial value and combine type
 		public Group getGroup() { return cGroup; }
 
-		//isInputOutput?="inputoutput"|isInput?="input"|isOutput?="output" 
-		// 	
-		//		//(isLocal?='local')? this does not make any sense anymore, does it?
+		//isLocal?="local"|(isInput?="input"|isOutput?="output"|isInput?="input" isOutput?=
+		//"output") 
+		// 	//a signal is EITHER local OR (input or output or both)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
-		//isInputOutput?="inputoutput"
-		public Assignment getIsInputOutputAssignment_0_0() { return cIsInputOutputAssignment_0_0; }
+		//isLocal?="local"
+		public Assignment getIsLocalAssignment_0_0() { return cIsLocalAssignment_0_0; }
 
-		//"inputoutput"
-		public Keyword getIsInputOutputInputoutputKeyword_0_0_0() { return cIsInputOutputInputoutputKeyword_0_0_0; }
+		//"local"
+		public Keyword getIsLocalLocalKeyword_0_0_0() { return cIsLocalLocalKeyword_0_0_0; }
+
+		//isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output"
+		public Alternatives getAlternatives_0_1() { return cAlternatives_0_1; }
 
 		//isInput?="input"
-		public Assignment getIsInputAssignment_0_1() { return cIsInputAssignment_0_1; }
+		public Assignment getIsInputAssignment_0_1_0() { return cIsInputAssignment_0_1_0; }
 
 		//"input"
-		public Keyword getIsInputInputKeyword_0_1_0() { return cIsInputInputKeyword_0_1_0; }
+		public Keyword getIsInputInputKeyword_0_1_0_0() { return cIsInputInputKeyword_0_1_0_0; }
 
 		//isOutput?="output"
-		public Assignment getIsOutputAssignment_0_2() { return cIsOutputAssignment_0_2; }
+		public Assignment getIsOutputAssignment_0_1_1() { return cIsOutputAssignment_0_1_1; }
 
 		//"output"
-		public Keyword getIsOutputOutputKeyword_0_2_0() { return cIsOutputOutputKeyword_0_2_0; }
+		public Keyword getIsOutputOutputKeyword_0_1_1_0() { return cIsOutputOutputKeyword_0_1_1_0; }
+
+		//isInput?="input" isOutput?="output"
+		public Group getGroup_0_1_2() { return cGroup_0_1_2; }
+
+		//isInput?="input"
+		public Assignment getIsInputAssignment_0_1_2_0() { return cIsInputAssignment_0_1_2_0; }
+
+		//"input"
+		public Keyword getIsInputInputKeyword_0_1_2_0_0() { return cIsInputInputKeyword_0_1_2_0_0; }
+
+		//isOutput?="output"
+		public Assignment getIsOutputAssignment_0_1_2_1() { return cIsOutputAssignment_0_1_2_1; }
+
+		//"output"
+		public Keyword getIsOutputOutputKeyword_0_1_2_1_0() { return cIsOutputOutputKeyword_0_1_2_1_0; }
 
 		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
@@ -2985,120 +2999,68 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
-		//(": " type=ValueType|": combine" type=ValueType "with" (combineOperator=
-		//CombineOperator|hostCombineOperator=STRING)|":=" initialValue=ID ": " type=
-		//ValueType|":=" initialValue=ID ": combine" type=ValueType "with" (combineOperator=
-		//CombineOperator|hostCombineOperator=STRING))?  
-		//		 
-		//		      //or type only, type being either pre-defined or hostcode
-		//		         //or combine type only
-		//		           // either initial value and type
-		//		               //or initial value and combine type
-		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		//(":=" initialValue=ID)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//":="
+		public Keyword getColonEqualsSignKeyword_2_0() { return cColonEqualsSignKeyword_2_0; }
+
+		//initialValue=ID
+		public Assignment getInitialValueAssignment_2_1() { return cInitialValueAssignment_2_1; }
+
+		//ID
+		public RuleCall getInitialValueIDTerminalRuleCall_2_1_0() { return cInitialValueIDTerminalRuleCall_2_1_0; }
+
+		//": " type=ValueType|": combine" type=ValueType "with" (combineOperator=
+		//CombineOperator|hostCombineOperator=STRING)  
+		//	
+		//	 
+		//		    // either initial value and type
+		//	  	         //or initial value and combine type
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//": " type=ValueType
-		public Group getGroup_2_0() { return cGroup_2_0; }
+		public Group getGroup_3_0() { return cGroup_3_0; }
 
 		//": "
-		public Keyword getColonSpaceKeyword_2_0_0() { return cColonSpaceKeyword_2_0_0; }
+		public Keyword getColonSpaceKeyword_3_0_0() { return cColonSpaceKeyword_3_0_0; }
 
 		//type=ValueType
-		public Assignment getTypeAssignment_2_0_1() { return cTypeAssignment_2_0_1; }
+		public Assignment getTypeAssignment_3_0_1() { return cTypeAssignment_3_0_1; }
 
 		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_2_0_1_0() { return cTypeValueTypeEnumRuleCall_2_0_1_0; }
+		public RuleCall getTypeValueTypeEnumRuleCall_3_0_1_0() { return cTypeValueTypeEnumRuleCall_3_0_1_0; }
 
 		//": combine" type=ValueType "with" (combineOperator=CombineOperator|
 		//hostCombineOperator=STRING)
-		public Group getGroup_2_1() { return cGroup_2_1; }
+		public Group getGroup_3_1() { return cGroup_3_1; }
 
 		//": combine"
-		public Keyword getCombineKeyword_2_1_0() { return cCombineKeyword_2_1_0; }
+		public Keyword getCombineKeyword_3_1_0() { return cCombineKeyword_3_1_0; }
 
 		//type=ValueType
-		public Assignment getTypeAssignment_2_1_1() { return cTypeAssignment_2_1_1; }
+		public Assignment getTypeAssignment_3_1_1() { return cTypeAssignment_3_1_1; }
 
 		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_2_1_1_0() { return cTypeValueTypeEnumRuleCall_2_1_1_0; }
+		public RuleCall getTypeValueTypeEnumRuleCall_3_1_1_0() { return cTypeValueTypeEnumRuleCall_3_1_1_0; }
 
 		//"with"
-		public Keyword getWithKeyword_2_1_2() { return cWithKeyword_2_1_2; }
+		public Keyword getWithKeyword_3_1_2() { return cWithKeyword_3_1_2; }
 
 		//combineOperator=CombineOperator|hostCombineOperator=STRING
-		public Alternatives getAlternatives_2_1_3() { return cAlternatives_2_1_3; }
+		public Alternatives getAlternatives_3_1_3() { return cAlternatives_3_1_3; }
 
 		//combineOperator=CombineOperator
-		public Assignment getCombineOperatorAssignment_2_1_3_0() { return cCombineOperatorAssignment_2_1_3_0; }
+		public Assignment getCombineOperatorAssignment_3_1_3_0() { return cCombineOperatorAssignment_3_1_3_0; }
 
 		//CombineOperator
-		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_2_1_3_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_2_1_3_0_0; }
+		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_3_1_3_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_3_1_3_0_0; }
 
 		//hostCombineOperator=STRING
-		public Assignment getHostCombineOperatorAssignment_2_1_3_1() { return cHostCombineOperatorAssignment_2_1_3_1; }
+		public Assignment getHostCombineOperatorAssignment_3_1_3_1() { return cHostCombineOperatorAssignment_3_1_3_1; }
 
 		//STRING
-		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_2_1_3_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_2_1_3_1_0; }
-
-		//":=" initialValue=ID ": " type=ValueType
-		public Group getGroup_2_2() { return cGroup_2_2; }
-
-		//":="
-		public Keyword getColonEqualsSignKeyword_2_2_0() { return cColonEqualsSignKeyword_2_2_0; }
-
-		//initialValue=ID
-		public Assignment getInitialValueAssignment_2_2_1() { return cInitialValueAssignment_2_2_1; }
-
-		//ID
-		public RuleCall getInitialValueIDTerminalRuleCall_2_2_1_0() { return cInitialValueIDTerminalRuleCall_2_2_1_0; }
-
-		//": "
-		public Keyword getColonSpaceKeyword_2_2_2() { return cColonSpaceKeyword_2_2_2; }
-
-		//type=ValueType
-		public Assignment getTypeAssignment_2_2_3() { return cTypeAssignment_2_2_3; }
-
-		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_2_2_3_0() { return cTypeValueTypeEnumRuleCall_2_2_3_0; }
-
-		//":=" initialValue=ID ": combine" type=ValueType "with" (combineOperator=
-		//CombineOperator|hostCombineOperator=STRING)
-		public Group getGroup_2_3() { return cGroup_2_3; }
-
-		//":="
-		public Keyword getColonEqualsSignKeyword_2_3_0() { return cColonEqualsSignKeyword_2_3_0; }
-
-		//initialValue=ID
-		public Assignment getInitialValueAssignment_2_3_1() { return cInitialValueAssignment_2_3_1; }
-
-		//ID
-		public RuleCall getInitialValueIDTerminalRuleCall_2_3_1_0() { return cInitialValueIDTerminalRuleCall_2_3_1_0; }
-
-		//": combine"
-		public Keyword getCombineKeyword_2_3_2() { return cCombineKeyword_2_3_2; }
-
-		//type=ValueType
-		public Assignment getTypeAssignment_2_3_3() { return cTypeAssignment_2_3_3; }
-
-		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_2_3_3_0() { return cTypeValueTypeEnumRuleCall_2_3_3_0; }
-
-		//"with"
-		public Keyword getWithKeyword_2_3_4() { return cWithKeyword_2_3_4; }
-
-		//combineOperator=CombineOperator|hostCombineOperator=STRING
-		public Alternatives getAlternatives_2_3_5() { return cAlternatives_2_3_5; }
-
-		//combineOperator=CombineOperator
-		public Assignment getCombineOperatorAssignment_2_3_5_0() { return cCombineOperatorAssignment_2_3_5_0; }
-
-		//CombineOperator
-		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_2_3_5_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_2_3_5_0_0; }
-
-		//hostCombineOperator=STRING
-		public Assignment getHostCombineOperatorAssignment_2_3_5_1() { return cHostCombineOperatorAssignment_2_3_5_1; }
-
-		//STRING
-		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_2_3_5_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_2_3_5_1_0; }
+		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_3_1_3_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_3_1_3_1_0; }
 	}
 	
 	
@@ -3362,7 +3324,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 	//	
 	//		 
 	//		 
-	//		 
+	//	    
 	//	  
 	//
 	////========================================================================================
@@ -3405,7 +3367,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 	////========================================================================================
 	////===  									    STATES  					               ===
 	////========================================================================================
-	//  
+	//  	
 	//		        
 	//  	      
 	//  	      
@@ -3519,8 +3481,8 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 	}
 
 	//Transition:
-	//  sourceState=[State|FullStateID]? type=TransitionType targetState=[State|
-	//  FullStateID] ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
+	//  sourceState=[State|FullStateID]? type=TransitionType newTargetState=
+	//  TransitionState ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
 	//
 	//	//========================================================================================
 	//	 //===  									    TRANSITION 					               ===
@@ -3531,7 +3493,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 	//	  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 	//	 //newSourceState=TransitionState
 	//	 
-	//	//|newTargetState=TransitionState )
+	//	//(targetState=[State|FullStateID] |
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}
@@ -3540,7 +3502,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		return getTransitionAccess().getRule();
 	}
 
-	//TransitionState:
+	//TransitionState returns State:
 	//  (isInitial?="init" isFinal?="final") type=StateType "state" name=FullStateID|(
 	//  isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial?="init"
 	//  isFinal?="final") type=StateType name=FullStateID|(isInitial?="init" isFinal?=
@@ -3562,8 +3524,8 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 	//  "final" "state" name=FullStateID|isFinal?="final" name=FullStateID|isFinal?="final"
 	//  |type=StateType "state" name=FullStateID|type=StateType "state"|type=StateType name=
 	//  FullStateID|type=StateType|"state" name=FullStateID|"state"|name=FullStateID; 
-	//// returns State:
-	//	 //name=FullStateID
+	//    
+	//	//name=FullStateID
 	//	         
 	//	      
 	//	      
@@ -3652,25 +3614,28 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 	}
 
 	//Signal:
-	//  (isInputOutput?="inputoutput"|isInput?="input"|isOutput?="output") name=ID (": "
-	//  type=ValueType|": combine" type=ValueType "with" (combineOperator=CombineOperator|
-	//  hostCombineOperator=STRING)|":=" initialValue=ID ": " type=ValueType|":="
-	//  initialValue=ID ": combine" type=ValueType "with" (combineOperator=CombineOperator|
-	//  hostCombineOperator=STRING))?; 
+	//  (isLocal?="local"|(isInput?="input"|isOutput?="output"|isInput?="input" isOutput
+	//  ?="output")) name=ID (":=" initialValue=ID)? (": " type=ValueType|": combine" type=
+	//  ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)); 
 	//
-	// 	
-	//		//(isLocal?='local')? this does not make any sense anymore, does it?
-	//		   
-	//		  
-	//		  
-	//				
-	//		 
-	//		 
-	//		      //or type only, type being either pre-defined or hostcode
-	//		         //or combine type only
-	//		           // either initial value and type
-	//		               //or initial value and combine type
-	//		  
+	// 	//a signal is EITHER local OR (input or output or both)
+	//	 	 
+	//	 
+	//			 
+	//		
+	//		 	
+	//		
+	//		 	
+	//		 		
+	//	
+	//	 
+	//	
+	//	   
+	//	
+	//	 
+	//		    // either initial value and type
+	//	  	         //or initial value and combine type
+	//	  
 	//
 	//	//========================================================================================
 	//	 //===  								 ENUMS, DATATYPES etc      			               ===

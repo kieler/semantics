@@ -16,7 +16,7 @@ package de.cau.cs.kieler.synccharts.dsl.kits_textonly;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getSourceState <em>Source State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getTargetState <em>Target State</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getNewTargetState <em>New Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#isIsHistory <em>Is History</em>}</li>
  * </ul>
  * </p>
@@ -83,30 +83,30 @@ public interface Transition extends Action
   void setType(TransitionType value);
 
   /**
-   * Returns the value of the '<em><b>Target State</b></em>' reference.
+   * Returns the value of the '<em><b>New Target State</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Target State</em>' reference isn't clear,
+   * If the meaning of the '<em>New Target State</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Target State</em>' reference.
-   * @see #setTargetState(State)
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Kits_textonlyPackage#getTransition_TargetState()
-   * @model
+   * @return the value of the '<em>New Target State</em>' containment reference.
+   * @see #setNewTargetState(State)
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Kits_textonlyPackage#getTransition_NewTargetState()
+   * @model containment="true"
    * @generated
    */
-  State getTargetState();
+  State getNewTargetState();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getTargetState <em>Target State</em>}' reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getNewTargetState <em>New Target State</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Target State</em>' reference.
-   * @see #getTargetState()
+   * @param value the new value of the '<em>New Target State</em>' containment reference.
+   * @see #getNewTargetState()
    * @generated
    */
-  void setTargetState(State value);
+  void setNewTargetState(State value);
 
   /**
    * Returns the value of the '<em><b>Is History</b></em>' attribute.

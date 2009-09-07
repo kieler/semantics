@@ -211,13 +211,13 @@ public class AbstractKits_textonlyProposalProvider extends TerminalsProposalProv
 		}
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
-	public void completeTransition_TargetState(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+	public void completeTransition_NewTargetState(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("completeTransition_TargetState feature '" + assignment.getFeature() + "' terminal '"
+			logger.debug("completeTransition_NewTargetState feature '" + assignment.getFeature() + "' terminal '"
 					+ assignment.getTerminal() + "' cardinality '" + assignment.getCardinality() + "' and prefix '"
 					+ context.getPrefix() + "'");
 		}
-		lookupCrossReference(((CrossReference)assignment.getTerminal()), context, acceptor);
+		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
 	public void completeTransition_TriggersAndEffects(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (logger.isDebugEnabled()) {
@@ -291,9 +291,9 @@ public class AbstractKits_textonlyProposalProvider extends TerminalsProposalProv
 		}
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
-	public void completeSignal_IsInputOutput(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+	public void completeSignal_IsLocal(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("completeSignal_IsInputOutput feature '" + assignment.getFeature() + "' terminal '"
+			logger.debug("completeSignal_IsLocal feature '" + assignment.getFeature() + "' terminal '"
 					+ assignment.getTerminal() + "' cardinality '" + assignment.getCardinality() + "' and prefix '"
 					+ context.getPrefix() + "'");
 		}
@@ -323,6 +323,14 @@ public class AbstractKits_textonlyProposalProvider extends TerminalsProposalProv
 		}
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
+	public void completeSignal_InitialValue(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("completeSignal_InitialValue feature '" + assignment.getFeature() + "' terminal '"
+					+ assignment.getTerminal() + "' cardinality '" + assignment.getCardinality() + "' and prefix '"
+					+ context.getPrefix() + "'");
+		}
+		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
+	}
 	public void completeSignal_Type(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("completeSignal_Type feature '" + assignment.getFeature() + "' terminal '"
@@ -342,14 +350,6 @@ public class AbstractKits_textonlyProposalProvider extends TerminalsProposalProv
 	public void completeSignal_HostCombineOperator(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("completeSignal_HostCombineOperator feature '" + assignment.getFeature() + "' terminal '"
-					+ assignment.getTerminal() + "' cardinality '" + assignment.getCardinality() + "' and prefix '"
-					+ context.getPrefix() + "'");
-		}
-		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
-	}
-	public void completeSignal_InitialValue(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("completeSignal_InitialValue feature '" + assignment.getFeature() + "' terminal '"
 					+ assignment.getTerminal() + "' cardinality '" + assignment.getCardinality() + "' and prefix '"
 					+ context.getPrefix() + "'");
 		}

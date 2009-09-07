@@ -103,11 +103,6 @@ public class Kits_textonlyAdapterFactory extends AdapterFactoryImpl
         return createTransitionAdapter();
       }
       @Override
-      public Adapter caseTransitionState(TransitionState object)
-      {
-        return createTransitionStateAdapter();
-      }
-      @Override
       public Adapter caseValuedObject(ValuedObject object)
       {
         return createValuedObjectAdapter();
@@ -215,21 +210,6 @@ public class Kits_textonlyAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTransitionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.TransitionState <em>Transition State</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.TransitionState
-   * @generated
-   */
-  public Adapter createTransitionStateAdapter()
   {
     return null;
   }

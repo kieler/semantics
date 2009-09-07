@@ -14,13 +14,13 @@ Region :
 	
 	(	variables+=Variable
 	|	signals+=Signal
-	|	innerStates+=State
+	|   innerStates+=State
 	) +
 ;
 //========================================================================================
 //===  									    STATES  					               ===
 //========================================================================================
-State :
+State :	
 		( ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' name=FullStateID
   	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
   	| ((isInitial?='init')(isFinal?='final')) (type=StateType) name=FullStateID
@@ -76,10 +76,12 @@ State :
 	  		| 	('oninner' innerActions+=Action) 
 	  		|   ('onexit' exitActions+=Action ) 
 	  		| 	('suspension' suspensionTrigger=Action) // kein effect, kein delay, kein immediate
-	  		| 	(signals+=Signal) 
-	  		|   (regions+=Region ('||' regions+=Region)*)
+	  		| 	(signals+=Signal)  
+	  		| 	(regions+=Region ('||' regions+=Region)*)
 	  	)+
    	'}')?
+
+   	
    	(outgoingTransitions+=Transition)* 
 ;
 Renaming	:oldID=STRING'/'newID=STRING;
@@ -104,12 +106,13 @@ Transition:
 	(sourceState=[State|FullStateID])? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 	//newSourceState=TransitionState
 	type=TransitionType
-	(targetState=[State|FullStateID])//|newTargetState=TransitionState )
+	//(targetState=[State|FullStateID] |
+	newTargetState=TransitionState 
 	( 'with' triggersAndEffects=STRING)?
 	(isHistory?=' history')?
 	';'
 ;
-TransitionState:// returns State:
+TransitionState returns State:
 	//name=FullStateID
 	( ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' name=FullStateID
 	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
@@ -173,19 +176,24 @@ Variable:
 	)  
 ;
 Signal:
- 	
-		//(isLocal?='local')? this does not make any sense anymore, does it?
-		( (isInputOutput?='inputoutput')
-		| (isInput?='input')
-		| (isOutput?='output')
-		)		
-		name=ID 
-		( 
-		  (': ' type=ValueType) //or type only, type being either pre-defined or hostcode
-		| (': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING))//or combine type only
-		| (':=' initialValue=ID ': ' type=ValueType) // either initial value and type
-		| (':=' initialValue=ID ': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING)) //or initial value and combine type
-		)? 
+ 	//a signal is EITHER local OR (input or output or both)
+	(	(isLocal?='local')
+	| 
+		(	(isInput?='input')
+		|
+		 	(isOutput?='output')
+		|
+		 	((isInput?='input')(isOutput?='output'))
+		 )		
+	)
+	name=ID 
+	
+	(':=' initialValue=ID)? 
+	
+	( 
+		(': ' type=ValueType) // either initial value and type
+	| 	(': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING)) //or initial value and combine type
+	) 
 ;
 	//========================================================================================
 	//===  								 ENUMS, DATATYPES etc      			               ===

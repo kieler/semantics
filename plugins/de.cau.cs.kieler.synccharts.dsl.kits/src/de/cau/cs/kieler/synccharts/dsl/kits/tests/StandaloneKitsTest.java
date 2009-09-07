@@ -22,31 +22,29 @@ public class StandaloneKitsTest {
 	private static SerializerUtil serializerUtil;
 
 	public static void main(String[] args) {
+		// new stand alone Kits application
 		injector = new KitsStandaloneSetup()
 				.createInjectorAndDoEMFRegistration();
-
+		// new serializer
 		serializerUtil = injector.getInstance(SerializerUtil.class);
 		try {
-			testParser1();
+			EObject parsedObject = parseAndSerialize("model.kits");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// @Before
-	// @Test
-	public static void testParser1() throws IOException {
-		EObject parsedObject = parseAndSerialize("example.mydsl");
-		// VarDeclList model = (VarDeclList) parsedObject;
-		// String serializedString = serializerUtil.serialize(model.getVar()
-		// .get(0));
-		// System.out.println(serializedString);
-	}
+	
 
 	private static EObject parseAndSerialize(String inputFileName)
 			throws IOException {
 		// parse and serialize the contents of the given file
-		EObject parsedObject = parseFile(inputFileName);
+		XtextResource xresource = createXtextResource(inputFileName);
+		EObject parsedObject = ParseAndGetParsedObject(xresource);
+		// were there any errors or warnings?
+		getParserErrorsOrWarnings(xresource, xresource.getErrors());
+		getParserErrorsOrWarnings(xresource, xresource.getWarnings());
+		//serialize back
 		String serializedString = serializerUtil.serialize(parsedObject);
 		// what was in the file?
 		String fileContent = readFile(getModelFolder() + inputFileName);
@@ -71,7 +69,7 @@ public class StandaloneKitsTest {
 	 * 
 	 */
 	private static String getModelFolder() {
-		String modelFolder = "/home/oba/Desktop/Link to shared/kieler/trunk/plugins/de.cau.cs.kieler.synccharts.dsl.rtsys/examplemodels/";
+		String modelFolder = "/home/oba/Desktop/workspaces/SEWINCH/de.cau.cs.kieler.synccharts.dsl.kits/examplemodels/";
 		return modelFolder;
 	}
 
@@ -81,7 +79,7 @@ public class StandaloneKitsTest {
 	 *            simple file name, without path etc
 	 * @return what has been parsed
 	 */
-	private static EObject parseFile(String file) {
+	private static XtextResource createXtextResource(String file) {
 		new org.eclipse.emf.mwe.utils.StandaloneSetup().setPlatformUri("../");
 
 		XtextResourceSet resourceSet = injector
@@ -89,23 +87,27 @@ public class StandaloneKitsTest {
 
 		resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL,
 				Boolean.TRUE);
-		Resource resource = resourceSet.getResource(URI
-				.createURI("platform:/resource/org.xtext.example.mydsl/models/"
-						+ file), true);
+		Resource resource = resourceSet
+				.getResource(
+						URI
+								.createURI("platform:/resource/de.cau.cs.kieler.synccharts.dsl.kits/examplemodels/"
+										+ file), true);
 		XtextResource xresource = (XtextResource) resource;
+		return xresource;
+	}
 
-		IParseResult parseResult = xresource.getParseResult();
+	private static EObject ParseAndGetParsedObject(XtextResource xres) {
+
+		IParseResult parseResult = xres.getParseResult();
 		if (parseResult == null)
 			System.out
 					.println("Could not parse action string. Parser did return null.");
-		// // were there any errors or warnings?
-		getErrorsOrWarnings(xresource, xresource.getErrors());
-		getErrorsOrWarnings(xresource, xresource.getWarnings());
-		EObject parsedObject = resource.getContents().get(0);
+
+		EObject parsedObject = xres.getContents().get(0);
 		return parsedObject;
 	}
 
-	private static void getErrorsOrWarnings(XtextResource resource,
+	private static void getParserErrorsOrWarnings(XtextResource resource,
 			EList<Diagnostic> diagnostics) {
 
 		if (diagnostics != null && diagnostics.size() > 0) {

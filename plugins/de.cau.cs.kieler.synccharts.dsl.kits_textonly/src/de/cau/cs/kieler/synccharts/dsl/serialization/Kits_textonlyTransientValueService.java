@@ -29,6 +29,12 @@ public class Kits_textonlyTransientValueService implements
 		return false;
 	}
 
+	public boolean isTransient(EObject owner, EStructuralFeature feature,
+			int index) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -37,14 +43,14 @@ public class Kits_textonlyTransientValueService implements
 	 * (org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature,
 	 * int)
 	 */
-	public boolean isTransient(EObject owner, EStructuralFeature feature,
-			int index) {
-
-		if ((owner instanceof State && (feature
-				.equals(SyncchartsPackage.eINSTANCE.getName()))))
-			return true;
-		else
-			return false;
-	}
+//	public boolean isTransient(EObject owner, EStructuralFeature feature,
+//			int index) {
+//
+//		if ((owner instanceof State && (feature
+//				.equals(SyncchartsPackage.eINSTANCE.getName()))))
+//			return true;
+//		else
+//			return false;
+//	}
 
 }

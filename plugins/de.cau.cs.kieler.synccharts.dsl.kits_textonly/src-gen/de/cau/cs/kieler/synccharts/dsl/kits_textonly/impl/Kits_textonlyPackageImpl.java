@@ -15,7 +15,6 @@ import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Signal;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.State;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.StateType;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition;
-import de.cau.cs.kieler.synccharts.dsl.kits_textonly.TransitionState;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.TransitionType;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValueType;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValuedObject;
@@ -71,13 +70,6 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * @generated
    */
   private EClass transitionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass transitionStateEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -286,7 +278,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getState_Id()
+  public EAttribute getState_Name()
   {
     return (EAttribute)stateEClass.getEStructuralFeatures().get(3);
   }
@@ -486,7 +478,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTransition_TargetState()
+  public EReference getTransition_NewTargetState()
   {
     return (EReference)transitionEClass.getEStructuralFeatures().get(2);
   }
@@ -499,56 +491,6 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
   public EAttribute getTransition_IsHistory()
   {
     return (EAttribute)transitionEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getTransitionState()
-  {
-    return transitionStateEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getTransitionState_IsInitial()
-  {
-    return (EAttribute)transitionStateEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getTransitionState_IsFinal()
-  {
-    return (EAttribute)transitionStateEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getTransitionState_Type()
-  {
-    return (EAttribute)transitionStateEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getTransitionState_Name()
-  {
-    return (EAttribute)transitionStateEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -576,7 +518,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getValuedObject_Type()
+  public EAttribute getValuedObject_InitialValue()
   {
     return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(1);
   }
@@ -586,7 +528,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getValuedObject_InitialValue()
+  public EAttribute getValuedObject_Type()
   {
     return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(2);
   }
@@ -616,7 +558,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSignal_IsInputOutput()
+  public EAttribute getSignal_IsLocal()
   {
     return (EAttribute)signalEClass.getEStructuralFeatures().get(0);
   }
@@ -741,7 +683,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
     createEAttribute(stateEClass, STATE__IS_INITIAL);
     createEAttribute(stateEClass, STATE__IS_FINAL);
     createEAttribute(stateEClass, STATE__TYPE);
-    createEAttribute(stateEClass, STATE__ID);
+    createEAttribute(stateEClass, STATE__NAME);
     createEAttribute(stateEClass, STATE__LABEL);
     createEAttribute(stateEClass, STATE__BODY_TEXT);
     createEReference(stateEClass, STATE__ENTRY_ACTIONS);
@@ -764,24 +706,18 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
     transitionEClass = createEClass(TRANSITION);
     createEReference(transitionEClass, TRANSITION__SOURCE_STATE);
     createEAttribute(transitionEClass, TRANSITION__TYPE);
-    createEReference(transitionEClass, TRANSITION__TARGET_STATE);
+    createEReference(transitionEClass, TRANSITION__NEW_TARGET_STATE);
     createEAttribute(transitionEClass, TRANSITION__IS_HISTORY);
-
-    transitionStateEClass = createEClass(TRANSITION_STATE);
-    createEAttribute(transitionStateEClass, TRANSITION_STATE__IS_INITIAL);
-    createEAttribute(transitionStateEClass, TRANSITION_STATE__IS_FINAL);
-    createEAttribute(transitionStateEClass, TRANSITION_STATE__TYPE);
-    createEAttribute(transitionStateEClass, TRANSITION_STATE__NAME);
 
     valuedObjectEClass = createEClass(VALUED_OBJECT);
     createEAttribute(valuedObjectEClass, VALUED_OBJECT__NAME);
-    createEAttribute(valuedObjectEClass, VALUED_OBJECT__TYPE);
     createEAttribute(valuedObjectEClass, VALUED_OBJECT__INITIAL_VALUE);
+    createEAttribute(valuedObjectEClass, VALUED_OBJECT__TYPE);
 
     variableEClass = createEClass(VARIABLE);
 
     signalEClass = createEClass(SIGNAL);
-    createEAttribute(signalEClass, SIGNAL__IS_INPUT_OUTPUT);
+    createEAttribute(signalEClass, SIGNAL__IS_LOCAL);
     createEAttribute(signalEClass, SIGNAL__IS_INPUT);
     createEAttribute(signalEClass, SIGNAL__IS_OUTPUT);
     createEAttribute(signalEClass, SIGNAL__COMBINE_OPERATOR);
@@ -838,7 +774,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
     initEAttribute(getState_IsInitial(), ecorePackage.getEBoolean(), "isInitial", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_IsFinal(), ecorePackage.getEBoolean(), "isFinal", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_Type(), this.getStateType(), "type", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getState_Id(), ecorePackage.getEString(), "id", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getState_Name(), ecorePackage.getEString(), "name", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_Label(), ecorePackage.getEString(), "label", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_BodyText(), ecorePackage.getEString(), "bodyText", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_EntryActions(), this.getAction(), null, "entryActions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -861,24 +797,18 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
     initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTransition_SourceState(), this.getState(), null, "sourceState", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_Type(), this.getTransitionType(), "type", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTransition_TargetState(), this.getState(), null, "targetState", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTransition_NewTargetState(), this.getState(), null, "newTargetState", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransition_IsHistory(), ecorePackage.getEBoolean(), "isHistory", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(transitionStateEClass, TransitionState.class, "TransitionState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getTransitionState_IsInitial(), ecorePackage.getEBoolean(), "isInitial", null, 0, 1, TransitionState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTransitionState_IsFinal(), ecorePackage.getEBoolean(), "isFinal", null, 0, 1, TransitionState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTransitionState_Type(), this.getStateType(), "type", null, 0, 1, TransitionState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTransitionState_Name(), ecorePackage.getEString(), "name", null, 0, 1, TransitionState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(valuedObjectEClass, ValuedObject.class, "ValuedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getValuedObject_Name(), ecorePackage.getEString(), "name", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getValuedObject_Type(), this.getValueType(), "type", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getValuedObject_InitialValue(), ecorePackage.getEString(), "initialValue", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getValuedObject_Type(), this.getValueType(), "type", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(variableEClass, Variable.class, "Variable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(signalEClass, Signal.class, "Signal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSignal_IsInputOutput(), ecorePackage.getEBoolean(), "isInputOutput", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSignal_IsLocal(), ecorePackage.getEBoolean(), "isLocal", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSignal_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSignal_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSignal_CombineOperator(), this.getCombineOperator(), "combineOperator", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -1,6 +1,7 @@
 import kits;
 import xtext;
 import ecore;
+import ocl;
 
 process(xtext::GeneratedMetamodel this) :
    ePackage.process()

@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.SignalImpl#isIsInputOutput <em>Is Input Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.SignalImpl#isIsLocal <em>Is Local</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.SignalImpl#isIsInput <em>Is Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.SignalImpl#isIsOutput <em>Is Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.SignalImpl#getCombineOperator <em>Combine Operator</em>}</li>
@@ -35,24 +35,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class SignalImpl extends ValuedObjectImpl implements Signal
 {
   /**
-   * The default value of the '{@link #isIsInputOutput() <em>Is Input Output</em>}' attribute.
+   * The default value of the '{@link #isIsLocal() <em>Is Local</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isIsInputOutput()
+   * @see #isIsLocal()
    * @generated
    * @ordered
    */
-  protected static final boolean IS_INPUT_OUTPUT_EDEFAULT = false;
+  protected static final boolean IS_LOCAL_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isIsInputOutput() <em>Is Input Output</em>}' attribute.
+   * The cached value of the '{@link #isIsLocal() <em>Is Local</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isIsInputOutput()
+   * @see #isIsLocal()
    * @generated
    * @ordered
    */
-  protected boolean isInputOutput = IS_INPUT_OUTPUT_EDEFAULT;
+  protected boolean isLocal = IS_LOCAL_EDEFAULT;
 
   /**
    * The default value of the '{@link #isIsInput() <em>Is Input</em>}' attribute.
@@ -160,9 +160,9 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isIsInputOutput()
+  public boolean isIsLocal()
   {
-    return isInputOutput;
+    return isLocal;
   }
 
   /**
@@ -170,12 +170,12 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setIsInputOutput(boolean newIsInputOutput)
+  public void setIsLocal(boolean newIsLocal)
   {
-    boolean oldIsInputOutput = isInputOutput;
-    isInputOutput = newIsInputOutput;
+    boolean oldIsLocal = isLocal;
+    isLocal = newIsLocal;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Kits_textonlyPackage.SIGNAL__IS_INPUT_OUTPUT, oldIsInputOutput, isInputOutput));
+      eNotify(new ENotificationImpl(this, Notification.SET, Kits_textonlyPackage.SIGNAL__IS_LOCAL, oldIsLocal, isLocal));
   }
 
   /**
@@ -280,8 +280,8 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
   {
     switch (featureID)
     {
-      case Kits_textonlyPackage.SIGNAL__IS_INPUT_OUTPUT:
-        return isIsInputOutput();
+      case Kits_textonlyPackage.SIGNAL__IS_LOCAL:
+        return isIsLocal();
       case Kits_textonlyPackage.SIGNAL__IS_INPUT:
         return isIsInput();
       case Kits_textonlyPackage.SIGNAL__IS_OUTPUT:
@@ -304,8 +304,8 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
   {
     switch (featureID)
     {
-      case Kits_textonlyPackage.SIGNAL__IS_INPUT_OUTPUT:
-        setIsInputOutput((Boolean)newValue);
+      case Kits_textonlyPackage.SIGNAL__IS_LOCAL:
+        setIsLocal((Boolean)newValue);
         return;
       case Kits_textonlyPackage.SIGNAL__IS_INPUT:
         setIsInput((Boolean)newValue);
@@ -333,8 +333,8 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
   {
     switch (featureID)
     {
-      case Kits_textonlyPackage.SIGNAL__IS_INPUT_OUTPUT:
-        setIsInputOutput(IS_INPUT_OUTPUT_EDEFAULT);
+      case Kits_textonlyPackage.SIGNAL__IS_LOCAL:
+        setIsLocal(IS_LOCAL_EDEFAULT);
         return;
       case Kits_textonlyPackage.SIGNAL__IS_INPUT:
         setIsInput(IS_INPUT_EDEFAULT);
@@ -362,8 +362,8 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
   {
     switch (featureID)
     {
-      case Kits_textonlyPackage.SIGNAL__IS_INPUT_OUTPUT:
-        return isInputOutput != IS_INPUT_OUTPUT_EDEFAULT;
+      case Kits_textonlyPackage.SIGNAL__IS_LOCAL:
+        return isLocal != IS_LOCAL_EDEFAULT;
       case Kits_textonlyPackage.SIGNAL__IS_INPUT:
         return isInput != IS_INPUT_EDEFAULT;
       case Kits_textonlyPackage.SIGNAL__IS_OUTPUT:
@@ -387,8 +387,8 @@ public class SignalImpl extends ValuedObjectImpl implements Signal
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (isInputOutput: ");
-    result.append(isInputOutput);
+    result.append(" (isLocal: ");
+    result.append(isLocal);
     result.append(", isInput: ");
     result.append(isInput);
     result.append(", isOutput: ");

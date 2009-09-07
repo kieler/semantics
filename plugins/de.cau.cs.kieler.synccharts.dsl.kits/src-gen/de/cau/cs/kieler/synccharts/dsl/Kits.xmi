@@ -1,41 +1,33 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:xtext="http://www.eclipse.org/2008/Xtext">
   <xtext:Grammar name="de.cau.cs.kieler.synccharts.dsl.Kits" usedGrammars="/1">
-    <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="kits">
-      <ePackage href="http://www.cau.de/cs/kieler/synccharts/dsl/Kits#/"/>
-    </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="sync">
       <ePackage href="http://kieler.cs.cau.de/synccharts#/"/>
     </metamodelDeclarations>
     <rules xsi:type="xtext:ParserRule" name="Region">
       <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/dsl/Kits#//Region"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//Region"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Group" cardinality="?">
+        <tokens xsi:type="xtext:Group">
           <tokens xsi:type="xtext:Keyword" value="region"/>
           <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
           </tokens>
         </tokens>
-        <tokens xsi:type="xtext:Alternatives" cardinality="+">
-          <groups xsi:type="xtext:Assignment" feature="variables" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
-          </groups>
-          <groups xsi:type="xtext:Assignment" feature="signals" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
-          </groups>
-          <groups xsi:type="xtext:Assignment" feature="innerStates" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
-          </groups>
+        <tokens xsi:type="xtext:Assignment" feature="innerStates" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
         </tokens>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="State">
       <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/dsl/Kits#//State"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//State"/>
       </type>
       <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+        </tokens>
         <tokens xsi:type="xtext:Alternatives">
           <groups xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Group">
@@ -50,7 +42,7 @@
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
             </tokens>
             <tokens xsi:type="xtext:Keyword" value="state"/>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -80,7 +72,7 @@
             <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
             </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -94,7 +86,7 @@
               </tokens>
             </tokens>
             <tokens xsi:type="xtext:Keyword" value="state"/>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -131,7 +123,7 @@
                 <terminal xsi:type="xtext:Keyword" value="final"/>
               </tokens>
             </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -156,7 +148,7 @@
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
             </tokens>
             <tokens xsi:type="xtext:Keyword" value="state"/>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -186,7 +178,7 @@
             <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
             </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -200,7 +192,7 @@
               </tokens>
             </tokens>
             <tokens xsi:type="xtext:Keyword" value="state"/>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -237,7 +229,7 @@
                 <terminal xsi:type="xtext:Keyword" value="init"/>
               </tokens>
             </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -257,7 +249,7 @@
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
             </tokens>
             <tokens xsi:type="xtext:Keyword" value="state"/>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -277,7 +269,7 @@
             <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
             </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -286,7 +278,7 @@
               <terminal xsi:type="xtext:Keyword" value="init"/>
             </tokens>
             <tokens xsi:type="xtext:Keyword" value="state"/>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -308,7 +300,7 @@
             <tokens xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
               <terminal xsi:type="xtext:Keyword" value="init"/>
             </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -323,7 +315,7 @@
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
             </tokens>
             <tokens xsi:type="xtext:Keyword" value="state"/>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -343,7 +335,7 @@
             <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
             </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -352,7 +344,7 @@
               <terminal xsi:type="xtext:Keyword" value="final"/>
             </tokens>
             <tokens xsi:type="xtext:Keyword" value="state"/>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -369,7 +361,7 @@
               <terminal xsi:type="xtext:Keyword" value="final"/>
             </tokens>
             <tokens xsi:type="xtext:Keyword" value="state"/>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -377,7 +369,7 @@
             <tokens xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
               <terminal xsi:type="xtext:Keyword" value="final"/>
             </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -389,7 +381,7 @@
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
             </tokens>
             <tokens xsi:type="xtext:Keyword" value="state"/>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -403,7 +395,7 @@
             <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
             </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
@@ -412,12 +404,12 @@
           </groups>
           <groups xsi:type="xtext:Group">
             <tokens xsi:type="xtext:Keyword" value="state"/>
-            <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
+            <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
             </tokens>
           </groups>
           <groups xsi:type="xtext:Keyword" value="state"/>
-          <groups xsi:type="xtext:Assignment" feature="name" operator="=">
+          <groups xsi:type="xtext:Assignment" feature="id" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
           </groups>
         </tokens>
@@ -477,7 +469,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Action">
-      <type metamodel="/0/@metamodelDeclarations.1">
+      <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//Action"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
@@ -499,7 +491,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="ValuedObject">
-      <type metamodel="/0/@metamodelDeclarations.1">
+      <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//ValuedObject"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
@@ -508,7 +500,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Variable">
-      <type metamodel="/0/@metamodelDeclarations.1">
+      <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//Variable"/>
       </type>
       <alternatives xsi:type="xtext:Group">
@@ -537,7 +529,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Signal">
-      <type metamodel="/0/@metamodelDeclarations.1">
+      <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//Signal"/>
       </type>
       <alternatives xsi:type="xtext:Group">
@@ -607,13 +599,13 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Transition">
-      <type metamodel="/0/@metamodelDeclarations.1">
+      <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//Transition"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <tokens xsi:type="xtext:Assignment" cardinality="?" feature="sourceState" operator="=">
           <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.1">
+            <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//State"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
@@ -624,7 +616,7 @@
         </tokens>
         <tokens xsi:type="xtext:Assignment" feature="targetState" operator="=">
           <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.1">
+            <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//State"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
@@ -655,7 +647,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="StateType">
-      <type metamodel="/0/@metamodelDeclarations.1">
+      <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts#//StateType"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
@@ -678,7 +670,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="CombineOperator">
-      <type metamodel="/0/@metamodelDeclarations.1">
+      <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts#//CombineOperator"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
@@ -709,7 +701,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="ValueType">
-      <type metamodel="/0/@metamodelDeclarations.1">
+      <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts#//ValueType"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
@@ -740,7 +732,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="TransitionType">
-      <type metamodel="/0/@metamodelDeclarations.1">
+      <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts#//TransitionType"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">

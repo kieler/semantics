@@ -46,7 +46,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/isInitial"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/isFinal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/label"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//State/bodyText"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//State/entryActions"/>
@@ -69,23 +69,17 @@
     <genClasses ecoreClass="Kits_textonly.ecore#//Transition">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//Transition/sourceState"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Transition/type"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//Transition/targetState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//Transition/newTargetState"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Transition/isHistory"/>
-    </genClasses>
-    <genClasses ecoreClass="Kits_textonly.ecore#//TransitionState">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//TransitionState/isInitial"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//TransitionState/isFinal"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//TransitionState/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//TransitionState/name"/>
     </genClasses>
     <genClasses ecoreClass="Kits_textonly.ecore#//ValuedObject">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//ValuedObject/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//ValuedObject/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//ValuedObject/initialValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//ValuedObject/type"/>
     </genClasses>
     <genClasses ecoreClass="Kits_textonly.ecore#//Variable"/>
     <genClasses ecoreClass="Kits_textonly.ecore#//Signal">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Signal/isInputOutput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Signal/isLocal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Signal/isInput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Signal/isOutput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Signal/combineOperator"/>

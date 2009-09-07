@@ -71,15 +71,6 @@ public interface Kits_textonlyFactory extends EFactory
   Transition createTransition();
 
   /**
-   * Returns a new object of class '<em>Transition State</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Transition State</em>'.
-   * @generated
-   */
-  TransitionState createTransitionState();
-
-  /**
    * Returns a new object of class '<em>Valued Object</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

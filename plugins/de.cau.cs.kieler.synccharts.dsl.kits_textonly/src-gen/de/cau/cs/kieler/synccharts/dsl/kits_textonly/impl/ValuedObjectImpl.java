@@ -24,8 +24,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.ValuedObjectImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.ValuedObjectImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.ValuedObjectImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,26 +54,6 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
-  protected static final ValueType TYPE_EDEFAULT = ValueType.PURE;
-
-  /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
-  protected ValueType type = TYPE_EDEFAULT;
-
-  /**
    * The default value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -92,6 +72,26 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * @ordered
    */
   protected String initialValue = INITIAL_VALUE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected static final ValueType TYPE_EDEFAULT = ValueType.PURE;
+
+  /**
+   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected ValueType type = TYPE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -142,29 +142,6 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValueType getType()
-  {
-    return type;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setType(ValueType newType)
-  {
-    ValueType oldType = type;
-    type = newType == null ? TYPE_EDEFAULT : newType;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Kits_textonlyPackage.VALUED_OBJECT__TYPE, oldType, type));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public String getInitialValue()
   {
     return initialValue;
@@ -188,6 +165,29 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
    * <!-- end-user-doc -->
    * @generated
    */
+  public ValueType getType()
+  {
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setType(ValueType newType)
+  {
+    ValueType oldType = type;
+    type = newType == null ? TYPE_EDEFAULT : newType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, Kits_textonlyPackage.VALUED_OBJECT__TYPE, oldType, type));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -195,10 +195,10 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
     {
       case Kits_textonlyPackage.VALUED_OBJECT__NAME:
         return getName();
-      case Kits_textonlyPackage.VALUED_OBJECT__TYPE:
-        return getType();
       case Kits_textonlyPackage.VALUED_OBJECT__INITIAL_VALUE:
         return getInitialValue();
+      case Kits_textonlyPackage.VALUED_OBJECT__TYPE:
+        return getType();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -216,11 +216,11 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
       case Kits_textonlyPackage.VALUED_OBJECT__NAME:
         setName((String)newValue);
         return;
-      case Kits_textonlyPackage.VALUED_OBJECT__TYPE:
-        setType((ValueType)newValue);
-        return;
       case Kits_textonlyPackage.VALUED_OBJECT__INITIAL_VALUE:
         setInitialValue((String)newValue);
+        return;
+      case Kits_textonlyPackage.VALUED_OBJECT__TYPE:
+        setType((ValueType)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -239,11 +239,11 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
       case Kits_textonlyPackage.VALUED_OBJECT__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case Kits_textonlyPackage.VALUED_OBJECT__TYPE:
-        setType(TYPE_EDEFAULT);
-        return;
       case Kits_textonlyPackage.VALUED_OBJECT__INITIAL_VALUE:
         setInitialValue(INITIAL_VALUE_EDEFAULT);
+        return;
+      case Kits_textonlyPackage.VALUED_OBJECT__TYPE:
+        setType(TYPE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -261,10 +261,10 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
     {
       case Kits_textonlyPackage.VALUED_OBJECT__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case Kits_textonlyPackage.VALUED_OBJECT__TYPE:
-        return type != TYPE_EDEFAULT;
       case Kits_textonlyPackage.VALUED_OBJECT__INITIAL_VALUE:
         return INITIAL_VALUE_EDEFAULT == null ? initialValue != null : !INITIAL_VALUE_EDEFAULT.equals(initialValue);
+      case Kits_textonlyPackage.VALUED_OBJECT__TYPE:
+        return type != TYPE_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -282,10 +282,10 @@ public class ValuedObjectImpl extends MinimalEObjectImpl.Container implements Va
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", type: ");
-    result.append(type);
     result.append(", initialValue: ");
     result.append(initialValue);
+    result.append(", type: ");
+    result.append(type);
     result.append(')');
     return result.toString();
   }

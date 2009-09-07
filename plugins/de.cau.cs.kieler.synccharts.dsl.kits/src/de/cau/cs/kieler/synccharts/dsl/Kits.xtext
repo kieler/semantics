@@ -1,63 +1,63 @@
 grammar de.cau.cs.kieler.synccharts.dsl.Kits with org.eclipse.xtext.common.Terminals
-generate kits "http://www.cau.de/cs/kieler/synccharts/dsl/Kits"
+//generate kits "http://www.cau.de/cs/kieler/synccharts/dsl/Kits"
 import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as sync
 
-Region ://returns sync::Region :
-	('region' id=ID)?
+Region returns sync::Region :
+	('region' id=ID)
 	
-	(	variables+=Variable
-	|	signals+=Signal
-	|	innerStates+=State //[sync::State]
-	) +
+	(	//variables+=Variable
+	//|	//signals+=Signal |
+		innerStates+=State //[sync::State]
+	) 
 ;
-State ://returns sync::State:
-	////label=ID (id=STRING)?(bodyText=STRING)?
-	( ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' name=FullStateID
+State returns sync::State:
+	id=ID 
+(	  ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' id=FullStateID
   	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
-  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) name=FullStateID
-  	| ((isInitial?='init')(isFinal?='final')) 'state' name=FullStateID
+  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) id=FullStateID
+  	| ((isInitial?='init')(isFinal?='final')) 'state' id=FullStateID
   	| ((isInitial?='init')(isFinal?='final')) (type=StateType)
   	| ((isInitial?='init')(isFinal?='final')) 'state'
-  	| ((isInitial?='init')(isFinal?='final')) name=FullStateID
+  	| ((isInitial?='init')(isFinal?='final')) id=FullStateID
   	| ((isInitial?='init')(isFinal?='final'))
   	
-  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' name=FullStateID
+  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' id=FullStateID
   	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state'
-  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) name=FullStateID
-  	| ((isFinal?='final')(isInitial?='init')) 'state' name=FullStateID
+  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) id=FullStateID
+  	| ((isFinal?='final')(isInitial?='init')) 'state' id=FullStateID
   	| ((isFinal?='final')(isInitial?='init')) (type=StateType)
   	| ((isFinal?='final')(isInitial?='init')) 'state'
-  	| ((isFinal?='final')(isInitial?='init')) name=FullStateID
+  	| ((isFinal?='final')(isInitial?='init')) id=FullStateID
   	| ((isFinal?='final')(isInitial?='init'))
   	
-  	| (isInitial?='init') (type=StateType) 'state' name=FullStateID
+  	| (isInitial?='init') (type=StateType) 'state' id=FullStateID
   	| (isInitial?='init') (type=StateType) 'state'
-  	| (isInitial?='init') (type=StateType) name=FullStateID  
-  	| (isInitial?='init') 'state' name=FullStateID
+  	| (isInitial?='init') (type=StateType) id=FullStateID  
+  	| (isInitial?='init') 'state' id=FullStateID
   	| (isInitial?='init') (type=StateType) 
   	| (isInitial?='init') 'state'
-  	| (isInitial?='init') name=FullStateID
+  	| (isInitial?='init') id=FullStateID
   	| (isInitial?='init')
   	
-  	| (isFinal?='final')  (type=StateType) 'state' name=FullStateID
+  	| (isFinal?='final')  (type=StateType) 'state' id=FullStateID
   	| (isFinal?='final')  (type=StateType) 'state' 
-  	| (isFinal?='final')  (type=StateType) name=FullStateID
-  	| (isFinal?='final')  'state' name=FullStateID
+  	| (isFinal?='final')  (type=StateType) id=FullStateID
+  	| (isFinal?='final')  'state' id=FullStateID
   	| (isFinal?='final')  (type=StateType)
-  	| (isFinal?='final')  'state' name=FullStateID
-  	| (isFinal?='final')  name=FullStateID
+  	| (isFinal?='final')  'state' id=FullStateID
+  	| (isFinal?='final')  id=FullStateID
   	| (isFinal?='final')
   	
-  	| (type=StateType) 'state' name=FullStateID
+  	| (type=StateType) 'state' id=FullStateID
   	| (type=StateType) 'state'
-  	| (type=StateType) name=FullStateID
+  	| (type=StateType) id=FullStateID
   	| (type=StateType)
   	
-  	| 'state' name=FullStateID
+  	| 'state' id=FullStateID
   	| 'state'
   		
-  	| name=FullStateID
-  	)
+  	| id=FullStateID
+  )
 
   (label=STRING)? //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
   (bodyText=STRING)? 
@@ -123,4 +123,4 @@ FullStateID : ((ID'@')?ID);
 enum StateType	returns sync::StateType	: NORMAL='state' | PSEUDO='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
 enum CombineOperator returns sync::CombineOperator: NONE | ADD='+' | MULT='*' | AND='AND'| OR='OR' |HOST='hostCombineOperator';
 enum ValueType returns sync::ValueType: PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='hostType';	
-enum TransitionType returns sync::TransitionType: WEAKABORT='-->' |  STRONGABORT='o->' | NORMALTERMINATION='>->' ;
+enum TransitionType returns sync::TransitionType: WEAKABORT='-->' |  STRONGABORT='o->' | NORMALTERMINATION='>->'; 
