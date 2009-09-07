@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <description url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite">
-      KIELER Update Site
+   <description name="KIELER nightly" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/">
+      KIELER nightly update site
    </description>
    <feature url="features/de.cau.cs.kieler.core_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.core" version="0.1.0.vqualifier">
       <category name="KIELER"/>
