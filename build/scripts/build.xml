@@ -63,6 +63,7 @@
 		<property name="genericTargets"  location="${eclipse.pdebuild.scripts}/genericTargets.xml"/>
 		<!-- property name="allElementsFile" location="${eclipse.pdebuild.templates}/headless-build/allElements.xml"/ -->
 
+		<mkdir dir="${basedir}/buildTempFolder" />
 		<mkdir dir="${basedir}/update-site/features" />
 		<mkdir dir="${basedir}/update-site/plugins" />
 		
