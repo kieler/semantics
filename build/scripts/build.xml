@@ -28,22 +28,22 @@
 			<arg line="-buildfile ${scriptdir}/build.xml ${target}" />
 			<arg line="-Dscriptdir=${scriptdir}" />
 				<!-- the folder containing build.xml, build.properties -->
-			<arg line="-Dbasedir=${system.WORKSPACE}" />
+			<arg value="-Dbasedir=${system.WORKSPACE}" />
 				<!-- the workspace folder of the current job
 						needed as Hudson is starting the build script
 						from the containing folder (i.e. ${scriptdir})
 						- not from workspace root folder -->
-			<arg line="-DbuildDirectory=${system.WORKSPACE}" />
+			<arg value="-DbuildDirectory=${system.WORKSPACE}" />
 				<!-- the build root folder
 						fed into the eclipse.generateScript task
 						within genericTarget.xml, one of the PDE build scripts
 						here equal to basedir -->
-			<arg line="-DbuildProperties=${scriptdir}/build.properties" />
+			<arg value="-DbuildProperties=${scriptdir}/build.properties" />
 				<!-- the property configuration file
 						examined by build.xml, one of the PDE build scripts -->
-			<arg line="-Dfeature=${feature}" />
+			<arg value="-Dfeature=${feature}" />
 				<!-- the feature whose plugins should be build -->
-			<arg line="-DpluginPath=${pluginPath}" />
+			<arg value="-DpluginPath=${pluginPath}" />
 				<!-- a list of source folders seperated by ':'
 						each folder should contain the subfolders 'features' and 'plugins'
 						can be relative (to ${basedir})
@@ -67,6 +67,7 @@
 		<mkdir dir="${basedir}/update-site/plugins" />
 		
 		<delete includeemptydirs="true">
+		    <fileset dir="${basedir}/buildTempFolder/" includes="**/*"/>
 		    <fileset dir="${basedir}/update-site/features/" includes="**/*"/>
 			<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
 		</delete>
@@ -81,6 +82,7 @@
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
 			<property name="feature.destination" value="${basedir}/update-site/features"/>
 			<property name="plugin.destination" value="${basedir}/update-site/plugins"/>
+			<property name="buildTempFolder" value="${basedir}/buildTempFolder"/>
 			<target name="clean" />
 			<target name="build.update.jar" />
 			<target name="zip.logs" />
@@ -89,10 +91,25 @@
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}" target="gather.bin.parts">
 			<property name="feature.base" value="${basedir}/update-site/"/>
 			<property name="updateJar.omitRootfiles" value="true"/>
+			<property name="buildTempFolder" value="${basedir}/buildTempFolder"/>
 		</ant>
 		
 		<echo message="STARTING p2 stuff" />
-		<ant antfile="assemble.${feature}.p2.xml" />
+		<ant antfile="assemble.${feature}.p2.xml">
+			<property name="buildTempFolder" value="${basedir}/buildTempFolder"/>
+		</ant>
+	</target>
+	
+	<target name="build.updatesiteEntry">
+		<property name="p2.gathering"  value="true" />
+		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
+		<property name="configs"       value="${feature.configs}" />
+		<property name="genericTargets"  location="${eclipse.pdebuild.scripts}/genericTargets.xml"/>
+
+		<echo message="STARTING p2 stuff" />
+		<ant antfile="assemble.${feature}.p2.xml">
+			<property name="buildTempFolder" value="${basedir}/buildTempFolder"/>
+		</ant>
 	</target>
 	
 	<target name="build.rca" if="eclipse.running">
