@@ -15,41 +15,76 @@
 package de.cau.cs.kieler.sim.mobile.tablemaster;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * @author delphino
+ * This class implements a TCP server component that waits for mobile table 
+ * clients in loop. If there is a connection request the initialization is
+ * triggered by either the master or the observer component. After that we
+ * read command (lines) until the connection breaks down or is terminated.
+ * <BR><BR>
+ * The following commands are processed:<BR>
+ * S - Step<BR>
+ * R - Run<BR>
+ * P - Pause<BR>
+ * T - Stop (Terminate)<BR>
+ * <BR><BR>
+ * These commands are processed if the line starts with a "C" for commands,
+ * followed by either S, R, P or T.
+ * Otherwise the received line contains (modified) JSON data in a string
+ * starting with "{" that is processed by the producer component's
+ * setDataToSend method.
+ *  
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
  *
  */
- //----------------------------------------------------------------------
-
  public class TCPServer implements Runnable {
 	
+	/** The server socket. */
 	private ServerSocket serverSocket;
+	
+	/** The client socket. */
 	private Socket clientSocket;
+	
+	/** The writer for outputs of data to send. */
 	private PrintWriter writer;
+	
+	/** The reader for inputs of data to receive. */
 	private BufferedReader reader;
+	
+	/** The terminate flag. */
 	private boolean terminate;
+	
+	/** The port of the server. */
 	private int port;
-	private String lastLine;
-	private static TCPServer instance;
+	
+	/** Try to get the socket SOCKET_RETRIES times with a waiting delay of
+	 * one second between each tries. */
+	private static final int SOCKET_RETRIES = 10;
 	
 	//-------------------------------------------------------------------------
 
+	/**
+	 * Instantiates a new TCPServer that listens to the given port.
+	 * 
+	 * @param port the port
+	 */
 	public TCPServer(int port) {
-		instance = this;
 		this.port = port;
 	}
 
 	//-------------------------------------------------------------------------
 
+	/**
+	 * Terminates the TCPServer setting the {@link #terminate}. flag to true
+	 * which will end the while loop and the run method also.
+	 */
 	public void terminate() {
 		synchronized (DataComponentMaster.getInstance()) {
-			System.out.println(this.hashCode()+" TERMINATE()");
+			//DEBUG//System.out.println(this.hashCode()+" TERMINATE()");
 			try{this.clientSocket.close();}catch(Exception e){}
 			terminate = true;
 		}
@@ -57,20 +92,41 @@ import java.net.Socket;
 
 	//-------------------------------------------------------------------------
 
+	/**
+	 * Print prints the text to the output stream and flushes the latter.
+	 * 
+	 * @param text the text
+	 */
 	public void print(String text) {
-		if (writer != null)
+		if (writer != null) {
 			this.writer.print(text);
+			this.writer.flush();
+		}
 	}
 	
 	//-------------------------------------------------------------------------
 
+	/**
+	 * Println prints the text as a line to the output stream and flushes the 
+	 * latter.
+.	 * 
+	 * @param text the text
+	 */
 	public void println(String text) {
-		if (writer != null)
+		if (writer != null) {
 			this.writer.println(text);
+			this.writer.flush();
+		}
 	}
 
 	//-------------------------------------------------------------------------
 	
+	/**
+	 * Checks if the server is already terminated or the terminate flag is set
+	 * so that the server will terminate soon.
+	 * 
+	 * @return true, if is terminate
+	 */
 	public boolean isTerminate() {
 		return this.terminate;
 	}
@@ -82,27 +138,34 @@ import java.net.Socket;
 	 */
 	public void run() {
 		//sleep to wait for potentially blocked port
-		try{Thread.sleep(1000);}catch(Exception e){}
-		synchronized (DataComponentMaster.getInstance()) {
-			try {
-	  			serverSocket = new ServerSocket(this.port);
-	  			serverSocket.setSoTimeout(500);
-			}catch(Exception e){
-				e.printStackTrace();
-				terminate = true;
-				return;
+		boolean gotSocket = false;
+		for (int retry = 0; retry < SOCKET_RETRIES; retry++) {
+			try{Thread.sleep(1000);}catch(Exception e){}
+			synchronized (DataComponentMaster.getInstance()) {
+				try {
+		  			serverSocket = new ServerSocket(this.port);
+		  			serverSocket.setSoTimeout(500);
+					gotSocket = true;
+				}catch(Exception e){
+					gotSocket = false;
+				}
 			}
+			//if we got the socket - do no more retries
+			if (gotSocket) break;
+		}
+		if (!gotSocket) {
+			//if we still did not get the socket after SOCKET_RETRIES
+			//retries we must stop the server
+			terminate = true;
+			return;
 		}
 		
-		System.out.println(this.hashCode() + " SERVER RUNNING");
 		terminate = false;
 		
 	  	while (!terminate) {
 	  		try {
-	  			System.out.println(this.hashCode() + " WAITING FOR CLIENTS");
 		  		//connection accepted
 		  		clientSocket = serverSocket.accept();
-		  		System.out.println(this.hashCode() + " CLIENT ACCEPTED");
 		  		if (terminate) {
 		  			break;
 		  		}
@@ -114,39 +177,33 @@ import java.net.Socket;
 				
 				//send master value
 				if (!DataComponentMaster.getInstance().isEnabled()) {
+					//send disabled flag to remot unit
 					this.println("D");
 				}
 				//if master is enabled, get data from master
 				//otherwise from the observer
 				if (DataComponentMaster.getInstance().isExecuting()) {
-					System.out.println("MASTER EXECUTING");
 					//send initialize
 					DataComponentMaster.getInstance().initialize();
 				}
 				else if (DataComponentObserver.getInstance().isExecuting()) {
-					System.out.println("OBSERVER EXECUTING");
 					//send initialize
 					DataComponentObserver.getInstance().initialize();
 				}
 
 				while(true) {
 					String line = null;
-					System.out.println(this.hashCode()+" READLINE START");
 					try {line = reader.readLine();}catch(Exception e){
 						e.printStackTrace();
 					}
-					System.out.println(this.hashCode()+" READLINE END");
-					lastLine = line;
 					//check if DataComponent is still available
 					if (DataComponentMaster.getInstance() == null) {
-						System.out.println(this.hashCode() + " DataComponent.getInstance() == null");
 						//otherwise stop server
 						clientSocket.close();
 						//terminate = true;
 						break;
 					}
 					if ((line == null)||(!clientSocket.isConnected())) {
-						System.out.println(this.hashCode() + " !clientSocket.isConnected()");
 						//STOP execution if necessary
 						try {
 							if (DataComponentMaster.getInstance().isEnabled())
@@ -161,23 +218,25 @@ import java.net.Socket;
 							if (line.startsWith("C")) {
 								String command = line.substring(1, 2);
 								
-								System.out.println("COMMAND>"+command);
-								
 								if (command.matches("S")) {
 									//STEP
-									DataComponentMaster.getInstance().masterStepExecution();
+									DataComponentMaster.getInstance()
+														.masterStepExecution();
 								}
 								else if (command.matches("R")) {
 									//RUN
-									DataComponentMaster.getInstance().masterRunExecution();
+									DataComponentMaster.getInstance()
+														.masterRunExecution();
 								}
 								else if (command.matches("P")) {
 									//PAUSE
-									DataComponentMaster.getInstance().masterPauseExecution();
+									DataComponentMaster.getInstance()
+														.masterPauseExecution();
 								}
 								else if (command.matches("T")) {
 									//STOP
-									DataComponentMaster.getInstance().masterStopExecution();
+									DataComponentMaster.getInstance()
+														.masterStopExecution();
 								}
 							}//end if command
 							else {
@@ -213,10 +272,7 @@ import java.net.Socket;
 	  			e.printStackTrace();
 				try{clientSocket.close();}catch(Exception ee){}
 	  		}
-	  		
 	  	}//end while accepting (server running)
-		System.out.println(this.hashCode() + " SERVER TERMINATED");
 		
 	}//end run
 }
-

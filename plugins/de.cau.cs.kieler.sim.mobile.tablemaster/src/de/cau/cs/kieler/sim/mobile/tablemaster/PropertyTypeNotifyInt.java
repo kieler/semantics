@@ -20,7 +20,8 @@ import de.cau.cs.kieler.sim.kiem.data.KiemPropertyType;
 
 /**
  * The Class KiemPropertyTypeInt. This implements a sample KiemPropertyType for
- * an integer type.
+ * a specialized version of an integer type that notifies the 
+ * DataComponentMaster upon a change.
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
@@ -58,6 +59,8 @@ public class PropertyTypeNotifyInt extends KiemPropertyType
 		try {
 			if (Integer.valueOf((String)value) < 0) return;
 			if (Integer.valueOf((String)value) > 10000) return;
+			//notify the DataComponentMaster so that the listening port
+			//can be adapted
 			DataComponentMaster.setPort(Integer.valueOf((String)value));
 			property.setValue(""+Integer.valueOf((String)value));
 		}catch(Exception e) {
