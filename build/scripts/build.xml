@@ -20,12 +20,20 @@
 		<delete dir="${eclipseWorkspace}" />
 		<delete dir="${p2.director.workspace}" / -->
 
+		<condition property="targetP" value="${target}" else="${system.TARGET}">
+			<equals arg1="${system.TARGET}" arg2="$${system.TARGET}" />
+			<!-- targetP is the actual target parameter;
+				 $$ is the escape character for not resolving a properties link,
+				 this is needed here to for examining the definition of the system property
+				 as the condition 'isset' doesn't work with system (environment) properties -->
+		</condition>
+
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg line="-configuration ${eclipseConfig}" />
 			<arg line="-data ${eclipseWorkspace}" />
 			<arg line="-application org.eclipse.ant.core.antRunner" />
 			<arg line="-consoleLog" />
-			<arg line="-buildfile ${scriptdir}/build.xml ${target}" />
+			<arg line="-buildfile ${scriptdir}/build.xml ${targetP}" />
 			<arg line="-Dscriptdir=${scriptdir}" />
 				<!-- the folder containing build.xml, build.properties -->
 			<arg value="-Dbasedir=${system.WORKSPACE}" />
