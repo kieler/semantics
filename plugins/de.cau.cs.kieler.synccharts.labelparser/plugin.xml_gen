@@ -3,14 +3,6 @@
 
 <plugin>
 
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http://kieler.cs.cau.de/synccharts/actionlabel" 
-       class = "de.cau.cs.kieler.synccharts.transitionlabel.TransitionlabelPackage"
-       genModel = "de/cau/cs/kieler/synccharts/TransitionLabel.genmodel" /> 
-	
-  </extension>
-
 
 
 

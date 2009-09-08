@@ -238,6 +238,7 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
 
     public static void copyActionContents(Action source, Action target) {
         target.setDelay(source.getDelay());
+        target.setIsImmediate(source.isIsImmediate());
         // don't set any parent! it will accidently remove the object from the model...
         //target.setParentStateEntryAction(source.getParentStateEntryAction());
         //target.setParentStateExitAction(source.getParentStateExitAction());

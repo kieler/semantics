@@ -39,10 +39,6 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		////import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
 		////import "synccharts" as synchcharts
 		//
-		////dummy rule to test the language in an editor
-		////Model : 
-		////	((("sig" signals+=Signal) | ("var" variables+=Variable)))* ';' (actions+=Action ";")*;
-		//
 		////==============================================================================
 		//// Basic Actions
 		////==============================================================================
@@ -277,7 +273,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueINTTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
-		//IntValue:
+		//IntValue returns synccharts::IntValue:
 		//  value=INT; 
 		//
 		////==============================================================================
@@ -297,7 +293,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueFloatTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
-		//FloatValue:
+		//FloatValue returns synccharts::FloatValue:
 		//  value=Float;
 		public ParserRule getRule() { return rule; }
 
@@ -313,7 +309,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueBooleanTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
-		//BooleanValue:
+		//BooleanValue returns synccharts::BooleanValue:
 		//  value=Boolean;
 		public ParserRule getRule() { return rule; }
 
@@ -331,16 +327,16 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cBooleanValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
-		//Value:
+		//Value returns synccharts::Value:
 		//  IntValue|FloatValue|BooleanValue; 
-		//
+		//    
 		//	        
 		//
 		//// make sure the Float rule does not shadow the built-in INT rule
 		public ParserRule getRule() { return rule; }
 
 		//IntValue|FloatValue|BooleanValue 
-		//
+		//    
 		//	        
 		//
 		//// make sure the Float rule does not shadow the built-in INT rule
@@ -439,15 +435,15 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cValueExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cOperationSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Action cComplexExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cOperatorCompareOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
 		private final RuleCall cSubExpressionsValueExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
 		//CompareOperation returns synccharts::Expression:
-		//  ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator
-		//  subExpressions+=ValueExpression); 
+		//  ValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=
+		//  CompareOperator subExpressions+=ValueExpression); 
 		//
 		//// Example: 42 <= ?A
 		//    
@@ -457,19 +453,19 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//// at the latter we need the parans to indicate the right binding
 		public ParserRule getRule() { return rule; }
 
-		//ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator
-		//subExpressions+=ValueExpression)
+		//ValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=
+		//CompareOperator subExpressions+=ValueExpression)
 		public Group getGroup() { return cGroup; }
 
 		//ValueExpression
 		public RuleCall getValueExpressionParserRuleCall_0() { return cValueExpressionParserRuleCall_0; }
 
-		//{Operation.subExpressions+=current} operator=CompareOperator subExpressions+=
-		//ValueExpression
+		//{synccharts::ComplexExpression.subExpressions+=current} operator=CompareOperator
+		//subExpressions+=ValueExpression
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{Operation.subExpressions+=current}
-		public Action getOperationSubExpressionsAction_1_0() { return cOperationSubExpressionsAction_1_0; }
+		//{synccharts::ComplexExpression.subExpressions+=current}
+		public Action getComplexExpressionSubExpressionsAction_1_0() { return cComplexExpressionSubExpressionsAction_1_0; }
 
 		//operator=CompareOperator
 		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
@@ -556,15 +552,15 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cNotOrNormalExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cOperationSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Action cComplexExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cOperatorOperatorAndEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
 		private final RuleCall cSubExpressionsNotOrNormalExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
 		//AndOperation returns synccharts::Expression:
-		//  NotOrNormalExpression ({Operation.subExpressions+=current} operator=OperatorAnd
-		//  subExpressions+=NotOrNormalExpression)*; 
+		//  NotOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current}
+		//  operator=OperatorAnd subExpressions+=NotOrNormalExpression)*; 
 		//
 		//// Example: A and B, not C and 42 <= ?D
 		//    
@@ -573,19 +569,19 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//// Example: A or B, C and B or D and not E
 		public ParserRule getRule() { return rule; }
 
-		//NotOrNormalExpression ({Operation.subExpressions+=current} operator=OperatorAnd
-		//subExpressions+=NotOrNormalExpression)*
+		//NotOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current}
+		//operator=OperatorAnd subExpressions+=NotOrNormalExpression)*
 		public Group getGroup() { return cGroup; }
 
 		//NotOrNormalExpression
 		public RuleCall getNotOrNormalExpressionParserRuleCall_0() { return cNotOrNormalExpressionParserRuleCall_0; }
 
-		//({Operation.subExpressions+=current} operator=OperatorAnd subExpressions+=
-		//NotOrNormalExpression)*
+		//({synccharts::ComplexExpression.subExpressions+=current} operator=OperatorAnd
+		//subExpressions+=NotOrNormalExpression)*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{Operation.subExpressions+=current}
-		public Action getOperationSubExpressionsAction_1_0() { return cOperationSubExpressionsAction_1_0; }
+		//{synccharts::ComplexExpression.subExpressions+=current}
+		public Action getComplexExpressionSubExpressionsAction_1_0() { return cComplexExpressionSubExpressionsAction_1_0; }
 
 		//operator=OperatorAnd
 		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
@@ -605,15 +601,15 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cAndOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cOperationSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Action cComplexExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cOperatorOperatorOrEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
 		private final RuleCall cSubExpressionsAndOperationParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
 		//OrOperation returns synccharts::Expression:
-		//  AndOperation ({Operation.subExpressions+=current} operator=OperatorOr
-		//  subExpressions+=AndOperation)*; 
+		//  AndOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=
+		//  OperatorOr subExpressions+=AndOperation)*; 
 		//
 		//// Example: A or B, C and B or D and not E 
 		//    
@@ -622,19 +618,19 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
 		public ParserRule getRule() { return rule; }
 
-		//AndOperation ({Operation.subExpressions+=current} operator=OperatorOr
-		//subExpressions+=AndOperation)*
+		//AndOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=
+		//OperatorOr subExpressions+=AndOperation)*
 		public Group getGroup() { return cGroup; }
 
 		//AndOperation
 		public RuleCall getAndOperationParserRuleCall_0() { return cAndOperationParserRuleCall_0; }
 
-		//({Operation.subExpressions+=current} operator=OperatorOr subExpressions+=
-		//AndOperation)*
+		//({synccharts::ComplexExpression.subExpressions+=current} operator=OperatorOr
+		//subExpressions+=AndOperation)*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{Operation.subExpressions+=current}
-		public Action getOperationSubExpressionsAction_1_0() { return cOperationSubExpressionsAction_1_0; }
+		//{synccharts::ComplexExpression.subExpressions+=current}
+		public Action getComplexExpressionSubExpressionsAction_1_0() { return cComplexExpressionSubExpressionsAction_1_0; }
 
 		//operator=OperatorOr
 		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
@@ -1094,10 +1090,6 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	////import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
 	////import "synccharts" as synchcharts
 	//
-	////dummy rule to test the language in an editor
-	////Model : 
-	////	((("sig" signals+=Signal) | ("var" variables+=Variable)))* ';' (actions+=Action ";")*;
-	//
 	////==============================================================================
 	//// Basic Actions
 	////==============================================================================
@@ -1186,7 +1178,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		return getVariableAccess().getRule();
 	}
 
-	//IntValue:
+	//IntValue returns synccharts::IntValue:
 	//  value=INT; 
 	//
 	////==============================================================================
@@ -1200,7 +1192,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		return getIntValueAccess().getRule();
 	}
 
-	//FloatValue:
+	//FloatValue returns synccharts::FloatValue:
 	//  value=Float;
 	public FloatValueElements getFloatValueAccess() {
 		return (pFloatValue != null) ? pFloatValue : (pFloatValue = new FloatValueElements());
@@ -1210,7 +1202,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		return getFloatValueAccess().getRule();
 	}
 
-	//BooleanValue:
+	//BooleanValue returns synccharts::BooleanValue:
 	//  value=Boolean;
 	public BooleanValueElements getBooleanValueAccess() {
 		return (pBooleanValue != null) ? pBooleanValue : (pBooleanValue = new BooleanValueElements());
@@ -1220,9 +1212,9 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		return getBooleanValueAccess().getRule();
 	}
 
-	//Value:
+	//Value returns synccharts::Value:
 	//  IntValue|FloatValue|BooleanValue; 
-	//
+	//    
 	//	        
 	//
 	//// make sure the Float rule does not shadow the built-in INT rule
@@ -1234,7 +1226,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		return getValueAccess().getRule();
 	}
 
-	//terminal Float returns ecore::EDouble:
+	//terminal Float returns ecore::EFloatObject:
 	//  (INT "." INT | INT ("." INT)? ("e" | "E") ("-" | "+")? INT) "f"? | INT "f"; 
 	//
 	//// make sure the Float rule does not shadow the built-in INT rule
@@ -1242,7 +1234,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		return (tFloat != null) ? tFloat : (tFloat = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Float"));
 	} 
 
-	//terminal Boolean returns ecore::EBoolean:
+	//terminal Boolean returns ecore::EBooleanObject:
 	//  "true" | "false"; 
 	//              
 	//
@@ -1292,8 +1284,8 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//CompareOperation returns synccharts::Expression:
-	//  ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator
-	//  subExpressions+=ValueExpression); 
+	//  ValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=
+	//  CompareOperator subExpressions+=ValueExpression); 
 	//
 	//// Example: 42 <= ?A
 	//    
@@ -1343,8 +1335,8 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//AndOperation returns synccharts::Expression:
-	//  NotOrNormalExpression ({Operation.subExpressions+=current} operator=OperatorAnd
-	//  subExpressions+=NotOrNormalExpression)*; 
+	//  NotOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current}
+	//  operator=OperatorAnd subExpressions+=NotOrNormalExpression)*; 
 	//
 	//// Example: A and B, not C and 42 <= ?D
 	//    
@@ -1360,8 +1352,8 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//OrOperation returns synccharts::Expression:
-	//  AndOperation ({Operation.subExpressions+=current} operator=OperatorOr
-	//  subExpressions+=AndOperation)*; 
+	//  AndOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=
+	//  OperatorOr subExpressions+=AndOperation)*; 
 	//
 	//// Example: A or B, C and B or D and not E 
 	//    

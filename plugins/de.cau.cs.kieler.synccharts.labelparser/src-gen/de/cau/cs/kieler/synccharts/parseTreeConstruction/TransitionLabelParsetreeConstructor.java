@@ -68,10 +68,6 @@ protected class ThisRootNode extends RootToken {
  * //import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
  * //import "synccharts" as synchcharts
  * 
- * //dummy rule to test the language in an editor
- * //Model : 
- * //	((("sig" signals+=Signal) | ("var" variables+=Variable)))* ';' (actions+=Action ";")*;
- * 
  * //==============================================================================
  * // Basic Actions
  * //==============================================================================
@@ -945,7 +941,7 @@ protected class Variable_NameAssignment extends AssignmentToken  {
 
 /************ begin Rule IntValue ****************
  *
- * IntValue:
+ * IntValue returns synccharts::IntValue:
  *   value=INT; 
  * 
  * //==============================================================================
@@ -993,7 +989,7 @@ protected class IntValue_ValueAssignment extends AssignmentToken  {
 
 /************ begin Rule FloatValue ****************
  *
- * FloatValue:
+ * FloatValue returns synccharts::FloatValue:
  *   value=Float;
  *
  **/
@@ -1037,7 +1033,7 @@ protected class FloatValue_ValueAssignment extends AssignmentToken  {
 
 /************ begin Rule BooleanValue ****************
  *
- * BooleanValue:
+ * BooleanValue returns synccharts::BooleanValue:
  *   value=Boolean;
  *
  **/
@@ -1081,9 +1077,9 @@ protected class BooleanValue_ValueAssignment extends AssignmentToken  {
 
 /************ begin Rule Value ****************
  *
- * Value:
+ * Value returns synccharts::Value:
  *   IntValue|FloatValue|BooleanValue; 
- * 
+ *     
  * 	        
  * 
  * // make sure the Float rule does not shadow the built-in INT rule
@@ -1091,7 +1087,7 @@ protected class BooleanValue_ValueAssignment extends AssignmentToken  {
  **/
 
 // IntValue|FloatValue|BooleanValue 
-// 
+//     
 // 	        
 // 
 // // make sure the Float rule does not shadow the built-in INT rule
@@ -1511,8 +1507,8 @@ protected class ValueExpression_VariableReferenceParserRuleCall_3 extends RuleCa
 /************ begin Rule CompareOperation ****************
  *
  * CompareOperation returns synccharts::Expression:
- *   ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator
- *   subExpressions+=ValueExpression); 
+ *   ValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=
+ *   CompareOperator subExpressions+=ValueExpression); 
  * 
  * // Example: 42 <= ?A
  *     
@@ -1523,8 +1519,8 @@ protected class ValueExpression_VariableReferenceParserRuleCall_3 extends RuleCa
  *
  **/
 
-// ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator
-// subExpressions+=ValueExpression)
+// ValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=
+// CompareOperator subExpressions+=ValueExpression)
 protected class CompareOperation_Group extends GroupToken {
 	
 	public CompareOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1579,8 +1575,8 @@ protected class CompareOperation_ValueExpressionParserRuleCall_0 extends RuleCal
 	}	
 }
 
-// {Operation.subExpressions+=current} operator=CompareOperator subExpressions+=
-// ValueExpression
+// {synccharts::ComplexExpression.subExpressions+=current} operator=CompareOperator
+// subExpressions+=ValueExpression
 protected class CompareOperation_Group_1 extends GroupToken {
 	
 	public CompareOperation_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1600,15 +1596,15 @@ protected class CompareOperation_Group_1 extends GroupToken {
 		
 }
 
-// {Operation.subExpressions+=current}
-protected class CompareOperation_OperationSubExpressionsAction_1_0 extends ActionToken  {
+// {synccharts::ComplexExpression.subExpressions+=current}
+protected class CompareOperation_ComplexExpressionSubExpressionsAction_1_0 extends ActionToken  {
 
-	public CompareOperation_OperationSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public CompareOperation_ComplexExpressionSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Action getGrammarElement() {
-		return grammarAccess.getCompareOperationAccess().getOperationSubExpressionsAction_1_0();
+		return grammarAccess.getCompareOperationAccess().getComplexExpressionSubExpressionsAction_1_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -1620,7 +1616,7 @@ protected class CompareOperation_OperationSubExpressionsAction_1_0 extends Actio
 		
 	
 	protected IInstanceDescription tryConsumeVal() {
-		if(!current.isInstanceOf(grammarAccess.getCompareOperationAccess().getOperationSubExpressionsAction_1_0().getType().getClassifier())) return null;
+		if(!current.isInstanceOf(grammarAccess.getCompareOperationAccess().getComplexExpressionSubExpressionsAction_1_0().getType().getClassifier())) return null;
 		Object val = current.getConsumable("subExpressions", false);
 		if(val == null) return null;
 		if(!current.isConsumedWithLastConsumtion("subExpressions")) return null;
@@ -1641,7 +1637,7 @@ protected class CompareOperation_OperatorAssignment_1_1 extends AssignmentToken 
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new CompareOperation_OperationSubExpressionsAction_1_0(parent, this, 0, inst);
+			case 0: return new CompareOperation_ComplexExpressionSubExpressionsAction_1_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -1933,8 +1929,8 @@ protected class NotOrNormalExpression_ParanthesedBooleanExpressionParserRuleCall
 /************ begin Rule AndOperation ****************
  *
  * AndOperation returns synccharts::Expression:
- *   NotOrNormalExpression ({Operation.subExpressions+=current} operator=OperatorAnd
- *   subExpressions+=NotOrNormalExpression)*; 
+ *   NotOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current}
+ *   operator=OperatorAnd subExpressions+=NotOrNormalExpression)*; 
  * 
  * // Example: A and B, not C and 42 <= ?D
  *     
@@ -1944,8 +1940,8 @@ protected class NotOrNormalExpression_ParanthesedBooleanExpressionParserRuleCall
  *
  **/
 
-// NotOrNormalExpression ({Operation.subExpressions+=current} operator=OperatorAnd
-// subExpressions+=NotOrNormalExpression)*
+// NotOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current}
+// operator=OperatorAnd subExpressions+=NotOrNormalExpression)*
 protected class AndOperation_Group extends GroupToken {
 	
 	public AndOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2001,8 +1997,8 @@ protected class AndOperation_NotOrNormalExpressionParserRuleCall_0 extends RuleC
 	}	
 }
 
-// ({Operation.subExpressions+=current} operator=OperatorAnd subExpressions+=
-// NotOrNormalExpression)*
+// ({synccharts::ComplexExpression.subExpressions+=current} operator=OperatorAnd
+// subExpressions+=NotOrNormalExpression)*
 protected class AndOperation_Group_1 extends GroupToken {
 	
 	public AndOperation_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2022,15 +2018,15 @@ protected class AndOperation_Group_1 extends GroupToken {
 		
 }
 
-// {Operation.subExpressions+=current}
-protected class AndOperation_OperationSubExpressionsAction_1_0 extends ActionToken  {
+// {synccharts::ComplexExpression.subExpressions+=current}
+protected class AndOperation_ComplexExpressionSubExpressionsAction_1_0 extends ActionToken  {
 
-	public AndOperation_OperationSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public AndOperation_ComplexExpressionSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Action getGrammarElement() {
-		return grammarAccess.getAndOperationAccess().getOperationSubExpressionsAction_1_0();
+		return grammarAccess.getAndOperationAccess().getComplexExpressionSubExpressionsAction_1_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -2043,7 +2039,7 @@ protected class AndOperation_OperationSubExpressionsAction_1_0 extends ActionTok
 		
 	
 	protected IInstanceDescription tryConsumeVal() {
-		if(!current.isInstanceOf(grammarAccess.getAndOperationAccess().getOperationSubExpressionsAction_1_0().getType().getClassifier())) return null;
+		if(!current.isInstanceOf(grammarAccess.getAndOperationAccess().getComplexExpressionSubExpressionsAction_1_0().getType().getClassifier())) return null;
 		Object val = current.getConsumable("subExpressions", false);
 		if(val == null) return null;
 		if(!current.isConsumedWithLastConsumtion("subExpressions")) return null;
@@ -2064,7 +2060,7 @@ protected class AndOperation_OperatorAssignment_1_1 extends AssignmentToken  {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new AndOperation_OperationSubExpressionsAction_1_0(parent, this, 0, inst);
+			case 0: return new AndOperation_ComplexExpressionSubExpressionsAction_1_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -2132,8 +2128,8 @@ protected class AndOperation_SubExpressionsAssignment_1_2 extends AssignmentToke
 /************ begin Rule OrOperation ****************
  *
  * OrOperation returns synccharts::Expression:
- *   AndOperation ({Operation.subExpressions+=current} operator=OperatorOr
- *   subExpressions+=AndOperation)*; 
+ *   AndOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=
+ *   OperatorOr subExpressions+=AndOperation)*; 
  * 
  * // Example: A or B, C and B or D and not E 
  *     
@@ -2143,8 +2139,8 @@ protected class AndOperation_SubExpressionsAssignment_1_2 extends AssignmentToke
  *
  **/
 
-// AndOperation ({Operation.subExpressions+=current} operator=OperatorOr
-// subExpressions+=AndOperation)*
+// AndOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=
+// OperatorOr subExpressions+=AndOperation)*
 protected class OrOperation_Group extends GroupToken {
 	
 	public OrOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2200,8 +2196,8 @@ protected class OrOperation_AndOperationParserRuleCall_0 extends RuleCallToken {
 	}	
 }
 
-// ({Operation.subExpressions+=current} operator=OperatorOr subExpressions+=
-// AndOperation)*
+// ({synccharts::ComplexExpression.subExpressions+=current} operator=OperatorOr
+// subExpressions+=AndOperation)*
 protected class OrOperation_Group_1 extends GroupToken {
 	
 	public OrOperation_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2221,15 +2217,15 @@ protected class OrOperation_Group_1 extends GroupToken {
 		
 }
 
-// {Operation.subExpressions+=current}
-protected class OrOperation_OperationSubExpressionsAction_1_0 extends ActionToken  {
+// {synccharts::ComplexExpression.subExpressions+=current}
+protected class OrOperation_ComplexExpressionSubExpressionsAction_1_0 extends ActionToken  {
 
-	public OrOperation_OperationSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public OrOperation_ComplexExpressionSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Action getGrammarElement() {
-		return grammarAccess.getOrOperationAccess().getOperationSubExpressionsAction_1_0();
+		return grammarAccess.getOrOperationAccess().getComplexExpressionSubExpressionsAction_1_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -2242,7 +2238,7 @@ protected class OrOperation_OperationSubExpressionsAction_1_0 extends ActionToke
 		
 	
 	protected IInstanceDescription tryConsumeVal() {
-		if(!current.isInstanceOf(grammarAccess.getOrOperationAccess().getOperationSubExpressionsAction_1_0().getType().getClassifier())) return null;
+		if(!current.isInstanceOf(grammarAccess.getOrOperationAccess().getComplexExpressionSubExpressionsAction_1_0().getType().getClassifier())) return null;
 		Object val = current.getConsumable("subExpressions", false);
 		if(val == null) return null;
 		if(!current.isConsumedWithLastConsumtion("subExpressions")) return null;
@@ -2263,7 +2259,7 @@ protected class OrOperation_OperatorAssignment_1_1 extends AssignmentToken  {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new OrOperation_OperationSubExpressionsAction_1_0(parent, this, 0, inst);
+			case 0: return new OrOperation_ComplexExpressionSubExpressionsAction_1_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	

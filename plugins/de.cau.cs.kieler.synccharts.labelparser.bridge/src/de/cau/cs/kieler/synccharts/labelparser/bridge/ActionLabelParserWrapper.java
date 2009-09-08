@@ -132,10 +132,13 @@ public class ActionLabelParserWrapper implements IParser {
             //ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             //resource.save(outputStream, options);
             //return outputStream.toString();
+           
+          /*  
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             serializerUtil.serialize(action, outputStream, null, false);
             return outputStream.toString();
-            
+          */
+            return ActionLabelSerializer.toString(action);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }

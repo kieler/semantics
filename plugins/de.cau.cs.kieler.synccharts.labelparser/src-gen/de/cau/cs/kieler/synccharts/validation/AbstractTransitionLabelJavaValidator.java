@@ -13,7 +13,6 @@ public class AbstractTransitionLabelJavaValidator extends AbstractDeclarativeVal
     @Override
     protected List<? extends EPackage> getEPackages() {
         List<EPackage> result = new ArrayList<EPackage>();
-        result.add(de.cau.cs.kieler.synccharts.transitionlabel.TransitionlabelPackage.eINSTANCE);
         return result;
     }
 

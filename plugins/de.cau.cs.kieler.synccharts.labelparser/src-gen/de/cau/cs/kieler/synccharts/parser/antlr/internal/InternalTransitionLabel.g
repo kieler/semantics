@@ -711,7 +711,7 @@ ruleCompareOperation returns [EObject current=null]
     }
 ((
     { 
-        temp=factory.create(grammarAccess.getCompareOperationAccess().getOperationSubExpressionsAction_1_0().getType().getClassifier());
+        temp=factory.create(grammarAccess.getCompareOperationAccess().getComplexExpressionSubExpressionsAction_1_0().getType().getClassifier());
         try {
         	factory.add(temp, "subExpressions", $current, null /*ParserRule*/, currentNode);
         } catch(ValueConverterException vce) {
@@ -719,7 +719,7 @@ ruleCompareOperation returns [EObject current=null]
         }
         $current = temp; 
         temp = null;
-        CompositeNode newNode = createCompositeNode(grammarAccess.getCompareOperationAccess().getOperationSubExpressionsAction_1_0(), currentNode.getParent());
+        CompositeNode newNode = createCompositeNode(grammarAccess.getCompareOperationAccess().getComplexExpressionSubExpressionsAction_1_0(), currentNode.getParent());
     newNode.getChildren().add(currentNode);
     moveLookaheadInfo(currentNode, newNode);
     currentNode = newNode; 
@@ -902,7 +902,7 @@ ruleAndOperation returns [EObject current=null]
     }
 ((
     { 
-        temp=factory.create(grammarAccess.getAndOperationAccess().getOperationSubExpressionsAction_1_0().getType().getClassifier());
+        temp=factory.create(grammarAccess.getAndOperationAccess().getComplexExpressionSubExpressionsAction_1_0().getType().getClassifier());
         try {
         	factory.add(temp, "subExpressions", $current, null /*ParserRule*/, currentNode);
         } catch(ValueConverterException vce) {
@@ -910,7 +910,7 @@ ruleAndOperation returns [EObject current=null]
         }
         $current = temp; 
         temp = null;
-        CompositeNode newNode = createCompositeNode(grammarAccess.getAndOperationAccess().getOperationSubExpressionsAction_1_0(), currentNode.getParent());
+        CompositeNode newNode = createCompositeNode(grammarAccess.getAndOperationAccess().getComplexExpressionSubExpressionsAction_1_0(), currentNode.getParent());
     newNode.getChildren().add(currentNode);
     moveLookaheadInfo(currentNode, newNode);
     currentNode = newNode; 
@@ -990,7 +990,7 @@ ruleOrOperation returns [EObject current=null]
     }
 ((
     { 
-        temp=factory.create(grammarAccess.getOrOperationAccess().getOperationSubExpressionsAction_1_0().getType().getClassifier());
+        temp=factory.create(grammarAccess.getOrOperationAccess().getComplexExpressionSubExpressionsAction_1_0().getType().getClassifier());
         try {
         	factory.add(temp, "subExpressions", $current, null /*ParserRule*/, currentNode);
         } catch(ValueConverterException vce) {
@@ -998,7 +998,7 @@ ruleOrOperation returns [EObject current=null]
         }
         $current = temp; 
         temp = null;
-        CompositeNode newNode = createCompositeNode(grammarAccess.getOrOperationAccess().getOperationSubExpressionsAction_1_0(), currentNode.getParent());
+        CompositeNode newNode = createCompositeNode(grammarAccess.getOrOperationAccess().getComplexExpressionSubExpressionsAction_1_0(), currentNode.getParent());
     newNode.getChildren().add(currentNode);
     moveLookaheadInfo(currentNode, newNode);
     currentNode = newNode; 

@@ -30,6 +30,7 @@ import org.junit.Test;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
@@ -39,6 +40,7 @@ import de.cau.cs.kieler.synccharts.TransitionLabelStandaloneSetup;
 import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParseCommand;
 import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParserWrapper;
+import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelSerializer;
 
 /**
  * JUnit Test Case for the SyncCharts Editor Transition label parser and its
@@ -131,39 +133,84 @@ public class ParserSerializerTest {
     }
     
     @Test
-    public void testSerializer1() throws Exception {
+    public void testSerializer_A() throws Exception {
         this.parseAndSerialize("A");
     }
     
     @Test
-    public void testSerializer2() throws Exception {
-        this.parseAndSerialize("/B");
+    public void testSerializer_Emission() throws Exception {
+        this.parseAndSerialize("/ B");
     }
     
     @Test
-    public void testSerializer3() throws Exception {
+    public void testSerializer_Comparison() throws Exception {
         this.parseAndSerialize("varA = 5");
     }
 
     @Test
-    public void testSerializer4() throws Exception {
-        this.parseAndSerialize("3 < ?A");
+    public void testSerializer_ComparisonValue() throws Exception {
+        this.parseAndSerialize("3 < ? A");
     }
     
     @Test
-    public void testSerializer5() throws Exception {
+    public void testSerializer_EmissionValue() throws Exception {
         this.parseAndSerialize("/ A(3)");
     }
     
     @Test
-    public void testSerializer6() throws Exception {
+    public void testSerializer_HostCode() throws Exception {
         this.parseAndSerialize("/ \"This is some host code\"");
     }
     @Test
-    public void testSerializer7() throws Exception {
+    public void testSerializer_HostCodeType() throws Exception {
         this.parseAndSerialize("/ \"This is some host code\"(Natural)");
     }
 
+    @Test
+    public void testSerializer_Assignment() throws Exception {
+        this.parseAndSerialize("/ varA:=5");
+    }
+    
+    @Test
+    public void testSerializer_BoolExpressionAllEffects() throws Exception {
+        this.parseAndSerialize("A and B / C(3), varA:=5, \"host code\"(Esterel)");
+    }
+    
+    @Test
+    public void testSerializer_Immediate() throws Exception {
+        this.parseAndSerialize("# A / B");
+    }
+    
+    @Test
+    public void testSerializer_Delay() throws Exception {
+        this.parseAndSerialize("3 A / B");
+    }
+    
+    @Test
+    public void testSerializer_DelayComparison() throws Exception {
+        this.parseAndSerialize("3 5 < ? A / B");
+    }
+
+    @Test
+    public void testSerializer_AndOr() throws Exception {
+        this.parseAndSerialize("(A and B) or C");
+    }
+    
+    @Test
+    public void testSerializer_AndOr2() throws Exception {
+        this.parseAndSerialize("A and (B or C)");
+    }
+    
+    @Test
+    public void testSerializer_AndNot() throws Exception {
+        this.parseAndSerialize("not A and B");
+    }
+    
+    @Test
+    public void testSerializer_AndNot2() throws Exception {
+        this.parseAndSerialize("not (A and B)");
+    }
+    
     /**
      * Create a new parse command and execute its parse method. Likely to throw
      * exceptions if the text could not be parsed.
@@ -184,7 +231,7 @@ public class ParserSerializerTest {
     
     private void parseAndSerialize(String inputString) throws KielerException, IOException{
         parse(inputString);
-        String serializedString = serializerUtil.serialize(transition);
+        String serializedString = ActionLabelSerializer.toString(transition); //serializerUtil.serialize(transition);
         if(inputString.equals(serializedString))
             return;
         else

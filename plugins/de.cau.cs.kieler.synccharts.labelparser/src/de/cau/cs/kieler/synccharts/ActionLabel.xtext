@@ -1,6 +1,9 @@
 grammar de.cau.cs.kieler.synccharts.TransitionLabel with org.eclipse.xtext.common.Terminals
 
-generate transitionlabel "http://kieler.cs.cau.de/synccharts/actionlabel"
+//// we do not need to generate the transitionlabel ecore model, because we
+//// only reuse classes of the official synccharts metamodel
+//generate transitionlabel "http://kieler.cs.cau.de/synccharts/actionlabel"
+
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://kieler.cs.cau.de/synccharts" as synccharts
@@ -39,18 +42,18 @@ Variable returns synccharts::Variable:
 // Values
 //==============================================================================
 
-IntValue: 
+IntValue returns synccharts::IntValue: 
 	value=INT;
-FloatValue:
-    value=Float;
-BooleanValue:
+FloatValue returns synccharts::FloatValue:
+    value=Float ; 
+BooleanValue returns synccharts::BooleanValue :
     value=Boolean;
-Value:
+Value returns synccharts::Value:
 	IntValue | FloatValue | BooleanValue;
 
 // make sure the Float rule does not shadow the built-in INT rule
-terminal Float returns ecore::EDouble : ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
-terminal Boolean returns ecore::EBoolean : "true" | "false";
+terminal Float returns ecore::EFloatObject : ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
+terminal Boolean returns ecore::EBooleanObject : "true" | "false";
 
 //==============================================================================
 // Expressions
@@ -66,7 +69,7 @@ ValueExpression returns synccharts::Expression:
 
 // Example: 42 <= ?A
 CompareOperation returns synccharts::Expression:
-	ValueExpression ({Operation.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
+	ValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
 
 // Example: not A, not false, not (A or B)
 // at the latter we need the parans to indicate the right binding
@@ -79,11 +82,11 @@ NotOrNormalExpression returns synccharts::Expression:
 
 // Example: A and B, not C and 42 <= ?D
 AndOperation returns synccharts::Expression:
-	NotOrNormalExpression ({Operation.subExpressions+=current} operator=OperatorAnd subExpressions+=NotOrNormalExpression)*;
+	NotOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=OperatorAnd subExpressions+=NotOrNormalExpression)*;
 
 // Example: A or B, C and B or D and not E 
 OrOperation returns synccharts::Expression:
-	AndOperation ({Operation.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
+	AndOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
 
 // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
 ParanthesedBooleanExpression returns synccharts::Expression:
