@@ -30,7 +30,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    EQ(1, "EQ", "EQ"),
+    EQ(1, "EQ", "="),
 
     /**
      * The '<em><b>LT</b></em>' literal object.
@@ -40,7 +40,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    LT(2, "LT", "LT"),
+    LT(2, "LT", "<"),
 
     /**
      * The '<em><b>LEQ</b></em>' literal object.
@@ -50,7 +50,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    LEQ(3, "LEQ", "LEQ"),
+    LEQ(3, "LEQ", "<="),
 
     /**
      * The '<em><b>GT</b></em>' literal object.
@@ -60,7 +60,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    GT(12, "GT", "GT"),
+    GT(12, "GT", ">"),
 
     /**
      * The '<em><b>GEQ</b></em>' literal object.
@@ -70,7 +70,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    GEQ(10, "GEQ", "GEQ"),
+    GEQ(10, "GEQ", ">="),
 
     /**
      * The '<em><b>NOT</b></em>' literal object.
@@ -80,7 +80,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    NOT(0, "NOT", "NOT"),
+    NOT(0, "NOT", "not"),
 
     /**
      * The '<em><b>VAL</b></em>' literal object.
@@ -90,7 +90,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    VAL(0, "VAL", "VAL"),
+    VAL(0, "VAL", "?"),
 
     /**
      * The '<em><b>PRE</b></em>' literal object.
@@ -100,7 +100,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    PRE(11, "PRE", "PRE"),
+    PRE(11, "PRE", "pre"),
 
     /**
      * The '<em><b>AND</b></em>' literal object.
@@ -110,7 +110,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    AND(4, "AND", "AND"),
+    AND(4, "AND", "and"),
 
     /**
      * The '<em><b>OR</b></em>' literal object.
@@ -120,7 +120,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    OR(5, "OR", "OR"),
+    OR(5, "OR", "or"),
 
     /**
      * The '<em><b>ADD</b></em>' literal object.
@@ -130,7 +130,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    ADD(6, "ADD", "ADD"),
+    ADD(6, "ADD", "add"),
 
     /**
      * The '<em><b>SUB</b></em>' literal object.
@@ -140,7 +140,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    SUB(7, "SUB", "SUB"),
+    SUB(7, "SUB", "-"),
 
     /**
      * The '<em><b>MULT</b></em>' literal object.
@@ -150,7 +150,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    MULT(8, "MULT", "MULT"),
+    MULT(8, "MULT", "*"),
 
     /**
      * The '<em><b>DIV</b></em>' literal object.
@@ -160,7 +160,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    DIV(9, "DIV", "DIV"),
+    DIV(9, "DIV", "/"),
 
     /**
      * The '<em><b>MOD</b></em>' literal object.
@@ -170,7 +170,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    MOD(13, "MOD", "MOD");
+    MOD(13, "MOD", "mod");
 
     /**
      * The '<em><b>EQ</b></em>' literal value.
@@ -181,7 +181,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #EQ
-     * @model
+     * @model literal="="
      * @generated
      * @ordered
      */
@@ -196,7 +196,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #LT
-     * @model
+     * @model literal="<"
      * @generated
      * @ordered
      */
@@ -211,7 +211,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #LEQ
-     * @model
+     * @model literal="<="
      * @generated
      * @ordered
      */
@@ -226,7 +226,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #GT
-     * @model
+     * @model literal=">"
      * @generated
      * @ordered
      */
@@ -241,7 +241,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #GEQ
-     * @model
+     * @model literal=">="
      * @generated
      * @ordered
      */
@@ -256,7 +256,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #NOT
-     * @model
+     * @model literal="not"
      * @generated
      * @ordered
      */
@@ -271,7 +271,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #VAL
-     * @model
+     * @model literal="?"
      * @generated
      * @ordered
      */
@@ -286,7 +286,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #PRE
-     * @model
+     * @model literal="pre"
      * @generated
      * @ordered
      */
@@ -301,7 +301,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #AND
-     * @model
+     * @model literal="and"
      * @generated
      * @ordered
      */
@@ -316,7 +316,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #OR
-     * @model
+     * @model literal="or"
      * @generated
      * @ordered
      */
@@ -331,7 +331,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #ADD
-     * @model
+     * @model literal="add"
      * @generated
      * @ordered
      */
@@ -346,7 +346,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #SUB
-     * @model
+     * @model literal="-"
      * @generated
      * @ordered
      */
@@ -361,7 +361,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #MULT
-     * @model
+     * @model literal="*"
      * @generated
      * @ordered
      */
@@ -376,7 +376,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #DIV
-     * @model
+     * @model literal="/"
      * @generated
      * @ordered
      */
@@ -391,7 +391,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #MOD
-     * @model
+     * @model literal="mod"
      * @generated
      * @ordered
      */

@@ -67,21 +67,21 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="OperatorType">
-    <eLiterals name="EQ" value="1" literal="EQ"/>
-    <eLiterals name="LT" value="2"/>
-    <eLiterals name="LEQ" value="3"/>
-    <eLiterals name="GT" value="12"/>
-    <eLiterals name="GEQ" value="10"/>
-    <eLiterals name="NOT" literal="NOT"/>
-    <eLiterals name="VAL"/>
-    <eLiterals name="PRE" value="11"/>
-    <eLiterals name="AND" value="4"/>
-    <eLiterals name="OR" value="5"/>
-    <eLiterals name="ADD" value="6"/>
-    <eLiterals name="SUB" value="7"/>
-    <eLiterals name="MULT" value="8"/>
-    <eLiterals name="DIV" value="9"/>
-    <eLiterals name="MOD" value="13"/>
+    <eLiterals name="EQ" value="1" literal="="/>
+    <eLiterals name="LT" value="2" literal="&lt;"/>
+    <eLiterals name="LEQ" value="3" literal="&lt;="/>
+    <eLiterals name="GT" value="12" literal=">"/>
+    <eLiterals name="GEQ" value="10" literal=">="/>
+    <eLiterals name="NOT" literal="not"/>
+    <eLiterals name="VAL" literal="?"/>
+    <eLiterals name="PRE" value="11" literal="pre"/>
+    <eLiterals name="AND" value="4" literal="and"/>
+    <eLiterals name="OR" value="5" literal="or"/>
+    <eLiterals name="ADD" value="6" literal="add"/>
+    <eLiterals name="SUB" value="7" literal="-"/>
+    <eLiterals name="MULT" value="8" literal="*"/>
+    <eLiterals name="DIV" value="9" literal="/"/>
+    <eLiterals name="MOD" value="13" literal="mod"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Region">
     <eStructuralFeatures xsi:type="ecore:EReference" name="innerStates" upperBound="-1"
