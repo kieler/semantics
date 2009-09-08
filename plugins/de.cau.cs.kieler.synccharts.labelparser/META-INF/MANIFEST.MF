@@ -41,7 +41,4 @@ Export-Package: de.cau.cs.kieler.synccharts,
  de.cau.cs.kieler.synccharts.parser.antlr,
  de.cau.cs.kieler.synccharts.scoping,
  de.cau.cs.kieler.synccharts.services,
- de.cau.cs.kieler.synccharts.transitionlabel,
- de.cau.cs.kieler.synccharts.transitionlabel.impl,
- de.cau.cs.kieler.synccharts.transitionlabel.util,
  de.cau.cs.kieler.synccharts.validation
