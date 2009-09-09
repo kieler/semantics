@@ -46,11 +46,12 @@ public class TransitionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValueAccess().getAlternatives(), "rule__Value__Alternatives");
 					put(grammarAccess.getValueExpressionAccess().getAlternatives(), "rule__ValueExpression__Alternatives");
 					put(grammarAccess.getNotOrNormalExpressionAccess().getAlternatives(), "rule__NotOrNormalExpression__Alternatives");
-					put(grammarAccess.getBooleanExpressionAccess().getAlternatives(), "rule__BooleanExpression__Alternatives");
+					put(grammarAccess.getParanthesedBooleanExpressionAccess().getAlternatives(), "rule__ParanthesedBooleanExpression__Alternatives");
 					put(grammarAccess.getOperatorTypeAccess().getAlternatives(), "rule__OperatorType__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getActionAccess().getGroup(), "rule__Action__Group__0");
 					put(grammarAccess.getActionAccess().getGroup_3(), "rule__Action__Group_3__0");
+					put(grammarAccess.getActionAccess().getGroup_3_1(), "rule__Action__Group_3_1__0");
 					put(grammarAccess.getEmissionAccess().getGroup(), "rule__Emission__Group__0");
 					put(grammarAccess.getEmissionAccess().getGroup_1(), "rule__Emission__Group_1__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
@@ -62,21 +63,24 @@ public class TransitionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAndOperationAccess().getGroup_1(), "rule__AndOperation__Group_1__0");
 					put(grammarAccess.getOrOperationAccess().getGroup(), "rule__OrOperation__Group__0");
 					put(grammarAccess.getOrOperationAccess().getGroup_1(), "rule__OrOperation__Group_1__0");
-					put(grammarAccess.getBooleanExpressionAccess().getGroup_3(), "rule__BooleanExpression__Group_3__0");
+					put(grammarAccess.getParanthesedBooleanExpressionAccess().getGroup_3(), "rule__ParanthesedBooleanExpression__Group_3__0");
+					put(grammarAccess.getHostCodeAccess().getGroup(), "rule__HostCode__Group__0");
+					put(grammarAccess.getHostCodeAccess().getGroup_1(), "rule__HostCode__Group_1__0");
 					put(grammarAccess.getActionAccess().getIsImmediateAssignment_0(), "rule__Action__IsImmediateAssignment_0");
 					put(grammarAccess.getActionAccess().getDelayAssignment_1(), "rule__Action__DelayAssignment_1");
 					put(grammarAccess.getActionAccess().getTriggerAssignment_2(), "rule__Action__TriggerAssignment_2");
-					put(grammarAccess.getActionAccess().getEffectsAssignment_3_1(), "rule__Action__EffectsAssignment_3_1");
+					put(grammarAccess.getActionAccess().getEffectsAssignment_3_1_0(), "rule__Action__EffectsAssignment_3_1_0");
 					put(grammarAccess.getEmissionAccess().getSignalAssignment_0(), "rule__Emission__SignalAssignment_0");
 					put(grammarAccess.getEmissionAccess().getNewValueAssignment_1_1(), "rule__Emission__NewValueAssignment_1_1");
 					put(grammarAccess.getAssignmentAccess().getVariableAssignment_0(), "rule__Assignment__VariableAssignment_0");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_2(), "rule__Assignment__ExpressionAssignment_2");
 					put(grammarAccess.getSignalReferenceAccess().getSignalAssignment(), "rule__SignalReference__SignalAssignment");
 					put(grammarAccess.getVariableReferenceAccess().getVariableAssignment(), "rule__VariableReference__VariableAssignment");
+					put(grammarAccess.getSignalAccess().getNameAssignment(), "rule__Signal__NameAssignment");
+					put(grammarAccess.getVariableAccess().getNameAssignment(), "rule__Variable__NameAssignment");
 					put(grammarAccess.getIntValueAccess().getValueAssignment(), "rule__IntValue__ValueAssignment");
 					put(grammarAccess.getFloatValueAccess().getValueAssignment(), "rule__FloatValue__ValueAssignment");
 					put(grammarAccess.getBooleanValueAccess().getValueAssignment(), "rule__BooleanValue__ValueAssignment");
-					put(grammarAccess.getHostCodeAccess().getCodeAssignment(), "rule__HostCode__CodeAssignment");
 					put(grammarAccess.getValOperationAccess().getOperatorAssignment_0(), "rule__ValOperation__OperatorAssignment_0");
 					put(grammarAccess.getValOperationAccess().getSubExpressionsAssignment_1(), "rule__ValOperation__SubExpressionsAssignment_1");
 					put(grammarAccess.getCompareOperationAccess().getOperatorAssignment_1_1(), "rule__CompareOperation__OperatorAssignment_1_1");
@@ -84,9 +88,11 @@ public class TransitionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNotOperationAccess().getOperatorAssignment_0(), "rule__NotOperation__OperatorAssignment_0");
 					put(grammarAccess.getNotOperationAccess().getSubExpressionsAssignment_1(), "rule__NotOperation__SubExpressionsAssignment_1");
 					put(grammarAccess.getAndOperationAccess().getOperatorAssignment_1_1(), "rule__AndOperation__OperatorAssignment_1_1");
-					put(grammarAccess.getAndOperationAccess().getSubExpressionAssignment_1_2(), "rule__AndOperation__SubExpressionAssignment_1_2");
+					put(grammarAccess.getAndOperationAccess().getSubExpressionsAssignment_1_2(), "rule__AndOperation__SubExpressionsAssignment_1_2");
 					put(grammarAccess.getOrOperationAccess().getOperatorAssignment_1_1(), "rule__OrOperation__OperatorAssignment_1_1");
 					put(grammarAccess.getOrOperationAccess().getSubExpressionsAssignment_1_2(), "rule__OrOperation__SubExpressionsAssignment_1_2");
+					put(grammarAccess.getHostCodeAccess().getCodeAssignment_0(), "rule__HostCode__CodeAssignment_0");
+					put(grammarAccess.getHostCodeAccess().getTypeAssignment_1_1(), "rule__HostCode__TypeAssignment_1_1");
 				}
 			};
 		}

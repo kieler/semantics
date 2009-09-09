@@ -42,6 +42,8 @@ import de.cau.cs.kieler.synccharts.VariableReference;
 public class ActionLabelSerializer {
 
     public static String toString(Action action){
+        if(action == null)
+            return null;
         StringBuffer sb = new StringBuffer();
         if( action.isIsImmediate() )
             sb.append("# ");

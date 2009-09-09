@@ -20,11 +20,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gef.commands.CommandStack;
+import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.common.core.command.ICommand;
 import org.eclipse.gmf.runtime.common.ui.services.parser.IParser;
 import org.eclipse.gmf.runtime.common.ui.services.parser.IParserEditStatus;
@@ -32,7 +39,9 @@ import org.eclipse.gmf.runtime.common.ui.services.parser.ParserEditStatus;
 import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramCommandStack;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
@@ -93,8 +102,8 @@ public class ActionLabelParserWrapper implements IParser {
      * (org.eclipse.core.runtime.IAdaptable, int)
      */
     public String getPrintString(IAdaptable element, int flags) {
-        //      if(lastEnteredString != null)
-        //          return lastEnteredString;
+        this.registerContentAdapter();
+        
         if (element instanceof EObjectAdapter) {
             if (((EObjectAdapter) element).getRealObject() instanceof Action) {
                 // take original emf model element and use the xtext serializer
@@ -103,8 +112,10 @@ public class ActionLabelParserWrapper implements IParser {
                         .getRealObject());
                 
                 String serializedString = serializeAction(action);
-                if(serializedString != null)
+                if(serializedString != null){
+                    doUpdateTriggerEffectsString(serializedString, action);
                     return serializedString;
+                }
                 else{
                     String triggersAndEffectsString = action.getTriggersAndEffects();
                     if(triggersAndEffectsString != null)
@@ -132,12 +143,14 @@ public class ActionLabelParserWrapper implements IParser {
             //ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             //resource.save(outputStream, options);
             //return outputStream.toString();
-           
+          
+          // this is the inofficial way  
           /*  
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             serializerUtil.serialize(action, outputStream, null, false);
             return outputStream.toString();
           */
+            // this is the custom way with my own rudimentary serializer
             return ActionLabelSerializer.toString(action);
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -176,6 +189,14 @@ public class ActionLabelParserWrapper implements IParser {
         }
     }
     
+    public void doUpdateTriggerEffectsString(final String newString, final Action targetElement){
+        Command cmd = SetCommand.create(
+                TransactionUtil.getEditingDomain(targetElement), 
+                targetElement, SyncchartsPackage.eINSTANCE.getAction_TriggersAndEffects(), newString);
+        
+        new ModelAsynchronousCommandExecutor(targetElement, cmd).start();
+    }
+    
     /**
      * Check whether an event is affected. This wrapper affects notification
      * events.
@@ -194,6 +215,10 @@ public class ActionLabelParserWrapper implements IParser {
                     this.doParse(value, (Action)((Notification) event).getNotifier());
                 }
                 return true;
+            }
+            // if a signal or variable name has changed, re-serialize the transition labels
+            if(feature.equals(SyncchartsPackage.eINSTANCE.getValuedObject_Name())){
+                System.out.println("Re-serializing labels.");
             }
         }
         return false;
@@ -251,5 +276,58 @@ public class ActionLabelParserWrapper implements IParser {
        // XtextContentAssistProcessor contentAssist = uiInjector.getInstance(XtextContentAssistProcessor.class);
        // return contentAssist;
         return null;
+    }
+    
+    public void registerContentAdapter(){
+        try{
+        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+        if(editor instanceof DiagramEditor){
+            EObject model = ((View)((DiagramEditor) editor).getDiagramEditPart().getModel()).getElement();
+            model.eAdapters().add(new ActionLabelContentAdapter());
+        }
+        }catch(NullPointerException e){
+            System.out.println("Trying to registering, but null");
+        }
+    }
+    
+    /**
+     * A Thread that executes a Command on the CommandStack of a given EObjects
+     * EditingDomain. The command is executed asynchronously and repeatedly
+     * until the command is executed sucessfully, i.e. no Exception has 
+     * occured or a timeout happened (5 secs) (to avoid endless loops).
+     * <p>
+     * This Thread is used to execute a command asynchronously when the usual
+     * synchronous way won't work, e.g. because the EditingDomain is in a 
+     * read-only transaction context and write commands are not allowed.
+     * 
+     * @author haf
+     *
+     */
+    class ModelAsynchronousCommandExecutor extends Thread{
+        
+        long TIMEOUT = 5000;
+        EObject target;
+        Command command;
+        
+        public ModelAsynchronousCommandExecutor(EObject target, Command command) {
+            this.target = target;
+            this.command = command;
+        }
+        
+        @Override
+        public void run() {
+            super.run();
+            boolean done = false;
+            long timeout = System.currentTimeMillis();
+            
+            while(!done && ((System.currentTimeMillis()-timeout) < TIMEOUT)){       
+                try{
+                    TransactionUtil.getEditingDomain(target).getCommandStack().execute(command);
+                    done = true;
+                }
+                catch(Exception e){};
+            }
+        }
+        
     }
 }

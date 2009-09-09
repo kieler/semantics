@@ -5,6 +5,7 @@ Bundle-Vendor: My Company
 Bundle-Version: 1.0.0
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.labelparser.ui; singleton:=true
 Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
+Eclipse-BuddyPolicy: dependent 
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.cau.cs.kieler.synccharts.labelparser;visibility:=reexport,
  org.eclipse.xtext.ui.core,
@@ -15,6 +16,7 @@ Require-Bundle: de.cau.cs.kieler.synccharts.labelparser;visibility:=reexport,
  org.eclipse.ui,
  org.antlr.runtime
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.synccharts.contentassist,
+Export-Package: de.cau.cs.kieler.synccharts,
+ de.cau.cs.kieler.synccharts.contentassist,
  de.cau.cs.kieler.synccharts.contentassist.antlr
 Bundle-Activator: de.cau.cs.kieler.synccharts.internal.TransitionLabelActivator
