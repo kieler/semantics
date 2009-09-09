@@ -6,5 +6,9 @@ Bundle-Version: 0.1.0.vqualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.emf.ecore;bundle-version="2.5.0";visibility:=reexport
+Require-Bundle: org.eclipse.emf.ecore;bundle-version="2.5.0";visibility:=reexport,
+ org.eclipse.xtend.typesystem.emf;bundle-version="0.7.2",
+ org.eclipse.ui;bundle-version="3.5.0",
+ de.cau.cs.kieler.synccharts.model;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.ui

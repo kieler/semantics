@@ -27,7 +27,7 @@ context State if (type != StateType::REFERENCE || type!= StateType::TEXTUAL) ERR
 	(bodyText == null) || (bodyText.matches("\\s*"));
 // ================================================================================================
 // General States 
-context State if ((parentRegion != null || parentRegion.parentState != null) && isInitial == false) // not checked for root state 
+context State if (parentRegion != null && parentRegion.parentState != null && isInitial == false) // not checked for root state 
   ERROR "Not reachable state! Every state needs at least one incoming transition!" :
   (parentRegion.innerStates.exists(e|e.outgoingTransitions.exists(t|t.targetState == this)));
 
@@ -35,7 +35,9 @@ context State if ( label == null || label.matches("\\s*"))
 	ERROR "Anonymous states (= no label) need an ID" : 
 	(id != null && id.length>0);
 
-
+context State if (label != null && !label.matches("\\s*"))
+	ERROR "States within a region need to have different labels." :
+	parentRegion.innerStates.forAll(s| (s.label != label) || (s == this));
 
 // ================================================================================================
 // Regions

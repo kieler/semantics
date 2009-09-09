@@ -10,6 +10,7 @@
 
 <plugin>
 
+<!--
    <extension
          point="org.openarchitectureware.adapter.emf.check.checks">
       <metaModel
@@ -19,6 +20,7 @@
          </checkFile>
       </metaModel>
    </extension>
+-->
    <extension
          id="product"
          point="org.eclipse.core.runtime.products">
@@ -30,6 +32,21 @@
                value="Synccharts">
          </property>
       </product>
+   </extension>
+   <extension
+         point="org.eclipse.xtend.typesystem.emf.checks">
+      <metaModel
+            nsURI="http://kieler.cs.cau.de/synccharts">
+         <checkFile
+               path="model/SyncchartsChecks.chk">
+         </checkFile>
+      </metaModel>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.synccharts.RegisterCheckValidator">
+      </startup>
    </extension>
 
 </plugin>
