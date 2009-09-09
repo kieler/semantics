@@ -81,7 +81,7 @@ under the terms of the Eclipse Public License (EPL).
       <import plugin="org.eclipse.xtext.ui.core" version="0.7.1" match="greaterOrEqual"/>
       <import plugin="org.junit4"/>
       <import plugin="org.eclipse.xtext" version="0.7.1" match="greaterOrEqual"/>
-      <import plugin="de.cau.cs.kieler.synccharts.labelparser" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.synccharts.labelparser" version="0.1.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.gmf.runtime.common.ui.services" version="1.2.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.2.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xpand"/>
