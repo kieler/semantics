@@ -15,7 +15,8 @@
         eType="#//State" eOpposite="#//State/innerActions"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentStateExitAction"
         eType="#//State" eOpposite="#//State/exitActions"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="1"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImmediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentStateSuspension"
         eType="#//State" eOpposite="#//State/suspensionTrigger"/>

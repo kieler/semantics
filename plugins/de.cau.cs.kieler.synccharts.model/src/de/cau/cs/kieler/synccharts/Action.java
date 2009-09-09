@@ -193,6 +193,7 @@ public interface Action extends EObject {
 
     /**
      * Returns the value of the '<em><b>Delay</b></em>' attribute.
+     * The default value is <code>"1"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Delay</em>' attribute isn't clear,
@@ -202,7 +203,7 @@ public interface Action extends EObject {
      * @return the value of the '<em>Delay</em>' attribute.
      * @see #setDelay(int)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getAction_Delay()
-     * @model
+     * @model default="1"
      * @generated
      */
     int getDelay();

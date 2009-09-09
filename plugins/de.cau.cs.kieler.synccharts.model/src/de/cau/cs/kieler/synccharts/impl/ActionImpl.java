@@ -99,7 +99,7 @@ public class ActionImpl extends EObjectImpl implements Action {
      * @generated
      * @ordered
      */
-    protected static final int DELAY_EDEFAULT = 0;
+    protected static final int DELAY_EDEFAULT = 1;
 
     /**
      * The cached value of the '{@link #getDelay() <em>Delay</em>}' attribute.
