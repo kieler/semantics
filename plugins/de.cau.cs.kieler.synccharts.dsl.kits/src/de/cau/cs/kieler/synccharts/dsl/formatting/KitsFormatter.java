@@ -10,16 +10,80 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
  * This class contains custom formatting description.
  * 
  * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#formatting
- * on how and when to use it 
+ * on how and when to use it
  * 
- * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
+ * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an
+ * example
  */
 public class KitsFormatter extends AbstractDeclarativeFormatter {
-	
+
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
 		de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess f = (de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess) getGrammarAccess();
+		c.setLinewrap(1).after(
+				f.getStateAccess().getLeftCurlyBracketKeyword_3_0());
+		c.setLinewrap(2).after(
+				f.getStateAccess().getRightCurlyBracketKeyword_3_2());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_0_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_1());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_10());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_10_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_11());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_11_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_12());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_12_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_13());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_13_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_14());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_14_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_15());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_16());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_17());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_18());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_19());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_2());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_2_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_20());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_21());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_22());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_24());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_25());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_26());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_27());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_28());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_29());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_3());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_30());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_32());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_33());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_34());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_3_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_36());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_4());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_4_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_5());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_5_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_6());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_6_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_7());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_8());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_8_0());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_9());
+		c.setLinewrap().after(f.getStateAccess().getGroup_0_9_0());
+		c.setLinewrap().after(
+				f.getStateAccess().getEntryActionsAssignment_3_1_0_1());
+		c.setLinewrap().after(
+				f.getStateAccess().getExitActionsActionParserRuleCall_3_1_2_1_0());
+		c.setLinewrap().after(
+				f.getStateAccess().getInnerActionsAssignment_3_1_1_1());
 
-		//...
+		c.setIndentation(f.getStateAccess().getLeftCurlyBracketKeyword_3_0(), f
+				.getStateAccess().getRightCurlyBracketKeyword_3_2());
+		c.setIndentation(f.getStateAccess().getRegionsAssignment_3_1_5_0(), f
+				.getStateAccess().getRegionsAssignment_3_1_5_1_1());
+
+		// ...
 	}
+
 }

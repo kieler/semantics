@@ -1,7 +1,7 @@
 grammar de.cau.cs.kieler.synccharts.dsl.Kits with org.eclipse.xtext.common.Terminals
 //generate kits "http://www.cau.de/cs/kieler/synccharts/dsl/Kits"
 import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as sync
-
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 Region returns sync::Region :
 	('region' id=ID)?
 	
@@ -78,12 +78,12 @@ FullStateID : ((ID'@')?ID);
 	//========================================================================================
 	//===  									    ACTIONS  					               ===
 	//========================================================================================
-Action returns sync::Action:
-	((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))
-| 
-	Transition
-	
-;
+//Action returns sync::Action:
+//	((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))
+//| 
+//	Transition
+//	
+//;
 
 	//========================================================================================
 	//===  									    TRANSITION 					               ===
@@ -183,6 +183,121 @@ Signal returns sync::Signal:
 	| 	(': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING)) //or initial value and combine type
 	) 
 ;
+//==============================================================================
+// Basic Actions
+//==============================================================================
+
+Action returns sync::Action:
+	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?; 		
+
+Effect returns sync::Effect: 
+	Emission | Assignment | HostCode;
+		
+Emission returns sync::Emission:
+	signal=[sync::Signal] ("(" newValue=ValueExpression ")")?;
+
+Assignment returns sync::Assignment:
+	variable=[sync::Variable] ":=" expression=ValueExpression;
+
+SignalReference returns sync::SignalReference:
+	signal = [sync::Signal];
+
+VariableReference returns sync::VariableReference:
+	variable = [sync::Variable];
+//
+//Signal returns sync::Signal:
+//	name=ID;
+//	
+//Variable returns sync::Variable:
+//	name=ID;
+
+//==============================================================================
+// Values
+//==============================================================================
+
+IntValue returns sync::IntValue: 
+	value=INT;
+FloatValue returns sync::FloatValue:
+    value=Float ; 
+BooleanValue returns sync::BooleanValue :
+    value=Boolean;
+Value returns sync::Value:
+	IntValue | FloatValue | BooleanValue;
+
+// make sure the Float rule does not shadow the built-in INT rule
+terminal Float returns ecore::EFloatObject : ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
+terminal Boolean returns ecore::EBooleanObject : "true" | "false";
+
+//==============================================================================
+// Expressions
+//==============================================================================
+
+// Example: ?A	
+ValOperation returns sync::ComplexExpression:
+	operator=ValOperator subExpressions+=SignalReference;
+
+// Example: 42, ?A, var1
+ValueExpression returns sync::Expression:
+	IntValue | FloatValue | ValOperation | VariableReference;
+
+// Example: 42 <= ?A
+CompareOperation returns sync::Expression:
+	ValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
+
+// Example: not A, not false, not (A or B)
+// at the latter we need the parans to indicate the right binding
+NotOperation returns sync::ComplexExpression:
+	operator=NotOperator subExpressions+=ParanthesedBooleanExpression;
+
+// Example: either negated or normal expression (with parantheses) 
+NotOrNormalExpression returns sync::Expression:
+	NotOperation | ParanthesedBooleanExpression;
+
+// Example: A and B, not C and 42 <= ?D
+AndOperation returns sync::Expression:
+	NotOrNormalExpression ({sync::ComplexExpression.subExpressions+=current} operator=OperatorAnd subExpressions+=NotOrNormalExpression)*;
+
+// Example: A or B, C and B or D and not E 
+OrOperation returns sync::Expression:
+	AndOperation ({sync::ComplexExpression.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
+
+// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+ParanthesedBooleanExpression returns sync::Expression:
+    BooleanValue | SignalReference | CompareOperation | '('OrOperation')' ;
+
+// Example: not D and C or ?E = 42 or not (A and (B or C))
+BooleanExpression returns sync::Expression:
+	OrOperation ;
+
+//==============================================================================
+// Operators
+//==============================================================================
+	
+enum OperatorType returns sync::OperatorType:
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="div" | MOD="mod" | VAL="?" | PRE="pre";
+
+enum ValOperator returns sync::OperatorType:
+	VAL="?";
+
+enum CompareOperator returns sync::OperatorType:
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
+	
+enum NotOperator returns sync::OperatorType:
+	NOT="not";
+
+enum OperatorOr returns sync::OperatorType:
+	OR="or";
+
+enum OperatorAnd returns sync::OperatorType:
+	AND="and";
+
+//==============================================================================
+// Misc
+//==============================================================================
+	
+HostCode returns sync::HostCode:
+	//"'"code=STRING"'";
+	code=STRING ("(" type=ID ")")?; 	
 enum StateType	returns sync::StateType	: NORMAL='state' | PSEUDO='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
 enum CombineOperator returns sync::CombineOperator: NONE | ADD='+' | MULT='*' | AND='AND'| OR='OR' |HOST='hostCombineOperator';
 enum ValueType returns sync::ValueType: PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='hostType';	
