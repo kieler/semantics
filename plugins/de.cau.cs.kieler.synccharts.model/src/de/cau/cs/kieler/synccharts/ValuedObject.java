@@ -94,7 +94,7 @@ public interface ValuedObject extends EObject {
      * @return the value of the '<em>Initial Value</em>' attribute.
      * @see #setInitialValue(String)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getValuedObject_InitialValue()
-     * @model required="true"
+     * @model
      * @generated
      */
     String getInitialValue();
