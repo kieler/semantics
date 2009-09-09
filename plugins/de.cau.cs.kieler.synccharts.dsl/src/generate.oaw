@@ -1,7 +1,0 @@
-<workflow>
-   <property file='generate.properties'/>
-   <bean class="org.eclipse.mwe.emf.StandaloneSetup">
-   		<registerGeneratedEPackage value="de.cau.cs.kieler.synccharts.SyncchartsPackage"/>
-   </bean>
-   <component file='org/openarchitectureware/xtext/Generator.oaw' inheritAll='true'/>
-</workflow>
