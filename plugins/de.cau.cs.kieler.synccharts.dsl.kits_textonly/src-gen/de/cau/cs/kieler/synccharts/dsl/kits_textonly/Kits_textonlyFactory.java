@@ -62,13 +62,13 @@ public interface Kits_textonlyFactory extends EFactory
   Action createAction();
 
   /**
-   * Returns a new object of class '<em>Transition</em>'.
+   * Returns a new object of class '<em>changed Name</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Transition</em>'.
+   * @return a new object of class '<em>changed Name</em>'.
    * @generated
    */
-  Transition createTransition();
+  changedName createchangedName();
 
   /**
    * Returns a new object of class '<em>Valued Object</em>'.

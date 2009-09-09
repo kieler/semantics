@@ -1325,13 +1325,27 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     {
                     int LA2_9 = input.LA(3);
 
-                    if ( (LA2_9==11) ) {
+                    if ( (LA2_9==RULE_ID) ) {
                         int LA2_35 = input.LA(4);
 
-                        if ( (LA2_35==EOF||LA2_35==RULE_STRING||(LA2_35>=11 && LA2_35<=14)||(LA2_35>=27 && LA2_35<=37)||LA2_35==41||(LA2_35>=45 && LA2_35<=46)||(LA2_35>=49 && LA2_35<=51)) ) {
-                            alt2=18;
+                        if ( (synpred21()) ) {
+                            alt2=19;
                         }
-                        else if ( (LA2_35==RULE_ID) ) {
+                        else if ( (synpred22()) ) {
+                            alt2=20;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 35, input);
+
+                            throw nvae;
+                        }
+                    }
+                    else if ( (LA2_9==11) ) {
+                        int LA2_36 = input.LA(4);
+
+                        if ( (LA2_36==RULE_ID) ) {
                             int LA2_66 = input.LA(5);
 
                             if ( (synpred19()) ) {
@@ -1348,22 +1362,8 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                                 throw nvae;
                             }
                         }
-                        else {
-                            if (backtracking>0) {failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 35, input);
-
-                            throw nvae;
-                        }
-                    }
-                    else if ( (LA2_9==RULE_ID) ) {
-                        int LA2_36 = input.LA(4);
-
-                        if ( (synpred21()) ) {
-                            alt2=19;
-                        }
-                        else if ( (synpred22()) ) {
-                            alt2=20;
+                        else if ( (LA2_36==EOF||LA2_36==RULE_STRING||(LA2_36>=11 && LA2_36<=14)||(LA2_36>=27 && LA2_36<=37)||LA2_36==41||(LA2_36>=45 && LA2_36<=46)||(LA2_36>=49 && LA2_36<=51)) ) {
+                            alt2=18;
                         }
                         else {
                             if (backtracking>0) {failed=true; return ;}
@@ -1396,12 +1396,9 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     int LA2_10 = input.LA(3);
 
                     if ( (LA2_10==11) ) {
-                        int LA2_35 = input.LA(4);
+                        int LA2_36 = input.LA(4);
 
-                        if ( (LA2_35==EOF||LA2_35==RULE_STRING||(LA2_35>=11 && LA2_35<=14)||(LA2_35>=27 && LA2_35<=37)||LA2_35==41||(LA2_35>=45 && LA2_35<=46)||(LA2_35>=49 && LA2_35<=51)) ) {
-                            alt2=18;
-                        }
-                        else if ( (LA2_35==RULE_ID) ) {
+                        if ( (LA2_36==RULE_ID) ) {
                             int LA2_66 = input.LA(5);
 
                             if ( (synpred19()) ) {
@@ -1418,10 +1415,13 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                                 throw nvae;
                             }
                         }
+                        else if ( (LA2_36==EOF||LA2_36==RULE_STRING||(LA2_36>=11 && LA2_36<=14)||(LA2_36>=27 && LA2_36<=37)||LA2_36==41||(LA2_36>=45 && LA2_36<=46)||(LA2_36>=49 && LA2_36<=51)) ) {
+                            alt2=18;
+                        }
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 35, input);
+                                new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 36, input);
 
                             throw nvae;
                         }
@@ -1449,12 +1449,9 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     int LA2_11 = input.LA(3);
 
                     if ( (LA2_11==11) ) {
-                        int LA2_35 = input.LA(4);
+                        int LA2_36 = input.LA(4);
 
-                        if ( (LA2_35==EOF||LA2_35==RULE_STRING||(LA2_35>=11 && LA2_35<=14)||(LA2_35>=27 && LA2_35<=37)||LA2_35==41||(LA2_35>=45 && LA2_35<=46)||(LA2_35>=49 && LA2_35<=51)) ) {
-                            alt2=18;
-                        }
-                        else if ( (LA2_35==RULE_ID) ) {
+                        if ( (LA2_36==RULE_ID) ) {
                             int LA2_66 = input.LA(5);
 
                             if ( (synpred19()) ) {
@@ -1471,10 +1468,13 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                                 throw nvae;
                             }
                         }
+                        else if ( (LA2_36==EOF||LA2_36==RULE_STRING||(LA2_36>=11 && LA2_36<=14)||(LA2_36>=27 && LA2_36<=37)||LA2_36==41||(LA2_36>=45 && LA2_36<=46)||(LA2_36>=49 && LA2_36<=51)) ) {
+                            alt2=18;
+                        }
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 35, input);
+                                new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 36, input);
 
                             throw nvae;
                         }
@@ -1505,12 +1505,9 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                         alt2=19;
                     }
                     else if ( (LA2_12==11) ) {
-                        int LA2_35 = input.LA(4);
+                        int LA2_36 = input.LA(4);
 
-                        if ( (LA2_35==EOF||LA2_35==RULE_STRING||(LA2_35>=11 && LA2_35<=14)||(LA2_35>=27 && LA2_35<=37)||LA2_35==41||(LA2_35>=45 && LA2_35<=46)||(LA2_35>=49 && LA2_35<=51)) ) {
-                            alt2=18;
-                        }
-                        else if ( (LA2_35==RULE_ID) ) {
+                        if ( (LA2_36==RULE_ID) ) {
                             int LA2_66 = input.LA(5);
 
                             if ( (synpred19()) ) {
@@ -1527,10 +1524,13 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                                 throw nvae;
                             }
                         }
+                        else if ( (LA2_36==EOF||LA2_36==RULE_STRING||(LA2_36>=11 && LA2_36<=14)||(LA2_36>=27 && LA2_36<=37)||LA2_36==41||(LA2_36>=45 && LA2_36<=46)||(LA2_36>=49 && LA2_36<=51)) ) {
+                            alt2=18;
+                        }
                         else {
                             if (backtracking>0) {failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 35, input);
+                                new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 36, input);
 
                             throw nvae;
                         }
@@ -1614,11 +1614,8 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                         if ( (LA2_41==11) ) {
                             int LA2_68 = input.LA(5);
 
-                            if ( (LA2_68==EOF||LA2_68==RULE_STRING||(LA2_68>=11 && LA2_68<=14)||(LA2_68>=27 && LA2_68<=37)||LA2_68==41||(LA2_68>=45 && LA2_68<=46)||(LA2_68>=49 && LA2_68<=51)) ) {
-                                alt2=10;
-                            }
-                            else if ( (LA2_68==RULE_ID) ) {
-                                int LA2_86 = input.LA(6);
+                            if ( (LA2_68==RULE_ID) ) {
+                                int LA2_85 = input.LA(6);
 
                                 if ( (synpred11()) ) {
                                     alt2=9;
@@ -1629,10 +1626,13 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                                 else {
                                     if (backtracking>0) {failed=true; return ;}
                                     NoViableAltException nvae =
-                                        new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 86, input);
+                                        new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 85, input);
 
                                     throw nvae;
                                 }
+                            }
+                            else if ( (LA2_68==EOF||LA2_68==RULE_STRING||(LA2_68>=11 && LA2_68<=14)||(LA2_68>=27 && LA2_68<=37)||LA2_68==41||(LA2_68>=45 && LA2_68<=46)||(LA2_68>=49 && LA2_68<=51)) ) {
+                                alt2=10;
                             }
                             else {
                                 if (backtracking>0) {failed=true; return ;}
@@ -1675,6 +1675,25 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     }
                     else if ( (LA2_15==12) ) {
                         switch ( input.LA(4) ) {
+                        case RULE_ID:
+                            {
+                            int LA2_72 = input.LA(5);
+
+                            if ( (synpred13()) ) {
+                                alt2=11;
+                            }
+                            else if ( (synpred15()) ) {
+                                alt2=13;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 72, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
                         case EOF:
                         case RULE_STRING:
                         case 12:
@@ -1699,25 +1718,6 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                         case 51:
                             {
                             alt2=13;
-                            }
-                            break;
-                        case RULE_ID:
-                            {
-                            int LA2_73 = input.LA(5);
-
-                            if ( (synpred13()) ) {
-                                alt2=11;
-                            }
-                            else if ( (synpred15()) ) {
-                                alt2=13;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 73, input);
-
-                                throw nvae;
-                            }
                             }
                             break;
                         case 11:
@@ -1777,7 +1777,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                             break;
                         case RULE_ID:
                             {
-                            int LA2_73 = input.LA(5);
+                            int LA2_72 = input.LA(5);
 
                             if ( (synpred13()) ) {
                                 alt2=11;
@@ -1788,7 +1788,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                             else {
                                 if (backtracking>0) {failed=true; return ;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 73, input);
+                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 72, input);
 
                                 throw nvae;
                             }
@@ -1853,6 +1853,25 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                             }
                             }
                             break;
+                        case RULE_ID:
+                            {
+                            int LA2_72 = input.LA(5);
+
+                            if ( (synpred13()) ) {
+                                alt2=11;
+                            }
+                            else if ( (synpred15()) ) {
+                                alt2=13;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 72, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
                         case EOF:
                         case RULE_STRING:
                         case 12:
@@ -1877,25 +1896,6 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                         case 51:
                             {
                             alt2=13;
-                            }
-                            break;
-                        case RULE_ID:
-                            {
-                            int LA2_73 = input.LA(5);
-
-                            if ( (synpred13()) ) {
-                                alt2=11;
-                            }
-                            else if ( (synpred15()) ) {
-                                alt2=13;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 73, input);
-
-                                throw nvae;
-                            }
                             }
                             break;
                         default:
@@ -1951,11 +1951,8 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     if ( (LA2_17==11) ) {
                         int LA2_48 = input.LA(4);
 
-                        if ( (LA2_48==EOF||LA2_48==RULE_STRING||(LA2_48>=11 && LA2_48<=14)||(LA2_48>=27 && LA2_48<=37)||LA2_48==41||(LA2_48>=45 && LA2_48<=46)||(LA2_48>=49 && LA2_48<=51)) ) {
-                            alt2=26;
-                        }
-                        else if ( (LA2_48==RULE_ID) ) {
-                            int LA2_76 = input.LA(5);
+                        if ( (LA2_48==RULE_ID) ) {
+                            int LA2_75 = input.LA(5);
 
                             if ( (synpred27()) ) {
                                 alt2=25;
@@ -1966,10 +1963,13 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                             else {
                                 if (backtracking>0) {failed=true; return ;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 76, input);
+                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 75, input);
 
                                 throw nvae;
                             }
+                        }
+                        else if ( (LA2_48==EOF||LA2_48==RULE_STRING||(LA2_48>=11 && LA2_48<=14)||(LA2_48>=27 && LA2_48<=37)||LA2_48==41||(LA2_48>=45 && LA2_48<=46)||(LA2_48>=49 && LA2_48<=51)) ) {
+                            alt2=26;
                         }
                         else {
                             if (backtracking>0) {failed=true; return ;}
@@ -2021,11 +2021,8 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     if ( (LA2_18==11) ) {
                         int LA2_48 = input.LA(4);
 
-                        if ( (LA2_48==EOF||LA2_48==RULE_STRING||(LA2_48>=11 && LA2_48<=14)||(LA2_48>=27 && LA2_48<=37)||LA2_48==41||(LA2_48>=45 && LA2_48<=46)||(LA2_48>=49 && LA2_48<=51)) ) {
-                            alt2=26;
-                        }
-                        else if ( (LA2_48==RULE_ID) ) {
-                            int LA2_76 = input.LA(5);
+                        if ( (LA2_48==RULE_ID) ) {
+                            int LA2_75 = input.LA(5);
 
                             if ( (synpred27()) ) {
                                 alt2=25;
@@ -2036,10 +2033,13 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                             else {
                                 if (backtracking>0) {failed=true; return ;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 76, input);
+                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 75, input);
 
                                 throw nvae;
                             }
+                        }
+                        else if ( (LA2_48==EOF||LA2_48==RULE_STRING||(LA2_48>=11 && LA2_48<=14)||(LA2_48>=27 && LA2_48<=37)||LA2_48==41||(LA2_48>=45 && LA2_48<=46)||(LA2_48>=49 && LA2_48<=51)) ) {
+                            alt2=26;
                         }
                         else {
                             if (backtracking>0) {failed=true; return ;}
@@ -2077,11 +2077,8 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     else if ( (LA2_19==11) ) {
                         int LA2_48 = input.LA(4);
 
-                        if ( (LA2_48==EOF||LA2_48==RULE_STRING||(LA2_48>=11 && LA2_48<=14)||(LA2_48>=27 && LA2_48<=37)||LA2_48==41||(LA2_48>=45 && LA2_48<=46)||(LA2_48>=49 && LA2_48<=51)) ) {
-                            alt2=26;
-                        }
-                        else if ( (LA2_48==RULE_ID) ) {
-                            int LA2_76 = input.LA(5);
+                        if ( (LA2_48==RULE_ID) ) {
+                            int LA2_75 = input.LA(5);
 
                             if ( (synpred27()) ) {
                                 alt2=25;
@@ -2092,10 +2089,13 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                             else {
                                 if (backtracking>0) {failed=true; return ;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 76, input);
+                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 75, input);
 
                                 throw nvae;
                             }
+                        }
+                        else if ( (LA2_48==EOF||LA2_48==RULE_STRING||(LA2_48>=11 && LA2_48<=14)||(LA2_48>=27 && LA2_48<=37)||LA2_48==41||(LA2_48>=45 && LA2_48<=46)||(LA2_48>=49 && LA2_48<=51)) ) {
+                            alt2=26;
                         }
                         else {
                             if (backtracking>0) {failed=true; return ;}
@@ -2124,14 +2124,14 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     {
                     int LA2_20 = input.LA(3);
 
-                    if ( (LA2_20==11) ) {
+                    if ( (LA2_20==RULE_ID) ) {
+                        alt2=27;
+                    }
+                    else if ( (LA2_20==11) ) {
                         int LA2_48 = input.LA(4);
 
-                        if ( (LA2_48==EOF||LA2_48==RULE_STRING||(LA2_48>=11 && LA2_48<=14)||(LA2_48>=27 && LA2_48<=37)||LA2_48==41||(LA2_48>=45 && LA2_48<=46)||(LA2_48>=49 && LA2_48<=51)) ) {
-                            alt2=26;
-                        }
-                        else if ( (LA2_48==RULE_ID) ) {
-                            int LA2_76 = input.LA(5);
+                        if ( (LA2_48==RULE_ID) ) {
+                            int LA2_75 = input.LA(5);
 
                             if ( (synpred27()) ) {
                                 alt2=25;
@@ -2142,10 +2142,13 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                             else {
                                 if (backtracking>0) {failed=true; return ;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 76, input);
+                                    new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 75, input);
 
                                 throw nvae;
                             }
+                        }
+                        else if ( (LA2_48==EOF||LA2_48==RULE_STRING||(LA2_48>=11 && LA2_48<=14)||(LA2_48>=27 && LA2_48<=37)||LA2_48==41||(LA2_48>=45 && LA2_48<=46)||(LA2_48>=49 && LA2_48<=51)) ) {
+                            alt2=26;
                         }
                         else {
                             if (backtracking>0) {failed=true; return ;}
@@ -2154,9 +2157,6 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
 
                             throw nvae;
                         }
-                    }
-                    else if ( (LA2_20==RULE_ID) ) {
-                        alt2=27;
                     }
                     else if ( (synpred31()) ) {
                         alt2=29;
@@ -2275,6 +2275,25 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             case 12:
                 {
                 switch ( input.LA(2) ) {
+                case RULE_ID:
+                    {
+                    int LA2_26 = input.LA(3);
+
+                    if ( (synpred37()) ) {
+                        alt2=35;
+                    }
+                    else if ( (synpred38()) ) {
+                        alt2=36;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return ;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 26, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
                 case EOF:
                 case RULE_STRING:
                 case 12:
@@ -2299,25 +2318,6 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                 case 51:
                     {
                     alt2=36;
-                    }
-                    break;
-                case RULE_ID:
-                    {
-                    int LA2_27 = input.LA(3);
-
-                    if ( (synpred37()) ) {
-                        alt2=35;
-                    }
-                    else if ( (synpred38()) ) {
-                        alt2=36;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return ;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 27, input);
-
-                        throw nvae;
-                    }
                     }
                     break;
                 case 11:
@@ -2377,6 +2377,25 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     }
                     }
                     break;
+                case RULE_ID:
+                    {
+                    int LA2_26 = input.LA(3);
+
+                    if ( (synpred37()) ) {
+                        alt2=35;
+                    }
+                    else if ( (synpred38()) ) {
+                        alt2=36;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return ;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 26, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
                 case EOF:
                 case RULE_STRING:
                 case 12:
@@ -2403,25 +2422,6 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     alt2=36;
                     }
                     break;
-                case RULE_ID:
-                    {
-                    int LA2_27 = input.LA(3);
-
-                    if ( (synpred37()) ) {
-                        alt2=35;
-                    }
-                    else if ( (synpred38()) ) {
-                        alt2=36;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return ;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 27, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
@@ -2437,7 +2437,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                 switch ( input.LA(2) ) {
                 case RULE_ID:
                     {
-                    int LA2_27 = input.LA(3);
+                    int LA2_26 = input.LA(3);
 
                     if ( (synpred37()) ) {
                         alt2=35;
@@ -2448,7 +2448,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     else {
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 27, input);
+                            new NoViableAltException("360:1: rule__State__Alternatives_0 : ( ( ( rule__State__Group_0_0__0 ) ) | ( ( rule__State__Group_0_1__0 ) ) | ( ( rule__State__Group_0_2__0 ) ) | ( ( rule__State__Group_0_3__0 ) ) | ( ( rule__State__Group_0_4__0 ) ) | ( ( rule__State__Group_0_5__0 ) ) | ( ( rule__State__Group_0_6__0 ) ) | ( ( rule__State__Group_0_7__0 ) ) | ( ( rule__State__Group_0_8__0 ) ) | ( ( rule__State__Group_0_9__0 ) ) | ( ( rule__State__Group_0_10__0 ) ) | ( ( rule__State__Group_0_11__0 ) ) | ( ( rule__State__Group_0_12__0 ) ) | ( ( rule__State__Group_0_13__0 ) ) | ( ( rule__State__Group_0_14__0 ) ) | ( ( rule__State__Group_0_15__0 ) ) | ( ( rule__State__Group_0_16__0 ) ) | ( ( rule__State__Group_0_17__0 ) ) | ( ( rule__State__Group_0_18__0 ) ) | ( ( rule__State__Group_0_19__0 ) ) | ( ( rule__State__Group_0_20__0 ) ) | ( ( rule__State__Group_0_21__0 ) ) | ( ( rule__State__Group_0_22__0 ) ) | ( ( rule__State__IsInitialAssignment_0_23 ) ) | ( ( rule__State__Group_0_24__0 ) ) | ( ( rule__State__Group_0_25__0 ) ) | ( ( rule__State__Group_0_26__0 ) ) | ( ( rule__State__Group_0_27__0 ) ) | ( ( rule__State__Group_0_28__0 ) ) | ( ( rule__State__Group_0_29__0 ) ) | ( ( rule__State__Group_0_30__0 ) ) | ( ( rule__State__IsFinalAssignment_0_31 ) ) | ( ( rule__State__Group_0_32__0 ) ) | ( ( rule__State__Group_0_33__0 ) ) | ( ( rule__State__Group_0_34__0 ) ) | ( ( rule__State__TypeAssignment_0_35 ) ) | ( ( rule__State__Group_0_36__0 ) ) | ( 'state' ) | ( ( rule__State__IdAssignment_0_38 ) ) );", 2, 26, input);
 
                         throw nvae;
                     }
@@ -5868,7 +5868,2202 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                 {
                 int LA3_6 = input.LA(2);
 
-                if ( (LA3_6==51) ) {
+                if ( (LA3_6==RULE_ID) ) {
+                    switch ( input.LA(3) ) {
+                    case 43:
+                        {
+                        int LA3_11 = input.LA(4);
+
+                        if ( (LA3_11==RULE_ID) ) {
+                            int LA3_14 = input.LA(5);
+
+                            if ( (LA3_14==42) ) {
+                                switch ( input.LA(6) ) {
+                                case 21:
+                                    {
+                                    int LA3_15 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 15, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 22:
+                                    {
+                                    int LA3_16 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 16, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 23:
+                                    {
+                                    int LA3_17 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 17, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 24:
+                                    {
+                                    int LA3_18 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 18, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 25:
+                                    {
+                                    int LA3_19 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 19, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 26:
+                                    {
+                                    int LA3_20 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 20, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                default:
+                                    if (backtracking>0) {failed=true; return ;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 12, input);
+
+                                    throw nvae;
+                                }
+
+                            }
+                            else if ( (LA3_14==44) ) {
+                                switch ( input.LA(6) ) {
+                                case 21:
+                                    {
+                                    int LA3_21 = input.LA(7);
+
+                                    if ( (LA3_21==40) ) {
+                                        switch ( input.LA(8) ) {
+                                        case 15:
+                                            {
+                                            int LA3_29 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 16:
+                                            {
+                                            int LA3_30 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 17:
+                                            {
+                                            int LA3_31 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 18:
+                                            {
+                                            int LA3_32 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 19:
+                                            {
+                                            int LA3_33 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 20:
+                                            {
+                                            int LA3_34 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case RULE_STRING:
+                                            {
+                                            int LA3_35 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        default:
+                                            if (backtracking>0) {failed=true; return ;}
+                                            NoViableAltException nvae =
+                                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
+
+                                            throw nvae;
+                                        }
+
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 21, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 22:
+                                    {
+                                    int LA3_22 = input.LA(7);
+
+                                    if ( (LA3_22==40) ) {
+                                        switch ( input.LA(8) ) {
+                                        case 15:
+                                            {
+                                            int LA3_29 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 16:
+                                            {
+                                            int LA3_30 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 17:
+                                            {
+                                            int LA3_31 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 18:
+                                            {
+                                            int LA3_32 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 19:
+                                            {
+                                            int LA3_33 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 20:
+                                            {
+                                            int LA3_34 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case RULE_STRING:
+                                            {
+                                            int LA3_35 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        default:
+                                            if (backtracking>0) {failed=true; return ;}
+                                            NoViableAltException nvae =
+                                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
+
+                                            throw nvae;
+                                        }
+
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 22, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 23:
+                                    {
+                                    int LA3_23 = input.LA(7);
+
+                                    if ( (LA3_23==40) ) {
+                                        switch ( input.LA(8) ) {
+                                        case 15:
+                                            {
+                                            int LA3_29 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 16:
+                                            {
+                                            int LA3_30 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 17:
+                                            {
+                                            int LA3_31 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 18:
+                                            {
+                                            int LA3_32 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 19:
+                                            {
+                                            int LA3_33 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 20:
+                                            {
+                                            int LA3_34 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case RULE_STRING:
+                                            {
+                                            int LA3_35 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        default:
+                                            if (backtracking>0) {failed=true; return ;}
+                                            NoViableAltException nvae =
+                                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
+
+                                            throw nvae;
+                                        }
+
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 23, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 24:
+                                    {
+                                    int LA3_24 = input.LA(7);
+
+                                    if ( (LA3_24==40) ) {
+                                        switch ( input.LA(8) ) {
+                                        case 15:
+                                            {
+                                            int LA3_29 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 16:
+                                            {
+                                            int LA3_30 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 17:
+                                            {
+                                            int LA3_31 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 18:
+                                            {
+                                            int LA3_32 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 19:
+                                            {
+                                            int LA3_33 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 20:
+                                            {
+                                            int LA3_34 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case RULE_STRING:
+                                            {
+                                            int LA3_35 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        default:
+                                            if (backtracking>0) {failed=true; return ;}
+                                            NoViableAltException nvae =
+                                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
+
+                                            throw nvae;
+                                        }
+
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 24, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 25:
+                                    {
+                                    int LA3_25 = input.LA(7);
+
+                                    if ( (LA3_25==40) ) {
+                                        switch ( input.LA(8) ) {
+                                        case 15:
+                                            {
+                                            int LA3_29 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 16:
+                                            {
+                                            int LA3_30 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 17:
+                                            {
+                                            int LA3_31 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 18:
+                                            {
+                                            int LA3_32 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 19:
+                                            {
+                                            int LA3_33 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 20:
+                                            {
+                                            int LA3_34 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case RULE_STRING:
+                                            {
+                                            int LA3_35 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        default:
+                                            if (backtracking>0) {failed=true; return ;}
+                                            NoViableAltException nvae =
+                                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
+
+                                            throw nvae;
+                                        }
+
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 25, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 26:
+                                    {
+                                    int LA3_26 = input.LA(7);
+
+                                    if ( (LA3_26==40) ) {
+                                        switch ( input.LA(8) ) {
+                                        case 15:
+                                            {
+                                            int LA3_29 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 16:
+                                            {
+                                            int LA3_30 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 17:
+                                            {
+                                            int LA3_31 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 18:
+                                            {
+                                            int LA3_32 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 19:
+                                            {
+                                            int LA3_33 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case 20:
+                                            {
+                                            int LA3_34 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        case RULE_STRING:
+                                            {
+                                            int LA3_35 = input.LA(9);
+
+                                            if ( (synpred45()) ) {
+                                                alt3=5;
+                                            }
+                                            else if ( (true) ) {
+                                                alt3=6;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return ;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
+
+                                                throw nvae;
+                                            }
+                                            }
+                                            break;
+                                        default:
+                                            if (backtracking>0) {failed=true; return ;}
+                                            NoViableAltException nvae =
+                                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
+
+                                            throw nvae;
+                                        }
+
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 26, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                default:
+                                    if (backtracking>0) {failed=true; return ;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 13, input);
+
+                                    throw nvae;
+                                }
+
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 14, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 11, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case 42:
+                        {
+                        switch ( input.LA(4) ) {
+                        case 21:
+                            {
+                            int LA3_15 = input.LA(5);
+
+                            if ( (synpred45()) ) {
+                                alt3=5;
+                            }
+                            else if ( (true) ) {
+                                alt3=6;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 15, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 22:
+                            {
+                            int LA3_16 = input.LA(5);
+
+                            if ( (synpred45()) ) {
+                                alt3=5;
+                            }
+                            else if ( (true) ) {
+                                alt3=6;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 16, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 23:
+                            {
+                            int LA3_17 = input.LA(5);
+
+                            if ( (synpred45()) ) {
+                                alt3=5;
+                            }
+                            else if ( (true) ) {
+                                alt3=6;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 17, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 24:
+                            {
+                            int LA3_18 = input.LA(5);
+
+                            if ( (synpred45()) ) {
+                                alt3=5;
+                            }
+                            else if ( (true) ) {
+                                alt3=6;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 18, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 25:
+                            {
+                            int LA3_19 = input.LA(5);
+
+                            if ( (synpred45()) ) {
+                                alt3=5;
+                            }
+                            else if ( (true) ) {
+                                alt3=6;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 19, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 26:
+                            {
+                            int LA3_20 = input.LA(5);
+
+                            if ( (synpred45()) ) {
+                                alt3=5;
+                            }
+                            else if ( (true) ) {
+                                alt3=6;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 20, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        default:
+                            if (backtracking>0) {failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 12, input);
+
+                            throw nvae;
+                        }
+
+                        }
+                        break;
+                    case 44:
+                        {
+                        switch ( input.LA(4) ) {
+                        case 21:
+                            {
+                            int LA3_21 = input.LA(5);
+
+                            if ( (LA3_21==40) ) {
+                                switch ( input.LA(6) ) {
+                                case 15:
+                                    {
+                                    int LA3_29 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 16:
+                                    {
+                                    int LA3_30 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 17:
+                                    {
+                                    int LA3_31 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 18:
+                                    {
+                                    int LA3_32 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 19:
+                                    {
+                                    int LA3_33 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 20:
+                                    {
+                                    int LA3_34 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case RULE_STRING:
+                                    {
+                                    int LA3_35 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                default:
+                                    if (backtracking>0) {failed=true; return ;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
+
+                                    throw nvae;
+                                }
+
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 21, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 22:
+                            {
+                            int LA3_22 = input.LA(5);
+
+                            if ( (LA3_22==40) ) {
+                                switch ( input.LA(6) ) {
+                                case 15:
+                                    {
+                                    int LA3_29 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 16:
+                                    {
+                                    int LA3_30 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 17:
+                                    {
+                                    int LA3_31 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 18:
+                                    {
+                                    int LA3_32 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 19:
+                                    {
+                                    int LA3_33 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 20:
+                                    {
+                                    int LA3_34 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case RULE_STRING:
+                                    {
+                                    int LA3_35 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                default:
+                                    if (backtracking>0) {failed=true; return ;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
+
+                                    throw nvae;
+                                }
+
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 22, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 23:
+                            {
+                            int LA3_23 = input.LA(5);
+
+                            if ( (LA3_23==40) ) {
+                                switch ( input.LA(6) ) {
+                                case 15:
+                                    {
+                                    int LA3_29 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 16:
+                                    {
+                                    int LA3_30 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 17:
+                                    {
+                                    int LA3_31 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 18:
+                                    {
+                                    int LA3_32 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 19:
+                                    {
+                                    int LA3_33 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 20:
+                                    {
+                                    int LA3_34 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case RULE_STRING:
+                                    {
+                                    int LA3_35 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                default:
+                                    if (backtracking>0) {failed=true; return ;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
+
+                                    throw nvae;
+                                }
+
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 23, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 24:
+                            {
+                            int LA3_24 = input.LA(5);
+
+                            if ( (LA3_24==40) ) {
+                                switch ( input.LA(6) ) {
+                                case 15:
+                                    {
+                                    int LA3_29 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 16:
+                                    {
+                                    int LA3_30 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 17:
+                                    {
+                                    int LA3_31 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 18:
+                                    {
+                                    int LA3_32 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 19:
+                                    {
+                                    int LA3_33 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 20:
+                                    {
+                                    int LA3_34 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case RULE_STRING:
+                                    {
+                                    int LA3_35 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                default:
+                                    if (backtracking>0) {failed=true; return ;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
+
+                                    throw nvae;
+                                }
+
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 24, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 25:
+                            {
+                            int LA3_25 = input.LA(5);
+
+                            if ( (LA3_25==40) ) {
+                                switch ( input.LA(6) ) {
+                                case 15:
+                                    {
+                                    int LA3_29 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 16:
+                                    {
+                                    int LA3_30 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 17:
+                                    {
+                                    int LA3_31 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 18:
+                                    {
+                                    int LA3_32 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 19:
+                                    {
+                                    int LA3_33 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 20:
+                                    {
+                                    int LA3_34 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case RULE_STRING:
+                                    {
+                                    int LA3_35 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                default:
+                                    if (backtracking>0) {failed=true; return ;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
+
+                                    throw nvae;
+                                }
+
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 25, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 26:
+                            {
+                            int LA3_26 = input.LA(5);
+
+                            if ( (LA3_26==40) ) {
+                                switch ( input.LA(6) ) {
+                                case 15:
+                                    {
+                                    int LA3_29 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 16:
+                                    {
+                                    int LA3_30 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 17:
+                                    {
+                                    int LA3_31 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 18:
+                                    {
+                                    int LA3_32 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 19:
+                                    {
+                                    int LA3_33 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 20:
+                                    {
+                                    int LA3_34 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case RULE_STRING:
+                                    {
+                                    int LA3_35 = input.LA(7);
+
+                                    if ( (synpred45()) ) {
+                                        alt3=5;
+                                    }
+                                    else if ( (true) ) {
+                                        alt3=6;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return ;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                default:
+                                    if (backtracking>0) {failed=true; return ;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
+
+                                    throw nvae;
+                                }
+
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 26, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        default:
+                            if (backtracking>0) {failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 13, input);
+
+                            throw nvae;
+                        }
+
+                        }
+                        break;
+                    default:
+                        if (backtracking>0) {failed=true; return ;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 9, input);
+
+                        throw nvae;
+                    }
+
+                }
+                else if ( (LA3_6==51) ) {
                     int LA3_10 = input.LA(3);
 
                     if ( (LA3_10==RULE_ID) ) {
@@ -8073,2201 +10268,6 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
 
                         throw nvae;
                     }
-                }
-                else if ( (LA3_6==RULE_ID) ) {
-                    switch ( input.LA(3) ) {
-                    case 43:
-                        {
-                        int LA3_11 = input.LA(4);
-
-                        if ( (LA3_11==RULE_ID) ) {
-                            int LA3_14 = input.LA(5);
-
-                            if ( (LA3_14==42) ) {
-                                switch ( input.LA(6) ) {
-                                case 21:
-                                    {
-                                    int LA3_15 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 15, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 22:
-                                    {
-                                    int LA3_16 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 16, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 23:
-                                    {
-                                    int LA3_17 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 17, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 24:
-                                    {
-                                    int LA3_18 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 18, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 25:
-                                    {
-                                    int LA3_19 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 19, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 26:
-                                    {
-                                    int LA3_20 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 20, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                default:
-                                    if (backtracking>0) {failed=true; return ;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 12, input);
-
-                                    throw nvae;
-                                }
-
-                            }
-                            else if ( (LA3_14==44) ) {
-                                switch ( input.LA(6) ) {
-                                case 21:
-                                    {
-                                    int LA3_21 = input.LA(7);
-
-                                    if ( (LA3_21==40) ) {
-                                        switch ( input.LA(8) ) {
-                                        case 15:
-                                            {
-                                            int LA3_29 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 16:
-                                            {
-                                            int LA3_30 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 17:
-                                            {
-                                            int LA3_31 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 18:
-                                            {
-                                            int LA3_32 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 19:
-                                            {
-                                            int LA3_33 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 20:
-                                            {
-                                            int LA3_34 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case RULE_STRING:
-                                            {
-                                            int LA3_35 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        default:
-                                            if (backtracking>0) {failed=true; return ;}
-                                            NoViableAltException nvae =
-                                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
-
-                                            throw nvae;
-                                        }
-
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 21, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 22:
-                                    {
-                                    int LA3_22 = input.LA(7);
-
-                                    if ( (LA3_22==40) ) {
-                                        switch ( input.LA(8) ) {
-                                        case 15:
-                                            {
-                                            int LA3_29 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 16:
-                                            {
-                                            int LA3_30 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 17:
-                                            {
-                                            int LA3_31 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 18:
-                                            {
-                                            int LA3_32 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 19:
-                                            {
-                                            int LA3_33 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 20:
-                                            {
-                                            int LA3_34 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case RULE_STRING:
-                                            {
-                                            int LA3_35 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        default:
-                                            if (backtracking>0) {failed=true; return ;}
-                                            NoViableAltException nvae =
-                                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
-
-                                            throw nvae;
-                                        }
-
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 22, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 23:
-                                    {
-                                    int LA3_23 = input.LA(7);
-
-                                    if ( (LA3_23==40) ) {
-                                        switch ( input.LA(8) ) {
-                                        case 15:
-                                            {
-                                            int LA3_29 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 16:
-                                            {
-                                            int LA3_30 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 17:
-                                            {
-                                            int LA3_31 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 18:
-                                            {
-                                            int LA3_32 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 19:
-                                            {
-                                            int LA3_33 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 20:
-                                            {
-                                            int LA3_34 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case RULE_STRING:
-                                            {
-                                            int LA3_35 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        default:
-                                            if (backtracking>0) {failed=true; return ;}
-                                            NoViableAltException nvae =
-                                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
-
-                                            throw nvae;
-                                        }
-
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 23, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 24:
-                                    {
-                                    int LA3_24 = input.LA(7);
-
-                                    if ( (LA3_24==40) ) {
-                                        switch ( input.LA(8) ) {
-                                        case 15:
-                                            {
-                                            int LA3_29 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 16:
-                                            {
-                                            int LA3_30 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 17:
-                                            {
-                                            int LA3_31 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 18:
-                                            {
-                                            int LA3_32 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 19:
-                                            {
-                                            int LA3_33 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 20:
-                                            {
-                                            int LA3_34 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case RULE_STRING:
-                                            {
-                                            int LA3_35 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        default:
-                                            if (backtracking>0) {failed=true; return ;}
-                                            NoViableAltException nvae =
-                                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
-
-                                            throw nvae;
-                                        }
-
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 24, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 25:
-                                    {
-                                    int LA3_25 = input.LA(7);
-
-                                    if ( (LA3_25==40) ) {
-                                        switch ( input.LA(8) ) {
-                                        case 15:
-                                            {
-                                            int LA3_29 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 16:
-                                            {
-                                            int LA3_30 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 17:
-                                            {
-                                            int LA3_31 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 18:
-                                            {
-                                            int LA3_32 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 19:
-                                            {
-                                            int LA3_33 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 20:
-                                            {
-                                            int LA3_34 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case RULE_STRING:
-                                            {
-                                            int LA3_35 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        default:
-                                            if (backtracking>0) {failed=true; return ;}
-                                            NoViableAltException nvae =
-                                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
-
-                                            throw nvae;
-                                        }
-
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 25, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 26:
-                                    {
-                                    int LA3_26 = input.LA(7);
-
-                                    if ( (LA3_26==40) ) {
-                                        switch ( input.LA(8) ) {
-                                        case 15:
-                                            {
-                                            int LA3_29 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 16:
-                                            {
-                                            int LA3_30 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 17:
-                                            {
-                                            int LA3_31 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 18:
-                                            {
-                                            int LA3_32 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 19:
-                                            {
-                                            int LA3_33 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case 20:
-                                            {
-                                            int LA3_34 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        case RULE_STRING:
-                                            {
-                                            int LA3_35 = input.LA(9);
-
-                                            if ( (synpred45()) ) {
-                                                alt3=5;
-                                            }
-                                            else if ( (true) ) {
-                                                alt3=6;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return ;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
-
-                                                throw nvae;
-                                            }
-                                            }
-                                            break;
-                                        default:
-                                            if (backtracking>0) {failed=true; return ;}
-                                            NoViableAltException nvae =
-                                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
-
-                                            throw nvae;
-                                        }
-
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 26, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                default:
-                                    if (backtracking>0) {failed=true; return ;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 13, input);
-
-                                    throw nvae;
-                                }
-
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 14, input);
-
-                                throw nvae;
-                            }
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 11, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case 42:
-                        {
-                        switch ( input.LA(4) ) {
-                        case 21:
-                            {
-                            int LA3_15 = input.LA(5);
-
-                            if ( (synpred45()) ) {
-                                alt3=5;
-                            }
-                            else if ( (true) ) {
-                                alt3=6;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 15, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 22:
-                            {
-                            int LA3_16 = input.LA(5);
-
-                            if ( (synpred45()) ) {
-                                alt3=5;
-                            }
-                            else if ( (true) ) {
-                                alt3=6;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 16, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 23:
-                            {
-                            int LA3_17 = input.LA(5);
-
-                            if ( (synpred45()) ) {
-                                alt3=5;
-                            }
-                            else if ( (true) ) {
-                                alt3=6;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 17, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 24:
-                            {
-                            int LA3_18 = input.LA(5);
-
-                            if ( (synpred45()) ) {
-                                alt3=5;
-                            }
-                            else if ( (true) ) {
-                                alt3=6;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 18, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 25:
-                            {
-                            int LA3_19 = input.LA(5);
-
-                            if ( (synpred45()) ) {
-                                alt3=5;
-                            }
-                            else if ( (true) ) {
-                                alt3=6;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 19, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 26:
-                            {
-                            int LA3_20 = input.LA(5);
-
-                            if ( (synpred45()) ) {
-                                alt3=5;
-                            }
-                            else if ( (true) ) {
-                                alt3=6;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 20, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        default:
-                            if (backtracking>0) {failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 12, input);
-
-                            throw nvae;
-                        }
-
-                        }
-                        break;
-                    case 44:
-                        {
-                        switch ( input.LA(4) ) {
-                        case 21:
-                            {
-                            int LA3_21 = input.LA(5);
-
-                            if ( (LA3_21==40) ) {
-                                switch ( input.LA(6) ) {
-                                case 15:
-                                    {
-                                    int LA3_29 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 16:
-                                    {
-                                    int LA3_30 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 17:
-                                    {
-                                    int LA3_31 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 18:
-                                    {
-                                    int LA3_32 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 19:
-                                    {
-                                    int LA3_33 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 20:
-                                    {
-                                    int LA3_34 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case RULE_STRING:
-                                    {
-                                    int LA3_35 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                default:
-                                    if (backtracking>0) {failed=true; return ;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
-
-                                    throw nvae;
-                                }
-
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 21, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 22:
-                            {
-                            int LA3_22 = input.LA(5);
-
-                            if ( (LA3_22==40) ) {
-                                switch ( input.LA(6) ) {
-                                case 15:
-                                    {
-                                    int LA3_29 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 16:
-                                    {
-                                    int LA3_30 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 17:
-                                    {
-                                    int LA3_31 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 18:
-                                    {
-                                    int LA3_32 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 19:
-                                    {
-                                    int LA3_33 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 20:
-                                    {
-                                    int LA3_34 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case RULE_STRING:
-                                    {
-                                    int LA3_35 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                default:
-                                    if (backtracking>0) {failed=true; return ;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
-
-                                    throw nvae;
-                                }
-
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 22, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 23:
-                            {
-                            int LA3_23 = input.LA(5);
-
-                            if ( (LA3_23==40) ) {
-                                switch ( input.LA(6) ) {
-                                case 15:
-                                    {
-                                    int LA3_29 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 16:
-                                    {
-                                    int LA3_30 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 17:
-                                    {
-                                    int LA3_31 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 18:
-                                    {
-                                    int LA3_32 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 19:
-                                    {
-                                    int LA3_33 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 20:
-                                    {
-                                    int LA3_34 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case RULE_STRING:
-                                    {
-                                    int LA3_35 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                default:
-                                    if (backtracking>0) {failed=true; return ;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
-
-                                    throw nvae;
-                                }
-
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 23, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 24:
-                            {
-                            int LA3_24 = input.LA(5);
-
-                            if ( (LA3_24==40) ) {
-                                switch ( input.LA(6) ) {
-                                case 15:
-                                    {
-                                    int LA3_29 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 16:
-                                    {
-                                    int LA3_30 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 17:
-                                    {
-                                    int LA3_31 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 18:
-                                    {
-                                    int LA3_32 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 19:
-                                    {
-                                    int LA3_33 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 20:
-                                    {
-                                    int LA3_34 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case RULE_STRING:
-                                    {
-                                    int LA3_35 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                default:
-                                    if (backtracking>0) {failed=true; return ;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
-
-                                    throw nvae;
-                                }
-
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 24, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 25:
-                            {
-                            int LA3_25 = input.LA(5);
-
-                            if ( (LA3_25==40) ) {
-                                switch ( input.LA(6) ) {
-                                case 15:
-                                    {
-                                    int LA3_29 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 16:
-                                    {
-                                    int LA3_30 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 17:
-                                    {
-                                    int LA3_31 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 18:
-                                    {
-                                    int LA3_32 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 19:
-                                    {
-                                    int LA3_33 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 20:
-                                    {
-                                    int LA3_34 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case RULE_STRING:
-                                    {
-                                    int LA3_35 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                default:
-                                    if (backtracking>0) {failed=true; return ;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
-
-                                    throw nvae;
-                                }
-
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 25, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 26:
-                            {
-                            int LA3_26 = input.LA(5);
-
-                            if ( (LA3_26==40) ) {
-                                switch ( input.LA(6) ) {
-                                case 15:
-                                    {
-                                    int LA3_29 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 29, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 16:
-                                    {
-                                    int LA3_30 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 30, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 17:
-                                    {
-                                    int LA3_31 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 31, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 18:
-                                    {
-                                    int LA3_32 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 32, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 19:
-                                    {
-                                    int LA3_33 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 33, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 20:
-                                    {
-                                    int LA3_34 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 34, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case RULE_STRING:
-                                    {
-                                    int LA3_35 = input.LA(7);
-
-                                    if ( (synpred45()) ) {
-                                        alt3=5;
-                                    }
-                                    else if ( (true) ) {
-                                        alt3=6;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return ;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 35, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                default:
-                                    if (backtracking>0) {failed=true; return ;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 28, input);
-
-                                    throw nvae;
-                                }
-
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 26, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        default:
-                            if (backtracking>0) {failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 13, input);
-
-                            throw nvae;
-                        }
-
-                        }
-                        break;
-                    default:
-                        if (backtracking>0) {failed=true; return ;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("606:1: rule__State__Alternatives_3_1 : ( ( ( rule__State__Group_3_1_0__0 ) ) | ( ( rule__State__Group_3_1_1__0 ) ) | ( ( rule__State__Group_3_1_2__0 ) ) | ( ( rule__State__Group_3_1_3__0 ) ) | ( ( rule__State__SignalsAssignment_3_1_4 ) ) | ( ( rule__State__Group_3_1_5__0 ) ) );", 3, 9, input);
-
-                        throw nvae;
-                    }
-
                 }
                 else {
                     if (backtracking>0) {failed=true; return ;}
@@ -12995,11 +12995,11 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             if ( (LA7_0==50) ) {
                 int LA7_1 = input.LA(2);
 
-                if ( (LA7_1==RULE_ID) ) {
-                    alt7=1;
-                }
-                else if ( (LA7_1==51) ) {
+                if ( (LA7_1==51) ) {
                     alt7=3;
+                }
+                else if ( (LA7_1==RULE_ID) ) {
+                    alt7=1;
                 }
                 else {
                     if (backtracking>0) {failed=true; return ;}
@@ -19723,7 +19723,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             int alt16=2;
             int LA16_0 = input.LA(1);
 
-            if ( (LA16_0==RULE_STRING) ) {
+            if ( (LA16_0==RULE_ID) ) {
                 int LA16_1 = input.LA(2);
 
                 if ( (synpred70()) ) {
@@ -33352,24 +33352,27 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__State__LabelAssignment_1
-    // ../de.cau.cs.kieler.synccharts.dsl.kits.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalKits.g:6455:1: rule__State__LabelAssignment_1 : ( RULE_STRING ) ;
+    // ../de.cau.cs.kieler.synccharts.dsl.kits.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalKits.g:6455:1: rule__State__LabelAssignment_1 : ( ruleFullStateID ) ;
     public final void rule__State__LabelAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.dsl.kits.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalKits.g:6459:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.synccharts.dsl.kits.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalKits.g:6460:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.dsl.kits.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalKits.g:6459:1: ( ( ruleFullStateID ) )
+            // ../de.cau.cs.kieler.synccharts.dsl.kits.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalKits.g:6460:1: ( ruleFullStateID )
             {
-            // ../de.cau.cs.kieler.synccharts.dsl.kits.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalKits.g:6460:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.dsl.kits.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalKits.g:6461:1: RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.dsl.kits.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalKits.g:6460:1: ( ruleFullStateID )
+            // ../de.cau.cs.kieler.synccharts.dsl.kits.ui/src-gen/de/cau/cs/kieler/synccharts/dsl/contentassist/antlr/internal/InternalKits.g:6461:1: ruleFullStateID
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_1_0()); 
+               before(grammarAccess.getStateAccess().getLabelFullStateIDParserRuleCall_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__State__LabelAssignment_112904); if (failed) return ;
+            pushFollow(FOLLOW_ruleFullStateID_in_rule__State__LabelAssignment_112904);
+            ruleFullStateID();
+            _fsp--;
+            if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_1_0()); 
+               after(grammarAccess.getStateAccess().getLabelFullStateIDParserRuleCall_1_0()); 
             }
 
             }
@@ -37021,7 +37024,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_ruleStateType_in_rule__State__TypeAssignment_0_3512811 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleFullStateID_in_rule__State__IdAssignment_0_36_112842 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleFullStateID_in_rule__State__IdAssignment_0_3812873 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__State__LabelAssignment_112904 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleFullStateID_in_rule__State__LabelAssignment_112904 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_STRING_in_rule__State__BodyTextAssignment_212935 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAction_in_rule__State__EntryActionsAssignment_3_1_0_112966 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAction_in_rule__State__InnerActionsAssignment_3_1_1_112997 = new BitSet(new long[]{0x0000000000000002L});

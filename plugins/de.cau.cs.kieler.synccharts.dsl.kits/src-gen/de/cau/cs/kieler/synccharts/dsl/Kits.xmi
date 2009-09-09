@@ -419,7 +419,7 @@
           </groups>
         </tokens>
         <tokens xsi:type="xtext:Assignment" cardinality="?" feature="label" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </tokens>
         <tokens xsi:type="xtext:Assignment" cardinality="?" feature="bodyText" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>

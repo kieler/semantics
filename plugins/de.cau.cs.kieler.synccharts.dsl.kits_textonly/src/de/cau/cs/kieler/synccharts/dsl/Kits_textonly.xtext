@@ -99,18 +99,15 @@ Action:
 	//========================================================================================
 	
 Transition:
-
-	(sourceState=[State|FullStateID])? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-	//newSourceState=TransitionState
+//either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+	(sourceState=[State|FullStateID] | newSourceState=TransitionState)? 
 	type=TransitionType
-	//(targetState=[State|FullStateID] |
-	newTargetState=TransitionState 
-	( 'with' triggersAndEffects=STRING)?
+	(targetState=[State|FullStateID] | newTargetState=TransitionState) 
+	( 'with' triggersAndEffects=STRING )?
 	(isHistory?=' history')?
 	';'
 ;
 TransitionState returns State:
-	//name=FullStateID
 	( ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' name=FullStateID
 	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
 	| ((isInitial?='init')(isFinal?='final')) (type=StateType) name=FullStateID

@@ -11,7 +11,7 @@ import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Region;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Signal;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.State;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.StateType;
-import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition;
+import de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName;
 
 import java.util.Collection;
 
@@ -244,7 +244,7 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * @generated
    * @ordered
    */
-  protected EList<Transition> outgoingTransitions;
+  protected EList<changedName> outgoingTransitions;
 
   /**
    * <!-- begin-user-doc -->
@@ -528,11 +528,11 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Transition> getOutgoingTransitions()
+  public EList<changedName> getOutgoingTransitions()
   {
     if (outgoingTransitions == null)
     {
-      outgoingTransitions = new EObjectContainmentEList<Transition>(Transition.class, this, Kits_textonlyPackage.STATE__OUTGOING_TRANSITIONS);
+      outgoingTransitions = new EObjectContainmentEList<changedName>(changedName.class, this, Kits_textonlyPackage.STATE__OUTGOING_TRANSITIONS);
     }
     return outgoingTransitions;
   }
@@ -659,7 +659,7 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return;
       case Kits_textonlyPackage.STATE__OUTGOING_TRANSITIONS:
         getOutgoingTransitions().clear();
-        getOutgoingTransitions().addAll((Collection<? extends Transition>)newValue);
+        getOutgoingTransitions().addAll((Collection<? extends changedName>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

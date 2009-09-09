@@ -32,7 +32,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
         eType="#//Region" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions" upperBound="-1"
-        eType="#//Transition" containment="true"/>
+        eType="#//changedName" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Renaming">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="oldID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -43,7 +43,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="triggersAndEffects" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Action">
+  <eClassifiers xsi:type="ecore:EClass" name="changedName" eSuperTypes="#//Action">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sourceState" eType="#//State"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//TransitionType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="newTargetState" eType="#//State"

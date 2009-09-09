@@ -9,7 +9,7 @@ public class CreateStateWithId {
 		SyncchartsFactory factory = SyncchartsFactory.eINSTANCE;
 		State myState = factory.createState();
 		myState.setId(id);
-		System.out.println("moin dolly");
+		System.out.println("moin, ich bin's dolly");
 	}
 
 }

@@ -10,43 +10,6 @@ process(EPackage this):
 ;
 
 process(EClassifier this) :
-    if this.name == "Transition" then ((EClass)this).moveState() ->
-    null
-;
-cached moveState(EClass this) :
-	//if (this.getEStructuralFeature("newTargetState") != null) then
-		//this.getEStructuralFeature("sourceState").eType.eContainer().eGet(eR) ->
-		null
-;
-process(kits_textonly::State this) :
-// if (this.name != null || this.label != null) 
-	null
-;
-process(kits_textonly::Transition this) :
-	//if (this.newTargetState != null) then moveState(this)
-	null
-;
-//cached moveState (kits_textonly::Transition this) :
-	//let region = ((Region)this.sourceState.eRootContainer):
-		//region.innerStates.add(this.newTargetState) //-> 
-		//deleteTargetState((Transition.), "newTargetState")
-		//deleteTargetState(this)
-//;
-cached deleteTargetState(kits_textonly::Transition this/*, String targetState*/) :
-	true//s.eUnset(s.getEStructuralFeature("newTargetState"))
-	
-;
-
-cached getNameAttribute(kits_textonly::State x):
-//if x.name !=null then x.n
-null
-;	
-create EAttribute idAttribute() ://, String value) :
-	setName("id") 
-	//setDefaultValueLiteral(value) ->
-	//class.eStructuralFeatures.add(this)
-
-;
-cached toID(EStructuralFeature e) :
-	e.setName("id")	
+    if this.name == "Transition" then ((EClass)this).setName("changedName")//.moveState() ->
+ ///   null
 ;

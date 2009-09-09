@@ -14,11 +14,11 @@ import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Renaming;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Signal;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.State;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.StateType;
-import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.TransitionType;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValueType;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValuedObject;
 import de.cau.cs.kieler.synccharts.dsl.kits_textonly.Variable;
+import de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -69,7 +69,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass transitionEClass = null;
+  private EClass changedNameEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -448,9 +448,9 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getTransition()
+  public EClass getchangedName()
   {
-    return transitionEClass;
+    return changedNameEClass;
   }
 
   /**
@@ -458,9 +458,9 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTransition_SourceState()
+  public EReference getchangedName_SourceState()
   {
-    return (EReference)transitionEClass.getEStructuralFeatures().get(0);
+    return (EReference)changedNameEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -468,9 +468,9 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getTransition_Type()
+  public EAttribute getchangedName_Type()
   {
-    return (EAttribute)transitionEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)changedNameEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -478,9 +478,9 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTransition_NewTargetState()
+  public EReference getchangedName_NewTargetState()
   {
-    return (EReference)transitionEClass.getEStructuralFeatures().get(2);
+    return (EReference)changedNameEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -488,9 +488,9 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getTransition_IsHistory()
+  public EAttribute getchangedName_IsHistory()
   {
-    return (EAttribute)transitionEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)changedNameEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -703,11 +703,11 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
     createEAttribute(actionEClass, ACTION__DELAY);
     createEAttribute(actionEClass, ACTION__TRIGGERS_AND_EFFECTS);
 
-    transitionEClass = createEClass(TRANSITION);
-    createEReference(transitionEClass, TRANSITION__SOURCE_STATE);
-    createEAttribute(transitionEClass, TRANSITION__TYPE);
-    createEReference(transitionEClass, TRANSITION__NEW_TARGET_STATE);
-    createEAttribute(transitionEClass, TRANSITION__IS_HISTORY);
+    changedNameEClass = createEClass(CHANGED_NAME);
+    createEReference(changedNameEClass, CHANGED_NAME__SOURCE_STATE);
+    createEAttribute(changedNameEClass, CHANGED_NAME__TYPE);
+    createEReference(changedNameEClass, CHANGED_NAME__NEW_TARGET_STATE);
+    createEAttribute(changedNameEClass, CHANGED_NAME__IS_HISTORY);
 
     valuedObjectEClass = createEClass(VALUED_OBJECT);
     createEAttribute(valuedObjectEClass, VALUED_OBJECT__NAME);
@@ -759,7 +759,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    transitionEClass.getESuperTypes().add(this.getAction());
+    changedNameEClass.getESuperTypes().add(this.getAction());
     variableEClass.getESuperTypes().add(this.getValuedObject());
     signalEClass.getESuperTypes().add(this.getValuedObject());
 
@@ -783,7 +783,7 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
     initEReference(getState_SuspensionTrigger(), this.getAction(), null, "suspensionTrigger", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_Signals(), this.getSignal(), null, "signals", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_Regions(), this.getRegion(), null, "regions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getState_OutgoingTransitions(), this.getTransition(), null, "outgoingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getState_OutgoingTransitions(), this.getchangedName(), null, "outgoingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(renamingEClass, Renaming.class, "Renaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRenaming_OldID(), ecorePackage.getEString(), "oldID", null, 0, 1, Renaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -794,11 +794,11 @@ public class Kits_textonlyPackageImpl extends EPackageImpl implements Kits_texto
     initEAttribute(getAction_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_TriggersAndEffects(), ecorePackage.getEString(), "triggersAndEffects", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTransition_SourceState(), this.getState(), null, "sourceState", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTransition_Type(), this.getTransitionType(), "type", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTransition_NewTargetState(), this.getState(), null, "newTargetState", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTransition_IsHistory(), ecorePackage.getEBoolean(), "isHistory", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(changedNameEClass, changedName.class, "changedName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getchangedName_SourceState(), this.getState(), null, "sourceState", null, 0, 1, changedName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getchangedName_Type(), this.getTransitionType(), "type", null, 0, 1, changedName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getchangedName_NewTargetState(), this.getState(), null, "newTargetState", null, 0, 1, changedName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getchangedName_IsHistory(), ecorePackage.getEBoolean(), "isHistory", null, 0, 1, changedName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(valuedObjectEClass, ValuedObject.class, "ValuedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getValuedObject_Name(), ecorePackage.getEString(), "name", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

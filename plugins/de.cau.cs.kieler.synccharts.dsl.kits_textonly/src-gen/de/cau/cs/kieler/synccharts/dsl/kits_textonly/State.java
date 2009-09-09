@@ -306,7 +306,7 @@ public interface State extends EObject
 
   /**
    * Returns the value of the '<em><b>Outgoing Transitions</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition}.
+   * The list contents are of type {@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Outgoing Transitions</em>' containment reference list isn't clear,
@@ -318,6 +318,6 @@ public interface State extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<Transition> getOutgoingTransitions();
+  EList<changedName> getOutgoingTransitions();
 
 } // State

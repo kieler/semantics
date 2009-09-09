@@ -6458,8 +6458,8 @@ rule__State__LabelAssignment_1
     }
 :
 (
-{ before(grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_1_0()); }
-	RULE_STRING{ after(grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_1_0()); }
+{ before(grammarAccess.getStateAccess().getLabelFullStateIDParserRuleCall_1_0()); }
+	ruleFullStateID{ after(grammarAccess.getStateAccess().getLabelFullStateIDParserRuleCall_1_0()); }
 )
 
 ;

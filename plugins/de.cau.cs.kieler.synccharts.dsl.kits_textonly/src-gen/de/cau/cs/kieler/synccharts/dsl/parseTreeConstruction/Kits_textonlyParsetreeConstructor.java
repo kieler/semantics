@@ -52,9 +52,6 @@ protected class ThisRootNode extends RootToken {
  * Region:
  *   ("region" id=ID)? (variables+=Variable|signals+=Signal|innerStates+=State)+; 
  * 
- * //import "http://kieler.cs.cau.de/synccharts" as sync 
- * //import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as sync
- * //import "http://www.eclipse.org/emf/2002/Ecore" as ecore
  * 
  * 
  * //========================================================================================
@@ -5840,7 +5837,7 @@ protected class Action_TransitionParserRuleCall_1 extends RuleCallToken {
 
 /************ begin Rule Transition ****************
  *
- * Transition:
+ * Transition returns changedName:
  *   sourceState=[State|FullStateID]? type=TransitionType newTargetState=
  *   TransitionState ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
  * 

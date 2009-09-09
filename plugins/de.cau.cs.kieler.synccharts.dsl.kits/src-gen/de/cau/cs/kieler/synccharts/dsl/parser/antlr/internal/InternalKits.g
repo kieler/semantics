@@ -2184,22 +2184,23 @@ ruleState returns [EObject current=null]
 	
 ))(	
 	
-	    lv_label_109=	RULE_STRING
-	{
-		createLeafNode(grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_1_0(), "label"); 
-	}
- 
+	    
+	    { 
+	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getLabelFullStateIDParserRuleCall_1_0(), currentNode); 
+	    }
+	    lv_label_109=ruleFullStateID 
 	    {
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode, $current);
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        
 	        try {
-	       		set($current, "label", lv_label_109, "STRING", lastConsumedNode);
+	       		set($current, "label", lv_label_109, "FullStateID", currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
+	        currentNode = currentNode.getParent();
 	    }
 	
 )?(	

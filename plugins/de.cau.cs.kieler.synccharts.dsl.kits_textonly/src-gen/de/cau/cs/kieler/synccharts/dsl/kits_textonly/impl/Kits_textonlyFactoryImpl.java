@@ -72,7 +72,7 @@ public class Kits_textonlyFactoryImpl extends EFactoryImpl implements Kits_texto
       case Kits_textonlyPackage.STATE: return createState();
       case Kits_textonlyPackage.RENAMING: return createRenaming();
       case Kits_textonlyPackage.ACTION: return createAction();
-      case Kits_textonlyPackage.TRANSITION: return createTransition();
+      case Kits_textonlyPackage.CHANGED_NAME: return createchangedName();
       case Kits_textonlyPackage.VALUED_OBJECT: return createValuedObject();
       case Kits_textonlyPackage.VARIABLE: return createVariable();
       case Kits_textonlyPackage.SIGNAL: return createSignal();
@@ -176,10 +176,10 @@ public class Kits_textonlyFactoryImpl extends EFactoryImpl implements Kits_texto
    * <!-- end-user-doc -->
    * @generated
    */
-  public Transition createTransition()
+  public changedName createchangedName()
   {
-    TransitionImpl transition = new TransitionImpl();
-    return transition;
+    changedNameImpl changedName = new changedNameImpl();
+    return changedName;
   }
 
   /**

@@ -3,15 +3,45 @@
  */
 package de.cau.cs.kieler.synccharts.dsl.scoping;
 
+import java.util.ArrayList;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.IScopedElement;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
+import org.eclipse.xtext.scoping.impl.ScopedElement;
+import org.eclipse.xtext.scoping.impl.SimpleScope;
+
+import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.Transition;
 
 /**
  * This class contains custom scoping description.
  * 
- * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping
- * on how and when to use it 
- *
+ * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping on
+ * how and when to use it
+ * 
  */
 public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
+
+	IScope scope_Transition_targetState(Transition context, EReference reference) {
+		State sourceState = (State) context.eContainer();
+		Region parentRegion = sourceState.getParentRegion();
+
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+
+		for (State innerState : parentRegion.getInnerStates()) {
+
+			IScopedElement elem = ScopedElement.create(innerState.getId(),
+					innerState);
+			scopeElems.add(elem);
+		}
+
+		return new SimpleScope(scopeElems);
+
+	}
 
 }

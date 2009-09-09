@@ -123,11 +123,11 @@ public class Kits_textonlySwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case Kits_textonlyPackage.TRANSITION:
+      case Kits_textonlyPackage.CHANGED_NAME:
       {
-        Transition transition = (Transition)theEObject;
-        T result = caseTransition(transition);
-        if (result == null) result = caseAction(transition);
+        changedName changedName = (changedName)theEObject;
+        T result = casechangedName(changedName);
+        if (result == null) result = caseAction(changedName);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -223,17 +223,17 @@ public class Kits_textonlySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Transition</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>changed Name</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Transition</em>'.
+   * @return the result of interpreting the object as an instance of '<em>changed Name</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseTransition(Transition object)
+  public T casechangedName(changedName object)
   {
     return null;
   }

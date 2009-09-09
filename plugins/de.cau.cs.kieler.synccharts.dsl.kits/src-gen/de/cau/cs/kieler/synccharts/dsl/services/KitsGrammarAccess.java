@@ -324,7 +324,7 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		private final Assignment cIdAssignment_0_38 = (Assignment)cAlternatives_0.eContents().get(38);
 		private final RuleCall cIdFullStateIDParserRuleCall_0_38_0 = (RuleCall)cIdAssignment_0_38.eContents().get(0);
 		private final Assignment cLabelAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cLabelSTRINGTerminalRuleCall_1_0 = (RuleCall)cLabelAssignment_1.eContents().get(0);
+		private final RuleCall cLabelFullStateIDParserRuleCall_1_0 = (RuleCall)cLabelAssignment_1.eContents().get(0);
 		private final Assignment cBodyTextAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cBodyTextSTRINGTerminalRuleCall_2_0 = (RuleCall)cBodyTextAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
@@ -380,10 +380,10 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		//  isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID|isFinal?=
 		//  "final" id=FullStateID|isFinal?="final"|type=StateType "state" id=FullStateID|type=
 		//  StateType "state"|type=StateType id=FullStateID|type=StateType|"state" id=
-		//  FullStateID|"state"|id=FullStateID) label=STRING? bodyText=STRING? ("{" ("onentry"
-		//  entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions+=Action|
-		//  "suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region ("||" regions
-		//  +=Region)*)+ "}")? outgoingTransitions+=Transition*; 
+		//  FullStateID|"state"|id=FullStateID) label=FullStateID? bodyText=STRING? ("{" (
+		//  "onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions
+		//  +=Action|"suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region (
+		//  "||" regions+=Region)*)+ "}")? outgoingTransitions+=Transition*; 
 		//    
 		//	
 		//	         
@@ -463,10 +463,10 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		//isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID|isFinal?=
 		//"final" id=FullStateID|isFinal?="final"|type=StateType "state" id=FullStateID|type=
 		//StateType "state"|type=StateType id=FullStateID|type=StateType|"state" id=
-		//FullStateID|"state"|id=FullStateID) label=STRING? bodyText=STRING? ("{" ("onentry"
-		//entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions+=Action|
-		//"suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region ("||" regions
-		//+=Region)*)+ "}")? outgoingTransitions+=Transition* 
+		//FullStateID|"state"|id=FullStateID) label=FullStateID? bodyText=STRING? ("{" (
+		//"onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions
+		//+=Action|"suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region (
+		//"||" regions+=Region)*)+ "}")? outgoingTransitions+=Transition* 
 		//	
 		//	         
 		//  	      
@@ -1286,11 +1286,11 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		//FullStateID
 		public RuleCall getIdFullStateIDParserRuleCall_0_38_0() { return cIdFullStateIDParserRuleCall_0_38_0; }
 
-		//label=STRING?
+		//label=FullStateID?
 		public Assignment getLabelAssignment_1() { return cLabelAssignment_1; }
 
-		//STRING
-		public RuleCall getLabelSTRINGTerminalRuleCall_1_0() { return cLabelSTRINGTerminalRuleCall_1_0; }
+		//FullStateID
+		public RuleCall getLabelFullStateIDParserRuleCall_1_0() { return cLabelFullStateIDParserRuleCall_1_0; }
 
 		//bodyText=STRING?
 		public Assignment getBodyTextAssignment_2() { return cBodyTextAssignment_2; }
@@ -1576,7 +1576,7 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		//    
 		//
 		//	  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-		//	 //newSourceState=TransitionState
+		//	 //|({sync::State} name=FullStateID)
 		//	 
 		//	
 		//	//|newTargetState=TransitionState )
@@ -1586,7 +1586,7 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		//State|FullStateID] ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";" 
 		//
 		//	  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-		//	 //newSourceState=TransitionState
+		//	 //|({sync::State} name=FullStateID)
 		//	 
 		//	
 		//	//|newTargetState=TransitionState )
@@ -1602,7 +1602,7 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		public RuleCall getSourceStateStateFullStateIDParserRuleCall_0_0_1() { return cSourceStateStateFullStateIDParserRuleCall_0_0_1; }
 
 		//type=TransitionType   //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-		//	 //newSourceState=TransitionState
+		//	 //|({sync::State} name=FullStateID)
 		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
 
 		//TransitionType
@@ -2887,7 +2887,7 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		//		
 		//		 	
 		//		
-		//		 	
+		//		 	                                   
 		//		 		
 		//	
 		//	 
@@ -2909,7 +2909,7 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		//		
 		//		 	
 		//		
-		//		 	
+		//		 	                                   
 		//		 		
 		//	
 		//	 
@@ -3302,10 +3302,10 @@ public class KitsGrammarAccess implements IGrammarAccess {
 	//  isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID|isFinal?=
 	//  "final" id=FullStateID|isFinal?="final"|type=StateType "state" id=FullStateID|type=
 	//  StateType "state"|type=StateType id=FullStateID|type=StateType|"state" id=
-	//  FullStateID|"state"|id=FullStateID) label=STRING? bodyText=STRING? ("{" ("onentry"
-	//  entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions+=Action|
-	//  "suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region ("||" regions
-	//  +=Region)*)+ "}")? outgoingTransitions+=Transition*; 
+	//  FullStateID|"state"|id=FullStateID) label=FullStateID? bodyText=STRING? ("{" (
+	//  "onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions
+	//  +=Action|"suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region (
+	//  "||" regions+=Region)*)+ "}")? outgoingTransitions+=Transition*; 
 	//    
 	//	
 	//	         
@@ -3429,7 +3429,7 @@ public class KitsGrammarAccess implements IGrammarAccess {
 	//    
 	//
 	//	  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-	//	 //newSourceState=TransitionState
+	//	 //|({sync::State} name=FullStateID)
 	//	 
 	//	
 	//	//|newTargetState=TransitionState )
@@ -3563,7 +3563,7 @@ public class KitsGrammarAccess implements IGrammarAccess {
 	//		
 	//		 	
 	//		
-	//		 	
+	//		 	                                   
 	//		 		
 	//	
 	//	 

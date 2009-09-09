@@ -58,6 +58,7 @@ public class GoToDeclaration implements IObjectActionDelegate {
 			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
 			if (structuredSelection.size() == 1) {
 				Object firstElement = structuredSelection.getFirstElement();
+				
 				if (firstElement instanceof IGraphicalEditPart) {
 					IGraphicalEditPart editPart = (IGraphicalEditPart) firstElement;
 					EObject semanticElement = editPart.resolveSemanticElement();

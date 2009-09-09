@@ -66,11 +66,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Action/delay"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Action/triggersAndEffects"/>
     </genClasses>
-    <genClasses ecoreClass="Kits_textonly.ecore#//Transition">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//Transition/sourceState"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Transition/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//Transition/newTargetState"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//Transition/isHistory"/>
+    <genClasses ecoreClass="Kits_textonly.ecore#//changedName">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//changedName/sourceState"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//changedName/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Kits_textonly.ecore#//changedName/newTargetState"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//changedName/isHistory"/>
     </genClasses>
     <genClasses ecoreClass="Kits_textonly.ecore#//ValuedObject">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Kits_textonly.ecore#//ValuedObject/name"/>

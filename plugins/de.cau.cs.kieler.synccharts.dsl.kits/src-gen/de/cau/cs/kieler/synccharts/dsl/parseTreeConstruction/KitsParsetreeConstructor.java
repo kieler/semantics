@@ -328,10 +328,10 @@ protected class Region_InnerStatesAssignment_1_2 extends AssignmentToken  {
  *   isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID|isFinal?=
  *   "final" id=FullStateID|isFinal?="final"|type=StateType "state" id=FullStateID|type=
  *   StateType "state"|type=StateType id=FullStateID|type=StateType|"state" id=
- *   FullStateID|"state"|id=FullStateID) label=STRING? bodyText=STRING? ("{" ("onentry"
- *   entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions+=Action|
- *   "suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region ("||" regions
- *   +=Region)*)+ "}")? outgoingTransitions+=Transition*; 
+ *   FullStateID|"state"|id=FullStateID) label=FullStateID? bodyText=STRING? ("{" (
+ *   "onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions
+ *   +=Action|"suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region (
+ *   "||" regions+=Region)*)+ "}")? outgoingTransitions+=Transition*; 
  *     
  * 	
  * 	         
@@ -412,10 +412,10 @@ protected class Region_InnerStatesAssignment_1_2 extends AssignmentToken  {
 // isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID|isFinal?=
 // "final" id=FullStateID|isFinal?="final"|type=StateType "state" id=FullStateID|type=
 // StateType "state"|type=StateType id=FullStateID|type=StateType|"state" id=
-// FullStateID|"state"|id=FullStateID) label=STRING? bodyText=STRING? ("{" ("onentry"
-// entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions+=Action|
-// "suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region ("||" regions
-// +=Region)*)+ "}")? outgoingTransitions+=Transition* 
+// FullStateID|"state"|id=FullStateID) label=FullStateID? bodyText=STRING? ("{" (
+// "onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions
+// +=Action|"suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region (
+// "||" regions+=Region)*)+ "}")? outgoingTransitions+=Transition* 
 // 	
 // 	         
 //   	      
@@ -4706,7 +4706,7 @@ protected class State_IdAssignment_0_38 extends AssignmentToken  {
 }
 
 
-// label=STRING?
+// label=FullStateID?
 protected class State_LabelAssignment_1 extends AssignmentToken  {
 	
 	public State_LabelAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -4727,9 +4727,9 @@ protected class State_LabelAssignment_1 extends AssignmentToken  {
 	protected IInstanceDescription tryConsumeVal() {
 		if((value = current.getConsumable("label",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("label");
-		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
-			type = AssignmentType.LRC;
-			element = grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_1_0();
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.DRC;
+			element = grammarAccess.getStateAccess().getLabelFullStateIDParserRuleCall_1_0();
 			return obj;
 		}
 		return null;
@@ -5826,7 +5826,7 @@ protected class Action_TransitionParserRuleCall_1 extends RuleCallToken {
  *     
  * 
  * 	  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
- * 	 //newSourceState=TransitionState
+ * 	 //|({sync::State} name=FullStateID)
  * 	 
  * 	
  * 	//|newTargetState=TransitionState )
@@ -5837,7 +5837,7 @@ protected class Action_TransitionParserRuleCall_1 extends RuleCallToken {
 // State|FullStateID] ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";" 
 // 
 // 	  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-// 	 //newSourceState=TransitionState
+// 	 //|({sync::State} name=FullStateID)
 // 	 
 // 	
 // 	//|newTargetState=TransitionState )
@@ -5898,7 +5898,7 @@ protected class Transition_SourceStateAssignment_0 extends AssignmentToken  {
 }
 
 // type=TransitionType   //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-// 	 //newSourceState=TransitionState
+// 	 //|({sync::State} name=FullStateID)
 protected class Transition_TypeAssignment_1 extends AssignmentToken  {
 	
 	public Transition_TypeAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -10818,7 +10818,7 @@ protected class Variable_TypeAssignment_2_1_3 extends AssignmentToken  {
  * 		
  * 		 	
  * 		
- * 		 	
+ * 		 	                                   
  * 		 		
  * 	
  * 	 
@@ -10841,7 +10841,7 @@ protected class Variable_TypeAssignment_2_1_3 extends AssignmentToken  {
 // 		
 // 		 	
 // 		
-// 		 	
+// 		 	                                   
 // 		 		
 // 	
 // 	 

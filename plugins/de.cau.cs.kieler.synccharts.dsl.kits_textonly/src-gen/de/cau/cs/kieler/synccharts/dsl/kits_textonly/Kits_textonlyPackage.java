@@ -335,14 +335,14 @@ public interface Kits_textonlyPackage extends EPackage
   int ACTION_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.TransitionImpl <em>Transition</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.changedNameImpl <em>changed Name</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.TransitionImpl
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.Kits_textonlyPackageImpl#getTransition()
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.changedNameImpl
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.Kits_textonlyPackageImpl#getchangedName()
    * @generated
    */
-  int TRANSITION = 4;
+  int CHANGED_NAME = 4;
 
   /**
    * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
@@ -351,7 +351,7 @@ public interface Kits_textonlyPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION__IS_IMMEDIATE = ACTION__IS_IMMEDIATE;
+  int CHANGED_NAME__IS_IMMEDIATE = ACTION__IS_IMMEDIATE;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' attribute.
@@ -360,7 +360,7 @@ public interface Kits_textonlyPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION__DELAY = ACTION__DELAY;
+  int CHANGED_NAME__DELAY = ACTION__DELAY;
 
   /**
    * The feature id for the '<em><b>Triggers And Effects</b></em>' attribute.
@@ -369,7 +369,7 @@ public interface Kits_textonlyPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION__TRIGGERS_AND_EFFECTS = ACTION__TRIGGERS_AND_EFFECTS;
+  int CHANGED_NAME__TRIGGERS_AND_EFFECTS = ACTION__TRIGGERS_AND_EFFECTS;
 
   /**
    * The feature id for the '<em><b>Source State</b></em>' reference.
@@ -378,7 +378,7 @@ public interface Kits_textonlyPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION__SOURCE_STATE = ACTION_FEATURE_COUNT + 0;
+  int CHANGED_NAME__SOURCE_STATE = ACTION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -387,7 +387,7 @@ public interface Kits_textonlyPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION__TYPE = ACTION_FEATURE_COUNT + 1;
+  int CHANGED_NAME__TYPE = ACTION_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>New Target State</b></em>' containment reference.
@@ -396,7 +396,7 @@ public interface Kits_textonlyPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION__NEW_TARGET_STATE = ACTION_FEATURE_COUNT + 2;
+  int CHANGED_NAME__NEW_TARGET_STATE = ACTION_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Is History</b></em>' attribute.
@@ -405,16 +405,16 @@ public interface Kits_textonlyPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION__IS_HISTORY = ACTION_FEATURE_COUNT + 3;
+  int CHANGED_NAME__IS_HISTORY = ACTION_FEATURE_COUNT + 3;
 
   /**
-   * The number of structural features of the '<em>Transition</em>' class.
+   * The number of structural features of the '<em>changed Name</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TRANSITION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 4;
+  int CHANGED_NAME_FEATURE_COUNT = ACTION_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.ValuedObjectImpl <em>Valued Object</em>}' class.
@@ -923,58 +923,58 @@ public interface Kits_textonlyPackage extends EPackage
   EAttribute getAction_TriggersAndEffects();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition <em>Transition</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName <em>changed Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Transition</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition
+   * @return the meta object for class '<em>changed Name</em>'.
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName
    * @generated
    */
-  EClass getTransition();
+  EClass getchangedName();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getSourceState <em>Source State</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName#getSourceState <em>Source State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Source State</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getSourceState()
-   * @see #getTransition()
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName#getSourceState()
+   * @see #getchangedName()
    * @generated
    */
-  EReference getTransition_SourceState();
+  EReference getchangedName_SourceState();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getType <em>Type</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName#getType <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getType()
-   * @see #getTransition()
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName#getType()
+   * @see #getchangedName()
    * @generated
    */
-  EAttribute getTransition_Type();
+  EAttribute getchangedName_Type();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getNewTargetState <em>New Target State</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName#getNewTargetState <em>New Target State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>New Target State</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#getNewTargetState()
-   * @see #getTransition()
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName#getNewTargetState()
+   * @see #getchangedName()
    * @generated
    */
-  EReference getTransition_NewTargetState();
+  EReference getchangedName_NewTargetState();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#isIsHistory <em>Is History</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName#isIsHistory <em>Is History</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Is History</em>'.
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition#isIsHistory()
-   * @see #getTransition()
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName#isIsHistory()
+   * @see #getchangedName()
    * @generated
    */
-  EAttribute getTransition_IsHistory();
+  EAttribute getchangedName_IsHistory();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.ValuedObject <em>Valued Object</em>}'.
@@ -1374,14 +1374,14 @@ public interface Kits_textonlyPackage extends EPackage
     EAttribute ACTION__TRIGGERS_AND_EFFECTS = eINSTANCE.getAction_TriggersAndEffects();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.TransitionImpl <em>Transition</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.changedNameImpl <em>changed Name</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.TransitionImpl
-     * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.Kits_textonlyPackageImpl#getTransition()
+     * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.changedNameImpl
+     * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.Kits_textonlyPackageImpl#getchangedName()
      * @generated
      */
-    EClass TRANSITION = eINSTANCE.getTransition();
+    EClass CHANGED_NAME = eINSTANCE.getchangedName();
 
     /**
      * The meta object literal for the '<em><b>Source State</b></em>' reference feature.
@@ -1389,7 +1389,7 @@ public interface Kits_textonlyPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TRANSITION__SOURCE_STATE = eINSTANCE.getTransition_SourceState();
+    EReference CHANGED_NAME__SOURCE_STATE = eINSTANCE.getchangedName_SourceState();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
@@ -1397,7 +1397,7 @@ public interface Kits_textonlyPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute TRANSITION__TYPE = eINSTANCE.getTransition_Type();
+    EAttribute CHANGED_NAME__TYPE = eINSTANCE.getchangedName_Type();
 
     /**
      * The meta object literal for the '<em><b>New Target State</b></em>' containment reference feature.
@@ -1405,7 +1405,7 @@ public interface Kits_textonlyPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TRANSITION__NEW_TARGET_STATE = eINSTANCE.getTransition_NewTargetState();
+    EReference CHANGED_NAME__NEW_TARGET_STATE = eINSTANCE.getchangedName_NewTargetState();
 
     /**
      * The meta object literal for the '<em><b>Is History</b></em>' attribute feature.
@@ -1413,7 +1413,7 @@ public interface Kits_textonlyPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute TRANSITION__IS_HISTORY = eINSTANCE.getTransition_IsHistory();
+    EAttribute CHANGED_NAME__IS_HISTORY = eINSTANCE.getchangedName_IsHistory();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.impl.ValuedObjectImpl <em>Valued Object</em>}' class.

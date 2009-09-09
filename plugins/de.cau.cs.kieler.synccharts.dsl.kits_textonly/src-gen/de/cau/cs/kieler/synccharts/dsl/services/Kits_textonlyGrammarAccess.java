@@ -35,9 +35,6 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		//Region:
 		//  ("region" id=ID)? (variables+=Variable|signals+=Signal|innerStates+=State)+; 
 		//
-		////import "http://kieler.cs.cau.de/synccharts" as sync 
-		////import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as sync
-		////import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 		//
 		//
 		////========================================================================================
@@ -1590,7 +1587,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		private final Keyword cIsHistoryHistoryKeyword_4_0 = (Keyword)cIsHistoryAssignment_4.eContents().get(0);
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		//Transition:
+		//Transition returns changedName:
 		//  sourceState=[State|FullStateID]? type=TransitionType newTargetState=
 		//  TransitionState ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
 		//
@@ -3311,9 +3308,6 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 	//Region:
 	//  ("region" id=ID)? (variables+=Variable|signals+=Signal|innerStates+=State)+; 
 	//
-	////import "http://kieler.cs.cau.de/synccharts" as sync 
-	////import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as sync
-	////import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 	//
 	//
 	////========================================================================================
@@ -3480,7 +3474,7 @@ public class Kits_textonlyGrammarAccess implements IGrammarAccess {
 		return getActionAccess().getRule();
 	}
 
-	//Transition:
+	//Transition returns changedName:
 	//  sourceState=[State|FullStateID]? type=TransitionType newTargetState=
 	//  TransitionState ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
 	//

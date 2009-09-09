@@ -98,9 +98,9 @@ public class Kits_textonlyAdapterFactory extends AdapterFactoryImpl
         return createActionAdapter();
       }
       @Override
-      public Adapter caseTransition(Transition object)
+      public Adapter casechangedName(changedName object)
       {
-        return createTransitionAdapter();
+        return createchangedNameAdapter();
       }
       @Override
       public Adapter caseValuedObject(ValuedObject object)
@@ -200,16 +200,16 @@ public class Kits_textonlyAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition <em>Transition</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName <em>changed Name</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.Transition
+   * @see de.cau.cs.kieler.synccharts.dsl.kits_textonly.changedName
    * @generated
    */
-  public Adapter createTransitionAdapter()
+  public Adapter createchangedNameAdapter()
   {
     return null;
   }

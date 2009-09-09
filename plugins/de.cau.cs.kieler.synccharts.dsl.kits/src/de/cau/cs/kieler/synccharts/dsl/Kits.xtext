@@ -59,7 +59,7 @@ State returns sync::State:
   	| id=FullStateID
   )
 
-  (label=STRING)? //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
+  (label=FullStateID)? //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
   (bodyText=STRING)? 
   
    ('{' 
@@ -73,7 +73,7 @@ State returns sync::State:
    	'}')?
    	(outgoingTransitions+=Transition)* 
 ;
-Renaming returns sync::Renaming	:oldID=STRING'/'newID=STRING;
+Renaming returns sync::Renaming: oldID=STRING'/'newID=STRING;
 FullStateID : ((ID'@')?ID);
 	//========================================================================================
 	//===  									    ACTIONS  					               ===
@@ -92,7 +92,7 @@ Action returns sync::Action:
 Transition returns sync::Transition:
 
 	(sourceState=[sync::State|FullStateID])? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-	//newSourceState=TransitionState
+	//|({sync::State} name=FullStateID)
 	type=TransitionType
 	(targetState=[sync::State|FullStateID])
 	//|newTargetState=TransitionState )
@@ -171,7 +171,7 @@ Signal returns sync::Signal:
 		|
 		 	(isOutput?='output')
 		|
-		 	((isInput?='input')(isOutput?='output'))
+		 	((isInput?='input')(isOutput?='output'))                                   
 		 )		
 	)
 	name=ID 
