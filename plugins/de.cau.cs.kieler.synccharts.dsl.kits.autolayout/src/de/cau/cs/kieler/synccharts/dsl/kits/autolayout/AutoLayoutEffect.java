@@ -62,7 +62,7 @@ public class AutoLayoutEffect extends AEffect {
 	}
 
 	@Override
-	public void setTarget(ShapeEditPart target) {
+	public void setTarget(EditPart target) {
 		// TODO Auto-generated method stub
 		
 	}
