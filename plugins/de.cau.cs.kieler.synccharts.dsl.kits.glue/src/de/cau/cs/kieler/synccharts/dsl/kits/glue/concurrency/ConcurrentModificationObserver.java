@@ -54,6 +54,7 @@ public class ConcurrentModificationObserver implements IPartListener,
 	private Transformer transformer;
 
 	public ConcurrentModificationObserver(IWorkbenchPage activePage) {
+		this.transformer = new Transformer();
 		this.page = activePage;
 		IEditorReference[] editorReferences = activePage.getEditorReferences();
 
@@ -94,6 +95,7 @@ public class ConcurrentModificationObserver implements IPartListener,
 					.getEditingDomain();
 			editingDomain.addResourceSetListener(this);
 			// run layout
+
 			transformer.ManualLayoutTrigger(part);
 			transformer.setLabel2Id();
 

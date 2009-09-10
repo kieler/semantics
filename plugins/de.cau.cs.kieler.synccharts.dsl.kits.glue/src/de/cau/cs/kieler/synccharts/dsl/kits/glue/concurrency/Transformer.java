@@ -30,6 +30,9 @@ import de.cau.cs.kieler.synccharts.impl.RegionImpl;
  * 
  */
 public class Transformer {
+	public Transformer() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@SuppressWarnings("unused")
 	 void setLabel2Id() {
