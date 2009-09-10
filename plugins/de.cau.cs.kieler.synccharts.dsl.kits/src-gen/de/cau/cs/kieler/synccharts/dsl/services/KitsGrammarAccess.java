@@ -1491,15 +1491,26 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		private final RuleCall cTargetStateStateFullStateIDParserRuleCall_2_0_1 = (RuleCall)cTargetStateStateCrossReference_2_0.eContents().get(1);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cWithKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cTriggersAndEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cTriggersAndEffectsSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cTriggersAndEffectsAssignment_3_1.eContents().get(0);
+		private final Assignment cIsImmediateAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final Keyword cIsImmediateNumberSignKeyword_3_1_0 = (Keyword)cIsImmediateAssignment_3_1.eContents().get(0);
+		private final Assignment cDelayAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cDelayINTTerminalRuleCall_3_2_0 = (RuleCall)cDelayAssignment_3_2.eContents().get(0);
+		private final Assignment cTriggerAssignment_3_3 = (Assignment)cGroup_3.eContents().get(3);
+		private final RuleCall cTriggerBooleanExpressionParserRuleCall_3_3_0 = (RuleCall)cTriggerAssignment_3_3.eContents().get(0);
+		private final Group cGroup_3_4 = (Group)cGroup_3.eContents().get(4);
+		private final Keyword cSolidusKeyword_3_4_0 = (Keyword)cGroup_3_4.eContents().get(0);
+		private final Group cGroup_3_4_1 = (Group)cGroup_3_4.eContents().get(1);
+		private final Assignment cEffectsAssignment_3_4_1_0 = (Assignment)cGroup_3_4_1.eContents().get(0);
+		private final RuleCall cEffectsEffectParserRuleCall_3_4_1_0_0 = (RuleCall)cEffectsAssignment_3_4_1_0.eContents().get(0);
+		private final Keyword cCommaKeyword_3_4_1_1 = (Keyword)cGroup_3_4_1.eContents().get(1);
 		private final Assignment cIsHistoryAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Keyword cIsHistoryHistoryKeyword_4_0 = (Keyword)cIsHistoryAssignment_4.eContents().get(0);
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//Transition returns sync::Transition:
 		//  sourceState=[sync::State|FullStateID]? type=TransitionType targetState=[sync::
-		//  State|FullStateID] ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
+		//  State|FullStateID] ("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? (
+		//  "/" (effects+=Effect ","?)*)?)? isHistory?=" history"? ";"; 
 		//	//========================================================================================
 		//	 //===  									    ACTIONS  					               ===
 		//	 //========================================================================================
@@ -1524,7 +1535,8 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		public ParserRule getRule() { return rule; }
 
 		//sourceState=[sync::State|FullStateID]? type=TransitionType targetState=[sync::
-		//State|FullStateID] ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";" 
+		//State|FullStateID] ("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? (
+		//"/" (effects+=Effect ","?)*)?)? isHistory?=" history"? ";" 
 		//
 		//	  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 		//	 //|({sync::State} name=FullStateID)
@@ -1558,17 +1570,48 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		//FullStateID
 		public RuleCall getTargetStateStateFullStateIDParserRuleCall_2_0_1() { return cTargetStateStateFullStateIDParserRuleCall_2_0_1; }
 
-		//("with" triggersAndEffects=STRING)?
+		//("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect
+		//","?)*)?)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//"with"
 		public Keyword getWithKeyword_3_0() { return cWithKeyword_3_0; }
 
-		//triggersAndEffects=STRING
-		public Assignment getTriggersAndEffectsAssignment_3_1() { return cTriggersAndEffectsAssignment_3_1; }
+		//isImmediate?="#"?
+		public Assignment getIsImmediateAssignment_3_1() { return cIsImmediateAssignment_3_1; }
 
-		//STRING
-		public RuleCall getTriggersAndEffectsSTRINGTerminalRuleCall_3_1_0() { return cTriggersAndEffectsSTRINGTerminalRuleCall_3_1_0; }
+		//"#"
+		public Keyword getIsImmediateNumberSignKeyword_3_1_0() { return cIsImmediateNumberSignKeyword_3_1_0; }
+
+		//delay=INT?
+		public Assignment getDelayAssignment_3_2() { return cDelayAssignment_3_2; }
+
+		//INT
+		public RuleCall getDelayINTTerminalRuleCall_3_2_0() { return cDelayINTTerminalRuleCall_3_2_0; }
+
+		//trigger=BooleanExpression?
+		public Assignment getTriggerAssignment_3_3() { return cTriggerAssignment_3_3; }
+
+		//BooleanExpression
+		public RuleCall getTriggerBooleanExpressionParserRuleCall_3_3_0() { return cTriggerBooleanExpressionParserRuleCall_3_3_0; }
+
+		//("/" (effects+=Effect ","?)*)?
+		public Group getGroup_3_4() { return cGroup_3_4; }
+
+		//"/"
+		public Keyword getSolidusKeyword_3_4_0() { return cSolidusKeyword_3_4_0; }
+
+		//(effects+=Effect ","?)*
+		public Group getGroup_3_4_1() { return cGroup_3_4_1; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_3_4_1_0() { return cEffectsAssignment_3_4_1_0; }
+
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_3_4_1_0_0() { return cEffectsEffectParserRuleCall_3_4_1_0_0; }
+
+		//","?
+		public Keyword getCommaKeyword_3_4_1_1() { return cCommaKeyword_3_4_1_1; }
 
 		//isHistory?=" history"?
 		public Assignment getIsHistoryAssignment_4() { return cIsHistoryAssignment_4; }
@@ -4371,7 +4414,8 @@ public class KitsGrammarAccess implements IGrammarAccess {
 
 	//Transition returns sync::Transition:
 	//  sourceState=[sync::State|FullStateID]? type=TransitionType targetState=[sync::
-	//  State|FullStateID] ("with" triggersAndEffects=STRING)? isHistory?=" history"? ";"; 
+	//  State|FullStateID] ("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? (
+	//  "/" (effects+=Effect ","?)*)?)? isHistory?=" history"? ";"; 
 	//	//========================================================================================
 	//	 //===  									    ACTIONS  					               ===
 	//	 //========================================================================================

@@ -14,7 +14,10 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.ScopedElement;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
+import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.Signal;
+import de.cau.cs.kieler.synccharts.SignalReference;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 
@@ -35,7 +38,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 
 		for (State innerState : parentRegion.getInnerStates()) {
 
-			IScopedElement elem = ScopedElement.create(innerState.getId(),
+			IScopedElement elem = ScopedElement.create(innerState.getLabel(),
 					innerState);
 			scopeElems.add(elem);
 		}
@@ -43,5 +46,58 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 		return new SimpleScope(scopeElems);
 
 	}
+
+	IScope scope_SignalReference_signal(SignalReference context,
+			EReference reference) {
+
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		Action a = context.getParentAction();
+
+		if (a instanceof Transition) {
+			Transition t = (Transition) a;
+			Region r = t.getSourceState().getParentRegion();
+
+			for (Signal sig : r.getSignals()) {
+				IScopedElement elem = ScopedElement.create(sig.getName(), sig);
+				scopeElems.add(elem);
+			}
+		}
+
+		return new SimpleScope(scopeElems);
+
+	}
+	// IScope scope_SignalReference_signal(SignalReference context,
+	// EReference reference) {
+	//
+	// ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+	// Action a = context.getParentAction();
+	//
+	// if (a instanceof Transition) {
+	// Transition t = (Transition) a;
+	// Region r = t.getSourceState().getParentRegion();
+	//
+	// for (Signal sig : r.getSignals()) {
+	// IScopedElement elem = ScopedElement.create(sig.getName(), sig);
+	// scopeElems.add(elem);
+	// }
+	// }
+	//
+	// return new SimpleScope(scopeElems);
+	//
+	// }
+	// IScope scope_Transition_trigger(Transition context, EReference reference)
+	// {
+	//
+	// ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+	// State s = context.getSourceState();
+	// Region r = s.getParentRegion();
+	// for (Signal sig : r.getSignals()) {
+	// IScopedElement elem = ScopedElement.create(sig.getName(), sig);
+	// scopeElems.add(elem);
+	// }
+	//
+	// return new SimpleScope(scopeElems);
+	//
+	// }
 
 }

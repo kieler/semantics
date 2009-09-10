@@ -96,7 +96,11 @@ Transition returns sync::Transition:
 	type=TransitionType
 	(targetState=[sync::State|FullStateID])
 	//|newTargetState=TransitionState )
-	( 'with' triggersAndEffects=STRING)?
+	( 'with' (isImmediate?='#')? (delay=INT)?
+		     (trigger=BooleanExpression)?
+		     ("/" (effects+=Effect (',')?)* )?
+			 
+	)?
 	(isHistory?=' history')?
 	';'
 ;

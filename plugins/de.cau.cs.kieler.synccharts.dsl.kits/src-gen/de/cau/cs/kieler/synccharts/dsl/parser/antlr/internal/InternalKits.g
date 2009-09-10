@@ -2553,9 +2553,30 @@ ruleTransition returns [EObject current=null]
     }
 (	
 	
-	    lv_triggersAndEffects_4=	RULE_STRING
+	    lv_isImmediate_4='#' 
+    {
+        createLeafNode(grammarAccess.getTransitionAccess().getIsImmediateNumberSignKeyword_3_1_0(), "isImmediate"); 
+    }
+
+ 
+	    {
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        
+	        try {
+	       		set($current, "isImmediate", true, "#", lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
+	
+)?(	
+	
+	    lv_delay_5=	RULE_INT
 	{
-		createLeafNode(grammarAccess.getTransitionAccess().getTriggersAndEffectsSTRINGTerminalRuleCall_3_1_0(), "triggersAndEffects"); 
+		createLeafNode(grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_3_2_0(), "delay"); 
 	}
  
 	    {
@@ -2565,15 +2586,65 @@ ruleTransition returns [EObject current=null]
 	        }
 	        
 	        try {
-	       		set($current, "triggersAndEffects", lv_triggersAndEffects_4, "STRING", lastConsumedNode);
+	       		set($current, "delay", lv_delay_5, "INT", lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
 	    }
 	
-))?(	
+)?(	
 	
-	    lv_isHistory_5=' history' 
+	    
+	    { 
+	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getTriggerBooleanExpressionParserRuleCall_3_3_0(), currentNode); 
+	    }
+	    lv_trigger_6=ruleBooleanExpression 
+	    {
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        
+	        try {
+	       		set($current, "trigger", lv_trigger_6, "BooleanExpression", currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+	
+)?('/' 
+    {
+        createLeafNode(grammarAccess.getTransitionAccess().getSolidusKeyword_3_4_0(), null); 
+    }
+((	
+	
+	    
+	    { 
+	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_3_4_1_0_0(), currentNode); 
+	    }
+	    lv_effects_8=ruleEffect 
+	    {
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        
+	        try {
+	       		add($current, "effects", lv_effects_8, "Effect", currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+	
+)(',' 
+    {
+        createLeafNode(grammarAccess.getTransitionAccess().getCommaKeyword_3_4_1_1(), null); 
+    }
+)?)*)?)?(	
+	
+	    lv_isHistory_10=' history' 
     {
         createLeafNode(grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_4_0(), "isHistory"); 
     }
