@@ -6,15 +6,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.ResourceSetChangeEvent;
 import org.eclipse.emf.transaction.ResourceSetListener;
@@ -23,6 +28,10 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequest;
+import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequestFactory;
+import org.eclipse.gmf.runtime.emf.type.core.IElementType;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.ITextViewerExtension;
 import org.eclipse.jface.text.source.ISourceViewer;
@@ -43,7 +52,16 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
 
 import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
+import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.SyncchartsFactory;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
+import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 import de.cau.cs.kieler.synccharts.dsl.kits.glue.Activator;
+import de.cau.cs.kieler.synccharts.impl.RegionImpl;
+import de.cau.cs.kieler.synccharts.impl.StateImpl;
 import de.cau.cs.kieler.viewmanagement.ACombination;
 
 /**
@@ -101,6 +119,7 @@ public class ConcurrentModificationObserver implements IPartListener,
 			editingDomain.addResourceSetListener(this);
 			// run layout
 			ManualLayoutTrigger(part);
+			setLabel2Id();
 
 		}
 		if (part instanceof XtextEditor) {
@@ -151,18 +170,29 @@ public class ConcurrentModificationObserver implements IPartListener,
 	}
 
 	public boolean isPostcommitOnly() {
-		return true;
-	}
-
-	public boolean isPrecommitOnly() {
 		return false;
 	}
 
+	public boolean isPrecommitOnly() {
+		return true;
+	}
+
+	/**
+	 * FIXME this looks quite hacky
+	 */
+	// System.out.println("==============================");
+	// System.out.println("I AM IN: doSaveDocument");
+	// System.out.println("==============================");
+	// State s = SyncchartsFactory.eINSTANCE.createState();
+	// s.setId("DOLLY");
+	// s.setLabel("DOLLY");
+	// newResource.getContents().add(s);
+	// System.out.println("Dolly created, can you see her?");
 	public void resourceSetChanged(ResourceSetChangeEvent event) {
 		System.out.println("==============================");
 		System.out.println("I AM IN: resourceSetChanged");
 		System.out.println("==============================");
-		//ManualLayoutTrigger(getIWorkbenchPart());
+
 	}
 
 	public Command transactionAboutToCommit(ResourceSetChangeEvent event)
@@ -201,7 +231,6 @@ public class ConcurrentModificationObserver implements IPartListener,
 		System.out.println("==============================");
 		System.out.println("I AM IN: transactionAboutToCommit");
 		System.out.println("==============================");
-		// ManualLayoutTrigger(getIWorkbenchPart());
 
 		return null;
 	}
@@ -392,4 +421,45 @@ public class ConcurrentModificationObserver implements IPartListener,
 	// ManualLayoutTrigger(getIWorkbenchPart());
 	//		
 	// }
+	private void setLabel2Id() {
+		EObject regionElement = null;
+		EditPart diagramEditPart = getDiagramEditPart();
+		if (diagramEditPart.getModel() != null) {
+			regionElement = ((View) diagramEditPart.getModel()).getElement();
+		}
+		if (regionElement instanceof RegionImpl) {
+			Region diagramRoot = (Region) regionElement;
+			/** start from the diagram root which is a region */
+			setLabel2Id(diagramRoot);
+			System.out.println("Dolly created, can you see her?");
+		}
+	}
+
+	private void setLabel2Id(Region region) {
+		/** get the workbench and editing domain */
+		IWorkbenchPart workbenchPart = getIWorkbenchPart();
+		TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) ((SyncchartsDiagramEditor) workbenchPart)
+				.getEditingDomain();
+		/** every region has inner states */
+		EList<State> innerStates = region.getInnerStates();
+		for (State s : innerStates) {
+			/** set label of one state to its id */
+			EAttribute labelAttribute = SyncchartsPackage.eINSTANCE
+					.getState_Label();
+			SetCommand setLabelCommand = (SetCommand) SetCommand.create(
+					editingDomain, s, labelAttribute, s.getId());
+
+			editingDomain.getCommandStack().execute(setLabelCommand);
+			/** every state has regions */
+			setLabel2Id(s);
+		}
+
+	}
+
+	private void setLabel2Id(State s) {
+		for (Region r : s.getRegions()) {
+			setLabel2Id(r);
+		}
+
+	}
 }
