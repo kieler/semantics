@@ -11,22 +11,16 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.ui.URIEditorInput;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.ResourceSetChangeEvent;
 import org.eclipse.emf.transaction.ResourceSetListener;
 import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.ITextViewerExtension;
 import org.eclipse.jface.text.source.ISourceViewer;
@@ -41,19 +35,11 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
 
-import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
-import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.dsl.kits.glue.Activator;
-import de.cau.cs.kieler.synccharts.impl.RegionImpl;
-
 
 /**
  * Detects concurrent modifications of diagrams and text files.
@@ -65,6 +51,7 @@ public class ConcurrentModificationObserver implements IPartListener,
 		ResourceSetListener, VerifyKeyListener {
 
 	private IWorkbenchPage page;
+	private Transformer transformer;
 
 	public ConcurrentModificationObserver(IWorkbenchPage activePage) {
 		this.page = activePage;
@@ -77,9 +64,7 @@ public class ConcurrentModificationObserver implements IPartListener,
 						.addResourceSetListener(this);
 			}
 			if (editor instanceof XtextEditor) {
-				// TextListener myTextListener = new TextListener();
-				// ((XtextEditor)
-				// editor).getInternalSourceViewer().addTextListener(myTextListener);
+
 				ISourceViewer sourceViewer = ((XtextEditor) editor)
 						.getInternalSourceViewer();
 				if (sourceViewer instanceof ITextViewerExtension) {
@@ -109,8 +94,8 @@ public class ConcurrentModificationObserver implements IPartListener,
 					.getEditingDomain();
 			editingDomain.addResourceSetListener(this);
 			// run layout
-			ManualLayoutTrigger(part);
-			setLabel2Id();
+			transformer.ManualLayoutTrigger(part);
+			transformer.setLabel2Id();
 
 		}
 		if (part instanceof XtextEditor) {
@@ -140,8 +125,7 @@ public class ConcurrentModificationObserver implements IPartListener,
 	}
 
 	public void partActivated(IWorkbenchPart part) {
-		// run ManualLayout
-		// ManualLayoutTrigger(part);
+		// do nothing
 	}
 
 	public void partDeactivated(IWorkbenchPart part) {
@@ -168,18 +152,8 @@ public class ConcurrentModificationObserver implements IPartListener,
 		return true;
 	}
 
-	/**
-	 * FIXME this looks quite hacky
-	 */
-	// System.out.println("==============================");
-	// System.out.println("I AM IN: doSaveDocument");
-	// System.out.println("==============================");
-	// State s = SyncchartsFactory.eINSTANCE.createState();
-	// s.setId("DOLLY");
-	// s.setLabel("DOLLY");
-	// newResource.getContents().add(s);
-	// System.out.println("Dolly created, can you see her?");
 	public void resourceSetChanged(ResourceSetChangeEvent event) {
+		// do nothing
 		System.out.println("==============================");
 		System.out.println("I AM IN: resourceSetChanged");
 		System.out.println("==============================");
@@ -218,7 +192,7 @@ public class ConcurrentModificationObserver implements IPartListener,
 			throw new RollbackException(new Status(IStatus.ERROR,
 					Activator.PLUGIN_ID, "Transaction aborted by user"));
 		}
-		// FIXME: add layout trigger?
+		// do nothing
 		System.out.println("==============================");
 		System.out.println("I AM IN: transactionAboutToCommit");
 		System.out.println("==============================");
@@ -280,7 +254,7 @@ public class ConcurrentModificationObserver implements IPartListener,
 	}
 
 	/**
-	 * Ask user if the resource should be saved althought the changes in the
+	 * Ask user if the resource should be saved although the changes in the
 	 * conflicting editors will be lost
 	 * 
 	 * @author oba
@@ -307,150 +281,23 @@ public class ConcurrentModificationObserver implements IPartListener,
 		}
 	}
 
-	/**
-	 * copied from {@link ACombination}
-	 * 
-	 * @param part
-	 */
-	private DiagramEditPart getDiagramEditPart() {
-		IWorkbenchPart workbenchPart = getIWorkbenchPart();
-		IEditorPart editorPart = null;
-		DiagramEditPart rootEditPart = null;
-
-		if (workbenchPart instanceof IEditorPart) {
-			editorPart = ((IEditorPart) workbenchPart);
-
-		}
-		if (editorPart instanceof DiagramEditor) {
-			rootEditPart = ((DiagramEditor) editorPart).getDiagramEditPart();
-		}
-		return rootEditPart;
-	}
-
-	/**
-	 * get the active editor part
-	 * 
-	 * @return IWorkbenchPart
-	 */
-	private IWorkbenchPart getIWorkbenchPart() {
-		IWorkbenchPart editor = null;
-		IWorkbenchPage activePage = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage();
-
-		IEditorReference[] editorReferences = activePage.getEditorReferences();
-
-		for (IEditorReference editorReference : editorReferences) {
-			editor = editorReference.getEditor(false);
-			if (editor instanceof DiagramEditor) {
-				editor = ((DiagramEditor) editor);
-
-			}
-
-		}
-		System.out
-				.println("========================================================");
-		System.out
-				.println("getIWorkbenchPart results in: " + editor.toString());
-		System.out
-				.println("========================================================");
-		return editor;
-	}
-
-	private void ManualLayoutTrigger(IWorkbenchPart part) {
-		if (part instanceof DiagramEditor) {
-			// get the RegionEditPart
-			EditPart e = ((DiagramEditor) part).getDiagramEditPart().getRoot()
-					.getContents();
-			if (!(e instanceof DiagramEditPart)) {
-				System.out
-						.println("========================================================");
-				System.out.println("Problem in: " + this.toString());
-				System.out.println("You really shouldn't be here!");
-				// e = (EditPart) e.getChildren().get(0);
-				System.out
-						.println("It is crazy that the root of the diagram is: "
-								+ e.toString());
-				System.out.println("Thus layout will probably fail");
-				System.out
-						.println("========================================================");
-			}
-			// run msp layout
-			DiagramLayoutManager.layout(((DiagramEditor) part), e, true, false);
-
-		} else {
-			System.out
-					.println("========================================================");
-			System.out.println("Warning in: " + this.toString());
-			System.out.println("I was invoked from an Xtext editor");
-
-			System.out
-					.println("========================================================");
-		}
-
-		// FIXME: Trigger view management rather than
-		// TODO: Is it sufficient that the LayoutCombo, provided by the
-		// ViewManagement is in the combo listor do I need to add my own combo
-		// there?
-		// TODO: Uncomment this part later when you understand how to activate
-		// the combo
-		// FIXME: Problem for now is that the trigger does not have any
-		// listeners
-		// RunLogic.getInstance().init();
-		// RunLogic.getInstance().registerListeners();
-		// AutoLayoutTrigger trigger = ((AutoLayoutTrigger) RunLogic
-		// .getTrigger("de.cau.cs.kieler.synccharts.dsl.kits.autolayout.AutoLayoutTrigger"));
-		// //here you have to give the name of the extension element
-		// "trigger" and not the package name or so like I did!
-		// if (trigger != null) {
-		// trigger.triggerAutoLayout(e, (DiagramEditor) part);
-		// }
-
-	}
-
-	// public void textValueChanged(TextEvent e) {
-	// System.out.println("text value changed");
-	// ManualLayoutTrigger(getIWorkbenchPart());
-	//		
+	// FIXME: Trigger view management rather than
+	// TODO: Is it sufficient that the LayoutCombo, provided by the
+	// ViewManagement is in the combinations list or do I need to add my own
+	// combinations
+	// there?
+	// TODO: Uncomment this part later when you understand how to activate
+	// the combinations
+	// FIXME: Problem for now is that the trigger does not have any
+	// listeners
+	// RunLogic.getInstance().init();
+	// RunLogic.getInstance().registerListeners();
+	// AutoLayoutTrigger trigger = ((AutoLayoutTrigger) RunLogic
+	// .getTrigger("de.cau.cs.kieler.synccharts.dsl.kits.autolayout.AutoLayoutTrigger"));
+	// //here you have to give the name of the extension element
+	// "trigger" and not the package name or so like I did!
+	// if (trigger != null) {
+	// trigger.triggerAutoLayout(e, (DiagramEditor) part);
 	// }
-	private void setLabel2Id() {
-		EObject regionElement = null;
-		EditPart diagramEditPart = getDiagramEditPart();
-		if (diagramEditPart.getModel() != null) {
-			regionElement = ((View) diagramEditPart.getModel()).getElement();
-		}
-		if (regionElement instanceof RegionImpl) {
-			Region diagramRoot = (Region) regionElement;
-			/** start from the diagram root which is a region */
-			setLabel2Id(diagramRoot);
-			System.out.println("Dolly created, can you see her?");
-		}
-	}
 
-	private void setLabel2Id(Region region) {
-		/** get the workbench and editing domain */
-		IWorkbenchPart workbenchPart = getIWorkbenchPart();
-		TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) ((SyncchartsDiagramEditor) workbenchPart)
-				.getEditingDomain();
-		/** every region has inner states */
-		EList<State> innerStates = region.getInnerStates();
-		for (State s : innerStates) {
-			/** set label of one state to its id */
-			EAttribute labelAttribute = SyncchartsPackage.eINSTANCE
-					.getState_Label();
-			SetCommand setLabelCommand = (SetCommand) SetCommand.create(
-					editingDomain, s, labelAttribute, s.getId());
-
-			editingDomain.getCommandStack().execute(setLabelCommand);
-			/** every state has regions */
-			setLabel2Id(s);
-		}
-
-	}
-
-	private void setLabel2Id(State s) {
-		for (Region r : s.getRegions()) {
-			setLabel2Id(r);
-		}
-
-	}
 }
