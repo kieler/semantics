@@ -16,7 +16,6 @@ package de.cau.cs.kieler.synccharts.dsl.kits.autolayout;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
