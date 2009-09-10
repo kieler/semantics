@@ -77,7 +77,7 @@ under the terms of the Eclipse Public License (EPL).
       <import plugin="org.eclipse.emf.mwe.core"/>
       <import plugin="org.eclipse.emf.mwe.utils"/>
       <import plugin="org.eclipse.xtext.ui.core"/>
-      <import plugin="org.eclipse.xtext.ui.common"/>
+      <import plugin="org.eclipse.xtext.ui.common" version="0.7.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtext.log4j" version="1.2.15" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.editors" version="3.4.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.1.0" match="greaterOrEqual"/>
