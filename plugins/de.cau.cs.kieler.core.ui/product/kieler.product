@@ -176,6 +176,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <feature id="org.eclipse.xtend.ui" version="0.7.2.v200908120436"/>
       <feature id="org.eclipse.xtext.runtime" version="0.7.2.v200908120607"/>
       <feature id="org.eclipse.xtext.ui" version="0.7.2.v200908120607"/>
+      <feature id="org.eclipse.xpand.ui" version="0.7.2.v200908120436"/>
    </features>
 
 
