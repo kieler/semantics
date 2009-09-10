@@ -20,6 +20,8 @@ import org.eclipse.emf.transaction.ResourceSetChangeEvent;
 import org.eclipse.emf.transaction.ResourceSetListener;
 import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.ITextViewerExtension;
@@ -35,10 +37,12 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
 
+import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
 import de.cau.cs.kieler.synccharts.dsl.kits.glue.Activator;
 
 /**
@@ -95,8 +99,8 @@ public class ConcurrentModificationObserver implements IPartListener,
 					.getEditingDomain();
 			editingDomain.addResourceSetListener(this);
 			// run layout
-
-			transformer.ManualLayoutTrigger(part);
+			// transformer.ManualLayoutTrigger(part);
+			ManualLayoutTrigger(part);
 			transformer.setLabel2Id();
 
 		}
@@ -301,5 +305,39 @@ public class ConcurrentModificationObserver implements IPartListener,
 	// if (trigger != null) {
 	// trigger.triggerAutoLayout(e, (DiagramEditor) part);
 	// }
+	// ================ HELPER METHODS ================ //
+
+	@SuppressWarnings("unused")
+	void ManualLayoutTrigger(IWorkbenchPart part) {
+		if (part instanceof DiagramEditor) {
+			// get the RegionEditPart
+			EditPart e = ((DiagramEditor) part).getDiagramEditPart().getRoot()
+					.getContents();
+			if (!(e instanceof DiagramEditPart)) {
+				System.out
+						.println("========================================================");
+				System.out.println("Problem in: ManualLayoutTrigger");
+				System.out.println("You really shouldn't be here!");
+				// e = (EditPart) e.getChildren().get(0);
+				System.out
+						.println("It is crazy that the root of the diagram is: "
+								+ e.toString());
+				System.out.println("Thus layout will probably fail");
+				System.out
+						.println("========================================================");
+			}
+			// run msp layout
+			DiagramLayoutManager.layout(((DiagramEditor) part), e, true, false);
+
+		} else {
+			System.out
+					.println("========================================================");
+			System.out.println("I was invoked from an Xtext editor");
+
+			System.out
+					.println("========================================================");
+		}
+
+	}
 
 }

@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.impl.RegionImpl;
 
@@ -35,7 +36,7 @@ public class Transformer {
 	}
 
 	@SuppressWarnings("unused")
-	 void setLabel2Id() {
+	void setLabel2Id() {
 		EObject regionElement = null;
 		EditPart diagramEditPart = getDiagramEditPart();
 		if (diagramEditPart.getModel() != null) {
@@ -45,11 +46,12 @@ public class Transformer {
 			Region diagramRoot = (Region) regionElement;
 			/** start from the diagram root which is a region */
 			setLabel2Id(diagramRoot);
+			setDelay(diagramRoot);
 			System.out.println("Dolly created, can you see her?");
 		}
 	}
 
-	 void setLabel2Id(Region region) {
+	void setLabel2Id(Region region) {
 		/** get the workbench and editing domain */
 		IWorkbenchPart workbenchPart = getIWorkbenchPart();
 		TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) ((SyncchartsDiagramEditor) workbenchPart)
@@ -66,13 +68,26 @@ public class Transformer {
 			editingDomain.getCommandStack().execute(setLabelCommand);
 			/** every state has regions */
 			setLabel2Id(s);
+
 		}
 
 	}
 
-	 void setLabel2Id(State s) {
+	void setLabel2Id(State s) {
 		for (Region r : s.getRegions()) {
 			setLabel2Id(r);
+			setDelay(r);
+		}
+
+	}
+
+	void setDelay(Region r) {
+		for (State s : r.getInnerStates()) {
+			for (Transition t : s.getOutgoingTransitions()) {
+				t.setDelay(1);
+
+			}
+
 		}
 
 	}
@@ -84,7 +99,7 @@ public class Transformer {
 	 * 
 	 * @param part
 	 */
-	 DiagramEditPart getDiagramEditPart() {
+	DiagramEditPart getDiagramEditPart() {
 		IWorkbenchPart workbenchPart = getIWorkbenchPart();
 		IEditorPart editorPart = null;
 		DiagramEditPart rootEditPart = null;
@@ -104,7 +119,7 @@ public class Transformer {
 	 * 
 	 * @return IWorkbenchPart
 	 */
-	 IWorkbenchPart getIWorkbenchPart() {
+	IWorkbenchPart getIWorkbenchPart() {
 		IWorkbenchPart editor = null;
 		IWorkbenchPage activePage = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage();
@@ -129,7 +144,7 @@ public class Transformer {
 	}
 
 	@SuppressWarnings("unused")
-	 void ManualLayoutTrigger(IWorkbenchPart part) {
+	void ManualLayoutTrigger(IWorkbenchPart part) {
 		if (part instanceof DiagramEditor) {
 			// get the RegionEditPart
 			EditPart e = ((DiagramEditor) part).getDiagramEditPart().getRoot()
