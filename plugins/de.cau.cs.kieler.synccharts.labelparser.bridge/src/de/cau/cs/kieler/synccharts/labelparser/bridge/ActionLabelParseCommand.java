@@ -120,8 +120,6 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
     }
-    
-   
 
     /*
      * (non-Javadoc)
@@ -165,6 +163,10 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         action.getEffects().clear();
         action.setDelay(1);
         action.setIsImmediate(false);
+        
+        // if the String is empty, we don't need to parse anything...
+        if(newString.trim().length()==0)
+            return;
         
         ByteArrayInputStream stream = new ByteArrayInputStream(newString
                 .getBytes());

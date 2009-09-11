@@ -33,6 +33,7 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.common.core.command.ICommand;
+import org.eclipse.gmf.runtime.common.core.command.UnexecutableCommand;
 import org.eclipse.gmf.runtime.common.ui.services.parser.IParser;
 import org.eclipse.gmf.runtime.common.ui.services.parser.IParserEditStatus;
 import org.eclipse.gmf.runtime.common.ui.services.parser.ParserEditStatus;
@@ -102,7 +103,7 @@ public class ActionLabelParserWrapper implements IParser {
      * (org.eclipse.core.runtime.IAdaptable, int)
      */
     public String getPrintString(IAdaptable element, int flags) {
-        this.registerContentAdapter();
+        //this.registerContentAdapter();
         
         if (element instanceof EObjectAdapter) {
             if (((EObjectAdapter) element).getRealObject() instanceof Action) {
@@ -113,7 +114,7 @@ public class ActionLabelParserWrapper implements IParser {
                 
                 String serializedString = serializeAction(action);
                 if(serializedString != null){
-                    doUpdateTriggerEffectsString(serializedString, action);
+   //                 doUpdateTriggerEffectsString(serializedString, action);
                     return serializedString;
                 }
                 else{
@@ -166,8 +167,8 @@ public class ActionLabelParserWrapper implements IParser {
      * (org.eclipse.core.runtime.IAdaptable, java.lang.String, int)
      */
     public ICommand getParseCommand(IAdaptable element, String newString, int flags) {
-        System.out.println("getParseCommand"+newString);
         this.newString = newString;
+        
         return new ActionLabelParseCommand(element, newString, parser, injector);
     }
 
@@ -205,7 +206,7 @@ public class ActionLabelParserWrapper implements IParser {
      *      int)
      */
     public boolean isAffectingEvent(Object event, int flags) {
-        System.out.println("isAffectingEvent "+flags+" "+event);
+        //System.out.println("isAffectingEvent "+flags+" "+event);
         if (event instanceof Notification) {
             Object feature = ((Notification) event).getFeature();
             if (feature.equals(SyncchartsPackage.eINSTANCE
@@ -215,10 +216,6 @@ public class ActionLabelParserWrapper implements IParser {
                     this.doParse(value, (Action)((Notification) event).getNotifier());
                 }
                 return true;
-            }
-            // if a signal or variable name has changed, re-serialize the transition labels
-            if(feature.equals(SyncchartsPackage.eINSTANCE.getValuedObject_Name())){
-                System.out.println("Re-serializing labels.");
             }
         }
         return false;
@@ -235,7 +232,7 @@ public class ActionLabelParserWrapper implements IParser {
     public IParserEditStatus isValidEditString(IAdaptable element,
             String editString) {
         // TODO: add real check here
-        System.out.println("isValidEditString");
+        //System.out.println("isValidEditString");
         IParserEditStatus status = ParserEditStatus.EDITABLE_STATUS;
         //status = ParserEditStatus.UNEDITABLE_STATUS;
         return status;
@@ -247,7 +244,7 @@ public class ActionLabelParserWrapper implements IParser {
      */
     public boolean areSemanticElementsAffected(EObject listener,
             Object notification) {
-        System.out.println("areSemanticElementsAffected "+listener+" "+notification);
+        //System.out.println("areSemanticElementsAffected "+listener+" "+notification);
         if (notification instanceof Notification) {
             Object feature = ((Notification) notification).getFeature();
             if (feature.equals(SyncchartsPackage.eINSTANCE
@@ -262,7 +259,7 @@ public class ActionLabelParserWrapper implements IParser {
      * @see org.eclipse.gmf.runtime.emf.ui.services.parser.ISemanticParser#getSemanticElementsBeingParsed(org.eclipse.emf.ecore.EObject)
      */
     public List getSemanticElementsBeingParsed(EObject element) {
-        System.out.println("getSemanticElementsBeingParsed");
+        //System.out.println("getSemanticElementsBeingParsed");
         List<Object> elementList = new ArrayList<Object>(1);
         elementList.add(element);
         return elementList;
