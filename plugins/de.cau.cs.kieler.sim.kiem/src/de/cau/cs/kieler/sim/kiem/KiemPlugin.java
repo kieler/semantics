@@ -59,6 +59,7 @@ import de.cau.cs.kieler.sim.kiem.views.KiemView;
  * or refreshing the table or the step information text field.
  *
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * 
  */
 public class KiemPlugin extends AbstractUIPlugin {
 
