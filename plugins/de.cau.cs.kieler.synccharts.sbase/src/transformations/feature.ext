@@ -1,0 +1,55 @@
+import synccharts;
+
+Void addSuccessorState(State source):
+ let target = new State:
+ connectStates(source, target) ->
+ source.parentRegion.innerStates.add(target)
+;
+Void addPredecessorState(State target):
+let source = new State:
+ connectStates(source, target) ->
+ target.parentRegion.innerStates.add(source)
+;
+
+Void addChoice(State source):
+let sel1 = new State:
+let sel2 = new State:
+connectStates(source,sel1) ->
+connectStates(source,sel2) ->
+source.parentRegion.innerStates.add(sel1) ->
+source.parentRegion.innerStates.add(sel2)
+;
+
+Void flipTransition(Transition t):
+ let source = t.sourceState:
+ let target = t.targetState:
+ t.setSourceState(target) ->
+ t.setTargetState(source)
+;
+
+Void connectStates(State source, State target):
+let transition = new Transition:
+transition.setSourceState(source) ->
+transition.setTargetState(target) ->
+source.outgoingTransitions.add(transition)
+;
+
+Void makeFinal(State s):
+s.setIsFinal(!s.isFinal)
+;
+
+Void makeInitial(State s):
+s.setIsInitial(!s.isInitial)
+;
+
+Void addRegion(State s):
+s.regions.add(new Region)
+;
+
+Void makeNormal(State s):
+s.setType( StateType::NORMAL )
+;
+
+Void makePseudo(State s):
+s.setType( StateType::PSEUDO )
+;
