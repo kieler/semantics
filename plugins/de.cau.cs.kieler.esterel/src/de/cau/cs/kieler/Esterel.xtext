@@ -56,15 +56,15 @@ SensorDecl:
 	
 // ==> Relations
 RelationDecl:
-	"relation" relation+=Relation ("," relation+=Relation)* ";";
+	{Relation} "relation" relation+=RelationType ("," relation+=RelationType)* ";";
 	
-Relation:
+RelationType:
 	RelationImplication|RelationIncompatibility;
 
-RelationImplication returns Relation:
+RelationImplication :
 	first=[Signal] type="=>" second=[Signal];
 	
-RelationIncompatibility returns Relation:
+RelationIncompatibility :
 	incomp+=[Signal] type="#" incomp+=[Signal] ("#" incomp+=[Signal])*;
 
 // ==> Types

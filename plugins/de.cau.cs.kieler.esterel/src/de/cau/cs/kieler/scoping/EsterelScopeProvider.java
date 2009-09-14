@@ -6,7 +6,6 @@ package de.cau.cs.kieler.scoping;
 import java.util.ArrayList;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.scoping.IScope;
@@ -15,14 +14,21 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.ScopedElement;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
+import de.cau.cs.kieler.esterel.DataUnaryExpr;
 import de.cau.cs.kieler.esterel.DelayEvent;
-import de.cau.cs.kieler.esterel.DelayExpr;
+import de.cau.cs.kieler.esterel.Emit;
+import de.cau.cs.kieler.esterel.LocalSignal;
+import de.cau.cs.kieler.esterel.LocalSignalDecl;
+import de.cau.cs.kieler.esterel.LocalSignalList;
 import de.cau.cs.kieler.esterel.MainModule;
 import de.cau.cs.kieler.esterel.Module;
 import de.cau.cs.kieler.esterel.ModuleBody;
 import de.cau.cs.kieler.esterel.ModuleInterface;
+import de.cau.cs.kieler.esterel.RelationImplication;
+import de.cau.cs.kieler.esterel.RelationIncompatibility;
 import de.cau.cs.kieler.esterel.Signal;
 import de.cau.cs.kieler.esterel.SignalDecl;
+import de.cau.cs.kieler.esterel.Sustain;
 
 /**
  * This class contains custom scoping description.
@@ -33,14 +39,82 @@ import de.cau.cs.kieler.esterel.SignalDecl;
  */
 public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 
-	// TODO: IScope for other references
-	// TODO: consider local Signals in the Scope
-	
+	// TODO scope for other references than signals
+
+	IScope scope_RelationImplication_first(RelationImplication context,
+			EReference ref) {
+		return new SimpleScope(getModuleSignals(context));
+
+	}
+
+	IScope scope_RelationImplication_second(RelationImplication context,
+			EReference ref) {
+		return new SimpleScope(getModuleSignals(context));
+
+	}
+
+	IScope scope_RelationIncompatibility_incomp(
+			RelationIncompatibility context, EReference ref) {
+		return new SimpleScope(getModuleSignals(context));
+
+	}
+
+	IScope scope_Emit_signal(Emit context, EReference ref) {
+		return new SimpleScope(getAllSignals(context));
+
+	}
+
+	// TODO Scope for Renamings (signals out of  other modules)
+
+	IScope scope_Sustain_signal(Sustain context, EReference ref) {
+		return new SimpleScope(getAllSignals(context));
+
+	}
+
+	IScope scope_DataUnaryExpr_signal(DataUnaryExpr context, EReference ref) {
+		return new SimpleScope(getAllSignals(context));
+
+	}
+
 	IScope scope_DelayEvent_signal(DelayEvent context, EReference ref) {
+		return new SimpleScope(getAllSignals(context));
+
+	}
+
+	private ArrayList<IScopedElement> getModuleSignals(EObject context) {
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		EObject parent = context.eContainer();
+		while (!(parent instanceof ModuleInterface))
+			parent = parent.eContainer();
+		EList<SignalDecl> intSignalDecl = ((ModuleInterface) parent)
+				.getIntSignalDecl();
+		if (!(intSignalDecl.isEmpty())) {
+			for (SignalDecl sigDecl : intSignalDecl) {
+				EList<Signal> sigList = sigDecl.getSignal();
+				for (Signal sig : sigList) {
+					scopeElems.add(ScopedElement.create(sig.getName(), sig));
+				}
+			}
+		}
+		return scopeElems;
+	}
+
+	// Gets all Signals (local and global) belonging to the scope of context
+	private ArrayList<IScopedElement> getAllSignals(EObject context) {
 		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
 		EObject parent = context.eContainer();
 		// Go up in the Structure until Module/MainModule
 		while (!(parent instanceof ModuleBody)) {
+			// Get the local signals into the scope
+			if (parent instanceof LocalSignalDecl) {
+				LocalSignalList localSigList = ((LocalSignalDecl) parent)
+						.getSignalList();
+				EList<Signal> signals = ((LocalSignal) localSigList)
+						.getSignal();
+				for (Signal sig : signals) {
+					scopeElems.add(ScopedElement.create(sig.getName(), sig));
+				}
+			}
 			parent = parent.eContainer();
 		}
 		if (parent instanceof ModuleBody)
@@ -62,9 +136,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 				}
 			}
 		}
-		return new SimpleScope(scopeElems);
-
+		return scopeElems;
 	}
-
 
 }
