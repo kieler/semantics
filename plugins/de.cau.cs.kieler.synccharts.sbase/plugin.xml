@@ -7,51 +7,60 @@
                      XtendFile="src/transformations/feature.ext"
                      contextID="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
                      createMenu="true"
-                     createToolbar="true"
+                     createPopup="true"
                      editor="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor"
                      menuLocationURI="menu:org.eclipse.ui.main.menu?after=window"
                      menuName="KIELER"
                      packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage"
-                     toolbarLocationURI="toolbar:org.eclipse.ui.views.ContentOutline?after=additions">
+                     popupLocationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
          <transformation
-               keyboardShortcut="M1 + K S"
+               keyboardShortcut="Ctrl+K S"
                name="Add Successor State"
                selectionCount="1"
                showInMenu="true"
-               showInToolbar="true"
+               showInPopup="true"
                transformation="addSuccessorState">
+            <element_selection
+                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
+            </element_selection>
             <element_selection
                   class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
             </element_selection>
          </transformation>
          <transformation
-               keyboardShortcut="M1 + K P"
+               keyboardShortcut="Ctrl+K P"
                name="Add Predecessor State"
                selectionCount="1"
                showInMenu="true"
-               showInToolbar="true"
+               showInPopup="true"
                transformation="addPredecessorState">
+            <element_selection
+                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
+            </element_selection>
             <element_selection
                   class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
             </element_selection>
          </transformation>
          <transformation
-               keyboardShortcut="M1 + K C"
+               keyboardShortcut="Ctrl+K C"
                name="Add Choice"
                selectionCount="1"
                showInMenu="true"
-               showInToolbar="true"
+               showInPopup="true"
                transformation="addChoice">
+            <element_selection
+                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
+            </element_selection>
             <element_selection
                   class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
             </element_selection>
          </transformation>
          <transformation
-               keyboardShortcut="M1 + K F"
+               keyboardShortcut="Ctrl+K F"
                name="Flip Transition"
-               selectionCount="2"
+               selectionCount="1"
                showInMenu="true"
-               showInToolbar="true"
+               showInPopup="true"
                transformation="flipTransition">
             <element_selection
                   class="de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart">
