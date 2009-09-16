@@ -6,20 +6,63 @@ package de.cau.cs.kieler.formatting;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 
+import sun.security.smartcardio.SunPCSC.Factory;
+
 /**
  * This class contains custom formatting description.
  * 
  * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#formatting
- * on how and when to use it 
+ * on how and when to use it
  * 
- * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
+ * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an
+ * example
  */
 public class EsterelFormatter extends AbstractDeclarativeFormatter {
-	
+
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
 		de.cau.cs.kieler.services.EsterelGrammarAccess f = (de.cau.cs.kieler.services.EsterelGrammarAccess) getGrammarAccess();
-
-		//...
+		// Linewrap after <moduleName>":"
+		c.setLinewrap().after(f.getMainModuleAccess().getColonKeyword_2());
+		c.setNoSpace().before(f.getMainModuleAccess().getColonKeyword_2());
+		c.setLinewrap(2).before(f.getModuleAccess().getModuleKeyword_0());
+		c.setLinewrap().after(f.getModuleAccess().getColonKeyword_2());
+		c.setNoSpace().before(f.getModuleAccess().getColonKeyword_2());
+		// Linewrap between ModuleInterface and ModuleBody
+//		c.setLinewrap(2).after(f.getModuleAccess().getModIntAssignment_3());
+		// Linewraps in the ModuleInterface
+		c.setLinewrap()
+				.after(f.getSignalDeclAccess().getSemicolonKeyword_0_4());
+		c.setNoSpace()
+				.before(f.getSignalDeclAccess().getSemicolonKeyword_0_4());
+		c.setLinewrap()
+				.after(f.getSignalDeclAccess().getSemicolonKeyword_1_4());
+		c.setNoSpace()
+				.before(f.getSignalDeclAccess().getSemicolonKeyword_1_4());
+		c.setLinewrap()
+				.after(f.getSignalDeclAccess().getSemicolonKeyword_2_4());
+		c.setNoSpace()
+				.before(f.getSignalDeclAccess().getSemicolonKeyword_2_4());
+		c.setLinewrap()
+				.after(f.getSignalDeclAccess().getSemicolonKeyword_3_4());
+		c.setNoSpace()
+				.before(f.getSignalDeclAccess().getSemicolonKeyword_3_4());
+		c.setLinewrap().after(f.getTypeDeclAccess().getSemicolonKeyword_3());
+		c.setNoSpace().before(f.getTypeDeclAccess().getSemicolonKeyword_3());
+		c.setLinewrap().after(f.getSensorDeclAccess().getSemicolonKeyword_3());
+		c.setNoSpace().before(f.getSensorDeclAccess().getSemicolonKeyword_3());
+		c.setLinewrap()
+				.after(f.getConstantDeclAccess().getSemicolonKeyword_3());
+		c.setNoSpace()
+				.before(f.getConstantDeclAccess().getSemicolonKeyword_3());
+		c.setLinewrap()
+				.after(f.getRelationDeclAccess().getSemicolonKeyword_4());
+		c.setNoSpace()
+				.before(f.getRelationDeclAccess().getSemicolonKeyword_4());
+		c.setLinewrap()
+				.after(f.getFunctionDeclAccess().getSemicolonKeyword_3());
+		c.setNoSpace()
+				.before(f.getFunctionDeclAccess().getSemicolonKeyword_3());
+		// ...
 	}
 }
