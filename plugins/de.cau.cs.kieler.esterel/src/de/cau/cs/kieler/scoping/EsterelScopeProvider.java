@@ -14,9 +14,17 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.ScopedElement;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
+import de.cau.cs.kieler.esterel.DataCurrent;
+import de.cau.cs.kieler.esterel.DataFunction;
+import de.cau.cs.kieler.esterel.DataPre;
+import de.cau.cs.kieler.esterel.DataTrap;
 import de.cau.cs.kieler.esterel.DataUnaryExpr;
 import de.cau.cs.kieler.esterel.DelayEvent;
 import de.cau.cs.kieler.esterel.Emit;
+import de.cau.cs.kieler.esterel.Exit;
+import de.cau.cs.kieler.esterel.Function;
+import de.cau.cs.kieler.esterel.FunctionDecl;
+import de.cau.cs.kieler.esterel.FunctionRenaming;
 import de.cau.cs.kieler.esterel.LocalSignal;
 import de.cau.cs.kieler.esterel.LocalSignalDecl;
 import de.cau.cs.kieler.esterel.LocalSignalList;
@@ -24,11 +32,19 @@ import de.cau.cs.kieler.esterel.MainModule;
 import de.cau.cs.kieler.esterel.Module;
 import de.cau.cs.kieler.esterel.ModuleBody;
 import de.cau.cs.kieler.esterel.ModuleInterface;
+import de.cau.cs.kieler.esterel.Programm;
 import de.cau.cs.kieler.esterel.RelationImplication;
 import de.cau.cs.kieler.esterel.RelationIncompatibility;
+import de.cau.cs.kieler.esterel.Run;
 import de.cau.cs.kieler.esterel.Signal;
 import de.cau.cs.kieler.esterel.SignalDecl;
+import de.cau.cs.kieler.esterel.SignalRenaming;
 import de.cau.cs.kieler.esterel.Sustain;
+import de.cau.cs.kieler.esterel.Trap;
+import de.cau.cs.kieler.esterel.TrapDecl;
+import de.cau.cs.kieler.esterel.Type;
+import de.cau.cs.kieler.esterel.TypeDecl;
+import de.cau.cs.kieler.esterel.TypeRenaming;
 
 /**
  * This class contains custom scoping description.
@@ -39,23 +55,26 @@ import de.cau.cs.kieler.esterel.Sustain;
  */
 public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 
-	// TODO scope for other references than signals
+	/* ************************************************************************
+	 * Scopes for references in one module
+	 * ************************************************************************
+	 */
 
 	IScope scope_RelationImplication_first(RelationImplication context,
 			EReference ref) {
-		return new SimpleScope(getModuleSignals(context));
+		return new SimpleScope(getInterfaceSignals(context));
 
 	}
 
 	IScope scope_RelationImplication_second(RelationImplication context,
 			EReference ref) {
-		return new SimpleScope(getModuleSignals(context));
+		return new SimpleScope(getInterfaceSignals(context));
 
 	}
 
 	IScope scope_RelationIncompatibility_incomp(
 			RelationIncompatibility context, EReference ref) {
-		return new SimpleScope(getModuleSignals(context));
+		return new SimpleScope(getInterfaceSignals(context));
 
 	}
 
@@ -64,14 +83,17 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 
 	}
 
-	// TODO Scope for Renamings (signals out of  other modules)
-
 	IScope scope_Sustain_signal(Sustain context, EReference ref) {
 		return new SimpleScope(getAllSignals(context));
 
 	}
 
-	IScope scope_DataUnaryExpr_signal(DataUnaryExpr context, EReference ref) {
+	IScope scope_DataCurrent_signal(DataCurrent context, EReference ref) {
+		return new SimpleScope(getAllSignals(context));
+
+	}
+	
+	IScope scope_DataPre_signal(DataPre context, EReference ref) {
 		return new SimpleScope(getAllSignals(context));
 
 	}
@@ -81,7 +103,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 
 	}
 
-	private ArrayList<IScopedElement> getModuleSignals(EObject context) {
+	private ArrayList<IScopedElement> getInterfaceSignals(EObject context) {
 		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
 		EObject parent = context.eContainer();
 		while (!(parent instanceof ModuleInterface))
@@ -137,6 +159,203 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 			}
 		}
 		return scopeElems;
+	}
+
+	IScope scope_Exit_trap(Exit context, EReference ref) {
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		EObject parent = context.eContainer();
+		// find all Traps
+		while (!(parent instanceof ModuleBody)) {
+			if (parent instanceof Trap) {
+				EList<TrapDecl> trapDecl = ((Trap) parent).getTrapDeclList()
+						.getTrapDecl();
+				// add Trap to the scope
+				for (TrapDecl trap : trapDecl)
+					scopeElems.add(ScopedElement.create(trap.getName(), trap));
+			}
+			parent = parent.eContainer();
+		}
+		return new SimpleScope(scopeElems);
+	}
+
+	IScope scope_DataTrap_trap(DataTrap context, EReference ref) {
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		EObject parent = context.eContainer();
+		// find all Traps
+		while (!(parent instanceof ModuleBody)) {
+			if (parent instanceof Trap) {
+				EList<TrapDecl> trapDecl = ((Trap) parent).getTrapDeclList()
+						.getTrapDecl();
+				// add Trap to the scope
+				for (TrapDecl trap : trapDecl)
+					scopeElems.add(ScopedElement.create(trap.getName(), trap));
+			}
+			parent = parent.eContainer();
+		}
+		return new SimpleScope(scopeElems);
+
+	}
+
+	IScope scope_DataFunction_function(DataFunction context, EReference ref) {
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		EObject parent = context.eContainer();
+		// Go up in the Structure until Module/MainModule
+		while (!(parent instanceof ModuleBody))
+			parent = parent.eContainer();
+		if (parent instanceof ModuleBody)
+			parent = parent.eContainer();
+		// Get the Functions declared in this Module
+		ModuleInterface modInt = null;
+		if (parent instanceof Module) {
+			modInt = ((Module) parent).getModInt();
+		}
+		if (parent instanceof MainModule) {
+			modInt = ((MainModule) parent).getModInt();
+		}
+		EList<FunctionDecl> intFunctionDecl = modInt.getIntFunctionDecl();
+		if (!(intFunctionDecl.isEmpty())) {
+			for (FunctionDecl funDecl : intFunctionDecl) {
+				EList<Function> funList = funDecl.getFunction();
+				for (Function fun : funList) {
+					scopeElems.add(ScopedElement.create(fun.getName(), fun));
+				}
+			}
+		}
+		return new SimpleScope(scopeElems);
+
+	}
+
+	/* ************************************************************************
+	 * Scopes for renaming
+	 * ************************************************************************
+	 */
+
+	IScope scope_SignalRenaming_oldName(SignalRenaming context, EReference ref) {
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ModuleInterface modInt = getModuleInterface(context);
+		if (!(modInt.equals(null))) {
+			EList<SignalDecl> intSignalDecl = modInt.getIntSignalDecl();
+			if (!(intSignalDecl.isEmpty()))
+				for (SignalDecl sigDecl : intSignalDecl) {
+					EList<Signal> sigList = sigDecl.getSignal();
+					for (Signal sig : sigList)
+						scopeElems
+								.add(ScopedElement.create(sig.getName(), sig));
+				}
+		}
+		return new SimpleScope(scopeElems);
+
+	}
+
+	IScope scope_SignalRenaming_newName(SignalRenaming context, EReference ref) {
+		return new SimpleScope(getAllSignals(context));
+
+	}
+
+	IScope scope_TypeRenaming_oldName(TypeRenaming context, EReference ref) {
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ModuleInterface modInt = getModuleInterface(context);
+		if (!(modInt.equals(null))) {
+			EList<TypeDecl> intTypeDecl = modInt.getIntTypeDecl();
+			if (!(intTypeDecl.isEmpty()))
+				for (TypeDecl typeDecl : intTypeDecl) {
+					EList<Type> typeList = typeDecl.getType();
+					for (Type type : typeList)
+						scopeElems.add(ScopedElement.create(type.getName(),
+								type));
+				}
+		}
+		return new SimpleScope(scopeElems);
+	}
+
+	IScope scope_TypeRenaming_newName(TypeRenaming context, EReference ref) {
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		EObject parent = context.eContainer();
+		while (!(parent instanceof ModuleBody))
+			parent = parent.eContainer();
+		if (parent instanceof ModuleBody)
+			parent = parent.eContainer();
+		ModuleInterface modInt = null;
+		if (parent instanceof Module)
+			modInt = ((Module) parent).getModInt();
+		else if (parent instanceof MainModule)
+			modInt = ((MainModule) parent).getModInt();
+		if (!(modInt.equals(null))) {
+			EList<TypeDecl> intTypeDecl = modInt.getIntTypeDecl();
+			if (!(intTypeDecl.isEmpty()))
+				for (TypeDecl typeDecl : intTypeDecl) {
+					EList<Type> typeList = typeDecl.getType();
+					for (Type type : typeList)
+						scopeElems.add(ScopedElement.create(type.getName(),
+								type));
+				}
+		}
+		return new SimpleScope(scopeElems);
+	}
+
+	IScope scope_FunctionRenaming_oldName(FunctionRenaming context,
+			EReference ref) {
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ModuleInterface modInt = getModuleInterface(context);
+		if (!(modInt.equals(null))) {
+			EList<FunctionDecl> intFunDecl = modInt.getIntFunctionDecl();
+			if (!(intFunDecl.isEmpty()))
+				for (FunctionDecl funDecl : intFunDecl) {
+					EList<Function> funList = funDecl.getFunction();
+					for (Function fun : funList)
+						scopeElems
+								.add(ScopedElement.create(fun.getName(), fun));
+				}
+		}
+		return new SimpleScope(scopeElems);
+	}
+
+	IScope scope_FunctionRenaming_newName(FunctionRenaming context,
+			EReference ref) {
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		EObject parent = context.eContainer();
+		while (!(parent instanceof ModuleBody))
+			parent = parent.eContainer();
+		if (parent instanceof ModuleBody)
+			parent = parent.eContainer();
+		ModuleInterface modInt = null;
+		if (parent instanceof Module)
+			modInt = ((Module) parent).getModInt();
+		else if (parent instanceof MainModule)
+			modInt = ((MainModule) parent).getModInt();
+		if (!(modInt.equals(null))) {
+			EList<FunctionDecl> intFunDecl = modInt.getIntFunctionDecl();
+			if (!(intFunDecl.isEmpty()))
+				for (FunctionDecl funDecl : intFunDecl) {
+					EList<Function> funList = funDecl.getFunction();
+					for (Function fun : funList)
+						scopeElems
+								.add(ScopedElement.create(fun.getName(), fun));
+				}
+		}
+		return new SimpleScope(scopeElems);
+	}
+
+	/*
+	 * Gets the ModuleInterface of the Module the reference in the Run-Object
+	 * points to
+	 */
+	private ModuleInterface getModuleInterface(EObject context) {
+		EObject parent = context.eContainer();
+		// get the name of the module the reference points to
+		while (!(parent instanceof Run))
+			parent = parent.eContainer();
+		String moduleName = ((Run) parent).getModule().getModule().getName();
+		// find the module the reference points to
+		while (!(parent instanceof Programm))
+			parent = parent.eContainer();
+		EList<EObject> moduleList = ((Programm) parent).getModule();
+		for (EObject module : moduleList)
+			if (module instanceof Module)
+				if (((Module) module).getName().equals(moduleName))
+					return ((Module) module).getModInt();
+		return null;
+
 	}
 
 }

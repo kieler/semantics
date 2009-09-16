@@ -13,10 +13,10 @@ Programm hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
 	module+=MainModule (module+=Module)*;
 	
 MainModule:
-	"module" name=ID ":" (modInt=ModuleInterface)? modBody=ModuleBody EndModule;	
+	"module" name=EsterelID ":" (modInt=ModuleInterface)? modBody=ModuleBody EndModule;	
 
 Module:
-	"module" name=ID ":" (modInt=ModuleInterface)? modBody=ModuleBody EndModule;
+	"module" name=EsterelID ":" (modInt=ModuleInterface)? modBody=ModuleBody EndModule;
 
 EndModule:
 	"end" "module"
@@ -62,10 +62,10 @@ RelationType:
 	RelationImplication|RelationIncompatibility;
 
 RelationImplication :
-	first=[Signal] type="=>" second=[Signal];
+	first=[Signal|EsterelID] type="=>" second=[Signal|EsterelID];
 	
 RelationIncompatibility :
-	incomp+=[Signal] type="#" incomp+=[Signal] ("#" incomp+=[Signal])*;
+	incomp+=[Signal|EsterelID] type="#" incomp+=[Signal|EsterelID] ("#" incomp+=[Signal|EsterelID])*;
 
 // ==> Types
 
@@ -73,7 +73,7 @@ TypeDecl:
 	"type" type+=Type ("," type+=Type)* ";"; 
 
 Type:
-	name=ID;
+	name=EsterelID;
 
 	
 // ==> Constants
@@ -81,15 +81,14 @@ ConstantDecl:
 	"constant" constant+=OneTypeConstantDecl ("," constant+=OneTypeConstantDecl)* ";";
 
 OneTypeConstantDecl:
-	constant+=Constant ("," constant+=Constant)* ":" (type=ID | type=BaseType);
+	constant+=Constant ("," constant+=Constant)* ":" (type=EsterelID | type=BaseType);
 	
 Constant:
-	name=ID ("=" value=ConstantValue)?;
+	name=EsterelID ("=" value=ConstantValue)?;
 
 ConstantValue:
-	ID
-	| Number
-	| INT
+	EsterelID
+	| ('-')? INT
 	| STRING
 	| Float
 	| Boolean;
@@ -100,7 +99,7 @@ FunctionDecl:
 	"function" function+=Function ("," function+=Function)* ";";
 	
 Function:
-	name=ID "(" (idList+=(ID|BaseType) ("," idList+=(ID|BaseType))*)? ")" ":" (type=ID | type=BaseType);
+	name=EsterelID "(" (idList+=(EsterelID|BaseType) ("," idList+=(EsterelID|BaseType))*)? ")" ":" (type=EsterelID | type=BaseType);
 
 // ==============================================
 // ===            B.4 Statements              ===
@@ -142,7 +141,7 @@ Block:
 	"["statement=Statement"]";
 	
 Assignment:
-	variable=ID ":=" expr=DataExpr;
+	variable=EsterelID ":=" expr=DataExpr;
 
 // --> B.4.2 abort: Strong Preemption
 Abort:
@@ -197,7 +196,7 @@ DoWatchingEnd:
 	
 // a help function to force an "emit" object into the model
 Emit: 
-	"emit" signal=[Signal] ("(" expr=DataExpr")")?; //("(" expr=DataExpr ")")?;
+	"emit" signal=[Signal|EsterelID] ("(" expr=DataExpr")")?; //("(" expr=DataExpr ")")?;
 	
 // --> B.4.8 every-do: Conditional Iteration
 EveryDo:
@@ -205,7 +204,7 @@ EveryDo:
 
 // --> B.4.10 exit: Trap Exit
 Exit:
-	"exit" trap=[Trap] ("(" dataExpr=DataExpr ")")?;
+	"exit" trap=[TrapDecl|EsterelID] ("(" dataExpr=DataExpr ")")?;
 	
 // --> B.4.11 halt: Wait Forever
 Halt:
@@ -287,7 +286,7 @@ Run:
 	|	"copymodule" module=ModuleRenaming ("[" list=RenamingList"]")?; //deprecated
 
 ModuleRenaming:
-	module=[Module] (renamed?="/" newName=ID)?;
+	module=[Module|EsterelID] (renamed?="/" newName=EsterelID)?;
 	
 RenamingList:
 	list+=Renaming (";" list+=Renaming)*;
@@ -299,16 +298,16 @@ Renaming:
 	|	"signal" renaming+=SignalRenaming ("," renaming+=SignalRenaming)*;
 	
 TypeRenaming:
-	oldName=[Type] "/" newName=ID;
+	oldName=[Type|EsterelID] "/" newName=[Type|EsterelID];
 	
 ConstantRenaming:
-	value=ConstantValue "/" newName=ID;
+	value=ConstantValue "/" newName=EsterelID;
 	
 FunctionRenaming:
-	oldName=[Function] "/" newName=ID;
+	oldName=[Function|EsterelID] "/" newName=[Function|EsterelID];
 
 SignalRenaming:
-	oldName=[Signal] "/" newName=ID;
+	oldName=[Signal|EsterelID] "/" newName=[Signal|EsterelID];
 	
 // --> B.4.20 signal: Local Signal Declaration <--
 	
@@ -325,7 +324,7 @@ Suspend:
 
 // --> B.4.22 sustain: Emit a Signal Indefinitely
 Sustain:
-	"sustain" signal=[Signal] ("(" dataExpr=DataExpr ")")?;
+	"sustain" signal=[Signal|EsterelID] ("(" dataExpr=DataExpr ")")?;
 	
 // --> B.4.23 trap: TrapDeclaration and Handling
 Trap:
@@ -335,7 +334,7 @@ TrapDeclList:
 	trapDecl+=TrapDecl ("," trapDecl+=TrapDecl)*;
 	
 TrapDecl:
-	name=ID (channelDesc=ChannelDescription)?;
+	name=EsterelID (channelDesc=ChannelDescription)?;
 	
 TrapHandlerList:
 	trapHandler+=TrapHandler (trapHandler+=TrapHandler)*;
@@ -348,12 +347,12 @@ Variable:
 	"var" varDecl=VariableDecl "in" statement=Statement "end" "var"?;
 
 VariableDecl:
-	varList=VariableList ":" (type=ID | type=BaseType)
-	({VariableDecl.left=current}"," varList=VariableList ":" (type=ID | type=BaseType))*;
+	varList=VariableList ":" (type=EsterelID | type=BaseType)
+	({VariableDecl.left=current}"," varList=VariableList ":" (type=EsterelID | type=BaseType))*;
 	
 VariableList:
-	variable=ID (":=" expression=DataExpr)? 
-	({VariableList.left=current} "," variable=ID (":=" expression=DataExpr)?)*;
+	variable=EsterelID (":=" expression=DataExpr)? 
+	({VariableList.left=current} "," variable=EsterelID (":=" expression=DataExpr)?)*;
 
 // --> B.4.25 weak abort: Weak Preemption
 WeakAbort:
@@ -378,21 +377,9 @@ WeakAbortCase:
 
 // --> B.3.1 Data Expressions
 DataExpr:
-	op=DataOp expr=DataExpr
-	| (expr=DataUnaryExpr ({DataExpr.left=current}op=DataOp expr=DataExpr)?);
+	(DataUnaryExpr ( {DataExpr.left=current} op=DataOp  right=DataExpr)?)
+	|	(op=DataOp  expr=DataExpr);
 
-DataUnaryExpr:
-	ID
-	| Float
-	| Boolean
-	| INT
-	| STRING
-	| "(" DataExpr ")"
-	| "?" signal=[Signal]
-	| "pre" "(" "?" signal=[Signal] ")"
-	| "??" trap=[Trap]
-	| function=[Function] "(" expression+=DataExpr ("," expression+=DataExpr)* ")";
-		
 DataOp:
 	"and"
 	|	"or"
@@ -409,6 +396,48 @@ DataOp:
 	|	"/"
 	|	"mod";	
 
+DataUnaryExpr:
+	DataValueFloat
+	| DataValueBoolean
+	| DataValueInt
+	| DataValueString
+	| DataValueID
+	| DataBlock
+	| DataCurrent
+	| DataPre
+	| DataTrap
+	| DataFunction;
+		
+DataValueID:
+	value = EsterelID;
+	
+DataValueFloat:
+	value = Float;
+	
+DataValueBoolean:
+	value = Boolean;
+	
+DataValueInt:
+	value = INT;
+	
+DataValueString:
+	value = STRING;
+	
+DataBlock:
+	"(" dataExpr=DataExpr ")";
+	
+DataCurrent:
+	"?" signal=[Signal|EsterelID];
+	
+DataPre:
+	"pre" "(" "?" signal=[Signal|EsterelID] ")";
+
+DataTrap:
+	"??" trap=[TrapDecl|EsterelID];
+	
+DataFunction:
+	function=[Function|EsterelID] "(" dataExpr+=DataExpr ("," dataExpr+=DataExpr)* ")";
+
 // --> B.3.3 Signal Expressions <--
 // --> B.3.5 Trap Expressions <--
 TrapExpr:
@@ -421,7 +450,7 @@ SigExprAND:
 	unaExpr+=SigExprUnary ("and" unaExpr+=SigExprUnary)*;
 
 SigExprUnary:
-	expr=ID
+	expr=EsterelID
 	|	"(" sigExpr=SigExpr ")"
 	|	"not" sigExpr=SigExprUnary;
 	
@@ -431,7 +460,7 @@ DelayExpr:
 	|	(expr=DataExpr event=DelayEvent);
 	
 DelayEvent:
-	signal=[Signal]
+	signal=[Signal|EsterelID]
 	|	"pre" "(" SigExpr ")"
 	|	"[" SigExpr"]";
 	
@@ -444,20 +473,20 @@ DelayEvent:
 
 // ==> Signals <==
 ChannelDescription:
-	(":" (type=ID | type=BaseType))
-	|	("(" (type=ID | type=BaseType) ")")
-	|	(":=" dataExpr=DataExpr ":" (type=ID | type=BaseType));
+	(":" (type=EsterelID | type=BaseType))
+	|	("(" (type=EsterelID | type=BaseType) ")")
+	|	(":=" dataExpr=DataExpr ":" (type=EsterelID | type=BaseType));
 	
 Signal:
-	name=ID (channel=ChannelDescription)?;
+	name=EsterelID (channel=ChannelDescription)?;
 
 Tick:
 	"tick" {Tick};
 
 	
 Sensor:
-	(name=ID ":" (type=ID | type=BaseType))
-	|	(name=ID "(" (type=ID | type=BaseType) ")");
+	(name=EsterelID ":" (type=EsterelID | type=BaseType))
+	|	(name=EsterelID "(" (type=EsterelID | type=BaseType) ")");
 
 
 terminal Float: ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
@@ -465,4 +494,4 @@ terminal Boolean : "true" | "false";
 terminal BaseType: 	"boolean" | "integer" | "float" | "double" | "string";
 terminal Esterel_SL_Comment: '%' !('\n'|'\r')* ('\r'? '\n')?;
 terminal Esterel_ML_Comment: ('%''{') -> ('}''%');
-terminal Number: ('+'|'-') ' '? INT;
+terminal EsterelID: ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
