@@ -14,7 +14,7 @@
                      packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage"
                      popupLocationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
          <transformation
-               keyboardShortcut="Ctrl+K S"
+               keyboardShortcut="CTRL+K S"
                name="Add Successor State"
                selectionCount="1"
                showInMenu="true"
@@ -26,9 +26,12 @@
             <element_selection
                   class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
             </element_selection>
+            <element_selection
+                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
+            </element_selection>
          </transformation>
          <transformation
-               keyboardShortcut="Ctrl+K P"
+               keyboardShortcut="CTRL+K P"
                name="Add Predecessor State"
                selectionCount="1"
                showInMenu="true"
@@ -40,9 +43,12 @@
             <element_selection
                   class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
             </element_selection>
+            <element_selection
+                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
+            </element_selection>
          </transformation>
          <transformation
-               keyboardShortcut="Ctrl+K C"
+               keyboardShortcut="CTRL+K C"
                name="Add Choice"
                selectionCount="1"
                showInMenu="true"
@@ -54,9 +60,12 @@
             <element_selection
                   class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
             </element_selection>
+            <element_selection
+                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
+            </element_selection>
          </transformation>
          <transformation
-               keyboardShortcut="Ctrl+K F"
+               keyboardShortcut="CTRL+K F"
                name="Flip Transition"
                selectionCount="1"
                showInMenu="true"
