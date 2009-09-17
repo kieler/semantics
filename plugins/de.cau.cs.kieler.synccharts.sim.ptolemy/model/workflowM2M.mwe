@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<workflow>
+	<property name="source" value="example.kits" />
+	<property name="target" value="src-gen/generated.moml" />
+
+	<!-- set up EMF for standalone execution -->
+	<bean class="org.eclipse.emf.mwe.utils.StandaloneSetup" >
+		<registerGeneratedEPackage value="de.cau.cs.kieler.synccharts.SyncchartsPackage" />
+		<registerGeneratedEPackage value="Moml.MomlPackage" />
+		<platformUri value=".."/>
+	</bean>
+	
+	<!-- load model and store it in slot 'source' -->
+	<component class="org.eclipse.emf.mwe.utils.Reader">
+	    <uri value="${source}" />
+		<modelSlot value="source" />
+	</component>
+	
+	
+	<!-- perform transformation -->
+	<component class="org.eclipse.xtend.XtendComponent">
+		<metaModel id="mm"
+			class="org.eclipse.xtend.typesystem.emf.EmfRegistryMetaModel"/>
+		<invoke value="synccharts2moml::transform(source)" />
+		<outputSlot value="target"/>
+	</component>
+
+	<!-- store model -->
+	<component class="de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.MomlWriter">
+		<uri value="${target}" />
+		<modelSlot value="target"/>
+	</component>
+		
+
+</workflow>
