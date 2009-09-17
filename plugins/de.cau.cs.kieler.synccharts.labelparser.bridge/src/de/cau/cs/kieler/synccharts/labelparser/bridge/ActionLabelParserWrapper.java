@@ -113,12 +113,13 @@ public class ActionLabelParserWrapper implements IParser {
                         .getRealObject());
                 
                 String serializedString = serializeAction(action);
-                if(serializedString != null){
+                String triggersAndEffectsString = action.getTriggersAndEffects();
+
+                if(serializedString != null && !serializedString.equals("")){
    //                 doUpdateTriggerEffectsString(serializedString, action);
                     return serializedString;
                 }
                 else{
-                    String triggersAndEffectsString = action.getTriggersAndEffects();
                     if(triggersAndEffectsString != null)
                         return triggersAndEffectsString;    
                 }
