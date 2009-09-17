@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:synccharts="http://kieler.cs.cau.de/synccharts">
+  <innerStates label="SyncChart">
+    <signals name="I" isInput="true"/>
+    <signals name="O" isOutput="true"/>
+    <signals name="L" isLocal="true"/>
+    <regions>
+      <innerStates label="A" isInitial="true">
+        <outgoingTransitions triggersAndEffects="I / O, L" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.1">
+          <effects xsi:type="synccharts:Emission" signal="O"/>
+          <effects xsi:type="synccharts:Emission" signal="L"/>
+          <trigger xsi:type="synccharts:SignalReference" signal="I"/>
+        </outgoingTransitions>
+      </innerStates>
+      <innerStates label="B"/>
+    </regions>
+    <regions>
+      <innerStates label="C" isInitial="true">
+        <outgoingTransitions triggersAndEffects="L /" priority="1" targetState="//@innerStates.0/@regions.1/@innerStates.1">
+          <trigger xsi:type="synccharts:SignalReference" signal="L"/>
+        </outgoingTransitions>
+      </innerStates>
+      <innerStates label="D">
+        <signals name="L" isInput="true"/>
+        <regions>
+          <innerStates label="E" isInitial="true">
+            <outgoingTransitions triggersAndEffects="L /" priority="1" targetState="//@innerStates.0/@regions.1/@innerStates.1/@regions.0/@innerStates.1">
+              <trigger xsi:type="synccharts:SignalReference" signal="L"/>
+            </outgoingTransitions>
+          </innerStates>
+          <innerStates id="" label="F"/>
+        </regions>
+      </innerStates>
+    </regions>
+  </innerStates>
+</synccharts:Region>

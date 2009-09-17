@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:synccharts="http://kieler.cs.cau.de/synccharts">
+  <innerStates label="SyncChart">
+    <signals name="I" isInput="true"/>
+    <regions>
+      <innerStates id="" label="Makrostate" isInitial="true">
+        <regions/>
+      </innerStates>
+    </regions>
+  </innerStates>
+</synccharts:Region>
