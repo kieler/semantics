@@ -103,8 +103,11 @@ public class TransitionLabelScopeProvider extends
             List<IScopedElement> elements = new ArrayList<IScopedElement>();
             elements.addAll(scopedElements);
             IScope outerScope = this.getOuterScope();
-            elements.addAll((Collection<? extends IScopedElement>) outerScope
-                    .getContents());
+            while ( ! outerScope.equals(IScope.NULLSCOPE) ){
+                elements.addAll((Collection<? extends IScopedElement>) outerScope
+                        .getContents());
+                outerScope = outerScope.getOuterScope();
+            }
             return elements;
         }
 
@@ -129,8 +132,8 @@ public class TransitionLabelScopeProvider extends
             }
                 else
                     if(parent instanceof State){            
-                        if (((Signal) parent).getParentRegion() != null)
-                            return new ExternalScope(((Signal) parent).getParentRegion());
+                        if (((State) parent).getParentRegion() != null)
+                            return new ExternalScope(((State) parent).getParentRegion());
                     }
             return IScope.NULLSCOPE;
         }
