@@ -39,11 +39,20 @@ context State if (label != null && !label.matches("\\s*"))
 	ERROR "States within a region need to have different labels." :
 	parentRegion.innerStates.forAll(s| (s.label != label) || (s == this));
 
+context State
+	ERROR "Names and IDs should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
+	(id.matches("\\w*") && label.matches("\\w*"));
+
 // ================================================================================================
 // Regions
+
 context Region if (parentState != null) // not checked for root state
 	ERROR "Every region should have exactly one initial state!" : 
 	(innerStates.select(s|s.isInitial).size == 1);
+
+context Region
+	ERROR "Names and IDs should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
+	id.matches("\\w*");
 
 // ================================================================================================
 // Signals
@@ -56,7 +65,22 @@ context Signal ERROR "signals have to be input, local or output!" :
 context Signal if ((initialValue == null) || (initialValue == "")) 
     ERROR "only valued signals may have a combine type other than NONE!" :
 	combineOperator == CombineOperator::NONE;
+	
+context Signal
+	ERROR "Signals need unique names in a State or Region declaration." :
+	( parentRegion != null && parentRegion.signals.forAll(s| (s.name != name) || (s == this)) ||
+	  parentState != null && parentState.signals.forAll(s| (s.name != name) || (s == this)) )
+	;
 
+context Variable
+	ERROR "Variables need unique names in a Region declaration." :
+	( parentRegion != null && parentRegion.signals.forAll(s| (s.name != name) || (s == this)) )
+	;
+
+context ValuedObject
+	ERROR "Names and IDs should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
+	(name.matches("\\w*"));
+	
 // ================================================================================================
 // Transitions
 context Transition if (isImmediate) ERROR "Immediate transitions must not have a delay!" :
