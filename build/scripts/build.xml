@@ -96,9 +96,9 @@
 			</path>
 		</foreach -->
 		
-        <loadfile property="doc.classpath">
+		<loadfile property="doc.classpath">
 			<concat>
-				<fileset dir="plugins" includes="build.xml" />
+				<fileset dir="plugins" includes="**/build.xml" />
 			</concat>
 			<filterchain>
 				<linecontainsregexp>
@@ -107,7 +107,7 @@
 			</filterchain>
 		</loadfile> 
 
-        <loadfile property="replacement" srcfile="${scriptdir}/javadoc.template.xml">
+		<loadfile property="replacement" srcfile="${scriptdir}/javadoc.template.xml">
 			<filterchain>
 				<expandproperties/>
 			</filterchain>
