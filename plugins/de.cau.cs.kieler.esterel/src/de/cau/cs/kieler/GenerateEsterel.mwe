@@ -65,6 +65,10 @@
 				message="You are generating without ANTLR. It is highly recommended to download and use the plugin 'de.itemis.xtext.antlr' \n\t using the update site http://download.itemis.com/updates/.">
 			</fragment>
 			<!-- <fragment class="de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment"/> --> 
+			<fragment class="de.itemis.xtext.antlr.XtextAntlrGeneratorFragment">
+   	   			<options backtrack="true" memoize="true" k="-1"/>
+		 	</fragment>
+			
 			
 		</language>
 	</component>

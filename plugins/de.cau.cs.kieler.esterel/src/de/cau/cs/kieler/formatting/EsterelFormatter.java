@@ -3,6 +3,8 @@
  */
 package de.cau.cs.kieler.formatting;
 
+import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 
@@ -22,6 +24,14 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
 		de.cau.cs.kieler.services.EsterelGrammarAccess f = (de.cau.cs.kieler.services.EsterelGrammarAccess) getGrammarAccess();
+		Iterable<Keyword> keywords = GrammarUtil.containedKeywords(f
+				.getGrammar());
+		for (Keyword keyword : keywords) {
+			if ((";".equals(keyword.getValue()))
+					| (",".equals(keyword.getValue()))) {
+				c.setNoSpace().before(keyword);
+			}
+		}
 		// Linewrap after <moduleName>":"
 		c.setLinewrap().after(f.getMainModuleAccess().getColonKeyword_2());
 		c.setNoSpace().before(f.getMainModuleAccess().getColonKeyword_2());
@@ -29,40 +39,52 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap().after(f.getModuleAccess().getColonKeyword_2());
 		c.setNoSpace().before(f.getModuleAccess().getColonKeyword_2());
 		// Linewrap between ModuleInterface and ModuleBody
-//		c.setLinewrap(2).after(f.getModuleAccess().getModIntAssignment_3());
+		// c.setLinewrap(2)
+		// .before(
+		// f.getModuleBodyAccess()
+		// .getStatementStatementParserRuleCall_0());
 		// Linewraps in the ModuleInterface
 		c.setLinewrap()
 				.after(f.getSignalDeclAccess().getSemicolonKeyword_0_4());
-		c.setNoSpace()
-				.before(f.getSignalDeclAccess().getSemicolonKeyword_0_4());
+		c.setLinewrap().after(f.getSignalDeclAccess().getCommaKeyword_0_3_0());
+		c.setIndentationSpace(getMaxIndentation(f.getSignalDeclAccess()
+				.getInputKeyword_0_1().getValue()));
+		c.setIndentation(f.getSignalDeclAccess().getInputKeyword_0_1(), f
+				.getSignalDeclAccess().getSemicolonKeyword_0_4());
 		c.setLinewrap()
 				.after(f.getSignalDeclAccess().getSemicolonKeyword_1_4());
-		c.setNoSpace()
-				.before(f.getSignalDeclAccess().getSemicolonKeyword_1_4());
 		c.setLinewrap()
 				.after(f.getSignalDeclAccess().getSemicolonKeyword_2_4());
-		c.setNoSpace()
-				.before(f.getSignalDeclAccess().getSemicolonKeyword_2_4());
 		c.setLinewrap()
 				.after(f.getSignalDeclAccess().getSemicolonKeyword_3_4());
-		c.setNoSpace()
-				.before(f.getSignalDeclAccess().getSemicolonKeyword_3_4());
 		c.setLinewrap().after(f.getTypeDeclAccess().getSemicolonKeyword_3());
-		c.setNoSpace().before(f.getTypeDeclAccess().getSemicolonKeyword_3());
 		c.setLinewrap().after(f.getSensorDeclAccess().getSemicolonKeyword_3());
-		c.setNoSpace().before(f.getSensorDeclAccess().getSemicolonKeyword_3());
 		c.setLinewrap()
 				.after(f.getConstantDeclAccess().getSemicolonKeyword_3());
-		c.setNoSpace()
-				.before(f.getConstantDeclAccess().getSemicolonKeyword_3());
 		c.setLinewrap()
 				.after(f.getRelationDeclAccess().getSemicolonKeyword_4());
-		c.setNoSpace()
-				.before(f.getRelationDeclAccess().getSemicolonKeyword_4());
 		c.setLinewrap()
 				.after(f.getFunctionDeclAccess().getSemicolonKeyword_3());
-		c.setNoSpace()
-				.before(f.getFunctionDeclAccess().getSemicolonKeyword_3());
+		c.setLinewrap().after(
+				f.getProcedureDeclAccess().getSemicolonKeyword_3());
+
+		// Formatting of the module-body
+//		c.setIndentationSpace("  "); // reset indentation for the module body
+		c.setLinewrap().after(f.getSequenceAccess().getSemicolonKeyword_1_1());
+		c.setLinewrap().after(f.getSequenceAccess().getSemicolonKeyword_2());
+		// -> Local Signal <-
+		c.setLinewrap().after(f.getLocalSignalDeclAccess().getInKeyword_2());
+		c.setIndentation(f.getLocalSignalDeclAccess().getInKeyword_2(), f
+				.getLocalSignalDeclAccess().getEndKeyword_4());
 		// ...
+	}
+
+	private String getMaxIndentation(String keyword) {
+		// Max Indentation may be changed here
+		int maxIndent = keyword.length() + 1;
+		String indent = "";
+		for (int i = 0; i < maxIndent; i++)
+			indent += " ";
+		return indent;
 	}
 }

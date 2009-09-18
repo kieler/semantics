@@ -32,7 +32,8 @@ ModuleInterface:
 	|	intSensorDecl+=SensorDecl
 	|	intConstantDecl+=ConstantDecl
 	|	intRelationDecl+=RelationDecl
-	|	intFunctionDecl+=FunctionDecl)+;
+	|	intFunctionDecl+=FunctionDecl
+	|	intProcedureDecl+=ProcedureDecl)+;
 
 // ----------------------------------------------
 //            Interface Declarations
@@ -100,6 +101,16 @@ FunctionDecl:
 	
 Function:
 	name=EsterelID "(" (idList+=(EsterelID|BaseType) ("," idList+=(EsterelID|BaseType))*)? ")" ":" (type=EsterelID | type=BaseType);
+
+// ==> Procedures
+
+ProcedureDecl:
+	"procedure" procedure+=Procedure ("," procedure+=Procedure)* ";";
+
+Procedure:
+	name=EsterelID 
+	"(" (idList+=(EsterelID|BaseType) ("," idList+=(EsterelID|BaseType))*)? ")"
+	"(" (idList+=(EsterelID|BaseType) ("," idList+=(EsterelID|BaseType))*)? ")";
 
 // ==============================================
 // ===            B.4 Statements              ===
@@ -298,16 +309,19 @@ Renaming:
 	|	"signal" renaming+=SignalRenaming ("," renaming+=SignalRenaming)*;
 	
 TypeRenaming:
-	oldName=[Type|EsterelID] "/" newName=[Type|EsterelID];
+	newName=[Type|EsterelID] "/" oldName=[Type|EsterelID];
 	
 ConstantRenaming:
 	value=ConstantValue "/" newName=EsterelID;
 	
 FunctionRenaming:
-	oldName=[Function|EsterelID] "/" newName=[Function|EsterelID];
+	newName=[Function|EsterelID] "/" oldName=[Function|EsterelID];
+	
+ProcedureRenaming:
+	newName=[Procedure|EsterelID] "/" oldName=[Procedure|EsterelID];
 
 SignalRenaming:
-	oldName=[Signal|EsterelID] "/" newName=[Signal|EsterelID];
+	newName=[Signal|EsterelID] "/" oldName=[Signal|EsterelID];
 	
 // --> B.4.20 signal: Local Signal Declaration <--
 	

@@ -32,6 +32,9 @@ import de.cau.cs.kieler.esterel.MainModule;
 import de.cau.cs.kieler.esterel.Module;
 import de.cau.cs.kieler.esterel.ModuleBody;
 import de.cau.cs.kieler.esterel.ModuleInterface;
+import de.cau.cs.kieler.esterel.Procedure;
+import de.cau.cs.kieler.esterel.ProcedureDecl;
+import de.cau.cs.kieler.esterel.ProcedureRenaming;
 import de.cau.cs.kieler.esterel.Programm;
 import de.cau.cs.kieler.esterel.RelationImplication;
 import de.cau.cs.kieler.esterel.RelationIncompatibility;
@@ -92,7 +95,7 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 		return new SimpleScope(getAllSignals(context));
 
 	}
-	
+
 	IScope scope_DataPre_signal(DataPre context, EReference ref) {
 		return new SimpleScope(getAllSignals(context));
 
@@ -331,6 +334,49 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 					for (Function fun : funList)
 						scopeElems
 								.add(ScopedElement.create(fun.getName(), fun));
+				}
+		}
+		return new SimpleScope(scopeElems);
+	}
+
+	IScope scope_ProcedureRenaming_oldName(ProcedureRenaming context,
+			EReference ref) {
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		ModuleInterface modInt = getModuleInterface(context);
+		if (!(modInt.equals(null))) {
+			EList<ProcedureDecl> intProcDecl = modInt.getIntProcedureDecl();
+			if (!(intProcDecl.isEmpty()))
+				for (ProcedureDecl procDecl : intProcDecl) {
+					EList<Procedure> procList = procDecl.getProcedure();
+					for (Procedure proc : procList)
+						scopeElems.add(ScopedElement.create(proc.getName(),
+								proc));
+				}
+		}
+		return new SimpleScope(scopeElems);
+	}
+
+	IScope scope_ProcedureRenaming_newName(ProcedureRenaming context,
+			EReference ref) {
+		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
+		EObject parent = context.eContainer();
+		while (!(parent instanceof ModuleBody))
+			parent = parent.eContainer();
+		if (parent instanceof ModuleBody)
+			parent = parent.eContainer();
+		ModuleInterface modInt = null;
+		if (parent instanceof Module)
+			modInt = ((Module) parent).getModInt();
+		else if (parent instanceof MainModule)
+			modInt = ((MainModule) parent).getModInt();
+		if (!(modInt.equals(null))) {
+			EList<ProcedureDecl> intProcDecl = modInt.getIntProcedureDecl();
+			if (!(intProcDecl.isEmpty()))
+				for (ProcedureDecl procDecl : intProcDecl) {
+					EList<Procedure> procList = procDecl.getProcedure();
+					for (Procedure proc : procList)
+						scopeElems.add(ScopedElement.create(proc.getName(),
+								proc));
 				}
 		}
 		return new SimpleScope(scopeElems);
