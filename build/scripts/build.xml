@@ -90,11 +90,30 @@
 		
 		<!-- extend plugins' build.xml files with a 'doc' target 
 			 CAUTION: foreach is a ant-contrib task declared above! -->
-		<foreach param="buildfile" target="extend.buildfile">
+		<!-- foreach param="buildfile" target="extend.buildfile">
 			<path id="buildfiles">
 				<fileset dir="plugins" includes="**/build.xml" />
 			</path>
-		</foreach>
+		</foreach -->
+		
+        <loadfile property="doc.classpath">
+			<concat>
+				<fileset dir="plugins" includes="build.xml" />
+			</concat>
+			<filterchain>
+				<linecontainsregexp>
+					<regexp pattern="&lt;pathelement"/>
+				</linecontainsregexp>
+			</filterchain>
+		</loadfile> 
+
+        <loadfile property="replacement" srcfile="${scriptdir}/javadoc.template.xml">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</loadfile>
+		
+		<replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${replacement}&lt;/project&gt;" />
 
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
 			<property name="feature.destination" value="${basedir}/update-site/features"/>
