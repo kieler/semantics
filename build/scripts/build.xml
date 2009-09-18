@@ -63,7 +63,7 @@
 		</java>
 	</target>
 
-	<target name="build.feature" if="eclipse.running">
+	<target name="build.feature" if="eclipse.running" description="target for complete feature build and publishing">
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
 		<property name="configs"       value="${feature.configs}" />
@@ -81,8 +81,7 @@
 			<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
 		</delete>
 		
-		<!-- echo message="basedir: ${basedir}" / -->
-		<!-- ant antfile="${eclipse.pdebuild.scripts}/build.xml" target="generate"/ -->
+		<!-- generate build.xml scripts for feature and plugins -->
 		<ant antfile="${genericTargets}" target="generateScript">
 			<property name="type" value="feature"/>
 			<property name="id" value="${feature}"/>
@@ -96,6 +95,7 @@
 			</path>
 		</foreach -->
 		
+		<!-- read javac's classpath information from build.xml scripts -->		
 		<loadfile property="doc.classpath">
 			<concat>
 				<fileset dir="plugins" includes="**/build.xml" />
@@ -107,14 +107,17 @@
 			</filterchain>
 		</loadfile> 
 
+		<!-- load javadoc target template, insert classpath entries (via property doc.classpath) -->		
 		<loadfile property="replacement" srcfile="${scriptdir}/javadoc.template.xml">
 			<filterchain>
 				<expandproperties/>
 			</filterchain>
 		</loadfile>
 		
+		<!-- insert javadoc target in feature's build.xml -->		
 		<replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${replacement}&lt;/project&gt;" />
 
+		<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc -->		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
 			<property name="feature.destination" value="${basedir}/update-site/features"/>
 			<property name="plugin.destination" value="${basedir}/update-site/plugins"/>
@@ -122,21 +125,25 @@
 			<target name="clean" />
 			<target name="build.update.jar" />
 			<target name="zip.logs" />
+			<target name="doc" />
 		</ant>
 
+		<!-- run feature's build.xml: copy customized feature.xml into update-site folder
+			 needed by succeeding feature builds while resolving dependencies -->		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}" target="gather.bin.parts">
 			<property name="feature.base" value="${basedir}/update-site/"/>
 			<property name="updateJar.omitRootfiles" value="true"/>
 			<property name="buildTempFolder" value="${basedir}/buildTempFolder"/>
 		</ant>
 		
+		<!-- run feature's assemble.p2.xml: generate update site entry -->		
 		<echo message="STARTING p2 stuff" />
 		<ant antfile="assemble.${feature}.p2.xml">
 			<property name="buildTempFolder" value="${basedir}/buildTempFolder"/>
 		</ant>
 	</target>
 	
-	<target name="extend.buildfile">
+	<!-- target name="extend.buildfile">
 	    <loadfile property="doc.classpath" srcfile="${buildfile}">
 			<filterchain>
 				<linecontainsregexp>
@@ -151,9 +158,9 @@
 		</loadfile>
 		
 		<replace file="${buildfile}" token="&lt;/project&gt;" value="${replacement}&lt;/project&gt;" />
-	</target>
+	</target -->
 
-	<target name="build.updatesiteEntry">
+	<target name="build.updatesiteEntry" if="eclipse.running" description="target for creating an updatesite entry of last build results">
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
 		<property name="configs"       value="${feature.configs}" />
@@ -165,7 +172,7 @@
 		</ant>
 	</target>
 	
-	<target name="build.rca" if="eclipse.running">
+	<target name="build.rca" if="eclipse.running" description="target for creating the RCA by means of the feature build's results">
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${basedir}/buildrepo" />
 		<property name="configs"       value="${product.configs}" />
@@ -192,7 +199,7 @@
 		</foreach>
 	</target>
 	
-	<target name="update.launcher">
+	<target name="update.launcher" description="private target for updating the permission flags of the launcher binaries">
 		<basename file="${zipfile}" property="platform" suffix="zip" />
 		<unzip dest="${basedir}/${buildLabel}/${platform}" src="${zipfile}">
 			<patternset includes="kieler/kieler.app/Contents/MacOS/kieler" />

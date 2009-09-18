@@ -4,7 +4,7 @@ ${doc.classpath}		</path>
 
 		<javadoc access="protected"
 				 author="true"
-				 destdir="./doc"
+				 destdir="${basedir}/doc"
 				 doctitle="KIELER API Specification"
 				 nodeprecated="false"
 				 nodeprecatedlist="false"
