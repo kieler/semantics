@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <workflow>
-	<property name="source" value="example.kits" />
+	<property name="source" value="default.kits" />
 	<property name="target" value="src-gen/generated.moml" />
 
 	<!-- set up EMF for standalone execution -->

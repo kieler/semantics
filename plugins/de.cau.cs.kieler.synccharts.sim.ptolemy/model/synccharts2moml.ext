@@ -279,8 +279,8 @@ create EntityType this createModalControllerEntity(synccharts::Region region,
    	this.setName("_Controller") ->
   	//this.setClass1("ptolemy.domains.fsm.modal.ModalController") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.modal.ModalController") ->
-  	//first add signals
-	addSignalsToModalController(this, signalList, region) ->  	
+  	//first add signals //CHECK//
+	addSignalsToModalController(this, null, signalList, region) ->  	
   	//then iterated all states (if any in this region)
 	(region.innerStates.size > 0) ? IterateStates(region.innerStates, this) : null
 ;
@@ -299,7 +299,7 @@ create EntityType this createMacroStateEntity(synccharts::State state):
   	SetStateInitialFinalFlag(state, this)
 ;
 //create ModalRefinement == State-Definition (of a macro state /w regions)
-create EntityType this createMacroStateRefinementEntity(synccharts::State state,
+create EntityType this createMacroStateRefinementEntity(synccharts::State state, EntityType modalModel,
 														List[synccharts::Signal] signalList):
    	this.setName(hash(getURIFragment(state))) ->
   	//this.setClass1("ptolemy.domains.fsm.modal.Refinement") -> //CHANGED 16.09.2009
@@ -307,7 +307,7 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
    	this.property.add(createSRDirector()) ->
    	signalList.addAll(state.signals) ->
    	//add signals to refinement (so that outer signals are visible inside)
-   	this.addSignalsToModalController(signalList, state.parentRegion) ->
+   	this.addSignalsToModalController(modalModel, signalList, state.parentRegion) ->
    	IterateRegions(state.regions, this, signalList)
 ;
 //create SimpleState == State-Component 
@@ -413,7 +413,7 @@ Void IterateStatesRefinement(List[synccharts::State] stateList,
 								  List[synccharts::Signal] signalList):
  	let state = stateList.last():
  	IsMacroState(state) ? entity.entity.add(
- 							createMacroStateRefinementEntity(state, signalList)) 
+ 							createMacroStateRefinementEntity(state, entity, signalList)) 
  						: null ->
     (stateList.size > 1) ? IterateStatesRefinement(stateList.withoutLast(), entity, signalList) : null
 ;
@@ -509,7 +509,7 @@ Void addTransition(	synccharts::Transition transition,
 	entity.link.add(link2) 
 ;
 
-//create a Relation Type for a Port connection to a ModalController
+//create a Relation Type for a Port connection to a ModalController or ModalModel
 Void addPortRelationAndLinks(EntityType entity, String portName):
     let relation = new RelationType:
 	let p1 = new PropertyType:
@@ -606,8 +606,6 @@ Void addSignalsToModalModel(EntityType entity,
 	p4b.setName("environment_output") ->
 	p4c.setName("local_input") ->
 	p4d.setName("local_output") ->
-	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
-	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 	p4a.setClass("ptolemy.kernel.util.StringAttribute") ->
 	p4b.setClass("ptolemy.kernel.util.StringAttribute") ->
 	p4c.setClass("ptolemy.kernel.util.StringAttribute") ->
@@ -636,7 +634,7 @@ Void addSignalsToModalModel(EntityType entity,
 	
 	//also add necessary relation that connect above ports with the controller
 	(!portType.name.matches("0")) ?
-		addPortRelationAndLinks(entity, port.name) : null ->
+			addPortRelationAndLinks(entity, port.name) : null ->
 	
 	//if still signals remain, continue
 	(signalList.size > 1) ? addSignalsToModalModel(entity,
@@ -644,7 +642,7 @@ Void addSignalsToModalModel(EntityType entity,
 												   region) : null
 ;
 
-Void addSignalsToModalController(EntityType entity,
+Void addSignalsToModalController(EntityType entity, EntityType parent,
 								 List[synccharts::Signal] signalList,
 								 synccharts::Region region) :
 								 
@@ -667,8 +665,6 @@ Void addSignalsToModalController(EntityType entity,
 	p4b.setName("environment_output") ->
 	p4c.setName("local_input") ->
 	p4d.setName("local_output") ->
-	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
-	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 	p4a.setClass("ptolemy.kernel.util.StringAttribute") ->
 	p4b.setClass("ptolemy.kernel.util.StringAttribute") ->
 	p4c.setClass("ptolemy.kernel.util.StringAttribute") ->
@@ -694,13 +690,24 @@ Void addSignalsToModalController(EntityType entity,
 	//only add ports that are used ( w/ type != 0)
 	(!portType.name.matches("0")) ?
 			entity.port.add(port) : null ->
+
+	//only link ports that are used ( w/ type != 0)
+	(!portType.name.matches("0")) ?
+			linkSignalRelationToState(entity, parent, signal.name) : null ->
 	
 	//if still signals remain, continue
-	(signalList.size > 1) ? addSignalsToModalController(entity,
+	(signalList.size > 1) ? addSignalsToModalController(entity, parent,
 														signalList.withoutLast(),
 														region) : null	
 ;
 
+linkSignalRelationToState(EntityType modalController, EntityType parent, String signalName) :
+	let stateName = modalController.name:
+	let l = new LinkType:
+	l.setPort(stateName + "." + signalName) ->
+	l.setRelation(signalName + "Relation") ->
+	parent.link.add(l)
+;
 
 //-----------------------------------------------------------------------------
 //--         C R E A T E     T R I G G E R   /   E M I S S I O N S           --
