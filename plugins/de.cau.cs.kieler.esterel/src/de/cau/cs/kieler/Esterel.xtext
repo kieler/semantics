@@ -205,9 +205,8 @@ DoWatchingEnd:
 	
 // --> B.4.7 emit: Signal Emission <--
 	
-// a help function to force an "emit" object into the model
 Emit: 
-	"emit" signal=[Signal|EsterelID] ("(" expr=DataExpr")")?; //("(" expr=DataExpr ")")?;
+	"emit" signal=[Signal|EsterelID] ("(" expr=DataExpr")")?;
 	
 // --> B.4.8 every-do: Conditional Iteration
 EveryDo:

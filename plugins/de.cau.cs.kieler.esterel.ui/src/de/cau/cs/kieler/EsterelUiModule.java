@@ -3,9 +3,16 @@
  */
 package de.cau.cs.kieler;
 
+import org.eclipse.xtext.ui.common.editor.syntaxcoloring.antlr.DefaultAntlrTokenToAttributeIdMapper;
+
+import de.cau.cs.kieler.highlighting.EsterelAntlrTokenToAttributeIdMapper;
+
 /**
  * Use this class to register components to be used within the IDE.
  */
 public class EsterelUiModule extends de.cau.cs.kieler.AbstractEsterelUiModule {
 
+	public Class<? extends DefaultAntlrTokenToAttributeIdMapper> bindTokenToAttributeIdMapper() {
+		return EsterelAntlrTokenToAttributeIdMapper.class;
+	}
 }

@@ -28,50 +28,169 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 				.getGrammar());
 		for (Keyword keyword : keywords) {
 			if ((";".equals(keyword.getValue()))
-					| (",".equals(keyword.getValue()))) {
+					| (",".equals(keyword.getValue())))
 				c.setNoSpace().before(keyword);
-			}
+			if (",".equals(keyword.getValue()))
+				c.setLinewrap().after(keyword);
 		}
-		// Linewrap after <moduleName>":"
+		/* ********************************************************************
+		 * Formatting for comments
+		 * ********************************************************************
+		 */
+
+		c.setLinewrap(2).before(f.getEsterel_ML_CommentRule());
+		c.setNoLinewrap().before(f.getEsterel_SL_CommentRule());
+		c.setLinewrap().after(f.getEsterel_SL_CommentRule());
+
+		/* ********************************************************************
+		 * Formatting for Module/MainModule
+		 * ********************************************************************
+		 */
 		c.setLinewrap().after(f.getMainModuleAccess().getColonKeyword_2());
 		c.setNoSpace().before(f.getMainModuleAccess().getColonKeyword_2());
 		c.setLinewrap(2).before(f.getModuleAccess().getModuleKeyword_0());
 		c.setLinewrap().after(f.getModuleAccess().getColonKeyword_2());
 		c.setNoSpace().before(f.getModuleAccess().getColonKeyword_2());
-		// Linewrap between ModuleInterface and ModuleBody
-		// c.setLinewrap(2)
-		// .before(
-		// f.getModuleBodyAccess()
-		// .getStatementStatementParserRuleCall_0());
-		// Linewraps in the ModuleInterface
+		c.setLinewrap().before(f.getEndModuleAccess().getEndKeyword_0_0());
+		c.setLinewrap().before(f.getEndModuleAccess().getFullStopKeyword_1());
+
+		/* ********************************************************************
+		 * Formatting for ModuleInterface
+		 * ********************************************************************
+		 */
+
+		// ==> Input <==
 		c.setLinewrap()
 				.after(f.getSignalDeclAccess().getSemicolonKeyword_0_4());
 		c.setLinewrap().after(f.getSignalDeclAccess().getCommaKeyword_0_3_0());
-		c.setIndentationSpace(getMaxIndentation(f.getSignalDeclAccess()
-				.getInputKeyword_0_1().getValue()));
+		// c.setIndentationSpace(getMaxIndentation(f.getSignalDeclAccess()
+		// .getInputKeyword_0_1().getValue()));
 		c.setIndentation(f.getSignalDeclAccess().getInputKeyword_0_1(), f
 				.getSignalDeclAccess().getSemicolonKeyword_0_4());
+		// ==> Output <==
 		c.setLinewrap()
 				.after(f.getSignalDeclAccess().getSemicolonKeyword_1_4());
+		c.setLinewrap().after(f.getSignalDeclAccess().getCommaKeyword_1_3_0());
+		c.setIndentation(f.getSignalDeclAccess().getOutputKeyword_1_1(), f
+				.getSignalDeclAccess().getSemicolonKeyword_1_4());
+		// ==> InputOutput <==
 		c.setLinewrap()
 				.after(f.getSignalDeclAccess().getSemicolonKeyword_2_4());
+		c.setLinewrap().after(f.getSignalDeclAccess().getCommaKeyword_2_3_0());
+		c.setIndentation(f.getSignalDeclAccess().getInputoutputKeyword_2_1(), f
+				.getSignalDeclAccess().getSemicolonKeyword_2_4());
+		// ==> Return <==
 		c.setLinewrap()
 				.after(f.getSignalDeclAccess().getSemicolonKeyword_3_4());
+		c.setLinewrap().after(f.getSignalDeclAccess().getCommaKeyword_3_3_0());
+		c.setIndentation(f.getSignalDeclAccess().getReturnKeyword_3_1(), f
+				.getSignalDeclAccess().getSemicolonKeyword_3_4());
+		// ==> Type <==
 		c.setLinewrap().after(f.getTypeDeclAccess().getSemicolonKeyword_3());
+		c.setLinewrap().after(f.getTypeDeclAccess().getCommaKeyword_2_0());
+		c.setIndentation(f.getTypeDeclAccess().getTypeKeyword_0(), f
+				.getTypeDeclAccess().getSemicolonKeyword_3());
+		// ==> Sensor <==
 		c.setLinewrap().after(f.getSensorDeclAccess().getSemicolonKeyword_3());
+		c.setLinewrap().after(f.getSensorDeclAccess().getCommaKeyword_2_0());
+		c.setIndentation(f.getSensorDeclAccess().getSensorKeyword_0(), f
+				.getSensorDeclAccess().getSemicolonKeyword_3());
+		// ==> Constant <==
 		c.setLinewrap()
 				.after(f.getConstantDeclAccess().getSemicolonKeyword_3());
+		c.setLinewrap().after(f.getConstantDeclAccess().getCommaKeyword_2_0());
+		c.setIndentation(f.getConstantDeclAccess().getConstantKeyword_0(), f
+				.getConstantDeclAccess().getSemicolonKeyword_3());
+		// ==> Relation <==
 		c.setLinewrap()
 				.after(f.getRelationDeclAccess().getSemicolonKeyword_4());
+		c.setLinewrap().after(f.getRelationDeclAccess().getCommaKeyword_3_0());
+		c.setIndentation(f.getRelationDeclAccess().getRelationKeyword_1(), f
+				.getRelationDeclAccess().getSemicolonKeyword_4());
+		// ==> Function <==
 		c.setLinewrap()
 				.after(f.getFunctionDeclAccess().getSemicolonKeyword_3());
+		c.setLinewrap().after(f.getFunctionDeclAccess().getCommaKeyword_2_0());
+		c.setIndentation(f.getFunctionDeclAccess().getFunctionKeyword_0(), f
+				.getFunctionDeclAccess().getSemicolonKeyword_3());
+		// ==> Procedure <==
 		c.setLinewrap().after(
 				f.getProcedureDeclAccess().getSemicolonKeyword_3());
+		c.setLinewrap().after(f.getProcedureDeclAccess().getCommaKeyword_2_0());
+		c.setIndentation(f.getProcedureDeclAccess().getProcedureKeyword_0(), f
+				.getProcedureDeclAccess().getSemicolonKeyword_3());
 
-		// Formatting of the module-body
-//		c.setIndentationSpace("  "); // reset indentation for the module body
-		c.setLinewrap().after(f.getSequenceAccess().getSemicolonKeyword_1_1());
-		c.setLinewrap().after(f.getSequenceAccess().getSemicolonKeyword_2());
+		/* ********************************************************************
+		 * Formatting for ModuleBody
+		 * ********************************************************************
+		 */
+		// c.setIndentationSpace("  "); // reset indentation for the module body
+		// c.setLinewrap().after(f.getSequenceAccess().getSemicolonKeyword_1_1());
+		// c.setLinewrap().after(f.getSequenceAccess().getSemicolonKeyword_2());
+
+		// ==> Parallel <==
+		c.setLinewrap()
+				.before(
+						f.getStatementAccess()
+								.getVerticalLineVerticalLineKeyword_1_1());
+		// ==> Block <==
+		c.setLinewrap().before(
+				f.getBlockAccess().getLeftSquareBracketKeyword_0());
+		c.setLinewrap().before(
+				f.getBlockAccess().getRightSquareBracketKeyword_2());
+		c.setIndentation(f.getBlockAccess().getLeftSquareBracketKeyword_0(), f
+				.getBlockAccess().getRightSquareBracketKeyword_2());
+		// ==> Assignment <==
+		c.setLinewrap().before(
+				f.getAssignmentAccess().getVariableAssignment_0());
+		// ==> Abort <==
+		c.setLinewrap().before(f.getAbortAccess().getAbortKeyword_0());
+		c.setLinewrap().before(f.getAbortAccess().getWhenKeyword_2());
+		c.setIndentation(f.getAbortAccess().getAbortKeyword_0(), f
+				.getAbortAccess().getWhenKeyword_2());
+		// TODO AbortBody
+		// ==> Await <==
+		c.setLinewrap().before(f.getAwaitAccess().getAwaitKeyword_0());
+		// TODO AwaitBody
+		// ==> Do <==
+		c.setLinewrap().before(f.getDoAccess().getDoKeyword_0());
+		c.setLinewrap().before(f.getDoUptoAccess().getUptoKeyword_0());
+		c.setIndentation(f.getDoAccess().getDoKeyword_0(), f.getDoUptoAccess()
+				.getUptoKeyword_0());
+		c.setLinewrap().before(f.getDoWatchingAccess().getWatchingKeyword_0());
+		c.setIndentation(f.getDoAccess().getDoKeyword_0(), f
+				.getDoWatchingAccess().getWatchingKeyword_0());
+		c.setLinewrap()
+				.before(f.getDoWatchingEndAccess().getTimeoutKeyword_0());
+		c.setLinewrap().before(f.getDoWatchingEndAccess().getEndKeyword_2());
+		c.setIndentation(f.getDoWatchingEndAccess().getTimeoutKeyword_0(), f
+				.getDoWatchingEndAccess().getEndKeyword_2());
+		// ==> Emit <==
+		c.setLinewrap().before(f.getEmitAccess().getEmitKeyword_0());
+		// ==> EveryDo <==
+		c.setLinewrap().before(f.getEveryDoAccess().getEveryKeyword_0());
+		c.setIndentation(f.getEveryDoAccess().getDoKeyword_2(), f
+				.getEveryDoAccess().getEndKeyword_4());
+		// ==> Exit <==
+		c.setLinewrap().before(f.getExitAccess().getExitKeyword_0());
+		// ==> Halt <==
+		c.setLinewrap().before(f.getHaltAccess().getHaltKeyword_0());
+		// ==> If <==
+		// TODO If + Subparts
+		// ==> Loop <==
+		// TODO Indentation for Loop
+		c.setLinewrap().before(f.getLoopAccess().getLoopKeyword_0());
+		c.setLinewrap().before(f.getEndLoopAccess().getEndKeyword_0());
+		// c.setIndentation(f.getLoopAccess().getLoopKeyword_0(), f
+		// .getEndLoopAccess().getEndKeyword_0());
+		c.setLinewrap().before(f.getLoopEachAccess().getEachKeyword_0());
+		// c.setIndentation(f.getLoopAccess().getLoopKeyword_0(), f
+		// .getLoopEachAccess().getEachKeyword_0());
+		// ==> Nothing <==
+		c.setLinewrap().before(f.getNothingAccess().getNothingKeyword_0());
+		// ==> Pause <==
+		c.setLinewrap().before(f.getPauseAccess().getPauseKeyword_0());
+		// TODO Add missing statements
 		// -> Local Signal <-
 		c.setLinewrap().after(f.getLocalSignalDeclAccess().getInKeyword_2());
 		c.setIndentation(f.getLocalSignalDeclAccess().getInKeyword_2(), f
