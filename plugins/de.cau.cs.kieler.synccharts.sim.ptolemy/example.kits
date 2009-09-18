@@ -2,13 +2,14 @@
 <synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:synccharts="http://kieler.cs.cau.de/synccharts">
   <innerStates label="SyncChart">
     <signals name="I" isInput="true"/>
-    <signals name="O" isOutput="true"/>
+    <signals name="O1" isOutput="true"/>
     <signals name="L1" isLocal="true"/>
     <signals name="L2" isLocal="true"/>
+    <signals name="O2" isOutput="true"/>
     <regions>
       <innerStates label="A" isInitial="true">
         <outgoingTransitions triggersAndEffects="I / O, L1" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.1">
-          <effects xsi:type="synccharts:Emission" signal="O"/>
+          <effects xsi:type="synccharts:Emission" signal="O1"/>
           <effects xsi:type="synccharts:Emission" signal="L1"/>
           <trigger xsi:type="synccharts:SignalReference" signal="I"/>
         </outgoingTransitions>
@@ -21,6 +22,13 @@
     </regions>
     <regions>
       <innerStates label="C" isInitial="true">
+        <regions>
+          <innerStates id="somestate" isInitial="true">
+            <outgoingTransitions triggersAndEffects="/O2" priority="1" targetState="//@innerStates.0/@regions.1/@innerStates.0/@regions.0/@innerStates.0">
+              <effects xsi:type="synccharts:Emission" signal="O2"/>
+            </outgoingTransitions>
+          </innerStates>
+        </regions>
         <outgoingTransitions triggersAndEffects="L /" priority="1" targetState="//@innerStates.0/@regions.1/@innerStates.1">
           <trigger xsi:type="synccharts:SignalReference" signal="L1"/>
         </outgoingTransitions>

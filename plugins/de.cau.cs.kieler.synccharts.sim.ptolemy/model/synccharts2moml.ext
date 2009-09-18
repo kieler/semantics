@@ -223,7 +223,7 @@ Void ConnectTopmostInputSignalsHelper(EntityType baseEntity,
 		addVertexRelation(baseEntity, firstPort.name + "_RELATION", "local_input") : null ->
 	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
 		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_RELATION") : null ->
-
+ 
 	//generate ADD-functions and connect local outputs to it
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
 		addIntCombineFunction(baseEntity, firstPort.name + "_COMBINE") : null ->
@@ -597,6 +597,7 @@ Void addSignalsToModalModel(EntityType entity,
 	let p4b = new PropertyType:
 	let p4c = new PropertyType:
 	let p4d = new PropertyType:
+	let portType = new PropertyType:
 	let signal = signalList.last():
 	//port.setClass("ptolemy.domains.fsm.modal.ModalPort") -> //CHANGED 16.09.2009
 	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
@@ -605,20 +606,22 @@ Void addSignalsToModalModel(EntityType entity,
 	p4b.setName("environment_output") ->
 	p4c.setName("local_input") ->
 	p4d.setName("local_output") ->
+	portType.setName(getPortType(signal, region)) ->
 	//denote environmental and local input/output signals
 	(signal.isInput) ? port.property.add(p4a) : null ->
 	(signal.isOutput) ? port.property.add(p4b) : null ->
-	((getPortType(signal, region) == 1) && signal.isLocal) ? port.property.add(p4c) : null ->
-	((getPortType(signal, region) == 2) && signal.isLocal) ? port.property.add(p4d) : null ->
+	(portType.name.matches("1") && signal.isLocal) ? port.property.add(p4c) : null ->
+	(portType.name.matches("2") && signal.isLocal) ? port.property.add(p4d) : null ->
 	p1.setName("input") ->
 	p2.setName("output") ->
-	((getPortType(signal, region) == 1) || signal.isInput) ? port.property.add(p1) : null ->
-	((getPortType(signal, region) == 2) || signal.isOutput) ? port.property.add(p2) : null ->
+	(portType.name.matches("1") || signal.isInput) ? port.property.add(p1) : null ->
+	(portType.name.matches("2") || signal.isOutput) ? port.property.add(p2) : null ->
 	p3.setName("_type") ->
 	p3.setClass("ptolemy.actor.TypeAttribute") ->
 	//(signal.type.toString().matches("INTEGER")) ? p3.setValue("int") : p3.setValue("boolean") ->
 	p3.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
 	port.property.add(p3) ->
+	port.property.add(portType) ->
 	entity.port.add(port) ->
 	//also add necessary relation that connect above ports with the controller
 	addPortRelationAndLinks(entity, port.name) ->
@@ -635,19 +638,22 @@ Void addSignalsToModalController(EntityType entity,
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
 	let p3 = new PropertyType:
+	let portType = new PropertyType:
 	let signal = signalList.last():
 	//port.setClass("ptolemy.domains.fsm.modal.RefinementPort") -> //CHANGED 16.09.2009
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	port.setName(signal.name) ->
 	p1.setName("input") ->
 	p2.setName("output") ->
-	((getPortType(signal, region) == 1) || signal.isInput) ? port.property.add(p1) : null ->
-	((getPortType(signal, region) == 2) || signal.isOutput) ? port.property.add(p2) : null ->
+	portType.setName(getPortType(signal, region)) ->
+	(portType.name.matches("1") || signal.isInput) ? port.property.add(p1) : null ->
+	(portType.name.matches("2") || signal.isOutput) ? port.property.add(p2) : null ->
 	p3.setName("_type") ->
 	p3.setClass("ptolemy.actor.TypeAttribute") ->
 	//(signal.type.toString().matches("INTEGER")) ? p3.setValue("int") : p3.setValue("boolean") ->
 	p3.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
 	port.property.add(p3) ->
+	port.property.add(portType) ->
 	entity.port.add(port) ->
 	(signalList.size > 1) ? addSignalsToModalController(entity,
 														signalList.withoutLast(),
