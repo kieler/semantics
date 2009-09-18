@@ -705,6 +705,8 @@ linkSignalRelationToState(EntityType modalController, EntityType parent, String 
 	let stateName = modalController.name:
 	let l = new LinkType:
 	l.setPort(stateName + "." + signalName) ->
+	dump(parent.name) ->
+	dump(stateName + "." + signalName) ->
 	l.setRelation(signalName + "Relation") ->
 	parent.link.add(l)
 ;
