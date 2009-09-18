@@ -88,6 +88,14 @@
 			<property name="id" value="${feature}"/>
 		</ant>
 		
+		<!-- extend plugins' build.xml files with a 'doc' target 
+			 CAUTION: foreach is a ant-contrib task declared above! -->
+		<foreach param="buildfile" target="extend.buildfile">
+			<path id="buildfiles">
+				<fileset dir="plugins" includes="**/build.xml" />
+			</path>
+		</foreach>
+
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
 			<property name="feature.destination" value="${basedir}/update-site/features"/>
 			<property name="plugin.destination" value="${basedir}/update-site/plugins"/>
@@ -109,6 +117,23 @@
 		</ant>
 	</target>
 	
+	<target name="extend.buildfile">
+	    <loadfile property="doc.classpath" srcfile="${buildfile}">
+			<filterchain>
+				<linecontainsregexp>
+					<regexp pattern="&lt;pathelement"/>
+				</linecontainsregexp>
+			</filterchain>
+		</loadfile>   
+        <loadfile property="replacement" srcfile="${scriptdir}/javadoc.template.xml">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</loadfile>
+		
+		<replace file="${buildfile}" token="&lt;/project&gt;" value="${replacement}&lt;/project&gt;" />
+	</target>
+
 	<target name="build.updatesiteEntry">
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />

@@ -4,7 +4,7 @@ ${doc.classpath}		</path>
 
         <javadoc access="protected"
             author="true"
-            destdir="./javadoc"
+            destdir="./doc"
             doctitle="KIELER API Specification"
             nodeprecated="false"
             nodeprecatedlist="false"
@@ -12,7 +12,7 @@ ${doc.classpath}		</path>
             nonavbar="false"
             notree="false"
             packagenames="de.cau.cs.kieler.*"
-			classpathref="doc.classpath"
+            classpathref="doc.classpath"
             source="1.5"
             splitindex="true"
             use="true"
