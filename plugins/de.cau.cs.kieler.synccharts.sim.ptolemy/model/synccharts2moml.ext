@@ -606,7 +606,14 @@ Void addSignalsToModalModel(EntityType entity,
 	p4b.setName("environment_output") ->
 	p4c.setName("local_input") ->
 	p4d.setName("local_output") ->
-	portType.setName(getPortType(signal, region)) ->
+	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
+	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
+	p4a.setClass("ptolemy.kernel.util.StringAttribute") ->
+	p4b.setClass("ptolemy.kernel.util.StringAttribute") ->
+	p4c.setClass("ptolemy.kernel.util.StringAttribute") ->
+	p4d.setClass("ptolemy.kernel.util.StringAttribute") ->
+	portType.setClass("ptolemy.kernel.util.StringAttribute") ->
+	portType.setName((getPortType(signal, region)).toString()) ->
 	//denote environmental and local input/output signals
 	(signal.isInput) ? port.property.add(p4a) : null ->
 	(signal.isOutput) ? port.property.add(p4b) : null ->
@@ -622,9 +629,16 @@ Void addSignalsToModalModel(EntityType entity,
 	p3.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
 	port.property.add(p3) ->
 	port.property.add(portType) ->
-	entity.port.add(port) ->
+	
+	//only add ports that are used ( w/ type != 0)
+	(!portType.name.matches("0")) ?
+			entity.port.add(port) : null ->
+	
 	//also add necessary relation that connect above ports with the controller
-	addPortRelationAndLinks(entity, port.name) ->
+	(!portType.name.matches("0")) ?
+		addPortRelationAndLinks(entity, port.name) : null ->
+	
+	//if still signals remain, continue
 	(signalList.size > 1) ? addSignalsToModalModel(entity,
 												   signalList.withoutLast(), 
 												   region) : null
@@ -638,14 +652,36 @@ Void addSignalsToModalController(EntityType entity,
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
 	let p3 = new PropertyType:
+	let p4a = new PropertyType:
+	let p4b = new PropertyType:
+	let p4c = new PropertyType:
+	let p4d = new PropertyType:
 	let portType = new PropertyType:
 	let signal = signalList.last():
 	//port.setClass("ptolemy.domains.fsm.modal.RefinementPort") -> //CHANGED 16.09.2009
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	port.setName(signal.name) ->
+	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
+	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
+	p4a.setName("environment_input") ->
+	p4b.setName("environment_output") ->
+	p4c.setName("local_input") ->
+	p4d.setName("local_output") ->
+	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
+	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
+	p4a.setClass("ptolemy.kernel.util.StringAttribute") ->
+	p4b.setClass("ptolemy.kernel.util.StringAttribute") ->
+	p4c.setClass("ptolemy.kernel.util.StringAttribute") ->
+	p4d.setClass("ptolemy.kernel.util.StringAttribute") ->
+	portType.setClass("ptolemy.kernel.util.StringAttribute") ->
 	p1.setName("input") ->
 	p2.setName("output") ->
-	portType.setName(getPortType(signal, region)) ->
+	portType.setName((getPortType(signal, region)).toString()) ->
+	//denote environmental and local input/output signals
+	(signal.isInput) ? port.property.add(p4a) : null ->
+	(signal.isOutput) ? port.property.add(p4b) : null ->
+	(portType.name.matches("1") && signal.isLocal) ? port.property.add(p4c) : null ->
+	(portType.name.matches("2") && signal.isLocal) ? port.property.add(p4d) : null ->
 	(portType.name.matches("1") || signal.isInput) ? port.property.add(p1) : null ->
 	(portType.name.matches("2") || signal.isOutput) ? port.property.add(p2) : null ->
 	p3.setName("_type") ->
@@ -654,7 +690,12 @@ Void addSignalsToModalController(EntityType entity,
 	p3.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
 	port.property.add(p3) ->
 	port.property.add(portType) ->
-	entity.port.add(port) ->
+	
+	//only add ports that are used ( w/ type != 0)
+	(!portType.name.matches("0")) ?
+			entity.port.add(port) : null ->
+	
+	//if still signals remain, continue
 	(signalList.size > 1) ? addSignalsToModalController(entity,
 														signalList.withoutLast(),
 														region) : null	
