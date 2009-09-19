@@ -1,0 +1,198 @@
+<project name="Build All Elements" default="call.antRunner">
+
+	<property environment="system"/>
+	<property name="scriptdir" location="."/>
+	<property file="${scriptdir}/build.general.properties" />
+	<property file="${projectPropertiesFile}" />
+	
+	<!-- target calls the eclipse antRunner processing THIS build file on target 'main' -->
+	<target name="call.antRunner">
+		<!-- property name="jobdir" location="../../../${job}/workspace" / -->
+		<property name="projectPropertiesFile" location="${system.WORKSPACE}/${projectProperties}" />
+		
+	    <!-- echo message="${jobdir}"/ -->
+		<echo message="${baseLocation}"/>
+		<echo message="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
+		<echo message="PropertiesFile: ${projectProperties} ${projectPropertiesFile}"/>
+
+		<!-- property name="workspace" value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/eclipseWorkspace"/ -->
+		<property name="eclipseWorkspace" location="${system.WORKSPACE}/eclipseWorkspace"/>
+
+		<!-- java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
+			<arg value="-configuration" />
+			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse" />
+			<arg value="-data" />
+			<arg value="${workspace}" />
+			<arg value="-clean" />
+			<arg value="-consoleLog" />
+			<arg value="-application" />
+			<arg value="org.eclipse.ant.core.antRunner" />
+			<arg value="-buildfile" />
+			<arg value="${scriptdir}/build.feature.xml" />
+			<arg value="genEMFcode" />
+			<arg value="genGMFcode" />
+			<arg value="build" />
+			<arg value="-Dbasedir=${jobdir}" />
+			<arg value="-Dscriptdir=${scriptdir}" />
+			<arg value="-DprojectPropertiesFile=${projectPropertiesFile}" />
+			<arg value="-DpluginPath=${pluginPath}" />
+			<arg value="-DtopLevelElementType=feature" />
+			<arg value="-DtopLevelElementId=${part}" />
+			
+			<classpath>
+				<pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
+			</classpath>
+		</java -->
+		
+		<property name="genModel" value=" "/>
+		<property name="gmfgenModel" value=" "/>
+		<property name="genModelCode" value="false"/>
+		<property name="genEditCode" value="false"/>
+		<property name="genEditorCode" value="false"/>
+		<property name="genTestsCode" value="false"/>
+
+		<exec executable="/tmp/eclipse_64/antRunner/antRunner" failonerror="true">
+			<arg value="-configuration" />
+			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse" />
+			<arg value="-data" />
+			<!-- arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/KIELER_SyncCharts_editor/workspace/eclipseWorkspace/" / -->
+			<arg value="${eclipseWorkspace}" />
+			<arg value="-clean" />
+			<!-- arg value="-debug" /-->
+			<arg value="-consoleLog" />
+			<arg value="-buildfile" />
+			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/scripts/build.feature.xml" />
+			<arg value="genCode" />
+			<arg value="-DtopLevelElementType=feature" />
+			<arg value="-DtopLevelElementId=${part}" />
+			<arg value="-Dscriptdir=${scriptdir}" />
+			<arg value="-Dbasedir=${system.WORKSPACE}" />
+			<arg value="-DprojectPropertiesFile=${projectPropertiesFile}" />
+			<arg value="-DpluginPath=${pluginPath}" />
+			<arg value="-DgenModel=${genModel}" />
+			<arg value="-DgmfgenModel=${gmfgenModel}" />
+			<arg value="-DgenModelCode=${genModelCode}" />
+			<arg value="-DgenEditCode=${genEditCode}" />
+			<arg value="-DgenEditorCode=${genEditorCode}" />
+			<arg value="-DgenTestsCode=${genTestsCode}" />
+		</exec>
+		<antcall target="rmEclipseWorkspace"/>
+		
+		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
+			<arg value="-configuration" />
+			<arg value="/var/lib/tomcat5.5/webapps/hudson/jobs/ImportBuildFiles/workspace/.eclipse2" />
+			<arg value="-data" />
+			<arg value="${eclipseWorkspace}" />
+			<arg value="-clean" />
+			<arg value="-consoleLog" />
+			<arg value="-application" />
+			<arg value="org.eclipse.ant.core.antRunner" />
+			<arg value="-buildfile" />
+			<arg value="${scriptdir}/build.feature.xml" />
+			<arg value="build" />
+			<arg value="-Dbasedir=${system.WORKSPACE}" />
+			<arg value="-Dscriptdir=${scriptdir}" />
+			<arg value="-DprojectPropertiesFile=${projectPropertiesFile}" />
+			<arg value="-DpluginPath=${pluginPath}" />
+			<arg value="-DtopLevelElementType=feature" />
+			<arg value="-DtopLevelElementId=${part}" />
+			
+			<classpath>
+				<pathelement location="${baseLocation2}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
+			</classpath>
+		</java>
+		
+	</target>
+
+	<target name="build">
+		<echo message="BaseDir ${basedir}"/>
+		<echo message="BuildDir ${buildDirectory}"/>
+		<echo message="ScriptDir ${scriptdir}"/>
+		<echo message="PluginPath ${pluginPath}"/>
+		<echo message="GenModel ${genModel}"/>
+		
+		<mkdir dir="${basedir}/update-site/features" />
+		<mkdir dir="${basedir}/update-site/plugins" />
+		<ant antfile="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml">
+			<target name="generate"/>
+		</ant>
+		<ant antfile="build.xml" dir="${elementPath}">
+			<property name="feature.destination" value="${basedir}/update-site/features"/>
+			<property name="plugin.destination" value="${basedir}/update-site/plugins"/>
+			<target name="build.jars"/>
+			<target name="build.update.jar"/>
+		</ant>
+	</target>
+	
+	
+	<target name="genCode" >
+		<echo message="genCode 1: ${genModel}"/>
+		<condition property="genEMFcode">
+			<not>
+				<equals arg1="${genModel}" arg2=""/>
+			</not>
+		</condition>
+		<echo message="genCode 2: ${gmfgenModel}"/>
+		<condition property="genGMFcode">
+			<not>
+				<equals arg1="${gmfgenModel}" arg2=""/>
+			</not>
+		</condition>
+		<antcall target="genEMFcode"/>
+		<antcall target="genGMFcode"/>
+	</target>	
+	
+	
+	<target name="genEMFcode" if="genEMFcode" >
+
+		<kieler.genEMFcode genModel="${genModel}"
+						   genModelCode="${genModelCode}" genEditCode="${genEditCode}" genEditorCode="${genEditorCode}" genTestsCode="${genTestsCode}" />
+						   
+		<copy todir="${basedir}/plugins">
+		    <fileset dir="${basedir}/eclipseWorkspace/">
+				<include name="*.model/**" />
+				<include name="*.edit/**" />
+				<include name="*.editor/**" />
+				<include name="*.tests/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="genGMFcode" if="genGMFcode">
+		<kieler.genGMFdiagramCode gmfgenModel="${gmfgenModel}"/>
+		
+		<copy todir="${basedir}/plugins">
+		    <fileset dir="${basedir}/eclipseWorkspace/">
+				<include name="*.diagram/**" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="rmEclipseWorkspace">
+	<delete verbose="true" dir="${basedir}/eclipseWorkspace" />
+	<!--	<exec executable="bash">
+			<arg value="-c" />			
+			<arg value="rm" />			
+			<arg value="-rf" />			
+			<arg value="${basedir}/eclipseWorkspace" />			
+		</exec> -->
+		<!-- deltree dir="{basedir}/eclipseWorkspace" / -->
+	</target>
+
+	
+<!--	      <mkdir dir="${buildDirectory}/update-site"/>
+	      <mkdir dir="${buildDirectory}/update-site/features"/>
+	      <copy todir="${buildDirectory}/update-site/features">
+		  <fileset dir="${buildDirectory}/features">
+		      <include name="*.jar"/>
+		  </fileset>
+	      </copy>
+	      <mkdir dir="${buildDirectory}/update-site/plugins"/>
+	      <copy todir="${buildDirectory}/update-site/plugins">
+		  <fileset dir="${buildDirectory}/plugins">
+		      <include name="*.jar"/>
+		  </fileset>
+	      </copy>
+-->
+	
+</project>
