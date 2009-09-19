@@ -194,6 +194,8 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     ConnectTopmostInputSignals(this, this.entity)
 ;
 
+//-----------------------------------------------------------------------------
+
 
 //connect top most input signals
 Void ConnectTopmostInputSignals(EntityType baseEntity, List[EntityType] entityList) :
@@ -254,6 +256,78 @@ Void ConnectTopmostInputSignalsHelper(EntityType baseEntity,
 ;
 
 
+//-----------------------------------------------------------------------------
+
+//connect nested input signals
+Void ConnectNestedInputSignals(EntityType baseEntity, List[EntityType] entityList) :
+	let firstEntity = entityList.first():
+	(firstEntity.class1.matches("ptolemy.domains.modal.modal.ModalModel")) ? 
+		ConnectNestedInputSignalsHelper(baseEntity, firstEntity.name, firstEntity.port) : null ->
+	(entityList.size > 0) ?
+		ConnectNestedInputSignals(baseEntity, entityList.withoutFirst()) : null
+;
+Void ConnectNestedInputSignalsHelper(EntityType baseEntity, 
+									  String modalModelName,
+						 			  List[PortType] portList) :
+	let firstPort = portList.first():
+	//for only input ports (that have a property with the name "*_input")
+	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
+		addVertexRelation(baseEntity, firstPort.name + "_RELATION", "environment_input") : null ->
+	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
+		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_RELATION") : null ->
+		
+	//create kielerIO for every environment input and connect it	
+	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
+		addKielerIO(baseEntity, firstPort.name + "_KIELERIO", firstPort.name) : null ->
+	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
+		addLink(baseEntity, firstPort.name + "_KIELERIO.signal", firstPort.name + "_RELATION") : null ->
+
+	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
+		addVertexRelation(baseEntity, firstPort.name + "_RELATION", "local_input") : null ->
+	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
+		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_RELATION") : null ->
+ 
+	//generate ADD-functions and connect local outputs to it
+	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
+		addIntCombineFunction(baseEntity, firstPort.name + "_COMBINE") : null ->
+	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
+		addRelation(baseEntity, firstPort.name + "_COMBINERELATION", "local_output") : null ->
+	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
+		addLink(baseEntity, firstPort.name + "_COMBINE.plus", firstPort.name + "_COMBINERELATION") : null ->
+	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
+		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_COMBINERELATION") : null ->
+
+	//connect local input vertex with output combine OR function operators
+	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
+		addLink(baseEntity, firstPort.name + "_COMBINE.output", firstPort.name + "_RELATION") : null ->
+
+	//generate ADD-functions and connect environment outputs to it
+	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
+		addEnvironmentIntCombineFunction(baseEntity, firstPort.name + "_COMBINE", firstPort.name) : null ->
+	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
+		addRelation(baseEntity, firstPort.name + modalModelName + "_COMBINERELATION", "environment_output") : null ->
+	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
+		addLink(baseEntity, firstPort.name + "_COMBINE.plus", firstPort.name + modalModelName + "_COMBINERELATION") : null ->
+	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
+		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + modalModelName + "_COMBINERELATION") : null ->
+
+	//connect combine function w/ output ports
+	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
+		addVertexRelation(baseEntity, firstPort.name + "_RELATION", "environment_output") : null ->
+	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
+		addLink(baseEntity, firstPort.name, firstPort.name + "_RELATION") : null ->
+	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
+		addLink(baseEntity, firstPort.name + "_COMBINE.output", firstPort.name + "_RELATION") : null ->
+	
+	
+
+	(portList.size > 0) ?
+		ConnectNestedInputSignalsHelper(baseEntity, modalModelName, portList.withoutFirst()) : null
+;
+
+//-----------------------------------------------------------------------------
+
+
 //create ModalModel == Region-Component 
 create EntityType this createModalModelEntity(synccharts::Region region, 
 											  int number, 
@@ -308,7 +382,9 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
    	signalList.addAll(state.signals) ->
    	//add signals to refinement (so that outer signals are visible inside)
    	this.addSignalsToModalController(modalModel, signalList, state.parentRegion) ->
-   	IterateRegions(state.regions, this, signalList)
+   	IterateRegions(state.regions, this, signalList) ->
+    //connect nested input signals
+    ConnectNestedInputSignals(this, this.entity)
 ;
 //create SimpleState == State-Component 
 create EntityType this createSimpleStateEntity(synccharts::State state):

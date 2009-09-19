@@ -80,6 +80,20 @@
           <link port="-375787636.incomingPort" relation="-375787636_transition_1"/>
         </entity>
       </entity>
+      <entity class="ptolemy.actor.lib.AddSubtract" name="O_COMBINE">
+        <property class="ptolemy.data.expr.Parameter" name="signal name" value="'O'"/>
+      </entity>
+      <relation class="ptolemy.actor.TypedIORelation" name="O-200586989_region_1_COMBINERELATION">
+        <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
+      </relation>
+      <link port="O_COMBINE.plus" relation="O-200586989_region_1_COMBINERELATION"/>
+      <link port="-200586989_region_1.O" relation="O-200586989_region_1_COMBINERELATION"/>
+      <relation class="ptolemy.actor.TypedIORelation" name="O_RELATION">
+        <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
+        <vertex name="O_RELATIONVERTEX" value="{0.0, 0.0}"/>
+      </relation>
+      <link port="O" relation="O_RELATION"/>
+      <link port="O_COMBINE.output" relation="O_RELATION"/>
     </entity>
   </entity>
   <entity class="ptolemy.actor.lib.AddSubtract" name="O_COMBINE">
