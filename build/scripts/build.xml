@@ -102,15 +102,23 @@
 			</concat>
 			<filterchain>
 				<linecontainsregexp>
-					<regexp pattern="&lt;pathelement"/>
+					<regexp pattern="&lt;pathelement" />
 				</linecontainsregexp>
+				<linecontainsregexp negate="true">
+					<regexp pattern="/@dot&quot;" />
+				</linecontainsregexp>
+				<linecontainsregexp negate="true">
+					<regexp pattern="/bin/&quot;" />
+				</linecontainsregexp>
+				<!-- separate enclosing tags to realize NOR function
+					 (multiple repexp conditions will be ANDed) -->
 			</filterchain>
 		</loadfile> 
 
 		<!-- load javadoc target template, insert classpath entries (via property doc.classpath) -->		
 		<loadfile property="replacement" srcfile="${scriptdir}/javadoc.template.xml">
 			<filterchain>
-				<expandproperties/>
+				<expandproperties />
 			</filterchain>
 		</loadfile>
 		
@@ -119,9 +127,10 @@
 
 		<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc -->		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
-			<property name="feature.destination" value="${basedir}/update-site/features"/>
-			<property name="plugin.destination" value="${basedir}/update-site/plugins"/>
-			<property name="buildTempFolder" value="${basedir}/buildTempFolder"/>
+			<property name="feature.destination" value="${basedir}/update-site/features" />
+			<property name="plugin.destination" value="${basedir}/update-site/plugins" />
+			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
+			<property name="doc.packages" value="${scriptdir}/../package-lists" />
 			<target name="clean" />
 			<target name="build.update.jar" />
 			<target name="zip.logs" />
@@ -131,15 +140,15 @@
 		<!-- run feature's build.xml: copy customized feature.xml into update-site folder
 			 needed by succeeding feature builds while resolving dependencies -->		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}" target="gather.bin.parts">
-			<property name="feature.base" value="${basedir}/update-site/"/>
-			<property name="updateJar.omitRootfiles" value="true"/>
-			<property name="buildTempFolder" value="${basedir}/buildTempFolder"/>
+			<property name="feature.base" value="${basedir}/update-site/" />
+			<property name="updateJar.omitRootfiles" value="true" />
+			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 		</ant>
 		
 		<!-- run feature's assemble.p2.xml: generate update site entry -->		
 		<echo message="STARTING p2 stuff" />
 		<ant antfile="assemble.${feature}.p2.xml">
-			<property name="buildTempFolder" value="${basedir}/buildTempFolder"/>
+			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 		</ant>
 	</target>
 	
