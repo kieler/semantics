@@ -23,6 +23,7 @@
     <port class="ptolemy.domains.modal.modal.ModalPort" name="terminated918158682">
       <property name="output"/>
       <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+      <property class="ptolemy.kernel.util.StringAttribute" name="termination"/>
     </port>
     <relation class="ptolemy.actor.TypedIORelation" name="terminated918158682Relation">
       <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
@@ -32,6 +33,7 @@
     <port class="ptolemy.domains.modal.modal.ModalPort" name="terminated200586988">
       <property name="output"/>
       <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+      <property class="ptolemy.kernel.util.StringAttribute" name="termination"/>
     </port>
     <relation class="ptolemy.actor.TypedIORelation" name="terminated200586988Relation">
       <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
@@ -48,10 +50,12 @@
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated918158682">
         <property name="output"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="termination"/>
       </port>
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated200586988">
         <property name="output"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="termination"/>
       </port>
       <entity class="ptolemy.domains.modal.kernel.State" name="200586988">
         <property class="ptolemy.kernel.util.StringAttribute" name="refinementName" value="200586988"/>
@@ -76,9 +80,9 @@
       </entity>
     </entity>
     <link port="200586988.O" relation="ORelation"/>
+    <link port="918158682_region_1.terminated200586988" relation="terminated200586988Relation"/>
     <entity class="ptolemy.domains.modal.modal.Refinement" name="200586988">
       <property class="ptolemy.domains.sr.kernel.SRDirector" name="SR Director"/>
-      <entity class="ptolemy.actor.kiel.KielerNormalTermination" name="KielerNormalTermination"/>
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="O">
         <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
         <property name="output"/>
@@ -88,7 +92,9 @@
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated200586988">
         <property name="output"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="termination"/>
       </port>
+      <entity class="ptolemy.actor.kiel.KielerNormalTermination" name="KielerNormalTermination"/>
       <entity class="ptolemy.domains.modal.modal.ModalModel" name="200586988_region_1">
         <property class="ptolemy.vergil.modal.modal.ModalTableauFactory" name="_tableauFactory"/>
         <port class="ptolemy.domains.modal.modal.ModalPort" name="O">
@@ -105,6 +111,7 @@
         <port class="ptolemy.domains.modal.modal.ModalPort" name="terminated200586988">
           <property name="output"/>
           <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+          <property class="ptolemy.kernel.util.StringAttribute" name="termination"/>
         </port>
         <relation class="ptolemy.actor.TypedIORelation" name="terminated200586988Relation">
           <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
@@ -121,6 +128,7 @@
           <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated200586988">
             <property name="output"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+            <property class="ptolemy.kernel.util.StringAttribute" name="termination"/>
           </port>
           <entity class="ptolemy.domains.modal.kernel.State" name="585826382">
             <property class="ptolemy.data.expr.Parameter" name="isInitialState" value="false"/>
@@ -158,6 +166,11 @@
       </relation>
       <link port="O" relation="O_RELATION"/>
       <link port="O_COMBINE.output" relation="O_RELATION"/>
+      <relation class="ptolemy.actor.TypedIORelation" name="terminated200586988_COMBINERELATION">
+        <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
+      </relation>
+      <link port="KielerNormalTermination.state terminated" relation="terminated200586988_COMBINERELATION"/>
+      <link port="200586988_region_1.terminated200586988" relation="terminated200586988_COMBINERELATION"/>
     </entity>
   </entity>
   <entity class="ptolemy.actor.lib.AddSubtract" name="O_COMBINE">

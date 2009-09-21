@@ -279,6 +279,14 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 									  String modalModelName,
 						 			  List[PortType] portList) :
 	let firstPort = portList.first():
+	//for termination ports
+	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+		addRelation(baseEntity, firstPort.name + "_COMBINERELATION", "termination") : null ->
+	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+		addLink(baseEntity, "KielerNormalTermination.state terminated", firstPort.name + "_COMBINERELATION") : null ->
+	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_COMBINERELATION") : null ->
+	
 	//for only input ports (that have a property with the name "*_input")
 	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
 		addVertexRelation(baseEntity, firstPort.name + "_RELATION", "environment_input") : null ->
@@ -395,12 +403,13 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
   	this.setClass1("ptolemy.domains.modal.modal.Refinement") ->
    	this.property.add(createSRDirector()) ->
    	signalList.addAll(state.signals) ->
-   	//add KielerNormalTermination
-   	this.addKielerNormalTermination() ->
    	//add signals to refinement (so that outer signals are visible inside)
    	this.addSignalsToModalController(modalModel, signalList, state.parentRegion) ->
    	//add termination signal
    	this.addTerminationSignalToModalController(modalModel, state) ->
+   	//add KielerNormalTermination
+   	this.addKielerNormalTermination() ->
+   	
    	IterateRegions(state.regions, this, signalList) ->
     //connect nested input signals
     ConnectNestedInputSignals(this, this.entity)
@@ -687,15 +696,28 @@ Void addTerminationSignalToModalController(EntityType entity,
 	let port = new PortType:
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
+	let p3 = new PropertyType:
+
+	let stateName = parent.name:
+	let l = new LinkType:
+
 	port.setName("terminated" + hash(getURIFragment(state))) ->
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	p1.setName("output") ->
 	p2.setName("_type") ->
 	p2.setClass("ptolemy.actor.TypeAttribute") ->
 	p2.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
+	p3.setName("termination") ->
+   	p3.setClass("ptolemy.kernel.util.StringAttribute") ->
 	port.property.add(p1) ->
 	port.property.add(p2) ->
-	entity.port.add(port) 
+	port.property.add(p3) ->
+	entity.port.add(port) ->
+	
+	//link relation
+	l.setPort(stateName + "." + port.name) ->
+	l.setRelation(port.name + "Relation") ->
+	parent.link.add(l)
 	//TODO: linkSignalRelationToState(entity, parent, "terminated")
 ;
 
@@ -718,18 +740,23 @@ Void addTerminationSignalToModalModel(EntityType entity, synccharts::Region regi
  	addTerminationSignalToModalModel(entity, region.parentState)
 ;
 
+ 
 Void addTerminationSignalToModalModel(EntityType entity, synccharts::State state) :
 	let port = new PortType:
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
+	let p3 = new PropertyType:
 	port.setName("terminated" + hash(getURIFragment(state))) ->
 	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	p1.setName("output") ->
 	p2.setName("_type") ->
 	p2.setClass("ptolemy.actor.TypeAttribute") ->
 	p2.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
+	p3.setName("termination") ->
+   	p3.setClass("ptolemy.kernel.util.StringAttribute") ->
 	port.property.add(p1) ->
 	port.property.add(p2) ->
+	port.property.add(p3) ->
 	entity.port.add(port) ->  
 	addPortRelationAndLinks(entity, port.name)
 ;
