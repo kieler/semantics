@@ -700,35 +700,27 @@ Void addTerminationSignalToModalController(EntityType entity,
 Void addTerminationSignalsToModalController(EntityType entity, 
 										   EntityType parent, 
 										   List[synccharts::State] stateList) :
-	let port = new PortType:
-	let p1 = new PropertyType:
-	let p2 = new PropertyType:
 	let state = stateList.last():
-	port.setName("terminated" + hash(getURIFragment(state))) ->
-	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
-	p1.setName("output") ->
-	p2.setName("_type") ->
-	p2.setClass("ptolemy.actor.TypeAttribute") ->
-	p2.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
-	port.property.add(p1) ->
-	port.property.add(p2) ->
-
 	//only for macro states
 	(state.isMacroState()) ?
-		entity.port.add(port) : null ->
-		 
+			addTerminationSignalToModalController(entity, 
+												  parent, 
+												  state) : null ->
 	(stateList.size > 1)?
 		addTerminationSignalsToModalController(entity, parent, 
 										  	  stateList.withoutLast()) : null
-	//TODO: linkSignalRelationToState(entity, parent, "terminated")
 ;
 
 
 Void addTerminationSignalToModalModel(EntityType entity, synccharts::Region region) :
+ 	addTerminationSignalToModalModel(entity, region.parentState)
+;
+
+Void addTerminationSignalToModalModel(EntityType entity, synccharts::State state) :
 	let port = new PortType:
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
-	port.setName("terminated" + hash(getURIFragment(region.parentState))) ->
+	port.setName("terminated" + hash(getURIFragment(state))) ->
 	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	p1.setName("output") ->
 	p2.setName("_type") ->
@@ -741,25 +733,10 @@ Void addTerminationSignalToModalModel(EntityType entity, synccharts::Region regi
 ;
 
 Void addTerminationSignalsToModalModel(EntityType entity, List[synccharts::State] stateList) :
-	let port = new PortType:
-	let p1 = new PropertyType:
-	let p2 = new PropertyType:
 	let state = stateList.last():
-	port.setName("terminated" + hash(getURIFragment(state))) ->
-	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
-	p1.setName("output") ->
-	p2.setName("_type") ->
-	p2.setClass("ptolemy.actor.TypeAttribute") ->
-	p2.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
-	port.property.add(p1) ->
-	port.property.add(p2) ->
-	
 	//only for macro states
 	(state.isMacroState()) ?
-		entity.port.add(port) : null ->  
-	(state.isMacroState()) ?
-		addPortRelationAndLinks(entity, port.name) : null ->
-	
+		addTerminationSignalToModalModel(entity, state) : null ->  
 	(stateList.size > 1)?
 		addTerminationSignalsToModalModel(entity, 
 										  stateList.withoutLast()) : null
