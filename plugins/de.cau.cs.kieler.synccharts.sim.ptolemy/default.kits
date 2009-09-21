@@ -29,7 +29,7 @@
               <effects xsi:type="synccharts:Emission" signal="O"/>
             </outgoingTransitions>
           </innerStates>
-          <innerStates label="done" isFinal="true"/>
+          <innerStates label="done"/>
         </regions>
         <outgoingTransitions triggersAndEffects="R /" priority="1" type="STRONGABORT" targetState="//@innerStates.0/@regions.0/@innerStates.0">
           <trigger xsi:type="synccharts:SignalReference" signal="R"/>

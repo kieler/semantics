@@ -281,11 +281,13 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 	let firstPort = portList.first():
 	//for termination ports
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addRelation(baseEntity, modalModelName + "_XXXCOMBINERELATION", "termination") : null ->
+		dump("Connect Termination for Port :"+firstPort.name+" in " + baseEntity.name) : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addLink(baseEntity, "KielerNormalTermination.state terminated", modalModelName  + "_XXXCOMBINERELATION") : null ->
+		addRelation(baseEntity, modalModelName + "_COMBINERELATION", "termination") : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addLink(baseEntity, modalModelName + "." + firstPort.name, modalModelName  + "_XXXCOMBINERELATION") : null ->
+		addLink(baseEntity, "KielerNormalTermination.state terminated", modalModelName  + "_COMBINERELATION") : null ->
+	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+		addLink(baseEntity, modalModelName + ".terminated" + baseEntity.name , modalModelName  + "_COMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
 		addRelation(baseEntity, "TERMINATION_RELATION", "termination") : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
@@ -742,6 +744,8 @@ Void addTerminationSignalToModalModel(EntityType entity, synccharts::State state
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
 	let p3 = new PropertyType:
+	let l = new LinkType:
+	
 	port.setName("terminated" + hash(getURIFragment(state))) ->
 	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	p1.setName("output") ->
@@ -754,7 +758,11 @@ Void addTerminationSignalToModalModel(EntityType entity, synccharts::State state
 	port.property.add(p2) ->
 	port.property.add(p3) ->
 	entity.port.add(port) ->  
-	addPortRelationAndLinks(entity, port.name)
+	addPortRelationAndLinks(entity, port.name) ->
+	
+	l.setPort(hash(getURIFragment(state)) + "." + port.name) ->
+	l.setRelation(port.name + "Relation") ->
+	entity.link.add(l)	
 ;
 
 Void addTerminationSignalsToModalModel(EntityType entity, List[synccharts::State] stateList) :
