@@ -80,7 +80,6 @@
       </entity>
     </entity>
     <link port="200586988.O" relation="ORelation"/>
-    <link port="918158682_region_1.terminated200586988" relation="terminated200586988Relation"/>
     <entity class="ptolemy.domains.modal.modal.Refinement" name="200586988">
       <property class="ptolemy.domains.sr.kernel.SRDirector" name="SR Director"/>
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="O">
@@ -171,6 +170,11 @@
       </relation>
       <link port="KielerNormalTermination.state terminated" relation="terminated200586988_COMBINERELATION"/>
       <link port="200586988_region_1.terminated200586988" relation="terminated200586988_COMBINERELATION"/>
+      <relation class="ptolemy.actor.TypedIORelation" name="TERMINATION_RELATION">
+        <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
+      </relation>
+      <link port="KielerNormalTermination.all states terminated" relation="TERMINATION_RELATION"/>
+      <link port="terminated200586988" relation="TERMINATION_RELATION"/>
     </entity>
   </entity>
   <entity class="ptolemy.actor.lib.AddSubtract" name="O_COMBINE">

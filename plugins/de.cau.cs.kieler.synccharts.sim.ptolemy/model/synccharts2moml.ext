@@ -286,6 +286,12 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 		addLink(baseEntity, "KielerNormalTermination.state terminated", firstPort.name + "_COMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
 		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_COMBINERELATION") : null ->
+	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+		addRelation(baseEntity, "TERMINATION_RELATION", "termination") : null ->
+	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+		addLink(baseEntity, "KielerNormalTermination.all states terminated", "TERMINATION_RELATION") : null ->
+	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+		addLink(baseEntity, firstPort.name, "TERMINATION_RELATION") : null ->
 	
 	//for only input ports (that have a property with the name "*_input")
 	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
@@ -697,10 +703,6 @@ Void addTerminationSignalToModalController(EntityType entity,
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
 	let p3 = new PropertyType:
-
-	let stateName = parent.name:
-	let l = new LinkType:
-
 	port.setName("terminated" + hash(getURIFragment(state))) ->
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	p1.setName("output") ->
@@ -712,13 +714,7 @@ Void addTerminationSignalToModalController(EntityType entity,
 	port.property.add(p1) ->
 	port.property.add(p2) ->
 	port.property.add(p3) ->
-	entity.port.add(port) ->
-	
-	//link relation
-	l.setPort(stateName + "." + port.name) ->
-	l.setRelation(port.name + "Relation") ->
-	parent.link.add(l)
-	//TODO: linkSignalRelationToState(entity, parent, "terminated")
+	entity.port.add(port)
 ;
 
 Void addTerminationSignalsToModalController(EntityType entity, 
