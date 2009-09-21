@@ -53,7 +53,7 @@
         <property class="ptolemy.data.expr.Parameter" name="defaultTransition" value="false"/>
         <property class="ptolemy.data.expr.Parameter" name="nondeterministic" value="false"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
-        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value=""/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value="terminated200586988_isPresent"/>
         <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="O=1"/>
       </relation>
       <link port="200586988.outgoingPort" relation="200586988_transition_1"/>

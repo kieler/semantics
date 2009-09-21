@@ -243,8 +243,14 @@ public class XtendJava {
 	
 	//-------------------------------------------------------------------------
 
-	public final static String buildTrigger(Expression expression) {
-		return buildExpression(expression);
+	public final static String buildTrigger(Expression expression, String terminatedURIHash) {
+		String trigger = buildExpression(expression);
+		if (!terminatedURIHash.equals("")) {
+			//replace any trigger in this case
+			//no trigger should be there in the normal, correct case
+			trigger = "terminated"+terminatedURIHash + "_isPresent";
+		}
+		return trigger;
 	}
 
 	

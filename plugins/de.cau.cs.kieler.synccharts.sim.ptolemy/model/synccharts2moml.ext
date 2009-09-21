@@ -841,9 +841,14 @@ linkSignalRelationToState(EntityType modalController, EntityType parent, String 
 //create guardExpression
 Void addTrigger(RelationType relation, synccharts::Transition transition) :
 	let p1 = new PropertyType:
+	//terminated source state triggers the normal termination
+	let terminatedURIHash = hash(getURIFragment(transition.sourceState)):
 	p1.setName("guardExpression") ->
 	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
-	p1.setValue(buildTrigger(transition.trigger)) ->
+	//if normal termination, replace trigger by termination-trigger
+	(transition.type.toString().matches("NORMALTERMINATION")) ? 
+		p1.setValue(buildTrigger(transition.trigger, terminatedURIHash)) :
+		p1.setValue(buildTrigger(transition.trigger, "")) ->
 	relation.property.add(p1)
 ;
 
@@ -862,9 +867,9 @@ Void addEmission(RelationType relation, synccharts::Transition transition) :
 ;
 
 
-String buildTrigger(synccharts::Expression expression) :
+String buildTrigger(synccharts::Expression expression, String terminatedURIHash) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			buildTrigger(de.cau.cs.kieler.synccharts.Expression)
+			buildTrigger(de.cau.cs.kieler.synccharts.Expression, java.lang.String)
 ;
 
 String buildEffect(List[synccharts::Effect] effectList, String terminatedURIHash) :
