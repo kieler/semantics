@@ -78,6 +78,7 @@
     <link port="200586988.O" relation="ORelation"/>
     <entity class="ptolemy.domains.modal.modal.Refinement" name="200586988">
       <property class="ptolemy.domains.sr.kernel.SRDirector" name="SR Director"/>
+      <entity class="ptolemy.actor.kiel.KielerNormalTermination" name="KielerNormalTermination"/>
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="O">
         <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
         <property name="output"/>

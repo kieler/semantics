@@ -121,7 +121,7 @@ Void addEnvironmentIntCombineFunction(EntityType baseEntity, String name, String
 Void addKielerNormalTermination(EntityType baseEntity) :
    let e = new EntityType:
    e.setName("KielerNormalTermination") ->
-   e.setClass1("ptolemy.actor.lib.AddSubtract") ->
+   e.setClass1("ptolemy.actor.kiel.KielerNormalTermination") ->
    //if not already exists
    (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) ?
 	   baseEntity.entity.add(e) : null
@@ -395,6 +395,8 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
   	this.setClass1("ptolemy.domains.modal.modal.Refinement") ->
    	this.property.add(createSRDirector()) ->
    	signalList.addAll(state.signals) ->
+   	//add KielerNormalTermination
+   	this.addKielerNormalTermination() ->
    	//add signals to refinement (so that outer signals are visible inside)
    	this.addSignalsToModalController(modalModel, signalList, state.parentRegion) ->
    	//add termination signal
