@@ -349,6 +349,8 @@ create EntityType this createModalModelEntity(synccharts::Region region,
   	this.setClass1("ptolemy.domains.modal.modal.ModalModel") ->
   	//first add signals
   	addSignalsToModalModel(this, signalList, region) ->
+  	//then add termination signal
+  	addTerminationSignalToModalModel(this, region) ->
   	//then create simple states and macro state declarations
    	this.entity.add(createModalControllerEntity(region, signalList)) ->
    	//then add macro state refinements (for all macro states)
@@ -679,7 +681,7 @@ Void addTerminationSignalToModalController(EntityType entity,
 	let port = new PortType:
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
-	port.setName("terminated") ->
+	port.setName("terminated" + hash(getURIFragment(region.parentState))) ->
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	p1.setName("output") ->
 	p2.setName("_type") ->
@@ -695,7 +697,7 @@ Void addTerminationSignalToModalModel(EntityType entity, synccharts::Region regi
 	let port = new PortType:
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
-	port.setName("terminated") ->
+	port.setName("terminated" + hash(getURIFragment(region.parentState))) ->
 	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	p1.setName("output") ->
 	p2.setName("_type") ->
@@ -780,8 +782,8 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	//port.setClass("ptolemy.domains.fsm.modal.RefinementPort") -> //CHANGED 16.09.2009
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	port.setName(signal.name) ->
-	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
-	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
+//	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
+//	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
 	p4a.setName("environment_input") ->
 	p4b.setName("environment_output") ->
 	p4c.setName("local_input") ->
@@ -848,10 +850,14 @@ Void addTrigger(RelationType relation, synccharts::Transition transition) :
 //create outputActions
 Void addEmission(RelationType relation, synccharts::Transition transition) :
 	let p1 = new PropertyType:
+	let terminatedURIHash = hash(getURIFragment(transition.targetState.parentRegion.parentState)):
 	p1.setName("outputActions") ->
 	//p1.setClass("ptolemy.domains.fsm.kernel.OutputActionsAttribute") -> CHANGED 16.09.2009
 	p1.setClass("ptolemy.domains.modal.kernel.OutputActionsAttribute") ->
-	p1.setValue(buildEffect(transition.effects, transition.targetState.isFinal)) ->
+	//if target state is final state, then add termination-effect
+	(transition.targetState.isFinal) ?
+		p1.setValue(buildEffect(transition.effects, terminatedURIHash)) :
+		p1.setValue(buildEffect(transition.effects, "")) ->
 	relation.property.add(p1) 
 ;
 
@@ -861,7 +867,7 @@ String buildTrigger(synccharts::Expression expression) :
 			buildTrigger(de.cau.cs.kieler.synccharts.Expression)
 ;
 
-String buildEffect(List[synccharts::Effect] effectList, Boolean toFinalState) :
+String buildEffect(List[synccharts::Effect] effectList, String terminatedURIHash) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			buildEffect(org.eclipse.emf.common.util.EList, java.lang.Boolean)
+			buildEffect(org.eclipse.emf.common.util.EList, java.lang.String)
 ;

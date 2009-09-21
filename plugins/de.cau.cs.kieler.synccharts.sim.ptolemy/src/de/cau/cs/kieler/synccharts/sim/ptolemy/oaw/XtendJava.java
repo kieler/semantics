@@ -94,7 +94,10 @@ public class XtendJava {
 	 * @return the hash value as a String
 	 */
 	public final static String hash(String string) {
-		return ""+string.hashCode();
+		String hashCode = string.hashCode() + "";
+		if (hashCode.startsWith("-"))
+			hashCode = hashCode.substring(1);
+		return hashCode;
 	}
 	
 	//-------------------------------------------------------------------------
@@ -245,7 +248,7 @@ public class XtendJava {
 	}
 
 	
-	public final static String buildEffect(EList<Effect> myEffectList, Boolean toFinalState) {
+	public final static String buildEffect(EList<Effect> myEffectList, String terminatedURIHash) {
 		String myEmission = "";
 		for (int c = 0; c < myEffectList.size(); c++) {
 			if (myEffectList.get(c) instanceof Emission) {
@@ -260,10 +263,10 @@ public class XtendJava {
 				}
 			}
 		}
-		if (toFinalState) {
+		if (!terminatedURIHash.equals("")) {
 			if (!myEmission.equals(""))
 				myEmission += "; ";
-			myEmission += "terminated=1";
+			myEmission += "terminated"+terminatedURIHash+"=1";
 		}
 		return myEmission;
 	}
