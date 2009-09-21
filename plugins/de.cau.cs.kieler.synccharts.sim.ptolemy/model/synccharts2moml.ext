@@ -281,11 +281,11 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 	let firstPort = portList.first():
 	//for termination ports
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addRelation(baseEntity, firstPort.name + "_COMBINERELATION", "termination") : null ->
+		addRelation(baseEntity, modalModelName + "_XXXCOMBINERELATION", "termination") : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addLink(baseEntity, "KielerNormalTermination.state terminated", firstPort.name + "_COMBINERELATION") : null ->
+		addLink(baseEntity, "KielerNormalTermination.state terminated", modalModelName  + "_XXXCOMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_COMBINERELATION") : null ->
+		addLink(baseEntity, modalModelName + "." + firstPort.name, modalModelName  + "_XXXCOMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
 		addRelation(baseEntity, "TERMINATION_RELATION", "termination") : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
