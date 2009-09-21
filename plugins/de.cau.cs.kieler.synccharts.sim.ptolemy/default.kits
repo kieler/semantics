@@ -3,14 +3,19 @@
   <innerStates label="SyncChart">
     <signals name="O" isOutput="true"/>
     <regions>
-      <innerStates label="my state" isInitial="true">
+      <innerStates label="C"/>
+      <innerStates label="inner state" isInitial="true">
         <regions>
-          <innerStates id="anonym" isInitial="true">
-            <outgoingTransitions triggersAndEffects="/O" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0">
+          <innerStates label="A" isInitial="true">
+            <outgoingTransitions triggersAndEffects="/ O" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.1/@regions.0/@innerStates.1">
               <effects xsi:type="synccharts:Emission" signal="O"/>
             </outgoingTransitions>
           </innerStates>
+          <innerStates label="B" isFinal="true"/>
         </regions>
+        <outgoingTransitions triggersAndEffects="/ O" priority="1" type="NORMALTERMINATION" targetState="//@innerStates.0/@regions.0/@innerStates.0">
+          <effects xsi:type="synccharts:Emission" signal="O"/>
+        </outgoingTransitions>
       </innerStates>
     </regions>
   </innerStates>

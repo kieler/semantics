@@ -224,12 +224,12 @@ public class XtendJava {
 			EList<Expression> subExpressionList = complexExpression.getSubExpressions();
 			for (int c = 0; c < subExpressionList.size(); c++) {
 				Expression subExpression = subExpressionList.get(c);
-				returnValue &= isSignalInExpression(signal, subExpression);
+				returnValue |= isSignalInExpression(signal, subExpression);
 				if (returnValue) return returnValue; //shortcut
 			}
 		}
 		else if (expression instanceof SignalReference) {
-//			System.out.println(((SignalReference)expression).getSignal().getName() + "==" + signal.getName());
+			System.out.println(((SignalReference)expression).getSignal().getName() + "==" + signal.getName());
 			SignalReference signalReference = (SignalReference)expression;
 			if (signalReference.getSignal() == signal)
 				return true;
@@ -245,7 +245,7 @@ public class XtendJava {
 	}
 
 	
-	public final static String buildEffect(EList<Effect> myEffectList) {
+	public final static String buildEffect(EList<Effect> myEffectList, Boolean toFinalState) {
 		String myEmission = "";
 		for (int c = 0; c < myEffectList.size(); c++) {
 			if (myEffectList.get(c) instanceof Emission) {
@@ -260,6 +260,11 @@ public class XtendJava {
 				}
 			}
 		}
+		if (toFinalState) {
+			if (!myEmission.equals(""))
+				myEmission += "; ";
+			myEmission += "terminated=1";
+		}
 		return myEmission;
 	}
 	
@@ -272,12 +277,12 @@ public class XtendJava {
 		else if (expression instanceof ComplexExpression) {
 			ComplexExpression complexExpression = (ComplexExpression)expression;
 			OperatorType operator = complexExpression.getOperator();
-			String operatorString = operator.getLiteral();
+			String operatorString = translateOperator(operator.getLiteral());
 			EList<Expression> subExpressionList = complexExpression.getSubExpressions();
 			expressionString += "(";
 			for (int c = 0; c < subExpressionList.size(); c++) {
 				Expression subExpression = subExpressionList.get(c);
-				if (expressionString != "(") expressionString += operatorString;
+				if (!expressionString.equals("(")) expressionString += " " + operatorString + " ";
 				expressionString += buildExpression(subExpression);
 			}
 			expressionString += ")";
@@ -288,6 +293,25 @@ public class XtendJava {
 		}
 		return expressionString;
 	}
+	
+private static final String translateOperator(String syncchartsOperator) {
+	if (syncchartsOperator.equalsIgnoreCase("EQ")) return "==";
+	if (syncchartsOperator.equalsIgnoreCase("LT")) return "<";
+	if (syncchartsOperator.equalsIgnoreCase("LEQ")) return "<=";
+	if (syncchartsOperator.equalsIgnoreCase("GT")) return ">";
+	if (syncchartsOperator.equalsIgnoreCase("GEQ")) return ">=";
+	if (syncchartsOperator.equalsIgnoreCase("NOT")) return "!";
+	if (syncchartsOperator.equalsIgnoreCase("VAL")) return ""; //UNSUPPORTED
+	if (syncchartsOperator.equalsIgnoreCase("PRE")) return ""; //UNSUPPORTED
+	if (syncchartsOperator.equalsIgnoreCase("AND")) return "&&";
+	if (syncchartsOperator.equalsIgnoreCase("OR")) return "||";
+	if (syncchartsOperator.equalsIgnoreCase("ADD")) return "+";
+	if (syncchartsOperator.equalsIgnoreCase("SUB")) return "-";
+	if (syncchartsOperator.equalsIgnoreCase("MULT")) return "*";
+	if (syncchartsOperator.equalsIgnoreCase("DIV")) return "/";
+	if (syncchartsOperator.equalsIgnoreCase("MOD")) return "%";
+	return "";
+}
 	
 //	public final static String buildEmission(Node myNode) {
 //		String myEmission = "";

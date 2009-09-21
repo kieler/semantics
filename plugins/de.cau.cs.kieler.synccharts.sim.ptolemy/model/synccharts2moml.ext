@@ -117,6 +117,15 @@ Void addEnvironmentIntCombineFunction(EntityType baseEntity, String name, String
 	   baseEntity.entity.add(e) : null
 ;   
   
+
+Void addKielerNormalTermination(EntityType baseEntity) :
+   let e = new EntityType:
+   e.setName("KielerNormalTermination") ->
+   e.setClass1("ptolemy.actor.lib.AddSubtract") ->
+   //if not already exists
+   (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) ?
+	   baseEntity.entity.add(e) : null
+;   
   
 Void addKielerIO(EntityType baseEntity, String name, String signalID) :
    let e = new EntityType:
@@ -276,11 +285,9 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
 		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_RELATION") : null ->
 		
-	//create kielerIO for every environment input and connect it	
+	//connect every environment input to relation	
 	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
-		addKielerIO(baseEntity, firstPort.name + "_KIELERIO", firstPort.name) : null ->
-	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
-		addLink(baseEntity, firstPort.name + "_KIELERIO.signal", firstPort.name + "_RELATION") : null ->
+		addLink(baseEntity, firstPort.name, firstPort.name + "_RELATION") : null ->
 
 	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
 		addVertexRelation(baseEntity, firstPort.name + "_RELATION", "local_input") : null ->
@@ -353,8 +360,10 @@ create EntityType this createModalControllerEntity(synccharts::Region region,
    	this.setName("_Controller") ->
   	//this.setClass1("ptolemy.domains.fsm.modal.ModalController") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.modal.ModalController") ->
-  	//first add signals //CHECK//
-	addSignalsToModalController(this, null, signalList, region) ->  	
+  	//first add signals 
+	addSignalsToModalController(this, null, signalList, region) ->
+  	//add termination signal 
+	addTerminationSignalToModalController(this, null, region) ->
   	//then iterated all states (if any in this region)
 	(region.innerStates.size > 0) ? IterateStates(region.innerStates, this) : null
 ;
@@ -382,6 +391,8 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
    	signalList.addAll(state.signals) ->
    	//add signals to refinement (so that outer signals are visible inside)
    	this.addSignalsToModalController(modalModel, signalList, state.parentRegion) ->
+   	//add termination signal
+   	this.addTerminationSignalToModalController(modalModel, state.parentRegion) ->
    	IterateRegions(state.regions, this, signalList) ->
     //connect nested input signals
     ConnectNestedInputSignals(this, this.entity)
@@ -662,6 +673,41 @@ create RelationType this createRelation(String name,
 //--                    C R E A T E     S I G N A L S                        --
 //-----------------------------------------------------------------------------
 
+Void addTerminationSignalToModalController(EntityType entity, 
+										   EntityType parent, 
+										   synccharts::Region region) :
+	let port = new PortType:
+	let p1 = new PropertyType:
+	let p2 = new PropertyType:
+	port.setName("terminated") ->
+	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
+	p1.setName("output") ->
+	p2.setName("_type") ->
+	p2.setClass("ptolemy.actor.TypeAttribute") ->
+	p2.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
+	port.property.add(p1) ->
+	port.property.add(p2) ->
+	entity.port.add(port) 
+	//TODO: linkSignalRelationToState(entity, parent, "terminated")
+;
+
+Void addTerminationSignalToModalModel(EntityType entity, synccharts::Region region) :
+	let port = new PortType:
+	let p1 = new PropertyType:
+	let p2 = new PropertyType:
+	port.setName("terminated") ->
+	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
+	p1.setName("output") ->
+	p2.setName("_type") ->
+	p2.setClass("ptolemy.actor.TypeAttribute") ->
+	p2.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
+	port.property.add(p1) ->
+	port.property.add(p2) ->
+	entity.port.add(port) ->  
+	addPortRelationAndLinks(entity, port.name)
+;
+
+
 Void addSignalsToModalModel(EntityType entity, 
 							List[synccharts::Signal] signalList,
 							synccharts::Region region) :
@@ -704,12 +750,12 @@ Void addSignalsToModalModel(EntityType entity,
 	port.property.add(p3) ->
 	port.property.add(portType) ->
 	
-	//only add ports that are used ( w/ type != 0)
-	(!portType.name.matches("0")) ?
+	//only add ports that are used ( w/ type != 0 or -1)
+	(!(portType.name.matches("0") || portType.name.matches("-1")))  ?
 			entity.port.add(port) : null ->
 	
 	//also add necessary relation that connect above ports with the controller
-	(!portType.name.matches("0")) ?
+	(!(portType.name.matches("0") || portType.name.matches("-1")))  ?
 			addPortRelationAndLinks(entity, port.name) : null ->
 	
 	//if still signals remain, continue
@@ -721,7 +767,6 @@ Void addSignalsToModalModel(EntityType entity,
 Void addSignalsToModalController(EntityType entity, EntityType parent,
 								 List[synccharts::Signal] signalList,
 								 synccharts::Region region) :
-								 
 	let port = new PortType:
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
@@ -763,12 +808,12 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	port.property.add(p3) ->
 	port.property.add(portType) ->
 	
-	//only add ports that are used ( w/ type != 0)
-	(!portType.name.matches("0")) ?
+	//only add ports that are used ( w/ type != 0 or -1)
+	(!(portType.name.matches("0") || portType.name.matches("-1")))  ?
 			entity.port.add(port) : null ->
 
-	//only link ports that are used ( w/ type != 0)
-	(!portType.name.matches("0")) ?
+	//only link ports that are used ( w/ type != 0 or -1)
+	(!(portType.name.matches("0") || portType.name.matches("-1")))  ?
 			linkSignalRelationToState(entity, parent, signal.name) : null ->
 	
 	//if still signals remain, continue
@@ -806,7 +851,7 @@ Void addEmission(RelationType relation, synccharts::Transition transition) :
 	p1.setName("outputActions") ->
 	//p1.setClass("ptolemy.domains.fsm.kernel.OutputActionsAttribute") -> CHANGED 16.09.2009
 	p1.setClass("ptolemy.domains.modal.kernel.OutputActionsAttribute") ->
-	p1.setValue(buildEffect(transition.effects)) ->
+	p1.setValue(buildEffect(transition.effects, transition.targetState.isFinal)) ->
 	relation.property.add(p1) 
 ;
 
@@ -816,7 +861,7 @@ String buildTrigger(synccharts::Expression expression) :
 			buildTrigger(de.cau.cs.kieler.synccharts.Expression)
 ;
 
-String buildEffect(List[synccharts::Effect] effectList) :
+String buildEffect(List[synccharts::Effect] effectList, Boolean toFinalState) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			buildEffect(org.eclipse.emf.common.util.EList)
+			buildEffect(org.eclipse.emf.common.util.EList, java.lang.Boolean)
 ;
