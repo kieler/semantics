@@ -29,6 +29,15 @@
     </relation>
     <link port="terminated918158682" relation="terminated918158682Relation"/>
     <link port="_Controller.terminated918158682" relation="terminated918158682Relation"/>
+    <port class="ptolemy.domains.modal.modal.ModalPort" name="terminated200586988">
+      <property name="output"/>
+      <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+    </port>
+    <relation class="ptolemy.actor.TypedIORelation" name="terminated200586988Relation">
+      <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
+    </relation>
+    <link port="terminated200586988" relation="terminated200586988Relation"/>
+    <link port="_Controller.terminated200586988" relation="terminated200586988Relation"/>
     <entity class="ptolemy.domains.modal.modal.ModalController" name="_Controller">
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="O">
         <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
@@ -37,6 +46,10 @@
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
       </port>
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated918158682">
+        <property name="output"/>
+        <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+      </port>
+      <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated200586988">
         <property name="output"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
       </port>
@@ -71,7 +84,7 @@
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
       </port>
-      <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated918158682">
+      <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated200586988">
         <property name="output"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
       </port>
