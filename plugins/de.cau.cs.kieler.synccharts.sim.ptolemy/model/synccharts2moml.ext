@@ -190,7 +190,7 @@ Void addConstant(EntityType baseEntity, String value):
 create EntityType this createBaseEntity(synccharts::Region mainRegion):
    	this.setName(hash(getURIFragment(mainRegion.innerStates.get(0))) + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
-   	this.property.add(createMainSRDirector()) ->
+   	this.createMainSRDirector() ->
    	//mainRegion has exactly ONE top most state
    	//iterate over all regions within this top most state
    	//the  of this containing Entity is derived from this
@@ -412,7 +412,7 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
    	this.setName(hash(getURIFragment(state))) ->
   	//this.setClass1("ptolemy.domains.fsm.modal.Refinement") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.modal.Refinement") ->
-   	this.property.add(createSRDirector()) ->
+   	this.createSRDirector() ->
    	signalList.addAll(state.signals) ->
    	//add signals to refinement (so that outer signals are visible inside), if any
    	(signalList.size > 0) ?
@@ -552,17 +552,20 @@ Void IterateRegions(List[synccharts::Region] regionList,
 //-----------------------------------------------------------------------------
 
 //create a "SR Director" (for macro state definition)
-create PropertyType this createSRDirector():
-    this.setName("SR Director") ->
-	this.setClass("ptolemy.domains.sr.kernel.SRDirector")
+Void createSRDirector(EntityType entity):
+    let p1 = new PropertyType:
+    	p1.setName("SR Director") ->
+		p1.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
+	entity.property.add(p1)
 ;
 
 //create outer most "SR Director" (ticks every seconds)
-create PropertyType this createMainSRDirector():
-	let p1 = new PropertyType:
-	let p2 = new PropertyType:
-	let p3 = new PropertyType:
-	let p4 = new PropertyType:
+Void createMainSRDirector(EntityType entity):
+    let p0 = new PropertyType:
+	 let p1 = new PropertyType:
+	 let p2 = new PropertyType:
+	 let p3 = new PropertyType:
+	 let p4 = new PropertyType:
 		p1.setName("iterations") ->
 		p1.setClass("ptolemy.data.expr.Parameter") ->
 		p1.setValue("100") ->
@@ -575,12 +578,13 @@ create PropertyType this createMainSRDirector():
 		p4.setName("period") ->
 		p4.setClass("ptolemy.data.expr.Parameter") ->
 		p4.setValue("1") ->
-    this.setName("SR Director") ->
-	this.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
-	this.property.add(p1) ->
-	this.property.add(p2) ->
-	this.property.add(p3) ->
-	this.property.add(p4)
+    p0.setName("SR Director") ->
+	p0.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
+	p0.property.add(p1) ->
+	p0.property.add(p2) ->
+	p0.property.add(p3) ->
+ 	p0.property.add(p4) ->
+	entity.property.add(p0) 
 ;
 
 
