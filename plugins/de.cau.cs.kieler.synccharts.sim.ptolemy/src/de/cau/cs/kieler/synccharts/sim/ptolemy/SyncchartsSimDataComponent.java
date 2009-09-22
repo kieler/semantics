@@ -230,7 +230,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		properties[0] = new KiemProperty(
 				"KIELER Model File",
 				new KiemPropertyTypeWorkspaceFile(),
-				"\\example\\default.kit");
+				"\\example\\default.kits");
 		properties[1] = new KiemProperty(
 				"State Name",
 				"state");

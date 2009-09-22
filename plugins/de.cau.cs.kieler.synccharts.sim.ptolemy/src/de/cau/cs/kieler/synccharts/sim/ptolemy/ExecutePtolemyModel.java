@@ -24,8 +24,8 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 
 import ptolemy.actor.CompositeActor;
 import ptolemy.actor.Manager;
-import ptolemy.domains.fsm.modal.ModalController;
-import ptolemy.domains.fsm.modal.ModalModel;
+import ptolemy.domains.modal.modal.ModalController;
+import ptolemy.domains.modal.modal.ModalModel;
 import ptolemy.kernel.InstantiableNamedObj;
 import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;
@@ -146,8 +146,13 @@ public class ExecutePtolemyModel implements Runnable {
 	@SuppressWarnings("unchecked")
 	private void fillModalModelList(List<ModalModel> modalModelList,
 									List<InstantiableNamedObj> children) {
+		
+		System.out.println("searching for ModalModels...");
+		
 		// if no further children
 		if (children == null) return;
+
+		System.out.println(""+children.size()+ " children found");
 
 		// do recursively for children
 		for (int c = 0; c < children.size(); c++){
@@ -164,6 +169,7 @@ public class ExecutePtolemyModel implements Runnable {
             if (child instanceof ModalModel) {
             	ModalModel modalModel = (ModalModel)child;
             	modalModelList.add(modalModel);
+            	System.out.println("ADD MODAL MODEL "+modalModel.getName());
             	
             	fillModalModelList(
             			modalModelList,
@@ -190,10 +196,14 @@ public class ExecutePtolemyModel implements Runnable {
 	public void run() {
 		URI fileURI = URI.createFileURI(new File(PtolemyModel).getAbsolutePath());
         URI momlFile = fileURI;
+        
+        System.out.println("RUN, PTOLEMY RUN");
 
         //create new MoML parser
         //make sure Ptolemy is in dependencies
         MoMLParser parser = new MoMLParser();
+
+        System.out.println("RUN, PTOLEMY RUN !!!");
         
         List<ModalModel> modalModelList = new LinkedList<ModalModel>();
         
@@ -271,6 +281,7 @@ public class ExecutePtolemyModel implements Runnable {
                         	  //the fragment URIs with a colon
                         	  currentState = "";
                         	  for (int c = 0; c < modalModelList.size(); c++) {
+                        		System.out.println(c+"");
                         		ModalModel modalModel = modalModelList.get(c);
                         		//if more than one active state
                         		if (!currentState.equals(""))

@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.core.runtime,
  ptolemy;bundle-version="0.1.0";resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ src/
 Import-Package: org.eclipse.core.runtime,
  org.eclipse.emf.common.util,
  org.eclipse.emf.ecore,
@@ -29,3 +30,8 @@ Import-Package: org.eclipse.core.runtime,
  org.eclipse.emf.mwe.core,
  org.eclipse.emf.mwe.utils,
  org.eclipse.gmf.runtime.notation
+Export-Package: Moml,
+ Moml.impl,
+ Moml.util,
+ de.cau.cs.kieler.synccharts.sim.ptolemy,
+ de.cau.cs.kieler.synccharts.sim.ptolemy.oaw
