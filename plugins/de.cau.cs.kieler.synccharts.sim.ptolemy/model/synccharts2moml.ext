@@ -568,7 +568,7 @@ Void createMainSRDirector(EntityType entity):
 	 let p4 = new PropertyType:
 		p1.setName("iterations") ->
 		p1.setClass("ptolemy.data.expr.Parameter") ->
-		p1.setValue("100") ->
+		p1.setValue("0") ->
 		p2.setName("synchronizeToRealTime") ->
 		p2.setClass("ptolemy.data.expr.Parameter") ->
 		p2.setValue("true") ->
