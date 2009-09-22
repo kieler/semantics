@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.synccharts.sim.ptolemy.DataComponent"
+            class="de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimDataComponent"
             id="de.cau.cs.kieler.synccharts.sim.ptolemy"
             name="Synccharts Ptolemy Simulator">
       </content>
