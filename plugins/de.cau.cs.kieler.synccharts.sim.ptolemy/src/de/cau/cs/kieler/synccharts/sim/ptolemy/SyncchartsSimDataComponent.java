@@ -146,8 +146,12 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent#step(de.cau.cs.kieler.sim.kiem.json.JSONObject)
 	 */
-	public JSONObject step(JSONObject JSONobject) throws
+	public JSONObject step(JSONObject jSONObject) throws
 												KiemExecutionException {
+		
+		//set current input data
+		PTOEXE.setData(jSONObject);
+		
 		//perform an asynchronous step in PtolemyExecutor
 		//note that this may produce a KiemExecutionException which has it 
 		//source in the previous call.

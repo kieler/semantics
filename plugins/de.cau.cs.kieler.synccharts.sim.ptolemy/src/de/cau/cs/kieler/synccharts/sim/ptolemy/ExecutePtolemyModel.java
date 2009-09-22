@@ -21,6 +21,8 @@ import java.util.List;
 import org.eclipse.emf.common.util.URI;
 
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.json.JSONException;
+import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
 import ptolemy.actor.CompositeActor;
 import ptolemy.actor.Manager;
@@ -31,6 +33,8 @@ import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;
 import ptolemy.moml.MoMLParser;
 //import ptolemy.actor.kiel.*;
+import ptolemy.actor.kiel.KielerIO;
+import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 
 /**
  * The class ExecutePtolemyModel implements the PtolemyExecutor. This is the
@@ -39,6 +43,10 @@ import ptolemy.moml.MoMLParser;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class ExecutePtolemyModel implements Runnable {
+	
+	private JSONObject inputData;
+	
+	private JSONObject outputData;
 	
 	/** The Ptolemy model to execute. */
 	private String PtolemyModel;
@@ -77,6 +85,26 @@ public class ExecutePtolemyModel implements Runnable {
 		this.makesteps = 0;
 		this.currentState = "";
 		this.executionException = null;
+	}
+	
+	//-------------------------------------------------------------------------
+	
+	public void setData(JSONObject jSONObject) {
+		this.inputData = jSONObject;
+	}
+	
+	//-------------------------------------------------------------------------
+	
+	public boolean isSignalPresent(String signalName) {
+		if (this.inputData.has(signalName)) {
+			try {
+				Object object = this.inputData.get(signalName);
+				return (JSONSignalValues.isPresent(object));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 	
 	//-------------------------------------------------------------------------
@@ -136,6 +164,58 @@ public class ExecutePtolemyModel implements Runnable {
 	}
 	
 	//-------------------------------------------------------------------------
+	
+	/**
+	 * Fills the modalModelList by recursively going thru the models elements.
+	 * 
+	 * @param modalModelList the list of ModalModels to fill
+	 * @param children the children to walk thru
+	 */
+	@SuppressWarnings("unchecked")
+	private void fillKielerIOList(List<KielerIO> kielerIOList,
+									List<InstantiableNamedObj> children) {
+		
+		System.out.println("searching for KielerIO...");
+		
+		// if no further children
+		if (children == null) return;
+
+		System.out.println(children.size() + " children");
+
+		// do recursively for children
+		for (int c = 0; c < children.size(); c++){
+			Object child = children.get(c);
+            if(child instanceof CompositeActor){
+            	CompositeActor compositeActor = (CompositeActor)child;
+            	
+            	fillKielerIOList(
+            			kielerIOList,
+            			compositeActor.entityList());
+            }
+            
+            if (child instanceof KielerIO) {
+            	kielerIOList.add((KielerIO)child);
+            }
+            if (child instanceof ModalModel) {
+            	ModalModel modalModel = (ModalModel)child;
+            	
+            	fillKielerIOList(
+            			kielerIOList,
+            			modalModel.entityList());
+            }
+
+            if (child instanceof ModalController) {
+            	ModalController modalController = (ModalController)child;
+            	
+            	fillKielerIOList(
+            			kielerIOList,
+            			modalController.entityList());
+            }
+        }//end while
+	}
+
+	
+	//-------------------------------------------------------------------------
 
 	/**
 	 * Fills the modalModelList by recursively going thru the models elements.
@@ -146,13 +226,8 @@ public class ExecutePtolemyModel implements Runnable {
 	@SuppressWarnings("unchecked")
 	private void fillModalModelList(List<ModalModel> modalModelList,
 									List<InstantiableNamedObj> children) {
-		
-		System.out.println("searching for ModalModels...");
-		
 		// if no further children
 		if (children == null) return;
-
-		System.out.println(""+children.size()+ " children found");
 
 		// do recursively for children
 		for (int c = 0; c < children.size(); c++){
@@ -169,7 +244,6 @@ public class ExecutePtolemyModel implements Runnable {
             if (child instanceof ModalModel) {
             	ModalModel modalModel = (ModalModel)child;
             	modalModelList.add(modalModel);
-            	System.out.println("ADD MODAL MODEL "+modalModel.getName());
             	
             	fillModalModelList(
             			modalModelList,
@@ -197,15 +271,12 @@ public class ExecutePtolemyModel implements Runnable {
 		URI fileURI = URI.createFileURI(new File(PtolemyModel).getAbsolutePath());
         URI momlFile = fileURI;
         
-        System.out.println("RUN, PTOLEMY RUN");
-
         //create new MoML parser
         //make sure Ptolemy is in dependencies
         MoMLParser parser = new MoMLParser();
 
-        System.out.println("RUN, PTOLEMY RUN !!!");
-        
         List<ModalModel> modalModelList = new LinkedList<ModalModel>();
+        List<KielerIO> kielerIOList = new LinkedList<KielerIO>();
         
         NamedObj ptolemyModel = null;
         try {
@@ -241,6 +312,11 @@ public class ExecutePtolemyModel implements Runnable {
                 //go thru the model and add fill the modalModelList
                 fillModalModelList(
                 		modalModelList,
+                		modelActor.entityList());
+
+                //go thru the model and add fill the kielerIOList
+                fillKielerIOList(
+                		kielerIOList,
                 		modelActor.entityList());
                 
 //                //modify host and port of railway simulation engine actor
@@ -281,7 +357,6 @@ public class ExecutePtolemyModel implements Runnable {
                         	  //the fragment URIs with a colon
                         	  currentState = "";
                         	  for (int c = 0; c < modalModelList.size(); c++) {
-                        		System.out.println(c+"");
                         		ModalModel modalModel = modalModelList.get(c);
                         		//if more than one active state
                         		if (!currentState.equals(""))
@@ -293,6 +368,15 @@ public class ExecutePtolemyModel implements Runnable {
                         				 .getValueAsString();
                         		}
                         		
+                        	  //iterate thru all kielerIOs
+                        	  for (int c = 0; c < kielerIOList.size(); c++) {
+                        		System.out.println(c+"");
+                        		KielerIO kielerIO = kielerIOList.get(c);
+                        		String signalName = kielerIO.getSignalName();
+                       			kielerIO.setPresent(isSignalPresent(signalName));
+                        	  }
+                        	  
+                        	  
                         	}
                     	}
                     }
