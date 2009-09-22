@@ -30,7 +30,7 @@ import ptolemy.kernel.InstantiableNamedObj;
 import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;
 import ptolemy.moml.MoMLParser;
-import ptolemy.actor.kiel.*;
+//import ptolemy.actor.kiel.*;
 
 /**
  * The class ExecutePtolemyModel implements the PtolemyExecutor. This is the
@@ -59,12 +59,6 @@ public class ExecutePtolemyModel implements Runnable {
 	/** The Ptolemy manager. */
 	private Manager manager; 
 	
-	/** The host for connecting to the model railway simulation. */
-	private String host;
-	
-	/** The port for connecting to the model railway simulation. */
-	private String port;
-	
 	/** The KiemExecutionException that may have occurred during the 
 	 * asynchronous performance of steps. */
 	private KiemExecutionException executionException; 
@@ -75,19 +69,13 @@ public class ExecutePtolemyModel implements Runnable {
 	 * Instantiates a new ExecutePtolemyModel.
 	 * 
 	 * @param PtolemyModel the Ptolemy model to execute
-	 * @param host the host for the simulation
-	 * @param port the port for the simulation
 	 */
-	public ExecutePtolemyModel(String PtolemyModel, 
-							   String host,
-							   String port) {
+	public ExecutePtolemyModel(String PtolemyModel) {
 		this.PtolemyModel = PtolemyModel;
 		this.paused = true;
 		this.stop = false;
 		this.makesteps = 0;
 		this.currentState = "";
-		this.host = host;
-		this.port = port;
 		this.executionException = null;
 	}
 	
@@ -245,20 +233,20 @@ public class ExecutePtolemyModel implements Runnable {
                 		modalModelList,
                 		modelActor.entityList());
                 
-                //modify host and port of railway simulation engine actor
-                if (modelActor.entityList() != null) {
-                    for (int c = 0; c < modelActor.entityList().size(); c++) {
-                    	Object entity = modelActor.entityList().get(c);
-                    	
-                    	if (entity instanceof ModelRailwayIO) {
-                    	  ModelRailwayIO modelRailwayIO =
-                    			(ModelRailwayIO) entity;
-                    	  modelRailwayIO.host.setExpression("'"+this.host+"'");
-                    	  modelRailwayIO.port.setExpression(this.port);
-                    	}
-                    	
-                    }//next c
-                }
+//                //modify host and port of railway simulation engine actor
+//                if (modelActor.entityList() != null) {
+//                    for (int c = 0; c < modelActor.entityList().size(); c++) {
+//                    	Object entity = modelActor.entityList().get(c);
+//                    	
+//                    	if (entity instanceof ModelRailwayIO) {
+//                    	  ModelRailwayIO modelRailwayIO =
+//                    			(ModelRailwayIO) entity;
+//                    	  modelRailwayIO.host.setExpression("'"+this.host+"'");
+//                    	  modelRailwayIO.port.setExpression(this.port);
+//                    	}
+//                    	
+//                    }//next c
+//                }
 
                 // run the model
                 if (manager != null) {

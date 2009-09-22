@@ -396,6 +396,11 @@ create EntityType this createModalControllerEntity(synccharts::Region region,
 
 //create MacroState == State-Component (of a macro state)
 create EntityType this createMacroStateEntity(synccharts::State state):
+	//elementURIFragment is *NOT* real XPATH!
+	let elementURIFragment = getURIFragment(state):
+	let elementURIFragmentProperty = newPropertyType("elementURIFragment",
+							 		"ptolemy.kernel.util.StringAttribute",
+							 		elementURIFragment):
 	let p1 = new PropertyType:
 		p1.setName("refinementName") ->
 		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
@@ -404,6 +409,7 @@ create EntityType this createMacroStateEntity(synccharts::State state):
   	//this.setClass1("ptolemy.domains.fsm.kernel.State") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.kernel.State") ->
 	this.property.add(p1) ->
+	this.property.add(elementURIFragmentProperty) ->
   	SetStateInitialFinalFlag(state, this)
 ;
 //create ModalRefinement == State-Definition (of a macro state /w regions)
@@ -428,9 +434,15 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
 ;
 //create SimpleState == State-Component 
 create EntityType this createSimpleStateEntity(synccharts::State state):
+	//elementURIFragment is *NOT* real XPATH!
+	let elementURIFragment = getURIFragment(state):
+	let elementURIFragmentProperty = newPropertyType("elementURIFragment",
+							 		"ptolemy.kernel.util.StringAttribute",
+							 		elementURIFragment):
    	this.setName(hash(getURIFragment(state))) ->
   	//this.setClass1("ptolemy.domains.fsm.kernel.State") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.kernel.State") ->
+	this.property.add(elementURIFragmentProperty) ->
   	SetStateInitialFinalFlag(state, this)
 ;
 
@@ -464,6 +476,16 @@ int getPortType(synccharts::Signal signal, synccharts::Region region) :
 						de.cau.cs.kieler.synccharts.Region)
 ;
 
+PropertyType newPropertyType
+								(String name,
+								String class,
+								String value) :
+	let p1 = new PropertyType :
+	p1.setClass(class) ->
+	p1.setName(name) ->
+	p1.setValue(value) ->
+	p1
+;
 
 //decide whether a states is initial or final and add the appropriate
 //property to the entity

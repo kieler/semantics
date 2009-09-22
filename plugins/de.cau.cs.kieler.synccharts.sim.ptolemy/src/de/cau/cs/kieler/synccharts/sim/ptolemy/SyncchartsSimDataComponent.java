@@ -31,7 +31,7 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
-import de.cau.cs.kieler.simplerailctrl.sim.ptolemy.oaw.MomlWriter;
+import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.MomlWriter;
 
 /**
  * The class SimpleRailCtrl DataComponent implements a KIELER Execution Manager
@@ -108,14 +108,14 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		        momlWriter.setModelSlot("momlmodel");
 		        
 		        //Meta models
-		        EmfMetaModel metaModel1 = new EmfMetaModel(de.cau.cs.kieler.simplerailctrl.SimplerailctrlPackage.eINSTANCE);
+		        EmfMetaModel metaModel1 = new EmfMetaModel(de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
 		        EmfMetaModel metaModel2 = new EmfMetaModel(Moml.MomlPackage.eINSTANCE);
 				
 		        //XtendComponent
 		        XtendComponent xtendComponent = new XtendComponent();
 		        xtendComponent.addMetaModel(metaModel1);
 		        xtendComponent.addMetaModel(metaModel2);
-		        xtendComponent.setInvoke("simplerailctrl2moml::transform(emfmodel)");
+		        xtendComponent.setInvoke("synccharts2moml::transform(emfmodel)");
 		        xtendComponent.setOutputSlot("momlmodel");
 		        
 		        //workflow
@@ -234,10 +234,10 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		properties[0] = new KiemProperty(
 				"KIELER Model File",
 				new KiemPropertyTypeWorkspaceFile(),
-				"\\example\\default.simplerailctrl");
+				"\\example\\default.kit");
 		properties[1] = new KiemProperty(
 				"State Name",
-				"RAIL state");
+				"state");
 		properties[2] = new KiemProperty(
 				"Host",
 				"localhost");
@@ -258,7 +258,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
 		//check if any EMF model instance form the current workspace is selected
 		if (properties[0].getValue().trim().length() == 0) {
-			throw new KiemPropertyException("A SimpleRailCtrl-Model File must be selected!");
+			throw new KiemPropertyException("A Syncchart-Model File must be selected!");
 		}
 	}
 	
