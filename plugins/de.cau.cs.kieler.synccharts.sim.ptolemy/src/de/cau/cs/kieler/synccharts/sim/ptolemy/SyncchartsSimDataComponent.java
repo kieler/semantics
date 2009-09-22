@@ -166,6 +166,12 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
     //-------------------------------------------------------------------------	 
 
+	public String[] provideInterfaceKeys() {
+		return PTOEXE.getInterfaceVariables();
+	}	
+	
+    //-------------------------------------------------------------------------	 
+	
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
 	 */

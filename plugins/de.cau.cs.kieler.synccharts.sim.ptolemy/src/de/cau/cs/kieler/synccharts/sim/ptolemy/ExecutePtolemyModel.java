@@ -44,6 +44,8 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
  */
 public class ExecutePtolemyModel implements Runnable {
 	
+	private List<KielerIO> kielerIOList;
+	
 	private JSONObject inputData;
 	
 	private JSONObject outputData;
@@ -85,6 +87,7 @@ public class ExecutePtolemyModel implements Runnable {
 		this.makesteps = 0;
 		this.currentState = "";
 		this.executionException = null;
+		this.kielerIOList = null;
 	}
 	
 	//-------------------------------------------------------------------------
@@ -108,7 +111,23 @@ public class ExecutePtolemyModel implements Runnable {
 	}
 	
 	//-------------------------------------------------------------------------
+	
+	public String[] getInterfaceVariables() {
+		if (this.kielerIOList == null) return null;
+		
+		List<String> keys = new LinkedList<String>();
+		for (int c = 0; c < kielerIOList.size(); c++) {
+			String signalName = ((KielerIO)kielerIOList.get(c)).getSignalName();
+			//remove quotation marks
+			signalName = signalName.replaceAll("'", "");
+			keys.add(signalName);
+		}
+		
+		return (String[])keys.toArray();
+	}
 
+	//-------------------------------------------------------------------------
+	
 	/**
 	 * Gets the currently active state as URIFragment.
 	 * 
@@ -175,12 +194,8 @@ public class ExecutePtolemyModel implements Runnable {
 	private void fillKielerIOList(List<KielerIO> kielerIOList,
 									List<InstantiableNamedObj> children) {
 		
-		System.out.println("searching for KielerIO...");
-		
 		// if no further children
 		if (children == null) return;
-
-		System.out.println(children.size() + " children");
 
 		// do recursively for children
 		for (int c = 0; c < children.size(); c++){
@@ -195,6 +210,9 @@ public class ExecutePtolemyModel implements Runnable {
             
             if (child instanceof KielerIO) {
             	kielerIOList.add((KielerIO)child);
+        		System.out.println(" KIELERIO found: "+ ((KielerIO)child).getSignalName());
+
+            	
             }
             if (child instanceof ModalModel) {
             	ModalModel modalModel = (ModalModel)child;
@@ -276,7 +294,7 @@ public class ExecutePtolemyModel implements Runnable {
         MoMLParser parser = new MoMLParser();
 
         List<ModalModel> modalModelList = new LinkedList<ModalModel>();
-        List<KielerIO> kielerIOList = new LinkedList<KielerIO>();
+        kielerIOList = new LinkedList<KielerIO>();
         
         NamedObj ptolemyModel = null;
         try {
@@ -370,10 +388,12 @@ public class ExecutePtolemyModel implements Runnable {
                         		
                         	  //iterate thru all kielerIOs
                         	  for (int c = 0; c < kielerIOList.size(); c++) {
-                        		System.out.println(c+"");
                         		KielerIO kielerIO = kielerIOList.get(c);
                         		String signalName = kielerIO.getSignalName();
+                        		//remove quotation marks
+                        		signalName = signalName.replaceAll("'", "");
                        			kielerIO.setPresent(isSignalPresent(signalName));
+                        		System.out.println(c+") "+ signalName + " : " + isSignalPresent(signalName) );
                         	  }
                         	  
                         	  
