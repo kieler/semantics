@@ -363,8 +363,9 @@ create EntityType this createModalModelEntity(synccharts::Region region,
    	this.setName(hash(getURIFragment(region.parentState)) + "_region_" + number) ->
   	//this.setClass1("ptolemy.domains.fsm.modal.ModalModel") -> // CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.modal.ModalModel") ->
-  	//first add signals
-  	addSignalsToModalModel(this, signalList, region) ->
+  	//first add signals if any
+  	(signalList.size > 0) ?
+  		addSignalsToModalModel(this, signalList, region) : null ->
   	//then add termination signal (outer)
   	addTerminationSignalToModalModel(this, region) ->
   	//then add termination signals (inner)
@@ -380,8 +381,9 @@ create EntityType this createModalControllerEntity(synccharts::Region region,
    	this.setName("_Controller") ->
   	//this.setClass1("ptolemy.domains.fsm.modal.ModalController") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.modal.ModalController") ->
-  	//first add signals 
-	addSignalsToModalController(this, null, signalList, region) ->
+  	//first add signals if any
+  	(signalList.size > 0) ?
+		addSignalsToModalController(this, null, signalList, region) : null ->
   	//add termination signal
 	this.addTerminationSignalToModalController(null, region.parentState) ->
   	//add termination signals 
@@ -411,8 +413,9 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
   	this.setClass1("ptolemy.domains.modal.modal.Refinement") ->
    	this.property.add(createSRDirector()) ->
    	signalList.addAll(state.signals) ->
-   	//add signals to refinement (so that outer signals are visible inside)
-   	this.addSignalsToModalController(modalModel, signalList, state.parentRegion) ->
+   	//add signals to refinement (so that outer signals are visible inside), if any
+   	(signalList.size > 0) ?
+	   	this.addSignalsToModalController(modalModel, signalList, state.parentRegion) : null ->
    	//add termination signal
    	this.addTerminationSignalToModalController(modalModel, state) ->
    	//add KielerNormalTermination
@@ -702,18 +705,21 @@ Void addTerminationSignalToModalController(EntityType entity,
 										   EntityType parent, 
 										   synccharts::State state) :
 	let port = new PortType:
-	let p1 = new PropertyType:
+	let p1a = new PropertyType:
+	let p1b = new PropertyType:
 	let p2 = new PropertyType:
 	let p3 = new PropertyType:
 	port.setName("terminated" + hash(getURIFragment(state))) ->
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
-	p1.setName("output") ->
+	p1a.setName("output") ->
+	p1b.setName("input") ->
 	p2.setName("_type") ->
 	p2.setClass("ptolemy.actor.TypeAttribute") ->
 	p2.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
 	p3.setName("termination") ->
    	p3.setClass("ptolemy.kernel.util.StringAttribute") ->
-	port.property.add(p1) ->
+	port.property.add(p1a) ->
+	port.property.add(p1b) ->
 	port.property.add(p2) ->
 	port.property.add(p3) ->
 	entity.port.add(port)
@@ -736,6 +742,14 @@ Void addTerminationSignalsToModalController(EntityType entity,
 
 Void addTerminationSignalToModalModel(EntityType entity, synccharts::Region region) :
  	addTerminationSignalToModalModel(entity, region.parentState)
+// 	addTerminationModalModelLink(entity, hash(getURIFragment(region.parentState)))
+;
+
+Void addTerminationModalModelLink(EntityType entity, String stateURIHash) : 
+	let l = new LinkType:
+	l.setPort(stateURIHash + ".terminated" + stateURIHash) ->
+	l.setRelation("terminated" + stateURIHash + "Relation") ->
+	entity.link.add(l)	
 ;
 
  
@@ -744,7 +758,6 @@ Void addTerminationSignalToModalModel(EntityType entity, synccharts::State state
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
 	let p3 = new PropertyType:
-	let l = new LinkType:
 	
 	port.setName("terminated" + hash(getURIFragment(state))) ->
 	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
@@ -758,11 +771,8 @@ Void addTerminationSignalToModalModel(EntityType entity, synccharts::State state
 	port.property.add(p2) ->
 	port.property.add(p3) ->
 	entity.port.add(port) ->  
-	addPortRelationAndLinks(entity, port.name) ->
+	addPortRelationAndLinks(entity, port.name)
 	
-	l.setPort(hash(getURIFragment(state)) + "." + port.name) ->
-	l.setRelation(port.name + "Relation") ->
-	entity.link.add(l)	
 ;
 
 Void addTerminationSignalsToModalModel(EntityType entity, List[synccharts::State] stateList) :
@@ -770,6 +780,8 @@ Void addTerminationSignalsToModalModel(EntityType entity, List[synccharts::State
 	//only for macro states
 	(state.isMacroState()) ?
 		addTerminationSignalToModalModel(entity, state) : null ->  
+	(state.isMacroState()) ?
+	 	addTerminationModalModelLink(entity, ""+hash(getURIFragment(state))) : null ->
 	(stateList.size > 1)?
 		addTerminationSignalsToModalModel(entity, 
 										  stateList.withoutLast()) : null
