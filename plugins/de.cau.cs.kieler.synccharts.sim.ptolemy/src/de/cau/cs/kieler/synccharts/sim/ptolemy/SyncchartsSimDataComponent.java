@@ -178,12 +178,8 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
 		if (this.Model2ModelTransformation(kielerModel, ptolemyModel)) {
 			System.out.println("Now loading Ptolemy Model..." + ptolemyModelFile);
-			//the simulation host is the third KIEM property
-			String host = this.getProperties()[2].getValue();
-			//the simulation port is the fourth KIEM property 
-			String port = this.getProperties()[3].getValue();
 	        //load the Ptolemy Model
-	        PTOEXE = new ExecutePtolemyModel(ptolemyModelFile,host,port);
+	        PTOEXE = new ExecutePtolemyModel(ptolemyModelFile);
 	        PTOEXE_Thread = new Thread(PTOEXE);
 			System.out.println("Now executing Ptolemy Model...");
 	        //start the thread - it is paused by default (steps==0)
@@ -230,7 +226,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	 */
 	@Override
 	public KiemProperty[] provideProperties() {
-		KiemProperty[] properties = new KiemProperty[4];
+		KiemProperty[] properties = new KiemProperty[2];
 		properties[0] = new KiemProperty(
 				"KIELER Model File",
 				new KiemPropertyTypeWorkspaceFile(),
@@ -238,14 +234,6 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		properties[1] = new KiemProperty(
 				"State Name",
 				"state");
-		properties[2] = new KiemProperty(
-				"Host",
-				"localhost");
-//				"epoch");
-		properties[3] = new KiemProperty(
-				"Port",
-				2000);
-//				5000);
 		return properties;
 	}
 
