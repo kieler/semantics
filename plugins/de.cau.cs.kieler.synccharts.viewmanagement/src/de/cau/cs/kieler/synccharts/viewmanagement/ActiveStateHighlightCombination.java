@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 
 import de.cau.cs.kieler.viewmanagement.ACombination;
@@ -21,14 +22,16 @@ public class ActiveStateHighlightCombination extends ACombination {
 
     @Override
     public boolean evaluate(TriggerEventObject triggerEvent) {
-        // TODO: rename Trigger Toggle in
-        if (triggerEvent.getAffectedObject() instanceof ShapeEditPart) {
-            ShapeEditPart editPart = (ShapeEditPart) triggerEvent
-                    .getAffectedObject();
-            if (triggerEvent.getTriggerToggle() && !effects.containsKey(editPart)) {
+      
+        if ((translateToEditPart(triggerEvent.getAffectedObject(), null)) instanceof EditPart) {
+            EditPart editPart = (EditPart) translateToEditPart(triggerEvent
+                    .getAffectedObject(), null);
+            if (triggerEvent.getTriggerState() && !effects.containsKey(editPart)) {
                 HighlightEffect effect = new HighlightEffect();
                 effect.setTarget(editPart);
-                effects.put(editPart, effect);
+                effect.execute();
+//                effects.put(editPart, effect);
+                
                 return true;
             } else {
                 HighlightEffect effect = effects.get(editPart);

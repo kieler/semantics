@@ -20,7 +20,9 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.viewmanagement.ATrigger;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
+
 
 public class StateActivityConsumer extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
@@ -60,8 +62,8 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
                     // a state is already highlighted
                     if(lastHighligtedStates != null && lastHighligtedStates.contains(affectedState))
                         continue;
-                    triggerEvent.setAffectedObject(affectedState);
-                    triggerEvent.setTriggerToggle(true);
+                    triggerEvent.setAffectedObject(translateToURI((Object)affectedState));
+                    triggerEvent.setTriggerActive(true);
                     trigger.notifyTrigger(triggerEvent);
                 }
                 // find all states that are not highlighted anymore
@@ -70,8 +72,8 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
                         lastHighligtedStates.remove(editPart);
                     for (EditPart editPart : lastHighligtedStates) {
                         TriggerEventObject triggerEvent = new TriggerEventObject();
-                        triggerEvent.setAffectedObject(editPart);
-                        triggerEvent.setTriggerToggle(false);
+                        triggerEvent.setAffectedObject(translateToURI((Object)editPart));
+                        triggerEvent.setTriggerActive(false);
                         trigger.notifyTrigger(triggerEvent);
                     }
                 }
