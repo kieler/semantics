@@ -47,9 +47,23 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class ExecutePtolemyModel {
+
+	public class ModelOutput {
+		public String signalName;
+		public boolean present;
+		public AddSubtract actor;
+		public ModelOutput(String signalName, AddSubtract actor) {
+			this.signalName = signalName;
+			this.actor = actor;
+			this.present = false;
+			
+		}
+	}
+	
 	
 	private List<KielerIO> kielerIOList;
-	private List<AddSubtract> addSubtractList;
+//	private List<AddSubtract> addSubtractList;
+	private List<ModelOutput> modelOutputList;
 	private List<ModalModel> modalModelList;
 	
 	private JSONObject inputData;
@@ -105,7 +119,8 @@ public class ExecutePtolemyModel {
 			return null;
 		}
 
-		String[] keyArray = new String[kielerIOList.size() + addSubtractList.size()];
+		String[] keyArray = new String[kielerIOList.size() 
+		                               + modelOutputList.size()];
 		
 		for (int c = 0; c < kielerIOList.size(); c++) {
 			String signalName = ((KielerIO)kielerIOList.get(c)).getSignalName();
@@ -114,13 +129,9 @@ public class ExecutePtolemyModel {
 			keyArray[c] = signalName;
 		}
 
-		for (int c = 0; c < addSubtractList.size(); c++) {
-			AddSubtract as = ((AddSubtract)addSubtractList.get(c));
-			String signalName = ((Parameter)as.getAttribute("signal name")).getValueAsString();
-			//remove quotation marks
-			signalName = signalName.replaceAll("'", "");
-	  		signalName = signalName.replaceAll("\"", "");
-			keyArray[kielerIOList.size() + c] = signalName;
+		for (int c = 0; c < modelOutputList.size(); c++) {
+			keyArray[kielerIOList.size() + c] = 
+							((ModelOutput)modelOutputList.get(c)).signalName;
 		}
 		
 		return keyArray;
@@ -199,7 +210,7 @@ public class ExecutePtolemyModel {
 	 * @param children the children to walk thru
 	 */
 	@SuppressWarnings("unchecked")
-	private void fillAddSubtractList(List<AddSubtract> addSubtractList,
+	private void fillModelOutputList(List<ModelOutput> modelOutputList,
 									List<InstantiableNamedObj> children) {
 		// if no children at all
 		if (children == null) return;
@@ -208,7 +219,12 @@ public class ExecutePtolemyModel {
 		for (int c = 0; c < children.size(); c++){
 			Object child = children.get(c);
             if (child instanceof AddSubtract) {
-            	addSubtractList.add((AddSubtract)child);
+            	AddSubtract as = (AddSubtract)child;
+    			String signalName = ((Parameter)as.getAttribute("signal name")).getValueAsString();
+    			//remove quotation marks
+    			signalName = signalName.replaceAll("'", "");
+    	  		signalName = signalName.replaceAll("\"", "");
+            	modelOutputList.add(new ModelOutput(signalName, as));
             }
         }//end while
 	}
@@ -333,7 +349,8 @@ public class ExecutePtolemyModel {
 
         modalModelList = new LinkedList<ModalModel>();
         kielerIOList = new LinkedList<KielerIO>();
-        addSubtractList = new LinkedList<AddSubtract>();
+//        addSubtractList = new LinkedList<AddSubtract>();
+        modelOutputList = new LinkedList<ModelOutput>();
         
         NamedObj ptolemyModel = null;
         try {
@@ -378,8 +395,8 @@ public class ExecutePtolemyModel {
                 
 
                 //go thru the model and add fill the addSubtractList (Outputs)
-                fillAddSubtractList(
-                		addSubtractList,
+                fillModelOutputList(
+                		modelOutputList,
                 		modelActor.entityList());
                 
                 // run the model

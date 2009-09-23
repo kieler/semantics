@@ -826,7 +826,7 @@ Void addSignalsToModalModel(EntityType entity,
 	let p4c = new PropertyType:
 	let p4d = new PropertyType:
 	let portType = new PropertyType:
-	let signal = signalList.last():
+	let signal = signalList.first():
 	//port.setClass("ptolemy.domains.fsm.modal.ModalPort") -> //CHANGED 16.09.2009
 	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	port.setName(signal.name) ->
@@ -866,7 +866,7 @@ Void addSignalsToModalModel(EntityType entity,
 	
 	//if still signals remain, continue
 	(signalList.size > 1) ? addSignalsToModalModel(entity,
-												   signalList.withoutLast(), 
+												   signalList.withoutFirst(), 
 												   region) : null
 ;
 
@@ -882,7 +882,7 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	let p4c = new PropertyType:
 	let p4d = new PropertyType:
 	let portType = new PropertyType:
-	let signal = signalList.last():
+	let signal = signalList.first():
 	//port.setClass("ptolemy.domains.fsm.modal.RefinementPort") -> //CHANGED 16.09.2009
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	port.setName(signal.name) ->
@@ -924,7 +924,7 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	
 	//if still signals remain, continue
 	(signalList.size > 1) ? addSignalsToModalController(entity, parent,
-														signalList.withoutLast(),
+														signalList.withoutFirst(),
 														region) : null	
 ;
 
