@@ -169,12 +169,13 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		String[] presentSignals = PTOEXE.getModelOutputPresentSignals();
 		for (int c = 0; c < presentSignals.length; c ++) {
 			String signalName = presentSignals[c];
-			try {
-				JSONObject signalObject = JSONSignalValues.newValue(true);
-				try {returnObj.accumulate(signalName,signalObject);}catch(Exception e){}
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+			System.out.println(signalName);
+//			try {
+//				JSONObject signalObject = JSONSignalValues.newValue(true);
+//				try {returnObj.accumulate(signalName,signalObject);}catch(Exception e){}
+//			} catch (JSONException e) {
+//				e.printStackTrace();
+//			}
 		}
 		
 		//the stateName is the second KIEM property

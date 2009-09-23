@@ -9,17 +9,6 @@
   </property>
   <entity class="ptolemy.domains.modal.modal.ModalModel" name="918158682_region_1">
     <property class="ptolemy.vergil.modal.modal.ModalTableauFactory" name="_tableauFactory"/>
-    <port class="ptolemy.domains.modal.modal.ModalPort" name="I">
-      <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
-      <property name="input"/>
-      <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-      <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
-    </port>
-    <relation class="ptolemy.actor.TypedIORelation" name="IRelation">
-      <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
-    </relation>
-    <link port="I" relation="IRelation"/>
-    <link port="_Controller.I" relation="IRelation"/>
     <port class="ptolemy.domains.modal.modal.ModalPort" name="O">
       <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
       <property name="output"/>
@@ -31,6 +20,17 @@
     </relation>
     <link port="O" relation="ORelation"/>
     <link port="_Controller.O" relation="ORelation"/>
+    <port class="ptolemy.domains.modal.modal.ModalPort" name="I">
+      <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
+      <property name="input"/>
+      <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+      <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
+    </port>
+    <relation class="ptolemy.actor.TypedIORelation" name="IRelation">
+      <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
+    </relation>
+    <link port="I" relation="IRelation"/>
+    <link port="_Controller.I" relation="IRelation"/>
     <port class="ptolemy.domains.modal.modal.ModalPort" name="terminated918158682">
       <property name="output"/>
       <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
@@ -53,17 +53,17 @@
     <link port="_Controller.terminated200586989" relation="terminated200586989Relation"/>
     <link port="200586989.terminated200586989" relation="terminated200586989Relation"/>
     <entity class="ptolemy.domains.modal.modal.ModalController" name="_Controller">
-      <port class="ptolemy.domains.modal.modal.RefinementPort" name="I">
-        <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
-        <property name="input"/>
-        <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-        <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
-      </port>
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="O">
         <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
         <property name="output"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
+      </port>
+      <port class="ptolemy.domains.modal.modal.RefinementPort" name="I">
+        <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
+        <property name="input"/>
+        <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
       </port>
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated918158682">
         <property name="output"/>
@@ -81,21 +81,21 @@
         <property class="ptolemy.data.expr.Parameter" name="isInitialState" value="true"/>
       </entity>
     </entity>
-    <link port="200586989.I" relation="IRelation"/>
     <link port="200586989.O" relation="ORelation"/>
+    <link port="200586989.I" relation="IRelation"/>
     <entity class="ptolemy.domains.modal.modal.Refinement" name="200586989">
       <property class="ptolemy.domains.sr.kernel.SRDirector" name="SR Director"/>
-      <port class="ptolemy.domains.modal.modal.RefinementPort" name="I">
-        <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
-        <property name="input"/>
-        <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-        <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
-      </port>
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="O">
         <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
         <property name="output"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
+      </port>
+      <port class="ptolemy.domains.modal.modal.RefinementPort" name="I">
+        <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
+        <property name="input"/>
+        <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
       </port>
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated200586989">
         <property name="output"/>
@@ -105,17 +105,6 @@
       <entity class="ptolemy.actor.kiel.KielerNormalTermination" name="KielerNormalTermination"/>
       <entity class="ptolemy.domains.modal.modal.ModalModel" name="200586989_region_2">
         <property class="ptolemy.vergil.modal.modal.ModalTableauFactory" name="_tableauFactory"/>
-        <port class="ptolemy.domains.modal.modal.ModalPort" name="L">
-          <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
-          <property name="output"/>
-          <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-          <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
-        </port>
-        <relation class="ptolemy.actor.TypedIORelation" name="LRelation">
-          <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
-        </relation>
-        <link port="L" relation="LRelation"/>
-        <link port="_Controller.L" relation="LRelation"/>
         <port class="ptolemy.domains.modal.modal.ModalPort" name="O">
           <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
           <property name="output"/>
@@ -127,6 +116,17 @@
         </relation>
         <link port="O" relation="ORelation"/>
         <link port="_Controller.O" relation="ORelation"/>
+        <port class="ptolemy.domains.modal.modal.ModalPort" name="L">
+          <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
+          <property name="output"/>
+          <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+          <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
+        </port>
+        <relation class="ptolemy.actor.TypedIORelation" name="LRelation">
+          <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
+        </relation>
+        <link port="L" relation="LRelation"/>
+        <link port="_Controller.L" relation="LRelation"/>
         <port class="ptolemy.domains.modal.modal.ModalPort" name="terminated200586989">
           <property name="output"/>
           <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
@@ -138,14 +138,14 @@
         <link port="terminated200586989" relation="terminated200586989Relation"/>
         <link port="_Controller.terminated200586989" relation="terminated200586989Relation"/>
         <entity class="ptolemy.domains.modal.modal.ModalController" name="_Controller">
-          <port class="ptolemy.domains.modal.modal.RefinementPort" name="L">
-            <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
+          <port class="ptolemy.domains.modal.modal.RefinementPort" name="O">
+            <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
             <property name="output"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
           </port>
-          <port class="ptolemy.domains.modal.modal.RefinementPort" name="O">
-            <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
+          <port class="ptolemy.domains.modal.modal.RefinementPort" name="L">
+            <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
             <property name="output"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
@@ -195,28 +195,6 @@
       </entity>
       <entity class="ptolemy.domains.modal.modal.ModalModel" name="200586989_region_1">
         <property class="ptolemy.vergil.modal.modal.ModalTableauFactory" name="_tableauFactory"/>
-        <port class="ptolemy.domains.modal.modal.ModalPort" name="L">
-          <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
-          <property name="input"/>
-          <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-          <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
-        </port>
-        <relation class="ptolemy.actor.TypedIORelation" name="LRelation">
-          <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
-        </relation>
-        <link port="L" relation="LRelation"/>
-        <link port="_Controller.L" relation="LRelation"/>
-        <port class="ptolemy.domains.modal.modal.ModalPort" name="I">
-          <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
-          <property name="input"/>
-          <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-          <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
-        </port>
-        <relation class="ptolemy.actor.TypedIORelation" name="IRelation">
-          <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
-        </relation>
-        <link port="I" relation="IRelation"/>
-        <link port="_Controller.I" relation="IRelation"/>
         <port class="ptolemy.domains.modal.modal.ModalPort" name="O">
           <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
           <property name="output"/>
@@ -228,6 +206,28 @@
         </relation>
         <link port="O" relation="ORelation"/>
         <link port="_Controller.O" relation="ORelation"/>
+        <port class="ptolemy.domains.modal.modal.ModalPort" name="I">
+          <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
+          <property name="input"/>
+          <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+          <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
+        </port>
+        <relation class="ptolemy.actor.TypedIORelation" name="IRelation">
+          <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
+        </relation>
+        <link port="I" relation="IRelation"/>
+        <link port="_Controller.I" relation="IRelation"/>
+        <port class="ptolemy.domains.modal.modal.ModalPort" name="L">
+          <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
+          <property name="input"/>
+          <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
+          <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
+        </port>
+        <relation class="ptolemy.actor.TypedIORelation" name="LRelation">
+          <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
+        </relation>
+        <link port="L" relation="LRelation"/>
+        <link port="_Controller.L" relation="LRelation"/>
         <port class="ptolemy.domains.modal.modal.ModalPort" name="terminated200586989">
           <property name="output"/>
           <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
@@ -239,11 +239,11 @@
         <link port="terminated200586989" relation="terminated200586989Relation"/>
         <link port="_Controller.terminated200586989" relation="terminated200586989Relation"/>
         <entity class="ptolemy.domains.modal.modal.ModalController" name="_Controller">
-          <port class="ptolemy.domains.modal.modal.RefinementPort" name="L">
-            <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
-            <property name="input"/>
+          <port class="ptolemy.domains.modal.modal.RefinementPort" name="O">
+            <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
+            <property name="output"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-            <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
+            <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
           </port>
           <port class="ptolemy.domains.modal.modal.RefinementPort" name="I">
             <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
@@ -251,11 +251,11 @@
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
           </port>
-          <port class="ptolemy.domains.modal.modal.RefinementPort" name="O">
-            <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
-            <property name="output"/>
+          <port class="ptolemy.domains.modal.modal.RefinementPort" name="L">
+            <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
+            <property name="input"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-            <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
+            <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
           </port>
           <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated200586989">
             <property name="output"/>
@@ -318,12 +318,6 @@
           <link port="375787635.incomingPort" relation="375787636_transition_1"/>
         </entity>
       </entity>
-      <entity class="ptolemy.actor.lib.AddSubtract" name="L_COMBINE"/>
-      <relation class="ptolemy.actor.TypedIORelation" name="L_COMBINERELATION">
-        <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-      </relation>
-      <link port="L_COMBINE.plus" relation="L_COMBINERELATION"/>
-      <link port="200586989_region_2.L" relation="L_COMBINERELATION"/>
       <entity class="ptolemy.actor.lib.AddSubtract" name="O_COMBINE">
         <property class="ptolemy.data.expr.Parameter" name="signal name" value="'O'"/>
       </entity>
@@ -338,6 +332,12 @@
       </relation>
       <link port="O" relation="O_RELATION"/>
       <link port="O_COMBINE.output" relation="O_RELATION"/>
+      <entity class="ptolemy.actor.lib.AddSubtract" name="L_COMBINE"/>
+      <relation class="ptolemy.actor.TypedIORelation" name="L_COMBINERELATION">
+        <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
+      </relation>
+      <link port="L_COMBINE.plus" relation="L_COMBINERELATION"/>
+      <link port="200586989_region_2.L" relation="L_COMBINERELATION"/>
       <relation class="ptolemy.actor.TypedIORelation" name="200586989_region_2_COMBINERELATION">
         <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
       </relation>
@@ -348,23 +348,23 @@
       </relation>
       <link port="KielerNormalTermination.all states terminated" relation="TERMINATION_RELATION"/>
       <link port="terminated200586989" relation="TERMINATION_RELATION"/>
-      <relation class="ptolemy.actor.TypedIORelation" name="L_RELATION">
+      <relation class="ptolemy.actor.TypedIORelation" name="O200586989_region_1_COMBINERELATION">
         <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-        <vertex name="L_RELATIONVERTEX" value="{0.0, 0.0}"/>
       </relation>
-      <link port="200586989_region_1.L" relation="L_RELATION"/>
-      <link port="L_COMBINE.output" relation="L_RELATION"/>
+      <link port="O_COMBINE.plus" relation="O200586989_region_1_COMBINERELATION"/>
+      <link port="200586989_region_1.O" relation="O200586989_region_1_COMBINERELATION"/>
       <relation class="ptolemy.actor.TypedIORelation" name="I_RELATION">
         <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
         <vertex name="I_RELATIONVERTEX" value="{0.0, 0.0}"/>
       </relation>
       <link port="200586989_region_1.I" relation="I_RELATION"/>
       <link port="I" relation="I_RELATION"/>
-      <relation class="ptolemy.actor.TypedIORelation" name="O200586989_region_1_COMBINERELATION">
+      <relation class="ptolemy.actor.TypedIORelation" name="L_RELATION">
         <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
+        <vertex name="L_RELATIONVERTEX" value="{0.0, 0.0}"/>
       </relation>
-      <link port="O_COMBINE.plus" relation="O200586989_region_1_COMBINERELATION"/>
-      <link port="200586989_region_1.O" relation="O200586989_region_1_COMBINERELATION"/>
+      <link port="200586989_region_1.L" relation="L_RELATION"/>
+      <link port="L_COMBINE.output" relation="L_RELATION"/>
       <relation class="ptolemy.actor.TypedIORelation" name="200586989_region_1_COMBINERELATION">
         <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
       </relation>
@@ -372,6 +372,14 @@
       <link port="200586989_region_1.terminated200586989" relation="200586989_region_1_COMBINERELATION"/>
     </entity>
   </entity>
+  <entity class="ptolemy.actor.lib.AddSubtract" name="O_COMBINE">
+    <property class="ptolemy.data.expr.Parameter" name="signal name" value="'O'"/>
+  </entity>
+  <relation class="ptolemy.actor.TypedIORelation" name="O918158682_region_1_COMBINERELATION">
+    <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
+  </relation>
+  <link port="O_COMBINE.plus" relation="O918158682_region_1_COMBINERELATION"/>
+  <link port="918158682_region_1.O" relation="O918158682_region_1_COMBINERELATION"/>
   <relation class="ptolemy.actor.TypedIORelation" name="I_RELATION">
     <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
     <vertex name="I_RELATIONVERTEX" value="{0.0, 0.0}"/>
@@ -385,12 +393,4 @@
     <property class="ptolemy.data.expr.Parameter" name="signal name" value="'I'"/>
   </entity>
   <link port="I_KIELERIO.signal" relation="I_RELATION"/>
-  <entity class="ptolemy.actor.lib.AddSubtract" name="O_COMBINE">
-    <property class="ptolemy.data.expr.Parameter" name="signal name" value="'O'"/>
-  </entity>
-  <relation class="ptolemy.actor.TypedIORelation" name="O918158682_region_1_COMBINERELATION">
-    <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-  </relation>
-  <link port="O_COMBINE.plus" relation="O918158682_region_1_COMBINERELATION"/>
-  <link port="918158682_region_1.O" relation="O918158682_region_1_COMBINERELATION"/>
 </entity>

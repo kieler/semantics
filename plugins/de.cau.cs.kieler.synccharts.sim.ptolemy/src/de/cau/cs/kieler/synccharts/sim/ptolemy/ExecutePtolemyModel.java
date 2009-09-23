@@ -148,6 +148,7 @@ public class ExecutePtolemyModel {
 			if (this.modelOutputList.get(c).present)
 				count++;
 		}
+		System.out.println(count);
 		String[] returnArray = new String[count];
 		count = 0;
 		for (int c = 0; c < this.modelOutputList.size(); c++ ) {
@@ -234,10 +235,12 @@ public class ExecutePtolemyModel {
 	class PresentTokenListener	implements IOPortEventListener {
 		ModelOutput modelOutput;
 		
-		public PresentTokenListener(ModelOutput moelOutput) {
+		public PresentTokenListener(ModelOutput modelOutput) {
 			this.modelOutput = modelOutput;
+			System.out.println(" NEW PRESENT TOKEN LISTENER  :  " + this.modelOutput.signalName);
 		}
 		public void portEvent(IOPortEvent event) {
+			System.out.println(" P R E S E N T  :  " + this.modelOutput.signalName);
 	    	this.modelOutput.present = true;
 		}
 		
@@ -268,7 +271,6 @@ public class ExecutePtolemyModel {
     			signalName = signalName.replaceAll("'", "");
     	  		signalName = signalName.replaceAll("\"", "");
     	  		ModelOutput modelOutput = new ModelOutput(signalName, as);
-            	modelOutputList.add(modelOutput);
             	
                 List<Object> ports = ( (Actor)as ).outputPortList();
                 for (Object port : ports) {
@@ -277,7 +279,8 @@ public class ExecutePtolemyModel {
                         		new PresentTokenListener(modelOutput));
                     }
                 }                       
-            	           	
+
+                modelOutputList.add(modelOutput);
             }
         }//end while
 	}
