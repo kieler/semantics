@@ -21,6 +21,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.URI;
 
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
@@ -29,11 +30,14 @@ import ptolemy.actor.Manager;
 import ptolemy.domains.modal.modal.ModalController;
 import ptolemy.domains.modal.modal.ModalModel;
 import ptolemy.kernel.InstantiableNamedObj;
+import ptolemy.kernel.util.KernelException;
 import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;
 import ptolemy.moml.MoMLParser;
 //import ptolemy.actor.kiel.*;
 import ptolemy.actor.kiel.KielerIO;
+import ptolemy.actor.lib.AddSubtract;
+import ptolemy.data.expr.Parameter;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 
 /**
@@ -42,9 +46,11 @@ import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
-public class ExecutePtolemyModel implements Runnable {
+public class ExecutePtolemyModel {
 	
 	private List<KielerIO> kielerIOList;
+	private List<AddSubtract> addSubtractList;
+	private List<ModalModel> modalModelList;
 	
 	private JSONObject inputData;
 	
@@ -53,25 +59,11 @@ public class ExecutePtolemyModel implements Runnable {
 	/** The Ptolemy model to execute. */
 	private String PtolemyModel;
 	
-	/** The flag indicating the execution is paused. */
-	private boolean paused;
-	
-	/** The flag indicating the execution should stop. */
-	private boolean stop;
-	
-	/** The steps to make, because {@link #executionStep()} is 
-	 * called asynchronously. */
-	private int makesteps;
-	
 	/** The currently active state of the EMF model as FragmentURI. */
 	private String currentState;
 	
 	/** The Ptolemy manager. */
 	private Manager manager; 
-	
-	/** The KiemExecutionException that may have occurred during the 
-	 * asynchronous performance of steps. */
-	private KiemExecutionException executionException; 
 	
 	//-------------------------------------------------------------------------
 	
@@ -82,11 +74,7 @@ public class ExecutePtolemyModel implements Runnable {
 	 */
 	public ExecutePtolemyModel(String PtolemyModel) {
 		this.PtolemyModel = PtolemyModel;
-		this.paused = true;
-		this.stop = false;
-		this.makesteps = 0;
 		this.currentState = "";
-		this.executionException = null;
 		this.kielerIOList = null;
 	}
 	
@@ -112,18 +100,30 @@ public class ExecutePtolemyModel implements Runnable {
 	
 	//-------------------------------------------------------------------------
 	
-	public String[] getInterfaceVariables() {
-		if (this.kielerIOList == null) return null;
+	public synchronized String[] getInterfaceSignals() {
+		if (this.kielerIOList == null)  {
+			return null;
+		}
+
+		String[] keyArray = new String[kielerIOList.size() + addSubtractList.size()];
 		
-		List<String> keys = new LinkedList<String>();
 		for (int c = 0; c < kielerIOList.size(); c++) {
 			String signalName = ((KielerIO)kielerIOList.get(c)).getSignalName();
 			//remove quotation marks
 			signalName = signalName.replaceAll("'", "");
-			keys.add(signalName);
+			keyArray[c] = signalName;
+		}
+
+		for (int c = 0; c < addSubtractList.size(); c++) {
+			AddSubtract as = ((AddSubtract)addSubtractList.get(c));
+			String signalName = ((Parameter)as.getAttribute("signal name")).getValueAsString();
+			//remove quotation marks
+			signalName = signalName.replaceAll("'", "");
+	  		signalName = signalName.replaceAll("\"", "");
+			keyArray[kielerIOList.size() + c] = signalName;
 		}
 		
-		return (String[])keys.toArray();
+		return keyArray;
 	}
 
 	//-------------------------------------------------------------------------
@@ -155,33 +155,63 @@ public class ExecutePtolemyModel implements Runnable {
 	 * @throws KiemExecutionException a KiemExecutionException
 	 */
 	public synchronized void executionStep() throws KiemExecutionException {
-		this.paused = false;
-		//increase steps to make
-		this.makesteps++;
-		//throw exception that may have occurred (asynchronously)
-		if (this.executionException != null)
-			throw this.executionException;
+		try {
+			  manager.iterate();
+			  
+		  	  //iterate thru all modal models and concatenate
+		  	  //the fragment URIs with a colon
+		  	  currentState = "";
+		  	  for (int c = 0; c < modalModelList.size(); c++) {
+		  		ModalModel modalModel = modalModelList.get(c);
+		  		//if more than one active state
+		  		if (!currentState.equals(""))
+		  			currentState += ", ";
+		  		currentState += ((StringAttribute)modalModel
+		  				 .getController()
+		  				 .currentState()
+		  				 .getAttribute("elementURIFragment"))
+		  				 .getValueAsString();
+		  		}
+		  		
+		  	  //iterate thru all kielerIOs
+		  	  for (int c = 0; c < kielerIOList.size(); c++) {
+		  		KielerIO kielerIO = kielerIOList.get(c);
+		  		String signalName = kielerIO.getSignalName();
+		  		//remove quotation marks
+		  		signalName = signalName.replaceAll("'", "");
+		 			kielerIO.setPresent(isSignalPresent(signalName));
+		  	  }
+  	  
+		} catch (KernelException e) {
+			e.printStackTrace();
+        	//raise a KiemExecutionException in case of any error
+        	throw 
+        		new KiemExecutionException(e.getLocalizedMessage(),true, e);
+		}
 	}
 
 	//-------------------------------------------------------------------------
 	
 	/**
-	 * This immediately stops the execution and will prevent any steps to make
-	 * even if they were triggered before a call to this method.
+	 * Fills the modalModelList by recursively going thru the models elements.
+	 * 
+	 * @param modalModelList the list of ModalModels to fill
+	 * @param children the children to walk thru
 	 */
-	public void executionStop() {
-		this.stop = true;
-	}
-	
-	//-------------------------------------------------------------------------
+	@SuppressWarnings("unchecked")
+	private void fillAddSubtractList(List<AddSubtract> addSubtractList,
+									List<InstantiableNamedObj> children) {
+		// if no children at all
+		if (children == null) return;
 
-	/**
-	 * This method will cause the execution pause.
-	 */
-	public void executionPause() {
-		this.paused = true;
+		// do *NOT* recursively for children, just a flat top-level search
+		for (int c = 0; c < children.size(); c++){
+			Object child = children.get(c);
+            if (child instanceof AddSubtract) {
+            	addSubtractList.add((AddSubtract)child);
+            }
+        }//end while
 	}
-	
 	//-------------------------------------------------------------------------
 	
 	/**
@@ -210,9 +240,6 @@ public class ExecutePtolemyModel implements Runnable {
             
             if (child instanceof KielerIO) {
             	kielerIOList.add((KielerIO)child);
-        		System.out.println(" KIELERIO found: "+ ((KielerIO)child).getSignalName());
-
-            	
             }
             if (child instanceof ModalModel) {
             	ModalModel modalModel = (ModalModel)child;
@@ -280,12 +307,23 @@ public class ExecutePtolemyModel implements Runnable {
 
 	
 	//-------------------------------------------------------------------------
+	
+	public synchronized void executionStop() {
+    	//if there is already a manager (e.g., from previous calls)
+    	//then try to stop it and create a new one
+    	try {
+        	manager.stop();
+        	manager.wrapup();
+    	}catch(Exception e){}
+	}
+	
+	//-------------------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
+	/**
+	 * Execution initialize.
 	 */
 	@SuppressWarnings("unchecked")
-	public void run() {
+	public synchronized void executionInitialize() throws KiemInitializationException {
 		URI fileURI = URI.createFileURI(new File(PtolemyModel).getAbsolutePath());
         URI momlFile = fileURI;
         
@@ -293,8 +331,9 @@ public class ExecutePtolemyModel implements Runnable {
         //make sure Ptolemy is in dependencies
         MoMLParser parser = new MoMLParser();
 
-        List<ModalModel> modalModelList = new LinkedList<ModalModel>();
+        modalModelList = new LinkedList<ModalModel>();
         kielerIOList = new LinkedList<KielerIO>();
+        addSubtractList = new LinkedList<AddSubtract>();
         
         NamedObj ptolemyModel = null;
         try {
@@ -327,87 +366,32 @@ public class ExecutePtolemyModel implements Runnable {
                     modelActor.setManager(manager);
                 }
 
-                //go thru the model and add fill the modalModelList
+                //go thru the model and add fill the modalModelList (Current States)
                 fillModalModelList(
                 		modalModelList,
                 		modelActor.entityList());
 
-                //go thru the model and add fill the kielerIOList
+                //go thru the model and add fill the kielerIOList (Inputs)
                 fillKielerIOList(
                 		kielerIOList,
                 		modelActor.entityList());
                 
-//                //modify host and port of railway simulation engine actor
-//                if (modelActor.entityList() != null) {
-//                    for (int c = 0; c < modelActor.entityList().size(); c++) {
-//                    	Object entity = modelActor.entityList().get(c);
-//                    	
-//                    	if (entity instanceof ModelRailwayIO) {
-//                    	  ModelRailwayIO modelRailwayIO =
-//                    			(ModelRailwayIO) entity;
-//                    	  modelRailwayIO.host.setExpression("'"+this.host+"'");
-//                    	  modelRailwayIO.port.setExpression(this.port);
-//                    	}
-//                    	
-//                    }//next c
-//                }
 
+                //go thru the model and add fill the addSubtractList (Outputs)
+                fillAddSubtractList(
+                		addSubtractList,
+                		modelActor.entityList());
+                
                 // run the model
                 if (manager != null) {
                     // run forest, run!
                     manager.initialize();
-                    while(true) {
-                    	
-                    	while(this.paused) {
-                    		Thread.sleep(100);
-                    	}
-                    	if (this.stop) {
-                            manager.wrapup();
-                    		return;
-                    	}
-                    	
-                    	synchronized(this) {
-                          if ((this.makesteps == -1)||(this.makesteps > 0)) {
-                        	  if (makesteps > 0) makesteps--;
-                        		manager.iterate();
-                        		
-                        	  //iterate thru all modal models and concatenate
-                        	  //the fragment URIs with a colon
-                        	  currentState = "";
-                        	  for (int c = 0; c < modalModelList.size(); c++) {
-                        		ModalModel modalModel = modalModelList.get(c);
-                        		//if more than one active state
-                        		if (!currentState.equals(""))
-                        			currentState += ", ";
-                        		currentState += ((StringAttribute)modalModel
-                        				 .getController()
-                        				 .currentState()
-                        				 .getAttribute("elementURIFragment"))
-                        				 .getValueAsString();
-                        		}
-                        		
-                        	  //iterate thru all kielerIOs
-                        	  for (int c = 0; c < kielerIOList.size(); c++) {
-                        		KielerIO kielerIO = kielerIOList.get(c);
-                        		String signalName = kielerIO.getSignalName();
-                        		//remove quotation marks
-                        		signalName = signalName.replaceAll("'", "");
-                       			kielerIO.setPresent(isSignalPresent(signalName));
-                        		System.out.println(c+") "+ signalName + " : " + isSignalPresent(signalName) );
-                        	  }
-                        	  
-                        	  
-                        	}
-                    	}
-                    }
-                    // calling manager.execute() would run the model
-                    // for the amount of iterations set in the director
                 }
-            }
+            }//end if
         } catch (Exception e) {
-        	//raise a KiemExecutionException in case of any error
-        	this.executionException = 
-        		new KiemExecutionException(e.getLocalizedMessage(),true, e);
+        	//raise a KiemInitializationException in case of any error
+        	throw
+        		new KiemInitializationException(e.getLocalizedMessage(),true, e);
         }
 	}
 	

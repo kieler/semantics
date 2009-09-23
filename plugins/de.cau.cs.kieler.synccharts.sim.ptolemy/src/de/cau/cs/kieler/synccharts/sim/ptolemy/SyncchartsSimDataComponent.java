@@ -149,6 +149,8 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	public JSONObject step(JSONObject jSONObject) throws
 												KiemExecutionException {
 		
+		System.out.println("Step in Ptolemy Model...");
+		
 		//set current input data
 		PTOEXE.setData(jSONObject);
 		
@@ -156,6 +158,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		//note that this may produce a KiemExecutionException which has it 
 		//source in the previous call.
 		PTOEXE.executionStep();
+		
 		String currentState = PTOEXE.getCurrentState();
 		//the stateName is the second KIEM property
 		String stateName = this.getProperties()[1].getValue();
@@ -166,16 +169,16 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
     //-------------------------------------------------------------------------	 
 
-	public String[] provideInterfaceKeys() {
-		return PTOEXE.getInterfaceVariables();
+	public String[] provideInterfaceKeys() throws KiemInitializationException {
+		//do the initialization prior to providing the interface keys
+		//this may rise an exception
+		loadAndExecuteModel();
+		return PTOEXE.getInterfaceSignals();
 	}	
 	
     //-------------------------------------------------------------------------	 
 	
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
-	 */
-	public void initialize() throws KiemInitializationException {
+	public void loadAndExecuteModel() throws KiemInitializationException {
 		workspaceFolder = Platform.getLocation().toString();
 		
 		//the SimpleRailCtrl EMF model instance is the first KIEM property
@@ -190,14 +193,21 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 			System.out.println("Now loading Ptolemy Model..." + ptolemyModelFile);
 	        //load the Ptolemy Model
 	        PTOEXE = new ExecutePtolemyModel(ptolemyModelFile);
-	        PTOEXE_Thread = new Thread(PTOEXE);
+			System.out.println("Now initializing Ptolemy Model...");
+	        PTOEXE.executionInitialize();
 			System.out.println("Now executing Ptolemy Model...");
-	        //start the thread - it is paused by default (steps==0)
-	        PTOEXE_Thread.start();
 		}//end if
 		else 
 			new KiemInitializationException
 					("Ptolemy Model could not be generated", true, null);
+	}
+
+	//-------------------------------------------------------------------------	 
+	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
+	 */
+	public void initialize() throws KiemInitializationException {
 	}
 
     //-------------------------------------------------------------------------	 
