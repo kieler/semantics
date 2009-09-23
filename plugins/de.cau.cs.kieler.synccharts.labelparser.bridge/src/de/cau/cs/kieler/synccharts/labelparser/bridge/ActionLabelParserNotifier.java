@@ -204,26 +204,15 @@ public class ActionLabelParserNotifier extends AdapterImpl implements IStartup{
         }
     }
     
-    public static void processActionLabels(final EObject parent, final boolean parse){
+    public static void processActionLabels(final EObject parent, final boolean parse) throws Exception{
         TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(parent);
         final ActionLabelParserNotifier parser = new ActionLabelParserNotifier();
-        AbstractCommand cmd = new AbstractCommand() {
-            public void execute() {
-                try {
-                    parser.processAffectedActionLabels(null, parent, parse);
-                } catch (Exception e) {
-                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error parsing an action string", e);
-                    StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-                }
-            }
-            public void redo() {execute();}
-            @Override
-            public boolean canUndo() {return false;}
-            @Override
-            protected boolean prepare() {return true;}
-        };
+        ActionLabelProcessCommand cmd = parser.new ActionLabelProcessCommand(parent, parse, parser);
         CommandStack stack = domain.getCommandStack();
         stack.execute(cmd);
+        if(cmd.error && cmd.exception != null){
+            throw cmd.exception;
+        }
     }
     
     /**
@@ -247,4 +236,33 @@ public class ActionLabelParserNotifier extends AdapterImpl implements IStartup{
         }
     }
     
-}
+    class ActionLabelProcessCommand extends AbstractCommand{
+
+        ActionLabelParserNotifier parser;
+        EObject parent;
+        boolean parse;
+        public ActionLabelProcessCommand(EObject parent, boolean parse, ActionLabelParserNotifier parser) {
+            this.parent = parent;
+            this.parse = parse;
+            this.parser = parser;
+        }
+        
+        public boolean error = false;
+            public Exception exception;
+            public void execute() {
+                try {
+                    parser.processAffectedActionLabels(null, parent, parse);
+                } catch (Exception e) {
+                    error = true;
+                    exception = e;
+                }
+            }
+            public void redo() {execute();}
+            @Override
+            public boolean canUndo() {return false;}
+            @Override
+            protected boolean prepare() {return true;}
+        };
+    }
+    
+

@@ -41,12 +41,12 @@ public class ActionLabelParseHandler extends AbstractHandler {
         myStatus = new Status(IStatus.OK, Activator.PLUGIN_ID, "Parsing and re-serialization of action strings done.");
         }
         catch (NullPointerException e) {
-            myStatus = new Status(IStatus.OK, Activator.PLUGIN_ID, "No SyncChart Editor open. ", e);
+            myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "No SyncChart Editor open. ", e);
         }
         catch (ClassCastException e) {
-            myStatus = new Status(IStatus.OK, Activator.PLUGIN_ID, "Not a SyncChart Editor open. ", e);
+            myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Not a SyncChart Editor open. ", e);
         } catch(Exception e){
-            myStatus = new Status(IStatus.OK, Activator.PLUGIN_ID, "Error parsing an action label. ", e);
+            myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error parsing an action label. ", e);
         }
         finally{
                StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
