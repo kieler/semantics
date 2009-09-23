@@ -134,10 +134,10 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
      */
     public Action createAction() {
         ActionImpl action = new ActionImpl();
+        action.eAdapters().addAll(this.eAdapters());
         return action;
     }
 
@@ -204,10 +204,10 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
      */
     public Signal createSignal() {
         SignalImpl signal = new SignalImpl();
+        signal.eAdapters().addAll(this.eAdapters());
         return signal;
     }
 
@@ -244,10 +244,10 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
      */
     public Transition createTransition() {
         TransitionImpl transition = new TransitionImpl();
+        transition.eAdapters().addAll(this.eAdapters());
         return transition;
     }
 
@@ -264,10 +264,10 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
      */
     public Variable createVariable() {
         VariableImpl variable = new VariableImpl();
+        variable.eAdapters().addAll(this.eAdapters());
         return variable;
     }
 
