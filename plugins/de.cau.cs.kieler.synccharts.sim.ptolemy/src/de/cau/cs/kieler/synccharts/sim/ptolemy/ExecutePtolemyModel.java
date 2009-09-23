@@ -25,7 +25,11 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
+import ptolemy.actor.Actor;
 import ptolemy.actor.CompositeActor;
+import ptolemy.actor.IOPort;
+import ptolemy.actor.IOPortEvent;
+import ptolemy.actor.IOPortEventListener;
 import ptolemy.actor.Manager;
 import ptolemy.domains.modal.modal.ModalController;
 import ptolemy.domains.modal.modal.ModalModel;
@@ -62,7 +66,6 @@ public class ExecutePtolemyModel {
 	
 	
 	private List<KielerIO> kielerIOList;
-//	private List<AddSubtract> addSubtractList;
 	private List<ModelOutput> modelOutputList;
 	private List<ModalModel> modalModelList;
 	
@@ -139,6 +142,24 @@ public class ExecutePtolemyModel {
 
 	//-------------------------------------------------------------------------
 	
+	public String[] getModelOutputPresentSignals() {
+		int count = 0;
+		for (int c = 0; c < this.modelOutputList.size(); c++ ) {
+			if (this.modelOutputList.get(c).present)
+				count++;
+		}
+		String[] returnArray = new String[count];
+		count = 0;
+		for (int c = 0; c < this.modelOutputList.size(); c++ ) {
+			if (this.modelOutputList.get(c).present) {
+				returnArray[count++] = this.modelOutputList.get(c).signalName;
+			}
+		}
+		return returnArray;
+	}
+	
+	//-------------------------------------------------------------------------
+	
 	/**
 	 * Gets the currently active state as URIFragment.
 	 * 
@@ -167,6 +188,12 @@ public class ExecutePtolemyModel {
 	 */
 	public synchronized void executionStep() throws KiemExecutionException {
 		try {
+			  //set all output signals to absent
+		  	  for (int c = 0; c < modelOutputList.size(); c++) {
+		  		ModelOutput modelOutput = modelOutputList.get(c);
+		  		modelOutput.present = false;
+		  	  }
+			
 			  manager.iterate();
 			  
 		  	  //iterate thru all modal models and concatenate
@@ -192,7 +219,8 @@ public class ExecutePtolemyModel {
 		  		signalName = signalName.replaceAll("'", "");
 		 			kielerIO.setPresent(isSignalPresent(signalName));
 		  	  }
-  	  
+
+		  	  
 		} catch (KernelException e) {
 			e.printStackTrace();
         	//raise a KiemExecutionException in case of any error
@@ -203,6 +231,20 @@ public class ExecutePtolemyModel {
 
 	//-------------------------------------------------------------------------
 	
+	class PresentTokenListener	implements IOPortEventListener {
+		ModelOutput modelOutput;
+		
+		public PresentTokenListener(ModelOutput moelOutput) {
+			this.modelOutput = modelOutput;
+		}
+		public void portEvent(IOPortEvent event) {
+	    	this.modelOutput.present = true;
+		}
+		
+	}
+	
+	//-------------------------------------------------------------------------
+
 	/**
 	 * Fills the modalModelList by recursively going thru the models elements.
 	 * 
@@ -220,11 +262,22 @@ public class ExecutePtolemyModel {
 			Object child = children.get(c);
             if (child instanceof AddSubtract) {
             	AddSubtract as = (AddSubtract)child;
-    			String signalName = ((Parameter)as.getAttribute("signal name")).getValueAsString();
+    			String signalName = 
+    				((Parameter)as.getAttribute("signal name")).getValueAsString();
     			//remove quotation marks
     			signalName = signalName.replaceAll("'", "");
     	  		signalName = signalName.replaceAll("\"", "");
-            	modelOutputList.add(new ModelOutput(signalName, as));
+    	  		ModelOutput modelOutput = new ModelOutput(signalName, as);
+            	modelOutputList.add(modelOutput);
+            	
+                List<Object> ports = ( (Actor)as ).outputPortList();
+                for (Object port : ports) {
+                    if(port instanceof IOPort){
+                        ( (IOPort)port ).addIOPortEventListener( 
+                        		new PresentTokenListener(modelOutput));
+                    }
+                }                       
+            	           	
             }
         }//end while
 	}

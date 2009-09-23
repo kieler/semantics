@@ -30,8 +30,10 @@ import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.MomlWriter;
+import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 
 /**
  * The class SimpleRailCtrl DataComponent implements a KIELER Execution Manager
@@ -154,15 +156,30 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		//set current input data
 		PTOEXE.setData(jSONObject);
 		
-		//perform an asynchronous step in PtolemyExecutor
-		//note that this may produce a KiemExecutionException which has it 
-		//source in the previous call.
+		//perform an synchronous step in PtolemyExecutor
 		PTOEXE.executionStep();
 		
+		//get the current states
 		String currentState = PTOEXE.getCurrentState();
+		
+		//the return object to construct
+		JSONObject returnObj = new JSONObject();
+		
+		//get the output present signals
+		String[] presentSignals = PTOEXE.getModelOutputPresentSignals();
+		for (int c = 0; c < presentSignals.length; c ++) {
+			String signalName = presentSignals[c];
+			try {
+				JSONObject signalObject = JSONSignalValues.newValue(true);
+				try {returnObj.accumulate(signalName,signalObject);}catch(Exception e){}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		//the stateName is the second KIEM property
 		String stateName = this.getProperties()[1].getValue();
-		JSONObject returnObj = new JSONObject();
+
 		try {returnObj.accumulate(stateName,currentState);}catch(Exception e){}
 		return returnObj;
 	}
