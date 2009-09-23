@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Klp
+Bundle-SymbolicName: de.cau.cs.kieler.krep.proc.klp
+Bundle-Version: 0.1.0.qualifier
+Fragment-Host: de.cau.cs.kieler.krep.evalbench.base;bundle-version="0.1.0"
+Bundle-NativeCode: /libklp.so; osname=linux; processor=x86
+Eclipse-PlatformFilter: (& (osgi.ws=gtk) (osgi.os=linux) (osgi.arch=x86))
