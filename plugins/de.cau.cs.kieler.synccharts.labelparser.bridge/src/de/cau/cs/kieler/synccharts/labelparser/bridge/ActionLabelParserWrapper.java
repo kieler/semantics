@@ -14,33 +14,22 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.labelparser.bridge;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gef.commands.CommandStack;
-import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.common.core.command.ICommand;
-import org.eclipse.gmf.runtime.common.core.command.UnexecutableCommand;
 import org.eclipse.gmf.runtime.common.ui.services.parser.IParser;
 import org.eclipse.gmf.runtime.common.ui.services.parser.IParserEditStatus;
 import org.eclipse.gmf.runtime.common.ui.services.parser.ParserEditStatus;
 import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramCommandStack;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
@@ -48,8 +37,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.parser.antlr.IAntlrParser;
 import org.eclipse.xtext.parsetree.reconstr.SerializerUtil;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Injector;
 
@@ -116,7 +103,7 @@ public class ActionLabelParserWrapper implements IParser {
                 String triggersAndEffectsString = action.getTriggersAndEffects();
 
                 if(serializedString != null && !serializedString.equals("")){
-   //                 doUpdateTriggerEffectsString(serializedString, action);
+                    doUpdateTriggerEffectsString(serializedString, action);
                     return serializedString;
                 }
                 else{
@@ -192,11 +179,14 @@ public class ActionLabelParserWrapper implements IParser {
     }
     
     public void doUpdateTriggerEffectsString(final String newString, final Action targetElement){
-        Command cmd = SetCommand.create(
+        if(! PlatformUI.getWorkbench().isStarting()){
+        Command cmd =  
+            SetCommand.create(
                 TransactionUtil.getEditingDomain(targetElement), 
                 targetElement, SyncchartsPackage.eINSTANCE.getAction_TriggersAndEffects(), newString);
         
         new ModelAsynchronousCommandExecutor(targetElement, cmd).start();
+        }
     }
     
     /**
@@ -232,38 +222,8 @@ public class ActionLabelParserWrapper implements IParser {
      */
     public IParserEditStatus isValidEditString(IAdaptable element,
             String editString) {
-        // TODO: add real check here
-        //System.out.println("isValidEditString");
         IParserEditStatus status = ParserEditStatus.EDITABLE_STATUS;
-        //status = ParserEditStatus.UNEDITABLE_STATUS;
         return status;
-    }
-
-   
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.emf.ui.services.parser.ISemanticParser#areSemanticElementsAffected(org.eclipse.emf.ecore.EObject, java.lang.Object)
-     */
-    public boolean areSemanticElementsAffected(EObject listener,
-            Object notification) {
-        //System.out.println("areSemanticElementsAffected "+listener+" "+notification);
-        if (notification instanceof Notification) {
-            Object feature = ((Notification) notification).getFeature();
-            if (feature.equals(SyncchartsPackage.eINSTANCE
-                    .getAction_TriggersAndEffects())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.emf.ui.services.parser.ISemanticParser#getSemanticElementsBeingParsed(org.eclipse.emf.ecore.EObject)
-     */
-    public List getSemanticElementsBeingParsed(EObject element) {
-        //System.out.println("getSemanticElementsBeingParsed");
-        List<Object> elementList = new ArrayList<Object>(1);
-        elementList.add(element);
-        return elementList;
     }
 
     /* (non-Javadoc)
@@ -320,7 +280,9 @@ public class ActionLabelParserWrapper implements IParser {
             
             while(!done && ((System.currentTimeMillis()-timeout) < TIMEOUT)){       
                 try{
-                    TransactionUtil.getEditingDomain(target).getCommandStack().execute(command);
+                   TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(target);
+                   org.eclipse.emf.common.command.CommandStack stack = domain.getCommandStack();
+                   stack.execute(command);
                     done = true;
                 }
                 catch(Exception e){};

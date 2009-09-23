@@ -113,12 +113,12 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         
         TransactionalEditingDomain domain = TransactionUtil
         .getEditingDomain(((Action)element));
-        if(domain == null){
+   /*     if(domain == null){
             // this is very evil, because then the element is not contained
             // by any resource, especially not by the diagram model
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Parser failed to parse the action string \""+newString+"\"! The action object is not part of the model and hence has no editing domain.", null);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-        }
+        }*/
     }
 
     /*
@@ -186,7 +186,12 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         if (parent == null && action instanceof Transition) {
             // the source state is not the parent, but its parent region is
             parent = ((Transition) action).getSourceState();
-            parent = ((State) parent).getParentRegion();
+            if(parent != null)
+                parent = ((State) parent).getParentRegion();
+            // source and target might have been not correctly initialized
+            // e.g. because a resource is freshly loaded
+            if(parent == null)
+                parent = action.eContainer(); 
         }
         if (parent == null)
             throw new KielerException(

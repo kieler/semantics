@@ -2,13 +2,33 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.gmf.runtime.common.ui.services.parserProviders">
-      <ParserProvider
-            class="de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParserProvider">
-         <Priority
-               name="Medium">
-         </Priority>
-      </ParserProvider>
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParserNotifier">
+      </startup>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.synccharts.labelparser.bridge.parse"
+               label="Parse"
+               style="push"
+               tooltip="Re-Parse all transition and action labels of current SyncChart.">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            category="de.cau.cs.kieler"
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParseHandler"
+            description="Re-parse all transition and action labels of the current SyncChart."
+            id="de.cau.cs.kieler.synccharts.labelparser.bridge.parse"
+            name="Parse all action labels">
+      </command>
    </extension>
 
 </plugin>
