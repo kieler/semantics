@@ -4,5 +4,5 @@ Bundle-Name: Kep
 Bundle-SymbolicName: de.cau.cs.kieler.krep.proc.kep
 Bundle-Version: 0.1.0.qualifier
 Fragment-Host: de.cau.cs.kieler.krep.evalbench.base;bundle-version="0.1.0"
-Bundle-NativeCode: /libkep.so; osname=linux; processor=x86
+Bundle-NativeCode: /lib/libkep.so; osname=linux; processor=x86
 Eclipse-PlatformFilter: (& (osgi.ws=gtk) (osgi.os=linux) (osgi.arch=x86))
