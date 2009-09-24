@@ -56,7 +56,7 @@ terminal Float returns ecore::EFloatObject : ((INT"."INT | INT("."INT)?("e"|"E")
 terminal Boolean returns ecore::EBooleanObject : "true" | "false";
 
 //==============================================================================
-// Expressions
+// Arithmetic Expressions
 //==============================================================================
 
 // Example: ?A	
@@ -65,7 +65,29 @@ ValOperation returns synccharts::ComplexExpression:
 
 // Example: 42, ?A, var1
 ValueExpression returns synccharts::Expression:
-	IntValue | FloatValue | ValOperation | VariableReference;
+	PlusOperation;
+
+ParanthesedValueExpression returns synccharts::Expression:
+    IntValue | FloatValue | ValOperation | VariableReference | '('PlusOperation')';
+
+// Example: 1 + 2, varA - ?B
+PlusOperation returns synccharts::Expression:
+	MultOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=PlusOperator subExpressions+=MultOperation)*;
+
+// Example: 2 * 4, varA mod ?B
+MultOperation returns synccharts::Expression:
+	PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=MultOperator subExpressions+=PreOrNormalValueExpression)* ;
+
+// Example: pre (?A + varB)
+PreArithmOperation returns synccharts::ComplexExpression:
+	operator=OperatorPre subExpressions+=ParanthesedValueExpression;
+	
+PreOrNormalValueExpression returns synccharts::Expression:
+	PreArithmOperation | ParanthesedValueExpression;
+
+//==============================================================================
+// Boolean Expressions
+//==============================================================================
 
 // Example: 42 <= ?A
 CompareOperation returns synccharts::Expression:
@@ -94,7 +116,7 @@ ParanthesedBooleanExpression returns synccharts::Expression:
 
 // Example: not D and C or ?E = 42 or not (A and (B or C))
 BooleanExpression returns synccharts::Expression:
-	OrOperation ;
+	OrOperation;
 
 //==============================================================================
 // Operators
@@ -117,6 +139,15 @@ enum OperatorOr returns synccharts::OperatorType:
 
 enum OperatorAnd returns synccharts::OperatorType:
 	AND="and";
+
+enum OperatorPre returns synccharts::OperatorType:
+    PRE="pre";
+
+enum PlusOperator returns synccharts::OperatorType:
+	ADD="+" | SUB="-";
+	
+enum MultOperator returns synccharts::OperatorType:	
+	MULT="*" | DIV="div" | MOD="mod";
 
 //==============================================================================
 // Misc
