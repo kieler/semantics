@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         id="application"
+         name="KReP Evalbench application"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            icon="icons/logo16.gif">
+         <run
+               class="de.cau.cs.kieler.krep.evalbench.application.EvalBenchApplication">
+         </run>
+      </application>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="de.cau.cs.kieler.krep.evalbench.application.application"
+            name="Evaluation Bench">
+         <property
+               name="windowImages"
+               value="/krep.evalbench.application/icons/logo16.gif,/krep.evalbench.application/icons/logo32.gif,/krep.evalbench.application/icons/logo48.gif,/krep.evalbench.application/icons/logo64.gif">
+         </property>
+         <property
+               name="appName"
+               value="Evaluation Bench">
+         </property>
+         <property
+               name="aboutImage"
+               value="/krep.evalbench.application/icons/logo128.gif">
+         </property>
+         <property
+               name="aboutText"
+               value="KReP Evaluation Bench by&#x0A;   Real-Time and Embedded Systems group&#x0A;   Christian-Albrechts University of Kiel&#x0A;&#x0A;http://www.informatik.uni-kiel.de/rtsys">
+         </property>
+         <property
+               name="startupForegroundColor"
+               value="F7F7F7">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="7,252,441,20">
+         </property>
+         <property
+               name="startupProgressRect"
+               value="5,275,445,15">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="de.cau.cs.kieler.krep.evalbench.application.editors.TextEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            default="false"
+            icon="icons/text.gif"
+            id="de.cau.cs.kieler.krep.evalbench.application.textEditor"
+            name="Text Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.ui.category.file"
+            description="Open File"
+            id="de.cau.cs.kieler.krep.evalbench.application.commands.openFile"
+            name="Open File...">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="de.cau.cs.kieler.krep.evalbench.application.commands.openFile"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+O">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="File Actions"
+            id="de.cau.cs.kieler.krep.evalbench.application.actionSets.file"
+            label="File Action Set"
+            visible="true">
+         <action
+               class="de.cau.cs.kieler.krep.evalbench.application.actions.OpenFileAction"
+               definitionId="de.cau.cs.kieler.krep.evalbench.application.commands.openFile"
+               icon="icons/open.gif"
+               id="de.cau.cs.kieler.krep.evalbench.application.actions.openFile"
+               label="&amp;Open..."
+               menubarPath="file/new.ext"
+               state="false"
+               style="push"
+               toolbarPath="org.eclipse.ui.workbench.file/open.ext"
+               tooltip="Open File">
+         </action>
+      </actionSet>
+   </extension>
+
+</plugin>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Evaluation Bench" uid="de.cau.cs.kieler.krep.evalbench.application.product" id="de.cau.cs.kieler.krep.evalbench.application.product" application="de.cau.cs.kieler.krep.evalbench.application.application" version="0.1.0" useFeatures="false" includeLaunchers="true">
+
+   <aboutInfo>
+      <image path="/krep.evalbench.application/icons/logo128.gif"/>
+      <text>
+         KReP Evaluation Bench by
+   Real-Time and Embedded Systems group
+   Christian-Albrechts University of Kiel
+
+http://www.informatik.uni-kiel.de/rtsys
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i16="/krep.evalbench.application/icons/logo16.gif" i32="/krep.evalbench.application/icons/logo32.gif" i48="/krep.evalbench.application/icons/logo48.gif" i64="/krep.evalbench.application/icons/logo64.gif"/>
+
+   <splash
+      location="krep.evalbench.application"
+      startupProgressRect="5,275,445,15"
+      startupMessageRect="7,252,441,20"
+      startupForegroundColor="F7F7F7" />
+   <launcher name="evalbench">
+      <linux icon="/de.cau.cs.kieler.krep.evalbench.application/icons/logo48.xpm"/>
+      <solaris/>
+      <win useIco="false">
+         <bmp
+            winSmallHigh="/krep.evalbench.application/icons/logo16.bmp"
+            winSmallLow="/krep.evalbench.application/icons/logo16-8.bmp"
+            winMediumHigh="/krep.evalbench.application/icons/logo32.bmp"
+            winMediumLow="/krep.evalbench.application/icons/logo32-8.bmp"
+            winLargeHigh="/krep.evalbench.application/icons/logo48.bmp"
+            winLargeLow="/krep.evalbench.application/icons/logo48-8.bmp"/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+      <plugin id="com.ibm.icu"/>
+      <plugin id="de.cau.cs.kieler.krep.evalbench.application"/>
+      <plugin id="de.cau.cs.kieler.krep.evalbench.base"/>
+      <plugin id="de.cau.cs.kieler.krep.help"/>
+      <plugin id="de.cau.cs.kieler.krep.proc.kep" fragment="true"/>
+      <plugin id="de.cau.cs.kieler.krep.proc.klp" fragment="true"/>
+      <plugin id="javax.transaction" fragment="true"/>
+      <plugin id="org.apache.log4j"/>
+      <plugin id="org.eclipse.compare.core"/>
+      <plugin id="org.eclipse.core.commands"/>
+      <plugin id="org.eclipse.core.contenttype"/>
+      <plugin id="org.eclipse.core.databinding"/>
+      <plugin id="org.eclipse.core.databinding.observable"/>
+      <plugin id="org.eclipse.core.databinding.property"/>
+      <plugin id="org.eclipse.core.expressions"/>
+      <plugin id="org.eclipse.core.jobs"/>
+      <plugin id="org.eclipse.core.runtime"/>
+      <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
+      <plugin id="org.eclipse.equinox.app"/>
+      <plugin id="org.eclipse.equinox.common"/>
+      <plugin id="org.eclipse.equinox.preferences"/>
+      <plugin id="org.eclipse.equinox.registry"/>
+      <plugin id="org.eclipse.help"/>
+      <plugin id="org.eclipse.jface"/>
+      <plugin id="org.eclipse.jface.databinding"/>
+      <plugin id="org.eclipse.jface.text"/>
+      <plugin id="org.eclipse.osgi"/>
+      <plugin id="org.eclipse.persistence.jpa.equinox.weaving" fragment="true"/>
+      <plugin id="org.eclipse.swt"/>
+      <plugin id="org.eclipse.swt.gtk.linux.x86" fragment="true"/>
+      <plugin id="org.eclipse.text"/>
+      <plugin id="org.eclipse.ui"/>
+      <plugin id="org.eclipse.ui.workbench"/>
+      <plugin id="org.eclipse.ui.workbench.texteditor"/>
+   </plugins>
+
+
+</product>
