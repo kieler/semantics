@@ -14,6 +14,8 @@
 
 package de.cau.cs.kieler.synccharts.sim.ptolemy;
 
+import java.io.File;
+
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
@@ -206,6 +208,19 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		ptolemyModel = this.getProperties()[0].getDirectory() + "generated.moml";
 		
 		String ptolemyModelFile = workspaceFolder + ptolemyModel;
+		
+		System.out.println("Now deleting old Ptolemy Model ..." + ptolemyModelFile);
+		 boolean exists = (new File(ptolemyModelFile)).exists();
+		    if (exists) {
+		    	boolean success = (new File(ptolemyModelFile)).delete();
+		    	if (success)
+		    		System.out.println("Old Ptolemy Model deleted..." + ptolemyModelFile);
+		    	else
+		    		System.out.println("Old Ptolemy Model could not be deleted..." + ptolemyModelFile);
+		    } else {
+				System.out.println("No old Ptolemy Model found ..." + ptolemyModelFile);
+		    }
+
 				
 		System.out.println("Now creating Ptolemy Model ..." + ptolemyModel);
 
