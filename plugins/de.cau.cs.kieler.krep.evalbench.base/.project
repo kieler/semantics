@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>de.cau.cs.kieler.krep.evalbench.base</name>
+	<comment></comment>
+	<projects>
+		<project>kiel</project>
+		<project>KRePCompiler</project>
+		<project>smakc</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.deved.antlride.core.nature</nature>
+	</natures>
+</projectDescription>

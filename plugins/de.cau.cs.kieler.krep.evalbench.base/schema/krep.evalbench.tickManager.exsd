@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="krep.evalbench.base" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="krep.evalbench.base" id="krep.evalbench.tickManager" name="Tick Manager"/>
+      </appinfo>
+      <documentation>
+         Extension point for tick managers that are notified each time the user performs a program tick. All input and output signals are passed to the signal listeners, so the value and status of each signal can be read and visualized.
+&lt;p&gt;
+Implementing subclasses of &lt;code&gt;AbstractTickManager&lt;/code&gt; may use &lt;code&gt;getActiveAssemblerEditor()&lt;/code&gt; to access the inputs of the current editor and &lt;code&gt;triggerTick(IEditorPart)&lt;/code&gt; to trigger a program tick of the given editor.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <documentation>
+            An extension may include an arbitrary number of &lt;code&gt;manager&lt;/code&gt; elements.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="manager"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="manager">
+      <annotation>
+         <documentation>
+            The &lt;code&gt;manager&lt;/code&gt; element has a string &lt;code&gt;id&lt;/code&gt; to identify the extension and a class, which is the superclass to extend for an extension.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Identifier for the extension.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Class extending &lt;code&gt;krep.evalbench.comm.AbstractTickManager&lt;/code&gt;.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="krep.evalbench.comm.AbstractTickManager:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         1.0.0
+      </documentation>
+   </annotation>
+
+
+
+   <annotation>
+      <appinfo>
+         <meta.section type="apiinfo"/>
+      </appinfo>
+      <documentation>
+         The class &lt;code&gt;krep.evalbench.comm.AbstractTickManager&lt;/code&gt; has to be extended for this extension point. Upon initialization of the &lt;code&gt;krep.evalbench.base&lt;/code&gt; plugin, an instance of each implementing class which is registered as extension is created and added to the list of signal listeners.
+      </documentation>
+   </annotation>
+
+
+
+</schema>

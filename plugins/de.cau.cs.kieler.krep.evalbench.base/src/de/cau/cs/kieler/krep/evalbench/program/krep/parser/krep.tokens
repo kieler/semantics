@@ -1,0 +1,6 @@
+NUMBER=4
+WHITESPACE=8
+COMMENT=9
+Digit=6
+ID=7
+Letter=5
