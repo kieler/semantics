@@ -150,6 +150,14 @@ public class MomlWriter extends AbstractEMFWorkflowComponent {
 
 		if (!multipleResourcesInCaseOfList) {
 			//final Resource r = getResourceSet().createResource(URI.createURI(getUri()));
+			final XMLResource r1 = (XMLResource)resourceSet.createResource(URI.createURI(getUri()));
+			try {
+				//ensure to overwrite the old file!
+				r1.delete(null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
 			final XMLResource r = (XMLResource)resourceSet.createResource(URI.createURI(getUri()));
 			if (slotContent instanceof Collection<?>) {
 				r.getContents().addAll((Collection) slotContent);
@@ -229,6 +237,9 @@ public class MomlWriter extends AbstractEMFWorkflowComponent {
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
 		}
 		catch (final IOException e) {
+			//clean resource afterwards
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+			
 			throw new WorkflowInterruptedException("Problems writing moml file to " + getUri() + " : " + e.getMessage());
 		}
 	}

@@ -122,12 +122,13 @@ public class ExecutePtolemyModel {
 		}
 
 		String[] keyArray = new String[kielerIOList.size() 
-		                               + modelOutputList.size()];
+		                               			+ modelOutputList.size()];
 		
 		for (int c = 0; c < kielerIOList.size(); c++) {
 			String signalName = ((KielerIO)kielerIOList.get(c)).getSignalName();
 			//remove quotation marks
 			signalName = signalName.replaceAll("'", "");
+			System.out.print(">>>" + signalName);
 			keyArray[c] = signalName;
 		}
 
@@ -202,7 +203,6 @@ public class ExecutePtolemyModel {
 		  		signalName = signalName.replaceAll("'", "");
 		 			kielerIO.setPresent(isSignalPresent(signalName));
 		  	  }
-		  	  
 
 		  	  // NOW ... TRIGGER A STEP :-)
 			  manager.iterate();
@@ -395,22 +395,28 @@ public class ExecutePtolemyModel {
 	 */
 	@SuppressWarnings("unchecked")
 	public synchronized void executionInitialize() throws KiemInitializationException {
+		System.out.println("#1");
 		URI fileURI = URI.createFileURI(new File(PtolemyModel).getAbsolutePath());
+		System.out.println("#2");
         URI momlFile = fileURI;
+		System.out.println("#3");
         
         //create new MoML parser
         //make sure Ptolemy is in dependencies
         MoMLParser parser = new MoMLParser();
+		System.out.println("#4");
 
         modalModelList = new LinkedList<ModalModel>();
         kielerIOList = new LinkedList<KielerIO>();
-//        addSubtractList = new LinkedList<AddSubtract>();
         modelOutputList = new LinkedList<ModelOutput>();
         
         NamedObj ptolemyModel = null;
         try {
             //parse
             ptolemyModel = parser.parse(null, new URL(momlFile.toString()));
+    		System.out.println("#5");
+    		
+    		parser.reset();
 
             //now execute the model
             if (ptolemyModel != null && ptolemyModel instanceof CompositeActor) {

@@ -15,8 +15,13 @@
 package de.cau.cs.kieler.synccharts.sim.ptolemy;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
@@ -25,6 +30,7 @@ import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.xtend.XtendComponent;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
+import org.eclipse.emf.mwe.utils.AbstractEMFWorkflowComponent;
 
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
@@ -139,6 +145,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		        System.out.print(issues.getErrors().toString());
 		 	}
 		 	catch(Exception e){
+		 		e.printStackTrace();
 		 		return false;
 		 	} 
 	        
@@ -194,6 +201,8 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	public String[] provideInterfaceKeys() throws KiemInitializationException {
 		//do the initialization prior to providing the interface keys
 		//this may rise an exception
+		PTOEXE = null;
+		System.gc();
 		loadAndExecuteModel();
 		return PTOEXE.getInterfaceSignals();
 	}	
@@ -209,18 +218,36 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		
 		String ptolemyModelFile = workspaceFolder + ptolemyModel;
 		
-		System.out.println("Now deleting old Ptolemy Model ..." + ptolemyModelFile);
-		 boolean exists = (new File(ptolemyModelFile)).exists();
-		    if (exists) {
-		    	boolean success = (new File(ptolemyModelFile)).delete();
-		    	if (success)
-		    		System.out.println("Old Ptolemy Model deleted..." + ptolemyModelFile);
-		    	else
-		    		System.out.println("Old Ptolemy Model could not be deleted..." + ptolemyModelFile);
-		    } else {
-				System.out.println("No old Ptolemy Model found ..." + ptolemyModelFile);
-		    }
-
+//		System.out.println("Now deleting old Ptolemy Model ..." + ptolemyModelFile);
+//		
+//	    ResourceSet resourceSet = new ResourceSetImpl();
+//	    Resource resource = resourceSet.createResource( URI.createFileURI( ptolemyModelFile) );
+//	    try {
+//			resource.unload();
+//			resource.delete(null);
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
+	    
+//		File f = new File(ptolemyModelFile);
+//		boolean exists = f.exists();
+//		if (exists) {
+//		    	boolean success = f.delete();
+//		    	if (success)
+//		    		System.out.println("Old Ptolemy Model deleted..." + ptolemyModelFile);
+//		    	else
+//		    		System.out.println("Old Ptolemy Model could not be deleted..." + ptolemyModelFile);
+//		    } else {
+//				System.out.println("No old Ptolemy Model found ..." + ptolemyModelFile);
+//		}
+//
+////		if ((new File(ptolemyModelFile)).exists()) {
+//		try {
+//				Thread.sleep(10000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+////		}
 				
 		System.out.println("Now creating Ptolemy Model ..." + ptolemyModel);
 
@@ -232,9 +259,10 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	        PTOEXE.executionInitialize();
 			System.out.println("Now executing Ptolemy Model...");
 		}//end if
-		else 
+		else {
 			new KiemInitializationException
-					("Ptolemy Model could not be generated", true, null);
+				("Ptolemy Model could not be generated", true, null);
+		}
 	}
 
 	//-------------------------------------------------------------------------	 
@@ -272,6 +300,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		//stop the model and unlink the PtolemyExecutor thread
 		PTOEXE.executionStop();
 		PTOEXE = null;
+		System.gc();
 	}
 	 
     //-------------------------------------------------------------------------	 
