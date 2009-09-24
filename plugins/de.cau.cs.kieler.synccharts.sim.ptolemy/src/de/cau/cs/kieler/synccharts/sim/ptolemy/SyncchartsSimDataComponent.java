@@ -158,7 +158,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		
 		//perform an synchronous step in PtolemyExecutor
 		PTOEXE.executionStep();
-		
+
 		//get the current states
 		String currentState = PTOEXE.getCurrentState();
 		
@@ -169,14 +169,16 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		String[] presentSignals = PTOEXE.getModelOutputPresentSignals();
 		for (int c = 0; c < presentSignals.length; c ++) {
 			String signalName = presentSignals[c];
-			System.out.println(signalName);
-//			try {
-//				JSONObject signalObject = JSONSignalValues.newValue(true);
-//				try {returnObj.accumulate(signalName,signalObject);}catch(Exception e){}
-//			} catch (JSONException e) {
-//				e.printStackTrace();
-//			}
+			System.out.println("Present:" + signalName);
+			try {
+				JSONObject signalObject = JSONSignalValues.newValue(true);
+				try {returnObj.accumulate(signalName,signalObject);}catch(Exception e){}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
+		
+		System.out.println( returnObj.toString());
 		
 		//the stateName is the second KIEM property
 		String stateName = this.getProperties()[1].getValue();

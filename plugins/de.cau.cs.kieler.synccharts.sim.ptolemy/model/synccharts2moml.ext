@@ -188,7 +188,8 @@ Void addConstant(EntityType baseEntity, String value):
 
 //create basic / outer most enclosing entity	
 create EntityType this createBaseEntity(synccharts::Region mainRegion):
-   	this.setName(hash(getURIFragment(mainRegion.innerStates.get(0))) + "_simulation") ->
+	let outerStateURIHash = hash(getURIFragment(mainRegion.innerStates.get(0))):
+   	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
    	this.createMainSRDirector() ->
    	//mainRegion has exactly ONE top most state
@@ -200,9 +201,31 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     //new entities or properties
     
     //connect most top input signals
-    ConnectTopmostInputSignals(this, this.entity)
+    ConnectTopmostInputSignals(this, this.entity) ->
+
+    //delete termination output port that corrupts operation
+    deleteModalModelPorts((List[EntityType])
+   				(this.entity.select(e|e.name.startsWith(outerStateURIHash))),
+   				"terminated"+outerStateURIHash) 
+    
 ;
 
+//-----------------------------------------------------------------------------
+
+Void deleteModalModelPorts(List[EntityType] entityList, String portName) :
+ 	let entity = entityList.last() :
+ 	
+ 	dump("DELETE "+portName +" IN " + entity.name) ->
+ 	
+	entity.port.remove(entity.port.select(e|e.name.matches(portName)).first()) ->
+	entity.relation.remove(entity.relation.select(e|e.name.matches(portName+"Relation")).first()) ->
+	entity.link.remove(entity.link.select(e|e.relation.matches(portName+"Relation")).first()) ->
+	entity.link.remove(entity.link.select(e|e.relation.matches(portName+"Relation")).first()) ->
+ 	
+ 	(entityList.size > 2) ?
+ 		deleteModalModelPorts(entityList.withoutLast(), portName) : null	
+;	
+//    	(firstPort.property.select(e|e.name.matches("terminated"+outerStateURIHash)).size > 0) ?
 //-----------------------------------------------------------------------------
 
 
@@ -575,10 +598,10 @@ Void IterateRegions(List[synccharts::Region] regionList,
 
 //create a "SR Director" (for macro state definition)
 Void createSRDirector(EntityType entity):
-    let p1 = new PropertyType:
-    	p1.setName("SR Director") ->
-		p1.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
-	entity.property.add(p1)
+    let p0 = new PropertyType:
+    p0.setName("SR Director") ->
+	p0.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
+	entity.property.add(p0) 
 ;
 
 //create outer most "SR Director" (ticks every seconds)
@@ -593,13 +616,13 @@ Void createMainSRDirector(EntityType entity):
 		p1.setValue("0") ->
 		p2.setName("synchronizeToRealTime") ->
 		p2.setClass("ptolemy.data.expr.Parameter") ->
-		p2.setValue("true") ->
+		p2.setValue("false") ->
 		p3.setName("timeResolution") ->
 		p3.setClass("ptolemy.data.expr.Parameter") ->
 		p3.setValue("1.0E-10") ->
 		p4.setName("period") ->
 		p4.setClass("ptolemy.data.expr.Parameter") ->
-		p4.setValue("1") ->
+		p4.setValue("0") ->
     p0.setName("SR Director") ->
 	p0.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
 	p0.property.add(p1) ->
@@ -699,7 +722,7 @@ create RelationType this createRelation(String name,
 		(!transition.isHistory) ? p4.setValue("true") : p4.setValue("false") ->
 		p5.setName("preemptive") ->
 		p5.setClass("ptolemy.data.expr.Parameter") ->
-		transition.type.toString().matches("STRONGABORT") ? 
+		(transition.type.toString().matches("STRONGABORT")) ? 
 								p5.setValue("true") : p5.setValue("false") ->
 		p6.setName("defaultTransition") ->
 		p6.setClass("ptolemy.data.expr.Parameter") ->

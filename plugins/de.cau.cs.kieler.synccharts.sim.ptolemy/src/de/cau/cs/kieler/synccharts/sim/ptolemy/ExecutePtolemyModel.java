@@ -64,7 +64,6 @@ public class ExecutePtolemyModel {
 		}
 	}
 	
-	
 	private List<KielerIO> kielerIOList;
 	private List<ModelOutput> modelOutputList;
 	private List<ModalModel> modalModelList;
@@ -148,7 +147,6 @@ public class ExecutePtolemyModel {
 			if (this.modelOutputList.get(c).present)
 				count++;
 		}
-		System.out.println(count);
 		String[] returnArray = new String[count];
 		count = 0;
 		for (int c = 0; c < this.modelOutputList.size(); c++ ) {
@@ -195,6 +193,18 @@ public class ExecutePtolemyModel {
 		  		modelOutput.present = false;
 		  	  }
 			
+		  	  
+		  	  //iterate thru all kielerIOs = set the input signals
+		  	  for (int c = 0; c < kielerIOList.size(); c++) {
+		  		KielerIO kielerIO = kielerIOList.get(c);
+		  		String signalName = kielerIO.getSignalName();
+		  		//remove quotation marks
+		  		signalName = signalName.replaceAll("'", "");
+		 			kielerIO.setPresent(isSignalPresent(signalName));
+		  	  }
+		  	  
+
+		  	  // NOW ... TRIGGER A STEP :-)
 			  manager.iterate();
 			  
 		  	  //iterate thru all modal models and concatenate
@@ -212,15 +222,6 @@ public class ExecutePtolemyModel {
 		  				 .getValueAsString();
 		  		}
 		  		
-		  	  //iterate thru all kielerIOs
-		  	  for (int c = 0; c < kielerIOList.size(); c++) {
-		  		KielerIO kielerIO = kielerIOList.get(c);
-		  		String signalName = kielerIO.getSignalName();
-		  		//remove quotation marks
-		  		signalName = signalName.replaceAll("'", "");
-		 			kielerIO.setPresent(isSignalPresent(signalName));
-		  	  }
-
 		  	  
 		} catch (KernelException e) {
 			e.printStackTrace();
@@ -237,10 +238,8 @@ public class ExecutePtolemyModel {
 		
 		public PresentTokenListener(ModelOutput modelOutput) {
 			this.modelOutput = modelOutput;
-			System.out.println(" NEW PRESENT TOKEN LISTENER  :  " + this.modelOutput.signalName);
 		}
 		public void portEvent(IOPortEvent event) {
-			System.out.println(" P R E S E N T  :  " + this.modelOutput.signalName);
 	    	this.modelOutput.present = true;
 		}
 		
