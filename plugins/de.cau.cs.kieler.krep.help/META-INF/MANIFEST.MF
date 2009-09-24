@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Help
+Bundle-SymbolicName: de.cau.cs.kieler.krep.help;singleton:=true
+Bundle-Version: 1.0.0.qualifier
