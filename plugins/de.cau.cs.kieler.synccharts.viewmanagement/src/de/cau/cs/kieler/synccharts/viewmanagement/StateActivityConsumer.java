@@ -218,8 +218,6 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
     @SuppressWarnings("unchecked")
 	public EditPart getEditPart(String elementURIFragment, 
     								   EditPart parent) {
-    	System.out.println("elementURIFragment: " + elementURIFragment);
-    	
     	if (cachedEditParts == null) {
         	// if hashmap is not initialized, create it
     		cachedEditParts = new HashMap<String,EditPart>();
