@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: eXtended KIELER Environment Visualization
+Bundle-SymbolicName: de.cau.cs.kieler.xkev;singleton:=true
+Bundle-Version: 0.1.0
+Bundle-Activator: de.cau.cs.kieler.xkev.Activator
+Bundle-Vendor: Christian-Albrechts-University of Kiel
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.apache.batik.bridge;bundle-version="1.6.0",
+ org.apache.batik.css;bundle-version="1.6.0",
+ org.apache.batik.dom;bundle-version="1.6.0",
+ org.apache.batik.dom.svg;bundle-version="1.6.0",
+ org.apache.batik.parser;bundle-version="1.6.0",
+ org.apache.batik.swing;bundle-version="1.6.0",
+ org.w3c.dom.svg;bundle-version="1.1.0",
+ org.apache.xerces;bundle-version="2.9.0",
+ de.cau.cs.kieler.sim.kiem,
+ org.eclipse.core.resources;bundle-version="3.5.0",
+ org.apache.batik.util;bundle-version="1.6.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
