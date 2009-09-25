@@ -37,7 +37,8 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
 	private HashMap<String,EditPart> cachedEditParts;
 	private HashMap<EditPart,String> cachedElementURIs;
     
-    List<EditPart> lastHighligtedStates;
+    /** The last highlighted states. */
+    private List<String> lastHighlightedStates;
 
     /*
      * (non-Javadoc)
@@ -61,6 +62,8 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
                 StringTokenizer tokenizer = new StringTokenizer(stateData
                         .toString(), " ,");
                 List<EditPart> highlightedStates = new ArrayList<EditPart>();
+                List<String> highlightedStatesURI = new ArrayList<String>();
+
                 while (tokenizer.hasMoreElements()) {
                     String stateName = tokenizer.nextToken();
                     // notify the viewmanagement about this active state
@@ -68,24 +71,35 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
                     EditPart affectedState = getEditPart(stateName, rootEditPart);
                     highlightedStates.add(affectedState);
                     // a state is already highlighted
-                    if(lastHighligtedStates != null && lastHighligtedStates.contains(affectedState))
+                    System.out.println("VIEW MANAGEMENT:"+stateName);
+                    
+                    highlightedStatesURI.add(stateName);
+                    // a state is already highlighted
+                    if(lastHighlightedStates != null && 
+                    		lastHighlightedStates.contains(stateName))
                         continue;
+                    
                     triggerEvent.setAffectedObject(stateName); //trigger.translateToURI((Object)affectedState));
                     triggerEvent.setTriggerActive(true);
                     trigger.notifyTrigger(triggerEvent);
                 }
+                
                 // find all states that are not highlighted anymore
-                if (lastHighligtedStates != null) {
-                    for (EditPart editPart : highlightedStates)
-                        lastHighligtedStates.remove(editPart);
-                    for (EditPart editPart : lastHighligtedStates) {
+                if (lastHighlightedStates != null) {
+                	//the following states are currently highlighted
+                    for (String editPartURI : highlightedStatesURI){
+                    	lastHighlightedStates.remove(editPartURI);
+                    	System.out.println("LEAVE:"+editPartURI);
+                    }
+                    for (String editPartURI : lastHighlightedStates) {
                         TriggerEventObject triggerEvent = new TriggerEventObject();
-                        triggerEvent.setAffectedObject(getElementURIFragment(editPart));
+                        triggerEvent.setAffectedObject(editPartURI);
+                        System.out.println("REMOVE:"+editPartURI);
                         triggerEvent.setTriggerActive(false);
                         trigger.notifyTrigger(triggerEvent);
                     }
-                }
-                lastHighligtedStates = highlightedStates;
+                }//end if
+                lastHighlightedStates = highlightedStatesURI;
 
             }
         } catch (JSONException e) {
@@ -151,7 +165,7 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
      */
     public KiemProperty[] provideProperties() {
         KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("state variable", "RAIL state");
+        properties[0] = new KiemProperty("state variable", "state");
         properties[1] = new KiemProperty("editor",
                 new KiemPropertyTypeEditor(), "");
         return properties;
@@ -204,6 +218,8 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
     @SuppressWarnings("unchecked")
 	public EditPart getEditPart(String elementURIFragment, 
     								   EditPart parent) {
+    	System.out.println("elementURIFragment: " + elementURIFragment);
+    	
     	if (cachedEditParts == null) {
         	// if hashmap is not initialized, create it
     		cachedEditParts = new HashMap<String,EditPart>();

@@ -33,6 +33,7 @@ import ptolemy.actor.IOPortEventListener;
 import ptolemy.actor.Manager;
 import ptolemy.domains.modal.modal.ModalController;
 import ptolemy.domains.modal.modal.ModalModel;
+import ptolemy.domains.modal.kernel.State;
 import ptolemy.kernel.InstantiableNamedObj;
 import ptolemy.kernel.util.KernelException;
 import ptolemy.kernel.util.NamedObj;
@@ -66,7 +67,7 @@ public class ExecutePtolemyModel {
 	
 	private List<KielerIO> kielerIOList;
 	private List<ModelOutput> modelOutputList;
-	private List<ModalModel> modalModelList;
+	private List<Object> modalModelTree;
 	
 	private JSONObject inputData;
 	
@@ -80,6 +81,9 @@ public class ExecutePtolemyModel {
 	
 	/** The Ptolemy manager. */
 	private Manager manager; 
+	
+	// the outer most actor
+	private CompositeActor modelActor;
 	
 	//-------------------------------------------------------------------------
 	
@@ -210,17 +214,19 @@ public class ExecutePtolemyModel {
 		  	  //iterate thru all modal models and concatenate
 		  	  //the fragment URIs with a colon
 		  	  currentState = "";
-		  	  for (int c = 0; c < modalModelList.size(); c++) {
-		  		ModalModel modalModel = modalModelList.get(c);
-		  		//if more than one active state
-		  		if (!currentState.equals(""))
-		  			currentState += ", ";
-		  		currentState += ((StringAttribute)modalModel
-		  				 .getController()
-		  				 .currentState()
-		  				 .getAttribute("elementURIFragment"))
-		  				 .getValueAsString();
-		  		}
+		  	  
+		  	  currentState = searchForActiveStates(modelActor.entityList(), null);
+//		  	  for (int c = 0; c < modalModelList.size(); c++) {
+//		  		ModalModel modalModel = modalModelList.get(c);
+//		  		//if more than one active state
+//		  		if (!currentState.equals(""))
+//		  			currentState += ", ";
+//		  		currentState += ((StringAttribute)modalModel
+//		  				 .getController()
+//		  				 .currentState()
+//		  				 .getAttribute("elementURIFragment"))
+//		  				 .getValueAsString();
+//		  		}
 		  		
 		  	  
 		} catch (KernelException e) {
@@ -230,7 +236,7 @@ public class ExecutePtolemyModel {
         		new KiemExecutionException(e.getLocalizedMessage(),true, e);
 		}
 	}
-
+	
 	//-------------------------------------------------------------------------
 	
 	class PresentTokenListener	implements IOPortEventListener {
@@ -340,40 +346,101 @@ public class ExecutePtolemyModel {
 	 * @param children the children to walk thru
 	 */
 	@SuppressWarnings("unchecked")
-	private void fillModalModelList(List<ModalModel> modalModelList,
-									List<InstantiableNamedObj> children) {
-		// if no further children
-		if (children == null) return;
+	private String searchForActiveStates(List<InstantiableNamedObj> children,
+										 String activeStateName) {
 
+      	System.out.println("-------------------");
+      	
+		// if no further children
+		if (children == null) return "";
+		if (children.size() == 0) return "";
+
+		String activeStates = "";
+      	System.out.println("   ACTIVE:"+activeStateName);
+		
 		// do recursively for children
 		for (int c = 0; c < children.size(); c++){
 			Object child = children.get(c);
-            if(child instanceof CompositeActor){
+			
+			if (child instanceof State) {
+				State state = (State)child;
+				if (state.getName().equals(activeStateName)) {
+	            	System.out.println("STATE (ACTIVE):" + state.getName());
+	    			//prepare for adding to the string
+	    			if (!activeStates.equals(""))
+	    				activeStates += ", ";
+	        		//add state name
+	        		activeStates += 
+	        					((StringAttribute)(state
+	        					.getAttribute("elementURIFragment")))
+	        					.getValueAsString();            		
+				}
+				else {
+	            	System.out.println("STATE (PASSIVE):" + state.getName());
+	            	continue;
+				}
+			}
+
+			if (child instanceof ModalModel) {
+            	ModalModel modalModel = (ModalModel)child;
+
+            	//add modal models of the same hierarchy to the list
+            	//modalModelTree.add(modalModel);
+            	System.out.println("MODALMODEL:" + modalModel.getName());
+            	System.out.println("         ->" + modalModel.getController().currentState().getName());
+            	
+            	//if it contains any more children...
+            	//denote current state
+            	activeStates += searchForActiveStates(
+            			modalModel.entityList(),
+            			modalModel.getController().currentState().getName());
+            }
+			
+			else if(child instanceof CompositeActor){
+            	//this could be a NON-active macro state
             	CompositeActor compositeActor = (CompositeActor)child;
             	
-            	fillModalModelList(
-            			modalModelList,
-            			compositeActor.entityList());
+            	String compositeActorName = compositeActor.getName();
+            	System.out.println("COMPOSITE:" + compositeActorName);
+            	
+            	if (activeStateName == null) {
+            		System.out.println("---> CALL INNER STATES (null)");
+            		//for active states only search deeper!
+                	activeStates += searchForActiveStates(	
+                			compositeActor.entityList(), activeStateName);
+            	}
+            	else if (compositeActorName.equals(activeStateName)) {
+            		System.out.println("---> CALL INNER STATES (name active)");
+            		//for active states only search deeper!
+                	activeStates += searchForActiveStates(	
+                			compositeActor.entityList(), activeStateName);
+            	}
+            }
+
+
+            else if (child instanceof ModalController) {
+            	ModalController modalController = (ModalController)child;
+
+            	//due to the complex hierarchy in moml-files
+            	//this has to be set here!
+            	//activeStateName = modalController.currentState().getName();
+              	//System.out.println("  +ACTIVE:"+activeStateName);
+            	
+            	System.out.println("MODALCONTR:" + modalController.getName());
+            	System.out.println("         ->" + modalController.currentState().getName());
+            	//if it contains any more children...
+            	//denote current state
+            	activeStates += searchForActiveStates(
+            			modalController.entityList(),
+            			modalController.currentState().getName());
             }
             
-
-            if (child instanceof ModalModel) {
-            	ModalModel modalModel = (ModalModel)child;
-            	modalModelList.add(modalModel);
-            	
-            	fillModalModelList(
-            			modalModelList,
-            			modalModel.entityList());
-            }
-
-            if (child instanceof ModalController) {
-            	ModalController modalController = (ModalController)child;
-            	
-            	fillModalModelList(
-            			modalModelList,
-            			modalController.entityList());
-            }
         }//end while
+		
+		if (!activeStates.equals(""))
+			activeStates = ", " + activeStates;
+		
+		return activeStates;
 	}
 
 	
@@ -406,7 +473,7 @@ public class ExecutePtolemyModel {
         MoMLParser parser = new MoMLParser();
 		System.out.println("#4");
 
-        modalModelList = new LinkedList<ModalModel>();
+        modalModelTree = new LinkedList<Object>();
         kielerIOList = new LinkedList<KielerIO>();
         modelOutputList = new LinkedList<ModelOutput>();
         
@@ -421,7 +488,7 @@ public class ExecutePtolemyModel {
             //now execute the model
             if (ptolemyModel != null && ptolemyModel instanceof CompositeActor) {
                 //check if the parsed model is of correct type
-                CompositeActor modelActor = ((CompositeActor) ptolemyModel);
+                modelActor = ((CompositeActor) ptolemyModel);
                 
                 //get the manager that manages execution
                 manager = modelActor.getManager();
@@ -444,10 +511,10 @@ public class ExecutePtolemyModel {
                     modelActor.setManager(manager);
                 }
 
-                //go thru the model and add fill the modalModelList (Current States)
-                fillModalModelList(
-                		modalModelList,
-                		modelActor.entityList());
+//                //go thru the model and add fill the modalModelList (Current States)
+//                fillModalModelTree(
+//                		modalModelTree,
+//                		modelActor.entityList());
 
                 //go thru the model and add fill the kielerIOList (Inputs)
                 fillKielerIOList(

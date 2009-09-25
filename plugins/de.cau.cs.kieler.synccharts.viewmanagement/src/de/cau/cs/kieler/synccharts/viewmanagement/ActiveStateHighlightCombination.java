@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 
@@ -15,7 +16,6 @@ import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 import de.cau.cs.kieler.viewmanagement.effects.HighlightEffect;
 
 public class ActiveStateHighlightCombination extends ACombination {
-
     /** The root EditPart of the editor. */
     private EditPart rootEditPart;
 
@@ -51,32 +51,50 @@ public class ActiveStateHighlightCombination extends ACombination {
 	
 	//-------------------------------------------------------------------------
 	
-	
-	
     StateActivityTrigger trigger;
 
-    Map<ShapeEditPart, HighlightEffect> effects = new HashMap<ShapeEditPart, HighlightEffect>();
+    Map<EditPart, HighlightEffect> effects = new HashMap<EditPart, HighlightEffect>();
 
     @Override
     public boolean evaluate(TriggerEventObject triggerEvent) {
-      
-        if ((translateToEditPart(triggerEvent.getAffectedObject(), rootEditPart)) instanceof EditPart) {
-            EditPart editPart = (EditPart) translateToEditPart(triggerEvent
-                    .getAffectedObject(), rootEditPart);
-            if (triggerEvent.getTriggerState() && !effects.containsKey(editPart)) {
-                HighlightEffect effect = new HighlightEffect();
-                effect.setTarget((ShapeEditPart)editPart);
-                effect.execute();
-//                effects.put(editPart, effect);
-                
-                return true;
-            } else {
-                HighlightEffect effect = effects.get(editPart);
-                if(effect!=null)
-                    effect.undo();
-                effects.remove(editPart);
-            }
+        if (rootEditPart != null) {
+        	EditPart editPart = this.translateToEditPart(
+        							triggerEvent.getAffectedObject(),
+        							rootEditPart); 
+        	if (editPart instanceof ShapeEditPart) {
+                triggerEvent.getAffectedObject();
+        		if (triggerEvent.getTriggerState() 
+        				&& !effects.containsKey(editPart)) {
+        					HighlightEffect effect = new HighlightEffect();
+        					effect.setTarget((ShapeEditPart)editPart);
+        					effect.setHighlightFigure(3, ColorConstants.red );
+        					effects.put(editPart, effect);
+        					return true;
+       			} else if (!triggerEvent.getTriggerState()) {
+        				HighlightEffect effect = effects.get(editPart);
+        				if(effect!=null)
+        					effect.undo();
+        				effects.remove(editPart);
+       			}
+        	}
         }
+//        if ((translateToEditPart(triggerEvent.getAffectedObject(), rootEditPart)) instanceof EditPart) {
+//            EditPart editPart = (EditPart) translateToEditPart(triggerEvent
+//                    .getAffectedObject(), rootEditPart);
+//            if (triggerEvent.getTriggerState() && !effects.containsKey(editPart)) {
+//                HighlightEffect effect = new HighlightEffect();
+//                effect.setTarget((ShapeEditPart)editPart);
+//                effect.execute();
+//                effects.put(editPart, effect);
+//                return true;
+//            } else {
+//                HighlightEffect effect = effects.get(editPart);
+//                if(effect!=null) {
+//                    //effect.undo();
+//                }
+//                effects.remove(editPart);
+//            }
+//        }
         return false;
     }
 
@@ -95,11 +113,11 @@ public class ActiveStateHighlightCombination extends ACombination {
         triggers.add(trigger);
         return triggers;
     }
-
+    
 	@Override
 	public void undoLastEffect() {
-		// TODO Auto-generated method stub
-		
+		//	effect.undo();
 	}
-
+	
+   
 }
