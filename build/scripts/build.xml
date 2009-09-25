@@ -218,8 +218,8 @@
 	<target name="update.launcher" description="private target for updating the permission flags of the launcher binaries">
 		<basename file="${zipfile}" property="platform" suffix="zip" />
 		<unzip dest="${basedir}/${buildLabel}/${platform}" src="${zipfile}">
-			<patternset includes="kieler/kieler.app/Contents/MacOS/kieler" />
-			<patternset includes="kieler/kieler" />
+			<patternset includes="${basename}/${basename}.app/Contents/MacOS/${basename}" />
+			<patternset includes="${basename}/${basename}" />
 		</unzip>
 		<touch>
 			<fileset dir="${basedir}/${buildLabel}/${platform}" />
