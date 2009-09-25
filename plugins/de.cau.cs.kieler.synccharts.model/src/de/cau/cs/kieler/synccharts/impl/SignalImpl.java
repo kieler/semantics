@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.SignalImpl#getValue <em>Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.SignalImpl#getParentState <em>Parent State</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.impl.SignalImpl#isIsLocal <em>Is Local</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.SignalImpl#isIsInput <em>Is Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.SignalImpl#isIsOutput <em>Is Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.SignalImpl#getCombineOperator <em>Combine Operator</em>}</li>
@@ -53,26 +52,6 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
      * @ordered
      */
     protected EObject value;
-
-    /**
-     * The default value of the '{@link #isIsLocal() <em>Is Local</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isIsLocal()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean IS_LOCAL_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isIsLocal() <em>Is Local</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isIsLocal()
-     * @generated
-     * @ordered
-     */
-    protected boolean isLocal = IS_LOCAL_EDEFAULT;
 
     /**
      * The default value of the '{@link #isIsInput() <em>Is Input</em>}' attribute.
@@ -255,27 +234,6 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SIGNAL__PARENT_STATE, newParentState, newParentState));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isIsLocal() {
-        return isLocal;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setIsLocal(boolean newIsLocal) {
-        boolean oldIsLocal = isLocal;
-        isLocal = newIsLocal;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SIGNAL__IS_LOCAL, oldIsLocal, isLocal));
     }
 
     /**
@@ -469,8 +427,6 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
                 return getValue();
             case SyncchartsPackage.SIGNAL__PARENT_STATE:
                 return getParentState();
-            case SyncchartsPackage.SIGNAL__IS_LOCAL:
-                return isIsLocal();
             case SyncchartsPackage.SIGNAL__IS_INPUT:
                 return isIsInput();
             case SyncchartsPackage.SIGNAL__IS_OUTPUT:
@@ -498,9 +454,6 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
                 return;
             case SyncchartsPackage.SIGNAL__PARENT_STATE:
                 setParentState((State)newValue);
-                return;
-            case SyncchartsPackage.SIGNAL__IS_LOCAL:
-                setIsLocal((Boolean)newValue);
                 return;
             case SyncchartsPackage.SIGNAL__IS_INPUT:
                 setIsInput((Boolean)newValue);
@@ -535,9 +488,6 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
             case SyncchartsPackage.SIGNAL__PARENT_STATE:
                 setParentState((State)null);
                 return;
-            case SyncchartsPackage.SIGNAL__IS_LOCAL:
-                setIsLocal(IS_LOCAL_EDEFAULT);
-                return;
             case SyncchartsPackage.SIGNAL__IS_INPUT:
                 setIsInput(IS_INPUT_EDEFAULT);
                 return;
@@ -569,8 +519,6 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
                 return value != null;
             case SyncchartsPackage.SIGNAL__PARENT_STATE:
                 return getParentState() != null;
-            case SyncchartsPackage.SIGNAL__IS_LOCAL:
-                return isLocal != IS_LOCAL_EDEFAULT;
             case SyncchartsPackage.SIGNAL__IS_INPUT:
                 return isInput != IS_INPUT_EDEFAULT;
             case SyncchartsPackage.SIGNAL__IS_OUTPUT:
@@ -595,9 +543,7 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (isLocal: ");
-        result.append(isLocal);
-        result.append(", isInput: ");
+        result.append(" (isInput: ");
         result.append(isInput);
         result.append(", isOutput: ");
         result.append(isOutput);

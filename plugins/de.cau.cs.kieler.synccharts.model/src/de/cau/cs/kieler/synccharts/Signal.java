@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.synccharts.Signal#getValue <em>Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.Signal#getParentState <em>Parent State</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.Signal#isIsLocal <em>Is Local</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.Signal#isIsInput <em>Is Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.Signal#isIsOutput <em>Is Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.Signal#getCombineOperator <em>Combine Operator</em>}</li>
@@ -85,32 +84,6 @@ public interface Signal extends ValuedObject {
      * @generated
      */
     void setParentState(State value);
-
-    /**
-     * Returns the value of the '<em><b>Is Local</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Is Local</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Is Local</em>' attribute.
-     * @see #setIsLocal(boolean)
-     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getSignal_IsLocal()
-     * @model required="true"
-     * @generated
-     */
-    boolean isIsLocal();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Signal#isIsLocal <em>Is Local</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Local</em>' attribute.
-     * @see #isIsLocal()
-     * @generated
-     */
-    void setIsLocal(boolean value);
 
     /**
      * Returns the value of the '<em><b>Is Input</b></em>' attribute.

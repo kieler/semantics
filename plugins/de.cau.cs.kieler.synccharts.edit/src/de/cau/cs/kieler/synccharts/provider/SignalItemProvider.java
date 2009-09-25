@@ -64,35 +64,12 @@ public class SignalItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addIsLocalPropertyDescriptor(object);
             addIsInputPropertyDescriptor(object);
             addIsOutputPropertyDescriptor(object);
             addCombineOperatorPropertyDescriptor(object);
             addHostCombineOperatorPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
-    }
-
-    /**
-     * This adds a property descriptor for the Is Local feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addIsLocalPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_Signal_isLocal_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Signal_isLocal_feature", "_UI_Signal_type"),
-                 SyncchartsPackage.Literals.SIGNAL__IS_LOCAL,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
     }
 
     /**
@@ -250,7 +227,6 @@ public class SignalItemProvider
         updateChildren(notification);
 
         switch (notification.getFeatureID(Signal.class)) {
-            case SyncchartsPackage.SIGNAL__IS_LOCAL:
             case SyncchartsPackage.SIGNAL__IS_INPUT:
             case SyncchartsPackage.SIGNAL__IS_OUTPUT:
             case SyncchartsPackage.SIGNAL__COMBINE_OPERATOR:

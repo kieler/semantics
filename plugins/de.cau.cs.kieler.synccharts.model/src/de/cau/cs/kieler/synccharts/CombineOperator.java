@@ -40,7 +40,7 @@ public enum CombineOperator implements Enumerator {
      * @generated
      * @ordered
      */
-    ADD(1, "ADD", "ADD"),
+    ADD(1, "ADD", "+"),
 
     /**
      * The '<em><b>MULT</b></em>' literal object.
@@ -50,7 +50,7 @@ public enum CombineOperator implements Enumerator {
      * @generated
      * @ordered
      */
-    MULT(2, "MULT", "MULT"),
+    MULT(2, "MULT", "*"),
 
     /**
      * The '<em><b>MAX</b></em>' literal object.
@@ -60,7 +60,7 @@ public enum CombineOperator implements Enumerator {
      * @generated
      * @ordered
      */
-    MAX(5, "MAX", "MAX"), /**
+    MAX(5, "MAX", "max"), /**
      * The '<em><b>MIN</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -68,7 +68,7 @@ public enum CombineOperator implements Enumerator {
      * @generated
      * @ordered
      */
-    MIN(6, "MIN", "MIN"), /**
+    MIN(6, "MIN", "min"), /**
      * The '<em><b>OR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -76,7 +76,7 @@ public enum CombineOperator implements Enumerator {
      * @generated
      * @ordered
      */
-    OR(4, "OR", "OR"), /**
+    OR(4, "OR", "or"), /**
      * The '<em><b>AND</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -84,7 +84,7 @@ public enum CombineOperator implements Enumerator {
      * @generated
      * @ordered
      */
-    AND(3, "AND", "AND"), /**
+    AND(3, "AND", "and"), /**
      * The '<em><b>HOST</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -92,7 +92,7 @@ public enum CombineOperator implements Enumerator {
      * @generated
      * @ordered
      */
-    HOST(0, "HOST", "HOST");
+    HOST(0, "HOST", "host");
 
     /**
      * The '<em><b>NONE</b></em>' literal value.
@@ -118,7 +118,7 @@ public enum CombineOperator implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #ADD
-     * @model
+     * @model literal="+"
      * @generated
      * @ordered
      */
@@ -133,7 +133,7 @@ public enum CombineOperator implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #MULT
-     * @model
+     * @model literal="*"
      * @generated
      * @ordered
      */
@@ -148,7 +148,7 @@ public enum CombineOperator implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #MAX
-     * @model
+     * @model literal="max"
      * @generated
      * @ordered
      */
@@ -163,7 +163,7 @@ public enum CombineOperator implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #MIN
-     * @model
+     * @model literal="min"
      * @generated
      * @ordered
      */
@@ -178,7 +178,7 @@ public enum CombineOperator implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #OR
-     * @model
+     * @model literal="or"
      * @generated
      * @ordered
      */
@@ -193,7 +193,7 @@ public enum CombineOperator implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #AND
-     * @model
+     * @model literal="and"
      * @generated
      * @ordered
      */
@@ -208,7 +208,7 @@ public enum CombineOperator implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #HOST
-     * @model
+     * @model literal="host"
      * @generated
      * @ordered
      */

@@ -130,7 +130,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    ADD(6, "ADD", "add"),
+    ADD(6, "ADD", "+"),
 
     /**
      * The '<em><b>SUB</b></em>' literal object.
@@ -331,7 +331,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #ADD
-     * @model literal="add"
+     * @model literal="+"
      * @generated
      * @ordered
      */

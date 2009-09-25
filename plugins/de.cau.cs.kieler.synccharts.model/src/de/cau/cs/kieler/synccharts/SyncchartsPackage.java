@@ -674,22 +674,13 @@ public interface SyncchartsPackage extends EPackage {
     int SIGNAL__PARENT_STATE = VALUED_OBJECT_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Is Local</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SIGNAL__IS_LOCAL = VALUED_OBJECT_FEATURE_COUNT + 2;
-
-    /**
      * The feature id for the '<em><b>Is Input</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SIGNAL__IS_INPUT = VALUED_OBJECT_FEATURE_COUNT + 3;
+    int SIGNAL__IS_INPUT = VALUED_OBJECT_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Is Output</b></em>' attribute.
@@ -698,7 +689,7 @@ public interface SyncchartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SIGNAL__IS_OUTPUT = VALUED_OBJECT_FEATURE_COUNT + 4;
+    int SIGNAL__IS_OUTPUT = VALUED_OBJECT_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
@@ -707,7 +698,7 @@ public interface SyncchartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SIGNAL__COMBINE_OPERATOR = VALUED_OBJECT_FEATURE_COUNT + 5;
+    int SIGNAL__COMBINE_OPERATOR = VALUED_OBJECT_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Host Combine Operator</b></em>' attribute.
@@ -716,7 +707,7 @@ public interface SyncchartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SIGNAL__HOST_COMBINE_OPERATOR = VALUED_OBJECT_FEATURE_COUNT + 6;
+    int SIGNAL__HOST_COMBINE_OPERATOR = VALUED_OBJECT_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Parent Region</b></em>' container reference.
@@ -725,7 +716,7 @@ public interface SyncchartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SIGNAL__PARENT_REGION = VALUED_OBJECT_FEATURE_COUNT + 7;
+    int SIGNAL__PARENT_REGION = VALUED_OBJECT_FEATURE_COUNT + 6;
 
     /**
      * The number of structural features of the '<em>Signal</em>' class.
@@ -734,7 +725,7 @@ public interface SyncchartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SIGNAL_FEATURE_COUNT = VALUED_OBJECT_FEATURE_COUNT + 8;
+    int SIGNAL_FEATURE_COUNT = VALUED_OBJECT_FEATURE_COUNT + 7;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.synccharts.impl.SignalReferenceImpl <em>Signal Reference</em>}' class.
@@ -1990,17 +1981,6 @@ public interface SyncchartsPackage extends EPackage {
     EReference getSignal_ParentState();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.Signal#isIsLocal <em>Is Local</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Local</em>'.
-     * @see de.cau.cs.kieler.synccharts.Signal#isIsLocal()
-     * @see #getSignal()
-     * @generated
-     */
-    EAttribute getSignal_IsLocal();
-
-    /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.Signal#isIsInput <em>Is Input</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2932,14 +2912,6 @@ public interface SyncchartsPackage extends EPackage {
          * @generated
          */
         EReference SIGNAL__PARENT_STATE = eINSTANCE.getSignal_ParentState();
-
-        /**
-         * The meta object literal for the '<em><b>Is Local</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute SIGNAL__IS_LOCAL = eINSTANCE.getSignal_IsLocal();
 
         /**
          * The meta object literal for the '<em><b>Is Input</b></em>' attribute feature.

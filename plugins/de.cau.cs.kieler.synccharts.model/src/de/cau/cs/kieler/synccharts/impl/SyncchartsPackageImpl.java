@@ -633,7 +633,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSignal_IsLocal() {
+    public EAttribute getSignal_IsInput() {
         return (EAttribute)signalEClass.getEStructuralFeatures().get(2);
     }
 
@@ -642,7 +642,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSignal_IsInput() {
+    public EAttribute getSignal_IsOutput() {
         return (EAttribute)signalEClass.getEStructuralFeatures().get(3);
     }
 
@@ -651,7 +651,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSignal_IsOutput() {
+    public EAttribute getSignal_CombineOperator() {
         return (EAttribute)signalEClass.getEStructuralFeatures().get(4);
     }
 
@@ -660,7 +660,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSignal_CombineOperator() {
+    public EAttribute getSignal_HostCombineOperator() {
         return (EAttribute)signalEClass.getEStructuralFeatures().get(5);
     }
 
@@ -669,17 +669,8 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSignal_HostCombineOperator() {
-        return (EAttribute)signalEClass.getEStructuralFeatures().get(6);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getSignal_ParentRegion() {
-        return (EReference)signalEClass.getEStructuralFeatures().get(7);
+        return (EReference)signalEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -1206,7 +1197,6 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         signalEClass = createEClass(SIGNAL);
         createEReference(signalEClass, SIGNAL__VALUE);
         createEReference(signalEClass, SIGNAL__PARENT_STATE);
-        createEAttribute(signalEClass, SIGNAL__IS_LOCAL);
         createEAttribute(signalEClass, SIGNAL__IS_INPUT);
         createEAttribute(signalEClass, SIGNAL__IS_OUTPUT);
         createEAttribute(signalEClass, SIGNAL__COMBINE_OPERATOR);
@@ -1367,7 +1357,6 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         initEClass(signalEClass, Signal.class, "Signal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSignal_Value(), ecorePackage.getEObject(), null, "value", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSignal_ParentState(), this.getState(), this.getState_Signals(), "parentState", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSignal_IsLocal(), ecorePackage.getEBoolean(), "isLocal", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSignal_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSignal_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSignal_CombineOperator(), this.getCombineOperator(), "combineOperator", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -269,10 +269,6 @@
   <children xmi:type="notation:Node" xmi:id="_wxjloHqYEd6nBdJEKpuS9w" type="1001">
     <children xmi:type="notation:Node" xmi:id="_wxkMsHqYEd6nBdJEKpuS9w" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_wxkMsXqYEd6nBdJEKpuS9w" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_wxkzxHqYEd6nBdJEKpuS9w" type="2001">
-        <element xmi:type="ecore:EAttribute" href="synccharts.ecore#//Signal/isLocal"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_wxkzxXqYEd6nBdJEKpuS9w"/>
-      </children>
       <children xmi:type="notation:Node" xmi:id="_wxkzxnqYEd6nBdJEKpuS9w" type="2001">
         <element xmi:type="ecore:EAttribute" href="synccharts.ecore#//Signal/isInput"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_wxkzx3qYEd6nBdJEKpuS9w"/>

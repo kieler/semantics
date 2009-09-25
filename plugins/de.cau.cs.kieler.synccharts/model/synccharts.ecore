@@ -29,13 +29,13 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="CombineOperator">
     <eLiterals name="NONE" literal="NONE"/>
-    <eLiterals name="ADD" value="1" literal="ADD"/>
-    <eLiterals name="MULT" value="2" literal="MULT"/>
-    <eLiterals name="MAX" value="5"/>
-    <eLiterals name="MIN" value="6"/>
-    <eLiterals name="OR" value="4"/>
-    <eLiterals name="AND" value="3"/>
-    <eLiterals name="HOST"/>
+    <eLiterals name="ADD" value="1" literal="+"/>
+    <eLiterals name="MULT" value="2" literal="*"/>
+    <eLiterals name="MAX" value="5" literal="max"/>
+    <eLiterals name="MIN" value="6" literal="min"/>
+    <eLiterals name="OR" value="4" literal="or"/>
+    <eLiterals name="AND" value="3" literal="and"/>
+    <eLiterals name="HOST" literal="host"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ComplexExpression" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subExpressions" lowerBound="1"
@@ -78,7 +78,7 @@
     <eLiterals name="PRE" value="11" literal="pre"/>
     <eLiterals name="AND" value="4" literal="and"/>
     <eLiterals name="OR" value="5" literal="or"/>
-    <eLiterals name="ADD" value="6" literal="add"/>
+    <eLiterals name="ADD" value="6" literal="+"/>
     <eLiterals name="SUB" value="7" literal="-"/>
     <eLiterals name="MULT" value="8" literal="*"/>
     <eLiterals name="DIV" value="9" literal="/"/>
@@ -100,8 +100,6 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"
         eOpposite="#//State/signals"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isLocal" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInput" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOutput" lowerBound="1"

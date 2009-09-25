@@ -6,28 +6,25 @@
  */
 package de.cau.cs.kieler.synccharts.impl;
 
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Expression;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.InternalEList;
+//import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParserNotifier;
 
 /**
  * <!-- begin-user-doc -->
@@ -671,4 +668,17 @@ public class ActionImpl extends EObjectImpl implements Action {
         return result.toString();
     }
 
+    @Override
+    public boolean eNotificationRequired()
+    {
+      return true;
+    } 
+
+    @Override
+    public void eNotify(Notification msg)
+    {
+    //  ActionLabelParserNotifier.notify(msg);
+      super.eNotify(msg);
+    }  
+    
 } //ActionImpl
