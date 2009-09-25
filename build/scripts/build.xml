@@ -4,7 +4,7 @@
 	<property name="scriptdir" location="."/>
 	<property file="${scriptdir}/build.properties" />
 
-	<property name="eclipseLocation"       location="/tmp/eclipse_64/eclipse" />
+	<property name="eclipseLocation"       location="/home/kieler/eclipse64/" />
 	<property name="eclipseConfig"         location="${scriptdir}/.eclipse" />
 	<property name="eclipseWorkspace"      location="${scriptdir}/.eclipseWorkspace" />
 	<property name="p2.director.workspace" location="${scriptdir}/.p2Workspace" />
@@ -12,6 +12,7 @@
 	<!-- default definitions: should be overwritten while calling this script -->	
 	<property name="target"  value="noTargetInfo"/>
 	<property name="feature" value=" "/>
+	<property name="product" value=" "/>
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="/home/kieler/ant-contrib/lib/ant-contrib.jar" />
 
@@ -51,6 +52,8 @@
 						examined by build.xml, one of the PDE build scripts -->
 			<arg value="-Dfeature=${feature}" />
 				<!-- the feature whose plugins should be build -->
+			<arg value="-Dproduct=${system.WORKSPACE}/${product}" />
+				<!-- the product which should be build -->
 			<arg value="-DpluginPath=${pluginPath}" />
 				<!-- a list of source folders seperated by ':'
 						each folder should contain the subfolders 'features' and 'plugins'
@@ -185,7 +188,7 @@
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${basedir}/buildrepo" />
 		<property name="configs"       value="${product.configs}" />
-		<property name="product"       value="${basedir}/plugins/de.cau.cs.kieler.core.ui/product/kieler.product" />
+		<!-- property name="product"       value="${basedir}/plugins/de.cau.cs.kieler.core.ui/product/kieler.product" /-->
 		<property name="runPackager"   value="true" />
 		<!-- property name="customTargets"   location="${scriptdir}/customTargets.xml"/ -->
 		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
@@ -222,7 +225,7 @@
 		</zip>
 		<delete dir="${basedir}/${buildLabel}/${platform}" />
 	</target>
-
+	
 	<target name="clean">
 		<available file="${elementPath}/build.xml" property="buildFilePresent"/>
 	    <antcall target="cleanUp" />
