@@ -28,13 +28,14 @@ import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 public class StateActivityConsumer extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
 
-    private KiemProperty stateVariableProperty;
-    private KiemProperty editorProperty;
+//    private KiemProperty stateVariableProperty;
+//    private KiemProperty editorProperty;
 
     EditPart rootEditPart;
 
 	/** The cached edit parts t be matched with FragmentURLs. */
 	private HashMap<String,EditPart> cachedEditParts;
+	private HashMap<EditPart,String> cachedElementURIs;
     
     List<EditPart> lastHighligtedStates;
 
@@ -47,11 +48,14 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
      */
     public JSONObject step(JSONObject data) {
         StateActivityTrigger trigger = StateActivityTrigger.instance;
-        String stateVariableKey = stateVariableProperty.getValue();
+        String stateVariableKey = this.getProperties()[0].getValue();
         try {
             // some sanity checks
             if (trigger != null && rootEditPart != null
                     && data.has(stateVariableKey)) {
+            	//set the rootEditPart
+            	ActiveStateHighlightCombination.getInstance().setRootEditPart(rootEditPart);
+            	
                 // find all states that are active
                 Object stateData = data.get(stateVariableKey);
                 StringTokenizer tokenizer = new StringTokenizer(stateData
@@ -66,7 +70,7 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
                     // a state is already highlighted
                     if(lastHighligtedStates != null && lastHighligtedStates.contains(affectedState))
                         continue;
-                    triggerEvent.setAffectedObject(translateToURI(affectedState));
+                    triggerEvent.setAffectedObject(stateName); //trigger.translateToURI((Object)affectedState));
                     triggerEvent.setTriggerActive(true);
                     trigger.notifyTrigger(triggerEvent);
                 }
@@ -76,7 +80,7 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
                         lastHighligtedStates.remove(editPart);
                     for (EditPart editPart : lastHighligtedStates) {
                         TriggerEventObject triggerEvent = new TriggerEventObject();
-                        triggerEvent.setAffectedObject(translateToURI(editPart));
+                        triggerEvent.setAffectedObject(getElementURIFragment(editPart));
                         triggerEvent.setTriggerActive(false);
                         trigger.notifyTrigger(triggerEvent);
                     }
@@ -98,25 +102,27 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
      */
     public void initialize() {
-        StringTokenizer tokenizer = new StringTokenizer(editorProperty
-                .getValue(), " ()");
+        StringTokenizer tokenizer = new StringTokenizer(
+        		this.getProperties()[1].getValue(), " ()");
         if (tokenizer.hasMoreTokens()) {
-            String fileString = tokenizer.nextToken();
-            String editorString = tokenizer.nextToken();
+         	//skip the file string 
+         	tokenizer.nextToken();
+             String editorString = tokenizer.nextToken();
 
-            IEditorReference[] editorRefs = PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getActivePage()
-                    .getEditorReferences();
-            for (int i = 0; i < editorRefs.length; i++) {
-                if (editorRefs[i].getId().equals(editorString)) {
-                    IEditorPart editor = editorRefs[i].getEditor(true);
-                    if (editor instanceof DiagramEditor) {
-                        rootEditPart = ((DiagramEditor) editor)
-                                .getDiagramEditPart();
-                    }
-                }
-            }
-        }
+             IEditorReference[] editorRefs = PlatformUI.getWorkbench()
+                     .getActiveWorkbenchWindow().getActivePage()
+                     .getEditorReferences();
+             for (int i = 0; i < editorRefs.length; i++) {
+                 if (editorRefs[i].getId().equals(editorString)) {
+                     IEditorPart editor = editorRefs[i].getEditor(true);
+                     if (editor instanceof DiagramEditor) {
+                         rootEditPart = ((DiagramEditor) editor)
+                                 .getDiagramEditPart();
+                     }
+                 }
+             }
+         }
+    	
     }
 
     /*
@@ -143,13 +149,11 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
      * @see
      * de.cau.cs.kieler.sim.kiem.extension.DataComponent#initializeProperties()
      */
-    public KiemProperty[] initializeProperties() {
+    public KiemProperty[] provideProperties() {
         KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("state variable", "state");
-        this.stateVariableProperty = properties[0];
+        properties[0] = new KiemProperty("state variable", "RAIL state");
         properties[1] = new KiemProperty("editor",
                 new KiemPropertyTypeEditor(), "");
-        this.editorProperty = properties[1];
         return properties;
     }
 
@@ -165,9 +169,9 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
 
     //-------------------------------------------------------------------------
 
-    String translateToURI(EditPart editPart) {
-    	return ((EObject)editPart).eResource().getURIFragment((EObject)editPart).toString();
-    }
+//    String translateToURI(EditPart editPart) {
+//    	return ((EObject)editPart).eResource().getURIFragment((EObject)editPart).toString();
+//    }
     
     //-------------------------------------------------------------------------
     
@@ -188,11 +192,22 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
      * @return the EditPart of the EObject
      */
     @SuppressWarnings("unchecked")
+	public String getElementURIFragment(EditPart editPart) {
+    	if (cachedElementURIs != null) {
+    		if (cachedElementURIs.containsKey(editPart))
+    			return cachedElementURIs.get(editPart);
+    	}
+    	return "";   	
+    }
+    
+    
+    @SuppressWarnings("unchecked")
 	public EditPart getEditPart(String elementURIFragment, 
     								   EditPart parent) {
     	if (cachedEditParts == null) {
         	// if hashmap is not initialized, create it
     		cachedEditParts = new HashMap<String,EditPart>();
+    		cachedElementURIs = new HashMap<EditPart,String>();
     	}
     	else {
         	//try to get from hashmap first
@@ -212,6 +227,9 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
                 	cachedEditParts.put(
                 			elementURIFragment, 
                 			(ShapeEditPart) child);
+                	cachedElementURIs.put(
+                			(ShapeEditPart) child, 
+                			elementURIFragment);
                 	//then return
                 	return (ShapeEditPart) child;
     			}

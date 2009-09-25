@@ -16,6 +16,43 @@ import de.cau.cs.kieler.viewmanagement.effects.HighlightEffect;
 
 public class ActiveStateHighlightCombination extends ACombination {
 
+    /** The root EditPart of the editor. */
+    private EditPart rootEditPart;
+
+    /** The single instance of this plug-in. */
+    private static ActiveStateHighlightCombination instance;
+    
+    /**
+	 * Instantiates a new StateCombination.
+	 */
+	public ActiveStateHighlightCombination() {
+		ActiveStateHighlightCombination.instance = this;
+		//StateCombination.getInstance().setActive(true);
+    }
+
+	
+	/** 
+	 * @return single instance of StateCombination
+	 */
+	public static ActiveStateHighlightCombination getInstance() {
+		return ActiveStateHighlightCombination.instance;
+	}
+
+	//-------------------------------------------------------------------------
+    
+	/**
+	 * Sets a new root EditPart.
+	 * 
+	 * @param rootEditPart the new root EditPart
+	 */
+	public void setRootEditPart(EditPart rootEditPart) {
+    	this.rootEditPart = rootEditPart;
+    }
+	
+	//-------------------------------------------------------------------------
+	
+	
+	
     StateActivityTrigger trigger;
 
     Map<ShapeEditPart, HighlightEffect> effects = new HashMap<ShapeEditPart, HighlightEffect>();
@@ -23,9 +60,9 @@ public class ActiveStateHighlightCombination extends ACombination {
     @Override
     public boolean evaluate(TriggerEventObject triggerEvent) {
       
-        if ((translateToEditPart(triggerEvent.getAffectedObject(), null)) instanceof EditPart) {
+        if ((translateToEditPart(triggerEvent.getAffectedObject(), rootEditPart)) instanceof EditPart) {
             EditPart editPart = (EditPart) translateToEditPart(triggerEvent
-                    .getAffectedObject(), null);
+                    .getAffectedObject(), rootEditPart);
             if (triggerEvent.getTriggerState() && !effects.containsKey(editPart)) {
                 HighlightEffect effect = new HighlightEffect();
                 effect.setTarget((ShapeEditPart)editPart);
