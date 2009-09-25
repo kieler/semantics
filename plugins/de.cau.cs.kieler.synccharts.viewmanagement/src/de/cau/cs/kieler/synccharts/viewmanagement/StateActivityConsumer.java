@@ -1,6 +1,7 @@
 package de.cau.cs.kieler.synccharts.viewmanagement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -32,6 +33,9 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
 
     EditPart rootEditPart;
 
+	/** The cached edit parts t be matched with FragmentURLs. */
+	private HashMap<String,EditPart> cachedEditParts;
+    
     List<EditPart> lastHighligtedStates;
 
     /*
@@ -57,12 +61,12 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
                     String stateName = tokenizer.nextToken();
                     // notify the viewmanagement about this active state
                     TriggerEventObject triggerEvent = new TriggerEventObject();
-                    EditPart affectedState = getState(stateName, rootEditPart);
+                    EditPart affectedState = getEditPart(stateName, rootEditPart);
                     highlightedStates.add(affectedState);
                     // a state is already highlighted
                     if(lastHighligtedStates != null && lastHighligtedStates.contains(affectedState))
                         continue;
-                    triggerEvent.setAffectedObject(translateToURI((Object)affectedState));
+                    triggerEvent.setAffectedObject(translateToURI(affectedState));
                     triggerEvent.setTriggerActive(true);
                     trigger.notifyTrigger(triggerEvent);
                 }
@@ -72,7 +76,7 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
                         lastHighligtedStates.remove(editPart);
                     for (EditPart editPart : lastHighligtedStates) {
                         TriggerEventObject triggerEvent = new TriggerEventObject();
-                        triggerEvent.setAffectedObject(translateToURI((Object)editPart));
+                        triggerEvent.setAffectedObject(translateToURI(editPart));
                         triggerEvent.setTriggerActive(false);
                         trigger.notifyTrigger(triggerEvent);
                     }
@@ -139,7 +143,6 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
      * @see
      * de.cau.cs.kieler.sim.kiem.extension.DataComponent#initializeProperties()
      */
-    @Override
     public KiemProperty[] initializeProperties() {
         KiemProperty[] properties = new KiemProperty[2];
         properties[0] = new KiemProperty("state variable", "state");
@@ -158,39 +161,75 @@ public class StateActivityConsumer extends JSONObjectDataComponent implements
     public void wrapup() {
         // TODO Auto-generated method stub
     }
+	
 
+    //-------------------------------------------------------------------------
+
+    String translateToURI(EditPart editPart) {
+    	return ((EObject)editPart).eResource().getURIFragment((EObject)editPart).toString();
+    }
+    
+    //-------------------------------------------------------------------------
+    
     /**
-     * Recursively search an EditPart for the corresponding model object with
-     * the given name. The model is required to be a State object and it will
-     * return null if the name is not found. It will do a DFS and return the
-     * first EditPart with the named condition found.
+     * This method searches recursively for an EditPart using the 
+     * modelElement URIFragment provided. The latter can be 
+     * obtained by calling:
      * 
-     * @param name
-     *            String name of the state
-     * @param parent
-     *            The parent to start the search
-     * @return the found EditPart or null
+     * myEObject.eResource().getURIFragment(myEObject).toString();
+     * 
+     * This returns the URI fragment that, when passed to getEObject
+     * will return the given object.
+     * 
+     * @param elementURIFragment the URIFragment of the EObject to 
+     * 		  search for
+     * @param parent the parent EditPart
+     * 
+     * @return the EditPart of the EObject
      */
-    public static EditPart getState(String name, EditPart parent) {
-        List children = parent.getChildren();
+    @SuppressWarnings("unchecked")
+	public EditPart getEditPart(String elementURIFragment, 
+    								   EditPart parent) {
+    	if (cachedEditParts == null) {
+        	// if hashmap is not initialized, create it
+    		cachedEditParts = new HashMap<String,EditPart>();
+    	}
+    	else {
+        	//try to get from hashmap first
+    		if (cachedEditParts.containsKey(elementURIFragment))
+    			return cachedEditParts.get(elementURIFragment);
+    	}
+    	
+        List<EditPart> children = parent.getChildren();
         for (Object child : children) {
             if (child instanceof ShapeEditPart) {
                 View view = (View) ((ShapeEditPart) child).getModel();
-                EObject model = view.getElement();
-                if (model instanceof State) {
-                    if (((State) model).getName().equals(name))
-                        return (ShapeEditPart) child;
-                }
+                EObject modelElement = view.getElement();
+    			if (modelElement.equals(
+    					modelElement.eResource()
+    					.getEObject(elementURIFragment))) {
+                	//first cache for later calls
+                	cachedEditParts.put(
+                			elementURIFragment, 
+                			(ShapeEditPart) child);
+                	//then return
+                	return (ShapeEditPart) child;
+    			}
+    			
             }
             // if node was not found yet, search recursively
             if (child instanceof EditPart) {
-                EditPart result = getState(name, (EditPart) child);
-                if (result != null)
+                EditPart result = getEditPart(elementURIFragment,
+                							  (EditPart) child);
+                if (result != null) {
                     return result;
+                }
             }
         }
         // we did not find anything in this trunk
         return null;
     }
+
+    //-------------------------------------------------------------------------
 
 }

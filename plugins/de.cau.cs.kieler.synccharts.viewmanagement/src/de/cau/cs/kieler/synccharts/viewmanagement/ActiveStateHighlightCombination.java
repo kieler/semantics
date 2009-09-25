@@ -28,7 +28,7 @@ public class ActiveStateHighlightCombination extends ACombination {
                     .getAffectedObject(), null);
             if (triggerEvent.getTriggerState() && !effects.containsKey(editPart)) {
                 HighlightEffect effect = new HighlightEffect();
-                effect.setTarget(editPart);
+                effect.setTarget((ShapeEditPart)editPart);
                 effect.execute();
 //                effects.put(editPart, effect);
                 
@@ -58,5 +58,11 @@ public class ActiveStateHighlightCombination extends ACombination {
         triggers.add(trigger);
         return triggers;
     }
+
+	@Override
+	public void undoLastEffect() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
