@@ -35,7 +35,7 @@
 				fileExtensions="${file.extensions}"/>
 				
 		 	<fragment class="de.itemis.xtext.antlr.XtextAntlrGeneratorFragment">
-          		<options backtrack="true" /> <!--memoize="true" k="-1"/> --> 
+          		<options backtrack="true" memoize="false" k="-1"/>  
      		</fragment> 
 			<!-- the following fragment tries to use the Antlr Generator fragment which can be installed via update manager from http://download.itemis.com/updates -->
 			<!--<fragment class="org.eclipse.xtext.generator.AntlrDelegatingFragment" /> -->
@@ -64,7 +64,7 @@
 			<!-- the following fragment tries to use the Antlr based content assist fragment which can be downloaded from http://www.itemis.com 
 			     and will be ignored if it's not available. -->
 			<fragment class="de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment">
-				<options backtrack="true"/> <!-- memoize="true" k="-1"/> -->
+				<options backtrack="true" memoize="false" k="-1"/>
 			</fragment>
 			
 		</language>

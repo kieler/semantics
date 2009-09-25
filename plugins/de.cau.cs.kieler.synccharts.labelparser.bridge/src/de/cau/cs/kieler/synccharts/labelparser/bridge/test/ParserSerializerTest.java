@@ -116,7 +116,7 @@ public class ParserSerializerTest {
 
     @Test
     public void testParser2() throws KielerException, IOException {
-        this.parse("A and B and C or D and not E or 43<?F or varA = 103 and not (B and (C or D)) / G, H(23) I, varB:=104");
+        this.parse("A and B and C or D and not E or (43<?F) or (varA = 103) and not (B and (C or D)) / G, H(23) I, varB:=104");
     }
 
     @Test(expected = KielerException.class)
@@ -172,7 +172,10 @@ public class ParserSerializerTest {
     public void testSerializer_HostCodeType() throws Exception {
         this.parseAndSerialize("/ \"This is some host code\"(Natural)");
     }
-
+    @Test
+    public void testSerializer_HostCodeEverywhere() throws Exception {
+        this.parseAndSerialize("(A and \"HostCode\"(host)) and (4 < \"Hooooost\") / \"This is some host code\"(Natural)");
+    }
     @Test
     public void testSerializer_Assignment() throws Exception {
         this.parseAndSerialize("/ varA:=5");
@@ -234,10 +237,19 @@ public class ParserSerializerTest {
     }
     
     @Test
+    public void testSerializer_Div() throws Exception {
+        this.parseAndSerialize("(varA / ? B) > varB");
+    }
+    
+    @Test
     public void testSerializer_PlusMult() throws Exception {
         this.parseAndSerialize("((5 * varA) - (? B mod 2)) > 3");
     }
     
+    @Test
+    public void testSerializer_PlusDiv() throws Exception {
+        this.parseAndSerialize("((5 / varA) - (? B / 2)) > 3");
+    }
     
     /**
      * Create a new parse command and execute its parse method. Likely to throw

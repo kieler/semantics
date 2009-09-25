@@ -47,6 +47,7 @@ public class TransitionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getAlternatives_2(), "rule__Assignment__Alternatives_2");
 					put(grammarAccess.getValueAccess().getAlternatives(), "rule__Value__Alternatives");
 					put(grammarAccess.getParanthesedValueExpressionAccess().getAlternatives(), "rule__ParanthesedValueExpression__Alternatives");
+					put(grammarAccess.getMultOrDivOperationAccess().getAlternatives(), "rule__MultOrDivOperation__Alternatives");
 					put(grammarAccess.getPreOrNormalValueExpressionAccess().getAlternatives(), "rule__PreOrNormalValueExpression__Alternatives");
 					put(grammarAccess.getNotOrNormalExpressionAccess().getAlternatives(), "rule__NotOrNormalExpression__Alternatives");
 					put(grammarAccess.getParanthesedBooleanExpressionAccess().getAlternatives(), "rule__ParanthesedBooleanExpression__Alternatives");
@@ -62,11 +63,13 @@ public class TransitionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEmissionAccess().getGroup_1_1(), "rule__Emission__Group_1_1__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
 					put(grammarAccess.getValOperationAccess().getGroup(), "rule__ValOperation__Group__0");
-					put(grammarAccess.getParanthesedValueExpressionAccess().getGroup_4(), "rule__ParanthesedValueExpression__Group_4__0");
+					put(grammarAccess.getParanthesedValueExpressionAccess().getGroup_5(), "rule__ParanthesedValueExpression__Group_5__0");
 					put(grammarAccess.getPlusOperationAccess().getGroup(), "rule__PlusOperation__Group__0");
 					put(grammarAccess.getPlusOperationAccess().getGroup_1(), "rule__PlusOperation__Group_1__0");
 					put(grammarAccess.getMultOperationAccess().getGroup(), "rule__MultOperation__Group__0");
 					put(grammarAccess.getMultOperationAccess().getGroup_1(), "rule__MultOperation__Group_1__0");
+					put(grammarAccess.getDivOperationAccess().getGroup(), "rule__DivOperation__Group__0");
+					put(grammarAccess.getDivOperationAccess().getGroup_2(), "rule__DivOperation__Group_2__0");
 					put(grammarAccess.getPreArithmOperationAccess().getGroup(), "rule__PreArithmOperation__Group__0");
 					put(grammarAccess.getCompareOperationAccess().getGroup(), "rule__CompareOperation__Group__0");
 					put(grammarAccess.getCompareOperationAccess().getGroup_1(), "rule__CompareOperation__Group_1__0");
@@ -75,7 +78,7 @@ public class TransitionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAndOperationAccess().getGroup_1(), "rule__AndOperation__Group_1__0");
 					put(grammarAccess.getOrOperationAccess().getGroup(), "rule__OrOperation__Group__0");
 					put(grammarAccess.getOrOperationAccess().getGroup_1(), "rule__OrOperation__Group_1__0");
-					put(grammarAccess.getParanthesedBooleanExpressionAccess().getGroup_3(), "rule__ParanthesedBooleanExpression__Group_3__0");
+					put(grammarAccess.getParanthesedBooleanExpressionAccess().getGroup_4(), "rule__ParanthesedBooleanExpression__Group_4__0");
 					put(grammarAccess.getHostCodeAccess().getGroup(), "rule__HostCode__Group__0");
 					put(grammarAccess.getHostCodeAccess().getGroup_1(), "rule__HostCode__Group_1__0");
 					put(grammarAccess.getActionAccess().getIsImmediateAssignment_0(), "rule__Action__IsImmediateAssignment_0");
@@ -101,6 +104,8 @@ public class TransitionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPlusOperationAccess().getSubExpressionsAssignment_1_2(), "rule__PlusOperation__SubExpressionsAssignment_1_2");
 					put(grammarAccess.getMultOperationAccess().getOperatorAssignment_1_1(), "rule__MultOperation__OperatorAssignment_1_1");
 					put(grammarAccess.getMultOperationAccess().getSubExpressionsAssignment_1_2(), "rule__MultOperation__SubExpressionsAssignment_1_2");
+					put(grammarAccess.getDivOperationAccess().getOperatorAssignment_2_1(), "rule__DivOperation__OperatorAssignment_2_1");
+					put(grammarAccess.getDivOperationAccess().getSubExpressionsAssignment_2_2(), "rule__DivOperation__SubExpressionsAssignment_2_2");
 					put(grammarAccess.getPreArithmOperationAccess().getOperatorAssignment_0(), "rule__PreArithmOperation__OperatorAssignment_0");
 					put(grammarAccess.getPreArithmOperationAccess().getSubExpressionsAssignment_1(), "rule__PreArithmOperation__SubExpressionsAssignment_1");
 					put(grammarAccess.getCompareOperationAccess().getOperatorAssignment_1_1(), "rule__CompareOperation__OperatorAssignment_1_1");

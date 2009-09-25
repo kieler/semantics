@@ -121,6 +121,9 @@ public class ActionLabelSerializer {
        if(expression instanceof FloatValue){
            return ((FloatValue)expression).getValue().toString();
        }
+       if(expression instanceof HostCode){
+           return toString((HostCode)expression);
+       }
         if(expression instanceof ComplexExpression){
             List subExpressions = ((ComplexExpression) expression).getSubExpressions();
             if(subExpressions.size() > 1){
