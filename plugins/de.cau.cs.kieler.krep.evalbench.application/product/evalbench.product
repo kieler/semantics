@@ -33,19 +33,17 @@ http://www.informatik.uni-kiel.de/rtsys
       <solaris/>
       <win useIco="false">
          <bmp
-            winSmallHigh="/krep.evalbench.application/icons/logo16.bmp"
-            winSmallLow="/krep.evalbench.application/icons/logo16-8.bmp"
-            winMediumHigh="/krep.evalbench.application/icons/logo32.bmp"
-            winMediumLow="/krep.evalbench.application/icons/logo32-8.bmp"
-            winLargeHigh="/krep.evalbench.application/icons/logo48.bmp"
-            winLargeLow="/krep.evalbench.application/icons/logo48-8.bmp"/>
+            winSmallHigh="/de.cau.cs.kieler.krep.evalbench.application/icons/logo16.bmp"
+            winSmallLow="/de.cau.cs.kieler.krep.evalbench.application/icons/logo16-8.bmp"
+            winMediumHigh="/de.cau.cs.kieler.krep.evalbench.application/icons/logo32.bmp"
+            winMediumLow="/de.cau.cs.kieler.krep.evalbench.application/icons/logo32-8.bmp"
+            winLargeHigh="/de.cau.cs.kieler.krep.evalbench.application/icons/logo48.bmp"
+            winLargeLow="/de.cau.cs.kieler.krep.evalbench.application/icons/logo48-8.bmp"/>
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
       <plugin id="com.ibm.icu"/>
