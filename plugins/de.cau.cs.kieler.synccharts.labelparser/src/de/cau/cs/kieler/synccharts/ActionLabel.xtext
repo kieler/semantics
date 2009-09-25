@@ -6,8 +6,8 @@ grammar de.cau.cs.kieler.synccharts.TransitionLabel with org.eclipse.xtext.commo
 
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
-import "http://kieler.cs.cau.de/synccharts" as synccharts
-//import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
+//import "http://kieler.cs.cau.de/synccharts" as syncchart
+import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
 //import "synccharts" as synchcharts
 
 //==============================================================================
@@ -21,10 +21,14 @@ Effect returns synccharts::Effect:
 	Emission | Assignment | HostCode;
 		
 Emission returns synccharts::Emission:
-	signal=[synccharts::Signal] ("(" newValue=ValueExpression ")")?;
+	signal=[synccharts::Signal]	
+	(("(" newValue=ValueExpression ")")
+   |("(" newValue=BooleanExpression ")") )?;
 
 Assignment returns synccharts::Assignment:
-	variable=[synccharts::Variable] ":=" expression=ValueExpression;
+	variable=[synccharts::Variable] ":=" 
+	 ( expression=ValueExpression
+	 | expression=BooleanExpression);
 
 SignalReference returns synccharts::SignalReference:
 	signal = [synccharts::Signal];
@@ -63,10 +67,11 @@ terminal Boolean returns ecore::EBooleanObject : "true" | "false";
 ValOperation returns synccharts::ComplexExpression:
 	operator=ValOperator subExpressions+=SignalReference;
 
-// Example: 42, ?A, var1
+// everything that evaluates to a primitive number value
 ValueExpression returns synccharts::Expression:
 	PlusOperation;
 
+// Example: 42, 42.2, ?A, var1, (1+2*3)
 ParanthesedValueExpression returns synccharts::Expression:
     IntValue | FloatValue | ValOperation | VariableReference | '('PlusOperation')';
 

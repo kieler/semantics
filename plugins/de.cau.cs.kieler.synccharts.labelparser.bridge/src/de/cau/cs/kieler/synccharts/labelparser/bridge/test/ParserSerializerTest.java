@@ -14,23 +14,16 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.labelparser.bridge.test;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 
-import org.eclipse.gmf.runtime.common.core.command.ICommand;
 import org.eclipse.xtext.parser.antlr.IAntlrParser;
 import org.eclipse.xtext.parsetree.reconstr.SerializerUtil;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
-import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
@@ -147,6 +140,16 @@ public class ParserSerializerTest {
     }
 
     @Test
+    public void testSerializer_Comparison2() throws Exception {
+        this.parseAndSerialize("5 = varA");
+    }
+    
+    @Test
+    public void testSerializer_Comparison3() throws Exception {
+        this.parseAndSerialize("? A = 5");
+    }
+    
+    @Test
     public void testSerializer_ComparisonValue() throws Exception {
         this.parseAndSerialize("3 < ? A");
     }
@@ -154,6 +157,11 @@ public class ParserSerializerTest {
     @Test
     public void testSerializer_EmissionValue() throws Exception {
         this.parseAndSerialize("/ A(3)");
+    }
+    
+    @Test
+    public void testSerializer_EmissionBoolean() throws Exception {
+        this.parseAndSerialize("/ A((3 < varA) and B)");
     }
     
     @Test
@@ -168,6 +176,11 @@ public class ParserSerializerTest {
     @Test
     public void testSerializer_Assignment() throws Exception {
         this.parseAndSerialize("/ varA:=5");
+    }
+    
+    @Test
+    public void testSerializer_AssignmentBoolean() throws Exception {
+        this.parseAndSerialize("/ varA:=(42 = varB) or not C");
     }
     
     @Test
@@ -212,12 +225,7 @@ public class ParserSerializerTest {
     
     @Test
     public void testSerializer_Plus() throws Exception {
-        this.parseAndSerialize("(?A + 4) > 3");
-    }
-    
-    @Test
-    public void testSerializer_Plus2() throws Exception {
-        this.parseAndSerialize("?A + 4 > 3");
+        this.parseAndSerialize("(? A + 4) > 3");
     }
     
     @Test
@@ -227,8 +235,9 @@ public class ParserSerializerTest {
     
     @Test
     public void testSerializer_PlusMult() throws Exception {
-        this.parseAndSerialize("(5 * varA - ?B mod 2) > 3");
+        this.parseAndSerialize("((5 * varA) - (? B mod 2)) > 3");
     }
+    
     
     /**
      * Create a new parse command and execute its parse method. Likely to throw

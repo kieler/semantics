@@ -36,7 +36,6 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//Action returns synccharts::Action:
 		//  isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)
 		//  ?; 
-		////import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
 		////import "synccharts" as synchcharts
 		//
 		////==============================================================================
@@ -115,17 +114,25 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final Assignment cSignalAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final CrossReference cSignalSignalCrossReference_0_0 = (CrossReference)cSignalAssignment_0.eContents().get(0);
 		private final RuleCall cSignalSignalIDTerminalRuleCall_0_0_1 = (RuleCall)cSignalSignalCrossReference_0_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cNewValueAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cNewValueValueExpressionParserRuleCall_1_1_0 = (RuleCall)cNewValueAssignment_1_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
+		private final Assignment cNewValueAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cNewValueValueExpressionParserRuleCall_1_0_1_0 = (RuleCall)cNewValueAssignment_1_0_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_0_2 = (Keyword)cGroup_1_0.eContents().get(2);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
+		private final Assignment cNewValueAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cNewValueBooleanExpressionParserRuleCall_1_1_1_0 = (RuleCall)cNewValueAssignment_1_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_1_2 = (Keyword)cGroup_1_1.eContents().get(2);
 		
 		//Emission returns synccharts::Emission:
-		//  signal=[synccharts::Signal] ("(" newValue=ValueExpression ")")?;
+		//  signal=[synccharts::Signal] ("(" newValue=ValueExpression ")"|"(" newValue=
+		//  BooleanExpression ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//signal=[synccharts::Signal] ("(" newValue=ValueExpression ")")?
+		//signal=[synccharts::Signal] ("(" newValue=ValueExpression ")"|"(" newValue=
+		//BooleanExpression ")")?
 		public Group getGroup() { return cGroup; }
 
 		//signal=[synccharts::Signal]
@@ -137,20 +144,38 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//ID
 		public RuleCall getSignalSignalIDTerminalRuleCall_0_0_1() { return cSignalSignalIDTerminalRuleCall_0_0_1; }
 
-		//("(" newValue=ValueExpression ")")?
-		public Group getGroup_1() { return cGroup_1; }
+		//("(" newValue=ValueExpression ")"|"(" newValue=BooleanExpression ")")?
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//"(" newValue=ValueExpression ")"
+		public Group getGroup_1_0() { return cGroup_1_0; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+		public Keyword getLeftParenthesisKeyword_1_0_0() { return cLeftParenthesisKeyword_1_0_0; }
 
 		//newValue=ValueExpression
-		public Assignment getNewValueAssignment_1_1() { return cNewValueAssignment_1_1; }
+		public Assignment getNewValueAssignment_1_0_1() { return cNewValueAssignment_1_0_1; }
 
 		//ValueExpression
-		public RuleCall getNewValueValueExpressionParserRuleCall_1_1_0() { return cNewValueValueExpressionParserRuleCall_1_1_0; }
+		public RuleCall getNewValueValueExpressionParserRuleCall_1_0_1_0() { return cNewValueValueExpressionParserRuleCall_1_0_1_0; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
+		public Keyword getRightParenthesisKeyword_1_0_2() { return cRightParenthesisKeyword_1_0_2; }
+
+		//"(" newValue=BooleanExpression ")"
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1_1_0() { return cLeftParenthesisKeyword_1_1_0; }
+
+		//newValue=BooleanExpression
+		public Assignment getNewValueAssignment_1_1_1() { return cNewValueAssignment_1_1_1; }
+
+		//BooleanExpression
+		public RuleCall getNewValueBooleanExpressionParserRuleCall_1_1_1_0() { return cNewValueBooleanExpressionParserRuleCall_1_1_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_1_1_2() { return cRightParenthesisKeyword_1_1_2; }
 	}
 
 	public class AssignmentElements implements IParserRuleAccess {
@@ -160,14 +185,19 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final CrossReference cVariableVariableCrossReference_0_0 = (CrossReference)cVariableAssignment_0.eContents().get(0);
 		private final RuleCall cVariableVariableIDTerminalRuleCall_0_0_1 = (RuleCall)cVariableVariableCrossReference_0_0.eContents().get(1);
 		private final Keyword cColonEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cExpressionValueExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Assignment cExpressionAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
+		private final RuleCall cExpressionValueExpressionParserRuleCall_2_0_0 = (RuleCall)cExpressionAssignment_2_0.eContents().get(0);
+		private final Assignment cExpressionAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final RuleCall cExpressionBooleanExpressionParserRuleCall_2_1_0 = (RuleCall)cExpressionAssignment_2_1.eContents().get(0);
 		
 		//Assignment returns synccharts::Assignment:
-		//  variable=[synccharts::Variable] ":=" expression=ValueExpression;
+		//  variable=[synccharts::Variable] ":=" (expression=ValueExpression|expression=
+		//  BooleanExpression);
 		public ParserRule getRule() { return rule; }
 
-		//variable=[synccharts::Variable] ":=" expression=ValueExpression
+		//variable=[synccharts::Variable] ":=" (expression=ValueExpression|expression=
+		//BooleanExpression)
 		public Group getGroup() { return cGroup; }
 
 		//variable=[synccharts::Variable]
@@ -182,11 +212,20 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//":="
 		public Keyword getColonEqualsSignKeyword_1() { return cColonEqualsSignKeyword_1; }
 
+		//expression=ValueExpression|expression=BooleanExpression
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+
 		//expression=ValueExpression
-		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
+		public Assignment getExpressionAssignment_2_0() { return cExpressionAssignment_2_0; }
 
 		//ValueExpression
-		public RuleCall getExpressionValueExpressionParserRuleCall_2_0() { return cExpressionValueExpressionParserRuleCall_2_0; }
+		public RuleCall getExpressionValueExpressionParserRuleCall_2_0_0() { return cExpressionValueExpressionParserRuleCall_2_0_0; }
+
+		//expression=BooleanExpression
+		public Assignment getExpressionAssignment_2_1() { return cExpressionAssignment_2_1; }
+
+		//BooleanExpression
+		public RuleCall getExpressionBooleanExpressionParserRuleCall_2_1_0() { return cExpressionBooleanExpressionParserRuleCall_2_1_0; }
 	}
 
 	public class SignalReferenceElements implements IParserRuleAccess {
@@ -364,14 +403,14 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//  operator=ValOperator subExpressions+=SignalReference; 
 		//
 		////==============================================================================
-		//// Expressions
+		//// Arithmetic Expressions
 		////==============================================================================
 		//
 		//// Example: ?A	
 		//    
 		//	  
 		//
-		//// Example: 42, ?A, var1
+		//// everything that evaluates to a primitive number value
 		public ParserRule getRule() { return rule; }
 
 		//operator=ValOperator subExpressions+=SignalReference
@@ -392,29 +431,51 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 
 	public class ValueExpressionElements implements IParserRuleAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValueExpression");
+		private final RuleCall cPlusOperationParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//ValueExpression returns synccharts::Expression:
+		//  PlusOperation; 
+		//
+		//// everything that evaluates to a primitive number value
+		//    
+		//	
+		//
+		//// Example: 42, 42.2, ?A, var1, (1+2*3)
+		public ParserRule getRule() { return rule; }
+
+		//PlusOperation
+		public RuleCall getPlusOperationParserRuleCall() { return cPlusOperationParserRuleCall; }
+	}
+
+	public class ParanthesedValueExpressionElements implements IParserRuleAccess {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ParanthesedValueExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cValOperationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cVariableReferenceParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
+		private final Keyword cLeftParenthesisKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final RuleCall cPlusOperationParserRuleCall_4_1 = (RuleCall)cGroup_4.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
 		
-		//ValueExpression returns synccharts::Expression:
-		//  IntValue|FloatValue|ValOperation|VariableReference; 
+		//ParanthesedValueExpression returns synccharts::Expression:
+		//  IntValue|FloatValue|ValOperation|VariableReference|"(" PlusOperation ")"; 
 		//
-		//// Example: 42, ?A, var1
+		//// Example: 42, 42.2, ?A, var1, (1+2*3)
 		//    
-		//	            
+		//                    
 		//
-		//// Example: 42 <= ?A
+		//// Example: 1 + 2, varA - ?B
 		public ParserRule getRule() { return rule; }
 
-		//IntValue|FloatValue|ValOperation|VariableReference 
+		//IntValue|FloatValue|ValOperation|VariableReference|"(" PlusOperation ")" 
 		//
-		//// Example: 42, ?A, var1
+		//// Example: 42, 42.2, ?A, var1, (1+2*3)
 		//    
-		//	            
+		//                    
 		//
-		//// Example: 42 <= ?A
+		//// Example: 1 + 2, varA - ?B
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//IntValue
@@ -428,6 +489,184 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 
 		//VariableReference
 		public RuleCall getVariableReferenceParserRuleCall_3() { return cVariableReferenceParserRuleCall_3; }
+
+		//"(" PlusOperation ")"
+		public Group getGroup_4() { return cGroup_4; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_4_0() { return cLeftParenthesisKeyword_4_0; }
+
+		//PlusOperation
+		public RuleCall getPlusOperationParserRuleCall_4_1() { return cPlusOperationParserRuleCall_4_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_4_2() { return cRightParenthesisKeyword_4_2; }
+	}
+
+	public class PlusOperationElements implements IParserRuleAccess {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PlusOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cMultOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cComplexExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorPlusOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsMultOperationParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		
+		//PlusOperation returns synccharts::Expression:
+		//  MultOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=
+		//  PlusOperator subExpressions+=MultOperation)*; 
+		//
+		//// Example: 1 + 2, varA - ?B
+		//    
+		//	      
+		//
+		//// Example: 2 * 4, varA mod ?B
+		public ParserRule getRule() { return rule; }
+
+		//MultOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=
+		//PlusOperator subExpressions+=MultOperation)*
+		public Group getGroup() { return cGroup; }
+
+		//MultOperation
+		public RuleCall getMultOperationParserRuleCall_0() { return cMultOperationParserRuleCall_0; }
+
+		//({synccharts::ComplexExpression.subExpressions+=current} operator=PlusOperator
+		//subExpressions+=MultOperation)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{synccharts::ComplexExpression.subExpressions+=current}
+		public Action getComplexExpressionSubExpressionsAction_1_0() { return cComplexExpressionSubExpressionsAction_1_0; }
+
+		//operator=PlusOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+
+		//PlusOperator
+		public RuleCall getOperatorPlusOperatorEnumRuleCall_1_1_0() { return cOperatorPlusOperatorEnumRuleCall_1_1_0; }
+
+		//subExpressions+=MultOperation
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//MultOperation
+		public RuleCall getSubExpressionsMultOperationParserRuleCall_1_2_0() { return cSubExpressionsMultOperationParserRuleCall_1_2_0; }
+	}
+
+	public class MultOperationElements implements IParserRuleAccess {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MultOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cPreOrNormalValueExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cComplexExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorMultOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		
+		//MultOperation returns synccharts::Expression:
+		//  PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=
+		//  current} operator=MultOperator subExpressions+=PreOrNormalValueExpression)*; 
+		//
+		//// Example: 2 * 4, varA mod ?B
+		//    
+		//	        
+		//
+		//// Example: pre (?A + varB)
+		public ParserRule getRule() { return rule; }
+
+		//PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=
+		//current} operator=MultOperator subExpressions+=PreOrNormalValueExpression)*
+		public Group getGroup() { return cGroup; }
+
+		//PreOrNormalValueExpression
+		public RuleCall getPreOrNormalValueExpressionParserRuleCall_0() { return cPreOrNormalValueExpressionParserRuleCall_0; }
+
+		//({synccharts::ComplexExpression.subExpressions+=current} operator=MultOperator
+		//subExpressions+=PreOrNormalValueExpression)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{synccharts::ComplexExpression.subExpressions+=current}
+		public Action getComplexExpressionSubExpressionsAction_1_0() { return cComplexExpressionSubExpressionsAction_1_0; }
+
+		//operator=MultOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+
+		//MultOperator
+		public RuleCall getOperatorMultOperatorEnumRuleCall_1_1_0() { return cOperatorMultOperatorEnumRuleCall_1_1_0; }
+
+		//subExpressions+=PreOrNormalValueExpression
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//PreOrNormalValueExpression
+		public RuleCall getSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0() { return cSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0; }
+	}
+
+	public class PreArithmOperationElements implements IParserRuleAccess {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PreArithmOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cOperatorAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cOperatorOperatorPreEnumRuleCall_0_0 = (RuleCall)cOperatorAssignment_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cSubExpressionsParanthesedValueExpressionParserRuleCall_1_0 = (RuleCall)cSubExpressionsAssignment_1.eContents().get(0);
+		
+		//PreArithmOperation returns synccharts::ComplexExpression:
+		//  operator=OperatorPre subExpressions+=ParanthesedValueExpression; 
+		//
+		//// Example: pre (?A + varB)
+		public ParserRule getRule() { return rule; }
+
+		//operator=OperatorPre subExpressions+=ParanthesedValueExpression
+		public Group getGroup() { return cGroup; }
+
+		//operator=OperatorPre
+		public Assignment getOperatorAssignment_0() { return cOperatorAssignment_0; }
+
+		//OperatorPre
+		public RuleCall getOperatorOperatorPreEnumRuleCall_0_0() { return cOperatorOperatorPreEnumRuleCall_0_0; }
+
+		//subExpressions+=ParanthesedValueExpression
+		public Assignment getSubExpressionsAssignment_1() { return cSubExpressionsAssignment_1; }
+
+		//ParanthesedValueExpression
+		public RuleCall getSubExpressionsParanthesedValueExpressionParserRuleCall_1_0() { return cSubExpressionsParanthesedValueExpressionParserRuleCall_1_0; }
+	}
+
+	public class PreOrNormalValueExpressionElements implements IParserRuleAccess {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PreOrNormalValueExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cPreArithmOperationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cParanthesedValueExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//PreOrNormalValueExpression returns synccharts::Expression:
+		//  PreArithmOperation|ParanthesedValueExpression; 
+		//	
+		//    
+		//	    
+		//
+		////==============================================================================
+		//// Boolean Expressions
+		////==============================================================================
+		//
+		//// Example: 42 <= ?A
+		public ParserRule getRule() { return rule; }
+
+		//PreArithmOperation|ParanthesedValueExpression 
+		//	
+		//    
+		//	    
+		//
+		////==============================================================================
+		//// Boolean Expressions
+		////==============================================================================
+		//
+		//// Example: 42 <= ?A
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//PreArithmOperation
+		public RuleCall getPreArithmOperationParserRuleCall_0() { return cPreArithmOperationParserRuleCall_0; }
+
+		//ParanthesedValueExpression
+		public RuleCall getParanthesedValueExpressionParserRuleCall_1() { return cParanthesedValueExpressionParserRuleCall_1; }
 	}
 
 	public class CompareOperationElements implements IParserRuleAccess {
@@ -444,6 +683,10 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//CompareOperation returns synccharts::Expression:
 		//  ValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=
 		//  CompareOperator subExpressions+=ValueExpression); 
+		//
+		////==============================================================================
+		//// Boolean Expressions
+		////==============================================================================
 		//
 		//// Example: 42 <= ?A
 		//    
@@ -706,7 +949,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		//
 		//// Example: not D and C or ?E = 42 or not (A and (B or C))
 		//    
-		//	  
+		//	
 		//
 		////==============================================================================
 		//// Operators
@@ -1015,14 +1258,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		private final Keyword cANDAndKeyword_0 = (Keyword)cANDEnumLiteralDeclaration.eContents().get(0);
 		
 		//enum OperatorAnd returns synccharts::OperatorType:
-		//  AND="and"; 
-		//
-		//      
-		//	
-		//
-		////==============================================================================
-		//// Misc
-		////==============================================================================
+		//  AND="and";
 		public EnumRule getRule() { return rule; }
 
 		//AND="and"
@@ -1030,6 +1266,100 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 
 		//"and"
 		public Keyword getANDAndKeyword_0() { return cANDAndKeyword_0; }
+	}
+
+	public class OperatorPreElements implements IEnumRuleAccess {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OperatorPre");
+		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cPREPreKeyword_0 = (Keyword)cPREEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum OperatorPre returns synccharts::OperatorType:
+		//  PRE="pre";
+		public EnumRule getRule() { return rule; }
+
+		//PRE="pre"
+		public EnumLiteralDeclaration getPREEnumLiteralDeclaration() { return cPREEnumLiteralDeclaration; }
+
+		//"pre"
+		public Keyword getPREPreKeyword_0() { return cPREPreKeyword_0; }
+	}
+
+	public class PlusOperatorElements implements IEnumRuleAccess {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "PlusOperator");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cADDPlusSignKeyword_0_0 = (Keyword)cADDEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cSUBEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cSUBHyphenMinusKeyword_1_0 = (Keyword)cSUBEnumLiteralDeclaration_1.eContents().get(0);
+		
+		//enum PlusOperator returns synccharts::OperatorType:
+		//  ADD="+" | SUB="-";
+		public EnumRule getRule() { return rule; }
+
+		//ADD="+" | SUB="-"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//ADD="+"
+		public EnumLiteralDeclaration getADDEnumLiteralDeclaration_0() { return cADDEnumLiteralDeclaration_0; }
+
+		//"+"
+		public Keyword getADDPlusSignKeyword_0_0() { return cADDPlusSignKeyword_0_0; }
+
+		//SUB="-"
+		public EnumLiteralDeclaration getSUBEnumLiteralDeclaration_1() { return cSUBEnumLiteralDeclaration_1; }
+
+		//"-"
+		public Keyword getSUBHyphenMinusKeyword_1_0() { return cSUBHyphenMinusKeyword_1_0; }
+	}
+
+	public class MultOperatorElements implements IEnumRuleAccess {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "MultOperator");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cMULTAsteriskKeyword_0_0 = (Keyword)cMULTEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cDIVDivKeyword_1_0 = (Keyword)cDIVEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cMODModKeyword_2_0 = (Keyword)cMODEnumLiteralDeclaration_2.eContents().get(0);
+		
+		//enum MultOperator returns synccharts::OperatorType:
+		//  MULT="*" | DIV="div" | MOD="mod"; 
+		//	
+		//      	
+		//	        
+		//
+		////==============================================================================
+		//// Misc
+		////==============================================================================
+		public EnumRule getRule() { return rule; }
+
+		//MULT="*" | DIV="div" | MOD="mod" 
+		//	
+		//      	
+		//	        
+		//
+		////==============================================================================
+		//// Misc
+		////==============================================================================
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//MULT="*"
+		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration_0() { return cMULTEnumLiteralDeclaration_0; }
+
+		//"*"
+		public Keyword getMULTAsteriskKeyword_0_0() { return cMULTAsteriskKeyword_0_0; }
+
+		//DIV="div"
+		public EnumLiteralDeclaration getDIVEnumLiteralDeclaration_1() { return cDIVEnumLiteralDeclaration_1; }
+
+		//"div"
+		public Keyword getDIVDivKeyword_1_0() { return cDIVDivKeyword_1_0; }
+
+		//MOD="mod"
+		public EnumLiteralDeclaration getMODEnumLiteralDeclaration_2() { return cMODEnumLiteralDeclaration_2; }
+
+		//"mod"
+		public Keyword getMODModKeyword_2_0() { return cMODModKeyword_2_0; }
 	}
 	
 	private ActionElements pAction;
@@ -1048,6 +1378,11 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	private TerminalRule tBoolean;
 	private ValOperationElements pValOperation;
 	private ValueExpressionElements pValueExpression;
+	private ParanthesedValueExpressionElements pParanthesedValueExpression;
+	private PlusOperationElements pPlusOperation;
+	private MultOperationElements pMultOperation;
+	private PreArithmOperationElements pPreArithmOperation;
+	private PreOrNormalValueExpressionElements pPreOrNormalValueExpression;
 	private CompareOperationElements pCompareOperation;
 	private NotOperationElements pNotOperation;
 	private NotOrNormalExpressionElements pNotOrNormalExpression;
@@ -1061,6 +1396,9 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	private NotOperatorElements unknownRuleNotOperator;
 	private OperatorOrElements unknownRuleOperatorOr;
 	private OperatorAndElements unknownRuleOperatorAnd;
+	private OperatorPreElements unknownRuleOperatorPre;
+	private PlusOperatorElements unknownRulePlusOperator;
+	private MultOperatorElements unknownRuleMultOperator;
 	private HostCodeElements pHostCode;
 	
 	private final GrammarProvider grammarProvider;
@@ -1087,7 +1425,6 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	//Action returns synccharts::Action:
 	//  isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)
 	//  ?; 
-	////import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
 	////import "synccharts" as synchcharts
 	//
 	////==============================================================================
@@ -1112,7 +1449,8 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//Emission returns synccharts::Emission:
-	//  signal=[synccharts::Signal] ("(" newValue=ValueExpression ")")?;
+	//  signal=[synccharts::Signal] ("(" newValue=ValueExpression ")"|"(" newValue=
+	//  BooleanExpression ")")?;
 	public EmissionElements getEmissionAccess() {
 		return (pEmission != null) ? pEmission : (pEmission = new EmissionElements());
 	}
@@ -1122,7 +1460,8 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//Assignment returns synccharts::Assignment:
-	//  variable=[synccharts::Variable] ":=" expression=ValueExpression;
+	//  variable=[synccharts::Variable] ":=" (expression=ValueExpression|expression=
+	//  BooleanExpression);
 	public AssignmentElements getAssignmentAccess() {
 		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
 	}
@@ -1239,7 +1578,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	//              
 	//
 	////==============================================================================
-	//// Expressions
+	//// Arithmetic Expressions
 	////==============================================================================
 	//
 	//// Example: ?A
@@ -1251,14 +1590,14 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	//  operator=ValOperator subExpressions+=SignalReference; 
 	//
 	////==============================================================================
-	//// Expressions
+	//// Arithmetic Expressions
 	////==============================================================================
 	//
 	//// Example: ?A	
 	//    
 	//	  
 	//
-	//// Example: 42, ?A, var1
+	//// everything that evaluates to a primitive number value
 	public ValOperationElements getValOperationAccess() {
 		return (pValOperation != null) ? pValOperation : (pValOperation = new ValOperationElements());
 	}
@@ -1268,13 +1607,13 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//ValueExpression returns synccharts::Expression:
-	//  IntValue|FloatValue|ValOperation|VariableReference; 
+	//  PlusOperation; 
 	//
-	//// Example: 42, ?A, var1
+	//// everything that evaluates to a primitive number value
 	//    
-	//	            
+	//	
 	//
-	//// Example: 42 <= ?A
+	//// Example: 42, 42.2, ?A, var1, (1+2*3)
 	public ValueExpressionElements getValueExpressionAccess() {
 		return (pValueExpression != null) ? pValueExpression : (pValueExpression = new ValueExpressionElements());
 	}
@@ -1283,9 +1622,94 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 		return getValueExpressionAccess().getRule();
 	}
 
+	//ParanthesedValueExpression returns synccharts::Expression:
+	//  IntValue|FloatValue|ValOperation|VariableReference|"(" PlusOperation ")"; 
+	//
+	//// Example: 42, 42.2, ?A, var1, (1+2*3)
+	//    
+	//                    
+	//
+	//// Example: 1 + 2, varA - ?B
+	public ParanthesedValueExpressionElements getParanthesedValueExpressionAccess() {
+		return (pParanthesedValueExpression != null) ? pParanthesedValueExpression : (pParanthesedValueExpression = new ParanthesedValueExpressionElements());
+	}
+	
+	public ParserRule getParanthesedValueExpressionRule() {
+		return getParanthesedValueExpressionAccess().getRule();
+	}
+
+	//PlusOperation returns synccharts::Expression:
+	//  MultOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=
+	//  PlusOperator subExpressions+=MultOperation)*; 
+	//
+	//// Example: 1 + 2, varA - ?B
+	//    
+	//	      
+	//
+	//// Example: 2 * 4, varA mod ?B
+	public PlusOperationElements getPlusOperationAccess() {
+		return (pPlusOperation != null) ? pPlusOperation : (pPlusOperation = new PlusOperationElements());
+	}
+	
+	public ParserRule getPlusOperationRule() {
+		return getPlusOperationAccess().getRule();
+	}
+
+	//MultOperation returns synccharts::Expression:
+	//  PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=
+	//  current} operator=MultOperator subExpressions+=PreOrNormalValueExpression)*; 
+	//
+	//// Example: 2 * 4, varA mod ?B
+	//    
+	//	        
+	//
+	//// Example: pre (?A + varB)
+	public MultOperationElements getMultOperationAccess() {
+		return (pMultOperation != null) ? pMultOperation : (pMultOperation = new MultOperationElements());
+	}
+	
+	public ParserRule getMultOperationRule() {
+		return getMultOperationAccess().getRule();
+	}
+
+	//PreArithmOperation returns synccharts::ComplexExpression:
+	//  operator=OperatorPre subExpressions+=ParanthesedValueExpression; 
+	//
+	//// Example: pre (?A + varB)
+	public PreArithmOperationElements getPreArithmOperationAccess() {
+		return (pPreArithmOperation != null) ? pPreArithmOperation : (pPreArithmOperation = new PreArithmOperationElements());
+	}
+	
+	public ParserRule getPreArithmOperationRule() {
+		return getPreArithmOperationAccess().getRule();
+	}
+
+	//PreOrNormalValueExpression returns synccharts::Expression:
+	//  PreArithmOperation|ParanthesedValueExpression; 
+	//	
+	//    
+	//	    
+	//
+	////==============================================================================
+	//// Boolean Expressions
+	////==============================================================================
+	//
+	//// Example: 42 <= ?A
+	public PreOrNormalValueExpressionElements getPreOrNormalValueExpressionAccess() {
+		return (pPreOrNormalValueExpression != null) ? pPreOrNormalValueExpression : (pPreOrNormalValueExpression = new PreOrNormalValueExpressionElements());
+	}
+	
+	public ParserRule getPreOrNormalValueExpressionRule() {
+		return getPreOrNormalValueExpressionAccess().getRule();
+	}
+
 	//CompareOperation returns synccharts::Expression:
 	//  ValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=
 	//  CompareOperator subExpressions+=ValueExpression); 
+	//
+	////==============================================================================
+	//// Boolean Expressions
+	////==============================================================================
 	//
 	//// Example: 42 <= ?A
 	//    
@@ -1389,7 +1813,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	//
 	//// Example: not D and C or ?E = 42 or not (A and (B or C))
 	//    
-	//	  
+	//	
 	//
 	////==============================================================================
 	//// Operators
@@ -1458,20 +1882,50 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	}
 
 	//enum OperatorAnd returns synccharts::OperatorType:
-	//  AND="and"; 
-	//
-	//      
-	//	
-	//
-	////==============================================================================
-	//// Misc
-	////==============================================================================
+	//  AND="and";
 	public OperatorAndElements getOperatorAndAccess() {
 		return (unknownRuleOperatorAnd != null) ? unknownRuleOperatorAnd : (unknownRuleOperatorAnd = new OperatorAndElements());
 	}
 	
 	public EnumRule getOperatorAndRule() {
 		return getOperatorAndAccess().getRule();
+	}
+
+	//enum OperatorPre returns synccharts::OperatorType:
+	//  PRE="pre";
+	public OperatorPreElements getOperatorPreAccess() {
+		return (unknownRuleOperatorPre != null) ? unknownRuleOperatorPre : (unknownRuleOperatorPre = new OperatorPreElements());
+	}
+	
+	public EnumRule getOperatorPreRule() {
+		return getOperatorPreAccess().getRule();
+	}
+
+	//enum PlusOperator returns synccharts::OperatorType:
+	//  ADD="+" | SUB="-";
+	public PlusOperatorElements getPlusOperatorAccess() {
+		return (unknownRulePlusOperator != null) ? unknownRulePlusOperator : (unknownRulePlusOperator = new PlusOperatorElements());
+	}
+	
+	public EnumRule getPlusOperatorRule() {
+		return getPlusOperatorAccess().getRule();
+	}
+
+	//enum MultOperator returns synccharts::OperatorType:
+	//  MULT="*" | DIV="div" | MOD="mod"; 
+	//	
+	//      	
+	//	        
+	//
+	////==============================================================================
+	//// Misc
+	////==============================================================================
+	public MultOperatorElements getMultOperatorAccess() {
+		return (unknownRuleMultOperator != null) ? unknownRuleMultOperator : (unknownRuleMultOperator = new MultOperatorElements());
+	}
+	
+	public EnumRule getMultOperatorRule() {
+		return getMultOperatorAccess().getRule();
 	}
 
 	//HostCode returns synccharts::HostCode:
