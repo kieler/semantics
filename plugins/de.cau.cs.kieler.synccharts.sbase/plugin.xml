@@ -5,14 +5,13 @@
          point="de.cau.cs.kieler.ksbase.configuration">
                <configuration
                      XtendFile="src/transformations/feature.ext"
-                     contextID="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+                     contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
                      createMenu="true"
                      createPopup="true"
                      editor="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor"
-                     menuLocationURI="menu:org.eclipse.ui.main.menu?after=window"
-                     menuName="KIELER"
+                     menuLocationURI="menu:de.cau.cs.kieler"
                      packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage"
-                     popupLocationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
+                     popupLocationURI="popup:de.cau.cs.kieler">
          <transformation
                keyboardShortcut="CTRL+K S"
                name="Add Successor State"
@@ -73,6 +72,17 @@
                transformation="flipTransition">
             <element_selection
                   class="de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart">
+            </element_selection>
+         </transformation>
+         <transformation
+               keyboardShortcut="CTRL+K W"
+               name="Connect States"
+               selectionCount="2"
+               showInMenu="true"
+               showInPopup="true"
+               transformation="connectStates">
+            <element_selection
+                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
             </element_selection>
          </transformation>
       </configuration>
