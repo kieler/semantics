@@ -29,6 +29,8 @@
 				 as the condition 'isset' doesn't work with system (environment) properties -->
 		</condition>
 
+		<basename property="basename" file="${product}" suffix=".product" />
+
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg line="-configuration ${eclipseConfig}" />
 			<arg line="-data ${eclipseWorkspace}" />
@@ -53,6 +55,8 @@
 			<arg value="-Dfeature=${feature}" />
 				<!-- the feature whose plugins should be build -->
 			<arg value="-Dproduct=${system.WORKSPACE}/${product}" />
+				<!-- the product which should be build -->
+			<arg value="-Dbasename=${basename}" />
 				<!-- the product which should be build -->
 			<arg value="-DpluginPath=${pluginPath}" />
 				<!-- a list of source folders seperated by ':'
@@ -193,7 +197,7 @@
 		<!-- property name="customTargets"   location="${scriptdir}/customTargets.xml"/ -->
 		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
 		<property name="allElementsFile" location="${scriptdir}/allElements.xml"/>
-
+				
 		<delete dir="${buildLabel}"/>
 		<!-- copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/kieler.product"
 			  tofile="${basedir}/kieler.product" overwrite="true" />
