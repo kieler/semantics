@@ -39,7 +39,6 @@ import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.TransitionLabelStandaloneSetup;
 import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParseCommand;
-import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParserWrapper;
 import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelSerializer;
 
 /**
@@ -209,6 +208,26 @@ public class ParserSerializerTest {
     @Test
     public void testSerializer_AndNot2() throws Exception {
         this.parseAndSerialize("not (A and B)");
+    }
+    
+    @Test
+    public void testSerializer_Plus() throws Exception {
+        this.parseAndSerialize("(?A + 4) > 3");
+    }
+    
+    @Test
+    public void testSerializer_Plus2() throws Exception {
+        this.parseAndSerialize("?A + 4 > 3");
+    }
+    
+    @Test
+    public void testSerializer_Mult() throws Exception {
+        this.parseAndSerialize("(5 * varA) > 3");
+    }
+    
+    @Test
+    public void testSerializer_PlusMult() throws Exception {
+        this.parseAndSerialize("(5 * varA - ?B mod 2) > 3");
     }
     
     /**
