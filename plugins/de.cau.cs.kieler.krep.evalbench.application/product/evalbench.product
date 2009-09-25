@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Evaluation Bench" uid="de.cau.cs.kieler.krep.evalbench.application.product" id="de.cau.cs.kieler.krep.evalbench.application.product" application="de.cau.cs.kieler.krep.evalbench.application.application" version="0.1.0" useFeatures="false" includeLaunchers="true">
+<product name="Evaluation Bench" uid="de.cau.cs.kieler.krep.evalbench.application.product" id="de.cau.cs.kieler.krep.evalbench.application.product" application="de.cau.cs.kieler.krep.evalbench.application.application" version="0.1.0.vqualifier" useFeatures="false" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="/krep.evalbench.application/icons/logo128.gif"/>
+      <image path="/de.cau.cs.kieler.krep.evalbench.application/icons/logo128.gif"/>
       <text>
          KReP Evaluation Bench by
    Real-Time and Embedded Systems group
@@ -21,10 +21,10 @@ http://www.informatik.uni-kiel.de/rtsys
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/krep.evalbench.application/icons/logo16.gif" i32="/krep.evalbench.application/icons/logo32.gif" i48="/krep.evalbench.application/icons/logo48.gif" i64="/krep.evalbench.application/icons/logo64.gif"/>
+   <windowImages i16="/de.cau.cs.kieler.krep.evalbench.application/icons/logo16.gif" i32="/de.cau.cs.kieler.krep.evalbench.application/icons/logo32.gif" i48="/de.cau.cs.kieler.krep.evalbench.application/icons/logo48.gif" i64="/de.cau.cs.kieler.krep.evalbench.application/icons/logo64.gif" i128="/de.cau.cs.kieler.krep.evalbench.application/icons/logo128.gif"/>
 
    <splash
-      location="krep.evalbench.application"
+      location="de.cau.cs.kieler.krep.evalbench.application"
       startupProgressRect="5,275,445,15"
       startupMessageRect="7,252,441,20"
       startupForegroundColor="F7F7F7" />
@@ -74,10 +74,10 @@ http://www.informatik.uni-kiel.de/rtsys
       <plugin id="org.eclipse.jface.text"/>
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.persistence.jpa.equinox.weaving" fragment="true"/>
-      <plugin id="org.eclipse.swt"/>
-      <plugin id="org.eclipse.swt.gtk.linux.x86" fragment="true"/>
       <plugin id="org.eclipse.text"/>
       <plugin id="org.eclipse.ui"/>
+      <plugin id="org.eclipse.ui.carbon" fragment="true"/>
+      <plugin id="org.eclipse.ui.cocoa" fragment="true"/>
       <plugin id="org.eclipse.ui.workbench"/>
       <plugin id="org.eclipse.ui.workbench.texteditor"/>
    </plugins>

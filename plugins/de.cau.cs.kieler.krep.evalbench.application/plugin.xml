@@ -21,7 +21,7 @@
             name="Evaluation Bench">
          <property
                name="windowImages"
-               value="/krep.evalbench.application/icons/logo16.gif,/krep.evalbench.application/icons/logo32.gif,/krep.evalbench.application/icons/logo48.gif,/krep.evalbench.application/icons/logo64.gif">
+               value="icons/logo16.gif,icons/logo32.gif,icons/logo48.gif,icons/logo64.gif,icons/logo128.gif">
          </property>
          <property
                name="appName"
@@ -29,7 +29,7 @@
          </property>
          <property
                name="aboutImage"
-               value="/krep.evalbench.application/icons/logo128.gif">
+               value="icons/logo128.gif">
          </property>
          <property
                name="aboutText"
