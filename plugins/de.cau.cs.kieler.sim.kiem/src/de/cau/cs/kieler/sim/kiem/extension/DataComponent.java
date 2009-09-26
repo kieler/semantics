@@ -257,8 +257,11 @@ public abstract class DataComponent implements IDataComponent,
 	 * the {@link #getInterfaceKeys()} method.
 	 * 
 	 * @return the local interface variable keys
+	 * @throws KiemInitializationException if a property prevents the execution of 
+	 * 								 this DataComponent this error should be
+	 * 								 thrown
 	 */
-	public String[] provideInterfaceKeys() {
+	public String[] provideInterfaceKeys() throws KiemInitializationException {
 		return null;
 	}
 	

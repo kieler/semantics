@@ -19,6 +19,7 @@ import java.util.HashMap;
 
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 
 /**
  * The Class DataComponentEx. Is a wrapper for the
@@ -350,9 +351,11 @@ public class DataComponentEx implements Serializable {
 	 * 
 	 * @return the String[] array of interface variables
 	 * 
+	 * @throws KiemInitializationException the KIEM initialization exception
+	 * 
 	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideInterfaceKeys()
 	 */
-	public String[] provideInterfaceKeys() {
+	public String[] provideInterfaceKeys() throws KiemInitializationException {
 		return this.component.provideInterfaceKeys(); 
 	}
 	

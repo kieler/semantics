@@ -519,15 +519,15 @@ public class KiemPlugin extends AbstractUIPlugin {
 			}//end if enabled
 		}//next c
 		if (countEnabledProducer < 1) {
+			this.KIEMViewInstance.setAllEnabled(true);
 			this.showError(Messages.ErrorNoDataProducer,
 					KiemPlugin.PLUGIN_ID,null);
-			this.KIEMViewInstance.setAllEnabled(true);
 			return false;
 		}
 		else if (countEnabledObserver < 1) {
+			this.KIEMViewInstance.setAllEnabled(true);
 			showError(Messages.ErrorNoDataObserver,
 					KiemPlugin.PLUGIN_ID,null);
-			this.KIEMViewInstance.setAllEnabled(true);
 			return false;
 		}
 		
@@ -537,12 +537,12 @@ public class KiemPlugin extends AbstractUIPlugin {
 			KiemProperty[] properties = dataComponentEx.getProperties();
 			try {
 				dataComponentEx.checkProperties(properties);
-			} catch (KiemPropertyException e) {
+			} catch (Exception e) {
+				this.KIEMViewInstance.setAllEnabled(true);
 				this.showError(e.getMessage(), dataComponentEx
 						.getDataComponent().getConfigurationElement()
 						.getContributor().getName(),
 						e);
-				this.KIEMViewInstance.setAllEnabled(true);
 				return false;
 			}
 		}
@@ -553,17 +553,26 @@ public class KiemPlugin extends AbstractUIPlugin {
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			if (dataComponentEx.isEnabled()) {
-			  String[] localInterfaceKeys = 
-			  dataComponentEx.provideInterfaceKeys();
-			  if (localInterfaceKeys != null) {
-				for (int cc = 0; cc < localInterfaceKeys.length; cc++) {
-				  String localInterfaceVariable = localInterfaceKeys[cc];
-				  globalInterfaceKeys.add(localInterfaceVariable);
-				}//next cc
-			  }//end if not null
+				
+				try {
+					  String[] localInterfaceKeys = 
+						  dataComponentEx.provideInterfaceKeys();
+					  if (localInterfaceKeys != null) {
+							for (int cc = 0; cc < localInterfaceKeys.length; cc++) {
+							  String localInterfaceVariable = localInterfaceKeys[cc];
+							  globalInterfaceKeys.add(localInterfaceVariable);
+							}//next cc
+						  }//end if not null
+				} catch(Exception e) {
+					this.KIEMViewInstance.setAllEnabled(true);
+					KiemPlugin.getDefault().handleComponentError(
+							dataComponentEx.getDataComponent(), e);
+					return false;
+				}
+				
 			}//if enabled
 		}//next c
-		
+	
 		//distribute union of InterfaceKeys to all enabled components
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
@@ -573,16 +582,18 @@ public class KiemPlugin extends AbstractUIPlugin {
 			}//end if enabled
 		}//next c
 		
+
 		//initialize all (enabled) data producer and Observer
 		for (int c = 0; c < dataComponentExList.size(); c++) {
 			DataComponentEx dataComponentEx = dataComponentExList.get(c);
 			if (dataComponentEx.isEnabled()) {
 				try {
 					dataComponentEx.getDataComponent().initialize();
-				}catch(KiemInitializationException e) {
+				}catch(Exception e) {
+					this.KIEMViewInstance.setAllEnabled(true);
+					e.printStackTrace();
 					KiemPlugin.getDefault().handleComponentError(
 							dataComponentEx.getDataComponent(), e);
-					this.KIEMViewInstance.setAllEnabled(true);
 					return false;
 				}
 			}//end if enabled
