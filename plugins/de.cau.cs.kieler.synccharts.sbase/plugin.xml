@@ -92,6 +92,18 @@
                   class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
             </element_selection>
          </transformation>
+                <transformation
+                      icon="icons/obj16/Region.gif"
+                      name="Add ABRO"
+                      selectionCount="1"
+                      showInMenu="true"
+                      showInPopup="true"
+                      showInToolbar="true"
+                      transformation="addABRO">
+          <element_selection
+                class="de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart">
+          </element_selection>
+       </transformation>
       </configuration>
    </extension>
 </plugin>

@@ -34,22 +34,80 @@ transition.setTargetState(target) ->
 source.outgoingTransitions.add(transition)
 ;
 
-Void makeFinal(State s):
-s.setIsFinal(!s.isFinal)
-;
-
-Void makeInitial(State s):
-s.setIsInitial(!s.isInitial)
-;
-
-Void addRegion(State s):
-s.regions.add(new Region)
-;
-
-Void makeNormal(State s):
-s.setType( StateType::NORMAL )
-;
-
-Void makePseudo(State s):
-s.setType( StateType::PSEUDO )
+Void addABRO(Region rootRegion):
+let reset = new Transition:
+let waitABToFinal = new Transition:
+let ABOFinal = new State:
+let wATrans = new Transition:
+let wBTrans = new Transition:
+let wAInitial = new State:
+let wAFinal = new State:
+let wBInitial = new State:
+let wBFinal = new State:
+let wA = new Region:
+let wB = new Region:
+let waitAB = new State:
+let ABORegion = new Region:
+let ABO = new State:
+let innerRootRegion = new Region:
+let sigA = new Signal:
+let sigB = new Signal:
+let sigR = new Signal:
+let sigO = new Signal:
+let root = new State:
+//ABRO Root State
+root.setLabel("ABRO") ->
+//ABRO Signal definition:
+sigA.setName("A") ->
+sigB.setName("B") ->
+sigR.setName("R") ->
+sigO.setName("O") ->
+root.signals.add(sigA) ->
+root.signals.add(sigB) ->
+root.signals.add(sigR) ->
+root.signals.add(sigO) ->
+//Inner State ABO
+ABO.setLabel("ABO") ->
+//Inner state Wait A and B
+waitAB.setLabel("Wait A and B") ->
+//Region for 'wait for a' 
+wAInitial.setLabel("wA") ->
+wAInitial.setIsInitial(true) ->
+wA.innerStates.add(wAInitial) ->
+wAFinal.setLabel("dA") ->
+wAFinal.setIsFinal(true) ->
+wA.innerStates.add(wAFinal) ->
+wATrans.setIsImmediate(true) ->
+wATrans.setSourceState(wAInitial) ->
+wATrans.setTargetState(wAFinal) ->
+wAInitial.outgoingTransitions.add(wATrans) ->
+waitAB.regions.add(wA) ->
+//Region for 'wait for b'
+wBInitial.setLabel("wB") ->
+wBInitial.setIsInitial(true) ->
+wB.innerStates.add(wBInitial) ->
+wBFinal.setLabel("dB") ->
+wBFinal.setIsFinal(true) ->
+wB.innerStates.add(wBFinal) ->
+wBTrans.setIsImmediate(true) ->
+wBTrans.setSourceState(wBInitial) ->
+wBTrans.setTargetState(wBFinal) ->
+wBInitial.outgoingTransitions.add(wBTrans) ->
+waitAB.regions.add(wB) ->
+//ABO final state
+ABOFinal.setLabel("done") ->
+ABOFinal.setIsFinal(true) ->
+waitABToFinal.setSourceState(waitAB) ->
+waitABToFinal.setTargetState(ABOFinal) ->
+waitAB.outgoingTransitions.add(waitABToFinal)  ->
+ABORegion.innerStates.add(waitAB) ->
+ABORegion.innerStates.add(ABOFinal) ->
+ABO.regions.add(ABORegion)->
+reset.setIsImmediate(true) ->
+reset.setSourceState(ABO) ->
+reset.setTargetState(ABO) ->
+ABO.outgoingTransitions.add(reset) ->
+innerRootRegion.innerStates.add(ABO) ->
+root.regions.add(innerRootRegion) ->
+rootRegion.innerStates.add(root)
 ;
