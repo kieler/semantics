@@ -230,6 +230,48 @@
 		<delete dir="${basedir}/${buildLabel}/${platform}" />
 	</target>
 	
+	<target name="doc" description="target for complete javadoc generation">
+		<loadfile property="doc.classpath">
+			<concat>
+				<fileset dir="${system.WORKSPACE}">
+					<include name="../../*/workspace/plugins/*/build.xml" />
+					<exclude name="../../Import*/**" />
+				</fileset>
+			</concat>
+			<filterchain>
+				<linecontainsregexp>
+					<regexp pattern="&lt;pathelement" />
+				</linecontainsregexp>
+				<linecontainsregexp negate="true">
+					<regexp pattern="/@dot&quot;" />
+				</linecontainsregexp>
+				<linecontainsregexp negate="true">
+					<regexp pattern="/bin/&quot;" />
+				</linecontainsregexp>
+				<!-- separate enclosing tags to realize NOR function
+					 (multiple repexp conditions will be ANDed) -->
+			</filterchain>
+		</loadfile>
+		<concat destfile="${system.WORKSPACE}/build.javadoc.xml" force="true">
+			<header filtering="no" trimleading="yes">
+				&lt;project name="build KIELER elements" basedir="." default="doc"&gt;
+			</header>
+			<fileset file="${scriptdir}/javadoc.template.xml"/>
+			<filterchain>
+				<tokenfilter>
+					<replacestring from="dir=&quot;${basedir}/plugins&quot;" to="&quot;${basedir}&quot;"/>
+					<replacestring from="includes=&quot;**/*.java&quot;"     to="&quot;../../*/workspace/plugins/**/*.java&quot;"/>
+				</tokenfilter>
+				<expandproperties />
+			</filterchain>
+			<footer filtering="no" trimleading="yes">
+				&lt;/project&gt;
+			</footer>
+		</concat>
+		
+		<!-- ant antfile="${system.WORKSPACE}/build.javadoc.xml" dir="${system.WORKSPACE}" / -->
+	</target>
+	
 	<target name="clean">
 		<available file="${elementPath}/build.xml" property="buildFilePresent"/>
 	    <antcall target="cleanUp" />
@@ -241,6 +283,6 @@
 	
 	
 	<target name="noTargetInfo">
-		<echo message="No build target given. Please give a target explicitly -Dtarget=&lt;{feature,rca}&gt;" />
+		<fail message="No build target given. Please give a target explicitly -Dtarget=&lt;{feature,rca}&gt;" />
 	</target>
 </project>
