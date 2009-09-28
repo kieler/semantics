@@ -9,10 +9,12 @@
 	<property name="eclipseWorkspace"      location="${scriptdir}/.eclipseWorkspace" />
 	<property name="p2.director.workspace" location="${scriptdir}/.p2Workspace" />
 	
-	<!-- default definitions: should be overwritten while calling this script -->	
-	<property name="target"  value="noTargetInfo"/>
-	<property name="feature" value=" "/>
-	<property name="product" value=" "/>
+	<!-- default definitions: should be overwritten while calling this script if necessary -->	
+	<property name="target"	      value="noTargetInfo"/>
+	<property name="feature"      value=" "/>
+	<property name="product"      value=" "/>
+	<property name="pluginPath"   value=" "/>
+	<property name="doc.excludes" value=" "/>
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="/home/kieler/ant-contrib/lib/ant-contrib.jar" />
 
@@ -37,7 +39,7 @@
 			<arg line="-application org.eclipse.ant.core.antRunner" />
 			<arg line="-consoleLog" />
 			<arg line="-buildfile ${scriptdir}/build.xml ${targetP}" />
-			<arg line="-Dscriptdir=${scriptdir}" />
+			<arg value="-Dscriptdir=${scriptdir}" />
 				<!-- the folder containing build.xml, build.properties -->
 			<arg value="-Dbasedir=${system.WORKSPACE}" />
 				<!-- the workspace folder of the current job
@@ -57,13 +59,15 @@
 			<arg value="-Dproduct=${system.WORKSPACE}/${product}" />
 				<!-- the product which should be build -->
 			<arg value="-Dbasename=${basename}" />
-				<!-- the product which should be build -->
+				<!-- the name of RCA's zip file, ziped top folder & launcher determined of product's basename -->
 			<arg value="-DpluginPath=${pluginPath}" />
 				<!-- a list of source folders seperated by ':'
 						each folder should contain the subfolders 'features' and 'plugins'
 						can be relative (to ${basedir})
 						CAUTION: features must not be JARed
 								 plugins should be JARed (so far I discovered) -->
+			<arg value="-Ddoc.excludes=${doc.excludes}" />
+				<!-- comma separated path patterns excluded during javadoc generation -->
 			<classpath>
 				<pathelement location="${eclipseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
@@ -192,17 +196,12 @@
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${basedir}/buildrepo" />
 		<property name="configs"       value="${product.configs}" />
-		<!-- property name="product"       value="${basedir}/plugins/de.cau.cs.kieler.core.ui/product/kieler.product" /-->
 		<property name="runPackager"   value="true" />
 		<!-- property name="customTargets"   location="${scriptdir}/customTargets.xml"/ -->
 		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
 		<property name="allElementsFile" location="${scriptdir}/allElements.xml"/>
 				
 		<delete dir="${buildLabel}"/>
-		<!-- copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/kieler.product"
-			  tofile="${basedir}/kieler.product" overwrite="true" />
-		<copy file="${basedir}/../../KIELER_core/workspace/plugins/de.cau.cs.kieler.core.ui/p2.inf"
-			  tofile="${basedir}/p2.inf" overwrite="true" / -->
 		
 		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
 		
@@ -231,11 +230,12 @@
 	</target>
 	
 	<target name="doc" description="target for complete javadoc generation">
+		<!-- first, we need to gather the classpath path entries from plugin's generated build files -->
 		<loadfile property="doc.classpath">
 			<concat>
-				<fileset dir="${system.WORKSPACE}">
-					<include name="../../*/workspace/plugins/*/build.xml" />
-					<exclude name="../../Import*/**" />
+				<fileset dir="${system.WORKSPACE}/../../">
+					<include name="*/workspace/plugins/*/build.xml" />
+					<exclude name="Import*/**" />
 				</fileset>
 			</concat>
 			<filterchain>
@@ -250,17 +250,22 @@
 				</linecontainsregexp>
 				<!-- separate enclosing tags to realize NOR function
 					 (multiple repexp conditions will be ANDed) -->
+				<tokenfilter>
+					<replacestring from="path=&quot;../../" to="path=&quot;" />
+				</tokenfilter>
 			</filterchain>
 		</loadfile>
+		
+		<!-- second, a build file for javadoc generation will be constructed -->
 		<concat destfile="${system.WORKSPACE}/build.javadoc.xml" force="true">
 			<header filtering="no" trimleading="yes">
-				&lt;project name="build KIELER elements" basedir="." default="doc"&gt;
+				&lt;project name="build KIELER javadoc" basedir="." default="doc"&gt;
 			</header>
 			<fileset file="${scriptdir}/javadoc.template.xml"/>
 			<filterchain>
 				<tokenfilter>
-					<replacestring from="dir=&quot;${basedir}/plugins&quot;" to="&quot;${basedir}&quot;"/>
-					<replacestring from="includes=&quot;**/*.java&quot;"     to="&quot;../../*/workspace/plugins/**/*.java&quot;"/>
+					<replacestring from="dir=&quot;${basedir}/plugins&quot;" to="dir=&quot;$${basedir}/../../&quot;" />
+					<replacestring from="includes=&quot;**/*.java&quot;"     to="includes=&quot;*/workspace/plugins/**/*.java&quot;"/>
 				</tokenfilter>
 				<expandproperties />
 			</filterchain>
@@ -269,7 +274,10 @@
 			</footer>
 		</concat>
 		
-		<!-- ant antfile="${system.WORKSPACE}/build.javadoc.xml" dir="${system.WORKSPACE}" / -->
+		<!-- finally, invoke the generated build file -->
+		<ant antfile="${system.WORKSPACE}/build.javadoc.xml" dir="${system.WORKSPACE}">
+			<property name="basedir" value="${system.WORKSPACE}" />
+		</ant>
 	</target>
 	
 	<target name="clean">
