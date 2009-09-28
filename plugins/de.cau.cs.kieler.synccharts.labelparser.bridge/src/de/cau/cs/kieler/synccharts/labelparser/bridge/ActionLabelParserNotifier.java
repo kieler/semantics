@@ -218,10 +218,14 @@ public class ActionLabelParserNotifier extends AdapterImpl implements IStartup{
             cmd.parse();
         }
         else{
-        String newLabel = ActionLabelSerializer.toString(action);
-        if(newLabel != null){
-            action.setTriggersAndEffects(newLabel);
-        }
+        
+            // only serialize if the action represents something useful
+            if(action.getTrigger()!=null || !action.getEffects().isEmpty()){
+                String newLabel = ActionLabelSerializer.toString(action);
+                if(newLabel != null){
+                    action.setTriggersAndEffects(newLabel);
+                }
+            }
         }
     }
     
