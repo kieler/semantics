@@ -251,6 +251,46 @@ public class ParserSerializerTest {
         this.parseAndSerialize("((5 / varA) - (? B / 2)) > 3");
     }
     
+    @Test
+    public void testSerializer_MultDiv() throws Exception {
+        this.parseAndSerialize("(varA * (? B / 2)) < 2");
+    }
+    
+    @Test
+    public void testSerializer_Pre() throws Exception {
+        this.parseAndSerialize("(pre (A) or (pre (? B) > 3)) or pre ((A and B))");
+    }
+    
+    @Test
+    public void testSerializer_Ctr1() throws Exception {
+        this.parseAndSerialize("(5 * (? A / 5)) = ? A / B");
+    }
+    
+    @Test
+    public void testSerializer_Ctr2() throws Exception {
+        this.parseAndSerialize("/ A(pre (? A) - 1)");
+    }
+    
+    @Test
+    public void testSerializer_Ctr3() throws Exception {
+        this.parseAndSerialize("pre (? A) = -100 / A(-100)");
+    }
+    
+    @Test
+    public void testSerializer_Ctr4() throws Exception {
+        this.parseAndSerialize("/ A(pre (? A) + 1)");
+    }
+    
+    @Test
+    public void testSerializer_Float() throws Exception {
+        this.parseAndSerialize("/ A(1.1), B(-23e-3), C(34f)");
+    }
+    
+    @Test
+    public void testSerializer_Boolean() throws Exception {
+        this.parseAndSerialize("true or false / A(true), B(false)");
+    }
+    
     /**
      * Create a new parse command and execute its parse method. Likely to throw
      * exceptions if the text could not be parsed.

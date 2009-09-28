@@ -54,13 +54,14 @@ protected class ThisRootNode extends RootToken {
 			case 19: return new PreArithmOperation_Group(this, this, 19, inst);
 			case 20: return new PreOrNormalValueExpression_Alternatives(this, this, 20, inst);
 			case 21: return new CompareOperation_Group(this, this, 21, inst);
-			case 22: return new NotOperation_Group(this, this, 22, inst);
-			case 23: return new NotOrNormalExpression_Alternatives(this, this, 23, inst);
-			case 24: return new AndOperation_Group(this, this, 24, inst);
-			case 25: return new OrOperation_Group(this, this, 25, inst);
-			case 26: return new ParanthesedBooleanExpression_Alternatives(this, this, 26, inst);
-			case 27: return new BooleanExpression_OrOperationParserRuleCall(this, this, 27, inst);
-			case 28: return new HostCode_Group(this, this, 28, inst);
+			case 22: return new UnaryOperation_Group(this, this, 22, inst);
+			case 23: return new UnaryParanthesedOperation_Group(this, this, 23, inst);
+			case 24: return new UnaryOrNormalExpression_Alternatives(this, this, 24, inst);
+			case 25: return new AndOperation_Group(this, this, 25, inst);
+			case 26: return new OrOperation_Group(this, this, 26, inst);
+			case 27: return new ParanthesedBooleanExpression_Alternatives(this, this, 27, inst);
+			case 28: return new BooleanExpression_OrOperationParserRuleCall(this, this, 28, inst);
+			case 29: return new HostCode_Group(this, this, 29, inst);
 			default: return null;
 		}	
 	}	
@@ -1098,6 +1099,8 @@ protected class Signal_NameAssignment extends AssignmentToken  {
  * //==============================================================================
  * // Values
  * //==============================================================================
+ * 
+ * // redefine INT terminal to allow negative numbers
  *
  **/
 
@@ -1141,11 +1144,7 @@ protected class Variable_NameAssignment extends AssignmentToken  {
 /************ begin Rule IntValue ****************
  *
  * IntValue returns synccharts::IntValue:
- *   value=INT; 
- * 
- * //==============================================================================
- * // Values
- * //==============================================================================
+ *   value=INT;
  *
  **/
 
@@ -1281,7 +1280,7 @@ protected class BooleanValue_ValueAssignment extends AssignmentToken  {
  *     
  * 	        
  * 
- * // make sure the Float rule does not shadow the built-in INT rule
+ * // make sure the Float rule does not shadow the INT rule
  *
  **/
 
@@ -1289,7 +1288,7 @@ protected class BooleanValue_ValueAssignment extends AssignmentToken  {
 //     
 // 	        
 // 
-// // make sure the Float rule does not shadow the built-in INT rule
+// // make sure the Float rule does not shadow the INT rule
 protected class Value_Alternatives extends AlternativesToken {
 
 	public Value_Alternatives(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1583,21 +1582,23 @@ protected class ValueExpression_PlusOperationParserRuleCall extends RuleCallToke
 /************ begin Rule ParanthesedValueExpression ****************
  *
  * ParanthesedValueExpression returns synccharts::Expression:
- *   IntValue|FloatValue|ValOperation|VariableReference|HostCode|"(" PlusOperation ")"; 
+ *   IntValue|FloatValue|ValOperation|VariableReference|HostCode|"(" PlusOperation ")"|
+ *   "(" DivOperation ")"; 
  * 
  * // Example: 42, 42.2, ?A, var1, (1+2*3)
  *     
- *                         
+ *                             
  * 
  * // Example: 1 + 2, varA - ?B
  *
  **/
 
-// IntValue|FloatValue|ValOperation|VariableReference|HostCode|"(" PlusOperation ")" 
+// IntValue|FloatValue|ValOperation|VariableReference|HostCode|"(" PlusOperation ")"|
+// "(" DivOperation ")" 
 // 
 // // Example: 42, 42.2, ?A, var1, (1+2*3)
 //     
-//                         
+//                             
 // 
 // // Example: 1 + 2, varA - ?B
 protected class ParanthesedValueExpression_Alternatives extends AlternativesToken {
@@ -1618,6 +1619,7 @@ protected class ParanthesedValueExpression_Alternatives extends AlternativesToke
 			case 3: return new ParanthesedValueExpression_VariableReferenceParserRuleCall_3(parent, this, 3, inst);
 			case 4: return new ParanthesedValueExpression_HostCodeParserRuleCall_4(parent, this, 4, inst);
 			case 5: return new ParanthesedValueExpression_Group_5(parent, this, 5, inst);
+			case 6: return new ParanthesedValueExpression_Group_6(parent, this, 6, inst);
 			default: return null;
 		}	
 	}	
@@ -1875,6 +1877,98 @@ protected class ParanthesedValueExpression_RightParenthesisKeyword_5_2 extends K
 }
 
 
+// "(" DivOperation ")"
+protected class ParanthesedValueExpression_Group_6 extends GroupToken {
+	
+	public ParanthesedValueExpression_Group_6(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Group getGrammarElement() {
+		return grammarAccess.getParanthesedValueExpressionAccess().getGroup_6();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new ParanthesedValueExpression_RightParenthesisKeyword_6_2(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "("
+protected class ParanthesedValueExpression_LeftParenthesisKeyword_6_0 extends KeywordToken  {
+	
+	public ParanthesedValueExpression_LeftParenthesisKeyword_6_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Keyword getGrammarElement() {
+		return grammarAccess.getParanthesedValueExpressionAccess().getLeftParenthesisKeyword_6_0();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+}
+
+// DivOperation
+protected class ParanthesedValueExpression_DivOperationParserRuleCall_6_1 extends RuleCallToken {
+	
+	public ParanthesedValueExpression_DivOperationParserRuleCall_6_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getParanthesedValueExpressionAccess().getDivOperationParserRuleCall_6_1();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new DivOperation_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
+		if(checkForRecursion(DivOperation_Group.class, current)) return null;
+		if(!current.isInstanceOf(grammarAccess.getDivOperationRule().getType().getClassifier())) return null;
+		return current;
+	}
+	
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new ParanthesedValueExpression_LeftParenthesisKeyword_6_0(parent, next, actIndex, inst);
+			default: return null;
+		}	
+	}	
+}
+
+// ")"
+protected class ParanthesedValueExpression_RightParenthesisKeyword_6_2 extends KeywordToken  {
+	
+	public ParanthesedValueExpression_RightParenthesisKeyword_6_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Keyword getGrammarElement() {
+		return grammarAccess.getParanthesedValueExpressionAccess().getRightParenthesisKeyword_6_2();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new ParanthesedValueExpression_DivOperationParserRuleCall_6_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+
 
 /************ end Rule ParanthesedValueExpression ****************/
 
@@ -2077,7 +2171,7 @@ protected class PlusOperation_SubExpressionsAssignment_1_2 extends AssignmentTok
 /************ begin Rule MultOrDivOperation ****************
  *
  * MultOrDivOperation returns synccharts::Expression:
- *   MultOperation|DivOperation; 
+ *   MultOperation|"(" DivOperation ")"; 
  * 
  *     
  * 	    
@@ -2086,7 +2180,7 @@ protected class PlusOperation_SubExpressionsAssignment_1_2 extends AssignmentTok
  *
  **/
 
-// MultOperation|DivOperation 
+// MultOperation|"(" DivOperation ")" 
 // 
 //     
 // 	    
@@ -2105,7 +2199,7 @@ protected class MultOrDivOperation_Alternatives extends AlternativesToken {
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new MultOrDivOperation_MultOperationParserRuleCall_0(parent, this, 0, inst);
-			case 1: return new MultOrDivOperation_DivOperationParserRuleCall_1(parent, this, 1, inst);
+			case 1: return new MultOrDivOperation_Group_1(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -2147,15 +2241,54 @@ protected class MultOrDivOperation_MultOperationParserRuleCall_0 extends RuleCal
 	}	
 }
 
-// DivOperation
-protected class MultOrDivOperation_DivOperationParserRuleCall_1 extends RuleCallToken {
+// "(" DivOperation ")"
+protected class MultOrDivOperation_Group_1 extends GroupToken {
 	
-	public MultOrDivOperation_DivOperationParserRuleCall_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public MultOrDivOperation_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Group getGrammarElement() {
+		return grammarAccess.getMultOrDivOperationAccess().getGroup_1();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new MultOrDivOperation_RightParenthesisKeyword_1_2(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// "("
+protected class MultOrDivOperation_LeftParenthesisKeyword_1_0 extends KeywordToken  {
+	
+	public MultOrDivOperation_LeftParenthesisKeyword_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Keyword getGrammarElement() {
+		return grammarAccess.getMultOrDivOperationAccess().getLeftParenthesisKeyword_1_0();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+}
+
+// DivOperation
+protected class MultOrDivOperation_DivOperationParserRuleCall_1_1 extends RuleCallToken {
+	
+	public MultOrDivOperation_DivOperationParserRuleCall_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getMultOrDivOperationAccess().getDivOperationParserRuleCall_1();
+		return grammarAccess.getMultOrDivOperationAccess().getDivOperationParserRuleCall_1_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -2173,10 +2306,32 @@ protected class MultOrDivOperation_DivOperationParserRuleCall_1 extends RuleCall
 	
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		switch(index) {
-			default: return parent.createParentFollower(next, actIndex , index, inst);
+			case 0: return new MultOrDivOperation_LeftParenthesisKeyword_1_0(parent, next, actIndex, inst);
+			default: return null;
 		}	
 	}	
 }
+
+// ")"
+protected class MultOrDivOperation_RightParenthesisKeyword_1_2 extends KeywordToken  {
+	
+	public MultOrDivOperation_RightParenthesisKeyword_1_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Keyword getGrammarElement() {
+		return grammarAccess.getMultOrDivOperationAccess().getRightParenthesisKeyword_1_2();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new MultOrDivOperation_DivOperationParserRuleCall_1_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
 
 
 /************ end Rule MultOrDivOperation ****************/
@@ -2385,20 +2540,20 @@ protected class MultOperation_SubExpressionsAssignment_1_2 extends AssignmentTok
 /************ begin Rule DivOperation ****************
  *
  * DivOperation returns synccharts::Expression:
- *   "(" PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=
- *   current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)* ")"; 
+ *   PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=
+ *   current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)*; 
  * 
  * // Example: (2 / 4)
  * // note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
  *     
  * 	      
  * 
- * // Example: pre (?A + varB)
+ * // Example: pre (? A)
  *
  **/
 
-// "(" PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=
-// current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)* ")"
+// PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=
+// current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)*
 protected class DivOperation_Group extends GroupToken {
 	
 	public DivOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2411,7 +2566,8 @@ protected class DivOperation_Group extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new DivOperation_RightParenthesisKeyword_3(parent, this, 0, inst);
+			case 0: return new DivOperation_Group_1(parent, this, 0, inst);
+			case 1: return new DivOperation_PreOrNormalValueExpressionParserRuleCall_0(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -2422,34 +2578,15 @@ protected class DivOperation_Group extends GroupToken {
 	}
 }
 
-// "("
-protected class DivOperation_LeftParenthesisKeyword_0 extends KeywordToken  {
-	
-	public DivOperation_LeftParenthesisKeyword_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getDivOperationAccess().getLeftParenthesisKeyword_0();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-}
-
 // PreOrNormalValueExpression
-protected class DivOperation_PreOrNormalValueExpressionParserRuleCall_1 extends RuleCallToken {
+protected class DivOperation_PreOrNormalValueExpressionParserRuleCall_0 extends RuleCallToken {
 	
-	public DivOperation_PreOrNormalValueExpressionParserRuleCall_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public DivOperation_PreOrNormalValueExpressionParserRuleCall_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getDivOperationAccess().getPreOrNormalValueExpressionParserRuleCall_1();
+		return grammarAccess.getDivOperationAccess().getPreOrNormalValueExpressionParserRuleCall_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -2467,27 +2604,26 @@ protected class DivOperation_PreOrNormalValueExpressionParserRuleCall_1 extends 
 	
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new DivOperation_LeftParenthesisKeyword_0(parent, next, actIndex, inst);
-			default: return null;
+			default: return parent.createParentFollower(next, actIndex , index, inst);
 		}	
 	}	
 }
 
 // ({synccharts::ComplexExpression.subExpressions+=current} operator=DivOperator
 // subExpressions+=PreOrNormalValueExpression)*
-protected class DivOperation_Group_2 extends GroupToken {
+protected class DivOperation_Group_1 extends GroupToken {
 	
-	public DivOperation_Group_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public DivOperation_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Group getGrammarElement() {
-		return grammarAccess.getDivOperationAccess().getGroup_2();
+		return grammarAccess.getDivOperationAccess().getGroup_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new DivOperation_SubExpressionsAssignment_2_2(parent, this, 0, inst);
+			case 0: return new DivOperation_SubExpressionsAssignment_1_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -2495,27 +2631,27 @@ protected class DivOperation_Group_2 extends GroupToken {
 }
 
 // {synccharts::ComplexExpression.subExpressions+=current}
-protected class DivOperation_ComplexExpressionSubExpressionsAction_2_0 extends ActionToken  {
+protected class DivOperation_ComplexExpressionSubExpressionsAction_1_0 extends ActionToken  {
 
-	public DivOperation_ComplexExpressionSubExpressionsAction_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public DivOperation_ComplexExpressionSubExpressionsAction_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Action getGrammarElement() {
-		return grammarAccess.getDivOperationAccess().getComplexExpressionSubExpressionsAction_2_0();
+		return grammarAccess.getDivOperationAccess().getComplexExpressionSubExpressionsAction_1_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new DivOperation_Group_2(parent, this, 0, inst);
-			case 1: return new DivOperation_PreOrNormalValueExpressionParserRuleCall_1(parent, this, 1, inst);
+			case 0: return new DivOperation_Group_1(parent, this, 0, inst);
+			case 1: return new DivOperation_PreOrNormalValueExpressionParserRuleCall_0(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
 		
 	
 	protected IInstanceDescription tryConsumeVal() {
-		if(!current.isInstanceOf(grammarAccess.getDivOperationAccess().getComplexExpressionSubExpressionsAction_2_0().getType().getClassifier())) return null;
+		if(!current.isInstanceOf(grammarAccess.getDivOperationAccess().getComplexExpressionSubExpressionsAction_1_0().getType().getClassifier())) return null;
 		Object val = current.getConsumable("subExpressions", false);
 		if(val == null) return null;
 		if(!current.isConsumedWithLastConsumtion("subExpressions")) return null;
@@ -2524,19 +2660,19 @@ protected class DivOperation_ComplexExpressionSubExpressionsAction_2_0 extends A
 }
 
 // operator=DivOperator
-protected class DivOperation_OperatorAssignment_2_1 extends AssignmentToken  {
+protected class DivOperation_OperatorAssignment_1_1 extends AssignmentToken  {
 	
-	public DivOperation_OperatorAssignment_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public DivOperation_OperatorAssignment_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getDivOperationAccess().getOperatorAssignment_2_1();
+		return grammarAccess.getDivOperationAccess().getOperatorAssignment_1_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new DivOperation_ComplexExpressionSubExpressionsAction_2_0(parent, this, 0, inst);
+			case 0: return new DivOperation_ComplexExpressionSubExpressionsAction_1_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -2546,7 +2682,7 @@ protected class DivOperation_OperatorAssignment_2_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("operator");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.ERC;
-			element = grammarAccess.getDivOperationAccess().getOperatorDivOperatorEnumRuleCall_2_1_0();
+			element = grammarAccess.getDivOperationAccess().getOperatorDivOperatorEnumRuleCall_1_1_0();
 			return obj;
 		}
 		return null;
@@ -2555,14 +2691,14 @@ protected class DivOperation_OperatorAssignment_2_1 extends AssignmentToken  {
 }
 
 // subExpressions+=PreOrNormalValueExpression
-protected class DivOperation_SubExpressionsAssignment_2_2 extends AssignmentToken  {
+protected class DivOperation_SubExpressionsAssignment_1_2 extends AssignmentToken  {
 	
-	public DivOperation_SubExpressionsAssignment_2_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public DivOperation_SubExpressionsAssignment_1_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getDivOperationAccess().getSubExpressionsAssignment_2_2();
+		return grammarAccess.getDivOperationAccess().getSubExpressionsAssignment_1_2();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -2579,7 +2715,7 @@ protected class DivOperation_SubExpressionsAssignment_2_2 extends AssignmentToke
 			IInstanceDescription param = getDescr((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getPreOrNormalValueExpressionRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getDivOperationAccess().getSubExpressionsPreOrNormalValueExpressionParserRuleCall_2_2_0(); 
+				element = grammarAccess.getDivOperationAccess().getSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -2590,33 +2726,12 @@ protected class DivOperation_SubExpressionsAssignment_2_2 extends AssignmentToke
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new DivOperation_OperatorAssignment_2_1(parent, next, actIndex, consumed);
+			case 0: return new DivOperation_OperatorAssignment_1_1(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
 }
 
-
-// ")"
-protected class DivOperation_RightParenthesisKeyword_3 extends KeywordToken  {
-	
-	public DivOperation_RightParenthesisKeyword_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getDivOperationAccess().getRightParenthesisKeyword_3();
-	}
-
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new DivOperation_Group_2(parent, this, 0, inst);
-			case 1: return new DivOperation_PreOrNormalValueExpressionParserRuleCall_1(parent, this, 1, inst);
-			default: return null;
-		}	
-	}	
-		
-}
 
 
 /************ end Rule DivOperation ****************/
@@ -2625,13 +2740,13 @@ protected class DivOperation_RightParenthesisKeyword_3 extends KeywordToken  {
 /************ begin Rule PreArithmOperation ****************
  *
  * PreArithmOperation returns synccharts::ComplexExpression:
- *   operator=OperatorPre subExpressions+=ParanthesedValueExpression; 
+ *   operator=UnaryParanthesedOperator "(" subExpressions+=ValOperation ")"; 
  * 
- * // Example: pre (?A + varB)
+ * // Example: pre (? A)
  *
  **/
 
-// operator=OperatorPre subExpressions+=ParanthesedValueExpression
+// operator=UnaryParanthesedOperator "(" subExpressions+=ValOperation ")"
 protected class PreArithmOperation_Group extends GroupToken {
 	
 	public PreArithmOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2644,7 +2759,7 @@ protected class PreArithmOperation_Group extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new PreArithmOperation_SubExpressionsAssignment_1(parent, this, 0, inst);
+			case 0: return new PreArithmOperation_RightParenthesisKeyword_3(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -2655,7 +2770,7 @@ protected class PreArithmOperation_Group extends GroupToken {
 	}
 }
 
-// operator=OperatorPre
+// operator=UnaryParanthesedOperator
 protected class PreArithmOperation_OperatorAssignment_0 extends AssignmentToken  {
 	
 	public PreArithmOperation_OperatorAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2677,7 +2792,7 @@ protected class PreArithmOperation_OperatorAssignment_0 extends AssignmentToken 
 		IInstanceDescription obj = current.cloneAndConsume("operator");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.ERC;
-			element = grammarAccess.getPreArithmOperationAccess().getOperatorOperatorPreEnumRuleCall_0_0();
+			element = grammarAccess.getPreArithmOperationAccess().getOperatorUnaryParanthesedOperatorEnumRuleCall_0_0();
 			return obj;
 		}
 		return null;
@@ -2685,20 +2800,40 @@ protected class PreArithmOperation_OperatorAssignment_0 extends AssignmentToken 
 
 }
 
-// subExpressions+=ParanthesedValueExpression
-protected class PreArithmOperation_SubExpressionsAssignment_1 extends AssignmentToken  {
+// "("
+protected class PreArithmOperation_LeftParenthesisKeyword_1 extends KeywordToken  {
 	
-	public PreArithmOperation_SubExpressionsAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public PreArithmOperation_LeftParenthesisKeyword_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
-	public Assignment getGrammarElement() {
-		return grammarAccess.getPreArithmOperationAccess().getSubExpressionsAssignment_1();
+	public Keyword getGrammarElement() {
+		return grammarAccess.getPreArithmOperationAccess().getLeftParenthesisKeyword_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new ParanthesedValueExpression_Alternatives(this, this, 0, inst);
+			case 0: return new PreArithmOperation_OperatorAssignment_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// subExpressions+=ValOperation
+protected class PreArithmOperation_SubExpressionsAssignment_2 extends AssignmentToken  {
+	
+	public PreArithmOperation_SubExpressionsAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Assignment getGrammarElement() {
+		return grammarAccess.getPreArithmOperationAccess().getSubExpressionsAssignment_2();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new ValOperation_Group(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -2708,9 +2843,9 @@ protected class PreArithmOperation_SubExpressionsAssignment_1 extends Assignment
 		IInstanceDescription obj = current.cloneAndConsume("subExpressions");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getParanthesedValueExpressionRule().getType().getClassifier())) {
+			if(param.isInstanceOf(grammarAccess.getValOperationRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getPreArithmOperationAccess().getSubExpressionsParanthesedValueExpressionParserRuleCall_1_0(); 
+				element = grammarAccess.getPreArithmOperationAccess().getSubExpressionsValOperationParserRuleCall_2_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -2721,10 +2856,30 @@ protected class PreArithmOperation_SubExpressionsAssignment_1 extends Assignment
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new PreArithmOperation_OperatorAssignment_0(parent, next, actIndex, consumed);
+			case 0: return new PreArithmOperation_LeftParenthesisKeyword_1(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
+}
+
+// ")"
+protected class PreArithmOperation_RightParenthesisKeyword_3 extends KeywordToken  {
+	
+	public PreArithmOperation_RightParenthesisKeyword_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Keyword getGrammarElement() {
+		return grammarAccess.getPreArithmOperationAccess().getRightParenthesisKeyword_3();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new PreArithmOperation_SubExpressionsAssignment_2(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
 }
 
 
@@ -3049,53 +3204,49 @@ protected class CompareOperation_SubExpressionsAssignment_1_2 extends Assignment
 /************ end Rule CompareOperation ****************/
 
 
-/************ begin Rule NotOperation ****************
+/************ begin Rule UnaryOperation ****************
  *
- * NotOperation returns synccharts::ComplexExpression:
- *   operator=NotOperator subExpressions+=ParanthesedBooleanExpression;   	
+ * UnaryOperation returns synccharts::ComplexExpression:
+ *   operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression;   	
  * 
  * // Example: not A, not false, not (A or B)
  * // at the latter we need the parans to indicate the right binding
- *     
- * 	  
- * 
- * // Example: either negated or normal expression (with parantheses)
  *
  **/
 
-// operator=NotOperator subExpressions+=ParanthesedBooleanExpression
-protected class NotOperation_Group extends GroupToken {
+// operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression
+protected class UnaryOperation_Group extends GroupToken {
 	
-	public NotOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public UnaryOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Group getGrammarElement() {
-		return grammarAccess.getNotOperationAccess().getGroup();
+		return grammarAccess.getUnaryOperationAccess().getGroup();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new NotOperation_SubExpressionsAssignment_1(parent, this, 0, inst);
+			case 0: return new UnaryOperation_SubExpressionsAssignment_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 	public IInstanceDescription tryConsume() {
-		if(!current.isInstanceOf(grammarAccess.getNotOperationRule().getType().getClassifier())) return null;
+		if(!current.isInstanceOf(grammarAccess.getUnaryOperationRule().getType().getClassifier())) return null;
 		return tryConsumeVal();
 	}
 }
 
-// operator=NotOperator
-protected class NotOperation_OperatorAssignment_0 extends AssignmentToken  {
+// operator=UnaryOperator
+protected class UnaryOperation_OperatorAssignment_0 extends AssignmentToken  {
 	
-	public NotOperation_OperatorAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public UnaryOperation_OperatorAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getNotOperationAccess().getOperatorAssignment_0();
+		return grammarAccess.getUnaryOperationAccess().getOperatorAssignment_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -3109,7 +3260,7 @@ protected class NotOperation_OperatorAssignment_0 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("operator");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.ERC;
-			element = grammarAccess.getNotOperationAccess().getOperatorNotOperatorEnumRuleCall_0_0();
+			element = grammarAccess.getUnaryOperationAccess().getOperatorUnaryOperatorEnumRuleCall_0_0();
 			return obj;
 		}
 		return null;
@@ -3118,14 +3269,14 @@ protected class NotOperation_OperatorAssignment_0 extends AssignmentToken  {
 }
 
 // subExpressions+=ParanthesedBooleanExpression
-protected class NotOperation_SubExpressionsAssignment_1 extends AssignmentToken  {
+protected class UnaryOperation_SubExpressionsAssignment_1 extends AssignmentToken  {
 	
-	public NotOperation_SubExpressionsAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public UnaryOperation_SubExpressionsAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public Assignment getGrammarElement() {
-		return grammarAccess.getNotOperationAccess().getSubExpressionsAssignment_1();
+		return grammarAccess.getUnaryOperationAccess().getSubExpressionsAssignment_1();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -3142,7 +3293,7 @@ protected class NotOperation_SubExpressionsAssignment_1 extends AssignmentToken 
 			IInstanceDescription param = getDescr((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getParanthesedBooleanExpressionRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getNotOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0(); 
+				element = grammarAccess.getUnaryOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -3153,81 +3304,265 @@ protected class NotOperation_SubExpressionsAssignment_1 extends AssignmentToken 
 	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
 		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new NotOperation_OperatorAssignment_0(parent, next, actIndex, consumed);
+			case 0: return new UnaryOperation_OperatorAssignment_0(parent, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
 }
 
 
-/************ end Rule NotOperation ****************/
+/************ end Rule UnaryOperation ****************/
 
 
-/************ begin Rule NotOrNormalExpression ****************
+/************ begin Rule UnaryParanthesedOperation ****************
  *
- * NotOrNormalExpression returns synccharts::Expression:
- *   NotOperation|ParanthesedBooleanExpression; 
+ * UnaryParanthesedOperation returns synccharts::ComplexExpression:
+ *   operator=UnaryParanthesedOperator "(" subExpressions+=BooleanExpression ")"; 
  * 
- * // Example: either negated or normal expression (with parantheses) 
  *     
- * 	    
+ *         
  * 
- * // Example: A and B, not C and 42 <= ?D
+ * // Example: either negated or normal expression (with parantheses)
  *
  **/
 
-// NotOperation|ParanthesedBooleanExpression 
-// 
-// // Example: either negated or normal expression (with parantheses) 
-//     
-// 	    
-// 
-// // Example: A and B, not C and 42 <= ?D
-protected class NotOrNormalExpression_Alternatives extends AlternativesToken {
-
-	public NotOrNormalExpression_Alternatives(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+// operator=UnaryParanthesedOperator "(" subExpressions+=BooleanExpression ")"
+protected class UnaryParanthesedOperation_Group extends GroupToken {
+	
+	public UnaryParanthesedOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
-	public Alternatives getGrammarElement() {
-		return grammarAccess.getNotOrNormalExpressionAccess().getAlternatives();
+	public Group getGrammarElement() {
+		return grammarAccess.getUnaryParanthesedOperationAccess().getGroup();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new NotOrNormalExpression_NotOperationParserRuleCall_0(parent, this, 0, inst);
-			case 1: return new NotOrNormalExpression_ParanthesedBooleanExpressionParserRuleCall_1(parent, this, 1, inst);
+			case 0: return new UnaryParanthesedOperation_RightParenthesisKeyword_3(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 	public IInstanceDescription tryConsume() {
-		if(!current.isInstanceOf(grammarAccess.getNotOrNormalExpressionRule().getType().getClassifier())) return null;
+		if(!current.isInstanceOf(grammarAccess.getUnaryParanthesedOperationRule().getType().getClassifier())) return null;
 		return tryConsumeVal();
 	}
 }
 
-// NotOperation
-protected class NotOrNormalExpression_NotOperationParserRuleCall_0 extends RuleCallToken {
+// operator=UnaryParanthesedOperator
+protected class UnaryParanthesedOperation_OperatorAssignment_0 extends AssignmentToken  {
 	
-	public NotOrNormalExpression_NotOperationParserRuleCall_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public UnaryParanthesedOperation_OperatorAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
-	public RuleCall getGrammarElement() {
-		return grammarAccess.getNotOrNormalExpressionAccess().getNotOperationParserRuleCall_0();
+	public Assignment getGrammarElement() {
+		return grammarAccess.getUnaryParanthesedOperationAccess().getOperatorAssignment_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new NotOperation_Group(this, this, 0, inst);
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("operator",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("operator");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getUnaryParanthesedOperationAccess().getOperatorUnaryParanthesedOperatorEnumRuleCall_0_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// "("
+protected class UnaryParanthesedOperation_LeftParenthesisKeyword_1 extends KeywordToken  {
+	
+	public UnaryParanthesedOperation_LeftParenthesisKeyword_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Keyword getGrammarElement() {
+		return grammarAccess.getUnaryParanthesedOperationAccess().getLeftParenthesisKeyword_1();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new UnaryParanthesedOperation_OperatorAssignment_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// subExpressions+=BooleanExpression
+protected class UnaryParanthesedOperation_SubExpressionsAssignment_2 extends AssignmentToken  {
+	
+	public UnaryParanthesedOperation_SubExpressionsAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Assignment getGrammarElement() {
+		return grammarAccess.getUnaryParanthesedOperationAccess().getSubExpressionsAssignment_2();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new BooleanExpression_OrOperationParserRuleCall(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if(checkForRecursion(NotOperation_Group.class, current)) return null;
-		if(!current.isInstanceOf(grammarAccess.getNotOperationRule().getType().getClassifier())) return null;
+		if((value = current.getConsumable("subExpressions",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("subExpressions");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IInstanceDescription param = getDescr((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getBooleanExpressionRule().getType().getClassifier())) {
+				type = AssignmentType.PRC;
+				element = grammarAccess.getUnaryParanthesedOperationAccess().getSubExpressionsBooleanExpressionParserRuleCall_2_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		if(value == inst.getDelegate() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new UnaryParanthesedOperation_LeftParenthesisKeyword_1(parent, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+// ")"
+protected class UnaryParanthesedOperation_RightParenthesisKeyword_3 extends KeywordToken  {
+	
+	public UnaryParanthesedOperation_RightParenthesisKeyword_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Keyword getGrammarElement() {
+		return grammarAccess.getUnaryParanthesedOperationAccess().getRightParenthesisKeyword_3();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new UnaryParanthesedOperation_SubExpressionsAssignment_2(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+
+/************ end Rule UnaryParanthesedOperation ****************/
+
+
+/************ begin Rule UnaryOrNormalExpression ****************
+ *
+ * UnaryOrNormalExpression returns synccharts::Expression:
+ *   UnaryOperation|UnaryParanthesedOperation|ParanthesedBooleanExpression; 
+ * 
+ * // Example: either negated or normal expression (with parantheses) 
+ *     
+ * 	        
+ * 
+ * // Example: A and B, not C and 42 <= ?D
+ *
+ **/
+
+// UnaryOperation|UnaryParanthesedOperation|ParanthesedBooleanExpression 
+// 
+// // Example: either negated or normal expression (with parantheses) 
+//     
+// 	        
+// 
+// // Example: A and B, not C and 42 <= ?D
+protected class UnaryOrNormalExpression_Alternatives extends AlternativesToken {
+
+	public UnaryOrNormalExpression_Alternatives(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public Alternatives getGrammarElement() {
+		return grammarAccess.getUnaryOrNormalExpressionAccess().getAlternatives();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new UnaryOrNormalExpression_UnaryOperationParserRuleCall_0(parent, this, 0, inst);
+			case 1: return new UnaryOrNormalExpression_UnaryParanthesedOperationParserRuleCall_1(parent, this, 1, inst);
+			case 2: return new UnaryOrNormalExpression_ParanthesedBooleanExpressionParserRuleCall_2(parent, this, 2, inst);
+			default: return null;
+		}	
+	}	
+		
+	public IInstanceDescription tryConsume() {
+		if(!current.isInstanceOf(grammarAccess.getUnaryOrNormalExpressionRule().getType().getClassifier())) return null;
+		return tryConsumeVal();
+	}
+}
+
+// UnaryOperation
+protected class UnaryOrNormalExpression_UnaryOperationParserRuleCall_0 extends RuleCallToken {
+	
+	public UnaryOrNormalExpression_UnaryOperationParserRuleCall_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getUnaryOrNormalExpressionAccess().getUnaryOperationParserRuleCall_0();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new UnaryOperation_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
+		if(checkForRecursion(UnaryOperation_Group.class, current)) return null;
+		if(!current.isInstanceOf(grammarAccess.getUnaryOperationRule().getType().getClassifier())) return null;
+		return current;
+	}
+	
+	public AbstractToken createParentFollower(AbstractToken next,	int actIndex, int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+// UnaryParanthesedOperation
+protected class UnaryOrNormalExpression_UnaryParanthesedOperationParserRuleCall_1 extends RuleCallToken {
+	
+	public UnaryOrNormalExpression_UnaryParanthesedOperationParserRuleCall_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getUnaryOrNormalExpressionAccess().getUnaryParanthesedOperationParserRuleCall_1();
+	}
+
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new UnaryParanthesedOperation_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+	protected IInstanceDescription tryConsumeVal() {
+		if(checkForRecursion(UnaryParanthesedOperation_Group.class, current)) return null;
+		if(!current.isInstanceOf(grammarAccess.getUnaryParanthesedOperationRule().getType().getClassifier())) return null;
 		return current;
 	}
 	
@@ -3239,14 +3574,14 @@ protected class NotOrNormalExpression_NotOperationParserRuleCall_0 extends RuleC
 }
 
 // ParanthesedBooleanExpression
-protected class NotOrNormalExpression_ParanthesedBooleanExpressionParserRuleCall_1 extends RuleCallToken {
+protected class UnaryOrNormalExpression_ParanthesedBooleanExpressionParserRuleCall_2 extends RuleCallToken {
 	
-	public NotOrNormalExpression_ParanthesedBooleanExpressionParserRuleCall_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public UnaryOrNormalExpression_ParanthesedBooleanExpressionParserRuleCall_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getNotOrNormalExpressionAccess().getParanthesedBooleanExpressionParserRuleCall_1();
+		return grammarAccess.getUnaryOrNormalExpressionAccess().getParanthesedBooleanExpressionParserRuleCall_2();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -3270,14 +3605,14 @@ protected class NotOrNormalExpression_ParanthesedBooleanExpressionParserRuleCall
 }
 
 
-/************ end Rule NotOrNormalExpression ****************/
+/************ end Rule UnaryOrNormalExpression ****************/
 
 
 /************ begin Rule AndOperation ****************
  *
  * AndOperation returns synccharts::Expression:
- *   NotOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current}
- *   operator=OperatorAnd subExpressions+=NotOrNormalExpression)*; 
+ *   UnaryOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current}
+ *   operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*; 
  * 
  * // Example: A and B, not C and 42 <= ?D
  *     
@@ -3287,8 +3622,8 @@ protected class NotOrNormalExpression_ParanthesedBooleanExpressionParserRuleCall
  *
  **/
 
-// NotOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current}
-// operator=OperatorAnd subExpressions+=NotOrNormalExpression)*
+// UnaryOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current}
+// operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*
 protected class AndOperation_Group extends GroupToken {
 	
 	public AndOperation_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3302,7 +3637,7 @@ protected class AndOperation_Group extends GroupToken {
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new AndOperation_Group_1(parent, this, 0, inst);
-			case 1: return new AndOperation_NotOrNormalExpressionParserRuleCall_0(parent, this, 1, inst);
+			case 1: return new AndOperation_UnaryOrNormalExpressionParserRuleCall_0(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -3313,27 +3648,27 @@ protected class AndOperation_Group extends GroupToken {
 	}
 }
 
-// NotOrNormalExpression
-protected class AndOperation_NotOrNormalExpressionParserRuleCall_0 extends RuleCallToken {
+// UnaryOrNormalExpression
+protected class AndOperation_UnaryOrNormalExpressionParserRuleCall_0 extends RuleCallToken {
 	
-	public AndOperation_NotOrNormalExpressionParserRuleCall_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public AndOperation_UnaryOrNormalExpressionParserRuleCall_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getAndOperationAccess().getNotOrNormalExpressionParserRuleCall_0();
+		return grammarAccess.getAndOperationAccess().getUnaryOrNormalExpressionParserRuleCall_0();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new NotOrNormalExpression_Alternatives(this, this, 0, inst);
+			case 0: return new UnaryOrNormalExpression_Alternatives(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
 		
 	protected IInstanceDescription tryConsumeVal() {
-		if(checkForRecursion(NotOrNormalExpression_Alternatives.class, current)) return null;
-		if(!current.isInstanceOf(grammarAccess.getNotOrNormalExpressionRule().getType().getClassifier())) return null;
+		if(checkForRecursion(UnaryOrNormalExpression_Alternatives.class, current)) return null;
+		if(!current.isInstanceOf(grammarAccess.getUnaryOrNormalExpressionRule().getType().getClassifier())) return null;
 		return current;
 	}
 	
@@ -3345,7 +3680,7 @@ protected class AndOperation_NotOrNormalExpressionParserRuleCall_0 extends RuleC
 }
 
 // ({synccharts::ComplexExpression.subExpressions+=current} operator=OperatorAnd
-// subExpressions+=NotOrNormalExpression)*
+// subExpressions+=UnaryOrNormalExpression)*
 protected class AndOperation_Group_1 extends GroupToken {
 	
 	public AndOperation_Group_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3379,7 +3714,7 @@ protected class AndOperation_ComplexExpressionSubExpressionsAction_1_0 extends A
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new AndOperation_Group_1(parent, this, 0, inst);
-			case 1: return new AndOperation_NotOrNormalExpressionParserRuleCall_0(parent, this, 1, inst);
+			case 1: return new AndOperation_UnaryOrNormalExpressionParserRuleCall_0(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -3425,7 +3760,7 @@ protected class AndOperation_OperatorAssignment_1_1 extends AssignmentToken  {
 
 }
 
-// subExpressions+=NotOrNormalExpression
+// subExpressions+=UnaryOrNormalExpression
 protected class AndOperation_SubExpressionsAssignment_1_2 extends AssignmentToken  {
 	
 	public AndOperation_SubExpressionsAssignment_1_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -3438,7 +3773,7 @@ protected class AndOperation_SubExpressionsAssignment_1_2 extends AssignmentToke
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new NotOrNormalExpression_Alternatives(this, this, 0, inst);
+			case 0: return new UnaryOrNormalExpression_Alternatives(this, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -3448,9 +3783,9 @@ protected class AndOperation_SubExpressionsAssignment_1_2 extends AssignmentToke
 		IInstanceDescription obj = current.cloneAndConsume("subExpressions");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IInstanceDescription param = getDescr((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getNotOrNormalExpressionRule().getType().getClassifier())) {
+			if(param.isInstanceOf(grammarAccess.getUnaryOrNormalExpressionRule().getType().getClassifier())) {
 				type = AssignmentType.PRC;
-				element = grammarAccess.getAndOperationAccess().getSubExpressionsNotOrNormalExpressionParserRuleCall_1_2_0(); 
+				element = grammarAccess.getAndOperationAccess().getSubExpressionsUnaryOrNormalExpressionParserRuleCall_1_2_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -3483,6 +3818,7 @@ protected class AndOperation_SubExpressionsAssignment_1_2 extends AssignmentToke
  * 	      
  * 
  * // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+ * // note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
  *
  **/
 
@@ -3677,6 +4013,7 @@ protected class OrOperation_SubExpressionsAssignment_1_2 extends AssignmentToken
  *   BooleanValue|CompareOperation|SignalReference|HostCode|"(" OrOperation ")"; 
  * 
  * // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+ * // note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
  *     
  *                       
  * 
@@ -3687,6 +4024,7 @@ protected class OrOperation_SubExpressionsAssignment_1_2 extends AssignmentToken
 // BooleanValue|CompareOperation|SignalReference|HostCode|"(" OrOperation ")" 
 // 
 // // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+// // note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
 //     
 //                       
 // 

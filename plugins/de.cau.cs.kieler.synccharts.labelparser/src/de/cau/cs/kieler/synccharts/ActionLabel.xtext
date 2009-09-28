@@ -46,6 +46,10 @@ Variable returns synccharts::Variable:
 // Values
 //==============================================================================
 
+// redefine INT terminal to allow negative numbers
+terminal INT returns ecore::EInt:
+ '-'?('0'..'9')+;
+
 IntValue returns synccharts::IntValue: 
 	value=INT;
 FloatValue returns synccharts::FloatValue:
@@ -55,8 +59,8 @@ BooleanValue returns synccharts::BooleanValue :
 Value returns synccharts::Value:
 	IntValue | FloatValue | BooleanValue;
 
-// make sure the Float rule does not shadow the built-in INT rule
-terminal Float returns ecore::EFloatObject : ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
+// make sure the Float rule does not shadow the INT rule
+terminal Float returns ecore::EFloatObject : ((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
 terminal Boolean returns ecore::EBooleanObject : "true" | "false";
 
 //==============================================================================
@@ -73,14 +77,14 @@ ValueExpression returns synccharts::Expression:
 
 // Example: 42, 42.2, ?A, var1, (1+2*3)
 ParanthesedValueExpression returns synccharts::Expression:
-    IntValue | FloatValue | ValOperation | VariableReference | HostCode | '('PlusOperation')';
+    IntValue | FloatValue | ValOperation | VariableReference | HostCode | '('PlusOperation')' | '('DivOperation')';
 
 // Example: 1 + 2, varA - ?B
 PlusOperation returns synccharts::Expression:
 	MultOrDivOperation ({synccharts::ComplexExpression.subExpressions+=current} operator=PlusOperator subExpressions+=MultOrDivOperation)*;
 
 MultOrDivOperation returns synccharts::Expression:
-	MultOperation | DivOperation;
+	MultOperation | '('DivOperation')';
 
 // Example: 2 * 4, varA mod ?B
 MultOperation returns synccharts::Expression:
@@ -89,11 +93,11 @@ MultOperation returns synccharts::Expression:
 // Example: (2 / 4)
 // note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
 DivOperation returns synccharts::Expression:
-	'('PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)*')';
+	PreOrNormalValueExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)*;
 
-// Example: pre (?A + varB)
+// Example: pre (? A)
 PreArithmOperation returns synccharts::ComplexExpression:
-	operator=OperatorPre subExpressions+=ParanthesedValueExpression;
+	operator=UnaryParanthesedOperator '('subExpressions+=ValOperation')';
 	
 PreOrNormalValueExpression returns synccharts::Expression:
 	PreArithmOperation | ParanthesedValueExpression;
@@ -108,16 +112,19 @@ CompareOperation returns synccharts::Expression:
 
 // Example: not A, not false, not (A or B)
 // at the latter we need the parans to indicate the right binding
-NotOperation returns synccharts::ComplexExpression:
-	operator=NotOperator subExpressions+=ParanthesedBooleanExpression;
+UnaryOperation returns synccharts::ComplexExpression:
+	operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression;
+
+UnaryParanthesedOperation returns synccharts::ComplexExpression:
+    operator=UnaryParanthesedOperator '('subExpressions+=BooleanExpression ')';
 
 // Example: either negated or normal expression (with parantheses) 
-NotOrNormalExpression returns synccharts::Expression:
-	NotOperation | ParanthesedBooleanExpression;
+UnaryOrNormalExpression returns synccharts::Expression:
+	UnaryOperation | UnaryParanthesedOperation | ParanthesedBooleanExpression;
 
 // Example: A and B, not C and 42 <= ?D
 AndOperation returns synccharts::Expression:
-	NotOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=OperatorAnd subExpressions+=NotOrNormalExpression)*;
+	UnaryOrNormalExpression ({synccharts::ComplexExpression.subExpressions+=current} operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*;
 
 // Example: A or B, C and B or D and not E 
 OrOperation returns synccharts::Expression:
@@ -144,9 +151,14 @@ enum ValOperator returns synccharts::OperatorType:
 
 enum CompareOperator returns synccharts::OperatorType:
 	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
-	
-enum NotOperator returns synccharts::OperatorType:
+
+// not A	
+enum UnaryOperator returns synccharts::OperatorType:
 	NOT="not";
+
+// pre(A)
+enum UnaryParanthesedOperator returns synccharts::OperatorType:
+	PRE="pre";
 
 enum OperatorOr returns synccharts::OperatorType:
 	OR="or";

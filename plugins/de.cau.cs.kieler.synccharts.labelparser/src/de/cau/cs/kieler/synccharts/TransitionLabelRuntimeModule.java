@@ -3,9 +3,11 @@
  */
 package de.cau.cs.kieler.synccharts;
 
+import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 
 import de.cau.cs.kieler.synccharts.formatting.TransitionLabelTransientValueService;
+import de.cau.cs.kieler.synccharts.formatting.TransitionLabelValueConverter;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -18,6 +20,14 @@ public class TransitionLabelRuntimeModule extends de.cau.cs.kieler.synccharts.Ab
     @Override
     public Class<? extends ITransientValueService> bindITransientValueService() {
         return TransitionLabelTransientValueService.class; 
+    }
+    
+    /* (non-Javadoc)
+     * @see org.eclipse.xtext.service.DefaultRuntimeModule#bindIValueConverterService()
+     */
+    @Override
+    public Class<? extends IValueConverterService> bindIValueConverterService() {
+        return TransitionLabelValueConverter.class;
     }
     
     

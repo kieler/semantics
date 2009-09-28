@@ -140,10 +140,12 @@ public class ActionLabelSerializer {
                     sb.append(")");
             }
             else{
-                if(isSubExpression && (subExpressions.get(0) instanceof ComplexExpression))
+                if((isSubExpression && (subExpressions.get(0) instanceof ComplexExpression))
+                        || ((ComplexExpression)expression).getOperator().equals(OperatorType.PRE))
                     sb.append("(");
                 sb.append(toString((Expression)subExpressions.get(0), true));
-                if(isSubExpression && (subExpressions.get(0) instanceof ComplexExpression))
+                if((isSubExpression && (subExpressions.get(0) instanceof ComplexExpression))
+                        || ((ComplexExpression)expression).getOperator().equals(OperatorType.PRE))
                     sb.append(")");
             }
         }

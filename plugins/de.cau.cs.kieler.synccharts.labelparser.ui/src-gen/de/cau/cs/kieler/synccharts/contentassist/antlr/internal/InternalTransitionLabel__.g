@@ -9,9 +9,9 @@ import org.eclipse.xtext.ui.common.editor.contentassist.antlr.internal.Lexer;
 
 T13 : '?' ;
 T14 : 'not' ;
-T15 : 'or' ;
-T16 : 'and' ;
-T17 : 'pre' ;
+T15 : 'pre' ;
+T16 : 'or' ;
+T17 : 'and' ;
 T18 : '/' ;
 T19 : '=' ;
 T20 : '<' ;
@@ -28,31 +28,31 @@ T30 : ')' ;
 T31 : ':=' ;
 T32 : '#' ;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3197
-RULE_FLOAT : ((RULE_INT '.' RULE_INT|RULE_INT ('.' RULE_INT)? ('e'|'E') ('-'|'+')? RULE_INT) 'f'?|RULE_INT 'f');
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3477
+RULE_INT : '-'? ('0'..'9')+;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3199
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3479
+RULE_FLOAT : ((RULE_INT '.' RULE_INT|RULE_INT ('.' RULE_INT)? ('e'|'E') '+'? RULE_INT) 'f'?|RULE_INT 'f');
+
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3481
 RULE_BOOLEAN : ('true'|'false');
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3201
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3483
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3203
-RULE_INT : ('0'..'9')+;
-
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3205
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3485
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3207
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3487
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3209
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3489
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3211
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3491
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3213
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/contentassist/antlr/internal/InternalTransitionLabel.g" 3493
 RULE_ANY_OTHER : .;
 
 

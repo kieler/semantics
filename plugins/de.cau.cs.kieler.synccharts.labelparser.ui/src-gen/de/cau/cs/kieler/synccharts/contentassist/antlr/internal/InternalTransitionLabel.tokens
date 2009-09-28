@@ -7,9 +7,9 @@ RULE_BOOLEAN=7
 RULE_ANY_OTHER=12
 RULE_FLOAT=6
 RULE_SL_COMMENT=10
-'and'=16
+'and'=17
 '<'=20
-'pre'=17
+'pre'=15
 '>'=22
 ')'=30
 'mod'=27
@@ -24,6 +24,6 @@ RULE_SL_COMMENT=10
 '*'=26
 '<='=21
 '='=19
-'or'=15
+'or'=16
 '+'=24
 '/'=18

@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.HashMap;
 public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_ID", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'#'", "'/'", "','", "'('", "')'", "':='", "'?'", "'='", "'<'", "'<='", "'>'", "'>='", "'not'", "'or'", "'and'", "'pre'", "'+'", "'-'", "'*'", "'mod'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_ID", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'#'", "'/'", "','", "'('", "')'", "':='", "'?'", "'='", "'<'", "'<='", "'>'", "'>='", "'not'", "'pre'", "'or'", "'and'", "'+'", "'-'", "'*'", "'mod'"
     };
     public static final int RULE_ML_COMMENT=9;
     public static final int RULE_ID=5;
@@ -40,7 +40,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
         public InternalTransitionLabelParser(TokenStream input) {
             super(input);
-            ruleMemo = new HashMap[96+1];
+            ruleMemo = new HashMap[100+1];
          }
         
 
@@ -176,7 +176,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             if ( (LA2_0==RULE_INT) ) {
                 int LA2_1 = input.LA(2);
 
-                if ( (LA2_1==EOF||(LA2_1>=RULE_INT && LA2_1<=RULE_STRING)||LA2_1==14||LA2_1==16||LA2_1==19||LA2_1==25||LA2_1==28) ) {
+                if ( (LA2_1==EOF||(LA2_1>=RULE_INT && LA2_1<=RULE_STRING)||LA2_1==14||LA2_1==16||LA2_1==19||(LA2_1>=25 && LA2_1<=26)) ) {
                     alt2=1;
                 }
             }
@@ -215,7 +215,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             int alt3=2;
             int LA3_0 = input.LA(1);
 
-            if ( ((LA3_0>=RULE_INT && LA3_0<=RULE_STRING)||LA3_0==16||LA3_0==19||LA3_0==25||LA3_0==28) ) {
+            if ( ((LA3_0>=RULE_INT && LA3_0<=RULE_STRING)||LA3_0==16||LA3_0==19||(LA3_0>=25 && LA3_0<=26)) ) {
                 alt3=1;
             }
             switch (alt3) {
@@ -867,7 +867,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:366:1: ( (lv_expression_2= ruleValueExpression ) | (lv_expression_3= ruleBooleanExpression ) )
             int alt9=2;
             switch ( input.LA(1) ) {
-            case 28:
+            case 26:
                 {
                 int LA9_1 = input.LA(2);
 
@@ -1867,7 +1867,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleParanthesedValueExpression
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:720:1: ruleParanthesedValueExpression returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:720:1: ruleParanthesedValueExpression returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) ) ;
     public final EObject ruleParanthesedValueExpression() throws RecognitionException {
         EObject current = null;
 
@@ -1883,15 +1883,17 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
         EObject this_PlusOperation_6 = null;
 
+        EObject this_DivOperation_9 = null;
+
 
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:725:6: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:725:6: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) )
-            int alt10=6;
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )
+            int alt10=7;
             switch ( input.LA(1) ) {
             case RULE_INT:
                 {
@@ -1920,13 +1922,432 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                 break;
             case 16:
                 {
-                alt10=6;
+                switch ( input.LA(2) ) {
+                case 26:
+                    {
+                    int LA10_7 = input.LA(3);
+
+                    if ( (LA10_7==16) ) {
+                        int LA10_14 = input.LA(4);
+
+                        if ( (LA10_14==19) ) {
+                            int LA10_20 = input.LA(5);
+
+                            if ( (LA10_20==RULE_ID) ) {
+                                int LA10_22 = input.LA(6);
+
+                                if ( (LA10_22==17) ) {
+                                    switch ( input.LA(7) ) {
+                                    case 14:
+                                        {
+                                        alt10=7;
+                                        }
+                                        break;
+                                    case 17:
+                                        {
+                                        int LA10_16 = input.LA(8);
+
+                                        if ( (synpred17()) ) {
+                                            alt10=6;
+                                        }
+                                        else if ( (true) ) {
+                                            alt10=7;
+                                        }
+                                        else {
+                                            if (backtracking>0) {failed=true; return current;}
+                                            NoViableAltException nvae =
+                                                new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 16, input);
+
+                                            throw nvae;
+                                        }
+                                        }
+                                        break;
+                                    case 29:
+                                    case 30:
+                                    case 31:
+                                    case 32:
+                                        {
+                                        alt10=6;
+                                        }
+                                        break;
+                                    default:
+                                        if (backtracking>0) {failed=true; return current;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 24, input);
+
+                                        throw nvae;
+                                    }
+
+                                }
+                                else {
+                                    if (backtracking>0) {failed=true; return current;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 22, input);
+
+                                    throw nvae;
+                                }
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 20, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 14, input);
+
+                            throw nvae;
+                        }
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 7, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
+                case RULE_INT:
+                    {
+                    switch ( input.LA(3) ) {
+                    case 14:
+                        {
+                        alt10=7;
+                        }
+                        break;
+                    case 17:
+                        {
+                        int LA10_16 = input.LA(4);
+
+                        if ( (synpred17()) ) {
+                            alt10=6;
+                        }
+                        else if ( (true) ) {
+                            alt10=7;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 16, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case 29:
+                    case 30:
+                    case 31:
+                    case 32:
+                        {
+                        alt10=6;
+                        }
+                        break;
+                    default:
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 8, input);
+
+                        throw nvae;
+                    }
+
+                    }
+                    break;
+                case RULE_FLOAT:
+                    {
+                    switch ( input.LA(3) ) {
+                    case 14:
+                        {
+                        alt10=7;
+                        }
+                        break;
+                    case 17:
+                        {
+                        int LA10_16 = input.LA(4);
+
+                        if ( (synpred17()) ) {
+                            alt10=6;
+                        }
+                        else if ( (true) ) {
+                            alt10=7;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 16, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case 29:
+                    case 30:
+                    case 31:
+                    case 32:
+                        {
+                        alt10=6;
+                        }
+                        break;
+                    default:
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 9, input);
+
+                        throw nvae;
+                    }
+
+                    }
+                    break;
+                case 19:
+                    {
+                    int LA10_10 = input.LA(3);
+
+                    if ( (LA10_10==RULE_ID) ) {
+                        switch ( input.LA(4) ) {
+                        case 29:
+                        case 30:
+                        case 31:
+                        case 32:
+                            {
+                            alt10=6;
+                            }
+                            break;
+                        case 17:
+                            {
+                            int LA10_16 = input.LA(5);
+
+                            if ( (synpred17()) ) {
+                                alt10=6;
+                            }
+                            else if ( (true) ) {
+                                alt10=7;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 16, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 14:
+                            {
+                            alt10=7;
+                            }
+                            break;
+                        default:
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 18, input);
+
+                            throw nvae;
+                        }
+
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 10, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
+                case RULE_ID:
+                    {
+                    switch ( input.LA(3) ) {
+                    case 14:
+                        {
+                        alt10=7;
+                        }
+                        break;
+                    case 17:
+                        {
+                        int LA10_16 = input.LA(4);
+
+                        if ( (synpred17()) ) {
+                            alt10=6;
+                        }
+                        else if ( (true) ) {
+                            alt10=7;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 16, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case 29:
+                    case 30:
+                    case 31:
+                    case 32:
+                        {
+                        alt10=6;
+                        }
+                        break;
+                    default:
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 11, input);
+
+                        throw nvae;
+                    }
+
+                    }
+                    break;
+                case RULE_STRING:
+                    {
+                    switch ( input.LA(3) ) {
+                    case 16:
+                        {
+                        int LA10_19 = input.LA(4);
+
+                        if ( (LA10_19==RULE_ID) ) {
+                            int LA10_21 = input.LA(5);
+
+                            if ( (LA10_21==17) ) {
+                                switch ( input.LA(6) ) {
+                                case 14:
+                                    {
+                                    alt10=7;
+                                    }
+                                    break;
+                                case 17:
+                                    {
+                                    int LA10_16 = input.LA(7);
+
+                                    if ( (synpred17()) ) {
+                                        alt10=6;
+                                    }
+                                    else if ( (true) ) {
+                                        alt10=7;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return current;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 16, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 29:
+                                case 30:
+                                case 31:
+                                case 32:
+                                    {
+                                    alt10=6;
+                                    }
+                                    break;
+                                default:
+                                    if (backtracking>0) {failed=true; return current;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 23, input);
+
+                                    throw nvae;
+                                }
+
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 21, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 19, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case 29:
+                    case 30:
+                    case 31:
+                    case 32:
+                        {
+                        alt10=6;
+                        }
+                        break;
+                    case 17:
+                        {
+                        int LA10_16 = input.LA(4);
+
+                        if ( (synpred17()) ) {
+                            alt10=6;
+                        }
+                        else if ( (true) ) {
+                            alt10=7;
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 16, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case 14:
+                        {
+                        alt10=7;
+                        }
+                        break;
+                    default:
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 12, input);
+
+                        throw nvae;
+                    }
+
+                    }
+                    break;
+                case 16:
+                    {
+                    int LA10_13 = input.LA(3);
+
+                    if ( (synpred17()) ) {
+                        alt10=6;
+                    }
+                    else if ( (true) ) {
+                        alt10=7;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 13, input);
+
+                        throw nvae;
+                    }
+                    }
+                    break;
+                default:
+                    if (backtracking>0) {failed=true; return current;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 6, input);
+
+                    throw nvae;
+                }
+
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) )", 10, 0, input);
+                    new NoViableAltException("726:1: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_ValOperation_2= ruleValOperation | this_VariableReference_3= ruleVariableReference | this_HostCode_4= ruleHostCode | ( '(' this_PlusOperation_6= rulePlusOperation ')' ) | ( '(' this_DivOperation_9= ruleDivOperation ')' ) )", 10, 0, input);
 
                 throw nvae;
             }
@@ -2076,6 +2497,45 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
                     }
                     break;
+                case 7 :
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:794:6: ( '(' this_DivOperation_9= ruleDivOperation ')' )
+                    {
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:794:6: ( '(' this_DivOperation_9= ruleDivOperation ')' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:794:7: '(' this_DivOperation_9= ruleDivOperation ')'
+                    {
+                    match(input,16,FOLLOW_16_in_ruleParanthesedValueExpression1798); if (failed) return current;
+                    if ( backtracking==0 ) {
+
+                              createLeafNode(grammarAccess.getParanthesedValueExpressionAccess().getLeftParenthesisKeyword_6_0(), null); 
+                          
+                    }
+                    if ( backtracking==0 ) {
+                       
+                              currentNode=createCompositeNode(grammarAccess.getParanthesedValueExpressionAccess().getDivOperationParserRuleCall_6_1(), currentNode); 
+                          
+                    }
+                    pushFollow(FOLLOW_ruleDivOperation_in_ruleParanthesedValueExpression1820);
+                    this_DivOperation_9=ruleDivOperation();
+                    _fsp--;
+                    if (failed) return current;
+                    if ( backtracking==0 ) {
+                       
+                              current = this_DivOperation_9; 
+                              currentNode = currentNode.getParent();
+                          
+                    }
+                    match(input,17,FOLLOW_17_in_ruleParanthesedValueExpression1828); if (failed) return current;
+                    if ( backtracking==0 ) {
+
+                              createLeafNode(grammarAccess.getParanthesedValueExpressionAccess().getRightParenthesisKeyword_6_2(), null); 
+                          
+                    }
+
+                    }
+
+
+                    }
+                    break;
 
             }
 
@@ -2101,7 +2561,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRulePlusOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:800:1: entryRulePlusOperation returns [EObject current=null] : iv_rulePlusOperation= rulePlusOperation EOF ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:818:1: entryRulePlusOperation returns [EObject current=null] : iv_rulePlusOperation= rulePlusOperation EOF ;
     public final EObject entryRulePlusOperation() throws RecognitionException {
         EObject current = null;
 
@@ -2109,20 +2569,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:800:55: (iv_rulePlusOperation= rulePlusOperation EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:801:2: iv_rulePlusOperation= rulePlusOperation EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:818:55: (iv_rulePlusOperation= rulePlusOperation EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:819:2: iv_rulePlusOperation= rulePlusOperation EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getPlusOperationRule(), currentNode); 
             }
-            pushFollow(FOLLOW_rulePlusOperation_in_entryRulePlusOperation1815);
+            pushFollow(FOLLOW_rulePlusOperation_in_entryRulePlusOperation1862);
             iv_rulePlusOperation=rulePlusOperation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_rulePlusOperation; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRulePlusOperation1825); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRulePlusOperation1872); if (failed) return current;
 
             }
 
@@ -2140,7 +2600,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start rulePlusOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:808:1: rulePlusOperation returns [EObject current=null] : (this_MultOrDivOperation_0= ruleMultOrDivOperation ( () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation ) )* ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:826:1: rulePlusOperation returns [EObject current=null] : (this_MultOrDivOperation_0= ruleMultOrDivOperation ( () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation ) )* ) ;
     public final EObject rulePlusOperation() throws RecognitionException {
         EObject current = null;
 
@@ -2154,18 +2614,18 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:813:6: ( (this_MultOrDivOperation_0= ruleMultOrDivOperation ( () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation ) )* ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:814:1: (this_MultOrDivOperation_0= ruleMultOrDivOperation ( () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation ) )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:831:6: ( (this_MultOrDivOperation_0= ruleMultOrDivOperation ( () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation ) )* ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:832:1: (this_MultOrDivOperation_0= ruleMultOrDivOperation ( () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation ) )* )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:814:1: (this_MultOrDivOperation_0= ruleMultOrDivOperation ( () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation ) )* )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:815:5: this_MultOrDivOperation_0= ruleMultOrDivOperation ( () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation ) )*
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:832:1: (this_MultOrDivOperation_0= ruleMultOrDivOperation ( () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation ) )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:833:5: this_MultOrDivOperation_0= ruleMultOrDivOperation ( () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation ) )*
             {
             if ( backtracking==0 ) {
                
                       currentNode=createCompositeNode(grammarAccess.getPlusOperationAccess().getMultOrDivOperationParserRuleCall_0(), currentNode); 
                   
             }
-            pushFollow(FOLLOW_ruleMultOrDivOperation_in_rulePlusOperation1872);
+            pushFollow(FOLLOW_ruleMultOrDivOperation_in_rulePlusOperation1919);
             this_MultOrDivOperation_0=ruleMultOrDivOperation();
             _fsp--;
             if (failed) return current;
@@ -2175,7 +2635,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                       currentNode = currentNode.getParent();
                   
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:823:1: ( () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation ) )*
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:841:1: ( () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation ) )*
             loop11:
             do {
                 int alt11=2;
@@ -2188,10 +2648,10 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
                 switch (alt11) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:823:2: () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:841:2: () (lv_operator_2= rulePlusOperator ) (lv_subExpressions_3= ruleMultOrDivOperation )
             	    {
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:823:2: ()
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:824:5: 
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:841:2: ()
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:842:5: 
             	    {
             	    if ( backtracking==0 ) {
             	       
@@ -2213,15 +2673,15 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:839:2: (lv_operator_2= rulePlusOperator )
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:842:6: lv_operator_2= rulePlusOperator
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:857:2: (lv_operator_2= rulePlusOperator )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:860:6: lv_operator_2= rulePlusOperator
             	    {
             	    if ( backtracking==0 ) {
             	       
             	      	        currentNode=createCompositeNode(grammarAccess.getPlusOperationAccess().getOperatorPlusOperatorEnumRuleCall_1_1_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_rulePlusOperator_in_rulePlusOperation1915);
+            	    pushFollow(FOLLOW_rulePlusOperator_in_rulePlusOperation1962);
             	    lv_operator_2=rulePlusOperator();
             	    _fsp--;
             	    if (failed) return current;
@@ -2243,15 +2703,15 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:860:2: (lv_subExpressions_3= ruleMultOrDivOperation )
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:863:6: lv_subExpressions_3= ruleMultOrDivOperation
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:878:2: (lv_subExpressions_3= ruleMultOrDivOperation )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:881:6: lv_subExpressions_3= ruleMultOrDivOperation
             	    {
             	    if ( backtracking==0 ) {
             	       
             	      	        currentNode=createCompositeNode(grammarAccess.getPlusOperationAccess().getSubExpressionsMultOrDivOperationParserRuleCall_1_2_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleMultOrDivOperation_in_rulePlusOperation1953);
+            	    pushFollow(FOLLOW_ruleMultOrDivOperation_in_rulePlusOperation2000);
             	    lv_subExpressions_3=ruleMultOrDivOperation();
             	    _fsp--;
             	    if (failed) return current;
@@ -2307,7 +2767,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleMultOrDivOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:888:1: entryRuleMultOrDivOperation returns [EObject current=null] : iv_ruleMultOrDivOperation= ruleMultOrDivOperation EOF ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:906:1: entryRuleMultOrDivOperation returns [EObject current=null] : iv_ruleMultOrDivOperation= ruleMultOrDivOperation EOF ;
     public final EObject entryRuleMultOrDivOperation() throws RecognitionException {
         EObject current = null;
 
@@ -2315,20 +2775,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:888:60: (iv_ruleMultOrDivOperation= ruleMultOrDivOperation EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:889:2: iv_ruleMultOrDivOperation= ruleMultOrDivOperation EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:906:60: (iv_ruleMultOrDivOperation= ruleMultOrDivOperation EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:907:2: iv_ruleMultOrDivOperation= ruleMultOrDivOperation EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getMultOrDivOperationRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleMultOrDivOperation_in_entryRuleMultOrDivOperation1992);
+            pushFollow(FOLLOW_ruleMultOrDivOperation_in_entryRuleMultOrDivOperation2039);
             iv_ruleMultOrDivOperation=ruleMultOrDivOperation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleMultOrDivOperation; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleMultOrDivOperation2002); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleMultOrDivOperation2049); if (failed) return current;
 
             }
 
@@ -2346,713 +2806,62 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleMultOrDivOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:896:1: ruleMultOrDivOperation returns [EObject current=null] : (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:914:1: ruleMultOrDivOperation returns [EObject current=null] : (this_MultOperation_0= ruleMultOperation | ( '(' this_DivOperation_2= ruleDivOperation ')' ) ) ;
     public final EObject ruleMultOrDivOperation() throws RecognitionException {
         EObject current = null;
 
         EObject this_MultOperation_0 = null;
 
-        EObject this_DivOperation_1 = null;
+        EObject this_DivOperation_2 = null;
 
 
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:901:6: ( (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:919:6: ( (this_MultOperation_0= ruleMultOperation | ( '(' this_DivOperation_2= ruleDivOperation ')' ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:920:1: (this_MultOperation_0= ruleMultOperation | ( '(' this_DivOperation_2= ruleDivOperation ')' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:920:1: (this_MultOperation_0= ruleMultOperation | ( '(' this_DivOperation_2= ruleDivOperation ')' ) )
             int alt12=2;
             int LA12_0 = input.LA(1);
 
-            if ( ((LA12_0>=RULE_INT && LA12_0<=RULE_FLOAT)||LA12_0==RULE_STRING||LA12_0==19||LA12_0==28) ) {
+            if ( ((LA12_0>=RULE_INT && LA12_0<=RULE_FLOAT)||LA12_0==RULE_STRING||LA12_0==19||LA12_0==26) ) {
                 alt12=1;
             }
             else if ( (LA12_0==16) ) {
-                switch ( input.LA(2) ) {
-                case 28:
-                    {
-                    switch ( input.LA(3) ) {
-                    case RULE_INT:
-                        {
-                        switch ( input.LA(4) ) {
-                        case 29:
-                        case 30:
-                        case 31:
-                        case 32:
-                            {
-                            alt12=1;
-                            }
-                            break;
-                        case 17:
-                            {
-                            int LA12_16 = input.LA(5);
-
-                            if ( (synpred18()) ) {
-                                alt12=1;
-                            }
-                            else if ( (true) ) {
-                                alt12=2;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 16, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 14:
-                            {
-                            alt12=2;
-                            }
-                            break;
-                        default:
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 10, input);
-
-                            throw nvae;
-                        }
-
-                        }
-                        break;
-                    case RULE_FLOAT:
-                        {
-                        switch ( input.LA(4) ) {
-                        case 14:
-                            {
-                            alt12=2;
-                            }
-                            break;
-                        case 17:
-                            {
-                            int LA12_16 = input.LA(5);
-
-                            if ( (synpred18()) ) {
-                                alt12=1;
-                            }
-                            else if ( (true) ) {
-                                alt12=2;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 16, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 29:
-                        case 30:
-                        case 31:
-                        case 32:
-                            {
-                            alt12=1;
-                            }
-                            break;
-                        default:
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 11, input);
-
-                            throw nvae;
-                        }
-
-                        }
-                        break;
-                    case 19:
-                        {
-                        int LA12_12 = input.LA(4);
-
-                        if ( (LA12_12==RULE_ID) ) {
-                            switch ( input.LA(5) ) {
-                            case 14:
-                                {
-                                alt12=2;
-                                }
-                                break;
-                            case 17:
-                                {
-                                int LA12_16 = input.LA(6);
-
-                                if ( (synpred18()) ) {
-                                    alt12=1;
-                                }
-                                else if ( (true) ) {
-                                    alt12=2;
-                                }
-                                else {
-                                    if (backtracking>0) {failed=true; return current;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 16, input);
-
-                                    throw nvae;
-                                }
-                                }
-                                break;
-                            case 29:
-                            case 30:
-                            case 31:
-                            case 32:
-                                {
-                                alt12=1;
-                                }
-                                break;
-                            default:
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 20, input);
-
-                                throw nvae;
-                            }
-
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 12, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case RULE_ID:
-                        {
-                        switch ( input.LA(4) ) {
-                        case 14:
-                            {
-                            alt12=2;
-                            }
-                            break;
-                        case 17:
-                            {
-                            int LA12_16 = input.LA(5);
-
-                            if ( (synpred18()) ) {
-                                alt12=1;
-                            }
-                            else if ( (true) ) {
-                                alt12=2;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 16, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 29:
-                        case 30:
-                        case 31:
-                        case 32:
-                            {
-                            alt12=1;
-                            }
-                            break;
-                        default:
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 13, input);
-
-                            throw nvae;
-                        }
-
-                        }
-                        break;
-                    case RULE_STRING:
-                        {
-                        switch ( input.LA(4) ) {
-                        case 16:
-                            {
-                            int LA12_21 = input.LA(5);
-
-                            if ( (LA12_21==RULE_ID) ) {
-                                int LA12_23 = input.LA(6);
-
-                                if ( (LA12_23==17) ) {
-                                    switch ( input.LA(7) ) {
-                                    case 29:
-                                    case 30:
-                                    case 31:
-                                    case 32:
-                                        {
-                                        alt12=1;
-                                        }
-                                        break;
-                                    case 17:
-                                        {
-                                        int LA12_16 = input.LA(8);
-
-                                        if ( (synpred18()) ) {
-                                            alt12=1;
-                                        }
-                                        else if ( (true) ) {
-                                            alt12=2;
-                                        }
-                                        else {
-                                            if (backtracking>0) {failed=true; return current;}
-                                            NoViableAltException nvae =
-                                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 16, input);
-
-                                            throw nvae;
-                                        }
-                                        }
-                                        break;
-                                    case 14:
-                                        {
-                                        alt12=2;
-                                        }
-                                        break;
-                                    default:
-                                        if (backtracking>0) {failed=true; return current;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 25, input);
-
-                                        throw nvae;
-                                    }
-
-                                }
-                                else {
-                                    if (backtracking>0) {failed=true; return current;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 23, input);
-
-                                    throw nvae;
-                                }
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 21, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 14:
-                            {
-                            alt12=2;
-                            }
-                            break;
-                        case 17:
-                            {
-                            int LA12_16 = input.LA(5);
-
-                            if ( (synpred18()) ) {
-                                alt12=1;
-                            }
-                            else if ( (true) ) {
-                                alt12=2;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 16, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 29:
-                        case 30:
-                        case 31:
-                        case 32:
-                            {
-                            alt12=1;
-                            }
-                            break;
-                        default:
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 14, input);
-
-                            throw nvae;
-                        }
-
-                        }
-                        break;
-                    case 16:
-                        {
-                        int LA12_15 = input.LA(4);
-
-                        if ( (synpred18()) ) {
-                            alt12=1;
-                        }
-                        else if ( (true) ) {
-                            alt12=2;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 15, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    default:
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 3, input);
-
-                        throw nvae;
-                    }
-
-                    }
-                    break;
-                case RULE_INT:
-                    {
-                    switch ( input.LA(3) ) {
-                    case 29:
-                    case 30:
-                    case 31:
-                    case 32:
-                        {
-                        alt12=1;
-                        }
-                        break;
-                    case 17:
-                        {
-                        int LA12_16 = input.LA(4);
-
-                        if ( (synpred18()) ) {
-                            alt12=1;
-                        }
-                        else if ( (true) ) {
-                            alt12=2;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 16, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case 14:
-                        {
-                        alt12=2;
-                        }
-                        break;
-                    default:
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 4, input);
-
-                        throw nvae;
-                    }
-
-                    }
-                    break;
-                case RULE_FLOAT:
-                    {
-                    switch ( input.LA(3) ) {
-                    case 29:
-                    case 30:
-                    case 31:
-                    case 32:
-                        {
-                        alt12=1;
-                        }
-                        break;
-                    case 17:
-                        {
-                        int LA12_16 = input.LA(4);
-
-                        if ( (synpred18()) ) {
-                            alt12=1;
-                        }
-                        else if ( (true) ) {
-                            alt12=2;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 16, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case 14:
-                        {
-                        alt12=2;
-                        }
-                        break;
-                    default:
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 5, input);
-
-                        throw nvae;
-                    }
-
-                    }
-                    break;
-                case 19:
-                    {
-                    int LA12_6 = input.LA(3);
-
-                    if ( (LA12_6==RULE_ID) ) {
-                        switch ( input.LA(4) ) {
-                        case 29:
-                        case 30:
-                        case 31:
-                        case 32:
-                            {
-                            alt12=1;
-                            }
-                            break;
-                        case 17:
-                            {
-                            int LA12_16 = input.LA(5);
-
-                            if ( (synpred18()) ) {
-                                alt12=1;
-                            }
-                            else if ( (true) ) {
-                                alt12=2;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 16, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 14:
-                            {
-                            alt12=2;
-                            }
-                            break;
-                        default:
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 18, input);
-
-                            throw nvae;
-                        }
-
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 6, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
-                case RULE_ID:
-                    {
-                    switch ( input.LA(3) ) {
-                    case 29:
-                    case 30:
-                    case 31:
-                    case 32:
-                        {
-                        alt12=1;
-                        }
-                        break;
-                    case 17:
-                        {
-                        int LA12_16 = input.LA(4);
-
-                        if ( (synpred18()) ) {
-                            alt12=1;
-                        }
-                        else if ( (true) ) {
-                            alt12=2;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 16, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case 14:
-                        {
-                        alt12=2;
-                        }
-                        break;
-                    default:
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 7, input);
-
-                        throw nvae;
-                    }
-
-                    }
-                    break;
-                case RULE_STRING:
-                    {
-                    switch ( input.LA(3) ) {
-                    case 16:
-                        {
-                        int LA12_19 = input.LA(4);
-
-                        if ( (LA12_19==RULE_ID) ) {
-                            int LA12_22 = input.LA(5);
-
-                            if ( (LA12_22==17) ) {
-                                switch ( input.LA(6) ) {
-                                case 14:
-                                    {
-                                    alt12=2;
-                                    }
-                                    break;
-                                case 17:
-                                    {
-                                    int LA12_16 = input.LA(7);
-
-                                    if ( (synpred18()) ) {
-                                        alt12=1;
-                                    }
-                                    else if ( (true) ) {
-                                        alt12=2;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return current;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 16, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case 29:
-                                case 30:
-                                case 31:
-                                case 32:
-                                    {
-                                    alt12=1;
-                                    }
-                                    break;
-                                default:
-                                    if (backtracking>0) {failed=true; return current;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 24, input);
-
-                                    throw nvae;
-                                }
-
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 22, input);
-
-                                throw nvae;
-                            }
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 19, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case 29:
-                    case 30:
-                    case 31:
-                    case 32:
-                        {
-                        alt12=1;
-                        }
-                        break;
-                    case 17:
-                        {
-                        int LA12_16 = input.LA(4);
-
-                        if ( (synpred18()) ) {
-                            alt12=1;
-                        }
-                        else if ( (true) ) {
-                            alt12=2;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 16, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case 14:
-                        {
-                        alt12=2;
-                        }
-                        break;
-                    default:
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 8, input);
-
-                        throw nvae;
-                    }
-
-                    }
-                    break;
-                case 16:
-                    {
-                    int LA12_9 = input.LA(3);
-
-                    if ( (synpred18()) ) {
-                        alt12=1;
-                    }
-                    else if ( (true) ) {
-                        alt12=2;
-                    }
-                    else {
-                        if (backtracking>0) {failed=true; return current;}
-                        NoViableAltException nvae =
-                            new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 9, input);
-
-                        throw nvae;
-                    }
-                    }
-                    break;
-                default:
+                int LA12_7 = input.LA(2);
+
+                if ( (synpred19()) ) {
+                    alt12=1;
+                }
+                else if ( (true) ) {
+                    alt12=2;
+                }
+                else {
                     if (backtracking>0) {failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 2, input);
+                        new NoViableAltException("920:1: (this_MultOperation_0= ruleMultOperation | ( '(' this_DivOperation_2= ruleDivOperation ')' ) )", 12, 7, input);
 
                     throw nvae;
                 }
-
             }
             else {
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("902:1: (this_MultOperation_0= ruleMultOperation | this_DivOperation_1= ruleDivOperation )", 12, 0, input);
+                    new NoViableAltException("920:1: (this_MultOperation_0= ruleMultOperation | ( '(' this_DivOperation_2= ruleDivOperation ')' ) )", 12, 0, input);
 
                 throw nvae;
             }
             switch (alt12) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:903:5: this_MultOperation_0= ruleMultOperation
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:921:5: this_MultOperation_0= ruleMultOperation
                     {
                     if ( backtracking==0 ) {
                        
                               currentNode=createCompositeNode(grammarAccess.getMultOrDivOperationAccess().getMultOperationParserRuleCall_0(), currentNode); 
                           
                     }
-                    pushFollow(FOLLOW_ruleMultOperation_in_ruleMultOrDivOperation2049);
+                    pushFollow(FOLLOW_ruleMultOperation_in_ruleMultOrDivOperation2096);
                     this_MultOperation_0=ruleMultOperation();
                     _fsp--;
                     if (failed) return current;
@@ -3066,23 +2875,41 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:913:5: this_DivOperation_1= ruleDivOperation
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:930:6: ( '(' this_DivOperation_2= ruleDivOperation ')' )
                     {
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:930:6: ( '(' this_DivOperation_2= ruleDivOperation ')' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:930:7: '(' this_DivOperation_2= ruleDivOperation ')'
+                    {
+                    match(input,16,FOLLOW_16_in_ruleMultOrDivOperation2111); if (failed) return current;
                     if ( backtracking==0 ) {
-                       
-                              currentNode=createCompositeNode(grammarAccess.getMultOrDivOperationAccess().getDivOperationParserRuleCall_1(), currentNode); 
+
+                              createLeafNode(grammarAccess.getMultOrDivOperationAccess().getLeftParenthesisKeyword_1_0(), null); 
                           
                     }
-                    pushFollow(FOLLOW_ruleDivOperation_in_ruleMultOrDivOperation2076);
-                    this_DivOperation_1=ruleDivOperation();
+                    if ( backtracking==0 ) {
+                       
+                              currentNode=createCompositeNode(grammarAccess.getMultOrDivOperationAccess().getDivOperationParserRuleCall_1_1(), currentNode); 
+                          
+                    }
+                    pushFollow(FOLLOW_ruleDivOperation_in_ruleMultOrDivOperation2133);
+                    this_DivOperation_2=ruleDivOperation();
                     _fsp--;
                     if (failed) return current;
                     if ( backtracking==0 ) {
                        
-                              current = this_DivOperation_1; 
+                              current = this_DivOperation_2; 
                               currentNode = currentNode.getParent();
                           
                     }
+                    match(input,17,FOLLOW_17_in_ruleMultOrDivOperation2141); if (failed) return current;
+                    if ( backtracking==0 ) {
+
+                              createLeafNode(grammarAccess.getMultOrDivOperationAccess().getRightParenthesisKeyword_1_2(), null); 
+                          
+                    }
+
+                    }
+
 
                     }
                     break;
@@ -3111,7 +2938,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleMultOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:928:1: entryRuleMultOperation returns [EObject current=null] : iv_ruleMultOperation= ruleMultOperation EOF ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:954:1: entryRuleMultOperation returns [EObject current=null] : iv_ruleMultOperation= ruleMultOperation EOF ;
     public final EObject entryRuleMultOperation() throws RecognitionException {
         EObject current = null;
 
@@ -3119,20 +2946,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:928:55: (iv_ruleMultOperation= ruleMultOperation EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:929:2: iv_ruleMultOperation= ruleMultOperation EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:954:55: (iv_ruleMultOperation= ruleMultOperation EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:955:2: iv_ruleMultOperation= ruleMultOperation EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getMultOperationRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleMultOperation_in_entryRuleMultOperation2108);
+            pushFollow(FOLLOW_ruleMultOperation_in_entryRuleMultOperation2175);
             iv_ruleMultOperation=ruleMultOperation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleMultOperation; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleMultOperation2118); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleMultOperation2185); if (failed) return current;
 
             }
 
@@ -3150,7 +2977,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleMultOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:936:1: ruleMultOperation returns [EObject current=null] : (this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )* ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:962:1: ruleMultOperation returns [EObject current=null] : (this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )* ) ;
     public final EObject ruleMultOperation() throws RecognitionException {
         EObject current = null;
 
@@ -3164,18 +2991,18 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:941:6: ( (this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )* ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:942:1: (this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:967:6: ( (this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )* ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:968:1: (this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )* )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:942:1: (this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )* )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:943:5: this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )*
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:968:1: (this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:969:5: this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )*
             {
             if ( backtracking==0 ) {
                
                       currentNode=createCompositeNode(grammarAccess.getMultOperationAccess().getPreOrNormalValueExpressionParserRuleCall_0(), currentNode); 
                   
             }
-            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_ruleMultOperation2165);
+            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_ruleMultOperation2232);
             this_PreOrNormalValueExpression_0=rulePreOrNormalValueExpression();
             _fsp--;
             if (failed) return current;
@@ -3185,7 +3012,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                       currentNode = currentNode.getParent();
                   
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:951:1: ( () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )*
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:977:1: ( () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )*
             loop13:
             do {
                 int alt13=2;
@@ -3198,10 +3025,10 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
                 switch (alt13) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:951:2: () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:977:2: () (lv_operator_2= ruleMultOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression )
             	    {
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:951:2: ()
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:952:5: 
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:977:2: ()
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:978:5: 
             	    {
             	    if ( backtracking==0 ) {
             	       
@@ -3223,15 +3050,15 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:967:2: (lv_operator_2= ruleMultOperator )
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:970:6: lv_operator_2= ruleMultOperator
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:993:2: (lv_operator_2= ruleMultOperator )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:996:6: lv_operator_2= ruleMultOperator
             	    {
             	    if ( backtracking==0 ) {
             	       
             	      	        currentNode=createCompositeNode(grammarAccess.getMultOperationAccess().getOperatorMultOperatorEnumRuleCall_1_1_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleMultOperator_in_ruleMultOperation2208);
+            	    pushFollow(FOLLOW_ruleMultOperator_in_ruleMultOperation2275);
             	    lv_operator_2=ruleMultOperator();
             	    _fsp--;
             	    if (failed) return current;
@@ -3253,15 +3080,15 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:988:2: (lv_subExpressions_3= rulePreOrNormalValueExpression )
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:991:6: lv_subExpressions_3= rulePreOrNormalValueExpression
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1014:2: (lv_subExpressions_3= rulePreOrNormalValueExpression )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1017:6: lv_subExpressions_3= rulePreOrNormalValueExpression
             	    {
             	    if ( backtracking==0 ) {
             	       
             	      	        currentNode=createCompositeNode(grammarAccess.getMultOperationAccess().getSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_ruleMultOperation2246);
+            	    pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_ruleMultOperation2313);
             	    lv_subExpressions_3=rulePreOrNormalValueExpression();
             	    _fsp--;
             	    if (failed) return current;
@@ -3317,7 +3144,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDivOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1016:1: entryRuleDivOperation returns [EObject current=null] : iv_ruleDivOperation= ruleDivOperation EOF ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1042:1: entryRuleDivOperation returns [EObject current=null] : iv_ruleDivOperation= ruleDivOperation EOF ;
     public final EObject entryRuleDivOperation() throws RecognitionException {
         EObject current = null;
 
@@ -3325,20 +3152,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1016:54: (iv_ruleDivOperation= ruleDivOperation EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1017:2: iv_ruleDivOperation= ruleDivOperation EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1042:54: (iv_ruleDivOperation= ruleDivOperation EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1043:2: iv_ruleDivOperation= ruleDivOperation EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getDivOperationRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleDivOperation_in_entryRuleDivOperation2285);
+            pushFollow(FOLLOW_ruleDivOperation_in_entryRuleDivOperation2352);
             iv_ruleDivOperation=ruleDivOperation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleDivOperation; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDivOperation2295); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDivOperation2362); if (failed) return current;
 
             }
 
@@ -3356,48 +3183,42 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDivOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1024:1: ruleDivOperation returns [EObject current=null] : ( '(' this_PreOrNormalValueExpression_1= rulePreOrNormalValueExpression ( () (lv_operator_3= ruleDivOperator ) (lv_subExpressions_4= rulePreOrNormalValueExpression ) )* ')' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1050:1: ruleDivOperation returns [EObject current=null] : (this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleDivOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )* ) ;
     public final EObject ruleDivOperation() throws RecognitionException {
         EObject current = null;
 
-        EObject this_PreOrNormalValueExpression_1 = null;
+        EObject this_PreOrNormalValueExpression_0 = null;
 
-        Enumerator lv_operator_3 = null;
+        Enumerator lv_operator_2 = null;
 
-        EObject lv_subExpressions_4 = null;
+        EObject lv_subExpressions_3 = null;
 
 
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1029:6: ( ( '(' this_PreOrNormalValueExpression_1= rulePreOrNormalValueExpression ( () (lv_operator_3= ruleDivOperator ) (lv_subExpressions_4= rulePreOrNormalValueExpression ) )* ')' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1030:1: ( '(' this_PreOrNormalValueExpression_1= rulePreOrNormalValueExpression ( () (lv_operator_3= ruleDivOperator ) (lv_subExpressions_4= rulePreOrNormalValueExpression ) )* ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1055:6: ( (this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleDivOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )* ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1056:1: (this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleDivOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )* )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1030:1: ( '(' this_PreOrNormalValueExpression_1= rulePreOrNormalValueExpression ( () (lv_operator_3= ruleDivOperator ) (lv_subExpressions_4= rulePreOrNormalValueExpression ) )* ')' )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1030:2: '(' this_PreOrNormalValueExpression_1= rulePreOrNormalValueExpression ( () (lv_operator_3= ruleDivOperator ) (lv_subExpressions_4= rulePreOrNormalValueExpression ) )* ')'
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1056:1: (this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleDivOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1057:5: this_PreOrNormalValueExpression_0= rulePreOrNormalValueExpression ( () (lv_operator_2= ruleDivOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )*
             {
-            match(input,16,FOLLOW_16_in_ruleDivOperation2329); if (failed) return current;
-            if ( backtracking==0 ) {
-
-                      createLeafNode(grammarAccess.getDivOperationAccess().getLeftParenthesisKeyword_0(), null); 
-                  
-            }
             if ( backtracking==0 ) {
                
-                      currentNode=createCompositeNode(grammarAccess.getDivOperationAccess().getPreOrNormalValueExpressionParserRuleCall_1(), currentNode); 
+                      currentNode=createCompositeNode(grammarAccess.getDivOperationAccess().getPreOrNormalValueExpressionParserRuleCall_0(), currentNode); 
                   
             }
-            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_ruleDivOperation2351);
-            this_PreOrNormalValueExpression_1=rulePreOrNormalValueExpression();
+            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_ruleDivOperation2409);
+            this_PreOrNormalValueExpression_0=rulePreOrNormalValueExpression();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                
-                      current = this_PreOrNormalValueExpression_1; 
+                      current = this_PreOrNormalValueExpression_0; 
                       currentNode = currentNode.getParent();
                   
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1043:1: ( () (lv_operator_3= ruleDivOperator ) (lv_subExpressions_4= rulePreOrNormalValueExpression ) )*
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1065:1: ( () (lv_operator_2= ruleDivOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression ) )*
             loop14:
             do {
                 int alt14=2;
@@ -3410,14 +3231,14 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
                 switch (alt14) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1043:2: () (lv_operator_3= ruleDivOperator ) (lv_subExpressions_4= rulePreOrNormalValueExpression )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1065:2: () (lv_operator_2= ruleDivOperator ) (lv_subExpressions_3= rulePreOrNormalValueExpression )
             	    {
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1043:2: ()
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1044:5: 
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1065:2: ()
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1066:5: 
             	    {
             	    if ( backtracking==0 ) {
             	       
-            	              temp=factory.create(grammarAccess.getDivOperationAccess().getComplexExpressionSubExpressionsAction_2_0().getType().getClassifier());
+            	              temp=factory.create(grammarAccess.getDivOperationAccess().getComplexExpressionSubExpressionsAction_1_0().getType().getClassifier());
             	              try {
             	              	factory.add(temp, "subExpressions", current, null /*ParserRule*/, currentNode);
             	              } catch(ValueConverterException vce) {
@@ -3425,7 +3246,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             	              }
             	              current = temp; 
             	              temp = null;
-            	              CompositeNode newNode = createCompositeNode(grammarAccess.getDivOperationAccess().getComplexExpressionSubExpressionsAction_2_0(), currentNode.getParent());
+            	              CompositeNode newNode = createCompositeNode(grammarAccess.getDivOperationAccess().getComplexExpressionSubExpressionsAction_1_0(), currentNode.getParent());
             	          newNode.getChildren().add(currentNode);
             	          moveLookaheadInfo(currentNode, newNode);
             	          currentNode = newNode; 
@@ -3435,16 +3256,16 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1059:2: (lv_operator_3= ruleDivOperator )
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1062:6: lv_operator_3= ruleDivOperator
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1081:2: (lv_operator_2= ruleDivOperator )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1084:6: lv_operator_2= ruleDivOperator
             	    {
             	    if ( backtracking==0 ) {
             	       
-            	      	        currentNode=createCompositeNode(grammarAccess.getDivOperationAccess().getOperatorDivOperatorEnumRuleCall_2_1_0(), currentNode); 
+            	      	        currentNode=createCompositeNode(grammarAccess.getDivOperationAccess().getOperatorDivOperatorEnumRuleCall_1_1_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleDivOperator_in_ruleDivOperation2394);
-            	    lv_operator_3=ruleDivOperator();
+            	    pushFollow(FOLLOW_ruleDivOperator_in_ruleDivOperation2452);
+            	    lv_operator_2=ruleDivOperator();
             	    _fsp--;
             	    if (failed) return current;
             	    if ( backtracking==0 ) {
@@ -3455,7 +3276,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             	      	        }
             	      	        
             	      	        try {
-            	      	       		set(current, "operator", lv_operator_3, "DivOperator", lastConsumedNode);
+            	      	       		set(current, "operator", lv_operator_2, "DivOperator", lastConsumedNode);
             	      	        } catch (ValueConverterException vce) {
             	      				handleValueConverterException(vce);
             	      	        }
@@ -3465,16 +3286,16 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1080:2: (lv_subExpressions_4= rulePreOrNormalValueExpression )
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1083:6: lv_subExpressions_4= rulePreOrNormalValueExpression
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1102:2: (lv_subExpressions_3= rulePreOrNormalValueExpression )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1105:6: lv_subExpressions_3= rulePreOrNormalValueExpression
             	    {
             	    if ( backtracking==0 ) {
             	       
-            	      	        currentNode=createCompositeNode(grammarAccess.getDivOperationAccess().getSubExpressionsPreOrNormalValueExpressionParserRuleCall_2_2_0(), currentNode); 
+            	      	        currentNode=createCompositeNode(grammarAccess.getDivOperationAccess().getSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_ruleDivOperation2432);
-            	    lv_subExpressions_4=rulePreOrNormalValueExpression();
+            	    pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_ruleDivOperation2490);
+            	    lv_subExpressions_3=rulePreOrNormalValueExpression();
             	    _fsp--;
             	    if (failed) return current;
             	    if ( backtracking==0 ) {
@@ -3485,7 +3306,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             	      	        }
             	      	        
             	      	        try {
-            	      	       		add(current, "subExpressions", lv_subExpressions_4, "PreOrNormalValueExpression", currentNode);
+            	      	       		add(current, "subExpressions", lv_subExpressions_3, "PreOrNormalValueExpression", currentNode);
             	      	        } catch (ValueConverterException vce) {
             	      				handleValueConverterException(vce);
             	      	        }
@@ -3504,12 +3325,6 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            match(input,17,FOLLOW_17_in_ruleDivOperation2447); if (failed) return current;
-            if ( backtracking==0 ) {
-
-                      createLeafNode(grammarAccess.getDivOperationAccess().getRightParenthesisKeyword_3(), null); 
-                  
-            }
 
             }
 
@@ -3535,7 +3350,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRulePreArithmOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1112:1: entryRulePreArithmOperation returns [EObject current=null] : iv_rulePreArithmOperation= rulePreArithmOperation EOF ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1130:1: entryRulePreArithmOperation returns [EObject current=null] : iv_rulePreArithmOperation= rulePreArithmOperation EOF ;
     public final EObject entryRulePreArithmOperation() throws RecognitionException {
         EObject current = null;
 
@@ -3543,20 +3358,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1112:60: (iv_rulePreArithmOperation= rulePreArithmOperation EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1113:2: iv_rulePreArithmOperation= rulePreArithmOperation EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1130:60: (iv_rulePreArithmOperation= rulePreArithmOperation EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1131:2: iv_rulePreArithmOperation= rulePreArithmOperation EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getPreArithmOperationRule(), currentNode); 
             }
-            pushFollow(FOLLOW_rulePreArithmOperation_in_entryRulePreArithmOperation2480);
+            pushFollow(FOLLOW_rulePreArithmOperation_in_entryRulePreArithmOperation2529);
             iv_rulePreArithmOperation=rulePreArithmOperation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_rulePreArithmOperation; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRulePreArithmOperation2490); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRulePreArithmOperation2539); if (failed) return current;
 
             }
 
@@ -3574,34 +3389,34 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start rulePreArithmOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1120:1: rulePreArithmOperation returns [EObject current=null] : ( (lv_operator_0= ruleOperatorPre ) (lv_subExpressions_1= ruleParanthesedValueExpression ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1138:1: rulePreArithmOperation returns [EObject current=null] : ( (lv_operator_0= ruleUnaryParanthesedOperator ) '(' (lv_subExpressions_2= ruleValOperation ) ')' ) ;
     public final EObject rulePreArithmOperation() throws RecognitionException {
         EObject current = null;
 
         Enumerator lv_operator_0 = null;
 
-        EObject lv_subExpressions_1 = null;
+        EObject lv_subExpressions_2 = null;
 
 
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1125:6: ( ( (lv_operator_0= ruleOperatorPre ) (lv_subExpressions_1= ruleParanthesedValueExpression ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1126:1: ( (lv_operator_0= ruleOperatorPre ) (lv_subExpressions_1= ruleParanthesedValueExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1143:6: ( ( (lv_operator_0= ruleUnaryParanthesedOperator ) '(' (lv_subExpressions_2= ruleValOperation ) ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1144:1: ( (lv_operator_0= ruleUnaryParanthesedOperator ) '(' (lv_subExpressions_2= ruleValOperation ) ')' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1126:1: ( (lv_operator_0= ruleOperatorPre ) (lv_subExpressions_1= ruleParanthesedValueExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1126:2: (lv_operator_0= ruleOperatorPre ) (lv_subExpressions_1= ruleParanthesedValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1144:1: ( (lv_operator_0= ruleUnaryParanthesedOperator ) '(' (lv_subExpressions_2= ruleValOperation ) ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1144:2: (lv_operator_0= ruleUnaryParanthesedOperator ) '(' (lv_subExpressions_2= ruleValOperation ) ')'
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1126:2: (lv_operator_0= ruleOperatorPre )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1129:6: lv_operator_0= ruleOperatorPre
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1144:2: (lv_operator_0= ruleUnaryParanthesedOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1147:6: lv_operator_0= ruleUnaryParanthesedOperator
             {
             if ( backtracking==0 ) {
                
-              	        currentNode=createCompositeNode(grammarAccess.getPreArithmOperationAccess().getOperatorOperatorPreEnumRuleCall_0_0(), currentNode); 
+              	        currentNode=createCompositeNode(grammarAccess.getPreArithmOperationAccess().getOperatorUnaryParanthesedOperatorEnumRuleCall_0_0(), currentNode); 
               	    
             }
-            pushFollow(FOLLOW_ruleOperatorPre_in_rulePreArithmOperation2549);
-            lv_operator_0=ruleOperatorPre();
+            pushFollow(FOLLOW_ruleUnaryParanthesedOperator_in_rulePreArithmOperation2598);
+            lv_operator_0=ruleUnaryParanthesedOperator();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
@@ -3612,7 +3427,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
               	        }
               	        
               	        try {
-              	       		set(current, "operator", lv_operator_0, "OperatorPre", lastConsumedNode);
+              	       		set(current, "operator", lv_operator_0, "UnaryParanthesedOperator", lastConsumedNode);
               	        } catch (ValueConverterException vce) {
               				handleValueConverterException(vce);
               	        }
@@ -3622,16 +3437,22 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1147:2: (lv_subExpressions_1= ruleParanthesedValueExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1150:6: lv_subExpressions_1= ruleParanthesedValueExpression
+            match(input,16,FOLLOW_16_in_rulePreArithmOperation2611); if (failed) return current;
+            if ( backtracking==0 ) {
+
+                      createLeafNode(grammarAccess.getPreArithmOperationAccess().getLeftParenthesisKeyword_1(), null); 
+                  
+            }
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1169:1: (lv_subExpressions_2= ruleValOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1172:6: lv_subExpressions_2= ruleValOperation
             {
             if ( backtracking==0 ) {
                
-              	        currentNode=createCompositeNode(grammarAccess.getPreArithmOperationAccess().getSubExpressionsParanthesedValueExpressionParserRuleCall_1_0(), currentNode); 
+              	        currentNode=createCompositeNode(grammarAccess.getPreArithmOperationAccess().getSubExpressionsValOperationParserRuleCall_2_0(), currentNode); 
               	    
             }
-            pushFollow(FOLLOW_ruleParanthesedValueExpression_in_rulePreArithmOperation2587);
-            lv_subExpressions_1=ruleParanthesedValueExpression();
+            pushFollow(FOLLOW_ruleValOperation_in_rulePreArithmOperation2645);
+            lv_subExpressions_2=ruleValOperation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
@@ -3642,7 +3463,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
               	        }
               	        
               	        try {
-              	       		add(current, "subExpressions", lv_subExpressions_1, "ParanthesedValueExpression", currentNode);
+              	       		add(current, "subExpressions", lv_subExpressions_2, "ValOperation", currentNode);
               	        } catch (ValueConverterException vce) {
               				handleValueConverterException(vce);
               	        }
@@ -3652,6 +3473,12 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             }
 
+            match(input,17,FOLLOW_17_in_rulePreArithmOperation2658); if (failed) return current;
+            if ( backtracking==0 ) {
+
+                      createLeafNode(grammarAccess.getPreArithmOperationAccess().getRightParenthesisKeyword_3(), null); 
+                  
+            }
 
             }
 
@@ -3677,7 +3504,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRulePreOrNormalValueExpression
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1175:1: entryRulePreOrNormalValueExpression returns [EObject current=null] : iv_rulePreOrNormalValueExpression= rulePreOrNormalValueExpression EOF ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1201:1: entryRulePreOrNormalValueExpression returns [EObject current=null] : iv_rulePreOrNormalValueExpression= rulePreOrNormalValueExpression EOF ;
     public final EObject entryRulePreOrNormalValueExpression() throws RecognitionException {
         EObject current = null;
 
@@ -3685,20 +3512,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1175:68: (iv_rulePreOrNormalValueExpression= rulePreOrNormalValueExpression EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1176:2: iv_rulePreOrNormalValueExpression= rulePreOrNormalValueExpression EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1201:68: (iv_rulePreOrNormalValueExpression= rulePreOrNormalValueExpression EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1202:2: iv_rulePreOrNormalValueExpression= rulePreOrNormalValueExpression EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getPreOrNormalValueExpressionRule(), currentNode); 
             }
-            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_entryRulePreOrNormalValueExpression2624);
+            pushFollow(FOLLOW_rulePreOrNormalValueExpression_in_entryRulePreOrNormalValueExpression2691);
             iv_rulePreOrNormalValueExpression=rulePreOrNormalValueExpression();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_rulePreOrNormalValueExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRulePreOrNormalValueExpression2634); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRulePreOrNormalValueExpression2701); if (failed) return current;
 
             }
 
@@ -3716,7 +3543,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start rulePreOrNormalValueExpression
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1183:1: rulePreOrNormalValueExpression returns [EObject current=null] : (this_PreArithmOperation_0= rulePreArithmOperation | this_ParanthesedValueExpression_1= ruleParanthesedValueExpression ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1209:1: rulePreOrNormalValueExpression returns [EObject current=null] : (this_PreArithmOperation_0= rulePreArithmOperation | this_ParanthesedValueExpression_1= ruleParanthesedValueExpression ) ;
     public final EObject rulePreOrNormalValueExpression() throws RecognitionException {
         EObject current = null;
 
@@ -3728,14 +3555,14 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1188:6: ( (this_PreArithmOperation_0= rulePreArithmOperation | this_ParanthesedValueExpression_1= ruleParanthesedValueExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1189:1: (this_PreArithmOperation_0= rulePreArithmOperation | this_ParanthesedValueExpression_1= ruleParanthesedValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1214:6: ( (this_PreArithmOperation_0= rulePreArithmOperation | this_ParanthesedValueExpression_1= ruleParanthesedValueExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1215:1: (this_PreArithmOperation_0= rulePreArithmOperation | this_ParanthesedValueExpression_1= ruleParanthesedValueExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1189:1: (this_PreArithmOperation_0= rulePreArithmOperation | this_ParanthesedValueExpression_1= ruleParanthesedValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1215:1: (this_PreArithmOperation_0= rulePreArithmOperation | this_ParanthesedValueExpression_1= ruleParanthesedValueExpression )
             int alt15=2;
             int LA15_0 = input.LA(1);
 
-            if ( (LA15_0==28) ) {
+            if ( (LA15_0==26) ) {
                 alt15=1;
             }
             else if ( ((LA15_0>=RULE_INT && LA15_0<=RULE_FLOAT)||LA15_0==RULE_STRING||LA15_0==16||LA15_0==19) ) {
@@ -3744,20 +3571,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             else {
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1189:1: (this_PreArithmOperation_0= rulePreArithmOperation | this_ParanthesedValueExpression_1= ruleParanthesedValueExpression )", 15, 0, input);
+                    new NoViableAltException("1215:1: (this_PreArithmOperation_0= rulePreArithmOperation | this_ParanthesedValueExpression_1= ruleParanthesedValueExpression )", 15, 0, input);
 
                 throw nvae;
             }
             switch (alt15) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1190:5: this_PreArithmOperation_0= rulePreArithmOperation
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1216:5: this_PreArithmOperation_0= rulePreArithmOperation
                     {
                     if ( backtracking==0 ) {
                        
                               currentNode=createCompositeNode(grammarAccess.getPreOrNormalValueExpressionAccess().getPreArithmOperationParserRuleCall_0(), currentNode); 
                           
                     }
-                    pushFollow(FOLLOW_rulePreArithmOperation_in_rulePreOrNormalValueExpression2681);
+                    pushFollow(FOLLOW_rulePreArithmOperation_in_rulePreOrNormalValueExpression2748);
                     this_PreArithmOperation_0=rulePreArithmOperation();
                     _fsp--;
                     if (failed) return current;
@@ -3771,14 +3598,14 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1200:5: this_ParanthesedValueExpression_1= ruleParanthesedValueExpression
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1226:5: this_ParanthesedValueExpression_1= ruleParanthesedValueExpression
                     {
                     if ( backtracking==0 ) {
                        
                               currentNode=createCompositeNode(grammarAccess.getPreOrNormalValueExpressionAccess().getParanthesedValueExpressionParserRuleCall_1(), currentNode); 
                           
                     }
-                    pushFollow(FOLLOW_ruleParanthesedValueExpression_in_rulePreOrNormalValueExpression2708);
+                    pushFollow(FOLLOW_ruleParanthesedValueExpression_in_rulePreOrNormalValueExpression2775);
                     this_ParanthesedValueExpression_1=ruleParanthesedValueExpression();
                     _fsp--;
                     if (failed) return current;
@@ -3816,7 +3643,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleCompareOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1215:1: entryRuleCompareOperation returns [EObject current=null] : iv_ruleCompareOperation= ruleCompareOperation EOF ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1241:1: entryRuleCompareOperation returns [EObject current=null] : iv_ruleCompareOperation= ruleCompareOperation EOF ;
     public final EObject entryRuleCompareOperation() throws RecognitionException {
         EObject current = null;
 
@@ -3824,20 +3651,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1215:58: (iv_ruleCompareOperation= ruleCompareOperation EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1216:2: iv_ruleCompareOperation= ruleCompareOperation EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1241:58: (iv_ruleCompareOperation= ruleCompareOperation EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1242:2: iv_ruleCompareOperation= ruleCompareOperation EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getCompareOperationRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleCompareOperation_in_entryRuleCompareOperation2740);
+            pushFollow(FOLLOW_ruleCompareOperation_in_entryRuleCompareOperation2807);
             iv_ruleCompareOperation=ruleCompareOperation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleCompareOperation; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleCompareOperation2750); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleCompareOperation2817); if (failed) return current;
 
             }
 
@@ -3855,7 +3682,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleCompareOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1223:1: ruleCompareOperation returns [EObject current=null] : (this_ValueExpression_0= ruleValueExpression ( () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression ) ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1249:1: ruleCompareOperation returns [EObject current=null] : (this_ValueExpression_0= ruleValueExpression ( () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression ) ) ) ;
     public final EObject ruleCompareOperation() throws RecognitionException {
         EObject current = null;
 
@@ -3869,18 +3696,18 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1228:6: ( (this_ValueExpression_0= ruleValueExpression ( () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression ) ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1229:1: (this_ValueExpression_0= ruleValueExpression ( () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1254:6: ( (this_ValueExpression_0= ruleValueExpression ( () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression ) ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1255:1: (this_ValueExpression_0= ruleValueExpression ( () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression ) ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1229:1: (this_ValueExpression_0= ruleValueExpression ( () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1230:5: this_ValueExpression_0= ruleValueExpression ( () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1255:1: (this_ValueExpression_0= ruleValueExpression ( () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1256:5: this_ValueExpression_0= ruleValueExpression ( () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression ) )
             {
             if ( backtracking==0 ) {
                
                       currentNode=createCompositeNode(grammarAccess.getCompareOperationAccess().getValueExpressionParserRuleCall_0(), currentNode); 
                   
             }
-            pushFollow(FOLLOW_ruleValueExpression_in_ruleCompareOperation2797);
+            pushFollow(FOLLOW_ruleValueExpression_in_ruleCompareOperation2864);
             this_ValueExpression_0=ruleValueExpression();
             _fsp--;
             if (failed) return current;
@@ -3890,11 +3717,11 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                       currentNode = currentNode.getParent();
                   
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1238:1: ( () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1238:2: () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1264:1: ( () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1264:2: () (lv_operator_2= ruleCompareOperator ) (lv_subExpressions_3= ruleValueExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1238:2: ()
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1239:5: 
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1264:2: ()
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1265:5: 
             {
             if ( backtracking==0 ) {
                
@@ -3916,15 +3743,15 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1254:2: (lv_operator_2= ruleCompareOperator )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1257:6: lv_operator_2= ruleCompareOperator
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1280:2: (lv_operator_2= ruleCompareOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1283:6: lv_operator_2= ruleCompareOperator
             {
             if ( backtracking==0 ) {
                
               	        currentNode=createCompositeNode(grammarAccess.getCompareOperationAccess().getOperatorCompareOperatorEnumRuleCall_1_1_0(), currentNode); 
               	    
             }
-            pushFollow(FOLLOW_ruleCompareOperator_in_ruleCompareOperation2840);
+            pushFollow(FOLLOW_ruleCompareOperator_in_ruleCompareOperation2907);
             lv_operator_2=ruleCompareOperator();
             _fsp--;
             if (failed) return current;
@@ -3946,15 +3773,15 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1275:2: (lv_subExpressions_3= ruleValueExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1278:6: lv_subExpressions_3= ruleValueExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1301:2: (lv_subExpressions_3= ruleValueExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1304:6: lv_subExpressions_3= ruleValueExpression
             {
             if ( backtracking==0 ) {
                
               	        currentNode=createCompositeNode(grammarAccess.getCompareOperationAccess().getSubExpressionsValueExpressionParserRuleCall_1_2_0(), currentNode); 
               	    
             }
-            pushFollow(FOLLOW_ruleValueExpression_in_ruleCompareOperation2878);
+            pushFollow(FOLLOW_ruleValueExpression_in_ruleCompareOperation2945);
             lv_subExpressions_3=ruleValueExpression();
             _fsp--;
             if (failed) return current;
@@ -4003,29 +3830,29 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
     // $ANTLR end ruleCompareOperation
 
 
-    // $ANTLR start entryRuleNotOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1303:1: entryRuleNotOperation returns [EObject current=null] : iv_ruleNotOperation= ruleNotOperation EOF ;
-    public final EObject entryRuleNotOperation() throws RecognitionException {
+    // $ANTLR start entryRuleUnaryOperation
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1329:1: entryRuleUnaryOperation returns [EObject current=null] : iv_ruleUnaryOperation= ruleUnaryOperation EOF ;
+    public final EObject entryRuleUnaryOperation() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleNotOperation = null;
+        EObject iv_ruleUnaryOperation = null;
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1303:54: (iv_ruleNotOperation= ruleNotOperation EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1304:2: iv_ruleNotOperation= ruleNotOperation EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1329:56: (iv_ruleUnaryOperation= ruleUnaryOperation EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1330:2: iv_ruleUnaryOperation= ruleUnaryOperation EOF
             {
             if ( backtracking==0 ) {
-               currentNode = createCompositeNode(grammarAccess.getNotOperationRule(), currentNode); 
+               currentNode = createCompositeNode(grammarAccess.getUnaryOperationRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleNotOperation_in_entryRuleNotOperation2916);
-            iv_ruleNotOperation=ruleNotOperation();
+            pushFollow(FOLLOW_ruleUnaryOperation_in_entryRuleUnaryOperation2983);
+            iv_ruleUnaryOperation=ruleUnaryOperation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
-               current =iv_ruleNotOperation; 
+               current =iv_ruleUnaryOperation; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleNotOperation2926); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleUnaryOperation2993); if (failed) return current;
 
             }
 
@@ -4039,12 +3866,12 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end entryRuleNotOperation
+    // $ANTLR end entryRuleUnaryOperation
 
 
-    // $ANTLR start ruleNotOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1311:1: ruleNotOperation returns [EObject current=null] : ( (lv_operator_0= ruleNotOperator ) (lv_subExpressions_1= ruleParanthesedBooleanExpression ) ) ;
-    public final EObject ruleNotOperation() throws RecognitionException {
+    // $ANTLR start ruleUnaryOperation
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1337:1: ruleUnaryOperation returns [EObject current=null] : ( (lv_operator_0= ruleUnaryOperator ) (lv_subExpressions_1= ruleParanthesedBooleanExpression ) ) ;
+    public final EObject ruleUnaryOperation() throws RecognitionException {
         EObject current = null;
 
         Enumerator lv_operator_0 = null;
@@ -4055,33 +3882,33 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1316:6: ( ( (lv_operator_0= ruleNotOperator ) (lv_subExpressions_1= ruleParanthesedBooleanExpression ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1317:1: ( (lv_operator_0= ruleNotOperator ) (lv_subExpressions_1= ruleParanthesedBooleanExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1342:6: ( ( (lv_operator_0= ruleUnaryOperator ) (lv_subExpressions_1= ruleParanthesedBooleanExpression ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1343:1: ( (lv_operator_0= ruleUnaryOperator ) (lv_subExpressions_1= ruleParanthesedBooleanExpression ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1317:1: ( (lv_operator_0= ruleNotOperator ) (lv_subExpressions_1= ruleParanthesedBooleanExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1317:2: (lv_operator_0= ruleNotOperator ) (lv_subExpressions_1= ruleParanthesedBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1343:1: ( (lv_operator_0= ruleUnaryOperator ) (lv_subExpressions_1= ruleParanthesedBooleanExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1343:2: (lv_operator_0= ruleUnaryOperator ) (lv_subExpressions_1= ruleParanthesedBooleanExpression )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1317:2: (lv_operator_0= ruleNotOperator )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1320:6: lv_operator_0= ruleNotOperator
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1343:2: (lv_operator_0= ruleUnaryOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1346:6: lv_operator_0= ruleUnaryOperator
             {
             if ( backtracking==0 ) {
                
-              	        currentNode=createCompositeNode(grammarAccess.getNotOperationAccess().getOperatorNotOperatorEnumRuleCall_0_0(), currentNode); 
+              	        currentNode=createCompositeNode(grammarAccess.getUnaryOperationAccess().getOperatorUnaryOperatorEnumRuleCall_0_0(), currentNode); 
               	    
             }
-            pushFollow(FOLLOW_ruleNotOperator_in_ruleNotOperation2985);
-            lv_operator_0=ruleNotOperator();
+            pushFollow(FOLLOW_ruleUnaryOperator_in_ruleUnaryOperation3052);
+            lv_operator_0=ruleUnaryOperator();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = factory.create(grammarAccess.getNotOperationRule().getType().getClassifier());
+              	            current = factory.create(grammarAccess.getUnaryOperationRule().getType().getClassifier());
               	            associateNodeWithAstElement(currentNode.getParent(), current);
               	        }
               	        
               	        try {
-              	       		set(current, "operator", lv_operator_0, "NotOperator", lastConsumedNode);
+              	       		set(current, "operator", lv_operator_0, "UnaryOperator", lastConsumedNode);
               	        } catch (ValueConverterException vce) {
               				handleValueConverterException(vce);
               	        }
@@ -4091,22 +3918,22 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1338:2: (lv_subExpressions_1= ruleParanthesedBooleanExpression )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1341:6: lv_subExpressions_1= ruleParanthesedBooleanExpression
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1364:2: (lv_subExpressions_1= ruleParanthesedBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1367:6: lv_subExpressions_1= ruleParanthesedBooleanExpression
             {
             if ( backtracking==0 ) {
                
-              	        currentNode=createCompositeNode(grammarAccess.getNotOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0(), currentNode); 
+              	        currentNode=createCompositeNode(grammarAccess.getUnaryOperationAccess().getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0(), currentNode); 
               	    
             }
-            pushFollow(FOLLOW_ruleParanthesedBooleanExpression_in_ruleNotOperation3023);
+            pushFollow(FOLLOW_ruleParanthesedBooleanExpression_in_ruleUnaryOperation3090);
             lv_subExpressions_1=ruleParanthesedBooleanExpression();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = factory.create(grammarAccess.getNotOperationRule().getType().getClassifier());
+              	            current = factory.create(grammarAccess.getUnaryOperationRule().getType().getClassifier());
               	            associateNodeWithAstElement(currentNode.getParent(), current);
               	        }
               	        
@@ -4142,32 +3969,32 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end ruleNotOperation
+    // $ANTLR end ruleUnaryOperation
 
 
-    // $ANTLR start entryRuleNotOrNormalExpression
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1366:1: entryRuleNotOrNormalExpression returns [EObject current=null] : iv_ruleNotOrNormalExpression= ruleNotOrNormalExpression EOF ;
-    public final EObject entryRuleNotOrNormalExpression() throws RecognitionException {
+    // $ANTLR start entryRuleUnaryParanthesedOperation
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1392:1: entryRuleUnaryParanthesedOperation returns [EObject current=null] : iv_ruleUnaryParanthesedOperation= ruleUnaryParanthesedOperation EOF ;
+    public final EObject entryRuleUnaryParanthesedOperation() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleNotOrNormalExpression = null;
+        EObject iv_ruleUnaryParanthesedOperation = null;
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1366:63: (iv_ruleNotOrNormalExpression= ruleNotOrNormalExpression EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1367:2: iv_ruleNotOrNormalExpression= ruleNotOrNormalExpression EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1392:67: (iv_ruleUnaryParanthesedOperation= ruleUnaryParanthesedOperation EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1393:2: iv_ruleUnaryParanthesedOperation= ruleUnaryParanthesedOperation EOF
             {
             if ( backtracking==0 ) {
-               currentNode = createCompositeNode(grammarAccess.getNotOrNormalExpressionRule(), currentNode); 
+               currentNode = createCompositeNode(grammarAccess.getUnaryParanthesedOperationRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleNotOrNormalExpression_in_entryRuleNotOrNormalExpression3060);
-            iv_ruleNotOrNormalExpression=ruleNotOrNormalExpression();
+            pushFollow(FOLLOW_ruleUnaryParanthesedOperation_in_entryRuleUnaryParanthesedOperation3127);
+            iv_ruleUnaryParanthesedOperation=ruleUnaryParanthesedOperation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
-               current =iv_ruleNotOrNormalExpression; 
+               current =iv_ruleUnaryParanthesedOperation; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleNotOrNormalExpression3070); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleUnaryParanthesedOperation3137); if (failed) return current;
 
             }
 
@@ -4181,58 +4008,279 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end entryRuleNotOrNormalExpression
+    // $ANTLR end entryRuleUnaryParanthesedOperation
 
 
-    // $ANTLR start ruleNotOrNormalExpression
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1374:1: ruleNotOrNormalExpression returns [EObject current=null] : (this_NotOperation_0= ruleNotOperation | this_ParanthesedBooleanExpression_1= ruleParanthesedBooleanExpression ) ;
-    public final EObject ruleNotOrNormalExpression() throws RecognitionException {
+    // $ANTLR start ruleUnaryParanthesedOperation
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1400:1: ruleUnaryParanthesedOperation returns [EObject current=null] : ( (lv_operator_0= ruleUnaryParanthesedOperator ) '(' (lv_subExpressions_2= ruleBooleanExpression ) ')' ) ;
+    public final EObject ruleUnaryParanthesedOperation() throws RecognitionException {
         EObject current = null;
 
-        EObject this_NotOperation_0 = null;
+        Enumerator lv_operator_0 = null;
 
-        EObject this_ParanthesedBooleanExpression_1 = null;
+        EObject lv_subExpressions_2 = null;
 
 
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1379:6: ( (this_NotOperation_0= ruleNotOperation | this_ParanthesedBooleanExpression_1= ruleParanthesedBooleanExpression ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1380:1: (this_NotOperation_0= ruleNotOperation | this_ParanthesedBooleanExpression_1= ruleParanthesedBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1405:6: ( ( (lv_operator_0= ruleUnaryParanthesedOperator ) '(' (lv_subExpressions_2= ruleBooleanExpression ) ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1406:1: ( (lv_operator_0= ruleUnaryParanthesedOperator ) '(' (lv_subExpressions_2= ruleBooleanExpression ) ')' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1380:1: (this_NotOperation_0= ruleNotOperation | this_ParanthesedBooleanExpression_1= ruleParanthesedBooleanExpression )
-            int alt16=2;
-            int LA16_0 = input.LA(1);
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1406:1: ( (lv_operator_0= ruleUnaryParanthesedOperator ) '(' (lv_subExpressions_2= ruleBooleanExpression ) ')' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1406:2: (lv_operator_0= ruleUnaryParanthesedOperator ) '(' (lv_subExpressions_2= ruleBooleanExpression ) ')'
+            {
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1406:2: (lv_operator_0= ruleUnaryParanthesedOperator )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1409:6: lv_operator_0= ruleUnaryParanthesedOperator
+            {
+            if ( backtracking==0 ) {
+               
+              	        currentNode=createCompositeNode(grammarAccess.getUnaryParanthesedOperationAccess().getOperatorUnaryParanthesedOperatorEnumRuleCall_0_0(), currentNode); 
+              	    
+            }
+            pushFollow(FOLLOW_ruleUnaryParanthesedOperator_in_ruleUnaryParanthesedOperation3196);
+            lv_operator_0=ruleUnaryParanthesedOperator();
+            _fsp--;
+            if (failed) return current;
+            if ( backtracking==0 ) {
 
-            if ( (LA16_0==25) ) {
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getUnaryParanthesedOperationRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode.getParent(), current);
+              	        }
+              	        
+              	        try {
+              	       		set(current, "operator", lv_operator_0, "UnaryParanthesedOperator", lastConsumedNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	        currentNode = currentNode.getParent();
+              	    
+            }
+
+            }
+
+            match(input,16,FOLLOW_16_in_ruleUnaryParanthesedOperation3209); if (failed) return current;
+            if ( backtracking==0 ) {
+
+                      createLeafNode(grammarAccess.getUnaryParanthesedOperationAccess().getLeftParenthesisKeyword_1(), null); 
+                  
+            }
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1431:1: (lv_subExpressions_2= ruleBooleanExpression )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1434:6: lv_subExpressions_2= ruleBooleanExpression
+            {
+            if ( backtracking==0 ) {
+               
+              	        currentNode=createCompositeNode(grammarAccess.getUnaryParanthesedOperationAccess().getSubExpressionsBooleanExpressionParserRuleCall_2_0(), currentNode); 
+              	    
+            }
+            pushFollow(FOLLOW_ruleBooleanExpression_in_ruleUnaryParanthesedOperation3243);
+            lv_subExpressions_2=ruleBooleanExpression();
+            _fsp--;
+            if (failed) return current;
+            if ( backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getUnaryParanthesedOperationRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode.getParent(), current);
+              	        }
+              	        
+              	        try {
+              	       		add(current, "subExpressions", lv_subExpressions_2, "BooleanExpression", currentNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	        currentNode = currentNode.getParent();
+              	    
+            }
+
+            }
+
+            match(input,17,FOLLOW_17_in_ruleUnaryParanthesedOperation3256); if (failed) return current;
+            if ( backtracking==0 ) {
+
+                      createLeafNode(grammarAccess.getUnaryParanthesedOperationAccess().getRightParenthesisKeyword_3(), null); 
+                  
+            }
+
+            }
+
+
+            }
+
+            if ( backtracking==0 ) {
+               resetLookahead(); 
+                  	lastConsumedNode = currentNode;
+                  
+            }
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end ruleUnaryParanthesedOperation
+
+
+    // $ANTLR start entryRuleUnaryOrNormalExpression
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1463:1: entryRuleUnaryOrNormalExpression returns [EObject current=null] : iv_ruleUnaryOrNormalExpression= ruleUnaryOrNormalExpression EOF ;
+    public final EObject entryRuleUnaryOrNormalExpression() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleUnaryOrNormalExpression = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1463:65: (iv_ruleUnaryOrNormalExpression= ruleUnaryOrNormalExpression EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1464:2: iv_ruleUnaryOrNormalExpression= ruleUnaryOrNormalExpression EOF
+            {
+            if ( backtracking==0 ) {
+               currentNode = createCompositeNode(grammarAccess.getUnaryOrNormalExpressionRule(), currentNode); 
+            }
+            pushFollow(FOLLOW_ruleUnaryOrNormalExpression_in_entryRuleUnaryOrNormalExpression3289);
+            iv_ruleUnaryOrNormalExpression=ruleUnaryOrNormalExpression();
+            _fsp--;
+            if (failed) return current;
+            if ( backtracking==0 ) {
+               current =iv_ruleUnaryOrNormalExpression; 
+            }
+            match(input,EOF,FOLLOW_EOF_in_entryRuleUnaryOrNormalExpression3299); if (failed) return current;
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end entryRuleUnaryOrNormalExpression
+
+
+    // $ANTLR start ruleUnaryOrNormalExpression
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1471:1: ruleUnaryOrNormalExpression returns [EObject current=null] : (this_UnaryOperation_0= ruleUnaryOperation | this_UnaryParanthesedOperation_1= ruleUnaryParanthesedOperation | this_ParanthesedBooleanExpression_2= ruleParanthesedBooleanExpression ) ;
+    public final EObject ruleUnaryOrNormalExpression() throws RecognitionException {
+        EObject current = null;
+
+        EObject this_UnaryOperation_0 = null;
+
+        EObject this_UnaryParanthesedOperation_1 = null;
+
+        EObject this_ParanthesedBooleanExpression_2 = null;
+
+
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1476:6: ( (this_UnaryOperation_0= ruleUnaryOperation | this_UnaryParanthesedOperation_1= ruleUnaryParanthesedOperation | this_ParanthesedBooleanExpression_2= ruleParanthesedBooleanExpression ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1477:1: (this_UnaryOperation_0= ruleUnaryOperation | this_UnaryParanthesedOperation_1= ruleUnaryParanthesedOperation | this_ParanthesedBooleanExpression_2= ruleParanthesedBooleanExpression )
+            {
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1477:1: (this_UnaryOperation_0= ruleUnaryOperation | this_UnaryParanthesedOperation_1= ruleUnaryParanthesedOperation | this_ParanthesedBooleanExpression_2= ruleParanthesedBooleanExpression )
+            int alt16=3;
+            switch ( input.LA(1) ) {
+            case 25:
+                {
                 alt16=1;
-            }
-            else if ( ((LA16_0>=RULE_INT && LA16_0<=RULE_STRING)||LA16_0==16||LA16_0==19||LA16_0==28) ) {
-                alt16=2;
-            }
-            else {
+                }
+                break;
+            case 26:
+                {
+                int LA16_2 = input.LA(2);
+
+                if ( (LA16_2==16) ) {
+                    int LA16_4 = input.LA(3);
+
+                    if ( (LA16_4==19) ) {
+                        int LA16_5 = input.LA(4);
+
+                        if ( (LA16_5==RULE_ID) ) {
+                            int LA16_7 = input.LA(5);
+
+                            if ( ((LA16_7>=20 && LA16_7<=24)||(LA16_7>=29 && LA16_7<=32)) ) {
+                                alt16=2;
+                            }
+                            else if ( (LA16_7==17) ) {
+                                alt16=3;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("1477:1: (this_UnaryOperation_0= ruleUnaryOperation | this_UnaryParanthesedOperation_1= ruleUnaryParanthesedOperation | this_ParanthesedBooleanExpression_2= ruleParanthesedBooleanExpression )", 16, 7, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else {
+                            if (backtracking>0) {failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("1477:1: (this_UnaryOperation_0= ruleUnaryOperation | this_UnaryParanthesedOperation_1= ruleUnaryParanthesedOperation | this_ParanthesedBooleanExpression_2= ruleParanthesedBooleanExpression )", 16, 5, input);
+
+                            throw nvae;
+                        }
+                    }
+                    else if ( ((LA16_4>=RULE_INT && LA16_4<=RULE_STRING)||LA16_4==16||(LA16_4>=25 && LA16_4<=26)) ) {
+                        alt16=2;
+                    }
+                    else {
+                        if (backtracking>0) {failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("1477:1: (this_UnaryOperation_0= ruleUnaryOperation | this_UnaryParanthesedOperation_1= ruleUnaryParanthesedOperation | this_ParanthesedBooleanExpression_2= ruleParanthesedBooleanExpression )", 16, 4, input);
+
+                        throw nvae;
+                    }
+                }
+                else {
+                    if (backtracking>0) {failed=true; return current;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("1477:1: (this_UnaryOperation_0= ruleUnaryOperation | this_UnaryParanthesedOperation_1= ruleUnaryParanthesedOperation | this_ParanthesedBooleanExpression_2= ruleParanthesedBooleanExpression )", 16, 2, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case RULE_INT:
+            case RULE_ID:
+            case RULE_FLOAT:
+            case RULE_BOOLEAN:
+            case RULE_STRING:
+            case 16:
+            case 19:
+                {
+                alt16=3;
+                }
+                break;
+            default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1380:1: (this_NotOperation_0= ruleNotOperation | this_ParanthesedBooleanExpression_1= ruleParanthesedBooleanExpression )", 16, 0, input);
+                    new NoViableAltException("1477:1: (this_UnaryOperation_0= ruleUnaryOperation | this_UnaryParanthesedOperation_1= ruleUnaryParanthesedOperation | this_ParanthesedBooleanExpression_2= ruleParanthesedBooleanExpression )", 16, 0, input);
 
                 throw nvae;
             }
+
             switch (alt16) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1381:5: this_NotOperation_0= ruleNotOperation
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1478:5: this_UnaryOperation_0= ruleUnaryOperation
                     {
                     if ( backtracking==0 ) {
                        
-                              currentNode=createCompositeNode(grammarAccess.getNotOrNormalExpressionAccess().getNotOperationParserRuleCall_0(), currentNode); 
+                              currentNode=createCompositeNode(grammarAccess.getUnaryOrNormalExpressionAccess().getUnaryOperationParserRuleCall_0(), currentNode); 
                           
                     }
-                    pushFollow(FOLLOW_ruleNotOperation_in_ruleNotOrNormalExpression3117);
-                    this_NotOperation_0=ruleNotOperation();
+                    pushFollow(FOLLOW_ruleUnaryOperation_in_ruleUnaryOrNormalExpression3346);
+                    this_UnaryOperation_0=ruleUnaryOperation();
                     _fsp--;
                     if (failed) return current;
                     if ( backtracking==0 ) {
                        
-                              current = this_NotOperation_0; 
+                              current = this_UnaryOperation_0; 
                               currentNode = currentNode.getParent();
                           
                     }
@@ -4240,20 +4288,41 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1391:5: this_ParanthesedBooleanExpression_1= ruleParanthesedBooleanExpression
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1488:5: this_UnaryParanthesedOperation_1= ruleUnaryParanthesedOperation
                     {
                     if ( backtracking==0 ) {
                        
-                              currentNode=createCompositeNode(grammarAccess.getNotOrNormalExpressionAccess().getParanthesedBooleanExpressionParserRuleCall_1(), currentNode); 
+                              currentNode=createCompositeNode(grammarAccess.getUnaryOrNormalExpressionAccess().getUnaryParanthesedOperationParserRuleCall_1(), currentNode); 
                           
                     }
-                    pushFollow(FOLLOW_ruleParanthesedBooleanExpression_in_ruleNotOrNormalExpression3144);
-                    this_ParanthesedBooleanExpression_1=ruleParanthesedBooleanExpression();
+                    pushFollow(FOLLOW_ruleUnaryParanthesedOperation_in_ruleUnaryOrNormalExpression3373);
+                    this_UnaryParanthesedOperation_1=ruleUnaryParanthesedOperation();
                     _fsp--;
                     if (failed) return current;
                     if ( backtracking==0 ) {
                        
-                              current = this_ParanthesedBooleanExpression_1; 
+                              current = this_UnaryParanthesedOperation_1; 
+                              currentNode = currentNode.getParent();
+                          
+                    }
+
+                    }
+                    break;
+                case 3 :
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1498:5: this_ParanthesedBooleanExpression_2= ruleParanthesedBooleanExpression
+                    {
+                    if ( backtracking==0 ) {
+                       
+                              currentNode=createCompositeNode(grammarAccess.getUnaryOrNormalExpressionAccess().getParanthesedBooleanExpressionParserRuleCall_2(), currentNode); 
+                          
+                    }
+                    pushFollow(FOLLOW_ruleParanthesedBooleanExpression_in_ruleUnaryOrNormalExpression3400);
+                    this_ParanthesedBooleanExpression_2=ruleParanthesedBooleanExpression();
+                    _fsp--;
+                    if (failed) return current;
+                    if ( backtracking==0 ) {
+                       
+                              current = this_ParanthesedBooleanExpression_2; 
                               currentNode = currentNode.getParent();
                           
                     }
@@ -4281,11 +4350,11 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end ruleNotOrNormalExpression
+    // $ANTLR end ruleUnaryOrNormalExpression
 
 
     // $ANTLR start entryRuleAndOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1406:1: entryRuleAndOperation returns [EObject current=null] : iv_ruleAndOperation= ruleAndOperation EOF ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1513:1: entryRuleAndOperation returns [EObject current=null] : iv_ruleAndOperation= ruleAndOperation EOF ;
     public final EObject entryRuleAndOperation() throws RecognitionException {
         EObject current = null;
 
@@ -4293,20 +4362,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1406:54: (iv_ruleAndOperation= ruleAndOperation EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1407:2: iv_ruleAndOperation= ruleAndOperation EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1513:54: (iv_ruleAndOperation= ruleAndOperation EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1514:2: iv_ruleAndOperation= ruleAndOperation EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getAndOperationRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleAndOperation_in_entryRuleAndOperation3176);
+            pushFollow(FOLLOW_ruleAndOperation_in_entryRuleAndOperation3432);
             iv_ruleAndOperation=ruleAndOperation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleAndOperation; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleAndOperation3186); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleAndOperation3442); if (failed) return current;
 
             }
 
@@ -4324,11 +4393,11 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleAndOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1414:1: ruleAndOperation returns [EObject current=null] : (this_NotOrNormalExpression_0= ruleNotOrNormalExpression ( () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleNotOrNormalExpression ) )* ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1521:1: ruleAndOperation returns [EObject current=null] : (this_UnaryOrNormalExpression_0= ruleUnaryOrNormalExpression ( () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleUnaryOrNormalExpression ) )* ) ;
     public final EObject ruleAndOperation() throws RecognitionException {
         EObject current = null;
 
-        EObject this_NotOrNormalExpression_0 = null;
+        EObject this_UnaryOrNormalExpression_0 = null;
 
         Enumerator lv_operator_2 = null;
 
@@ -4338,44 +4407,44 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1419:6: ( (this_NotOrNormalExpression_0= ruleNotOrNormalExpression ( () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleNotOrNormalExpression ) )* ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1420:1: (this_NotOrNormalExpression_0= ruleNotOrNormalExpression ( () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleNotOrNormalExpression ) )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1526:6: ( (this_UnaryOrNormalExpression_0= ruleUnaryOrNormalExpression ( () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleUnaryOrNormalExpression ) )* ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1527:1: (this_UnaryOrNormalExpression_0= ruleUnaryOrNormalExpression ( () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleUnaryOrNormalExpression ) )* )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1420:1: (this_NotOrNormalExpression_0= ruleNotOrNormalExpression ( () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleNotOrNormalExpression ) )* )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1421:5: this_NotOrNormalExpression_0= ruleNotOrNormalExpression ( () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleNotOrNormalExpression ) )*
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1527:1: (this_UnaryOrNormalExpression_0= ruleUnaryOrNormalExpression ( () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleUnaryOrNormalExpression ) )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1528:5: this_UnaryOrNormalExpression_0= ruleUnaryOrNormalExpression ( () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleUnaryOrNormalExpression ) )*
             {
             if ( backtracking==0 ) {
                
-                      currentNode=createCompositeNode(grammarAccess.getAndOperationAccess().getNotOrNormalExpressionParserRuleCall_0(), currentNode); 
+                      currentNode=createCompositeNode(grammarAccess.getAndOperationAccess().getUnaryOrNormalExpressionParserRuleCall_0(), currentNode); 
                   
             }
-            pushFollow(FOLLOW_ruleNotOrNormalExpression_in_ruleAndOperation3233);
-            this_NotOrNormalExpression_0=ruleNotOrNormalExpression();
+            pushFollow(FOLLOW_ruleUnaryOrNormalExpression_in_ruleAndOperation3489);
+            this_UnaryOrNormalExpression_0=ruleUnaryOrNormalExpression();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                
-                      current = this_NotOrNormalExpression_0; 
+                      current = this_UnaryOrNormalExpression_0; 
                       currentNode = currentNode.getParent();
                   
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1429:1: ( () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleNotOrNormalExpression ) )*
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1536:1: ( () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleUnaryOrNormalExpression ) )*
             loop17:
             do {
                 int alt17=2;
                 int LA17_0 = input.LA(1);
 
-                if ( (LA17_0==27) ) {
+                if ( (LA17_0==28) ) {
                     alt17=1;
                 }
 
 
                 switch (alt17) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1429:2: () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleNotOrNormalExpression )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1536:2: () (lv_operator_2= ruleOperatorAnd ) (lv_subExpressions_3= ruleUnaryOrNormalExpression )
             	    {
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1429:2: ()
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1430:5: 
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1536:2: ()
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1537:5: 
             	    {
             	    if ( backtracking==0 ) {
             	       
@@ -4397,15 +4466,15 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1445:2: (lv_operator_2= ruleOperatorAnd )
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1448:6: lv_operator_2= ruleOperatorAnd
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1552:2: (lv_operator_2= ruleOperatorAnd )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1555:6: lv_operator_2= ruleOperatorAnd
             	    {
             	    if ( backtracking==0 ) {
             	       
             	      	        currentNode=createCompositeNode(grammarAccess.getAndOperationAccess().getOperatorOperatorAndEnumRuleCall_1_1_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleOperatorAnd_in_ruleAndOperation3276);
+            	    pushFollow(FOLLOW_ruleOperatorAnd_in_ruleAndOperation3532);
             	    lv_operator_2=ruleOperatorAnd();
             	    _fsp--;
             	    if (failed) return current;
@@ -4427,16 +4496,16 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1466:2: (lv_subExpressions_3= ruleNotOrNormalExpression )
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1469:6: lv_subExpressions_3= ruleNotOrNormalExpression
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1573:2: (lv_subExpressions_3= ruleUnaryOrNormalExpression )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1576:6: lv_subExpressions_3= ruleUnaryOrNormalExpression
             	    {
             	    if ( backtracking==0 ) {
             	       
-            	      	        currentNode=createCompositeNode(grammarAccess.getAndOperationAccess().getSubExpressionsNotOrNormalExpressionParserRuleCall_1_2_0(), currentNode); 
+            	      	        currentNode=createCompositeNode(grammarAccess.getAndOperationAccess().getSubExpressionsUnaryOrNormalExpressionParserRuleCall_1_2_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleNotOrNormalExpression_in_ruleAndOperation3314);
-            	    lv_subExpressions_3=ruleNotOrNormalExpression();
+            	    pushFollow(FOLLOW_ruleUnaryOrNormalExpression_in_ruleAndOperation3570);
+            	    lv_subExpressions_3=ruleUnaryOrNormalExpression();
             	    _fsp--;
             	    if (failed) return current;
             	    if ( backtracking==0 ) {
@@ -4447,7 +4516,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             	      	        }
             	      	        
             	      	        try {
-            	      	       		add(current, "subExpressions", lv_subExpressions_3, "NotOrNormalExpression", currentNode);
+            	      	       		add(current, "subExpressions", lv_subExpressions_3, "UnaryOrNormalExpression", currentNode);
             	      	        } catch (ValueConverterException vce) {
             	      				handleValueConverterException(vce);
             	      	        }
@@ -4491,7 +4560,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleOrOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1494:1: entryRuleOrOperation returns [EObject current=null] : iv_ruleOrOperation= ruleOrOperation EOF ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1601:1: entryRuleOrOperation returns [EObject current=null] : iv_ruleOrOperation= ruleOrOperation EOF ;
     public final EObject entryRuleOrOperation() throws RecognitionException {
         EObject current = null;
 
@@ -4499,20 +4568,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1494:53: (iv_ruleOrOperation= ruleOrOperation EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1495:2: iv_ruleOrOperation= ruleOrOperation EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1601:53: (iv_ruleOrOperation= ruleOrOperation EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1602:2: iv_ruleOrOperation= ruleOrOperation EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getOrOperationRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleOrOperation_in_entryRuleOrOperation3353);
+            pushFollow(FOLLOW_ruleOrOperation_in_entryRuleOrOperation3609);
             iv_ruleOrOperation=ruleOrOperation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleOrOperation; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleOrOperation3363); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleOrOperation3619); if (failed) return current;
 
             }
 
@@ -4530,7 +4599,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleOrOperation
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1502:1: ruleOrOperation returns [EObject current=null] : (this_AndOperation_0= ruleAndOperation ( () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation ) )* ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1609:1: ruleOrOperation returns [EObject current=null] : (this_AndOperation_0= ruleAndOperation ( () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation ) )* ) ;
     public final EObject ruleOrOperation() throws RecognitionException {
         EObject current = null;
 
@@ -4544,18 +4613,18 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1507:6: ( (this_AndOperation_0= ruleAndOperation ( () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation ) )* ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1508:1: (this_AndOperation_0= ruleAndOperation ( () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation ) )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1614:6: ( (this_AndOperation_0= ruleAndOperation ( () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation ) )* ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1615:1: (this_AndOperation_0= ruleAndOperation ( () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation ) )* )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1508:1: (this_AndOperation_0= ruleAndOperation ( () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation ) )* )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1509:5: this_AndOperation_0= ruleAndOperation ( () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation ) )*
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1615:1: (this_AndOperation_0= ruleAndOperation ( () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation ) )* )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1616:5: this_AndOperation_0= ruleAndOperation ( () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation ) )*
             {
             if ( backtracking==0 ) {
                
                       currentNode=createCompositeNode(grammarAccess.getOrOperationAccess().getAndOperationParserRuleCall_0(), currentNode); 
                   
             }
-            pushFollow(FOLLOW_ruleAndOperation_in_ruleOrOperation3410);
+            pushFollow(FOLLOW_ruleAndOperation_in_ruleOrOperation3666);
             this_AndOperation_0=ruleAndOperation();
             _fsp--;
             if (failed) return current;
@@ -4565,23 +4634,23 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                       currentNode = currentNode.getParent();
                   
             }
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1517:1: ( () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation ) )*
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1624:1: ( () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation ) )*
             loop18:
             do {
                 int alt18=2;
                 int LA18_0 = input.LA(1);
 
-                if ( (LA18_0==26) ) {
+                if ( (LA18_0==27) ) {
                     alt18=1;
                 }
 
 
                 switch (alt18) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1517:2: () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1624:2: () (lv_operator_2= ruleOperatorOr ) (lv_subExpressions_3= ruleAndOperation )
             	    {
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1517:2: ()
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1518:5: 
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1624:2: ()
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1625:5: 
             	    {
             	    if ( backtracking==0 ) {
             	       
@@ -4603,15 +4672,15 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1533:2: (lv_operator_2= ruleOperatorOr )
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1536:6: lv_operator_2= ruleOperatorOr
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1640:2: (lv_operator_2= ruleOperatorOr )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1643:6: lv_operator_2= ruleOperatorOr
             	    {
             	    if ( backtracking==0 ) {
             	       
             	      	        currentNode=createCompositeNode(grammarAccess.getOrOperationAccess().getOperatorOperatorOrEnumRuleCall_1_1_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleOperatorOr_in_ruleOrOperation3453);
+            	    pushFollow(FOLLOW_ruleOperatorOr_in_ruleOrOperation3709);
             	    lv_operator_2=ruleOperatorOr();
             	    _fsp--;
             	    if (failed) return current;
@@ -4633,15 +4702,15 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1554:2: (lv_subExpressions_3= ruleAndOperation )
-            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1557:6: lv_subExpressions_3= ruleAndOperation
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1661:2: (lv_subExpressions_3= ruleAndOperation )
+            	    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1664:6: lv_subExpressions_3= ruleAndOperation
             	    {
             	    if ( backtracking==0 ) {
             	       
             	      	        currentNode=createCompositeNode(grammarAccess.getOrOperationAccess().getSubExpressionsAndOperationParserRuleCall_1_2_0(), currentNode); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleAndOperation_in_ruleOrOperation3491);
+            	    pushFollow(FOLLOW_ruleAndOperation_in_ruleOrOperation3747);
             	    lv_subExpressions_3=ruleAndOperation();
             	    _fsp--;
             	    if (failed) return current;
@@ -4697,7 +4766,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleParanthesedBooleanExpression
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1582:1: entryRuleParanthesedBooleanExpression returns [EObject current=null] : iv_ruleParanthesedBooleanExpression= ruleParanthesedBooleanExpression EOF ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1689:1: entryRuleParanthesedBooleanExpression returns [EObject current=null] : iv_ruleParanthesedBooleanExpression= ruleParanthesedBooleanExpression EOF ;
     public final EObject entryRuleParanthesedBooleanExpression() throws RecognitionException {
         EObject current = null;
 
@@ -4705,20 +4774,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1582:70: (iv_ruleParanthesedBooleanExpression= ruleParanthesedBooleanExpression EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1583:2: iv_ruleParanthesedBooleanExpression= ruleParanthesedBooleanExpression EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1689:70: (iv_ruleParanthesedBooleanExpression= ruleParanthesedBooleanExpression EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1690:2: iv_ruleParanthesedBooleanExpression= ruleParanthesedBooleanExpression EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getParanthesedBooleanExpressionRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleParanthesedBooleanExpression_in_entryRuleParanthesedBooleanExpression3530);
+            pushFollow(FOLLOW_ruleParanthesedBooleanExpression_in_entryRuleParanthesedBooleanExpression3786);
             iv_ruleParanthesedBooleanExpression=ruleParanthesedBooleanExpression();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleParanthesedBooleanExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleParanthesedBooleanExpression3540); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleParanthesedBooleanExpression3796); if (failed) return current;
 
             }
 
@@ -4736,7 +4805,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleParanthesedBooleanExpression
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1590:1: ruleParanthesedBooleanExpression returns [EObject current=null] : (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1697:1: ruleParanthesedBooleanExpression returns [EObject current=null] : (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) ) ;
     public final EObject ruleParanthesedBooleanExpression() throws RecognitionException {
         EObject current = null;
 
@@ -4754,10 +4823,10 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1595:6: ( (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1596:1: (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1702:6: ( (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1703:1: (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1596:1: (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1703:1: (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) )
             int alt19=5;
             switch ( input.LA(1) ) {
             case RULE_BOOLEAN:
@@ -4768,7 +4837,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             case RULE_INT:
             case RULE_FLOAT:
             case 19:
-            case 28:
+            case 26:
                 {
                 alt19=2;
                 }
@@ -4777,16 +4846,16 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                 {
                 int LA19_6 = input.LA(2);
 
-                if ( (synpred26()) ) {
+                if ( (synpred28()) ) {
                     alt19=2;
                 }
-                else if ( (synpred27()) ) {
+                else if ( (synpred29()) ) {
                     alt19=3;
                 }
                 else {
                     if (backtracking>0) {failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1596:1: (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) )", 19, 6, input);
+                        new NoViableAltException("1703:1: (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) )", 19, 6, input);
 
                     throw nvae;
                 }
@@ -4796,16 +4865,16 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                 {
                 int LA19_7 = input.LA(2);
 
-                if ( (synpred26()) ) {
+                if ( (synpred28()) ) {
                     alt19=2;
                 }
-                else if ( (synpred28()) ) {
+                else if ( (synpred30()) ) {
                     alt19=4;
                 }
                 else {
                     if (backtracking>0) {failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1596:1: (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) )", 19, 7, input);
+                        new NoViableAltException("1703:1: (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) )", 19, 7, input);
 
                     throw nvae;
                 }
@@ -4815,7 +4884,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                 {
                 int LA19_8 = input.LA(2);
 
-                if ( (synpred26()) ) {
+                if ( (synpred28()) ) {
                     alt19=2;
                 }
                 else if ( (true) ) {
@@ -4824,7 +4893,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                 else {
                     if (backtracking>0) {failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1596:1: (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) )", 19, 8, input);
+                        new NoViableAltException("1703:1: (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) )", 19, 8, input);
 
                     throw nvae;
                 }
@@ -4833,21 +4902,21 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1596:1: (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) )", 19, 0, input);
+                    new NoViableAltException("1703:1: (this_BooleanValue_0= ruleBooleanValue | this_CompareOperation_1= ruleCompareOperation | this_SignalReference_2= ruleSignalReference | this_HostCode_3= ruleHostCode | ( '(' this_OrOperation_5= ruleOrOperation ')' ) )", 19, 0, input);
 
                 throw nvae;
             }
 
             switch (alt19) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1597:5: this_BooleanValue_0= ruleBooleanValue
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1704:5: this_BooleanValue_0= ruleBooleanValue
                     {
                     if ( backtracking==0 ) {
                        
                               currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getBooleanValueParserRuleCall_0(), currentNode); 
                           
                     }
-                    pushFollow(FOLLOW_ruleBooleanValue_in_ruleParanthesedBooleanExpression3587);
+                    pushFollow(FOLLOW_ruleBooleanValue_in_ruleParanthesedBooleanExpression3843);
                     this_BooleanValue_0=ruleBooleanValue();
                     _fsp--;
                     if (failed) return current;
@@ -4861,14 +4930,14 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1607:5: this_CompareOperation_1= ruleCompareOperation
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1714:5: this_CompareOperation_1= ruleCompareOperation
                     {
                     if ( backtracking==0 ) {
                        
                               currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getCompareOperationParserRuleCall_1(), currentNode); 
                           
                     }
-                    pushFollow(FOLLOW_ruleCompareOperation_in_ruleParanthesedBooleanExpression3614);
+                    pushFollow(FOLLOW_ruleCompareOperation_in_ruleParanthesedBooleanExpression3870);
                     this_CompareOperation_1=ruleCompareOperation();
                     _fsp--;
                     if (failed) return current;
@@ -4882,14 +4951,14 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1617:5: this_SignalReference_2= ruleSignalReference
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1724:5: this_SignalReference_2= ruleSignalReference
                     {
                     if ( backtracking==0 ) {
                        
                               currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getSignalReferenceParserRuleCall_2(), currentNode); 
                           
                     }
-                    pushFollow(FOLLOW_ruleSignalReference_in_ruleParanthesedBooleanExpression3641);
+                    pushFollow(FOLLOW_ruleSignalReference_in_ruleParanthesedBooleanExpression3897);
                     this_SignalReference_2=ruleSignalReference();
                     _fsp--;
                     if (failed) return current;
@@ -4903,14 +4972,14 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1627:5: this_HostCode_3= ruleHostCode
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1734:5: this_HostCode_3= ruleHostCode
                     {
                     if ( backtracking==0 ) {
                        
                               currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getHostCodeParserRuleCall_3(), currentNode); 
                           
                     }
-                    pushFollow(FOLLOW_ruleHostCode_in_ruleParanthesedBooleanExpression3668);
+                    pushFollow(FOLLOW_ruleHostCode_in_ruleParanthesedBooleanExpression3924);
                     this_HostCode_3=ruleHostCode();
                     _fsp--;
                     if (failed) return current;
@@ -4924,12 +4993,12 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1636:6: ( '(' this_OrOperation_5= ruleOrOperation ')' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1743:6: ( '(' this_OrOperation_5= ruleOrOperation ')' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1636:6: ( '(' this_OrOperation_5= ruleOrOperation ')' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1636:7: '(' this_OrOperation_5= ruleOrOperation ')'
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1743:6: ( '(' this_OrOperation_5= ruleOrOperation ')' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1743:7: '(' this_OrOperation_5= ruleOrOperation ')'
                     {
-                    match(input,16,FOLLOW_16_in_ruleParanthesedBooleanExpression3683); if (failed) return current;
+                    match(input,16,FOLLOW_16_in_ruleParanthesedBooleanExpression3939); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getParanthesedBooleanExpressionAccess().getLeftParenthesisKeyword_4_0(), null); 
@@ -4940,7 +5009,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                               currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getOrOperationParserRuleCall_4_1(), currentNode); 
                           
                     }
-                    pushFollow(FOLLOW_ruleOrOperation_in_ruleParanthesedBooleanExpression3705);
+                    pushFollow(FOLLOW_ruleOrOperation_in_ruleParanthesedBooleanExpression3961);
                     this_OrOperation_5=ruleOrOperation();
                     _fsp--;
                     if (failed) return current;
@@ -4950,7 +5019,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                               currentNode = currentNode.getParent();
                           
                     }
-                    match(input,17,FOLLOW_17_in_ruleParanthesedBooleanExpression3713); if (failed) return current;
+                    match(input,17,FOLLOW_17_in_ruleParanthesedBooleanExpression3969); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getParanthesedBooleanExpressionAccess().getRightParenthesisKeyword_4_2(), null); 
@@ -4987,7 +5056,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleBooleanExpression
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1660:1: entryRuleBooleanExpression returns [EObject current=null] : iv_ruleBooleanExpression= ruleBooleanExpression EOF ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1767:1: entryRuleBooleanExpression returns [EObject current=null] : iv_ruleBooleanExpression= ruleBooleanExpression EOF ;
     public final EObject entryRuleBooleanExpression() throws RecognitionException {
         EObject current = null;
 
@@ -4995,20 +5064,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1660:59: (iv_ruleBooleanExpression= ruleBooleanExpression EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1661:2: iv_ruleBooleanExpression= ruleBooleanExpression EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1767:59: (iv_ruleBooleanExpression= ruleBooleanExpression EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1768:2: iv_ruleBooleanExpression= ruleBooleanExpression EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getBooleanExpressionRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleBooleanExpression_in_entryRuleBooleanExpression3747);
+            pushFollow(FOLLOW_ruleBooleanExpression_in_entryRuleBooleanExpression4003);
             iv_ruleBooleanExpression=ruleBooleanExpression();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleBooleanExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleBooleanExpression3757); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleBooleanExpression4013); if (failed) return current;
 
             }
 
@@ -5026,7 +5095,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleBooleanExpression
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1668:1: ruleBooleanExpression returns [EObject current=null] : this_OrOperation_0= ruleOrOperation ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1775:1: ruleBooleanExpression returns [EObject current=null] : this_OrOperation_0= ruleOrOperation ;
     public final EObject ruleBooleanExpression() throws RecognitionException {
         EObject current = null;
 
@@ -5036,15 +5105,15 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1673:6: (this_OrOperation_0= ruleOrOperation )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1675:5: this_OrOperation_0= ruleOrOperation
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1780:6: (this_OrOperation_0= ruleOrOperation )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1782:5: this_OrOperation_0= ruleOrOperation
             {
             if ( backtracking==0 ) {
                
                       currentNode=createCompositeNode(grammarAccess.getBooleanExpressionAccess().getOrOperationParserRuleCall(), currentNode); 
                   
             }
-            pushFollow(FOLLOW_ruleOrOperation_in_ruleBooleanExpression3803);
+            pushFollow(FOLLOW_ruleOrOperation_in_ruleBooleanExpression4059);
             this_OrOperation_0=ruleOrOperation();
             _fsp--;
             if (failed) return current;
@@ -5076,7 +5145,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleHostCode
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1690:1: entryRuleHostCode returns [EObject current=null] : iv_ruleHostCode= ruleHostCode EOF ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1797:1: entryRuleHostCode returns [EObject current=null] : iv_ruleHostCode= ruleHostCode EOF ;
     public final EObject entryRuleHostCode() throws RecognitionException {
         EObject current = null;
 
@@ -5084,20 +5153,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1690:50: (iv_ruleHostCode= ruleHostCode EOF )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1691:2: iv_ruleHostCode= ruleHostCode EOF
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1797:50: (iv_ruleHostCode= ruleHostCode EOF )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1798:2: iv_ruleHostCode= ruleHostCode EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getHostCodeRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleHostCode_in_entryRuleHostCode3834);
+            pushFollow(FOLLOW_ruleHostCode_in_entryRuleHostCode4090);
             iv_ruleHostCode=ruleHostCode();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleHostCode; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleHostCode3844); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleHostCode4100); if (failed) return current;
 
             }
 
@@ -5115,7 +5184,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleHostCode
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1698:1: ruleHostCode returns [EObject current=null] : ( (lv_code_0= RULE_STRING ) ( '(' (lv_type_2= RULE_ID ) ')' )? ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1805:1: ruleHostCode returns [EObject current=null] : ( (lv_code_0= RULE_STRING ) ( '(' (lv_type_2= RULE_ID ) ')' )? ) ;
     public final EObject ruleHostCode() throws RecognitionException {
         EObject current = null;
 
@@ -5125,17 +5194,17 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1703:6: ( ( (lv_code_0= RULE_STRING ) ( '(' (lv_type_2= RULE_ID ) ')' )? ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1704:1: ( (lv_code_0= RULE_STRING ) ( '(' (lv_type_2= RULE_ID ) ')' )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1810:6: ( ( (lv_code_0= RULE_STRING ) ( '(' (lv_type_2= RULE_ID ) ')' )? ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1811:1: ( (lv_code_0= RULE_STRING ) ( '(' (lv_type_2= RULE_ID ) ')' )? )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1704:1: ( (lv_code_0= RULE_STRING ) ( '(' (lv_type_2= RULE_ID ) ')' )? )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1704:2: (lv_code_0= RULE_STRING ) ( '(' (lv_type_2= RULE_ID ) ')' )?
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1811:1: ( (lv_code_0= RULE_STRING ) ( '(' (lv_type_2= RULE_ID ) ')' )? )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1811:2: (lv_code_0= RULE_STRING ) ( '(' (lv_type_2= RULE_ID ) ')' )?
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1704:2: (lv_code_0= RULE_STRING )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1706:6: lv_code_0= RULE_STRING
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1811:2: (lv_code_0= RULE_STRING )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1813:6: lv_code_0= RULE_STRING
             {
             lv_code_0=(Token)input.LT(1);
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleHostCode3891); if (failed) return current;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleHostCode4147); if (failed) return current;
             if ( backtracking==0 ) {
 
               		createLeafNode(grammarAccess.getHostCodeAccess().getCodeSTRINGTerminalRuleCall_0_0(), "code"); 
@@ -5158,7 +5227,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1724:2: ( '(' (lv_type_2= RULE_ID ) ')' )?
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1831:2: ( '(' (lv_type_2= RULE_ID ) ')' )?
             int alt20=2;
             int LA20_0 = input.LA(1);
 
@@ -5167,19 +5236,19 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             }
             switch (alt20) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1724:3: '(' (lv_type_2= RULE_ID ) ')'
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1831:3: '(' (lv_type_2= RULE_ID ) ')'
                     {
-                    match(input,16,FOLLOW_16_in_ruleHostCode3909); if (failed) return current;
+                    match(input,16,FOLLOW_16_in_ruleHostCode4165); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getHostCodeAccess().getLeftParenthesisKeyword_1_0(), null); 
                           
                     }
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1728:1: (lv_type_2= RULE_ID )
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1730:6: lv_type_2= RULE_ID
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1835:1: (lv_type_2= RULE_ID )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1837:6: lv_type_2= RULE_ID
                     {
                     lv_type_2=(Token)input.LT(1);
-                    match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleHostCode3931); if (failed) return current;
+                    match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleHostCode4187); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		createLeafNode(grammarAccess.getHostCodeAccess().getTypeIDTerminalRuleCall_1_1_0(), "type"); 
@@ -5202,7 +5271,7 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    match(input,17,FOLLOW_17_in_ruleHostCode3948); if (failed) return current;
+                    match(input,17,FOLLOW_17_in_ruleHostCode4204); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getHostCodeAccess().getRightParenthesisKeyword_1_2(), null); 
@@ -5239,19 +5308,19 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleValOperator
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1761:1: ruleValOperator returns [Enumerator current=null] : ( '?' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1868:1: ruleValOperator returns [Enumerator current=null] : ( '?' ) ;
     public final Enumerator ruleValOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1765:6: ( ( '?' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1766:1: ( '?' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1872:6: ( ( '?' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1873:1: ( '?' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1766:1: ( '?' )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1766:3: '?'
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1873:1: ( '?' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1873:3: '?'
             {
-            match(input,19,FOLLOW_19_in_ruleValOperator3998); if (failed) return current;
+            match(input,19,FOLLOW_19_in_ruleValOperator4254); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getValOperatorAccess().getVALEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -5283,16 +5352,16 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleCompareOperator
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1776:1: ruleCompareOperator returns [Enumerator current=null] : ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1883:1: ruleCompareOperator returns [Enumerator current=null] : ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) ) ;
     public final Enumerator ruleCompareOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1780:6: ( ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1781:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1887:6: ( ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1888:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1781:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1888:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) )
             int alt21=5;
             switch ( input.LA(1) ) {
             case 20:
@@ -5323,19 +5392,19 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1781:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) )", 21, 0, input);
+                    new NoViableAltException("1888:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) )", 21, 0, input);
 
                 throw nvae;
             }
 
             switch (alt21) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1781:2: ( '=' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1888:2: ( '=' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1781:2: ( '=' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1781:4: '='
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1888:2: ( '=' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1888:4: '='
                     {
-                    match(input,20,FOLLOW_20_in_ruleCompareOperator4040); if (failed) return current;
+                    match(input,20,FOLLOW_20_in_ruleCompareOperator4296); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -5349,12 +5418,12 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1787:6: ( '<' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1894:6: ( '<' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1787:6: ( '<' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1787:8: '<'
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1894:6: ( '<' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1894:8: '<'
                     {
-                    match(input,21,FOLLOW_21_in_ruleCompareOperator4055); if (failed) return current;
+                    match(input,21,FOLLOW_21_in_ruleCompareOperator4311); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getLTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -5368,12 +5437,12 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1793:6: ( '<=' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1900:6: ( '<=' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1793:6: ( '<=' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1793:8: '<='
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1900:6: ( '<=' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1900:8: '<='
                     {
-                    match(input,22,FOLLOW_22_in_ruleCompareOperator4070); if (failed) return current;
+                    match(input,22,FOLLOW_22_in_ruleCompareOperator4326); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getLEQEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -5387,12 +5456,12 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1799:6: ( '>' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1906:6: ( '>' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1799:6: ( '>' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1799:8: '>'
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1906:6: ( '>' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1906:8: '>'
                     {
-                    match(input,23,FOLLOW_23_in_ruleCompareOperator4085); if (failed) return current;
+                    match(input,23,FOLLOW_23_in_ruleCompareOperator4341); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getGTEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -5406,12 +5475,12 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1805:6: ( '>=' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1912:6: ( '>=' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1805:6: ( '>=' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1805:8: '>='
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1912:6: ( '>=' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1912:8: '>='
                     {
-                    match(input,24,FOLLOW_24_in_ruleCompareOperator4100); if (failed) return current;
+                    match(input,24,FOLLOW_24_in_ruleCompareOperator4356); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getGEQEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -5448,24 +5517,24 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
     // $ANTLR end ruleCompareOperator
 
 
-    // $ANTLR start ruleNotOperator
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1815:1: ruleNotOperator returns [Enumerator current=null] : ( 'not' ) ;
-    public final Enumerator ruleNotOperator() throws RecognitionException {
+    // $ANTLR start ruleUnaryOperator
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1922:1: ruleUnaryOperator returns [Enumerator current=null] : ( 'not' ) ;
+    public final Enumerator ruleUnaryOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1819:6: ( ( 'not' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1820:1: ( 'not' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1926:6: ( ( 'not' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1927:1: ( 'not' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1820:1: ( 'not' )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1820:3: 'not'
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1927:1: ( 'not' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1927:3: 'not'
             {
-            match(input,25,FOLLOW_25_in_ruleNotOperator4142); if (failed) return current;
+            match(input,25,FOLLOW_25_in_ruleUnaryOperator4398); if (failed) return current;
             if ( backtracking==0 ) {
 
-                      current = grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration().getEnumLiteral().getInstance();
-                      createLeafNode(grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration(), null); 
+                      current = grammarAccess.getUnaryOperatorAccess().getNOTEnumLiteralDeclaration().getEnumLiteral().getInstance();
+                      createLeafNode(grammarAccess.getUnaryOperatorAccess().getNOTEnumLiteralDeclaration(), null); 
                   
             }
 
@@ -5489,23 +5558,67 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end ruleNotOperator
+    // $ANTLR end ruleUnaryOperator
+
+
+    // $ANTLR start ruleUnaryParanthesedOperator
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1937:1: ruleUnaryParanthesedOperator returns [Enumerator current=null] : ( 'pre' ) ;
+    public final Enumerator ruleUnaryParanthesedOperator() throws RecognitionException {
+        Enumerator current = null;
+
+         setCurrentLookahead(); resetLookahead(); 
+        try {
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1941:6: ( ( 'pre' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1942:1: ( 'pre' )
+            {
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1942:1: ( 'pre' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1942:3: 'pre'
+            {
+            match(input,26,FOLLOW_26_in_ruleUnaryParanthesedOperator4439); if (failed) return current;
+            if ( backtracking==0 ) {
+
+                      current = grammarAccess.getUnaryParanthesedOperatorAccess().getPREEnumLiteralDeclaration().getEnumLiteral().getInstance();
+                      createLeafNode(grammarAccess.getUnaryParanthesedOperatorAccess().getPREEnumLiteralDeclaration(), null); 
+                  
+            }
+
+            }
+
+
+            }
+
+            if ( backtracking==0 ) {
+               resetLookahead(); 
+                  	lastConsumedNode = currentNode;
+                  
+            }
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end ruleUnaryParanthesedOperator
 
 
     // $ANTLR start ruleOperatorOr
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1830:1: ruleOperatorOr returns [Enumerator current=null] : ( 'or' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1952:1: ruleOperatorOr returns [Enumerator current=null] : ( 'or' ) ;
     public final Enumerator ruleOperatorOr() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1834:6: ( ( 'or' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1835:1: ( 'or' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1956:6: ( ( 'or' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1957:1: ( 'or' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1835:1: ( 'or' )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1835:3: 'or'
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1957:1: ( 'or' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1957:3: 'or'
             {
-            match(input,26,FOLLOW_26_in_ruleOperatorOr4183); if (failed) return current;
+            match(input,27,FOLLOW_27_in_ruleOperatorOr4480); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getOperatorOrAccess().getOREnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -5537,19 +5650,19 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleOperatorAnd
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1845:1: ruleOperatorAnd returns [Enumerator current=null] : ( 'and' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1967:1: ruleOperatorAnd returns [Enumerator current=null] : ( 'and' ) ;
     public final Enumerator ruleOperatorAnd() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1849:6: ( ( 'and' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1850:1: ( 'and' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1971:6: ( ( 'and' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1972:1: ( 'and' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1850:1: ( 'and' )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1850:3: 'and'
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1972:1: ( 'and' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1972:3: 'and'
             {
-            match(input,27,FOLLOW_27_in_ruleOperatorAnd4224); if (failed) return current;
+            match(input,28,FOLLOW_28_in_ruleOperatorAnd4521); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getOperatorAndAccess().getANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -5580,61 +5693,17 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
     // $ANTLR end ruleOperatorAnd
 
 
-    // $ANTLR start ruleOperatorPre
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1860:1: ruleOperatorPre returns [Enumerator current=null] : ( 'pre' ) ;
-    public final Enumerator ruleOperatorPre() throws RecognitionException {
-        Enumerator current = null;
-
-         setCurrentLookahead(); resetLookahead(); 
-        try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1864:6: ( ( 'pre' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1865:1: ( 'pre' )
-            {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1865:1: ( 'pre' )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1865:3: 'pre'
-            {
-            match(input,28,FOLLOW_28_in_ruleOperatorPre4265); if (failed) return current;
-            if ( backtracking==0 ) {
-
-                      current = grammarAccess.getOperatorPreAccess().getPREEnumLiteralDeclaration().getEnumLiteral().getInstance();
-                      createLeafNode(grammarAccess.getOperatorPreAccess().getPREEnumLiteralDeclaration(), null); 
-                  
-            }
-
-            }
-
-
-            }
-
-            if ( backtracking==0 ) {
-               resetLookahead(); 
-                  	lastConsumedNode = currentNode;
-                  
-            }
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end ruleOperatorPre
-
-
     // $ANTLR start rulePlusOperator
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1875:1: rulePlusOperator returns [Enumerator current=null] : ( ( '+' ) | ( '-' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1984:1: rulePlusOperator returns [Enumerator current=null] : ( ( '+' ) | ( '-' ) ) ;
     public final Enumerator rulePlusOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1879:6: ( ( ( '+' ) | ( '-' ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1880:1: ( ( '+' ) | ( '-' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1988:6: ( ( ( '+' ) | ( '-' ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1989:1: ( ( '+' ) | ( '-' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1880:1: ( ( '+' ) | ( '-' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1989:1: ( ( '+' ) | ( '-' ) )
             int alt22=2;
             int LA22_0 = input.LA(1);
 
@@ -5647,18 +5716,18 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             else {
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1880:1: ( ( '+' ) | ( '-' ) )", 22, 0, input);
+                    new NoViableAltException("1989:1: ( ( '+' ) | ( '-' ) )", 22, 0, input);
 
                 throw nvae;
             }
             switch (alt22) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1880:2: ( '+' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1989:2: ( '+' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1880:2: ( '+' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1880:4: '+'
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1989:2: ( '+' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1989:4: '+'
                     {
-                    match(input,29,FOLLOW_29_in_rulePlusOperator4307); if (failed) return current;
+                    match(input,29,FOLLOW_29_in_rulePlusOperator4565); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getPlusOperatorAccess().getADDEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -5672,12 +5741,12 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1886:6: ( '-' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1995:6: ( '-' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1886:6: ( '-' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1886:8: '-'
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1995:6: ( '-' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1995:8: '-'
                     {
-                    match(input,30,FOLLOW_30_in_rulePlusOperator4322); if (failed) return current;
+                    match(input,30,FOLLOW_30_in_rulePlusOperator4580); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getPlusOperatorAccess().getSUBEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -5715,16 +5784,16 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleMultOperator
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1896:1: ruleMultOperator returns [Enumerator current=null] : ( ( '*' ) | ( 'mod' ) ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2005:1: ruleMultOperator returns [Enumerator current=null] : ( ( '*' ) | ( 'mod' ) ) ;
     public final Enumerator ruleMultOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1900:6: ( ( ( '*' ) | ( 'mod' ) ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1901:1: ( ( '*' ) | ( 'mod' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2009:6: ( ( ( '*' ) | ( 'mod' ) ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2010:1: ( ( '*' ) | ( 'mod' ) )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1901:1: ( ( '*' ) | ( 'mod' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2010:1: ( ( '*' ) | ( 'mod' ) )
             int alt23=2;
             int LA23_0 = input.LA(1);
 
@@ -5737,18 +5806,18 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
             else {
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1901:1: ( ( '*' ) | ( 'mod' ) )", 23, 0, input);
+                    new NoViableAltException("2010:1: ( ( '*' ) | ( 'mod' ) )", 23, 0, input);
 
                 throw nvae;
             }
             switch (alt23) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1901:2: ( '*' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2010:2: ( '*' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1901:2: ( '*' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1901:4: '*'
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2010:2: ( '*' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2010:4: '*'
                     {
-                    match(input,31,FOLLOW_31_in_ruleMultOperator4365); if (failed) return current;
+                    match(input,31,FOLLOW_31_in_ruleMultOperator4623); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getMultOperatorAccess().getMULTEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -5762,12 +5831,12 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1907:6: ( 'mod' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2016:6: ( 'mod' )
                     {
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1907:6: ( 'mod' )
-                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1907:8: 'mod'
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2016:6: ( 'mod' )
+                    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2016:8: 'mod'
                     {
-                    match(input,32,FOLLOW_32_in_ruleMultOperator4380); if (failed) return current;
+                    match(input,32,FOLLOW_32_in_ruleMultOperator4638); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getMultOperatorAccess().getMODEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -5805,19 +5874,19 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDivOperator
-    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1917:1: ruleDivOperator returns [Enumerator current=null] : ( '/' ) ;
+    // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2026:1: ruleDivOperator returns [Enumerator current=null] : ( '/' ) ;
     public final Enumerator ruleDivOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1921:6: ( ( '/' ) )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1922:1: ( '/' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2030:6: ( ( '/' ) )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2031:1: ( '/' )
             {
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1922:1: ( '/' )
-            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1922:3: '/'
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2031:1: ( '/' )
+            // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:2031:3: '/'
             {
-            match(input,14,FOLLOW_14_in_ruleDivOperator4422); if (failed) return current;
+            match(input,14,FOLLOW_14_in_ruleDivOperator4680); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -5938,75 +6007,59 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred11
 
-    // $ANTLR start synpred18
-    public final void synpred18_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:903:5: ( ruleMultOperation )
-        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:903:5: ruleMultOperation
+    // $ANTLR start synpred17
+    public final void synpred17_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:776:6: ( ( '(' rulePlusOperation ')' ) )
+        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:776:6: ( '(' rulePlusOperation ')' )
+        {
+        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:776:6: ( '(' rulePlusOperation ')' )
+        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:776:7: '(' rulePlusOperation ')'
+        {
+        match(input,16,FOLLOW_16_in_synpred171751); if (failed) return ;
+        pushFollow(FOLLOW_rulePlusOperation_in_synpred171773);
+        rulePlusOperation();
+        _fsp--;
+        if (failed) return ;
+        match(input,17,FOLLOW_17_in_synpred171781); if (failed) return ;
+
+        }
+
+
+        }
+    }
+    // $ANTLR end synpred17
+
+    // $ANTLR start synpred19
+    public final void synpred19_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:921:5: ( ruleMultOperation )
+        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:921:5: ruleMultOperation
         {
         if ( backtracking==0 ) {
            
                   currentNode=createCompositeNode(grammarAccess.getMultOrDivOperationAccess().getMultOperationParserRuleCall_0(), currentNode); 
               
         }
-        pushFollow(FOLLOW_ruleMultOperation_in_synpred182049);
+        pushFollow(FOLLOW_ruleMultOperation_in_synpred192096);
         ruleMultOperation();
         _fsp--;
         if (failed) return ;
 
         }
     }
-    // $ANTLR end synpred18
+    // $ANTLR end synpred19
 
-    // $ANTLR start synpred26
-    public final void synpred26_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1607:5: ( ruleCompareOperation )
-        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1607:5: ruleCompareOperation
+    // $ANTLR start synpred28
+    public final void synpred28_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1714:5: ( ruleCompareOperation )
+        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1714:5: ruleCompareOperation
         {
         if ( backtracking==0 ) {
            
                   currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getCompareOperationParserRuleCall_1(), currentNode); 
               
         }
-        pushFollow(FOLLOW_ruleCompareOperation_in_synpred263614);
+        pushFollow(FOLLOW_ruleCompareOperation_in_synpred283870);
         ruleCompareOperation();
-        _fsp--;
-        if (failed) return ;
-
-        }
-    }
-    // $ANTLR end synpred26
-
-    // $ANTLR start synpred27
-    public final void synpred27_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1617:5: ( ruleSignalReference )
-        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1617:5: ruleSignalReference
-        {
-        if ( backtracking==0 ) {
-           
-                  currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getSignalReferenceParserRuleCall_2(), currentNode); 
-              
-        }
-        pushFollow(FOLLOW_ruleSignalReference_in_synpred273641);
-        ruleSignalReference();
-        _fsp--;
-        if (failed) return ;
-
-        }
-    }
-    // $ANTLR end synpred27
-
-    // $ANTLR start synpred28
-    public final void synpred28_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1627:5: ( ruleHostCode )
-        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1627:5: ruleHostCode
-        {
-        if ( backtracking==0 ) {
-           
-                  currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getHostCodeParserRuleCall_3(), currentNode); 
-              
-        }
-        pushFollow(FOLLOW_ruleHostCode_in_synpred283668);
-        ruleHostCode();
         _fsp--;
         if (failed) return ;
 
@@ -6014,20 +6067,44 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred28
 
-    public final boolean synpred27() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred27_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
+    // $ANTLR start synpred29
+    public final void synpred29_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1724:5: ( ruleSignalReference )
+        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1724:5: ruleSignalReference
+        {
+        if ( backtracking==0 ) {
+           
+                  currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getSignalReferenceParserRuleCall_2(), currentNode); 
+              
         }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
+        pushFollow(FOLLOW_ruleSignalReference_in_synpred293897);
+        ruleSignalReference();
+        _fsp--;
+        if (failed) return ;
+
+        }
     }
+    // $ANTLR end synpred29
+
+    // $ANTLR start synpred30
+    public final void synpred30_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1734:5: ( ruleHostCode )
+        // ../de.cau.cs.kieler.synccharts.labelparser/src-gen/de/cau/cs/kieler/synccharts/parser/antlr/internal/InternalTransitionLabel.g:1734:5: ruleHostCode
+        {
+        if ( backtracking==0 ) {
+           
+                  currentNode=createCompositeNode(grammarAccess.getParanthesedBooleanExpressionAccess().getHostCodeParserRuleCall_3(), currentNode); 
+              
+        }
+        pushFollow(FOLLOW_ruleHostCode_in_synpred303924);
+        ruleHostCode();
+        _fsp--;
+        if (failed) return ;
+
+        }
+    }
+    // $ANTLR end synpred30
+
     public final boolean synpred9() {
         backtracking++;
         int start = input.mark();
@@ -6042,11 +6119,25 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
         failed=false;
         return success;
     }
-    public final boolean synpred18() {
+    public final boolean synpred29() {
         backtracking++;
         int start = input.mark();
         try {
-            synpred18_fragment(); // can never throw exception
+            synpred29_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred19() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred19_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -6070,11 +6161,11 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
         failed=false;
         return success;
     }
-    public final boolean synpred26() {
+    public final boolean synpred17() {
         backtracking++;
         int start = input.mark();
         try {
-            synpred26_fragment(); // can never throw exception
+            synpred17_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -6089,6 +6180,20 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred28_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred30() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred30_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -6118,8 +6223,8 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
 
     public static final BitSet FOLLOW_ruleAction_in_entryRuleAction79 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAction89 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_13_in_ruleAction135 = new BitSet(new long[]{0x00000000120941F2L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleAction171 = new BitSet(new long[]{0x00000000120941F2L});
+    public static final BitSet FOLLOW_13_in_ruleAction135 = new BitSet(new long[]{0x00000000060941F2L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleAction171 = new BitSet(new long[]{0x00000000060941F2L});
     public static final BitSet FOLLOW_ruleBooleanExpression_in_ruleAction214 = new BitSet(new long[]{0x0000000000004002L});
     public static final BitSet FOLLOW_14_in_ruleAction229 = new BitSet(new long[]{0x0000000000000122L});
     public static final BitSet FOLLOW_ruleEffect_in_ruleAction264 = new BitSet(new long[]{0x0000000000008122L});
@@ -6132,16 +6237,16 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleEmission_in_entryRuleEmission460 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleEmission470 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleEmission517 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_16_in_ruleEmission531 = new BitSet(new long[]{0x0000000010090170L});
+    public static final BitSet FOLLOW_16_in_ruleEmission531 = new BitSet(new long[]{0x0000000004090170L});
     public static final BitSet FOLLOW_ruleValueExpression_in_ruleEmission565 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_17_in_ruleEmission578 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_ruleEmission595 = new BitSet(new long[]{0x00000000120901F0L});
+    public static final BitSet FOLLOW_16_in_ruleEmission595 = new BitSet(new long[]{0x00000000060901F0L});
     public static final BitSet FOLLOW_ruleBooleanExpression_in_ruleEmission629 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_17_in_ruleEmission642 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAssignment_in_entryRuleAssignment678 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAssignment688 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleAssignment735 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_ruleAssignment747 = new BitSet(new long[]{0x00000000120901F0L});
+    public static final BitSet FOLLOW_18_in_ruleAssignment747 = new BitSet(new long[]{0x00000000060901F0L});
     public static final BitSet FOLLOW_ruleValueExpression_in_ruleAssignment782 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleBooleanExpression_in_ruleAssignment826 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSignalReference_in_entryRuleSignalReference864 = new BitSet(new long[]{0x0000000000000000L});
@@ -6173,104 +6278,119 @@ public class InternalTransitionLabelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleValOperation_in_ruleParanthesedValueExpression1682 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleVariableReference_in_ruleParanthesedValueExpression1709 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleHostCode_in_ruleParanthesedValueExpression1736 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_ruleParanthesedValueExpression1751 = new BitSet(new long[]{0x0000000010090170L});
+    public static final BitSet FOLLOW_16_in_ruleParanthesedValueExpression1751 = new BitSet(new long[]{0x0000000004090170L});
     public static final BitSet FOLLOW_rulePlusOperation_in_ruleParanthesedValueExpression1773 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_17_in_ruleParanthesedValueExpression1781 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePlusOperation_in_entryRulePlusOperation1815 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePlusOperation1825 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultOrDivOperation_in_rulePlusOperation1872 = new BitSet(new long[]{0x0000000060000002L});
-    public static final BitSet FOLLOW_rulePlusOperator_in_rulePlusOperation1915 = new BitSet(new long[]{0x0000000010090170L});
-    public static final BitSet FOLLOW_ruleMultOrDivOperation_in_rulePlusOperation1953 = new BitSet(new long[]{0x0000000060000002L});
-    public static final BitSet FOLLOW_ruleMultOrDivOperation_in_entryRuleMultOrDivOperation1992 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleMultOrDivOperation2002 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultOperation_in_ruleMultOrDivOperation2049 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDivOperation_in_ruleMultOrDivOperation2076 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultOperation_in_entryRuleMultOperation2108 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleMultOperation2118 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_ruleMultOperation2165 = new BitSet(new long[]{0x0000000180000002L});
-    public static final BitSet FOLLOW_ruleMultOperator_in_ruleMultOperation2208 = new BitSet(new long[]{0x0000000010090170L});
-    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_ruleMultOperation2246 = new BitSet(new long[]{0x0000000180000002L});
-    public static final BitSet FOLLOW_ruleDivOperation_in_entryRuleDivOperation2285 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDivOperation2295 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_ruleDivOperation2329 = new BitSet(new long[]{0x0000000010090170L});
-    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_ruleDivOperation2351 = new BitSet(new long[]{0x0000000000024000L});
-    public static final BitSet FOLLOW_ruleDivOperator_in_ruleDivOperation2394 = new BitSet(new long[]{0x0000000010090170L});
-    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_ruleDivOperation2432 = new BitSet(new long[]{0x0000000000024000L});
-    public static final BitSet FOLLOW_17_in_ruleDivOperation2447 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePreArithmOperation_in_entryRulePreArithmOperation2480 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePreArithmOperation2490 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleOperatorPre_in_rulePreArithmOperation2549 = new BitSet(new long[]{0x0000000000090170L});
-    public static final BitSet FOLLOW_ruleParanthesedValueExpression_in_rulePreArithmOperation2587 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_entryRulePreOrNormalValueExpression2624 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePreOrNormalValueExpression2634 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePreArithmOperation_in_rulePreOrNormalValueExpression2681 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleParanthesedValueExpression_in_rulePreOrNormalValueExpression2708 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCompareOperation_in_entryRuleCompareOperation2740 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleCompareOperation2750 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValueExpression_in_ruleCompareOperation2797 = new BitSet(new long[]{0x0000000001F00000L});
-    public static final BitSet FOLLOW_ruleCompareOperator_in_ruleCompareOperation2840 = new BitSet(new long[]{0x0000000010090170L});
-    public static final BitSet FOLLOW_ruleValueExpression_in_ruleCompareOperation2878 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNotOperation_in_entryRuleNotOperation2916 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleNotOperation2926 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNotOperator_in_ruleNotOperation2985 = new BitSet(new long[]{0x00000000100901F0L});
-    public static final BitSet FOLLOW_ruleParanthesedBooleanExpression_in_ruleNotOperation3023 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNotOrNormalExpression_in_entryRuleNotOrNormalExpression3060 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleNotOrNormalExpression3070 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNotOperation_in_ruleNotOrNormalExpression3117 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleParanthesedBooleanExpression_in_ruleNotOrNormalExpression3144 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAndOperation_in_entryRuleAndOperation3176 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleAndOperation3186 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNotOrNormalExpression_in_ruleAndOperation3233 = new BitSet(new long[]{0x0000000008000002L});
-    public static final BitSet FOLLOW_ruleOperatorAnd_in_ruleAndOperation3276 = new BitSet(new long[]{0x00000000120901F0L});
-    public static final BitSet FOLLOW_ruleNotOrNormalExpression_in_ruleAndOperation3314 = new BitSet(new long[]{0x0000000008000002L});
-    public static final BitSet FOLLOW_ruleOrOperation_in_entryRuleOrOperation3353 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleOrOperation3363 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAndOperation_in_ruleOrOperation3410 = new BitSet(new long[]{0x0000000004000002L});
-    public static final BitSet FOLLOW_ruleOperatorOr_in_ruleOrOperation3453 = new BitSet(new long[]{0x00000000120901F0L});
-    public static final BitSet FOLLOW_ruleAndOperation_in_ruleOrOperation3491 = new BitSet(new long[]{0x0000000004000002L});
-    public static final BitSet FOLLOW_ruleParanthesedBooleanExpression_in_entryRuleParanthesedBooleanExpression3530 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleParanthesedBooleanExpression3540 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBooleanValue_in_ruleParanthesedBooleanExpression3587 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCompareOperation_in_ruleParanthesedBooleanExpression3614 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignalReference_in_ruleParanthesedBooleanExpression3641 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleHostCode_in_ruleParanthesedBooleanExpression3668 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_ruleParanthesedBooleanExpression3683 = new BitSet(new long[]{0x00000000120901F0L});
-    public static final BitSet FOLLOW_ruleOrOperation_in_ruleParanthesedBooleanExpression3705 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_ruleParanthesedBooleanExpression3713 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBooleanExpression_in_entryRuleBooleanExpression3747 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleBooleanExpression3757 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleOrOperation_in_ruleBooleanExpression3803 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleHostCode_in_entryRuleHostCode3834 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleHostCode3844 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleHostCode3891 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_16_in_ruleHostCode3909 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleHostCode3931 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_ruleHostCode3948 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_19_in_ruleValOperator3998 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_20_in_ruleCompareOperator4040 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_21_in_ruleCompareOperator4055 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_ruleCompareOperator4070 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_ruleCompareOperator4085 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_24_in_ruleCompareOperator4100 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_25_in_ruleNotOperator4142 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_26_in_ruleOperatorOr4183 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_ruleOperatorAnd4224 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_28_in_ruleOperatorPre4265 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rulePlusOperator4307 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rulePlusOperator4322 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_ruleMultOperator4365 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_ruleMultOperator4380 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_14_in_ruleDivOperator4422 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_synpred9531 = new BitSet(new long[]{0x0000000010090170L});
+    public static final BitSet FOLLOW_16_in_ruleParanthesedValueExpression1798 = new BitSet(new long[]{0x0000000004090170L});
+    public static final BitSet FOLLOW_ruleDivOperation_in_ruleParanthesedValueExpression1820 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_ruleParanthesedValueExpression1828 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePlusOperation_in_entryRulePlusOperation1862 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePlusOperation1872 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMultOrDivOperation_in_rulePlusOperation1919 = new BitSet(new long[]{0x0000000060000002L});
+    public static final BitSet FOLLOW_rulePlusOperator_in_rulePlusOperation1962 = new BitSet(new long[]{0x0000000004090170L});
+    public static final BitSet FOLLOW_ruleMultOrDivOperation_in_rulePlusOperation2000 = new BitSet(new long[]{0x0000000060000002L});
+    public static final BitSet FOLLOW_ruleMultOrDivOperation_in_entryRuleMultOrDivOperation2039 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleMultOrDivOperation2049 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMultOperation_in_ruleMultOrDivOperation2096 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_ruleMultOrDivOperation2111 = new BitSet(new long[]{0x0000000004090170L});
+    public static final BitSet FOLLOW_ruleDivOperation_in_ruleMultOrDivOperation2133 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_ruleMultOrDivOperation2141 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMultOperation_in_entryRuleMultOperation2175 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleMultOperation2185 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_ruleMultOperation2232 = new BitSet(new long[]{0x0000000180000002L});
+    public static final BitSet FOLLOW_ruleMultOperator_in_ruleMultOperation2275 = new BitSet(new long[]{0x0000000004090170L});
+    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_ruleMultOperation2313 = new BitSet(new long[]{0x0000000180000002L});
+    public static final BitSet FOLLOW_ruleDivOperation_in_entryRuleDivOperation2352 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDivOperation2362 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_ruleDivOperation2409 = new BitSet(new long[]{0x0000000000004002L});
+    public static final BitSet FOLLOW_ruleDivOperator_in_ruleDivOperation2452 = new BitSet(new long[]{0x0000000004090170L});
+    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_ruleDivOperation2490 = new BitSet(new long[]{0x0000000000004002L});
+    public static final BitSet FOLLOW_rulePreArithmOperation_in_entryRulePreArithmOperation2529 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePreArithmOperation2539 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryParanthesedOperator_in_rulePreArithmOperation2598 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_rulePreArithmOperation2611 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_ruleValOperation_in_rulePreArithmOperation2645 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_rulePreArithmOperation2658 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePreOrNormalValueExpression_in_entryRulePreOrNormalValueExpression2691 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePreOrNormalValueExpression2701 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePreArithmOperation_in_rulePreOrNormalValueExpression2748 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleParanthesedValueExpression_in_rulePreOrNormalValueExpression2775 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCompareOperation_in_entryRuleCompareOperation2807 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleCompareOperation2817 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValueExpression_in_ruleCompareOperation2864 = new BitSet(new long[]{0x0000000001F00000L});
+    public static final BitSet FOLLOW_ruleCompareOperator_in_ruleCompareOperation2907 = new BitSet(new long[]{0x0000000004090170L});
+    public static final BitSet FOLLOW_ruleValueExpression_in_ruleCompareOperation2945 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryOperation_in_entryRuleUnaryOperation2983 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleUnaryOperation2993 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryOperator_in_ruleUnaryOperation3052 = new BitSet(new long[]{0x00000000040901F0L});
+    public static final BitSet FOLLOW_ruleParanthesedBooleanExpression_in_ruleUnaryOperation3090 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryParanthesedOperation_in_entryRuleUnaryParanthesedOperation3127 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleUnaryParanthesedOperation3137 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryParanthesedOperator_in_ruleUnaryParanthesedOperation3196 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_ruleUnaryParanthesedOperation3209 = new BitSet(new long[]{0x00000000060901F0L});
+    public static final BitSet FOLLOW_ruleBooleanExpression_in_ruleUnaryParanthesedOperation3243 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_ruleUnaryParanthesedOperation3256 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryOrNormalExpression_in_entryRuleUnaryOrNormalExpression3289 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleUnaryOrNormalExpression3299 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryOperation_in_ruleUnaryOrNormalExpression3346 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryParanthesedOperation_in_ruleUnaryOrNormalExpression3373 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleParanthesedBooleanExpression_in_ruleUnaryOrNormalExpression3400 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAndOperation_in_entryRuleAndOperation3432 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleAndOperation3442 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryOrNormalExpression_in_ruleAndOperation3489 = new BitSet(new long[]{0x0000000010000002L});
+    public static final BitSet FOLLOW_ruleOperatorAnd_in_ruleAndOperation3532 = new BitSet(new long[]{0x00000000060901F0L});
+    public static final BitSet FOLLOW_ruleUnaryOrNormalExpression_in_ruleAndOperation3570 = new BitSet(new long[]{0x0000000010000002L});
+    public static final BitSet FOLLOW_ruleOrOperation_in_entryRuleOrOperation3609 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleOrOperation3619 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAndOperation_in_ruleOrOperation3666 = new BitSet(new long[]{0x0000000008000002L});
+    public static final BitSet FOLLOW_ruleOperatorOr_in_ruleOrOperation3709 = new BitSet(new long[]{0x00000000060901F0L});
+    public static final BitSet FOLLOW_ruleAndOperation_in_ruleOrOperation3747 = new BitSet(new long[]{0x0000000008000002L});
+    public static final BitSet FOLLOW_ruleParanthesedBooleanExpression_in_entryRuleParanthesedBooleanExpression3786 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleParanthesedBooleanExpression3796 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBooleanValue_in_ruleParanthesedBooleanExpression3843 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCompareOperation_in_ruleParanthesedBooleanExpression3870 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignalReference_in_ruleParanthesedBooleanExpression3897 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleHostCode_in_ruleParanthesedBooleanExpression3924 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_ruleParanthesedBooleanExpression3939 = new BitSet(new long[]{0x00000000060901F0L});
+    public static final BitSet FOLLOW_ruleOrOperation_in_ruleParanthesedBooleanExpression3961 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_ruleParanthesedBooleanExpression3969 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBooleanExpression_in_entryRuleBooleanExpression4003 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleBooleanExpression4013 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleOrOperation_in_ruleBooleanExpression4059 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleHostCode_in_entryRuleHostCode4090 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleHostCode4100 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleHostCode4147 = new BitSet(new long[]{0x0000000000010002L});
+    public static final BitSet FOLLOW_16_in_ruleHostCode4165 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleHostCode4187 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_ruleHostCode4204 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_19_in_ruleValOperator4254 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_20_in_ruleCompareOperator4296 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_21_in_ruleCompareOperator4311 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_22_in_ruleCompareOperator4326 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_ruleCompareOperator4341 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_24_in_ruleCompareOperator4356 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_25_in_ruleUnaryOperator4398 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_26_in_ruleUnaryParanthesedOperator4439 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_ruleOperatorOr4480 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_ruleOperatorAnd4521 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rulePlusOperator4565 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rulePlusOperator4580 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_ruleMultOperator4623 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_ruleMultOperator4638 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_14_in_ruleDivOperator4680 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_synpred9531 = new BitSet(new long[]{0x0000000004090170L});
     public static final BitSet FOLLOW_ruleValueExpression_in_synpred9565 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_17_in_synpred9578 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_synpred10595 = new BitSet(new long[]{0x00000000120901F0L});
+    public static final BitSet FOLLOW_16_in_synpred10595 = new BitSet(new long[]{0x00000000060901F0L});
     public static final BitSet FOLLOW_ruleBooleanExpression_in_synpred10629 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_17_in_synpred10642 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleValueExpression_in_synpred11782 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultOperation_in_synpred182049 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCompareOperation_in_synpred263614 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignalReference_in_synpred273641 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleHostCode_in_synpred283668 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_synpred171751 = new BitSet(new long[]{0x0000000004090170L});
+    public static final BitSet FOLLOW_rulePlusOperation_in_synpred171773 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_synpred171781 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMultOperation_in_synpred192096 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCompareOperation_in_synpred283870 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignalReference_in_synpred293897 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleHostCode_in_synpred303924 = new BitSet(new long[]{0x0000000000000002L});
 
 }

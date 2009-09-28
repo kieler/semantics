@@ -137,7 +137,7 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
             parse();
             return CommandResult.newOKCommandResult();
         } catch (Exception e) {
-            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error parsing the action string \""+newString+"\"", e);
+            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error parsing the action string. ", e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
         // return ok even when the parsing was not successful. Then at least
@@ -195,7 +195,7 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         }
         if (parent == null)
             throw new KielerException(
-                    "Can't find the right scope for the action. Scope is null.");
+                    "\""+newString+"\""+"Can't find the right scope for the action. Scope is null.");
         TransitionLabelScopeProvider.parent = parent;
 
         // now do parsing
@@ -209,7 +209,7 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         IParseResult parseResult = resource.getParseResult();
         if (parseResult == null)
             throw new KielerException(
-                    "Could not parse action string. Parser did return null.");
+                    "\""+newString+"\""+"Could not parse action string. Parser did return null.");
 
         this.errors = resource.getErrors();
         this.warnings = resource.getWarnings();
@@ -219,20 +219,20 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
             for (Diagnostic syntaxError : this.errors) {
                 parseErrorString += "\n" + syntaxError.getMessage();
             }
-            throw new KielerException("Parse errors in action String: "
+            throw new KielerException("\""+newString+"\""+" Parse errors in action String: "
                     + parseErrorString);
         }
 
         EObject parsedObject = resource.getContents().get(0);
         if (parsedObject == null || !(parsedObject instanceof Action))
             throw new KielerException(
-                    "Could not parse action string. Parser did not return an Action object but "
+                    "\""+newString+"\""+"Could not parse action string. Parser did not return an Action object but "
                             + parsedObject);
         Action newAction = (Action) parsedObject;
 
         if (!allReferencesResolved(newAction)){
             throw new KielerException(
-                    "Not all referenced Signals and/or Variables could be resolved!");
+                    "\""+newString+"\""+"Not all referenced Signals and/or Variables could be resolved!");
         }
         
         copyActionContents(newAction, action);
