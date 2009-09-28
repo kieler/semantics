@@ -98,14 +98,6 @@
 			<property name="id" value="${feature}"/>
 		</ant>
 		
-		<!-- extend plugins' build.xml files with a 'doc' target 
-			 CAUTION: foreach is a ant-contrib task declared above! -->
-		<!-- foreach param="buildfile" target="extend.buildfile">
-			<path id="buildfiles">
-				<fileset dir="plugins" includes="**/build.xml" />
-			</path>
-		</foreach -->
-		
 		<!-- read javac's classpath information from build.xml scripts -->		
 		<loadfile property="doc.classpath">
 			<concat>
@@ -163,23 +155,6 @@
 		</ant>
 	</target>
 	
-	<!-- target name="extend.buildfile">
-	    <loadfile property="doc.classpath" srcfile="${buildfile}">
-			<filterchain>
-				<linecontainsregexp>
-					<regexp pattern="&lt;pathelement"/>
-				</linecontainsregexp>
-			</filterchain>
-		</loadfile>   
-        <loadfile property="replacement" srcfile="${scriptdir}/javadoc.template.xml">
-			<filterchain>
-				<expandproperties/>
-			</filterchain>
-		</loadfile>
-		
-		<replace file="${buildfile}" token="&lt;/project&gt;" value="${replacement}&lt;/project&gt;" />
-	</target -->
-
 	<target name="build.updatesiteEntry" if="eclipse.running" description="target for creating an updatesite entry of last build results">
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
@@ -264,8 +239,8 @@
 			<fileset file="${scriptdir}/javadoc.template.xml"/>
 			<filterchain>
 				<tokenfilter>
-					<replacestring from="dir=&quot;${basedir}/plugins&quot;" to="dir=&quot;$${basedir}/../../&quot;" />
-					<replacestring from="includes=&quot;**/*.java&quot;"     to="includes=&quot;*/workspace/plugins/**/*.java&quot;"/>
+					<replacestring from="dir=&quot;$${basedir}/plugins&quot;" to="dir=&quot;$${basedir}/../../&quot;" />
+					<replacestring from="includes=&quot;**/*.java&quot;"      to="includes=&quot;*/workspace/plugins/**/*.java&quot;"/>
 				</tokenfilter>
 				<expandproperties />
 			</filterchain>
@@ -276,7 +251,8 @@
 		
 		<!-- finally, invoke the generated build file -->
 		<ant antfile="${system.WORKSPACE}/build.javadoc.xml" dir="${system.WORKSPACE}">
-			<property name="basedir" value="${system.WORKSPACE}" />
+			<property name="basedir"      value="${system.WORKSPACE}" />
+			<property name="doc.packages" value="${scriptdir}/../package-lists" />
 		</ant>
 	</target>
 	
