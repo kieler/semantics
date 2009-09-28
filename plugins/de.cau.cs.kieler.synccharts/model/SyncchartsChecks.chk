@@ -56,12 +56,10 @@ context Region
 
 // ================================================================================================
 // Signals
-context Signal if (isLocal) ERROR "local signals must not be input or output!" :
+context Signal if (parentState != null && parentState.parentRegion != null && parentState.parentRegion.parentState != null) 
+    ERROR "Only signals in the root state may be global inputs or outputs." :
 	((!isInput) && (!isOutput));
 	
-context Signal ERROR "signals have to be input, local or output!" :
-	isInput || isLocal || isOutput;
-
 context Signal if ((initialValue == null) || (initialValue == "")) 
     ERROR "only valued signals may have a combine type other than NONE!" :
 	combineOperator == CombineOperator::NONE;
