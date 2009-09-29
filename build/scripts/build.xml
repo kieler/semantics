@@ -67,7 +67,7 @@
 						CAUTION: features must not be JARed
 								 plugins should be JARed (so far I discovered) -->
 			<arg value="-Ddoc.excludes=${doc.excludes}" />
-				<!-- comma separated path patterns excluded during javadoc generation -->
+				<!-- comma separated path patterns excluded at javadoc generation -->
 			<classpath>
 				<pathelement location="${eclipseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
@@ -205,10 +205,13 @@
 	</target>
 	
 	<target name="doc" description="target for complete javadoc generation">
+		<property name="basedir"      value="${system.WORKSPACE}" />
+		<property name="doc.packages" value="${scriptdir}/../package-lists" />
+
 		<!-- first, we need to gather the classpath path entries from plugin's generated build files -->
 		<loadfile property="doc.classpath">
 			<concat>
-				<fileset dir="${system.WORKSPACE}/../../">
+				<fileset dir="${basedir}/../../">
 					<include name="*/workspace/plugins/*/build.xml" />
 					<exclude name="Import*/**" />
 				</fileset>
@@ -232,15 +235,15 @@
 		</loadfile>
 		
 		<!-- second, a build file for javadoc generation will be constructed -->
-		<concat destfile="${system.WORKSPACE}/build.javadoc.xml" force="true">
+		<concat destfile="${basedir}/build.javadoc.xml" force="true">
 			<header filtering="no" trimleading="yes">
 				&lt;project name="build KIELER javadoc" basedir="." default="doc"&gt;
 			</header>
-			<fileset file="${scriptdir}/javadoc.template.xml"/>
+			<fileset file="${scriptdir}/javadoc.template.xml" />
 			<filterchain>
 				<tokenfilter>
 					<replacestring from="dir=&quot;$${basedir}/plugins&quot;" to="dir=&quot;$${basedir}/../../&quot;" />
-					<replacestring from="includes=&quot;**/*.java&quot;"      to="includes=&quot;*/workspace/plugins/**/*.java&quot;"/>
+					<replacestring from="includes=&quot;**/*.java&quot;"      to="includes=&quot;*/workspace/plugins/**/*.java&quot;" />
 				</tokenfilter>
 				<expandproperties />
 			</filterchain>
@@ -250,14 +253,11 @@
 		</concat>
 		
 		<!-- finally, invoke the generated build file -->
-		<ant antfile="${system.WORKSPACE}/build.javadoc.xml" dir="${system.WORKSPACE}">
-			<property name="basedir"      value="${system.WORKSPACE}" />
-			<property name="doc.packages" value="${scriptdir}/../package-lists" />
-		</ant>
+		<ant antfile="${basedir}/build.javadoc.xml" dir="${basedir}" />
 	</target>
 	
 	<target name="clean">
-		<available file="${elementPath}/build.xml" property="buildFilePresent"/>
+		<available file="${elementPath}/build.xml" property="buildFilePresent" />
 	    <antcall target="cleanUp" />
 	</target>
 	
