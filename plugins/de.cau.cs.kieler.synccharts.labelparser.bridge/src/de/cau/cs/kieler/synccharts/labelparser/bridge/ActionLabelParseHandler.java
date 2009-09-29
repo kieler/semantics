@@ -32,8 +32,8 @@ public class ActionLabelParseHandler extends AbstractHandler {
         Object rootView = rootEditPart.getModel();
         EObject rootModel = ((View)rootView).getElement();
         if(rootModel instanceof Region){
-            ActionLabelParserNotifier.processActionLabels(rootModel, ActionLabelParserNotifier.PARSE);
-            ActionLabelParserNotifier.processActionLabels(rootModel, ActionLabelParserNotifier.SERIALIZE);
+            ActionLabelProcessorWrapper.processActionLabels(rootModel, ActionLabelProcessorWrapper.SERIALIZE);
+            ActionLabelProcessorWrapper.processActionLabels(rootModel, ActionLabelProcessorWrapper.PARSE);
         }
         else
             throw new KielerException("Root model element is no Region");

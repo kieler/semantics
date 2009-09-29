@@ -234,10 +234,10 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
      */
     public State createState() {
         StateImpl state = new StateImpl();
+        state.eAdapters().addAll(this.eAdapters());
         return state;
     }
 

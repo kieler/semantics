@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParserNotifier">
+            class="de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter">
       </startup>
    </extension>
    <extension
