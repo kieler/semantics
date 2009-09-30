@@ -20,6 +20,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter;
 import de.cau.cs.kieler.synccharts.provider.SyncchartsItemProviderAdapterFactory;
 
 /**
@@ -60,7 +61,6 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * @generated
      */
     public void start(BundleContext context) throws Exception {
         super.start(context);
@@ -68,6 +68,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
         PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT,
                 getPreferenceStore());
         adapterFactory = createAdapterFactory();
+        SyncchartsContentAdapter.init();
     }
 
     /**
