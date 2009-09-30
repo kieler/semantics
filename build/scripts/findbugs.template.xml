@@ -1,0 +1,21 @@
+	<target name="findbugs" description="experimental">
+		<property name="basedir" value="${system.WORKSPACE}" />
+		
+		<path id="findbugs.classpath">
+${findbugs.classpath}		</path>
+
+		<findbugs home="${findbugs.home}"
+			  output="xml"
+			  outputFile="${basedir}/findbugs.report.xml"
+			  auxClasspathRef="findbugs.classpath"
+			  reportLevel="medium"
+			  effort="default"
+			  failOnError="false"
+			  errorProperty="findbugs.error"
+			  warningsProperty="findbugs.warnings">
+			<class location="${basedir}/update-site/plugins/" />
+			<sourcePath path="${basedir}/plugins/" />
+			<!-- auxClasspath path="${basedir}/lib/Regex.jar" / -->
+		</findbugs>
+	</target>
+	

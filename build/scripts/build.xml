@@ -258,7 +258,45 @@
 		<ant antfile="${basedir}/build.javadoc.xml" dir="${basedir}" />
 	</target>
 
+	<target name="findbugsInit" description="experimental">
+		<loadfile property="findbugs.classpath">
+			<concat>
+				<fileset dir="plugins" includes="*/build.xml" />
+			</concat>
+			<filterchain>
+				<linecontainsregexp>
+					<regexp pattern="&lt;pathelement" />
+				</linecontainsregexp>
+				<linecontainsregexp negate="true">
+					<regexp pattern="/@dot&quot;" />
+				</linecontainsregexp>
+				<linecontainsregexp negate="true">
+					<regexp pattern="/bin/&quot;" />
+				</linecontainsregexp>
+				<!-- separate enclosing tags to realize NOR function
+					 (multiple repexp conditions will be ANDed) -->
+			</filterchain>
+		</loadfile> 
+
+		<!-- load javadoc target template, insert classpath entries (via property doc.classpath) -->		
+		<loadfile property="replacement" srcfile="${scriptdir}/findbugs.template.xml">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadfile>
+		
+		<!-- insert javadoc target in feature's build.xml -->		
+		<replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${replacement}&lt;/project&gt;" />
+	</target>
+
 	<target name="findbugs" description="experimental">
+		<!-- run feature's build.xml: apply findbugs -->		
+		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
+			<target name="findbugs" />
+		</ant>
+	</target>
+
+	<!-- target name="findbugs" description="experimental">
 		<property name="basedir" value="${system.WORKSPACE}" />
 		<findbugs home="${findbugs.home}"
 			  output="xml"
@@ -270,9 +308,9 @@
 			  warningsProperty="findbugs.warnings">
 			<class location="${basedir}/update-site/plugins/" />
 			<sourcePath path="${basedir}/plugins/" />
-			<!-- auxClasspath path="${basedir}/lib/Regex.jar" / -->
+			<!-- auxClasspath path="${basedir}/lib/Regex.jar" />
 		</findbugs>
-	</target>
+	</target -->
 
 	
 	<target name="clean">
