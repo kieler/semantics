@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
-<plugin>
-	<extension point="de.cau.cs.kieler.ksbase.configuration">
+<plugin> 
+	<extension
+       point="de.cau.cs.kieler.ksbase.configuration">
 		<configuration XtendFile="src/transformations/feature.ext"
 			contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
 			defautlIcon="icons/obj16/State.gif"
@@ -92,8 +93,18 @@
 					</transformationCommand>
 					<transformationCommand transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
 				</menuContribution>
+    <menuContribution
+          locationURI="popup:de.cau.cs.kieler">
+          <transformationCommand transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addPred"></transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addChoice">
+					</transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addSuc"></transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.sbase.connect"></transformationCommand>
+    </menuContribution>
 
 			</menus>
 		</configuration>
 	</extension>
+
 </plugin>
