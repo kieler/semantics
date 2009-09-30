@@ -16,22 +16,23 @@ package de.cau.cs.kieler.synccharts.custom;
 
 import java.util.List;
 
+import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.gmf.runtime.diagram.ui.figures.ShapeCompartmentFigure;
 
 /**
  * An OpenRectangleFigure that draws only its outline sides under certain
  * conditions. It iterates its sibling figures and determines which are
  * neighbors on which sides and how far they are away.
  * <p>
- * In general it draws only its east and south border. Even then only iff 
- * at the corresponding side there is a neighbor. If there is no neighbor (e.g.
- * if the figure is at the lower bottom of its parent) then the side is not
- * drawn.
+ * In general it draws only its east and south border. Even then only iff at the
+ * corresponding side there is a neighbor. If there is no neighbor (e.g. if the
+ * figure is at the lower bottom of its parent) then the side is not drawn.
  * <p>
- * If the neighbors are too far away, the corresponding site still gets drawn
- * to get clear bounds if the children are laid out sparsely.
- *  
+ * If the neighbors are too far away, the corresponding site still gets drawn to
+ * get clear bounds if the children are laid out sparsely.
+ * 
  * @author haf
  * 
  */
@@ -43,10 +44,10 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
     private int siblingLevel = 1;
 
     private int margin = 10;
-    
+
     /**
-     * Iterate your siblings and determine if they are neighbors and on
-     * what sides and how far away. Configure your side drawing accordingly.
+     * Iterate your siblings and determine if they are neighbors and on what
+     * sides and how far away. Configure your side drawing accordingly.
      */
     public void checkNeighbors() {
         this.north = false;
@@ -79,10 +80,12 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
                     // check if there is also something west or north. Then
                     // we check if it is too far away so it would make sense
                     // to draw the border
-                    int dist = myBounds.getTopLeft().x - herBounds.getTopRight().x; 
+                    int dist = myBounds.getTopLeft().x
+                            - herBounds.getTopRight().x;
                     if (dist >= 0 && westDistance > dist)
                         westDistance = dist;
-                    dist = myBounds.getTopLeft().y - herBounds.getBottomRight().y;
+                    dist = myBounds.getTopLeft().y
+                            - herBounds.getBottomRight().y;
                     if (dist >= 0 && northDistance > dist)
                         northDistance = dist;
                     // check how far we are from the border
@@ -92,30 +95,34 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
                     dist = myBounds.getTopLeft().y;
                     if (dist >= 0 && northDistance > dist)
                         northDistance = dist;
-                    dist = parent.getClientArea().getBottomRight().x - myBounds.getBottomRight().x ;
+                    dist = parent.getClientArea().getBottomRight().x
+                            - myBounds.getBottomRight().x;
                     if (dist >= 0 && eastDistance > dist)
                         eastDistance = dist;
-                    dist = parent.getClientArea().getBottomRight().y - myBounds.getBottomRight().y;
+                    dist = parent.getClientArea().getBottomRight().y
+                            - myBounds.getBottomRight().y;
                     if (dist >= 0 && southDistance > dist)
                         southDistance = dist;
                 }
             }
             // don't draw if we are too near (either parent border or neighbor)
-            if(westDistance < Integer.MAX_VALUE && westDistance > this.margin )
+            if (westDistance < Integer.MAX_VALUE && westDistance > this.margin)
                 this.west = true;
-            if(northDistance < Integer.MAX_VALUE && northDistance > this.margin )
+            if (northDistance < Integer.MAX_VALUE
+                    && northDistance > this.margin)
                 this.north = true;
-            if(eastDistance < Integer.MAX_VALUE && eastDistance > this.margin )
+            if (eastDistance < Integer.MAX_VALUE && eastDistance > this.margin)
                 this.east = true;
-            if(southDistance < Integer.MAX_VALUE && southDistance > this.margin )
+            if (southDistance < Integer.MAX_VALUE
+                    && southDistance > this.margin)
                 this.south = true;
         }
     }
 
     /**
-     * Indicate that all sibling shall check for their neighbors. This is 
-     * likely be called whenever this figure has been modified (e.g. moved) and
-     * all siblings have to be checked whether this is still a neighbor or not.
+     * Indicate that all sibling shall check for their neighbors. This is likely
+     * be called whenever this figure has been modified (e.g. moved) and all
+     * siblings have to be checked whether this is still a neighbor or not.
      */
     public void allCheck() {
         IFigure parent = this;
@@ -135,7 +142,7 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
                                 children = ((IFigure) child).getChildren();
                             if (child instanceof NeighborAwareOpenRectangleFigure)
                                 ((NeighborAwareOpenRectangleFigure) child)
-                                .checkNeighbors();
+                                        .checkNeighbors();
                         }
                     }
                 }
@@ -144,8 +151,8 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
     }
 
     /**
-     * Overriding the realRepaint() method in order to trigger a check
-     * for neighborhood for all siblings whenever this figure is modified.
+     * Overriding the realRepaint() method in order to trigger a check for
+     * neighborhood for all siblings whenever this figure is modified.
      */
     @Override
     public void realRepaint() {
@@ -154,58 +161,92 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
     }
 
     /**
+     * Overriding shouldRepaint to test whether the sides must be checked again.
+     * Will return true either if this bounds have changed or the bounds of the
+     * "real" parent
+     */
+    @Override
+    public boolean shouldRepaint() {
+        Rectangle r = Rectangle.SINGLETON.setBounds(getBounds());
+        if (preBounds == null || !r.equals(preBounds)) {
+            preBounds = r.getCopy();
+            return true;
+        } else {
+            // find the "real" parent and not only the plate on which the
+            // region is drawn
+            IFigure myParent = this;
+            while (myParent != null
+                    && !(myParent instanceof ShapeCompartmentFigure)) {
+                myParent = myParent.getParent();
+            }
+            if (myParent != null) {
+                Rectangle parentBounds = myParent.getBounds();
+                if (preParentBounds == null
+                        || !parentBounds.equals(preParentBounds)) {
+                    preParentBounds = parentBounds.getCopy();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Set the hierarchy level on which this figure searches for sibling
      * neighbors. In a complex context (e.g. in the Eclipse Graphical Editing
-     * Framework or Graphical Modeling Framework) the 
+     * Framework or Graphical Modeling Framework) the
      * NeigborAwareOpenRectangleFigures might be nested in an additional parent.
      * Like:
      * <ul>
-     *  <li>Parent Figure </li>
-     *  <li>
-     *          <ul>
-     *                  <li>DefaultSizeNodeFigure</li>
-     *                  <li> 
-     *                  <ul>
-     *                  <li> NeighborAwareOpenRectangleFigure</li>
-     *                  </ul>
-     *                  </li>
-     *                  <li>DefaultSizeNodeFigure</li>
-     *                  <li> 
-     *                  <ul>
-     *                  <li> NeighborAwareOpenRectangleFigure</li>
-     *                  </ul>
-     *                  </li>
-     *                  <li>DefaultSizeNodeFigure</li>
-     *                  <li> 
-     *                  <ul>
-     *                  <li> NeighborAwareOpenRectangleFigure</li>
-     *                  </ul>
-     *                  </li>
-     *                  <li>...</li>
-     *          </ul>
-     *   </li>
+     * <li>Parent Figure</li>
+     * <li>
+     * <ul>
+     * <li>DefaultSizeNodeFigure</li>
+     * <li>
+     * <ul>
+     * <li>NeighborAwareOpenRectangleFigure</li>
+     * </ul>
+     * </li>
+     * <li>DefaultSizeNodeFigure</li>
+     * <li>
+     * <ul>
+     * <li>NeighborAwareOpenRectangleFigure</li>
+     * </ul>
+     * </li>
+     * <li>DefaultSizeNodeFigure</li>
+     * <li>
+     * <ul>
+     * <li>NeighborAwareOpenRectangleFigure</li>
+     * </ul>
+     * </li>
+     * <li>...</li>
+     * </ul>
+     * </li>
      * </ul>
      * 
      * Hence this siblingLevel tells the figure not only look into its parent,
-     * but the corresponding amount of levels up in the hierarchy and just then 
+     * but the corresponding amount of levels up in the hierarchy and just then
      * dive back into it. For simplicity this only covers the simple trees like
      * shown above and not arbitrary trees.
      * 
-     * @param level the hierarchy level which shall be used to find
-     *        sibling elements.
+     * @param level
+     *            the hierarchy level which shall be used to find sibling
+     *            elements.
      */
     public void setSiblingLevel(int level) {
         this.siblingLevel = level;
     }
 
     /**
-     * Set the margin from either the border of the parent or siblings
-     * at which the corresponding sides shall be drawn no matter what.
-     * This can help to clarify a nodes bounds if it is too far away from its 
-     * neighbors or the parent bounds.
-     * @param margin the desired margin.
+     * Set the margin from either the border of the parent or siblings at which
+     * the corresponding sides shall be drawn no matter what. This can help to
+     * clarify a nodes bounds if it is too far away from its neighbors or the
+     * parent bounds.
+     * 
+     * @param margin
+     *            the desired margin.
      */
-    public void setNoDrawMargin(int margin){
+    public void setNoDrawMargin(int margin) {
         this.margin = margin;
     }
 }

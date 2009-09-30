@@ -38,6 +38,9 @@ public class OpenRectangleFigure extends Shape {
     /** earlier bounds to check if bounds have changed
      */
     protected Rectangle preBounds;
+    /** earlier bounds to check if bounds have changed
+     */
+    protected Rectangle preParentBounds;
 
     /**
      * Set which sides of the rectangle shall be drawn. If a value is true, 
@@ -73,6 +76,15 @@ public class OpenRectangleFigure extends Shape {
     }
     
     /**
+     * Test whether the realRepaint should be called or not. May be 
+     * overriden by subclasse. Default always to true.
+     * @return true
+     */
+    public boolean shouldRepaint(){
+        return true;
+    }
+    
+    /**
      * Draws the outline of the shape, i.e. a rectangle where not all
      * border get drawn but only those specified by the setDrawSide() method.
      * @see Shape#outlineShape(Graphics)
@@ -85,11 +97,9 @@ public class OpenRectangleFigure extends Shape {
 
         Rectangle r = Rectangle.SINGLETON.setBounds(getBounds());
         
-        if( preBounds == null || ! r.equals(preBounds)){
-            preBounds = r.getCopy();
+        if(shouldRepaint())
             this.realRepaint();
-        }
-        
+                
         r.x += inset1 ; 
         r.y += inset1; 
         r.width -= inset1 + inset2;
@@ -105,4 +115,6 @@ public class OpenRectangleFigure extends Shape {
         if (west)
             graphics.drawLine(r.getBottomLeft(), r.getTopLeft());
     }
+    
+    
 }
