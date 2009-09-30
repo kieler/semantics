@@ -1,112 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
- <extension
-         point="de.cau.cs.kieler.ksbase.configuration">
-               <configuration
-                     XtendFile="src/transformations/feature.ext"
-                     contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
-                     defautlIcon="icons/obj16/State.gif"
-                     editor="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor"
-                     packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage">
-         <transformation
-               keyboardShortcut="CTRL+K S"
-               name="Add Successor State"
-               selectionCount="1"
-               transformation="addSuccessorState"
-               transformationId="de.cau.cs.kieler.sbase.addSuc">
-            <element_selection
-                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
-            </element_selection>
-            <element_selection
-                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
-            </element_selection>
-         </transformation>
-         <transformation
-               keyboardShortcut="CTRL+K P"
-               name="Add Predecessor State"
-               selectionCount="1"
-               transformation="addPredecessorState"
-               transformationId="de.cau.cs.kieler.sbase.addPred">
-            <element_selection
-                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
-            </element_selection>
-            <element_selection
-                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
-            </element_selection>
-            <element_selection
-                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
-            </element_selection>
-         </transformation>
-         <transformation
-               keyboardShortcut="CTRL+K C"
-               name="Add Choice"
-               selectionCount="1"
-               transformation="addChoice"
-               transformationId="de.cau.cs.kieler.sbase.addChoice">
-            <element_selection
-                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
-            </element_selection>
-            <element_selection
-                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
-            </element_selection>
-            <element_selection
-                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
-            </element_selection>
-         </transformation>
-         <transformation
-               icon="icons/obj16/Transition.gif"
-               keyboardShortcut="CTRL+K F"
-               name="Flip Transition"
-               selectionCount="1"
-               transformation="flipTransition"
-               transformationId="de.cau.cs.kieler.sbase.flip">
-            <element_selection
-                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart">
-            </element_selection>
-         </transformation>
-         <transformation
-               icon="icons/obj16/Action.gif"
-               keyboardShortcut="CTRL+K W"
-               name="Connect States"
-               selectionCount="2"
-               transformation="connectStates"
-               transformationId="de.cau.cs.kieler.sbase.connect">
-            <element_selection
-                  class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
-            </element_selection>
-         </transformation>
-                <transformation
-                      icon="icons/obj16/Region.gif"
-                      name="Add ABRO"
-                      selectionCount="1"
-                      transformation="addABRO"
-                      transformationId="de.cau.cs.kieler.sbase.addABRO">
-          <element_selection
-                class="de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart">
-          </element_selection>
-       </transformation>
-      
-               <menuContribution
-                     locationURI="menu:de.cau.cs.kieler">
-                  <menu
-                        label="Templates"
-                        id="de.cau.cs.kieler.synccharts.sbase.templates">
-                     <transformationCommand
-                           transformationId="de.cau.cs.kieler.sbase.addABRO"></transformationCommand>
-                  </menu>
-                  <transformationCommand
-                        transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
-                  <transformationCommand
-                        transformationId="de.cau.cs.kieler.sbase.addPred"></transformationCommand>
-                  <transformationCommand
-                        transformationId="de.cau.cs.kieler.sbase.addChoice">
-                  </transformationCommand>
-                  <transformationCommand
-                        transformationId="de.cau.cs.kieler.sbase.addSuc"></transformationCommand>
-                  <transformationCommand
-                        transformationId="de.cau.cs.kieler.sbase.connect"></transformationCommand>
-               </menuContribution>
-               </configuration>
-   </extension>
+	<extension point="de.cau.cs.kieler.ksbase.configuration">
+		<configuration XtendFile="src/transformations/feature.ext"
+			contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+			defautlIcon="icons/obj16/State.gif"
+			editor="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor"
+			packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage">
+			<transformations>
+				<transformation keyboardShortcut="CTRL+K S"
+					name="Add Successor State" selectionCount="1" transformation="addSuccessorState"
+					transformationId="de.cau.cs.kieler.sbase.addSuc">
+					<element_selection
+						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
+					</element_selection>
+					<element_selection
+						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
+					</element_selection>
+				</transformation>
+				<transformation keyboardShortcut="CTRL+K P"
+					name="Add Predecessor State" selectionCount="1" transformation="addPredecessorState"
+					transformationId="de.cau.cs.kieler.sbase.addPred">
+					<element_selection
+						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
+					</element_selection>
+					<element_selection
+						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
+					</element_selection>
+					<element_selection
+						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
+					</element_selection>
+				</transformation>
+				<transformation keyboardShortcut="CTRL+K C" name="Add Choice"
+					selectionCount="1" transformation="addChoice"
+					transformationId="de.cau.cs.kieler.sbase.addChoice">
+					<element_selection
+						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
+					</element_selection>
+					<element_selection
+						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
+					</element_selection>
+					<element_selection
+						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
+					</element_selection>
+				</transformation>
+				<transformation icon="icons/obj16/Transition.gif"
+					keyboardShortcut="CTRL+K F" name="Flip Transition" selectionCount="1"
+					transformation="flipTransition" transformationId="de.cau.cs.kieler.sbase.flip">
+					<element_selection
+						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart">
+					</element_selection>
+				</transformation>
+				<transformation icon="icons/obj16/Action.gif"
+					keyboardShortcut="CTRL+K W" name="Connect States" selectionCount="2"
+					transformation="connectStates" transformationId="de.cau.cs.kieler.sbase.connect">
+					<element_selection
+						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
+					</element_selection>
+				</transformation>
+				<transformation icon="icons/obj16/Region.gif" name="Add ABRO"
+					selectionCount="1" transformation="addABRO" transformationId="de.cau.cs.kieler.sbase.addABRO">
+					<element_selection
+						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart">
+					</element_selection>
+
+				</transformation>
+
+				<transformation icon="icons/obj16/Signal.gif" name="Create Default"
+					selectionCount="1" transformation="createDefault" transformationId="de.cau.cs.kieler.sbase.empty">
+					<element_selection
+						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart">
+					</element_selection>
+				</transformation>
+			</transformations>
+			<menus>
+				<menuContribution locationURI="menu:de.cau.cs.kieler">
+					<menu label="Templates" id="de.cau.cs.kieler.synccharts.sbase.templates">
+						<transformationCommand transformationId="de.cau.cs.kieler.sbase.addABRO"></transformationCommand>
+						<transformationCommand transformationId="de.cau.cs.kieler.sbase.empty">
+						</transformationCommand>
+					</menu>
+					<transformationCommand transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addPred"></transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addChoice">
+					</transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addSuc"></transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.sbase.connect"></transformationCommand>
+				</menuContribution>
+				<menuContribution locationURI="toolbar:de.cau.cs.kieler">
+					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addChoice">
+					</transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
+				</menuContribution>
+
+			</menus>
+		</configuration>
+	</extension>
 </plugin>
