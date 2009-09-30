@@ -155,15 +155,15 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 	 * @return The decoration.
 	 */
 	private RotatableDecoration createArrowDecoration() {
-		PolylineDecoration arrowDecoration = new PolylineDecoration();
-		arrowDecoration.setLineWidth(2);
-		arrowDecoration.setForegroundColor(ColorConstants.black);
-		arrowDecoration.setBackgroundColor(ColorConstants.black);
-		PointList arrowDecorationPoints = new PointList();
-		arrowDecorationPoints.addPoint(-2, 2);
-		arrowDecorationPoints.addPoint(0, 0);
-		arrowDecorationPoints.addPoint(-2, -2);
-		arrowDecoration.setTemplate(arrowDecorationPoints);
+		PolygonDecoration arrowDecoration = new PolygonDecoration();
+		//arrowDecoration.setLineWidth(2);
+		//arrowDecoration.setForegroundColor(ColorConstants.black);
+		//arrowDecoration.setBackgroundColor(ColorConstants.black);
+		//PointList arrowDecorationPoints = new PointList();
+		//arrowDecorationPoints.addPoint(-2, 2);
+		//arrowDecorationPoints.addPoint(0, 0);
+		//arrowDecorationPoints.addPoint(-2, -2);
+		//arrowDecoration.setTemplate(arrowDecorationPoints);
 		return arrowDecoration;
 	}
 
