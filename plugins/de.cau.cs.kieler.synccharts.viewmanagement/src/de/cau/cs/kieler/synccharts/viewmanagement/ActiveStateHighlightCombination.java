@@ -71,10 +71,10 @@ public class ActiveStateHighlightCombination extends ACombination {
         		if (triggerEvent.getTriggerState() 
         				&& !effects.containsKey(editPart)) {
 
-        			if (layoutEffect == null) {
-            			layoutEffect = new LayoutEffect();
-            			layoutEffect.setTarget(this.rootEditPart);
-            		}
+//        			if (layoutEffect == null) {
+//            			layoutEffect = new LayoutEffect();
+//            			layoutEffect.setTarget(this.rootEditPart);
+//            		}
         					ShapeHighlightEffect effect = new ShapeHighlightEffect();
         					//HighlightEffect effect = new HighlightEffect();
         					effect.setTarget((ShapeEditPart)editPart);
