@@ -37,6 +37,19 @@ main() {
 	
 	// special settings for all compartments
 	model.diagram.allSubobjectsOfType(GenCompartment)[GenCompartment] ->map compartmentSettings();
+	
+	// set some default preferences
+	model.diagram.preferences := object GenDiagramPreferences{
+		showPopupBars := false;
+		rulerUnits := RulerUnits::CENTIMETERS;
+	};
+
+	// set some default colors
+	model.diagram.preferences.lineColor := object GenConstantColor{name := DiagramColors::black;}; 
+	model.diagram.preferences.fillColor := object GenConstantColor{name := DiagramColors::white;};
+	model.diagram.preferences.fontColor := object GenConstantColor{name := DiagramColors::black;};
+	model.diagram.preferences.noteFillColor := object GenConstantColor{name := DiagramColors::yellow;};
+	model.diagram.preferences.noteLineColor := object GenConstantColor{name := DiagramColors::orange;};
 }
 
 mapping inout GenCompartment::compartmentSettings(){

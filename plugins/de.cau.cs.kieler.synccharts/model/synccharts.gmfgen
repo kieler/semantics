@@ -701,6 +701,25 @@
             genLinks="//@diagram/@links.0"/>
       </groups>
     </palette>
+    <preferences
+        showPopupBars="false"
+        rulerUnits="CENTIMETERS">
+      <fontColor
+          xsi:type="gmfgen:GenConstantColor"
+          name="black"/>
+      <fillColor
+          xsi:type="gmfgen:GenConstantColor"
+          name="white"/>
+      <lineColor
+          xsi:type="gmfgen:GenConstantColor"
+          name="black"/>
+      <noteFillColor
+          xsi:type="gmfgen:GenConstantColor"
+          name="yellow"/>
+      <noteLineColor
+          xsi:type="gmfgen:GenConstantColor"
+          name="orange"/>
+    </preferences>
     <preferencePages
         xsi:type="gmfgen:GenStandardPreferencePage"
         iD="de.cau.cs.kieler.synccharts.diagram.general"
@@ -734,6 +753,7 @@
       printingEnabled="true">
     <requiredPlugins>org.eclipse.draw2d</requiredPlugins>
     <requiredPlugins>de.cau.cs.kieler.synccharts.custom</requiredPlugins>
+    <requiredPlugins>de.cau.cs.kieler.synccharts.labelparser.bridge</requiredPlugins>
   </plugin>
   <editor/>
   <navigator>
