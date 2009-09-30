@@ -61,6 +61,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     }
 
     /**
+     * @generated
      */
     public void start(BundleContext context) throws Exception {
         super.start(context);
@@ -68,6 +69,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
         PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT,
                 getPreferenceStore());
         adapterFactory = createAdapterFactory();
+
         SyncchartsContentAdapter.init();
     }
 
