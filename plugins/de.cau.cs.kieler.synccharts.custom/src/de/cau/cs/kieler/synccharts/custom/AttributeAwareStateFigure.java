@@ -36,7 +36,7 @@ import de.cau.cs.kieler.synccharts.State;
  * @author schm
  *
  */
-public class AttributeAwareStateFigure extends AttributeAwareShape {
+public class AttributeAwareStateFigure extends AttributeAwareFigure {
 	
 	boolean containsRegions;
 	boolean containsSignals;
