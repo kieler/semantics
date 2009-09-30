@@ -1,5 +1,7 @@
 import synccharts;
-
+///////////////////////////////////////////
+//More ore less usefull transformations ///
+///////////////////////////////////////////
 Void addSuccessorState(State source):
  let target = new State:
  connectStates(source, target) ->
@@ -32,6 +34,17 @@ let transition = new Transition:
 transition.setSourceState(source) ->
 transition.setTargetState(target) ->
 source.outgoingTransitions.add(transition)
+;
+
+/////////////////////////
+//     Templates      ///
+/////////////////////////
+Void createDefault(Region rootRegion):
+let state = new State:
+let region = new Region:
+state.setLabel("SyncChart") ->
+state.regions.add(region) ->
+rootRegion.innerStates.add(state)
 ;
 
 Void addABRO(Region rootRegion):
