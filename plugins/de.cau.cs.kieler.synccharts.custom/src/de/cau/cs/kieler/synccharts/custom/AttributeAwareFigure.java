@@ -26,6 +26,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.graphics.Color;
 
 /**
  * This class represents node figures that are aware of changes made to
@@ -144,6 +145,24 @@ public class AttributeAwareFigure extends Figure implements Adapter {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	        * @see org.eclipse.draw2d.Figure#setForegroundColor(org.eclipse.swt.graphics.Color)
+	        */
+	        @Override
+	        public void setForegroundColor(Color fg) {
+	            super.setForegroundColor(fg);
+	            currentFigure.setForegroundColor(fg);
+	        }
+
+	        /* (non-Javadoc)
+	        * @see org.eclipse.draw2d.Figure#setBackgroundColor(org.eclipse.swt.graphics.Color)
+	        */
+	        @Override
+	        public void setBackgroundColor(Color bg) {
+	            super.setBackgroundColor(bg);
+	            currentFigure.setBackgroundColor(bg);
+	        }
+	
 	/**
 	 * Adjust the appearance to the changes reported in the notification.
 	 * @param notification The notification containing the changes made to the model element.
