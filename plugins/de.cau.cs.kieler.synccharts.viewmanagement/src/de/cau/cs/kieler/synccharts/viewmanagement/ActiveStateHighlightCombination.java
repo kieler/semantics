@@ -14,10 +14,14 @@ import de.cau.cs.kieler.viewmanagement.ATrigger;
 import de.cau.cs.kieler.viewmanagement.RunLogic;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 import de.cau.cs.kieler.viewmanagement.effects.HighlightEffect;
+import de.cau.cs.kieler.viewmanagement.effects.LayoutEffect;
+import de.cau.cs.kieler.viewmanagement.effects.ShapeHighlightEffect;
 
 public class ActiveStateHighlightCombination extends ACombination {
     /** The root EditPart of the editor. */
     private EditPart rootEditPart;
+    
+    private LayoutEffect layoutEffect;
 
     /** The single instance of this plug-in. */
     private static ActiveStateHighlightCombination instance;
@@ -53,7 +57,8 @@ public class ActiveStateHighlightCombination extends ACombination {
 	
     StateActivityTrigger trigger;
 
-    Map<EditPart, HighlightEffect> effects = new HashMap<EditPart, HighlightEffect>();
+    //Map<EditPart, HighlightEffect> effects = new HashMap<EditPart, HighlightEffect>();
+    Map<EditPart, ShapeHighlightEffect> effects = new HashMap<EditPart, ShapeHighlightEffect>();
 
     @Override
     public boolean evaluate(TriggerEventObject triggerEvent) {
@@ -65,13 +70,23 @@ public class ActiveStateHighlightCombination extends ACombination {
                 triggerEvent.getAffectedObject();
         		if (triggerEvent.getTriggerState() 
         				&& !effects.containsKey(editPart)) {
-        					HighlightEffect effect = new HighlightEffect();
+
+        			if (layoutEffect == null) {
+            			layoutEffect = new LayoutEffect();
+            			layoutEffect.setTarget(this.rootEditPart);
+            		}
+        					ShapeHighlightEffect effect = new ShapeHighlightEffect();
+        					//HighlightEffect effect = new HighlightEffect();
         					effect.setTarget((ShapeEditPart)editPart);
-        					effect.setHighlightFigure(3, ColorConstants.red );
+        					//effect.setHighlightFigure(3, ColorConstants.red );
+        					effect.setColors(ColorConstants.blue, ColorConstants.lightBlue);
+        					
+        					
         					effects.put(editPart, effect);
         					return true;
        			} else if (!triggerEvent.getTriggerState()) {
-        				HighlightEffect effect = effects.get(editPart);
+//	    				HighlightEffect effect = effects.get(editPart);
+        				ShapeHighlightEffect effect = effects.get(editPart);
         				if(effect!=null)
         					effect.undo();
         				effects.remove(editPart);
@@ -100,9 +115,14 @@ public class ActiveStateHighlightCombination extends ACombination {
 
     @Override
     public void execute() {
-        for (HighlightEffect effect : effects.values()) {
+//        for (HighlightEffect effect : effects.values()) {
+//            effect.execute();
+//        }
+        for (ShapeHighlightEffect effect : effects.values()) {
             effect.execute();
         }
+        //if (layoutEffect != null)
+        	//layoutEffect.execute();
     }
 
     @Override

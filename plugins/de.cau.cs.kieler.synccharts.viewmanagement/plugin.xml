@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.synccharts.viewmanagement.StateActivityConsumer"
+            class="de.cau.cs.kieler.synccharts.viewmanagement.StateActivityObserver"
             id="de.cau.cs.kieler.sim.viewmanagement.stateactivity"
             name="Viewmanagement SyncCharts Visualizer">
       </content>
