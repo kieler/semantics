@@ -1,0 +1,52 @@
+«IMPORT synccharts»
+
+«EXTENSION template::helper»
+
+«DEFINE main FOR Region-»
+	«FILE "Dummy.sc"-»
+	«EXPAND tickstart-»
+	«EXPAND init-»
+	«EXPAND tickend-»
+	«ENDFILE-»
+«ENDDEFINE»
+
+«DEFINE tickstart FOR Region-»
+	TICKSTART(isInit);
+	
+«ENDDEFINE»
+
+«DEFINE init FOR Region-»
+	«FOREACH innerStates AS startState-»
+«EXPAND execinit FOREACH startState.regions-»
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE execinit FOR Region-»
+	«FOREACH innerStates AS state-»
+		«IF !(state.isInitial || state.isFinal || state.regions.isEmpty)-»
+«state.label-»:		
+«EXPAND buildforks FOREACH state.regions-»
+		PARE(0, «state.label»main, «getChildrenSet(state.regions.innerStates.select(e|!(e.isFinal) && !(e.isInitial)))»);
+		
+			«EXPAND execinit FOREACH state.regions-»
+		«ENDIF-»
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«REM» 
+
+	not childstates in PAR -> parallel Threads! 
+
+«ENDREM»
+
+«DEFINE buildforks FOR Region-»
+	«FOREACH innerStates AS childState-»
+		«IF !(childState.isInitial || childState.isFinal)-»
+		PAR(0, «childState.label-», ids[«childState.label-»]);
+		«ENDIF-»
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE tickend FOR Region-»
+		TICKEND;
+«ENDDEFINE»

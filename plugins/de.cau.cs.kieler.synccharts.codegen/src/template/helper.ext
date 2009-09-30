@@ -1,0 +1,13 @@
+import synccharts;
+
+String builtString(List stateList): 
+	// is the list empty?
+	stateList.isEmpty ? "":
+	"id2b("
+	+ ((synccharts::State)stateList.first()).label
+	+ ") | "
+	+ builtString(stateList.withoutFirst())
+	+ builtString(((synccharts::State)stateList.first()).regions.innerStates.select(e|!(e.isFinal) && !(e.isInitial)));
+
+String getChildrenSet(List stateList):
+	builtString(stateList).subString(0, builtString(stateList).length - 3);

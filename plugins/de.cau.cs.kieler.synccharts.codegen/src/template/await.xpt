@@ -1,0 +1,50 @@
+«IMPORT synccharts»
+
+«EXTENSION template::helper»
+
+«DEFINE main FOR Region-»
+	«FILE "Dummy.sc"-»
+	«EXPAND await-»
+	«ENDFILE-»
+«ENDDEFINE»
+
+«DEFINE await FOR Region-»
+	«FOREACH innerStates.regions.innerStates AS awaitState-»
+		«IF (!(awaitState.type.toString().matches("PSEUDO")) && !(awaitState.isInitial))-»
+			«IF awaitState.outgoingTransitions.size == 1-»
+			
+__LABEL__:
+					AWAIT(«awaitState.outgoingTransitions.first().triggersAndEffects-»);
+				«IF awaitState.outgoingTransitions.first().targetState.isFinal-»
+					TERM;
+				«ELSE»
+					GOTO(__LABEL__);
+				«ENDIF-»
+			«ELSEIF awaitState.outgoingTransitions.size > 1-»
+
+__LOOP__:
+					PAUSE;
+				«LET awaitState.outgoingTransitions.size AS size»
+					«FOREACH awaitState.outgoingTransitions AS trans ITERATOR i-»
+						«IF i.counter1 != size-»
+					PRESENT(«trans.triggersAndEffects», «trans.triggersAndEffects»_not_present);
+							«IF trans.targetState.isFinal-»
+					TERM;
+							«ELSE-»
+					GOTO(«trans.triggersAndEffects»_present);
+							«ENDIF-»
+«trans.triggersAndEffects»_not_present:
+						«ELSE-»
+					PRESENT(«trans.triggersAndEffects», __LOOP__);
+							«IF trans.targetState.isFinal-»
+					TERM;
+							«ELSE-»
+					GOTO(«trans.triggersAndEffects»_present);
+							«ENDIF-»
+						«ENDIF-»
+					«ENDFOREACH-»
+				«ENDLET»
+			«ENDIF-»
+		«ENDIF-»
+	«ENDFOREACH-»
+«ENDDEFINE»
