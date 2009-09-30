@@ -87,9 +87,9 @@ context Transition if (isImmediate) ERROR "Immediate transitions must not have a
 context Transition ERROR "Delays have to be at least 1!" :
 	(delay == null) || (delay >= 1);
 
-//context State if(outgoingTransitions.size > 1) 
-//    ERROR "Priorities of outgoing transitions need to be distinct!" :
-//    (outgoingTransitions.forAll(t|t.priority != )));
+context State if(outgoingTransitions.size > 1) 
+    ERROR "Priorities of outgoing transitions need to be distinct!" :
+    (outgoingTransitions.forAll(t| outgoingTransitions.forAll(s| (s.priority != t.priority) || s == t)));
 
 // ================================================================================================
 // Expressions
