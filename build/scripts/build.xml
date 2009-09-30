@@ -8,7 +8,8 @@
 	<property name="eclipseConfig"         location="${scriptdir}/.eclipse" />
 	<property name="eclipseWorkspace"      location="${scriptdir}/.eclipseWorkspace" />
 	<property name="p2.director.workspace" location="${scriptdir}/.p2Workspace" />
-	
+	<property name="findbugs.home"         location="/home/kieler/findbugs" />
+  	
 	<!-- default definitions: should be overwritten while calling this script if necessary -->	
 	<property name="target"	      value="noTargetInfo"/>
 	<property name="feature"      value=" "/>
@@ -17,7 +18,8 @@
 	<property name="doc.excludes" value=" "/>
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="/home/kieler/ant-contrib/lib/ant-contrib.jar" />
-
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="/home/kieler/findbugs/lib/findbugs-ant.jar" />
+	
 	<target name="call.antRunner">
 		<!-- delete dir="${eclipseConfig}" />
 		<delete dir="${eclipseWorkspace}" />
@@ -218,7 +220,7 @@
 			</concat>
 			<filterchain>
 				<linecontainsregexp>
-					<regexp pattern="&lt;pathelement" />
+					<regexp pattern="&lt;pathelement path=&quot;../" />
 				</linecontainsregexp>
 				<linecontainsregexp negate="true">
 					<regexp pattern="/@dot&quot;" />
@@ -255,6 +257,23 @@
 		<!-- finally, invoke the generated build file -->
 		<ant antfile="${basedir}/build.javadoc.xml" dir="${basedir}" />
 	</target>
+
+	<target name="findbugs" description="experimental">
+		<property name="basedir" value="${system.WORKSPACE}" />
+		<findbugs home="${findbugs.home}"
+			  output="xml"
+			  outputFile="${basedir}/findbugs.report.xml"
+			  reportLevel="medium"
+			  effort="default"
+			  failOnError="false"
+			  errorProperty="findbugs.error"
+			  warningsProperty="findbugs.warnings">
+			<class location="${basedir}/update-site/plugins/" />
+			<sourcePath path="${basedir}/plugins/" />
+			<!-- auxClasspath path="${basedir}/lib/Regex.jar" / -->
+		</findbugs>
+	</target>
+
 	
 	<target name="clean">
 		<available file="${elementPath}/build.xml" property="buildFilePresent" />
