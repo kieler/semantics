@@ -1,8 +1,8 @@
 	<target name="doc">
 		<property name="doc.excludes" value=" " />
 		
-		<path id="feature.classpath">
-${doc.classpath}		</path>
+		<path id="doc.classpath">
+${feature.classpath}		</path>
 
 		<javadoc access="protected"
 			 author="true"
