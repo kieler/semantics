@@ -11,12 +11,13 @@
 	<property name="findbugs.home"         location="/home/kieler/findbugs" />
   	
 	<!-- default definitions: should be overwritten while calling this script if necessary -->	
-	<property name="target"	         value="noTargetInfo"/>
-	<property name="feature"         value=" "/>
-	<property name="product"         value=" "/>
-	<property name="pluginPath"      value=" "/>
-	<property name="doc.excludes"    value=" "/>
-	<property name="publish.feature" value="true"/>
+	<property name="target"	             value="noTargetInfo"/>
+	<property name="feature"             value=" "/>
+	<property name="product"             value=" "/>
+	<property name="pluginPath"          value=" "/>
+	<property name="doc.excludes"        value=" "/>
+	<property name="checkstyle.excludes" value=" "/>
+	<property name="publish.feature"     value="true"/>
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="/home/kieler/ant-contrib/lib/ant-contrib.jar" />
 	<taskdef resource="checkstyletask.properties" classpath="/home/kieler/checkstyle/checkstyle-all-5.0.jar" />
@@ -171,6 +172,7 @@
 			<target name="zip.logs" />
 			<target name="doc" />
 			<target name="findbugs" />
+			<target name="checkstyle" />
 		</ant>
 
 		<!-- run feature's build.xml: copy customized feature.xml into update-site folder
