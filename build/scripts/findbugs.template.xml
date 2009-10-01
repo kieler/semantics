@@ -1,21 +1,22 @@
 	<target name="findbugs" description="experimental">
-		<property name="basedir" value="${system.WORKSPACE}" />
-		
-		<path id="findbugs.classpath">
-${findbugs.classpath}		</path>
+		<path id="findbugs.auxClasses">
+${feature.classpath}		</path>
+
+		<path id="findbugs.sources">
+			<dirset dir="${basedir}/plugins/" includes="**/src,**/srcgen" />
+		</path>
 
 		<findbugs home="${findbugs.home}"
 			  output="xml"
 			  outputFile="${basedir}/findbugs.report.xml"
-			  auxClasspathRef="findbugs.classpath"
-			  reportLevel="medium"
+			  auxClasspathRef="findbugs.auxClasses"
+			  sourcePathRef="findbugs.sources"
+			  reportLevel="low"
 			  effort="default"
 			  failOnError="false"
-			  errorProperty="findbugs.error"
+			  errorProperty="findbugs.errors"
 			  warningsProperty="findbugs.warnings">
-			<class location="${basedir}/update-site/plugins/" />
-			<sourcePath path="${basedir}/plugins/" />
-			<!-- auxClasspath path="${basedir}/lib/Regex.jar" / -->
+			<class location="${findbugs.classes}" />
 		</findbugs>
 	</target>
 	

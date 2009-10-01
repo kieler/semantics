@@ -11,11 +11,12 @@
 	<property name="findbugs.home"         location="/home/kieler/findbugs" />
   	
 	<!-- default definitions: should be overwritten while calling this script if necessary -->	
-	<property name="target"	      value="noTargetInfo"/>
-	<property name="feature"      value=" "/>
-	<property name="product"      value=" "/>
-	<property name="pluginPath"   value=" "/>
-	<property name="doc.excludes" value=" "/>
+	<property name="target"	         value="noTargetInfo"/>
+	<property name="feature"         value=" "/>
+	<property name="product"         value=" "/>
+	<property name="pluginPath"      value=" "/>
+	<property name="doc.excludes"    value=" "/>
+	<property name="publish.feature" value="true"/>
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="/home/kieler/ant-contrib/lib/ant-contrib.jar" />
 	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="/home/kieler/findbugs/lib/findbugs-ant.jar" />
@@ -70,6 +71,8 @@
 								 plugins should be JARed (so far I discovered) -->
 			<arg value="-Ddoc.excludes=${doc.excludes}" />
 				<!-- comma separated path patterns excluded at javadoc generation -->
+			<arg value="-Dpublish.feature=${publish.feature}" />
+				<!-- set to false to suppress publishing to updatesite, default is true -->
 			<classpath>
 				<pathelement location="${eclipseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
@@ -101,7 +104,7 @@
 		</ant>
 		
 		<!-- read javac's classpath information from build.xml scripts -->		
-		<loadfile property="doc.classpath">
+		<loadfile property="feature.classpath">
 			<concat>
 				<fileset dir="plugins" includes="**/build.xml" />
 			</concat>
@@ -115,20 +118,33 @@
 				<linecontainsregexp negate="true">
 					<regexp pattern="/bin/&quot;" />
 				</linecontainsregexp>
+				<linecontainsregexp negate="true">
+					<regexp pattern="e4-workbench.jar" />
+				</linecontainsregexp>
 				<!-- separate enclosing tags to realize NOR function
 					 (multiple repexp conditions will be ANDed) -->
 			</filterchain>
 		</loadfile> 
 
-		<!-- load javadoc target template, insert classpath entries (via property doc.classpath) -->		
-		<loadfile property="replacement" srcfile="${scriptdir}/javadoc.template.xml">
+		<!-- load javadoc target template, insert classpath entries (via property feature.classpath) -->		
+		<loadfile property="doc.target" srcfile="${scriptdir}/javadoc.template.xml">
 			<filterchain>
 				<expandproperties />
 			</filterchain>
 		</loadfile>
 		
 		<!-- insert javadoc target in feature's build.xml -->		
-		<replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${replacement}&lt;/project&gt;" />
+		<replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${doc.target}&lt;/project&gt;" />
+
+		<!-- load findbugs target template, insert classpath entries (via property feature.classpath) -->		
+		<loadfile property="findbugs.target" srcfile="${scriptdir}/findbugs.template.xml">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadfile>
+		
+		<!-- insert findbugs target in feature's build.xml -->		
+		<replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${findbugs.target}&lt;/project&gt;" />
 
 		<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc -->		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
@@ -136,10 +152,12 @@
 			<property name="plugin.destination" value="${basedir}/update-site/plugins" />
 			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 			<property name="doc.packages" value="${scriptdir}/../package-lists" />
+			<property name="findbugs.classes" value="${plugin.destination}" />
 			<target name="clean" />
 			<target name="build.update.jar" />
 			<target name="zip.logs" />
 			<target name="doc" />
+			<target name="findbugs" />
 		</ant>
 
 		<!-- run feature's build.xml: copy customized feature.xml into update-site folder
@@ -152,12 +170,17 @@
 		
 		<!-- run feature's assemble.p2.xml: generate update site entry -->		
 		<echo message="STARTING p2 stuff" />
-		<ant antfile="assemble.${feature}.p2.xml">
+		<!-- ant antfile="assemble.${feature}.p2.xml">
 			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
-		</ant>
+		</ant -->
+		<condition property="suppress.publishing">
+			<isfalse value="${publish.feature}" />
+		</condition>
+		<antcall target="build.updatesiteEntry" />
+		
 	</target>
 	
-	<target name="build.updatesiteEntry" if="eclipse.running" description="target for creating an updatesite entry of last build results">
+	<target name="build.updatesiteEntry" if="eclipse.running" unless="suppress.publishing" description="target for creating an updatesite entry of last build results">
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
 		<property name="configs"       value="${feature.configs}" />
@@ -296,23 +319,6 @@
 		</ant>
 	</target>
 
-	<!-- target name="findbugs" description="experimental">
-		<property name="basedir" value="${system.WORKSPACE}" />
-		<findbugs home="${findbugs.home}"
-			  output="xml"
-			  outputFile="${basedir}/findbugs.report.xml"
-			  reportLevel="medium"
-			  effort="default"
-			  failOnError="false"
-			  errorProperty="findbugs.error"
-			  warningsProperty="findbugs.warnings">
-			<class location="${basedir}/update-site/plugins/" />
-			<sourcePath path="${basedir}/plugins/" />
-			<!-- auxClasspath path="${basedir}/lib/Regex.jar" />
-		</findbugs>
-	</target -->
-
-	
 	<target name="clean">
 		<available file="${elementPath}/build.xml" property="buildFilePresent" />
 	    <antcall target="cleanUp" />
