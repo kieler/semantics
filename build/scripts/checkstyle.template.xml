@@ -1,0 +1,12 @@
+	<target name="checkstyle" description="experimental">
+		<checkstyle config="${scriptdir}/checks.xml"
+				failureProperty="checkstyle.failure"
+			    failOnViolation="false">
+			<formatter type="xml"
+				   tofile="${basedir}/checkstyle.report.xml" />
+			<fileset dir="${checkstyle.sources}"
+				 includes="**/*.java"
+				 excludes="${checkstyle.excludes}" />
+		</checkstyle>
+	</target>
+	

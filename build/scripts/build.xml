@@ -31,7 +31,7 @@
 			<equals arg1="${system.TARGET}" arg2="$${system.TARGET}" />
 			<!-- targetP is the actual target parameter;
 				 $$ is the escape character for not resolving a properties link,
-				 this is needed here to for examining the definition of the system property
+				 here it is needed to examine the definition of the system property
 				 as the condition 'isset' doesn't work with system (environment) properties -->
 		</condition>
 
@@ -69,7 +69,7 @@
 						each folder should contain the subfolders 'features' and 'plugins'
 						can be relative (to ${basedir})
 						CAUTION: features must not be JARed
-								 plugins should be JARed (so far I discovered) -->
+								 plugins should be JARed (so far I figured out) -->
 			<arg value="-Ddoc.excludes=${doc.excludes}" />
 				<!-- comma separated path patterns excluded at javadoc generation -->
 			<arg value="-Dpublish.feature=${publish.feature}" />
@@ -147,6 +147,16 @@
 		<!-- insert findbugs target in feature's build.xml -->		
 		<replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${findbugs.target}&lt;/project&gt;" />
 
+		<!-- load checkstyle target template -->		
+		<loadfile property="checkstyle.target" srcfile="${scriptdir}/checkstyle.template.xml">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadfile>
+		
+		<!-- insert checkstyle target in feature's build.xml -->		
+		<replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${checkstyle.target}&lt;/project&gt;" />
+
 		<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc -->		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
 			<property name="javacDebugInfo" value="true" />
@@ -155,6 +165,7 @@
 			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 			<property name="doc.packages" value="${scriptdir}/../package-lists" />
 			<property name="findbugs.classes" value="${basedir}/update-site/plugins" />
+			<property name="checkstyle.sources" value="${basedir}/plugins" />
 			<target name="clean" />
 			<target name="build.update.jar" />
 			<target name="zip.logs" />
