@@ -41,9 +41,13 @@ source.outgoingTransitions.add(transition)
 /////////////////////////
 Void createDefault(Region rootRegion):
 let state = new State:
+let innerState = new State:
 let region = new Region:
 state.setLabel("SyncChart") ->
 state.regions.add(region) ->
+innerState.setLabel("Initial") ->
+innerState.setIsInitial(true) -> 
+region.innerStates.add(innerState) ->
 rootRegion.innerStates.add(state)
 ;
 
