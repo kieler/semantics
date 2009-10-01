@@ -19,8 +19,9 @@
 	<property name="publish.feature" value="true"/>
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="/home/kieler/ant-contrib/lib/ant-contrib.jar" />
+	<taskdef resource="checkstyletask.properties" classpath="/home/kieler/checkstyle/checkstyle-all-5.0.jar" />
 	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="/home/kieler/findbugs/lib/findbugs-ant.jar" />
-	
+
 	<target name="call.antRunner">
 		<!-- delete dir="${eclipseConfig}" />
 		<delete dir="${eclipseWorkspace}" />
@@ -148,11 +149,12 @@
 
 		<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc -->		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
+			<property name="javacDebugInfo" value="true" />
 			<property name="feature.destination" value="${basedir}/update-site/features" />
 			<property name="plugin.destination" value="${basedir}/update-site/plugins" />
 			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 			<property name="doc.packages" value="${scriptdir}/../package-lists" />
-			<property name="findbugs.classes" value="${plugin.destination}" />
+			<property name="findbugs.classes" value="${basedir}/update-site/plugins" />
 			<target name="clean" />
 			<target name="build.update.jar" />
 			<target name="zip.logs" />
@@ -234,7 +236,7 @@
 		<property name="doc.packages" value="${scriptdir}/../package-lists" />
 
 		<!-- first, we need to gather the classpath path entries from plugin's generated build files -->
-		<loadfile property="doc.classpath">
+		<loadfile property="feature.classpath">
 			<concat>
 				<fileset dir="${basedir}/../../">
 					<include name="*/workspace/plugins/*/build.xml" />
@@ -279,44 +281,6 @@
 		
 		<!-- finally, invoke the generated build file -->
 		<ant antfile="${basedir}/build.javadoc.xml" dir="${basedir}" />
-	</target>
-
-	<target name="findbugsInit" description="experimental">
-		<loadfile property="findbugs.classpath">
-			<concat>
-				<fileset dir="plugins" includes="*/build.xml" />
-			</concat>
-			<filterchain>
-				<linecontainsregexp>
-					<regexp pattern="&lt;pathelement" />
-				</linecontainsregexp>
-				<linecontainsregexp negate="true">
-					<regexp pattern="/@dot&quot;" />
-				</linecontainsregexp>
-				<linecontainsregexp negate="true">
-					<regexp pattern="/bin/&quot;" />
-				</linecontainsregexp>
-				<!-- separate enclosing tags to realize NOR function
-					 (multiple repexp conditions will be ANDed) -->
-			</filterchain>
-		</loadfile> 
-
-		<!-- load javadoc target template, insert classpath entries (via property doc.classpath) -->		
-		<loadfile property="replacement" srcfile="${scriptdir}/findbugs.template.xml">
-			<filterchain>
-				<expandproperties />
-			</filterchain>
-		</loadfile>
-		
-		<!-- insert javadoc target in feature's build.xml -->		
-		<replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${replacement}&lt;/project&gt;" />
-	</target>
-
-	<target name="findbugs" description="experimental">
-		<!-- run feature's build.xml: apply findbugs -->		
-		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
-			<target name="findbugs" />
-		</ant>
 	</target>
 
 	<target name="clean">

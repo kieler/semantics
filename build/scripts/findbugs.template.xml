@@ -3,7 +3,7 @@
 ${feature.classpath}		</path>
 
 		<path id="findbugs.sources">
-			<dirset dir="${basedir}/plugins/" includes="**/src,**/srcgen" />
+			<dirset dir="${basedir}/plugins/" includes="**/src,**/srcgen,**/src-gen" />
 		</path>
 
 		<findbugs home="${findbugs.home}"
