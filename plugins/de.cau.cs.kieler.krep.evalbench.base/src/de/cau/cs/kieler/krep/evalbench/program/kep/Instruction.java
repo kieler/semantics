@@ -69,7 +69,7 @@ public class Instruction extends de.cau.cs.kieler.krep.evalbench.program.Instruc
 	private int[] String2Array(String bin){
 		 int[] res = new int[5];
 		 // pad with 0
-		 String pad = new String();
+		 String pad = "";
 		 for (int i=0; i<5*8-bin.length(); i++){
 		     pad +="0";
 		 }

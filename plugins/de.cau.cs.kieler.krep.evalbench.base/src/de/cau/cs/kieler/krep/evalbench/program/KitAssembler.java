@@ -69,7 +69,7 @@ public class KitAssembler implements IAssembler {
 
 
     public void assemble(final String name, final Reader program) throws ParseException {
-	String s = new String();
+	String s = "";
 	char c;
 	try {
 	    while (program.ready()) {
@@ -139,7 +139,7 @@ public class KitAssembler implements IAssembler {
 	    }
 	} catch (final Exception e) {
 	    throw new ParseException(
-		    "Execution of external assembler program failed: "
+	    "Execution of external assembler program failed: "
 			    + e.getMessage());
 	}
     }

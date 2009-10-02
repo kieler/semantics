@@ -96,7 +96,7 @@ public class Tick {
      *		  String representation
      */
     public String toString(final IO io) {
-	String res = new String();
+	String res = "";
 	LinkedList<Signal> sigs = null;
 	switch (io) {
 	case INPUT:

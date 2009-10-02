@@ -82,7 +82,7 @@ public class InputSignalModifier implements ICellModifier {
 		case 0:
 			return s.getName();
 		case 1:
-			return new Boolean(s.getPresent());
+			return Boolean.valueOf(s.getPresent());
 		case 2:
 			Object value = s.getValue();
 			if (value != null)
@@ -115,7 +115,7 @@ public class InputSignalModifier implements ICellModifier {
 			try {
 				s.setValue(Integer.valueOf((String)value));
 			} catch (NumberFormatException e) {
-				s.setValue(new Integer(0));
+				s.setValue(0);
 			}
 			break;
 		}

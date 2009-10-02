@@ -145,7 +145,7 @@ public class Trace implements IPartListener, Iterator<Tick> {
 	    Boolean v = valid.get(i);
 	    String t[] = { tick.toString(IO.INPUT), tick.toString(IO.OUTPUT),
 		    tick.toString(IO.SAVED_OUTPUT),
-		    v == null ? (new String()) : Boolean.toString(v),
+		    v == null ? "" : Boolean.toString(v),
 		    String.valueOf(tick.getRT()) };
 	    res.add(t);
 	}
@@ -236,11 +236,11 @@ public class Trace implements IPartListener, Iterator<Tick> {
     // Misc
     @Override
     public String toString() {
-	String res = new String();
+	StringBuffer res = new StringBuffer();
 	for (Tick tick : ticks) {
-	    res += tick.toString(IO.INPUT) + ";\n";
+	    res.append(tick.toString(IO.INPUT) + ";\n");
 	}
-	return res;
+	return res.toString();
     }
 
     // Editor functions

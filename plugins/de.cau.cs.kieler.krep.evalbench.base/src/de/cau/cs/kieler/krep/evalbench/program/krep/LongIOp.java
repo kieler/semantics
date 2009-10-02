@@ -55,7 +55,7 @@ public class LongIOp extends Statement {
     @Override
     public String toString(){
 	String r = kind.toString();
-	String op = new String(); 
+	String op = ""; 
 	switch(kind){
 	case ADD: op = "+"; break;
 	case SUB: op = "-"; break;

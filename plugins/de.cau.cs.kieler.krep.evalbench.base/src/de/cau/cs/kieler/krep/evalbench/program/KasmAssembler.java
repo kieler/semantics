@@ -71,7 +71,7 @@ public class KasmAssembler implements IAssembler {
 
 	while (tokenizer.hasMoreTokens()) {
 	    final Signal signal = new Signal(tokenizer.nextToken(), false,
-		    valued ? new Integer(0) : null, newIndex);
+		    valued ? 0 : null, newIndex);
 	    signalIndex.put(signal.getName(), signal.getIndex());
 	    newIndex++;
 	    list.add(signal);
@@ -187,7 +187,7 @@ public class KasmAssembler implements IAssembler {
 
 
     public void assemble(final String name, final Reader program) throws ParseException {
-	String s = new String();
+	String s = "";
 	try {
 	    while (program.ready()) {
 		s += (char) (program.read());
@@ -229,7 +229,7 @@ public class KasmAssembler implements IAssembler {
 
     public String canExecute(final Config c) {
 	// TODO: implement Configuration for KEP
-	return new String("not yet implemented!");
+	return "not yet implemented!";
     }
 
 

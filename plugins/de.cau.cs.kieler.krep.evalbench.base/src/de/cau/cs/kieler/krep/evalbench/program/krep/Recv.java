@@ -8,9 +8,9 @@ import java.util.Map;
  */
 public class Recv extends Statement {
 
-    String Name; 
-    Integer ID;
-    Integer Reg;  
+    String name; 
+    Integer id;
+    Integer reg;  
     
         
     /**
@@ -18,32 +18,32 @@ public class Recv extends Statement {
      */
     public Recv(final String name) {
 	super();
-	Name = name;
+	this.name = name;
     }
 
     @Override
     public int[] getBytes() {
-	int b[] = {OPCODE.RECV, Reg, ID, 0};
+	int b[] = {OPCODE.RECV, reg, id, 0};
 	return b;
     }
     
     @Override
     public String toString(){
-	return "RECV " + Reg + " " +  ID + " (" + Name + ")";
+	return "RECV " + reg + " " +  id + " (" + name + ")";
     }
     
     @Override
     public void allocateRegs(Map<String, Integer> regs){
-	Reg=regs.size()+1;
-	regs.put(Name, Reg);	
+    	reg=regs.size()+1;
+	regs.put(name, reg);	
     }  
     
     @Override
     public void setBusID(Map<String, Integer> ids){
-	ID = ids.get(Name);
-	if(ID==null){
-	    ID=ids.size()+1;
-	    ids.put(Name, ID);
+    	id = ids.get(name);
+	if(id==null){
+		id=ids.size()+1;
+	    ids.put(name, id);
 	}
     }
     

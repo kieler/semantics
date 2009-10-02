@@ -152,9 +152,9 @@ public class KlpAssembler implements IAssembler {
 	int k = 0;
 	for (final Instruction i : instructions) {
 	    String opcode = i.writeObj();
-	    String num = new String();
+	    String num = "";
 	    if (opcode == null) {
-		opcode = new String();
+		opcode = "";
 	    } else {
 		rows.put(j, k);
 		num = String.valueOf(j++);

@@ -56,8 +56,8 @@ public class Tracer {
 	int lineNumber = 0;
 	int instrNumber =0;
 
-	String nextState = new String();
-	String nextTrans = new String();
+	String nextState = "";
+	String nextTrans ="";
 
 	HashMap<String, Integer> states = new HashMap<String, Integer>();
 	//HashMap<String, Integer> trans = new HashMap<String, Integer>();

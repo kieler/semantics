@@ -28,9 +28,9 @@ public class KepWrapper implements IKrepWrapper {
 
 	public KepWrapper() {
 		super();
-		String msg = null;
+		String msg = "";
 		kep_reset(msg);
-		if (msg != null) {
+		if (msg.length()>0) {
 			MessageView.print(msg);
 		}
 
@@ -75,11 +75,11 @@ public class KepWrapper implements IKrepWrapper {
 	}
 
 	public void send(byte b) {
-		String msg = null;
+		String msg ="";
 		step();
 		esi.write("RX(0x" + Integer.toHexString(b & 0xFF) + ")");
 		kep_send(b, msg);
-		if (msg != null) {
+		if (msg.length()>0) {
 			MessageView.print(msg);
 		}
 		step();
@@ -99,6 +99,7 @@ public class KepWrapper implements IKrepWrapper {
 			File f = new File(esiFile);
 			BufferedWriter out = new BufferedWriter(new FileWriter(f));
 			out.write(esi.toString());
+			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

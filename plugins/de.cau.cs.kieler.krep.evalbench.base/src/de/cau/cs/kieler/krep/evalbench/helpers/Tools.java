@@ -94,7 +94,7 @@ public class Tools {
 	long min = 60*sec;
 	long hour = 60*min;
 	
-	String res = new String();
+	String res = "";
 	if(time > hour){
 	    res += time/hour + "h ";
 	    time = time % hour;
@@ -142,8 +142,7 @@ public class Tools {
     * @return Hex String for this integer value
     */
     public static String toHex(final int i) {
-	String res = new String();
-	res = Integer.toHexString(i);
+	String res = Integer.toHexString(i);
 	if (res.length() == 1) {
 	    res = "0" + res;
 	}

@@ -155,6 +155,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 			    + n + " characters");
 		}
 	    } while (stringBuffer.length() < n);
+	    reader.close();
 	    return stringBuffer.toString();
 	} catch (IOException e) {
 	    throw new CommunicationException(
@@ -192,6 +193,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 			    + n + " characters");
 		}
 	    } while (res.size() < n);
+	    reader.close();
 	    return res;
 	} catch (IOException e) {
 	    throw new CommunicationException(
@@ -267,6 +269,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 	    OutputStreamWriter writer = new OutputStreamWriter(outputStream);
 	    writer.write(data);
 	    writer.flush();
+	    writer.close();
 	} catch (IOException e) {
 	    throw new CommunicationException(
 		    "Error while writing to connection: " + e.getMessage());
@@ -287,6 +290,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 	    OutputStreamWriter writer = new OutputStreamWriter(outputStream);
 	    writer.write(data);
 	    writer.flush();
+	    writer.close();
 	} catch (IOException e) {
 	    throw new CommunicationException(
 		    "Error while writing to connection: " + e.getMessage());

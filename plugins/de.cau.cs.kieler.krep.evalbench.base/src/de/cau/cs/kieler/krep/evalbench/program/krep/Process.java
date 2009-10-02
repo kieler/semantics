@@ -89,7 +89,7 @@ public class Process {
     }
 
     private String toHex(int i) {
-	String res = new String();
+	String res = "";
 	res = Integer.toHexString(i);
 	if (res.length() == 1) {
 	    res = "0" + res;
@@ -117,7 +117,7 @@ public class Process {
 
     @Override
     public String toString() {
-	String res = new String();
+	String res = "";
 	for (Statement s : stmts) {
 	    res += s.toString() + "\n";
 	}

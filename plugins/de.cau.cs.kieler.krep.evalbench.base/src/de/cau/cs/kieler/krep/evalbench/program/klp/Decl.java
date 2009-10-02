@@ -72,7 +72,7 @@ public class Decl extends Instruction {
 
 	@Override
 	public String toString() {
-		String res = new String();
+		String res = "";
 		switch (kind) {
 		case INPUT:
 			res = "INPUT";
@@ -94,7 +94,7 @@ public class Decl extends Instruction {
 	 * @return get signal for this declaration
 	 */
 	public Signal getSignal() {
-		final Signal res = new Signal(reg.toString(), false, new Integer(0), id);
+		final Signal res = new Signal(reg.toString(), false, 0, id);
 		return res;
 	}
 

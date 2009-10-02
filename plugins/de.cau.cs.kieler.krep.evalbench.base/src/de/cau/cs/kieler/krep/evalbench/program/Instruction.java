@@ -40,7 +40,7 @@ abstract public class Instruction {
      */
     public void setLabels(final LinkedList<String> labels) {
 	for (String label : labels) {
-	    this.labels.add(new String(label));
+	    this.labels.add(label);
 	}
     }
 

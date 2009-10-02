@@ -24,7 +24,7 @@ public class Jmp extends Instruction {
 
     @Override
     public String toString() {
-	return "  " + "JMP\t" + label.toString();
+	return "  " + "JMP\t" + label;
     }
 
     @Override

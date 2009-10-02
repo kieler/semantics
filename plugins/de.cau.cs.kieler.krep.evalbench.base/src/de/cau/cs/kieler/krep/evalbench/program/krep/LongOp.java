@@ -49,7 +49,7 @@ public class LongOp extends Statement {
     @Override
     public String toString(){
 	String r = kind.toString();
-	String op = new String(); 
+	String op = ""; 
 	switch(kind){
 	case ADD: op = "+"; break;
 	case MUL: op = "*"; break;

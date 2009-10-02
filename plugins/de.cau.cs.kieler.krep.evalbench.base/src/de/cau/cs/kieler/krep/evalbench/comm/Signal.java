@@ -213,7 +213,7 @@ public class Signal implements Comparable<Signal>{
 	}
 	return res;
     }
-
+    
     public int compareTo(Signal o) {
 	return name.compareTo(o.name);
     }

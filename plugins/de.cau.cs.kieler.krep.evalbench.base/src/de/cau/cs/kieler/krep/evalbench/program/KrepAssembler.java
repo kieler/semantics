@@ -213,7 +213,7 @@ public class KrepAssembler implements IAssembler {
      *            name of the signal
      */
     public void addInput(String n) {
-	Signal s = new Signal(n, false, new Integer(0), 0);
+	Signal s = new Signal(n, false, 0, 0);
 	inputs.add(s);
     }
 
@@ -224,7 +224,7 @@ public class KrepAssembler implements IAssembler {
      *            name of the signal
      */
     public void addOutput(final String n) {
-	Signal s = new Signal(n, false, new Integer(0), 0);
+	Signal s = new Signal(n, false, 0, 0);
 	outputs.add(s);
     }
 

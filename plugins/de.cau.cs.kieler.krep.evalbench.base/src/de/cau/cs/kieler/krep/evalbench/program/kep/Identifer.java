@@ -1,5 +1,7 @@
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
+import java.util.Locale;
+
 
 public abstract class Identifer {
 
@@ -11,7 +13,7 @@ public abstract class Identifer {
 	public Identifer(String name, Integer id) {
 		this.name = name;
 		if(id==null){
-		  if(this.name.toUpperCase().equals("TICK")){
+		  if(this.name.toUpperCase(Locale.ENGLISH).equals("TICK")){
 		      id = 0;
 		  }
 		}
@@ -27,19 +29,20 @@ public abstract class Identifer {
 	}
 
 	public String print(){
-		String result =name;
-		while (result.length()<Constants.instr_width) result+=" ";
-		return result+"\t\t"+this.id+"\t"+this.encode();
+		StringBuffer result = new StringBuffer();
+		result.append(name);
+		while (result.length()<Constants.instr_width) result.append(" ");
+		return result.toString()+"\t\t"+this.id+"\t"+this.encode();
 	}
 
 	public String getValidName() {
 		if ((name.equals("_COUNT"))
-		    |(name.equals("R0"))
-			|(name.equals("R1"))
-			|(name.equals("R2"))
-			|(name.equals("R3"))
-			|(name.equals("TICK"))
-			|(name.equals("_TICKLEN"))
+		    ||(name.equals("R0"))
+			||(name.equals("R1"))
+			||(name.equals("R2"))
+			||(name.equals("R3"))
+			||(name.equals("TICK"))
+			||(name.equals("_TICKLEN"))
 			)
 			return "";
 		else
