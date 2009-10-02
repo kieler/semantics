@@ -27,6 +27,7 @@ import org.eclipse.xtext.parsetree.reconstr.SerializerUtil;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -70,9 +71,9 @@ public class ActionLabelProcessorWrapper {
      * @param parse true if the label should be reparsed, false if it should
      *        be serialized
      * @throws IOException unlikely parser IO error
-     * @throws KielerException possible parser syntax errors
+     * @throws KielerModelException possible parser syntax errors
      */
-    public void processAffectedActionLabels(ValuedObject changedObject, EObject parent, boolean  parse) throws KielerException, IOException{
+    public void processAffectedActionLabels(ValuedObject changedObject, EObject parent, boolean  parse) throws KielerModelException, IOException{
         if(changedObject == null && parent == null)
             return; // cannot handle this combination
         if(parent == null){
@@ -122,10 +123,10 @@ public class ActionLabelProcessorWrapper {
      * build the corresponding effects and trigger objects and add/replace them in the Action.
      * @param action the action to be serialized/parsed
      * @throws IOException unlikely parser IO error
-     * @throws KielerException possible parser syntax errors
+     * @throws KielerModelException possible parser syntax errors
      */
-    void processAction(Action action, boolean parse) throws KielerException, IOException{
-        if(parse == PARSE){
+    void processAction(Action action, boolean parse) throws KielerModelException, IOException{
+            if(parse == PARSE){
             ActionLabelParseCommand cmd = new ActionLabelParseCommand(action, action.getTriggersAndEffects(), parser, injector);
             cmd.parse();
         }

@@ -16,6 +16,7 @@ package de.cau.cs.kieler.synccharts.labelparser.bridge;
 
 import java.io.IOException;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.AbstractCommand;
@@ -35,6 +36,7 @@ import org.eclipse.xtext.parsetree.reconstr.SerializerUtil;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -95,10 +97,32 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup{
             handleValuedObject(notification, (ValuedObject)notifier);
         else if(notifier instanceof State)
             handleState(notification, (State)notifier);
-        } catch (Exception e) {
-            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error parsing the action string \""+notification.getNewStringValue()+"\"", e);
+
+        // remove all existing problem markers
+        if(notifier instanceof EObject){
+            SyncchartsContentUtil.clearMarker((EObject)notifier);
+        }
+        }
+        catch (Exception e){
+            /*
+             * Try to handle the exception by placing a problem Marker in 
+             * the diagram. If this fails somehow, propagate the error to the
+             * next level.
+             */
+            if(e instanceof KielerModelException){
+                Object modelObject = ((KielerModelException)e).getModelObject();
+                if(modelObject instanceof EObject){
+                    try {
+                        SyncchartsContentUtil.addMarker(e.getMessage(), (EObject)modelObject);
+                        return;
+                    } catch (KielerException e1) { /*nothing, will go on in next case*/ }
+                }
+            }
+            /*
+             * Handle the error the classic way by using a popup of the Status Manager.
+             */
+            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "My Status Error Message", e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-            e.printStackTrace();
         }
     }
 
@@ -121,7 +145,7 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup{
     }
 
     private void handleValuedObject(Notification notification, ValuedObject notifier)
-            throws KielerException, IOException {
+            throws KielerModelException, IOException {
         /* serialize the label again if any names have changed. Conditions
          * for serialization:
          * - the name attribute of a Signal/Variable is affected
@@ -141,7 +165,7 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup{
     }
 
     private void handleAction(Notification notification, Action notifier)
-            throws KielerException, IOException {
+            throws KielerModelException, IOException {
         /*
          * In order to parse correctly
          *  - the notifier must be an Action

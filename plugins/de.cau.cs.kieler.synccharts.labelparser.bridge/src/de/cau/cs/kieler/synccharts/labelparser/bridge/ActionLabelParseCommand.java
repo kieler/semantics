@@ -44,6 +44,7 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.ComplexExpression;
@@ -147,15 +148,12 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         return CommandResult.newOKCommandResult();
     }
 
-    public void parse() throws KielerException, IOException {
+    public void parse() throws KielerModelException, IOException {
         errors = null;
         warnings = null;
         unresolvedReferences = new ArrayList<String>();
-        if (newString == null || element == null)
-            throw new KielerException(
-                    "String to be parsed or new Object are null.");
-
         this.action = (Action) element;
+
         action.setTriggersAndEffects(newString);
 
         // set some default values
@@ -163,9 +161,13 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         action.getEffects().clear();
         action.setDelay(1);
         action.setIsImmediate(false);
+
+        if (element == null)
+            throw new KielerModelException(
+                    "Action object to be parsed is null.", this.action);
         
         // if the String is empty, we don't need to parse anything...
-        if(newString.trim().length()==0)
+        if(newString == null || newString.trim().length()==0)
             return;
         
         ByteArrayInputStream stream = new ByteArrayInputStream(newString
@@ -194,8 +196,8 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
                 parent = action.eContainer(); 
         }
         if (parent == null)
-            throw new KielerException(
-                    "\""+newString+"\""+"Can't find the right scope for the action. Scope is null.");
+            throw new KielerModelException(
+                    "\""+newString+"\""+"Can't find the right scope for the action. Scope is null.", this.action);
         TransitionLabelScopeProvider.parent = parent;
 
         // now do parsing
@@ -208,8 +210,8 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
 
         IParseResult parseResult = resource.getParseResult();
         if (parseResult == null)
-            throw new KielerException(
-                    "\""+newString+"\""+"Could not parse action string. Parser did return null.");
+            throw new KielerModelException(
+                    "\""+newString+"\""+"Could not parse action string. Parser did return null.", this.action);
 
         this.errors = resource.getErrors();
         this.warnings = resource.getWarnings();
@@ -219,20 +221,20 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
             for (Diagnostic syntaxError : this.errors) {
                 parseErrorString += "\n" + syntaxError.getMessage();
             }
-            throw new KielerException("\""+newString+"\""+" Parse errors in action String: "
-                    + parseErrorString);
+            throw new KielerModelException("\""+newString+"\""+" Parse errors in action String: "
+                    + parseErrorString, this.action);
         }
 
         EObject parsedObject = resource.getContents().get(0);
         if (parsedObject == null || !(parsedObject instanceof Action))
-            throw new KielerException(
+            throw new KielerModelException(
                     "\""+newString+"\""+"Could not parse action string. Parser did not return an Action object but "
-                            + parsedObject);
+                            + parsedObject, this.action);
         Action newAction = (Action) parsedObject;
 
         if (!allReferencesResolved(newAction)){
-            throw new KielerException(
-                    "\""+newString+"\""+"Not all referenced Signals and/or Variables could be resolved!");
+            throw new KielerModelException(
+                    "\""+newString+"\""+"Not all referenced Signals and/or Variables could be resolved!", this.action);
         }
         
         copyActionContents(newAction, action);
