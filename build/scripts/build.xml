@@ -158,8 +158,8 @@
 		</loadfile>
 		
 		<property name="feature.classpath"
-				  value="&lt;/path id=&quot;feature.classpath&quot;&gt;
-${feature.classpath.entries}		&lt;/path&gt;" />
+				  value="	&lt;path id=&quot;feature.classpath&quot;&gt;
+${feature.classpath.entries}	&lt;/path&gt;" />
 		
 		<!-- insert javadoc, findbugs, checkstyle target in feature's build.xml -->		
 		<replace file="${basedir}/features/${feature}/build.xml"
