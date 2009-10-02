@@ -29,7 +29,7 @@
 				fileExtensions="${file.extensions}"/>
 				
 			<!-- the following fragment tries to use the Antlr Generator fragment which can be installed via update manager from http://download.itemis.com/updates/ -->
-			<!--	<fragment class="org.eclipse.xtext.generator.AntlrDelegatingFragment" />  -->
+			<fragment class="org.eclipse.xtext.generator.AntlrDelegatingFragment" />
 			
 			<!-- If you don't want to use the Antlr fragment for some reason, remove the antlr fragment and uncomment the packrat parser fragment below.
 			<fragment class="org.eclipse.xtext.generator.parser.PackratParserFragment"/>

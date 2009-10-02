@@ -47,8 +47,6 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 		 * Formatting for Module/MainModule
 		 * ********************************************************************
 		 */
-		c.setLinewrap().after(f.getMainModuleAccess().getColonKeyword_2());
-		c.setNoSpace().before(f.getMainModuleAccess().getColonKeyword_2());
 		c.setLinewrap(2).before(f.getModuleAccess().getModuleKeyword_0());
 		c.setLinewrap().after(f.getModuleAccess().getColonKeyword_2());
 		c.setNoSpace().before(f.getModuleAccess().getColonKeyword_2());
@@ -184,7 +182,12 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 		// ==> Halt <==
 		c.setLinewrap().before(f.getHaltAccess().getHaltKeyword_0());
 		// ==> If <==
-		// TODO If + Subparts
+		c.setLinewrap().before(f.getIfTestAccess().getIfKeyword_0());
+		c.setLinewrap().before(f.getIfTestAccess().getEndKeyword_5());
+		c.setLinewrap().before(f.getElsIfAccess().getElsifKeyword_0());
+		c.setLinewrap().before(f.getElsePartAccess().getElseKeyword_0());
+		c.setLinewrap().before(f.getThenPartAccess().getThenKeyword_0());
+		// TODO If indentation
 		// ==> Loop <==
 		// TODO Indentation for Loop
 		c.setLinewrap().before(f.getLoopAccess().getLoopKeyword_0());

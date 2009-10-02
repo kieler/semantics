@@ -28,14 +28,13 @@ import de.cau.cs.kieler.esterel.FunctionRenaming;
 import de.cau.cs.kieler.esterel.LocalSignal;
 import de.cau.cs.kieler.esterel.LocalSignalDecl;
 import de.cau.cs.kieler.esterel.LocalSignalList;
-import de.cau.cs.kieler.esterel.MainModule;
 import de.cau.cs.kieler.esterel.Module;
 import de.cau.cs.kieler.esterel.ModuleBody;
 import de.cau.cs.kieler.esterel.ModuleInterface;
 import de.cau.cs.kieler.esterel.Procedure;
 import de.cau.cs.kieler.esterel.ProcedureDecl;
 import de.cau.cs.kieler.esterel.ProcedureRenaming;
-import de.cau.cs.kieler.esterel.Programm;
+import de.cau.cs.kieler.esterel.Program;
 import de.cau.cs.kieler.esterel.RelationImplication;
 import de.cau.cs.kieler.esterel.RelationIncompatibility;
 import de.cau.cs.kieler.esterel.Run;
@@ -149,9 +148,6 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 		if (parent instanceof Module) {
 			modInt = ((Module) parent).getModInt();
 		}
-		if (parent instanceof MainModule) {
-			modInt = ((MainModule) parent).getModInt();
-		}
 		EList<SignalDecl> intSignalDecl = modInt.getIntSignalDecl();
 		if (!(intSignalDecl.isEmpty())) {
 			for (SignalDecl sigDecl : intSignalDecl) {
@@ -211,9 +207,6 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 		ModuleInterface modInt = null;
 		if (parent instanceof Module) {
 			modInt = ((Module) parent).getModInt();
-		}
-		if (parent instanceof MainModule) {
-			modInt = ((MainModule) parent).getModInt();
 		}
 		EList<FunctionDecl> intFunctionDecl = modInt.getIntFunctionDecl();
 		if (!(intFunctionDecl.isEmpty())) {
@@ -281,8 +274,6 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 		ModuleInterface modInt = null;
 		if (parent instanceof Module)
 			modInt = ((Module) parent).getModInt();
-		else if (parent instanceof MainModule)
-			modInt = ((MainModule) parent).getModInt();
 		if (!(modInt.equals(null))) {
 			EList<TypeDecl> intTypeDecl = modInt.getIntTypeDecl();
 			if (!(intTypeDecl.isEmpty()))
@@ -324,8 +315,6 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 		ModuleInterface modInt = null;
 		if (parent instanceof Module)
 			modInt = ((Module) parent).getModInt();
-		else if (parent instanceof MainModule)
-			modInt = ((MainModule) parent).getModInt();
 		if (!(modInt.equals(null))) {
 			EList<FunctionDecl> intFunDecl = modInt.getIntFunctionDecl();
 			if (!(intFunDecl.isEmpty()))
@@ -367,8 +356,6 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 		ModuleInterface modInt = null;
 		if (parent instanceof Module)
 			modInt = ((Module) parent).getModInt();
-		else if (parent instanceof MainModule)
-			modInt = ((MainModule) parent).getModInt();
 		if (!(modInt.equals(null))) {
 			EList<ProcedureDecl> intProcDecl = modInt.getIntProcedureDecl();
 			if (!(intProcDecl.isEmpty()))
@@ -393,13 +380,12 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 			parent = parent.eContainer();
 		String moduleName = ((Run) parent).getModule().getModule().getName();
 		// find the module the reference points to
-		while (!(parent instanceof Programm))
+		while (!(parent instanceof Program))
 			parent = parent.eContainer();
-		EList<EObject> moduleList = ((Programm) parent).getModule();
-		for (EObject module : moduleList)
-			if (module instanceof Module)
-				if (((Module) module).getName().equals(moduleName))
-					return ((Module) module).getModInt();
+		EList<Module> moduleList = ((Program) parent).getModule();
+		for (Module module : moduleList)
+			if (module.getName().equals(moduleName))
+				return module.getModInt();
 		return null;
 
 	}

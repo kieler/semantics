@@ -1,19 +1,14 @@
 grammar de.cau.cs.kieler.Esterel with org.eclipse.xtext.common.Terminals
 
-generate esterel "http://www.cau.de/cs/kieler/Esterel"
-
-// TODO : replace ID with proper build strings		
+generate esterel "http://www.cau.de/cs/kieler/Esterel"	
 
 // ==============================================
 // ===              B.5 Modules               ===
 // ==============================================
 
 //	help function to allow multiple modules in one document
-Programm hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
-	module+=MainModule (module+=Module)*;
-	
-MainModule:
-	"module" name=EsterelID ":" (modInt=ModuleInterface)? modBody=ModuleBody EndModule;	
+Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
+	module+=Module (module+=Module)*;
 
 Module:
 	"module" name=EsterelID ":" (modInt=ModuleInterface)? modBody=ModuleBody EndModule;
