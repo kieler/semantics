@@ -24,7 +24,7 @@ source.parentRegion.innerStates.add(sel2)
 
 Void flipTransition(Transition t):
  let source = t.sourceState:
- let target = t.targetState:
+ let target = t.targetState: 
  t.setSourceState(target) ->
  t.setTargetState(source)
 ;
@@ -34,6 +34,16 @@ let transition = new Transition:
 transition.setSourceState(source) ->
 transition.setTargetState(target) ->
 source.outgoingTransitions.add(transition)
+;
+
+Void rerouteTransitionTarget(Transition t, State target):
+t.setTargetState(target)
+;
+
+Void rerouteTransitionSource(Transition t, State source):
+t.sourceState.outgoingTransitions.remove(t) ->
+t.setSourceState(source) ->
+source.outgoingTransitions.add(t)
 ;
 
 /////////////////////////
