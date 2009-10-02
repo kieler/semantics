@@ -157,6 +157,9 @@ Assignment:
 // --> B.4.2 abort: Strong Preemption
 Abort:
 	"abort" statement=Statement "when" body=AbortBody;
+//	("abort" statement=Statement "when" delay=DelayExpr "do" statement=Statement end=AbortEnd)
+//	|	("abort" statement=Statement "when" delay=DelayExpr)
+//	|	("abort" statement=Statement "when" cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=AbortEnd);
 
 AbortBody:
 	AbortInstance | AbortCase;

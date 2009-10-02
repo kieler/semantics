@@ -26,6 +26,7 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 		de.cau.cs.kieler.services.EsterelGrammarAccess f = (de.cau.cs.kieler.services.EsterelGrammarAccess) getGrammarAccess();
 		Iterable<Keyword> keywords = GrammarUtil.containedKeywords(f
 				.getGrammar());
+		// remove space before ";" and "," . Add linewrap after ","
 		for (Keyword keyword : keywords) {
 			if ((";".equals(keyword.getValue()))
 					| (",".equals(keyword.getValue())))
@@ -148,6 +149,13 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap().before(f.getAbortAccess().getWhenKeyword_2());
 		c.setIndentation(f.getAbortAccess().getAbortKeyword_0(), f
 				.getAbortAccess().getWhenKeyword_2());
+		c.setLinewrap().before(f.getAbortEndAccess().getEndKeyword_0());
+		c.setLinewrap().before(f.getAbortCaseSingleAccess().getCaseKeyword_0());
+		c.setIndentation(f.getAbortCaseSingleAccess().getDoKeyword_2_0(), f
+				.getAbortCaseSingleAccess().getGroup_2());
+		c.setLinewrap().before(f.getAbortInstanceAccess().getDoKeyword_1_0());
+		c.setIndentation(f.getAbortInstanceAccess().getDoKeyword_1_0(), f
+				.getAbortInstanceAccess().getEndAssignment_1_2());
 		// TODO AbortBody
 		// ==> Await <==
 		c.setLinewrap().before(f.getAwaitAccess().getAwaitKeyword_0());
@@ -190,11 +198,49 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap().before(f.getNothingAccess().getNothingKeyword_0());
 		// ==> Pause <==
 		c.setLinewrap().before(f.getPauseAccess().getPauseKeyword_0());
-		// TODO Add missing statements
-		// -> Local Signal <-
-		c.setLinewrap().after(f.getLocalSignalDeclAccess().getInKeyword_2());
+		// ==> Present <==
+		c.setLinewrap().before(f.getPresentAccess().getPresentKeyword_0());
+		c.setLinewrap().before(f.getPresentAccess().getEndKeyword_3());
+		// TODO Present indents
+		// ==> Repeat <==
+		c.setLinewrap().before(f.getRepeatAccess().getGroup());
+		c.setLinewrap().before(f.getRepeatAccess().getTimesKeyword_3());
+		c.setLinewrap().before(f.getRepeatAccess().getEndKeyword_5());
+		// TODO test repeat
+		// ==> Run <==
+		c.setLinewrap().before(f.getRunAccess().getRunKeyword_0_0());
+		c.setLinewrap().before(f.getRunAccess().getCopymoduleKeyword_1_0());
+		// TODO formatting for renaming
+		// ==> Local Signal <==
+		c.setLinewrap().before(
+				f.getLocalSignalDeclAccess().getSignalKeyword_0());
+		c.setLinewrap().before(f.getLocalSignalDeclAccess().getInKeyword_2());
+		c.setLinewrap().before(f.getLocalSignalDeclAccess().getEndKeyword_4());
+		c.setIndentation(f.getLocalSignalDeclAccess().getSignalKeyword_0(), f
+				.getLocalSignalDeclAccess().getEndKeyword_4());
 		c.setIndentation(f.getLocalSignalDeclAccess().getInKeyword_2(), f
 				.getLocalSignalDeclAccess().getEndKeyword_4());
+		// ==> Suspend <==
+		c.setLinewrap().before(f.getSuspendAccess().getSuspendKeyword_0());
+		c.setLinewrap().before(f.getSuspendAccess().getWhenKeyword_2());
+		c.setIndentation(f.getSuspendAccess().getSuspendKeyword_0(), f
+				.getSuspendAccess().getWhenKeyword_2());
+		// ==> Sustain <==
+		c.setLinewrap().before(f.getSustainAccess().getSustainKeyword_0());
+		// ==> Trap <==
+		c.setLinewrap().before(f.getTrapAccess().getTrapKeyword_0());
+		c.setLinewrap().before(f.getTrapAccess().getInKeyword_2());
+		c.setLinewrap().before(f.getTrapAccess().getEndKeyword_5());
+		// ==> Var <==
+		c.setLinewrap().before(f.getVariableAccess().getVarKeyword_0());
+		c.setLinewrap().before(f.getVariableAccess().getInKeyword_2());
+		c.setLinewrap().before(f.getVariableAccess().getEndKeyword_4());
+		// ==> Weak Abort <==
+		c.setLinewrap().before(f.getWeakAbortAccess().getWeakKeyword_0());
+		c.setLinewrap().before(f.getWeakAbortAccess().getWhenKeyword_3());
+		c.setIndentation(f.getWeakAbortAccess().getWeakKeyword_0(), f
+				.getWeakAbortAccess().getWhenKeyword_3());
+		c.setLinewrap().before(f.getWeakAbortEndAccess().getEndKeyword_0());
 		// ...
 	}
 
