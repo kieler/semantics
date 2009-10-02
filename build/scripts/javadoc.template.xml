@@ -1,9 +1,6 @@
 	<target name="doc">
 		<property name="doc.excludes" value=" " />
 		
-		<path id="doc.classpath">
-${feature.classpath}		</path>
-
 		<javadoc access="protected"
 			 author="true"
 			 destdir="${basedir}/doc"
@@ -14,7 +11,7 @@ ${feature.classpath}		</path>
 			 nonavbar="false"
 			 notree="false"
 			 packagenames="de.cau.cs.kieler.*"
-			 classpathref="doc.classpath"
+			 classpathref="feature.classpath"
 			 source="1.5"
 			 splitindex="true"
 			 use="true"

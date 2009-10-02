@@ -1,6 +1,7 @@
 	<target name="findbugs" description="experimental">
 		<path id="findbugs.auxClasses">
-${feature.classpath}		</path>
+			<path refid="feature.classpath"/>				
+		</path>
 
 		<path id="findbugs.sources">
 			<dirset dir="${findbugs.sources}" includes="**/src,**/srcgen,**/src-gen" />

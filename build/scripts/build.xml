@@ -108,7 +108,7 @@
 		</ant>
 		
 		<!-- read javac's classpath information from build.xml scripts -->		
-		<loadfile property="feature.classpath">
+		<loadfile property="feature.classpath.entries">
 			<concat>
 				<fileset dir="plugins" includes="**/build.xml" />
 			</concat>
@@ -157,10 +157,14 @@
 			</filterchain>
 		</loadfile>
 		
+		<property name="feature.classpath"
+				  value="&lt;/path id=&quot;feature.classpath&quot;&gt;
+${feature.classpath.entries}		&lt;/path&gt;" />
+		
 		<!-- insert javadoc, findbugs, checkstyle target in feature's build.xml -->		
 		<replace file="${basedir}/features/${feature}/build.xml"
 				 token="&lt;/project&gt;"
-				 value="${doc.target}${findbugs.target}${checkstyle.target}&lt;/project&gt;" />
+				 value="${feature.classpath}${doc.target}${findbugs.target}${checkstyle.target}&lt;/project&gt;" />
 
 		<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc -->		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
