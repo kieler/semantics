@@ -73,6 +73,8 @@
 								 plugins should be JARed (so far I figured out) -->
 			<arg value="-Ddoc.excludes=${doc.excludes}" />
 				<!-- comma separated path patterns excluded at javadoc generation -->
+			<arg value="-Dcheckstyle.excludes=${checkstyle.excludes}" />
+				<!-- comma separated path patterns excluded at checkstyle examination -->
 			<arg value="-Dpublish.feature=${publish.feature}" />
 				<!-- set to false to suppress publishing to updatesite, default is true -->
 			<classpath>
@@ -136,7 +138,7 @@
 		</loadfile>
 		
 		<!-- insert javadoc target in feature's build.xml -->		
-		<replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${doc.target}&lt;/project&gt;" />
+		<!-- replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${doc.target}&lt;/project&gt;" / -->
 
 		<!-- load findbugs target template, insert classpath entries (via property feature.classpath) -->		
 		<loadfile property="findbugs.target" srcfile="${scriptdir}/findbugs.template.xml">
@@ -146,7 +148,7 @@
 		</loadfile>
 		
 		<!-- insert findbugs target in feature's build.xml -->		
-		<replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${findbugs.target}&lt;/project&gt;" />
+		<!-- replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${findbugs.target}&lt;/project&gt;" / -->
 
 		<!-- load checkstyle target template -->		
 		<loadfile property="checkstyle.target" srcfile="${scriptdir}/checkstyle.template.xml">
@@ -155,8 +157,10 @@
 			</filterchain>
 		</loadfile>
 		
-		<!-- insert checkstyle target in feature's build.xml -->		
-		<replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${checkstyle.target}&lt;/project&gt;" />
+		<!-- insert javadoc, findbugs, checkstyle target in feature's build.xml -->		
+		<replace file="${basedir}/features/${feature}/build.xml"
+				 token="&lt;/project&gt;"
+				 value="${doc.target}${findbugs.target}${checkstyle.target}&lt;/project&gt;" />
 
 		<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc -->		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
@@ -166,6 +170,7 @@
 			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 			<property name="doc.packages" value="${scriptdir}/../package-lists" />
 			<property name="findbugs.classes" value="${basedir}/update-site/plugins" />
+			<property name="findbugs.sources" value="${basedir}/plugins" />
 			<property name="checkstyle.sources" value="${basedir}/plugins" />
 			<target name="clean" />
 			<target name="build.update.jar" />
