@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.synccharts.labelparser.bridge;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,16 +139,53 @@ public class SyncchartsContentUtil {
     }
     
     /**
-     * Find an GEF EditPart that corresponds to an semantic model EObject.
+     * Find an GEF EditPart that corresponds to an semantic model EObject. 
+     * 
      * @param eObject the semantic object
      * @return the corresponding EditPart
+     * 
+     * TODO: search of transition edit parts iterates all edit parts and will
+     *       take linear time. You should improve this, by maybe build a local
+     *       cache hash map
      */
+    
     public static EditPart getEditPart(EObject eObject){
         try{
             DiagramEditor editor = (DiagramEditor)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
             DiagramEditPart dep = editor.getDiagramEditPart();
             EditPart editPart = dep.findEditPart(dep, eObject);
-            
+            if(editPart == null)
+                dep.getViewer().getEditPartRegistry().get(eObject);
+            // have to search registry manually
+            if(editPart == null){
+               @SuppressWarnings("unchecked")
+               Collection<Object> editParts = dep.getViewer().getEditPartRegistry().values();
+               for (Object object : editParts) {
+                     editPart = (EditPart)object;
+                     EObject model = ((View)((EditPart)object).getModel()).getElement();
+                     if(model == eObject){
+                         // search the most valid parent
+                         // this is necessary because inner EditParts may also reference the same model, e.g.
+                         // TransitionTriggerAndEffectsEditPart has TransitionImpl as model element
+                         // however, the parent
+                         // TransitionEditPart also has TransitionImpl as model element
+                         // so there are multiple EditParts that have the same EObject. Here we will
+                         // return only the outermost parent EditPart
+                         while(editPart.getParent() != null){
+                             EditPart parentPart = editPart.getParent();
+                             Object view  = parentPart.getModel();
+                             if(view instanceof View){
+                                 EObject parentModel = ((View)view).getElement();
+                                 if(parentModel == eObject){
+                                     editPart = parentPart;
+                                     System.out.println(); ;
+                                 }
+                             }else{break;} // a Root diagram edit part has no real view, so we will stop searching there
+                         }
+                         return editPart;
+                     }
+            }
+            }
             return editPart;
         }catch(Exception e){
             /* nothing, we simply return null if it cannot be found */
