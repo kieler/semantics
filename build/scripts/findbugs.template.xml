@@ -19,4 +19,4 @@ ${feature.classpath}		</path>
 			<class location="${findbugs.classes}" />
 		</findbugs>
 	</target>
-	
+

@@ -19,9 +19,9 @@
 	<property name="checkstyle.excludes" value=" "/>
 	<property name="publish.feature"     value="true"/>
 	
-	<!-- taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="/home/kieler/ant-contrib/lib/ant-contrib.jar" />
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="/home/kieler/ant-contrib/lib/ant-contrib.jar" />
 	<taskdef resource="checkstyletask.properties" classpath="/home/kieler/checkstyle/checkstyle-all-5.0.jar" />
-	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="/home/kieler/findbugs/lib/findbugs-ant.jar" / -->
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="/home/kieler/findbugs/lib/findbugs-ant.jar" />
 
 	<target name="call.antRunner">
 		<!-- delete dir="${eclipseConfig}" />

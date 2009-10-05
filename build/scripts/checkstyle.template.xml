@@ -9,4 +9,4 @@
 				 excludes="${checkstyle.excludes}" />
 		</checkstyle>
 	</target>
-	
+
