@@ -2,21 +2,21 @@ import synccharts;
 
 // ================================================================================================
 // Pseudo States 
-context State if (type == StateType::PSEUDO) ERROR "pseudo states must not be initial or final!" :
+context State if (type == StateType::PSEUDO) ERROR "Pseudo states must not be initial or final!" :
 	isInitial == false && isFinal == false;
 	
-context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain regions!" :
+context State if (type == StateType::PSEUDO) ERROR "Pseudo states must not contain regions!" :
 	(regions == null) || (regions.size == 0);
 	
-context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain signals!" :
+context State if (type == StateType::PSEUDO) ERROR "Pseudo states must not contain signals!" :
 	(signals == null) || (signals.size == 0);
 	
-context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain actions!" :
+context State if (type == StateType::PSEUDO) ERROR "Pseudo states must not contain actions!" :
 	((entryActions == null) || (entryActions.size == 0))
 	&& ((innerActions == null) || (innerActions.size == 0))
 	&& ((exitActions == null) || (exitActions.size == 0));
 	
-context State if (type == StateType::PSEUDO) ERROR "pseudo states must not contain a suspension trigger!" :
+context State if (type == StateType::PSEUDO) ERROR "Pseudo states must not contain a suspension trigger!" :
 	suspensionTrigger == null;
 // ================================================================================================
 // Reference States 
@@ -32,7 +32,7 @@ context State if (parentRegion != null && parentRegion.parentState != null && is
   (parentRegion.innerStates.exists(e|e.outgoingTransitions.exists(t|t.targetState == this)));
 
 context State if ( label == null || label.matches("\\s*"))
-	ERROR "Anonymous states (= no label) need an ID" : 
+	ERROR "Anonymous states (= no label) need an ID." : 
 	(id != null && id.length>0);
 
 context State if (label != null && !label.matches("\\s*"))
@@ -61,7 +61,7 @@ context Signal if (parentState != null && parentState.parentRegion != null && pa
 	((!isInput) && (!isOutput));
 	
 context Signal if ((initialValue == null) || (initialValue == "")) 
-    ERROR "only valued signals may have a combine type other than NONE!" :
+    ERROR "Only valued signals may have a combine type other than NONE!" :
 	combineOperator == CombineOperator::NONE;
 	
 context Signal
