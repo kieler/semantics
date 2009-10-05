@@ -12,7 +12,6 @@ import org.eclipse.ui.IPerspectiveFactory;
 public class TracePerspective implements IPerspectiveFactory {
 
     /** Identifier string for this perspective */
-    @SuppressWarnings("unused")
     public final static String PERSPECTIVE_ID = "de.cau.cs.kieler.krep.evalbench.ui.traceperspective";
 
     /** Identifier string for the connection view */

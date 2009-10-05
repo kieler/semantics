@@ -17,7 +17,6 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.VerifyView;
 public class VerifyPerspective implements IPerspectiveFactory {
 
     /** Identifier string for this perspective */
-    @SuppressWarnings("unused")
     public final static String PERSPECTIVE_ID = "de.cau.cs.kieler.krep.evalbench.ui.verifyperspective";
 
     /** Identifier string for the connection view */

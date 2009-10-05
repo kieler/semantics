@@ -6,8 +6,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
-import de.cau.cs.kieler.krep.evalbench.comm.*;
-import de.cau.cs.kieler.krep.evalbench.program.*;
 
 /**
  * Preference page for general EvalBench preferences.

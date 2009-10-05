@@ -1,6 +1,5 @@
 package de.cau.cs.kieler.krep.evalbench.ui;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
@@ -21,7 +20,6 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.TraceView;
 public class EvalBenchPerspective implements IPerspectiveFactory {
 
 	/** Identifier string for this perspective */
-	@SuppressWarnings("unused")
 	public final static String PERSPECTIVE_ID = "de.cau.cs.kieler.krep.evalbench.ui.perspective";
 	/** Identifier string for the connection view */
 	private final static String ID_CONNECTION = ConnectionView.VIEW_ID;// "de.cau.cs.kieler.krep.evalbench.ui.views.connection";

@@ -10,11 +10,11 @@ public class Irmov extends Statement {
 
     String to;
     Integer val;
-    Integer R_to;
+    Integer R_to=0;
     
     
     /**
-     * @param to Name of the tareget register
+     * @param to Name of the target register
      * @param val value
      */
     public Irmov(String to, Integer val) {

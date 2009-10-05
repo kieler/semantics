@@ -1,3 +1,17 @@
+/******************************************************************************
+ * KIELER - Kiel Integrated Environment for Layout for the Eclipse RCP
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright ${year} by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ ******************************************************************************/
+
 package de.cau.cs.kieler.krep.evalbench.comm;
 
 import java.io.BufferedWriter;
@@ -56,15 +70,16 @@ public class KepWrapper implements IKrepWrapper {
 	}
 
 	public void step() {
-		String msg = null;
+		String msg = "";
 		String io = ";";
 		byte c = kep_step(msg);
-		if (msg != null) {
+		if (msg.length() != 0) {
 			MessageView.print(msg);
+			msg="";
 		}
 		if (c!=0) {
 			c = kep_recv(msg);
-			if (msg != null) {
+			if (msg.length()>0) {
 				MessageView.print(msg);
 			}
 			io += " %OUTPUT: TX(0x" + Integer.toHexString(c & 0xFF) + ")";
@@ -95,13 +110,22 @@ public class KepWrapper implements IKrepWrapper {
 	public static native void kep_send(byte c, String msg);
 
 	public void saveEsi(String esiFile) {
+		BufferedWriter out=null;
 		try {
 			File f = new File(esiFile);
-			BufferedWriter out = new BufferedWriter(new FileWriter(f));
+			out = new BufferedWriter(new FileWriter(f));
 			out.write(esi.toString());
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			if(out!=null){
+				try {
+					out.close();
+				} catch (IOException e) {
+					// silently ignore
+				}
+			}
 		}
 
 	}

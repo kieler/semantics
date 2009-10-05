@@ -9,8 +9,8 @@ import java.util.Map;
 public class Recv extends Statement {
 
     String name; 
-    Integer id;
-    Integer reg;  
+    Integer id=0;
+    Integer reg=0;  
     
         
     /**

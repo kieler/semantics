@@ -11,7 +11,7 @@ public class Rrmov extends Statement {
 
     String to, from;
     
-    Integer R_to, R_from;
+    Integer R_to=0, R_from=0;
       
     /**
      * @param to name of the target register

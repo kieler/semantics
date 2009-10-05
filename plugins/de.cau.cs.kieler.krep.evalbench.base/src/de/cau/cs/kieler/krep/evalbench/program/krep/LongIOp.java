@@ -12,8 +12,8 @@ public class LongIOp extends Statement {
     String op1;
     int op2;
     
-    Integer R_op1;
-    Integer R_res;
+    Integer R_op1=0;
+    Integer R_res=0;
      
     /**
      * @param kind operator

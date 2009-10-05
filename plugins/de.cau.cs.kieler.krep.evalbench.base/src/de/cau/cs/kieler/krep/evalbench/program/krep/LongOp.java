@@ -12,9 +12,9 @@ public class LongOp extends Statement {
     String op1;
     String op2;
     
-    Integer R_op1;
-    Integer R_op2;
-    Integer R_res;
+    Integer R_op1=0;
+    Integer R_op2=0;
+    Integer R_res=0;
      
     /**
      * @param kind operator
