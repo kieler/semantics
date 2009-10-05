@@ -19,9 +19,9 @@
 	<property name="checkstyle.excludes" value=" "/>
 	<property name="publish.feature"     value="true"/>
 	
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="/home/kieler/ant-contrib/lib/ant-contrib.jar" />
+	<!-- taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="/home/kieler/ant-contrib/lib/ant-contrib.jar" />
 	<taskdef resource="checkstyletask.properties" classpath="/home/kieler/checkstyle/checkstyle-all-5.0.jar" />
-	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="/home/kieler/findbugs/lib/findbugs-ant.jar" />
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="/home/kieler/findbugs/lib/findbugs-ant.jar" / -->
 
 	<target name="call.antRunner">
 		<!-- delete dir="${eclipseConfig}" />
@@ -108,7 +108,7 @@
 		</ant>
 		
 		<!-- read javac's classpath information from build.xml scripts -->		
-		<loadfile property="feature.classpath.entries">
+		<loadfile property="feature.classpath">
 			<concat>
 				<fileset dir="plugins" includes="**/build.xml" />
 			</concat>
@@ -157,14 +157,10 @@
 			</filterchain>
 		</loadfile>
 		
-		<property name="feature.classpath"
-				  value="	&lt;path id=&quot;feature.classpath&quot;&gt;
-${feature.classpath.entries}	&lt;/path&gt;" />
-		
 		<!-- insert javadoc, findbugs, checkstyle target in feature's build.xml -->		
 		<replace file="${basedir}/features/${feature}/build.xml"
 				 token="&lt;/project&gt;"
-				 value="${feature.classpath}${doc.target}${findbugs.target}${checkstyle.target}&lt;/project&gt;" />
+				 value="${doc.target}${findbugs.target}${checkstyle.target}&lt;/project&gt;" />
 
 		<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc -->		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
@@ -262,7 +258,6 @@ ${feature.classpath.entries}	&lt;/path&gt;" />
 			<concat>
 				<fileset dir="${basedir}/../../">
 					<include name="*/workspace/plugins/*/build.xml" />
-					<exclude name="Import*/**" />
 				</fileset>
 			</concat>
 			<filterchain>
