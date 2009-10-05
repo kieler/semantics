@@ -15,7 +15,7 @@ ${feature.classpath}
 			 nonavbar="false"
 			 notree="false"
 			 packagenames="de.cau.cs.kieler.*"
-			 classpathref="feature.classpath"
+			 classpathref="doc.classpath"
 			 source="1.5"
 			 splitindex="true"
 			 use="true"
