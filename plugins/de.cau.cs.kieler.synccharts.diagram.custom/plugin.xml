@@ -407,7 +407,7 @@
       <option
             object="de.cau.cs.kieler.synccharts.region"
             option="de.cau.cs.kieler.layout.options.minSpacing"
-            value="5.0">
+            value="1.0">
       </option>
       <option
             object="de.cau.cs.kieler.synccharts.region"
