@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.TableViewer;
@@ -23,68 +22,77 @@ import de.cau.cs.kieler.krep.evalbench.program.*;
 import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
 
 /**
- * The basic editor for displaying assembler instructions
- * in the evaluation bench. Subclasses of this abstract class must
- * create a suitable implementation of the <code>IAssembler</code>
- * interface.
+ * The basic editor for displaying assembler instructions in the evaluation
+ * bench. Subclasses of this abstract class must create a suitable
+ * implementation of the <code>IAssembler</code> interface.
  * 
  * @author msp
  */
 public abstract class AssemblerEditor extends EditorPart {
 
 	/** Column identifiers for the embedded table */
-	private final static String[] COLUMN_NAMES = { "index", 
-	    "label", 
-	    "instruction",
-	    "opcode"};
+	private final static String[] COLUMN_NAMES = { "index", "label",
+			"instruction", "opcode" };
 
 	/** The embedded table */
-	private Table table;
+	private Table table = null;;
 	/** The viewer used to display program instructions */
 	private TableViewer viewer;
-	
-	/** Assembler used to parse the input file. Subclasses must fill
-	 *  this field with their implementation.
+
+	/**
+	 * Assembler used to parse the input file. Subclasses must fill this field
+	 * with their implementation.
 	 */
 	protected IAssembler assembler;
-	
+
 	/**
 	 * Gets the protocol type suited for the current editor implementation.
-	 * Subclasses must extend this and return one of the constants defined
-	 * in <code>ICommunicationProtocol</code>.
+	 * Subclasses must extend this and return one of the constants defined in
+	 * <code>ICommunicationProtocol</code>.
 	 * 
 	 * @return communication protocol identifier
 	 */
 	public abstract String getProtocolType();
-	
+
 	/**
-	 * Reads an input file and executes an assembler to generate
-	 * binary code and signals information.
+	 * Reads an input file and executes an assembler to generate binary code and
+	 * signals information.
 	 * 
-	 * @param inputFile assembler file to be read
-	 * @throws IOException when the input file could not be read
-	 * @throws ParseException when the assembler fails to parse the input
+	 * @param inputFile
+	 *            assembler file to be read
+	 * @throws IOException
+	 *             when the input file could not be read
+	 * @throws ParseException
+	 *             when the assembler fails to parse the input
 	 */
-	private void updateProgram(File inputFile) throws IOException, ParseException {
+	private void updateProgram(File inputFile) throws IOException,
+			ParseException {
 		// read input file
 		StringBuffer stringBuffer = new StringBuffer();
 		FileReader reader = new FileReader(inputFile);
-		int c;
-		while ((c = reader.read()) >= 0) {
-			stringBuffer.append((char)c);
+		try {
+			int c;
+
+			while ((c = reader.read()) >= 0) {
+				stringBuffer.append((char) c);
+			}
+			String source = stringBuffer.toString();
+			// execute assembler
+			assembler.assemble(inputFile.getName(), source);
+
+			String baseName = inputFile.getAbsolutePath();
+			baseName = baseName.substring(0, baseName.lastIndexOf('.'));
+			Activator.setTraces(new TraceList(assembler, baseName));
+		} finally {
+			reader.close();
 		}
-		String source = stringBuffer.toString();
-		// execute assembler
-		assembler.assemble(inputFile.getName(), source);
-		
-		String baseName = inputFile.getAbsolutePath();
-		baseName = baseName.substring(0, baseName.lastIndexOf('.'));
-		Activator.setTraces(new TraceList(assembler, baseName));
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.EditorPart#init(org.eclipse.ui.IEditorSite, org.eclipse.ui.IEditorInput)
+	 * 
+	 * @see org.eclipse.ui.part.EditorPart#init(org.eclipse.ui.IEditorSite,
+	 * org.eclipse.ui.IEditorInput)
 	 */
 	@Override
 	public void init(IEditorSite site, IEditorInput input)
@@ -95,43 +103,49 @@ public abstract class AssemblerEditor extends EditorPart {
 			// get input file and execute the assembler
 			File file;
 			if (input instanceof IPathEditorInput) {
-				 file = ((IPathEditorInput)input).getPath().toFile();
-			// TODO add support for default editor inputs
-			/*} else if (input instanceof IURIEditorInput) {
-				file = new File(((IURIEditorInput)input).getURI().getPath());*/
+				file = ((IPathEditorInput) input).getPath().toFile();
+				// TODO add support for default editor inputs
+				/*
+				 * } else if (input instanceof IURIEditorInput) { file = new
+				 * File(((IURIEditorInput)input).getURI().getPath());
+				 */
 			} else {
 				file = new File(input.getName());
 			}
 			updateProgram(file);
 			setPartName(file.getName());
 		} catch (IOException e) {
-			throw new PartInitException(new Status(Status.ERROR, Activator.PLUGIN_ID,
-					"Could not read from input file.", e));
+			throw new PartInitException(new Status(Status.ERROR,
+					Activator.PLUGIN_ID, "Could not read from input file.", e));
 		} catch (ParseException e) {
-			throw new PartInitException(new Status(Status.ERROR, Activator.PLUGIN_ID,
+			throw new PartInitException(new Status(Status.ERROR,
+					Activator.PLUGIN_ID,
 					"The assembler could not parse the input file.", e));
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
+	 * 
+	 * @see
+	 * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
+	 * .Composite)
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
 		// create table
 		table = new Table(parent, SWT.MULTI);
-		TableColumn column0 =  new TableColumn(table, SWT.RIGHT, 0);
+		TableColumn column0 = new TableColumn(table, SWT.RIGHT, 0);
 		column0.setWidth(40);
-		TableColumn column1 =  new TableColumn(table, SWT.NONE, 1);
+		TableColumn column1 = new TableColumn(table, SWT.NONE, 1);
 		column1.setWidth(90);
-		TableColumn column2 =  new TableColumn(table, SWT.NONE, 2);
+		TableColumn column2 = new TableColumn(table, SWT.NONE, 2);
 		column2.setWidth(300);
-		TableColumn column3 =  new TableColumn(table, SWT.NONE, 3);
+		TableColumn column3 = new TableColumn(table, SWT.NONE, 3);
 		column3.setWidth(50);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
-		
+
 		// create table viewer
 		viewer = new TableViewer(table);
 		viewer.setColumnProperties(COLUMN_NAMES);
@@ -140,40 +154,45 @@ public abstract class AssemblerEditor extends EditorPart {
 		// set viewer input
 		viewer.setInput(assembler.getInstructions());
 	}
-	
+
 	/**
 	 * Selects the rows with the given numbers in the embedded table.
 	 * 
-	 * @param adrs instruction addresses to select
+	 * @param adrs
+	 *            instruction addresses to select
 	 */
 	public void setSelectedRows(int[] adrs) {
-	    	int rows[] = new int[adrs.length];
-	    	for(int i=0; i< adrs.length; i++){
-	    	    rows[i] = assembler.adr2row(adrs[i]);
-	    	}
+		int rows[] = new int[adrs.length];
+		for (int i = 0; i < adrs.length; i++) {
+			rows[i] = assembler.adr2row(adrs[i]);
+		}
 		table.setSelection(rows);
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	@Override
-	public void doSave(IProgressMonitor monitor) {
-	    	// Nothing to do
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
+	 * @seeorg.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.
+	 * IProgressMonitor)
+	 */
+	@Override
+	public void doSave(IProgressMonitor monitor) {
+		// Nothing to do
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.EditorPart#doSaveAs()
 	 */
 	@Override
 	public void doSaveAs() {
-	    // Nothing to do
+		// Nothing to do
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.EditorPart#isDirty()
 	 */
 	@Override
@@ -183,6 +202,7 @@ public abstract class AssemblerEditor extends EditorPart {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.EditorPart#isSaveAsAllowed()
 	 */
 	@Override
@@ -192,11 +212,12 @@ public abstract class AssemblerEditor extends EditorPart {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
 	 */
 	@Override
 	public void setFocus() {
-	    // Nothing to do
+		// Nothing to do
 	}
 
 	/**
@@ -225,14 +246,15 @@ public abstract class AssemblerEditor extends EditorPart {
 	public LinkedList<Signal> getOutputs() {
 		return assembler.getOutputs();
 	}
-	
+
 	/**
-	 * Check whether the current program can be executed on this the
-	 * given configuration. Should be accessed from the currently connected target. 
+	 * Check whether the current program can be executed on this the given
+	 * configuration. Should be accessed from the currently connected target.
+	 * 
 	 * @param krp
 	 * @return true if all constraints (e.g., number of signals) are fulfilled
 	 */
-	public boolean canExecute(Config krp){
-	    return assembler.canExecute(krp)==null;
+	public boolean canExecute(Config krp) {
+		return assembler.canExecute(krp) == null;
 	}
 }

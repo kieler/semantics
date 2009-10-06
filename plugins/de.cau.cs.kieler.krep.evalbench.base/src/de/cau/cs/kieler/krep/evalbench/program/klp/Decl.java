@@ -6,7 +6,6 @@ import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.Instruction;
 
-
 /**
  * @author ctr Declare register as input, output or local
  */
@@ -83,13 +82,14 @@ public class Decl extends Instruction {
 		case LOCAL:
 			res = "LOCAL";
 			break;
+		default:
+			break;
 		}
 		res += "\t" + reg.toString();
 
 		return res;
 	}
 
-	
 	/**
 	 * @return get signal for this declaration
 	 */
@@ -122,8 +122,8 @@ public class Decl extends Instruction {
 
 	@Override
 	public void asmLabel(HashMap<String, Integer> label2addr)
-		throws ParseException {
-	   //nothing to do 
+			throws ParseException {
+		// nothing to do
 	}
 
 }

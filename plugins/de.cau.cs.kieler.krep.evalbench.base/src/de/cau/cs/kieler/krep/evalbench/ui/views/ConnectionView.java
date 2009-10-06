@@ -23,12 +23,12 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
 	public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.connection";
 	
 	/** The viewer used to display connection logs */
-	private TextViewer viewer;
+	private TextViewer viewer=null;
 	
 	/** The load program action */
-	private IAction loadProgramAction;
+	private IAction loadProgramAction=null;
 
-	private IPreferenceStore preferenceStore;
+	private IPreferenceStore preferenceStore=null;
 	
 	/*
 	 * (non-Javadoc)

@@ -13,6 +13,7 @@
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.program;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import java.util.LinkedList;
 
 import org.antlr.runtime.ANTLRReaderStream;
 import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
 
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
@@ -85,10 +87,10 @@ public class KlpAssembler implements IAssembler {
 	    if (error) {
 		MessageView.print(errorMsg);
 	    }
-	} catch (final Exception e) {
-	    e.printStackTrace();
+	} catch (final IOException e) {
 	    throw new ParseException(e.getMessage());
-
+	} catch (RecognitionException e) {
+	    throw new ParseException(e.getMessage());
 	}
 	if (error) {
 	    throw new ParseException(errorMsg);
@@ -187,7 +189,6 @@ public class KlpAssembler implements IAssembler {
     public String[] getObj(final Config c) {
 	int j = 0;
 	LinkedList<String> obj = new LinkedList<String>();
-	obj = new LinkedList<String>();
 	if (instructions != null) {
 	    for (final Instruction i : instructions) {
 		final String t = i.writeObj();

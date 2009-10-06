@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.TableViewer;
@@ -22,9 +21,9 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.TraceContentProvider;
 import de.cau.cs.kieler.krep.evalbench.ui.views.TraceLabelProvider;
 
 /**
- * The basic editor for displaying trace files. 
- * Subclasses of this abstract class must create a suitable
- * implementation of the <code>ITrace</code> interface.
+ * The basic editor for displaying trace files. Subclasses of this abstract
+ * class must create a suitable implementation of the <code>ITrace</code>
+ * interface.
  * 
  * @author ctr
  */
@@ -32,7 +31,7 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.TraceLabelProvider;
 abstract public class TraceEditor extends EditorPart {
 
 	/** Column identifiers for the embedded table */
-	private final static String[] COLUMN_NAMES = { "tick", "values"};
+	private final static String[] COLUMN_NAMES = { "tick", "values" };
 
 	/** The embedded table */
 	private Table table;
@@ -42,8 +41,8 @@ abstract public class TraceEditor extends EditorPart {
 	abstract TraceList openTrace(String source);
 
 	/**
-	 * Reads an input file and executes an assembler to generate binary code
-	 * and signals information.
+	 * Reads an input file and executes an assembler to generate binary code and
+	 * signals information.
 	 * 
 	 * @param inputFile
 	 *            assembler file to be read
@@ -57,9 +56,12 @@ abstract public class TraceEditor extends EditorPart {
 		// read input file
 		StringBuffer stringBuffer = new StringBuffer();
 		FileReader reader = new FileReader(inputFile);
-		int c;
+		try{int c;
 		while ((c = reader.read()) >= 0) {
 			stringBuffer.append((char) c);
+		}
+		}finally{
+			reader.close();
 		}
 		
 		String source = stringBuffer.toString();
@@ -71,7 +73,7 @@ abstract public class TraceEditor extends EditorPart {
 	 * (non-Javadoc)
 	 * 
 	 * @see org.eclipse.ui.part.EditorPart#init(org.eclipse.ui.IEditorSite,
-	 *      org.eclipse.ui.IEditorInput)
+	 * org.eclipse.ui.IEditorInput)
 	 */
 	@Override
 	public void init(IEditorSite site, IEditorInput input)
@@ -106,7 +108,9 @@ abstract public class TraceEditor extends EditorPart {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
+	 * @see
+	 * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
+	 * .Composite)
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
@@ -123,8 +127,9 @@ abstract public class TraceEditor extends EditorPart {
 		viewer.setColumnProperties(COLUMN_NAMES);
 		viewer.setContentProvider(new TraceContentProvider());
 		viewer.setLabelProvider(new TraceLabelProvider());
-		 // set viewer input
-		viewer.setInput(Activator.getTraces().getTable().toArray(new String[0][0]));
+		// set viewer input
+		viewer.setInput(Activator.getTraces().getTable().toArray(
+				new String[0][0]));
 	}
 
 	/**
@@ -134,18 +139,19 @@ abstract public class TraceEditor extends EditorPart {
 	 *            rows to select
 	 */
 	public void setSelectedRows() {
-		//int rows[] =   {trace.getPos() };
-		//table.setSelection(rows);
+		// int rows[] = {trace.getPos() };
+		// table.setSelection(rows);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.IProgressMonitor)
+	 * @seeorg.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.
+	 * IProgressMonitor)
 	 */
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-	    // Nothing to do
+		// Nothing to do
 	}
 
 	/*
@@ -155,7 +161,7 @@ abstract public class TraceEditor extends EditorPart {
 	 */
 	@Override
 	public void doSaveAs() {
-	    // Nothing to do
+		// Nothing to do
 	}
 
 	/*
@@ -185,6 +191,6 @@ abstract public class TraceEditor extends EditorPart {
 	 */
 	@Override
 	public void setFocus() {
-	    // Nothing to do
+		// Nothing to do
 	}
 }

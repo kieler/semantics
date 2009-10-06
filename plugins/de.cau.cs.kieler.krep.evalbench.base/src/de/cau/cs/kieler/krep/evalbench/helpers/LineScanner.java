@@ -12,23 +12,14 @@
  * See the file epl-v10.html for the license text.
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.helpers;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Stack;
 
 import kiel.util.kit.analysis.DepthFirstAdapter;
-import kiel.util.kit.node.AChart;
 import kiel.util.kit.node.ACompositeState;
-import kiel.util.kit.node.ACstate;
-import kiel.util.kit.node.ADeclaration;
-import kiel.util.kit.node.AEvent;
 import kiel.util.kit.node.AInitialTransition;
-import kiel.util.kit.node.ANormalTranstype;
 import kiel.util.kit.node.AOtherTransition;
-import kiel.util.kit.node.APriorityTransargument;
 import kiel.util.kit.node.ASimpleState;
 import kiel.util.kit.node.Node;
-import kiel.util.kit.node.Switch;
 
 
 /*
@@ -41,14 +32,14 @@ public class LineScanner extends DepthFirstAdapter {
 	private HashMap<String, Integer> states;
 	private HashMap<Integer, Integer> sem2line;
 	//private Stack<String> stack;
-	private String key;
+	//private String key;
 
 	public LineScanner(HashMap<String, Integer> states, HashMap<Integer, Integer> sem2line) {
 		super();
 		this.states = states;
 		this.sem2line = sem2line;
 		//stack = new Stack<String>();
-		key = "";
+		//key = "";
 	}
 
 	@Override

@@ -30,20 +30,20 @@ public class TraceView extends ViewPart implements ITraceListener{
     public final static String[] COLUMN_NAMES = { "tick", "status", "values" };
 
     /** Table viewer where inputs are listed */
-    private TableViewer viewer;
-    Table table;
+    private TableViewer viewer = null;
+    private Table table = null;
 
     /** The reset action */
-    private IAction resetAction;
+    private IAction resetAction = null;
 
     /** The step action */
-    private IAction stepAction;
+    private IAction stepAction = null;
 
     /** The run action */
-    private IAction runAction;
+    private IAction runAction = null;
 
     /** The stop action */
-    private IAction stopAction;
+    private IAction stopAction = null;
 
     /*
      * (non-Javadoc)

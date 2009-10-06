@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.krep.evalbench.program.kep;
+/*package de.cau.cs.kieler.krep.evalbench.program.kep;
 
 import java.util.Comparator;
 
@@ -12,4 +12,4 @@ public class ClassComparator implements Comparator<Instruction> {
 		return false;
 	}
 
-}
+}*/

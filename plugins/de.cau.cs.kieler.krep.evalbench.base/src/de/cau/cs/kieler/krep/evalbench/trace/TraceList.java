@@ -277,8 +277,7 @@ public class TraceList implements IPartListener {
 		final int davg = avg;
 		final int dsize = size;
 		
-		if(!hasNext() || pos % 128 == 0){
-		    
+		if(!hasNext() || pos % 128 == 0){		    
 		    Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 			    if(!manager.isDirty()){

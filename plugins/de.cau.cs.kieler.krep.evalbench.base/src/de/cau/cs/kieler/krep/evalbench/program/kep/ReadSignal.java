@@ -13,7 +13,6 @@ public class ReadSignal extends Identifer {
 
 		public ReadSignal(String name, Integer id ) {
 			super(name,id);
-			this.type=type;
 			this.datatype=Constants.SignalDataType.PURE;
 		}
 

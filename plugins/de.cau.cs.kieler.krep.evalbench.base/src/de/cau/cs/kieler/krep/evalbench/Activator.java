@@ -21,8 +21,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
 
 import de.cau.cs.kieler.krep.evalbench.comm.CommonLayer;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;

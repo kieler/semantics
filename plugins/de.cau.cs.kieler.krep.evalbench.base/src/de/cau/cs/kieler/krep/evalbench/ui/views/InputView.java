@@ -33,16 +33,16 @@ public class InputView extends ViewPart {
 	public final static String[] COLUMN_NAMES = { "signal", "present", "value" };
 	
 	/** Table viewer where inputs are listed */
-	private TableViewer viewer;
+	private TableViewer viewer = null;
 	
 	/** The reset action */
-	private IAction resetAction;
+	private IAction resetAction = null;
 	/** The step action */
-	private IAction stepAction;
+	private IAction stepAction = null;
 	/** The run action */
-	private IAction runAction;
+	private IAction runAction = null;
 	/** The stop action */
-	private IAction stopAction;
+	private IAction stopAction = null;
 	
 	/*
 	 * (non-Javadoc)

@@ -18,7 +18,7 @@ public class TargetView extends ViewPart {
 	public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.target";
 	
 	/** The viewer used to display target info */
-	private TextViewer viewer;
+	private TextViewer viewer = null;
 
 	/*
 	 * (non-Javadoc)

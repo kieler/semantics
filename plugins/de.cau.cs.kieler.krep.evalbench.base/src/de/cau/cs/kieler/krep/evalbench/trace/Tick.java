@@ -82,6 +82,8 @@ public class Tick {
 		case SAVED_OUTPUT:
 			saved_outputs.add(s);
 			break;
+		default:
+			break;
 		}
 	}
 
@@ -105,6 +107,8 @@ public class Tick {
 			break;
 		case SAVED_OUTPUT:
 			sigs = saved_outputs;
+			break;
+		default:
 			break;
 		}
 		if (sigs != null) {

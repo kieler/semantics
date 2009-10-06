@@ -142,12 +142,13 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 	 * @see krep.evalbench.comm.IConnectionProtocol#receive(char)
 	 */
 	public String receive(int n) throws CommunicationException {
+		InputStreamReader reader = null;
 		try {
 			InputStream inputStream = getInputStream();
 			if (inputStream == null) {
 				throw new CommunicationException("No input stream available");
 			}
-			InputStreamReader reader = new InputStreamReader(inputStream);
+			reader = new InputStreamReader(inputStream);
 			StringBuffer stringBuffer = new StringBuffer();
 			String input;
 			long startTime = System.currentTimeMillis();
@@ -169,11 +170,18 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 							+ n + " characters");
 				}
 			} while (stringBuffer.length() < n);
-			reader.close();
 			return stringBuffer.toString();
 		} catch (IOException e) {
 			throw new CommunicationException(
 					"Error while reading from connection: " + e.getMessage());
+		}finally{
+			if(reader!=null){
+				try {
+					reader.close();
+				} catch (IOException e) {
+					// silently ignore
+				}
+			}
 		}
 	}
 
@@ -183,12 +191,13 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 	 * @see krep.evalbench.comm.IConnectionProtocol#receive(char)
 	 */
 	public LinkedList<Integer> receiveByte(int n) throws CommunicationException {
+		InputStreamReader reader=null;
 		try {
 			InputStream inputStream = getInputStream();
 			if (inputStream == null) {
 				throw new CommunicationException("No input stream available");
 			}
-			InputStreamReader reader = new InputStreamReader(inputStream);
+			reader = new InputStreamReader(inputStream);
 			LinkedList<Integer> res = new LinkedList<Integer>();
 			int i = 0;
 			long startTime = System.currentTimeMillis();
@@ -207,11 +216,19 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 							+ n + " characters");
 				}
 			} while (res.size() < n);
-			reader.close();
 			return res;
 		} catch (IOException e) {
 			throw new CommunicationException(
 					"Error while reading from connection: " + e.getMessage());
+		}finally{
+			if (reader!=null){
+				try {
+					reader.close();
+				} catch (IOException e) {
+					//silently ignore
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -275,18 +292,27 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 	 * @see krep.evalbench.comm.IConnectionProtocol#send(java.lang.String)
 	 */
 	public void send(final String data) throws CommunicationException {
+		OutputStreamWriter writer=null;
 		try {
 			OutputStream outputStream = getOutputStream();
 			if (outputStream == null) {
 				throw new CommunicationException("No output stream available");
 			}
-			OutputStreamWriter writer = new OutputStreamWriter(outputStream);
+			 writer= new OutputStreamWriter(outputStream);
 			writer.write(data);
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
 			throw new CommunicationException(
 					"Error while writing to connection: " + e.getMessage());
+		}finally{
+			if(writer!=null){
+				try {
+					writer.close();
+				} catch (IOException e) {
+					// silently ignore
+				}
+			}
 		}
 	}
 

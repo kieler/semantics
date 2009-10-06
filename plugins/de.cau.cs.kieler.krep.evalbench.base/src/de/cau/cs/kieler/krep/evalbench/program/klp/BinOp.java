@@ -84,6 +84,9 @@ public class BinOp extends Instruction {
 	    case DIV:
 		res = Opcode.DIV.getCode();
 		break;
+		default:
+			// nothing to do
+			break;
 	    }
 	    return res;
 	}

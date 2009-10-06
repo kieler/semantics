@@ -13,6 +13,7 @@
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.program;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import java.util.Stack;
 
 import org.antlr.runtime.ANTLRReaderStream;
 import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
 
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
@@ -114,8 +116,10 @@ public class KepAssembler implements IAssembler {
 	    if (error) {
 		MessageView.print(errorMsg);
 	    }
-	} catch (final Exception e) {
-	    throw new ParseException(e.getMessage());
+	} catch (final IOException e) {
+		 throw new ParseException(e.getMessage()); 
+	} catch (RecognitionException e) {
+		 throw new ParseException(e.getMessage());
 	}
 	if (error) {
 	    throw new ParseException(errorMsg);
@@ -168,8 +172,8 @@ public class KepAssembler implements IAssembler {
 	if (!c.isKEP()) {
 	    return "wrong processor";
 	}
-	KepConfig k = (KepConfig)c;
-	
+	//KepConfig k = (KepConfig)c;
+	// TODO: implement
     return null;
     }
 
@@ -195,7 +199,6 @@ public class KepAssembler implements IAssembler {
 
     public String[] getObj(final Config c) {
 	LinkedList<String> obj = new LinkedList<String>();
-	obj = new LinkedList<String>();
 	if (instructions != null) {
 	    for (final Instruction i : instructions) {
 		obj.add(i.writeObj());

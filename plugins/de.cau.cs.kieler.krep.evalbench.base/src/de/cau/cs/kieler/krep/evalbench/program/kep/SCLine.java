@@ -4,12 +4,12 @@ public class SCLine {
 
 	String content;
 	int number;
-	int pos;
+	//int pos;
 
 	public SCLine (String content,int number, int pos){
 		this.content = content.trim();
 		this.number = number;
-		this.pos = pos;
+		//this.pos = pos;
 	}
 
 	public SCLine (String content,int number){

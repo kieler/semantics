@@ -51,7 +51,7 @@ public class IMov extends Instruction {
 		case IC:
 			res += "C";
 			break;
-		case IV:
+		default:
 			res += "V";
 			break;
 		}
@@ -67,7 +67,7 @@ public class IMov extends Instruction {
 		case IC:
 			op = Opcode.ICMOV;
 			break;
-		case IV:
+		default:
 			op = Opcode.IVMOV;
 			break;
 		}

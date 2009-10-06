@@ -2,8 +2,6 @@ package de.cau.cs.kieler.krep.evalbench.ui.views;
 
 import java.util.LinkedList;
 
-
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -28,7 +26,7 @@ public class OutputView extends ViewPart implements ISignalListener {
 	private final static String[] COLUMN_NAMES = { "signal", "present", "value" };
 	
 	/** The viewer used to display output values */
-	private TableViewer viewer;
+	private TableViewer viewer = null;
 
 	/*
 	 * (non-Javadoc)
@@ -36,7 +34,7 @@ public class OutputView extends ViewPart implements ISignalListener {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
+		//IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
 		//toolBarManager.add(new ContributionItem());
 		// create table
 		Table table = new Table(parent, SWT.NONE);
