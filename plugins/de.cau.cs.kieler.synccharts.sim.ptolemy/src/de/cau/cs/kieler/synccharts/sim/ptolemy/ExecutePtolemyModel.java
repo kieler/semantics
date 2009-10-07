@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.synccharts.sim.ptolemy;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +45,7 @@ import ptolemy.actor.kiel.KielerIO;
 import ptolemy.actor.lib.AddSubtract;
 import ptolemy.data.expr.Parameter;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
+//import de.cau.cs.kieler.sim.ptolemy.DynamicClasspath;
 
 /**
  * The class ExecutePtolemyModel implements the PtolemyExecutor. This is the
@@ -93,6 +95,14 @@ public class ExecutePtolemyModel {
 	 * @param PtolemyModel the Ptolemy model to execute
 	 */
 	public ExecutePtolemyModel(String PtolemyModel) {
+//		System.out.print("Adding Ptolemy to classpath ...");
+//		try {
+//			DynamicClasspath.addFile("D:\\Studium_SVN\\ptIIplugin\\ptolemy");
+//			System.out.println(" done!");
+//		} catch (IOException e) {
+//			System.out.println(" failed!");
+//			e.printStackTrace();
+//		}
 		this.PtolemyModel = PtolemyModel;
 		this.currentState = "";
 		this.kielerIOList = null;
@@ -270,22 +280,24 @@ public class ExecutePtolemyModel {
 			Object child = children.get(c);
             if (child instanceof AddSubtract) {
             	AddSubtract as = (AddSubtract)child;
-    			String signalName = 
-    				((Parameter)as.getAttribute("signal name")).getValueAsString();
-    			//remove quotation marks
-    			signalName = signalName.replaceAll("'", "");
-    	  		signalName = signalName.replaceAll("\"", "");
-    	  		ModelOutput modelOutput = new ModelOutput(signalName, as);
+            	if (as.getAttribute("signal name") != null) {
+            		//this is only true for output not for local signals
+        			String signalName = 
+        				((Parameter)as.getAttribute("signal name")).getValueAsString();
+        			//remove quotation marks
+        			signalName = signalName.replaceAll("'", "");
+        	  		signalName = signalName.replaceAll("\"", "");
+        	  		ModelOutput modelOutput = new ModelOutput(signalName, as);
+                    List<Object> ports = ( (Actor)as ).outputPortList();
+                    for (Object port : ports) {
+                        if(port instanceof IOPort){
+                            ( (IOPort)port ).addIOPortEventListener( 
+                            		new PresentTokenListener(modelOutput));
+                        }
+                    }                       
+                    modelOutputList.add(modelOutput);
+            	}
             	
-                List<Object> ports = ( (Actor)as ).outputPortList();
-                for (Object port : ports) {
-                    if(port instanceof IOPort){
-                        ( (IOPort)port ).addIOPortEventListener( 
-                        		new PresentTokenListener(modelOutput));
-                    }
-                }                       
-
-                modelOutputList.add(modelOutput);
             }
         }//end while
 	}
@@ -487,8 +499,12 @@ public class ExecutePtolemyModel {
 
             //now execute the model
             if (ptolemyModel != null && ptolemyModel instanceof CompositeActor) {
-                //check if the parsed model is of correct type
+        		System.out.println("#6");
+
+            	//check if the parsed model is of correct type
                 modelActor = ((CompositeActor) ptolemyModel);
+
+        		System.out.println("#7");
                 
                 //get the manager that manages execution
                 manager = modelActor.getManager();
@@ -511,6 +527,8 @@ public class ExecutePtolemyModel {
                     modelActor.setManager(manager);
                 }
 
+        		System.out.println("#8");
+                
 //                //go thru the model and add fill the modalModelList (Current States)
 //                fillModalModelTree(
 //                		modalModelTree,
@@ -521,16 +539,21 @@ public class ExecutePtolemyModel {
                 		kielerIOList,
                 		modelActor.entityList());
                 
+        		System.out.println("#9");
 
                 //go thru the model and add fill the addSubtractList (Outputs)
                 fillModelOutputList(
                 		modelOutputList,
                 		modelActor.entityList());
                 
+        		System.out.println("#10");
+                
                 // run the model
                 if (manager != null) {
                     // run forest, run!
                     manager.initialize();
+            		System.out.println("#11");
+                    
                 }
             }//end if
         } catch (Exception e) {
