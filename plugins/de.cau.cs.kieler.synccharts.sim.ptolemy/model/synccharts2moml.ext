@@ -866,8 +866,8 @@ Void addSignalsToModalModel(EntityType entity,
 	//denote environmental and local input/output signals
 	(signal.isInput) ? port.property.add(p4a) : null ->
 	(signal.isOutput) ? port.property.add(p4b) : null ->
-	(portType.name.matches("1") && signal.isLocal) ? port.property.add(p4c) : null ->
-	(portType.name.matches("2") && signal.isLocal) ? port.property.add(p4d) : null ->
+	(portType.name.matches("1") && signal.isLocal()) ? port.property.add(p4c) : null ->
+	(portType.name.matches("2") && signal.isLocal()) ? port.property.add(p4d) : null ->
 	p1.setName("input") ->
 	p2.setName("output") ->
 	(portType.name.matches("1") || signal.isInput) ? port.property.add(p1) : null ->
@@ -891,6 +891,12 @@ Void addSignalsToModalModel(EntityType entity,
 	(signalList.size > 1) ? addSignalsToModalModel(entity,
 												   signalList.withoutFirst(), 
 												   region) : null
+;
+
+
+//if signals is not input and signal is not output => signal is local
+Boolean isLocal(synccharts::Signal signal) :
+ (!signal.isInput && !signal.isOutput)
 ;
 
 Void addSignalsToModalController(EntityType entity, EntityType parent,
@@ -926,8 +932,8 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	//denote environmental and local input/output signals
 	(signal.isInput) ? port.property.add(p4a) : null ->
 	(signal.isOutput) ? port.property.add(p4b) : null ->
-	(portType.name.matches("1") && signal.isLocal) ? port.property.add(p4c) : null ->
-	(portType.name.matches("2") && signal.isLocal) ? port.property.add(p4d) : null ->
+	(portType.name.matches("1") && signal.isLocal()) ? port.property.add(p4c) : null ->
+	(portType.name.matches("2") && signal.isLocal()) ? port.property.add(p4d) : null ->
 	(portType.name.matches("1") || signal.isInput) ? port.property.add(p1) : null ->
 	(portType.name.matches("2") || signal.isOutput) ? port.property.add(p2) : null ->
 	p3.setName("_type") ->
