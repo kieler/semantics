@@ -14,13 +14,13 @@
 
 package de.cau.cs.kieler.krep.evalbench.comm;
 
-import java.io.IOException;
+//import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Enumeration;
+//import java.util.Enumeration;
 import java.util.LinkedList;
 
-import de.cau.cs.kieler.krep.evalbench.Activator;
+//import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 
 
@@ -35,7 +35,7 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 public class RxtxSerialConnection extends ConnectionProtocol {
 
 	/** Baud rate used for serial connection */
-	private final static int BAUD_RATE = 115200;
+	//private final static int BAUD_RATE = 115200;
 	
 	/** Instance of the used serial port */
 	//private SerialPort serialPort;
@@ -56,7 +56,7 @@ public class RxtxSerialConnection extends ConnectionProtocol {
 			}
 		}*/
 		portNames.add("no serial port available");
-		return portNames.toArray(new String[0]);
+		return portNames.toArray(new String[1]);
 	}
 	
 	/*
