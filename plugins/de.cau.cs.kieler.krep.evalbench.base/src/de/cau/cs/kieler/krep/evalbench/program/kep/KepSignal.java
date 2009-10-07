@@ -93,29 +93,32 @@ public class KepSignal extends Identifer {
 	}
 
 	public String encode() {
-		String result = super.encode(Program.constants.signal_width);
+		String result = super.encode(Constants.signal_width);
 		if (!this.isPre)
 			result += "0";
 		else
 			result += "1";
 
-		assert result.length() == Program.constants.signal_width + 1 : "Opcode length for signal should be "
-				+ Program.constants.signal_width
+		assert result.length() == Constants.signal_width + 1 : "Opcode length for signal should be "
+				+ Constants.signal_width
 				+ 1
 				+ " but is "
-				+ result.length() + "!";
+				+ result.length()
+				+ "!";
 		return result;
 	}
 
 	public String info() {
-		String result = "";
-		while (result.length() < Program.constants.signal_width)
-			result += "S";
-		return result + "P";
+		StringBuffer result = new StringBuffer();
+		while (result.length() < Constants.signal_width) {
+			result.append("S");
+		}
+		result.append("P");
+		return result.toString();
 	}
 
 	public int length() {
-		return Program.constants.signal_width + 1;
+		return Constants.signal_width + 1;
 	}
 
 	public Register getReg() {

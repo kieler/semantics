@@ -31,14 +31,14 @@ public class Label extends Identifer {
 	}
 
 	public String encode() {
-		return super.encode(Program.constants.addr_width);
+		return super.encode(Constants.addr_width);
 	}
 
 	public String info() {
-		String result = "";
-		while (result.length() < Program.constants.addr_width)
-			result += "A";
-		return result;
+		StringBuffer result = new StringBuffer();
+		while (result.length() < Constants.addr_width)
+			result.append("A");
+		return result.toString();
 	}
 
 	public String print() {
@@ -46,13 +46,14 @@ public class Label extends Identifer {
 	}
 
 	public String printLabel() {
-		String result = name;
+		StringBuffer result = new StringBuffer();
+		result.append(name);
 		while (result.length() < Constants.max_LabelPrint)
-			result += " ";
-		return result;
+			result.append(" ");
+		return result.toString();
 	}
 
 	public int length() {
-		return Program.constants.addr_width;
+		return Constants.addr_width;
 	}
 }

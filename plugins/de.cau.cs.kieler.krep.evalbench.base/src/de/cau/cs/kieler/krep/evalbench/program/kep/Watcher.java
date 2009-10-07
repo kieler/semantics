@@ -17,27 +17,28 @@ public class Watcher extends Identifer {
 
 	public Watcher(int ident) {
 
-		if (ident > Program.constants.max_watcher)
+		if (ident > Constants.max_watcher)
 			throw new IllegalArgumentException("Watcher ID (" + ident
-					+ ") is greater then " + Program.constants.max_watcher);
+					+ ") is greater then " + Constants.max_watcher);
 		this.id = ident;
 
 	}
 
 	public String encode() {
 		{
-			String result = "";
+			StringBuffer result = new StringBuffer();
 			if (this.id != null) {
-				result = super.encode(Program.constants.watcher_width);
+				result.append(super.encode(Constants.watcher_width));
 			} else
-				while (result.length() < Program.constants.watcher_width)
-					result += "0";
-			assert result.length() == Program.constants.watcher_width : "Opcode length for watcher should be "
-					+ Program.constants.watcher_width
+				while (result.length() < Constants.watcher_width)
+					result.append("0");
+			assert result.length() == Constants.watcher_width : "Opcode length for watcher should be "
+					+ Constants.watcher_width
 					+ " but is "
-					+ result.length() + "!";
+					+ result.length()
+					+ "!";
 
-			return result;
+			return result.toString();
 		}
 
 	}
@@ -54,10 +55,10 @@ public class Watcher extends Identifer {
 	 */
 	@Override
 	public String info() {
-		String result = "";
-		while (result.length() < Program.constants.watcher_width)
-			result += "W";
-		return result;
+		StringBuffer result = new StringBuffer();
+		while (result.length() < Constants.watcher_width)
+			result.append("W");
+		return result.toString();
 	}
 
 	/*
@@ -67,7 +68,7 @@ public class Watcher extends Identifer {
 	 */
 	@Override
 	public int length() {
-		return Program.constants.watcher_width;
+		return Constants.watcher_width;
 	}
 
 }

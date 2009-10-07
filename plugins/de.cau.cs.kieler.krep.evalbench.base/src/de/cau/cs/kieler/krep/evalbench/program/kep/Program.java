@@ -43,7 +43,6 @@ public class Program {
 
 	HashMap<String, KepSignal> signals = new HashMap<String, KepSignal>();
 
-	// HashMap<String, Signal> localSignals = new HashMap<String, Signal>();
 	HashMap<String, Register> registers = new HashMap<String, Register>();
 
 	HashMap<String, Label> labels = new HashMap<String, Label>();
@@ -70,19 +69,9 @@ public class Program {
 			max_watchers_needed++;
 			return new Watcher(watcher_list.size() - 1);
 		}
-		/*
-		 * else { watcher_list.pop(); max_watchers_needed--; return
-		 * getNewWatcher(endAddr); } }
-		 */
+
 	}
 
-	/*
-	 * if (watcher_list.size()>max_watcher) max_watcher=watcher_list.size(); if
-	 * (!watcher_list.empty() && watcher_list.peek()<programCounter){
-	 * watcher_list.pop(); watcher_list.push(programCounter); return
-	 * watcher_list.size(); } else { watcher_list.push(programCounter); return
-	 * watcher_list.size(); } }
-	 */
 	public int getProgramCounter() {
 		return this.programCounter;
 	}
@@ -158,39 +147,42 @@ public class Program {
 	}
 
 	private String printLabels() {
-		String result = "----------------------------\n\r"
+		StringBuffer result = new StringBuffer();
+		result.append("----------------------------\n\r"
 				+ "List of Labels: \n\r"
-				+ "Ident \t CodePos \t BinCode \t [Line]\n\r";
+				+ "Ident \t CodePos \t BinCode \t [Line]\n\r");
 		Set<Entry<String, Label>> jls = this.labels.entrySet();
 		for (Entry<String, Label> entry : jls) {
-			result += entry.getValue().print() + "\n\r";
+			result.append(entry.getValue().print() + "\n\r");
 
 		}
-		return result;
+		return result.toString();
 	}
 
 	private String printVars() {
-		String result = "----------------------------\n\r"
-				+ "List of Variables: \n\r" + "Name \t  BinCode\n\r";
+		StringBuffer result = new StringBuffer();
+		result.append("----------------------------\n\r"
+				+ "List of Variables: \n\r" + "Name \t  BinCode\n\r");
 		Set<Entry<String, Register>> regs = this.registers.entrySet();
 
 		for (Entry<String, Register> entry : regs) {
-			result += entry.getValue().print() + "\n\r";
+			result.append(entry.getValue().print() + "\n\r");
 
 		}
-		return result;
+		return result.toString();
 	}
 
 	private String printSignals() {
-		String result = "----------------------------\n\r"
+		StringBuffer result = new StringBuffer();
+		result.append("----------------------------\n\r"
 				+ "List of Signals: \n\r"
-				+ "Name \t\t Type \t\t Num \t BinCode\n\r";
+				+ "Name \t\t Type \t\t Num \t BinCode\n\r");
 		Set<Entry<String, KepSignal>> sigs = this.signals.entrySet();
 		for (Entry<String, KepSignal> entry : sigs) {
-			result += entry.getValue().print() + "\n\r";
+			result.append(entry.getValue().print() + "\n\r");
 
 		}
-		return result;
+		return result.toString();
 	}
 
 	public KepSignal getSignalbyName(String name) throws NullPointerException {
@@ -307,10 +299,11 @@ public class Program {
 		Set<Entry<String, Integer>> countSet = this.count(this.countCrit)
 				.entrySet();
 		for (Entry<String, Integer> entry : countSet) {
-			String key = entry.getKey();
+			StringBuffer key = new StringBuffer();
+			key.append(entry.getKey());
 			while (key.length() < 10)
-				key += " ";
-			result += "# " + key + ": " + entry.getValue() + "\n\r";
+				key.append(" ");
+			result += "# " + key.toString() + ": " + entry.getValue() + "\n\r";
 
 		}
 		return result;
@@ -339,31 +332,35 @@ public class Program {
 	}
 
 	public void toFile(String file) throws IOException {
-		FileWriter fw;
+		FileWriter fw = null;
 		try {
 			fw = new FileWriter(file + "txt");
 			System.out.print("Writing " + file + "txt ...");
 			fw.write(this.toString());
-			fw.close();
 			System.out.println(" done.");
 		} catch (IOException e) {
 			throw new IOException(e.getMessage());
-
+		} finally {
+			if (fw != null) {
+				fw.close();
+			}
 		}
 
 	}
 
 	public void toEsi(String file) throws IOException {
-		FileWriter fw;
+		FileWriter fw = null;
 		try {
 			fw = new FileWriter(file + "esi");
 			System.out.print("Writing " + file + "esi ...");
 			fw.write(this.toEsi());
-			fw.close();
 			System.out.println(" done.");
 		} catch (IOException e) {
 			throw new IOException(e.getMessage());
-
+		} finally {
+			if (fw != null) {
+				fw.close();
+			}
 		}
 	}
 
@@ -387,31 +384,34 @@ public class Program {
 		System.out.print(" Code ...");
 		if (info)
 			System.out.println(this.info());
-		String result = this.printHeader() + "\n\r";
-		result += "---opcode---\n\r";
-		result += "Label\tSC-Line\t            SourceCode(KASM)               \t#\t7..ID..015.............0\r\n";
+		StringBuffer result = new StringBuffer();
+		result.append(this.printHeader() + "\n\r");
+		result.append("---opcode---\n\r");
+		result
+				.append("Label\tSC-Line\t            SourceCode(KASM)               \t#\t7..ID..015.............0\r\n");
 
 		for (Instruction myinst : instructions) {
 			Set<Entry<String, Label>> jls = this.labels.entrySet();
-			String label = "";
+			StringBuffer label = new StringBuffer();
 			for (Entry<String, Label> entry : jls)
 				if (entry.getValue().line == addr)
-					label = entry.getValue().printLabel();
+					label.append(entry.getValue().printLabel());
 				else
 					while (label.length() < Constants.max_LabelPrint)
-						label += " ";
-			result += label + myinst.getScource() + "\t" + (addr) + "\t"
-					+ myinst + "\n\r";
+						label.append(" ");
+			result.append(label.toString());
+			result.append(myinst.getScource() + "\t" + (addr) + "\t" + myinst
+					+ "\n\r");
 			addr++;
 
 		}
 		System.out.println("done!");
-		return result;
+		return result.toString();
 	}
 
 	public String toEsi() {
 		int i = 0;
-		String result = "!reset;\n\r;\n\r";
+		StringBuffer result = new StringBuffer("!reset;\n\r;\n\r");
 		for (Instruction myinst : this.instructions) {
 			Set<Entry<String, Label>> jls = this.labels.entrySet();
 			String label = "";
@@ -421,24 +421,25 @@ public class Program {
 
 			try {
 				String tmpinst = myinst.toString();
-				result += "instr_from_esi='b" + tmpinst + "; %" + (i) + "\t"
-						+ label + "\t" + myinst.getScource() + "\n\r";
+				result.append("instr_from_esi='b" + tmpinst + "; %" + (i)
+						+ "\t" + label + "\t" + myinst.getScource() + "\n\r");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			i++;
 		}
-		return result + "done_loading;";
+		result.append("done_loading;");
+		return result.toString();
 	}
 
 	public String toLst() {
 		int addr = 0;
 		String result = "";
 		result += "% ------------------------------------------------------------";
-		String inputsV = "";
-		String inputs = "";
-		String outputsV = "";
-		String outputs = "";
+		StringBuffer inputsV = new StringBuffer();
+		StringBuffer inputs = new StringBuffer();
+		StringBuffer outputsV = new StringBuffer();
+		StringBuffer outputs = new StringBuffer();
 
 		// Set<Entry<String,Signal>> sigs = this.signals.entrySet();
 		// Collection<Signal> sigs = this.signals.values();
@@ -450,16 +451,16 @@ public class Program {
 			if (mySig.getValidName().length() != 0) {
 				switch (mySig.getType()) {
 				case INPUT_VAL:
-					inputsV += " " + mySig.getValidName();
+					inputsV.append(" " + mySig.getValidName());
 					break;
 				case INPUT:
-					inputs += " " + mySig.getValidName();
+					inputs.append(" " + mySig.getValidName());
 					break;
 				case OUTPUT_VAL:
-					outputsV += " " + mySig.getValidName();
+					outputsV.append(" " + mySig.getValidName());
 					break;
 				case OUTPUT:
-					outputs += " " + mySig.getValidName();
+					outputs.append(" " + mySig.getValidName());
 					break;
 				default:
 					break;
@@ -478,14 +479,14 @@ public class Program {
 			result += "\nOUTPUT" + outputs;
 
 		Set<Entry<String, Register>> regs = this.registers.entrySet();
-		String vars = "";
+		StringBuffer vars = new StringBuffer();
 		for (Entry<String, Register> entry : regs) {
 			if (entry.getValue().getValidName().length() != 0)
-				vars += " " + entry.getValue().getValidName();
+				vars.append(" " + entry.getValue().getValidName());
 
 		}
 		if (vars.length() != 0)
-			result += "\nVAR" + vars;
+			result += "\nVAR" + vars.toString();
 		result += "\n";
 		result += "\n" + "% Signal codes";
 		result += "\n";
@@ -496,40 +497,40 @@ public class Program {
 		int output_val_count = 0;
 		int local_count = 0;
 		int local_val_count = 0;
-		inputs = "% Input ports (include local signals)";
-		outputs = "% Output ports (include local signals)";
+		inputs.append("% Input ports (include local signals)");
+		outputs.append("% Output ports (include local signals)");
 		for (KepSignal mySig : sigs) {
 			// Signal mySig = entry.getValue();
 			if (mySig.getValidName().length() != 0) {
 				switch (mySig.getType()) {
 				case INPUT_VAL:
-					inputs += "\n" + mySig.printlst() + " (VALUED)";
+					inputs.append("\n" + mySig.printlst() + " (VALUED)");
 					input_count++;
 					input_val_count++;
 					break;
 				case INPUT:
-					inputs += "\n" + mySig.printlst();
+					inputs.append("\n" + mySig.printlst());
 					input_count++;
 					break;
 				case OUTPUT_VAL:
-					outputs += "\n" + mySig.printlst() + " (VALUED)";
+					outputs.append("\n" + mySig.printlst() + " (VALUED)");
 					output_count++;
 					output_val_count++;
 					break;
 				case OUTPUT:
-					outputs += "\n" + mySig.printlst();
+					outputs.append("\n" + mySig.printlst());
 					output_count++;
 					break;
 				case SIGNAL:
-					inputs += "\n" + mySig.printlst() + " %signal";
-					outputs += "\n" + mySig.printlst() + " %signal";
+					inputs.append("\n" + mySig.printlst() + " %signal");
+					outputs.append("\n" + mySig.printlst() + " %signal");
 					local_count++;
 					break;
 				case SIGNAL_VAL:
-					inputs += "\n" + mySig.printlst() + " (VALUED)"
-							+ " %signal";
-					outputs += "\n" + mySig.printlst() + " (VALUED)"
-							+ " %signal";
+					inputs.append("\n" + mySig.printlst() + " (VALUED)"
+							+ " %signal");
+					outputs.append("\n" + mySig.printlst() + " (VALUED)"
+							+ " %signal");
 					local_count++;
 					local_val_count++;
 					break;
@@ -538,15 +539,15 @@ public class Program {
 				}
 			}
 		}
-		result += "\n" + inputs;
+		result += "\n" + inputs.toString();
 		result += "\n";
-		result += "\n" + outputs;
+		result += "\n" + outputs.toString();
 		result += "\n";
-		vars = "% Variable";
+		vars = new StringBuffer("% Variable");
 		int var_count = 0;
 		for (Entry<String, Register> entry : regs) {
 			if (entry.getValue().getValidName().length() != 0) {
-				vars += "\n" + entry.getValue().printlst();
+				vars.append("\n" + entry.getValue().printlst());
 				var_count++;
 			}
 
@@ -567,7 +568,7 @@ public class Program {
 
 		result += "\n%";
 		result += "\n% RAM Usage (in byte): "
-				+ ((registers.size() * constants.data_width) / 8);
+				+ ((registers.size() * Constants.data_width) / 8);
 		result += "\n% Code size (in byte): "
 				+ ((instructions.size() * Constants.instr_width) / 8);
 		result += "\n% Code size (in word): "
@@ -596,9 +597,9 @@ public class Program {
 					+ myinst.encode().length()
 					+ " but should be " + myinst.length() + ": " + myinst;
 			String inst = myinst.encode();
-			String hexInstr = "";
+			StringBuffer hexInstr = new StringBuffer();
 			for (int i = 0; i < inst.length() / 4; i++) {
-				hexInstr += toHex(inst.substring(i * 4, (i * 4) + 4));
+				hexInstr.append(toHex(inst.substring(i * 4, (i * 4) + 4)));
 			}
 
 			result_listing += "\n[" + addrString + "] {" + hexInstr + "}";
@@ -627,7 +628,7 @@ public class Program {
 
 		int intVal = 0;
 		for (int i = 0; i < bin.length(); i++) {
-			assert bin.charAt(i) == '1' | bin.charAt(i) == '0' : "binary String is not binary:"
+			assert bin.charAt(i) == '1' || bin.charAt(i) == '0' : "binary String is not binary:"
 					+ bin.charAt(i);
 			if (bin.charAt(i) == '1')
 				intVal += Math.pow(2, 3 - i);

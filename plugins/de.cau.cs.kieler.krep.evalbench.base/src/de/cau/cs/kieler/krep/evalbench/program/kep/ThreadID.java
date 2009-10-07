@@ -25,15 +25,15 @@ public class ThreadID extends Identifer {
 			throw new IllegalArgumentException(e.getMessage());
 		}
 		int idt = ident;
-		if (idt > Program.constants.max_threadId)
+		if (idt > Constants.max_threadId)
 			throw new IllegalArgumentException("Thread ID (" + idt
-					+ ") is greater then " + Program.constants.max_threadId);
+					+ ") is greater then " + Constants.max_threadId);
 		this.id = idt;
 		this.prio = prio;
 	}
 
 	public String encode() {
-		return "0" + super.encode(Program.constants.threadId_width);
+		return "0" + super.encode(Constants.threadId_width);
 
 	}
 
@@ -49,10 +49,11 @@ public class ThreadID extends Identifer {
 	 */
 	@Override
 	public String info() {
-		String result = "";
-		while (result.length() < Program.constants.threadId_width)
-			result += "T";
-		return "0" + result;
+		StringBuffer result = new StringBuffer();
+		while (result.length() < Constants.threadId_width)
+			result.append("T");
+		result.append("0");
+		return result.toString();
 
 	}
 
@@ -63,7 +64,7 @@ public class ThreadID extends Identifer {
 	 */
 	@Override
 	public int length() {
-		return Program.constants.threadId_width + 1;
+		return Constants.threadId_width + 1;
 
 	}
 

@@ -17,9 +17,9 @@ public class PrioID extends Identifer {
 
 	public PrioID(int val) throws IllegalArgumentException {
 
-		if (val > Program.constants.max_prio)
+		if (val > Constants.max_prio)
 			throw new IllegalArgumentException("Prio ID (" + val
-					+ ") is greater then " + Program.constants.max_prio);
+					+ ") is greater then " + Constants.max_prio);
 		this.id = val;
 
 	}
@@ -28,13 +28,11 @@ public class PrioID extends Identifer {
 		{
 			String result = "";
 			if (this.id != null) {
-				result = super.encode(Program.constants.prio_width);
+				result = super.encode(Constants.prio_width);
 			}
-			// else while(result.length()<Constants.prio_width) result+="0";
-			assert result.length() == Program.constants.prio_width : "Opcode length for prio should be "
-					+ Program.constants.prio_width
-					+ " but is "
-					+ result.length() + "!";
+
+			assert result.length() == Constants.prio_width : "Opcode length for prio should be "
+					+ Constants.prio_width + " but is " + result.length() + "!";
 
 			return result;
 		}
@@ -52,10 +50,10 @@ public class PrioID extends Identifer {
 	 */
 	@Override
 	public String info() {
-		String result = "";
-		while (result.length() < Program.constants.prio_width)
-			result += "p";
-		return result;
+		StringBuffer result = new StringBuffer();
+		while (result.length() < Constants.prio_width)
+			result.append("p");
+		return result.toString();
 	}
 
 	/*
@@ -65,7 +63,7 @@ public class PrioID extends Identifer {
 	 */
 	@Override
 	public int length() {
-		return Program.constants.prio_width;
+		return Constants.prio_width;
 	}
 
 }
