@@ -174,8 +174,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 		} catch (IOException e) {
 			throw new CommunicationException(
 					"Error while reading from connection: " + e.getMessage());
-		}finally{
-			if(reader!=null){
+		} finally {
+			if (reader != null) {
 				try {
 					reader.close();
 				} catch (IOException e) {
@@ -191,7 +191,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 	 * @see krep.evalbench.comm.IConnectionProtocol#receive(char)
 	 */
 	public LinkedList<Integer> receiveByte(int n) throws CommunicationException {
-		InputStreamReader reader=null;
+		InputStreamReader reader = null;
 		try {
 			InputStream inputStream = getInputStream();
 			if (inputStream == null) {
@@ -220,12 +220,12 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 		} catch (IOException e) {
 			throw new CommunicationException(
 					"Error while reading from connection: " + e.getMessage());
-		}finally{
-			if (reader!=null){
+		} finally {
+			if (reader != null) {
 				try {
 					reader.close();
 				} catch (IOException e) {
-					//silently ignore
+					// silently ignore
 					e.printStackTrace();
 				}
 			}
@@ -292,21 +292,21 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 	 * @see krep.evalbench.comm.IConnectionProtocol#send(java.lang.String)
 	 */
 	public void send(final String data) throws CommunicationException {
-		OutputStreamWriter writer=null;
+		OutputStreamWriter writer = null;
 		try {
 			OutputStream outputStream = getOutputStream();
 			if (outputStream == null) {
 				throw new CommunicationException("No output stream available");
 			}
-			 writer= new OutputStreamWriter(outputStream);
+			writer = new OutputStreamWriter(outputStream);
 			writer.write(data);
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
 			throw new CommunicationException(
 					"Error while writing to connection: " + e.getMessage());
-		}finally{
-			if(writer!=null){
+		} finally {
+			if (writer != null) {
 				try {
 					writer.close();
 				} catch (IOException e) {
@@ -337,7 +337,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 					"Error while writing to connection: " + e.getMessage());
 		} finally {
 			try {
-				if(writer!=null){
+				if (writer != null) {
 					writer.close();
 				}
 			} catch (IOException e) {

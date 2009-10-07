@@ -19,43 +19,43 @@ package de.cau.cs.kieler.krep.evalbench.program.krep;
  *         Arithmetic and boolean operators
  */
 public enum Operator {
-    /**
-     * addition
-     */
-    ADD,
+	/**
+	 * addition
+	 */
+	ADD,
 
-    /**
-     * subtraction
-     */
-    SUB,
+	/**
+	 * subtraction
+	 */
+	SUB,
 
-    /**
-     * multiplication
-     */
-    MUL,
+	/**
+	 * multiplication
+	 */
+	MUL,
 
-    /**
-     * division
-     */
-    DIV,
+	/**
+	 * division
+	 */
+	DIV,
 
-    /**
-     * boolean and
-     */
-    AND,
+	/**
+	 * boolean and
+	 */
+	AND,
 
-    /**
-     * boolean or
-     */
-    OR,
+	/**
+	 * boolean or
+	 */
+	OR,
 
-    /**
-     * boolean exclusive or
-     */
-    XOR,
+	/**
+	 * boolean exclusive or
+	 */
+	XOR,
 
-    /**
-     * negation
-     */
-    NOT;
+	/**
+	 * negation
+	 */
+	NOT;
 }

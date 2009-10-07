@@ -13,7 +13,6 @@
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.ui.actions;
 
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IStatusLineManager;
 
@@ -29,50 +28,50 @@ import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
  */
 public class StepTraceAction extends Action {
 
-    /** Identifier string for this action */
-    private static final String ACTION_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.step";
+	/** Identifier string for this action */
+	private static final String ACTION_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.step";
 
-    /** Relative path to the icon to use for this action */
-    private static final String ICON_PATH = "icons/step.gif";
+	/** Relative path to the icon to use for this action */
+	private static final String ICON_PATH = "icons/step.gif";
 
-    /** The status line manager that can be used to display messages */
-    private IStatusLineManager statusLineManager;
+	/** The status line manager that can be used to display messages */
+	private IStatusLineManager statusLineManager;
 
-    private TraceList traces = null;
+	private TraceList traces = null;
 
-    /**
-     * Creates a new Step Action.
-     * 
-     * @param manager
-     *            status line manager used to display action result
-     * @param traces
-     *            trace from which the inputs are read If trace is null or all
-     *            ticks are executed, the inputs are read from the input view
-     */
-    public StepTraceAction(IStatusLineManager manager, TraceList traces) {
-	setId(ACTION_ID);
-	setText("&Step");
-	setToolTipText("Perform a single step in the current program");
-	setImageDescriptor(Activator.imageDescriptorFromPlugin(
-		Activator.PLUGIN_ID, ICON_PATH));
-	this.statusLineManager = manager;
-	this.traces = traces;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.action.Action#run()
-     */
-    @Override
-    public void run() {
-	if (traces != null) {
-	    try {
-		traces.executeStep(statusLineManager);
-	    } catch (CommunicationException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    }
+	/**
+	 * Creates a new Step Action.
+	 * 
+	 * @param manager
+	 *            status line manager used to display action result
+	 * @param traces
+	 *            trace from which the inputs are read If trace is null or all
+	 *            ticks are executed, the inputs are read from the input view
+	 */
+	public StepTraceAction(IStatusLineManager manager, TraceList traces) {
+		setId(ACTION_ID);
+		setText("&Step");
+		setToolTipText("Perform a single step in the current program");
+		setImageDescriptor(Activator.imageDescriptorFromPlugin(
+				Activator.PLUGIN_ID, ICON_PATH));
+		this.statusLineManager = manager;
+		this.traces = traces;
 	}
-    }
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.action.Action#run()
+	 */
+	@Override
+	public void run() {
+		if (traces != null) {
+			try {
+				traces.executeStep(statusLineManager);
+			} catch (CommunicationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }

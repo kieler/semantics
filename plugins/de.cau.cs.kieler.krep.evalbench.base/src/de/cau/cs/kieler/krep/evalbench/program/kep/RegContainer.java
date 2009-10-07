@@ -13,7 +13,6 @@
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-
 public class RegContainer {
 
 	Register target;
@@ -28,13 +27,13 @@ public class RegContainer {
 		type = Constants.RegisterType.REG;
 	}
 
-	public RegContainer(Register target, String data) throws IllegalArgumentException {
+	public RegContainer(Register target, String data)
+			throws IllegalArgumentException {
 		try {
 			this.target = target;
 			this.data = new Data(data);
 			type = Constants.RegisterType.DATA;
-			}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
@@ -45,8 +44,8 @@ public class RegContainer {
 		type = Constants.RegisterType.SIGNAL;
 	}
 
-	public String encodeData(){
-			return data.encode();
+	public String encodeData() {
+		return data.encode();
 
 	}
 

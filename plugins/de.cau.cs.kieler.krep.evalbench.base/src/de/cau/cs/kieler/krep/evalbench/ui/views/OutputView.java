@@ -37,29 +37,33 @@ public class OutputView extends ViewPart implements ISignalListener {
 
 	/** Column identifiers for the embedded table */
 	private final static String[] COLUMN_NAMES = { "signal", "present", "value" };
-	
+
 	/** The viewer used to display output values */
 	private TableViewer viewer = null;
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
+	 * 
+	 * @see
+	 * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
+	 * .Composite)
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		//IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
-		//toolBarManager.add(new ContributionItem());
+		// IToolBarManager toolBarManager =
+		// getViewSite().getActionBars().getToolBarManager();
+		// toolBarManager.add(new ContributionItem());
 		// create table
 		Table table = new Table(parent, SWT.NONE);
-		TableColumn column0 =  new TableColumn(table, SWT.NONE, 0);
+		TableColumn column0 = new TableColumn(table, SWT.NONE, 0);
 		column0.setText("Signal");
 		column0.setToolTipText("Signal name");
 		column0.setWidth(150);
-		TableColumn column1 =  new TableColumn(table, SWT.NONE, 1);
+		TableColumn column1 = new TableColumn(table, SWT.NONE, 1);
 		column1.setText("P");
 		column1.setToolTipText("Signal presence status");
 		column1.setWidth(20);
-		TableColumn column2 =  new TableColumn(table, SWT.NONE, 2);
+		TableColumn column2 = new TableColumn(table, SWT.NONE, 2);
 		column2.setText("Value");
 		column2.setToolTipText("Signal value");
 		column2.setWidth(80);
@@ -76,15 +80,17 @@ public class OutputView extends ViewPart implements ISignalListener {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
 	 */
 	@Override
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.WorkbenchPart#dispose()
 	 */
 	@Override
@@ -95,18 +101,23 @@ public class OutputView extends ViewPart implements ISignalListener {
 
 	/*
 	 * (non-Javadoc)
-	 * @see krep.evalbench.comm.ISignalListener#tickPerformed(krep.evalbench.comm.Signal[], krep.evalbench.comm.Signal[])
+	 * 
+	 * @see
+	 * krep.evalbench.comm.ISignalListener#tickPerformed(krep.evalbench.comm
+	 * .Signal[], krep.evalbench.comm.Signal[])
 	 */
-	public void tickPerformed(LinkedList<Signal> inputs, LinkedList<Signal> outputs) {
+	public void tickPerformed(LinkedList<Signal> inputs,
+			LinkedList<Signal> outputs) {
 		// input signals are ignored
 		viewer.setInput(outputs.toArray(new Signal[0]));
 	}
-	
+
 	/**
-	 * Changes the input of the embedded table viewer to the given
-	 * list of signals.
+	 * Changes the input of the embedded table viewer to the given list of
+	 * signals.
 	 * 
-	 * @param input the new input
+	 * @param input
+	 *            the new input
 	 */
 	public void setInput(LinkedList<Signal> input) {
 		viewer.setInput(input.toArray(new Signal[0]));

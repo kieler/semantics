@@ -16,34 +16,35 @@ package de.cau.cs.kieler.krep.evalbench.program.klp;
 import java.util.HashMap;
 
 /**
- * @author ctr
- * Access to a register. Implements Singleton to ensure that all registers are unique
+ * @author ctr Access to a register. Implements Singleton to ensure that all
+ *         registers are unique
  */
 public class Register {
 
-	/*private enum Kind {
-		INPUT, OUTPUT, LOCAL, TEMP;
-	}*/
+	/*
+	 * private enum Kind { INPUT, OUTPUT, LOCAL, TEMP; }
+	 */
 
 	private final String name;
 
 	private static HashMap<String, Register> regs = new HashMap<String, Register>();
 
-	//private boolean isClock;
-	//private final Kind kind;
+	// private boolean isClock;
+	// private final Kind kind;
 
 	private final int id; // 
 
 	private Register(final String name) {
 		this.name = name;
 		// this.isClock = false;
-		//this.kind = Kind.TEMP;
+		// this.kind = Kind.TEMP;
 		// Reg 0 is always true!
 		id = regs.size() + 1;
 	}
 
 	/**
-	 * @param name of the register
+	 * @param name
+	 *            of the register
 	 * @return unique register with this name
 	 */
 	public static Register get(final String name) {
@@ -56,18 +57,13 @@ public class Register {
 	}
 
 	/**
-	 * @param t type of the register
+	 * @param t
+	 *            type of the register
 	 */
-	/*public void setType(final Init.Type t) {
-		switch (t) {
-		case C:
-			isClock = true;
-			break;
-		case V:
-			isClock = false;
-			break;
-		}
-	}*/
+	/*
+	 * public void setType(final Init.Type t) { switch (t) { case C: isClock =
+	 * true; break; case V: isClock = false; break; } }
+	 */
 
 	/*
 	 * public static void allocate(Config conf) { if (conf instanceof

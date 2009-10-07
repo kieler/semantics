@@ -15,7 +15,6 @@ package de.cau.cs.kieler.krep.evalbench.ui.views;
 
 import java.util.LinkedList;
 
-
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -44,10 +43,10 @@ public class InputView extends ViewPart {
 
 	/** Column identifiers for the embedded table */
 	public final static String[] COLUMN_NAMES = { "signal", "present", "value" };
-	
+
 	/** Table viewer where inputs are listed */
 	private TableViewer viewer = null;
-	
+
 	/** The reset action */
 	private IAction resetAction = null;
 	/** The step action */
@@ -56,24 +55,27 @@ public class InputView extends ViewPart {
 	private IAction runAction = null;
 	/** The stop action */
 	private IAction stopAction = null;
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
+	 * 
+	 * @see
+	 * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
+	 * .Composite)
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
 		// create table
 		Table table = new Table(parent, SWT.NONE);
-		TableColumn column0 =  new TableColumn(table, SWT.NONE, 0);
+		TableColumn column0 = new TableColumn(table, SWT.NONE, 0);
 		column0.setText("Signal");
 		column0.setToolTipText("Signal name");
 		column0.setWidth(150);
-		TableColumn column1 =  new TableColumn(table, SWT.NONE, 1);
+		TableColumn column1 = new TableColumn(table, SWT.NONE, 1);
 		column1.setText("P");
 		column1.setToolTipText("Signal presence status");
 		column1.setWidth(20);
-		TableColumn column2 =  new TableColumn(table, SWT.NONE, 2);
+		TableColumn column2 = new TableColumn(table, SWT.NONE, 2);
 		column2.setText("Value");
 		column2.setToolTipText("Signal value");
 		column2.setWidth(80);
@@ -93,23 +95,25 @@ public class InputView extends ViewPart {
 		viewer.setCellEditors(editors);
 		viewer.setCellModifier(new InputSignalModifier(viewer));
 
-		IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
-		IStatusLineManager statusLineManager = getViewSite().getActionBars().getStatusLineManager();
+		IToolBarManager toolBarManager = getViewSite().getActionBars()
+				.getToolBarManager();
+		IStatusLineManager statusLineManager = getViewSite().getActionBars()
+				.getStatusLineManager();
 		// create reset action
 		resetAction = new ResetAction(statusLineManager, null);
 		toolBarManager.add(resetAction);
 		resetAction.setEnabled(true);
-		
+
 		// create step action
 		stepAction = new StepAction(statusLineManager);
 		toolBarManager.add(stepAction);
 		stepAction.setEnabled(true);
-		
+
 		// create run action
 		runAction = new RunAction(statusLineManager, null);
 		toolBarManager.add(runAction);
 		runAction.setEnabled(false);
-		
+
 		// create stop action
 		stopAction = new StopAction(statusLineManager);
 		toolBarManager.add(stopAction);
@@ -118,27 +122,30 @@ public class InputView extends ViewPart {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
 	 */
 	@Override
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
-	
+
 	/**
-	 * Changes the input of the embedded table viewer to the given
-	 * list of signals.
+	 * Changes the input of the embedded table viewer to the given list of
+	 * signals.
 	 * 
-	 * @param input the new input
+	 * @param input
+	 *            the new input
 	 */
 	public void setInput(LinkedList<Signal> input) {
 		viewer.setInput(input.toArray(new Signal[0]));
 	}
-	
+
 	/**
 	 * Enables or disables the control actions in this view.
 	 * 
-	 * @param enabled the new action state
+	 * @param enabled
+	 *            the new action state
 	 */
 	public void setActionsEnabled(boolean enabled) {
 		resetAction.setEnabled(enabled);

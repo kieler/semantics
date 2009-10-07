@@ -323,7 +323,7 @@ public class Program {
 	}
 
 	public void toListingFile(String file) throws IOException {
-		FileWriter fw=null;
+		FileWriter fw = null;
 		try {
 			fw = new FileWriter(file + "lst");
 			System.out.print("Writing " + file + "lst ...");

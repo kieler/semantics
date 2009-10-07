@@ -69,17 +69,18 @@ abstract public class TraceEditor extends EditorPart {
 		// read input file
 		StringBuffer stringBuffer = new StringBuffer();
 		FileReader reader = new FileReader(inputFile);
-		try{int c;
-		while ((c = reader.read()) >= 0) {
-			stringBuffer.append((char) c);
-		}
-		}finally{
+		try {
+			int c;
+			while ((c = reader.read()) >= 0) {
+				stringBuffer.append((char) c);
+			}
+		} finally {
 			reader.close();
 		}
-		
+
 		String source = stringBuffer.toString();
 		Activator.setTraces(openTrace(source));
-	//	Trace.notifyListeners();
+		// Trace.notifyListeners();
 	}
 
 	/*

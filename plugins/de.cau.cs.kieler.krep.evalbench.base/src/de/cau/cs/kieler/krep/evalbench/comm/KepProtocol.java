@@ -23,7 +23,6 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
-
 /**
  * Implementation of the communication protocol interface that uses the KEP
  * protocol.
@@ -91,27 +90,28 @@ public class KepProtocol extends CommunicationProtocol {
 
 	/** Description of received target information data */
 	private final static String[] INFO_DESC = {
-		"KEP Type:                         ",
-		"PRE support:                      ",
-		"Data path width:                  ",
-		"Signal number:                    ",
-		"Thread number:                    ",
-		"Watcher number:                   ",
-		"Watcher counter width:            ",
-		"LWatcher number:                  ",
-		"LWatcher counter width:           ",
-		"TWatcher counter width:           ",
-		"Delay counter width:              ",
-		"Prio value width:                 ",
-		"Register number:                  ",
-		"Tick length:                      ",
-	"Instruction memory address width: " };
+			"KEP Type:                         ",
+			"PRE support:                      ",
+			"Data path width:                  ",
+			"Signal number:                    ",
+			"Thread number:                    ",
+			"Watcher number:                   ",
+			"Watcher counter width:            ",
+			"LWatcher number:                  ",
+			"LWatcher counter width:           ",
+			"TWatcher counter width:           ",
+			"Delay counter width:              ",
+			"Prio value width:                 ",
+			"Register number:                  ",
+			"Tick length:                      ",
+			"Instruction memory address width: " };
 
 	/** Length of information items for target information */
 	private final static int[] INFO_LENGTH = { 0, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2,
-		2, 3, 4, 2 };
+			2, 3, 4, 2 };
 
-	private int MAX_TICKLEN=0;
+	private int MAX_TICKLEN = 0;
+
 	/**
 	 * Constructs a new instance of the KEP protocol.
 	 * 
@@ -138,14 +138,14 @@ public class KepProtocol extends CommunicationProtocol {
 	 *             when the input string does not match the expected format
 	 */
 	private static int parseIntRev(String s, int offset, int n)
-	throws CommunicationException {
+			throws CommunicationException {
 		// reverse digits for parsing
 		StringBuffer stringBuffer = new StringBuffer(n);
 		stringBuffer.setLength(n);
 		for (int i = 0; i < n; i++) {
 			if (offset + i >= s.length()) {
 				throw new CommunicationException(
-				"Wrong number of digits in received string");
+						"Wrong number of digits in received string");
 			}
 			stringBuffer.setCharAt(n - i - 1, s.charAt(offset + i));
 		}
@@ -184,7 +184,7 @@ public class KepProtocol extends CommunicationProtocol {
 				}
 			} catch (NumberFormatException e) {
 				throw new CommunicationException(
-				"Invalid number format in received string");
+						"Invalid number format in received string");
 			}
 		}
 		return x;
@@ -276,30 +276,25 @@ public class KepProtocol extends CommunicationProtocol {
 		return stringBuffer.toString();
 	}
 
-
 	private void send(final String data) throws CommunicationException {
 		connection.send(data);
-		Display.getDefault().asyncExec(new Runnable(){
-			public void run(){
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
 				notifySend(data);
 			}
 		});
 	}
 
-	/*private String receive(int n) throws CommunicationException {
-	final String res = connection.receive(n);
-	Display.getDefault().asyncExec(new Runnable(){
-	    public void run(){
-		notifyReceive(res);
-	    }
-	});
-	return res;
-    }*/
+	/*
+	 * private String receive(int n) throws CommunicationException { final
+	 * String res = connection.receive(n); Display.getDefault().asyncExec(new
+	 * Runnable(){ public void run(){ notifyReceive(res); } }); return res; }
+	 */
 
 	private String receive(char x) throws CommunicationException {
 		final String res = connection.receive(x);
-		Display.getDefault().asyncExec(new Runnable(){
-			public void run(){
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
 				notifyReceive(res);
 			}
 		});
@@ -374,7 +369,7 @@ public class KepProtocol extends CommunicationProtocol {
 	 * krep.evalbench.comm.ICommunicationProtocol#loadProgram(java.lang.String)
 	 */
 	public boolean loadProgram(IAssembler program, IProgressMonitor monitor)
-	throws CommunicationException {
+			throws CommunicationException {
 		String[] prog = program.getObj(null);
 		send(LOAD_COMMAND);
 		int n = prog.length;
@@ -396,16 +391,16 @@ public class KepProtocol extends CommunicationProtocol {
 			String reply = connection.hark(1);
 			if (reply.length() > 0) {
 				final String notify = reply;
-				Display.getDefault().asyncExec(new Runnable(){
-					public void run(){
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
 						notifyReceive(notify);
 					}
 				});
 			}
-			if (reply.length()==1 && reply.charAt(0)==END_REPLY) {
+			if (reply.length() == 1 && reply.charAt(0) == END_REPLY) {
 				return false;
 			}
-			if(monitor!=null){
+			if (monitor != null) {
 				monitor.worked(1);
 			}
 		}
@@ -452,9 +447,9 @@ public class KepProtocol extends CommunicationProtocol {
 		while (iterator.hasNext()) {
 			Signal s = iterator.next();
 			int index = s.getIndex() - 1;
-			try{
+			try {
 				inputStatus[index / 8] |= (s.getPresent() ? 1 : 0) << (index % 8);
-			}catch(Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 				throw new CommunicationException(e.getMessage());
 			}
@@ -465,7 +460,6 @@ public class KepProtocol extends CommunicationProtocol {
 		String inputString = toHexStringSeq(inputStatus, n);
 		send(inputString);
 		send(END_COMMAND);
-
 
 		// send values of valued input signals
 		iterator = valuedInputs.iterator();
@@ -515,12 +509,13 @@ public class KepProtocol extends CommunicationProtocol {
 			// receive data of valued signal
 			send(GET_VALUED_COMMAND);
 			reply = receive(END_REPLY);
-			s.setValue(Integer.valueOf((parseIntRev(reply, 0, reply.length() - 1))));
+			s.setValue(Integer.valueOf((parseIntRev(reply, 0,
+					reply.length() - 1))));
 		}
 
 		int len = getTickLength();
 
-		if( MAX_TICKLEN>0 && len>MAX_TICKLEN ){
+		if (MAX_TICKLEN > 0 && len > MAX_TICKLEN) {
 			outputs.getLast().setPresent(true);
 		}
 
@@ -541,7 +536,7 @@ public class KepProtocol extends CommunicationProtocol {
 			return "Return string is invalid!";
 	}
 
-	public boolean getTickWarn(){
+	public boolean getTickWarn() {
 		return true;
 	}
 
@@ -549,6 +544,5 @@ public class KepProtocol extends CommunicationProtocol {
 		MessageView.print("dump ROM not available for KEP");
 
 	}
-
 
 }

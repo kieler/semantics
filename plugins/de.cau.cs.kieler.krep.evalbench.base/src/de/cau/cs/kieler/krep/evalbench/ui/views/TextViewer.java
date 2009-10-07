@@ -97,13 +97,14 @@ public class TextViewer extends ContentViewer {
 	@Override
 	public void setSelection(ISelection selection, boolean reveal) {
 		try {
-			if(selection instanceof ITextSelection){
-			ITextSelection textSelection = (ITextSelection)selection;
-			text.setSelection(textSelection.getOffset(),
-					textSelection.getOffset() + textSelection.getLength());
+			if (selection instanceof ITextSelection) {
+				ITextSelection textSelection = (ITextSelection) selection;
+				text.setSelection(textSelection.getOffset(), textSelection
+						.getOffset()
+						+ textSelection.getLength());
 			}
 		} catch (ClassCastException e) {
-		    // Ignore silently
+			// Ignore silently
 		}
 	}
 

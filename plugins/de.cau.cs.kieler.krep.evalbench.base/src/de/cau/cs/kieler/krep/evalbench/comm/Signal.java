@@ -233,20 +233,18 @@ public class Signal implements Comparable<Signal> {
 		return res;
 	}
 
-	
-	
-	public int hashCode(){
+	public int hashCode() {
 		return name.hashCode();
 	}
-	
-	public boolean equals(Object o){
-		if(o instanceof Signal){
-			return name.equals(((Signal)o).name);
-		}else{
+
+	public boolean equals(Object o) {
+		if (o instanceof Signal) {
+			return name.equals(((Signal) o).name);
+		} else {
 			return false;
 		}
 	}
-	
+
 	public int compareTo(Signal o) {
 		return name.compareTo(o.name);
 	}

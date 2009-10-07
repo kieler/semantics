@@ -49,7 +49,8 @@ public class KitAssembler implements IAssembler {
 	private final LinkedList<String> instructions;
 
 	/** index for all signals */
-	//private HashMap<String, Integer> signalIndex = new HashMap<String, Integer>();
+	// private HashMap<String, Integer> signalIndex = new HashMap<String,
+	// Integer>();
 
 	private final KepAssembler kasm;
 
@@ -61,7 +62,7 @@ public class KitAssembler implements IAssembler {
 	public KitAssembler() {
 		super();
 		kasm = new KepAssembler();
-		//signalIndex = new HashMap<String, Integer>();
+		// signalIndex = new HashMap<String, Integer>();
 		instructions = new LinkedList<String>();
 	}
 

@@ -28,7 +28,7 @@ public class ProgramLabelProvider implements ITableLabelProvider {
 
 	/** List of label provider listeners */
 	private LinkedList<ILabelProviderListener> listeners;
-	
+
 	/**
 	 * Initializes the program label provider.
 	 */
@@ -36,10 +36,13 @@ public class ProgramLabelProvider implements ITableLabelProvider {
 		// create list for label provider listeners
 		listeners = new LinkedList<ILabelProviderListener>();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang.Object, int)
+	 * 
+	 * @see
+	 * org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang
+	 * .Object, int)
 	 */
 	public Image getColumnImage(Object element, int columnIndex) {
 		// no images for this table
@@ -48,11 +51,14 @@ public class ProgramLabelProvider implements ITableLabelProvider {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang.Object, int)
+	 * 
+	 * @see
+	 * org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang
+	 * .Object, int)
 	 */
 	public String getColumnText(Object element, int columnIndex) {
 		if (element instanceof String[]) {
-			String[] line = (String[])element;
+			String[] line = (String[]) element;
 			return line[columnIndex];
 		} else {
 			return null;
@@ -61,22 +67,29 @@ public class ProgramLabelProvider implements ITableLabelProvider {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.jface.viewers.ILabelProviderListener)
+	 * 
+	 * @see
+	 * org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.
+	 * jface.viewers.ILabelProviderListener)
 	 */
 	public void addListener(ILabelProviderListener listener) {
 		listeners.add(listener);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)
+	 * 
+	 * @see
+	 * org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse
+	 * .jface.viewers.ILabelProviderListener)
 	 */
 	public void removeListener(ILabelProviderListener listener) {
-		listeners.remove(listener);			
+		listeners.remove(listener);
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
 	 */
 	public void dispose() {
@@ -86,7 +99,10 @@ public class ProgramLabelProvider implements ITableLabelProvider {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang.Object, java.lang.String)
+	 * 
+	 * @see
+	 * org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang
+	 * .Object, java.lang.String)
 	 */
 	public boolean isLabelProperty(Object element, String property) {
 		return true;

@@ -123,7 +123,7 @@ public class KrepAssembler implements IAssembler {
 			final krepParser parser = new krepParser(tokens);
 
 			procs = parser.prog();
-			
+
 		} catch (IOException e) {
 			throw new ParseException(e.toString());
 		} catch (RecognitionException e) {

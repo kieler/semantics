@@ -60,7 +60,7 @@ public class MessageView extends ViewPart {
 	 *            message
 	 */
 	public static void print(String data) {
-		if(viewer !=null){
+		if (viewer != null) {
 			viewer.append(data + "\n");
 		}
 	}

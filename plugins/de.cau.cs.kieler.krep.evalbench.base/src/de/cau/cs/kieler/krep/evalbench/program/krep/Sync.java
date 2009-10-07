@@ -22,20 +22,20 @@ import java.util.Map;
  */
 public class Sync extends Statement {
 
-    @Override
-    public int[] getBytes() {
-	int[] b = { OPCODE.SYNC, 0, 0, 0 };
-	return b;
-    }
+	@Override
+	public int[] getBytes() {
+		int[] b = { OPCODE.SYNC, 0, 0, 0 };
+		return b;
+	}
 
-    @Override
-    public String toString() {
-	return "SYNC";
-    }
+	@Override
+	public String toString() {
+		return "SYNC";
+	}
 
-    @Override
-    public void allocateRegs(Map<String, Integer> regs) {
-	// no regs used
-    }
+	@Override
+	public void allocateRegs(Map<String, Integer> regs) {
+		// no regs used
+	}
 
 }

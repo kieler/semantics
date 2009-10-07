@@ -24,116 +24,117 @@ import java.util.Map;
  *         KReP process that is executed on one core
  */
 public class Process {
-    private List<Statement> stmts = new LinkedList<Statement>();
+	private List<Statement> stmts = new LinkedList<Statement>();
 
-    private byte id;
+	private byte id;
 
-    private HashMap<String, Integer> labels = new HashMap<String, Integer>();
+	private HashMap<String, Integer> labels = new HashMap<String, Integer>();
 
-    /**
-     * @param id
-     *            identifier of the core on which the process runs
-     */
-    public Process(final byte id) {
-	this.id = id;
-    }
-
-    /**
-     * @param s
-     *            additional statement
-     */
-    public void addStatement(Statement s) {
-	stmts.add(s);
-    }
-
-    /**
-     * @param label
-     *            label for end of current process code
-     */
-    public void addLabel(final String label) {
-	labels.put(label, stmts.size());
-    }
-
-    /**
-     * Compute that address for each label
-     * 
-     * @return number of statements
-     */
-    public int setLabel() {
-	for (Statement s : stmts) {
-	    s.setLabel(labels);
+	/**
+	 * @param id
+	 *            identifier of the core on which the process runs
+	 */
+	public Process(final byte id) {
+		this.id = id;
 	}
-	return stmts.size();
-    }
 
-    /**
-     * Allocate all register for the process
-     * 
-     * @return number of used registers
-     */
-    public int allocateRegs() {
-	HashMap<String, Integer> regs = new HashMap<String, Integer>();
-	for (Statement s : stmts) {
-	    s.allocateRegs(regs);
+	/**
+	 * @param s
+	 *            additional statement
+	 */
+	public void addStatement(Statement s) {
+		stmts.add(s);
 	}
-	return regs.size();
-    }
 
-    /**
-     * Compute identifier for all send values
-     * 
-     * @param ids maps register names to bus identifiers
-     */
-    public void setBusID(final Map<String, Integer> ids) {
-	for (Statement s : stmts) {
-	    s.setBusID(ids);
+	/**
+	 * @param label
+	 *            label for end of current process code
+	 */
+	public void addLabel(final String label) {
+		labels.put(label, stmts.size());
 	}
-    }
 
-    /**
-     * @return textual assembler description of the code
-     */
-    public List<String> getText() {
-	List<String> res = new LinkedList<String>();
-	for (Statement s : stmts) {
-	    res.add(s.toString());
+	/**
+	 * Compute that address for each label
+	 * 
+	 * @return number of statements
+	 */
+	public int setLabel() {
+		for (Statement s : stmts) {
+			s.setLabel(labels);
+		}
+		return stmts.size();
 	}
-	return res;
-    }
 
-    private String toHex(int i) {
-	String res = "";
-	res = Integer.toHexString(i);
-	if (res.length() == 1) {
-	    res = "0" + res;
+	/**
+	 * Allocate all register for the process
+	 * 
+	 * @return number of used registers
+	 */
+	public int allocateRegs() {
+		HashMap<String, Integer> regs = new HashMap<String, Integer>();
+		for (Statement s : stmts) {
+			s.allocateRegs(regs);
+		}
+		return regs.size();
 	}
-	return res;
-    }
 
-    /**
-     * @return hex description of the program code. Each list entry is one
-     *         instruction (4 Bytes)
-     * 
-     */
-    public List<String> getCode() {
-	final List<String> res = new LinkedList<String>();
-	for (final Statement stmt : stmts) {
-	    String s = toHex(id);
-
-	    for (final int i : stmt.getBytes()) {
-		s += toHex(i);
-	    }
-	    res.add(s);
+	/**
+	 * Compute identifier for all send values
+	 * 
+	 * @param ids
+	 *            maps register names to bus identifiers
+	 */
+	public void setBusID(final Map<String, Integer> ids) {
+		for (Statement s : stmts) {
+			s.setBusID(ids);
+		}
 	}
-	return res;
-    }
 
-    @Override
-    public String toString() {
-	String res = "";
-	for (Statement s : stmts) {
-	    res += s.toString() + "\n";
+	/**
+	 * @return textual assembler description of the code
+	 */
+	public List<String> getText() {
+		List<String> res = new LinkedList<String>();
+		for (Statement s : stmts) {
+			res.add(s.toString());
+		}
+		return res;
 	}
-	return res;
-    }
+
+	private String toHex(int i) {
+		String res = "";
+		res = Integer.toHexString(i);
+		if (res.length() == 1) {
+			res = "0" + res;
+		}
+		return res;
+	}
+
+	/**
+	 * @return hex description of the program code. Each list entry is one
+	 *         instruction (4 Bytes)
+	 * 
+	 */
+	public List<String> getCode() {
+		final List<String> res = new LinkedList<String>();
+		for (final Statement stmt : stmts) {
+			String s = toHex(id);
+
+			for (final int i : stmt.getBytes()) {
+				s += toHex(i);
+			}
+			res.add(s);
+		}
+		return res;
+	}
+
+	@Override
+	public String toString() {
+		String res = "";
+		for (Statement s : stmts) {
+			res += s.toString() + "\n";
+		}
+		return res;
+	}
 }

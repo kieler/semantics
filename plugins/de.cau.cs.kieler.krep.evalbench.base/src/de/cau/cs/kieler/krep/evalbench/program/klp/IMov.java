@@ -18,7 +18,6 @@ import java.util.HashMap;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.Instruction;
 
-
 /**
  * @author ctr immediate move
  */
@@ -44,8 +43,9 @@ public class IMov extends Instruction {
 
 	/**
 	 * move integer value to register
-	 * @param t 
-	 * 			  type of movement
+	 * 
+	 * @param t
+	 *            type of movement
 	 * @param to
 	 *            register that stores the value
 	 * @param val
@@ -87,9 +87,10 @@ public class IMov extends Instruction {
 		return new int[] { op.getCode(), 2 * to.getId(), val, 0 };
 	}
 
-	    @Override
-	    public void asmLabel(HashMap<String, Integer> label2addr) throws ParseException {
+	@Override
+	public void asmLabel(HashMap<String, Integer> label2addr)
+			throws ParseException {
 		// nothing to do
-	    }
-	
+	}
+
 }

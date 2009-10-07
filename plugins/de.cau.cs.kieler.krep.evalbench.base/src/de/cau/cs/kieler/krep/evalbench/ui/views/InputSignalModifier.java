@@ -13,7 +13,6 @@
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.ui.views;
 
-
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Item;
@@ -21,8 +20,7 @@ import org.eclipse.swt.widgets.Item;
 import de.cau.cs.kieler.krep.evalbench.comm.*;
 
 /**
- * Modifier for the table viewer that is embedded in the
- * input view.
+ * Modifier for the table viewer that is embedded in the input view.
  * 
  * @author msp
  */
@@ -30,22 +28,23 @@ public class InputSignalModifier implements ICellModifier {
 
 	/** The table viewer that uses this modifier */
 	private TableViewer parentViewer;
-	
+
 	/**
 	 * Creates an input signal modifier.
 	 * 
-	 * @param parent the table viewer that uses this modifier
+	 * @param parent
+	 *            the table viewer that uses this modifier
 	 */
 	public InputSignalModifier(TableViewer parent) {
 		this.parentViewer = parent;
 	}
-	
+
 	/**
 	 * Finds the column index from a given column name.
 	 * 
-	 * @param property property name
-	 * @return the column index, or -1 if the given property
-	 *         was not found
+	 * @param property
+	 *            property name
+	 * @return the column index, or -1 if the given property was not found
 	 */
 	private static int getColumnIndex(String property) {
 		for (int i = 0; i < InputView.COLUMN_NAMES.length; i++) {
@@ -54,19 +53,21 @@ public class InputSignalModifier implements ICellModifier {
 		}
 		return -1;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.ICellModifier#canModify(java.lang.Object, java.lang.String)
+	 * 
+	 * @see org.eclipse.jface.viewers.ICellModifier#canModify(java.lang.Object,
+	 * java.lang.String)
 	 */
 	public boolean canModify(Object element, String property) {
 		int columnIndex = getColumnIndex(property);
 		// get signal to analyze
 		Signal s;
 		if (element instanceof Item)
-			s = (Signal)((Item)element).getData();
+			s = (Signal) ((Item) element).getData();
 		else
-			s = (Signal)element;
+			s = (Signal) element;
 		// return modifiability information
 		switch (columnIndex) {
 		case 1:
@@ -80,16 +81,18 @@ public class InputSignalModifier implements ICellModifier {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.ICellModifier#getValue(java.lang.Object, java.lang.String)
+	 * 
+	 * @see org.eclipse.jface.viewers.ICellModifier#getValue(java.lang.Object,
+	 * java.lang.String)
 	 */
 	public Object getValue(Object element, String property) {
 		int columnIndex = getColumnIndex(property);
 		// get signal to retrieve value
 		Signal s;
 		if (element instanceof Item)
-			s = (Signal)((Item)element).getData();
+			s = (Signal) ((Item) element).getData();
 		else
-			s = (Signal)element;
+			s = (Signal) element;
 		// get value from signal
 		switch (columnIndex) {
 		case 0:
@@ -109,24 +112,26 @@ public class InputSignalModifier implements ICellModifier {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.ICellModifier#modify(java.lang.Object, java.lang.String, java.lang.Object)
+	 * 
+	 * @see org.eclipse.jface.viewers.ICellModifier#modify(java.lang.Object,
+	 * java.lang.String, java.lang.Object)
 	 */
 	public void modify(Object element, String property, Object value) {
 		int columnIndex = getColumnIndex(property);
 		// get signal to modify
 		Signal s;
 		if (element instanceof Item)
-			s = (Signal)((Item)element).getData();
+			s = (Signal) ((Item) element).getData();
 		else
-			s = (Signal)element;
+			s = (Signal) element;
 		// modify specified property
 		switch (columnIndex) {
 		case 1:
-			s.setPresent(((Boolean)value).booleanValue());
+			s.setPresent(((Boolean) value).booleanValue());
 			break;
 		case 2:
 			try {
-				s.setValue(Integer.valueOf((String)value));
+				s.setValue(Integer.valueOf((String) value));
 			} catch (NumberFormatException e) {
 				s.setValue(0);
 			}

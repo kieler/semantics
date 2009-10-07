@@ -27,6 +27,7 @@ public class LstEditor extends AssemblerEditor {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see krep.evalbench.ui.editors.AssemblerEditor#getProtocolType()
 	 */
 	@Override

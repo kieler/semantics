@@ -168,9 +168,9 @@ public class KasmAssembler implements IAssembler {
 			String line = tokenizer.nextToken();
 			if (line.startsWith("[")) {
 				line = line.substring(line.lastIndexOf('}') + 1); // if
-																	// (line.length()
-																	// >= 2 &&
-																	// !line.startsWith("%")
+				// (line.length()
+				// >= 2 &&
+				// !line.startsWith("%")
 				int icomment = line.indexOf('%');
 				if (icomment > 0) {
 					line = line.substring(0, icomment - 1);

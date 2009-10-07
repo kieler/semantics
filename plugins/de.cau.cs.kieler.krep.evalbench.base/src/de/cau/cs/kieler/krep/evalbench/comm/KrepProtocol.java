@@ -185,7 +185,7 @@ public class KrepProtocol extends CommunicationProtocol {
 		int nIO = msg.get(3); // Integer.parseInt(msg.substring(6, 8), 16);
 		int nReg = msg.get(4); // Integer.parseInt(msg.substring(8, 10), 16);
 		int nROM = 1 << msg.get(5); // Integer.parseInt(msg.substring(10, 12),
-									// 16);
+		// 16);
 
 		/*
 		 * if (nROM <0){ nROM=0; int b = msg.get(5); if ((b & 0x01) !=0) nROM+=

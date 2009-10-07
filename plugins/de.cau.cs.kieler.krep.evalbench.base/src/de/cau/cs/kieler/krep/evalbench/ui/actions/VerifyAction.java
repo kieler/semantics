@@ -200,7 +200,7 @@ public class VerifyAction extends Action {
 				String logFile = preferenceStore
 						.getString(VerifyPreferencePage.VERIFY_LOG);
 				if (logFile.length() > 0) {
-					BufferedWriter out=null;
+					BufferedWriter out = null;
 					try {
 						File f = new File(logFile);
 						out = new BufferedWriter(new FileWriter(f));
@@ -219,7 +219,7 @@ public class VerifyAction extends Action {
 					} catch (IOException e) {
 						MessageView.print("cannot log to file " + logFile);
 					} finally {
-						if(out!=null){
+						if (out != null) {
 							try {
 								out.close();
 							} catch (IOException e) {

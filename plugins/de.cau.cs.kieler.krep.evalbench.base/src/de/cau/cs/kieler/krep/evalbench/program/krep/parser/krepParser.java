@@ -13,10 +13,9 @@
  ******************************************************************************/
 // $ANTLR 3.1.1 krep.g 2008-10-13 11:53:38
 
-  package de.cau.cs.kieler.krep.evalbench.program.krep.parser;
-  import java.util.LinkedList;
-  
+package de.cau.cs.kieler.krep.evalbench.program.krep.parser;
 
+import java.util.LinkedList;
 
 import org.antlr.runtime.*;
 
@@ -29,89 +28,84 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class krepParser extends Parser {
-    public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "NUMBER", "Letter", "Digit", "ID", "WHITESPACE", "COMMENT"
-    };
-    public static final int NUMBER=4;
-    public static final int WHITESPACE=8;
-    public static final int COMMENT=9;
-    public static final int Digit=6;
-    public static final int ID=7;
-    public static final int EOF=-1;
-    public static final int Letter=5;
+	public static final String[] tokenNames = new String[] { "<invalid>",
+			"<EOR>", "<DOWN>", "<UP>", "NUMBER", "Letter", "Digit", "ID",
+			"WHITESPACE", "COMMENT" };
+	public static final int NUMBER = 4;
+	public static final int WHITESPACE = 8;
+	public static final int COMMENT = 9;
+	public static final int Digit = 6;
+	public static final int ID = 7;
+	public static final int EOF = -1;
+	public static final int Letter = 5;
 
-    // delegates
-    // delegators
+	// delegates
+	// delegators
 
+	public krepParser(TokenStream input) {
+		this(input, new RecognizerSharedState());
+	}
 
-        public krepParser(TokenStream input) {
-            this(input, new RecognizerSharedState());
-        }
-        public krepParser(TokenStream input, RecognizerSharedState state) {
-            super(input, state);
-             
-        }
-        
+	public krepParser(TokenStream input, RecognizerSharedState state) {
+		super(input, state);
 
-    public String[] getTokenNames() { return krepParser.tokenNames; }
-    public String getGrammarFileName() { return "krep.g"; }
+	}
 
+	public String[] getTokenNames() {
+		return krepParser.tokenNames;
+	}
 
+	public String getGrammarFileName() {
+		return "krep.g";
+	}
 
+	// $ANTLR start "prog"
+	// krep.g:19:1: prog returns [LinkedList<Process> res] : ;
+	public final LinkedList<Process> prog() throws RecognitionException {
+		LinkedList<Process> res = null;
 
+		try {
+			// krep.g:20:3: ()
+			// krep.g:20:4:
+			{
+			}
 
+		} finally {
+		}
+		return res;
+	}
 
-    // $ANTLR start "prog"
-    // krep.g:19:1: prog returns [LinkedList<Process> res] : ;
-    public final LinkedList<Process> prog() throws RecognitionException {
-        LinkedList<Process> res = null;
+	// $ANTLR end "prog"
 
-        try {
-            // krep.g:20:3: ()
-            // krep.g:20:4: 
-            {
-            }
+	// $ANTLR start "num"
+	// krep.g:22:2: num returns [Integer v] : n= NUMBER ;
+	public final Integer num() throws RecognitionException {
+		Integer v = null;
 
-        }
-        finally {
-        }
-        return res;
-    }
-    // $ANTLR end "prog"
+		Token n = null;
 
+		try {
+			// krep.g:23:7: (n= NUMBER )
+			// krep.g:23:9: n= NUMBER
+			{
+				n = (Token) match(input, NUMBER, FOLLOW_NUMBER_in_num59);
+				v = Integer.parseInt((n != null ? n.getText() : null));
 
-    // $ANTLR start "num"
-    // krep.g:22:2: num returns [Integer v] : n= NUMBER ;
-    public final Integer num() throws RecognitionException {
-        Integer v = null;
+			}
 
-        Token n=null;
+		} catch (RecognitionException re) {
+			reportError(re);
+			recover(input, re);
+		} finally {
+		}
+		return v;
+	}
 
-        try {
-            // krep.g:23:7: (n= NUMBER )
-            // krep.g:23:9: n= NUMBER
-            {
-            n=(Token)match(input,NUMBER,FOLLOW_NUMBER_in_num59); 
-             v=Integer.parseInt((n!=null?n.getText():null)); 
+	// $ANTLR end "num"
 
-            }
+	// Delegated rules
 
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-        }
-        return v;
-    }
-    // $ANTLR end "num"
-
-    // Delegated rules
-
-
- 
-
-    public static final BitSet FOLLOW_NUMBER_in_num59 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NUMBER_in_num59 = new BitSet(
+			new long[] { 0x0000000000000002L });
 
 }

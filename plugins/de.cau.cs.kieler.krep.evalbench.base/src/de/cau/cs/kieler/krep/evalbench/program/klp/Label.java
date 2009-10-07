@@ -12,6 +12,7 @@
  * See the file epl-v10.html for the license text.
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.program.klp;
+
 //package krep.evalbench.program.klp;
 //
 //import java.util.HashMap;
@@ -77,4 +78,4 @@ package de.cau.cs.kieler.krep.evalbench.program.klp;
 //    protected int[] getObj() {
 //	return null;
 //    }
-//}
+// }

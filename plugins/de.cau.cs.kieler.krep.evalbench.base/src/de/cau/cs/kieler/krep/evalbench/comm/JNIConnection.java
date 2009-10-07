@@ -21,13 +21,12 @@ import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage;
 
-
 public class JNIConnection implements IConnectionProtocol {
 
 	IKrepWrapper krep = null;
 
 	public void dispose() {
-		if(krep!=null){
+		if (krep != null) {
 			krep.terminate();
 			krep = null;
 		}
@@ -35,15 +34,16 @@ public class JNIConnection implements IConnectionProtocol {
 	}
 
 	public String initialize(String device, int port)
-	throws CommunicationException {
+			throws CommunicationException {
 		String name = "unknown";
 		if (krep != null) {
 			krep.terminate();
 		}
 		try {
 			IPreferenceStore preferenceStore = Activator.getDefault()
-			.getPreferenceStore();
-			String currentProtocolType = preferenceStore.getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
+					.getPreferenceStore();
+			String currentProtocolType = preferenceStore
+					.getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
 			if (currentProtocolType.equals(ICommunicationProtocol.P_KEP)) {
 				name = "kep";
 				krep = new KepWrapper();
@@ -59,7 +59,8 @@ public class JNIConnection implements IConnectionProtocol {
 					+ t.getMessage() + "\nLibrary path: "
 					+ System.getProperty("java.library.path"));
 		}
-		return "started new " + ((krep!=null)?krep.getName():"unknown processor");
+		return "started new "
+				+ ((krep != null) ? krep.getName() : "unknown processor");
 	}
 
 	public String hark(int n) throws CommunicationException {
@@ -77,7 +78,7 @@ public class JNIConnection implements IConnectionProtocol {
 			while (!krep.hasOutput()) {
 				krep.step();
 			}
-			c = (char)krep.getOutput();
+			c = (char) krep.getOutput();
 			res.append(c);
 		} while (c != exit);
 		return res.toString();
@@ -88,7 +89,7 @@ public class JNIConnection implements IConnectionProtocol {
 		while (res.length() < n) {
 			krep.step();
 			if (krep.hasOutput()) {
-				res.append((char)krep.getOutput());
+				res.append((char) krep.getOutput());
 			}
 		}
 		return res.toString();
@@ -101,9 +102,9 @@ public class JNIConnection implements IConnectionProtocol {
 	}
 
 	public void send(byte data) throws CommunicationException {
-		//for (byte b : data.getBytes()) {
+		// for (byte b : data.getBytes()) {
 		krep.send(data);
-		//}
+		// }
 	}
 
 	public void comment(String comment) {
@@ -115,7 +116,7 @@ public class JNIConnection implements IConnectionProtocol {
 		while (res.size() < n) {
 			krep.step();
 			if (krep.hasOutput()) {
-				res.add(((int)krep.getOutput()) & 0xFF);
+				res.add(((int) krep.getOutput()) & 0xFF);
 			}
 		}
 		return res;

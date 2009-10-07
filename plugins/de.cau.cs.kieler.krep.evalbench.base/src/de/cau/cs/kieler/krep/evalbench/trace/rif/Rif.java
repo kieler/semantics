@@ -12,6 +12,7 @@
  * See the file epl-v10.html for the license text.
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.trace.rif;
+
 //package krep.evalbench.trace.rif;
 //
 //import java.io.Reader;
@@ -71,4 +72,4 @@ package de.cau.cs.kieler.krep.evalbench.trace.rif;
 //
 //    }
 //
-//}
+// }

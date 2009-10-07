@@ -18,7 +18,6 @@ import java.util.HashMap;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.Instruction;
 
-
 /**
  * @author ctr Copy register value to another register
  */
@@ -108,8 +107,8 @@ public class Mov extends Instruction {
 
 	@Override
 	public void asmLabel(HashMap<String, Integer> label2addr)
-		throws ParseException {
-	    // TODO nothing to do
+			throws ParseException {
+		// TODO nothing to do
 	}
 
 }

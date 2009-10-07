@@ -13,20 +13,18 @@
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-
-
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-
-
-
-public class Instruction extends de.cau.cs.kieler.krep.evalbench.program.Instruction implements InstInf {
+public class Instruction extends
+		de.cau.cs.kieler.krep.evalbench.program.Instruction implements InstInf {
 
 	String id;
 	String mnemonic;
 	SCLine sourceCode;
-	public Instruction(){}
+
+	public Instruction() {
+	}
 
 	public Instruction(String id, String name, SCLine sourceCode) {
 		this.id = id;
@@ -34,24 +32,23 @@ public class Instruction extends de.cau.cs.kieler.krep.evalbench.program.Instruc
 		this.sourceCode = sourceCode;
 	}
 
-	public String toString(){
+	public String toString() {
 		return mnemonic + " ";
 	}
 
-	public String encode(){
+	public String encode() {
 		return id;
 	}
 
-	public String info(){
-		return  ""+mnemonic+"\n\r" +
-				id;
+	public String info() {
+		return "" + mnemonic + "\n\r" + id;
 	}
 
-	public int length(){
+	public int length() {
 		return Constants.id_width;
 	}
 
-	public SCLine getScource(){
+	public SCLine getScource() {
 		return sourceCode;
 	}
 
@@ -63,45 +60,38 @@ public class Instruction extends de.cau.cs.kieler.krep.evalbench.program.Instruc
 		return id;
 	}
 
+	public boolean equals(String crit) {
 
+		StringTokenizer tokenizer = new StringTokenizer(this.mnemonic);
+		String name = tokenizer.nextToken();
 
-
-	public boolean equals(String crit){
-
-	   StringTokenizer tokenizer = new StringTokenizer(this.mnemonic);
-   	   String name = tokenizer.nextToken();
-
-	   return name.contains(crit);
+		return name.contains(crit);
 	}
 
 	@Override
 	public void asmLabel(HashMap<String, Integer> label2addr) {
-	    // TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 	}
 
-	private int[] String2Array(String bin){
-		 int[] res = new int[5];
-		 // pad with 0
-		 String pad = "";
-		 for (int i=0; i<5*8-bin.length(); i++){
-		     pad +="0";
-		 }
-		 bin +=pad;
-		 
-		 for(int i =0; i<5; i++){
-		     String s = bin.substring(8*i, 8*(i+1));
-		   res[i] = Integer.parseInt(s, 2);    
-		 }
-		 return res;
+	private int[] String2Array(String bin) {
+		int[] res = new int[5];
+		// pad with 0
+		String pad = "";
+		for (int i = 0; i < 5 * 8 - bin.length(); i++) {
+			pad += "0";
 		}
-	
+		bin += pad;
+
+		for (int i = 0; i < 5; i++) {
+			String s = bin.substring(8 * i, 8 * (i + 1));
+			res[i] = Integer.parseInt(s, 2);
+		}
+		return res;
+	}
+
 	@Override
 	protected int[] getObj() {
-	    return String2Array(encode());
+		return String2Array(encode());
 	}
-
-
-
-
 
 }

@@ -13,7 +13,6 @@
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.ui.views;
 
-
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
@@ -29,32 +28,37 @@ public class TargetView extends ViewPart {
 
 	/** The identifier string for this view */
 	public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.target";
-	
+
 	/** The viewer used to display target info */
 	private TextViewer viewer = null;
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
+	 * 
+	 * @see
+	 * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
+	 * .Composite)
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
 		// create text viewer
 		viewer = new TextViewer(parent);
 		// create actions
-		IToolBarManager manager = getViewSite().getActionBars().getToolBarManager();
+		IToolBarManager manager = getViewSite().getActionBars()
+				.getToolBarManager();
 		manager.add(new TargetInfoAction());
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
 	 */
 	@Override
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
-	
+
 	/**
 	 * Gets the text viewer.
 	 * 

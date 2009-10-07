@@ -17,105 +17,111 @@ import de.cau.cs.kieler.krep.evalbench.program.kep.Constants.*;
 
 public class ReadSignal extends Identifer {
 
+	SignalType type;
+	SignalDataType datatype;
+	boolean isPre = false;
+	Data value;
+	Register reg;
 
-		SignalType type;
-		SignalDataType datatype;
-		boolean isPre = false;
-		Data value ;
-		Register reg;
+	public ReadSignal(String name, Integer id) {
+		super(name, id);
+		this.datatype = Constants.SignalDataType.PURE;
+	}
 
-		public ReadSignal(String name, Integer id ) {
-			super(name,id);
-			this.datatype=Constants.SignalDataType.PURE;
+	public ReadSignal(String name, Integer id, boolean isPre) {
+		this(name, id);
+		this.isPre = isPre;
+		this.datatype = Constants.SignalDataType.PURE;
+	}
+
+	public ReadSignal(String name, Integer id, String value)
+			throws IllegalArgumentException {
+		this(name, id);
+		try {
+			this.value = new Data(value);
+			this.datatype = Constants.SignalDataType.DATA;
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException(e.getMessage());
 		}
+	}
 
-		public ReadSignal(String name, Integer id, boolean isPre) {
-			this(name,id);
-			this.isPre=isPre;
-			this.datatype=Constants.SignalDataType.PURE;
-		}
+	public ReadSignal(String name, SignalType type, Integer id, Register reg) {
+		this(name, id);
+		this.reg = reg;
+		this.datatype = Constants.SignalDataType.REG;
+	}
 
-		public ReadSignal(String name, Integer id, String value) throws IllegalArgumentException{
-			this(name,id);
-			try {
-			this.value=new Data(value);
-			this.datatype=Constants.SignalDataType.DATA;
-			}
-			catch (IllegalArgumentException e) {
-				throw new IllegalArgumentException(e.getMessage());
-			}
-		}
+	@Override
+	public String toString() {
+		return encode();
+	}
 
-		public ReadSignal(String name, SignalType type, Integer id, Register reg) {
-			this(name,id);
-			this.reg=reg;
-			this.datatype=Constants.SignalDataType.REG;
-		}
+	public String printlst() {
 
-		@Override
-		public String toString(){
-			return encode();
-		}
-		public String printlst(){
-			
-				return "% ["+this.toString()+"]  I/O(#"+this.id+")  "+this.name;
-			
-		}
-		public String print(){
-			return super.print()+"\t"+this.type.toString();
-		}
+		return "% [" + this.toString() + "]  I/O(#" + this.id + ")  "
+				+ this.name;
 
-		public void setType(SignalType type) {
-			this.type = type;
-		}
+	}
 
-		public SignalType getType() {
-			return type;
-		}
+	public String print() {
+		return super.print() + "\t" + this.type.toString();
+	}
 
-		public SignalDataType getDataType() {
-			return datatype;
-		}
+	public void setType(SignalType type) {
+		this.type = type;
+	}
 
+	public SignalType getType() {
+		return type;
+	}
 
-		public void setReg(Register reg) {
-			this.reg = reg;
-		}
+	public SignalDataType getDataType() {
+		return datatype;
+	}
 
-		public void setValue(Data value) {
-			this.value = value;
-		}
+	public void setReg(Register reg) {
+		this.reg = reg;
+	}
 
-		public String encode(){
-			String result = super.encode(Constants.signal_width);
-			if (!this.isPre) result+="0";
-			else result+="1";
+	public void setValue(Data value) {
+		this.value = value;
+	}
 
-			assert result.length()==Constants.signal_width+1 : "Opcode length for signal should be "+Constants.signal_width+1+" but is "+result.length()+"!";
+	public String encode() {
+		String result = super.encode(Constants.signal_width);
+		if (!this.isPre)
+			result += "0";
+		else
+			result += "1";
 
-			return result;
+		assert result.length() == Constants.signal_width + 1 : "Opcode length for signal should be "
+				+ Constants.signal_width
+				+ 1
+				+ " but is "
+				+ result.length()
+				+ "!";
 
-		}
+		return result;
 
-		
-		public String info(){
-			String result ="";
-			while (result.length()<Constants.signal_width) result+="S";
-			return result+"P";
-		}
+	}
 
-		public int length(){
-			return Constants.signal_width+1;
-		}
+	public String info() {
+		String result = "";
+		while (result.length() < Constants.signal_width)
+			result += "S";
+		return result + "P";
+	}
 
-		public Register getReg() {
-			return reg;
-		}
+	public int length() {
+		return Constants.signal_width + 1;
+	}
 
-		public Data getValue() {
-			return value;
-		}
+	public Register getReg() {
+		return reg;
+	}
 
-
+	public Data getValue() {
+		return value;
+	}
 
 }

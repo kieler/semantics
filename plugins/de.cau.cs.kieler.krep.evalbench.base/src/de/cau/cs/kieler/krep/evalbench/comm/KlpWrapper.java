@@ -98,7 +98,7 @@ public class KlpWrapper implements IKrepWrapper {
 		step();
 		esi.write("RX(0x" + Integer.toHexString(b & 0xFF) + ")");
 		klp_send(b, msg);
-		if (msg.length()>0) {
+		if (msg.length() > 0) {
 			MessageView.print(msg);
 		}
 		step();
@@ -114,7 +114,7 @@ public class KlpWrapper implements IKrepWrapper {
 	public static native void klp_send(byte c, String msg);
 
 	public void saveEsi(String esiFile) {
-		BufferedWriter out=null;
+		BufferedWriter out = null;
 		try {
 			File f = new File(esiFile);
 			out = new BufferedWriter(new FileWriter(f));
@@ -122,8 +122,8 @@ public class KlpWrapper implements IKrepWrapper {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			if(out!=null){
+		} finally {
+			if (out != null) {
 				try {
 					out.close();
 				} catch (IOException e) {

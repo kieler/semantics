@@ -24,71 +24,67 @@ import org.eclipse.ui.IPerspectiveFactory;
  */
 public class TracePerspective implements IPerspectiveFactory {
 
-    /** Identifier string for this perspective */
-    public final static String PERSPECTIVE_ID = "de.cau.cs.kieler.krep.evalbench.ui.traceperspective";
+	/** Identifier string for this perspective */
+	public final static String PERSPECTIVE_ID = "de.cau.cs.kieler.krep.evalbench.ui.traceperspective";
 
-    /** Identifier string for the connection view */
-    private final static String ID_CONNECTION = "de.cau.cs.kieler.krep.evalbench.ui.views.connection";
+	/** Identifier string for the connection view */
+	private final static String ID_CONNECTION = "de.cau.cs.kieler.krep.evalbench.ui.views.connection";
 
-    /** Identifier string for the message view */
-    private final static String ID_MESSAGE = "de.cau.cs.kieler.krep.evalbench.ui.views.message";
+	/** Identifier string for the message view */
+	private final static String ID_MESSAGE = "de.cau.cs.kieler.krep.evalbench.ui.views.message";
 
-    
-    /** Identifier string for the target view */
-    private final static String ID_TARGET = "de.cau.cs.kieler.krep.evalbench.ui.views.target";
+	/** Identifier string for the target view */
+	private final static String ID_TARGET = "de.cau.cs.kieler.krep.evalbench.ui.views.target";
 
-    /** Identifier string for the trace view */
-    private final static String ID_TRACE = "de.cau.cs.kieler.krep.evalbench.ui.views.trace";
+	/** Identifier string for the trace view */
+	private final static String ID_TRACE = "de.cau.cs.kieler.krep.evalbench.ui.views.trace";
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui
+	 * .IPageLayout)
+	 */
+	public void createInitialLayout(IPageLayout layout) {
 
-  
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui
-     * .IPageLayout)
-     */
-    public void createInitialLayout(IPageLayout layout) {
+		// get the editor area.
+		String editorArea = layout.getEditorArea();
 
-	// get the editor area.
-	String editorArea = layout.getEditorArea();
+		// bottom: Connection and Target view
+		IFolderLayout bottom = layout.createFolder("bottom",
+				IPageLayout.BOTTOM, 0.7f, editorArea);
+		bottom.addView(ID_CONNECTION);
+		bottom.addView(ID_TARGET);
+		bottom.addView(ID_MESSAGE);
 
-	// bottom: Connection and Target view
-	IFolderLayout bottom = layout.createFolder("bottom",
-		IPageLayout.BOTTOM, 0.7f, editorArea);
-	bottom.addView(ID_CONNECTION);
-	bottom.addView(ID_TARGET);
-	bottom.addView(ID_MESSAGE);
-	
-	// right 1: trace view view
-	//layout.addStandaloneView(ID_TRACE, true, IPageLayout.RIGHT, 0.57f, editorArea);
-	
-	
-	IFolderLayout left = layout.createFolder("left", IPageLayout.RIGHT,
-		0.57f, editorArea);
+		// right 1: trace view view
+		// layout.addStandaloneView(ID_TRACE, true, IPageLayout.RIGHT, 0.57f,
+		// editorArea);
 
-	left.addView(ID_TRACE);
+		IFolderLayout left = layout.createFolder("left", IPageLayout.RIGHT,
+				0.57f, editorArea);
 
-	// haf: try to add the KIEL Environment Visualization View if the KEV
-	// plugin is available
-	//if (Platform.getBundle("edu.unikiel.rtsys.kieler.kev") != null) {
-	 //   IFolderLayout rightBottom = layout.createFolder("rightBottom",
-	//	    IPageLayout.BOTTOM, 0.5f, "right");
-	///   rightBottom
-	//	    .addView("edu.unikiel.rtsys.kieler.kev.views.EnvironmentView");
-	//}
+		left.addView(ID_TRACE);
 
-	// add all shown views as shortcuts
-	layout.addShowViewShortcut(ID_TRACE);
-	layout.addShowViewShortcut(ID_CONNECTION);
-	layout.addShowViewShortcut(ID_TARGET);
+		// haf: try to add the KIEL Environment Visualization View if the KEV
+		// plugin is available
+		// if (Platform.getBundle("edu.unikiel.rtsys.kieler.kev") != null) {
+		// IFolderLayout rightBottom = layout.createFolder("rightBottom",
+		// IPageLayout.BOTTOM, 0.5f, "right");
+		// / rightBottom
+		// .addView("edu.unikiel.rtsys.kieler.kev.views.EnvironmentView");
+		// }
 
-	// add this perspective as shortcut	
-	layout.addPerspectiveShortcut(EvalBenchPerspective.PERSPECTIVE_ID); 
-	layout.addPerspectiveShortcut(TracePerspective.PERSPECTIVE_ID); 
-	layout.addPerspectiveShortcut(VerifyPerspective.PERSPECTIVE_ID);
-    
-    }
+		// add all shown views as shortcuts
+		layout.addShowViewShortcut(ID_TRACE);
+		layout.addShowViewShortcut(ID_CONNECTION);
+		layout.addShowViewShortcut(ID_TARGET);
+
+		// add this perspective as shortcut
+		layout.addPerspectiveShortcut(EvalBenchPerspective.PERSPECTIVE_ID);
+		layout.addPerspectiveShortcut(TracePerspective.PERSPECTIVE_ID);
+		layout.addPerspectiveShortcut(VerifyPerspective.PERSPECTIVE_ID);
+
+	}
 }

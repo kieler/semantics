@@ -17,34 +17,35 @@ public class SCLine {
 
 	String content;
 	int number;
-	//int pos;
 
-	public SCLine (String content,int number, int pos){
+	// int pos;
+
+	public SCLine(String content, int number, int pos) {
 		this.content = content.trim();
 		this.number = number;
-		//this.pos = pos;
+		// this.pos = pos;
 	}
 
-	public SCLine (String content,int number){
+	public SCLine(String content, int number) {
 		this.content = content;
 		this.number = number;
 
 	}
-	
 
 	public SCLine appendContent(String appendix) {
 		this.content += appendix;
 		return this;
 	}
 
-	public String toString(){
-		String result =content;
-		while (result.length()<Constants.instr_width) result+=" ";
-		//return "["+number+"]\t"+result;
+	public String toString() {
+		String result = content;
+		while (result.length() < Constants.instr_width)
+			result += " ";
+		// return "["+number+"]\t"+result;
 		return result;
 	}
 
-	public String errorMsg(){
-		return "In line "+number+": near \""+content+"\": ";
+	public String errorMsg() {
+		return "In line " + number + ": near \"" + content + "\": ";
 	}
 }

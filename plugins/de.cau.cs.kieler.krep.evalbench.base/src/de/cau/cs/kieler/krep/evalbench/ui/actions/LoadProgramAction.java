@@ -13,7 +13,6 @@
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.ui.actions;
 
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -37,60 +36,61 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.TargetView;
  */
 public class LoadProgramAction extends Action {
 
-    /** Identifier string for this action */
-    private static final String ACTION_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.loadProgram";
+	/** Identifier string for this action */
+	private static final String ACTION_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.loadProgram";
 
-    /** Relative path to the icon to use for this action */
-    private static final String ICON_PATH = "icons/load_kfile.gif";
+	/** Relative path to the icon to use for this action */
+	private static final String ICON_PATH = "icons/load_kfile.gif";
 
-    /**
-     * Creates a new Load Program Action.
-     */
-    public LoadProgramAction() {
-	setId(ACTION_ID);
-	setText("Load Program");
-	setToolTipText("Load program to the current target");
-	setImageDescriptor(Activator.imageDescriptorFromPlugin(
-		Activator.PLUGIN_ID, ICON_PATH));
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.action.Action#run()
-     */
-    @Override
-    public void run() {
-	IWorkbenchWindow dw = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-	IWorkbenchPage page = dw.getActivePage();
-	
-	try{
-	    page.showView(TargetView.VIEW_ID);
-
-	System.out.println(page.getActivePart().getTitle());
-	}catch (PartInitException e){
-	    System.out.println(page.getActivePart().getTitle());
-		    
-	//      DialogUtil.openError(dw.getShell(), ResourceMessages.getString(
-	//"DataFileResource.errorMessage"),e.getMessage(),e);
+	/**
+	 * Creates a new Load Program Action.
+	 */
+	public LoadProgramAction() {
+		setId(ACTION_ID);
+		setText("Load Program");
+		setToolTipText("Load program to the current target");
+		setImageDescriptor(Activator.imageDescriptorFromPlugin(
+				Activator.PLUGIN_ID, ICON_PATH));
 	}
 
-	Tools.runWithProgress(new IRunnableWithProgress() {
-	    public void run(IProgressMonitor monitor) {
-		monitor.beginTask("Load program", Activator.commonLayer
-			.getActiveAssemblerEditor().getAssembler().size());
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.action.Action#run()
+	 */
+	@Override
+	public void run() {
+		IWorkbenchWindow dw = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		IWorkbenchPage page = dw.getActivePage();
+
 		try {
-		    Activator.commonLayer.loadProgram(monitor);
-		} catch (CommunicationException e) {
-		    MessageView.print(e.getMessage());
-		    // e.printStackTrace();
-		} catch (LoadException e) {
-		    MessageView.print(e.getMessage());
-		    // e.printStackTrace();
+			page.showView(TargetView.VIEW_ID);
+
+			System.out.println(page.getActivePart().getTitle());
+		} catch (PartInitException e) {
+			System.out.println(page.getActivePart().getTitle());
+
+			// DialogUtil.openError(dw.getShell(), ResourceMessages.getString(
+			// "DataFileResource.errorMessage"),e.getMessage(),e);
 		}
-		monitor.done();
-	    }
-	});
-    }
+
+		Tools.runWithProgress(new IRunnableWithProgress() {
+			public void run(IProgressMonitor monitor) {
+				monitor.beginTask("Load program", Activator.commonLayer
+						.getActiveAssemblerEditor().getAssembler().size());
+				try {
+					Activator.commonLayer.loadProgram(monitor);
+				} catch (CommunicationException e) {
+					MessageView.print(e.getMessage());
+					// e.printStackTrace();
+				} catch (LoadException e) {
+					MessageView.print(e.getMessage());
+					// e.printStackTrace();
+				}
+				monitor.done();
+			}
+		});
+	}
 
 }

@@ -27,7 +27,6 @@ import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
 import de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
-
 public class KepWrapper implements IKrepWrapper {
 
 	private EsiLogger esi;
@@ -44,14 +43,15 @@ public class KepWrapper implements IKrepWrapper {
 		super();
 		String msg = "";
 		kep_reset(msg);
-		if (msg.length()>0) {
+		if (msg.length() > 0) {
 			MessageView.print(msg);
 		}
 
 		IPreferenceStore preferenceStore = Activator.getDefault()
-		.getPreferenceStore();
+				.getPreferenceStore();
 
-		String fileName =preferenceStore.getString(ConnectionPreferencePage.JNI_LOG_FILE); 
+		String fileName = preferenceStore
+				.getString(ConnectionPreferencePage.JNI_LOG_FILE);
 		esi = new EsiLogger(fileName);
 		esi.reset();
 	}
@@ -66,7 +66,7 @@ public class KepWrapper implements IKrepWrapper {
 
 	public byte getOutput() {
 		byte b = output.poll();
-		return ( b);
+		return (b);
 	}
 
 	public void step() {
@@ -75,11 +75,11 @@ public class KepWrapper implements IKrepWrapper {
 		byte c = kep_step(msg);
 		if (msg.length() != 0) {
 			MessageView.print(msg);
-			msg="";
+			msg = "";
 		}
-		if (c!=0) {
+		if (c != 0) {
 			c = kep_recv(msg);
-			if (msg.length()>0) {
+			if (msg.length() > 0) {
 				MessageView.print(msg);
 			}
 			io += " %OUTPUT: TX(0x" + Integer.toHexString(c & 0xFF) + ")";
@@ -90,11 +90,11 @@ public class KepWrapper implements IKrepWrapper {
 	}
 
 	public void send(byte b) {
-		String msg ="";
+		String msg = "";
 		step();
 		esi.write("RX(0x" + Integer.toHexString(b & 0xFF) + ")");
 		kep_send(b, msg);
-		if (msg.length()>0) {
+		if (msg.length() > 0) {
 			MessageView.print(msg);
 		}
 		step();
@@ -110,7 +110,7 @@ public class KepWrapper implements IKrepWrapper {
 	public static native void kep_send(byte c, String msg);
 
 	public void saveEsi(String esiFile) {
-		BufferedWriter out=null;
+		BufferedWriter out = null;
 		try {
 			File f = new File(esiFile);
 			out = new BufferedWriter(new FileWriter(f));
@@ -119,7 +119,7 @@ public class KepWrapper implements IKrepWrapper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if(out!=null){
+			if (out != null) {
 				try {
 					out.close();
 				} catch (IOException e) {
@@ -134,7 +134,7 @@ public class KepWrapper implements IKrepWrapper {
 		esi.comment(comment);
 	}
 
-	public String getName(){
+	public String getName() {
 		return name;
 	}
 }

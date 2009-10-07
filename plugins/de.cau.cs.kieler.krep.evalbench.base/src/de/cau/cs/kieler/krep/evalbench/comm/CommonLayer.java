@@ -84,7 +84,7 @@ public class CommonLayer implements IPartListener {
 	private LinkedList<ISignalListener> signalListeners;
 
 	/** The currently synchronized assembler editor */
-	private AssemblerEditor currentEditor =null;
+	private AssemblerEditor currentEditor = null;
 
 	/** Serial port names available for connection */
 	private String[] serialPorts;
