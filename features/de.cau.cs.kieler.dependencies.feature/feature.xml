@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.cau.cs.kieler.dependencies"
+      label="Dependencies"
+      version="0.1.0.vqualifier"
+      provider-name="Christian-Albrechts-Universität zu Kiel">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <plugin
+         id="org.eclipse.jdt.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.core.manipulation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.compiler.apt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.compiler.tool"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.debug"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.jdt.launching"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.debug.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.views.log"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.junit4"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.hamcrest.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.junit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>
