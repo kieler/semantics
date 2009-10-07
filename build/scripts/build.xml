@@ -4,12 +4,16 @@
 	<property name="scriptdir" location="."/>
 	<property file="${scriptdir}/build.properties" />
 
-	<property name="eclipseLocation"       location="/home/kieler/eclipse64/" />
+	<property name="eclipseLocation"       location="${system.eclipseLocation}" />
 	<property name="eclipseConfig"         location="${scriptdir}/.eclipse" />
 	<property name="eclipseWorkspace"      location="${scriptdir}/.eclipseWorkspace" />
 	<property name="p2.director.workspace" location="${scriptdir}/.p2Workspace" />
+	<property name="antContrib.home"       location="/home/kieler/ant-contrib" />
 	<property name="findbugs.home"         location="/home/kieler/findbugs" />
-  	
+	<property name="checkstyle.home"       location="/home/kieler/checkstyle" />
+ 
+ 	<property name="equinoxLauncherPluginVersion" value="${system.equinoxLauncherPluginVersion}" />
+	 	
 	<!-- default definitions: should be overwritten while calling this script if necessary -->	
 	<property name="target"	             value="noTargetInfo"/>
 	<property name="feature"             value=" "/>
@@ -17,11 +21,12 @@
 	<property name="pluginPath"          value=" "/>
 	<property name="doc.excludes"        value=" "/>
 	<property name="checkstyle.excludes" value=" "/>
+	<property name="build.jars"          value="true"/>
 	<property name="publish.feature"     value="true"/>
 	
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="/home/kieler/ant-contrib/lib/ant-contrib.jar" />
-	<taskdef resource="checkstyletask.properties" classpath="/home/kieler/checkstyle/checkstyle-all-5.0.jar" />
-	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="/home/kieler/findbugs/lib/findbugs-ant.jar" />
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${antContrib.home}/lib/ant-contrib.jar" />
+	<taskdef resource="checkstyletask.properties" classpath="${checkstyle.home}/checkstyle-all-5.0.jar" />
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="${findbugs.home}/lib/findbugs-ant.jar" />
 
 	<target name="call.antRunner">
 		<!-- delete dir="${eclipseConfig}" />
@@ -75,6 +80,8 @@
 				<!-- comma separated path patterns excluded at javadoc generation -->
 			<arg value="-Dcheckstyle.excludes=${checkstyle.excludes}" />
 				<!-- comma separated path patterns excluded at checkstyle examination -->
+			<arg value="-Dbuild.jars=${build.jars}" />
+				<!-- set to false to suppress building jars, doc, findbugs, checkstyle; feature will be timestamped only, default is true -->
 			<arg value="-Dpublish.feature=${publish.feature}" />
 				<!-- set to false to suppress publishing to updatesite, default is true -->
 			<classpath>
@@ -92,12 +99,14 @@
 		<!-- property name="allElementsFile" location="${eclipse.pdebuild.templates}/headless-build/allElements.xml"/ -->
 
 		<mkdir dir="${basedir}/buildTempFolder" />
+		<mkdir dir="${basedir}/features" />
+		<mkdir dir="${basedir}/plugins" />
 		<mkdir dir="${basedir}/update-site/features" />
 		<mkdir dir="${basedir}/update-site/plugins" />
 		
 		<delete includeemptydirs="true">
-		    <fileset dir="${basedir}/buildTempFolder/" includes="**/*"/>
-		    <fileset dir="${basedir}/update-site/features/" includes="**/*"/>
+			<fileset dir="${basedir}/buildTempFolder/" includes="**/*"/>
+			<fileset dir="${basedir}/update-site/features/" includes="**/*"/>
 			<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
 		</delete>
 		
@@ -111,24 +120,27 @@
 		<loadfile property="feature.classpath">
 			<concat>
 				<fileset dir="plugins" includes="**/build.xml" />
+				<filterchain>
+					<linecontainsregexp>
+						<regexp pattern="&lt;pathelement" />
+					</linecontainsregexp>
+					<linecontainsregexp negate="true">
+						<regexp pattern="/@dot&quot;" />
+					</linecontainsregexp>
+					<linecontainsregexp negate="true">
+						<regexp pattern="/bin/&quot;" />
+					</linecontainsregexp>
+					<linecontainsregexp negate="true">
+						<regexp pattern="e4-workbench.jar" />
+					</linecontainsregexp>
+					<!-- separate enclosing tags to realize NOR function
+						 (multiple repexp conditions will be ANDed) -->
+				</filterchain>
 			</concat>
-			<filterchain>
-				<linecontainsregexp>
-					<regexp pattern="&lt;pathelement" />
-				</linecontainsregexp>
-				<linecontainsregexp negate="true">
-					<regexp pattern="/@dot&quot;" />
-				</linecontainsregexp>
-				<linecontainsregexp negate="true">
-					<regexp pattern="/bin/&quot;" />
-				</linecontainsregexp>
-				<linecontainsregexp negate="true">
-					<regexp pattern="e4-workbench.jar" />
-				</linecontainsregexp>
-				<!-- separate enclosing tags to realize NOR function
-					 (multiple repexp conditions will be ANDed) -->
-			</filterchain>
 		</loadfile> 
+
+		<property name="feature.classpath" value=" " />
+		<!-- property name="feature.classpath" value="&lt;pathelement path=&quot;.&quot; /&gt;" / -->
 
 		<!-- load javadoc target template, insert classpath entries (via property feature.classpath) -->		
 		<loadfile property="doc.target" srcfile="${scriptdir}/javadoc.template.xml">
@@ -137,9 +149,6 @@
 			</filterchain>
 		</loadfile>
 		
-		<!-- insert javadoc target in feature's build.xml -->		
-		<!-- replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${doc.target}&lt;/project&gt;" / -->
-
 		<!-- load findbugs target template, insert classpath entries (via property feature.classpath) -->		
 		<loadfile property="findbugs.target" srcfile="${scriptdir}/findbugs.template.xml">
 			<filterchain>
@@ -147,9 +156,6 @@
 			</filterchain>
 		</loadfile>
 		
-		<!-- insert findbugs target in feature's build.xml -->		
-		<!-- replace file="${basedir}/features/${feature}/build.xml" token="&lt;/project&gt;" value="${findbugs.target}&lt;/project&gt;" / -->
-
 		<!-- load checkstyle target template -->		
 		<loadfile property="checkstyle.target" srcfile="${scriptdir}/checkstyle.template.xml">
 			<filterchain>
@@ -162,23 +168,30 @@
 				 token="&lt;/project&gt;"
 				 value="${doc.target}${findbugs.target}${checkstyle.target}&lt;/project&gt;" />
 
-		<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc -->		
-		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
-			<property name="javacDebugInfo" value="true" />
-			<property name="feature.destination" value="${basedir}/update-site/features" />
-			<property name="plugin.destination" value="${basedir}/update-site/plugins" />
-			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
-			<property name="doc.packages" value="${scriptdir}/../package-lists" />
-			<property name="findbugs.classes" value="${basedir}/update-site/plugins" />
-			<property name="findbugs.sources" value="${basedir}/plugins" />
-			<property name="checkstyle.sources" value="${basedir}/plugins" />
-			<target name="clean" />
-			<target name="build.update.jar" />
-			<target name="zip.logs" />
-			<target name="doc" />
-			<target name="findbugs" />
-			<target name="checkstyle" />
-		</ant>
+		<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc
+			 CAUTION: if is a ant-contrib task declared above! -->
+		<if>
+			<istrue value="${build.jars}" />
+			<then>
+				<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc -->		
+				<ant antfile="build.xml" dir="${basedir}/features/${feature}">
+					<property name="javacDebugInfo" value="true" />
+					<property name="feature.destination" value="${basedir}/update-site/features" />
+					<property name="plugin.destination" value="${basedir}/update-site/plugins" />
+					<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
+					<property name="doc.packages" value="${scriptdir}/../package-lists" />
+					<property name="findbugs.classes" value="${basedir}/update-site/plugins" />
+					<property name="findbugs.sources" value="${basedir}/plugins" />
+					<property name="checkstyle.sources" value="${basedir}/plugins" />
+					<target name="clean" />
+					<target name="build.update.jar" />
+					<target name="zip.logs" />
+					<target name="doc" />
+					<target name="findbugs" />
+					<target name="checkstyle" />
+				</ant>
+			</then>
+		</if>
 
 		<!-- run feature's build.xml: copy customized feature.xml into update-site folder
 			 needed by succeeding feature builds while resolving dependencies -->		
@@ -188,19 +201,17 @@
 			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 		</ant>
 		
-		<!-- run feature's assemble.p2.xml: generate update site entry -->		
-		<echo message="STARTING p2 stuff" />
-		<!-- ant antfile="assemble.${feature}.p2.xml">
-			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
-		</ant -->
-		<condition property="suppress.publishing">
-			<isfalse value="${publish.feature}" />
-		</condition>
-		<antcall target="build.updatesiteEntry" />
-		
+		<!-- run feature's assemble.p2.xml: generate update site entry
+			 CAUTION: if is a ant-contrib task declared above! -->
+		<if>
+			<istrue value="${publish.feature}" />
+			<then>
+				<antcall target="build.updatesiteEntry" />
+			</then>
+		</if>
 	</target>
 	
-	<target name="build.updatesiteEntry" if="eclipse.running" unless="suppress.publishing" description="target for creating an updatesite entry of last build results">
+	<target name="build.updatesiteEntry" if="eclipse.running" description="target for creating an updatesite entry of last build results">
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
 		<property name="configs"       value="${feature.configs}" />
@@ -259,23 +270,23 @@
 				<fileset dir="${basedir}/../../">
 					<include name="*/workspace/plugins/*/build.xml" />
 				</fileset>
+				<filterchain>
+					<linecontainsregexp>
+						<regexp pattern="&lt;pathelement path=&quot;../" />
+					</linecontainsregexp>
+					<linecontainsregexp negate="true">
+						<regexp pattern="/@dot&quot;" />
+					</linecontainsregexp>
+					<linecontainsregexp negate="true">
+						<regexp pattern="/bin/&quot;" />
+					</linecontainsregexp>
+					<!-- separate enclosing tags to realize NOR function
+						 (multiple repexp conditions will be ANDed) -->
+					<tokenfilter>
+						<replacestring from="path=&quot;../../" to="path=&quot;" />
+					</tokenfilter>
+				</filterchain>
 			</concat>
-			<filterchain>
-				<linecontainsregexp>
-					<regexp pattern="&lt;pathelement path=&quot;../" />
-				</linecontainsregexp>
-				<linecontainsregexp negate="true">
-					<regexp pattern="/@dot&quot;" />
-				</linecontainsregexp>
-				<linecontainsregexp negate="true">
-					<regexp pattern="/bin/&quot;" />
-				</linecontainsregexp>
-				<!-- separate enclosing tags to realize NOR function
-					 (multiple repexp conditions will be ANDed) -->
-				<tokenfilter>
-					<replacestring from="path=&quot;../../" to="path=&quot;" />
-				</tokenfilter>
-			</filterchain>
 		</loadfile>
 		
 		<!-- second, a build file for javadoc generation will be constructed -->
@@ -300,16 +311,6 @@
 		<ant antfile="${basedir}/build.javadoc.xml" dir="${basedir}" />
 	</target>
 
-	<target name="clean">
-		<available file="${elementPath}/build.xml" property="buildFilePresent" />
-	    <antcall target="cleanUp" />
-	</target>
-	
-	<target name="cleanUp" if="buildFilePresent">
-		<ant antfile="build.xml" dir="${elementPath}" target="clean" />
-	</target>
-	
-	
 	<target name="noTargetInfo">
 		<fail message="No build target given. Please give a target explicitly -Dtarget=&lt;{feature,rca}&gt;" />
 	</target>
