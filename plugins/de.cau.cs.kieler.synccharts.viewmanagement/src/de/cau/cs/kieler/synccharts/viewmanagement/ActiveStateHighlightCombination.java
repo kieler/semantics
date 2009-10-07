@@ -79,7 +79,7 @@ public class ActiveStateHighlightCombination extends ACombination {
         					//HighlightEffect effect = new HighlightEffect();
         					effect.setTarget((ShapeEditPart)editPart);
         					//effect.setHighlightFigure(3, ColorConstants.red );
-        					effect.setColors(ColorConstants.blue, ColorConstants.lightBlue);
+        					effect.setColors(ColorConstants.red, ColorConstants.red);
         					
         					
         					effects.put(editPart, effect);
@@ -134,9 +134,13 @@ public class ActiveStateHighlightCombination extends ACombination {
         return triggers;
     }
     
+    
 	@Override
 	public void undoLastEffect() {
-		//	effect.undo();
+		System.out.println("---------------------> undoLastEffect()");
+        for (ShapeHighlightEffect effect : effects.values()) {
+    		effect.undo();
+        }
 	}
 	
    
