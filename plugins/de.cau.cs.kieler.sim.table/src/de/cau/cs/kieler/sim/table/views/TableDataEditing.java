@@ -106,7 +106,13 @@ public class TableDataEditing extends EditingSupport {
 		TableData tableData = (TableData) element;
 
 		//table data is being edited and should not be updated by observer
-		DataTableView.getInstance().setCurrentlyEditing(true);
+		if (!tableData.isPermanent()) {
+			DataTableView.getInstance().setCurrentlyEditing(true);
+		}
+		else {
+			DataTableView.getInstance().setCurrentlyEditing(false);
+		}
+		
 
 		switch (this.columnIndex) {
 		case 1:
