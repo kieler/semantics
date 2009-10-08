@@ -1,5 +1,5 @@
 /******************************************************************************
- * KIELER - Kiel Integrated Environment for Layout for the Eclipse RCP
+  * KIELER - Kiel Integrated Environment for Layout for the Eclipse RCP
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
@@ -106,14 +106,6 @@ public class TableDataEditing extends EditingSupport {
 		TableData tableData = (TableData) element;
 
 		//table data is being edited and should not be updated by observer
-		if (!tableData.isPermanent()) {
-			DataTableView.getInstance().setCurrentlyEditing(true);
-		}
-		else {
-			DataTableView.getInstance().setCurrentlyEditing(false);
-		}
-		
-
 		switch (this.columnIndex) {
 		case 1:
 			if (tableData.isSignal()) {
@@ -172,13 +164,13 @@ public class TableDataEditing extends EditingSupport {
 		default:
 			break;
 		}
-		
-		//updates the table
-		getViewer().update(element, null);
-
 		//table data is not being edited any more and can be
 		//updated by observer again
 		DataTableView.getInstance().setCurrentlyEditing(false);
+
+		//updates the table
+		getViewer().update(element, null);
+
 	}
 
 }

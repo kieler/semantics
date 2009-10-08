@@ -115,6 +115,7 @@ public class DataTableView extends ViewPart {
 	 * @param currentlyEditing true, if user is currently editing an entry
 	 */
 	public void setCurrentlyEditing(boolean currentlyEditing) {
+		System.out.println("SETTING EDITING TO:"+currentlyEditing);
 		this.currentlyEditing = currentlyEditing;
 	}
 
@@ -327,6 +328,10 @@ public class DataTableView extends ViewPart {
 													selection.toArray()[c];
 					tableData.setPermanent(permanentValue);
 				}
+				//enable updates for the table because we cannot edit the element anyway
+				if (permanentValue)
+					DataTableView.getInstance().setCurrentlyEditing(false);
+				
 				//viewer.setSelection(null);
 				viewer.refresh();
 				updateEnabled();			
