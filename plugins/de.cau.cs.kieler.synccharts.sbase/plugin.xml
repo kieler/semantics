@@ -10,90 +10,42 @@
 			packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage">
 			<transformations>
 				<transformation keyboardShortcut="CTRL+K S"
-					name="Add Successor State" selectionCount="1" transformation="addSuccessorState"
+					name="Add Successor State" transformation="addSuccessorState"
 					transformationId="de.cau.cs.kieler.sbase.addSuc">
-					<diagramElements>
-					<diagramElement class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart" />
-					<diagramElement class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart" />
-					</diagramElements>
 				</transformation>
 				<transformation keyboardShortcut="CTRL+K P"
-					name="Add Predecessor State" selectionCount="1" transformation="addPredecessorState"
+					name="Add Predecessor State" transformation="addPredecessorState"
 					transformationId="de.cau.cs.kieler.sbase.addPred">
-					<diagramElements>
-					<diagramElement
-						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
-					</diagramElement>
-					<diagramElement
-						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
-					</diagramElement>
-					</diagramElements>
 				</transformation>
 				<transformation keyboardShortcut="CTRL+K C" name="Add Choice"
-					selectionCount="1" transformation="addChoice"
+					transformation="addChoice"
 					transformationId="de.cau.cs.kieler.sbase.addChoice">
-					<diagramElements>
-					<diagramElement
-						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
-					</diagramElement>
-					<diagramElement
-						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
-					</diagramElement>
-					</diagramElements>
 				</transformation>
 				<transformation icon="icons/obj16/Transition.gif"
-					keyboardShortcut="CTRL+K F" name="Flip Transition" selectionCount="1"
+					keyboardShortcut="CTRL+K F" name="Flip Transition" 
 					transformation="flipTransition" transformationId="de.cau.cs.kieler.sbase.flip">
-					<diagramElements>
-					<diagramElement
-						class="de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart">
-					</diagramElement>
-					</diagramElements>
 				</transformation>
 				<transformation icon="icons/obj16/Action.gif"
-					keyboardShortcut="CTRL+K W" name="Connect States" selectionCount="2"
+					keyboardShortcut="CTRL+K W" name="Connect States" 
 					transformation="connectStates" transformationId="de.cau.cs.kieler.sbase.connect">
-					<diagramElements class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart" />
 				</transformation>
 				<transformation icon="icons/obj16/Region.gif" name="Add ABRO"
-					selectionCount="1" transformation="addABRO" transformationId="de.cau.cs.kieler.sbase.addABRO">
-					<diagramElements class="de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart"/>
+					transformation="addABRO" transformationId="de.cau.cs.kieler.sbase.addABRO">
 				</transformation>
 				<transformation icon="icons/obj16/Signal.gif" name="Create Default"
-					selectionCount="1" transformation="createDefault" transformationId="de.cau.cs.kieler.sbase.empty">
-						<diagramElements class="de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart"/>
+					transformation="createDefault" transformationId="de.cau.cs.kieler.sbase.empty">
 				</transformation>
     <transformation
           keyboardShortcut="CTRL+K Q"
           name="Set Transition Target"
-          selectionCount="2"
           transformation="rerouteTransitionTarget"
           transformationId="de.cau.cs.kieler.sbase.rerouteTarget">
-          <diagramElements class="de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart" />
-       <diagramElements>
-          <diagramElement
-                class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
-          </diagramElement>
-          <diagramElement
-                class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
-          </diagramElement>
-       </diagramElements>
        </transformation>
        <transformation
              keyboardShortcut="CTRL+K J"
              name="Set Transition Source"
-             selectionCount="2"
              transformation="rerouteTransitionSource"
              transformationId="de.cau.cs.kieler.sbase.rerouteSource">
-       <diagramElements class="de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart" />
-       <diagramElements>
-          <diagramElement
-                class="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
-          </diagramElement>
-          <diagramElement
-                class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
-          </diagramElement>
-       </diagramElements>
     	</transformation>
 			</transformations>
 			<menus>
