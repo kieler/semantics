@@ -109,13 +109,14 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 	// Methods to create the different decorations
 	private RotatableDecoration createStrongAbortionDecoration() {
 		PolygonDecoration circleDecoration = new CircleDecoration();
-		circleDecoration.setLineWidth(2);
+		circleDecoration.setLineWidth(1);
 		circleDecoration.setForegroundColor(ColorConstants.black);
 		circleDecoration.setBackgroundColor(ColorConstants.red);
 		PointList circleDecorationPoints = new PointList();
-		circleDecorationPoints.addPoint(1, 2);
-		circleDecorationPoints.addPoint(-1, -2);
+		circleDecorationPoints.addPoint(2, 2);
+		circleDecorationPoints.addPoint(-2, -2);
 		circleDecoration.setTemplate(circleDecorationPoints);
+		circleDecoration.setScale(3, 3);
 		return circleDecoration;
 	}
 	
@@ -159,11 +160,15 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 		//arrowDecoration.setLineWidth(2);
 		//arrowDecoration.setForegroundColor(ColorConstants.black);
 		//arrowDecoration.setBackgroundColor(ColorConstants.black);
-		//PointList arrowDecorationPoints = new PointList();
-		//arrowDecorationPoints.addPoint(-2, 2);
-		//arrowDecorationPoints.addPoint(0, 0);
-		//arrowDecorationPoints.addPoint(-2, -2);
-		//arrowDecoration.setTemplate(arrowDecorationPoints);
+		PointList arrowDecorationPoints = new PointList();
+		arrowDecorationPoints.addPoint(-10, 10);
+		arrowDecorationPoints.addPoint(1, 0);
+		arrowDecorationPoints.addPoint(-10, -10);
+		arrowDecorationPoints.addPoint(-5, 0);
+		arrowDecorationPoints.addPoint(-10, 10);
+		arrowDecoration.setTemplate(arrowDecorationPoints);
+		//arrowDecoration.setFill(false);
+		arrowDecoration.setScale(1, 0.5);
 		return arrowDecoration;
 	}
 

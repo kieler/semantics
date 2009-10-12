@@ -24,20 +24,20 @@ import org.eclipse.draw2d.geometry.Rectangle;
  * @author schm
  *
  */
-public class PseudoStateFigure extends Ellipse {
+public class ConditionalStateFigure extends Ellipse {
 	
 	/**
 	 * The constructor.
 	 */
-	// A class that draws a 'P' inside of an ellipse
-	public PseudoStateFigure() {
+	// A class that draws a 'C' inside of an ellipse
+	public ConditionalStateFigure() {
 		super();
 	}
 
 	/**
 	 * Draw the outline of the circle and a 'P' inside.
 	 */
-	@Override
+/*	@Override
 	protected void outlineShape(Graphics graphics) {
 		Rectangle t = Rectangle.SINGLETON;
 		t.setBounds(getBounds());
@@ -72,5 +72,5 @@ public class PseudoStateFigure extends Ellipse {
 		graphics.drawLine(bP4.x, bP4.y, bP5.x, bP5.y);
 		graphics.drawLine(bP5.x, bP5.y, eP.x, eP.y);
 	}
-	
+*/	
 }

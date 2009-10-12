@@ -386,7 +386,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_wxsvkXqYEd6nBdJEKpuS9w"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_wxsvknqYEd6nBdJEKpuS9w" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="synccharts.ecore#//StateType/PSEUDO"/>
+        <element xmi:type="ecore:EEnumLiteral" href="synccharts.ecore#//StateType/CONDITIONAL"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_wxsvk3qYEd6nBdJEKpuS9w"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_wxtWoHqYEd6nBdJEKpuS9w" type="2006">

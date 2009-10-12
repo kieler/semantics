@@ -1449,7 +1449,7 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
 
         initEEnum(stateTypeEEnum, StateType.class, "StateType");
         addEEnumLiteral(stateTypeEEnum, StateType.NORMAL);
-        addEEnumLiteral(stateTypeEEnum, StateType.PSEUDO);
+        addEEnumLiteral(stateTypeEEnum, StateType.CONDITIONAL);
         addEEnumLiteral(stateTypeEEnum, StateType.REFERENCE);
         addEEnumLiteral(stateTypeEEnum, StateType.TEXTUAL);
 

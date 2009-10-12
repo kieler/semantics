@@ -132,9 +132,6 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements
             fFigureTransitionTriggersAndEffectsFigure = new WrappingLabel();
             fFigureTransitionTriggersAndEffectsFigure.setText("");
 
-            fFigureTransitionTriggersAndEffectsFigure
-                    .setFont(FFIGURETRANSITIONTRIGGERSANDEFFECTSFIGURE_FONT);
-
             this.add(fFigureTransitionTriggersAndEffectsFigure);
 
         }
@@ -166,12 +163,5 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements
         }
 
     }
-
-    /**
-     * @generated
-     */
-    static final Font FFIGURETRANSITIONTRIGGERSANDEFFECTSFIGURE_FONT = new Font(
-            Display.getCurrent(), Display.getDefault().getSystemFont()
-                    .getFontData()[0].getName(), 10, SWT.BOLD);
 
 }

@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.MarginBorder;
+import org.eclipse.draw2d.Polyline;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -168,7 +170,7 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected NodeFigure createNodePlate() {
-        DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(40, 40);
+        DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
         return result;
     }
 
@@ -341,6 +343,7 @@ public class State2EditPart extends ShapeNodeEditPart {
 
             this.setLayoutManager(layoutThis);
 
+            this.setSize(getMapMode().DPtoLP(20), getMapMode().DPtoLP(20));
             createContents();
         }
 
@@ -352,20 +355,27 @@ public class State2EditPart extends ShapeNodeEditPart {
             fFigureStateNameFigure = new WrappingLabel();
             fFigureStateNameFigure.setText("");
 
-            fFigureStateNameFigure.setFont(FFIGURESTATENAMEFIGURE_FONT);
-
             fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode()
                     .DPtoLP(5), getMapMode().DPtoLP(10),
                     getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureStateNameFigure);
 
+            Polyline polyline0 = new Polyline();
+            polyline0.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode()
+                    .DPtoLP(20)));
+            polyline0.addPoint(new Point(getMapMode().DPtoLP(50), getMapMode()
+                    .DPtoLP(20)));
+            polyline0.setLineWidth(1);
+
+            this.add(polyline0);
+
         }
 
         /**
          * @generated
          */
-        private boolean myUseLocalCoordinates = false;
+        private boolean myUseLocalCoordinates = true;
 
         /**
          * @generated
@@ -389,13 +399,5 @@ public class State2EditPart extends ShapeNodeEditPart {
         }
 
     }
-
-    /**
-     * @generated
-     */
-    static final Font FFIGURESTATENAMEFIGURE_FONT = new Font(Display
-            .getCurrent(),
-            Display.getDefault().getSystemFont().getFontData()[0].getName(),
-            10, SWT.BOLD);
 
 }

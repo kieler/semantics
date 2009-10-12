@@ -148,7 +148,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="StateType">
     <eLiterals name="NORMAL"/>
-    <eLiterals name="PSEUDO" value="1"/>
+    <eLiterals name="CONDITIONAL" value="1"/>
     <eLiterals name="REFERENCE"/>
     <eLiterals name="TEXTUAL"/>
   </eClassifiers>

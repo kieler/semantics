@@ -131,7 +131,7 @@ public class AttributeAwareShape extends Shape implements Adapter {
 	@Override
 	public void setVisible(boolean visible) {
 	    super.setVisible(visible);
-	    currentFigure.setVisible(visible);
+	    //currentFigure.setVisible(visible);
 	}
 	
 	/**
@@ -217,7 +217,7 @@ public class AttributeAwareShape extends Shape implements Adapter {
      */
     @Override
     protected void fillShape(Graphics graphics) {
-        /* do nothing. will be handled by current Figure */
+        
     }
 
     /* (non-Javadoc)

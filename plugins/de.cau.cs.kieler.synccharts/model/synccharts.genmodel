@@ -15,6 +15,10 @@
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//CombineOperator/NONE"/>
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//CombineOperator/ADD"/>
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//CombineOperator/MULT"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//CombineOperator/MAX"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//CombineOperator/MIN"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//CombineOperator/OR"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//CombineOperator/AND"/>
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//CombineOperator/HOST"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="synccharts.ecore#//OperatorType">
@@ -50,7 +54,7 @@
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//ValueType/BOOL"/>
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//ValueType/UNSIGNED"/>
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//ValueType/INTEGER"/>
-      <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//ValueType/DOUBLE"/>
+      <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//ValueType/FLOAT"/>
       <genEnumLiterals ecoreEnumLiteral="synccharts.ecore#//ValueType/HOST"/>
     </genEnums>
     <genClasses ecoreClass="synccharts.ecore#//Action">
@@ -99,7 +103,6 @@
     <genClasses ecoreClass="synccharts.ecore#//Signal">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Signal/value"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//Signal/parentState"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Signal/isLocal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Signal/isInput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Signal/isOutput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Signal/combineOperator"/>
@@ -109,10 +112,10 @@
     <genClasses ecoreClass="synccharts.ecore#//SignalReference">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts.ecore#//SignalReference/signal"/>
     </genClasses>
-    <genClasses ecoreClass="synccharts.ecore#//SignalRenaming">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts.ecore#//SignalRenaming/oldSignal"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts.ecore#//SignalRenaming/newSignal"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//SignalRenaming/parentState"/>
+    <genClasses ecoreClass="synccharts.ecore#//Renaming">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//Renaming/parentState"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Renaming/oldID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Renaming/newID"/>
     </genClasses>
     <genClasses ecoreClass="synccharts.ecore#//State">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//State/id"/>
@@ -123,7 +126,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/entryActions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/innerActions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/exitActions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/signalRenamings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/renamings"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/suspensionTrigger"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//State/outgoingTransitions"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//State/parentRegion"/>
@@ -150,6 +153,16 @@
     </genClasses>
     <genClasses ecoreClass="synccharts.ecore#//VariableReference">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts.ecore#//VariableReference/variable"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts.ecore#//Value"/>
+    <genClasses ecoreClass="synccharts.ecore#//IntValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//IntValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts.ecore#//FloatValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//FloatValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="synccharts.ecore#//BooleanValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//BooleanValue/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

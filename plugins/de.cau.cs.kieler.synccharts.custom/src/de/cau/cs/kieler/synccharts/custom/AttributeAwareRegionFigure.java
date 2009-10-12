@@ -49,8 +49,11 @@ import org.eclipse.gef.EditPart;
 		//this.setModelElementAndRegisterFromEditPart(e);
 		
 		this.setFill(false);
-		this.setLineWidth(2);
-		this.setLineStyle(Graphics.LINE_DASH);
+		this.setLineWidth(1);
+		//this.setLineStyle(Graphics.LINE_DASH);
+		this.setLineStyle(Graphics.LINE_CUSTOM);
+		float[] fs = {10,5};
+		this.setLineDash(fs);
 		this.setForegroundColor(ColorConstants.gray);
 		
 		this.setNoDrawMargin(10);

@@ -33,16 +33,14 @@ public enum StateType implements Enumerator {
     NORMAL(0, "NORMAL", "NORMAL"),
 
     /**
-     * The '<em><b>PSEUDO</b></em>' literal object.
+     * The '<em><b>CONDITIONAL</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #PSEUDO_VALUE
+     * @see #CONDITIONAL_VALUE
      * @generated
      * @ordered
      */
-    PSEUDO(1, "PSEUDO", "PSEUDO"),
-
-    /**
+    CONDITIONAL(1, "CONDITIONAL", "CONDITIONAL"), /**
      * The '<em><b>REFERENCE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -78,19 +76,19 @@ public enum StateType implements Enumerator {
     public static final int NORMAL_VALUE = 0;
 
     /**
-     * The '<em><b>PSEUDO</b></em>' literal value.
+     * The '<em><b>CONDITIONAL</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of '<em><b>PSEUDO</b></em>' literal object isn't clear,
+     * If the meaning of '<em><b>CONDITIONAL</b></em>' literal object isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @see #PSEUDO
+     * @see #CONDITIONAL
      * @model
      * @generated
      * @ordered
      */
-    public static final int PSEUDO_VALUE = 1;
+    public static final int CONDITIONAL_VALUE = 1;
 
     /**
      * The '<em><b>REFERENCE</b></em>' literal value.
@@ -131,7 +129,7 @@ public enum StateType implements Enumerator {
     private static final StateType[] VALUES_ARRAY =
         new StateType[] {
             NORMAL,
-            PSEUDO,
+            CONDITIONAL,
             REFERENCE,
             TEXTUAL,
         };
@@ -185,7 +183,7 @@ public enum StateType implements Enumerator {
     public static StateType get(int value) {
         switch (value) {
             case NORMAL_VALUE: return NORMAL;
-            case PSEUDO_VALUE: return PSEUDO;
+            case CONDITIONAL_VALUE: return CONDITIONAL;
         }
         return null;
     }
