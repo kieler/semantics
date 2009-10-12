@@ -65,14 +65,15 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
         
 
         // Create all needed figures
+        // complex state
         RoundedRectangle normalStateFigure = new RoundedRectangle();
         normalStateFigure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH / 2, StateLayout.MIN_HEIGHT / 2));
+                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
         normalStateFigure.setFill(false);
         normalStateFigure.setLineWidth(1);
         normalStateFigure.setForegroundColor(ColorConstants.black);
                 
-        // Ellipse normalNChildrenStateFigure = new Ellipse();
+        // simple state
         RoundedRectangle normalNChildrenStateFigure = new RoundedRectangle();
         normalNChildrenStateFigure.setCornerDimensions(new Dimension(
                 StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
@@ -83,21 +84,21 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
 
         RoundedRectangle initialStateFigure = new RoundedRectangle();
         initialStateFigure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH / 2, StateLayout.MIN_HEIGHT / 2));
+                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
         initialStateFigure.setFill(false);
         initialStateFigure.setLineWidth(4);
         initialStateFigure.setForegroundColor(ColorConstants.black);
 
         RoundedRectangle initialNChildrenStateFigure = new RoundedRectangle();
-        initialStateFigure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH / 2, StateLayout.MIN_HEIGHT / 2));
+        initialNChildrenStateFigure.setCornerDimensions(new Dimension(
+                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
         initialNChildrenStateFigure.setFill(false);
-        initialNChildrenStateFigure.setLineWidth(4);
+        initialNChildrenStateFigure.setLineWidth(3);
         initialNChildrenStateFigure.setForegroundColor(ColorConstants.black);
 
         RoundedRectangle finalStateFigure = new DoubleRoundedRectangle();
         initialStateFigure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH / 2, StateLayout.MIN_HEIGHT / 2));
+                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
         finalStateFigure.setFill(false);
         finalStateFigure.setLineWidth(2);
         finalStateFigure.setForegroundColor(ColorConstants.black);
