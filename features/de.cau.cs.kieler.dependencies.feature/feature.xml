@@ -134,11 +134,13 @@
 
    <includes
          id="org.eclipse.xpand.ui"
-         version="0.0.0"/>
+         version="0.0.0"
+         search-location="self"/>
 
    <includes
          id="org.eclipse.emf.mwe.ui"
-         version="0.0.0"/>
+         version="0.0.0"
+         search-location="self"/>
 
    <plugin
          id="org.eclipse.jdt.core"
@@ -232,6 +234,13 @@
 
    <plugin
          id="org.eclipse.jdt.debug.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.xtend.util.stdlib"
          download-size="0"
          install-size="0"
          version="0.0.0"
