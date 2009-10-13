@@ -6,7 +6,6 @@ Bundle-Version: 0.1.0.vqualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.sbase.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.ksbase,
  de.cau.cs.kieler.ksbase.ui,
  de.cau.cs.kieler.synccharts,
  de.cau.cs.kieler.synccharts.diagram,
