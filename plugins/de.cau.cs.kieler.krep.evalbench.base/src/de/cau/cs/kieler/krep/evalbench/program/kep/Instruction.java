@@ -73,14 +73,14 @@ public class Instruction extends
 		// TODO Auto-generated method stub
 	}
 
-	private int[] String2Array(String bin) {
+	private int[] string2Array(String bin) {
 		int[] res = new int[5];
 		// pad with 0
-		String pad = "";
+		StringBuffer pad = new StringBuffer();
 		for (int i = 0; i < 5 * 8 - bin.length(); i++) {
-			pad += "0";
+			pad.append("0");
 		}
-		bin += pad;
+		bin += pad.toString();
 
 		for (int i = 0; i < 5; i++) {
 			String s = bin.substring(8 * i, 8 * (i + 1));
@@ -91,7 +91,7 @@ public class Instruction extends
 
 	@Override
 	protected int[] getObj() {
-		return String2Array(encode());
+		return string2Array(encode());
 	}
 
 }

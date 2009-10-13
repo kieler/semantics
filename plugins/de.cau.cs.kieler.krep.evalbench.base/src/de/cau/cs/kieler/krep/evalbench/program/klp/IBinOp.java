@@ -98,7 +98,7 @@ public class IBinOp extends Instruction {
 		case MUL:
 			res = Opcode.IMUL.getCode();
 			break;
-		case DIV:
+		default:
 			res = Opcode.IDIV.getCode();
 			break;
 		}

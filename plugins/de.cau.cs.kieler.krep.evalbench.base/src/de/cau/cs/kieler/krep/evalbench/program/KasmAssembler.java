@@ -46,7 +46,7 @@ public class KasmAssembler implements IAssembler {
 	private String[][] instructions;
 
 	/** Internal array of object code */
-	private String[] obj;
+	private String[] obj = null;
 
 	/** index for all signals */
 	private HashMap<String, Integer> signalIndex;

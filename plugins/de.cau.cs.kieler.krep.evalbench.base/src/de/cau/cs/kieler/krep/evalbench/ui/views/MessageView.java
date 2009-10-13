@@ -29,6 +29,10 @@ public class MessageView extends ViewPart {
 	/** The viewer used to display connection logs */
 	private static TextViewer viewer;
 
+	private static void setViewer(TextViewer viewer){
+		MessageView.viewer = viewer;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -39,7 +43,7 @@ public class MessageView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		// create text viewer
-		viewer = new TextViewer(parent);
+		setViewer(new TextViewer(parent));
 	}
 
 	/*

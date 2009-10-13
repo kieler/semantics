@@ -52,10 +52,11 @@ public class Data extends Identifer {
 	}
 
 	public String info() {
-		String result = "";
-		while (result.length() < Constants.data_width)
-			result += "N";
-		return result;
+		StringBuffer result = new StringBuffer();
+		while (result.length() < Constants.data_width){
+			result.append("N");
+		}
+		return result.toString();
 	}
 
 	public int length() {

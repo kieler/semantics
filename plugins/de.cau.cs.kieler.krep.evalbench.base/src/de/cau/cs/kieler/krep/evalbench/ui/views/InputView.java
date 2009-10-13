@@ -138,7 +138,7 @@ public class InputView extends ViewPart {
 	 *            the new input
 	 */
 	public void setInput(LinkedList<Signal> input) {
-		viewer.setInput(input.toArray(new Signal[0]));
+		viewer.setInput(input.toArray(new Signal[1]));
 	}
 
 	/**

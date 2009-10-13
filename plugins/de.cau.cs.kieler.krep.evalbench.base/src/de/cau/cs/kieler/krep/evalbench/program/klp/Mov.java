@@ -76,7 +76,7 @@ public class Mov extends Instruction {
 		case VC:
 			res += "VC";
 			break;
-		case VV:
+		default:
 			res += "VV";
 			break;
 		}
@@ -98,7 +98,7 @@ public class Mov extends Instruction {
 		case VC:
 			op = Opcode.BOOL;
 			break;
-		case VV:
+		default:
 			op = Opcode.VVMOV;
 			break;
 		}

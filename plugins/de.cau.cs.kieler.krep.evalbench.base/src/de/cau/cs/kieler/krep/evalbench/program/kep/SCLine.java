@@ -38,11 +38,10 @@ public class SCLine {
 	}
 
 	public String toString() {
-		String result = content;
+		StringBuffer result = new StringBuffer(content);
 		while (result.length() < Constants.instr_width)
-			result += " ";
-		// return "["+number+"]\t"+result;
-		return result;
+			result.append(" ");
+		return result.toString();
 	}
 
 	public String errorMsg() {

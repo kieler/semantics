@@ -109,7 +109,7 @@ public class OutputView extends ViewPart implements ISignalListener {
 	public void tickPerformed(LinkedList<Signal> inputs,
 			LinkedList<Signal> outputs) {
 		// input signals are ignored
-		viewer.setInput(outputs.toArray(new Signal[0]));
+		viewer.setInput(outputs.toArray(new Signal[1]));
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class OutputView extends ViewPart implements ISignalListener {
 	 *            the new input
 	 */
 	public void setInput(LinkedList<Signal> input) {
-		viewer.setInput(input.toArray(new Signal[0]));
+		viewer.setInput(input.toArray(new Signal[1]));
 	}
 
 }

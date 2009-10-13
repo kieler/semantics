@@ -136,6 +136,8 @@ public class InputSignalModifier implements ICellModifier {
 				s.setValue(0);
 			}
 			break;
+		default:
+			break;
 		}
 		parentViewer.refresh();
 	}

@@ -33,13 +33,13 @@ public class Activator extends AbstractUIPlugin implements IPageListener {
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.krep.evalbench.base";
 
 	/** The common layer for data exchange */
-	public static CommonLayer commonLayer;
+	public static CommonLayer commonLayer = new CommonLayer();
 
 	/** current program */
 	private static IAssembler program = null;
 
 	/** current execution Trace */
-	private static TraceList traces;
+	private static TraceList traces = new TraceList();
 
 	/** The shared instance */
 	private static Activator plugin;
@@ -48,10 +48,10 @@ public class Activator extends AbstractUIPlugin implements IPageListener {
 	 * The constructor
 	 */
 	public Activator() {
-		commonLayer = new CommonLayer();
-		traces = new TraceList();
+		super();
 	}
 
+	
 	/**
 	 * @return currently loaded traces
 	 */

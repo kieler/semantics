@@ -139,7 +139,7 @@ public class KlpAssembler implements IAssembler {
 	}
 
 	public String canExecute(final Config c) {
-		if (!c.isKLP()) {
+		if (!(c instanceof KrepConfig)) {
 			return "wrong processor";
 		}
 		final KrepConfig k = (KrepConfig) c;
@@ -197,7 +197,7 @@ public class KlpAssembler implements IAssembler {
 				}
 			}
 		}
-		return obj.toArray(new String[0]);
+		return obj.toArray(new String[1]);
 	}
 
 	private void clear() {

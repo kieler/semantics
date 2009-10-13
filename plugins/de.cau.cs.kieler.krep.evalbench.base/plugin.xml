@@ -72,7 +72,8 @@
          point="org.eclipse.ui.views">
       <category
             id="de.cau.cs.kieler.krep.evalbench.ui.categories.evalBench"
-            name="Evaluation Bench">
+            name="Evaluation Bench"
+            parentCategory="de.cau.cs.kieler">
       </category>
       <view
             allowMultiple="false"
@@ -128,6 +129,13 @@
             class="de.cau.cs.kieler.krep.evalbench.ui.views.MessageView"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.message"
             name="Message">
+      </view>
+      <view
+            category="de.cau.cs.kieler.krep.evalbench.ui.categories.evalBench"
+            class="de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView"
+            id="de.cau.cs.kieler.krep.evalbench.ui.views.assembler"
+            name="Assembler View"
+            restorable="true">
       </view>
    </extension>
    <extension

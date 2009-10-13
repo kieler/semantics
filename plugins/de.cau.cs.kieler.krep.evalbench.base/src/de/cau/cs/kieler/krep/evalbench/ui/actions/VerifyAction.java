@@ -41,7 +41,6 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KasmAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
-import de.cau.cs.kieler.krep.evalbench.program.KrepAssembler;
 import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
 import de.cau.cs.kieler.krep.evalbench.ui.VerifyPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
@@ -247,8 +246,8 @@ public class VerifyAction extends Action {
 				res = new KepAssembler();
 			} else if ((file = new File(prefix + ".klp")).exists()) {
 				res = new KlpAssembler();
-			} else if ((file = new File(prefix + ".krp")).exists()) {
-				res = new KrepAssembler();
+			//} else if ((file = new File(prefix + ".krp")).exists()) {
+//				res = new KrepAssembler();
 			} else {
 				throw new ParseException("No assembler found in " + path);
 			}
