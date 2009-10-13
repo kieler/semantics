@@ -55,7 +55,9 @@
 						<transformationCommand transformationId="de.cau.cs.kieler.sbase.empty">
 						</transformationCommand>
 					</menu>
-					<transformationCommand transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
+					<menu label="Transitions" id="de.cau.cs.kieler.synccharts.sbase.trans">
+						<transformationCommand transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
+					</menu>
 					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addPred"></transformationCommand>
 					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addChoice">
 					</transformationCommand>
