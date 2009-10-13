@@ -9,7 +9,6 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: de.cau.cs.kieler.sim.esi;visibility:=reexport,
  org.eclipse.xtext.ui.core,
  org.eclipse.xtext.ui.common,
- org.eclipse.xtext.log4j;bundle-version="1.2.15",
  org.eclipse.ui.editors;bundle-version="3.4.0",
  org.eclipse.ui.ide;bundle-version="3.4.0",
  org.eclipse.ui,

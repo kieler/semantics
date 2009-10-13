@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+    <extension
+            point="org.eclipse.ui.editors">
+        <editor
+            class="de.cau.cs.kieler.EsiExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.XtextEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            default="true"
+            extensions="esi"
+            id="de.cau.cs.kieler.Esi"
+            name="Esi Editor">
+        </editor>
+    </extension>
+    <extension
+        point="org.eclipse.ui.handlers">
+        <handler
+            class="de.cau.cs.kieler.EsiExecutableExtensionFactory:org.eclipse.xtext.ui.common.editor.hyperlinking.OpenDeclarationHandler"
+            commandId="org.eclipse.xtext.ui.common.editor.hyperlinking.OpenDeclaration">
+            <activeWhen>
+                <reference
+                    definitionId="de.cau.cs.kieler.Esi.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+        <handler
+            class="de.cau.cs.kieler.EsiExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.handler.ValidateActionHandler"
+            commandId="de.cau.cs.kieler.Esi.validate">
+         <activeWhen>
+            <reference
+                    definitionId="de.cau.cs.kieler.Esi.Editor.opened">
+            </reference>
+         </activeWhen>
+      </handler>
+    </extension>
+    <extension point="org.eclipse.core.expressions.definitions">
+        <definition id="de.cau.cs.kieler.Esi.Editor.opened">
+            <and>
+                <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
+                <with variable="activeEditor">
+                    <test property="org.eclipse.xtext.ui.core.editor.XtextEditor.languageName" 
+                        value="de.cau.cs.kieler.Esi" 
+                        forcePluginActivation="true"/>
+                </with>        
+            </and>
+        </definition>
+    </extension>
+    <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+            class="de.cau.cs.kieler.EsiExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.Esi"
+            name="Esi"
+            category="org.eclipse.xtext.languages">
+            <keywordReference id="de.cau.cs.kieler.ui.keyword_Esi"/>
+        </page>
+        <page
+            category="de.cau.cs.kieler.Esi"
+            class="de.cau.cs.kieler.EsiExecutableExtensionFactory:org.eclipse.xtext.ui.common.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="de.cau.cs.kieler.Esi.coloring"
+            name="Syntax Coloring">
+            <keywordReference id="de.cau.cs.kieler.ui.keyword_Esi"/>
+        </page>
+        <page
+            category="de.cau.cs.kieler.Esi"
+            class="de.cau.cs.kieler.EsiExecutableExtensionFactory:org.eclipse.xtext.ui.common.editor.templates.XtextTemplatePreferencePage"
+            id="de.cau.cs.kieler.Esi.templates"
+            name="Templates">
+            <keywordReference id="de.cau.cs.kieler.ui.keyword_Esi"/>
+        </page>
+    </extension>
+    <extension
+        point="org.eclipse.ui.keywords">
+        <keyword
+            id="de.cau.cs.kieler.ui.keyword_Esi"
+            label="Esi"/>
+    </extension>
+    <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Trigger expensive validation"
+            id="de.cau.cs.kieler.Esi.validate"
+            name="Validate">
+      </command>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.open">
+             <command
+                 commandId="de.cau.cs.kieler.Esi.validate"
+                 style="push"
+                 tooltip="Trigger expensive validation">
+            <visibleWhen checkEnabled="false">
+                <reference
+                    definitionId="de.cau.cs.kieler.Esi.Editor.opened">
+                </reference>
+            </visibleWhen>
+         </command>  
+         </menuContribution>
+    </extension>
+
+<!-- adding resource factories -->
+
+	<extension
+		point="org.eclipse.emf.ecore.extension_parser">
+		<parser
+			class="de.cau.cs.kieler.EsiExecutableExtensionFactory:org.eclipse.xtext.resource.XtextResourceFactory"
+			type="esi">
+		</parser>
+	</extension>
+
+
+
+
+</plugin>
