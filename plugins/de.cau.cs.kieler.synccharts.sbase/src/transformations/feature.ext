@@ -14,12 +14,19 @@ let source = new State:
 ;
 
 Void addChoice(State source):
-let sel1 = new State:
-let sel2 = new State:
-connectStates(source,sel1) ->
-connectStates(source,sel2) ->
-source.parentRegion.innerStates.add(sel1) ->
-source.parentRegion.innerStates.add(sel2)
+let choice = new State:
+let opt1 = new State:
+let opt2 = new State:
+choice.setLabel("C1") ->
+choice.setType(StateType::CONDITIONAL) ->
+opt1.setLabel("S0") ->
+opt2.setLabel("S1") ->
+connectStates(source,choice) ->
+connectStates(choice,opt1) ->
+connectStates(choice,opt2) ->
+source.parentRegion.innerStates.add(choice) ->
+source.parentRegion.innerStates.add(opt1) ->
+source.parentRegion.innerStates.add(opt2)
 ;
 
 Void flipTransition(Transition t):

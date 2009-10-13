@@ -9,24 +9,24 @@
 			editor="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor"
 			packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage">
 			<transformations>
-				<transformation keyboardShortcut="CTRL+K S"
+				<transformation keyboardShortcut="M1+K S"
 					name="Add Successor State" transformation="addSuccessorState"
 					transformationId="de.cau.cs.kieler.sbase.addSuc">
 				</transformation>
-				<transformation keyboardShortcut="CTRL+K P"
+				<transformation keyboardShortcut="M1+K P"
 					name="Add Predecessor State" transformation="addPredecessorState"
 					transformationId="de.cau.cs.kieler.sbase.addPred">
 				</transformation>
-				<transformation keyboardShortcut="CTRL+K C" name="Add Choice"
+				<transformation keyboardShortcut="M1+K C" name="Add Choice"
 					transformation="addChoice"
 					transformationId="de.cau.cs.kieler.sbase.addChoice">
 				</transformation>
 				<transformation icon="icons/obj16/Transition.gif"
-					keyboardShortcut="CTRL+K F" name="Flip Transition" 
+					keyboardShortcut="M1+K F" name="Flip Transition" 
 					transformation="flipTransition" transformationId="de.cau.cs.kieler.sbase.flip">
 				</transformation>
 				<transformation icon="icons/obj16/Action.gif"
-					keyboardShortcut="CTRL+K W" name="Connect States" 
+					keyboardShortcut="M1+K W" name="Connect States" 
 					transformation="connectStates" transformationId="de.cau.cs.kieler.sbase.connect">
 				</transformation>
 				<transformation icon="icons/obj16/Region.gif" name="Add ABRO"
@@ -36,13 +36,13 @@
 					transformation="createDefault" transformationId="de.cau.cs.kieler.sbase.empty">
 				</transformation>
     <transformation
-          keyboardShortcut="CTRL+K Q"
+          keyboardShortcut="M1+K Q"
           name="Set Transition Target"
           transformation="rerouteTransitionTarget"
           transformationId="de.cau.cs.kieler.sbase.rerouteTarget">
        </transformation>
        <transformation
-             keyboardShortcut="CTRL+K J"
+             keyboardShortcut="M1+K J"
              name="Set Transition Source"
              transformation="rerouteTransitionSource"
              transformationId="de.cau.cs.kieler.sbase.rerouteSource">
