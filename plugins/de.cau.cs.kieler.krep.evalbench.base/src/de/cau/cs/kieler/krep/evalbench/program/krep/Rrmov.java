@@ -1,9 +1,9 @@
 ///******************************************************************************
-// * KIELER - Kiel Integrated Environment for Layout for the Eclipse RCP
+// * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
 // *
 // * http://www.informatik.uni-kiel.de/rtsys/kieler/
 // * 
-// * Copyright ${year} by
+// * Copyright 2009 by
 // * + Christian-Albrechts-University of Kiel
 // *   + Department of Computer Science
 // *     + Real-Time and Embedded Systems Group

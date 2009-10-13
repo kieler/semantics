@@ -135,7 +135,7 @@ Your DataComponent may want to define properties that can be saved together with
     &lt;td&gt;&lt;font size=&quot;2&quot; face=&quot;Courier New, Courier, mono&quot;&gt;&amp;nbsp; 
 	
 /******************************************************************************&lt;BR&gt;
- * KIELER - Kiel Integrated Environment for Layout for the Eclipse RCP&lt;BR&gt;
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient&lt;BR&gt;
  *&lt;BR&gt;
  * http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;BR&gt;
  *&lt;BR&gt; 
