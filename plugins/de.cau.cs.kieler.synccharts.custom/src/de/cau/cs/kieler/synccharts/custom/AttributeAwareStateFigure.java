@@ -216,75 +216,7 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
         notifyChanged(null);
     }
 
-    /**
-     * Returns the minimum size of the figure.
-     * 
-     * @return The minimum size of the figure.
-     */
-    // The minimum size of a simple state is 40x40 pixels
-    // The minimum height of complex states is the sum of
-    // all its children's minimum heights, while its minimum
-    // width is the maximum of all its children's minimum sizes;
-    // however, empty compartments are not considered.
-    @Override
-    public Dimension getMinimumSize(int hint, int hint2) {
-        if (modelElement instanceof State) {
-            State state = (State) modelElement;
 
-            int prefWidth = super.getMinimumSize(hint, hint2).width;
-            int prefHeight = 0;
-
-            List<Object> children = getChildren();
-            int numChildren = children.size();
-
-            if(state.getType().equals(StateType.CONDITIONAL)){
-                return new Dimension(StateLayout.COND_WIDTH,
-                        StateLayout.COND_HEIGHT);
-            }
-            if (isSimple(state)) {
-                if (children.get(0) instanceof WrappingLabel) {
-                    return new Dimension(((WrappingLabel) children.get(0))
-                            .getPreferredSize().width, StateLayout.MIN_HEIGHT);
-                } else {
-                    return new Dimension(StateLayout.MIN_WIDTH,
-                            StateLayout.MIN_WIDTH);
-                }
-            } else {
-
-                // Lookup, which compartments contain contents
-                retrieveContents(state);
-
-                for (int i = 0; i < numChildren; i++) {
-                    Object child = children.get(i);
-                    if (child instanceof IFigure) {
-                        IFigure childFigure = (IFigure) child;
-                        prefHeight += childFigure.getPreferredSize().height;
-                        if (child instanceof ShapeCompartmentFigure) {
-                            // Empty compartments are not considered
-                            if ((getName((ShapeCompartmentFigure) child)
-                                    .equals("Signal:") && (!containsSignals))
-                                    || (getName((ShapeCompartmentFigure) child)
-                                            .equals("Variable:") && (!containsVariables))
-                                    || (getName((ShapeCompartmentFigure) child)
-                                            .equals("OnEntryAction:") && (!containsEntryActions))
-                                    || (getName((ShapeCompartmentFigure) child)
-                                            .equals("OnInsideAction:") && (!containsInnerActions))
-                                    || (getName((ShapeCompartmentFigure) child)
-                                            .equals("OnExitAction:") && (!containsExitActions))
-                                    || (getName((ShapeCompartmentFigure) child)
-                                            .equals("Suspend:") && (!containsSuspensionTrigger))
-                                    || (getName((ShapeCompartmentFigure) child)
-                                            .equals("RegionCompartment") && (!containsRegions))) {
-                                prefHeight -= childFigure.getPreferredSize().height;
-                            }
-                        }
-                    }
-                }
-                return new Dimension(prefWidth, prefHeight);
-            }
-        }
-        return super.getMinimumSize(hint, hint2);
-    }
 
     /**
      * Returns the preferred size of the figure. Here it is the same as the

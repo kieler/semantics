@@ -186,7 +186,7 @@ public class StateLayout extends ConstrainedToolbarLayout {
         int regionSeparatorWidth = 0;
         for (int i = 0; i < numChildren; i++) {
             Object child = children.get(i);
-            if (child instanceof IFigure) {
+            if (child instanceof IFigure && ! (child instanceof Polyline)) {
                 IFigure childFigure = (IFigure) child;
                 int newWidth = childFigure.getPreferredSize().width;
                 int newHeight = childFigure.getPreferredSize().height;
@@ -199,60 +199,25 @@ public class StateLayout extends ConstrainedToolbarLayout {
                             || (compartmentName.equals("OnInsideAction:") && (!containsInnerActions))
                             || (compartmentName.equals("OnExitAction:") && (!containsExitActions))
                             || (compartmentName.equals("Suspend:") && (!containsSuspensionTrigger))
-                            || (compartmentName.equals("RegionCompartment") && (!containsRegions))) {
+                            ) {
                         newWidth = 0;
                         newHeight = 0;
+                        setCompartmentTitleVisibility(child, false);
+                    } else if(!compartmentName.equals("RegionCompartment")){
+                        // Make title label visible if the compartment is not a
+                        // region compartment and has more than the title label as
+                        // content
+                        setCompartmentTitleVisibility(child, true);
                     }
-                    // Make title label invisible if the compartment is not a
-                    // region compartment and has only the title label as
-                    // content
-                    if (compartmentName.equals("Signal:")) {
-                        if (!containsSignals) {
-                            setCompartmentTitleVisibility(child, false);
-                        } else {
-                            setCompartmentTitleVisibility(child, true);
+                    else { // child is the region compartment
+                        if(!containsRegions){
+                            newWidth = 0;
+                            newHeight = 0;
                         }
-                    }
-                    if (compartmentName.equals("Variable:")) {
-                        if (!containsVariables) {
-                            setCompartmentTitleVisibility(child, false);
-                        } else {
-                            setCompartmentTitleVisibility(child, true);
-                        }
-                    }
-                    if (compartmentName.equals("OnEntryAction:")) {
-                        if (!containsEntryActions) {
-                            setCompartmentTitleVisibility(child, false);
-                        } else {
-                            setCompartmentTitleVisibility(child, true);
-                        }
-                    }
-                    if (compartmentName.equals("OnInsideAction:")) {
-                        if (!containsInnerActions) {
-                            setCompartmentTitleVisibility(child, false);
-                        } else {
-                            setCompartmentTitleVisibility(child, true);
-                        }
-                    }
-                    if (compartmentName.equals("OnExitAction:")) {
-                        if (!containsExitActions) {
-                            setCompartmentTitleVisibility(child, false);
-                        } else {
-                            setCompartmentTitleVisibility(child, true);
-                        }
-                    }
-                    if (compartmentName.equals("Suspend:")) {
-                        if (!containsSuspensionTrigger) {
-                            setCompartmentTitleVisibility(child, false);
-                        } else {
-                            setCompartmentTitleVisibility(child, true);
-                        }
-                    }
-                    if (compartmentName.equals("RegionCompartment")) {
-                        regionSeparatorHeight = ((ResizableCompartmentFigure)child).getBounds().getTopLeft().y;
-                        regionSeparatorWidth = ((ResizableCompartmentFigure)child).getBounds().width;
-                        
-                    
+                        // set the y position of the region separator polyline to the current
+                        // calculated total height = y position of region compartment
+                        regionSeparatorHeight = totalHeight;
+                        //regionSeparatorWidth = ((ResizableCompartmentFigure)child).getBounds().width;
                     }
                 }
                
@@ -264,35 +229,40 @@ public class StateLayout extends ConstrainedToolbarLayout {
                     totalWidth = newWidth;
                 }
             }
-            for (Object childObject : children) {
-                if(childObject instanceof Polyline){
-                    // handle RegionSeparator
-                        Polyline regionSeparator = (Polyline)childObject;
-                        PointList points = new PointList();
-                        //points.addPoint(new Point(offset,regionSeparatorHeight));
-                        //points.addPoint(new Point(parent.getBounds().width,regionSeparatorHeight));
-                        Point start = new Point(1,regionSeparatorHeight);
-                        //start.x = start.x + parent.getBounds().x;
-                        //start.y = start.y + parent.getBounds().y;
-                        Point end = new Point(parent.getBounds().width,regionSeparatorHeight);
-                        //end.translate(parent.getBounds().getLocation());
-                        points.addPoint(start);
-                        points.addPoint(end);
-                        regionSeparator.setPoints(points);
-                        break;
-                    }
-            }
         }
 
         // stretch if the node is larger than the
         if (totalHeight < height) {
             totalHeight = height;
         }
+        if (totalWidth < width){
+            totalWidth = width;
+        }
 
         // Labels are centered in the upper area while compartments share the
         // rest of the space, always using the full available width
+        int offsetY = 0;
         for (int i = 0; i < numChildren; i++) {
             Object child = children.get(i);
+            if(i>0)
+                offsetY += prefHeights[i-1];
+            
+            if(child instanceof Polyline){
+                // handle RegionSeparator
+                    Polyline regionSeparator = (Polyline)child;
+                    PointList points = new PointList();
+                    //points.addPoint(new Point(offset,regionSeparatorHeight));
+                    //points.addPoint(new Point(parent.getBounds().width,regionSeparatorHeight));
+                    Point start = new Point(1,regionSeparatorHeight);
+                    //start.x = start.x + parent.getBounds().x;
+                    //start.y = start.y + parent.getBounds().y;
+                    Point end = new Point(totalWidth,regionSeparatorHeight);
+                    //end.translate(parent.getBounds().getLocation());
+                    points.addPoint(start);
+                    points.addPoint(end);
+                    regionSeparator.setPoints(points);
+                } else
+            
             if (child instanceof Figure) {
                 IFigure childFigure = (IFigure) child;
                 if (child instanceof WrappingLabel) {
@@ -300,22 +270,23 @@ public class StateLayout extends ConstrainedToolbarLayout {
                     newBounds.y = y;
                     newBounds.width = prefWidths[i];
                     newBounds.height = prefHeights[i];
+                    childFigure.setBounds(transposer.t(newBounds));
                 } else if (child instanceof ShapeCompartmentFigure) {
-                    int offsetY = 0;
-                    for (int j = 0; j < i; j++) {
-                        Object child2 = children.get(j);
-                        if (child2 instanceof IFigure) {
-                            offsetY += prefHeights[j];
-                        }
-                    }
                     // Leave a little border so that transition anchors
                     // can be moved freely by the user
                     newBounds.x = x + 1;
                     newBounds.y = y + offsetY;
-                    newBounds.width = width - 2;
-                    newBounds.height = totalHeight - offsetY;
+                    if(prefWidths[i] == 0)
+                        newBounds.width = 0;
+                    else
+                        newBounds.width = totalWidth - 2;
+                    // stretch the last element over the rest space
+                    if(i == (numChildren -1))
+                        newBounds.height = totalHeight - offsetY;
+                    else
+                        newBounds.height = prefHeights[i];
+                    childFigure.setBounds(transposer.t(newBounds));
                 }
-                childFigure.setBounds(transposer.t(newBounds));
             }
         }
     }
@@ -416,8 +387,13 @@ public class StateLayout extends ConstrainedToolbarLayout {
                     newBounds.y = y;
                     newBounds.width = 0;
                     newBounds.height = 0;
+                } else if(child instanceof Polyline){
+                    // hide region separator line by setting an empty point list
+                    ((Polyline)child).setPoints(new PointList());
                 }
+                
                 childFigure.setBounds(transposer.t(newBounds));
+                
             }
         }
     }
@@ -464,47 +440,122 @@ public class StateLayout extends ConstrainedToolbarLayout {
     }
 
     /**
+     * Returns the minimum size of the figure.
+     * 
+     * @return The minimum size of the figure.
+     */
+    // The minimum size of a simple state is 40x40 pixels
+    // The minimum height of complex states is the sum of
+    // all its children's minimum heights, while its minimum
+    // width is the maximum of all its children's minimum sizes;
+    // however, empty compartments are not considered.
+    @Override
+    public Dimension calculateMinimumSize(IFigure parent, int hint, int hint2) {
+        EObject modelElement = ((AttributeAwareFigure) parent)
+            .getModelElement();
+        int prefWidth = 0;//super.getMinimumSize(hint, hint2).width;
+        int prefHeight = 0;
+        if (modelElement instanceof State) {
+            State state = (State) modelElement;
+
+
+            List<Object> children = parent.getChildren();
+            int numChildren = children.size();
+
+            if(state.getType().equals(StateType.CONDITIONAL)){
+                return new Dimension(StateLayout.COND_WIDTH,
+                        StateLayout.COND_HEIGHT);
+            }
+            if (isSimple(state)) {
+                if (children.get(0) instanceof WrappingLabel) {
+                    return new Dimension(((WrappingLabel) children.get(0))
+                            .getPreferredSize().width, StateLayout.MIN_HEIGHT);
+                } else {
+                    return new Dimension(StateLayout.MIN_WIDTH,
+                            StateLayout.MIN_WIDTH);
+                }
+            } else {
+
+                // Lookup, which compartments contain contents
+                retrieveContents(state);
+
+                for (int i = 0; i < numChildren; i++) {
+                    Object child = children.get(i);
+                    if (child instanceof IFigure && ! (child instanceof Polyline)) {
+                        IFigure childFigure = (IFigure) child;
+                        if (! (child instanceof ShapeCompartmentFigure)
+                                || !getName((ShapeCompartmentFigure) child)
+                                .equals("RegionCompartment")){
+                            Rectangle childBounds = childFigure.getBounds();
+                            // if we have manually set the bounds to zero, ignore
+                            // the bounds for min size calculations
+                            if(childBounds.height == 0 || childBounds.width == 0){
+                                continue;
+                            }
+                            Dimension preferredSize = childFigure.getPreferredSize();
+                            if (preferredSize.width > prefWidth) {
+                                // add 1 pixel to avoid scroll bars (this was added during layout above)
+                                prefWidth = preferredSize.width + 1;
+                            }
+                            prefHeight += preferredSize.height;
+                        }
+                        else if (child instanceof ShapeCompartmentFigure){
+                            // child is the region compartment
+                            // add a default minimum size so that the region compartment
+                            // is visible after all
+                            prefHeight += StateLayout.MIN_HEIGHT;
+                        }     
+                    }  
+                }
+            }
+        }
+        return new Dimension(prefWidth, prefHeight);
+        
+    }
+    
+    /**
      * Calculate the minimum size of the figure.
      */
     // Method to calculate the minimum size of a figure
-    @Override
-    public Dimension calculateMinimumSize(IFigure parent, int hint, int hint2) {
-
-        int minWidth = 0;
-        int minHeight = 0;
-        for (Object child : parent.getChildren()) {
-            if (child instanceof Figure && ! (child instanceof Polyline)) {
-                IFigure childFigure = (IFigure) child;
-                int newWidth = childFigure.getPreferredSize().width;
-                if (newWidth > minWidth) {
-                    minWidth = newWidth;
-                }
-                minHeight += childFigure.getPreferredSize().height;
-            }
-        }
-
-        // simple states can be made smaller in height than the compartments
-        // would allow
-        if (parent instanceof AttributeAwareFigure) {
-            EObject modelElement = ((AttributeAwareFigure) parent)
-                    .getModelElement();
-            if (modelElement instanceof State) {
-                State state = (State) modelElement;
-                if (isSimple(state)) {
-                    minHeight = MIN_HEIGHT;
-                    if (minWidth < MIN_WIDTH) {
-                        minWidth = MIN_WIDTH;
-                    }
-                    if (state.getType().equals(StateType.CONDITIONAL)) {
-                        minHeight = COND_HEIGHT;
-                        minWidth = COND_WIDTH;
-                    }
-                }
-            }
-        }
-
-        return new Dimension(minWidth, minHeight);
-    }
+//    @Override
+//    public Dimension calculateMinimumSize(IFigure parent, int hint, int hint2) {
+//
+//        int minWidth = 0;
+//        int minHeight = 0;
+//        for (Object child : parent.getChildren()) {
+//            if (child instanceof IFigure && ! (child instanceof Polyline)
+//                    && !(child instanceof ShapeCompartmentFigure)) {
+//                IFigure childFigure = (IFigure) child;
+//                int newWidth = childFigure.getPreferredSize().width;
+//                if (newWidth > minWidth) {
+//                    minWidth = newWidth;
+//                }
+//                minHeight += childFigure.getPreferredSize().height;
+//            }
+//        }
+//
+//        // simple states can be made smaller in height than the compartments
+//        // would allow
+//        if (parent instanceof AttributeAwareFigure) {
+//            EObject modelElement = ((AttributeAwareFigure) parent)
+//                    .getModelElement();
+//            if (modelElement instanceof State) {
+//                State state = (State) modelElement;
+//                if (isSimple(state)) {
+//                    minHeight = MIN_HEIGHT;
+//                    if (minWidth < MIN_WIDTH) {
+//                        minWidth = MIN_WIDTH;
+//                    }
+//                    if (state.getType().equals(StateType.CONDITIONAL)) {
+//                        minHeight = COND_HEIGHT;
+//                        minWidth = COND_WIDTH;
+//                    }
+//                }
+//            }
+//        }
+//
+//        return new Dimension(minWidth, minHeight);
+//    }
 
     /**
      * Calculate the preferred size of the figure.
