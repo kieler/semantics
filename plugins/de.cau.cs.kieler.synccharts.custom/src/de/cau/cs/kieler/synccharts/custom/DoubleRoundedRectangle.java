@@ -45,10 +45,10 @@ public class DoubleRoundedRectangle extends RoundedRectangle {
 		f.height = r.height - lineWidth;
 		graphics.drawRoundRectangle(f, corner.width, corner.height);
 		// Draw the second rectangle inside the first one
-		f.x += 5;
-		f.y += 5;
-		f.width -= 10;
-		f.height -= 10;
+		f.x += 3;
+		f.y += 3;
+		f.width -= 6;
+		f.height -= 6;
 		graphics.drawRoundRectangle(f, corner.width, corner.height);
 	}
 }

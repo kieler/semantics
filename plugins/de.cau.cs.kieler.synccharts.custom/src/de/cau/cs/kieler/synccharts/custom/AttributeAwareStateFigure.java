@@ -97,22 +97,22 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
         initialNChildrenStateFigure.setForegroundColor(ColorConstants.black);
 
         RoundedRectangle finalStateFigure = new DoubleRoundedRectangle();
-        initialStateFigure.setCornerDimensions(new Dimension(
+        finalStateFigure.setCornerDimensions(new Dimension(
                 StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
         finalStateFigure.setFill(false);
-        finalStateFigure.setLineWidth(2);
+        finalStateFigure.setLineWidth(1);
         finalStateFigure.setForegroundColor(ColorConstants.black);
 
-        RoundedRectangle finalNChildrenStateFigure = new RoundedRectangle();
-        initialStateFigure.setCornerDimensions(new Dimension(
+        RoundedRectangle finalNChildrenStateFigure = new DoubleRoundedRectangle();
+        finalNChildrenStateFigure.setCornerDimensions(new Dimension(
                 StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
         finalNChildrenStateFigure.setFill(false);
-        finalNChildrenStateFigure.setLineWidth(2);
+        finalNChildrenStateFigure.setLineWidth(1);
         finalNChildrenStateFigure.setForegroundColor(ColorConstants.black);
 
         ConditionalStateFigure conditionalStateFigure = new ConditionalStateFigure();
         conditionalStateFigure.setFill(true);
-        conditionalStateFigure.setLineWidth(2);
+        conditionalStateFigure.setLineWidth(1);
         conditionalStateFigure.setForegroundColor(ColorConstants.black);
         conditionalStateFigure.setBackgroundColor(ColorConstants.black);
 
