@@ -1,0 +1,116 @@
+«IMPORT synccharts»
+
+«EXTENSION template::helper»
+
+«DEFINE main FOR Region-»
+	«FILE "Dummy.sc"-»
+	«EXPAND start-»
+	«ENDFILE-»
+«ENDDEFINE»
+
+«DEFINE start FOR Region-»
+	«FOREACH innerStates.regions.innerStates AS anyState-»
+		«EXPAND state FOR anyState-»
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE state FOR State-»
+«id»:
+	«IF (outgoingTransitions.size == 1)-»
+		«EXPAND oneTransition FOR this-»
+	«ELSEIF (outgoingTransitions.size > 1)-»
+		«EXPAND moreTransitions FOR this-»
+	«ELSEIF !(isFinal)-»
+				HALT;
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE oneTransition FOR State-»
+		«IF (outgoingTransitions.first().triggersAndEffects == null)-»
+«id»_depth:
+				PAUSE;
+				«EXPAND testFinal FOR this.outgoingTransitions.first()-»
+		«ELSE-»
+«id»_depth:
+				«EXPAND triggerAndEffectOneTransition FOR this.outgoingTransitions.first()-»
+				«EXPAND testFinal FOR this.outgoingTransitions.first()-»
+		«ENDIF-»
+				GOTO(«id»_depth);
+«ENDDEFINE»
+
+«DEFINE moreTransitions FOR State-»
+	«EXPAND testForImmediate FOR this-»
+«id»_depth:
+				PAUSE;
+	«FOREACH sortTransitionPrios(this) AS trans-»
+		«IF (((synccharts::Action)trans).triggersAndEffects == null)-»
+				«EXPAND testFinal FOR (Transition)trans-»
+		«ELSE-»
+				«EXPAND triggerAndEffectMoreTransitions FOR (Transition)trans-»
+				«EXPAND testFinal FOR (Transition)trans-»
+			}
+		«ENDIF-»
+	«ENDFOREACH-»
+				GOTO(«id»_depth);
+«ENDDEFINE»
+
+«DEFINE triggerAndEffectOneTransition FOR Transition-»
+	«IF (this.trigger == null)-»
+				PAUSE;
+	«ELSE»
+		«IF (trigger.metaType == SignalReference)-»
+				AWAIT(«((SignalReference)trigger).signal.name-»);
+		«ELSE-»
+				COMPLEXTYPE -> ToDo
+		«ENDIF-»
+	«ENDIF-»
+	«IF !effects.isEmpty-»
+		«FOREACH this.effects AS effect-»
+				EMIT(«((Emission)effect).signal.name-»);
+		«ENDFOREACH-»
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE triggerAndEffectMoreTransitions FOR Transition-»
+	«IF !(this.trigger == null)-»
+		«IF (trigger.metaType == SignalReference)-»
+			if (PRESENT(«((SignalReference)trigger).signal.name-»)){
+		«ELSE-»
+				COMPLEXTYPE -> ToDo
+		«ENDIF-»
+	«ENDIF-»
+	«IF !effects.isEmpty-»
+		«FOREACH this.effects AS effect-»
+				EMIT(«((Emission)effect).signal.name-»);
+		«ENDFOREACH-»
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE testFinal FOR Transition-»
+	«IF this.targetState.isFinal-»
+				TERM;
+	«ELSE-»
+				GOTO(«targetState.id»);
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE testForImmediate FOR State-»
+	«FOREACH outgoingTransitions AS trans-»
+		«IF trans.isImmediate-»
+			«IF !(trans.trigger == null)-»
+				«IF (trans.trigger.metaType == SignalReference)-»
+			if(PRESENT(«((SignalReference)trans.trigger).signal.name-»)){
+				«ELSE-»
+					COMPLEXTYPE -> ToDo
+				«ENDIF-»
+			«ENDIF-»
+			«IF !trans.effects.isEmpty-»
+				«FOREACH trans.effects AS effect-»
+					EMIT(«((Emission)effect).signal.name-»);
+				«ENDFOREACH-»
+					GOTO(«trans.targetState.id»);
+			«ENDIF-»
+			}
+		«ENDIF-»
+	«ENDFOREACH-»
+«ENDDEFINE»

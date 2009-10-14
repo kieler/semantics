@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <workflow>
-  <property name="model" value="examples/await2.kits" />
+  <property name="model" value="examples/state1.kits" />
   <property name="src-gen" value="." />
 
   <!-- set up EMF for standalone execution -->
@@ -32,7 +32,7 @@
   <metaModelPackage value="dataflow.DataflowPackage"/>  
     </metaModel> -->
     <expand
-	  value="template::await::main FOR model" />
+	  value="template::codegen::main FOR model" />
     <outlet path="${src-gen}" />
   </component>
 </workflow>

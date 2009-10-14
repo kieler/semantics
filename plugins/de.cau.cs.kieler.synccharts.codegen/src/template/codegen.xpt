@@ -1,0 +1,68 @@
+«IMPORT synccharts»
+
+«EXTENSION template::helper»
+
+«DEFINE main FOR Region-»
+	«FILE "Dummy.sc"-»
+// generated SC-code //
+	«EXPAND start-»
+	«ENDFILE-»
+«ENDDEFINE»
+
+«DEFINE start FOR Region-»
+	«FOREACH innerStates.regions.innerStates AS anyState-»
+		«EXPAND state FOR anyState-»
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE state FOR State-»
+
+«this.id-»:
+	«FOREACH sortTransitionPrios(this) AS outTrans-»
+		«IF ((Transition)outTrans).isImmediate-»
+			«EXPAND transition FOR (Transition)outTrans-»
+		«ENDIF-»
+	«ENDFOREACH-»
+	
+«this.id»_depth:
+			PAUSE;
+	«FOREACH sortTransitionPrios(this) AS outTrans-»
+		«EXPAND transition FOR (Transition)outTrans-»
+	«ENDFOREACH-»
+			GOTO(«this.id»_depth);
+«ENDDEFINE»
+
+«DEFINE transition FOR Transition-»
+	«IF this.triggersAndEffects == null-»
+			GOTO(«this.targetState.id-»);
+	«ELSE-»
+		«IF !(this.trigger == null)-»
+			«IF (this.trigger.metaType == SignalReference)-»
+					«EXPAND simpleTrigger FOR this-»
+			«ELSE-»
+					«EXPAND complexTrigger FOR this-»
+			«ENDIF-»
+		«ELSE-»
+	«EXPAND transitionEffects FOR this-»
+		«ENDIF-»
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE simpleTrigger FOR Transition-»
+			if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
+	«EXPAND transitionEffects FOR this-»
+				GOTO(«this.targetState.id»);
+			}
+«ENDDEFINE»
+
+«DEFINE complexTrigger FOR Transition-»
+>>>> TODO complex Trigger
+«ENDDEFINE»
+
+«DEFINE transitionEffects FOR Transition-»
+	«IF !(effects.isEmpty)-»
+		«FOREACH this.effects AS effect-»
+				EMIT(«((Emission)effect).signal.name-»);
+		«ENDFOREACH-»
+	«ENDIF-»
+«ENDDEFINE»

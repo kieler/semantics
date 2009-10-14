@@ -11,3 +11,9 @@ String builtString(List stateList):
 
 String getChildrenSet(List stateList):
 	builtString(stateList).subString(0, builtString(stateList).length - 3);
+	
+List sortTransitionPrios(State transitions):
+	transitions.outgoingTransitions.sortBy(e|e.priority);
+	
+List putIntoList(State state):
+	state;
