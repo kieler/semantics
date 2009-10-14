@@ -90,19 +90,18 @@ Void addLocigalFunction(EntityType baseEntity, String name, String function) :
 ; 
 
 
-Void addCombineFunction(EntityType baseEntity, String name) :
+Void addIntCombineFunction(EntityType baseEntity, String name) :
    let e = new EntityType:
    let p1 = new PropertyType:
+   let p2 = new PropertyType:
+   let p3 = new PropertyType:
    e.setName(name) ->
-   //e.setClass1("ptolemy.actor.lib.AddSubtract") ->
-   e.setClass1("ptolemy.actor.kiel.KielerCombine") ->
-   	p1.setName("combine function") ->
-   	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
-   	p1.setValue("1") ->
+   e.setClass1("ptolemy.actor.lib.AddSubtract") ->
    //if not already exists
    (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) ?
 	   baseEntity.entity.add(e) : null
 ;   
+
 
 Void addEnvironmentIntCombineFunction(EntityType baseEntity, String name, String signalID) :
    let e = new EntityType:
@@ -211,33 +210,22 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     
 ;
 
-
 //-----------------------------------------------------------------------------
-// Termination ports are not needed on the toplevel, so these can be deleted.
-// This is done by iterating thru the list of all modalmodels (and their
-// controller)
+
 Void deleteModalModelPorts(List[EntityType] entityList, String portName) :
- 	let modalmodel = entityList.last() :
- 	let controller = (EntityType) modalmodel.entity.select
- 									(e|e.name.matches("_Controller")).first():
-	
-	//debug output
- 	//dump("DELETE "+portName +" IN " + modalmodel.name) ->
-
-	//delete port and links in modal model
-	modalmodel.port.remove(modalmodel.port.select(e|e.name.matches(portName)).first()) ->
-	modalmodel.relation.remove(modalmodel.relation.select(e|e.name.matches(portName+"Relation")).first()) ->
-	modalmodel.link.remove(modalmodel.link.select(e|e.relation.matches(portName+"Relation")).first()) ->
-	modalmodel.link.remove(modalmodel.link.select(e|e.relation.matches(portName+"Relation")).first()) ->
+ 	let entity = entityList.last() :
  	
- 	//delete port in controller
- 	controller.port.remove(controller.port.select(e|e.name.matches(portName)).first()) ->
-
-	//go thru the rest of the list, if any
- 	(entityList.size > 1) ?
+ 	dump("DELETE "+portName +" IN " + entity.name) ->
+ 	
+	entity.port.remove(entity.port.select(e|e.name.matches(portName)).first()) ->
+	entity.relation.remove(entity.relation.select(e|e.name.matches(portName+"Relation")).first()) ->
+	entity.link.remove(entity.link.select(e|e.relation.matches(portName+"Relation")).first()) ->
+	entity.link.remove(entity.link.select(e|e.relation.matches(portName+"Relation")).first()) ->
+ 	
+ 	(entityList.size > 2) ?
  		deleteModalModelPorts(entityList.withoutLast(), portName) : null	
 ;	
-
+//    	(firstPort.property.select(e|e.name.matches("terminated"+outerStateURIHash)).size > 0) ?
 //-----------------------------------------------------------------------------
 
 
@@ -271,27 +259,18 @@ Void ConnectTopmostInputSignalsHelper(EntityType baseEntity,
 		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_RELATION") : null ->
  
 	//generate ADD-functions and connect local outputs to it
-//	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-//		addIntCombineFunction(baseEntity, firstPort.name + "_COMBINE") : null ->
-//	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-//		addRelation(baseEntity, firstPort.name + "_COMBINERELATION", "local_output") : null ->
-//	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-//		addLink(baseEntity, firstPort.name + "_COMBINE.plus", firstPort.name + "_COMBINERELATION") : null ->
-//	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-//		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_COMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addCombineFunction(baseEntity, firstPort.name + "_COMBINE") : null ->
+		addIntCombineFunction(baseEntity, firstPort.name + "_COMBINE") : null ->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addRelation(baseEntity, firstPort.name + modalModelName + "_COMBINERELATION", "local_output") : null ->
+		addRelation(baseEntity, firstPort.name + "_COMBINERELATION", "local_output") : null ->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addLink(baseEntity, firstPort.name + "_COMBINE.input", firstPort.name + modalModelName + "_COMBINERELATION" ) : null ->
+		addLink(baseEntity, firstPort.name + "_COMBINE.plus", firstPort.name + "_COMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + modalModelName +"_COMBINERELATION") : null ->
+		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_COMBINERELATION") : null ->
 
 	//connect local input vertex with output combine OR function operators
-	//be careful: local signals end with o or i now, oCombine must be linked with iVertex!!!
 	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
-		addLink(baseEntity, firstPort.name.subString(0,firstPort.name.length-1) + "o_COMBINE.output", firstPort.name + "_RELATION") : null ->
+		addLink(baseEntity, firstPort.name + "_COMBINE.output", firstPort.name + "_RELATION") : null ->
 	
 	//generate ADD-functions and connect environment outputs to it
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
@@ -357,11 +336,11 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
  
 	//generate ADD-functions and connect local outputs to it
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addCombineFunction(baseEntity, firstPort.name + "_COMBINE") : null ->
+		addIntCombineFunction(baseEntity, firstPort.name + "_COMBINE") : null ->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
 		addRelation(baseEntity, firstPort.name + "_COMBINERELATION", "local_output") : null ->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addLink(baseEntity, firstPort.name + "_COMBINE.input", firstPort.name + "_COMBINERELATION") : null ->
+		addLink(baseEntity, firstPort.name + "_COMBINE.plus", firstPort.name + "_COMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
 		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_COMBINERELATION") : null ->
 
@@ -386,6 +365,8 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 		addLink(baseEntity, firstPort.name, firstPort.name + "_RELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
 		addLink(baseEntity, firstPort.name + "_COMBINE.output", firstPort.name + "_RELATION") : null ->
+	
+	
 
 	(portList.size > 0) ?
 		ConnectNestedInputSignalsHelper(baseEntity, modalModelName, portList.withoutFirst()) : null
@@ -860,8 +841,6 @@ Void addSignalsToModalModel(EntityType entity,
 							List[synccharts::Signal] signalList,
 							synccharts::Region region) :
 	let port = new PortType:
-	let portLocalIn = new PortType:
-	let portLocalOut = new PortType:
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
 	let p3 = new PropertyType:
@@ -870,16 +849,10 @@ Void addSignalsToModalModel(EntityType entity,
 	let p4c = new PropertyType:
 	let p4d = new PropertyType:
 	let portType = new PropertyType:
-	let portTypeLocalIn = new PropertyType:
-	let portTypeLocalOut = new PropertyType:
 	let signal = signalList.first():
 	//port.setClass("ptolemy.domains.fsm.modal.ModalPort") -> //CHANGED 16.09.2009
 	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	port.setName(signal.name) ->
-	portLocalIn.setClass("ptolemy.domains.modal.modal.ModalPort") ->
-	portLocalIn.setName(signal.name+"i") ->
-	portLocalOut.setClass("ptolemy.domains.modal.modal.ModalPort") ->
-	portLocalOut.setName(signal.name+"o") ->
 	p4a.setName("environment_input") ->
 	p4b.setName("environment_output") ->
 	p4c.setName("local_input") ->
@@ -890,47 +863,29 @@ Void addSignalsToModalModel(EntityType entity,
 	p4d.setClass("ptolemy.kernel.util.StringAttribute") ->
 	portType.setClass("ptolemy.kernel.util.StringAttribute") ->
 	portType.setName((getPortType(signal, region)).toString()) ->
-	portTypeLocalIn.setClass("ptolemy.kernel.util.StringAttribute") ->
-	portTypeLocalIn.setName("1") -> //in
-	portTypeLocalOut.setClass("ptolemy.kernel.util.StringAttribute") ->
-	portTypeLocalOut.setName("2") -> //out
 	//denote environmental and local input/output signals
 	(signal.isInput) ? port.property.add(p4a) : null ->
 	(signal.isOutput) ? port.property.add(p4b) : null ->
+	(portType.name.matches("1") && signal.isLocal()) ? port.property.add(p4c) : null ->
+	(portType.name.matches("2") && signal.isLocal()) ? port.property.add(p4d) : null ->
 	p1.setName("input") ->
 	p2.setName("output") ->
-	//if local signal, create in AND output port
-	portLocalIn.property.add(p4c) ->
- 	portLocalOut.property.add(p4d) ->	
-	portLocalIn.property.add(p1) ->
-	portLocalOut.property.add(p2) ->
+	(portType.name.matches("1") || signal.isInput) ? port.property.add(p1) : null ->
+	(portType.name.matches("2") || signal.isOutput) ? port.property.add(p2) : null ->
 	p3.setName("_type") ->
 	p3.setClass("ptolemy.actor.TypeAttribute") ->
+	//(signal.type.toString().matches("INTEGER")) ? p3.setValue("int") : p3.setValue("boolean") ->
 	p3.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
 	port.property.add(p3) ->
-	port.property.add(portType) -> //input or real type
-	portLocalIn.property.add(p3) ->
-	portLocalIn.property.add(portTypeLocalIn) -> //(local) input
-	portLocalOut.property.add(p3) ->
-	portLocalOut.property.add(portTypeLocalOut) -> //(local) output
+	port.property.add(portType) ->
 	
-	//only add ports that are used ( w/ type != 0 or -1) - do not handle local ports here
-	(!(portType.name.matches("0") || portType.name.matches("-1") || signal.isLocal()))  ?
+	//only add ports that are used ( w/ type != 0 or -1)
+	(!(portType.name.matches("0") || portType.name.matches("-1")))  ?
 			entity.port.add(port) : null ->
-			
-	//also add necessary relation that connect above ports with the controller
-	(!(portType.name.matches("0") || portType.name.matches("-1") || signal.isLocal()))  ?
-			addPortRelationAndLinks(entity, port.name) : null ->
 	
-	//add local ports
-	(signal.isLocal()) ?
-			entity.port.add(portLocalIn) : null ->
-	(signal.isLocal()) ?
-			entity.port.add(portLocalOut) : null ->
-	(signal.isLocal()) ?
-			addPortRelationAndLinks(entity, portLocalIn.name) : null ->
-	(signal.isLocal()) ?
-			addPortRelationAndLinks(entity, portLocalOut.name) : null ->
+	//also add necessary relation that connect above ports with the controller
+	(!(portType.name.matches("0") || portType.name.matches("-1")))  ?
+			addPortRelationAndLinks(entity, port.name) : null ->
 	
 	//if still signals remain, continue
 	(signalList.size > 1) ? addSignalsToModalModel(entity,
@@ -948,29 +903,18 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 								 List[synccharts::Signal] signalList,
 								 synccharts::Region region) :
 	let port = new PortType:
-	let portLocalIn = new PortType:
-	let portLocalOut = new PortType:
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
-	let p1b = new PropertyType:
-	let p2b = new PropertyType:
 	let p3 = new PropertyType:
-	let p1c = new PropertyType:
 	let p4a = new PropertyType:
 	let p4b = new PropertyType:
 	let p4c = new PropertyType:
 	let p4d = new PropertyType:
 	let portType = new PropertyType:
-	let portTypeLocalIn = new PropertyType:
-	let portTypeLocalOut = new PropertyType:
 	let signal = signalList.first():
 	//port.setClass("ptolemy.domains.fsm.modal.RefinementPort") -> //CHANGED 16.09.2009
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	port.setName(signal.name) ->
-	portLocalIn.setClass("ptolemy.domains.modal.modal.ModalPort") ->
-	portLocalIn.setName(signal.name+"i") ->
-	portLocalOut.setClass("ptolemy.domains.modal.modal.ModalPort") ->
-	portLocalOut.setName(signal.name+"o") ->
 //	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 //	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
 	p4a.setName("environment_input") ->
@@ -982,58 +926,31 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	p4c.setClass("ptolemy.kernel.util.StringAttribute") ->
 	p4d.setClass("ptolemy.kernel.util.StringAttribute") ->
 	portType.setClass("ptolemy.kernel.util.StringAttribute") ->
-	portTypeLocalIn.setClass("ptolemy.kernel.util.StringAttribute") ->
-	portTypeLocalIn.setName("1") -> //in
-	portTypeLocalOut.setClass("ptolemy.kernel.util.StringAttribute") ->
-	portTypeLocalOut.setName("2") -> //out
 	p1.setName("input") ->
 	p2.setName("output") ->
-	p1b.setName("input") ->
-	p2b.setName("output") ->
-	p1c.setName("input") ->
 	portType.setName((getPortType(signal, region)).toString()) ->
 	//denote environmental and local input/output signals
 	(signal.isInput) ? port.property.add(p4a) : null ->
 	(signal.isOutput) ? port.property.add(p4b) : null ->
-	(signal.isInput) ? port.property.add(p1) : null ->
-	(signal.isOutput) ? port.property.add(p2) : null ->
-
-	//if local signal, create in AND output port
-	portLocalIn.property.add(p4c) ->
- 	portLocalOut.property.add(p4d) ->	
-	portLocalIn.property.add(p1b) -> //in only
-	portLocalOut.property.add(p1c) -> //out & in
-	portLocalOut.property.add(p2b) ->
-
+	(portType.name.matches("1") && signal.isLocal()) ? port.property.add(p4c) : null ->
+	(portType.name.matches("2") && signal.isLocal()) ? port.property.add(p4d) : null ->
+	(portType.name.matches("1") || signal.isInput) ? port.property.add(p1) : null ->
+	(portType.name.matches("2") || signal.isOutput) ? port.property.add(p2) : null ->
 	p3.setName("_type") ->
 	p3.setClass("ptolemy.actor.TypeAttribute") ->
+	//(signal.type.toString().matches("INTEGER")) ? p3.setValue("int") : p3.setValue("boolean") ->
 	p3.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
 	port.property.add(p3) ->
 	port.property.add(portType) ->
-	portLocalIn.property.add(p3) ->
-	portLocalIn.property.add(portTypeLocalIn) -> //(local) input
-	portLocalOut.property.add(p3) ->
-	portLocalOut.property.add(portTypeLocalOut) -> //(local) output
 	
 	//only add ports that are used ( w/ type != 0 or -1)
-	(!(portType.name.matches("0") || portType.name.matches("-1") || signal.isLocal()))  ?
+	(!(portType.name.matches("0") || portType.name.matches("-1")))  ?
 			entity.port.add(port) : null ->
 
 	//only link ports that are used ( w/ type != 0 or -1)
-	(!(portType.name.matches("0") || portType.name.matches("-1") || signal.isLocal()))  ?
+	(!(portType.name.matches("0") || portType.name.matches("-1")))  ?
 			linkSignalRelationToState(entity, parent, signal.name) : null ->
 	
-	//add local ports
-	(signal.isLocal()) ?
-			entity.port.add(portLocalIn) : null ->
-	(signal.isLocal()) ?
-			entity.port.add(portLocalOut) : null ->
-	(signal.isLocal()) ?
-			linkSignalRelationToState(entity, parent, signal.name+"i") : null ->
-	(signal.isLocal()) ?
-			linkSignalRelationToState(entity, parent, signal.name+"o") : null ->
-			
-
 	//if still signals remain, continue
 	(signalList.size > 1) ? addSignalsToModalController(entity, parent,
 														signalList.withoutFirst(),

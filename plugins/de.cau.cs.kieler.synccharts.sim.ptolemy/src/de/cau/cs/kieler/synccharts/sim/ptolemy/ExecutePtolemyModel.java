@@ -253,9 +253,11 @@ public class ExecutePtolemyModel {
 		ModelOutput modelOutput;
 		
 		public PresentTokenListener(ModelOutput modelOutput) {
+			System.out.println("+++++++++++++++PresentTokenListener");
 			this.modelOutput = modelOutput;
 		}
 		public void portEvent(IOPortEvent event) {
+			System.out.println("+++++++++++++++PORT EVENT");
 	    	this.modelOutput.present = true;
 		}
 		

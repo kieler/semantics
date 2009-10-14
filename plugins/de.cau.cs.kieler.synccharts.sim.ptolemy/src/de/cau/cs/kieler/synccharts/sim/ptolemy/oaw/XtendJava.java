@@ -252,6 +252,11 @@ public class XtendJava {
 		}
 		return trigger;
 	}
+	
+	public static boolean isLocal(Signal signal) {
+		return (!signal.isIsInput()  
+				 &&(!signal.isIsOutput()));
+	}
 
 	
 	public final static String buildEffect(EList<Effect> myEffectList, String terminatedURIHash) {
@@ -261,6 +266,10 @@ public class XtendJava {
 				Emission emission = (Emission)myEffectList.get(c);
 				if (myEmission != "") myEmission += "; ";
 				myEmission += emission.getSignal().getName();
+				if (isLocal(emission.getSignal())) {
+					//local signal -> set output signal -> signalo
+					myEmission += "o";
+				}
 				if (emission.getNewValue() == null) {
 					myEmission += "=1"; //pure signals
 				}
@@ -298,7 +307,12 @@ public class XtendJava {
 		}
 		else if (expression instanceof SignalReference) {
 			SignalReference signalReference = (SignalReference)expression;
-			expressionString += signalReference.getSignal().getName() + "_isPresent";
+			String signalName = signalReference.getSignal().getName();
+			if (isLocal(signalReference.getSignal())) {
+				//local signal -> set input signal -> signali
+				signalName += "i";
+			}
+			expressionString += signalName + "_isPresent";
 		}
 		return expressionString;
 	}

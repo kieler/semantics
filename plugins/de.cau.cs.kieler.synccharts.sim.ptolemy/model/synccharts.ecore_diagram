@@ -195,10 +195,6 @@
         <element xmi:type="ecore:EEnumLiteral" href="synccharts.ecore#//OperatorType/MOD"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_RJbCHZ9-Ed6ZLJNM7LwX5A"/>
       </children>
-      <children xmi:type="notation:Node" xmi:id="_h8MUQJ-BEd6ZLJNM7LwX5A" type="3009">
-        <element xmi:type="ecore:EEnumLiteral" href="synccharts.ecore#//OperatorType/@eLiterals.15"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_h8MUQZ-BEd6ZLJNM7LwX5A"/>
-      </children>
       <styles xmi:type="notation:SortingStyle" xmi:id="_QnTMZJ9-Ed6ZLJNM7LwX5A"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_QnTMZZ9-Ed6ZLJNM7LwX5A"/>
     </children>
@@ -228,11 +224,11 @@
   </children>
   <children xmi:type="notation:Shape" xmi:id="_QnTMdZ9-Ed6ZLJNM7LwX5A" type="2001">
     <children xmi:type="notation:DecorationNode" xmi:id="_QnTMd59-Ed6ZLJNM7LwX5A" type="5001"/>
-    <children xmi:type="notation:BasicCompartment" xmi:id="_QnTMeJ9-Ed6ZLJNM7LwX5A" type="7001" collapsed="true">
+    <children xmi:type="notation:BasicCompartment" xmi:id="_QnTMeJ9-Ed6ZLJNM7LwX5A" type="7001">
       <styles xmi:type="notation:SortingStyle" xmi:id="_QnTMeZ9-Ed6ZLJNM7LwX5A"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_QnTMep9-Ed6ZLJNM7LwX5A"/>
     </children>
-    <children xmi:type="notation:BasicCompartment" xmi:id="_QnTMe59-Ed6ZLJNM7LwX5A" type="7002" collapsed="true">
+    <children xmi:type="notation:BasicCompartment" xmi:id="_QnTMe59-Ed6ZLJNM7LwX5A" type="7002">
       <styles xmi:type="notation:SortingStyle" xmi:id="_QnTMfJ9-Ed6ZLJNM7LwX5A"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_QnTMfZ9-Ed6ZLJNM7LwX5A"/>
     </children>
