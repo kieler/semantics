@@ -21,45 +21,38 @@ import de.cau.cs.kieler.esi.*;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
-import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 
 public class DataComponent extends JSONStringDataComponent {
 
-	//private KiemPropertyTypeFile traceFile;
-
-	//private String traceFileString = "/home/ctr/runtime-EclipseApplication/test/abro.esi";
 	private tracelist model = null;
 	private Iterator<trace> iTrace;
 	private Iterator<tick> iTick;
 
 	public String step(String JSONobject) {
 		StringBuffer res = new StringBuffer("{");
-		if (!iTick.hasNext() && iTrace.hasNext()) {
-			iTick = iTrace.next().getTicks().iterator();
-		}
-		if (iTick.hasNext()) {
-			tick t = iTick.next();
-			for (signal s : t.getInput()) {
-				if (res.length() > 1){
-					res.append(",");
+		if (model != null) {
+			if (!iTick.hasNext() && iTrace.hasNext()) {
+				iTick = iTrace.next().getTicks().iterator();
+			}
+			if (iTick.hasNext()) {
+				tick t = iTick.next();
+				for (signal s : t.getInput()) {
+					if (res.length() > 1) {
+						res.append(",");
+					}
+					if (!s.isValued())
+						res.append("\"" + s.getName() + "\":{\""
+								+ JSONSignalValues.presentKey + "\":true}");
+					else
+						res.append("\"" + s.getName() + "\":{\""
+								+ JSONSignalValues.presentKey
+								+ "\":true,\"value\":" + s.getVal() + "}");
 				}
-				if (!s.isValued())
-					res.append("\"" + s.getName() + "\":{\""
-							+ JSONSignalValues.presentKey + "\":true}");
-				else
-					res.append("\"" + s.getName() + "\":{\""
-							+ JSONSignalValues.presentKey
-							+ "\":true,\"value\":" + s.getVal() + "}");
-				// returnObj.accumulate(s.getName(),
-				// s.isValued()?s.getVal():"");
-				// System.out.println(s.getName());
 			}
 		}
 		res.append("}");
-		System.out.println(res.toString());
 		return res.toString();
 	}
 
@@ -75,7 +68,7 @@ public class DataComponent extends JSONStringDataComponent {
 		IResourceFactory resourceFactory = injector
 				.getInstance(IResourceFactory.class);
 		// setup.doSetup();
-		URI uri = URI.createURI("TODO");// Activator.PLUGIN_ID);
+		URI uri = URI.createURI("de.cau.cs.kieler.sim.esi");// Activator.PLUGIN_ID);
 		XtextResource resource = (XtextResource) resourceFactory
 				.createResource(uri);
 		rs.getResources().add(resource);
@@ -84,9 +77,11 @@ public class DataComponent extends JSONStringDataComponent {
 		InputStream in;
 		// if(model==null){
 		try {
-			 IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			    IEditorReference[] editors = page.getEditorReferences();
-			 //in =   new StringInputStream(editors[(int)(getProperties()[0].getValue())].getEditorInput().toString());
+			// IWorkbenchPage page =
+			// PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			// IEditorReference[] editors = page.getEditorReferences();
+			// in = new
+			// StringInputStream(editors[(int)(getProperties()[0].getValue())].getEditorInput().toString());
 			in = new FileInputStream(getProperties()[0].getValue());
 			resource.load(in, null);
 			EcoreUtil.resolveAll(resource);
@@ -146,7 +141,7 @@ public class DataComponent extends JSONStringDataComponent {
 		properties[0] = new KiemProperty("Input File",
 				new KiemPropertyTypeFile(),
 				"/home/ctr/runtime-EclipseApplication/test/abro.esi");
-		properties[0] = new KiemProperty("Input Editor",
+		properties[1] = new KiemProperty("Input Editor",
 				new KiemPropertyTypeEditor(),
 				"/home/ctr/runtime-EclipseApplication/test/abro.esi");
 		return properties;
