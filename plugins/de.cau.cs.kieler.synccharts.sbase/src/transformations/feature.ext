@@ -53,6 +53,15 @@ t.setSourceState(source) ->
 source.outgoingTransitions.add(t)
 ;
 
+Void addParallelRegion(State parentState):
+let region = new Region:
+let state = new State:
+state.setIsInitial(true) ->
+state.setLabel("S") ->
+region.innerStates.add(state) ->
+parentState.regions.add(region)
+;
+
 /////////////////////////
 //     Templates      ///
 /////////////////////////

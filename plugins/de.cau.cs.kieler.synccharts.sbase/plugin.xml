@@ -47,6 +47,13 @@
              transformation="rerouteTransitionSource"
              transformationId="de.cau.cs.kieler.sbase.rerouteSource">
     	</transformation>
+       <transformation
+             icon="icons/obj16/Region.gif"
+             keyboardShortcut="M1+K R"
+             name="Add Region"
+             transformation="addParallelRegion"
+             transformationId="de.cau.cs.kieler.sbase.addRegion">
+       </transformation>
 			</transformations>
 			<menus>
 				<menuContribution locationURI="menu:de.cau.cs.kieler">
@@ -56,33 +63,57 @@
 						</transformationCommand>
 					</menu>
 					<menu label="Transitions" id="de.cau.cs.kieler.synccharts.sbase.trans">
+        <transformationCommand
+              transformationId="de.cau.cs.kieler.sbase.connect">
+        </transformationCommand>
 						<transformationCommand transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
+      <transformationCommand
+            transformationId="de.cau.cs.kieler.sbase.rerouteTarget">
+      </transformationCommand>
+      <transformationCommand
+            transformationId="de.cau.cs.kieler.sbase.rerouteSource">
+      </transformationCommand>
 					</menu>
 					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addPred"></transformationCommand>
 					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addChoice">
 					</transformationCommand>
 					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addSuc"></transformationCommand>
-					<transformationCommand transformationId="de.cau.cs.kieler.sbase.connect"></transformationCommand>
      <transformationCommand
-           transformationId="de.cau.cs.kieler.sbase.rerouteTarget">
-     </transformationCommand>
-     <transformationCommand
-           transformationId="de.cau.cs.kieler.sbase.rerouteSource">
+           transformationId="de.cau.cs.kieler.sbase.addRegion">
      </transformationCommand>
 				</menuContribution>
 				<menuContribution locationURI="toolbar:de.cau.cs.kieler">
-					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addChoice">
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.sbase.addSuc">
+       </transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addRegion">
 					</transformationCommand>
 					<transformationCommand transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
 				</menuContribution>
     <menuContribution
           locationURI="popup:de.cau.cs.kieler">
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.sbase.addSuc">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.sbase.addPred">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.sbase.addRegion">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.sbase.addChoice">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.sbase.connect">
+       </transformationCommand>
           <transformationCommand transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
-					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addPred"></transformationCommand>
-					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addChoice">
-					</transformationCommand>
-					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addSuc"></transformationCommand>
-					<transformationCommand transformationId="de.cau.cs.kieler.sbase.connect"></transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.sbase.rerouteTarget">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.sbase.rerouteSource">
+          </transformationCommand>
     </menuContribution>
 
 			</menus>
