@@ -221,15 +221,7 @@ public class SyncchartsDiagramEditorUtil {
      * @generated
      */
     private static Region createInitialModel() {
-
-        Region root = SyncchartsFactory.eINSTANCE.createRegion();
-        State state = SyncchartsFactory.eINSTANCE.createState();
-        Region region = SyncchartsFactory.eINSTANCE.createRegion();
-        state.setLabel("SyncChart");
-        state.getRegions().add(region);
-        root.getInnerStates().add(state);
-        return root;
-
+        return SyncchartsFactory.eINSTANCE.createRegion();
     }
 
     /**

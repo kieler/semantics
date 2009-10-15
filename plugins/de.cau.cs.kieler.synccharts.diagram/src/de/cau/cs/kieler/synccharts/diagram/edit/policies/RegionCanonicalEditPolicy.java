@@ -358,7 +358,8 @@ public class RegionCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
                 continue;
             }
             CreateConnectionViewRequest.ConnectionViewDescriptor descriptor = new CreateConnectionViewRequest.ConnectionViewDescriptor(
-                    nextLinkDescriptor.getSemanticAdapter(), null,
+                    nextLinkDescriptor.getSemanticAdapter(), String
+                            .valueOf(nextLinkDescriptor.getVisualID()),
                     ViewUtil.APPEND, false, ((IGraphicalEditPart) getHost())
                             .getDiagramPreferencesHint());
             CreateConnectionViewRequest ccr = new CreateConnectionViewRequest(

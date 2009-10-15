@@ -246,9 +246,12 @@
       <?gmfgen generated="true"?>
       <viewProvider class="de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsViewProvider">
          <Priority name="Lowest"/>
+         
          <context viewClass="org.eclipse.gmf.runtime.notation.Diagram" semanticHints="Synccharts"/>
-         <context viewClass="org.eclipse.gmf.runtime.notation.Node" semanticHints="2001,3001,3002,3003,3004,3005,3006,3008"/>
-         <context viewClass="org.eclipse.gmf.runtime.notation.Edge" semanticHints="4001"/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Node" semanticHints=""/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Edge" semanticHints=""/>
+      
+      
       </viewProvider>
    </extension>
 

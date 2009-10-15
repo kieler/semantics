@@ -892,6 +892,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                 Resource resource = (Resource) it.next();
                 resource.unload();
             }
+            getEditingDomain().dispose();
         }
 
         /**
