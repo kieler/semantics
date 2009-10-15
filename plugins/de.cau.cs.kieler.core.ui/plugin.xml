@@ -55,6 +55,13 @@
             id="de.cau.cs.kieler"
             name="KIELER">
       </category>
+      <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.core.ui.handler.ZoomToFitHandler"
+            description="Zoom so that the content fits the whole canvas"
+            id="de.cau.cs.kieler.core.ui.command.zoom"
+            name="Zoom to fit">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
@@ -180,6 +187,15 @@
             configId="org.eclipse.ui.intro.universalConfig"
             content="help/introContent.xml">
       </configExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="de.cau.cs.kieler.core.ui.command.zoom"
+            contextId="org.eclipse.gmf.runtime.diagram.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+K Z">
+      </key>
    </extension>
  <!--  <extension
          point="org.eclipse.ui.intro.config">
