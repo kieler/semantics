@@ -204,7 +204,7 @@ DoWatchingEnd:
 // --> B.4.7 emit: Signal Emission <--
 	
 Emit: 
-	"emit" signal=[Signal|EsterelID] ("(" expr=DataExpr")")?;
+	"emit" ((signal=[Signal|EsterelID]) | tick=Tick) ("(" expr=DataExpr")")?;
 	
 // --> B.4.8 every-do: Conditional Iteration
 EveryDo:
@@ -335,7 +335,7 @@ Suspend:
 
 // --> B.4.22 sustain: Emit a Signal Indefinitely
 Sustain:
-	"sustain" signal=[Signal|EsterelID] ("(" dataExpr=DataExpr ")")?;
+	"sustain" ((signal=[Signal|EsterelID]) | tick=Tick) ("(" dataExpr=DataExpr ")")?;
 	
 // --> B.4.23 trap: TrapDeclaration and Handling
 Trap:
@@ -438,10 +438,10 @@ DataBlock:
 	"(" dataExpr=DataExpr ")";
 	
 DataCurrent:
-	"?" signal=[Signal|EsterelID];
+	"?" ((signal=[Signal|EsterelID]) | tick=Tick);
 	
 DataPre:
-	"pre" "(" "?" signal=[Signal|EsterelID] ")";
+	"pre" "(" "?" ((signal=[Signal|EsterelID]) | tick=Tick) ")";
 
 DataTrap:
 	"??" trap=[TrapDecl|EsterelID];
@@ -471,7 +471,7 @@ DelayExpr:
 	|	(expr=DataExpr event=DelayEvent);
 	
 DelayEvent:
-	signal=[Signal|EsterelID]
+	((signal=[Signal|EsterelID]) | tick=Tick)
 	|	"pre" "(" SigExpr ")"
 	|	"[" SigExpr"]";
 	
@@ -492,7 +492,7 @@ Signal:
 	name=EsterelID (channel=ChannelDescription)?;
 
 Tick:
-	"tick" {Tick};
+	"tick";
 
 	
 Sensor:
