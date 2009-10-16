@@ -461,9 +461,12 @@ public class StateLayout extends ConstrainedToolbarLayout {
                         StateLayout.COND_HEIGHT);
             }
             if (isSimple(state)) {
-                if (children.get(0) instanceof WrappingLabel) {
+                Object child = children.get(0);
+                // set the min size of a state with a label
+                // increase the size abit such that the text looks proper even for a final state
+                if (child != null && child instanceof WrappingLabel && ((WrappingLabel)child).getText()!=null && !((WrappingLabel)child).getText().equals("")) {
                     return new Dimension(((WrappingLabel) children.get(0))
-                            .getPreferredSize().width, StateLayout.MIN_HEIGHT);
+                            .getPreferredSize().width, StateLayout.MIN_HEIGHT+2);
                 } else {
                     return new Dimension(StateLayout.MIN_WIDTH,
                             StateLayout.MIN_WIDTH);
