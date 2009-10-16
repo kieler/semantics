@@ -10,7 +10,6 @@ import org.eclipse.xtext.parser.ParseException;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 import de.cau.cs.kieler.services.EsiGrammarAccess;
 
@@ -22,16 +21,13 @@ public class EsiParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 	@Inject
 	private EsiGrammarAccess grammarAccess;
 	
-	@Inject
-	private Provider<de.cau.cs.kieler.parser.antlr.internal.InternalEsiLexer> lexerProvider;
-	
 	@Override
 	protected IParseResult parse(String ruleName, ANTLRInputStream in) {
-		de.cau.cs.kieler.parser.antlr.internal.InternalEsiLexer lexer = lexerProvider.get();
-		lexer.setCharStream(in);
+		de.cau.cs.kieler.parser.antlr.internal.InternalEsiLexer lexer = new de.cau.cs.kieler.parser.antlr.internal.InternalEsiLexer(in);
 		XtextTokenStream stream = new XtextTokenStream(lexer, antlrTokenDefProvider);
 		stream.setInitialHiddenTokens("RULE_WS", "RULE_COMMENT");
-		de.cau.cs.kieler.parser.antlr.internal.InternalEsiParser parser = createParser(stream);
+		de.cau.cs.kieler.parser.antlr.internal.InternalEsiParser parser = new de.cau.cs.kieler.parser.antlr.internal.InternalEsiParser(
+				stream, getElementFactory(), grammarAccess);
 		parser.setTokenTypeMap(antlrTokenDefProvider.getTokenDefMap());
 		try {
 			if(ruleName != null)
@@ -40,10 +36,6 @@ public class EsiParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 		} catch (Exception re) {
 			throw new ParseException(re.getMessage(),re);
 		}
-	}
-	
-	protected de.cau.cs.kieler.parser.antlr.internal.InternalEsiParser createParser(XtextTokenStream stream) {
-		return new de.cau.cs.kieler.parser.antlr.internal.InternalEsiParser(stream, getElementFactory(), getGrammarAccess());
 	}
 	
 	@Override 
@@ -57,13 +49,5 @@ public class EsiParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 	
 	public void setGrammarAccess(EsiGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
-	}
-	
-	public Provider<de.cau.cs.kieler.parser.antlr.internal.InternalEsiLexer> getLexerProvider() {
-		return this.lexerProvider;
-	}
-	
-	public void setGrammarAccess(Provider<de.cau.cs.kieler.parser.antlr.internal.InternalEsiLexer> lexerProvider) {
-		this.lexerProvider = lexerProvider;
 	}
 }

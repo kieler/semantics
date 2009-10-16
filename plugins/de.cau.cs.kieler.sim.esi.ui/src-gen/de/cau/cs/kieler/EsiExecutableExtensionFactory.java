@@ -5,6 +5,7 @@
  
 package de.cau.cs.kieler;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
@@ -19,6 +20,7 @@ import com.google.inject.Injector;
  */
 public class EsiExecutableExtensionFactory implements IExecutableExtensionFactory, IExecutableExtension {
 
+	private Logger log = Logger.getLogger(EsiExecutableExtensionFactory.class);
 	private String clazzName;
 	private IConfigurationElement config;
 
@@ -47,6 +49,7 @@ public class EsiExecutableExtensionFactory implements IExecutableExtensionFactor
 			return result;
 		}
 		catch (Exception e) {
+			log.error(e);
 			throw new CoreException(new Status(Status.ERROR, bundle.getSymbolicName(), e.getMessage(),e));
 		}
 	}
