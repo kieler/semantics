@@ -185,6 +185,8 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
             parent = action.getParentStateExitAction();
         if (parent == null)
             parent = action.getParentStateInnerAction();
+        if (parent == null)
+            parent = action.getParentStateSuspension();
         if (parent == null && action instanceof Transition) {
             // the source state is not the parent, but its parent region is
             parent = ((Transition) action).getSourceState();
