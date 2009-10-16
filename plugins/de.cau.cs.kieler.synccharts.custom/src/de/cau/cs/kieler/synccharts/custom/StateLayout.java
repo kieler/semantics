@@ -252,7 +252,8 @@ public class StateLayout extends ConstrainedToolbarLayout {
                 Polyline regionSeparator = (Polyline) child;
                 PointList points = new PointList();
                 Point start = new Point(1, regionSeparatorHeight);
-                Point end = new Point(Math.max(0, totalWidth-1), regionSeparatorHeight);
+                Point end = new Point(Math.max(0, totalWidth - 1),
+                        regionSeparatorHeight);
                 points.addPoint(start);
                 points.addPoint(end);
                 regionSeparator.setPoints(points);
@@ -428,7 +429,7 @@ public class StateLayout extends ConstrainedToolbarLayout {
                 && (state.getInnerActions() == null || state.getInnerActions()
                         .size() == 0)
                 && (state.getExitActions() == null || state.getExitActions()
-                        .size() == 0)) {
+                        .size() == 0) && (state.getSuspensionTrigger() == null)) {
             return true;
         }
         return false;
@@ -463,10 +464,14 @@ public class StateLayout extends ConstrainedToolbarLayout {
             if (isSimple(state)) {
                 Object child = children.get(0);
                 // set the min size of a state with a label
-                // increase the size abit such that the text looks proper even for a final state
-                if (child != null && child instanceof WrappingLabel && ((WrappingLabel)child).getText()!=null && !((WrappingLabel)child).getText().equals("")) {
+                // increase the size abit such that the text looks proper even
+                // for a final state
+                if (child != null && child instanceof WrappingLabel
+                        && ((WrappingLabel) child).getText() != null
+                        && !((WrappingLabel) child).getText().equals("")) {
                     return new Dimension(((WrappingLabel) children.get(0))
-                            .getPreferredSize().width, StateLayout.MIN_HEIGHT+2);
+                            .getPreferredSize().width,
+                            StateLayout.MIN_HEIGHT + 2);
                 } else {
                     return new Dimension(StateLayout.MIN_WIDTH,
                             StateLayout.MIN_WIDTH);
