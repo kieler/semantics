@@ -4,6 +4,8 @@
 	<property name="scriptdir" location="."/>
 	<property file="${scriptdir}/build.properties" />
 
+	<property name="baseLocation"          location="${system.baseLocation}" />
+	<property name="baseDeltaPackLocation" location="${system.baseDeltaPackLocation}" />
 	<property name="eclipseLocation"       location="${system.eclipseLocation}" />
 	<property name="eclipseConfig"         location="${scriptdir}/.eclipse" />
 	<property name="eclipseWorkspace"      location="${scriptdir}/.eclipseWorkspace" />
@@ -70,7 +72,7 @@
 				<!-- the product which should be build -->
 			<arg value="-Dbasename=${basename}" />
 				<!-- the name of RCA's zip file, ziped top folder & launcher determined of product's basename -->
-			<arg value="-DpluginPath=${pluginPath}" />
+			<arg value="-DpluginPath=${baseDeltaPackLocation}:${pluginPath}" />
 				<!-- a list of source folders seperated by ':'
 						each folder should contain the subfolders 'features' and 'plugins'
 						can be relative (to ${basedir})
