@@ -456,10 +456,8 @@ create EntityType this createModalControllerEntity(synccharts::Region region,
   	//this.setClass1("ptolemy.domains.fsm.modal.ModalController") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.modal.ModalController") ->
   	//first add signals if any
-  	//XXX//
   	(signalList.size > 0) ?
-		addSignalsToModalController(this, null, signalList, region) : null ->
-//		addSignalsToModalController(this, null, signalList, region, null) : null ->
+		addSignalsToModalController(this, null, signalList, region, null) : null ->
   	//add termination signal
 	this.addTerminationSignalToModalController(null, region.parentState) ->
   	//add termination signals 
@@ -497,13 +495,12 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
   	this.setClass1("ptolemy.domains.modal.modal.Refinement") ->
    	this.createSRDirector() ->
    	//getMovedSignalNames() contains names of moved signals
-	signalList.addAll(state.signals) ->
+	//signalList.addAll(state.signals) ->
 	//XXX//
-	//moveToSignalList(signalList, state.signals) ->
+	moveToSignalList(signalList, state.signals) ->
    	//add signals to refinement (so that outer signals are visible inside), if any
    	(signalList.size > 0) ?
-	   	this.addSignalsToModalController(modalModel, signalList, state.parentRegion) : null ->
-//	   	this.addSignalsToModalController(modalModel, signalList, state.parentRegion, getMovedSignalNames()) : null ->
+	   	this.addSignalsToModalController(modalModel, signalList, state.parentRegion, getMovedSignalNames()) : null ->
    	//add termination signal
    	this.addTerminationSignalToModalController(modalModel, state) ->
    	//add KielerNormalTermination
@@ -533,14 +530,14 @@ create EntityType this createSimpleStateEntity(synccharts::State state):
 
 //XXX//
 //move signalList to the other newList 
-//Void moveToSignalList(List[synccharts::Signal] newList, List[synccharts::Signal] signalList) :
-//	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-//			moveToSignalList(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList)
-//;
-//List[String] getMovedSignalNames():
-//	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-//			 getMovedSignalNames()
-//;
+Void moveToSignalList(List[synccharts::Signal] newList, List[synccharts::Signal] signalList) :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
+			moveToSignalList(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList)
+;
+List[String] getMovedSignalNames():
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
+			 getMovedSignalNames()
+;
 
 
 //do some java console output for debugging purpose 
@@ -1002,8 +999,8 @@ Boolean isLocal(synccharts::Signal signal) :
 //and that do not need to be added
 Void addSignalsToModalController(EntityType entity, EntityType parent,
 								 List[synccharts::Signal] signalList,
-								 synccharts::Region region) :
-//								 List[String] stateSignalNames) :
+								 synccharts::Region region,
+								 List[String] stateSignalNames) :
 	let port = new PortType:
 	let portLocalIn = new PortType:
 	let portLocalOut = new PortType:
@@ -1022,7 +1019,7 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	let portTypeLocalOut = new PropertyType:
 	let signal = signalList.first():
 	//XXX//
-	let isStateSignal = false: //(stateSignalNames != null) && (stateSignalNames.select(e|e.matches(signal.name)).size > 0 ):
+	let isStateSignal = (stateSignalNames != null) && (stateSignalNames.select(e|e.matches(signal.name)).size > 0 ):
 	//port.setClass("ptolemy.domains.fsm.modal.RefinementPort") -> //CHANGED 16.09.2009
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	port.setName(signal.name) ->
@@ -1108,8 +1105,8 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	//if still signals remain, continue
 	(signalList.size > 1) ? addSignalsToModalController(entity, parent,
 														signalList.withoutFirst(),
-														region ) : null
-//														stateSignalNames) : null	
+														region,
+														stateSignalNames) : null	
 ;
 
 linkSignalRelationToState(EntityType modalController, EntityType parent, String signalName) :
