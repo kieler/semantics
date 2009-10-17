@@ -18,6 +18,7 @@ import java.util.Hashtable;
 
 import de.cau.cs.kieler.synccharts.*;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.BasicEList;
 
 /**
  * The class XtendJava implements some Java escape code used in the model2model
@@ -196,7 +197,23 @@ public class XtendJava {
 		return false;
 	}
 
+
 	
+	public static EList<String> movedSignalNames;
+	
+	public final static EList<String>  getMovedSignalNames() {
+		return movedSignalNames;
+	}
+	
+	public final static void moveToSignalList(EList<Signal> newList, EList<Signal> signalList) {
+		movedSignalNames = new BasicEList<String>();
+		if (signalList == null) return;
+		for (int c = 0; c < signalList.size(); c++) {
+			movedSignalNames.add(signalList.get(c).getName());
+			newList. add(signalList.get(c));
+		}
+	}
+
 	
 	public final static boolean isInputPort(Signal signal, Region region) {
 		EList<State> innerStates  = region.getInnerStates();
