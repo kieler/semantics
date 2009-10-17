@@ -186,6 +186,8 @@ Void addConstant(EntityType baseEntity, String value):
    			baseEntity.entity.add(e) : null
 ;
 
+//-----------------------------------------------------------------------------
+
 
 //create basic / outer most enclosing entity	
 create EntityType this createBaseEntity(synccharts::Region mainRegion):
@@ -222,7 +224,7 @@ Void deleteModalModelPorts(List[EntityType] entityList, String portName) :
  									(e|e.name.matches("_Controller")).first():
 	
 	//debug output
- 	//dump("DELETE "+portName +" IN " + modalmodel.name) ->
+ 	dump("DELETE "+portName +" IN " + modalmodel.name) ->
 
 	//delete port and links in modal model
 	modalmodel.port.remove(modalmodel.port.select(e|e.name.matches(portName)).first()) ->
@@ -419,12 +421,15 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 
 //-----------------------------------------------------------------------------
 
-
 //create ModalModel == Region-Component 
 create EntityType this createModalModelEntity(synccharts::Region region, 
 											  int number, 
 											  List[synccharts::Signal] signalList):
+	let p0 = new PropertyType:
 	let p1 = new PropertyType:
+		p0.setName("directorClass") ->
+		p0.setClass("ptolemy.data.expr.StringParameter") ->
+		p0.setValue("ptolemy.domains.modal.kernel.KielerFSMDirector") ->
 		p1.setName("_tableauFactory") ->
 		//p1.setClass("ptolemy.vergil.fsm.modal.ModalTableauFactory") -> //CHANGED 16.09.2009
 		p1.setClass("ptolemy.vergil.modal.modal.ModalTableauFactory") ->
@@ -451,8 +456,10 @@ create EntityType this createModalControllerEntity(synccharts::Region region,
   	//this.setClass1("ptolemy.domains.fsm.modal.ModalController") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.modal.ModalController") ->
   	//first add signals if any
+  	//XXX//
   	(signalList.size > 0) ?
 		addSignalsToModalController(this, null, signalList, region) : null ->
+//		addSignalsToModalController(this, null, signalList, region, null) : null ->
   	//add termination signal
 	this.addTerminationSignalToModalController(null, region.parentState) ->
   	//add termination signals 
@@ -480,6 +487,8 @@ create EntityType this createMacroStateEntity(synccharts::State state):
 	this.property.add(elementURIFragmentProperty) ->
   	SetStateInitialFinalFlag(state, this)
 ;
+
+
 //create ModalRefinement == State-Definition (of a macro state /w regions)
 create EntityType this createMacroStateRefinementEntity(synccharts::State state, EntityType modalModel,
 														List[synccharts::Signal] signalList):
@@ -487,15 +496,18 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
   	//this.setClass1("ptolemy.domains.fsm.modal.Refinement") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.modal.Refinement") ->
    	this.createSRDirector() ->
-   	signalList.addAll(state.signals) ->
+   	//getMovedSignalNames() contains names of moved signals
+	signalList.addAll(state.signals) ->
+	//XXX//
+	//moveToSignalList(signalList, state.signals) ->
    	//add signals to refinement (so that outer signals are visible inside), if any
    	(signalList.size > 0) ?
 	   	this.addSignalsToModalController(modalModel, signalList, state.parentRegion) : null ->
+//	   	this.addSignalsToModalController(modalModel, signalList, state.parentRegion, getMovedSignalNames()) : null ->
    	//add termination signal
    	this.addTerminationSignalToModalController(modalModel, state) ->
    	//add KielerNormalTermination
    	this.addKielerNormalTermination() ->
-   	
    	IterateRegions(state.regions, this, signalList) ->
     //connect nested input signals
     ConnectNestedInputSignals(this, this.entity)
@@ -518,6 +530,18 @@ create EntityType this createSimpleStateEntity(synccharts::State state):
 //-----------------------------------------------------------------------------
 //--                   H E L P E R    F U N C T I O N S                      --
 //-----------------------------------------------------------------------------
+
+//XXX//
+//move signalList to the other newList 
+//Void moveToSignalList(List[synccharts::Signal] newList, List[synccharts::Signal] signalList) :
+//	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
+//			moveToSignalList(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList)
+//;
+//List[String] getMovedSignalNames():
+//	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
+//			 getMovedSignalNames()
+//;
+
 
 //do some java console output for debugging purpose 
 Void dump(String s) :
@@ -644,8 +668,9 @@ Void IterateRegions(List[synccharts::Region] regionList,
 //create a "SR Director" (for macro state definition)
 Void createSRDirector(EntityType entity):
     let p0 = new PropertyType:
-    p0.setName("SR Director") ->
-	p0.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
+    p0.setName("Kieler SyncChart Director") ->
+//	p0.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
+	p0.setClass("ptolemy.actor.kiel.SyncChartDirector") ->
 	entity.property.add(p0) 
 ;
 
@@ -668,8 +693,9 @@ Void createMainSRDirector(EntityType entity):
 		p4.setName("period") ->
 		p4.setClass("ptolemy.data.expr.Parameter") ->
 		p4.setValue("0") ->
-    p0.setName("SR Director") ->
-	p0.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
+    p0.setName("Kieler SyncChart Director") ->
+//	p0.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
+	p0.setClass("ptolemy.actor.kiel.SyncChartDirector") ->
 	p0.property.add(p1) ->
 	p0.property.add(p2) ->
 	p0.property.add(p3) ->
@@ -948,6 +974,7 @@ Void addSignalsToModalModel(EntityType entity,
 	(!(portType.name.matches("0") || portType.name.matches("-1") || signal.isLocal()))  ?
 			addPortRelationAndLinks(entity, port.name) : null ->
 	
+	
 	//add local ports
 	(signal.isLocal()) ?
 			entity.port.add(portLocalIn) : null ->
@@ -970,9 +997,13 @@ Boolean isLocal(synccharts::Signal signal) :
  (!signal.isInput && !signal.isOutput)
 ;
 
+
+//stateSignalList contains all local signals that are defined in this state
+//and that do not need to be added
 Void addSignalsToModalController(EntityType entity, EntityType parent,
 								 List[synccharts::Signal] signalList,
 								 synccharts::Region region) :
+//								 List[String] stateSignalNames) :
 	let port = new PortType:
 	let portLocalIn = new PortType:
 	let portLocalOut = new PortType:
@@ -990,6 +1021,8 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	let portTypeLocalIn = new PropertyType:
 	let portTypeLocalOut = new PropertyType:
 	let signal = signalList.first():
+	//XXX//
+	let isStateSignal = false: //(stateSignalNames != null) && (stateSignalNames.select(e|e.matches(signal.name)).size > 0 ):
 	//port.setClass("ptolemy.domains.fsm.modal.RefinementPort") -> //CHANGED 16.09.2009
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	port.setName(signal.name) ->
@@ -1016,7 +1049,7 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	p2.setName("output") ->
 	p1b.setName("input") ->
 	p2b.setName("output") ->
-	p1c.setName("input") ->
+//	p1c.setName("input") ->
 	portType.setName((getPortType(signal, region)).toString()) ->
 	//denote environmental and local input/output signals
 	(signal.isInput) ? port.property.add(p4a) : null ->
@@ -1028,7 +1061,7 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	portLocalIn.property.add(p4c) ->
  	portLocalOut.property.add(p4d) ->	
 	portLocalIn.property.add(p1b) -> //in only
-	portLocalOut.property.add(p1c) -> //out & in
+//	portLocalOut.property.add(p1c) -> //out & in
 	portLocalOut.property.add(p2b) ->
 
 	p3.setName("_type") ->
@@ -1049,21 +1082,34 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	(!(portType.name.matches("0") || portType.name.matches("-1") || signal.isLocal()))  ?
 			linkSignalRelationToState(entity, parent, signal.name) : null ->
 	
-	//add local ports
-	(signal.isLocal()) ?
+	
+//	dump("S------------") ->
+//	(isStateSignal) ?
+//		dump(signal.name + " in " + parent.name ) : null ->
+//	(!isStateSignal) ?
+//		dump(signal.name + " NOT in " + parent.name )  : null ->
+//	dump("E------------") ->
+	
+	//add local ports (ONLY iff they are not defined in this state)
+//	(signal.isLocal() && (stateSignalList != null) && !stateSignalList.contains(signal)) ?
+	
+	
+	//add local ports 
+	(signal.isLocal() && !isStateSignal) ?
 			entity.port.add(portLocalIn) : null ->
-	(signal.isLocal()) ?
+	(signal.isLocal() && !isStateSignal) ?
 			entity.port.add(portLocalOut) : null ->
-	(signal.isLocal()) ?
+	(signal.isLocal() && !isStateSignal) ?
 			linkSignalRelationToState(entity, parent, signal.name+"i") : null ->
-	(signal.isLocal()) ?
+	(signal.isLocal() && !isStateSignal) ?
 			linkSignalRelationToState(entity, parent, signal.name+"o") : null ->
 			
 
 	//if still signals remain, continue
 	(signalList.size > 1) ? addSignalsToModalController(entity, parent,
 														signalList.withoutFirst(),
-														region) : null	
+														region ) : null
+//														stateSignalNames) : null	
 ;
 
 linkSignalRelationToState(EntityType modalController, EntityType parent, String signalName) :
