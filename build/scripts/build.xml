@@ -97,20 +97,16 @@
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
 		<property name="configs"       value="${feature.configs}" />
 		<!-- property name="customTargets"   location="${eclipse.pdebuild.templates}/headless-build/customTargets.xml"/ -->
+		<!-- customTargets is not needed as we directly call the features buildfile -> no prebuild, postbuild, ... will be considered -->
 		<property name="genericTargets"  location="${eclipse.pdebuild.scripts}/genericTargets.xml"/>
 		<!-- property name="allElementsFile" location="${eclipse.pdebuild.templates}/headless-build/allElements.xml"/ -->
+		<!-- allElements is need for product build only -->
 
 		<mkdir dir="${basedir}/buildTempFolder" />
 		<mkdir dir="${basedir}/features" />
 		<mkdir dir="${basedir}/plugins" />
 		<mkdir dir="${basedir}/update-site/features" />
 		<mkdir dir="${basedir}/update-site/plugins" />
-		
-		<delete includeemptydirs="true">
-			<fileset dir="${basedir}/buildTempFolder/" includes="**/*"/>
-			<fileset dir="${basedir}/update-site/features/" includes="**/*"/>
-			<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
-		</delete>
 		
 		<!-- generate build.xml scripts for feature and plugins -->
 		<ant antfile="${genericTargets}" target="generateScript">
@@ -175,6 +171,13 @@
 		<if>
 			<istrue value="${build.jars}" />
 			<then>
+
+				<delete includeemptydirs="true">
+					<fileset dir="${basedir}/buildTempFolder/" includes="**/*"/>
+					<fileset dir="${basedir}/update-site/features/" includes="**/*"/>
+					<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
+				</delete>
+
 				<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc -->		
 				<ant antfile="build.xml" dir="${basedir}/features/${feature}">
 					<property name="javacDebugInfo" value="true" />
@@ -230,10 +233,33 @@
 		<property name="p2.build.repo" value="file:/${basedir}/buildrepo" />
 		<property name="configs"       value="${product.configs}" />
 		<property name="runPackager"   value="true" />
-		<!-- property name="customTargets"   location="${scriptdir}/customTargets.xml"/ -->
-		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
-		<property name="allElementsFile" location="${scriptdir}/allElements.xml"/>
+		<property name="builder"       value="${eclipse.pdebuild.templates}" />
+		<!-- property name="customTargets"   location="${eclipse.pdebuild.templates}/customTargets.xml"/ -->
+		<!-- customTargets property can't be set as it is defined through an <available> task in called build file;
+			 defining leads to 'DEPRECATED' echo, property will be overwritten exceptionally!
+			 Therefor the builder property is defined, it points to the folder customTargets is expected to be in -->
+		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml" />
+		<property name="allElementsFile" location="${scriptdir}/allElements.xml" />
 				
+		<tstamp />
+		<property name="forceContextQualifier" value="v${DSTAMP}${TSTAMP}" />
+		<!-- <tstamp> provides the above referenced properties, they're not declared explicitly -->
+
+		<!-- extract product version from product file, replace v?qualifier by ${forceContextQualifier} -->
+		<loadfile property="p2.product.version" srcfile="${product}">
+			<filterchain>
+				<linecontainsregexp>
+					<regexp pattern="&lt;product" />
+				</linecontainsregexp>
+				<tokenfilter>
+					<stringtokenizer delims="&quot;" suppressdelims="true" />
+					<containsregex pattern="\d\.\d\.\d\." flags="i" />
+					<replaceregex pattern="\.\D+" replace=".${forceContextQualifier}" flags="i"/>
+					<!-- \d = digit, \D = non-digit, . = any character, \. = '.'  -->
+				</tokenfilter>
+			</filterchain>
+		</loadfile>
+		
 		<delete dir="${buildLabel}"/>
 		
 		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />

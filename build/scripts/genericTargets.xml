@@ -183,6 +183,8 @@ set here?
 <!-- extract the generated product qualifier                               -->
 <!-- added by CHSCH                                                        -->
 <!-- ===================================================================== -->
+<!-- p2.product.version will be determined in main build file (scriptdir/build.xml)
+
 <target name="load.product.version" unless="no.version">
 	<loadfile property="p2.product.qualifier" srcfile="assemble.org.eclipse.pde.build.container.feature.p2.xml">
 		<filterchain>
@@ -191,7 +193,7 @@ set here?
 			</linecontainsregexp>
 			<tokenfilter>
 			    <stringtokenizer delims="&quot;" suppressdelims="true" />
-				<containsregex pattern="v\d{12}" flags="i" />
+				<containsregex pattern="\d{12}" flags="i" />
 			</tokenfilter>
 		</filterchain>
 	</loadfile>
@@ -202,24 +204,25 @@ set here?
 			</linecontainsregexp>
 			<tokenfilter>
 			    <stringtokenizer delims="&quot;" suppressdelims="true" />
-				<containsregex pattern="\d.\d.\d." flags="i" />
+				<containsregex pattern="\d\.\d\.\d\." flags="i" />
 			</tokenfilter>
 			<expandproperties />
 		</filterchain>
 	</loadfile>
 </target>
+-->
 
 <!-- ===================================================================== -->
 <!-- Assemble one build element -->
 <!-- ===================================================================== -->
-<target name="assembleElement" description="Assembling the build..." depends="init, load.product.version">
+<target name="assembleElement" description="Assembling the build..." depends="init"> <!-- , load.product.version -->
 	<ant antfile="assemble.${id}.all.xml" dir="${buildDirectory}"/>
 </target>
 
 <!-- ===================================================================== -->
 <!-- Package one build element -->
 <!-- ===================================================================== -->
-<target name="packageElement" description="Packaging the build..." depends="init, load.product.version">
+<target name="packageElement" description="Packaging the build..." depends="init"> <!-- , load.product.version -->
 	<ant antfile="package.${id}.all.xml" dir="${buildDirectory}"/>
 </target>
 
