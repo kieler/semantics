@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:synccharts="http://kieler.cs.cau.de/synccharts">
+  <innerStates id="SyncChart" label="SyncChart">
+    <signals name="door"/>
+    <signals name="up" isInput="true"/>
+    <signals name="out" isOutput="true"/>
+    <regions>
+      <innerStates id="s1" label="s1" isInitial="true">
+        <regions>
+          <innerStates id="s1" label="s1" isInitial="true">
+            <outgoingTransitions triggersAndEffects="up / door" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.1">
+              <effects xsi:type="synccharts:Emission" signal="door"/>
+              <trigger xsi:type="synccharts:SignalReference" signal="up"/>
+            </outgoingTransitions>
+          </innerStates>
+          <innerStates id="s2" label="s2"/>
+        </regions>
+      </innerStates>
+    </regions>
+    <regions>
+      <innerStates id="s1" label="s1" isInitial="true">
+        <outgoingTransitions triggersAndEffects="door / out" priority="1" targetState="//@innerStates.0/@regions.1/@innerStates.1">
+          <effects xsi:type="synccharts:Emission" signal="out"/>
+          <trigger xsi:type="synccharts:SignalReference" signal="door"/>
+        </outgoingTransitions>
+      </innerStates>
+      <innerStates id="s2" label="s2"/>
+    </regions>
+  </innerStates>
+</synccharts:Region>
