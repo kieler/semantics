@@ -80,6 +80,7 @@ public class ActionLabelProcessorWrapper {
             parent = changedObject.eContainer();
             if(parent != null)
                 processAffectedActionLabels(changedObject, parent, parse);
+                return;
         }
         
         if(parent instanceof State){
