@@ -104,15 +104,21 @@ Void addCombineFunction(EntityType baseEntity, String name) :
 	   baseEntity.entity.add(e) : null
 ;   
 
-Void addEnvironmentIntCombineFunction(EntityType baseEntity, String name, String signalID) :
+Void addEnvironmentCombineFunction(EntityType baseEntity, String name, String signalID) :
    let e = new EntityType:
    let p1 = new PropertyType:
+   let p2 = new PropertyType:
    e.setName(name) ->
-   e.setClass1("ptolemy.actor.lib.AddSubtract") ->
+   e.setClass1("ptolemy.actor.kiel.KielerCombine") ->
+//   e.setClass1("ptolemy.actor.lib.AddSubtract") ->
+   	p2.setName("combine function") ->
+   	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
+   	p2.setValue("1") ->
    	p1.setName("signal name") ->
    	p1.setClass("ptolemy.data.expr.Parameter") ->
    	p1.setValue("'"+signalID+"'") ->
    e.property.add(p1) ->
+   e.property.add(p2) ->
    //if not already exists
    (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) ?
 	   baseEntity.entity.add(e) : null
@@ -289,11 +295,11 @@ Void ConnectTopmostInputSignalsHelper(EntityType baseEntity,
 	
 	//generate ADD-functions and connect environment outputs to it
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addEnvironmentIntCombineFunction(baseEntity, firstPort.name + "_COMBINE", firstPort.name) : null ->
+		addEnvironmentCombineFunction(baseEntity, firstPort.name + "_COMBINE", firstPort.name) : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
 		addRelation(baseEntity, firstPort.name + modalModelName + "_COMBINERELATION", "environment_output") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addLink(baseEntity, firstPort.name + "_COMBINE.plus", firstPort.name + modalModelName + "_COMBINERELATION") : null ->
+		addLink(baseEntity, firstPort.name + "_COMBINE.input", firstPort.name + modalModelName + "_COMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
 		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + modalModelName + "_COMBINERELATION") : null ->
 
@@ -397,13 +403,13 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + modalModelName +"_COMBINERELATION") : null ->
  ///-----
 
-	//generate ADD-functions and connect environment outputs to it
+	//generate KielerCombine-functions and connect environment outputs to it
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addEnvironmentIntCombineFunction(baseEntity, firstPort.name + "_COMBINE", firstPort.name) : null ->
+		addEnvironmentCombineFunction(baseEntity, firstPort.name + "_COMBINE", firstPort.name) : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
 		addRelation(baseEntity, firstPort.name + modalModelName + "_COMBINERELATION", "environment_output") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addLink(baseEntity, firstPort.name + "_COMBINE.plus", firstPort.name + modalModelName + "_COMBINERELATION") : null ->
+		addLink(baseEntity, firstPort.name + "_COMBINE.input", firstPort.name + modalModelName + "_COMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
 		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + modalModelName + "_COMBINERELATION") : null ->
 
