@@ -1,22 +1,82 @@
 package de.cau.cs.kieler.xkev.extension;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.HashMap;
+
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.views.IViewDescriptor;
+import org.osgi.framework.Bundle;
+import org.w3c.dom.svg.SVGDocument;
+
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import de.cau.cs.kieler.xkev.Activator;
+import de.cau.cs.kieler.xkev.helpers.Tools;
+import de.cau.cs.kieler.xkev.mapping.SVGDocumentParser;
+import de.cau.cs.kieler.xkev.mapping.animations.Animations;
+import de.cau.cs.kieler.xkev.views.EnvironmentView;
 
 public class DataOberserver extends JSONObjectDataComponent implements
 		IJSONObjectDataComponent {
 
+	private int counter = 0;
 	public DataOberserver() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stu
 	}
 
 	@Override
 	public JSONObject step(JSONObject JSONobject) throws KiemExecutionException {
 		// TODO The new JSON Data must be connected with
-		// the old SVG-Graphic and updated afterwords 
+		// the old SVG-Graphic and updated afterwards
+
+		Animations animation = new Animations();
+		counter++;
+		if (animation.isReady()) {
+			switch (counter % 4) {
+				case 0:animation.changeColor("cRed", "#FF0000");animation.changeColor("cYellow", "none");animation.changeColor("cGreen", "none");break;
+				case 1:animation.changeColor("cRed", "none");animation.changeColor("cYellow", "#FFFF00");animation.changeColor("cGreen", "none");break;
+				case 2:animation.changeColor("cRed", "none");animation.changeColor("cYellow", "none");animation.changeColor("cGreen", "#00FF00");break;
+				case 3:animation.changeColor("cRed", "none");animation.changeColor("cYellow", "#FFFF00");animation.changeColor("cGreen", "none");break;
+			}
+		animation.applyAnimation();
+		}
+
+//		Bundle b = Platform.getBundle(Activator.PLUGIN_ID);
+//		Enumeration e = b.findEntries("examples", "Test.svg", false);
+//		URL url = null;
+//		if (e.hasMoreElements()) {
+//			url = (URL) e.nextElement();
+//		}
+//		SVGDocumentParser p = new SVGDocumentParser(url.toString());
+//		
+//		counter++;
+//		switch (counter % 4) {
+//		case 0:p.changeColor("cRed", "#FF0000");p.changeColor("cYellow", "none");p.changeColor("cGreen", "none");break;
+//		case 1:p.changeColor("cRed", "none");p.changeColor("cYellow", "#FFFF00");p.changeColor("cGreen", "none");break;
+//		case 2:p.changeColor("cRed", "none");p.changeColor("cYellow", "none");p.changeColor("cGreen", "#00FF00");break;
+//		case 3:p.changeColor("cRed", "none");p.changeColor("cYellow", "#FFFF00");p.changeColor("cGreen", "none");break;
+//		}
+		
+		
+		//For now the easiest way to get Access to KEV view
+//		IWorkbenchWindow window = PlatformUI.getWorkbench().getWorkbenchWindows()[0];
+//		IViewPart view = window.getActivePage().findView(EnvironmentView.ID);
+//
+//		//PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();//.findView(EnvironmentView.ID);
+//		if (view == null) System.out.println("Can't find KEV View!");
+//		else ((EnvironmentView) view).getComposite().getSvgCanvas().setDocument(p.getSVGDocument());
+
 		return null;//Because it's only an Observer right now
 	}
 
@@ -29,13 +89,13 @@ public class DataOberserver extends JSONObjectDataComponent implements
 	@Override
 	public boolean isObserver() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isProducer() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -43,5 +103,10 @@ public class DataOberserver extends JSONObjectDataComponent implements
 		// TODO Auto-generated method stub
 
 	}
+	
+//	@Override
+//	public boolean isMaster() {
+//		return true;
+//	}
 
 }

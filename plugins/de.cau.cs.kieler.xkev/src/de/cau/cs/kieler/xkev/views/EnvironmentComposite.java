@@ -194,7 +194,7 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
 	
 	public void setSVGPath(IPath path) {
 	    try {
-	        URL url = path.toFile().toURL();
+	        URL url = path.toFile().toURI().toURL();
 	        setSVGFile(url);
 	        svgURI = path.toFile().toURI();
 	    } catch (MalformedURLException e) {
@@ -218,9 +218,8 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
 		try{
 			//Tools.setStatusLine("loading image...");
 			File f = new File(svgURI.getPath());
-			//Only try to load the SVG-file if we really have selected one 
-			if (f.isFile()) svgCanvas.loadSVGDocument(url.toExternalForm());
-		}
+			//Only try to load the SVG-file if we really have selected one or if the the URI is a valid bundleentry 
+			if (f.isFile() || svgURI.getScheme().contentEquals("bundleentry")) svgCanvas.loadSVGDocument(url.toExternalForm());		}
 		catch(Exception e){
 			Tools.showDialog("Failed to load svg image: "+url, e);
 		}
@@ -230,7 +229,7 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
 	public void paintSVGFile() {
 		try {
 			if (svgFile != null) {
-				URL url = svgFile.getLocation().toFile().toURL();
+				URL url = svgFile.getLocation().toFile().toURI().toURL();
 				svgCanvas.loadSVGDocument(url.toExternalForm());
 			}else if(svgURI != null){
 				//Tools.setStatusLine("loading image...");

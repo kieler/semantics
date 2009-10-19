@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,11 +82,6 @@ public class OpenImageWizard extends Wizard {
 				URL url;
 				try {
 					url = new URL(resourceNameField.getText());
-					File f = new File(url.toURI().getPath());
-					if (!f.isFile()) {
-						page.setErrorMessage("Please enter a valid svg file");
-						return false;
-					}
 					((EnvironmentView)view).getComposite().setSVGFile(url);
 					savePreferences();
 					return true;
@@ -129,6 +125,7 @@ public class OpenImageWizard extends Wizard {
 			this.setMessage(Messages.MessageOpenImageWizard);
 			this.setTitle(Messages.TitleOpenImageWizard);
 		}
+		
 		public void createControl(Composite parent) {
 			Composite composite = new Composite(parent, SWT.NONE);
 												
@@ -148,7 +145,18 @@ public class OpenImageWizard extends Wizard {
 			GridData data1 = new GridData(GridData.FILL_BOTH);
 			List imagesList = new List(composite, SWT.BORDER | SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL);
 			imagesList.setLayoutData(data1);
-			imageUrlMap = getImageURLs();
+			
+			//imageUrlMap = getImageURLs(); //old Version
+			imageUrlMap = new HashMap<String,URL>();
+
+			//Load images from Plugin "example" Folder
+			Bundle b = Platform.getBundle(Activator.PLUGIN_ID);
+			Enumeration e = b.findEntries("examples", "*.svg", false);
+			while (e.hasMoreElements()) {
+				URL url = (URL) e.nextElement();
+				imageUrlMap.put(url.toString(), url);
+			}		
+			
 			for (String imageName : imageUrlMap.keySet()) {
 				imagesList.add(imageName);				
 			}
@@ -241,7 +249,6 @@ public class OpenImageWizard extends Wizard {
 			return null;
 		}
 		
-		boolean init = true;
 		/**
 		 * Handles selection changes in the image List widget. If a different
 		 * item is selected, the corresponding URL is automatically inserted
@@ -250,12 +257,7 @@ public class OpenImageWizard extends Wizard {
 		public void widgetSelected(SelectionEvent e) {
 			if (e.getSource() instanceof List){ // Item in List was selected
 				List list = (List)e.getSource();
-				// bad trick to avoid a default selection of item 0 at the beginning
-				if (init) {
-					init = false;
-					list.deselectAll();
-					return;
-				}
+
 				for (int i = 0; i < list.getSelection().length; i++) {
 					URL url = imageUrlMap.get(list.getSelection()[i]);
 					String URLstring = url.toString();

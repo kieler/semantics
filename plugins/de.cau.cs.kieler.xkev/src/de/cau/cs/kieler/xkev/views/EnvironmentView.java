@@ -14,6 +14,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.xkev.Activator;
@@ -41,6 +43,7 @@ public class EnvironmentView extends ViewPart {
 	 */
 	public EnvironmentView() {
 	}
+	
 	
 	/**
 	 * This is a callback that will allow us to create the viewer and
