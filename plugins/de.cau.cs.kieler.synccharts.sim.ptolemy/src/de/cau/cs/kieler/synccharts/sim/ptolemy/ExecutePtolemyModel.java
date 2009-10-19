@@ -41,8 +41,8 @@ import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;
 import ptolemy.moml.MoMLParser;
 //import ptolemy.actor.kiel.*;
+import ptolemy.actor.kiel.KielerCombine;
 import ptolemy.actor.kiel.KielerIO;
-import ptolemy.actor.lib.AddSubtract;
 import ptolemy.data.expr.Parameter;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 //import de.cau.cs.kieler.sim.ptolemy.DynamicClasspath;
@@ -58,8 +58,8 @@ public class ExecutePtolemyModel {
 	public class ModelOutput {
 		public String signalName;
 		public boolean present;
-		public AddSubtract actor;
-		public ModelOutput(String signalName, AddSubtract actor) {
+		public KielerCombine actor;
+		public ModelOutput(String signalName, KielerCombine actor) {
 			this.signalName = signalName;
 			this.actor = actor;
 			this.present = false;
@@ -266,7 +266,7 @@ public class ExecutePtolemyModel {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Fills the modalModelList by recursively going thru the models elements.
+	 * Fills the kielerCombine list by recursively going thru the models elements.
 	 * 
 	 * @param modalModelList the list of ModalModels to fill
 	 * @param children the children to walk thru
@@ -280,8 +280,8 @@ public class ExecutePtolemyModel {
 		// do *NOT* recursively for children, just a flat top-level search
 		for (int c = 0; c < children.size(); c++){
 			Object child = children.get(c);
-            if (child instanceof AddSubtract) {
-            	AddSubtract as = (AddSubtract)child;
+            if (child instanceof KielerCombine) {
+            	KielerCombine as = (KielerCombine)child;
             	if (as.getAttribute("signal name") != null) {
             		//this is only true for output not for local signals
         			String signalName = 
@@ -543,7 +543,7 @@ public class ExecutePtolemyModel {
                 
         		System.out.println("#9");
 
-                //go thru the model and add fill the addSubtractList (Outputs)
+                //go thru the model and add fill the kielerCombine (Outputs)
                 fillModelOutputList(
                 		modelOutputList,
                 		modelActor.entityList());
