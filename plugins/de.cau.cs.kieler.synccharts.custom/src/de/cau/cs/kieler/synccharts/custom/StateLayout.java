@@ -181,7 +181,6 @@ public class StateLayout extends ConstrainedToolbarLayout {
         int[] prefHeights = new int[numChildren];
         Rectangle newBounds = new Rectangle();
         int regionSeparatorHeight = 0;
-        int regionSeparatorWidth = 0;
         for (int i = 0; i < numChildren; i++) {
             Object child = children.get(i);
             if (child instanceof IFigure && !(child instanceof Polyline)) {
@@ -196,7 +195,9 @@ public class StateLayout extends ConstrainedToolbarLayout {
                             || (compartmentName.equals("OnEntryAction:") && (!containsEntryActions))
                             || (compartmentName.equals("OnInsideAction:") && (!containsInnerActions))
                             || (compartmentName.equals("OnExitAction:") && (!containsExitActions))
-                            || (compartmentName.equals("Suspend:") && (!containsSuspensionTrigger))) {
+                            || (compartmentName.equals("Suspend:") && (!containsSuspensionTrigger))
+                            || !((ResizableCompartmentFigure) child)
+                                    .isExpanded()) {
                         newWidth = 0;
                         newHeight = 0;
                         setCompartmentTitleVisibility(child, false);
@@ -206,7 +207,10 @@ public class StateLayout extends ConstrainedToolbarLayout {
                         // as
                         // content
                         setCompartmentTitleVisibility(child, true);
-                    } else { // child is the region compartment
+                    }
+
+                    if (compartmentName.equals("RegionCompartment")) {
+                        // child is the region compartment
                         if (!containsRegions) {
                             newWidth = 0;
                             newHeight = 0;
@@ -216,8 +220,6 @@ public class StateLayout extends ConstrainedToolbarLayout {
                         // calculated total height = y position of region
                         // compartment
                         regionSeparatorHeight = totalHeight;
-                        // regionSeparatorWidth =
-                        // ((ResizableCompartmentFigure)child).getBounds().width;
                     }
                 }
 
