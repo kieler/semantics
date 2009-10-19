@@ -132,9 +132,8 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
         StringTokenizer tokenizer = new StringTokenizer(
         		this.getProperties()[1].getValue(), " ()");
         if (tokenizer.hasMoreTokens()) {
-         	//skip the file string 
-         	tokenizer.nextToken();
-             String editorString = tokenizer.nextToken();
+        	String fileString = tokenizer.nextToken(); 
+        	String editorString = tokenizer.nextToken();
 
              IEditorReference[] editorRefs = PlatformUI.getWorkbench()
                      .getActiveWorkbenchWindow().getActivePage()
@@ -143,8 +142,12 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                  if (editorRefs[i].getId().equals(editorString)) {
                      IEditorPart editor = editorRefs[i].getEditor(true);
                      if (editor instanceof DiagramEditor) {
-                         rootEditPart = ((DiagramEditor) editor)
-                                 .getDiagramEditPart();
+                    	 //test if correct file
+                    	 if (fileString.equals(editor.getTitle())) {
+                             rootEditPart = ((DiagramEditor) editor)
+                                     .getDiagramEditPart();
+                             break;
+                    	 }
                      }
                  }
              }
@@ -203,7 +206,20 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
      */
     public void wrapup() {
-        // TODO Auto-generated method stub
+    	//clean up all visual effects
+//        StateActivityTrigger trigger = StateActivityTrigger.instance;
+//        for (String editPartURI : lastHighlightedStates) {
+//            TriggerEventObject triggerEvent = new TriggerEventObject();
+//            triggerEvent.setAffectedObject(editPartURI);
+//            System.out.println("REMOVE:"+editPartURI);
+//            triggerEvent.setTriggerActive(false);
+//            trigger.notifyTrigger(triggerEvent);
+//        }
+        ActiveStateHighlightCombination.getInstance().undoLastEffect();
+        cachedEditParts.clear();
+        cachedElementURIs.clear();
+        lastHighlightedStates.clear();
+        rootEditPart = null;
     }
 	
 

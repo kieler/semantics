@@ -20,8 +20,6 @@ import de.cau.cs.kieler.viewmanagement.effects.ShapeHighlightEffect;
 public class ActiveStateHighlightCombination extends ACombination {
     /** The root EditPart of the editor. */
     private EditPart rootEditPart;
-    
-    private LayoutEffect layoutEffect;
 
     /** The single instance of this plug-in. */
     private static ActiveStateHighlightCombination instance;
@@ -31,7 +29,7 @@ public class ActiveStateHighlightCombination extends ACombination {
 	 */
 	public ActiveStateHighlightCombination() {
 		ActiveStateHighlightCombination.instance = this;
-		//StateCombination.getInstance().setActive(true);
+		ActiveStateHighlightCombination.getInstance().setActive(true);
     }
 
 	
@@ -137,11 +135,12 @@ public class ActiveStateHighlightCombination extends ACombination {
     
 	@Override
 	public void undoLastEffect() {
-		System.out.println("---------------------> undoLastEffect()");
         for (ShapeHighlightEffect effect : effects.values()) {
     		effect.undo();
         }
         this.effects.clear();
+        this.resetHashedEditParts();
+		System.out.println("---------------------> undoLastEffect()");
 	}
 	
 	@Override
