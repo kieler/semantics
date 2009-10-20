@@ -3,11 +3,74 @@
 «EXTENSION template::helper»
 
 «DEFINE main FOR Region-»
-	«FILE "Dummy.sc"-»
+	«FILE innerStates.first().label + ".c"-»
 // generated SC-code //
+	«EXPAND init-»
 	«EXPAND start-»
+	«EXPAND finish-»
 	«ENDFILE-»
+	«EXPAND codegen_data::main»
 «ENDDEFINE»
+
+«DEFINE init FOR Region-»
+#include "sc.h"
+
+	«EXPAND generateSigType FOR innerStates.signals-»
+	«EXPAND generateSigArray FOR innerStates.signals-»
+	«FOREACH innerStates.signals AS signal-»
+		«IF signal.isInput-»
+			«EXPAND generateInputSignals FOR signal»
+		«ENDIF-»
+	«ENDFOREACH-»
+	«EXPAND generateCheckOutputs FOR innerStates.signals»
+	«EXPAND generateReset-»
+int tick(int isInit)
+{
+			TICKSTART(isInit, «EXPAND computeMaxThread-»);
+«ENDDEFINE»
+
+«DEFINE generateSigType FOR List-»
+typedef enum {«FOREACH this AS signal SEPARATOR ", "-»
+«((Signal)signal).name-»
+«ENDFOREACH-»} signaltype;
+
+«ENDDEFINE»
+
+«DEFINE generateSigArray FOR List-»
+const char *s2signame[] = {«FOREACH this AS signal SEPARATOR ", "-»
+"«((Signal)signal).name-»"«ENDFOREACH-»};
+
+«ENDDEFINE»
+
+«DEFINE generateInputSignals FOR Signal-»
+void «this.parentState.label»_I_«this.name»()
+{
+	signals = signals | (1 << «this.name»);
+}
+«ENDDEFINE»
+
+«DEFINE generateCheckOutputs FOR List-»
+void callOutputs()
+{
+	«FOREACH this AS signal-»
+		«IF ((Signal)signal).isOutput-»
+	if(signals & (1 << «((Signal)signal).name-»)){
+	  SyncChart_O_«((Signal)signal).name-»();
+  }	
+		«ENDIF-»
+	«ENDFOREACH-»
+}
+«ENDDEFINE»
+
+«DEFINE generateReset FOR Region-»
+void reset()
+{
+	signals = 0;
+}
+
+«ENDDEFINE»
+
+«DEFINE computeMaxThread FOR Region-»4«ENDDEFINE»
 
 «DEFINE start FOR Region-»
 	«FOREACH innerStates.regions.innerStates AS anyState-»
@@ -65,4 +128,9 @@
 				EMIT(«((Emission)effect).signal.name-»);
 		«ENDFOREACH-»
 	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE finish FOR Region»
+			TICKEND;
+}
 «ENDDEFINE»

@@ -1,0 +1,65 @@
+«IMPORT synccharts»
+
+«DEFINE main FOR Region-»
+	«FILE innerStates.first().label + "_data.c"-»
+// generated SC-code //
+	«EXPAND init-»
+	«EXPAND generateSetInputs-»
+	«EXPAND generateMain-»
+	«ENDFILE-»
+«ENDDEFINE»
+
+«DEFINE init FOR Region»
+#include "sc.h"
+#include <string.h>
+
+void selectCid() {
+	int act;
+
+	_cid = 0;
+	for (act = active; act > 1; act >>= 1){
+		_cid++;
+	}
+}
+	«FOREACH innerStates.signals AS signal-»
+		«IF signal.isOutput-»
+			«EXPAND generateOutputSignals FOR signal»
+		«ENDIF-»
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE generateOutputSignals FOR Signal»
+void «this.parentState.label»_O_«this.name»()
+{
+	printf ("«this.name» is present. \n");
+}
+«ENDDEFINE»
+
+«DEFINE generateSetInputs FOR Region»
+void setInputs()
+{
+  char str[12];
+  scanf ("%s",str);
+  «FOREACH innerStates.signals AS signal-»
+  	«IF signal.isInput-»
+  if (strcmp(str, "«signal.name»") == 0) { 
+  	«innerStates.first().label»_I_«signal.name»();
+  	printf("«signal.name»");
+  }
+  	«ENDIF-»
+  «ENDFOREACH-»
+}
+«ENDDEFINE»
+
+«DEFINE generateMain FOR Region»
+int main(){	
+	setInputs();
+	tick(1);
+	while(1){  
+  	callOutputs();
+		reset();
+		setInputs();
+		tick(0);
+	}
+}
+«ENDDEFINE»

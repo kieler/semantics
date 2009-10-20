@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:synccharts="http://kieler.cs.cau.de/synccharts">
   <innerStates id="SyncChart" label="SyncChart">
-    <signals name="A0"/>
-    <signals name="B0"/>
-    <signals name="A1"/>
-    <signals name="B1"/>
-    <signals name="C1"/>
-    <signals name="U0"/>
-    <signals name="V0"/>
-    <signals name="U1"/>
-    <signals name="V1"/>
-    <signals name="W1"/>
+    <signals name="A0" isInput="true"/>
+    <signals name="B0" isInput="true"/>
+    <signals name="A1" isInput="true"/>
+    <signals name="B1" isInput="true"/>
+    <signals name="C1" isInput="true"/>
+    <signals name="U0" isOutput="true"/>
+    <signals name="V0" isOutput="true"/>
+    <signals name="U1" isOutput="true"/>
+    <signals name="V1" isOutput="true"/>
+    <signals name="W1" isOutput="true"/>
     <regions>
       <innerStates id="S0" label="S0" isInitial="true">
         <outgoingTransitions triggersAndEffects="A0 / U0" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.1">
