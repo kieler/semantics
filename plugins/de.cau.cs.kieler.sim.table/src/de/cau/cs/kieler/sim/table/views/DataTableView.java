@@ -183,7 +183,7 @@ public class DataTableView extends ViewPart {
 	private void createColumns(DataTableViewer viewer) {
 		String[] titles = { "", "P", "Key", "Value" };
 		String[] toolTip = { "", "Present/Absent/No Signal", "Key", "Value" };
-		int[] bounds = { 0, 22, 120, 120 };
+		int[] bounds = { 0, 25, 120, 120 };
 		
 		for (int i = 0; i < titles.length; i++) {
 			TreeViewerColumn column = new TreeViewerColumn(viewer, SWT.NONE);
