@@ -146,7 +146,6 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <feature id="de.cau.cs.kieler.ksbase" version="0.1.0.vqualifier"/>
       <feature id="de.cau.cs.kieler.sim.kiem" version="0.1.0.vqualifier"/>
       <feature id="de.cau.cs.kieler.sim.ptolemy" version="0.1.0.vqualifier"/>
-      <feature id="de.cau.cs.kieler.synccharts.sim.ptolemy" version="0.1.0.vqualifier"/>
       <feature id="de.cau.cs.kieler.dependencies" version="0.1.0.vqualifier"/>
    </features>
 
