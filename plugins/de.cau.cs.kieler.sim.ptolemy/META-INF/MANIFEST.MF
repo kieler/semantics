@@ -3,13 +3,11 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Ptolemy
 Bundle-SymbolicName: de.cau.cs.kieler.sim.ptolemy;singleton:=true
 Bundle-Version: 0.1.0.vqualifier
-Bundle-Activator: de.cau.cs.kieler.sim.ptolemy.Activator
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jdt.launching,
  org.eclipse.ui;bundle-version="3.5.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  lib/ptolemy.jar
 Export-Package: com.microstar.xml,
@@ -95,4 +93,6 @@ Export-Package: com.microstar.xml,
  ptolemy.moml.unit,
  ptolemy.util,
  ptolemy.vergil.icon,
+ ptolemy.vergil.modal,
+ ptolemy.vergil.modal.modal,
  util.testsuite
