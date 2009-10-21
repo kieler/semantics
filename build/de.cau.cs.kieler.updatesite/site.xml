@@ -24,6 +24,18 @@
    <feature url="features/de.cau.cs.kieler.sim.kiem_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.sim.kiem" version="0.1.0.vqualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.dependencies_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.dependencies" version="0.1.0.vqualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.sim.ptolemy_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.sim.ptolemy" version="0.1.0.vqualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.synccharts.sim.ptolemy_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.synccharts.sim.ptolemy" version="0.1.0.vqualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.synccharts.textual_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.synccharts.textual" version="0.1.0.vqualifier">
+      <category name="KIELER"/>
+   </feature>
    <category-def name="KIELER" label="KIELER">
       <description>
          Kiel Integrated Environment for Layout for the Eclipse RichClientPlatform
