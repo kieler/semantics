@@ -26,6 +26,8 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
+import ptolemy.actor.kiel.KielerCombine;
+import ptolemy.actor.kiel.KielerIO;
 import ptolemy.actor.Actor;
 import ptolemy.actor.CompositeActor;
 import ptolemy.actor.IOPort;
@@ -41,8 +43,6 @@ import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;
 import ptolemy.moml.MoMLParser;
 //import ptolemy.actor.kiel.*;
-import ptolemy.actor.kiel.KielerCombine;
-import ptolemy.actor.kiel.KielerIO;
 import ptolemy.data.expr.Parameter;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 //import de.cau.cs.kieler.sim.ptolemy.DynamicClasspath;
