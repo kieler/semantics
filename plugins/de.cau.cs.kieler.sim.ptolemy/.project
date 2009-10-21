@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>de.cau.cs.kieler.sim.ptolemy</name>
+	<name>de.cau.cs.kieler.sim.ptolemy_</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -21,11 +21,6 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.openarchitectureware.base.oawBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
 			<name>org.eclipse.xtend.typesystem.xsd.ui.xsdBuilder</name>
 			<arguments>
 			</arguments>
@@ -34,6 +29,5 @@
 	<natures>
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>org.openarchitectureware.base.oawNature</nature>
 	</natures>
 </projectDescription>

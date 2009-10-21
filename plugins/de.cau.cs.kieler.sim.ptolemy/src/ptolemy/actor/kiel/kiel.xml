@@ -1,0 +1,35 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE plot PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+
+<group>
+	<entity name="ModelRailwayIO" class="ptolemy.actor.kiel.ModelRailwayIO">
+		<doc>ModelRailway KIEL connector</doc>
+	</entity>
+
+	<entity name="ModelRailwayMerge" class="ptolemy.actor.kiel.ModelRailwayMerge">
+		<doc>ModelRailway KIEL token merger</doc>
+	</entity>
+
+
+	<entity name="RtsysActor" class="ptolemy.actor.kiel.RtsysActor">
+		<doc>Demo Actor for Rtsys Chair, University of Kiel, Germany</doc>
+	</entity>
+
+	<entity name="KielerIO" class="ptolemy.actor.kiel.KielerIO">
+		<doc>KIELER I/O connector</doc>
+	</entity>
+
+	<entity name="KielerNormalTermination" class="ptolemy.actor.kiel.KielerNormalTermination">
+		<doc>KIELER normal termination actor</doc>
+	</entity>
+
+	<entity name="KielerCombine" class="ptolemy.actor.kiel.KielerCombine">
+		<doc>KIELER combine actor</doc>
+	</entity>
+
+	<entity name="SyncChartDirector" class="ptolemy.actor.kiel.SyncChartDirector">
+		<doc>KIELER SyncChart director</doc>
+	</entity>
+</group>
+
