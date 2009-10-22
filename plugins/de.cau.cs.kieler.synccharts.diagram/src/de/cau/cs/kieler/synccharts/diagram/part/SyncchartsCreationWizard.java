@@ -110,7 +110,7 @@ public class SyncchartsCreationWizard extends Wizard implements INewWizard {
         addPage(diagramModelFilePage);
 
         domainModelFilePage = new SyncchartsCreationWizardPage(
-                "DomainModelFile", getSelection(), "kits") { //$NON-NLS-1$ //$NON-NLS-2$
+                "DomainModelFile", getSelection(), "kixs") { //$NON-NLS-1$ //$NON-NLS-2$
 
             public void setVisible(boolean visible) {
                 if (visible) {
@@ -118,7 +118,7 @@ public class SyncchartsCreationWizard extends Wizard implements INewWizard {
                     fileName = fileName.substring(0, fileName.length()
                             - ".kids".length()); //$NON-NLS-1$
                     setFileName(SyncchartsDiagramEditorUtil.getUniqueFileName(
-                            getContainerFullPath(), fileName, "kits")); //$NON-NLS-1$
+                            getContainerFullPath(), fileName, "kixs")); //$NON-NLS-1$
                 }
                 super.setVisible(visible);
             }

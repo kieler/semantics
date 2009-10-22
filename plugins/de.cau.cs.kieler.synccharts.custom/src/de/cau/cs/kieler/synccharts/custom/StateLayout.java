@@ -375,7 +375,7 @@ public class StateLayout extends ConstrainedToolbarLayout {
                     prefHeight = childFigure.getPreferredSize().height;
                     newBounds.x = x + (width / 2) - (prefWidth / 2);
                     newBounds.y = y + (height / 2) - (prefHeight / 2);
-                    newBounds.width = prefWidth;
+                    newBounds.width = prefWidth+2;
                     newBounds.height = prefHeight;
                 } else if (child instanceof ResizableCompartmentFigure) {
                     name = ((ResizableCompartmentFigure) child)
@@ -472,11 +472,11 @@ public class StateLayout extends ConstrainedToolbarLayout {
                         && ((WrappingLabel) child).getText() != null
                         && !((WrappingLabel) child).getText().equals("")) {
                     return new Dimension(((WrappingLabel) children.get(0))
-                            .getPreferredSize().width,
-                            StateLayout.MIN_HEIGHT + 2);
+                            .getPreferredSize().width,((WrappingLabel) children.get(0))
+                            .getPreferredSize().height);
                 } else {
                     return new Dimension(StateLayout.MIN_WIDTH,
-                            StateLayout.MIN_WIDTH);
+                            StateLayout.MIN_HEIGHT);
                 }
             } else {
 

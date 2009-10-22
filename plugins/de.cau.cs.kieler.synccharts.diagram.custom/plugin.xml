@@ -313,16 +313,10 @@
    <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addRegion"
-            contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+M3+R">
-      </key>
-      <key
             commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addSignal"
             contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+M3+S">
+            sequence="M1+K I">
       </key>
       <key
             commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addVariable"

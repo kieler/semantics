@@ -30,45 +30,5 @@
             name="Parse all action labels">
       </command>
    </extension>
-   <extension
-         id="de.cau.cs.kieler.synccharts.labelparser.bridge.constraint1"
-         point="org.eclipse.emf.validation.constraintProviders">
-      <constraintProvider
-            cache="true"
-            mode="Live">
-         <package
-               namespaceUri="http://kieler.cs.cau.de/synccharts">
-         </package>
-         <constraints
-               categories="de.cau.cs.kieler.synccharts">
-            <constraint
-                  class="de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParserConstraint"
-                  id="de.cau.cs.kieler.synccharts.labelparser.bridge.constraint1"
-                  lang="Java"
-                  mode="Live"
-                  name="Labelparser"
-                  severity="ERROR"
-                  statusCode="1">
-               <message>
-                  Action label parse error.
-               </message>
-               <description>
-                  Validation of action labels.
-               </description>
-            </constraint>
-         </constraints>
-         <target
-               class="Action">
-         </target>
-         <target
-               class="Transition">
-         </target>
-      </constraintProvider>
-      <category
-            id="de.cau.cs.kieler.synccharts"
-            mandatory="false"
-            name="SyncCharts Validation">
-      </category>
-   </extension>
 
 </plugin>

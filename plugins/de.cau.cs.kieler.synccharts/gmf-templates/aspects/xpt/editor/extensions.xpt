@@ -1,0 +1,92 @@
+﻿«REM»
+@author: haf
+Added custom initialization action to support multiple domain file extensions
+«ENDREM»
+
+«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'»
+
+«DEFINE extensions FOR gmfgen::GenEditorGenerator»
+   <extension point="org.eclipse.ui.editors" id="gmf-editor">
+      «EXPAND xpt::Common::xmlGeneratedTag»
+      <editor
+         id="«editor.iD»"
+         name="%editorName"
+         icon="«editor.iconPathX»"
+         extensions="«diagramFileExtension»"
+         default="true"
+         class="«editor.getQualifiedClassName()»"
+         matchingStrategy="«diagram.getMatchingStrategyQualifiedClassName()»"
+         contributorClass="«editor.getActionBarContributorQualifiedClassName()»">
+      </editor>
+   </extension>
+   
+   <extension point="org.eclipse.ui.contexts" id="ui-context">
+      «EXPAND xpt::Common::xmlGeneratedTag»
+      <context
+         description="%context.description"
+         id="«editor.contextID»"
+         name="%context.name"
+         parentId="org.eclipse.gmf.runtime.diagram.ui.diagramContext">
+      </context>
+   </extension>
+
+   <extension point="org.eclipse.ui.newWizards" id="creation-wizard">
+      «EXPAND xpt::Common::xmlGeneratedTag»
+  	  <wizard
+  	     name="%newWizardName"
+  	     icon="«diagram.creationWizardIconPathX»"
+  	     category="«diagram.creationWizardCategoryID»"
+  	     class="«diagram.getCreationWizardQualifiedClassName()»"
+  	     id="«diagram.getCreationWizardQualifiedClassName()»ID">
+  	  	 <description>%newWizardDesc</description>  
+      </wizard>
+   </extension>
+
+«IF diagram.generateInitDiagramAction()-»
+   «IF null = application»<extension point="org.eclipse.ui.popupMenus" id="init-diagram-action">
+      «EXPAND xpt::Common::xmlGeneratedTag»
+      <objectContribution
+            id="«plugin.iD».InitDiagram"
+            nameFilter="*.«domainFileExtension»"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               label="%initDiagramActionLabel"
+               class="«diagram.getInitDiagramFileActionQualifiedClassName()»"
+               menubarPath="additions"
+               enablesFor="1"
+               id="«plugin.iD».InitDiagramAction">
+         </action>
+      </objectContribution>
+      «REM»Added custom initialization action to support multiple domain file extensions«ENDREM»
+      <objectContribution
+            id="«plugin.iD».InitDiagram2"
+            nameFilter="*.kits"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               label="%initDiagramActionLabel"
+               class="«diagram.getInitDiagramFileActionQualifiedClassName()»"
+               menubarPath="additions"
+               enablesFor="1"
+               id="«plugin.iD».InitDiagramAction2">
+         </action>
+      </objectContribution>
+      «REM»End of customization«ENDREM»
+   </extension>
+	«ELSE-»
+   <extension point="org.eclipse.ui.actionSets" id="init-diagram-action">
+      «EXPAND xpt::Common::xmlGeneratedTag»
+      <actionSet
+            label="%initDiagramActionLabel"
+            visible="true"
+            id="«plugin.iD».InitDiagram">
+         <action
+               label="%initDiagramActionLabel"
+               class="«diagram.getInitDiagramFileActionQualifiedClassName()»"
+               menubarPath="file/additions"
+               id="«plugin.iD».InitDiagramAction">
+         </action>
+      </actionSet>
+   </extension>
+	«ENDIF-»
+«ENDIF-»
+«ENDDEFINE»

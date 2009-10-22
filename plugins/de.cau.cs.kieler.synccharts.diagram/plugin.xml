@@ -55,7 +55,7 @@
       <?gmfgen generated="true"?>
       <objectContribution
             id="de.cau.cs.kieler.synccharts.diagram.InitDiagram"
-            nameFilter="*.kits"
+            nameFilter="*.kixs"
             objectClass="org.eclipse.core.resources.IFile">
          <action
                label="%initDiagramActionLabel"
@@ -65,6 +65,20 @@
                id="de.cau.cs.kieler.synccharts.diagram.InitDiagramAction">
          </action>
       </objectContribution>
+      
+      <objectContribution
+            id="de.cau.cs.kieler.synccharts.diagram.InitDiagram2"
+            nameFilter="*.kits"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               label="%initDiagramActionLabel"
+               class="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsInitDiagramFileAction"
+               menubarPath="additions"
+               enablesFor="1"
+               id="de.cau.cs.kieler.synccharts.diagram.InitDiagramAction2">
+         </action>
+      </objectContribution>
+      
    </extension>
 	
    <extension point="org.eclipse.gmf.runtime.common.ui.services.action.globalActionHandlerProviders" id="global-actions">
@@ -501,7 +515,7 @@
             <or>
 	           <and>
     	          <instanceof value="org.eclipse.core.resources.IFile"/>
-        	      <test property="org.eclipse.core.resources.extension" value="kits"/>
+        	      <test property="org.eclipse.core.resources.extension" value="kixs"/>
                </and>
                <instanceof value="de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem"/>
             </or>

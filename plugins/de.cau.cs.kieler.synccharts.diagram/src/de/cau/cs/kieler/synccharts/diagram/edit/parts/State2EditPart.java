@@ -355,6 +355,8 @@ public class State2EditPart extends ShapeNodeEditPart {
             fFigureStateNameFigure = new WrappingLabel();
             fFigureStateNameFigure.setText("");
 
+            fFigureStateNameFigure.setFont(FFIGURESTATENAMEFIGURE_FONT);
+
             fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode()
                     .DPtoLP(5), getMapMode().DPtoLP(10),
                     getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
@@ -399,5 +401,11 @@ public class State2EditPart extends ShapeNodeEditPart {
         }
 
     }
+
+    /**
+     * @generated
+     */
+    static final Font FFIGURESTATENAMEFIGURE_FONT = new Font(Display
+            .getCurrent(), "Sans", 12, SWT.NORMAL);
 
 }
