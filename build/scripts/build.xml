@@ -18,6 +18,7 @@
 	 	
 	<!-- default definitions: should be overwritten while calling this script if necessary -->	
 	<property name="target"	             value="noTargetInfo"/>
+	<property name="plugin"              value=" "/>
 	<property name="feature"             value=" "/>
 	<property name="product"             value=" "/>
 	<property name="pluginPath"          value=" "/>
@@ -66,6 +67,8 @@
 			<arg value="-DbuildProperties=${scriptdir}/build.properties" />
 				<!-- the property configuration file
 						examined by build.xml, one of the PDE build scripts -->
+			<arg value="-Dplugin=${plugin}" />
+				<!-- the plugin whose bin parts should be gathered (after building the feature) -->
 			<arg value="-Dfeature=${feature}" />
 				<!-- the feature whose plugins should be build -->
 			<arg value="-Dproduct=${system.WORKSPACE}/${product}" />
@@ -225,6 +228,14 @@
 		<echo message="STARTING p2 stuff" />
 		<ant antfile="assemble.${feature}.p2.xml">
 			<property name="buildTempFolder" value="${basedir}/buildTempFolder"/>
+		</ant>
+	</target>
+	
+	<target name="gather.plugin.bin.parts" if="eclipse.running" description="target for gathering plugin's bin parts, needed if ${plugin} contains <lib>.jar files">
+		<ant antfile="build.xml" dir="${basedir}/plugins/${plugin}">
+			<property name="destination.temp.folder" value="${basedir}/update-site/plugins" />
+			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
+			<target name="gather.bin.parts" />
 		</ant>
 	</target>
 	
