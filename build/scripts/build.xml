@@ -237,7 +237,9 @@
 			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 			<target name="gather.bin.parts" />
 		</ant>
-		<delete file="update-site/plugins/${plugin}*.jar" />
+		<delete>
+			<fileset dir="${basedir}/update-site/plugins/" includes="${plugin}*.jar" />
+		</delete>
 	</target>
 	
 	<target name="build.rca" if="eclipse.running" description="target for creating the RCA by means of the feature build's results">
