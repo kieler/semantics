@@ -138,6 +138,7 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
     }
 
     private void handleState(Notification notification, State state) {
+        // if state label has changed
         if (notification.getFeature() != null
                 && notification.getFeature().equals(
                         SyncchartsPackage.eINSTANCE.getState_Label())) {
@@ -149,8 +150,16 @@ public class SyncchartsContentAdapter extends AdapterImpl implements IStartup {
             else {
                 String newId = state.getLabel();
                 newId = newId.replaceAll("\\s", "_"); // replace all whitespace
-                                                      // with underscores
+                // with underscores
                 state.setId(newId);
+            }
+        }
+        // if new state is created, only the parent region is set
+        else if (notification.getFeature() != null
+                && notification.getFeature().equals(
+                        SyncchartsPackage.eINSTANCE.getState_ParentRegion())) {
+            if (state.getLabel() == null || state.getLabel().trim().equals("")) {
+                state.setId(SyncchartsContentUtil.getNewId(state));
             }
         }
     }
