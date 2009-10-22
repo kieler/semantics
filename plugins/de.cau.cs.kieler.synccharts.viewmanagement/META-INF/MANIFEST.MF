@@ -9,9 +9,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.viewmanagement,
+ de.cau.cs.kieler.viewmanagement.effects,
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.0",
- de.cau.cs.kieler.synccharts.model;bundle-version="0.1.0",
- de.cau.cs.kieler.viewmanagement.effects
+ de.cau.cs.kieler.synccharts.model;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Import-Package: de.cau.cs.kieler.viewmanagement.effects
