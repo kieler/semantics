@@ -2825,18 +2825,15 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Assignment cIsLocalAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
-		private final Keyword cIsLocalLocalKeyword_0_0_0 = (Keyword)cIsLocalAssignment_0_0.eContents().get(0);
-		private final Alternatives cAlternatives_0_1 = (Alternatives)cAlternatives_0.eContents().get(1);
-		private final Assignment cIsInputAssignment_0_1_0 = (Assignment)cAlternatives_0_1.eContents().get(0);
-		private final Keyword cIsInputInputKeyword_0_1_0_0 = (Keyword)cIsInputAssignment_0_1_0.eContents().get(0);
-		private final Assignment cIsOutputAssignment_0_1_1 = (Assignment)cAlternatives_0_1.eContents().get(1);
-		private final Keyword cIsOutputOutputKeyword_0_1_1_0 = (Keyword)cIsOutputAssignment_0_1_1.eContents().get(0);
-		private final Group cGroup_0_1_2 = (Group)cAlternatives_0_1.eContents().get(2);
-		private final Assignment cIsInputAssignment_0_1_2_0 = (Assignment)cGroup_0_1_2.eContents().get(0);
-		private final Keyword cIsInputInputKeyword_0_1_2_0_0 = (Keyword)cIsInputAssignment_0_1_2_0.eContents().get(0);
-		private final Assignment cIsOutputAssignment_0_1_2_1 = (Assignment)cGroup_0_1_2.eContents().get(1);
-		private final Keyword cIsOutputOutputKeyword_0_1_2_1_0 = (Keyword)cIsOutputAssignment_0_1_2_1.eContents().get(0);
+		private final Assignment cIsInputAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
+		private final Keyword cIsInputInputKeyword_0_0_0 = (Keyword)cIsInputAssignment_0_0.eContents().get(0);
+		private final Assignment cIsOutputAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final Keyword cIsOutputOutputKeyword_0_1_0 = (Keyword)cIsOutputAssignment_0_1.eContents().get(0);
+		private final Group cGroup_0_2 = (Group)cAlternatives_0.eContents().get(2);
+		private final Assignment cIsInputAssignment_0_2_0 = (Assignment)cGroup_0_2.eContents().get(0);
+		private final Keyword cIsInputInputKeyword_0_2_0_0 = (Keyword)cIsInputAssignment_0_2_0.eContents().get(0);
+		private final Assignment cIsOutputAssignment_0_2_1 = (Assignment)cGroup_0_2.eContents().get(1);
+		private final Keyword cIsOutputOutputKeyword_0_2_1_0 = (Keyword)cIsOutputAssignment_0_2_1.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
@@ -2860,21 +2857,21 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_3_1_3_1_0 = (RuleCall)cHostCombineOperatorAssignment_3_1_3_1.eContents().get(0);
 		
 		//Signal returns sync::Signal:
-		//  (isLocal?="local"|(isInput?="input"|isOutput?="output"|isInput?="input" isOutput
-		//  ?="output")) name=ID (":=" initialValue=ID)? (": " type=ValueType|": combine" type=
-		//  ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)); 
+		//  (isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=ID (
+		//  ":=" initialValue=ID)? (": " type=ValueType|": combine" type=ValueType "with" (
+		//  combineOperator=CombineOperator|hostCombineOperator=STRING)); 
 		//    
 		// 	//a signal is EITHER local OR (input or output or both)
-		//	 	 
-		//	 
-		//			 
+		//	 //(	(isLocal?='local')
+		//	 //| 
+		//		 	 
 		//		
 		//		 	
 		//		
 		//		 	                                   
 		//		 		
-		//	
-		//	 
+		//	//)
+		//	  
 		//	
 		//	   
 		//	
@@ -2888,20 +2885,20 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		////==============================================================================
 		public ParserRule getRule() { return rule; }
 
-		//(isLocal?="local"|(isInput?="input"|isOutput?="output"|isInput?="input" isOutput
-		//?="output")) name=ID (":=" initialValue=ID)? (": " type=ValueType|": combine" type=
-		//ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)) 
+		//(isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=ID (
+		//":=" initialValue=ID)? (": " type=ValueType|": combine" type=ValueType "with" (
+		//combineOperator=CombineOperator|hostCombineOperator=STRING)) 
 		// 	//a signal is EITHER local OR (input or output or both)
-		//	 	 
-		//	 
-		//			 
+		//	 //(	(isLocal?='local')
+		//	 //| 
+		//		 	 
 		//		
 		//		 	
 		//		
 		//		 	                                   
 		//		 		
-		//	
-		//	 
+		//	//)
+		//	  
 		//	
 		//	   
 		//	
@@ -2910,48 +2907,48 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		//	  	         //or initial value and combine type
 		public Group getGroup() { return cGroup; }
 
-		//isLocal?="local"|(isInput?="input"|isOutput?="output"|isInput?="input" isOutput?=
-		//"output") 
+		//isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output" 
 		// 	//a signal is EITHER local OR (input or output or both)
+		//	 //(	(isLocal?='local')
+		//	 //| 
+		//		 	 
+		//		
+		//		 	
+		//		
+		//		 	                                   
+		//		 		
+		//	//)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
-		//isLocal?="local"
-		public Assignment getIsLocalAssignment_0_0() { return cIsLocalAssignment_0_0; }
-
-		//"local"
-		public Keyword getIsLocalLocalKeyword_0_0_0() { return cIsLocalLocalKeyword_0_0_0; }
-
-		//isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output"
-		public Alternatives getAlternatives_0_1() { return cAlternatives_0_1; }
-
 		//isInput?="input"
-		public Assignment getIsInputAssignment_0_1_0() { return cIsInputAssignment_0_1_0; }
+		public Assignment getIsInputAssignment_0_0() { return cIsInputAssignment_0_0; }
 
 		//"input"
-		public Keyword getIsInputInputKeyword_0_1_0_0() { return cIsInputInputKeyword_0_1_0_0; }
+		public Keyword getIsInputInputKeyword_0_0_0() { return cIsInputInputKeyword_0_0_0; }
 
 		//isOutput?="output"
-		public Assignment getIsOutputAssignment_0_1_1() { return cIsOutputAssignment_0_1_1; }
+		public Assignment getIsOutputAssignment_0_1() { return cIsOutputAssignment_0_1; }
 
 		//"output"
-		public Keyword getIsOutputOutputKeyword_0_1_1_0() { return cIsOutputOutputKeyword_0_1_1_0; }
+		public Keyword getIsOutputOutputKeyword_0_1_0() { return cIsOutputOutputKeyword_0_1_0; }
 
 		//isInput?="input" isOutput?="output"
-		public Group getGroup_0_1_2() { return cGroup_0_1_2; }
+		public Group getGroup_0_2() { return cGroup_0_2; }
 
 		//isInput?="input"
-		public Assignment getIsInputAssignment_0_1_2_0() { return cIsInputAssignment_0_1_2_0; }
+		public Assignment getIsInputAssignment_0_2_0() { return cIsInputAssignment_0_2_0; }
 
 		//"input"
-		public Keyword getIsInputInputKeyword_0_1_2_0_0() { return cIsInputInputKeyword_0_1_2_0_0; }
+		public Keyword getIsInputInputKeyword_0_2_0_0() { return cIsInputInputKeyword_0_2_0_0; }
 
 		//isOutput?="output"
-		public Assignment getIsOutputAssignment_0_1_2_1() { return cIsOutputAssignment_0_1_2_1; }
+		public Assignment getIsOutputAssignment_0_2_1() { return cIsOutputAssignment_0_2_1; }
 
 		//"output"
-		public Keyword getIsOutputOutputKeyword_0_1_2_1_0() { return cIsOutputOutputKeyword_0_1_2_1_0; }
+		public Keyword getIsOutputOutputKeyword_0_2_1_0() { return cIsOutputOutputKeyword_0_2_1_0; }
 
-		//name=ID
+		//name=ID 		
+		//	//)
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
 		//ID
@@ -4018,18 +4015,18 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cNORMALEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
 		private final Keyword cNORMALStateKeyword_0_0 = (Keyword)cNORMALEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cPSEUDOEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cPSEUDOCondKeyword_1_0 = (Keyword)cPSEUDOEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cCONDITIONALEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cCONDITIONALCondKeyword_1_0 = (Keyword)cCONDITIONALEnumLiteralDeclaration_1.eContents().get(0);
 		private final EnumLiteralDeclaration cREFERENCEEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
 		private final Keyword cREFERENCERefKeyword_2_0 = (Keyword)cREFERENCEEnumLiteralDeclaration_2.eContents().get(0);
 		private final EnumLiteralDeclaration cTEXTUALEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
 		private final Keyword cTEXTUALTextualKeyword_3_0 = (Keyword)cTEXTUALEnumLiteralDeclaration_3.eContents().get(0);
 		
 		//enum StateType returns sync::StateType:
-		//  NORMAL="state" | PSEUDO="cond" | REFERENCE="ref" | TEXTUAL="textual";
+		//  NORMAL="state" | CONDITIONAL="cond" | REFERENCE="ref" | TEXTUAL="textual";
 		public EnumRule getRule() { return rule; }
 
-		//NORMAL="state" | PSEUDO="cond" | REFERENCE="ref" | TEXTUAL="textual"
+		//NORMAL="state" | CONDITIONAL="cond" | REFERENCE="ref" | TEXTUAL="textual"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//NORMAL="state"
@@ -4038,11 +4035,11 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		//"state"
 		public Keyword getNORMALStateKeyword_0_0() { return cNORMALStateKeyword_0_0; }
 
-		//PSEUDO="cond"
-		public EnumLiteralDeclaration getPSEUDOEnumLiteralDeclaration_1() { return cPSEUDOEnumLiteralDeclaration_1; }
+		//CONDITIONAL="cond"
+		public EnumLiteralDeclaration getCONDITIONALEnumLiteralDeclaration_1() { return cCONDITIONALEnumLiteralDeclaration_1; }
 
 		//"cond"
-		public Keyword getPSEUDOCondKeyword_1_0() { return cPSEUDOCondKeyword_1_0; }
+		public Keyword getCONDITIONALCondKeyword_1_0() { return cCONDITIONALCondKeyword_1_0; }
 
 		//REFERENCE="ref"
 		public EnumLiteralDeclaration getREFERENCEEnumLiteralDeclaration_2() { return cREFERENCEEnumLiteralDeclaration_2; }
@@ -4556,21 +4553,21 @@ public class KitsGrammarAccess implements IGrammarAccess {
 	}
 
 	//Signal returns sync::Signal:
-	//  (isLocal?="local"|(isInput?="input"|isOutput?="output"|isInput?="input" isOutput
-	//  ?="output")) name=ID (":=" initialValue=ID)? (": " type=ValueType|": combine" type=
-	//  ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)); 
+	//  (isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=ID (
+	//  ":=" initialValue=ID)? (": " type=ValueType|": combine" type=ValueType "with" (
+	//  combineOperator=CombineOperator|hostCombineOperator=STRING)); 
 	//    
 	// 	//a signal is EITHER local OR (input or output or both)
-	//	 	 
-	//	 
-	//			 
+	//	 //(	(isLocal?='local')
+	//	 //| 
+	//		 	 
 	//		
 	//		 	
 	//		
 	//		 	                                   
 	//		 		
-	//	
-	//	 
+	//	//)
+	//	  
 	//	
 	//	   
 	//	
@@ -4987,7 +4984,7 @@ public class KitsGrammarAccess implements IGrammarAccess {
 	}
 
 	//enum StateType returns sync::StateType:
-	//  NORMAL="state" | PSEUDO="cond" | REFERENCE="ref" | TEXTUAL="textual";
+	//  NORMAL="state" | CONDITIONAL="cond" | REFERENCE="ref" | TEXTUAL="textual";
 	public StateTypeElements getStateTypeAccess() {
 		return (unknownRuleStateType != null) ? unknownRuleStateType : (unknownRuleStateType = new StateTypeElements());
 	}

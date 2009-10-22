@@ -74,7 +74,8 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap().after(
 				f.getStateAccess().getEntryActionsAssignment_3_1_0_1());
 		c.setLinewrap().after(
-				f.getStateAccess().getExitActionsActionParserRuleCall_3_1_2_1_0());
+				f.getStateAccess()
+						.getExitActionsActionParserRuleCall_3_1_2_1_0());
 		c.setLinewrap().after(
 				f.getStateAccess().getInnerActionsAssignment_3_1_1_1());
 
@@ -82,6 +83,25 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
 				.getStateAccess().getRightCurlyBracketKeyword_3_2());
 		c.setIndentation(f.getStateAccess().getRegionsAssignment_3_1_5_0(), f
 				.getStateAccess().getRegionsAssignment_3_1_5_1_1());
+		c.setLinewrap().before(f.getStateAccess().getSignalsAssignment_3_1_4());
+		c.setLinewrap().before(
+				f.getStateAccess().getEntryActionsAssignment_3_1_0_1());
+		c.setLinewrap().before(
+				f.getStateAccess().getExitActionsAssignment_3_1_2_1());
+		c.setLinewrap().before(
+				f.getStateAccess().getInnerActionsAssignment_3_1_1_1());
+		c.setLinewrap().after(
+				f.getStateAccess().getOutgoingTransitionsAssignment_4());
+		c.setLinewrap().before(
+				f.getStateAccess().getOutgoingTransitionsAssignment_4());
+		c.setLinewrap().before(
+				f.getStateAccess().getRegionsAssignment_3_1_5_0());
+		c.setLinewrap()
+				.after(f.getStateAccess().getRegionsAssignment_3_1_5_0());
+		c.setLinewrap().before(
+				f.getStateAccess().getRegionsAssignment_3_1_5_1_1());
+		c.setLinewrap().after(
+				f.getStateAccess().getRegionsAssignment_3_1_5_1_1());
 
 		// ...
 	}

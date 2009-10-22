@@ -169,15 +169,15 @@ Variable returns sync::Variable:
 ;
 Signal returns sync::Signal:
  	//a signal is EITHER local OR (input or output or both)
-	(	(isLocal?='local')
-	| 
+	//(	(isLocal?='local')
+	//| 
 		(	(isInput?='input')
 		|
 		 	(isOutput?='output')
 		|
 		 	((isInput?='input')(isOutput?='output'))                                   
 		 )		
-	)
+	//)
 	name=ID 
 	
 	(':=' initialValue=ID)? 
@@ -302,7 +302,7 @@ enum OperatorAnd returns sync::OperatorType:
 HostCode returns sync::HostCode:
 	//"'"code=STRING"'";
 	code=STRING ("(" type=ID ")")?; 	
-enum StateType	returns sync::StateType	: NORMAL='state' | PSEUDO='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
+enum StateType	returns sync::StateType	: NORMAL='state' | CONDITIONAL='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
 enum CombineOperator returns sync::CombineOperator: NONE | ADD='+' | MULT='*' | AND='AND'| OR='OR' |HOST='hostCombineOperator';
 enum ValueType returns sync::ValueType: PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='hostType';	
 enum TransitionType returns sync::TransitionType: WEAKABORT='-->' |  STRONGABORT='o->' | NORMALTERMINATION='>->'; 

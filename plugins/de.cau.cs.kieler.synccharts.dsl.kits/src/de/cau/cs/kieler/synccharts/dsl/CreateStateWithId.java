@@ -3,6 +3,7 @@ package de.cau.cs.kieler.synccharts.dsl;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 
+@Deprecated
 public class CreateStateWithId {
 
 	public final static void createNewState(String id) {

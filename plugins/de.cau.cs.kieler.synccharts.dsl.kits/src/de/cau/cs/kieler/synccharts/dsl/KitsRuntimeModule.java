@@ -24,13 +24,13 @@ public class KitsRuntimeModule extends
 	public Class<? extends IFragmentProvider> bindIFragmentProvider() {
 		return KitsFragmentProvider.class;
 	}
-//	/**
-//	 * bind the fragment provider
-//	 * it is used for the Glue code -oba
-//	 */
-//	public Class<? extends IScopeProvider> bindIScopeProvider() {
-//		return MyDefaultScopeProvider.class;
-//	}
+	/**
+	 * bind the fragment provider
+	 * it is used for the Glue code -oba
+	 */
+	public Class<? extends IScopeProvider> bindIScopeProvider() {
+		return MyDefaultScopeProvider.class;
+	}
 
 	/*
 	 * (non-Javadoc)
