@@ -1,6 +1,0 @@
-<template name="source state" description="source of a transition" id="SourceState"
-    context="de.cau.cs.kieler.synccharts.dsl.RetypingSynccharts.Transition" enabled="true">
-    ${source:CrossReference('Transition.sourceState')
-        ${type:Enum('TransitionType')} 
-            ${target:CrossReference('Transition.targetState')} 
-</template>
