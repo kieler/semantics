@@ -28,6 +28,14 @@
 
   Finally, it is worth reading the documentation.
 
+  Modifications:
+  - haf: added author tag to JavadocType
+  - haf: set PackageName to disallow underscores and capital letters 
+         (as suggested by the Checkstyle docu)
+  - haf: IllegalInstantiation: added class java.lang.Boolean
+         (as suggested by the Checkstyle docu)
+  - haf: Setup KIELER header for java files
+
 -->
 
 <module name="Checker">
@@ -73,9 +81,11 @@
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
         <module name="JavadocMethod"/>
-        <module name="JavadocType"/>
         <module name="JavadocVariable"/>
         <module name="JavadocStyle"/>
+        <module name="JavadocType">
+             <property name="authorFormat" value="\S*"/>
+        </module>
 
 
         <!-- Checks for Naming Conventions.                  -->
@@ -85,15 +95,17 @@
         <module name="LocalVariableName"/>
         <module name="MemberName"/>
         <module name="MethodName"/>
-        <module name="PackageName"/>
         <module name="ParameterName"/>
         <module name="StaticVariableName"/>
         <module name="TypeName"/>
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+        </module>
 
 
         <!-- Checks for Headers                                -->
         <!-- See http://checkstyle.sf.net/config_header.html   -->
-        <!-- <module name="Header">                            -->
+        <module name="Header">
             <!-- The follow property value demonstrates the ability     -->
             <!-- to have access to ANT properties. In this case it uses -->
             <!-- the ${basedir} property to allow Checkstyle to be run  -->
@@ -103,7 +115,23 @@
             <!-- <property                                              -->
             <!--     name="headerFile"                                  -->
             <!--     value="${basedir}/java.header"/>                   -->
-        <!-- </module> -->
+            <property name="header"
+              value="
+/******************************************************************************\n
+ * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client\n
+ *\n
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/\n
+ * \n
+ * Copyright ${year} by\n
+ * + Christian-Albrechts-University of Kiel\n
+ *   + Department of Computer Science\n
+ *     + Real-Time and Embedded Systems Group\n
+ * \n
+ * This code is provided under the terms of the Eclipse Public License (EPL).\n
+ * See the file epl-v10.html for the license text.\n
+ ******************************************************************************/
+            "/>
+        </module>
 
         <!-- Following interprets the header file as regular expressions. -->
         <!-- <module name="RegexpHeader"/>                                -->
@@ -162,13 +190,15 @@
         <module name="EmptyStatement"/>
         <module name="EqualsHashCode"/>
         <module name="HiddenField"/>
-        <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
         <module name="MagicNumber"/>
         <module name="MissingSwitchDefault"/>
         <module name="RedundantThrows"/>
         <module name="SimplifyBooleanExpression"/>
         <module name="SimplifyBooleanReturn"/>
+        <module name="IllegalInstantiation">
+            <property name="classes" value="java.lang.Boolean"/>
+        </module>
 
         <!-- Checks for class design                         -->
         <!-- See http://checkstyle.sf.net/config_design.html -->
