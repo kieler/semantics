@@ -26,6 +26,7 @@
 // It also references two lists: IODeclarations and optional Chart Arguments  
 /***************************************************************/
 
+// modified KIT grammar
 
 Chart :
 	"statechart" name=SableCCIdentifier // bla.bla is possible now
