@@ -56,7 +56,7 @@ public class KitsLabelProvider extends DefaultLabelProvider {
 	}
 
 	String image(Region r) {
-		String image = "Region.gif";
+		String image = "Region25.gif";
 		return image;
 	}
 
