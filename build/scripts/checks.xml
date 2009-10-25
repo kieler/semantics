@@ -47,6 +47,37 @@
         <property name="basedir" value="${basedir}"/>
     -->
 
+            <!-- Checks for Headers                                -->
+        <!-- See http://checkstyle.sf.net/config_header.html   -->
+        <module name="Header">
+            <!-- The follow property value demonstrates the ability     -->
+            <!-- to have access to ANT properties. In this case it uses -->
+            <!-- the ${basedir} property to allow Checkstyle to be run  -->
+            <!-- from any directory within a project. See property      -->
+            <!-- expansion,                                             -->
+            <!-- http://checkstyle.sf.net/config.html#properties        -->
+            <!-- <property                                              -->
+            <!--     name="headerFile"                                  -->
+            <!--     value="${basedir}/java.header"/>                   -->
+            <property name="header"
+              value="
+/******************************************************************************\n
+ * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client\n
+ *\n
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/\n
+ * \n
+ * Copyright 2009 by\n
+ * + Christian-Albrechts-University of Kiel\n
+ *   + Department of Computer Science\n
+ *     + Real-Time and Embedded Systems Group\n
+ * \n
+ * This code is provided under the terms of the Eclipse Public License (EPL).\n
+ * See the file epl-v10.html for the license text.\n
+ ******************************************************************************/
+            "/>
+        </module>
+    
+
     <!-- Checks that a package-info.java file exists for each package.     -->
     <!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocPackage -->
     <module name="JavadocPackage"/>
@@ -100,37 +131,6 @@
         <module name="TypeName"/>
         <module name="PackageName">
             <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
-        </module>
-
-
-        <!-- Checks for Headers                                -->
-        <!-- See http://checkstyle.sf.net/config_header.html   -->
-        <module name="Header">
-            <!-- The follow property value demonstrates the ability     -->
-            <!-- to have access to ANT properties. In this case it uses -->
-            <!-- the ${basedir} property to allow Checkstyle to be run  -->
-            <!-- from any directory within a project. See property      -->
-            <!-- expansion,                                             -->
-            <!-- http://checkstyle.sf.net/config.html#properties        -->
-            <!-- <property                                              -->
-            <!--     name="headerFile"                                  -->
-            <!--     value="${basedir}/java.header"/>                   -->
-            <property name="header"
-              value="
-/******************************************************************************\n
- * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client\n
- *\n
- * http://www.informatik.uni-kiel.de/rtsys/kieler/\n
- * \n
- * Copyright ${year} by\n
- * + Christian-Albrechts-University of Kiel\n
- *   + Department of Computer Science\n
- *     + Real-Time and Embedded Systems Group\n
- * \n
- * This code is provided under the terms of the Eclipse Public License (EPL).\n
- * See the file epl-v10.html for the license text.\n
- ******************************************************************************/
-            "/>
         </module>
 
         <!-- Following interprets the header file as regular expressions. -->
