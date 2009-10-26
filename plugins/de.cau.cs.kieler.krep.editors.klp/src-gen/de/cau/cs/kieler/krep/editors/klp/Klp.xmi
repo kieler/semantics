@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:xtext="http://www.eclipse.org/2008/Xtext">
+  <xtext:Grammar name="de.cau.cs.kieler.krep.editors.klp.Klp" usedGrammars="/1">
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="klp">
+      <ePackage href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#/"/>
+    </metamodelDeclarations>
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
+      <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+    </metamodelDeclarations>
+    <rules xsi:type="xtext:ParserRule" name="KLP">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//KLP"/>
+      </type>
+      <alternatives xsi:type="xtext:Assignment" cardinality="*" feature="instructions" operator="+=">
+        <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Line">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Line"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Group" cardinality="*">
+          <tokens xsi:type="xtext:Assignment" feature="labels" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
+          </tokens>
+          <tokens xsi:type="xtext:Keyword" value=":"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" feature="instruction" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Instruction">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Instruction"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
+        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
+        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.9"/>
+        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.10"/>
+        <groups xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Decl">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Decl"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Assignment" feature="scope" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.14"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" feature="reg" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="SetClk">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//SetClk"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" value="SETCLK"/>
+        <tokens xsi:type="xtext:Assignment" feature="reg" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" feature="clk" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="SetPC">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//SetPC"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" value="SETPC"/>
+        <tokens xsi:type="xtext:Assignment" feature="reg" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" feature="label" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Prio">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Prio"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" value="PRIO"/>
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="reg" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" feature="prio" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.19"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Done">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Done"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" value="DONE"/>
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="pc" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Binop">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Binop"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Assignment" feature="op" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.15"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" feature="to" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" feature="arg1" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.18"/>
+        </tokens>
+        <tokens xsi:type="xtext:Alternatives">
+          <groups xsi:type="xtext:Assignment" feature="arg2" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.18"/>
+          </groups>
+          <groups xsi:type="xtext:Assignment" feature="val" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.19"/>
+          </groups>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Jmp">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Jmp"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" value="JMP"/>
+        <tokens xsi:type="xtext:Assignment" feature="label" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="CJmp">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//CJmp"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Assignment" feature="cond" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.16"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" feature="reg" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.18"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" feature="label" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Move">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Move"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.17"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" feature="to" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+        </tokens>
+        <tokens xsi:type="xtext:Alternatives">
+          <groups xsi:type="xtext:Assignment" feature="from" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.18"/>
+          </groups>
+          <groups xsi:type="xtext:Assignment" feature="val" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.19"/>
+          </groups>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Label">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Label"/>
+      </type>
+      <alternatives xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Reg">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Reg"/>
+      </type>
+      <alternatives xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="Scope">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Scope"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Scope/input"/>
+          <literal value="INPUT"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Scope/output"/>
+          <literal value="OUTPUT"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Scope/local"/>
+          <literal value="LOCAL"/>
+        </groups>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="Operator">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/add"/>
+          <literal value="ADD"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/iadd"/>
+          <literal value="IADD"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/sub"/>
+          <literal value="SUB"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/mul"/>
+          <literal value="MUL"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/div"/>
+          <literal value="DIV"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/and"/>
+          <literal value="AND"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/or"/>
+          <literal value="OR"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/xor"/>
+          <literal value="XOR"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/lt"/>
+          <literal value="LT"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/le"/>
+          <literal value="LE"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/eq"/>
+          <literal value="EQ"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ge"/>
+          <literal value="GE"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/gt"/>
+          <literal value="GT"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/neq"/>
+          <literal value="NEQ"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/isub"/>
+          <literal value="ISUB"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/imul"/>
+          <literal value="IMUL"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/idiv"/>
+          <literal value="IDIV"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/iand"/>
+          <literal value="IAND"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ior"/>
+          <literal value="IOR"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ixor"/>
+          <literal value="IXOR"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ilt"/>
+          <literal value="ILT"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ile"/>
+          <literal value="ILE"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ieq"/>
+          <literal value="IEQ"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ige"/>
+          <literal value="IGE"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/igt"/>
+          <literal value="IGT"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Operator/ineq"/>
+          <literal value="INEQ"/>
+        </groups>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="JumpKind">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//JumpKind"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//JumpKind/jt"/>
+          <literal value="JT"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//JumpKind/jf"/>
+          <literal value="JF"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//JumpKind/jz"/>
+          <literal value="JZ"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//JumpKind/jnz"/>
+          <literal value="JNZ"/>
+        </groups>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="MoveKind">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind/cmov"/>
+          <literal value="CVMOV"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind/vcmov"/>
+          <literal value="VCMOV"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind/vvmov"/>
+          <literal value="VVMOV"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind/ccmov"/>
+          <literal value="CCMOV"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind/ivmov"/>
+          <literal value="IVMOV"/>
+        </groups>
+        <groups xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//MoveKind/icmov"/>
+          <literal value="ICMOV"/>
+        </groups>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Read">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/krep/editors/klp/Klp#//Read"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <groups xsi:type="xtext:Group">
+          <tokens xsi:type="xtext:Assignment" feature="pre" operator="?=">
+            <terminal xsi:type="xtext:Keyword" value="pre"/>
+          </tokens>
+          <tokens xsi:type="xtext:Keyword" value="("/>
+          <tokens xsi:type="xtext:Assignment" feature="reg" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+          </tokens>
+          <tokens xsi:type="xtext:Keyword" value=")"/>
+        </groups>
+        <groups xsi:type="xtext:Assignment" feature="reg" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+        </groups>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="INT">
+      <type metamodel="/0/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Alternatives" cardinality="?">
+          <groups xsi:type="xtext:Keyword" value="+"/>
+          <groups xsi:type="xtext:Keyword" value="-"/>
+        </tokens>
+        <tokens xsi:type="xtext:RuleCall" cardinality="+" rule="/0/@rules.23"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="ID">
+      <type metamodel="/0/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Alternatives">
+          <groups xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
+          <groups xsi:type="xtext:Keyword" value="_"/>
+        </tokens>
+        <tokens xsi:type="xtext:Alternatives" cardinality="*">
+          <groups xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
+          <groups xsi:type="xtext:RuleCall" rule="/0/@rules.23"/>
+          <groups xsi:type="xtext:Keyword" value="_"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="WS">
+      <type metamodel="/0/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <groups xsi:type="xtext:Keyword" value="&#x9;"/>
+        <groups xsi:type="xtext:Keyword" value=" "/>
+        <groups xsi:type="xtext:Keyword" value="&#xD;"/>
+        <groups xsi:type="xtext:Keyword" value="&#xA;"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="COMMENT">
+      <type metamodel="/0/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" value="#"/>
+        <tokens xsi:type="xtext:UntilToken">
+          <terminal xsi:type="xtext:Keyword" value="&#xA;"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="DIGIT">
+      <type metamodel="/0/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:CharacterRange">
+        <left value="0"/>
+        <right value="9"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="LETTER">
+      <type metamodel="/0/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <groups xsi:type="xtext:CharacterRange">
+          <left value="a"/>
+          <right value="z"/>
+        </groups>
+        <groups xsi:type="xtext:CharacterRange">
+          <left value="A"/>
+          <right value="Z"/>
+        </groups>
+      </alternatives>
+    </rules>
+  </xtext:Grammar>
+  <xtext:Grammar name="org.eclipse.xtext.common.Terminals" definesHiddenTokens="true" hiddenTokens="/0/@rules.21 /1/@rules.3 /1/@rules.4">
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
+      <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+    </metamodelDeclarations>
+    <rules xsi:type="xtext:TerminalRule" name="ID">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" cardinality="?" value="^"/>
+        <tokens xsi:type="xtext:Alternatives">
+          <groups xsi:type="xtext:CharacterRange">
+            <left value="a"/>
+            <right value="z"/>
+          </groups>
+          <groups xsi:type="xtext:CharacterRange">
+            <left value="A"/>
+            <right value="Z"/>
+          </groups>
+          <groups xsi:type="xtext:Keyword" value="_"/>
+        </tokens>
+        <tokens xsi:type="xtext:Alternatives" cardinality="*">
+          <groups xsi:type="xtext:CharacterRange">
+            <left value="a"/>
+            <right value="z"/>
+          </groups>
+          <groups xsi:type="xtext:CharacterRange">
+            <left value="A"/>
+            <right value="Z"/>
+          </groups>
+          <groups xsi:type="xtext:Keyword" value="_"/>
+          <groups xsi:type="xtext:CharacterRange">
+            <left value="0"/>
+            <right value="9"/>
+          </groups>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="INT">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </type>
+      <alternatives xsi:type="xtext:CharacterRange" cardinality="+">
+        <left value="0"/>
+        <right value="9"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="STRING">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <groups xsi:type="xtext:Group">
+          <tokens xsi:type="xtext:Keyword" value="&quot;"/>
+          <tokens xsi:type="xtext:Alternatives" cardinality="*">
+            <groups xsi:type="xtext:Group">
+              <tokens xsi:type="xtext:Keyword" value="\"/>
+              <tokens xsi:type="xtext:Alternatives">
+                <groups xsi:type="xtext:Keyword" value="b"/>
+                <groups xsi:type="xtext:Keyword" value="t"/>
+                <groups xsi:type="xtext:Keyword" value="n"/>
+                <groups xsi:type="xtext:Keyword" value="f"/>
+                <groups xsi:type="xtext:Keyword" value="r"/>
+                <groups xsi:type="xtext:Keyword" value="&quot;"/>
+                <groups xsi:type="xtext:Keyword" value="'"/>
+                <groups xsi:type="xtext:Keyword" value="\"/>
+              </tokens>
+            </groups>
+            <groups xsi:type="xtext:NegatedToken">
+              <terminal xsi:type="xtext:Alternatives">
+                <groups xsi:type="xtext:Keyword" value="\"/>
+                <groups xsi:type="xtext:Keyword" value="&quot;"/>
+              </terminal>
+            </groups>
+          </tokens>
+          <tokens xsi:type="xtext:Keyword" value="&quot;"/>
+        </groups>
+        <groups xsi:type="xtext:Group">
+          <tokens xsi:type="xtext:Keyword" value="'"/>
+          <tokens xsi:type="xtext:Alternatives" cardinality="*">
+            <groups xsi:type="xtext:Group">
+              <tokens xsi:type="xtext:Keyword" value="\"/>
+              <tokens xsi:type="xtext:Alternatives">
+                <groups xsi:type="xtext:Keyword" value="b"/>
+                <groups xsi:type="xtext:Keyword" value="t"/>
+                <groups xsi:type="xtext:Keyword" value="n"/>
+                <groups xsi:type="xtext:Keyword" value="f"/>
+                <groups xsi:type="xtext:Keyword" value="r"/>
+                <groups xsi:type="xtext:Keyword" value="&quot;"/>
+                <groups xsi:type="xtext:Keyword" value="'"/>
+                <groups xsi:type="xtext:Keyword" value="\"/>
+              </tokens>
+            </groups>
+            <groups xsi:type="xtext:NegatedToken">
+              <terminal xsi:type="xtext:Alternatives">
+                <groups xsi:type="xtext:Keyword" value="\"/>
+                <groups xsi:type="xtext:Keyword" value="'"/>
+              </terminal>
+            </groups>
+          </tokens>
+          <tokens xsi:type="xtext:Keyword" value="'"/>
+        </groups>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="ML_COMMENT">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" value="/*"/>
+        <tokens xsi:type="xtext:UntilToken">
+          <terminal xsi:type="xtext:Keyword" value="*/"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="SL_COMMENT">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <tokens xsi:type="xtext:Keyword" value="//"/>
+        <tokens xsi:type="xtext:NegatedToken" cardinality="*">
+          <terminal xsi:type="xtext:Alternatives">
+            <groups xsi:type="xtext:Keyword" value="&#xA;"/>
+            <groups xsi:type="xtext:Keyword" value="&#xD;"/>
+          </terminal>
+        </tokens>
+        <tokens xsi:type="xtext:Group" cardinality="?">
+          <tokens xsi:type="xtext:Keyword" cardinality="?" value="&#xD;"/>
+          <tokens xsi:type="xtext:Keyword" value="&#xA;"/>
+        </tokens>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="WS">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives" cardinality="+">
+        <groups xsi:type="xtext:Keyword" value=" "/>
+        <groups xsi:type="xtext:Keyword" value="&#x9;"/>
+        <groups xsi:type="xtext:Keyword" value="&#xD;"/>
+        <groups xsi:type="xtext:Keyword" value="&#xA;"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="ANY_OTHER">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Wildcard"/>
+    </rules>
+  </xtext:Grammar>
+</xmi:XMI>
