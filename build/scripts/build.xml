@@ -12,6 +12,7 @@
 	<property name="p2.director.workspace" location="${scriptdir}/.p2Workspace" />
 	<property name="antContrib.home"       location="/home/kieler/ant-contrib" />
 	<property name="findbugs.home"         location="/home/kieler/findbugs" />
+	<property name="findbugs.classes"      location="${basedir}/update-site/plugins" />
 	<property name="checkstyle.home"       location="/home/kieler/checkstyle" />
  
  	<property name="equinoxLauncherPluginVersion" value="${system.equinoxLauncherPluginVersion}" />
@@ -47,19 +48,19 @@
 		
 		<!-- the following conditions will check the presence of certain properties
 		     and write definite values to new properties in order to pass them to the antRunner -->
-		<condition property="suppress.publishing" value="false" else="true">
+		<condition property="suppress.publishing" value="true" else="false">
 			<isset property="no.publishing" />
 		</condition>
 	
-		<condition property="suppress.doc" value="false" else="true">
+		<condition property="suppress.doc" value="true" else="false">
 			<isset property="no.doc" />
 		</condition>
 	
-		<condition property="suppress.findbugs" value="false" else="true">
+		<condition property="suppress.findbugs" value="true" else="false">
 			<isset property="no.findbugs" />
 		</condition>
 	
-		<condition property="suppress.checkstyle" value="false" else="true">
+		<condition property="suppress.checkstyle" value="true" else="false">
 			<isset property="no.checkstyle" />
 		</condition>
 	
@@ -114,35 +115,56 @@
 				<!-- set to true to suppress running findbugs, default is false -->
 			<arg value="-Dsuppress.checkstyle=${suppress.checkstyle}" />
 				<!-- set to true to suppress running checkstyle, default is false -->
+			<arg value="-Dfindbugs.classes=${findbugs.classes}" />
+				<!-- set to true to suppress running findbugs, default is false -->
 			<classpath>
 				<pathelement location="${eclipseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
 		</java>
 	</target>
 
-	<target name="build.feature" if="eclipse.running" depends="init"
-		description="target for complete feature build and publishing">
-		
+	<target name="init">
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
 		<property name="configs"       value="${feature.configs}" />
+		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
 		<!-- property name="customTargets"   location="${eclipse.pdebuild.templates}/headless-build/customTargets.xml"/ -->
-		<!-- customTargets is not needed as we directly call the features buildfile -> no prebuild, postbuild, ... will be considered -->
-		<property name="genericTargets"  location="${eclipse.pdebuild.scripts}/genericTargets.xml"/>
+		    <!-- customTargets is not needed as we directly call the features buildfile -> no prebuild, postbuild, ... will be executed -->
 		<!-- property name="allElementsFile" location="${eclipse.pdebuild.templates}/headless-build/allElements.xml"/ -->
-		<!-- allElements is need for product build only -->
+		    <!-- allElements is need for product build only -->
+	
+		<!-- the following conditions work in the other way round than the conditions in line 50ff.,
+		     i.e. they provide properties set under certain circumstances only
+			 to be properly used in target's 'unless' declarations -->
+		<condition property="no.doc" value="true">
+			<istrue value="${suppress.doc}" />
+		</condition>
+	
+		<condition property="no.findbugs" value="true">
+			<istrue value="${suppress.findbugs}" />
+		</condition>
+	
+		<condition property="no.checkstyle" value="true">
+			<istrue value="${suppress.checkstyle}" />
+		</condition>	
 
-		<mkdir dir="${basedir}/buildTempFolder" />
-		<mkdir dir="${basedir}/features" />
-		<mkdir dir="${basedir}/plugins" />
-		<mkdir dir="${basedir}/update-site/features" />
-		<mkdir dir="${basedir}/update-site/plugins" />
+		<condition property="no.publishing" value="true">
+			<istrue value="${suppress.publishing}" />
+		</condition>
+	</target>	
+
+	<target name="generateScripts" if="eclipse.running" depends="init"
+	    description="target for complete feature build and publishing">
 		
 		<!-- generate build.xml scripts for feature and plugins -->
 		<ant antfile="${genericTargets}" target="generateScript">
 			<property name="type" value="feature"/>
 			<property name="id" value="${feature}"/>
 		</ant>
+	</target>	
+
+	<target name="editScripts" if="eclipse.running" depends="init, generateScripts"
+	    description="target for editing the features build file (adding targets for doc, findbugs, checkstyle)">
 		
 		<!-- read javac's classpath information from build.xml scripts -->		
 		<loadfile property="feature.classpath">
@@ -195,64 +217,57 @@
 		<replace file="${basedir}/features/${feature}/build.xml"
 				 token="&lt;/project&gt;"
 				 value="${doc.target}${findbugs.target}${checkstyle.target}&lt;/project&gt;" />
+	</target>
 
-		<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc
-			 CAUTION: if is a ant-contrib task declared above! -->
-		<if>
-			<isfalse value="${suppress.buildJars}" />
-			<then>
+	<target name="build.feature" if="eclipse.running" depends="init, generateScripts, editScripts"
+	    description="target for complete feature building, checking and publishing">
+		
+		<mkdir dir="${basedir}/buildTempFolder" />
+		<mkdir dir="${basedir}/features" />
+		<mkdir dir="${basedir}/plugins" />
+		<mkdir dir="${basedir}/update-site/features" />
+		<mkdir dir="${basedir}/update-site/plugins" />		
 
-				<delete includeemptydirs="true">
-					<fileset dir="${basedir}/buildTempFolder/" includes="**/*"/>
-					<fileset dir="${basedir}/update-site/features/" includes="**/*"/>
-					<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
-				</delete>
+		<delete includeemptydirs="true">
+			<fileset dir="${basedir}/buildTempFolder/" includes="**/*"/>
+			<fileset dir="${basedir}/update-site/features/" includes="**/*"/>
+			<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
+		</delete>
 
-				<!-- run feature's build.xml: clean, compile and jarUp, provide ziped logs, generate javadoc -->		
-				<ant antfile="build.xml" dir="${basedir}/features/${feature}">
-					<property name="javacDebugInfo" value="true" />
-					<property name="feature.destination" value="${basedir}/update-site/features" />
-					<property name="plugin.destination" value="${basedir}/update-site/plugins" />
-					<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
-					<property name="doc.packages" value="${scriptdir}/../package-lists" />
-					<property name="findbugs.classes" value="${basedir}/update-site/plugins" />
-					<property name="findbugs.sources" value="${basedir}/plugins" />
-					<property name="checkstyle.sources" value="${basedir}/plugins" />
-					<target name="clean" />
-					<target name="build.update.jar" />
-					<target name="zip.logs" />
-					<target name="doc" />
-					<target name="findbugs" />
-					<target name="checkstyle" />
-				</ant>
-			</then>
-		</if>
-
-		<!-- run feature's build.xml: copy customized feature.xml into update-site folder
-			 needed by succeeding feature builds while resolving dependencies -->		
-		<ant antfile="build.xml" dir="${basedir}/features/${feature}" target="gather.bin.parts">
+		<!-- run feature's build.xml: clean, compile and jarUp, provide unjared feature, zip logs, generate javadoc -->		
+		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
+			<property name="javacDebugInfo" value="true" />
+			<property name="feature.destination" value="${basedir}/update-site/features" />
+			<property name="plugin.destination" value="${basedir}/update-site/plugins" />
 			<property name="feature.base" value="${basedir}/update-site/" />
 			<property name="updateJar.omitRootfiles" value="true" />
 			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
+			<property name="doc.packages" value="${scriptdir}/../package-lists" />
+			<!-- property name="findbugs.classes" value="${basedir}/update-site/plugins" / --><!-- defined above -->
+			<property name="findbugs.sources" value="${basedir}/plugins" />
+			<property name="checkstyle.sources" value="${basedir}/plugins" />
+			<target name="clean" />
+			<target name="build.update.jar" />
+			<target name="gather.bin.parts" />
+			<target name="zip.logs" />
+			<target name="doc" />
+			<target name="findbugs" />
+			<target name="checkstyle" />
+			<!-- gather.bin.parts copies customized feature.xml into update-site/features folder
+			     needed by succeeding feature builds while resolving dependencies -->		
 		</ant>
-		
-		<!-- run feature's assemble.p2.xml: generate update site entry
-			 CAUTION: if is a ant-contrib task declared above! -->
-		<if>
-			<isfalse value="${suppress.publishing}" />
-			<then>
-				<antcall target="build.updatesiteEntry" />
-			</then>
-		</if>
+
+		<!-- run feature's assemble.p2.xml: generate update site entry -->
+		<antcall target="build.updatesiteEntry" />
 	</target>
 	
-	<target name="build.updatesiteEntry" if="eclipse.running"
+	<target name="build.updatesiteEntry" if="eclipse.running" unless="no.publishing" depends="init, generateScripts"
 		description="target for creating an updatesite entry of last build results">
 		
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
 		<property name="configs"       value="${feature.configs}" />
-		<property name="genericTargets"  location="${eclipse.pdebuild.scripts}/genericTargets.xml"/>
+		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
 
 		<echo message="STARTING p2 stuff" />
 		<ant antfile="assemble.${feature}.p2.xml">
@@ -260,7 +275,7 @@
 		</ant>
 	</target>
 	
-	<target name="gather.plugin.bin.parts" if="eclipse.running"
+	<target name="gather.plugin.bin.parts" if="eclipse.running" depends="init, generateScripts"
 		description="target for gathering plugin's bin parts, needed if ${plugin} contains library .jar files">
 		<!-- used in KIELER_klepto job, for instance -->
 
@@ -268,19 +283,26 @@
 			<property name="destination.temp.folder" value="${basedir}/update-site/plugins" />
 			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 		</ant>
+		
 		<delete>
 			<fileset dir="${basedir}/update-site/plugins/" includes="${plugin}*.jar" />
 		</delete>
 	</target>
 	
-	<target name="gather.feature.bin.parts" if="eclipse.running"
+	<target name="gather.feature.bin.parts" if="eclipse.running" depends="init, generateScripts"
 		description="target for gathering feature's bin parts, i.e. timestamp the feature only. No children included!">
 		<!-- used in KIELER_dependencies job, for instance -->
+
+		<mkdir dir="${basedir}/update-site/features" />
+
+		<ant antfile="${genericTargets}" target="generateScript">
+			<property name="type" value="feature"/>
+			<property name="id" value="${feature}"/>
+		</ant>
 
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}" target="gather.bin.parts">
 			<property name="feature.base" value="${basedir}/update-site/" />
 			<property name="updateJar.omitRootfiles" value="true" />
-			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 		</ant>
 	</target>
 	
@@ -397,23 +419,5 @@
 
 	<target name="noTargetInfo">
 		<fail message="No build target given. Please give a target explicitly -Dtarget=&lt;{feature,rca}&gt;" />
-	</target>
-	
-	<target name="init">
-		<condition property="no.publishing" value="true">
-			<istrue value="${suppress.publishing}" />
-		</condition>
-	
-		<condition property="no.doc" value="true">
-			<istrue value="${suppress.doc}" />
-		</condition>
-	
-		<condition property="no.findbugs" value="true">
-			<istrue value="${suppress.findbugs}" />
-		</condition>
-	
-		<condition property="no.checkstyle" value="true">
-			<istrue value="${suppress.checkstyle}" />
-		</condition>	
 	</target>	
 </project>
