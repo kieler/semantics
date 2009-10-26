@@ -28,45 +28,43 @@ import de.cau.cs.kieler.krep.evalbench.ui.editors.AssemblerEditor;
  */
 public class StepAction extends Action {
 
-	/** Identifier string for this action */
-	private static final String ACTION_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.step";
-	/** Relative path to the icon to use for this action */
-	private static final String ICON_PATH = "icons/step.gif";
+    /** Identifier string for this action. */
+    private static final String ACTION_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.step";
+    /** Relative path to the icon to use for this action. */
+    private static final String ICON_PATH = "icons/step.gif";
 
-	/** The status line manager that can be used to display messages */
-	private IStatusLineManager statusLineManager;
+    /** The status line manager that can be used to display messages. */
+    private IStatusLineManager statusLineManager;
 
-	/**
-	 * Creates a new Step Action.
-	 * 
-	 * @param manager
-	 *            status line manager used to display action result
-	 * @param trace
-	 *            trace from which the inputs are read If trace is null or all
-	 *            ticks are executed, the inputs are read from the input view
-	 */
-	public StepAction(IStatusLineManager manager) {
-		setId(ACTION_ID);
-		setText("&Step");
-		setToolTipText("Perform a single step in the current program");
-		setImageDescriptor(Activator.imageDescriptorFromPlugin(
-				Activator.PLUGIN_ID, ICON_PATH));
-		this.statusLineManager = manager;
-	}
+    /**
+     * Creates a new Step Action.
+     * 
+     * @param manager
+     *            status line manager used to display action result
+     */
+    public StepAction(IStatusLineManager manager) {
+        setId(ACTION_ID);
+        setText("&Step");
+        setToolTipText("Perform a single step in the current program");
+        setImageDescriptor(Activator.imageDescriptorFromPlugin(
+                Activator.PLUGIN_ID, ICON_PATH));
+        this.statusLineManager = manager;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.action.Action#run()
-	 */
-	@Override
-	public void run() {
-		AssemblerEditor editor = Activator.commonLayer
-				.getActiveAssemblerEditor();
-		Tick tick = new Tick(editor.getInputs(), editor.getOutputs());
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.action.Action#run()
+     */
+    @Override
+    public void run() {
+        AssemblerEditor editor = Activator.getDefault().commonLayer
+                .getActiveAssemblerEditor();
+        Tick tick = new Tick(editor.getInputs(), editor.getOutputs());
 
-		Activator.commonLayer.step(tick);
-		statusLineManager.setMessage(Activator.commonLayer.getStatusMessage());
-	}
+        Activator.getDefault().commonLayer.step(tick);
+        statusLineManager.setMessage(Activator.getDefault().commonLayer
+                .getStatusMessage());
+    }
 
 }

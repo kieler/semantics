@@ -31,72 +31,72 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.TraceView;
  */
 public class EvalBenchPerspective implements IPerspectiveFactory {
 
-	/** Identifier string for this perspective */
-	public final static String PERSPECTIVE_ID = "de.cau.cs.kieler.krep.evalbench.ui.perspective";
-	/** Identifier string for the connection view */
-	private final static String ID_CONNECTION = ConnectionView.VIEW_ID;// "de.cau.cs.kieler.krep.evalbench.ui.views.connection";
+    /** Identifier string for this perspective. */
+    public static final String PERSPECTIVE_ID = "de.cau.cs.kieler.krep.evalbench.ui.perspective";
+    /** Identifier string for the connection view. */
+    private static final String ID_CONNECTION = ConnectionView.VIEW_ID;
 
-	/** Identifier string for the message view */
-	private final static String ID_MESSAGE = MessageView.VIEW_ID; // "de.cau.cs.kieler.krep.evalbench.ui.views.connection";
-	/** Identifier string for the target view */
-	private final static String ID_TARGET = TargetView.VIEW_ID; // "de.cau.cs.kieler.krep.evalbench.ui.views.target";
-	/** Identifier string for the input view */
-	private final static String ID_INPUT = InputView.VIEW_ID; // "de.cau.cs.kieler.krep.evalbench.ui.views.input";
+    /** Identifier string for the message view. */
+    private static final String ID_MESSAGE = MessageView.VIEW_ID;
+    /** Identifier string for the target view. */
+    private static final String ID_TARGET = TargetView.VIEW_ID;
+    /** Identifier string for the input view. */
+    private static final String ID_INPUT = InputView.VIEW_ID;
 
-	/** Identifier string for the trace view */
-	private final static String ID_TRACE = TraceView.VIEW_ID; // "de.cau.cs.kieler.krep.evalbench.ui.views.trace";
-	/** Identifier string for the output view */
-	private final static String ID_OUTPUT = OutputView.VIEW_ID; // "de.cau.cs.kieler.krep.evalbench.ui.views.output";
+    /** Identifier string for the trace view. */
+    private static final String ID_TRACE = TraceView.VIEW_ID;
+    /** Identifier string for the output view. */
+    private static final String ID_OUTPUT = OutputView.VIEW_ID;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui
-	 * .IPageLayout)
-	 */
-	public void createInitialLayout(IPageLayout layout) {
-		// get the editor area.
-		String editorArea = layout.getEditorArea();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui
+     * .IPageLayout)
+     */
+    public void createInitialLayout(IPageLayout layout) {
+        // get the editor area.
+        String editorArea = layout.getEditorArea();
 
-		// bottom: Connection and Target view
-		IFolderLayout bottom = layout.createFolder("bottom",
-				IPageLayout.BOTTOM, 0.7f, editorArea);
-		bottom.addView(ID_CONNECTION);
-		bottom.addView(ID_TARGET);
-		bottom.addView(ID_MESSAGE);
+        // bottom: Connection and Target view
+        IFolderLayout bottom = layout.createFolder("bottom",
+                IPageLayout.BOTTOM, 0.7f, editorArea);
+        bottom.addView(ID_CONNECTION);
+        bottom.addView(ID_TARGET);
+        bottom.addView(ID_MESSAGE);
 
-		// right 2: Output view
-		IFolderLayout right = layout.createFolder("right2", IPageLayout.RIGHT,
-				0.7f, editorArea);
-		right.addView(ID_OUTPUT);
+        // right 2: Output view
+        IFolderLayout right = layout.createFolder("right2", IPageLayout.RIGHT,
+                0.7f, editorArea);
+        right.addView(ID_OUTPUT);
 
-		// right 1: Input view
-		IFolderLayout left = layout.createFolder("right1", IPageLayout.RIGHT,
-				0.57f, editorArea);
-		left.addView(ID_INPUT);
-		// left.addView(ID_TRACE);
+        // right 1: Input view
+        IFolderLayout left = layout.createFolder("right1", IPageLayout.RIGHT,
+                0.57f, editorArea);
+        left.addView(ID_INPUT);
+        // left.addView(ID_TRACE);
 
-		// haf: try to add the KIEL Environment Visualization View if the KEV
-		// plugin is available
-		// if (Platform.getBundle("edu.unikiel.rtsys.kieler.kev") != null) {
-		// IFolderLayout rightBottom = layout.createFolder("rightBottom",
-		// IPageLayout.BOTTOM, 0.5f, "right");
-		// rightBottom.addView("edu.unikiel.rtsys.kieler.kev.views.EnvironmentView");
-		// }
+        // haf: try to add the KIEL Environment Visualization View if the KEV
+        // plugin is available
+        // if (Platform.getBundle("edu.unikiel.rtsys.kieler.kev") != null) {
+        // IFolderLayout rightBottom = layout.createFolder("rightBottom",
+        // IPageLayout.BOTTOM, 0.5f, "right");
+        // rightBottom.addView("edu.unikiel.rtsys.kieler.kev.views.EnvironmentView");
+        // }
 
-		// add all shown views as shortcuts
-		layout.addShowViewShortcut(ID_INPUT);
-		layout.addShowViewShortcut(ID_TRACE);
-		layout.addShowViewShortcut(ID_CONNECTION);
-		layout.addShowViewShortcut(ID_MESSAGE);
-		layout.addShowViewShortcut(ID_TARGET);
-		layout.addShowViewShortcut(ID_OUTPUT);
-		layout.addShowViewShortcut(ID_TRACE);
+        // add all shown views as shortcuts
+        layout.addShowViewShortcut(ID_INPUT);
+        layout.addShowViewShortcut(ID_TRACE);
+        layout.addShowViewShortcut(ID_CONNECTION);
+        layout.addShowViewShortcut(ID_MESSAGE);
+        layout.addShowViewShortcut(ID_TARGET);
+        layout.addShowViewShortcut(ID_OUTPUT);
+        layout.addShowViewShortcut(ID_TRACE);
 
-		// add this perspective as shortcut
-		layout.addPerspectiveShortcut(EvalBenchPerspective.PERSPECTIVE_ID);// "de.cau.cs.kieler.krep.evalbench.ui.perspective");
-		layout.addPerspectiveShortcut(TracePerspective.PERSPECTIVE_ID); // "de.cau.cs.kieler.krep.evalbench.ui.traceperspective");
-		layout.addPerspectiveShortcut(VerifyPerspective.PERSPECTIVE_ID); // "de.cau.cs.kieler.krep.evalbench.ui.traceperspective");
-	}
+        // add this perspective as shortcut
+        layout.addPerspectiveShortcut(EvalBenchPerspective.PERSPECTIVE_ID);
+        layout.addPerspectiveShortcut(TracePerspective.PERSPECTIVE_ID);
+        layout.addPerspectiveShortcut(VerifyPerspective.PERSPECTIVE_ID);
+    }
 }

@@ -21,131 +21,138 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.krep.evalbench.comm.CommonLayer;
-import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
+import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
+ * 
+ * @author ctr
  */
-public class Activator extends AbstractUIPlugin implements IPageListener {
+public final class Activator extends AbstractUIPlugin implements IPageListener {
 
-	/** The plug-in ID */
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.krep.evalbench.base";
+    /** The plug-in ID. */
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.krep.evalbench.base";
 
-	/** The common layer for data exchange */
-	public static CommonLayer commonLayer = new CommonLayer();
+    /** The shared instance. */
+    private static Activator plugin;
 
-	/** current program */
-	private static IAssembler program = null;
+    /** The common layer for data exchange. */
+    public CommonLayer commonLayer = new CommonLayer();
 
-	/** current execution Trace */
-	private static TraceList traces = new TraceList();
+    /** The viewer to show the current program. */
+    private AssemblerView viewer = null;
 
-	/** The shared instance */
-	private static Activator plugin;
+    /** current execution Trace. */
+    private TraceList traces = new TraceList();
 
-	/**
-	 * The constructor
-	 */
-	public Activator() {
-		super();
-	}
+    /**
+     * The constructor.
+     */
+    public Activator() {
+        super();
+    }
 
-	
-	/**
-	 * @return currently loaded traces
-	 */
-	public static TraceList getTraces() {
-		return traces;
-	}
+    /**
+     * @return Viewer to display the current assembler.
+     */
+    public AssemblerView getViewer() {
+        return viewer;
+    }
 
-	/**
-	 * @param traces
-	 *            new tracelist
-	 */
-	public static void setTraces(final TraceList traces) {
-		Activator.traces = traces;
+    /**
+     * @param v
+     *            to display the assembler
+     */
+    public void setViewer(final AssemblerView v) {
+        this.viewer = v;
+    }
 
-	}
+    /**
+     * @return currently loaded traces
+     */
+    public TraceList getTraces() {
+        return traces;
+    }
 
-	public static IAssembler getProgram() {
-		return program;
-	}
+    /**
+     * @param t
+     *            new list of traces
+     */
+    public void setTraces(final TraceList t) {
+        this.traces = t;
 
-	public static void setProgram(IAssembler program) {
-		Activator.program = program;
-	}
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
-	 * )
-	 */
-	@Override
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-		// initialize the common layer
-		commonLayer.initialize();
-		// register as page listener
-		PlatformUI.getWorkbench().getActiveWorkbenchWindow().addPageListener(
-				this);
-	}
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+     * )
+     */
+    @Override
+    public void start(final BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
+        // initialize the common layer
+        commonLayer.initialize();
+        // register as page listener
+        PlatformUI.getWorkbench().getActiveWorkbenchWindow().addPageListener(
+                this);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
-	 * )
-	 */
-	@Override
-	public void stop(BundleContext context) throws Exception {
-		// dispose the common layer
-		commonLayer.dispose();
-		plugin = null;
-		super.stop(context);
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+     * )
+     */
+    @Override
+    public void stop(final BundleContext context) throws Exception {
+        // dispose the common layer
+        commonLayer.dispose();
+        plugin = null;
+        super.stop(context);
+    }
 
-	/**
-	 * Returns the shared instance
-	 * 
-	 * @return the shared instance
-	 */
-	public static Activator getDefault() {
-		return plugin;
-	}
+    /**
+     * Returns the shared instance.
+     * 
+     * @return the shared instance
+     */
+    public static Activator getDefault() {
+        return plugin;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.IPageListener#pageActivated(org.eclipse.ui.IWorkbenchPage)
-	 */
-	public void pageActivated(final IWorkbenchPage page) {
-		page.addPartListener(commonLayer);
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.eclipse.ui.IPageListener#pageActivated(org.eclipse.ui.IWorkbenchPage)
+     */
+    public void pageActivated(final IWorkbenchPage page) {
+        page.addPartListener(commonLayer);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.IPageListener#pageClosed(org.eclipse.ui.IWorkbenchPage)
-	 */
-	public final void pageClosed(final IWorkbenchPage page) {
-		// Nothing to do
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.eclipse.ui.IPageListener#pageClosed(org.eclipse.ui.IWorkbenchPage)
+     */
+    public void pageClosed(final IWorkbenchPage page) {
+        // Nothing to do
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.IPageListener#pageOpened(org.eclipse.ui.IWorkbenchPage)
-	 */
-	public final void pageOpened(final IWorkbenchPage page) {
-		// Nothing to do
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.eclipse.ui.IPageListener#pageOpened(org.eclipse.ui.IWorkbenchPage)
+     */
+    public void pageOpened(final IWorkbenchPage page) {
+        // Nothing to do
+    }
 
 }

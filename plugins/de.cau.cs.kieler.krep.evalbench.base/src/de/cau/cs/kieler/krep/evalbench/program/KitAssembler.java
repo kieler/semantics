@@ -36,168 +36,156 @@ import de.cau.cs.kieler.krep.evalbench.helpers.Tracer;
  * 
  */
 public class KitAssembler implements IAssembler {
-	/** Internal list of input signals */
-	// private LinkedList<Signal> inputs;
 
-	/** Internal list of output signals */
-	// private LinkedList<Signal> outputs;
+    /** Internal array of assembler instructions. */
+    private final LinkedList<String> instructions;
 
-	/** Internal list of local signals */
-	// private LinkedList<Signal> locals;
 
-	/** Internal array of assembler instructions */
-	private final LinkedList<String> instructions;
+    private final KepAssembler kasm;
 
-	/** index for all signals */
-	// private HashMap<String, Integer> signalIndex = new HashMap<String,
-	// Integer>();
+    private Map<Integer, Integer> lines = null;
 
-	private final KepAssembler kasm;
+    /**
+     * generate new empty assembler for kit files.
+     */
+    public KitAssembler() {
+        super();
+        kasm = new KepAssembler();
+        instructions = new LinkedList<String>();
+    }
 
-	private Map<Integer, Integer> lines = null;
+    public int adr2row(final int i) {
+        if (lines != null) {
+            Integer c = lines.get(i);
+            if (c != null) {
+                return c - 1;
+            }
+        }
+        return 0;
+    }
 
-	/**
-	 * generate new empty assembler for kit files
-	 */
-	public KitAssembler() {
-		super();
-		kasm = new KepAssembler();
-		// signalIndex = new HashMap<String, Integer>();
-		instructions = new LinkedList<String>();
-	}
+    public void assemble(final String name, final Reader program)
+            throws ParseException {
+        String s = "";
+        char c;
+        try {
+            while (program.ready()) {
+                c = (char) (program.read());
+                s += c;
+            }
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+        assemble(name, s);
 
-	public int adr2row(final int i) {
-		if (lines != null) {
-			Integer c = lines.get(i);
-			if (c != null) {
-				return c - 1;
-			}
-		}
-		return 0;
-	}
+    }
 
-	public void assemble(final String name, final Reader program)
-			throws ParseException {
-		String s = "";
-		char c;
-		try {
-			while (program.ready()) {
-				c = (char) (program.read());
-				s += c;
-			}
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
-		assemble(name, s);
+    public void assemble(final String name, final String program)
+            throws ParseException {
+        File kasmFile;
+        // get command string for the external assembler
+        try {
+            // create temporary kasm file and write program content
+            final File kitFile = File.createTempFile("temp", ".kit");
+            kitFile.deleteOnExit();
+            final FileWriter writer = new FileWriter(kitFile);
+            writer.write(program);
+            writer.flush();
+            writer.close();
+            // execute external assembler program
+            final String fileName = kitFile.getName();
+            // final String filePrefix = fileName.substring(0, fileName
+            // .lastIndexOf('.'));
+            final String[] command = { "/home/esterel/bin/smakc", fileName };
+            final Process process = Runtime.getRuntime().exec(command, null,
+                    kitFile.getParentFile());
+            // any output?
 
-	}
+            final StreamGobbler errorGobbler = new StreamGobbler(process
+                    .getErrorStream(), "ERROR");
 
-	public void assemble(final String name, final String program)
-			throws ParseException {
-		File kasmFile;
-		// get command string for the external assembler
-		try {
-			// create temporary kasm file and write program content
-			final File kitFile = File.createTempFile("temp", ".kit");
-			kitFile.deleteOnExit();
-			final FileWriter writer = new FileWriter(kitFile);
-			writer.write(program);
-			writer.flush();
-			writer.close();
-			// execute external assembler program
-			final String fileName = kitFile.getName();
-			// final String filePrefix = fileName.substring(0, fileName
-			// .lastIndexOf('.'));
-			final String[] command = { "/home/esterel/bin/smakc", fileName };
-			final Process process = Runtime.getRuntime().exec(command, null,
-					kitFile.getParentFile());
-			// any output?
+            final StreamGobbler outputGobbler = new StreamGobbler(process
+                    .getInputStream(), "OUTPUT");
 
-			final StreamGobbler errorGobbler = new StreamGobbler(process
-					.getErrorStream(), "ERROR");
+            errorGobbler.start();
+            outputGobbler.start();
 
-			final StreamGobbler outputGobbler = new StreamGobbler(process
-					.getInputStream(), "OUTPUT");
+            final int exitVal = process.waitFor();
+            System.out.println("ExitValue: " + exitVal);
 
-			errorGobbler.start();
-			outputGobbler.start();
+            final String filePrefix = fileName.substring(0, fileName
+                    .lastIndexOf('.'));
 
-			final int exitVal = process.waitFor();
-			System.out.println("ExitValue: " + exitVal);
+            // get the created listing file
+            kasmFile = new File(kitFile.getParentFile(), filePrefix + ".kasm");
+            kasmFile.deleteOnExit();
+            final FileReader reader = new FileReader(kasmFile);
+            kasm.assemble(name, reader);
+            try {
+                lines = Tracer.trace(kitFile.getAbsolutePath(), kasmFile
+                        .getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            } catch (Throwable t) {
+                t.printStackTrace();
+            } finally {
+                System.out.println("okay");
+            }
 
-			final String filePrefix = fileName.substring(0, fileName
-					.lastIndexOf('.'));
+            final StringTokenizer token = new StringTokenizer(program, "\n");
+            while (token.hasMoreTokens()) {
+                instructions.add(token.nextToken());
+            }
+        } catch (final IOException e) {
+            throw new ParseException(
+                    "Execution of external assembler program failed: "
+                            + e.getMessage());
+        } catch (InterruptedException e) {
+            throw new ParseException(
+                    "Execution of external assembler program failed: "
+                            + e.getMessage());
+        }
+    }
 
-			// get the created listing file
-			kasmFile = new File(kitFile.getParentFile(), filePrefix + ".kasm");
-			kasmFile.deleteOnExit();
-			final FileReader reader = new FileReader(kasmFile);
-			kasm.assemble(name, reader);
-			try {
-				lines = Tracer.trace(kitFile.getAbsolutePath(), kasmFile
-						.getAbsolutePath());
-			} catch (Exception e) {
-				e.printStackTrace();
-			} catch (Throwable t) {
-				t.printStackTrace();
-			} finally {
-				System.out.println("okay");
-			}
+    public String canExecute(final Config c) {
+        if (!c.isKEP()) {
+            return "wrong processor";
+        }
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-			final StringTokenizer token = new StringTokenizer(program, "\n");
-			while (token.hasMoreTokens()) {
-				instructions.add(token.nextToken());
-			}
-		} catch (final IOException e) {
-			throw new ParseException(
-					"Execution of external assembler program failed: "
-							+ e.getMessage());
-		} catch (InterruptedException e) {
-			throw new ParseException(
-					"Execution of external assembler program failed: "
-							+ e.getMessage());
-		}
-	}
+    public LinkedList<Signal> getInputs() {
+        return kasm.getInputs();
+    }
 
-	public String canExecute(final Config c) {
-		if (!c.isKEP()) {
-			return "wrong processor";
-		}
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String[][] getInstructions() {
+        final LinkedList<String[]> res = new LinkedList<String[]>();
+        int j = 0;
+        for (final String i : instructions) {
+            final String num = String.valueOf(j++);
+            res.add(new String[] { num, "", i, "" });
+        }
+        return res.toArray(new String[0][0]);
+    }
 
-	public LinkedList<Signal> getInputs() {
-		return kasm.getInputs();
-	}
+    public String[] getObj(final Config c) {
+        return kasm.getObj(c);
+    }
 
-	public String[][] getInstructions() {
-		final LinkedList<String[]> res = new LinkedList<String[]>();
-		int j = 0;
-		for (final String i : instructions) {
-			final String num = String.valueOf(j++);
-			res.add(new String[] { num, "", i, "" });
-		}
-		return res.toArray(new String[0][0]);
-	}
+    public LinkedList<Signal> getOutputs() {
+        return kasm.getOutputs();
+    }
 
-	public String[] getObj(final Config c) {
-		return kasm.getObj(c);
-	}
+    public HashMap<String, Integer> getSignalIndex() {
+        return kasm.getSignalIndex();
+    }
 
-	public LinkedList<Signal> getOutputs() {
-		return kasm.getOutputs();
-	}
+    public int size() {
+        return kasm.size();
+    }
 
-	public HashMap<String, Integer> getSignalIndex() {
-		return kasm.getSignalIndex();
-	}
-
-	public int size() {
-		return kasm.size();
-	}
-
-	public String getName() {
-		return kasm.getName();
-	}
+    public String getName() {
+        return kasm.getName();
+    }
 }

@@ -23,58 +23,58 @@ import org.eclipse.ui.part.ViewPart;
  */
 public class MessageView extends ViewPart {
 
-	/** The identifier string for this view */
-	public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.message";
+    /** The identifier string for this view. */
+    public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.message";
 
-	/** The viewer used to display connection logs */
-	private static TextViewer viewer;
+    /** The viewer used to display connection logs. */
+    private static TextViewer viewer;
 
-	private static void setViewer(TextViewer viewer){
-		MessageView.viewer = viewer;
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
-	 * .Composite)
-	 */
-	@Override
-	public void createPartControl(Composite parent) {
-		// create text viewer
-		setViewer(new TextViewer(parent));
-	}
+    private static void setViewer(final TextViewer viewer) {
+        MessageView.viewer = viewer;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
-	 */
-	@Override
-	public void setFocus() {
-		viewer.getControl().setFocus();
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
+     * .Composite)
+     */
+    @Override
+    public void createPartControl(Composite parent) {
+        // create text viewer
+        setViewer(new TextViewer(parent));
+    }
 
-	/*
-	 * display message
-	 */
-	/**
-	 * @param data
-	 *            message
-	 */
-	public static void print(String data) {
-		if (viewer != null) {
-			viewer.append(data + "\n");
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
+     */
+    @Override
+    public void setFocus() {
+        viewer.getControl().setFocus();
+    }
 
-	/**
-	 * Gets the text viewer.
-	 * 
-	 * @return text viewer
-	 */
-	public TextViewer getViewer() {
-		return viewer;
-	}
+    /*
+     * display message
+     */
+    /**
+     * @param data
+     *            message
+     */
+    public static void print(String data) {
+        if (viewer != null) {
+            viewer.append(data + "\n");
+        }
+    }
+
+    /**
+     * Gets the text viewer.
+     * 
+     * @return text viewer
+     */
+    public TextViewer getViewer() {
+        return viewer;
+    }
 }

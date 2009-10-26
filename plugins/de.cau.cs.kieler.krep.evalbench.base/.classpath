@@ -6,6 +6,5 @@
 	<classpathentry kind="src" path="lib"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-runtime-3.1.jar" sourcepath="krep.evalbench.basesrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/kiel.kit.jar" sourcepath="krep.evalbench.basesrc.zip"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/libkep.so"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

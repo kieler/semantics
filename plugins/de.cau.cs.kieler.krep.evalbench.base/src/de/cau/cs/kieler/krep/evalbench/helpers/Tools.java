@@ -25,160 +25,163 @@ import org.eclipse.ui.PlatformUI;
  * @author haf
  * 
  */
-public class Tools {
+public final class Tools {
 
-	private static long time;
+    private Tools() {
+    }
 
-	/**
-	 * Runs a runnable with progress in the UI Thread of the active workbench
-	 * window.
-	 * 
-	 * @param runnable
-	 *            runnable to run
-	 */
-	public static void runWithProgress(IRunnableWithProgress runnable) {
-		try {
-			// IRunnableContext context =
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-			PlatformUI.getWorkbench().getProgressService().run(true, false,
-					runnable);// .runInUI(context, runnable, null);
-		} catch (InvocationTargetException e) {
-			// silently ignore exception
-		} catch (InterruptedException e) {
-			// silently ignore exception
-		}
-	}
+    private static long time;
 
-	/**
-	 * Very simple dialog.
-	 * 
-	 * @param msg
-	 * @author haf
-	 */
-	/*
-	 * public static void showDialog(String msg) { showDialog(msg, null); }
-	 */
+    /**
+     * Runs a runnable with progress in the UI Thread of the active workbench
+     * window.
+     * 
+     * @param runnable
+     *            runnable to run
+     */
+    public static void runWithProgress(IRunnableWithProgress runnable) {
+        try {
+            // IRunnableContext context =
+            PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+            PlatformUI.getWorkbench().getProgressService().run(true, false,
+                    runnable);
+        } catch (InvocationTargetException e) {
+            // silently ignore exception
+        } catch (InterruptedException e) {
+            // silently ignore exception
+        }
+    }
 
-	/**
-	 * Very simple exception dialog.
-	 * 
-	 * @param exc
-	 * @author haf
-	 */
-	/*
-	 * public static void showDialog(Exception exc) { showDialog(null, exc); }
-	 */
+    /**
+     * Very simple dialog.
+     * 
+     * @param msg
+     * @author haf
+     */
+    /*
+     * public static void showDialog(String msg) { showDialog(msg, null); }
+     */
 
-	/**
-	 * Error Dialog displaying a message and a details field. In the details
-	 * field is printed the stack trace.
-	 * 
-	 * @param msg
-	 * @param exc
-	 */
-	/*
-	 * public static void showDialog(String msg, Exception exc) {
-	 * PlatformUI.getWorkbench().getDisplay().syncExec( new DiagramRunnable(msg,
-	 * exc)); }
-	 */
+    /**
+     * Very simple exception dialog.
+     * 
+     * @param exc
+     * @author haf
+     */
+    /*
+     * public static void showDialog(Exception exc) { showDialog(null, exc); }
+     */
 
-	/**
-	 * for time measurement purposes Should be called at start of measuring
-	 */
-	public static void tic() {
-		time = System.currentTimeMillis();
-	}
+    /**
+     * Error Dialog displaying a message and a details field. In the details
+     * field is printed the stack trace.
+     * 
+     * @param msg
+     * @param exc
+     */
+    /*
+     * public static void showDialog(String msg, Exception exc) {
+     * PlatformUI.getWorkbench().getDisplay().syncExec( new DiagramRunnable(msg,
+     * exc)); }
+     */
 
-	/**
-	 * for time measurement purposes
-	 * 
-	 * @return elapsed time since calling tic() in milliseconds
-	 */
-	public static long tac() {
-		return System.currentTimeMillis() - time;
-	}
+    /**
+     * for time measurement purposes Should be called at start of measuring.
+     */
+    public static void tic() {
+        time = System.currentTimeMillis();
+    }
 
-	/**
-	 * for time measurement purposes
-	 * 
-	 * @return elapsed time since calling tic() in human readable form
-	 */
-	public static String showTime() {
-		long time = tac();
-		long sec = 1000;
-		long min = 60 * sec;
-		long hour = 60 * min;
+    /**
+     * for time measurement purposes.
+     * 
+     * @return elapsed time since calling tic() in milliseconds.
+     */
+    public static long tac() {
+        return System.currentTimeMillis() - time;
+    }
 
-		String res = "";
-		if (time > hour) {
-			res += time / hour + "h ";
-			time = time % hour;
-		}
-		if (time > min) {
-			res += time / min + "m ";
-			time = time % min;
-		}
-		if (time > sec) {
-			res += time / sec + ".";
-			time = time % sec;
-		}
-		String ms = String.valueOf(time);
-		while (ms.length() < 3) {
-			ms = "0" + ms;
-		}
-		res += ms + "s";
+    /**
+     * for time measurement purposes.
+     * 
+     * @return elapsed time since calling tic() in human readable form.
+     */
+    public static String showTime() {
+        long time = tac();
+        long sec = 1000;
+        long min = 60 * sec;
+        long hour = 60 * min;
 
-		return res;
-	}
+        String res = "";
+        if (time > hour) {
+            res += time / hour + "h ";
+            time = time % hour;
+        }
+        if (time > min) {
+            res += time / min + "m ";
+            time = time % min;
+        }
+        if (time > sec) {
+            res += time / sec + ".";
+            time = time % sec;
+        }
+        String ms = String.valueOf(time);
+        while (ms.length() < 3) {
+            ms = "0" + ms;
+        }
+        res += ms + "s";
 
-	/**
-	 * Takes a URI and exchanges the extension in the path segment with a new
-	 * one.
-	 * 
-	 * @param uri
-	 * @param extension
-	 * @return uri with replaced extension
-	 * @throws URISyntaxException
-	 */
-	public static URI exchangeExtension(URI uri, String extension)
-			throws URISyntaxException {
-		String path = uri.getPath();
-		int index = path.lastIndexOf('.');
-		String pathWithoutExtension = path.substring(0, index);
-		String newPath = pathWithoutExtension + '.' + extension;
-		// clone uri with adapted path segment
-		URI newUri = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(),
-				uri.getPort(), newPath, uri.getQuery(), uri.getFragment());
-		return newUri;
-	}
+        return res;
+    }
 
-	/**
-	 * @param i
-	 *            integer containing a byte
-	 * @return Hex String for this integer value
-	 */
-	public static String toHex(final int i) {
-		String res = Integer.toHexString(i);
-		if (res.length() == 1) {
-			res = "0" + res;
-		}
-		return res;
-	}
+    /**
+     * Takes a URI and exchanges the extension in the path segment with a new
+     * one.
+     * 
+     * @param uri
+     * @param extension
+     * @return uri with replaced extension
+     * @throws URISyntaxException
+     */
+    public static URI exchangeExtension(final URI uri, final String extension)
+            throws URISyntaxException {
+        String path = uri.getPath();
+        int index = path.lastIndexOf('.');
+        String pathWithoutExtension = path.substring(0, index);
+        String newPath = pathWithoutExtension + '.' + extension;
+        // clone uri with adapted path segment
+        URI newUri = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(),
+                uri.getPort(), newPath, uri.getQuery(), uri.getFragment());
+        return newUri;
+    }
 
-	/**
-	 * @param name
-	 *            the name of a file
-	 * @return the suffix of file, containing its type
-	 */
-	public static String getSuffix(final String name) {
-		int pos = name.lastIndexOf('.');
-		if (pos == -1) {
-			return "";
-		} else {
-			String res = name.substring(pos);
-			return res;
-		}
-	}
+    /**
+     * @param i
+     *            integer containing a byte
+     * @return Hex String for this integer value
+     */
+    public static String toHex(final int i) {
+        String res = Integer.toHexString(i);
+        if (res.length() == 1) {
+            res = "0" + res;
+        }
+        return res;
+    }
+
+    /**
+     * @param name
+     *            the name of a file
+     * @return the suffix of file, containing its type
+     */
+    public static String getSuffix(final String name) {
+        int pos = name.lastIndexOf('.');
+        if (pos == -1) {
+            return "";
+        } else {
+            String res = name.substring(pos);
+            return res;
+        }
+    }
 
 }
 /**

@@ -20,18 +20,18 @@ package de.cau.cs.kieler.krep.evalbench.comm;
  */
 public interface ICommunicationListener {
 
-	/**
-	 * Executed when data is sent to the target.
-	 * 
-	 * @param data
-	 */
-	public void dataSent(String data);
+    /**
+     * Executed when data is sent to the target.
+     * 
+     * @param data
+     */
+    public void dataSent(String data);
 
-	/**
-	 * Executed when data is received from the target.
-	 * 
-	 * @param data
-	 */
-	public void dataReceived(String data);
+    /**
+     * Executed when data is received from the target.
+     * 
+     * @param data
+     */
+    public void dataReceived(String data);
 
 }

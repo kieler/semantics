@@ -23,43 +23,41 @@ import de.cau.cs.kieler.krep.evalbench.program.Instruction;
  */
 public class SetClk extends Instruction {
 
-	private final Register reg;
+    private final Register reg;
 
-	private Register clock = null;
+    private Register clock = null;
 
-	/**
-	 * @param name
-	 *            unique name of the register
-	 * @param label
-	 *            label where the corresponding code starts
-	 * @param clock
-	 *            name of the clock register, null when on base clock
-	 */
-	public SetClk(final String name, final String clock) {
-		super();
-		this.reg = Register.get(name);
-		this.clock = Register.get(clock);
+    /**
+     * @param name
+     *            unique name of the register
+     * @param clock
+     *            name of the clock register, null when on base clock
+     */
+    public SetClk(final String name, final String clock) {
+        super();
+        this.reg = Register.get(name);
+        this.clock = Register.get(clock);
 
-	}
+    }
 
-	@Override
-	public String toString() {
-		String res = "SETClk" + "\t" + reg.toString() + "\t" + clock.toString();
+    @Override
+    public String toString() {
+        String res = "SETClk" + "\t" + reg.toString() + "\t" + clock.toString();
 
-		return res;
-	}
+        return res;
+    }
 
-	@Override
-	protected int[] getObj() {
-		Opcode op = Opcode.SETCLK;
+    @Override
+    protected int[] getObj() {
+        Opcode op = Opcode.SETCLK;
 
-		return new int[] { op.getCode(), reg.getId(), clock.getId(), 0 };
-	}
+        return new int[] { op.getCode(), reg.getId(), clock.getId(), 0 };
+    }
 
-	@Override
-	public void asmLabel(HashMap<String, Integer> label2addr)
-			throws ParseException {
-		// Nothing to do
-	}
+    @Override
+    public void asmLabel(HashMap<String, Integer> label2addr)
+            throws ParseException {
+        // Nothing to do
+    }
 
 }

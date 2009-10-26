@@ -33,71 +33,71 @@ import de.cau.cs.kieler.krep.evalbench.ui.VerifyPreferencePage;
  */
 public class RunAction extends Action {
 
-	/** Identifier string for this action */
-	private static final String ACTION_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.run";
+    /** Identifier string for this action. */
+    private static final String ACTION_ID = "de.cau.cs.kieler.krep.evalbench.ui.actions.run";
 
-	/** Relative path to the icon to use for this action */
-	private static final String ICON_PATH = "icons/run.gif";
+    /** Relative path to the icon to use for this action. */
+    private static final String ICON_PATH = "icons/run.gif";
 
-	/** The status line manager that can be used to display messages */
-	private IStatusLineManager statusLineManager;
+    /** The status line manager that can be used to display messages. */
+    private IStatusLineManager statusLineManager;
 
-	private TraceList traces;
+    private TraceList traces;
 
-	/**
-	 * Creates a new Run Action.
-	 * 
-	 * @param manager
-	 *            status line manager used to display action result
-	 * @param traces
-	 *            trace from which the inputs are read. If this is null,
-	 *            external inputs are assumed
-	 */
-	public RunAction(IStatusLineManager manager, TraceList traces) {
-		setId(ACTION_ID);
-		setText("R&un");
-		setToolTipText("Run the current program");
-		setImageDescriptor(Activator.imageDescriptorFromPlugin(
-				Activator.PLUGIN_ID, ICON_PATH));
-		this.statusLineManager = manager;
-		this.traces = traces;
-	}
+    /**
+     * Creates a new Run Action.
+     * 
+     * @param manager
+     *            status line manager used to display action result
+     * @param traces
+     *            trace from which the inputs are read. If this is null,
+     *            external inputs are assumed
+     */
+    public RunAction(final IStatusLineManager manager, final TraceList traces) {
+        setId(ACTION_ID);
+        setText("R&un");
+        setToolTipText("Run the current program");
+        setImageDescriptor(Activator.imageDescriptorFromPlugin(
+                Activator.PLUGIN_ID, ICON_PATH));
+        this.statusLineManager = manager;
+        this.traces = traces;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.action.Action#run()
-	 */
-	@Override
-	public void run() {
-		if (traces == null) {
-			Activator.commonLayer.continuousRun();
-			statusLineManager.setMessage(Activator.commonLayer
-					.getStatusMessage());
-		} else {
-			Tools.runWithProgress(new IRunnableWithProgress() {
-				public void run(IProgressMonitor monitor) {
-					monitor.beginTask("Execute Trace", traces.size()
-							- traces.getTablePos());
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.action.Action#run()
+     */
+    @Override
+    public void run() {
+        if (traces == null) {
+            Activator.getDefault().commonLayer.continuousRun();
+            statusLineManager.setMessage(Activator.getDefault().commonLayer
+                    .getStatusMessage());
+        } else {
+            Tools.runWithProgress(new IRunnableWithProgress() {
+                public void run(IProgressMonitor monitor) {
+                    monitor.beginTask("Execute Trace", traces.size()
+                            - traces.getTablePos());
 
-					IPreferenceStore preferenceStore = Activator.getDefault()
-							.getPreferenceStore();
-					boolean ignoreInvalid = preferenceStore
-							.getBoolean(VerifyPreferencePage.IGNORE_INVALID);
+                    IPreferenceStore preferenceStore = Activator.getDefault()
+                            .getPreferenceStore();
+                    boolean ignoreInvalid = preferenceStore
+                            .getBoolean(VerifyPreferencePage.IGNORE_INVALID);
 
-					while (traces.hasNext()
-							&& (ignoreInvalid || traces.isValid())) {
-						try {
-							traces.executeStep(statusLineManager);
-							monitor.worked(1);
-						} catch (CommunicationException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					monitor.done();
-				}
-			});
-		}
-	}
+                    while (traces.hasNext()
+                            && (ignoreInvalid || traces.isValid())) {
+                        try {
+                            traces.executeStep(statusLineManager);
+                            monitor.worked(1);
+                        } catch (CommunicationException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                    monitor.done();
+                }
+            });
+        }
+    }
 }

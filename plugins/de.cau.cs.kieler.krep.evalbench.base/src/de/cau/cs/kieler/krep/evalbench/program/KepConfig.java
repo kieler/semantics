@@ -17,102 +17,110 @@ package de.cau.cs.kieler.krep.evalbench.program;
  * @author ctr configuration of the Kiel Esterel Processor
  * 
  */
-public class KepConfig extends Config {
+public class KepConfig implements Config {
 
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
-	}
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
 
-	/**
-	 * @param type
-	 *            the type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
+    /**
+     * @param t
+     *            the type to set
+     */
+    public void setType(final String t) {
+        this.type = t;
+    }
 
-	/**
-	 * @return the nSignals
-	 */
-	public int getnSignals() {
-		return nSignals;
-	}
+    /**
+     * @return the nSignals
+     */
+    public int getnSignals() {
+        return nSignals;
+    }
 
-	/**
-	 * @param nSignals
-	 *            the nSignals to set
-	 */
-	public void setnSignals(int nSignals) {
-		this.nSignals = nSignals;
-	}
+    /**
+     * @param nSignals
+     *            the number of signals
+     */
+    public void setnSignals(final int nSignals) {
+        this.nSignals = nSignals;
+    }
 
-	/**
-	 * @return the nThread
-	 */
-	public int getnThread() {
-		return nThread;
-	}
+    /**
+     * @return the nThread
+     */
+    public int getnThread() {
+        return nThread;
+    }
 
-	/**
-	 * @param nThread
-	 *            the nThread to set
-	 */
-	public void setnThread(int nThread) {
-		this.nThread = nThread;
-	}
+    /**
+     * @param nThread
+     *            the nThread to set
+     */
+    public void setnThread(int nThread) {
+        this.nThread = nThread;
+    }
 
-	/**
-	 * @return the widthCounter
-	 */
-	public int getWidthCounter() {
-		return widthCounter;
-	}
+    /**
+     * @return the widthCounter
+     */
+    public int getWidthCounter() {
+        return widthCounter;
+    }
 
-	/**
-	 * @param widthCounter
-	 *            the widthCounter to set
-	 */
-	public void setWidthCounter(int widthCounter) {
-		this.widthCounter = widthCounter;
-	}
+    /**
+     * @param widthCounter
+     *            the widthCounter to set
+     */
+    public void setWidthCounter(int widthCounter) {
+        this.widthCounter = widthCounter;
+    }
 
-	/**
-	 * @return the lTick
-	 */
-	public int getlTick() {
-		return lTick;
-	}
+    /**
+     * @return the lTick
+     */
+    public int getlTick() {
+        return lTick;
+    }
 
-	/**
-	 * @param lTick
-	 *            the lTick to set
-	 */
-	public void setlTick(int lTick) {
-		this.lTick = lTick;
-	}
+    /**
+     * @param lTick
+     *            the lTick to set
+     */
+    public void setlTick(int lTick) {
+        this.lTick = lTick;
+    }
 
-	/**
-	 * @return the maxROM
-	 */
-	public int getMaxROM() {
-		return maxROM;
-	}
+    /**
+     * @return the maxROM
+     */
+    public int getMaxROM() {
+        return maxROM;
+    }
 
-	/**
-	 * @param maxROM
-	 *            the maxROM to set
-	 */
-	public void setMaxROM(int maxROM) {
-		this.maxROM = maxROM;
-	}
+    /**
+     * @param maxROM
+     *            the maxROM to set
+     */
+    public void setMaxROM(int maxROM) {
+        this.maxROM = maxROM;
+    }
 
-	private String type;
-	private int nSignals;
-	private int nThread;
-	private int widthCounter;
-	private int lTick;
-	private int maxROM;
+    private String type;
+    private int nSignals;
+    private int nThread;
+    private int widthCounter;
+    private int lTick;
+    private int maxROM;
+    
+    public boolean isKEP() {
+        return true;
+    }
+
+    public boolean isKLP() {
+        return false;
+    }
 }

@@ -30,61 +30,61 @@ import de.cau.cs.kieler.krep.evalbench.ui.editors.AssemblerEditor;
  */
 public abstract class AbstractTickManager implements ISignalListener {
 
-	/** Identifier for the signal listener extension point */
-	public final static String EXTENSION_ID = "de.cau.cs.kieler.krep.evalbench.tickManager";
+    /** Identifier for the signal listener extension point. */
+    public static final String EXTENSION_ID = "de.cau.cs.kieler.krep.evalbench.tickManager";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * krep.evalbench.comm.ISignalListener#tickPerformed(java.util.LinkedList,
-	 * java.util.LinkedList)
-	 */
-	public abstract void tickPerformed(LinkedList<Signal> inputs,
-			LinkedList<Signal> outputs);
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * krep.evalbench.comm.ISignalListener#tickPerformed(java.util.LinkedList,
+     * java.util.LinkedList)
+     */
+    public abstract void tickPerformed(LinkedList<Signal> inputs,
+            LinkedList<Signal> outputs);
 
-	/**
-	 * Retrieves the currently active assembler editor from the common layer.
-	 * 
-	 * @return the active assembler editor, or null if there is no active
-	 *         assembler editor
-	 */
-	protected AssemblerEditor getActiveAssemblerEditor() {
-		return Activator.commonLayer.getActiveAssemblerEditor();
-	}
+    /**
+     * Retrieves the currently active assembler editor from the common layer.
+     * 
+     * @return the active assembler editor, or null if there is no active
+     *         assembler editor
+     */
+    protected final AssemblerEditor getActiveAssemblerEditor() {
+        return Activator.getDefault().commonLayer.getActiveAssemblerEditor();
+    }
 
-	/**
-	 * Triggers a program tick in the common layer. The given editor part is
-	 * brought to top, so the common layer can synchronize with it.
-	 * <p>
-	 * Note that this method may throw a <code>NullPointerException</code> if
-	 * the given editor part is no longer available.
-	 * 
-	 * @param editorPart
-	 *            assembler editor to use
-	 */
-	protected void triggerTick(IEditorPart editorPart) {
-		editorPart.getSite().getPage().bringToTop(editorPart);
-		Activator.commonLayer.step(new Tick());
-	}
+    /**
+     * Triggers a program tick in the common layer. The given editor part is
+     * brought to top, so the common layer can synchronize with it.
+     * <p>
+     * Note that this method may throw a <code>NullPointerException</code> if
+     * the given editor part is no longer available.
+     * 
+     * @param editorPart
+     *            assembler editor to use
+     */
+    protected final void triggerTick(final IEditorPart editorPart) {
+        editorPart.getSite().getPage().bringToTop(editorPart);
+        Activator.getDefault().commonLayer.step(new Tick());
+    }
 
-	/**
-	 * Triggers a program reset in the common layer.
-	 */
-	protected void triggetReset() {
-		try {
-			Activator.commonLayer.reset();
-		} catch (CommunicationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Triggers a program reset in the common layer.
+     */
+    protected final void triggetReset() {
+        try {
+            Activator.getDefault().commonLayer.reset();
+        } catch (CommunicationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * Updates the signal views of the evaluation bench.
-	 */
-	protected void updateSignalViews() {
-		Activator.commonLayer.updateSignalViews();
-	}
+    /**
+     * Updates the signal views of the evaluation bench.
+     */
+    protected final void updateSignalViews() {
+        Activator.getDefault().commonLayer.updateSignalViews();
+    }
 
 }

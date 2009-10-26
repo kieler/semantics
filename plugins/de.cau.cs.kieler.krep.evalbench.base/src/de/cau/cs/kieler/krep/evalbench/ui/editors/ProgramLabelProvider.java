@@ -26,86 +26,86 @@ import org.eclipse.swt.graphics.Image;
  */
 public class ProgramLabelProvider implements ITableLabelProvider {
 
-	/** List of label provider listeners */
-	private LinkedList<ILabelProviderListener> listeners;
+    /** List of label provider listeners. */
+    private LinkedList<ILabelProviderListener> listeners;
 
-	/**
-	 * Initializes the program label provider.
-	 */
-	public ProgramLabelProvider() {
-		// create list for label provider listeners
-		listeners = new LinkedList<ILabelProviderListener>();
-	}
+    /**
+     * Initializes the program label provider.
+     */
+    public ProgramLabelProvider() {
+        // create list for label provider listeners
+        listeners = new LinkedList<ILabelProviderListener>();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang
-	 * .Object, int)
-	 */
-	public Image getColumnImage(Object element, int columnIndex) {
-		// no images for this table
-		return null;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang
+     * .Object, int)
+     */
+    public Image getColumnImage(Object element, int columnIndex) {
+        // no images for this table
+        return null;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang
-	 * .Object, int)
-	 */
-	public String getColumnText(Object element, int columnIndex) {
-		if (element instanceof String[]) {
-			String[] line = (String[]) element;
-			return line[columnIndex];
-		} else {
-			return null;
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang
+     * .Object, int)
+     */
+    public String getColumnText(Object element, int columnIndex) {
+        if (element instanceof String[]) {
+            String[] line = (String[]) element;
+            return line[columnIndex];
+        } else {
+            return null;
+        }
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.
-	 * jface.viewers.ILabelProviderListener)
-	 */
-	public void addListener(ILabelProviderListener listener) {
-		listeners.add(listener);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.
+     * jface.viewers.ILabelProviderListener)
+     */
+    public void addListener(ILabelProviderListener listener) {
+        listeners.add(listener);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse
-	 * .jface.viewers.ILabelProviderListener)
-	 */
-	public void removeListener(ILabelProviderListener listener) {
-		listeners.remove(listener);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse
+     * .jface.viewers.ILabelProviderListener)
+     */
+    public void removeListener(ILabelProviderListener listener) {
+        listeners.remove(listener);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
-	 */
-	public void dispose() {
-		// clear list of label provider listeners
-		listeners.clear();
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
+     */
+    public void dispose() {
+        // clear list of label provider listeners
+        listeners.clear();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang
-	 * .Object, java.lang.String)
-	 */
-	public boolean isLabelProperty(Object element, String property) {
-		return true;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang
+     * .Object, java.lang.String)
+     */
+    public boolean isLabelProperty(Object element, String property) {
+        return true;
+    }
 
 }

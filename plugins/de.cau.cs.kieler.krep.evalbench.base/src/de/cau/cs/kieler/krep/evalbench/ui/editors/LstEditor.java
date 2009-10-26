@@ -18,22 +18,22 @@ import de.cau.cs.kieler.krep.evalbench.program.KasmAssembler;
 
 public class LstEditor extends AssemblerEditor {
 
-	/**
-	 * Creates a KASM editor using the external assembler.
-	 */
-	public LstEditor() {
-		assembler = new KasmAssembler();
-	}
+    /**
+     * Creates a KASM editor using the external assembler.
+     */
+    public LstEditor() {
+        assembler = new KasmAssembler();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see krep.evalbench.ui.editors.AssemblerEditor#getProtocolType()
-	 */
-	@Override
-	public String getProtocolType() {
-		// KASM files are related to the KEP protocol
-		return ICommunicationProtocol.P_KEP;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see krep.evalbench.ui.editors.AssemblerEditor#getProtocolType()
+     */
+    @Override
+    public String getProtocolType() {
+        // KASM files are related to the KEP protocol
+        return ICommunicationProtocol.P_KEP;
+    }
 
 }

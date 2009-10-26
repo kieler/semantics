@@ -20,17 +20,17 @@ package de.cau.cs.kieler.krep.evalbench.exceptions;
  */
 public class CommunicationException extends Exception {
 
-	/** The serial version UID */
-	private static final long serialVersionUID = 1L;
+    /** The serial version UID. */
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Creates a communication exception with given message.
-	 * 
-	 * @param message
-	 *            message to be stored
-	 */
-	public CommunicationException(String message) {
-		super(message);
-	}
+    /**
+     * Creates a communication exception with given message.
+     * 
+     * @param message
+     *            message to be stored
+     */
+    public CommunicationException(final String message) {
+        super(message);
+    }
 
 }

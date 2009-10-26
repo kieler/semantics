@@ -22,17 +22,17 @@ import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
  * 
  */
 public class KlpEditor extends AssemblerEditor {
-	/**
-	 * generate empty editor
-	 */
-	public KlpEditor() {
-		super();
-		assembler = new KlpAssembler();
-	}
+    /**
+     * generate empty editor.
+     */
+    public KlpEditor() {
+        super();
+        assembler = new KlpAssembler();
+    }
 
-	@Override
-	public String getProtocolType() {
-		return ICommunicationProtocol.P_KREP;
-	}
+    @Override
+    public String getProtocolType() {
+        return ICommunicationProtocol.P_KREP;
+    }
 
 }

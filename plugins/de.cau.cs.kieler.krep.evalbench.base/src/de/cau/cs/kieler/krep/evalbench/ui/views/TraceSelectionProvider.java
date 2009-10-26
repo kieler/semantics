@@ -22,8 +22,8 @@ import de.cau.cs.kieler.krep.evalbench.Activator;
  */
 public class TraceSelectionProvider implements ISelection {
 
-	public boolean isEmpty() {
-		return !(Activator.getTraces().hasNext());
-	}
+    public boolean isEmpty() {
+        return !(Activator.getDefault().getTraces().hasNext());
+    }
 
 }

@@ -15,36 +15,37 @@ package de.cau.cs.kieler.krep.evalbench.program.kep;
 
 public class SCLine {
 
-	String content;
-	int number;
+    String content;
+    int number;
 
-	// int pos;
+    // int pos;
 
-	public SCLine(String content, int number, int pos) {
-		this.content = content.trim();
-		this.number = number;
-		// this.pos = pos;
-	}
+    public SCLine(String content, int number, int pos) {
+        this.content = content.trim();
+        this.number = number;
+        // this.pos = pos;
+    }
 
-	public SCLine(String content, int number) {
-		this.content = content;
-		this.number = number;
+    public SCLine(String content, int number) {
+        this.content = content;
+        this.number = number;
 
-	}
+    }
 
-	public SCLine appendContent(String appendix) {
-		this.content += appendix;
-		return this;
-	}
+    public SCLine appendContent(String appendix) {
+        this.content += appendix;
+        return this;
+    }
 
-	public String toString() {
-		StringBuffer result = new StringBuffer(content);
-		while (result.length() < Constants.instr_width)
-			result.append(" ");
-		return result.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuffer result = new StringBuffer(content);
+        while (result.length() < Constants.instr_width)
+            result.append(" ");
+        return result.toString();
+    }
 
-	public String errorMsg() {
-		return "In line " + number + ": near \"" + content + "\": ";
-	}
+    public String errorMsg() {
+        return "In line " + number + ": near \"" + content + "\": ";
+    }
 }

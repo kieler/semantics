@@ -14,46 +14,51 @@
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
 public class Label extends Identifer {
-	int line;
+    int line;
 
-	public Label(String name, Integer addr, int line) {
-		super(name, addr);
-		this.line = line;
-	}
+    public Label(String name, Integer addr, int line) {
+        super(name, addr);
+        this.line = line;
+    }
 
-	public Label(String name, Integer addr) {
-		super(name, addr);
+    public Label(String name, Integer addr) {
+        super(name, addr);
 
-	}
+    }
 
-	public String toString() {
-		return name;
-	}
+    @Override
+    public String toString() {
+        return name;
+    }
 
-	public String encode() {
-		return super.encode(Constants.addr_width);
-	}
+    @Override
+    public String encode() {
+        return super.encode(Constants.addr_width);
+    }
 
-	public String info() {
-		StringBuffer result = new StringBuffer();
-		while (result.length() < Constants.addr_width)
-			result.append("A");
-		return result.toString();
-	}
+    @Override
+    public String info() {
+        StringBuffer result = new StringBuffer();
+        while (result.length() < Constants.addr_width)
+            result.append("A");
+        return result.toString();
+    }
 
-	public String print() {
-		return super.print() + "\t[" + this.line + "]";
-	}
+    @Override
+    public String print() {
+        return super.print() + "\t[" + this.line + "]";
+    }
 
-	public String printLabel() {
-		StringBuffer result = new StringBuffer();
-		result.append(name);
-		while (result.length() < Constants.max_LabelPrint)
-			result.append(" ");
-		return result.toString();
-	}
+    public String printLabel() {
+        StringBuffer result = new StringBuffer();
+        result.append(name);
+        while (result.length() < Constants.max_LabelPrint)
+            result.append(" ");
+        return result.toString();
+    }
 
-	public int length() {
-		return Constants.addr_width;
-	}
+    @Override
+    public int length() {
+        return Constants.addr_width;
+    }
 }

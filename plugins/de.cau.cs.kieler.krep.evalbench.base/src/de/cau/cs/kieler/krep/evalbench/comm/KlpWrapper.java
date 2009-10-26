@@ -29,117 +29,117 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
 public class KlpWrapper implements IKrepWrapper {
 
-	private EsiLogger esi;
+    private EsiLogger esi;
 
-	private final static String name = "klp";
+    private static final String NAME = "klp";
 
-	static {
-		System.loadLibrary("klp");
-	}
+    static {
+        System.loadLibrary("klp");
+    }
 
-	private LinkedList<Byte> output = new LinkedList<Byte>();
+    private LinkedList<Byte> output = new LinkedList<Byte>();
 
-	public KlpWrapper() {
-		super();
-		String msg = "";
-		klp_reset(msg);
-		if (msg.length() > 0) {
-			MessageView.print(msg);
-		}
+    public KlpWrapper() {
+        super();
+        String msg = "";
+        klp_reset(msg);
+        if (msg.length() > 0) {
+            MessageView.print(msg);
+        }
 
-		IPreferenceStore preferenceStore = Activator.getDefault()
-				.getPreferenceStore();
+        IPreferenceStore preferenceStore = Activator.getDefault()
+                .getPreferenceStore();
 
-		String fileName = preferenceStore
-				.getString(ConnectionPreferencePage.JNI_LOG_FILE);
-		esi = new EsiLogger(fileName);
-		esi.reset();
-		step();
+        String fileName = preferenceStore
+                .getString(ConnectionPreferencePage.JNI_LOG_FILE);
+        esi = new EsiLogger(fileName);
+        esi.reset();
+        step();
 
-	}
+    }
 
-	public void terminate() {
-		// TODO Auto-generated method stub
-	}
+    public void terminate() {
+        // TODO Auto-generated method stub
+    }
 
-	public boolean hasOutput() {
-		return !output.isEmpty();
-	}
+    public boolean hasOutput() {
+        return !output.isEmpty();
+    }
 
-	public byte getOutput() {
-		byte b = output.poll();
-		return (b);
-	}
+    public byte getOutput() {
+        byte b = output.poll();
+        return (b);
+    }
 
-	public void step() {
-		String msg = "";
-		String io = ";";
-		byte c = klp_step(msg);
-		if (msg.length() > 0) {
-			MessageView.print(msg);
-		}
-		if (c != 0) {
-			msg = "";
-			c = klp_recv(msg);
-			if (msg.length() > 0) {
-				MessageView.print(msg);
-			}
-			io += " %OUTPUT: TX(0x" + Integer.toHexString(c & 0xFF) + ")";
-			output.offer(c);
-		}
-		io += "\n";
+    public void step() {
+        String msg = "";
+        String io = ";";
+        byte c = klp_step(msg);
+        if (msg.length() > 0) {
+            MessageView.print(msg);
+        }
+        if (c != 0) {
+            msg = "";
+            c = klp_recv(msg);
+            if (msg.length() > 0) {
+                MessageView.print(msg);
+            }
+            io += " %OUTPUT: TX(0x" + Integer.toHexString(c & 0xFF) + ")";
+            output.offer(c);
+        }
+        io += "\n";
 
-		esi.write(io);
+        esi.write(io);
 
-	}
+    }
 
-	public void send(byte b) {
-		String msg = "";
-		step();
-		esi.write("RX(0x" + Integer.toHexString(b & 0xFF) + ")");
-		klp_send(b, msg);
-		if (msg.length() > 0) {
-			MessageView.print(msg);
-		}
-		step();
+    public void send(byte b) {
+        String msg = "";
+        step();
+        esi.write("RX(0x" + Integer.toHexString(b & 0xFF) + ")");
+        klp_send(b, msg);
+        if (msg.length() > 0) {
+            MessageView.print(msg);
+        }
+        step();
 
-	}
+    }
 
-	public static native byte klp_step(String msg);
+    public static native byte klp_step(String msg);
 
-	public static native byte klp_recv(String msg);
+    public static native byte klp_recv(String msg);
 
-	public static native void klp_reset(String msg);
+    public static native void klp_reset(String msg);
 
-	public static native void klp_send(byte c, String msg);
+    public static native void klp_send(byte c, String msg);
 
-	public void saveEsi(String esiFile) {
-		BufferedWriter out = null;
-		try {
-			File f = new File(esiFile);
-			out = new BufferedWriter(new FileWriter(f));
-			out.write(esi.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if (out != null) {
-				try {
-					out.close();
-				} catch (IOException e) {
-					// silently ignore
-				}
-			}
-		}
+    public final void saveEsi(final String esiFile) {
+        BufferedWriter out = null;
+        try {
+            File f = new File(esiFile);
+            out = new BufferedWriter(new FileWriter(f));
+            out.write(esi.toString());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    // silently ignore
+                }
+            }
+        }
 
-	}
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return NAME;
+    }
 
-	public void comment(String comment) {
-		esi.comment(comment);
-	}
+    public void comment(String comment) {
+        esi.comment(comment);
+    }
 
 }

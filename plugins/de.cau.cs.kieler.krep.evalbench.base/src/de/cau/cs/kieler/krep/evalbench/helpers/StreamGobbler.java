@@ -13,7 +13,11 @@
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.helpers;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 
 /**
  * @author ctr
@@ -23,31 +27,32 @@ import java.io.*;
  *         program.
  */
 public class StreamGobbler extends Thread {
-	InputStream is;
+    InputStream is;
 
-	String type;
+    String type;
 
-	/**
-	 * @param is
-	 *            input stream from which messages are read
-	 * @param type
-	 *            this prefix is written before each line on stdout
-	 */
-	public StreamGobbler(InputStream is, String type) {
-		this.is = is;
-		this.type = type;
-	}
+    /**
+     * @param is
+     *            input stream from which messages are read
+     * @param type
+     *            this prefix is written before each line on stdout
+     */
+    public StreamGobbler(InputStream is, String type) {
+        this.is = is;
+        this.type = type;
+    }
 
-	@Override
-	public void run() {
-		try {
-			InputStreamReader isr = new InputStreamReader(is);
-			BufferedReader br = new BufferedReader(isr);
-			String line = null;
-			while ((line = br.readLine()) != null)
-				System.out.println(type + ">" + line);
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-	}
+    @Override
+    public final void run() {
+        try {
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                System.out.println(type + ">" + line);
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
 }

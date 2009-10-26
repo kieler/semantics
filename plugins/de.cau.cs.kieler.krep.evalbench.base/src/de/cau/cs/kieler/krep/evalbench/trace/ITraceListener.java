@@ -19,13 +19,13 @@ package de.cau.cs.kieler.krep.evalbench.trace;
  */
 public interface ITraceListener {
 
-	/**
-	 * the current trace has changed
-	 * 
-	 * @param newTrace
-	 *            true if the table has changed, false if only the current index
-	 *            changed
-	 */
-	public void traceChanged(boolean newTrace);
+    /**
+     * the current trace has changed.
+     * 
+     * @param newTrace
+     *            true if the table has changed, false if only the current index
+     *            changed
+     */
+    void traceChanged(boolean newTrace);
 
 }

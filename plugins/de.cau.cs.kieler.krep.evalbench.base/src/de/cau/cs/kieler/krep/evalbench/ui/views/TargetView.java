@@ -17,7 +17,8 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
-import de.cau.cs.kieler.krep.evalbench.ui.actions.*;
+import de.cau.cs.kieler.krep.evalbench.ui.actions.TargetInfoAction;
+
 
 /**
  * A View for displaying target information.
@@ -26,45 +27,45 @@ import de.cau.cs.kieler.krep.evalbench.ui.actions.*;
  */
 public class TargetView extends ViewPart {
 
-	/** The identifier string for this view */
-	public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.target";
+    /** The identifier string for this view. */
+    public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.target";
 
-	/** The viewer used to display target info */
-	private TextViewer viewer = null;
+    /** The viewer used to display target info. */
+    private TextViewer viewer = null;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
-	 * .Composite)
-	 */
-	@Override
-	public void createPartControl(Composite parent) {
-		// create text viewer
-		viewer = new TextViewer(parent);
-		// create actions
-		IToolBarManager manager = getViewSite().getActionBars()
-				.getToolBarManager();
-		manager.add(new TargetInfoAction());
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
+     * .Composite)
+     */
+    @Override
+    public void createPartControl(final Composite parent) {
+        // create text viewer
+        viewer = new TextViewer(parent);
+        // create actions
+        IToolBarManager manager = getViewSite().getActionBars()
+                .getToolBarManager();
+        manager.add(new TargetInfoAction());
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
-	 */
-	@Override
-	public void setFocus() {
-		viewer.getControl().setFocus();
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
+     */
+    @Override
+    public void setFocus() {
+        viewer.getControl().setFocus();
+    }
 
-	/**
-	 * Gets the text viewer.
-	 * 
-	 * @return text viewer
-	 */
-	public TextViewer getViewer() {
-		return viewer;
-	}
+    /**
+     * Gets the text viewer.
+     * 
+     * @return text viewer
+     */
+    public TextViewer getViewer() {
+        return viewer;
+    }
 }
