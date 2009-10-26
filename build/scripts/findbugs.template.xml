@@ -1,4 +1,4 @@
-	<target name="findbugs" description="experimental">
+	<target name="findbugs" unless="no.findbugs" description="experimental">
 		<path id="findbugs.auxClasses">
 ${feature.classpath}		</path>
 

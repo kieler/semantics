@@ -1,4 +1,4 @@
-	<target name="doc">
+	<target name="doc" unless="no.doc">
 		<property name="doc.excludes" value=" " />
 		
 		<path id="doc.classpath"> 

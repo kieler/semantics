@@ -1,4 +1,4 @@
-	<target name="checkstyle" description="experimental">
+	<target name="checkstyle" unless="no.findbugs" description="experimental">
 		<checkstyle config="${scriptdir}/checks.xml"
 				failureProperty="checkstyle.failure"
 			    failOnViolation="false">
