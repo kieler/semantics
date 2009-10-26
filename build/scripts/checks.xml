@@ -37,6 +37,7 @@
   - haf: Setup KIELER header for java files
   - haf: Removed some checks after internal discussion with msp and chsch
   - haf: Set default severity to warning
+  - haf: WhitespaceAfter: Removed ARRAY_INIT token as not synchronized to formatter
 
 -->
 
@@ -57,7 +58,7 @@
             <!--     value="${basedir}/java.header"/>                   -->
             <property name="header"
               value="
- ^/\*\*+.*
+ ^/\*+.*
  ^* KIELER - Kiel Integrated Environment for Layout Eclipse Rich\s?Client\n
  ^.*
  ^\*+/"/>
@@ -160,8 +161,11 @@
         <module name="OperatorWrap"/>
         <module name="ParenPad"/>
         <module name="TypecastParenPad"/>
-        <module name="WhitespaceAfter"/>
         <module name="WhitespaceAround"/>
+        <!--  haf: removed ARRAY_INIT, because not synchronized with Eclipse formatter -->
+        <module name="WhitespaceAfter">
+             <property name="tokens" value="BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS"/>
+        </module>
 
 
         <!-- Modifier Checks                                    -->
