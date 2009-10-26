@@ -4,12 +4,12 @@ Bundle-Name: KReP Evaluation Bench
 Bundle-SymbolicName: de.cau.cs.kieler.krep.evalbench.base;singleton:=true
 Bundle-Version: 0.1.0
 Bundle-Activator: de.cau.cs.kieler.krep.evalbench.Activator
-Bundle-Vendor: Real-Time and Embedded Systems group, CAU Kiel
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.jface.text,
  de.cau.cs.kieler.krep.rxtx;bundle-version="0.1.0";resolution:=optional,
- de.cau.cs.kieler.krep.editors.klp;bundle-version="0.1.0",
+ de.cau.cs.kieler.krep.editors.klp;bundle-version="0.1.0";resolution:=optional,
  org.eclipse.emf.common;bundle-version="2.5.0",
  org.eclipse.emf.ecore;bundle-version="2.5.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
