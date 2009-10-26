@@ -200,7 +200,7 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
 	let outerStateURIHash = hash(getURIFragment(mainRegion.innerStates.get(0))):
    	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
-   	this.createMainSRDirector() ->
+   	this.createMainSyncChartDirector() ->
    	//mainRegion has exactly ONE top most state
    	//iterate over all regions within this top most state
    	//the  of this containing Entity is derived from this
@@ -499,7 +499,6 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
    	this.setName(hash(getURIFragment(state))) ->
   	//this.setClass1("ptolemy.domains.fsm.modal.Refinement") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.modal.Refinement") ->
-   	this.createSRDirector() ->
    	//getMovedSignalNames() contains names of moved signals
 	//signalList.addAll(state.signals) ->
 	//XXX//
@@ -507,6 +506,8 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
    	//add signals to refinement (so that outer signals are visible inside), if any
    	(signalList.size > 0) ?
 	   	this.addSignalsToModalController(modalModel, signalList, state.parentRegion, getMovedSignalNames()) : null ->
+   	//create SyncChartDirector
+   	this.createSyncChartDirector(getMovedSignalNames()) ->
    	//add termination signal
    	this.addTerminationSignalToModalController(modalModel, state) ->
    	//add KielerNormalTermination
@@ -669,16 +670,21 @@ Void IterateRegions(List[synccharts::Region] regionList,
 //-----------------------------------------------------------------------------
 
 //create a "SR Director" (for macro state definition)
-Void createSRDirector(EntityType entity):
+Void createSyncChartDirector(EntityType entity, List[String] stateSignalNames):
     let p0 = new PropertyType:
+	 let p1 = new PropertyType:
+	 p1.setName("statesignals") ->
+	 p1.setClass("ptolemy.kernel.util.StringAttribute") ->
+	 p1.setValue(stateSignalNames.flatten().toString()) ->
     p0.setName("Kieler SyncChart Director") ->
 //	p0.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
 	p0.setClass("ptolemy.actor.kiel.SyncChartDirector") ->
+	p0.property.add(p1) ->
 	entity.property.add(p0) 
 ;
 
 //create outer most "SR Director" (ticks every seconds)
-Void createMainSRDirector(EntityType entity):
+Void createMainSyncChartDirector(EntityType entity):
     let p0 = new PropertyType:
 	 let p1 = new PropertyType:
 	 let p2 = new PropertyType:
