@@ -9,4 +9,11 @@
  *
  * context Class WARNING "Name should start with a capital" :
  *    name.toFirstUpper() == name;
- */
+ *
+
+ 
+ import Kits;
+ context State if (regions != null) ERROR "States cannot have empty regions. Either delete the curly brackets, that indicate to a region or fill the region with a content like substates or actions." :
+    
+    ;
+    */

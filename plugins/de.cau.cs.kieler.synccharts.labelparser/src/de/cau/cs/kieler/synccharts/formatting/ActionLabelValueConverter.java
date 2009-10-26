@@ -27,7 +27,7 @@ import org.eclipse.xtext.util.Strings;
  * @author haf
  *
  */
-public class TransitionLabelValueConverter extends DefaultTerminalConverters {
+public class ActionLabelValueConverter extends DefaultTerminalConverters {
 
     /**
      * Standard boolean data type converter to convert standard Java style

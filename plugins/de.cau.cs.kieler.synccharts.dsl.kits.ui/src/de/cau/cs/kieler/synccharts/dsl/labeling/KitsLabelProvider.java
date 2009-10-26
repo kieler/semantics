@@ -44,7 +44,7 @@ public class KitsLabelProvider extends DefaultLabelProvider {
 			image = "SuspensionSD.gif";
 		}
 		if (a.eContainingFeature().getName() == "entryActions") {
-			image = "EntryAction.gif";
+			image = "onentry.gif";
 		}
 		// if (a.eContainingFeature().getName() == "innerActions") {
 		// image = "...";

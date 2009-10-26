@@ -11,7 +11,13 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.linking.impl.SimpleAttributeResolver;
 import org.eclipse.xtext.resource.IFragmentProvider;
-
+/**
+ * 
+ * @author oba
+ *	This class gives each parsed object a unique ID, using fragments
+ *	and vice versa, meaning every object can be found via its ID (AT link:
+ *	getEObjectBzFragmet Path) 
+ */
 public class KitsFragmentProvider implements IFragmentProvider {
 
 	public EObject getEObject(Resource resource, String fragment) {

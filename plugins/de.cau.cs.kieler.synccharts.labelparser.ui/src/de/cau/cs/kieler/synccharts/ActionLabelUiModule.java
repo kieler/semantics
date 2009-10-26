@@ -3,9 +3,20 @@
  */
 package de.cau.cs.kieler.synccharts;
 
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceStore;
+import org.eclipse.xtext.ui.core.internal.Activator;
+
+import com.google.inject.Binder;
+
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class ActionLabelUiModule extends de.cau.cs.kieler.synccharts.AbstractActionLabelUiModule {
-
+public class ActionLabelUiModule extends AbstractActionLabelUiModule {
+    @Override
+    public void configure(Binder binder) {
+        // TODO Auto-generated method stub
+        super.configure(binder);
+        binder.bind(IPreferenceStore.class).to(PreferenceStore.class);
+    }
 }

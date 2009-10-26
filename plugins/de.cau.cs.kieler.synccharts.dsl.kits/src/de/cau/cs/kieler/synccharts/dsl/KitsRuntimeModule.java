@@ -3,13 +3,15 @@
  */
 package de.cau.cs.kieler.synccharts.dsl;
 
+import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.resource.IFragmentProvider;
 import org.eclipse.xtext.scoping.IScopeProvider;
 
 import de.cau.cs.kieler.synccharts.dsl.kits.resource.KitsFragmentProvider;
 import de.cau.cs.kieler.synccharts.dsl.kits.serialization.KitsTransientValueService;
-import de.cau.cs.kieler.synccharts.dsl.scoping.MyDefaultScopeProvider;
+import de.cau.cs.kieler.synccharts.dsl.scoping.MyDefaultScopeProvider; 
+import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -24,9 +26,9 @@ public class KitsRuntimeModule extends
 	public Class<? extends IFragmentProvider> bindIFragmentProvider() {
 		return KitsFragmentProvider.class;
 	}
+
 	/**
-	 * bind the fragment provider
-	 * it is used for the Glue code -oba
+	 * bind the fragment provider it is used for the Glue code -oba
 	 */
 	public Class<? extends IScopeProvider> bindIScopeProvider() {
 		return MyDefaultScopeProvider.class;
@@ -42,6 +44,18 @@ public class KitsRuntimeModule extends
 	@Override
 	public Class<? extends ITransientValueService> bindITransientValueService() {
 		return KitsTransientValueService.class;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.xtext.service.DefaultRuntimeModule#bindIValueConverterService
+	 * ()
+	 */
+	@Override
+	public Class<? extends IValueConverterService> bindIValueConverterService() {
+		return ActionLabelValueConverter.class;
 	}
 
 }

@@ -23,7 +23,8 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtend,
  de.cau.cs.kieler.synccharts.diagram.custom;bundle-version="0.1.0",
  de.cau.cs.kieler.synccharts.custom;bundle-version="0.1.0",
- de.cau.cs.kieler.synccharts.model;bundle-version="0.1.0"
+ de.cau.cs.kieler.synccharts.model;bundle-version="0.1.0",
+ de.cau.cs.kieler.synccharts.labelparser;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.dsl,
  de.cau.cs.kieler.synccharts.dsl.services,

@@ -3,9 +3,33 @@
  */
 package de.cau.cs.kieler.synccharts;
 
+import org.eclipse.xtext.conversion.IValueConverterService;
+import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
+
+import de.cau.cs.kieler.synccharts.formatting.TransitionLabelTransientValueService;
+import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
+
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class ActionLabelRuntimeModule extends de.cau.cs.kieler.synccharts.AbstractActionLabelRuntimeModule {
+public class ActionLabelRuntimeModule extends AbstractActionLabelRuntimeModule {
 
+    /* (non-Javadoc)
+     * @see org.eclipse.xtext.service.DefaultRuntimeModule#bindITransientValueService()
+     */
+    @Override
+    public Class<? extends ITransientValueService> bindITransientValueService() {
+        return TransitionLabelTransientValueService.class; 
+    }
+    
+    /* (non-Javadoc)
+     * @see org.eclipse.xtext.service.DefaultRuntimeModule#bindIValueConverterService()
+     */
+    @Override
+    public Class<? extends IValueConverterService> bindIValueConverterService() {
+        return ActionLabelValueConverter.class;
+    }
+    
+    
+    
 }
