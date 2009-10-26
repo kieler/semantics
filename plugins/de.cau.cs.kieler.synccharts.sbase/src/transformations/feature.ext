@@ -2,17 +2,25 @@ import synccharts;
 ///////////////////////////////////////////
 //More ore less usefull transformations ///
 ///////////////////////////////////////////
+
+//Adds a successor to the given state 
 Void addSuccessorState(State source):
  let target = new State:
  connectStates(source, target) ->
  source.parentRegion.innerStates.add(target)
 ;
+
+//Adds a predecessor to the given state
 Void addPredecessorState(State target):
 let source = new State:
  connectStates(source, target) ->
  target.parentRegion.innerStates.add(source)
 ;
 
+//Adds a choice to the given state
+//by adding a conditional with two
+//targets. This won't set any priorities
+//so resulting model may be invalid.
 Void addChoice(State source):
 let choice = new State:
 let opt1 = new State:
@@ -29,6 +37,8 @@ source.parentRegion.innerStates.add(opt1) ->
 source.parentRegion.innerStates.add(opt2)
 ;
 
+//Flips source and target of the 
+//given transition.
 Void flipTransition(Transition t):
  let source = t.sourceState:
  let target = t.targetState: 
@@ -36,6 +46,7 @@ Void flipTransition(Transition t):
  t.setTargetState(source)
 ;
 
+//Connects two states
 Void connectStates(State source, State target):
 let transition = new Transition:
 transition.setSourceState(source) ->
@@ -43,16 +54,21 @@ transition.setTargetState(target) ->
 source.outgoingTransitions.add(transition)
 ;
 
+//Reroutes the target of the given transition
+//to the given state
 Void rerouteTransitionTarget(Transition t, State target):
 t.setTargetState(target)
 ;
 
+//Reroutes the source of the given transition
+//to the given state
 Void rerouteTransitionSource(Transition t, State source):
 t.sourceState.outgoingTransitions.remove(t) ->
 t.setSourceState(source) ->
 source.outgoingTransitions.add(t)
 ;
 
+//Adds a parallel region to the given state
 Void addParallelRegion(State parentState):
 let region = new Region:
 let state = new State:
@@ -65,6 +81,8 @@ parentState.regions.add(region)
 /////////////////////////
 //     Templates      ///
 /////////////////////////
+
+//Creates a default StateChart
 Void createDefault(Region rootRegion):
 let state = new State:
 let innerState = new State:
@@ -77,6 +95,7 @@ region.innerStates.add(innerState) ->
 rootRegion.innerStates.add(state)
 ;
 
+//Good ol' ABRO
 Void addABRO(Region rootRegion):
 let reset = new Transition:
 let waitABToFinal = new Transition:
