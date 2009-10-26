@@ -332,8 +332,9 @@ public class SyncChartDirector extends FixedPointDirector {
         }
     	
     	stateSignals = stateSignals.replaceAll("'", "");
-    	//stateSignals = stateSignals.replaceAll("[", "");
-    	//stateSignals = stateSignals.replaceAll("]", "");
+       	stateSignals = stateSignals.replaceAll(" ", "");
+        stateSignals = stateSignals.replaceAll("[", "");
+    	stateSignals = stateSignals.replaceAll("]", "");
     	String[] stateSignalArray = stateSignals.split(",");
     	for (int c = 0; c < stateSignalArray.length; c++) {
         	String stateSignal = stateSignalArray[c];
