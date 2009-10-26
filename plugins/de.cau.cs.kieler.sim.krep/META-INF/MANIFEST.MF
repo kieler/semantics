@@ -7,6 +7,14 @@ Bundle-Activator: de.cau.cs.kieler.sim.krep.Activator
 Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0",
  de.cau.cs.kieler.krep.evalbench.base;bundle-version="0.1.0",
- org.eclipse.ui;bundle-version="3.5.1"
+ org.eclipse.ui;bundle-version="3.5.0",
+ de.cau.cs.kieler.krep.editors.klp;bundle-version="0.1.0",
+ org.eclipse.xtext;bundle-version="0.7.2",
+ org.eclipse.ui.editors;bundle-version="3.5.0",
+ de.cau.cs.kieler.core.ui;bundle-version="0.1.0",
+ org.eclipse.emf.mwe.core;bundle-version="0.7.2",
+ org.eclipse.emf.mwe.utils;bundle-version="0.7.2"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: org.eclipse.core.resources,
+ org.eclipse.ui.part
