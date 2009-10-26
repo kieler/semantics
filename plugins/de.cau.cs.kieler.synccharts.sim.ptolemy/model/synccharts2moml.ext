@@ -200,7 +200,7 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
 	let outerStateURIHash = hash(getURIFragment(mainRegion.innerStates.get(0))):
    	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
-   	this.createMainSyncChartDirector(mainRegion.signals.select(e|e.isLocal())) ->
+   	this.createMainSyncChartDirector(mainRegion.innerStates.get(0).signals.select(e|e.isLocal())) ->
    	//mainRegion has exactly ONE top most state
    	//iterate over all regions within this top most state
    	//the  of this containing Entity is derived from this
