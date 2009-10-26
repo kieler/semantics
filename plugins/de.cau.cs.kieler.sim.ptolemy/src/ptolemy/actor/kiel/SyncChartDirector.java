@@ -185,7 +185,7 @@ public class SyncChartDirector extends FixedPointDirector {
     ///////////////////////////////////////////////////////////////////
     ////                         parameters                        ////
     
-    public Parameter statesignals;
+    public Attribute statesignals;
 
     /** The number of times that postfire may be called before it
      *  returns false. The type must be int, and the value
@@ -323,7 +323,14 @@ public class SyncChartDirector extends FixedPointDirector {
         
         //construct a list of state signals, not in possible signals (= cannot be emitted)
         LinkedList<String> cannotSignals = new LinkedList<String>();
-    	String stateSignals = this.statesignals.getValueAsString();
+    	
+        String stateSignals = "";
+        Attribute attribute = this.getAttribute("statesignals");
+        if (attribute instanceof StringAttribute) {
+        	StringAttribute stringAttribute = (StringAttribute)attribute;
+        	stateSignals = stringAttribute.getValueAsString();
+        }
+    	
     	stateSignals = stateSignals.replaceAll("'", "");
     	//stateSignals = stateSignals.replaceAll("[", "");
     	//stateSignals = stateSignals.replaceAll("]", "");
@@ -1007,7 +1014,7 @@ public class SyncChartDirector extends FixedPointDirector {
 //        synchronizeToRealTime = new Parameter(this, "synchronizeToRealTime");
 //        synchronizeToRealTime.setExpression("false");
 //        synchronizeToRealTime.setTypeEquals(BaseType.BOOLEAN);
-        statesignals = new Parameter(this, "statesignals");
+          //statesignals = new Parameter(this, "statesignals");
 
         timeResolution.setVisibility(Settable.FULL);
         timeResolution.moveToLast();
