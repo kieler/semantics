@@ -12,7 +12,7 @@
 	<property name="p2.director.workspace" location="${scriptdir}/.p2Workspace" />
 	<property name="antContrib.home"       location="/home/kieler/ant-contrib" />
 	<property name="findbugs.home"         location="/home/kieler/findbugs" />
-	<property name="findbugs.classes"      location="${basedir}/update-site/plugins" />
+	<property name="findbugs.classes"      location="update-site/plugins" /> <!-- path is relative to workspace folder!! -->
 	<property name="checkstyle.home"       location="/home/kieler/checkstyle" />
  
  	<property name="equinoxLauncherPluginVersion" value="${system.equinoxLauncherPluginVersion}" />
@@ -48,6 +48,10 @@
 		
 		<!-- the following conditions will check the presence of certain properties
 		     and write definite values to new properties in order to pass them to the antRunner -->
+		<condition property="suppress.clean" value="true" else="false">
+			<isset property="no.clean" />
+		</condition>
+		
 		<condition property="suppress.publishing" value="true" else="false">
 			<isset property="no.publishing" />
 		</condition>
@@ -99,14 +103,13 @@
 				<!-- a list of source folders seperated by ':'
 						each folder should contain the subfolders 'features' and 'plugins'
 						can be relative (to ${basedir})
-						CAUTION: features must not be JARed
-								 plugins should be JARed (so far I figured out) -->
+						CAUTION: required features must not be JARed, plugins should be JARed (so far I figured out) -->
 			<arg value="-Ddoc.excludes=${doc.excludes}" />
 				<!-- comma separated path patterns excluded at javadoc generation -->
 			<arg value="-Dcheckstyle.excludes=${checkstyle.excludes}" />
 				<!-- comma separated path patterns excluded at checkstyle examination -->
-			<arg value="-Dsuppress.buildJars=${suppress.buildJars}" />
-				<!-- set to true to suppress building jars, doc, findbugs, checkstyle; feature will be timestamped only, default is false -->
+			<arg value="-Dsuppress.clean=${suppress.clean}" />
+				<!-- set to true to suppress cleaning the temp / result folders, default is false -->
 			<arg value="-Dsuppress.publishing=${suppress.publishing}" />
 				<!-- set to true to suppress publishing to updatesite, default is false -->
 			<arg value="-Dsuppress.doc=${suppress.doc}" />
@@ -115,7 +118,7 @@
 				<!-- set to true to suppress running findbugs, default is false -->
 			<arg value="-Dsuppress.checkstyle=${suppress.checkstyle}" />
 				<!-- set to true to suppress running checkstyle, default is false -->
-			<arg value="-Dfindbugs.classes=${findbugs.classes}" />
+			<arg value="-Dfindbugs.classes=${system.WORKSPACE}/${findbugs.classes}" />
 				<!-- set to true to suppress running findbugs, default is false -->
 			<classpath>
 				<pathelement location="${eclipseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
@@ -136,6 +139,10 @@
 		<!-- the following conditions work in the other way round than the conditions in line 50ff.,
 		     i.e. they provide properties set under certain circumstances only
 			 to be properly used in target's 'unless' declarations -->
+		<condition property="no.clean" value="true">
+			<istrue value="${suppress.clean}" />
+		</condition>
+	
 		<condition property="no.doc" value="true">
 			<istrue value="${suppress.doc}" />
 		</condition>
@@ -219,8 +226,9 @@
 				 value="${doc.target}${findbugs.target}${checkstyle.target}&lt;/project&gt;" />
 	</target>
 
-	<target name="build.feature" if="eclipse.running" depends="init, generateScripts, editScripts"
-	    description="target for complete feature building, checking and publishing">
+	<target name="cleanFolders" unless="no.clean">
+		<!-- this is just a helper target, which is executed during normal feature builds
+		     but skipped in release build, if multiples feature should be build in one job -->
 		
 		<mkdir dir="${basedir}/buildTempFolder" />
 		<mkdir dir="${basedir}/features" />
@@ -233,7 +241,11 @@
 			<fileset dir="${basedir}/update-site/features/" includes="**/*"/>
 			<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
 		</delete>
+	</target>
 
+	<target name="build.feature" if="eclipse.running" depends="init, generateScripts, editScripts, cleanFolders"
+	    description="target for complete feature building, checking and publishing">
+		
 		<!-- run feature's build.xml: clean, compile and jarUp, provide unjared feature, zip logs, generate javadoc -->		
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}">
 			<property name="javacDebugInfo" value="true" />
@@ -261,8 +273,8 @@
 		<antcall target="build.updatesiteEntry" />
 	</target>
 	
-	<target name="build.updatesiteEntry" if="eclipse.running" unless="no.publishing" depends="init, generateScripts"
-		description="target for creating an updatesite entry of last build results">
+	<target name="build.updatesiteEntry" if="eclipse.running" unless="no.publishing"
+	    description="target for creating an updatesite entry of last build results">
 		
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
