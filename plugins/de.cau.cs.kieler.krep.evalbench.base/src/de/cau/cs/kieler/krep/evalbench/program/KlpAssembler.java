@@ -13,13 +13,29 @@
  ******************************************************************************/
 package de.cau.cs.kieler.krep.evalbench.program;
 
-import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import org.antlr.runtime.ANTLRReaderStream;
+import de.cau.cs.kieler.krep.editors.klp.klp.Binop;
+import de.cau.cs.kieler.krep.editors.klp.klp.CJmp;
+import de.cau.cs.kieler.krep.editors.klp.klp.Decl;
+import de.cau.cs.kieler.krep.editors.klp.klp.Instruction;
+import de.cau.cs.kieler.krep.editors.klp.klp.KLP;
+import de.cau.cs.kieler.krep.editors.klp.klp.Line;
+import de.cau.cs.kieler.krep.editors.klp.klp.Prio;
+import de.cau.cs.kieler.krep.editors.klp.klp.Read;
+import de.cau.cs.kieler.krep.editors.klp.klp.Reg;
+import de.cau.cs.kieler.krep.editors.klp.klp.Scope;
+import de.cau.cs.kieler.krep.editors.klp.klp.SetClk;
+import de.cau.cs.kieler.krep.editors.klp.klp.SetPC;
+import de.cau.cs.kieler.krep.evalbench.comm.Signal;
+import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
+import de.cau.cs.kieler.krep.evalbench.helpers.Tools;
+import de.cau.cs.kieler.krep.evalbench.program.kep.Register;
+import de.cau.cs.kieler.krep.evalbench.program.klp.Opcode;
+
+/*import org.antlr.runtime.ANTLRReaderStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
@@ -42,6 +58,7 @@ import de.cau.cs.kieler.krep.evalbench.program.klp.Register;
 import de.cau.cs.kieler.krep.evalbench.program.klp.parser.klpLexer;
 import de.cau.cs.kieler.krep.evalbench.program.klp.parser.klpParser;
 import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
+*/
 
 /**
  * @author ctr assembler description for the Lustre processor
@@ -75,7 +92,7 @@ public class KlpAssembler implements IAssembler {
         inputs = new LinkedList<Signal>();
         outputs = new LinkedList<Signal>();
         index = new HashMap<String, Integer>();
-        instructions = new LinkedList<Instruction>();
+        //instructions = new LinkedList<Instruction>();
         size = 0;
     }
 
@@ -120,44 +137,44 @@ public class KlpAssembler implements IAssembler {
     }
 
     private void initialize(
-            de.cau.cs.kieler.krep.editors.klp.klp.Instruction instr,
+            final Instruction instruction,
             HashMap<String, Integer> label2addr, HashMap<String, Integer> regs) {
-        if (instr instanceof de.cau.cs.kieler.krep.editors.klp.klp.Decl) {
-            de.cau.cs.kieler.krep.editors.klp.klp.Decl i = (de.cau.cs.kieler.krep.editors.klp.klp.Decl) instr;
+        if (instruction instanceof Decl) {
+            de.cau.cs.kieler.krep.editors.klp.klp.Decl i = (de.cau.cs.kieler.krep.editors.klp.klp.Decl) instruction;
             setRegs(i.getReg(), regs);
             setOpcode(i);
-        } else if (instr instanceof de.cau.cs.kieler.krep.editors.klp.klp.Binop) {
-            de.cau.cs.kieler.krep.editors.klp.klp.Binop i = (de.cau.cs.kieler.krep.editors.klp.klp.Binop) instr;
+        } else if (instruction instanceof de.cau.cs.kieler.krep.editors.klp.klp.Binop) {
+            de.cau.cs.kieler.krep.editors.klp.klp.Binop i = (de.cau.cs.kieler.krep.editors.klp.klp.Binop) instruction;
             setRegs(i.getTo(), regs);
             setRegs(i.getArg1().getReg(), regs);
             if (i.getArg2() != null) {
                 setRegs(i.getArg2().getReg(), regs);
             }
             setOpcode(i);
-        } else if (instr instanceof de.cau.cs.kieler.krep.editors.klp.klp.CJmp) {
-            de.cau.cs.kieler.krep.editors.klp.klp.CJmp i = (de.cau.cs.kieler.krep.editors.klp.klp.CJmp) instr;
+        } else if (instruction instanceof de.cau.cs.kieler.krep.editors.klp.klp.CJmp) {
+            de.cau.cs.kieler.krep.editors.klp.klp.CJmp i = (de.cau.cs.kieler.krep.editors.klp.klp.CJmp) instruction;
             setOpcode(i);
             setRegs(i.getReg(), regs);
             i.getLabel().setAddr(label2addr.get(i.getLabel().getName()));
-        } else if (instr instanceof de.cau.cs.kieler.krep.editors.klp.klp.Done
-                || instr == null) {
+        } else if (instruction instanceof de.cau.cs.kieler.krep.editors.klp.klp.Done
+                || instruction == null) {
             de.cau.cs.kieler.krep.editors.klp.klp.Done i = null;
-            if (instr == null) {
+            if (instruction == null) {
                 i = new de.cau.cs.kieler.krep.editors.klp.klp.impl.DoneImpl();
             } else {
-                i = (de.cau.cs.kieler.krep.editors.klp.klp.Done) instr;
+                i = (de.cau.cs.kieler.krep.editors.klp.klp.Done) instruction;
             }
             i.setOpcode0(Opcode.DONE.getCode());
             if (i.getPc() != null) {
                 i.getPc().setAddr(label2addr.get(i.getPc().getName()));
             }
-        } else if (instr instanceof de.cau.cs.kieler.krep.editors.klp.klp.Jmp) {
-            de.cau.cs.kieler.krep.editors.klp.klp.Jmp i = (de.cau.cs.kieler.krep.editors.klp.klp.Jmp) instr;
+        } else if (instruction instanceof de.cau.cs.kieler.krep.editors.klp.klp.Jmp) {
+            de.cau.cs.kieler.krep.editors.klp.klp.Jmp i = (de.cau.cs.kieler.krep.editors.klp.klp.Jmp) instruction;
             i.setOpcode0(Opcode.JMP.getCode());
             i.getLabel().setAddr(label2addr.get(i.getLabel().getName()));
             i.setOpcode1(i.getLabel().getAddr());
-        } else if (instr instanceof de.cau.cs.kieler.krep.editors.klp.klp.Move) {
-            de.cau.cs.kieler.krep.editors.klp.klp.Move i = (de.cau.cs.kieler.krep.editors.klp.klp.Move) instr;
+        } else if (instruction instanceof de.cau.cs.kieler.krep.editors.klp.klp.Move) {
+            de.cau.cs.kieler.krep.editors.klp.klp.Move i = (de.cau.cs.kieler.krep.editors.klp.klp.Move) instruction;
             // res = i.getType().getName().toUpperCase() + " " +
             // printReg(i.getTo()) + " ";
             // if (i.getFrom() != null) {
@@ -165,19 +182,19 @@ public class KlpAssembler implements IAssembler {
             // } else {
             // res += i.getVal();
             // }
-        } else if (instr instanceof de.cau.cs.kieler.krep.editors.klp.klp.Prio) {
-            de.cau.cs.kieler.krep.editors.klp.klp.Prio i = (de.cau.cs.kieler.krep.editors.klp.klp.Prio) instr;
+        } else if (instruction instanceof de.cau.cs.kieler.krep.editors.klp.klp.Prio) {
+            de.cau.cs.kieler.krep.editors.klp.klp.Prio i = (de.cau.cs.kieler.krep.editors.klp.klp.Prio) instruction;
             if (i.getReg() != null) {
                 setRegs(i.getReg(), regs);
             }
             setOpcode(i);
-        } else if (instr instanceof de.cau.cs.kieler.krep.editors.klp.klp.SetClk) {
-            de.cau.cs.kieler.krep.editors.klp.klp.SetClk i = (de.cau.cs.kieler.krep.editors.klp.klp.SetClk) instr;
+        } else if (instruction instanceof de.cau.cs.kieler.krep.editors.klp.klp.SetClk) {
+            de.cau.cs.kieler.krep.editors.klp.klp.SetClk i = (de.cau.cs.kieler.krep.editors.klp.klp.SetClk) instruction;
             setRegs(i.getReg(), regs);
             setRegs(i.getClk(), regs);
             setOpcode(i);
-        } else if (instr instanceof de.cau.cs.kieler.krep.editors.klp.klp.SetPC) {
-            de.cau.cs.kieler.krep.editors.klp.klp.SetPC i = (de.cau.cs.kieler.krep.editors.klp.klp.SetPC) instr;
+        } else if (instruction instanceof de.cau.cs.kieler.krep.editors.klp.klp.SetPC) {
+            de.cau.cs.kieler.krep.editors.klp.klp.SetPC i = (de.cau.cs.kieler.krep.editors.klp.klp.SetPC) instruction;
             setRegs(i.getReg(), regs);
             i.getLabel().setAddr(label2addr.get(i.getLabel().getName()));
             setOpcode(i);
@@ -224,7 +241,7 @@ public class KlpAssembler implements IAssembler {
         i.setOpcode2(i.getLabel().getAddr());
     }
 
-    private void setOpcode(Binop i) {
+    private void setOpcode(final Binop i) {
         i.setOpcode1(i.getTo().getId());
         i.setOpcode2(i.getArg1().getReg().getId());
         if (i.getArg2() != null) {
@@ -317,7 +334,7 @@ public class KlpAssembler implements IAssembler {
         }
     }
 
-    private void setOpcode(de.cau.cs.kieler.krep.editors.klp.klp.Decl i) {
+    private void setOpcode(Decl i) {
         switch (i.getScope()) {
         case INPUT:
             i.setOpcode0(Opcode.INPUT.getCode());
@@ -340,7 +357,7 @@ public class KlpAssembler implements IAssembler {
 
     }
 
-    private void addSignal(de.cau.cs.kieler.krep.editors.klp.klp.Decl decl) {
+    private void addSignal(Decl decl) {
         Signal s = new Signal(decl.getReg().getName(), false, 0, 0);
         switch (decl.getScope()) {
         case INPUT:
@@ -354,7 +371,7 @@ public class KlpAssembler implements IAssembler {
         }
     }
 
-    public void assemble(final String name, final Reader program)
+    /*public void assemble(final String name, final Reader program)
             throws ParseException {
         this.name = name;
         boolean error = false;
@@ -423,7 +440,7 @@ public class KlpAssembler implements IAssembler {
             throws ParseException {
         final StringReader in = new StringReader(program);
         assemble(name, in);
-    }
+    }*/
 
     public String canExecute(final Config c) {
         if (!(c instanceof KrepConfig)) {
@@ -434,10 +451,10 @@ public class KlpAssembler implements IAssembler {
             return "not enough IO";
         }
 
-        if (k.getRegs() < Register.getMax()) {
-            return "not enough registers (" + k.getRegs() + "<"
-                    + Register.getMax() + ")";
-        }
+        //if (k.getRegs() < Register.getMax()) {
+         //   return "not enough registers (" + k.getRegs() + "<";
+                  //  + Register.getMax() + ")";
+        //}
         if (k.getIrom() < size) {
             return "not enough ROM (" + k.getIrom() + "<" + size + ")";
         }
@@ -468,7 +485,7 @@ public class KlpAssembler implements IAssembler {
                 }
                 res.add(new String[] { num, label, i, opcode });
             }
-        } else {
+        } /*else {
 
             for (final Instruction i : instructions) {
                 String opcode = i.writeObj();
@@ -484,7 +501,7 @@ public class KlpAssembler implements IAssembler {
                 k++;
                 res.add(new String[] { num, label, instr, opcode });
             }
-        }
+        }*/
         return res.toArray(new String[0][0]);
     }
 
@@ -587,14 +604,14 @@ public class KlpAssembler implements IAssembler {
     public String[] getObj(final Config c) {
         int j = 0;
         LinkedList<String> obj = new LinkedList<String>();
-        if (instructions != null) {
+      /*  if (instructions != null) {
             for (final Instruction i : instructions) {
                 final String t = i.writeObj();
                 if (t != null) {
                     obj.add(Tools.toHex(j++) + t);
                 }
             }
-        }
+        }*/
         return obj.toArray(new String[obj.size()]);
     }
 
@@ -602,8 +619,8 @@ public class KlpAssembler implements IAssembler {
         inputs.clear();
         outputs.clear();
 
-        Register.clear();
-        Decl.clear();
+       // Register.clear();
+        //Decl.clear();
         instructions.clear();
     }
 
@@ -626,6 +643,16 @@ public class KlpAssembler implements IAssembler {
 
     public String getName() {
         return name;
+    }
+
+    public void assemble(String name, String program) throws ParseException {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void assemble(String name, Reader program) throws ParseException {
+        // TODO Auto-generated method stub
+        
     }
 
 }
