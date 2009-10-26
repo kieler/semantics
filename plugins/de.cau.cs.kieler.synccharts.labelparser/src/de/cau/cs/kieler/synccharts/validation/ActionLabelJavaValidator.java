@@ -1,7 +1,7 @@
 package de.cau.cs.kieler.synccharts.validation;
  
 
-public class TransitionLabelJavaValidator extends AbstractActionLabelJavaValidator {
+public class ActionLabelJavaValidator extends AbstractActionLabelJavaValidator {
 
 //	@Check
 //	public void checkTypeNameStartsWithCapital(Type type) {

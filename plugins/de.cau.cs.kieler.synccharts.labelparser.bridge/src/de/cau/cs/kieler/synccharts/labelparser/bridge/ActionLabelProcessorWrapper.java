@@ -32,7 +32,8 @@ import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
-import de.cau.cs.kieler.synccharts.TransitionLabelStandaloneSetup;
+//import de.cau.cs.kieler.synccharts.TransitionLabelStandaloneSetup;
+import de.cau.cs.kieler.synccharts.ActionLabelStandaloneSetup;
 import de.cau.cs.kieler.synccharts.ValuedObject;
 
 /**
@@ -52,7 +53,8 @@ public class ActionLabelProcessorWrapper {
      * Default Constructor initializes parsers and serializers.
      */
     public ActionLabelProcessorWrapper() {
-        injector = new TransitionLabelStandaloneSetup()
+        //injector = new TransitionLabelStandaloneSetup()
+    	injector = new ActionLabelStandaloneSetup()
         .createInjectorAndDoEMFRegistration();
         serializerUtil = injector.getInstance(SerializerUtil.class);
         parser = injector.getInstance(IAntlrParser.class);

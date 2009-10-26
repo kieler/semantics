@@ -8,16 +8,16 @@ import org.eclipse.xtext.*;
 import org.eclipse.xtext.parsetree.reconstr.IInstanceDescription;
 import org.eclipse.xtext.parsetree.reconstr.impl.AbstractParseTreeConstructor;
 
-import de.cau.cs.kieler.synccharts.services.TransitionLabelGrammarAccess;
+import de.cau.cs.kieler.synccharts.services.ActionLabelGrammarAccess;
 
 import com.google.inject.Inject;
 
-public class TransitionLabelParsetreeConstructor extends AbstractParseTreeConstructor {
+public class ActionLabelParsetreeConstructor extends AbstractParseTreeConstructor {
 		
 	@Inject
-	private TransitionLabelGrammarAccess grammarAccess;
+	private ActionLabelGrammarAccess grammarAccess;
 		
-	public TransitionLabelGrammarAccess getGrammarAccess() {
+	public ActionLabelGrammarAccess getGrammarAccess() {
 		return grammarAccess;
 	}
 

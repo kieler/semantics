@@ -12,7 +12,7 @@ import com.google.inject.Binder;
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class TransitionLabelUiModule extends de.cau.cs.kieler.synccharts.AbstractTransitionLabelUiModule {
+public class TransitionLabelUiModule extends AbstractActionLabelUiModule {
     @Override
     public void configure(Binder binder) {
         // TODO Auto-generated method stub

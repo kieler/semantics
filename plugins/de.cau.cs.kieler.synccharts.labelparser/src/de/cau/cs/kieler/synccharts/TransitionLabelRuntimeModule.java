@@ -12,7 +12,7 @@ import de.cau.cs.kieler.synccharts.formatting.TransitionLabelValueConverter;
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class TransitionLabelRuntimeModule extends de.cau.cs.kieler.synccharts.AbstractTransitionLabelRuntimeModule {
+public class TransitionLabelRuntimeModule extends AbstractActionLabelRuntimeModule {
 
     /* (non-Javadoc)
      * @see org.eclipse.xtext.service.DefaultRuntimeModule#bindITransientValueService()

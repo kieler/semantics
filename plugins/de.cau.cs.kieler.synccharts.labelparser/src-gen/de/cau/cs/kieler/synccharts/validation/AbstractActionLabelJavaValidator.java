@@ -8,7 +8,7 @@ import org.eclipse.xtext.validation.AbstractDeclarativeValidator;
 import org.eclipse.xtext.validation.ComposedChecks;
 
 @ComposedChecks(validators= {org.eclipse.xtext.validation.ImportUriValidator.class})
-public class AbstractTransitionLabelJavaValidator extends AbstractDeclarativeValidator {
+public class AbstractActionLabelJavaValidator extends AbstractDeclarativeValidator {
 
     @Override
     protected List<? extends EPackage> getEPackages() {

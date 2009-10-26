@@ -10,10 +10,10 @@ import com.google.inject.Injector;
 /**
  * Generated from StandaloneSetup.xpt!
  */
-public class TransitionLabelStandaloneSetup implements ISetup {
+public class ActionLabelStandaloneSetup implements ISetup {
 
 	public static void doSetup() {
-		new TransitionLabelStandaloneSetup().createInjectorAndDoEMFRegistration();
+		new ActionLabelStandaloneSetup().createInjectorAndDoEMFRegistration();
 	}
 
 	public Injector createInjectorAndDoEMFRegistration() {
@@ -25,7 +25,7 @@ public class TransitionLabelStandaloneSetup implements ISetup {
 	}
 	
 	public Injector createInjector() {
-		return Guice.createInjector(new de.cau.cs.kieler.synccharts.TransitionLabelRuntimeModule());
+		return Guice.createInjector(new de.cau.cs.kieler.synccharts.ActionLabelRuntimeModule());
 	}
 	
 	public void register(Injector injector) {

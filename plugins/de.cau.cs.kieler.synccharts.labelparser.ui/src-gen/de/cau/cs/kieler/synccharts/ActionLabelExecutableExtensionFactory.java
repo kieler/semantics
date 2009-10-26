@@ -18,9 +18,9 @@ import com.google.inject.Injector;
 /**
  * generated
  */
-public class TransitionLabelExecutableExtensionFactory implements IExecutableExtensionFactory, IExecutableExtension {
+public class ActionLabelExecutableExtensionFactory implements IExecutableExtensionFactory, IExecutableExtension {
 
-	private Logger log = Logger.getLogger(TransitionLabelExecutableExtensionFactory.class);
+	private Logger log = Logger.getLogger(ActionLabelExecutableExtensionFactory.class);
 	private String clazzName;
 	private IConfigurationElement config;
 
@@ -36,13 +36,13 @@ public class TransitionLabelExecutableExtensionFactory implements IExecutableExt
 	}
 	
 	public Object create() throws CoreException {
-		de.cau.cs.kieler.synccharts.internal.TransitionLabelActivator instance = de.cau.cs.kieler.synccharts.internal.TransitionLabelActivator.getInstance();
+		de.cau.cs.kieler.synccharts.internal.ActionLabelActivator instance = de.cau.cs.kieler.synccharts.internal.ActionLabelActivator.getInstance();
 		if (instance == null)
 			throw new IllegalStateException("The bundle has not yet been activated. Make sure the Manifest.MF contains 'Bundle-ActivationPolicy: lazy'.");
 		Bundle bundle = instance.getBundle();
 		try {
 			final Class<?> clazz = bundle.loadClass(clazzName);
-			final Injector injector = de.cau.cs.kieler.synccharts.internal.TransitionLabelActivator.getInstance().getInjector("de.cau.cs.kieler.synccharts.TransitionLabel");
+			final Injector injector = de.cau.cs.kieler.synccharts.internal.ActionLabelActivator.getInstance().getInjector("de.cau.cs.kieler.synccharts.ActionLabel");
 			final Object result = injector.getInstance(clazz);
 			if (result instanceof IExecutableExtension)
 				((IExecutableExtension) result).setInitializationData(config, null, null);

@@ -11,31 +11,31 @@ import com.google.inject.Binder;
 import com.google.inject.name.Names;
 
 /**
- * Manual modifications go to {de.cau.cs.kieler.synccharts.TransitionLabelRuntimeModule}
+ * Manual modifications go to {de.cau.cs.kieler.synccharts.ActionLabelRuntimeModule}
  */
-public abstract class AbstractTransitionLabelRuntimeModule extends DefaultRuntimeModule {
+public abstract class AbstractActionLabelRuntimeModule extends DefaultRuntimeModule {
 	
 	@Override
 	public void configure(Binder binder) {
 		super.configure(binder);
 		binder.bind(String.class).annotatedWith(Names.named(Constants.LANGUAGE_NAME)).toInstance(
-			"de.cau.cs.kieler.synccharts.TransitionLabel");
+			"de.cau.cs.kieler.synccharts.ActionLabel");
 	}
 	
 	
 	// contributed by org.eclipse.xtext.generator.grammarAccess.GrammarAccessFragment
 	public Class<? extends org.eclipse.xtext.IGrammarAccess> bindIGrammarAccess() {
-		return de.cau.cs.kieler.synccharts.services.TransitionLabelGrammarAccess.class;
+		return de.cau.cs.kieler.synccharts.services.ActionLabelGrammarAccess.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.parseTreeConstructor.ParseTreeConstructorFragment
 	public Class<? extends org.eclipse.xtext.parsetree.reconstr.IParseTreeConstructor> bindIParseTreeConstructor() {
-		return de.cau.cs.kieler.synccharts.parseTreeConstruction.TransitionLabelParsetreeConstructor.class;
+		return de.cau.cs.kieler.synccharts.parseTreeConstruction.ActionLabelParsetreeConstructor.class;
 	}
 
 	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
 	public Class<? extends org.eclipse.xtext.parser.antlr.IAntlrParser> bindIAntlrParser() {
-		return de.cau.cs.kieler.synccharts.parser.antlr.TransitionLabelParser.class;
+		return de.cau.cs.kieler.synccharts.parser.antlr.ActionLabelParser.class;
 	}
 
 	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
@@ -45,12 +45,12 @@ public abstract class AbstractTransitionLabelRuntimeModule extends DefaultRuntim
 
 	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
 	public Class<? extends org.eclipse.xtext.parser.antlr.IAntlrTokenFileProvider> bindIAntlrTokenFileProvider() {
-		return de.cau.cs.kieler.synccharts.parser.antlr.TransitionLabelAntlrTokenFileProvider.class;
+		return de.cau.cs.kieler.synccharts.parser.antlr.ActionLabelAntlrTokenFileProvider.class;
 	}
 
 	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
 	public Class<? extends org.eclipse.xtext.parser.antlr.Lexer> bindLexer() {
-		return de.cau.cs.kieler.synccharts.parser.antlr.internal.InternalTransitionLabelLexer.class;
+		return de.cau.cs.kieler.synccharts.parser.antlr.internal.InternalActionLabelLexer.class;
 	}
 
 	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
@@ -59,18 +59,18 @@ public abstract class AbstractTransitionLabelRuntimeModule extends DefaultRuntim
 	}
 
 	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.synccharts.validation.TransitionLabelJavaValidator> bindTransitionLabelJavaValidator() {
-		return de.cau.cs.kieler.synccharts.validation.TransitionLabelJavaValidator.class;
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.synccharts.validation.ActionLabelJavaValidator> bindActionLabelJavaValidator() {
+		return de.cau.cs.kieler.synccharts.validation.ActionLabelJavaValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.JavaScopingFragment
 	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
-		return de.cau.cs.kieler.synccharts.scoping.TransitionLabelScopeProvider.class;
+		return de.cau.cs.kieler.synccharts.scoping.ActionLabelScopeProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment
 	public Class<? extends org.eclipse.xtext.formatting.IFormatter> bindIFormatter() {
-		return de.cau.cs.kieler.synccharts.formatting.TransitionLabelFormatter.class;
+		return de.cau.cs.kieler.synccharts.formatting.ActionLabelFormatter.class;
 	}
 
 }

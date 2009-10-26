@@ -4,12 +4,12 @@
  */
 package de.cau.cs.kieler.synccharts;
 
-import de.cau.cs.kieler.synccharts.TransitionLabelRuntimeModule;
+import de.cau.cs.kieler.synccharts.ActionLabelRuntimeModule;
 
 /**
- * Manual modifications go to {de.cau.cs.kieler.synccharts.TransitionLabelUiModule}
+ * Manual modifications go to {de.cau.cs.kieler.synccharts.ActionLabelUiModule}
  */
-public abstract class AbstractTransitionLabelUiModule extends TransitionLabelRuntimeModule {
+public abstract class AbstractActionLabelUiModule extends ActionLabelRuntimeModule {
 	
 	
 	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
@@ -134,22 +134,22 @@ public abstract class AbstractTransitionLabelUiModule extends TransitionLabelRun
 
 	// contributed by org.eclipse.xtext.ui.generator.labeling.LabelProviderFragment
 	public Class<? extends org.eclipse.jface.viewers.ILabelProvider> bindILabelProvider() {
-		return de.cau.cs.kieler.synccharts.labeling.TransitionLabelLabelProvider.class;
+		return de.cau.cs.kieler.synccharts.labeling.ActionLabelLabelProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.outline.TransformerFragment
 	public Class<? extends org.eclipse.xtext.ui.common.editor.outline.transformer.ISemanticModelTransformer> bindISemanticModelTransformer() {
-		return de.cau.cs.kieler.synccharts.outline.TransitionLabelTransformer.class;
+		return de.cau.cs.kieler.synccharts.outline.ActionLabelTransformer.class;
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.outline.OutlineNodeAdapterFactoryFragment
 	public Class<? extends org.eclipse.xtext.ui.common.editor.outline.actions.IContentOutlineNodeAdapterFactory> bindIContentOutlineNodeAdapterFactory() {
-		return de.cau.cs.kieler.synccharts.outline.TransitionLabelOutlineNodeAdapterFactory.class;
+		return de.cau.cs.kieler.synccharts.outline.ActionLabelOutlineNodeAdapterFactory.class;
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.contentAssist.JavaBasedContentAssistFragment
 	public Class<? extends org.eclipse.xtext.ui.core.editor.contentassist.IContentProposalProvider> bindIContentProposalProvider() {
-		return de.cau.cs.kieler.synccharts.contentassist.TransitionLabelProposalProvider.class;
+		return de.cau.cs.kieler.synccharts.contentassist.ActionLabelProposalProvider.class;
 	}
 
 	// contributed by de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment
@@ -159,7 +159,7 @@ public abstract class AbstractTransitionLabelUiModule extends TransitionLabelRun
 
 	// contributed by de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment
 	public Class<? extends org.eclipse.xtext.ui.common.editor.contentassist.antlr.IContentAssistParser> bindIContentAssistParser() {
-		return de.cau.cs.kieler.synccharts.contentassist.antlr.TransitionLabelParser.class;
+		return de.cau.cs.kieler.synccharts.contentassist.antlr.ActionLabelParser.class;
 	}
 
 

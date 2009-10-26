@@ -29,7 +29,8 @@ import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.Transition;
-import de.cau.cs.kieler.synccharts.TransitionLabelStandaloneSetup;
+//import de.cau.cs.kieler.synccharts.TransitionLabelStandaloneSetup;
+import de.cau.cs.kieler.synccharts.ActionLabelStandaloneSetup;
 import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParseCommand;
 import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelSerializer;
@@ -103,7 +104,7 @@ public class ParserSerializerTest {
      */
     @Before
     public void setUpParserAndSerializer() throws Exception {
-        injector = new TransitionLabelStandaloneSetup()
+        injector = new ActionLabelStandaloneSetup()
                 .createInjectorAndDoEMFRegistration();
         serializerUtil = injector.getInstance(SerializerUtil.class);
         parser = injector.getInstance(IAntlrParser.class);

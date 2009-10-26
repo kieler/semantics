@@ -6,8 +6,6 @@ package de.cau.cs.kieler.synccharts.formatting;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 
-import de.cau.cs.kieler.synccharts.services.ActionLabelGrammarAccess;
-
 /**
  * This class contains custom formatting description.
  * 
@@ -16,11 +14,11 @@ import de.cau.cs.kieler.synccharts.services.ActionLabelGrammarAccess;
  * 
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  */
-public class TransitionLabelFormatter extends AbstractDeclarativeFormatter {
+public class ActionLabelFormatter extends AbstractDeclarativeFormatter {
 	
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
-		ActionLabelGrammarAccess f = (ActionLabelGrammarAccess) getGrammarAccess();
+		de.cau.cs.kieler.synccharts.services.ActionLabelGrammarAccess f = (de.cau.cs.kieler.synccharts.services.ActionLabelGrammarAccess) getGrammarAccess();
 
 		//...
 	}

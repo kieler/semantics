@@ -3,11 +3,10 @@
 */
 package de.cau.cs.kieler.synccharts.contentassist;
 
-//import de.cau.cs.kieler.synccharts.contentassist.AbstractTransitionLabelProposalProvider;
 import de.cau.cs.kieler.synccharts.contentassist.AbstractActionLabelProposalProvider;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
-public class TransitionLabelProposalProvider extends AbstractActionLabelProposalProvider {
+public class ActionLabelProposalProvider extends AbstractActionLabelProposalProvider {
 
 }

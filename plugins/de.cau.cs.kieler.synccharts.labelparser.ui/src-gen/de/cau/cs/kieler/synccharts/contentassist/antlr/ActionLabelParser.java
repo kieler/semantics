@@ -16,23 +16,23 @@ import org.eclipse.xtext.ui.common.editor.contentassist.antlr.internal.AbstractI
 
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.synccharts.services.TransitionLabelGrammarAccess;
+import de.cau.cs.kieler.synccharts.services.ActionLabelGrammarAccess;
 
-public class TransitionLabelParser extends AbstractContentAssistParser {
+public class ActionLabelParser extends AbstractContentAssistParser {
 	
 	@Inject
-	private TransitionLabelGrammarAccess grammarAccess;
+	private ActionLabelGrammarAccess grammarAccess;
 	
 	private Map<AbstractElement, String> nameMappings;
 	
 	@Override
-	protected de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalTransitionLabelLexer createLexer(CharStream stream) {
-		return new de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalTransitionLabelLexer(stream);
+	protected de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalActionLabelLexer createLexer(CharStream stream) {
+		return new de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalActionLabelLexer(stream);
 	}
 	
 	@Override
-	protected de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalTransitionLabelParser createParser() {
-		de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalTransitionLabelParser result = new de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalTransitionLabelParser(null);
+	protected de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalActionLabelParser createParser() {
+		de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalActionLabelParser result = new de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalActionLabelParser(null);
 		result.setGrammarAccess(grammarAccess);
 		return result;
 	}
@@ -132,7 +132,7 @@ public class TransitionLabelParser extends AbstractContentAssistParser {
 	@Override
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
-			de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalTransitionLabelParser typedParser = (de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalTransitionLabelParser) parser;
+			de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalActionLabelParser typedParser = (de.cau.cs.kieler.synccharts.contentassist.antlr.internal.InternalActionLabelParser) parser;
 			typedParser.entryRuleAction();
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
@@ -145,11 +145,11 @@ public class TransitionLabelParser extends AbstractContentAssistParser {
 		return new String[] { "RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT" };
 	}
 	
-	public TransitionLabelGrammarAccess getGrammarAccess() {
+	public ActionLabelGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
 	
-	public void setGrammarAccess(TransitionLabelGrammarAccess grammarAccess) {
+	public void setGrammarAccess(ActionLabelGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
 }

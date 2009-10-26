@@ -9,10 +9,12 @@ import org.eclipse.xtext.ui.core.internal.Activator;
 
 import com.google.inject.Binder;
 
+import de.cau.cs.kieler.synccharts.AbstractActionLabelUiModule;
+
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class TransitionLabelUiModule extends de.cau.cs.kieler.synccharts.AbstractTransitionLabelUiModule {
+public class TransitionLabelUiModule extends AbstractActionLabelUiModule {
     @Override
     public void configure(Binder binder) {
         // TODO Auto-generated method stub

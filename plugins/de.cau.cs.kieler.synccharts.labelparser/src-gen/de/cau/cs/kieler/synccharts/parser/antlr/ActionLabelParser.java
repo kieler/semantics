@@ -11,22 +11,22 @@ import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.synccharts.services.TransitionLabelGrammarAccess;
+import de.cau.cs.kieler.synccharts.services.ActionLabelGrammarAccess;
 
-public class TransitionLabelParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
+public class ActionLabelParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
 	
 	@Inject 
     protected ITokenDefProvider antlrTokenDefProvider;
 	
 	@Inject
-	private TransitionLabelGrammarAccess grammarAccess;
+	private ActionLabelGrammarAccess grammarAccess;
 	
 	@Override
 	protected IParseResult parse(String ruleName, ANTLRInputStream in) {
-		de.cau.cs.kieler.synccharts.parser.antlr.internal.InternalTransitionLabelLexer lexer = new de.cau.cs.kieler.synccharts.parser.antlr.internal.InternalTransitionLabelLexer(in);
+		de.cau.cs.kieler.synccharts.parser.antlr.internal.InternalActionLabelLexer lexer = new de.cau.cs.kieler.synccharts.parser.antlr.internal.InternalActionLabelLexer(in);
 		XtextTokenStream stream = new XtextTokenStream(lexer, antlrTokenDefProvider);
 		stream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
-		de.cau.cs.kieler.synccharts.parser.antlr.internal.InternalTransitionLabelParser parser = new de.cau.cs.kieler.synccharts.parser.antlr.internal.InternalTransitionLabelParser(
+		de.cau.cs.kieler.synccharts.parser.antlr.internal.InternalActionLabelParser parser = new de.cau.cs.kieler.synccharts.parser.antlr.internal.InternalActionLabelParser(
 				stream, getElementFactory(), grammarAccess);
 		parser.setTokenTypeMap(antlrTokenDefProvider.getTokenDefMap());
 		try {
@@ -43,11 +43,11 @@ public class TransitionLabelParser extends org.eclipse.xtext.parser.antlr.Abstra
 		return "Action";
 	}
 	
-	public TransitionLabelGrammarAccess getGrammarAccess() {
+	public ActionLabelGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
 	
-	public void setGrammarAccess(TransitionLabelGrammarAccess grammarAccess) {
+	public void setGrammarAccess(ActionLabelGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
 }

@@ -14,7 +14,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 
 @Singleton
-public class TransitionLabelGrammarAccess implements IGrammarAccess {
+public class ActionLabelGrammarAccess implements IGrammarAccess {
 	
 	
 	public class ActionElements implements IParserRuleAccess {
@@ -1614,7 +1614,7 @@ public class TransitionLabelGrammarAccess implements IGrammarAccess {
 	private TerminalsGrammarAccess gaTerminals;
 
 	@Inject
-	public TransitionLabelGrammarAccess(GrammarProvider grammarProvider,
+	public ActionLabelGrammarAccess(GrammarProvider grammarProvider,
 		TerminalsGrammarAccess gaTerminals) {
 		this.grammarProvider = grammarProvider;
 		this.gaTerminals = gaTerminals;

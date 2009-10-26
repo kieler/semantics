@@ -18,10 +18,10 @@ import java.util.HashMap;
 /**
  * Generated
  */
-public class TransitionLabelActivator extends AbstractUIPlugin {
+public class ActionLabelActivator extends AbstractUIPlugin {
 
 	private Map<String,Injector> injectors = new HashMap<String,Injector>();
-	private static TransitionLabelActivator INSTANCE;
+	private static ActionLabelActivator INSTANCE;
 
 	public Injector getInjector(String languageName) {
 		return injectors.get(languageName);
@@ -32,14 +32,14 @@ public class TransitionLabelActivator extends AbstractUIPlugin {
 		super.start(context);
 		INSTANCE = this;
 		
-		injectors.put("de.cau.cs.kieler.synccharts.TransitionLabel", Guice.createInjector(
-			new de.cau.cs.kieler.synccharts.TransitionLabelUiModule(),
+		injectors.put("de.cau.cs.kieler.synccharts.ActionLabel", Guice.createInjector(
+			new de.cau.cs.kieler.synccharts.ActionLabelUiModule(),
 			createUIPluginModule()
 		));
 		
 	}
 	
-	public static TransitionLabelActivator getInstance() {
+	public static ActionLabelActivator getInstance() {
 		return INSTANCE;
 	}
 	

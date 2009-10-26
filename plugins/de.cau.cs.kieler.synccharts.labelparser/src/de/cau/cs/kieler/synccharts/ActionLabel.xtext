@@ -1,5 +1,5 @@
-grammar de.cau.cs.kieler.synccharts.TransitionLabel with org.eclipse.xtext.common.Terminals
-
+//grammar de.cau.cs.kieler.synccharts.TransitionLabel with org.eclipse.xtext.common.Terminals
+grammar de.cau.cs.kieler.synccharts.ActionLabel with org.eclipse.xtext.common.Terminals
 //// we do not need to generate the transitionlabel ecore model, because we
 //// only reuse classes of the official synccharts metamodel
 //generate transitionlabel "http://kieler.cs.cau.de/synccharts/actionlabel"
