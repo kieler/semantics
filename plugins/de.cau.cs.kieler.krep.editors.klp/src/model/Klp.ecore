@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="klp"
+    nsURI="http://www.cau.de/cs/kieler/krep/editors/klp/Klp" nsPrefix="klp">
+  <eClassifiers xsi:type="ecore:EClass" name="KLP">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instructions" upperBound="-1"
+        eType="#//Line" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Line">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="labels" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instruction" eType="#//Instruction"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Label">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="addr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Instruction" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="opcode0" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="opcode1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="opcode2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="opcode3" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Decl" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" eType="#//Scope"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SetClk" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clk" eType="#//Reg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SetPC" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="label" eType="#//Label"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Prio" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="prio" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Done" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pc" eType="#//Label"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Binop" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="#//Operator"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arg1" eType="#//Read" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arg2" eType="#//Read" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="val" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="#//Reg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Jmp" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="label" eType="#//Label"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CJmp" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cond" eType="#//JumpKind"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Read" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="label" eType="#//Label"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Move" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//MoveKind"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="#//Read" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="val" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="#//Reg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Reg">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Scope">
+    <eLiterals name="input" literal="INPUT"/>
+    <eLiterals name="output" value="1" literal="OUTPUT"/>
+    <eLiterals name="local" value="2" literal="LOCAL"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Operator">
+    <eLiterals name="add" literal="ADD"/>
+    <eLiterals name="iadd" value="1" literal="IADD"/>
+    <eLiterals name="sub" value="2" literal="SUB"/>
+    <eLiterals name="mul" value="3" literal="MUL"/>
+    <eLiterals name="div" value="4" literal="DIV"/>
+    <eLiterals name="and" value="5" literal="AND"/>
+    <eLiterals name="or" value="6" literal="OR"/>
+    <eLiterals name="xor" value="7" literal="XOR"/>
+    <eLiterals name="lt" value="8" literal="LT"/>
+    <eLiterals name="le" value="9" literal="LE"/>
+    <eLiterals name="eq" value="10" literal="EQ"/>
+    <eLiterals name="ge" value="11" literal="GE"/>
+    <eLiterals name="gt" value="12" literal="GT"/>
+    <eLiterals name="neq" value="13" literal="NEQ"/>
+    <eLiterals name="isub" value="14" literal="ISUB"/>
+    <eLiterals name="imul" value="15" literal="IMUL"/>
+    <eLiterals name="idiv" value="16" literal="IDIV"/>
+    <eLiterals name="iand" value="17" literal="IAND"/>
+    <eLiterals name="ior" value="18" literal="IOR"/>
+    <eLiterals name="ixor" value="19" literal="IXOR"/>
+    <eLiterals name="ilt" value="20" literal="ILT"/>
+    <eLiterals name="ile" value="21" literal="ILE"/>
+    <eLiterals name="ieq" value="22" literal="IEQ"/>
+    <eLiterals name="ige" value="23" literal="IGE"/>
+    <eLiterals name="igt" value="24" literal="IGT"/>
+    <eLiterals name="ineq" value="25" literal="INEQ"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="JumpKind">
+    <eLiterals name="jt" literal="JT"/>
+    <eLiterals name="jf" value="1" literal="JF"/>
+    <eLiterals name="jz" value="2" literal="JZ"/>
+    <eLiterals name="jnz" value="3" literal="JNZ"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MoveKind">
+    <eLiterals name="cmov" literal="CVMOV"/>
+    <eLiterals name="vcmov" value="1" literal="VCMOV"/>
+    <eLiterals name="vvmov" value="2" literal="VVMOV"/>
+    <eLiterals name="ccmov" value="3" literal="CCMOV"/>
+    <eLiterals name="ivmov" value="4" literal="IVMOV"/>
+    <eLiterals name="icmov" value="5" literal="ICMOV"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Read">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg"/>
+  </eClassifiers>
+</ecore:EPackage>

@@ -1,0 +1,117 @@
+grammar de.cau.cs.kieler.krep.editors.klp.Klp with org.eclipse.xtext.common.Terminals
+
+//generate klp "http://www.cau.de/cs/kieler/krep/editors/klp/Klp2"
+
+import "platform:/resource/de.cau.cs.kieler.krep.editors.klp/src/model/Klp.ecore" as klp
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+  
+KLP returns klp::KLP:
+	instructions += Line*
+	;
+  
+Line returns klp::Line:
+	(labels += ID ':')* instruction=Instruction;
+	
+Instruction returns klp::Instruction:
+	Decl
+	| SetClk
+	| SetPC
+	| Prio
+	| Done
+	| Binop
+	| Jmp
+	| CJmp
+	| Move
+	;
+	
+Decl returns klp::Decl : scope=Scope	reg=Reg;
+SetClk returns klp::SetClk : 'SETCLK' reg=Reg clk= Reg;
+SetPC returns klp::SetPC : 'SETPC' reg=Reg label= Label;
+Prio returns klp::Prio : 'PRIO' reg=Reg? prio=INT;
+Done returns klp::Done : 'DONE' pc=Label?;
+Binop returns klp::Binop : op = Operator to=Reg arg1= Read (arg2=Read | val=INT );
+Jmp returns klp::Jmp : 'JMP' label=Label; 
+CJmp returns klp::CJmp : cond = JumpKind reg=Read label=Label;
+Move returns klp::Move : type = MoveKind to = Reg (from = Read | val = INT);
+
+Label returns klp::Label:
+  name=ID;
+      
+Reg returns klp::Reg:
+  name=ID;      
+      
+enum Scope returns klp::Scope: 
+	input = 'INPUT'  
+    | output = 'OUTPUT'  
+    | local = 'LOCAL'  
+    ;
+
+enum Operator returns klp::Operator
+      : add='ADD'
+      | iadd='IADD' 
+      | sub='SUB'
+      | mul='MUL'
+      | div='DIV'
+      | and='AND' 
+      | or='OR' 
+      | xor='XOR' 
+      | lt='LT' 
+      | le='LE'  
+      | eq='EQ' 
+      | ge='GE'  
+      | gt='GT' 
+      | neq='NEQ'      
+      | isub='ISUB'
+      | imul='IMUL'
+      | idiv='IDIV'
+      | iand='IAND' 
+      | ior='IOR' 
+      | ixor='IXOR'    
+      | ilt='ILT' 
+      | ile='ILE' 
+      | ieq='IEQ'
+      | ige='IGE' 
+      | igt='IGT'  
+      | ineq='INEQ' 
+      ;
+           
+ enum JumpKind returns klp::JumpKind:
+ 	  jt = 'JT'  
+	| jf = 'JF' 
+    | jz = 'JZ'  
+    | jnz = 'JNZ' 
+     ;       
+ 
+ enum MoveKind returns klp::MoveKind: 
+ 	cmov = 'CVMOV'   
+    | vcmov = 'VCMOV'  
+    | vvmov = 'VVMOV' 
+    | ccmov = 'CCMOV' 
+    | ivmov = 'IVMOV'
+    | icmov = 'ICMOV' 
+    ;
+      
+ Read returns klp::Read:
+      pre?='pre' '(' reg=Reg ')'
+      | reg=Reg 
+      ;
+ 
+/*------------------------------------------------------------------
+* LEXER RULES
+*------------------------------------------------------------------*/
+
+terminal INT	 returns ecore::EInt : ('+'|'-')?(DIGIT)+ ; 
+
+terminal ID	: (LETTER | '_') (LETTER | DIGIT | '_')*;
+
+terminal WS :  '\t' | ' ' | '\r' | '\n';
+
+terminal COMMENT : '#' -> '\n';
+
+terminal DIGIT	: '0'..'9' ;
+
+terminal LETTER 
+	:	'a'..'z'|'A'..'Z';
+ 
+	
