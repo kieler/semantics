@@ -401,19 +401,19 @@
 	
 	<target name="init">
 		<condition property="no.publishing" value="true">
-			<istrue property="suppress.publishing" />
+			<istrue value="${suppress.publishing}" />
 		</condition>
 	
 		<condition property="no.doc" value="true">
-			<istrue property="suppress.doc" />
+			<istrue value="${suppress.doc}" />
 		</condition>
 	
 		<condition property="no.findbugs" value="true">
-			<istrue property="suppress.findbugs" />
+			<istrue value="${suppress.findbugs}" />
 		</condition>
 	
 		<condition property="no.checkstyle" value="true">
-			<istrue property="suppress.checkstyle" />
+			<istrue value="${suppress.checkstyle}" />
 		</condition>	
 	</target>	
 </project>
