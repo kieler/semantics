@@ -187,7 +187,7 @@ public final class DataComponent extends JSONObjectDataComponent {
                                 true, null);
                     }
                     KLP model = (KLP) parseResult.getRootASTElement();
-                    ((KlpAssembler) assembler).assemble("huhu", model);
+                   // ((KlpAssembler) assembler).assemble("huhu", model);
                 } else if (file.getFileExtension().equals("kasm")) {
                     connection.initialize(ICommunicationProtocol.P_KEP);
                     protocol = new KepProtocol(connection);
