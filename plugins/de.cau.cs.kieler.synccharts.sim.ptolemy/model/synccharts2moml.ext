@@ -200,7 +200,7 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
 	let outerStateURIHash = hash(getURIFragment(mainRegion.innerStates.get(0))):
    	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
-   	this.createMainSyncChartDirector() ->
+   	this.createMainSyncChartDirector(mainRegion.signals.select(e|e.isLocal())) ->
    	//mainRegion has exactly ONE top most state
    	//iterate over all regions within this top most state
    	//the  of this containing Entity is derived from this
@@ -684,12 +684,13 @@ Void createSyncChartDirector(EntityType entity, List[String] stateSignalNames):
 ;
 
 //create outer most "SR Director" (ticks every seconds)
-Void createMainSyncChartDirector(EntityType entity):
+Void createMainSyncChartDirector(EntityType entity, List[String] stateSignalNames):
     let p0 = new PropertyType:
 	 let p1 = new PropertyType:
 	 let p2 = new PropertyType:
 	 let p3 = new PropertyType:
 	 let p4 = new PropertyType:
+	 let p5 = new PropertyType:
 		p1.setName("iterations") ->
 		p1.setClass("ptolemy.data.expr.Parameter") ->
 		p1.setValue("0") ->
@@ -702,6 +703,9 @@ Void createMainSyncChartDirector(EntityType entity):
 		p4.setName("period") ->
 		p4.setClass("ptolemy.data.expr.Parameter") ->
 		p4.setValue("0") ->
+  	 	p5.setName("statesignals") ->
+	 	p5.setClass("ptolemy.kernel.util.StringAttribute") ->
+	 	p5.setValue(stateSignalNames.flatten().toString()) ->
     p0.setName("Kieler SyncChart Director") ->
 //	p0.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
 	p0.setClass("ptolemy.actor.kiel.SyncChartDirector") ->
@@ -709,6 +713,7 @@ Void createMainSyncChartDirector(EntityType entity):
 	p0.property.add(p2) ->
 	p0.property.add(p3) ->
  	p0.property.add(p4) ->
+ 	p0.property.add(p5) ->
 	entity.property.add(p0) 
 ;
 
