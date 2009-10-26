@@ -57,7 +57,7 @@
             <!--     value="${basedir}/java.header"/>                   -->
             <property name="header"
               value="
- ^/\*\*+\n
+ ^/\*\*+.*
  ^* KIELER - Kiel Integrated Environment for Layout Eclipse Rich\s?Client\n
  ^.*
  ^\*+/"/>
