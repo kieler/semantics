@@ -56,40 +56,54 @@ public class Transformer {
 		IWorkbenchPart workbenchPart = getIWorkbenchPart();
 		TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) ((SyncchartsDiagramEditor) workbenchPart)
 				.getEditingDomain();
-		/** every region has inner states */
-		EList<State> innerStates = region.getInnerStates();
-		for (State s : innerStates) {
-			/** set label of one state to its id */
-			EAttribute labelAttribute = SyncchartsPackage.eINSTANCE
-					.getState_Label();
-			SetCommand setLabelCommand = (SetCommand) SetCommand.create(
-					editingDomain, s, labelAttribute, s.getId());
+		/** if the region has inner states */
+		if (region.getInnerStates() != null) {
+			EList<State> innerStates = region.getInnerStates();
+			for (State s : innerStates) {
+				/** set label of one of its states to its id */
+				EAttribute labelAttribute = SyncchartsPackage.eINSTANCE
+						.getState_Label();
+				SetCommand setLabelCommand = (SetCommand) SetCommand.create(
+						editingDomain, s, labelAttribute, s.getId());
 
-			editingDomain.getCommandStack().execute(setLabelCommand);
-			/** every state has regions */
-			setLabel2Id(s);
+				editingDomain.getCommandStack().execute(setLabelCommand);
+				/** every state has regions */
+				setLabel2Id(s);
 
+			}
 		}
 
 	}
 
 	void setLabel2Id(State s) {
-		for (Region r : s.getRegions()) {
-			setLabel2Id(r);
-			setDelay(r);
+		if (s.getRegions() != null) {
+			for (Region r : s.getRegions()) {
+				setLabel2Id(r);
+				setDelay(r);
+			}
 		}
-
 	}
 
 	void setDelay(Region r) {
-		for (State s : r.getInnerStates()) {
-			for (Transition t : s.getOutgoingTransitions()) {
-				t.setDelay(1);
+		if (r.getInnerStates() != null) {
+			for (State s : r.getInnerStates()) {
+				if (s.getOutgoingTransitions() != null) {
+					for (Transition t : s.getOutgoingTransitions()) {
+						/**
+						 * init I final F I-->F;
+						 * 
+						 * yields to the transition F-->F; because the
+						 * transition belongs to F thus sourceState =
+						 * EOpposite(F.outgoingTransitions) <=> sourceState =
+						 * EOpposite(???)
+						 */
+						t.setDelay(1);
 
+					}
+
+				}
 			}
-
 		}
-
 	}
 
 	// ================ HELPER METHODS ================ //

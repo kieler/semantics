@@ -1681,6 +1681,12 @@ rule__SignalValue__Alternatives
 { after(grammarAccess.getSignalValueAccess().getIDTerminalRuleCall_1()); }
 )
 
+    |(
+{ before(grammarAccess.getSignalValueAccess().getBooleanTerminalRuleCall_2()); }
+	RULE_BOOLEAN
+{ after(grammarAccess.getSignalValueAccess().getBooleanTerminalRuleCall_2()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);

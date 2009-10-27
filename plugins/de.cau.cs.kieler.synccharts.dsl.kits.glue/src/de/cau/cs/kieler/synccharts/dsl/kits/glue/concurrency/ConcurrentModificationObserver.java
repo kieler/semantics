@@ -49,295 +49,302 @@ import de.cau.cs.kieler.synccharts.dsl.kits.glue.Activator;
  * Detects concurrent modifications of diagrams and text files.
  * 
  * @author koehnlein
- * 
  */
 public class ConcurrentModificationObserver implements IPartListener,
-		ResourceSetListener, VerifyKeyListener {
+        ResourceSetListener, VerifyKeyListener {
 
-	private IWorkbenchPage page;
-	private Transformer transformer;
+    private IWorkbenchPage page;
+    private Transformer transformer;
 
-	public ConcurrentModificationObserver(IWorkbenchPage activePage) {
-		this.transformer = new Transformer();
-		this.page = activePage;
-		IEditorReference[] editorReferences = activePage.getEditorReferences();
+    /**
+     * 
+     * @param activePage
+     */
+    public ConcurrentModificationObserver(final IWorkbenchPage activePage) {
+        this.transformer = new Transformer();
+        this.page = activePage;
+        IEditorReference[] editorReferences = activePage.getEditorReferences();
 
-		for (IEditorReference editorReference : editorReferences) {
-			IEditorPart editor = editorReference.getEditor(false);
-			if (editor instanceof DiagramEditor) {
-				((DiagramEditor) editor).getEditingDomain()
-						.addResourceSetListener(this);
-			}
-			if (editor instanceof XtextEditor) {
+        for (IEditorReference editorReference : editorReferences) {
+            IEditorPart editor = editorReference.getEditor(false);
+            if (editor instanceof DiagramEditor) {
+                ((DiagramEditor) editor).getEditingDomain()
+                        .addResourceSetListener(this);
+            }
+            if (editor instanceof XtextEditor) {
 
-				ISourceViewer sourceViewer = ((XtextEditor) editor)
-						.getInternalSourceViewer();
-				if (sourceViewer instanceof ITextViewerExtension) {
-					((ITextViewerExtension) sourceViewer)
-							.appendVerifyKeyListener(this);
-				}
-			}
-		}
+                ISourceViewer sourceViewer = ((XtextEditor) editor)
+                        .getInternalSourceViewer();
+                if (sourceViewer instanceof ITextViewerExtension) {
+                    ((ITextViewerExtension) sourceViewer)
+                            .appendVerifyKeyListener(this);
+                }
+            }
+        }
 
-	}
+    }
 
-	private URI getEditorInputURI(ITextEditor textEditor) {
-		IEditorInput editorInput = textEditor.getEditorInput();
-		if (editorInput instanceof FileEditorInput) {
-			return URI.createPlatformResourceURI(
-					((FileEditorInput) editorInput).getFile().getFullPath()
-							.toString(), true);
-		} else if (editorInput instanceof URIEditorInput) {
-			return ((URIEditorInput) editorInput).getURI();
-		}
-		return null;
-	}
+    private URI getEditorInputURI(ITextEditor textEditor) {
+        IEditorInput editorInput = textEditor.getEditorInput();
+        if (editorInput instanceof FileEditorInput) {
+            return URI.createPlatformResourceURI(
+                    ((FileEditorInput) editorInput).getFile().getFullPath()
+                            .toString(), true);
+        } else if (editorInput instanceof URIEditorInput) {
+            return ((URIEditorInput) editorInput).getURI();
+        }
+        return null;
+    }
 
-	public void partOpened(IWorkbenchPart part) {
-		if (part instanceof DiagramEditor) {
-			TransactionalEditingDomain editingDomain = ((DiagramEditor) part)
-					.getEditingDomain();
-			editingDomain.addResourceSetListener(this);
-			// run layout
-			// transformer.ManualLayoutTrigger(part);
-			ManualLayoutTrigger(part);
-			transformer.setLabel2Id();
+    public void partOpened(IWorkbenchPart part) {
+        if (part instanceof DiagramEditor) {
+            TransactionalEditingDomain editingDomain = ((DiagramEditor) part)
+                    .getEditingDomain();
+            editingDomain.addResourceSetListener(this);
+            // run layout
+            // transformer.ManualLayoutTrigger(part);
+            ManualLayoutTrigger(part);
+            transformer.setLabel2Id();
+            // conflict with haf?
+            System.out.println("==============================");
+            System.out.println("I AM IN: partOpened thus in setLabel2Id");
+            System.out.println("==============================");
 
-		}
-		if (part instanceof XtextEditor) {
-			ISourceViewer sourceViewer = ((XtextEditor) part)
-					.getInternalSourceViewer();
-			if (sourceViewer instanceof ITextViewerExtension) {
-				((ITextViewerExtension) sourceViewer)
-						.appendVerifyKeyListener(this);
-			}
-		}
-	}
+        }
+        if (part instanceof XtextEditor) {
+            ISourceViewer sourceViewer = ((XtextEditor) part)
+                    .getInternalSourceViewer();
+            if (sourceViewer instanceof ITextViewerExtension) {
+                ((ITextViewerExtension) sourceViewer)
+                        .appendVerifyKeyListener(this);
+            }
+        }
+    }
 
-	public void partClosed(IWorkbenchPart part) {
-		if (part instanceof DiagramEditor) {
-			TransactionalEditingDomain editingDomain = ((DiagramEditor) part)
-					.getEditingDomain();
-			editingDomain.removeResourceSetListener(this);
-		}
-		if (part instanceof XtextEditor) {
-			ISourceViewer sourceViewer = ((XtextEditor) part)
-					.getInternalSourceViewer();
-			if (sourceViewer instanceof ITextViewerExtension) {
-				((ITextViewerExtension) sourceViewer)
-						.removeVerifyKeyListener(this);
-			}
-		}
-	}
+    public void partClosed(IWorkbenchPart part) {
+        if (part instanceof DiagramEditor) {
+            TransactionalEditingDomain editingDomain = ((DiagramEditor) part)
+                    .getEditingDomain();
+            editingDomain.removeResourceSetListener(this);
+        }
+        if (part instanceof XtextEditor) {
+            ISourceViewer sourceViewer = ((XtextEditor) part)
+                    .getInternalSourceViewer();
+            if (sourceViewer instanceof ITextViewerExtension) {
+                ((ITextViewerExtension) sourceViewer)
+                        .removeVerifyKeyListener(this);
+            }
+        }
+    }
 
-	public void partActivated(IWorkbenchPart part) {
-		// do nothing
-	}
+    public void partActivated(IWorkbenchPart part) {
+        // do nothing
+    }
 
-	public void partDeactivated(IWorkbenchPart part) {
-		// do nothing
-	}
+    public void partDeactivated(IWorkbenchPart part) {
+        // do nothing
+    }
 
-	public void partBroughtToTop(IWorkbenchPart part) {
-		// do nothing
-	}
+    public void partBroughtToTop(IWorkbenchPart part) {
+        // do nothing
+    }
 
-	public NotificationFilter getFilter() {
-		return NotificationFilter.ANY;
-	}
+    public NotificationFilter getFilter() {
+        return NotificationFilter.ANY;
+    }
 
-	public boolean isAggregatePrecommitListener() {
-		return false;
-	}
+    public boolean isAggregatePrecommitListener() {
+        return false;
+    }
 
-	public boolean isPostcommitOnly() {
-		return false;
-	}
+    public boolean isPostcommitOnly() {
+        return false;
+    }
 
-	public boolean isPrecommitOnly() {
-		return true;
-	}
+    public boolean isPrecommitOnly() {
+        return true;
+    }
 
-	public void resourceSetChanged(ResourceSetChangeEvent event) {
-		// do nothing
-		System.out.println("==============================");
-		System.out.println("I AM IN: resourceSetChanged");
-		System.out.println("==============================");
+    public void resourceSetChanged(ResourceSetChangeEvent event) {
+        // do nothing
+        System.out.println("==============================");
+        System.out.println("I AM IN: resourceSetChanged");
+        System.out.println("==============================");
 
-	}
+    }
 
-	public Command transactionAboutToCommit(ResourceSetChangeEvent event)
-			throws RollbackException {
+    public Command transactionAboutToCommit(ResourceSetChangeEvent event)
+            throws RollbackException {
 
-		List<Notification> notifications = event.getNotifications();
+        List<Notification> notifications = event.getNotifications();
 
-		Set<IEditorPart> conflictingEditors = new HashSet<IEditorPart>();
+        Set<IEditorPart> conflictingEditors = new HashSet<IEditorPart>();
 
-		for (Notification notification : notifications) {
-			Object notifier = notification.getNotifier();
-			if (notifier instanceof EObject) {
-				Resource eResource = ((EObject) notifier).eResource();
-				if (eResource != null) {
-					URI uri = eResource.getURI();
-					conflictingEditors.addAll(findConflictingEditors(uri));
-				}
-			}
+        for (Notification notification : notifications) {
+            Object notifier = notification.getNotifier();
+            if (notifier instanceof EObject) {
+                Resource eResource = ((EObject) notifier).eResource();
+                if (eResource != null) {
+                    URI uri = eResource.getURI();
+                    conflictingEditors.addAll(findConflictingEditors(uri));
+                }
+            }
 
-		}
-		for (Iterator<IEditorPart> i = conflictingEditors.iterator(); i
-				.hasNext();) {
-			IEditorPart conflictingEditor = i.next();
-			if (conflictingEditor instanceof DiagramEditor) {
-				if (((DiagramEditor) conflictingEditor).getEditingDomain()
-						.equals(event.getEditingDomain())) {
-					i.remove();
-				}
-			}
-		}
-		if (!conflictingEditors.isEmpty() && !queryApplyChanges()) {
-			throw new RollbackException(new Status(IStatus.ERROR,
-					Activator.PLUGIN_ID, "Transaction aborted by user"));
-		}
-		// do nothing
-		System.out.println("==============================");
-		System.out.println("I AM IN: transactionAboutToCommit");
-		System.out.println("==============================");
+        }
+        for (Iterator<IEditorPart> i = conflictingEditors.iterator(); i
+                .hasNext();) {
+            IEditorPart conflictingEditor = i.next();
+            if (conflictingEditor instanceof DiagramEditor) {
+                if (((DiagramEditor) conflictingEditor).getEditingDomain()
+                        .equals(event.getEditingDomain())) {
+                    i.remove();
+                }
+            }
+        }
+        if (!conflictingEditors.isEmpty()) {// && !queryApplyChanges()) {
+            throw new RollbackException(new Status(IStatus.ERROR,
+                    Activator.PLUGIN_ID, "Transaction aborted by user"));
+        }
+        // do nothing
+        System.out.println("==============================");
+        System.out.println("I AM IN: transactionAboutToCommit");
+        System.out.println("==============================");
 
-		return null;
-	}
+        return null;
+    }
 
-	public void verifyKey(VerifyEvent event) {
-		IEditorPart editor = page.getActiveEditor();
-		if (!editor.isDirty() && editor instanceof ITextEditor) {
-			ITextEditor textEditor = (ITextEditor) editor;
-			URI editorInputURI = getEditorInputURI(textEditor);
-			List<IEditorPart> conflictingEditors = findConflictingEditors(editorInputURI);
-			/**
-			 * queryApplyChanges is set to true if the user clicks on
-			 * "yes, apply" in the message dialog
-			 */
-			if (!conflictingEditors.isEmpty() && !queryApplyChanges()) {
-				event.doit = false;
-			}
-		}
-	}
+    public void verifyKey(VerifyEvent event) {
+        IEditorPart editor = page.getActiveEditor();
+        if (!editor.isDirty() && editor instanceof ITextEditor) {
+            ITextEditor textEditor = (ITextEditor) editor;
+            URI editorInputURI = getEditorInputURI(textEditor);
+            List<IEditorPart> conflictingEditors = findConflictingEditors(editorInputURI);
+            /**
+             * queryApplyChanges is set to true if the user clicks on
+             * "yes, apply" in the message dialog
+             */
+            if (!conflictingEditors.isEmpty()) {// && !queryApplyChanges()) {
+                event.doit = false;
+            }
+        }
+    }
 
-	private List<IEditorPart> findConflictingEditors(URI resourceURI) {
-		List<IEditorPart> conflictingDirtyEditors = new ArrayList<IEditorPart>();
-		for (IEditorPart dirtyEditor : page.getDirtyEditors()) {
-			if (dirtyEditor instanceof DiagramEditor) {
-				DiagramEditor dirtyDiagramEditor = (DiagramEditor) dirtyEditor;
-				ResourceSet resourceSet = dirtyDiagramEditor.getEditingDomain()
-						.getResourceSet();
-				for (Resource diagramEditorResource : resourceSet
-						.getResources()) {
-					if (resourceURI.equals(diagramEditorResource.getURI())
-							&& diagramEditorResource.isModified()) {
-						conflictingDirtyEditors.add(dirtyDiagramEditor);
-					}
-				}
-			}
-			if (dirtyEditor instanceof ITextEditor) {
-				URI editorInputURI = getEditorInputURI((ITextEditor) dirtyEditor);
-				if (editorInputURI.equals(resourceURI)) {
-					conflictingDirtyEditors.add(dirtyEditor);
-				}
-			}
-		}
-		return conflictingDirtyEditors;
-	}
+    private List<IEditorPart> findConflictingEditors(URI resourceURI) {
+        List<IEditorPart> conflictingDirtyEditors = new ArrayList<IEditorPart>();
+        for (IEditorPart dirtyEditor : page.getDirtyEditors()) {
+            if (dirtyEditor instanceof DiagramEditor) {
+                DiagramEditor dirtyDiagramEditor = (DiagramEditor) dirtyEditor;
+                ResourceSet resourceSet = dirtyDiagramEditor.getEditingDomain()
+                        .getResourceSet();
+                for (Resource diagramEditorResource : resourceSet
+                        .getResources()) {
+                    if (resourceURI.equals(diagramEditorResource.getURI())
+                            && diagramEditorResource.isModified()) {
+                        conflictingDirtyEditors.add(dirtyDiagramEditor);
+                    }
+                }
+            }
+            if (dirtyEditor instanceof ITextEditor) {
+                URI editorInputURI = getEditorInputURI((ITextEditor) dirtyEditor);
+                if (editorInputURI.equals(resourceURI)) {
+                    conflictingDirtyEditors.add(dirtyEditor);
+                }
+            }
+        }
+        return conflictingDirtyEditors;
+    }
 
-	/**
-	 * boolean flag to activate/deactivate an event
-	 * 
-	 * @return yesResult
-	 */
-	private boolean queryApplyChanges() {
-		DialogPrompter dialogPrompter = new DialogPrompter();
-		Display.getDefault().syncExec(dialogPrompter);
-		boolean yesResult = dialogPrompter.isYesResult();
-		return yesResult;
-	}
+    /**
+     * boolean flag to activate/deactivate an event
+     * 
+     * @return yesResult
+     */
+    private boolean queryApplyChanges() {
+        DialogPrompter dialogPrompter = new DialogPrompter();
+        Display.getDefault().syncExec(dialogPrompter);
+        boolean yesResult = dialogPrompter.isYesResult();
+        return yesResult;
+    }
 
-	/**
-	 * Ask user if the resource should be saved although the changes in the
-	 * conflicting editors will be lost
-	 * 
-	 * @author oba
-	 * 
-	 */
-	private class DialogPrompter implements Runnable {
+    /**
+     * Ask user if the resource should be saved although the changes in the
+     * conflicting editors will be lost
+     * 
+     * @author oba
+     * 
+     */
+    private class DialogPrompter implements Runnable {
 
-		private boolean isYesResult;
+        private boolean isYesResult;
 
-		public boolean isYesResult() {
-			return isYesResult;
-		}
+        public boolean isYesResult() {
+            return isYesResult;
+        }
 
-		public void run() {
-			Shell shell = page.getWorkbenchWindow().getShell();
-			isYesResult = MessageDialog
-					.open(
-							MessageDialog.QUESTION,
-							shell,
-							"KITE Concurrent Modification Observer",
-							"Other editors have a modified version of models you are going to change.\n"
-									+ "If apply your changes you are loosing the possibility to save the others.\n"
-									+ "Apply changes anyway?", SWT.NONE);
-		}
-	}
+        public void run() {
+            Shell shell = page.getWorkbenchWindow().getShell();
+            isYesResult = MessageDialog
+                    .open(
+                            MessageDialog.QUESTION,
+                            shell,
+                            "KITE Concurrent Modification Observer",
+                            "Other editors have a modified version of models you are going to change.\n"
+                                    + "If apply your changes you are loosing the possibility to save the others.\n"
+                                    + "Apply changes anyway?", SWT.NONE);
+        }
+    }
 
-	// FIXME: Trigger view management rather than
-	// TODO: Is it sufficient that the LayoutCombo, provided by the
-	// ViewManagement is in the combinations list or do I need to add my own
-	// combinations
-	// there?
-	// TODO: Uncomment this part later when you understand how to activate
-	// the combinations
-	// FIXME: Problem for now is that the trigger does not have any
-	// listeners
-	// RunLogic.getInstance().init();
-	// RunLogic.getInstance().registerListeners();
-	// AutoLayoutTrigger trigger = ((AutoLayoutTrigger) RunLogic
-	// .getTrigger("de.cau.cs.kieler.synccharts.dsl.kits.autolayout.AutoLayoutTrigger"));
-	// //here you have to give the name of the extension element
-	// "trigger" and not the package name or so like I did!
-	// if (trigger != null) {
-	// trigger.triggerAutoLayout(e, (DiagramEditor) part);
-	// }
-	// ================ HELPER METHODS ================ //
+    // FIXME: Trigger view management rather than
+    // TODO: Is it sufficient that the LayoutCombo, provided by the
+    // ViewManagement is in the combinations list or do I need to add my own
+    // combinations
+    // there?
+    // TODO: Uncomment this part later when you understand how to activate
+    // the combinations
+    // FIXME: Problem for now is that the trigger does not have any
+    // listeners
+    // RunLogic.getInstance().init();
+    // RunLogic.getInstance().registerListeners();
+    // AutoLayoutTrigger trigger = ((AutoLayoutTrigger) RunLogic
+    // .getTrigger("de.cau.cs.kieler.synccharts.dsl.kits.autolayout.AutoLayoutTrigger"));
+    // //here you have to give the name of the extension element
+    // "trigger" and not the package name or so like I did!
+    // if (trigger != null) {
+    // trigger.triggerAutoLayout(e, (DiagramEditor) part);
+    // }
+    // ================ HELPER METHODS ================ //
 
-	@SuppressWarnings("unused")
-	void ManualLayoutTrigger(IWorkbenchPart part) {
-		if (part instanceof DiagramEditor) {
-			// get the RegionEditPart
-			EditPart e = ((DiagramEditor) part).getDiagramEditPart().getRoot()
-					.getContents();
-			if (!(e instanceof DiagramEditPart)) {
-				System.out
-						.println("========================================================");
-				System.out.println("Problem in: ManualLayoutTrigger");
-				System.out.println("You really shouldn't be here!");
-				// e = (EditPart) e.getChildren().get(0);
-				System.out
-						.println("It is crazy that the root of the diagram is: "
-								+ e.toString());
-				System.out.println("Thus layout will probably fail");
-				System.out
-						.println("========================================================");
-			}
-			// run msp layout
-			DiagramLayoutManager.layout(((DiagramEditor) part), e, true, false);
+    @SuppressWarnings("unused")
+    void ManualLayoutTrigger(IWorkbenchPart part) {
+        if (part instanceof DiagramEditor) {
+            // get the RegionEditPart
+            EditPart e = ((DiagramEditor) part).getDiagramEditPart().getRoot()
+                    .getContents();
+            if (!(e instanceof DiagramEditPart)) {
+                System.out
+                        .println("========================================================");
+                System.out.println("Problem in: ManualLayoutTrigger");
+                System.out.println("You really shouldn't be here!");
+                // e = (EditPart) e.getChildren().get(0);
+                System.out
+                        .println("It is crazy that the root of the diagram is: "
+                                + e.toString());
+                System.out.println("Thus layout will probably fail");
+                System.out
+                        .println("========================================================");
+            }
+            // run msp layout
+            DiagramLayoutManager.layout(((DiagramEditor) part), e, true, false);
 
-		} else {
-			System.out
-					.println("========================================================");
-			System.out.println("I was invoked from an Xtext editor");
+        } else {
+            System.out
+                    .println("========================================================");
+            System.out.println("I was invoked from an Xtext editor");
 
-			System.out
-					.println("========================================================");
-		}
+            System.out
+                    .println("========================================================");
+        }
 
-	}
+    }
 
 }

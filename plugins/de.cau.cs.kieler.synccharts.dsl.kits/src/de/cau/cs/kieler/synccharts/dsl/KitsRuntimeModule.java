@@ -9,60 +9,60 @@ import org.eclipse.xtext.resource.IFragmentProvider;
 import org.eclipse.xtext.scoping.IScopeProvider;
 
 import de.cau.cs.kieler.synccharts.dsl.kits.resource.KitsFragmentProvider;
-import de.cau.cs.kieler.synccharts.dsl.kits.serialization.KitsTransientValueService;
 import de.cau.cs.kieler.synccharts.dsl.scoping.MyDefaultScopeProvider;
 import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
 import de.cau.cs.kieler.synccharts.formatting.TransitionLabelTransientValueService;
 
 /**
- * Use this class to register components to be used within the IDE.
+ * @author oba Use this class to register components to be used within the IDE.
  */
 public class KitsRuntimeModule extends
-		de.cau.cs.kieler.synccharts.dsl.AbstractKitsRuntimeModule {
-	@Override
-	/**
-	 * bind the fragment provider
-	 * it is used for the Glue code -oba
-	 */
-	public Class<? extends IFragmentProvider> bindIFragmentProvider() {
-		return KitsFragmentProvider.class;
-	}
+        de.cau.cs.kieler.synccharts.dsl.AbstractKitsRuntimeModule {
+    @Override
+    /*
+     * binds the fragment provider. it is used for the Glue code
+     */
+    public Class<? extends IFragmentProvider> bindIFragmentProvider() {
+        return KitsFragmentProvider.class;
+    }
 
-	/**
-	 * bind the fragment provider it is used for the Glue code -oba
-	 */
-	public Class<? extends IScopeProvider> bindIScopeProvider() {
-		return MyDefaultScopeProvider.class;
-	}
+    /**
+     * binds the custom scope provider.
+     * 
+     * @return custom implementation of the Scope Provider
+     */
+    public Class<? extends IScopeProvider> bindIScopeProvider() {
+        return MyDefaultScopeProvider.class;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.xtext.service.DefaultRuntimeModule#bindITransientValueService
-	 * ()
-	 */
-	// @Override
-	// public Class<? extends ITransientValueService>
-	// bindITransientValueService() {
-	// return KitsTransientValueService.class;
-	// }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.xtext.service.DefaultRuntimeModule#bindITransientValueService
+     * ()
+     */
+    // @Override
+    // public Class<? extends ITransientValueService>
+    // bindITransientValueService() {
+    // return KitsTransientValueService.class;
+    // }
 
-	@Override
-	public Class<? extends ITransientValueService> bindITransientValueService() {
-		return TransitionLabelTransientValueService.class;
-	}
+    @Override
+    public Class<? extends ITransientValueService> bindITransientValueService() {
+        return TransitionLabelTransientValueService.class;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.xtext.service.DefaultRuntimeModule#bindIValueConverterService
-	 * ()
-	 */
-	@Override
-	public Class<? extends IValueConverterService> bindIValueConverterService() {
-		return ActionLabelValueConverter.class;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.xtext.service.DefaultRuntimeModule#bindIValueConverterService
+     * ()
+     */
+    @Override
+    public Class<? extends IValueConverterService> bindIValueConverterService() {
+        return ActionLabelValueConverter.class;
+    }
 
 }
