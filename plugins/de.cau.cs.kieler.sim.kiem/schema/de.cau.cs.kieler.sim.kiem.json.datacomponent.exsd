@@ -134,7 +134,7 @@ Your DataComponent may want to define properties that can be saved together with
   &lt;tr&gt; 
     &lt;td&gt;&lt;font size=&quot;2&quot; face=&quot;Courier New, Courier, mono&quot;&gt;&amp;nbsp; 
 	
-/******************************************************************************&lt;BR&gt;
+/*&lt;BR&gt;
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient&lt;BR&gt;
  *&lt;BR&gt;
  * http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;BR&gt;
@@ -146,7 +146,7 @@ Your DataComponent may want to define properties that can be saved together with
  *&lt;BR&gt; 
  * This code is provided under the terms of the Eclipse Public License (EPL).&lt;BR&gt;
  * See the file epl-v10.html for the license text.&lt;BR&gt;
- ******************************************************************************/&lt;BR&gt;
+ */&lt;BR&gt;
 &lt;BR&gt;
 package de.cau.cs.kieler.sim.abro;&lt;BR&gt;
 &lt;BR&gt;

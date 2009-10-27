@@ -11,12 +11,8 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class Awaiti extends SigInstruction {
-
-    public Awaiti(KepSignal sig, SCLine sc) {
-        super(Constants.AWAITI.getOpcode(), Constants.AWAITI.getInfo(), sig, sc);
-
-    }
-}
+/**
+ * General handlers for the KIELER user interface.
+ */
+package de.cau.cs.kieler.core.ui.handler;

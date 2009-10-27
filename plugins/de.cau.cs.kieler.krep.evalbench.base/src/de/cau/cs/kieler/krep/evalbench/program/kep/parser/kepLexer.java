@@ -1,4 +1,4 @@
-/******************************************************************************
+/*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- ******************************************************************************/
+ */
 // $ANTLR 3.1.1 kep.g 2009-03-27 15:25:59
 
 package de.cau.cs.kieler.krep.evalbench.program.kep.parser;
