@@ -116,10 +116,16 @@ public class KepConfig implements Config {
     private int lTick;
     private int maxROM;
     
+    /**
+     * {@inheritDoc}
+     */
     public boolean isKEP() {
         return true;
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     public boolean isKLP() {
         return false;
     }

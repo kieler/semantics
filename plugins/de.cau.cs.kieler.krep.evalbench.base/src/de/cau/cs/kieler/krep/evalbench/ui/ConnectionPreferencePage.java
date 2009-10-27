@@ -33,8 +33,8 @@ import de.cau.cs.kieler.krep.evalbench.comm.CommonLayer;
  * 
  * @author msp
  */
-public class ConnectionPreferencePage extends FieldEditorPreferencePage
-        implements IWorkbenchPreferencePage {
+public class ConnectionPreferencePage extends FieldEditorPreferencePage implements
+        IWorkbenchPreferencePage {
 
     /** Preference name for the type of connection. */
     public static final String CONNECTION_TYPE = "EvalBench.Connection.connection";
@@ -50,7 +50,7 @@ public class ConnectionPreferencePage extends FieldEditorPreferencePage
 
     /** The greatest valid port number. */
     private static final int MAX_PORT_NUMBER = 65535;
-    
+
     /** Shall we show the connection in the Connection view? */
     public static final String LOG = "EvalBench.Connection.log";
     /** Log-file for JNI connection. */
@@ -63,66 +63,57 @@ public class ConnectionPreferencePage extends FieldEditorPreferencePage
         super(FieldEditorPreferencePage.GRID);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+     * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
      */
     public void init(final IWorkbench workbench) {
         // set the preference store
-        IPreferenceStore preferenceStore = Activator.getDefault()
-                .getPreferenceStore();
+        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
         setPreferenceStore(preferenceStore);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors
-     * ()
+     * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors ()
      */
     @Override
     protected void createFieldEditors() {
         // create field editor for connection type
         String[][] labels = new String[][] { { "JNI", CommonLayer.JNI_CON },
-                { "Serial port", CommonLayer.SERIAL_CON },
-                { "TCP/IP", CommonLayer.TCPIP_CON } };
-        FieldEditor fieldEditor = new RadioGroupFieldEditor(CONNECTION_TYPE,
-                "Connection type:", 1, labels, getFieldEditorParent());
+                { "Serial port", CommonLayer.SERIAL_CON }, { "TCP/IP", CommonLayer.TCPIP_CON } };
+        FieldEditor fieldEditor = new RadioGroupFieldEditor(CONNECTION_TYPE, "Connection type:", 1,
+                labels, getFieldEditorParent());
         addField(fieldEditor);
 
         // create field editor for serial port name
-        String[] serialPorts = Activator.getDefault().commonLayer
-                .getSerialPorts();
+        String[] serialPorts = Activator.getDefault().commonLayer.getSerialPorts();
         labels = new String[serialPorts.length][2];
         for (int i = 0; i < serialPorts.length; i++) {
             labels[i] = new String[] { serialPorts[i], serialPorts[i] };
         }
-        fieldEditor = new ComboFieldEditor(SERIAL_PORT_NAME,
-                "Serial port name:", labels, getFieldEditorParent());
+        fieldEditor = new ComboFieldEditor(SERIAL_PORT_NAME, "Serial port name:", labels,
+                getFieldEditorParent());
         addField(fieldEditor);
 
         // create field editor for host name
-        fieldEditor = new StringFieldEditor(HOST_NAME, "Host name:",
-                getFieldEditorParent());
+        fieldEditor = new StringFieldEditor(HOST_NAME, "Host name:", getFieldEditorParent());
         addField(fieldEditor);
 
         // create field editor for port number
-        fieldEditor = new IntegerFieldEditor(PORT_NUMBER, "Port number:",
-                getFieldEditorParent());
+        fieldEditor = new IntegerFieldEditor(PORT_NUMBER, "Port number:", getFieldEditorParent());
         ((IntegerFieldEditor) fieldEditor).setValidRange(0, MAX_PORT_NUMBER);
         addField(fieldEditor);
 
-        FileFieldEditor file = new FileFieldEditor(JNI_LOG_FILE,
-                "Communication log File", getFieldEditorParent());
+        FileFieldEditor file = new FileFieldEditor(JNI_LOG_FILE, "Communication log File",
+                getFieldEditorParent());
         String[] extensions = { "*.esi", "*.eso", "*" };
         file.setFileExtensions(extensions);
         addField(file);
 
-        fieldEditor = new BooleanFieldEditor(LOG, "Log connection:",
-                getFieldEditorParent());
+        fieldEditor = new BooleanFieldEditor(LOG, "Log connection:", getFieldEditorParent());
         addField(fieldEditor);
 
         adjustGridLayout();

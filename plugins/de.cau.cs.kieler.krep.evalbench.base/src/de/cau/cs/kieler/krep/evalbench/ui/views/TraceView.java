@@ -44,6 +44,11 @@ public class TraceView extends ViewPart implements ITraceListener {
     /** Column identifiers for the embedded table. */
     public static final String[] COLUMN_NAMES = { "tick", "status", "values" };
 
+    /**
+     * status column.
+     */
+    public static final int COLUMN_STATUS = 3;
+
     /** Table viewer where inputs are listed. */
     private TableViewer viewer = null;
     private Table table = null;

@@ -23,13 +23,10 @@ import org.eclipse.jface.viewers.Viewer;
  * 
  */
 public class TraceContentProvider implements IStructuredContentProvider {
-
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java
-     * .lang.Object)
+     * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java .lang.Object)
      */
     public Object[] getElements(final Object inputElement) {
         if (inputElement instanceof String[][]) {
@@ -39,11 +36,17 @@ public class TraceContentProvider implements IStructuredContentProvider {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void dispose() {
         // nothing to do
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {
         // noting to do
 

@@ -24,8 +24,7 @@ import java.util.LinkedList;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 
 /**
- * Abstract superclass for connection protocols that use input and output
- * streams.
+ * Abstract superclass for connection protocols that use input and output streams.
  * 
  * @author msp, ctr
  */
@@ -47,12 +46,14 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      * @throws IOException
      *             when the read operation throws an exception
      */
-    private static String readInput(final InputStreamReader input, final int n)
-            throws IOException {
+    private static String readInput(final InputStreamReader input, final int n) throws IOException {
         StringBuffer stringBuffer = new StringBuffer();
-        int c;
         int i = 0;
-        while (i < n && (c = input.read()) != -1) {
+        while (i < n) {
+            int c = input.read();
+            if (c == -1) {
+                break;
+            }
             stringBuffer.append((char) c);
             i++;
         }
@@ -60,8 +61,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
     }
 
     /**
-     * Reads from an input stream until an exit character is reached and stores
-     * into a string.
+     * Reads from an input stream until an exit character is reached and stores into a string.
      * 
      * @param input
      *            the input stream to be read
@@ -71,8 +71,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      * @throws IOException
      *             when the read operation throws an exception
      */
-    private static String readInputExit(final InputStreamReader input,
-            final char x) throws IOException {
+    private static String readInputExit(final InputStreamReader input, final char x)
+            throws IOException {
         StringBuffer stringBuffer = new StringBuffer();
         int c;
         while ((c = input.read()) != -1) {
@@ -87,16 +87,14 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
     /**
      * Retrieves the input stream for this connection.
      * 
-     * @return the input stream, or <code>null</code> if no input stream is
-     *         available
+     * @return the input stream, or <code>null</code> if no input stream is available
      */
     protected abstract InputStream getInputStream();
 
     /**
      * Retrieves the output stream for this connection.
      * 
-     * @return the output stream, or <code>null</code> if no output stream is
-     *         available
+     * @return the output stream, or <code>null</code> if no output stream is available
      */
     protected abstract OutputStream getOutputStream();
 
@@ -129,15 +127,13 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                 }
                 if (System.currentTimeMillis() - startTime > LONG_TIMEOUT) {
                     throw new CommunicationException(
-                            "Timeout reached while waiting for character '"
-                                    + exit + "'");
+                            "Timeout reached while waiting for character '" + exit + "'");
                 }
-            } while (input.length() == 0
-                    || input.charAt(input.length() - 1) != exit);
+            } while (input.length() == 0 || input.charAt(input.length() - 1) != exit);
             return stringBuffer.toString();
         } catch (IOException e) {
-            throw new CommunicationException(
-                    "Error while reading from connection: " + e.getMessage());
+            throw new CommunicationException("Error while reading from connection: "
+                    + e.getMessage());
         }
     }
 
@@ -171,14 +167,13 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                 }
                 if (System.currentTimeMillis() - startTime > LONG_TIMEOUT) {
                     reader.close();
-                    throw new CommunicationException("Timeout reached reading "
-                            + n + " characters");
+                    throw new CommunicationException("Timeout reached reading " + n + " characters");
                 }
             } while (stringBuffer.length() < n);
             return stringBuffer.toString();
         } catch (IOException e) {
-            throw new CommunicationException(
-                    "Error while reading from connection: " + e.getMessage());
+            throw new CommunicationException("Error while reading from connection: "
+                    + e.getMessage());
         } finally {
             if (reader != null) {
                 try {
@@ -195,8 +190,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#receive(char)
      */
-    public LinkedList<Integer> receiveByte(final int n)
-            throws CommunicationException {
+    public LinkedList<Integer> receiveByte(final int n) throws CommunicationException {
         InputStreamReader reader = null;
         try {
             InputStream inputStream = getInputStream();
@@ -218,14 +212,13 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                     }
                 }
                 if (System.currentTimeMillis() - startTime > LONG_TIMEOUT) {
-                    throw new CommunicationException("Timeout reached reading "
-                            + n + " characters");
+                    throw new CommunicationException("Timeout reached reading " + n + " characters");
                 }
             } while (res.size() < n);
             return res;
         } catch (IOException e) {
-            throw new CommunicationException(
-                    "Error while reading from connection: " + e.getMessage());
+            throw new CommunicationException("Error while reading from connection: "
+                    + e.getMessage());
         } finally {
             if (reader != null) {
                 try {
@@ -256,9 +249,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                 return "";
             }
         } catch (IOException e) {
-            throw new CommunicationException(
-                    "Error while reading from serial connection: "
-                            + e.getMessage());
+            throw new CommunicationException("Error while reading from serial connection: "
+                    + e.getMessage());
         }
     }
 
@@ -266,8 +258,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      * 
      * Read the next byte.
      */
-    private LinkedList<Integer> harkByte(final int n)
-            throws CommunicationException {
+    private LinkedList<Integer> harkByte(final int n) throws CommunicationException {
         try {
             InputStream inputStream = getInputStream();
             if (inputStream == null) {
@@ -276,8 +267,11 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
             LinkedList<Integer> res = new LinkedList<Integer>();
             if (inputStream.available() > 0) {
                 int i = 0;
-                int b;
-                while (i < n && (b = inputStream.read()) != -1) {
+                while (i < n) {
+                    int b = inputStream.read();
+                    if (b == -1) {
+                        break;
+                    }
                     res.add(b);
                     i++;
                 }
@@ -286,9 +280,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                 return res;
             }
         } catch (IOException e) {
-            throw new CommunicationException(
-                    "Error while reading from serial connection: "
-                            + e.getMessage());
+            throw new CommunicationException("Error while reading from serial connection: "
+                    + e.getMessage());
         }
     }
 
@@ -309,8 +302,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            throw new CommunicationException(
-                    "Error while writing to connection: " + e.getMessage());
+            throw new CommunicationException("Error while writing to connection: " + e.getMessage());
         } finally {
             if (writer != null) {
                 try {
@@ -339,8 +331,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            throw new CommunicationException(
-                    "Error while writing to connection: " + e.getMessage());
+            throw new CommunicationException("Error while writing to connection: " + e.getMessage());
         } finally {
             try {
                 if (writer != null) {
@@ -365,8 +356,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
             }
             outputStream.write(data);
         } catch (IOException e) {
-            throw new CommunicationException(
-                    "Error while writing to connection: " + e.getMessage());
+            throw new CommunicationException("Error while writing to connection: " + e.getMessage());
         }
     }
 

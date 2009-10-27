@@ -24,8 +24,7 @@ import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 
 /**
- * Label provider used for the embedded table viewer in the input and output
- * views.
+ * Label provider used for the embedded table viewer in the input and output views.
  * 
  * @author msp
  */
@@ -59,31 +58,26 @@ public class SignalLabelProvider implements ITableLabelProvider {
         listeners = new LinkedList<ILabelProviderListener>();
         // create images
         if (input) {
-            ImageDescriptor presentImageDescriptor = Activator
-                    .imageDescriptorFromPlugin(Activator.PLUGIN_ID,
-                            CHECKED_PATH);
+            ImageDescriptor presentImageDescriptor = Activator.imageDescriptorFromPlugin(
+                    Activator.PLUGIN_ID, CHECKED_PATH);
             presentImage = presentImageDescriptor.createImage();
-            ImageDescriptor absentImageDescriptor = Activator
-                    .imageDescriptorFromPlugin(Activator.PLUGIN_ID,
-                            UNCHECKED_PATH);
+            ImageDescriptor absentImageDescriptor = Activator.imageDescriptorFromPlugin(
+                    Activator.PLUGIN_ID, UNCHECKED_PATH);
             absentImage = absentImageDescriptor.createImage();
         } else {
-            ImageDescriptor presentImageDescriptor = Activator
-                    .imageDescriptorFromPlugin(Activator.PLUGIN_ID,
-                            PRESENT_PATH);
+            ImageDescriptor presentImageDescriptor = Activator.imageDescriptorFromPlugin(
+                    Activator.PLUGIN_ID, PRESENT_PATH);
             presentImage = presentImageDescriptor.createImage();
-            ImageDescriptor absentImageDescriptor = Activator
-                    .imageDescriptorFromPlugin(Activator.PLUGIN_ID, ABSENT_PATH);
+            ImageDescriptor absentImageDescriptor = Activator.imageDescriptorFromPlugin(
+                    Activator.PLUGIN_ID, ABSENT_PATH);
             absentImage = absentImageDescriptor.createImage();
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang
-     * .Object, int)
+     * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang .Object, int)
      */
     public Image getColumnImage(final Object element, final int columnIndex) {
         if (element instanceof Signal) {
@@ -99,12 +93,10 @@ public class SignalLabelProvider implements ITableLabelProvider {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang
-     * .Object, int)
+     * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang .Object, int)
      */
     public String getColumnText(final Object element, final int columnIndex) {
         if (element instanceof Signal) {
@@ -131,30 +123,28 @@ public class SignalLabelProvider implements ITableLabelProvider {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.
-     * jface.viewers.ILabelProviderListener)
+     * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.
+     *      jface.viewers.ILabelProviderListener)
      */
     public void addListener(final ILabelProviderListener listener) {
         listeners.add(listener);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse
-     * .jface.viewers.ILabelProviderListener)
+     * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse
+     *      .jface.viewers.ILabelProviderListener)
      */
     public void removeListener(final ILabelProviderListener listener) {
         listeners.remove(listener);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
      */
@@ -166,12 +156,11 @@ public class SignalLabelProvider implements ITableLabelProvider {
         absentImage.dispose();
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang
-     * .Object, java.lang.String)
+     * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang .Object,
+     *      java.lang.String)
      */
     public boolean isLabelProperty(final Object element, final String property) {
         return true;

@@ -21,8 +21,8 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
 
 /**
- * Action that performs a single step in the current program. The plugin
- * activator and the common layer are used to access all relevant data.
+ * Action that performs a single step in the current program. The plugin activator and the common
+ * layer are used to access all relevant data.
  * 
  * @author msp, ctr
  */
@@ -44,18 +44,17 @@ public class StepTraceAction extends Action {
      * 
      * @param manager
      *            status line manager used to display action result
-     * @param traces
-     *            trace from which the inputs are read If trace is null or all
-     *            ticks are executed, the inputs are read from the input view
+     * @param traceList
+     *            trace from which the inputs are read If trace is null or all ticks are executed,
+     *            the inputs are read from the input view
      */
-    public StepTraceAction(final IStatusLineManager manager, final TraceList traces) {
+    public StepTraceAction(final IStatusLineManager manager, final TraceList traceList) {
         setId(ACTION_ID);
         setText("&Step");
         setToolTipText("Perform a single step in the current program");
-        setImageDescriptor(Activator.imageDescriptorFromPlugin(
-                Activator.PLUGIN_ID, ICON_PATH));
+        setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
         this.statusLineManager = manager;
-        this.traces = traces;
+        this.traces = traceList;
     }
 
     /*

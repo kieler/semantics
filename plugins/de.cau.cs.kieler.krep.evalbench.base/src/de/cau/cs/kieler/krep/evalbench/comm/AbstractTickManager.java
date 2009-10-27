@@ -35,30 +35,25 @@ public abstract class AbstractTickManager implements ISignalListener {
 
     /**
      * {@inheritDoc}
-     *
-     * @see
-     * krep.evalbench.comm.ISignalListener#tickPerformed(java.util.LinkedList,
-     * java.util.LinkedList)
+     * 
      */
-    public abstract void tickPerformed(LinkedList<Signal> inputs,
-            LinkedList<Signal> outputs);
+    public abstract void tickPerformed(LinkedList<Signal> inputs, LinkedList<Signal> outputs);
 
     /**
      * Retrieves the currently active assembler editor from the common layer.
      * 
-     * @return the active assembler editor, or null if there is no active
-     *         assembler editor
+     * @return the active assembler editor, or null if there is no active assembler editor
      */
     protected final AssemblerEditor getActiveAssemblerEditor() {
         return Activator.getDefault().commonLayer.getActiveAssemblerEditor();
     }
 
     /**
-     * Triggers a program tick in the common layer. The given editor part is
-     * brought to top, so the common layer can synchronize with it.
+     * Triggers a program tick in the common layer. The given editor part is brought to top, so the
+     * common layer can synchronize with it.
      * <p>
-     * Note that this method may throw a <code>NullPointerException</code> if
-     * the given editor part is no longer available.
+     * Note that this method may throw a <code>NullPointerException</code> if the given editor part
+     * is no longer available.
      * 
      * @param editorPart
      *            assembler editor to use

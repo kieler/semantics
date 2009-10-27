@@ -44,8 +44,8 @@ public class VerifyPerspective implements IPerspectiveFactory {
     /** Identifier string for the output view. */
     private static final String ID_VERIFY = VerifyView.VIEW_ID;
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui .IPageLayout)
      */

@@ -49,18 +49,18 @@ public class RunAction extends Action {
      * 
      * @param manager
      *            status line manager used to display action result
-     * @param traces
+     * @param traceList
      *            trace from which the inputs are read. If this is null,
      *            external inputs are assumed
      */
-    public RunAction(final IStatusLineManager manager, final TraceList traces) {
+    public RunAction(final IStatusLineManager manager, final TraceList traceList) {
         setId(ACTION_ID);
         setText("R&un");
         setToolTipText("Run the current program");
         setImageDescriptor(Activator.imageDescriptorFromPlugin(
                 Activator.PLUGIN_ID, ICON_PATH));
         this.statusLineManager = manager;
-        this.traces = traces;
+        this.traces = traceList;
     }
 
     /*

@@ -19,19 +19,16 @@ import org.eclipse.jface.viewers.Viewer;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 
 /**
- * Content provider used for the embedded table viewer in the input and output
- * views.
+ * Content provider used for the embedded table viewer in the input and output views.
  * 
  * @author msp
  */
 public class SignalContentProvider implements IStructuredContentProvider {
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java
-     * .lang.Object)
+     * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java .lang.Object)
      */
     public Object[] getElements(final Object inputElement) {
         if (inputElement instanceof Signal[]) {
@@ -41,8 +38,8 @@ public class SignalContentProvider implements IStructuredContentProvider {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see org.eclipse.jface.viewers.IContentProvider#dispose()
      */
@@ -50,11 +47,10 @@ public class SignalContentProvider implements IStructuredContentProvider {
         // Nothing to do
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface
+     * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface
      * .viewers.Viewer, java.lang.Object, java.lang.Object)
      */
     public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {

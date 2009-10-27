@@ -29,8 +29,8 @@ public class MessageView extends ViewPart {
     /** The viewer used to display connection logs. */
     private static TextViewer viewer;
 
-    private static void setViewer(final TextViewer viewer) {
-        MessageView.viewer = viewer;
+    private static void setViewer(final TextViewer tViewer) {
+        MessageView.viewer = tViewer;
     }
 
     /*

@@ -59,8 +59,6 @@ public class KlpAssembler implements IAssembler {
 
     private HashMap<Integer, Integer> rows = new HashMap<Integer, Integer>();
 
-    private int size;
-
     private String name;
 
     /**
@@ -71,25 +69,21 @@ public class KlpAssembler implements IAssembler {
         inputs = new LinkedList<Signal>();
         outputs = new LinkedList<Signal>();
         index = new HashMap<String, Integer>();
-        // instructions = new LinkedList<Instruction>();
-        size = 0;
     }
 
     /**
-     * @param name
+     * @param tName
      *            Name of the model
-     * @param model
+     * @param tModel
      *            model parsed by xtext parser
      * @throws ParseException
-     *          thrown for parse errors, e.g., undefined labels or registers
+     *             thrown for parse errors, e.g., undefined labels or registers
      */
-    public void assemble(final String name, final KLP model)
-            throws ParseException {
-        this.name = name;
-        this.model = model;
+    public void assemble(final String tName, final KLP tModel) throws ParseException {
+        this.name = tName;
+        this.model = tModel;
         HashMap<String, Integer> label2addr = new HashMap<String, Integer>();
         HashMap<String, Integer> regs = new HashMap<String, Integer>();
-        size = 0;
         int iIndex = 0;
         for (Line l : model.getInstructions()) {
             if (l.getLabels() != null) {
@@ -116,8 +110,7 @@ public class KlpAssembler implements IAssembler {
     }
 
     private void initialize(final Instruction instruction,
-            final HashMap<String, Integer> label2addr,
-            final HashMap<String, Integer> regs) {
+            final HashMap<String, Integer> label2addr, final HashMap<String, Integer> regs) {
         if (instruction instanceof Decl) {
             Decl i = (Decl) instruction;
             setRegs(i.getReg(), regs);
@@ -153,6 +146,7 @@ public class KlpAssembler implements IAssembler {
             i.setOpcode1(i.getLabel().getAddr());
         } else if (instruction instanceof Move) {
             Move i = (Move) instruction;
+
             // res = i.getType().getName().toUpperCase() + " " +
             // printReg(i.getTo()) + " ";
             // if (i.getFrom() != null) {
@@ -349,76 +343,31 @@ public class KlpAssembler implements IAssembler {
         }
     }
 
-    /*public void assemble(final String name, final Reader program)
-            throws ParseException {
-        this.name = name;
-        boolean error = false;
-        String errorMsg;
-        clear();
-
-        try {
-            final klpLexer lex = new klpLexer(new ANTLRReaderStream(program));
-            final CommonTokenStream tokens = new CommonTokenStream(lex);
-
-            final klpParser parser = new klpParser(tokens);
-
-            instructions = parser.prog();
-            error = parser.getError();
-            errorMsg = parser.getErrorMsg();
-            if (error) {
-                MessageView.print(errorMsg);
-            }
-        } catch (final IOException e) {
-            throw new ParseException(e.getMessage());
-        } catch (RecognitionException e) {
-            throw new ParseException(e.getMessage());
-        }
-        if (error) {
-            throw new ParseException(errorMsg);
-        }
-        if (instructions == null) {
-            throw new ParseException("unknown error");
-        }
-        if (!error) {
-            size = 0;
-            int iIndex = 0;
-            HashMap<String, Integer> label2addr = new HashMap<String, Integer>();
-            for (final Instruction i : instructions) {
-                for (String s : i.getLabels()) {
-                    label2addr.put(s, iIndex);
-                }
-                if (i.writeObj() != null) {
-                    iIndex++;
-                }
-            }
-            iIndex = 0;
-            for (final Instruction i : instructions) {
-                i.asmLabel(label2addr);
-                if (i.writeObj() != null) {
-                    size++;
-                }
-                if (i instanceof Decl) {
-                    final Decl io = (Decl) i;
-                    final Signal s = io.getSignal();
-                    if (io.isInput()) {
-                        inputs.add(s);
-                        index.put(s.getName(), iIndex);
-                        iIndex++;
-                    } else if (io.isOutput()) {
-                        outputs.add(s);
-                        index.put(s.getName(), iIndex);
-                        iIndex++;
-                    }
-                }
-            }
-        }
-    }
-
-    public void assemble(final String name, final String program)
-            throws ParseException {
-        final StringReader in = new StringReader(program);
-        assemble(name, in);
-    }*/
+    /*
+     * public void assemble(final String name, final Reader program) throws ParseException {
+     * this.name = name; boolean error = false; String errorMsg; clear();
+     * 
+     * try { final klpLexer lex = new klpLexer(new ANTLRReaderStream(program)); final
+     * CommonTokenStream tokens = new CommonTokenStream(lex);
+     * 
+     * final klpParser parser = new klpParser(tokens);
+     * 
+     * instructions = parser.prog(); error = parser.getError(); errorMsg = parser.getErrorMsg(); if
+     * (error) { MessageView.print(errorMsg); } } catch (final IOException e) { throw new
+     * ParseException(e.getMessage()); } catch (RecognitionException e) { throw new
+     * ParseException(e.getMessage()); } if (error) { throw new ParseException(errorMsg); } if
+     * (instructions == null) { throw new ParseException("unknown error"); } if (!error) { size = 0;
+     * int iIndex = 0; HashMap<String, Integer> label2addr = new HashMap<String, Integer>(); for
+     * (final Instruction i : instructions) { for (String s : i.getLabels()) { label2addr.put(s,
+     * iIndex); } if (i.writeObj() != null) { iIndex++; } } iIndex = 0; for (final Instruction i :
+     * instructions) { i.asmLabel(label2addr); if (i.writeObj() != null) { size++; } if (i
+     * instanceof Decl) { final Decl io = (Decl) i; final Signal s = io.getSignal(); if
+     * (io.isInput()) { inputs.add(s); index.put(s.getName(), iIndex); iIndex++; } else if
+     * (io.isOutput()) { outputs.add(s); index.put(s.getName(), iIndex); iIndex++; } } } } }
+     * 
+     * public void assemble(final String name, final String program) throws ParseException { final
+     * StringReader in = new StringReader(program); assemble(name, in); }
+     */
 
     public String canExecute(final Config c) {
         // if (!(c instanceof KrepConfig)) {
@@ -446,7 +395,6 @@ public class KlpAssembler implements IAssembler {
     public String[][] getInstructions() {
         final LinkedList<String[]> res = new LinkedList<String[]>();
         int j = 0;
-        int k = 0;
         if (model != null) {
             for (Line line : model.getInstructions()) {
                 String num = String.valueOf(j++);
@@ -456,30 +404,20 @@ public class KlpAssembler implements IAssembler {
                 }
                 String i = print(line.getInstruction());
                 String opcode = getOpcode(line.getInstruction());
-                if (line.getInstruction() == null
-                        || line.getInstruction().getOpcode0() == 0) {
+                if (line.getInstruction() == null || line.getInstruction().getOpcode0() == 0) {
                     num = "";
                     opcode = "";
                 }
                 res.add(new String[] { num, label, i, opcode });
             }
-        } /*else {
-
-            for (final Instruction i : instructions) {
-                String opcode = i.writeObj();
-                String num = "";
-                if (opcode == null) {
-                    opcode = "";
-                } else {
-                    rows.put(j, k);
-                    num = String.valueOf(j++);
-                }
-                String label = i.getLabel();
-                String instr = i.toString();
-                k++;
-                res.add(new String[] { num, label, instr, opcode });
-            }
-          }*/
+        } /*
+           * else {
+           * 
+           * for (final Instruction i : instructions) { String opcode = i.writeObj(); String num =
+           * ""; if (opcode == null) { opcode = ""; } else { rows.put(j, k); num =
+           * String.valueOf(j++); } String label = i.getLabel(); String instr = i.toString(); k++;
+           * res.add(new String[] { num, label, instr, opcode }); } }
+           */
         return res.toArray(new String[0][0]);
     }
 
@@ -525,12 +463,11 @@ public class KlpAssembler implements IAssembler {
         if (instr instanceof Decl) {
             Decl i = (Decl) instr;
 
-            res = i.getScope().getName().toUpperCase() + " "
-                    + printReg(i.getReg());
+            res = i.getScope().getName().toUpperCase() + " " + printReg(i.getReg());
         } else if (instr instanceof Binop) {
             Binop i = (Binop) instr;
-            res = i.getOp().getName().toUpperCase() + " " + printReg(i.getTo())
-                    + " " + printRead(i.getArg1()) + " ";
+            res = i.getOp().getName().toUpperCase() + " " + printReg(i.getTo()) + " "
+                    + printRead(i.getArg1()) + " ";
             if (i.getArg2() != null) {
                 res += printRead(i.getArg2());
             } else {
@@ -538,8 +475,7 @@ public class KlpAssembler implements IAssembler {
             }
         } else if (instr instanceof CJmp) {
             CJmp i = (CJmp) instr;
-            res = "J" + i.getCond() + " " + printLabel(i.getLabel()) + " "
-                    + i.getReg() + "(";
+            res = "J" + i.getCond() + " " + printLabel(i.getLabel()) + " " + i.getReg() + "(";
         } else if (instr instanceof Done) {
             Done i = (Done) instr;
             res = "DONE";
@@ -551,8 +487,7 @@ public class KlpAssembler implements IAssembler {
             res = "JMP " + printLabel(i.getLabel());
         } else if (instr instanceof Move) {
             Move i = (Move) instr;
-            res = i.getType().getName().toUpperCase() + " "
-                    + printReg(i.getTo()) + " ";
+            res = i.getType().getName().toUpperCase() + " " + printReg(i.getTo()) + " ";
             if (i.getFrom() != null) {
                 res += i.getFrom().getReg();
             } else {
@@ -566,29 +501,30 @@ public class KlpAssembler implements IAssembler {
             res = "SETCLK " + printReg(i.getReg()) + " " + i.getClk();
         } else if (instr instanceof SetPC) {
             SetPC i = (SetPC) instr;
-            res = "SETPC " + printReg(i.getReg()) + " "
-                    + printLabel(i.getLabel());
+            res = "SETPC " + printReg(i.getReg()) + " " + printLabel(i.getLabel());
         } else {
             res = "error";
         }
         return res;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public LinkedList<Signal> getOutputs() {
         return outputs;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String[] getObj(final Config c) {
         int j = 0;
         LinkedList<String> obj = new LinkedList<String>();
-        /*  if (instructions != null) {
-              for (final Instruction i : instructions) {
-                  final String t = i.writeObj();
-                  if (t != null) {
-                      obj.add(Tools.toHex(j++) + t);
-                  }
-              }
-          }*/
+        /*
+         * if (instructions != null) { for (final Instruction i : instructions) { final String t =
+         * i.writeObj(); if (t != null) { obj.add(Tools.toHex(j++) + t); } } }
+         */
         return obj.toArray(new String[obj.size()]);
     }
 
@@ -596,15 +532,19 @@ public class KlpAssembler implements IAssembler {
         inputs.clear();
         outputs.clear();
 
-        // Register.clear();
-        // Decl.clear();
         instructions.clear();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public HashMap<String, Integer> getSignalIndex() {
         return index;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int adr2row(final int i) {
         Integer res = rows.get(i);
         if (res == null) {
@@ -614,22 +554,29 @@ public class KlpAssembler implements IAssembler {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int size() {
         return instructions.size();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getName() {
         return name;
     }
 
-    public void assemble(final String name, final String program)
-            throws ParseException {
+    /**
+     * {@inheritDoc}
+     */
+    public void assemble(final String name, final String program) throws ParseException {
         // TODO Auto-generated method stub
 
     }
 
-    public void assemble(final String name, final Reader program)
-            throws ParseException {
+    public void assemble(final String name, final Reader program) throws ParseException {
         // TODO Auto-generated method stub
 
     }

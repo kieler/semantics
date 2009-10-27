@@ -88,12 +88,6 @@ public class EvalBenchPreferencePage extends FieldEditorPreferencePage
                 1, labels, getFieldEditorParent());
         addField(fieldEditor);
 
-        // create field editor for the external assembler program
-        // fieldEditor = new StringFieldEditor(EXTERNAL_ASSEMBLER,
-        // "External command for kasm to lst conversion:",
-        // getFieldEditorParent());
-        // addField(fieldEditor);
-
         adjustGridLayout();
     }
 

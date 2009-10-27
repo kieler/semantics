@@ -48,9 +48,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
-     * .Composite)
+     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
      */
     @Override
     public void createPartControl(final Composite parent) {
@@ -58,8 +56,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
         viewer = new TextViewer(parent);
 
         // create actions
-        IToolBarManager toolBarManager = getViewSite().getActionBars()
-                .getToolBarManager();
+        IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
         toolBarManager.add(new ConnectAction());
         toolBarManager.add(new DisconnectAction());
         toolBarManager.add(new CheckConnectionAction());
@@ -81,11 +78,10 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
         viewer.getControl().setFocus();
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * krep.evalbench.comm.ICommunicationListener#dataReceived(java.lang.String)
+     * @see krep.evalbench.comm.ICommunicationListener#dataReceived(java.lang.String)
      */
     public void dataReceived(final String data) {
         if (preferenceStore.getBoolean(ConnectionPreferencePage.LOG)) {
@@ -93,11 +89,10 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * krep.evalbench.comm.ICommunicationListener#dataSent(java.lang.String)
+     * @see krep.evalbench.comm.ICommunicationListener#dataSent(java.lang.String)
      */
     public void dataSent(final String data) {
 

@@ -21,8 +21,8 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
 
 /**
- * Action that resets the current program. The plugin activator and the common
- * layer are used to access all relevant data.
+ * Action that resets the current program. The plugin activator and the common layer are used to
+ * access all relevant data.
  * 
  * @author msp
  */
@@ -44,17 +44,16 @@ public class ResetAction extends Action {
      * 
      * @param manager
      *            status line manager used to display action result
-     * @param traces
+     * @param traceList
      *            trace which inputs are read, it must be reseted as well
      */
-    public ResetAction(final IStatusLineManager manager, final TraceList traces) {
+    public ResetAction(final IStatusLineManager manager, final TraceList traceList) {
         setId(ACTION_ID);
         setText("&Reset");
         setToolTipText("Reset the current program");
-        setImageDescriptor(Activator.imageDescriptorFromPlugin(
-                Activator.PLUGIN_ID, ICON_PATH));
+        setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
         this.statusLineManager = manager;
-        this.traces = traces;
+        this.traces = traceList;
     }
 
     /*
@@ -74,8 +73,7 @@ public class ResetAction extends Action {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        statusLineManager.setMessage(Activator.getDefault().commonLayer
-                .getStatusMessage());
+        statusLineManager.setMessage(Activator.getDefault().commonLayer.getStatusMessage());
     }
 
 }

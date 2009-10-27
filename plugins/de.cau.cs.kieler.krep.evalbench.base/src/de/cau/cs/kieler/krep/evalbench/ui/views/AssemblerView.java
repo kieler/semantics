@@ -36,9 +36,9 @@ public class AssemblerView extends ViewPart {
     public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.assembler";
 
     /** Column identifiers for the embedded table. */
-    private static final String[] COLUMN_NAMES = { "index", "label",
-            "instruction", "opcode" };
+    private static final String[] COLUMN_NAMES = { "index", "label", "instruction", "opcode" };
 
+    /** Activator for this view. */
     public Activator activator = null;
 
     /** The embedded table. */
@@ -59,9 +59,7 @@ public class AssemblerView extends ViewPart {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
-     * .Composite)
+     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
      */
     @Override
     public final void createPartControl(final Composite parent) {
@@ -114,9 +112,8 @@ public class AssemblerView extends ViewPart {
      * Highlight the currently executed instructions.
      * 
      * @param trace
-     *            the active assembler instructions. This is the actual number
-     *            of instructions, the assembler is responsible to map them to
-     *            lines in the assembler.
+     *            the active assembler instructions. This is the actual number of instructions, the
+     *            assembler is responsible to map them to lines in the assembler.
      */
     public final void markTrace(final int[] trace) {
         Display.getDefault().asyncExec(new Runnable() {
@@ -126,8 +123,5 @@ public class AssemblerView extends ViewPart {
             }
 
         });
-        // table.select(trace);
-
     }
-
 }

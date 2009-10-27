@@ -37,8 +37,7 @@ public class VerifyPreferencePage extends FieldEditorPreferencePage implements
     public static final String BENCHMARK_PATH = "EvalBench.benchmark_path";
 
     /**
-     * Regular expression to express, which files in the Benchmark path are
-     * actual benchmarks.
+     * Regular expression to express, which files in the Benchmark path are actual benchmarks.
      */
     public static final String BENCHMARK_FILES = "Evalbench.benchmark_files";
 
@@ -61,48 +60,42 @@ public class VerifyPreferencePage extends FieldEditorPreferencePage implements
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+     * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
      */
     public void init(final IWorkbench workbench) {
         // set the preference store
-        IPreferenceStore preferenceStore = Activator.getDefault()
-                .getPreferenceStore();
+        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
         setPreferenceStore(preferenceStore);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors
-     * ()
+     * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors ()
      */
     @Override
     protected void createFieldEditors() {
 
-        FieldEditor fieldEditor = new DirectoryFieldEditor(BENCHMARK_PATH,
-                "Path the benchmarks:", getFieldEditorParent());
-        addField(fieldEditor);
-
-        fieldEditor = new StringFieldEditor(BENCHMARK_FILES,
-                "Regular expression to describe benchmark directories:",
+        FieldEditor fieldEditor = new DirectoryFieldEditor(BENCHMARK_PATH, "Path the benchmarks:",
                 getFieldEditorParent());
         addField(fieldEditor);
 
-        fieldEditor = new BooleanFieldEditor(CASE_SENSITIVE,
-                "signals are case sensitve", getFieldEditorParent());
+        fieldEditor = new StringFieldEditor(BENCHMARK_FILES,
+                "Regular expression to describe benchmark directories:", getFieldEditorParent());
         addField(fieldEditor);
 
-        FileFieldEditor log = new FileFieldEditor(VERIFY_LOG,
-                "log File for verification results", getFieldEditorParent());
+        fieldEditor = new BooleanFieldEditor(CASE_SENSITIVE, "signals are case sensitve",
+                getFieldEditorParent());
+        addField(fieldEditor);
+
+        FileFieldEditor log = new FileFieldEditor(VERIFY_LOG, "log File for verification results",
+                getFieldEditorParent());
         String[] extensions = { "*.log" };
         log.setFileExtensions(extensions);
         addField(fieldEditor);
 
         fieldEditor = new BooleanFieldEditor(IGNORE_INVALID,
-                "continue verify run after mismatch as detected",
-                getFieldEditorParent());
+                "continue verify run after mismatch as detected", getFieldEditorParent());
         addField(fieldEditor);
 
         adjustGridLayout();

@@ -56,8 +56,8 @@ public class InputSignalModifier implements ICellModifier {
         return -1;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see org.eclipse.jface.viewers.ICellModifier#canModify(java.lang.Object,
      * java.lang.String)
@@ -82,8 +82,8 @@ public class InputSignalModifier implements ICellModifier {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see org.eclipse.jface.viewers.ICellModifier#getValue(java.lang.Object,
      * java.lang.String)
@@ -115,8 +115,8 @@ public class InputSignalModifier implements ICellModifier {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see org.eclipse.jface.viewers.ICellModifier#modify(java.lang.Object,
      * java.lang.String, java.lang.Object)

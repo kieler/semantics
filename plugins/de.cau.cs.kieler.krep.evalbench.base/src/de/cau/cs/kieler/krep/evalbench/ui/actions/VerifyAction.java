@@ -46,8 +46,8 @@ import de.cau.cs.kieler.krep.evalbench.ui.VerifyPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
 /**
- * Action that runs the current program. The plugin activator and the common
- * layer are used to access all relevant data.
+ * Action that runs the current program. The plugin activator and the common layer are used to
+ * access all relevant data.
  * 
  * @author ctr
  */
@@ -71,18 +71,17 @@ public class VerifyAction extends Action {
      * 
      * @param manager
      *            status line manager used to display action result
-     * @param table
+     * @param tTable
      *            table to present the results
      */
-    public VerifyAction(final IStatusLineManager manager, final TableViewer table) {
+    public VerifyAction(final IStatusLineManager manager, final TableViewer tTable) {
         setId(VERIFY_ID);
         setText("R&un");
         setToolTipText("Verify all benchmarks");
-        setImageDescriptor(Activator.imageDescriptorFromPlugin(
-                Activator.PLUGIN_ID, ICON_PATH));
+        setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
         manager.setCancelEnabled(true);
         this.statusLineManager = manager;
-        this.table = table;
+        this.table = tTable;
     }
 
     /*
@@ -96,11 +95,9 @@ public class VerifyAction extends Action {
         Tools.tic();
         final Display display = Display.findDisplay(Thread.currentThread());
 
-        IPreferenceStore preferenceStore = Activator.getDefault()
-                .getPreferenceStore();
+        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
-        File dir = new File(preferenceStore
-                .getString(VerifyPreferencePage.BENCHMARK_PATH));
+        File dir = new File(preferenceStore.getString(VerifyPreferencePage.BENCHMARK_PATH));
 
         final boolean ignoreInvalid = preferenceStore
                 .getBoolean(VerifyPreferencePage.IGNORE_INVALID);
@@ -109,11 +106,8 @@ public class VerifyAction extends Action {
         final LinkedList<File> files = new LinkedList<File>();
         for (File f : dir.listFiles()) {
             if (f.isDirectory()
-                    && f
-                            .getName()
-                            .matches(
-                                    preferenceStore
-                                            .getString(VerifyPreferencePage.BENCHMARK_FILES))) {
+                    && f.getName().matches(
+                            preferenceStore.getString(VerifyPreferencePage.BENCHMARK_FILES))) {
                 files.add(f);
             }
         }
@@ -126,9 +120,10 @@ public class VerifyAction extends Action {
         }
 
         table.setInput(data.toArray(new String[0][0]));
-        // final UIJob job = new UIJob("verify"){
         Tools.runWithProgress(new IRunnableWithProgress() {
             public void run(final IProgressMonitor monitor) {
+                final int rowWCRT = 2;
+                final int rowComment = 3;
                 int k = 0;
                 monitor.beginTask("Verify", files.size());
                 Iterator<File> i = files.iterator();
@@ -142,16 +137,14 @@ public class VerifyAction extends Action {
                         monitor.subTask(f.getName());
                         IAssembler asm = parse(f);
 
-                        TraceList traces = new TraceList(asm, f
-                                .getAbsolutePath()
-                                + "/" + f.getName());
+                        TraceList traces = new TraceList(asm, f.getAbsolutePath() + "/"
+                                + f.getName());
                         // Execute Trace
                         if (traces == null || !traces.hasNext()) {
-                            s[3] = "no trace found";
+                            s[rowComment] = "no trace found";
                         } else {
                             Activator.getDefault().commonLayer.reset();
-                            Activator.getDefault().commonLayer.loadProgram(asm,
-                                    null);
+                            Activator.getDefault().commonLayer.loadProgram(asm, null);
 
                             Activator.getDefault().commonLayer.reset();
 
@@ -161,10 +154,10 @@ public class VerifyAction extends Action {
 
                             }
                             success = valid;
-                            s[2] = traces.getWCRT();
+                            s[rowWCRT] = traces.getWCRT();
 
                             if (!success) {
-                                s[3] = "traces differ";
+                                s[rowComment] = "traces differ";
                             }
                         }
 
@@ -172,15 +165,15 @@ public class VerifyAction extends Action {
 
                         monitor.worked(1);
                     } catch (CommunicationException eCom) {
-                        s[3] = eCom.getMessage();
+                        s[rowComment] = eCom.getMessage();
                     } catch (ParseException eParse) {
-                        s[3] = eParse.getMessage();
+                        s[rowComment] = eParse.getMessage();
                     } catch (LoadException eLoad) {
-                        s[3] = eLoad.getMessage();
+                        s[rowComment] = eLoad.getMessage();
                     } catch (Exception e) {
-                        s[3] = e.getMessage();
+                        s[rowComment] = e.getMessage();
                     } catch (Throwable t) {
-                        s[3] = t.getMessage();
+                        s[rowComment] = t.getMessage();
                     }
 
                     display.asyncExec(new Runnable() {
@@ -194,11 +187,9 @@ public class VerifyAction extends Action {
                     k++;
                 }
                 monitor.done();
-                IPreferenceStore preferenceStore = Activator.getDefault()
-                        .getPreferenceStore();
+                IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
-                String logFile = preferenceStore
-                        .getString(VerifyPreferencePage.VERIFY_LOG);
+                String logFile = preferenceStore.getString(VerifyPreferencePage.VERIFY_LOG);
                 if (logFile.length() > 0) {
                     BufferedWriter out = null;
                     try {
@@ -229,8 +220,6 @@ public class VerifyAction extends Action {
                     }
                 }
                 MessageView.print("test done:" + Tools.showTime());
-                // return Status.OK_STATUS;
-
             }
         });
     }
@@ -238,8 +227,7 @@ public class VerifyAction extends Action {
     private IAssembler parse(final File path) throws ParseException {
         IAssembler res = null;
         File file = null;
-        String prefix = path.getAbsolutePath() + File.separator
-                + path.getName();
+        String prefix = path.getAbsolutePath() + File.separator + path.getName();
         try {
             file = new File(prefix + ".lst");
             if (file.exists()) {
@@ -248,8 +236,6 @@ public class VerifyAction extends Action {
                 res = new KepAssembler();
             } else if ((file = new File(prefix + ".klp")).exists()) {
                 res = new KlpAssembler();
-                // } else if ((file = new File(prefix + ".krp")).exists()) {
-                // res = new KrepAssembler();
             } else {
                 throw new ParseException("No assembler found in " + path);
             }
@@ -258,9 +244,6 @@ public class VerifyAction extends Action {
         } catch (FileNotFoundException e1) {
             // e1.printStackTrace();
             throw new ParseException(e1.getMessage());
-        } catch (ParseException e1) {
-            // e1.printStackTrace();
-            throw e1;
         }
     }
 }

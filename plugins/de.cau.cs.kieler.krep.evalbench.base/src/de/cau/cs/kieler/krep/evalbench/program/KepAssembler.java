@@ -83,12 +83,17 @@ public class KepAssembler implements IAssembler {
         signalIndex = new HashMap<String, Integer>();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int adr2row(final int i) {
         return i;
     }
 
-    public void assemble(final String name, final Reader program)
-            throws ParseException {
+    /**
+     * {@inheritDoc}
+     */
+    public void assemble(final String name, final Reader program) throws ParseException {
         this.name = name;
         boolean error = false;
         String errorMsg;
@@ -150,19 +155,23 @@ public class KepAssembler implements IAssembler {
             this.postProcess();
             outputs.add(new Signal("TickWarn", false, null, signalIndex));
             /*
-             * for (final Instruction i : instructions) {
-             * i.setLabel(uniqueLabel.get(i.getLabel()));
+             * for (final Instruction i : instructions) { i.setLabel(uniqueLabel.get(i.getLabel()));
              * i.asmLabel(label2addr); i.asmSignal(signalIndex); }
              */
         }
     }
 
-    public void assemble(final String name, final String program)
-            throws ParseException {
+    /**
+     * {@inheritDoc}
+     */
+    public void assemble(final String name, final String program) throws ParseException {
         final StringReader in = new StringReader(program);
         assemble(name, in);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String canExecute(final Config c) {
         if (!c.isKEP()) {
             return "wrong processor";
@@ -172,10 +181,16 @@ public class KepAssembler implements IAssembler {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public LinkedList<Signal> getInputs() {
         return inputs;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String[][] getInstructions() {
         final LinkedList<String[]> res = new LinkedList<String[]>();
         if (instructions != null) {
@@ -192,6 +207,9 @@ public class KepAssembler implements IAssembler {
         return res.toArray(new String[0][0]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String[] getObj(final Config c) {
         LinkedList<String> obj = new LinkedList<String>();
         if (instructions != null) {
@@ -202,14 +220,23 @@ public class KepAssembler implements IAssembler {
         return obj.toArray(new String[0]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public LinkedList<Signal> getOutputs() {
         return outputs;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public HashMap<String, Integer> getSignalIndex() {
         return signalIndex;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int size() {
         return instructions.size();
     }
@@ -229,8 +256,7 @@ public class KepAssembler implements IAssembler {
             return new Watcher(watcherList.size() - 1);
         }
         /*
-         * else { watcher_list.pop(); max_watchers_needed--; return
-         * getNewWatcher(endAddr); } }
+         * else { watcher_list.pop(); max_watchers_needed--; return getNewWatcher(endAddr); } }
          */
     }
 
@@ -244,12 +270,10 @@ public class KepAssembler implements IAssembler {
                     if (instr instanceof AddrSigWatchInstruction) {
                         final AddrSigWatchInstruction aswInstr = (AddrSigWatchInstruction) instr;
                         if (aswInstr.getWatch() == null) {
-                            aswInstr.setWatch(getNewWatcher(aswInstr.getAddr()
-                                    .getId()));
+                            aswInstr.setWatch(getNewWatcher(aswInstr.getAddr().getId()));
                             /*
-                             * myinst.setSourceCode(myinst .getScource()
-                             * .appendContent( "," + ((AddrSigWatchInstruction)
-                             * myinst) .getWatch() .getId()));
+                             * myinst.setSourceCode(myinst .getScource() .appendContent( "," +
+                             * ((AddrSigWatchInstruction) myinst) .getWatch() .getId()));
                              */
                         }
                     }
@@ -264,11 +288,13 @@ public class KepAssembler implements IAssembler {
         this.instructions = result;
     }
 
-    private de.cau.cs.kieler.krep.evalbench.program.kep.Label getLabel(
-            final String name) {
-        return labels.get(name);
+    private Label getLabel(final String tName) {
+        return labels.get(tName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getName() {
         return name;
     }

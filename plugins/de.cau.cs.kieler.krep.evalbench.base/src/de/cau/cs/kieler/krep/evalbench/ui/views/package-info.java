@@ -11,23 +11,12 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.evalbench.ui.views;
-
-import org.eclipse.jface.viewers.ISelection;
-
-import de.cau.cs.kieler.krep.evalbench.Activator;
 
 /**
- * @author ctr Selection Provider for table in view.
+ * views for the KREP evalbench.
+ *
+ * @author ctr
  */
-public class TraceSelectionProvider implements ISelection {
 
-    
-    /**
-     * @return true if no trace is selected
-     */
-    public boolean isEmpty() {
-        return !(Activator.getDefault().getTraces().hasNext());
-    }
+package de.cau.cs.kieler.krep.evalbench.ui.views;
 
-}
