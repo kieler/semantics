@@ -56,14 +56,10 @@
             <!-- <property                                              -->
             <!--     name="headerFile"                                  -->
             <!--     value="${basedir}/java.header"/>                   -->
-            <property name="header"
-              value="
- ^/\*+.*
- ^* KIELER - Kiel Integrated Environment for Layout Eclipse Rich\s?Client\n
- ^.*
- ^\*+/"/>
+            
+            
+            <property name="header" value="^/\\*\n.*KIELER - Kiel Integrated Environment for Layout Eclipse Rich\s?Client.*\n"/>
         </module>
-    
 
     <!-- Checks that a package-info.java file exists for each package.     -->
     <!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocPackage -->
