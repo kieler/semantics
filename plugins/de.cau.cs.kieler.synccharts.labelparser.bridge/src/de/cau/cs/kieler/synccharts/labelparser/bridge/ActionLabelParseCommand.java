@@ -57,7 +57,7 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.VariableReference;
-import de.cau.cs.kieler.synccharts.scoping.TransitionLabelScopeProvider;
+import de.cau.cs.kieler.synccharts.scoping.ActionLabelScopeProvider;
 
 /**
  * @author haf
@@ -200,7 +200,7 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         if (parent == null)
             throw new KielerModelException(
                     "\""+newString+"\""+"Can't find the right scope for the action. Scope is null.", this.action);
-        TransitionLabelScopeProvider.parent = parent;
+        ActionLabelScopeProvider.parent = parent;
 
         // now do parsing
         Map<Object,Object> loadOptions = resourceSet.getLoadOptions();
