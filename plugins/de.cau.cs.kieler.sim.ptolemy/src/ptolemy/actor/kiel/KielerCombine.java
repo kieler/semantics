@@ -153,17 +153,19 @@ public class KielerCombine extends TypedAtomicActor {
     		}
     	}
 
-    	_countDownRegions--;
-    	if (_countDownRegions == 0) {
-        	if (!_present) {
+    	if (!_present) {
+        	//check if all ports are cleared (known w/o any token)
+        	boolean allKnown = true;
+        	for (int i = 0; i < input.getWidth(); i++) {
+        		allKnown &= input.isKnown(i);
+        	}
+        	if (allKnown) {
             	output.sendClear(0);
             	value.sendClear(0);
         	}
     	}
-
-    	
-    	//send out integer token if presentToken
-    	if (_present) {
+    	else  {
+        	//send out integer token if presentToken
         	output.send(0, new IntToken(1));
         	value.send(0, new IntToken(_value));
     	}

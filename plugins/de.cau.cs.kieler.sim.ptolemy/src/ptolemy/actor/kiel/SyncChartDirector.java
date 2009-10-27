@@ -311,7 +311,7 @@ public class SyncChartDirector extends FixedPointDirector {
                             _debug("FixedPointDirector: no longer enabled (return false in postfire): "
                                     + actor.getFullName());
                         }
-                        _sendClearToAllUnknownOutputsOf(actor);
+//                        _sendClearToAllUnknownOutputsOf(actor);
                     }
                 }
                 iterationCount++;
