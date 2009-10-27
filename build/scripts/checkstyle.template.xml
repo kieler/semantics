@@ -1,5 +1,6 @@
-	<target name="checkstyle" unless="no.findbugs" description="experimental">
-		<checkstyle config="${scriptdir}/checks.xml"
+	<target name="checkstyle" unless="no.findbugs"
+	    description="running checkstyle (configured by ${scriptdir}/build.xml)">
+			<checkstyle config="${scriptdir}/checks.xml"
 				failureProperty="checkstyle.failure"
 			    failOnViolation="false">
 			<formatter type="xml"

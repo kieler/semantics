@@ -1,4 +1,5 @@
-	<target name="doc" unless="no.doc">
+	<target name="doc" unless="no.doc" 
+	    description="generate javadoc (configured by ${scriptdir}/build.xml)">
 		<property name="doc.excludes" value=" " />
 		
 		<path id="doc.classpath"> 

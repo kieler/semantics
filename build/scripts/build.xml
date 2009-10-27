@@ -12,7 +12,6 @@
 	<property name="p2.director.workspace" location="${scriptdir}/.p2Workspace" />
 	<property name="antContrib.home"       location="/home/kieler/ant-contrib" />
 	<property name="findbugs.home"         location="/home/kieler/findbugs" />
-	<property name="findbugs.classes"      location="update-site/plugins" /> <!-- path is relative to workspace folder!! -->
 	<property name="checkstyle.home"       location="/home/kieler/checkstyle" />
  
  	<property name="equinoxLauncherPluginVersion" value="${system.equinoxLauncherPluginVersion}" />
@@ -27,6 +26,7 @@
 	<property name="checkstyle.excludes" value=" "/>
 	<property name="build.jars"          value="true"/>
 	<property name="publish.feature"     value="true"/>
+	<property name="findbugs.classes"    value="${system.WORKSPACE}/update-site/plugins" />
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${antContrib.home}/lib/ant-contrib.jar" />
 	<taskdef resource="checkstyletask.properties" classpath="${checkstyle.home}/checkstyle-all-5.0.jar" />
@@ -37,14 +37,16 @@
 		<delete dir="${eclipseWorkspace}" />
 		<delete dir="${p2.director.workspace}" / -->
 
+		<!-- check, whether a target is given by a system (environment) property
+		     use case: RebuildUpdateSite job triggers a feature build job
+		               and defines: target=buildUpdateSiteEntry -->
 		<condition property="targetP" value="${target}" else="${system.TARGET}">
 			<equals arg1="${system.TARGET}" arg2="$${system.TARGET}" />
 			<!-- targetP is the actual target parameter;
 				 $$ is the escape character for not resolving a properties link,
 				 here it is needed to examine the definition of the system property
-				 as the condition 'isset' doesn't work with system (environment) properties -->
+				 as the condition 'isset' doesn't work for system (environment) properties -->
 		</condition>
-
 		
 		<!-- the following conditions will check the presence of certain properties
 		     and write definite values to new properties in order to pass them to the antRunner -->
@@ -79,18 +81,16 @@
 			<arg value="-Dscriptdir=${scriptdir}" />
 				<!-- the folder containing build.xml, build.properties -->
 			<arg value="-Dbasedir=${system.WORKSPACE}" />
-				<!-- the workspace folder of the current job
-						needed as Hudson is starting the build script
-						from the containing folder (i.e. ${scriptdir})
-						- not from workspace root folder -->
+				<!-- the workspace folder of the current job needed as Hudson is starting the build script
+				     from the containing folder (i.e. ${scriptdir}) - not from workspace root folder -->
 			<arg value="-DbuildDirectory=${system.WORKSPACE}" />
 				<!-- the build root folder
-						fed into the eclipse.generateScript task
-						within genericTarget.xml, one of the PDE build scripts
-						here equal to basedir -->
+				     fed into the eclipse.generateScript task
+				     within genericTarget.xml, one of the PDE build scripts
+				     here equal to basedir -->
 			<arg value="-DbuildProperties=${scriptdir}/build.properties" />
 				<!-- the property configuration file
-						examined by build.xml, one of the PDE build scripts -->
+				     examined by build.xml, one of the PDE build scripts -->
 			<arg value="-Dplugin=${plugin}" />
 				<!-- the plugin whose bin parts should be gathered (after building the feature) -->
 			<arg value="-Dfeature=${feature}" />
@@ -101,9 +101,11 @@
 				<!-- the name of RCA's zip file, ziped top folder & launcher determined of product's basename -->
 			<arg value="-DpluginPath=${baseDeltaPackLocation}:${pluginPath}" />
 				<!-- a list of source folders seperated by ':'
-						each folder should contain the subfolders 'features' and 'plugins'
-						can be relative (to ${basedir})
-						CAUTION: required features must not be JARed, plugins should be JARed (so far I figured out) -->
+				     each folder should contain the subfolders 'features' and 'plugins'
+				     can be relative (to ${basedir})
+				     CAUTION: required features must not be JARed, plugins should be JARed (so far I figured out) -->
+			<arg value="-Dfindbugs.classes=${findbugs.classes}" />
+				<!-- path to classes, jars to be examined by findbugs -->
 			<arg value="-Ddoc.excludes=${doc.excludes}" />
 				<!-- comma separated path patterns excluded at javadoc generation -->
 			<arg value="-Dcheckstyle.excludes=${checkstyle.excludes}" />
@@ -118,8 +120,6 @@
 				<!-- set to true to suppress running findbugs, default is false -->
 			<arg value="-Dsuppress.checkstyle=${suppress.checkstyle}" />
 				<!-- set to true to suppress running checkstyle, default is false -->
-			<arg value="-Dfindbugs.classes=${system.WORKSPACE}/${findbugs.classes}" />
-				<!-- set to true to suppress running findbugs, default is false -->
 			<classpath>
 				<pathelement location="${eclipseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
@@ -136,9 +136,9 @@
 		<!-- property name="allElementsFile" location="${eclipse.pdebuild.templates}/headless-build/allElements.xml"/ -->
 		    <!-- allElements is need for product build only -->
 	
-		<!-- the following conditions work in the other way round than the conditions in line 50ff.,
+		<!-- the following conditions work in the other way round than the conditions in line 53ff.,
 		     i.e. they provide properties set under certain circumstances only
-			 to be properly used in target's 'unless' declarations -->
+			 to be properly used in targets' 'unless' declarations -->
 		<condition property="no.clean" value="true">
 			<istrue value="${suppress.clean}" />
 		</condition>
@@ -162,7 +162,11 @@
 
 	<target name="generateScripts" if="eclipse.running" depends="init"
 	    description="target for complete feature build and publishing">
-		
+
+		<tstamp />
+		<property name="forceContextQualifier" value="${DSTAMP}${TSTAMP}" />
+		<!-- <tstamp> provides the above referenced properties, they're not declared explicitly -->
+
 		<!-- generate build.xml scripts for feature and plugins -->
 		<ant antfile="${genericTargets}" target="generateScript">
 			<property name="type" value="feature"/>
@@ -171,7 +175,7 @@
 	</target>	
 
 	<target name="editScripts" if="eclipse.running" depends="init, generateScripts"
-	    description="target for editing the features build file (adding targets for doc, findbugs, checkstyle)">
+	    description="target for editing the features build file: adding targets for doc, findbugs, checkstyle">
 		
 		<!-- read javac's classpath information from build.xml scripts -->		
 		<loadfile property="feature.classpath">
@@ -196,8 +200,9 @@
 			</concat>
 		</loadfile> 
 
+		<!-- default property definition due to:
+		     no build file found in the above statement -> feature.classpath won't be set by the loadfile task -->
 		<property name="feature.classpath" value=" " />
-		<!-- property name="feature.classpath" value="&lt;pathelement path=&quot;.&quot; /&gt;" / -->
 
 		<!-- load javadoc target template, insert classpath entries (via property feature.classpath) -->		
 		<loadfile property="doc.target" srcfile="${scriptdir}/javadoc.template.xml">
@@ -242,8 +247,24 @@
 			<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
 		</delete>
 	</target>
+	
+	<target name="setBuildTempFolder" if="eclipse.running" unless="no.publishing">
+		<!-- this target is a hack due to a bug in the publish-to-updatesite-script:
+		     running the publishing with default configuration will modify
+		     the plugins' MANIFEST.MF in the source folder instead to of a copied
+			 temporary version (will replace 'qualifier' by the timestamp,
+			 which won't work anymore after do that);
+		     Help comes with the 'buildTempFolder' property that introduces a
+		     temporary build folder explicitly.
+			 However, in case of a release build (not only the feature plugins
+		     but all released plugins will be checked out) the buildTempFolder
+		     construction will lead to errors.
+		     Therefor the 'unless' declaration is added. -->
+		
+		<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
+	</target>
 
-	<target name="build.feature" if="eclipse.running" depends="init, generateScripts, editScripts, cleanFolders"
+	<target name="build.feature" if="eclipse.running" depends="init, generateScripts, editScripts, cleanFolders, setBuildTempFolder"
 	    description="target for complete feature building, checking and publishing">
 		
 		<!-- run feature's build.xml: clean, compile and jarUp, provide unjared feature, zip logs, generate javadoc -->		
@@ -253,7 +274,6 @@
 			<property name="plugin.destination" value="${basedir}/update-site/plugins" />
 			<property name="feature.base" value="${basedir}/update-site/" />
 			<property name="updateJar.omitRootfiles" value="true" />
-			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 			<property name="doc.packages" value="${scriptdir}/../package-lists" />
 			<!-- property name="findbugs.classes" value="${basedir}/update-site/plugins" / --><!-- defined above -->
 			<property name="findbugs.sources" value="${basedir}/plugins" />
@@ -288,8 +308,8 @@
 	</target>
 	
 	<target name="gather.plugin.bin.parts" if="eclipse.running" depends="init, generateScripts"
-		description="target for gathering plugin's bin parts, needed if ${plugin} contains library .jar files">
-		<!-- used in KIELER_klepto job, for instance -->
+		description="target for providing an unjared version of ${plugins}, needed if it contains library .jar files">
+		<!-- used in KIELER_klepto job -->
 
 		<ant antfile="build.xml" dir="${basedir}/plugins/${plugin}" target="gather.bin.parts">
 			<property name="destination.temp.folder" value="${basedir}/update-site/plugins" />
@@ -301,9 +321,9 @@
 		</delete>
 	</target>
 	
-	<target name="gather.feature.bin.parts" if="eclipse.running" depends="init, generateScripts"
+	<target name="gather.feature.bin.parts" if="eclipse.running" depends="init"
 		description="target for gathering feature's bin parts, i.e. timestamp the feature only. No children included!">
-		<!-- used in KIELER_dependencies job, for instance -->
+		<!-- used in KIELER_dependencies job -->
 
 		<mkdir dir="${basedir}/update-site/features" />
 
@@ -318,7 +338,8 @@
 		</ant>
 	</target>
 	
-	<target name="build.rca" if="eclipse.running" description="target for creating the RCA by means of the feature build's results">
+	<target name="build.rca" if="eclipse.running"
+	    description="target for creating the RCA by means of the feature build's results">
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${basedir}/buildrepo" />
 		<property name="configs"       value="${product.configs}" />
@@ -335,7 +356,10 @@
 		<property name="forceContextQualifier" value="v${DSTAMP}${TSTAMP}" />
 		<!-- <tstamp> provides the above referenced properties, they're not declared explicitly -->
 
-		<!-- extract product version from product file, replace v?qualifier by ${forceContextQualifier} -->
+		<!-- extract product version from product file,
+		     replace v?qualifier by ${forceContextQualifier}
+		     'p2.product.version' will be referenced in allElements.xml while creating the zip archives
+		     in order to add version and timestamp to zips' file name -->
 		<loadfile property="p2.product.version" srcfile="${product}">
 			<filterchain>
 				<linecontainsregexp>
@@ -350,7 +374,7 @@
 			</filterchain>
 		</loadfile>
 		
-		<delete dir="${buildLabel}"/>
+		<delete dir="${buildLabel}"/> <!-- here the N.kieler folder -->
 		
 		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
 		
@@ -363,7 +387,10 @@
 		</foreach>
 	</target>
 	
-	<target name="update.launcher" description="private target for updating the permission flags of the launcher binaries">
+	<target name="update.launcher"
+	    description="private target for updating the permission flags of the launcher binaries">
+		<!-- will put the binaries in a unique temporary folder, touch and re-zip with 755 -->
+		
 		<basename file="${zipfile}" property="platform" suffix="zip" />
 		<unzip dest="${basedir}/${buildLabel}/${platform}" src="${zipfile}">
 			<patternset includes="${basename}/${basename}.app/Contents/MacOS/${basename}" />
@@ -378,7 +405,7 @@
 		<delete dir="${basedir}/${buildLabel}/${platform}" />
 	</target>
 	
-	<target name="doc" description="target for complete javadoc generation">
+	<target name="doc" description="target for overall javadoc generation">
 		<property name="basedir"      value="${system.WORKSPACE}" />
 		<property name="doc.packages" value="${scriptdir}/../package-lists" />
 
@@ -430,6 +457,6 @@
 	</target>
 
 	<target name="noTargetInfo">
-		<fail message="No build target given. Please give a target explicitly -Dtarget=&lt;{feature,rca}&gt;" />
+		<fail message="No build target given. Please give a target explicitly by setting -Dtarget=&lt;{build.feature,build.rca}&gt;" />
 	</target>	
 </project>

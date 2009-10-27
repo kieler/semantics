@@ -1,4 +1,5 @@
-	<target name="findbugs" unless="no.findbugs" description="experimental">
+	<target name="findbugs" unless="no.findbugs"
+	    description="running findbugs (configured by ${scriptdir}/build.xml)">
 		<path id="findbugs.auxClasses">
 ${feature.classpath}		</path>
 
