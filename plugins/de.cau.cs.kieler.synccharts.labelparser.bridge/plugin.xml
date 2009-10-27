@@ -10,12 +10,21 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="toolbar:de.cau.cs.kieler">
+            locationURI="popup:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.synccharts.labelparser.bridge.parse"
-               label="Parse"
+               label="Parse Labels"
                style="push"
                tooltip="Re-Parse all transition and action labels of current SyncChart.">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="activeEditorId">
+                  <equals
+                        value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
+                  </equals>
+               </with>
+            </visibleWhen>
          </command>
       </menuContribution>
    </extension>
