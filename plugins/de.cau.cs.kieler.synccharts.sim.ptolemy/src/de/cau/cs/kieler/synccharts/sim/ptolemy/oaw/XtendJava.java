@@ -210,7 +210,7 @@ public class XtendJava {
 		if (signalList == null) return;
 		for (int c = 0; c < signalList.size(); c++) {
 			movedSignalNames.add(signalList.get(c).getName());
-			newList. add(signalList.get(c));
+			newList.add(signalList.get(c));
 		}
 	}
 

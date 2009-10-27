@@ -6,6 +6,7 @@
     <property class="ptolemy.data.expr.Parameter" name="synchronizeToRealTime" value="false"/>
     <property class="ptolemy.data.expr.Parameter" name="timeResolution" value="1.0E-10"/>
     <property class="ptolemy.data.expr.Parameter" name="period" value="0"/>
+    <property class="ptolemy.kernel.util.StringAttribute" name="statesignals" value="[L]"/>
   </property>
   <entity class="ptolemy.domains.modal.modal.ModalModel" name="918158682_region_1">
     <property class="ptolemy.vergil.modal.modal.ModalTableauFactory" name="_tableauFactory"/>
@@ -82,7 +83,6 @@
     <link port="200586989.Lo" relation="LoRelation"/>
     <link port="200586989.O" relation="ORelation"/>
     <entity class="ptolemy.domains.modal.modal.Refinement" name="200586989">
-      <property class="ptolemy.actor.kiel.SyncChartDirector" name="Kieler SyncChart Director"/>
       <port class="ptolemy.domains.modal.modal.ModalPort" name="Li">
         <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
         <property name="input"/>
@@ -99,6 +99,9 @@
         <property name="output"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
       </port>
+      <property class="ptolemy.actor.kiel.SyncChartDirector" name="Kieler SyncChart Director">
+        <property class="ptolemy.kernel.util.StringAttribute" name="statesignals" value="[]"/>
+      </property>
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated200586989">
         <property name="output"/>
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>

@@ -200,6 +200,7 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
 	let outerStateURIHash = hash(getURIFragment(mainRegion.innerStates.get(0))):
    	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
+  	//TODO: fix outer most local signal declarations
    	this.createMainSyncChartDirector(mainRegion.innerStates.get(0).signals.select(e|e.isLocal()).name) ->
    	//mainRegion has exactly ONE top most state
    	//iterate over all regions within this top most state
@@ -501,7 +502,8 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
   	this.setClass1("ptolemy.domains.modal.modal.Refinement") ->
    	//getMovedSignalNames() contains names of moved signals
 	//signalList.addAll(state.signals) ->
-	//XXX//
+	//signalList.union(state.signals) ->
+	//TODO: why does the added list gets empty?//
 	moveToSignalList(signalList, state.signals) ->
    	//add signals to refinement (so that outer signals are visible inside), if any
    	(signalList.size > 0) ?
