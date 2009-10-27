@@ -46,13 +46,17 @@ http://www.informatik.uni-kiel.de/rtsys
    </vm>
 
    <plugins>
+      <plugin id="com.google.collect"/>
+      <plugin id="com.google.guice"/>
       <plugin id="com.ibm.icu"/>
+      <plugin id="de.cau.cs.kieler.krep.editors.klp"/>
       <plugin id="de.cau.cs.kieler.krep.evalbench.application"/>
       <plugin id="de.cau.cs.kieler.krep.evalbench.base"/>
       <plugin id="de.cau.cs.kieler.krep.help"/>
       <plugin id="de.cau.cs.kieler.krep.proc.kep" fragment="true"/>
       <plugin id="de.cau.cs.kieler.krep.proc.klp" fragment="true"/>
       <plugin id="javax.transaction" fragment="true"/>
+      <plugin id="org.antlr.runtime"/>
       <plugin id="org.apache.log4j"/>
       <plugin id="org.eclipse.compare.core"/>
       <plugin id="org.eclipse.core.commands"/>
@@ -64,6 +68,10 @@ http://www.informatik.uni-kiel.de/rtsys
       <plugin id="org.eclipse.core.jobs"/>
       <plugin id="org.eclipse.core.runtime"/>
       <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
+      <plugin id="org.eclipse.emf.common"/>
+      <plugin id="org.eclipse.emf.ecore"/>
+      <plugin id="org.eclipse.emf.ecore.xmi"/>
+      <plugin id="org.eclipse.emf.index"/>
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
       <plugin id="org.eclipse.equinox.launcher"/>
@@ -94,6 +102,10 @@ http://www.informatik.uni-kiel.de/rtsys
       <plugin id="org.eclipse.ui"/>
       <plugin id="org.eclipse.ui.workbench"/>
       <plugin id="org.eclipse.ui.workbench.texteditor"/>
+      <plugin id="org.eclipse.xtext"/>
+      <plugin id="org.eclipse.xtext.log4j"/>
+      <plugin id="org.eclipse.xtext.util"/>
+      <plugin id="org.junit"/>
    </plugins>
 
 
