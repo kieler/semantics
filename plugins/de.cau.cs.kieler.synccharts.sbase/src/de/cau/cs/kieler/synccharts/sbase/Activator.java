@@ -1,3 +1,17 @@
+/******************************************************************************
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ * 
+ *****************************************************************************/
 package de.cau.cs.kieler.synccharts.sbase;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -8,10 +22,10 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
-    // The plug-in ID
+    /** The plug-in ID. **/
     public static final String PLUGIN_ID = "de.cau.cs.kieler.synccharts.sbase";
 
-    // The shared instance
+    /** The shared instance. **/
     private static Activator plugin;
 
     /**
@@ -20,28 +34,33 @@ public class Activator extends AbstractUIPlugin {
     public Activator() {
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Starts the plug-in.
      * 
-     * @see
-     * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
-     * )
+     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+     * @param context
+     *            The bundle context for this plug-in
+     * @throws Exception
+     *             When starting this plug-in fails.
+     * 
      */
-    public void start(BundleContext context) throws Exception {
-	super.start(context);
-	Activator.plugin = this;
+    public void start(final BundleContext context) throws Exception {
+        super.start(context);
+        Activator.plugin = this;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Stops the plug-in.
      * 
-     * @see
-     * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
-     * )
+     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+     * @param context
+     *            The bundle context for this plug-in
+     * @throws Exception
+     *             When stopping this plug-in fails.
      */
-    public void stop(BundleContext context) throws Exception {
-	Activator.plugin = null;
-	super.stop(context);
+    public void stop(final BundleContext context) throws Exception {
+        Activator.plugin = null;
+        super.stop(context);
     }
 
     /**
@@ -50,7 +69,7 @@ public class Activator extends AbstractUIPlugin {
      * @return the shared instance
      */
     public static Activator getDefault() {
-	return plugin;
+        return plugin;
     }
 
 }
