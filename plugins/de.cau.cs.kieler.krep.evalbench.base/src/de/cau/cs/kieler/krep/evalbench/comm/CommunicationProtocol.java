@@ -72,29 +72,34 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see krep.evalbench.comm.ICommunicationProtocol#comment(krep
+     *      .evalbench.comm.ICommunicationListener)
+     */
     public void comment(final String comment) {
         connection.comment(comment);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * krep.evalbench.comm.ICommunicationProtocol#addCommunicationListener(krep
-     * .evalbench.comm.ICommunicationListener)
+     * @see krep.evalbench.comm.ICommunicationProtocol#addCommunicationListener(krep
+     *      .evalbench.comm.ICommunicationListener)
      */
     public void addCommunicationListener(final ICommunicationListener listener) {
         communicationListeners.add(listener);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * krep.evalbench.comm.ICommunicationProtocol#removeCommunicationListener
-     * (krep.evalbench.comm.ICommunicationListener)
+     * @see krep.evalbench.comm.ICommunicationProtocol#removeCommunicationListener
+     *      (krep.evalbench.comm.ICommunicationListener)
      */
-    public void removeCommunicationListener(final ICommunicationListener listener) {
+    public void removeCommunicationListener(
+            final ICommunicationListener listener) {
         communicationListeners.remove(listener);
     }
 

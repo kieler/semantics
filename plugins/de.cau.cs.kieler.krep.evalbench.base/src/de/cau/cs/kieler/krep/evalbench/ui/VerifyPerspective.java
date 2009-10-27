@@ -42,30 +42,26 @@ public class VerifyPerspective implements IPerspectiveFactory {
     private static final String ID_MESSAGE = MessageView.VIEW_ID;
 
     /** Identifier string for the output view. */
-    private static final String ID_VERIFY = VerifyView.VIEW_ID; 
+    private static final String ID_VERIFY = VerifyView.VIEW_ID;
 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui
-     * .IPageLayout)
+     * @see org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui .IPageLayout)
      */
     public void createInitialLayout(final IPageLayout layout) {
         // get the editor area.
         String editorArea = layout.getEditorArea();
 
         // bottom: Connection and Target view
-        IFolderLayout bottom = layout.createFolder("bottom",
-                IPageLayout.BOTTOM, 0.7f, editorArea);
+        IFolderLayout bottom = layout.createFolder("bottom", IPageLayout.BOTTOM, 0.7f, editorArea);
         bottom.addView(ID_CONNECTION);
         bottom.addView(ID_TARGET);
         bottom.addView(ID_MESSAGE);
         layout.setEditorAreaVisible(false);
 
         // right 1: Input view
-        IFolderLayout left = layout.createFolder("right1", IPageLayout.RIGHT,
-                0.57f, editorArea);
+        IFolderLayout left = layout.createFolder("right1", IPageLayout.RIGHT, 0.57f, editorArea);
         left.addView(ID_VERIFY);
 
         // add all shown views as shortcuts

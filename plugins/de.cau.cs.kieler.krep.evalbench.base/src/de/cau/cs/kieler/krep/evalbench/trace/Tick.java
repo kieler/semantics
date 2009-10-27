@@ -66,14 +66,14 @@ public class Tick {
     /**
      * Generate tick.
      * 
-     * @param inputs
+     * @param ins
      *            list of input signals with their values
-     * @param outputs
+     * @param outs
      *            list of output signals with their values
      */
-    public Tick(final LinkedList<Signal> inputs, final LinkedList<Signal> outputs) {
-        this.inputs = inputs;
-        this.outputs = outputs;
+    public Tick(final LinkedList<Signal> ins, final LinkedList<Signal> outs) {
+        this.inputs = ins;
+        this.outputs = outs;
     }
 
     /**
@@ -215,11 +215,11 @@ public class Tick {
     /**
      * return the reaction time to compute this tick.
      * 
-     * @param rt
+     * @param reactionTime
      *            reaction time
      */
-    public void setRT(final int rt) {
-        this.rt = rt;
+    public void setRT(final int reactionTime) {
+        this.rt = reactionTime;
     }
 
     /**

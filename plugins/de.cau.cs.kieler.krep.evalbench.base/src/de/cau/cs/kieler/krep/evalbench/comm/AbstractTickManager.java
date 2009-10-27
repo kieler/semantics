@@ -26,15 +26,15 @@ import de.cau.cs.kieler.krep.evalbench.ui.editors.AssemblerEditor;
 /**
  * Abstract superclass for extensions of the tick manager extension point.
  * 
- * @author msp
+ * @author msp, ctr
  */
 public abstract class AbstractTickManager implements ISignalListener {
 
     /** Identifier for the signal listener extension point. */
     public static final String EXTENSION_ID = "de.cau.cs.kieler.krep.evalbench.tickManager";
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
      * @see
      * krep.evalbench.comm.ISignalListener#tickPerformed(java.util.LinkedList,

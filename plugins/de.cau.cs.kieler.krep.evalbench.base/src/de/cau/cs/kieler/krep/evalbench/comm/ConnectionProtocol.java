@@ -27,7 +27,7 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
  * Abstract superclass for connection protocols that use input and output
  * streams.
  * 
- * @author msp
+ * @author msp, ctr
  */
 public abstract class ConnectionProtocol implements IConnectionProtocol {
 
@@ -71,8 +71,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      * @throws IOException
      *             when the read operation throws an exception
      */
-    private static String readInputExit(final InputStreamReader input, final char x)
-            throws IOException {
+    private static String readInputExit(final InputStreamReader input,
+            final char x) throws IOException {
         StringBuffer stringBuffer = new StringBuffer();
         int c;
         while ((c = input.read()) != -1) {
@@ -100,8 +100,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      */
     protected abstract OutputStream getOutputStream();
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#receive(char)
      */
@@ -141,8 +141,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#receive(char)
      */
@@ -190,12 +190,13 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#receive(char)
      */
-    public LinkedList<Integer> receiveByte(final int n) throws CommunicationException {
+    public LinkedList<Integer> receiveByte(final int n)
+            throws CommunicationException {
         InputStreamReader reader = null;
         try {
             InputStream inputStream = getInputStream();
@@ -237,8 +238,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#hark(int)
      */
@@ -261,12 +262,12 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * 
-     * @see krep.evalbench.comm.IConnectionProtocol#hark(int)
+     * Read the next byte.
      */
-    public LinkedList<Integer> harkByte(final int n) throws CommunicationException {
+    private LinkedList<Integer> harkByte(final int n)
+            throws CommunicationException {
         try {
             InputStream inputStream = getInputStream();
             if (inputStream == null) {
@@ -291,8 +292,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#send(java.lang.String)
      */
@@ -321,8 +322,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#send(java.lang.String)
      */
@@ -351,8 +352,8 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#send(java.lang.String)
      */
@@ -362,10 +363,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
             if (outputStream == null) {
                 throw new CommunicationException("No output stream available");
             }
-            // OutputStreamWriter writer = new OutputStreamWriter(outputStream);
             outputStream.write(data);
-            // writer.write(data);
-            // writer.flush();
         } catch (IOException e) {
             throw new CommunicationException(
                     "Error while writing to connection: " + e.getMessage());

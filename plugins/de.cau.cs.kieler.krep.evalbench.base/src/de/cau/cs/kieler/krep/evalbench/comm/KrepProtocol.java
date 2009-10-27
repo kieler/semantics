@@ -15,7 +15,6 @@
 package de.cau.cs.kieler.krep.evalbench.comm;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -54,8 +53,6 @@ public class KrepProtocol extends CommunicationProtocol {
     private static final byte SETVALUE_COMMAND = 'S';
 
     private static final byte GETVALUE_COMMAND = 'G';
-
-    private static final byte DUMPROM_COMMAND = 'D';
 
     private static final String VERIFICATION_STRING = "0123456789:)";
 
@@ -126,8 +123,8 @@ public class KrepProtocol extends CommunicationProtocol {
         super(connectionProtocol);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ICommunicationProtocol#continuousRun()
      */
@@ -135,8 +132,8 @@ public class KrepProtocol extends CommunicationProtocol {
         sendCmd(CONT_COMMAND);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ICommunicationProtocol#getExecutionTrace()
      */
@@ -166,8 +163,8 @@ public class KrepProtocol extends CommunicationProtocol {
         return res;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ICommunicationProtocol#getTargetInfo()
      */
@@ -180,28 +177,20 @@ public class KrepProtocol extends CommunicationProtocol {
             stringBuffer.append(INFO_DESC[i] + "0x"
                     + String.valueOf(msg.get(i)) + "\n");
         }
-        int nKind = msg.get(0); // Integer.parseInt(msg.substring(0, 2), 16);
-        int nCores = msg.get(2); // Integer.parseInt(msg.substring(4, 6), 16);
-        int nIO = msg.get(3); // Integer.parseInt(msg.substring(6, 8), 16);
-        int nReg = msg.get(4); // Integer.parseInt(msg.substring(8, 10), 16);
-        int nROM = 1 << msg.get(5); // Integer.parseInt(msg.substring(10, 12),
-        // 16);
+        int nKind = msg.get(0);
+        int nCores = msg.get(2); 
+        int nIO = msg.get(3);
+        int nReg = msg.get(4); 
+        int nROM = 1 << msg.get(5);
 
-        /*
-         * if (nROM <0){ nROM=0; int b = msg.get(5); if ((b & 0x01) !=0) nROM+=
-         * 1; if ((b & 0x02) !=0) nROM+= 2; if ((b & 0x04) !=0) nROM+= 4; if ((b
-         * & 0x08) !=0) nROM+= 8; if ((b & 0x10) !=0) nROM+= 16; if ((b & 0x20)
-         * !=0) nROM+= 32; if ((b & 0x40) !=0) nROM+= 64; if ((b & 0x80) !=0)
-         * nROM+= 128; }
-         */
 
         krp = new KrepConfig(nCores, nIO, nReg, nROM);
 
         return stringBuffer.toString();
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * krep.evalbench.comm.ICommunicationProtocol#loadProgram(java.lang.String)
@@ -236,8 +225,8 @@ public class KrepProtocol extends CommunicationProtocol {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ICommunicationProtocol#resetStatus()
      */
@@ -247,8 +236,8 @@ public class KrepProtocol extends CommunicationProtocol {
         receiveByte(1);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ICommunicationProtocol#stopContinuous()
      */
@@ -256,8 +245,8 @@ public class KrepProtocol extends CommunicationProtocol {
         sendCmd(HALT_COMMAND);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * krep.evalbench.comm.ICommunicationProtocol#tick(java.util.LinkedList,
@@ -332,8 +321,8 @@ public class KrepProtocol extends CommunicationProtocol {
         return res;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ICommunicationProtocol#verifyCommunication()
      */
@@ -345,24 +334,5 @@ public class KrepProtocol extends CommunicationProtocol {
         } else {
             return "Return string is invalid!";
         }
-    }
-
-    public void dumpRom() {
-        try {
-            sendCmd(DUMPROM_COMMAND);
-            LinkedList<Integer> rom = receiveByte(4 * krp.getIrom());
-            Iterator<Integer> i = rom.iterator();
-            for (int k = 0; k < krp.getIrom(); k++) {
-                String s = k + ": ";
-                for (int j = 0; j < 4; j++) {
-                    s += Integer.toHexString(i.next()) + " ";
-                }
-                MessageView.print(s);
-            }
-        } catch (CommunicationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
     }
 }

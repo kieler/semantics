@@ -47,69 +47,69 @@ public class Signal implements Comparable<Signal> {
      * Creates and initializes a signal. Depending of the input this will be
      * either a valued or an unvalued signal.
      * 
-     * @param name
+     * @param n
      *            signal name
-     * @param status
+     * @param s
      *            initial status of the signal
-     * @param value
+     * @param v
      *            value of the signal, null for pure signal
-     * @param index
+     * @param tIndex
      *            signal index
      */
-    public Signal(final String name, final boolean status, final Integer value,
-            final HashMap<String, Integer> index) {
+    public Signal(final String n, final boolean s, final Integer v,
+            final HashMap<String, Integer> tIndex) {
         IPreferenceStore preferenceStore = Activator.getDefault()
                 .getPreferenceStore();
         if (preferenceStore.getBoolean(VerifyPreferencePage.CASE_SENSITIVE)) {
-            this.name = name;
+            this.name = n;
         } else {
-            this.name = name.toUpperCase();
+            this.name = n.toUpperCase();
         }
 
-        this.valued = value != null;
-        this.value = value;
-        Integer i = index.get(this.name);
+        this.valued = v != null;
+        this.value = v;
+        Integer i = tIndex.get(this.name);
         if (i == null) {
             System.err.println("Unknown signal " + this.name);
             this.index = 0;
         } else {
             this.index = i;
         }
-        this.status = status;
+        this.status = s;
     }
 
     /**
      * generate Signal with explicit index.
      * 
-     * @param name
+     * @param tName
      *            name of the signal
-     * @param status
+     * @param tStatus
      *            initial status
-     * @param value
+     * @param tValue
      *            value if valued, null for pure signal
-     * @param index
+     * @param tIndex
      *            index in the current program
      */
-    public Signal(final String name, final boolean status, final Integer value,
-            final Integer index) {
+    public Signal(final String tName, final boolean tStatus, final Integer tValue,
+            final Integer tIndex) {
         IPreferenceStore preferenceStore = Activator.getDefault()
                 .getPreferenceStore();
         if (preferenceStore.getBoolean(VerifyPreferencePage.CASE_SENSITIVE)) {
-            this.name = name;
+            this.name = tName;
         } else {
-            this.name = name.toUpperCase();
+            this.name = tName.toUpperCase();
         }
 
-        this.valued = value != null;
-        this.value = value;
-        Integer i = index;
+        this.valued = tValue != null;
+        this.value = tValue;
+        Integer i = tIndex;
         if (i == null) {
             System.err.println("Unknown signal " + this.name);
             this.index = 0;
         } else {
             this.index = i;
         }
-        this.status = status;
+        this.status = tStatus;
     }
 
     /**
@@ -129,22 +129,22 @@ public class Signal implements Comparable<Signal> {
     /**
      * generate new signal. Signals are initially absent
      * 
-     * @param name
+     * @param tName
      *            name of the signal
-     * @param value
+     * @param tValue
      *            initial value for a valued signal, null for a pure signal
      */
-    public Signal(final String name, final Integer value) {
+    public Signal(final String tName, final Integer tValue) {
         IPreferenceStore preferenceStore = Activator.getDefault()
                 .getPreferenceStore();
         if (preferenceStore.getBoolean(VerifyPreferencePage.CASE_SENSITIVE)) {
 
-            this.name = name;
+            this.name = tName;
         } else {
-            this.name = name.toUpperCase();
+            this.name = tName.toUpperCase();
         }
-        this.valued = value != null;
-        this.value = value;
+        this.valued = tValue != null;
+        this.value = tValue;
         this.index = 0;
         status = false;
     }
@@ -170,12 +170,12 @@ public class Signal implements Comparable<Signal> {
     /**
      * Set the signal index.
      * 
-     * @param index
+     * @param tIndex
      *            signal index
      * 
      */
-    public void setIndex(final int index) {
-        this.index = index;
+    public void setIndex(final int tIndex) {
+        this.index = tIndex;
     }
 
     /**
@@ -249,6 +249,9 @@ public class Signal implements Comparable<Signal> {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int compareTo(final Signal o) {
         return name.compareTo(o.name);
     }

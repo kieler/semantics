@@ -27,11 +27,19 @@ import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
 import de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
+/**
+ * Wrapper to software simulation of the Kiel Lustre Processor.
+ * 
+ * @author ctr
+ * 
+ */
 public class KlpWrapper implements IKrepWrapper {
 
     private EsiLogger esi;
 
     private static final String NAME = "klp";
+
+    private static final int MASK_BYTE = 0xFF;
 
     static {
         System.loadLibrary("klp");
@@ -39,38 +47,51 @@ public class KlpWrapper implements IKrepWrapper {
 
     private LinkedList<Byte> output = new LinkedList<Byte>();
 
+    /**
+     * Generate new connection to KLP and reset the KLP.
+     */
     public KlpWrapper() {
         super();
-        String msg = "";
+        final String msg = "";
         klp_reset(msg);
         if (msg.length() > 0) {
             MessageView.print(msg);
         }
 
-        IPreferenceStore preferenceStore = Activator.getDefault()
-                .getPreferenceStore();
+        final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
-        String fileName = preferenceStore
-                .getString(ConnectionPreferencePage.JNI_LOG_FILE);
+        final String fileName = preferenceStore.getString(ConnectionPreferencePage.JNI_LOG_FILE);
         esi = new EsiLogger(fileName);
         esi.reset();
         step();
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void terminate() {
         // TODO Auto-generated method stub
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean hasOutput() {
         return !output.isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public byte getOutput() {
         byte b = output.poll();
         return (b);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void step() {
         String msg = "";
         String io = ";";
@@ -84,7 +105,7 @@ public class KlpWrapper implements IKrepWrapper {
             if (msg.length() > 0) {
                 MessageView.print(msg);
             }
-            io += " %OUTPUT: TX(0x" + Integer.toHexString(c & 0xFF) + ")";
+            io += " %OUTPUT: TX(0x" + Integer.toHexString(c & MASK_BYTE) + ")";
             output.offer(c);
         }
         io += "\n";
@@ -93,10 +114,13 @@ public class KlpWrapper implements IKrepWrapper {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void send(final byte b) {
         String msg = "";
         step();
-        esi.write("RX(0x" + Integer.toHexString(b & 0xFF) + ")");
+        esi.write("RX(0x" + Integer.toHexString(b & MASK_BYTE) + ")");
         klp_send(b, msg);
         if (msg.length() > 0) {
             MessageView.print(msg);
@@ -105,14 +129,17 @@ public class KlpWrapper implements IKrepWrapper {
 
     }
 
-    public static native byte klp_step(final String msg);
+    private static native byte klp_step(final String msg);
 
-    public static native byte klp_recv(final String msg);
+    private static native byte klp_recv(final String msg);
 
-    public static native void klp_reset(final String msg);
+    private static native void klp_reset(final String msg);
 
-    public static native void klp_send(final byte c, final String msg);
+    private static native void klp_send(final byte c, final String msg);
 
+    /**
+     * {@inheritDoc}
+     */
     public final void saveEsi(final String esiFile) {
         BufferedWriter out = null;
         try {
@@ -134,10 +161,16 @@ public class KlpWrapper implements IKrepWrapper {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getName() {
         return NAME;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void comment(final String comment) {
         esi.comment(comment);
     }

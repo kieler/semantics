@@ -146,6 +146,4 @@ public interface ICommunicationProtocol {
      */
     void comment(String string);
 
-    void dumpRom();
-
 }

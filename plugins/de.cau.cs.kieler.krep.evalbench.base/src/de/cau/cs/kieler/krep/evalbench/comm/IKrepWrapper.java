@@ -13,20 +13,56 @@
  */
 package de.cau.cs.kieler.krep.evalbench.comm;
 
+/**
+ * Generic interface for the processors.
+ * 
+ * @author ctr
+ * 
+ */
 public interface IKrepWrapper {
+
+    /**
+     * Close the connection.
+     */
     void terminate();
 
-     boolean hasOutput();
+    /**
+     * @return true if new outputs are available
+     */
+    boolean hasOutput();
 
-     byte getOutput();
+    /**
+     * @return the next output
+     */
+    byte getOutput();
 
-     void step();
+    /**
+     * perform one tick.
+     */
+    void step();
 
-     void send(byte b);
+    
+    /**
+     * @param b byte to send to the processor
+     */
+    void send(byte b);
 
-     void saveEsi(String esiFile);
+    
+    /**
+     * Tell the processor to log the communication into a log-File in esi Format.
+     * 
+     * @param esiFile name of the log File
+     */
+    void saveEsi(String esiFile);
 
-     void comment(String comment);
+    /**
+     * @param comment comment to send to the processor (used for logging)
+     */
+    void comment(String comment);
 
-     String getName();
+    
+    /**
+     * @return retrieve the name of the connected processor
+     */
+    String getName();
 }

@@ -117,6 +117,13 @@ public interface IConnectionProtocol {
      */
     String hark(int n) throws CommunicationException;
 
+    /**
+     * Comment on the current communication. This information is used for log
+     * Files.
+     * 
+     * @param comment
+     *            the comment to add to the log File
+     */
     void comment(String comment);
 
 }

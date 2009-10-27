@@ -409,10 +409,11 @@ public class CommonLayer implements IPartListener {
      * @throws CommunicationException
      *             thrown when any communication error occurred *
      * @throws LoadException
-     *          thrown when program can not be loaded onto the processor
+     *             thrown when program can not be loaded onto the processor
      */
-    public void loadProgram(final IAssembler program, final IProgressMonitor monitor)
-            throws CommunicationException, LoadException {
+    public void loadProgram(final IAssembler program,
+            final IProgressMonitor monitor) throws CommunicationException,
+            LoadException {
         try {
             currentProtocol.comment("load  " + program.getName());
             currentProgram = program;
@@ -607,8 +608,8 @@ public class CommonLayer implements IPartListener {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * org.eclipse.ui.IPartListener#partBroughtToTop(org.eclipse.ui.IWorkbenchPart
@@ -640,8 +641,8 @@ public class CommonLayer implements IPartListener {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * org.eclipse.ui.IPartListener#partOpened(org.eclipse.ui.IWorkbenchPart)
@@ -677,8 +678,8 @@ public class CommonLayer implements IPartListener {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * org.eclipse.ui.IPartListener#partClosed(org.eclipse.ui.IWorkbenchPart)
@@ -736,8 +737,8 @@ public class CommonLayer implements IPartListener {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * org.eclipse.ui.IPartListener#partActivated(org.eclipse.ui.IWorkbenchPart)
@@ -746,8 +747,8 @@ public class CommonLayer implements IPartListener {
         // Nothing to do
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * org.eclipse.ui.IPartListener#partDeactivated(org.eclipse.ui.IWorkbenchPart
@@ -757,7 +758,4 @@ public class CommonLayer implements IPartListener {
         // Nothing to do
     }
 
-    public void dumpRom() {
-        currentProtocol.dumpRom();
-    }
 }

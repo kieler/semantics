@@ -21,10 +21,21 @@ import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage;
 
+/**
+ * Connection to software emulation of the processor via java native interfaces.
+ * 
+ * @author ctr
+ * 
+ */
 public class JNIConnection implements IConnectionProtocol {
 
     private IKrepWrapper krep = null;
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see krep.evalbench.comm.ConnectionProtocol#dispose()
+     */
     public void dispose() {
         if (krep != null) {
             krep.terminate();
@@ -33,7 +44,20 @@ public class JNIConnection implements IConnectionProtocol {
 
     }
 
-    public String initialize(final String protocol) throws CommunicationException {
+    /**
+     * Connect to software emulation.
+     * 
+     * @param protocol
+     *            use KEP or KReP protocol
+     * @return String to indicate the status of the connection.
+     * @throws CommunicationException
+     *             thrown for any connection errors, e.g., if the software
+     *             simulation is not found
+     * 
+     * 
+     */
+    public String initialize(final String protocol)
+            throws CommunicationException {
         String name = "unknown";
         if (krep != null) {
             krep.terminate();
@@ -48,7 +72,7 @@ public class JNIConnection implements IConnectionProtocol {
             } else {
                 krep = null;
             }
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             throw new CommunicationException("Error generating " + name + "\n"
                     + t.getMessage() + "\nLibrary path: "
                     + System.getProperty("java.library.path"));
@@ -57,36 +81,25 @@ public class JNIConnection implements IConnectionProtocol {
                 + ((krep != null) ? krep.getName() : "unknown processor");
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see krep.evalbench.comm.ConnectionProtocol#initialize()
+     */
     public String initialize(final String device, final int port)
             throws CommunicationException {
-        /*String name = "unknown";
-        if (krep != null) {
-          krep.terminate();
-        }
-        try {*/
         IPreferenceStore preferenceStore = Activator.getDefault()
                 .getPreferenceStore();
         String currentProtocolType = preferenceStore
                 .getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
         return initialize(currentProtocolType);
-        /*if (currentProtocolType.equals(ICommunicationProtocol.P_KEP)) {
-          name = "kep";
-          krep = new KepWrapper();
-        } else if (currentProtocolType.equals(ICommunicationProtocol.P_KREP)) {
-          name = "klp";
-          krep = new KlpWrapper();
-        } else {
-          krep = null;
-        }
-        } catch (Throwable t) {
-        throw new CommunicationException("Error generating " + name + "\n"
-        + t.getMessage() + "\nLibrary path: "
-        + System.getProperty("java.library.path"));
-        }
-        return "started new "
-       + ((krep != null) ? krep.getName() : "unknown processor");*/
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see krep.evalbench.comm.ConnectionProtocol#hark()
+     */
     public String hark(final int n) throws CommunicationException {
         StringBuffer res = new StringBuffer();
         while (res.length() < n && krep.hasOutput()) {
@@ -95,6 +108,11 @@ public class JNIConnection implements IConnectionProtocol {
         return res.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see krep.evalbench.comm.ConnectionProtocol#receive()
+     */
     public String receive(final char exit) throws CommunicationException {
         StringBuffer res = new StringBuffer();
         char c;
@@ -108,6 +126,11 @@ public class JNIConnection implements IConnectionProtocol {
         return res.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see krep.evalbench.comm.ConnectionProtocol#receive()
+     */
     public String receive(final int n) throws CommunicationException {
         StringBuffer res = new StringBuffer();
         while (res.length() < n) {
@@ -119,25 +142,44 @@ public class JNIConnection implements IConnectionProtocol {
         return res.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see krep.evalbench.comm.ConnectionProtocol#send()
+     */
     public void send(final String data) throws CommunicationException {
         for (byte b : data.getBytes()) {
             krep.send(b);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see krep.evalbench.comm.ConnectionProtocol#send()
+     */
     public void send(final byte data) throws CommunicationException {
-        // for (byte b : data.getBytes()) {
         krep.send(data);
-        // }
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see krep.evalbench.comm.ConnectionProtocol#comment()
+     */
     public void comment(final String comment) {
         krep.comment(comment);
     }
 
-    public LinkedList<Integer> receiveByte(final int n) throws CommunicationException {
+    /**
+     * {@inheritDoc}
+     * 
+     * @see krep.evalbench.comm.ConnectionProtocol#receiveByte()
+     */
+    public LinkedList<Integer> receiveByte(final int n)
+            throws CommunicationException {
         LinkedList<Integer> res = new LinkedList<Integer>();
-        final int maskByte  = 0xFF;
+        final int maskByte = 0xFF;
         while (res.size() < n) {
             krep.step();
             if (krep.hasOutput()) {
@@ -147,6 +189,11 @@ public class JNIConnection implements IConnectionProtocol {
         return res;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see krep.evalbench.comm.ConnectionProtocol#send()
+     */
     public void send(final byte[] data) throws CommunicationException {
         for (byte b : data) {
             krep.send(b);

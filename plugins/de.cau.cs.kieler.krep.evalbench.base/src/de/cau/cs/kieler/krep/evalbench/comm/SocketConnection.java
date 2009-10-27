@@ -31,8 +31,8 @@ public class SocketConnection extends ConnectionProtocol {
     /** The socket used for connection. */
     private Socket socket;
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#initialize(java.lang.String)
      */
@@ -48,8 +48,8 @@ public class SocketConnection extends ConnectionProtocol {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#dispose()
      */
@@ -61,8 +61,8 @@ public class SocketConnection extends ConnectionProtocol {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ConnectionProtocol#getInputStream()
      */
@@ -75,8 +75,8 @@ public class SocketConnection extends ConnectionProtocol {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ConnectionProtocol#getOutputStream()
      */
@@ -89,9 +89,11 @@ public class SocketConnection extends ConnectionProtocol {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void comment(final String comment) {
         // Nothing to do
-
     }
 
 }

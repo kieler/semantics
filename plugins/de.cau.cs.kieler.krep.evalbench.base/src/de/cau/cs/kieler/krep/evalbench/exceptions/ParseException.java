@@ -23,12 +23,12 @@ public class ParseException extends Exception {
     private String cause;
 
     /**
-     * @param cause
+     * @param tCause
      *            detailed cause for the exception
      */
-    public ParseException(final String cause) {
+    public ParseException(final String tCause) {
         super();
-        this.cause = cause;
+        this.cause = tCause;
     }
 
     @Override

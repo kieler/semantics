@@ -57,8 +57,8 @@ public class RxtxSerialConnection extends ConnectionProtocol {
         return portNames.toArray(new String[1]);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#initialize()
      */
@@ -79,8 +79,8 @@ public class RxtxSerialConnection extends ConnectionProtocol {
         return "not supported";
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#dispose()
      */
@@ -88,8 +88,8 @@ public class RxtxSerialConnection extends ConnectionProtocol {
         // serialPort.close();
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ConnectionProtocol#getInputStream()
      */
@@ -102,8 +102,8 @@ public class RxtxSerialConnection extends ConnectionProtocol {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ConnectionProtocol#getOutputStream()
      */
@@ -116,6 +116,11 @@ public class RxtxSerialConnection extends ConnectionProtocol {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see krep.evalbench.comm.ConnectionProtocol#comment(String comment)
+     */
     public void comment(final String comment) {
         // Nothing to do
 

@@ -125,9 +125,9 @@ public final class Activator extends AbstractUIPlugin implements IPageListener {
         return plugin;
     }
 
-    /*
-     * (non-Javadoc)
-     *
+    /**
+     * {@inheritDoc}
+
      * @see
      * org.eclipse.ui.IPageListener#pageActivated(org.eclipse.ui.IWorkbenchPage)
      */
@@ -135,8 +135,8 @@ public final class Activator extends AbstractUIPlugin implements IPageListener {
         page.addPartListener(commonLayer);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
      * @see
      * org.eclipse.ui.IPageListener#pageClosed(org.eclipse.ui.IWorkbenchPage)
@@ -145,8 +145,8 @@ public final class Activator extends AbstractUIPlugin implements IPageListener {
         // Nothing to do
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
      * @see
      * org.eclipse.ui.IPageListener#pageOpened(org.eclipse.ui.IWorkbenchPage)

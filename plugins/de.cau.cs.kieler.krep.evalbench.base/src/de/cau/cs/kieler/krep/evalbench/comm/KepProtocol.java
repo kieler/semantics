@@ -21,11 +21,9 @@ import org.eclipse.swt.widgets.Display;
 
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
-import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
 /**
- * Implementation of the communication protocol interface that uses the KEP
- * protocol.
+ * Implementation of the communication protocol interface that uses the KEP protocol.
  * 
  * @author msp
  */
@@ -88,44 +86,38 @@ public class KepProtocol extends CommunicationProtocol {
     /** Character received at the end of a normal reply. */
     private static final char END_REPLY = 'X';
 
+    /** base for number exchange in protocol. */
+    private static final int NUMBASE = 16;
+
     /** Description of received target information data. */
-    private static final String[] INFO_DESC = {
-            "KEP Type:                         ",
-            "PRE support:                      ",
-            "Data path width:                  ",
-            "Signal number:                    ",
-            "Thread number:                    ",
-            "Watcher number:                   ",
-            "Watcher counter width:            ",
-            "LWatcher number:                  ",
-            "LWatcher counter width:           ",
-            "TWatcher counter width:           ",
-            "Delay counter width:              ",
-            "Prio value width:                 ",
-            "Register number:                  ",
-            "Tick length:                      ",
-            "Instruction memory address width: " };
+    private static final String[] INFO_DESC = { "KEP Type:                         ",
+            "PRE support:                      ", "Data path width:                  ",
+            "Signal number:                    ", "Thread number:                    ",
+            "Watcher number:                   ", "Watcher counter width:            ",
+            "LWatcher number:                  ", "LWatcher counter width:           ",
+            "TWatcher counter width:           ", "Delay counter width:              ",
+            "Prio value width:                 ", "Register number:                  ",
+            "Tick length:                      ", "Instruction memory address width: " };
 
     /** Length of information items for target information. */
-    private static final int[] INFO_LENGTH = { 0, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2,
-            2, 3, 4, 2 };
+    private static final int[] INFO_LENGTH = { 0, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4, 2 };
 
-    private int MAX_TICKLEN = 0;
+    private int maxTicklen = 0;
 
     /**
      * Constructs a new instance of the KEP protocol.
      * 
      * @param connectionProtocol
-     *            underlying connection protocol to be used; this protocol
-     *            instance is expected to be already initialized
+     *            underlying connection protocol to be used; this protocol instance is expected to
+     *            be already initialized
      */
     public KepProtocol(final IConnectionProtocol connectionProtocol) {
         super(connectionProtocol);
     }
 
     /**
-     * Parses an integer value from a received string. The integer is expected
-     * to be encoded as hex number with the least significant digit first.
+     * Parses an integer value from a received string. The integer is expected to be encoded as hex
+     * number with the least significant digit first.
      * 
      * @param s
      *            input string
@@ -144,25 +136,22 @@ public class KepProtocol extends CommunicationProtocol {
         stringBuffer.setLength(n);
         for (int i = 0; i < n; i++) {
             if (offset + i >= s.length()) {
-                throw new CommunicationException(
-                        "Wrong number of digits in received string");
+                throw new CommunicationException("Wrong number of digits in received string");
             }
             stringBuffer.setCharAt(n - i - 1, s.charAt(offset + i));
         }
         // parse integer with radix 16
         try {
-            return Integer.parseInt(stringBuffer.toString(), 16);
+            return Integer.parseInt(stringBuffer.toString(), NUMBASE);
         } catch (NumberFormatException e) {
-            throw new CommunicationException(
-                    "Invalid number format in received string");
+            throw new CommunicationException("Invalid number format in received string");
         }
     }
 
     /**
-     * Transforms a string with hex digits into a sequence of characters with
-     * corresponding binary information. The character sequence will have half
-     * the length of the input string. Each pair of hex digits is expected to be
-     * reversed in the input string.
+     * Transforms a string with hex digits into a sequence of characters with corresponding binary
+     * information. The character sequence will have half the length of the input string. Each pair
+     * of hex digits is expected to be reversed in the input string.
      * 
      * @param s
      *            string to be processed
@@ -176,25 +165,22 @@ public class KepProtocol extends CommunicationProtocol {
         for (int i = 0; i < n; i += 2) {
             try {
                 if (i < n - 1) {
-                    x[i / 2] = (char) Integer.parseInt(s
-                            .substring(i + 1, i + 2)
-                            + s.substring(i, i + 1), 16);
+                    x[i / 2] = (char) Integer.parseInt(s.substring(i + 1, i + 2)
+                            + s.substring(i, i + 1), NUMBASE);
                 } else {
-                    x[i / 2] = (char) Integer.parseInt(s.substring(i), 16);
+                    x[i / 2] = (char) Integer.parseInt(s.substring(i), NUMBASE);
                 }
             } catch (NumberFormatException e) {
-                throw new CommunicationException(
-                        "Invalid number format in received string");
+                throw new CommunicationException("Invalid number format in received string");
             }
         }
         return x;
     }
 
     /**
-     * Constructs a string holding a hex representation of the given number with
-     * leading zeros, so a string length of n is reached as long as the input
-     * number is less than 2^n. In any other case a hex string with needed
-     * length is returned.
+     * Constructs a string holding a hex representation of the given number with leading zeros, so a
+     * string length of n is reached as long as the input number is less than 2^n. In any other case
+     * a hex string with needed length is returned.
      * 
      * @param x
      *            number to be processed
@@ -218,10 +204,9 @@ public class KepProtocol extends CommunicationProtocol {
     }
 
     /**
-     * Constructs a string holding a reversed hex representation of the given
-     * number with leading zeros, so a string length of n is reached as long as
-     * the input number is less than 2^n. In any other case a reversed hex
-     * string with needed length is returned.
+     * Constructs a string holding a reversed hex representation of the given number with leading
+     * zeros, so a string length of n is reached as long as the input number is less than 2^n. In
+     * any other case a reversed hex string with needed length is returned.
      * 
      * @param x
      *            number to be processed
@@ -250,15 +235,15 @@ public class KepProtocol extends CommunicationProtocol {
     }
 
     /**
-     * Constructs a string holding a hex representation of the given character
-     * sequence. The string will have twice the length of the input sequence.
+     * Constructs a string holding a hex representation of the given character sequence. The string
+     * will have twice the length of the input sequence.
      * 
      * @param x
      *            sequence of numbers to be processed
      * @param n
      *            total number of bits to be stored
-     * @return string where each character is a reversed hex representation of
-     *         the two corresponding characters of the input sequence
+     * @return string where each character is a reversed hex representation of the two corresponding
+     *         characters of the input sequence
      */
     private static String toHexStringSeq(final char[] x, final int n) {
         StringBuffer stringBuffer = new StringBuffer();
@@ -286,12 +271,6 @@ public class KepProtocol extends CommunicationProtocol {
         });
     }
 
-    /*
-     * private String receive(int n) throws CommunicationException { final
-     * String res = connection.receive(n); Display.getDefault().asyncExec(new
-     * Runnable(){ public void run(){ notifyReceive(res); } }); return res; }
-     */
-
     private String receive(final char x) throws CommunicationException {
         final String res = connection.receive(x);
         Display.getDefault().asyncExec(new Runnable() {
@@ -302,8 +281,8 @@ public class KepProtocol extends CommunicationProtocol {
         return res;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ICommunicationProtocol#continuousRun()
      */
@@ -311,8 +290,8 @@ public class KepProtocol extends CommunicationProtocol {
         send(RUN_COMMAND);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ICommunicationProtocol#getExecutionTrace()
      */
@@ -328,8 +307,8 @@ public class KepProtocol extends CommunicationProtocol {
         return trace;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ICommunicationProtocol#getTargetInfo()
      */
@@ -363,11 +342,10 @@ public class KepProtocol extends CommunicationProtocol {
         return parseIntRev(reply, 0, 4);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * krep.evalbench.comm.ICommunicationProtocol#loadProgram(java.lang.String)
+     * @see krep.evalbench.comm.ICommunicationProtocol#loadProgram(java.lang.String)
      */
     public boolean loadProgram(final IAssembler program, final IProgressMonitor monitor)
             throws CommunicationException {
@@ -409,8 +387,8 @@ public class KepProtocol extends CommunicationProtocol {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ICommunicationProtocol#resetStatus()
      */
@@ -419,8 +397,8 @@ public class KepProtocol extends CommunicationProtocol {
         receive(END_REPLY);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ICommunicationProtocol#stopContinuous()
      */
@@ -429,12 +407,10 @@ public class KepProtocol extends CommunicationProtocol {
         receive(END_REPLY);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * krep.evalbench.comm.ICommunicationProtocol#tick(java.util.LinkedList,
-     * java.util.LinkedList)
+     * @see krep.evalbench.comm.ICommunicationProtocol#tick()
      */
     public int tick(final int maxSignals, final LinkedList<Signal> inputs,
             final LinkedList<Signal> outputs) throws CommunicationException {
@@ -473,8 +449,7 @@ public class KepProtocol extends CommunicationProtocol {
             send(END_COMMAND);
             // send data of valued signal; data is expected to be of type int
             send(SEND_VALUED_COMMAND);
-            String signalValue = toHexStringRev(((Integer) s.getValue())
-                    .intValue(), 8);
+            String signalValue = toHexStringRev(((Integer) s.getValue()).intValue(), 8);
             send(signalValue);
             send(END_COMMAND);
         }
@@ -510,21 +485,20 @@ public class KepProtocol extends CommunicationProtocol {
             // receive data of valued signal
             send(GET_VALUED_COMMAND);
             reply = receive(END_REPLY);
-            s.setValue(Integer.valueOf((parseIntRev(reply, 0,
-                    reply.length() - 1))));
+            s.setValue(Integer.valueOf((parseIntRev(reply, 0, reply.length() - 1))));
         }
 
         int len = getTickLength();
 
-        if (MAX_TICKLEN > 0 && len > MAX_TICKLEN) {
+        if (maxTicklen > 0 && len > maxTicklen) {
             outputs.getLast().setPresent(true);
         }
 
         return len;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.comm.ICommunicationProtocol#verifyCommunication()
      */
@@ -538,13 +512,12 @@ public class KepProtocol extends CommunicationProtocol {
         }
     }
 
+    /**
+     * @return true if a tick warn occurred
+     */
     public final boolean getTickWarn() {
+        // TODO: implement
         return true;
-    }
-
-    public void dumpRom() {
-        MessageView.print("dump ROM not available for KEP");
-
     }
 
 }

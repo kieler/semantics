@@ -27,6 +27,12 @@ import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
 import de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
+/**
+ * JNI wrapper for the Kiel Esterel Processor.
+ * 
+ * @author ctr
+ * 
+ */
 public class KepWrapper implements IKrepWrapper {
 
     private final EsiLogger esi;
@@ -39,6 +45,9 @@ public class KepWrapper implements IKrepWrapper {
 
     private final LinkedList<Byte> output = new LinkedList<Byte>();
 
+    /**
+     * Connect to KEP simulation and reset the KEP.
+     */
     public KepWrapper() {
         super();
         final String msg = "";
@@ -47,28 +56,38 @@ public class KepWrapper implements IKrepWrapper {
             MessageView.print(msg);
         }
 
-        final IPreferenceStore preferenceStore = Activator.getDefault()
-                .getPreferenceStore();
+        final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
-        final String fileName = preferenceStore
-                .getString(ConnectionPreferencePage.JNI_LOG_FILE);
+        final String fileName = preferenceStore.getString(ConnectionPreferencePage.JNI_LOG_FILE);
         esi = new EsiLogger(fileName);
         esi.reset();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void terminate() {
         // nothing to do
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean hasOutput() {
         return !output.isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public byte getOutput() {
         final byte b = output.poll();
         return (b);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void step() {
         String msg = "";
         String io = ";";
@@ -89,6 +108,9 @@ public class KepWrapper implements IKrepWrapper {
         esi.write(io);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void send(final byte b) {
         final String msg = "";
         step();
@@ -109,6 +131,9 @@ public class KepWrapper implements IKrepWrapper {
 
     public static native void kep_send(final byte c, final String msg);
 
+    /**
+     * {@inheritDoc}
+     */    
     public void saveEsi(final String esiFile) {
         BufferedWriter out = null;
         try {
@@ -130,10 +155,16 @@ public class KepWrapper implements IKrepWrapper {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void comment(final String comment) {
         esi.comment(comment);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getName() {
         return NAME;
     }
