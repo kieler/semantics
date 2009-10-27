@@ -5,8 +5,6 @@ package de.cau.cs.kieler.synccharts.dsl.scoping;
 
 import java.util.ArrayList;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.IScopedElement;
@@ -66,28 +64,162 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 		return new SimpleScope(scopeElems);
 
 	}
+	// public static EObject parent;
+	//
+	//	
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see
+	// *
+	// org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider#getScope
+	// * (org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference)
+	// */
+	// @Override
+	// public IScope getScope(EObject context, EReference reference) {
+	// if (parent != null)
+	// return new ExternalScope(parent);
+	// return super.getScope(context, reference);
+	// }
+	//
+	// class ExternalScope implements IScope {
+	//
+	// EObject parent;
+	// List<IScopedElement> scopedElements;
+	//
+	// public ExternalScope(EObject parent) {
+	// this.parent = parent;
+	// this.scopedElements = new ArrayList<IScopedElement>();
+	// // State scopedState = parentState;
+	// // while(scopedState != null){
+	// if (this.parent != null && this.parent instanceof Region) {
+	// List<Signal> signals = ((Region) parent).getSignals();
+	// for (Signal signal : signals) {
+	// scopedElements.add(new ExternalScopedElement(signal, signal
+	// .getName()));
+	// }
+	// List<Variable> variables = ((Region) parent).getVariables();
+	// for (Variable variable : variables) {
+	// scopedElements.add(new ExternalScopedElement(variable,
+	// variable.getName()));
+	// }
+	// } else if (this.parent != null && this.parent instanceof State) {
+	// List<Signal> signals = ((State) parent).getSignals();
+	// for (Signal signal : signals) {
+	// scopedElements.add(new ExternalScopedElement(signal, signal
+	// .getName()));
+	// }
+	// }
+	// // if(scopedState.getParentRegion() != null)
+	// // scopedState = scopedState.getParentRegion().getParentState();
+	// // }
+	// }
+	//
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see org.eclipse.xtext.scoping.IScope#getAllContents()
+	// */
+	// public Iterable<IScopedElement> getAllContents() {
+	// List<IScopedElement> elements = new ArrayList<IScopedElement>();
+	// elements.addAll(scopedElements);
+	// IScope outerScope = this.getOuterScope();
+	// while (!outerScope.equals(IScope.NULLSCOPE)) {
+	// elements
+	// .addAll((Collection<? extends IScopedElement>) outerScope
+	// .getContents());
+	// outerScope = outerScope.getOuterScope();
+	// }
+	// return elements;
+	// }
+	//
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see org.eclipse.xtext.scoping.IScope#getContents()
+	// */
+	// public Iterable<IScopedElement> getContents() {
+	// return scopedElements;
+	// }
+	//
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see org.eclipse.xtext.scoping.IScope#getOuterScope()
+	// */
+	// public IScope getOuterScope() {
+	// if (parent instanceof Region) {
+	// if (((Region) parent).getParentState() != null)
+	// return new ExternalScope(((Region) parent).getParentState());
+	// } else if (parent instanceof State) {
+	// if (((State) parent).getParentRegion() != null)
+	// return new ExternalScope(((State) parent).getParentRegion());
+	// }
+	// return IScope.NULLSCOPE;
+	// }
+	//
+	// class ExternalScopedElement implements IScopedElement {
+	//
+	// EObject object;
+	// String name;
+	//
+	// public ExternalScopedElement(EObject o, String n) {
+	// object = o;
+	// name = n;
+	// }
+	//
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see
+	// * org.eclipse.xtext.scoping.IScopedElement#additionalInformation()
+	// */
+	// public Object additionalInformation() {
+	// return null;
+	// }
+	//
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see org.eclipse.xtext.scoping.IScopedElement#element()
+	// */
+	// public EObject element() {
+	// return object;
+	// }
+	//
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see org.eclipse.xtext.scoping.IScopedElement#name()
+	// */
+	// public String name() {
+	// return name;
+	// }
+	//
+	// }
+	// }
 	// IScope scope_SignalReference_signal(SignalReference context,
 	// EReference reference) {
-	//
+	//	
 	// ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
 	// Action a = context.getParentAction();
-	//
+	//	
 	// if (a instanceof Transition) {
 	// Transition t = (Transition) a;
 	// Region r = t.getSourceState().getParentRegion();
-	//
+	//	
 	// for (Signal sig : r.getSignals()) {
 	// IScopedElement elem = ScopedElement.create(sig.getName(), sig);
 	// scopeElems.add(elem);
 	// }
 	// }
-	//
+	//	
 	// return new SimpleScope(scopeElems);
-	//
+	//	
 	// }
 	// IScope scope_Transition_trigger(Transition context, EReference reference)
 	// {
-	//
+
 	// ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
 	// State s = context.getSourceState();
 	// Region r = s.getParentRegion();

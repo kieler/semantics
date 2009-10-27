@@ -1043,6 +1043,7 @@
       <alternatives xsi:type="xtext:Alternatives" cardinality="+">
         <groups xsi:type="xtext:RuleCall" rule="/1/@rules.8"/>
         <groups xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+        <groups xsi:type="xtext:RuleCall" rule="/1/@rules.14"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="StateType">

@@ -1,8 +1,7 @@
 package de.cau.cs.kieler.synccharts.dsl;
 
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.xtext.ISetup;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.ISetup;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -12,30 +11,31 @@ import com.google.inject.Injector;
  */
 public class KitsStandaloneSetup implements ISetup {
 
-	public static void doSetup() {
-		new KitsStandaloneSetup().createInjectorAndDoEMFRegistration();
-	}
+    public static void doSetup() {
+        new KitsStandaloneSetup().createInjectorAndDoEMFRegistration();
+    }
 
-	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.synccharts.ActionLabelStandaloneSetup.doSetup();
+    public Injector createInjectorAndDoEMFRegistration() {
+        de.cau.cs.kieler.synccharts.ActionLabelStandaloneSetup.doSetup();
 
-		Injector injector = createInjector();
-		register(injector);
-		return injector;
-	}
-	
-	public Injector createInjector() {
-		return Guice.createInjector(new de.cau.cs.kieler.synccharts.dsl.KitsRuntimeModule());
-	}
-	
-	public void register(Injector injector) {
+        Injector injector = createInjector();
+        register(injector);
+        return injector;
+    }
 
-		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("kits", resourceFactory);
-		
-	//TODO registration of EValidators should be added here, too
+    public Injector createInjector() {
+        return Guice
+                .createInjector(new de.cau.cs.kieler.synccharts.dsl.KitsRuntimeModule());
+    }
 
+    public void register(Injector injector) {
 
+        org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector
+                .getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
+        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
+                "kits", resourceFactory);
 
-	}
+        // TODO registration of EValidators should be added here, too
+
+    }
 }

@@ -2861,52 +2861,30 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		//  ":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=ValueType
 		//  "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)); 
 		//    
-		// 	//a signal is EITHER local OR (input or output or both)
-		//	 //(	(isLocal?='local')
-		//	 //| 
-		//		 	 
+		//			 
 		//		
 		//		 	
 		//		
-		//		 	                                   
-		//		 		
-		//	//)
-		//	  
-		//	
-		//	    //the value of a signal 
-		//	 // after the initial value, either the type or the combine type has to come
+		//		 	
+		//	 
+		//	   
+		//	// after the initial value, either the type or the combine type has to come
 		public ParserRule getRule() { return rule; }
 
 		//(isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=ID (
 		//":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=ValueType
 		//"with" (combineOperator=CombineOperator|hostCombineOperator=STRING)) 
-		// 	//a signal is EITHER local OR (input or output or both)
-		//	 //(	(isLocal?='local')
-		//	 //| 
-		//		 	 
+		//			 
 		//		
 		//		 	
 		//		
-		//		 	                                   
-		//		 		
-		//	//)
-		//	  
-		//	
-		//	    //the value of a signal 
-		//	 // after the initial value, either the type or the combine type has to come
+		//		 	
+		//	 
+		//	   
+		//	// after the initial value, either the type or the combine type has to come
 		public Group getGroup() { return cGroup; }
 
-		//isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output" 
-		// 	//a signal is EITHER local OR (input or output or both)
-		//	 //(	(isLocal?='local')
-		//	 //| 
-		//		 	 
-		//		
-		//		 	
-		//		
-		//		 	                                   
-		//		 		
-		//	//)
+		//isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output"
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//isInput?="input"
@@ -2936,8 +2914,7 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		//"output"
 		public Keyword getIsOutputOutputKeyword_0_2_1_0() { return cIsOutputOutputKeyword_0_2_1_0; }
 
-		//name=ID 		
-		//	//)
+		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
 		//ID
@@ -2956,8 +2933,8 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		public RuleCall getInitialValueSignalValueParserRuleCall_2_1_0() { return cInitialValueSignalValueParserRuleCall_2_1_0; }
 
 		//": " type=ValueType|": combine" type=ValueType "with" (combineOperator=
-		//CombineOperator|hostCombineOperator=STRING)   //the value of a signal 
-		//	 // after the initial value, either the type or the combine type has to come
+		//CombineOperator|hostCombineOperator=STRING)  
+		//	// after the initial value, either the type or the combine type has to come
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//": " type=ValueType
@@ -3009,15 +2986,13 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cINTTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cBooleanTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//SignalValue returns ecore::EString:
-		//  (INT|ID)+; 
-		//      
-		//	//(INT)?ID
+		//  (INT|ID|Boolean)+;
 		public ParserRule getRule() { return rule; }
 
-		//(INT|ID)+ 
-		//	//(INT)?ID
+		//(INT|ID|Boolean)+
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//INT
@@ -3025,6 +3000,9 @@ public class KitsGrammarAccess implements IGrammarAccess {
 
 		//ID
 		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
+
+		//Boolean
+		public RuleCall getBooleanTerminalRuleCall_2() { return cBooleanTerminalRuleCall_2; }
 	}
 	
 	
@@ -3205,34 +3183,10 @@ public class KitsGrammarAccess implements IGrammarAccess {
 		private final Keyword cNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0 = (Keyword)cNORMALTERMINATIONEnumLiteralDeclaration_2.eContents().get(0);
 		
 		//enum TransitionType returns sync::TransitionType:
-		//  WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->"; 	
-		//                  
-		/// *******************************************************************************
-		// * Copyright (c) 2008 itemis AG and others.
-		// * All rights reserved. This program and the accompanying materials
-		// * are made available under the terms of the Eclipse Public License v1.0
-		// * which accompanies this distribution, and is available at
-		// * http://www.eclipse.org/legal/epl-v10.html
-		// ******************************************************************************* /
-		//// copied from org.eclipse.xtext.common.Terminals 
-		//// because we cannot mix more than one grammar into our grammar, cf.http://www.eclipse.org/forums/index.php?t=msg&goto=373405&S=7098a10326975347f40e8b7bbbff1c17
-		//// what about the "hidden(WS, ML_COMMENT, SL_COMMENT)" in the grammar declaration of Terminals??										
-		////import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+		//  WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->";
 		public EnumRule getRule() { return rule; }
 
-		//WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->" 	
-		//                  
-		/// *******************************************************************************
-		// * Copyright (c) 2008 itemis AG and others.
-		// * All rights reserved. This program and the accompanying materials
-		// * are made available under the terms of the Eclipse Public License v1.0
-		// * which accompanies this distribution, and is available at
-		// * http://www.eclipse.org/legal/epl-v10.html
-		// ******************************************************************************* /
-		//// copied from org.eclipse.xtext.common.Terminals 
-		//// because we cannot mix more than one grammar into our grammar, cf.http://www.eclipse.org/forums/index.php?t=msg&goto=373405&S=7098a10326975347f40e8b7bbbff1c17
-		//// what about the "hidden(WS, ML_COMMENT, SL_COMMENT)" in the grammar declaration of Terminals??										
-		////import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+		//WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//WEAKABORT="-->"
@@ -3572,20 +3526,14 @@ public class KitsGrammarAccess implements IGrammarAccess {
 	//  ":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=ValueType
 	//  "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)); 
 	//    
-	// 	//a signal is EITHER local OR (input or output or both)
-	//	 //(	(isLocal?='local')
-	//	 //| 
-	//		 	 
+	//			 
 	//		
 	//		 	
 	//		
-	//		 	                                   
-	//		 		
-	//	//)
-	//	  
-	//	
-	//	    //the value of a signal 
-	//	 // after the initial value, either the type or the combine type has to come
+	//		 	
+	//	 
+	//	   
+	//	// after the initial value, either the type or the combine type has to come
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
 	}
@@ -3595,9 +3543,7 @@ public class KitsGrammarAccess implements IGrammarAccess {
 	}
 
 	//SignalValue returns ecore::EString:
-	//  (INT|ID)+; 
-	//      
-	//	//(INT)?ID
+	//  (INT|ID|Boolean)+;
 	public SignalValueElements getSignalValueAccess() {
 		return (pSignalValue != null) ? pSignalValue : (pSignalValue = new SignalValueElements());
 	}
@@ -3638,19 +3584,7 @@ public class KitsGrammarAccess implements IGrammarAccess {
 	}
 
 	//enum TransitionType returns sync::TransitionType:
-	//  WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->"; 	
-	//                  
-	/// *******************************************************************************
-	// * Copyright (c) 2008 itemis AG and others.
-	// * All rights reserved. This program and the accompanying materials
-	// * are made available under the terms of the Eclipse Public License v1.0
-	// * which accompanies this distribution, and is available at
-	// * http://www.eclipse.org/legal/epl-v10.html
-	// ******************************************************************************* /
-	//// copied from org.eclipse.xtext.common.Terminals 
-	//// because we cannot mix more than one grammar into our grammar, cf.http://www.eclipse.org/forums/index.php?t=msg&goto=373405&S=7098a10326975347f40e8b7bbbff1c17
-	//// what about the "hidden(WS, ML_COMMENT, SL_COMMENT)" in the grammar declaration of Terminals??										
-	////import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+	//  WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->";
 	public TransitionTypeElements getTransitionTypeAccess() {
 		return (unknownRuleTransitionType != null) ? unknownRuleTransitionType : (unknownRuleTransitionType = new TransitionTypeElements());
 	}

@@ -3077,6 +3077,14 @@ ruleSignalValue returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleTok
     { 
     createLeafNode(grammarAccess.getSignalValueAccess().getIDTerminalRuleCall_1(), null); 
     }
+
+    |    this_Boolean_2=RULE_BOOLEAN    {
+		$current.merge(this_Boolean_2);
+    }
+
+    { 
+    createLeafNode(grammarAccess.getSignalValueAccess().getBooleanTerminalRuleCall_2(), null); 
+    }
 )+
     ;
 

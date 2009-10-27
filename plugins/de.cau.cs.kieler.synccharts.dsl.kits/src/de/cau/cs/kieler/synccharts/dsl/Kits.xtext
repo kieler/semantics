@@ -168,19 +168,13 @@ Variable returns sync::Variable:
 	)  
 ;
 Signal returns sync::Signal:
- 	//a signal is EITHER local OR (input or output or both)
-	//(	(isLocal?='local')
-	//| 
 		(	(isInput?='input')
 		|
 		 	(isOutput?='output')
 		|
-		 	((isInput?='input')(isOutput?='output'))                                   
-		 )		
-	//)
+		 	((isInput?='input')(isOutput?='output')))
 	name=ID 
-	
-	(':=' initialValue=SignalValue)? //the value of a signal 
+	(':=' initialValue=SignalValue)? 
 	// after the initial value, either the type or the combine type has to come
 	( 
 		(': ' type=ValueType)
@@ -188,24 +182,11 @@ Signal returns sync::Signal:
 	) 
 ;
 SignalValue returns ecore::EString :
-	//(INT)?ID
-	(INT | ID)+
+	(INT | ID | Boolean)+
 ;
-	
-	
-	
+		
 enum StateType	returns sync::StateType	: NORMAL | CONDITIONAL='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
 enum CombineOperator returns sync::CombineOperator: NONE | ADD='+' | MULT='*' | AND='AND'| OR='OR' |HOST='hostCombineOperator';
 enum ValueType returns sync::ValueType: PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='hostType';	
 enum TransitionType returns sync::TransitionType: WEAKABORT='-->' |  STRONGABORT='o->' | NORMALTERMINATION='>->'; 
-/*******************************************************************************
- * Copyright (c) 2008 itemis AG and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-// copied from org.eclipse.xtext.common.Terminals 
-// because we cannot mix more than one grammar into our grammar, cf.http://www.eclipse.org/forums/index.php?t=msg&goto=373405&S=7098a10326975347f40e8b7bbbff1c17
-// what about the "hidden(WS, ML_COMMENT, SL_COMMENT)" in the grammar declaration of Terminals??										
-//import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+

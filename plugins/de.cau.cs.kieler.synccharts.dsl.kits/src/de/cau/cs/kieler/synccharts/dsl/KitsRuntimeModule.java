@@ -10,8 +10,9 @@ import org.eclipse.xtext.scoping.IScopeProvider;
 
 import de.cau.cs.kieler.synccharts.dsl.kits.resource.KitsFragmentProvider;
 import de.cau.cs.kieler.synccharts.dsl.kits.serialization.KitsTransientValueService;
-import de.cau.cs.kieler.synccharts.dsl.scoping.MyDefaultScopeProvider; 
+import de.cau.cs.kieler.synccharts.dsl.scoping.MyDefaultScopeProvider;
 import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
+import de.cau.cs.kieler.synccharts.formatting.TransitionLabelTransientValueService;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -41,9 +42,15 @@ public class KitsRuntimeModule extends
 	 * org.eclipse.xtext.service.DefaultRuntimeModule#bindITransientValueService
 	 * ()
 	 */
+	// @Override
+	// public Class<? extends ITransientValueService>
+	// bindITransientValueService() {
+	// return KitsTransientValueService.class;
+	// }
+
 	@Override
 	public Class<? extends ITransientValueService> bindITransientValueService() {
-		return KitsTransientValueService.class;
+		return TransitionLabelTransientValueService.class;
 	}
 
 	/*

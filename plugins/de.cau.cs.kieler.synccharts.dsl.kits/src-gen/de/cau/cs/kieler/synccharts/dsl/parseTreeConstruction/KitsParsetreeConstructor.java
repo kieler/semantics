@@ -10763,40 +10763,28 @@ protected class Variable_TypeAssignment_2_1_3 extends AssignmentToken  {
  *   ":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=ValueType
  *   "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)); 
  *     
- *  	//a signal is EITHER local OR (input or output or both)
- * 	 //(	(isLocal?='local')
- * 	 //| 
- * 		 	 
+ * 			 
  * 		
  * 		 	
  * 		
- * 		 	                                   
- * 		 		
- * 	//)
- * 	  
- * 	
- * 	    //the value of a signal 
- * 	 // after the initial value, either the type or the combine type has to come
+ * 		 	
+ * 	 
+ * 	   
+ * 	// after the initial value, either the type or the combine type has to come
  *
  **/
 
 // (isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=ID (
 // ":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=ValueType
 // "with" (combineOperator=CombineOperator|hostCombineOperator=STRING)) 
-//  	//a signal is EITHER local OR (input or output or both)
-// 	 //(	(isLocal?='local')
-// 	 //| 
-// 		 	 
+// 			 
 // 		
 // 		 	
 // 		
-// 		 	                                   
-// 		 		
-// 	//)
-// 	  
-// 	
-// 	    //the value of a signal 
-// 	 // after the initial value, either the type or the combine type has to come
+// 		 	
+// 	 
+// 	   
+// 	// after the initial value, either the type or the combine type has to come
 protected class Signal_Group extends GroupToken {
 	
 	public Signal_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -10820,17 +10808,7 @@ protected class Signal_Group extends GroupToken {
 	}
 }
 
-// isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output" 
-//  	//a signal is EITHER local OR (input or output or both)
-// 	 //(	(isLocal?='local')
-// 	 //| 
-// 		 	 
-// 		
-// 		 	
-// 		
-// 		 	                                   
-// 		 		
-// 	//)
+// isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output"
 protected class Signal_Alternatives_0 extends AlternativesToken {
 
 	public Signal_Alternatives_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -10995,8 +10973,7 @@ protected class Signal_IsOutputAssignment_0_2_1 extends AssignmentToken  {
 
 
 
-// name=ID 		
-// 	//)
+// name=ID
 protected class Signal_NameAssignment_1 extends AssignmentToken  {
 	
 	public Signal_NameAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -11100,8 +11077,8 @@ protected class Signal_InitialValueAssignment_2_1 extends AssignmentToken  {
 
 
 // ": " type=ValueType|": combine" type=ValueType "with" (combineOperator=
-// CombineOperator|hostCombineOperator=STRING)   //the value of a signal 
-// 	 // after the initial value, either the type or the combine type has to come
+// CombineOperator|hostCombineOperator=STRING)  
+// 	// after the initial value, either the type or the combine type has to come
 protected class Signal_Alternatives_3 extends AlternativesToken {
 
 	public Signal_Alternatives_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
