@@ -72,10 +72,6 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
 
     EObject element;
 
-    List<Diagnostic> errors;
-    List<Diagnostic> warnings;
-    List<String> unresolvedReferences;
-
     /**
      * @param theElement
      *            the target element
@@ -182,12 +178,12 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
      *             only if there is an internal parser error
      */
     public void parse() throws KielerModelException, IOException {
-        errors = null;
-        warnings = null;
-        unresolvedReferences = new ArrayList<String>();
         this.action = (Action) element;
-
-        action.setTriggersAndEffects(newString);
+        if (newString != null) {
+            action.setTriggersAndEffects(newString);
+        } else {
+            action.setTriggersAndEffects("");
+        }
 
         // set some default values
         action.setTrigger(null);
@@ -253,12 +249,11 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
                     + "Could not parse action string. Parser did return null.", this.action);
         }
 
-        this.errors = resource.getErrors();
-        this.warnings = resource.getWarnings();
+        List<Diagnostic> errors = resource.getErrors();
 
-        if (this.errors != null && this.errors.size() > 0) {
+        if (errors != null && errors.size() > 0) {
             String parseErrorString = "";
-            for (Diagnostic syntaxError : this.errors) {
+            for (Diagnostic syntaxError : errors) {
                 parseErrorString += "\n" + syntaxError.getMessage();
             }
             throw new KielerModelException("\"" + newString + "\""
@@ -273,10 +268,13 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         }
         Action newAction = (Action) parsedObject;
 
+        /*
         if (!allReferencesResolved(newAction)) {
             throw new KielerModelException("\"" + newString + "\""
-                    + "Not all referenced Signals and/or Variables could be resolved!", this.action);
-        }
+                    + "Not all referenced Signals and/or Variables could be resolved!",
+                    this.action);
+                    
+        }*/
 
         copyActionContents(newAction, action);
     }
@@ -301,38 +299,6 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         target.setTrigger(source.getTrigger());
         target.getEffects().addAll(source.getEffects());
         // linkAllReferences(target.getTrigger());
-    }
-
-    /**
-     * Check if all references of the given Action object are correctly resolved.
-     * 
-     * @param newAction
-     *            the Action object to be checked
-     * @return true iff all references have been resolved
-     */
-    private boolean allReferencesResolved(final Action newAction) {
-        boolean isOk = true;
-        // check for unresolved references in the trigger expression
-        if (!allReferencesResolved(newAction.getTrigger())) {
-            isOk = false;
-        }
-        // check for unresolved references in all effects
-        for (Effect effect : newAction.getEffects()) {
-            // check for unresolved references in the emissions
-            if (effect instanceof Emission) {
-                if (!allReferencesResolved(((Emission) effect).getNewValue())
-                        || ((Emission) effect).getSignal().eIsProxy()) {
-                    isOk = false;
-                }
-            } else if (effect instanceof Assignment) { // check for unresolved references in the
-                                                       // assignments
-                if (!allReferencesResolved(((Assignment) effect).getExpression())
-                        || ((Assignment) effect).getVariable().eIsProxy()) {
-                    isOk = false;
-                }
-            }
-        }
-        return isOk;
     }
 
     /**
