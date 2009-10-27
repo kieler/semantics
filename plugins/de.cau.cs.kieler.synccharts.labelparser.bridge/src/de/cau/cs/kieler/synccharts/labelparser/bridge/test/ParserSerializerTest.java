@@ -17,19 +17,18 @@ package de.cau.cs.kieler.synccharts.labelparser.bridge.test;
 import java.io.IOException;
 
 import org.eclipse.xtext.parser.antlr.IAntlrParser;
-import org.eclipse.xtext.parsetree.reconstr.SerializerUtil;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.synccharts.ActionLabelStandaloneSetup;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
-import de.cau.cs.kieler.synccharts.Transition; //import de.cau.cs.kieler.synccharts.TransitionLabelStandaloneSetup;
-import de.cau.cs.kieler.synccharts.ActionLabelStandaloneSetup;
+import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParseCommand;
 import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelSerializer;
@@ -46,7 +45,7 @@ public class ParserSerializerTest {
     Transition transition;
 
     Injector injector;
-    SerializerUtil serializerUtil;
+    // SerializerUtil serializerUtil;
     IAntlrParser parser;
 
     private static final int A = 65;
@@ -106,7 +105,7 @@ public class ParserSerializerTest {
     @Before
     public void setUpParserAndSerializer() throws Exception {
         injector = new ActionLabelStandaloneSetup().createInjectorAndDoEMFRegistration();
-        serializerUtil = injector.getInstance(SerializerUtil.class);
+        // serializerUtil = injector.getInstance(SerializerUtil.class);
         parser = injector.getInstance(IAntlrParser.class);
     }
 
@@ -268,8 +267,8 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerHostCodeEverywhere() throws Exception {
-        this
-                .parseAndSerialize("(A and \"HostCode\"(host)) and (4 < \"Hooooost\") / \"This is some host code\"(Natural)");
+        this.parseAndSerialize("(A and \"HostCode\"(host)) and (4 < \"Hooooost\") /"
+                + " \"This is some host code\"(Natural)");
     }
 
     /**
@@ -538,8 +537,8 @@ public class ParserSerializerTest {
      *             factories.
      */
     private void parse(final String textToParse) throws KielerException, IOException {
-        ActionLabelParseCommand parseCommand = new ActionLabelParseCommand(transition, textToParse,
-                parser, injector);
+        ActionLabelParseCommand parseCommand = new ActionLabelParseCommand(transition,
+                textToParse, parser, injector);
         parseCommand.parse();
     }
 

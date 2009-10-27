@@ -16,7 +16,6 @@ package de.cau.cs.kieler.synccharts.labelparser.bridge;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,17 +42,8 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
-import de.cau.cs.kieler.synccharts.Assignment;
-import de.cau.cs.kieler.synccharts.ComplexExpression;
-import de.cau.cs.kieler.synccharts.Effect;
-import de.cau.cs.kieler.synccharts.Emission;
-import de.cau.cs.kieler.synccharts.Expression;
-import de.cau.cs.kieler.synccharts.Signal;
-import de.cau.cs.kieler.synccharts.SignalReference;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
-import de.cau.cs.kieler.synccharts.Variable;
-import de.cau.cs.kieler.synccharts.VariableReference;
 import de.cau.cs.kieler.synccharts.scoping.ActionLabelScopeProvider;
 
 /**
@@ -66,7 +56,6 @@ import de.cau.cs.kieler.synccharts.scoping.ActionLabelScopeProvider;
  */
 public class ActionLabelParseCommand extends AbstractTransactionalCommand {
 
-    Action action;
     String newString;
     Injector injector;
 
@@ -89,7 +78,6 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         // of the model yet. Then this command will fail.
         super(TransactionUtil.getEditingDomain(((Action) (((EObjectAdapter) theElement)
                 .getRealObject()))), theNewString, null);
-        this.action = (Action) (((EObjectAdapter) theElement).getRealObject());
         this.newString = theNewString;
         this.injector = theInjector;
         this.element = ((Action) (((EObjectAdapter) theElement).getRealObject()));
@@ -99,13 +87,10 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         if (domain == null) {
             // this is very evil, because then the element is not contained
             // by any resource, especially not by the diagram model
-            Status myStatus = new Status(
-                    IStatus.ERROR,
-                    Activator.PLUGIN_ID,
-                    "Parser failed to parse the action string \""
-                            + theNewString
-                            + "\"! The action object is not part of the model and hence has no editing domain.",
-                    null);
+            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    "Parser failed to parse the action string \"" + theNewString
+                            + "\"! The action object is not part of the model "
+                            + "and hence has no editing domain.", null);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
     }
@@ -126,7 +111,6 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         // does not belong to some resource, i.e. is not really part
         // of the model yet. Then this command will fail.
         super(TransactionUtil.getEditingDomain(((Action) theElement)), theNewString, null);
-        this.action = (Action) theElement;
         this.newString = theNewString;
         this.injector = theInjector;
         this.element = theElement;
@@ -178,13 +162,10 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
      *             only if there is an internal parser error
      */
     public void parse() throws KielerModelException, IOException {
-        this.action = (Action) element;
-        if (newString != null) {
-            action.setTriggersAndEffects(newString);
-        } else {
-            action.setTriggersAndEffects("");
-        }
+        Action action = (Action) element;
+        assert action != null;
 
+        action.setTriggersAndEffects(newString);
         // set some default values
         action.setTrigger(null);
         action.getEffects().clear();
@@ -192,7 +173,7 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         action.setIsImmediate(false);
 
         if (element == null) {
-            throw new KielerModelException("Action object to be parsed is null.", this.action);
+            throw new KielerModelException("Action object to be parsed is null.", action);
         }
 
         // if the String is empty, we don't need to parse anything...
@@ -203,9 +184,9 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         ByteArrayInputStream stream = new ByteArrayInputStream(newString.getBytes());
 
         XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
-        XtextResource resource = (XtextResource) resourceSet
-                .createResource(URI
-                        .createURI("platform:/resource/de.cau.cs.kieler.synccharts.labelparser/dummy.action"));
+        XtextResource resource = (XtextResource) resourceSet.createResource(URI
+                .createURI("platform:/resource/de.cau.cs.kieler.synccharts.labelparser/"
+                        + "dummy.action"));
         // set the scope where the Xtext linker shall search for Signals and
         // Variables
         EObject parent = action.getParentStateEntryAction();
@@ -232,8 +213,9 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         }
         if (parent == null) {
             throw new KielerModelException("\"" + newString + "\""
-                    + "Can't find the right scope for the action. Scope is null.", this.action);
+                    + "Can't find the right scope for the action. Scope is null.", action);
         }
+        // FIXME: passing the parent to the scope provider in this static way is veeeeery evil
         ActionLabelScopeProvider.parent = parent;
 
         // now do parsing
@@ -246,35 +228,34 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         IParseResult parseResult = resource.getParseResult();
         if (parseResult == null) {
             throw new KielerModelException("\"" + newString + "\""
-                    + "Could not parse action string. Parser did return null.", this.action);
+                    + "Could not parse action string. Parser did return null.", action);
         }
 
         List<Diagnostic> errors = resource.getErrors();
 
         if (errors != null && errors.size() > 0) {
-            String parseErrorString = "";
+            StringBuffer parseErrorString = new StringBuffer("");
             for (Diagnostic syntaxError : errors) {
-                parseErrorString += "\n" + syntaxError.getMessage();
+                parseErrorString.append("\n" + syntaxError.getMessage());
             }
             throw new KielerModelException("\"" + newString + "\""
-                    + " Parse errors in action String: " + parseErrorString, this.action);
+                    + " Parse errors in action String: " + parseErrorString, action);
         }
 
         EObject parsedObject = resource.getContents().get(0);
         if (parsedObject == null || !(parsedObject instanceof Action)) {
             throw new KielerModelException("\"" + newString + "\""
                     + "Could not parse action string. Parser did not return an Action object but "
-                    + parsedObject, this.action);
+                    + parsedObject, action);
         }
         Action newAction = (Action) parsedObject;
 
         /*
-        if (!allReferencesResolved(newAction)) {
-            throw new KielerModelException("\"" + newString + "\""
-                    + "Not all referenced Signals and/or Variables could be resolved!",
-                    this.action);
-                    
-        }*/
+         * if (!allReferencesResolved(newAction)) { throw new KielerModelException("\"" + newString
+         * + "\"" + "Not all referenced Signals and/or Variables could be resolved!", this.action);
+         * 
+         * }
+         */
 
         copyActionContents(newAction, action);
     }
@@ -300,40 +281,4 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
         target.getEffects().addAll(source.getEffects());
         // linkAllReferences(target.getTrigger());
     }
-
-    /**
-     * Check if all references of the given Expression object are correctly resolved.
-     * 
-     * @return true iff all references are resolved
-     */
-    private boolean allReferencesResolved(final Expression expression) {
-        if (expression == null) {
-            return true;
-        }
-        // call the getter for signal or variable, as it will resolve the proxy
-        // if possible. If not, it will stay a proxy which indicates, that
-        // the reference could not be resolved
-        boolean isProxy = false;
-        if (expression instanceof SignalReference) {
-            Signal sig = ((SignalReference) expression).getSignal();
-            isProxy = sig.eIsProxy();
-            return !isProxy;
-        } else if (expression instanceof VariableReference) {
-            Variable var = ((VariableReference) expression).getVariable();
-            isProxy = var.eIsProxy();
-            return !isProxy;
-            // TODO: recursive call!
-        } else if (expression instanceof ComplexExpression) {
-            List<Expression> subExpressions = ((ComplexExpression) expression).getSubExpressions();
-            isProxy = false;
-            for (Expression expression2 : subExpressions) {
-                if (!allReferencesResolved(expression2)) {
-                    isProxy = true;
-                    return !isProxy;
-                }
-            }
-        }
-        return true;
-    }
-
 }

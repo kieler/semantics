@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.xtext.parser.antlr.IAntlrParser;
-import org.eclipse.xtext.parsetree.reconstr.SerializerUtil;
 
 import com.google.inject.Injector;
 
@@ -35,6 +34,9 @@ import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.ValuedObject;
 
 /**
+ * A wrapper class that provides methods to process (i.e. parse or serialize) Action labels (i.e.
+ * transition labels or entry, inner, exit, suspend actions of states).
+ * 
  * @author haf
  * 
  */
@@ -44,7 +46,7 @@ public class ActionLabelProcessorWrapper {
     static final boolean SERIALIZE = false;
 
     Injector injector;
-    SerializerUtil serializerUtil;
+    // SerializerUtil serializerUtil;
     IAntlrParser parser;
 
     /**
@@ -53,7 +55,7 @@ public class ActionLabelProcessorWrapper {
     public ActionLabelProcessorWrapper() {
         // injector = new TransitionLabelStandaloneSetup()
         injector = new ActionLabelStandaloneSetup().createInjectorAndDoEMFRegistration();
-        serializerUtil = injector.getInstance(SerializerUtil.class);
+        // serializerUtil = injector.getInstance(SerializerUtil.class);
         parser = injector.getInstance(IAntlrParser.class);
     }
 
