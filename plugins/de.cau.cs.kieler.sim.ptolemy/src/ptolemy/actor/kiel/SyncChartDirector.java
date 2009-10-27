@@ -44,6 +44,7 @@ import ptolemy.actor.sched.FixedPointDirector;
 import ptolemy.actor.sched.FixedPointReceiver;
 import ptolemy.actor.sched.FixedPointScheduler;
 import ptolemy.actor.sched.Schedule;
+import ptolemy.actor.sched.ScheduleElement;
 import ptolemy.actor.sched.StaticSchedulingDirector;
 import ptolemy.data.BooleanToken;
 import ptolemy.data.IntToken;
@@ -211,6 +212,7 @@ public class SyncChartDirector extends FixedPointDirector {
     ///////////////////////////////////////////////////////////////////
     ////                         public methods                    ////
     
+    
     public String[] getMustCannotSignals() {
     	LinkedList<String> returnList = new LinkedList<String>();
     	
@@ -287,12 +289,27 @@ public class SyncChartDirector extends FixedPointDirector {
         }
         Schedule schedule = getScheduler().getSchedule();
         int iterationCount = 0;
+
+        //------------------------------------------------------------
+        //order the schedule to habe KIELER_IO inputs scheduled first!
+        Schedule orderedSchedule = new Schedule();
+        Iterator firingIterator = schedule.firingIterator();
+        for (int c = 0; c < schedule.size(); c++) {
+        	ScheduleElement element = (ScheduleElement)schedule.get(c);
+            Actor actor = ((Firing) element).getActor();
+            int index = c;
+            if (actor instanceof KielerIO) 
+            	index = 0;
+            orderedSchedule.add(index, element);
+        }
+        //------------------------------------------------------------
         
         do {
             do {
-                Iterator firingIterator = schedule.firingIterator();
+            	firingIterator = orderedSchedule.firingIterator();
                 while (firingIterator.hasNext() && !_stopRequested) {
                     Actor actor = ((Firing) firingIterator.next()).getActor();
+                    System.out.println("FIRING: "+actor.getFullName());
                     // If the actor has previously returned false in postfire(),
                     // do not fire it.
                     if (!_actorsFinishedExecution.contains(actor)) {
@@ -316,10 +333,18 @@ public class SyncChartDirector extends FixedPointDirector {
                 }
                 iterationCount++;
             } while (!_hasIterationConverged() && !_stopRequested);
-            
+                       
         //converged BUT no test if any local signals (defined on this level)
         //can be set to absent (=cannot be emmitted by any statemachine)
+        //this also propagates the unlock!
         String[] possibleSignals = getMustCannotSignals();
+        
+        //debug printout
+    	for (String possibleSignal: possibleSignals) {
+    		System.out.println("possible signal: "+possibleSignal); 
+    	}
+    	if (possibleSignals.length == 0)
+    		System.out.println("no possible signals"); 
         
         //construct a list of state signals, not in possible signals (= cannot be emitted)
         LinkedList<String> cannotSignals = new LinkedList<String>();
@@ -502,7 +527,7 @@ public class SyncChartDirector extends FixedPointDirector {
 
         _cachedFunctionalProperty = true;
         _functionalPropertyVersion = -1;
-
+        
         super.initialize();
 
         _realStartTime = System.currentTimeMillis();
@@ -585,7 +610,6 @@ public class SyncChartDirector extends FixedPointDirector {
         if (_debugging) {
             _debug("FixedPointDirector: Called postfire().");
         }
-
         boolean needMoreIterations = true;
         // If no actors were fired, this director used to return
         // false in postfire. However, this is not correct because there

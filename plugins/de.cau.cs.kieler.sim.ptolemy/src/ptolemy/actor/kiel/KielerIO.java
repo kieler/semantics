@@ -191,16 +191,18 @@ public class KielerIO extends TypedAtomicActor {
 
         if (present.getValueAsString().equals("true")) {
         	signal.send(0, new IntToken(Integer.valueOf(value.getValueAsString())));
-            if (permanent.getValueAsString().equals("false")) {
-            	this.setPresent(false);
-            }
         }
-
-
 
         super.fire();
     }
 
+    
+    public boolean postfire() {
+        if (present.getValueAsString().equals("true") && permanent.getValueAsString().equals("false")) {
+        	this.setPresent(false);
+        }
+        return true;
+    }
 
     /** Set the RailwayInterface and open a TCP connection to the
      *  Model Railway interface program w/ the given <i>host</i> and
