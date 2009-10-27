@@ -53,7 +53,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      * .Composite)
      */
     @Override
-    public void createPartControl(Composite parent) {
+    public void createPartControl(final Composite parent) {
         // create text viewer
         viewer = new TextViewer(parent);
 
@@ -87,7 +87,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      * @see
      * krep.evalbench.comm.ICommunicationListener#dataReceived(java.lang.String)
      */
-    public void dataReceived(String data) {
+    public void dataReceived(final String data) {
         if (preferenceStore.getBoolean(ConnectionPreferencePage.LOG)) {
             viewer.append("< " + data + "\n");
         }
@@ -99,7 +99,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      * @see
      * krep.evalbench.comm.ICommunicationListener#dataSent(java.lang.String)
      */
-    public void dataSent(String data) {
+    public void dataSent(final String data) {
 
         if (preferenceStore.getBoolean(ConnectionPreferencePage.LOG)) {
             viewer.append("> " + data + "\n");
@@ -121,7 +121,7 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
      * @param enabled
      *            the new state
      */
-    public void setActionsEnabled(boolean enabled) {
+    public void setActionsEnabled(final boolean enabled) {
         loadProgramAction.setEnabled(true);
         // loadProgramAction.setEnabled(enabled);
     }

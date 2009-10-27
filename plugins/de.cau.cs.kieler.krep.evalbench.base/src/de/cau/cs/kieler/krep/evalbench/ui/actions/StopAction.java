@@ -40,7 +40,7 @@ public class StopAction extends Action {
      * @param manager
      *            status line manager used to display action result
      */
-    public StopAction(IStatusLineManager manager) {
+    public StopAction(final IStatusLineManager manager) {
         setId(ACTION_ID);
         setText("St&op");
         setToolTipText("Stop the current program");

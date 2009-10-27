@@ -60,7 +60,7 @@ public class CJmp extends Instruction {
      * @param l
      *            label of the target
      */
-    public CJmp(Cond cond, Read reg, String l) {
+    public CJmp(final Cond cond, final Read reg, final String l) {
         super();
         this.cond = cond;
         this.reg = reg;
@@ -100,7 +100,7 @@ public class CJmp extends Instruction {
     }
 
     @Override
-    public void asmLabel(HashMap<String, Integer> label2addr)
+    public void asmLabel(final HashMap<String, Integer> label2addr)
             throws ParseException {
         Integer p = label2addr.get(label);
         if (p == null) {

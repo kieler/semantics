@@ -55,7 +55,7 @@ public class EvalBenchPerspective implements IPerspectiveFactory {
      * org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui
      * .IPageLayout)
      */
-    public void createInitialLayout(IPageLayout layout) {
+    public void createInitialLayout(final IPageLayout layout) {
         // get the editor area.
         String editorArea = layout.getEditorArea();
 

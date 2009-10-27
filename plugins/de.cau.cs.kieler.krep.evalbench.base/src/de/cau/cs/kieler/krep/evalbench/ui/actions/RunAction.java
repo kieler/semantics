@@ -76,7 +76,7 @@ public class RunAction extends Action {
                     .getStatusMessage());
         } else {
             Tools.runWithProgress(new IRunnableWithProgress() {
-                public void run(IProgressMonitor monitor) {
+                public void run(final IProgressMonitor monitor) {
                     monitor.beginTask("Execute Trace", traces.size()
                             - traces.getTablePos());
 

@@ -67,7 +67,7 @@ public class InputView extends ViewPart {
      * .Composite)
      */
     @Override
-    public void createPartControl(Composite parent) {
+    public void createPartControl(final Composite parent) {
         // create table
         Table table = new Table(parent, SWT.NONE);
         TableColumn column0 = new TableColumn(table, SWT.NONE, 0);
@@ -140,7 +140,7 @@ public class InputView extends ViewPart {
      * @param input
      *            the new input
      */
-    public void setInput(LinkedList<Signal> input) {
+    public void setInput(final LinkedList<Signal> input) {
         viewer.setInput(input.toArray(new Signal[1]));
     }
 
@@ -150,7 +150,7 @@ public class InputView extends ViewPart {
      * @param enabled
      *            the new action state
      */
-    public void setActionsEnabled(boolean enabled) {
+    public void setActionsEnabled(final boolean enabled) {
         resetAction.setEnabled(enabled);
         stepAction.setEnabled(enabled);
         runAction.setEnabled(false);

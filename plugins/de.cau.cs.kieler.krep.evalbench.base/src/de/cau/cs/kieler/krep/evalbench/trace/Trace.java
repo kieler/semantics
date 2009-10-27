@@ -172,6 +172,7 @@ public class Trace implements IPartListener, Iterator<Tick> {
      * set the value of the output signal in the current tick.
      * 
      * @param output
+     *            tick which outputs are read
      */
     public void setOutput(final Tick output) {
         int i = step - 1;
@@ -262,26 +263,26 @@ public class Trace implements IPartListener, Iterator<Tick> {
     }
 
     // Editor functions
-    public void partActivated(IWorkbenchPart part) {
+    public void partActivated(final IWorkbenchPart part) {
         // nothing to do
     }
 
-    public void partBroughtToTop(IWorkbenchPart part) {
+    public void partBroughtToTop(final IWorkbenchPart part) {
         // nothing to do
 
     }
 
-    public void partClosed(IWorkbenchPart part) {
+    public void partClosed(final IWorkbenchPart part) {
         // / nothing to do
 
     }
 
-    public void partDeactivated(IWorkbenchPart part) {
+    public void partDeactivated(final IWorkbenchPart part) {
         // nothing to do
 
     }
 
-    public void partOpened(IWorkbenchPart part) {
+    public void partOpened(final IWorkbenchPart part) {
         // nothing to do
 
     }
@@ -322,7 +323,7 @@ public class Trace implements IPartListener, Iterator<Tick> {
     /**
      * add an additional tick to the end of the trace.
      * 
-     * @param t
+     * @param t the additional tick
      */
     public void add(final Tick t) {
         if (ticks.isEmpty()) {

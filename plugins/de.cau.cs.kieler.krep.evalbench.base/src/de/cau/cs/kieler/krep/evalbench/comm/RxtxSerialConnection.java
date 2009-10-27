@@ -62,7 +62,7 @@ public class RxtxSerialConnection extends ConnectionProtocol {
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#initialize()
      */
-    public String initialize(String device, int port)
+    public String initialize(final String device, final int port)
             throws CommunicationException {
         /*
          * try { CommPortIdentifier portIdentifier =
@@ -116,7 +116,7 @@ public class RxtxSerialConnection extends ConnectionProtocol {
         return null;
     }
 
-    public void comment(String comment) {
+    public void comment(final String comment) {
         // Nothing to do
 
     }

@@ -35,7 +35,7 @@ public class BinOp extends Instruction {
      * @param op
      *            operator
      */
-    public BinOp(String to, Read r1, Read r2, OP op) {
+    public BinOp(final String to, final Read r1, final Read r2, final OP op) {
         super();
         this.to = Register.get(to);
         this.r1 = r1;
@@ -105,7 +105,7 @@ public class BinOp extends Instruction {
     }
 
     @Override
-    public void asmLabel(HashMap<String, Integer> label2addr) {
+    public void asmLabel(final HashMap<String, Integer> label2addr) {
         // nothing to do;
     }
 }

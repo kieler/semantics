@@ -194,7 +194,7 @@ public abstract class AssemblerEditor extends EditorPart {
      * IProgressMonitor)
      */
     @Override
-    public void doSave(IProgressMonitor monitor) {
+    public void doSave(final IProgressMonitor monitor) {
         // Nothing to do
     }
 
@@ -270,6 +270,7 @@ public abstract class AssemblerEditor extends EditorPart {
      * configuration. Should be accessed from the currently connected target.
      * 
      * @param krp
+     *            configuration of the current processor
      * @return true if all constraints (e.g., number of signals) are fulfilled
      */
     public boolean canExecute(final Config krp) {

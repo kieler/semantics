@@ -51,7 +51,7 @@ public class IMov extends Instruction {
      * @param val
      *            constant value to move
      */
-    public IMov(final Type t, String to, int val) {
+    public IMov(final Type t, final String to, final int val) {
         this.t = t;
         this.to = Register.get(to);
         this.val = val; // new Read(Register.get(v.toString()), pre);

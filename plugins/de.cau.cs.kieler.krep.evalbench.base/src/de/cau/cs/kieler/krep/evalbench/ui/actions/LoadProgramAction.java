@@ -72,7 +72,7 @@ public class LoadProgramAction extends Action {
         // }
 
         Tools.runWithProgress(new IRunnableWithProgress() {
-            public void run(IProgressMonitor monitor) {
+            public void run(final IProgressMonitor monitor) {
                 monitor.beginTask("Load program",
                         Activator.getDefault().commonLayer
                                 .getActiveAssemblerEditor().getAssembler()

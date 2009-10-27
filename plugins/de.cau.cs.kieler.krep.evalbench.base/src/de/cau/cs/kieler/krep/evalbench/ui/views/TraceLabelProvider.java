@@ -114,7 +114,7 @@ public class TraceLabelProvider implements ITableLabelProvider {
      * org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.
      * jface.viewers.ILabelProviderListener)
      */
-    public void addListener(ILabelProviderListener listener) {
+    public void addListener(final ILabelProviderListener listener) {
         listeners.add(listener);
     }
 
@@ -146,7 +146,7 @@ public class TraceLabelProvider implements ITableLabelProvider {
      * org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang
      * .Object, java.lang.String)
      */
-    public boolean isLabelProperty(Object element, String property) {
+    public boolean isLabelProperty(final Object element, final String property) {
         return true;
     }
 }

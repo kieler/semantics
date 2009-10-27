@@ -39,7 +39,7 @@ public final class Tools {
      * @param runnable
      *            runnable to run
      */
-    public static void runWithProgress(IRunnableWithProgress runnable) {
+    public static void runWithProgress(final IRunnableWithProgress runnable) {
         try {
             // IRunnableContext context =
             PlatformUI.getWorkbench().getActiveWorkbenchWindow();
@@ -107,25 +107,25 @@ public final class Tools {
      * @return elapsed time since calling tic() in human readable form.
      */
     public static String showTime() {
-        long time = tac();
-        long sec = 1000;
-        long min = 60 * sec;
-        long hour = 60 * min;
+        long dTime = tac();
+        final long sec = 1000;
+        final long min = 60 * sec;
+        final long hour = 60 * min;
 
         String res = "";
-        if (time > hour) {
-            res += time / hour + "h ";
-            time = time % hour;
+        if (dTime > hour) {
+            res += dTime / hour + "h ";
+            dTime = dTime % hour;
         }
-        if (time > min) {
-            res += time / min + "m ";
-            time = time % min;
+        if (dTime > min) {
+            res += dTime / min + "m ";
+            dTime = dTime % min;
         }
-        if (time > sec) {
-            res += time / sec + ".";
-            time = time % sec;
+        if (dTime > sec) {
+            res += dTime / sec + ".";
+            dTime = dTime % sec;
         }
-        String ms = String.valueOf(time);
+        String ms = String.valueOf(dTime);
         while (ms.length() < 3) {
             ms = "0" + ms;
         }
@@ -139,9 +139,13 @@ public final class Tools {
      * one.
      * 
      * @param uri
+     *            original uri
      * @param extension
+     *            the new extension
      * @return uri with replaced extension
      * @throws URISyntaxException
+     *             thrown when generated uri si not valid
+     * 
      */
     public static URI exchangeExtension(final URI uri, final String extension)
             throws URISyntaxException {
@@ -184,32 +188,4 @@ public final class Tools {
     }
 
 }
-/**
- * A simple runnable that will display an Error dialog with a message and the
- * stack-trace of the Exception in a details pane. This can be called by the
- * current Display thread. Necessary because of SWT's multi-threading
- * principles.
- * 
- * e.g. call: PlatformUI.getWorkbench().getDisplay().syncExec(new
- * DiagramRunnable(msg,exc));
- * 
- * @author haf
- * 
- */
-/*
- * class DiagramRunnable implements Runnable { String msg;
- * 
- * Exception exc;
- * 
- * DiagramRunnable(String msg, Exception exc) { this.msg = msg; if (this.msg ==
- * null) this.msg = "An Exception was thrown."; this.exc = exc; if (this.exc ==
- * null) { this.exc = new Exception("not specified"); } }
- * 
- * @Override public void run() { Exception alibiException = new
- * Exception(exc.toString()); Status s = new Status(IStatus.ERROR, null,
- * exc.getMessage(), alibiException); //
- * ErrorDialog.openError(null,"Error",msg,s); //
- * AbortErrorDialog.openError(msg,s,true); }
- * 
- * }
- */
+

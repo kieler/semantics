@@ -186,7 +186,7 @@ public class TraceList implements IPartListener {
      * @param listener
      *            listener to be added
      */
-    public static void addListener(ITraceListener listener) {
+    public static void addListener(final ITraceListener listener) {
         listeners.add(listener);
     }
 
@@ -194,6 +194,7 @@ public class TraceList implements IPartListener {
      * remove a trace listener.
      * 
      * @param listener
+     *            to remove
      */
     public static void removeListener(final ITraceListener listener) {
         listeners.remove(listener);
@@ -218,24 +219,24 @@ public class TraceList implements IPartListener {
     }
 
     // Editor functions
-    public void partActivated(IWorkbenchPart part) {
+    public void partActivated(final IWorkbenchPart part) {
         // nothing to do
     }
 
-    public void partBroughtToTop(IWorkbenchPart part) {
+    public void partBroughtToTop(final IWorkbenchPart part) {
         // nothing to do
     }
 
-    public void partClosed(IWorkbenchPart part) {
+    public void partClosed(final IWorkbenchPart part) {
         // nothing to do
     }
 
-    public void partDeactivated(IWorkbenchPart part) {
+    public void partDeactivated(final IWorkbenchPart part) {
         // nothing to do
 
     }
 
-    public void partOpened(IWorkbenchPart part) {
+    public void partOpened(final IWorkbenchPart part) {
         notifyListeners(true);
 
     }
@@ -267,6 +268,7 @@ public class TraceList implements IPartListener {
      * @param manager
      *            to display the current status
      * @throws CommunicationException
+     *             thrown for any communication errors
      */
     public boolean executeStep(final IStatusLineManager manager)
             throws CommunicationException {

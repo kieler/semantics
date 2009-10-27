@@ -101,7 +101,7 @@ public class KrepProtocol extends CommunicationProtocol {
         });
     }
 
-    private LinkedList<Integer> receiveByte(int n)
+    private LinkedList<Integer> receiveByte(final int n)
             throws CommunicationException {
         final LinkedList<Integer> res = connection.receiveByte(n);
         String s = "";
@@ -122,7 +122,7 @@ public class KrepProtocol extends CommunicationProtocol {
      *            underlying connection protocol to be used; this protocol
      *            instance is expected to be already initialized
      */
-    public KrepProtocol(IConnectionProtocol connectionProtocol) {
+    public KrepProtocol(final IConnectionProtocol connectionProtocol) {
         super(connectionProtocol);
     }
 
@@ -206,7 +206,7 @@ public class KrepProtocol extends CommunicationProtocol {
      * @see
      * krep.evalbench.comm.ICommunicationProtocol#loadProgram(java.lang.String)
      */
-    public boolean loadProgram(IAssembler program, IProgressMonitor monitor)
+    public boolean loadProgram(final IAssembler program, final IProgressMonitor monitor)
             throws CommunicationException, LoadException {
         if (krp == null) {
             getTargetInfo();
@@ -263,8 +263,8 @@ public class KrepProtocol extends CommunicationProtocol {
      * krep.evalbench.comm.ICommunicationProtocol#tick(java.util.LinkedList,
      * java.util.LinkedList)
      */
-    public int tick(int maxSignals, LinkedList<Signal> inputs,
-            LinkedList<Signal> outputs) throws CommunicationException {
+    public int tick(final int maxSignals, final LinkedList<Signal> inputs,
+            final LinkedList<Signal> outputs) throws CommunicationException {
 
         int rt = 0;
         // send inputs

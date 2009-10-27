@@ -14,19 +14,19 @@
 package de.cau.cs.kieler.krep.evalbench.comm;
 
 public interface IKrepWrapper {
-    public void terminate();
+    void terminate();
 
-    public boolean hasOutput();
+     boolean hasOutput();
 
-    public byte getOutput();
+     byte getOutput();
 
-    public void step();
+     void step();
 
-    public void send(byte b);
+     void send(byte b);
 
-    public void saveEsi(String esiFile);
+     void saveEsi(String esiFile);
 
-    public void comment(String comment);
+     void comment(String comment);
 
-    public String getName();
+     String getName();
 }

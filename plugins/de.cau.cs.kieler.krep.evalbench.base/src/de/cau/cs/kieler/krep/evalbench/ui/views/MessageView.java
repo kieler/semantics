@@ -41,7 +41,7 @@ public class MessageView extends ViewPart {
      * .Composite)
      */
     @Override
-    public void createPartControl(Composite parent) {
+    public void createPartControl(final Composite parent) {
         // create text viewer
         setViewer(new TextViewer(parent));
     }
@@ -63,7 +63,7 @@ public class MessageView extends ViewPart {
      * @param data
      *            message
      */
-    public static void print(String data) {
+    public static void print(final String data) {
         if (viewer != null) {
             viewer.append(data + "\n");
         }

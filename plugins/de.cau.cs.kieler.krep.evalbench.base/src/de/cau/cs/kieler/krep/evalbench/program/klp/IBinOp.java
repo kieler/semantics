@@ -40,7 +40,7 @@ public class IBinOp extends Instruction {
      * @param op
      *            operation
      */
-    public IBinOp(String to, Read r1, int c, OP op) {
+    public IBinOp(final String to, final Read r1, final int c, final OP op) {
         super();
         this.to = Register.get(to);
         this.r1 = r1;
@@ -106,7 +106,7 @@ public class IBinOp extends Instruction {
     }
 
     @Override
-    public void asmLabel(HashMap<String, Integer> label2addr)
+    public void asmLabel(final HashMap<String, Integer> label2addr)
             throws ParseException {
         // nothing to do
 

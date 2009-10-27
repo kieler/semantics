@@ -30,9 +30,9 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 public interface ICommunicationProtocol {
 
     /** Identifier for the KEP protocol. */
-    public static final String P_KEP = "kep";
+    String P_KEP = "kep";
     /** Identifier for the KReP protocol. */
-    public static final String P_KREP = "krep";
+    String P_KREP = "krep";
 
     /**
      * Adds a communication listener that is notified of all transferred data.
@@ -40,7 +40,7 @@ public interface ICommunicationProtocol {
      * @param listener
      *            listener to be added
      */
-    public void addCommunicationListener(ICommunicationListener listener);
+    void addCommunicationListener(ICommunicationListener listener);
 
     /**
      * Removes a communication listener from the list.
@@ -48,7 +48,7 @@ public interface ICommunicationProtocol {
      * @param listener
      *            listener to be removed
      */
-    public void removeCommunicationListener(ICommunicationListener listener);
+    void removeCommunicationListener(ICommunicationListener listener);
 
     /**
      * Verifies communication by sending a command and receiving a return
@@ -58,7 +58,7 @@ public interface ICommunicationProtocol {
      * @throws CommunicationException
      *             when the return string is invalid
      */
-    public String verifyCommunication() throws CommunicationException;
+    String verifyCommunication() throws CommunicationException;
 
     /**
      * Requests target information from the target and translates the received
@@ -68,7 +68,7 @@ public interface ICommunicationProtocol {
      * @throws CommunicationException
      *             when the return string is invalid
      */
-    public String getTargetInfo() throws CommunicationException;
+    String getTargetInfo() throws CommunicationException;
 
     /**
      * Loads a program onto the connected target.
@@ -83,7 +83,7 @@ public interface ICommunicationProtocol {
      * @throws LoadException
      *             cannot execute this program
      */
-    public boolean loadProgram(IAssembler program, IProgressMonitor monitor)
+    boolean loadProgram(IAssembler program, IProgressMonitor monitor)
             throws CommunicationException, LoadException;
 
     /**
@@ -92,7 +92,7 @@ public interface ICommunicationProtocol {
      * @throws CommunicationException
      *             when an invalid reply was received
      */
-    public void resetStatus() throws CommunicationException;
+    void resetStatus() throws CommunicationException;
 
     /**
      * Performs a program tick by sending the global input signal status,
@@ -108,17 +108,9 @@ public interface ICommunicationProtocol {
      * @throws CommunicationException
      *             when an invalid reply was received
      */
-    public int tick(int maxSignals, LinkedList<Signal> inputs,
+    int tick(int maxSignals, LinkedList<Signal> inputs,
             LinkedList<Signal> outputs) throws CommunicationException;
 
-    /**
-     * Requests the valid tick length for the last tick command.
-     * 
-     * @return number of instruction cycles used for the last tick
-     * @throws CommunicationException
-     *             when the return string is invalid
-     */
-    // public int getTickLength() throws CommunicationException;
     /**
      * Requests an execution trace for the last tick command.
      * 
@@ -126,7 +118,7 @@ public interface ICommunicationProtocol {
      * @throws CommunicationException
      *             when the received trace is invalid
      */
-    public int[] getExecutionTrace() throws CommunicationException;
+    int[] getExecutionTrace() throws CommunicationException;
 
     /**
      * When executed the target is set to continuous mode. Only external inputs
@@ -135,7 +127,7 @@ public interface ICommunicationProtocol {
      * @throws CommunicationException
      *             when an exception occurs while sending the command
      */
-    public void continuousRun() throws CommunicationException;
+    void continuousRun() throws CommunicationException;
 
     /**
      * Stops continuous mode and returns to single tick mode.
@@ -143,7 +135,7 @@ public interface ICommunicationProtocol {
      * @throws CommunicationException
      *             when an invalid reply was received
      */
-    public void stopContinuous() throws CommunicationException;
+    void stopContinuous() throws CommunicationException;
 
     /**
      * add a comment to the communication trace. This is useful, if an esi-File
@@ -152,8 +144,8 @@ public interface ICommunicationProtocol {
      * @param string
      *            comment to the next operation
      */
-    public void comment(String string);
+    void comment(String string);
 
-    public void dumpRom();
+    void dumpRom();
 
 }

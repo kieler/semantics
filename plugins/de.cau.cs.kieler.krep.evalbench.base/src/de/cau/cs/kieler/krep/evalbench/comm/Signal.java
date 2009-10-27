@@ -82,6 +82,7 @@ public class Signal implements Comparable<Signal> {
      * generate Signal with explicit index.
      * 
      * @param name
+     *            name of the signal
      * @param status
      *            initial status
      * @param value
@@ -114,7 +115,8 @@ public class Signal implements Comparable<Signal> {
     /**
      * generate a new signal by copying.
      * 
-     * @param s signal to copy
+     * @param s
+     *            signal to copy
      */
     public Signal(final Signal s) {
         this.name = s.name;

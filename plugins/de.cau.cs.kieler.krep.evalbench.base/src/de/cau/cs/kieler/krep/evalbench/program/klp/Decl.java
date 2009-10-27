@@ -134,7 +134,7 @@ public class Decl extends Instruction {
     }
 
     @Override
-    public void asmLabel(HashMap<String, Integer> label2addr)
+    public void asmLabel(final HashMap<String, Integer> label2addr)
             throws ParseException {
         // nothing to do
     }

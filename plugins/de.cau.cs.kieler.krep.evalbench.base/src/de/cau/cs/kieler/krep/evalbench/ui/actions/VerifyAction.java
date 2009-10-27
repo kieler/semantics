@@ -74,7 +74,7 @@ public class VerifyAction extends Action {
      * @param table
      *            table to present the results
      */
-    public VerifyAction(IStatusLineManager manager, TableViewer table) {
+    public VerifyAction(final IStatusLineManager manager, final TableViewer table) {
         setId(VERIFY_ID);
         setText("R&un");
         setToolTipText("Verify all benchmarks");
@@ -128,7 +128,7 @@ public class VerifyAction extends Action {
         table.setInput(data.toArray(new String[0][0]));
         // final UIJob job = new UIJob("verify"){
         Tools.runWithProgress(new IRunnableWithProgress() {
-            public void run(IProgressMonitor monitor) {
+            public void run(final IProgressMonitor monitor) {
                 int k = 0;
                 monitor.beginTask("Verify", files.size());
                 Iterator<File> i = files.iterator();

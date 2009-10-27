@@ -48,7 +48,7 @@ public class StepTraceAction extends Action {
      *            trace from which the inputs are read If trace is null or all
      *            ticks are executed, the inputs are read from the input view
      */
-    public StepTraceAction(IStatusLineManager manager, TraceList traces) {
+    public StepTraceAction(final IStatusLineManager manager, final TraceList traces) {
         setId(ACTION_ID);
         setText("&Step");
         setToolTipText("Perform a single step in the current program");

@@ -22,7 +22,7 @@ public class EsiLogger {
 
     BufferedWriter esi = null;
 
-    public EsiLogger(String fileName) {
+    public EsiLogger(final String fileName) {
         super();
         if (fileName != null && fileName.length() > 0) {
             File f = new File(fileName);
@@ -47,7 +47,7 @@ public class EsiLogger {
         }
     }
 
-    public void write(String io) {
+    public void write(final String io) {
         if (esi != null) {
             try {
                 esi.write(io);

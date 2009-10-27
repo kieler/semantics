@@ -64,7 +64,7 @@ public class VerifyPreferencePage extends FieldEditorPreferencePage implements
      * @see
      * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
      */
-    public void init(IWorkbench workbench) {
+    public void init(final IWorkbench workbench) {
         // set the preference store
         IPreferenceStore preferenceStore = Activator.getDefault()
                 .getPreferenceStore();

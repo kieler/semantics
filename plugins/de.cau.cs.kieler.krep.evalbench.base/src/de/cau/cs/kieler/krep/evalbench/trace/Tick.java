@@ -71,7 +71,7 @@ public class Tick {
      * @param outputs
      *            list of output signals with their values
      */
-    public Tick(LinkedList<Signal> inputs, LinkedList<Signal> outputs) {
+    public Tick(final LinkedList<Signal> inputs, final LinkedList<Signal> outputs) {
         this.inputs = inputs;
         this.outputs = outputs;
     }
@@ -199,9 +199,9 @@ public class Tick {
     /**
      * copy all outputs from Tick t.
      * 
-     * @param t
+     * @param t the tick that defines the outputs
      */
-    public void setOutput(Tick t) {
+    public void setOutput(final Tick t) {
         if (t != null) {
             outputs = new LinkedList<Signal>();
             for (Signal s : t.outputs) {

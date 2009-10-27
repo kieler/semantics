@@ -35,8 +35,8 @@ public class LineScanner extends DepthFirstAdapter {
     // private Stack<String> stack;
     // private String key;
 
-    public LineScanner(HashMap<String, Integer> states,
-            HashMap<Integer, Integer> sem2line) {
+    public LineScanner(final HashMap<String, Integer> states,
+            final HashMap<Integer, Integer> sem2line) {
         super();
         this.states = states;
         this.sem2line = sem2line;
@@ -45,7 +45,7 @@ public class LineScanner extends DepthFirstAdapter {
     }
 
     @Override
-    public void defaultIn(Node node) {
+    public void defaultIn(final Node node) {
         // System.err.println(node.getClass().getSimpleName() + ": " +
         // node.toString());
         super.defaultIn(node);

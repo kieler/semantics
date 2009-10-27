@@ -119,7 +119,7 @@ public class KepProtocol extends CommunicationProtocol {
      *            underlying connection protocol to be used; this protocol
      *            instance is expected to be already initialized
      */
-    public KepProtocol(IConnectionProtocol connectionProtocol) {
+    public KepProtocol(final IConnectionProtocol connectionProtocol) {
         super(connectionProtocol);
     }
 
@@ -137,7 +137,7 @@ public class KepProtocol extends CommunicationProtocol {
      * @throws CommunicationException
      *             when the input string does not match the expected format
      */
-    private static int parseIntRev(String s, int offset, int n)
+    private static int parseIntRev(final String s, final int offset, final int n)
             throws CommunicationException {
         // reverse digits for parsing
         StringBuffer stringBuffer = new StringBuffer(n);
@@ -170,7 +170,7 @@ public class KepProtocol extends CommunicationProtocol {
      * @throws CommunicationException
      *             when the input string does not match the expected format
      */
-    private static char[] parseSeq(String s) throws CommunicationException {
+    private static char[] parseSeq(final String s) throws CommunicationException {
         int n = s.length();
         char[] x = new char[(n + 1) / 2];
         for (int i = 0; i < n; i += 2) {
@@ -202,7 +202,7 @@ public class KepProtocol extends CommunicationProtocol {
      *            number of digits for hex representation
      * @return hex string with length n if x < 2^n
      */
-    private static String toHexString(int x, int n) {
+    private static String toHexString(final int x, final int n) {
         String s = Integer.toHexString(x).toUpperCase();
         int l = s.length();
         if (l < n) {
@@ -229,7 +229,7 @@ public class KepProtocol extends CommunicationProtocol {
      *            number of digits for hex representation
      * @return reversed hex string with length n if x < 2^n
      */
-    private static String toHexStringRev(int x, int n) {
+    private static String toHexStringRev(final int x, final int n) {
         String s = Integer.toHexString(x).toUpperCase();
         int l = s.length();
         StringBuffer reversed = new StringBuffer(l);
@@ -260,7 +260,7 @@ public class KepProtocol extends CommunicationProtocol {
      * @return string where each character is a reversed hex representation of
      *         the two corresponding characters of the input sequence
      */
-    private static String toHexStringSeq(char[] x, int n) {
+    private static String toHexStringSeq(final char[] x, final int n) {
         StringBuffer stringBuffer = new StringBuffer();
         for (int i = 0; i < x.length; i++) {
             String s = Integer.toHexString((int) x[i]).toUpperCase();
@@ -292,7 +292,7 @@ public class KepProtocol extends CommunicationProtocol {
      * Runnable(){ public void run(){ notifyReceive(res); } }); return res; }
      */
 
-    private String receive(char x) throws CommunicationException {
+    private String receive(final char x) throws CommunicationException {
         final String res = connection.receive(x);
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
@@ -369,7 +369,7 @@ public class KepProtocol extends CommunicationProtocol {
      * @see
      * krep.evalbench.comm.ICommunicationProtocol#loadProgram(java.lang.String)
      */
-    public boolean loadProgram(IAssembler program, IProgressMonitor monitor)
+    public boolean loadProgram(final IAssembler program, final IProgressMonitor monitor)
             throws CommunicationException {
         String[] prog = program.getObj(null);
         send(LOAD_COMMAND);
@@ -436,8 +436,8 @@ public class KepProtocol extends CommunicationProtocol {
      * krep.evalbench.comm.ICommunicationProtocol#tick(java.util.LinkedList,
      * java.util.LinkedList)
      */
-    public int tick(int maxSignals, LinkedList<Signal> inputs,
-            LinkedList<Signal> outputs) throws CommunicationException {
+    public int tick(final int maxSignals, final LinkedList<Signal> inputs,
+            final LinkedList<Signal> outputs) throws CommunicationException {
         // construct and send input message
         LinkedList<Signal> valuedInputs = new LinkedList<Signal>();
         send(INPUT_COMMAND);

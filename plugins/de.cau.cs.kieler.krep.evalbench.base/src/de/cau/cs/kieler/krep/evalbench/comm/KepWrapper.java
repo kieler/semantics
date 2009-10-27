@@ -101,13 +101,13 @@ public class KepWrapper implements IKrepWrapper {
 
     }
 
-    public static native byte kep_step(String msg);
+    public static native byte kep_step(final String msg);
 
-    public static native byte kep_recv(String msg);
+    public static native byte kep_recv(final String msg);
 
-    public static native void kep_reset(String msg);
+    public static native void kep_reset(final String msg);
 
-    public static native void kep_send(byte c, String msg);
+    public static native void kep_send(final byte c, final String msg);
 
     public void saveEsi(final String esiFile) {
         BufferedWriter out = null;

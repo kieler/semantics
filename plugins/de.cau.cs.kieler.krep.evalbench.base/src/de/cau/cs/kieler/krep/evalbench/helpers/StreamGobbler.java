@@ -37,7 +37,7 @@ public class StreamGobbler extends Thread {
      * @param type
      *            this prefix is written before each line on stdout
      */
-    public StreamGobbler(InputStream is, String type) {
+    public StreamGobbler(final InputStream is, final String type) {
         this.is = is;
         this.type = type;
     }

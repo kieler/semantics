@@ -47,7 +47,7 @@ public class InputSignalModifier implements ICellModifier {
      *            property name
      * @return the column index, or -1 if the given property was not found
      */
-    private static int getColumnIndex(String property) {
+    private static int getColumnIndex(final String property) {
         for (int i = 0; i < InputView.COLUMN_NAMES.length; i++) {
             if (property.equals(InputView.COLUMN_NAMES[i])) {
                 return i;
@@ -62,7 +62,7 @@ public class InputSignalModifier implements ICellModifier {
      * @see org.eclipse.jface.viewers.ICellModifier#canModify(java.lang.Object,
      * java.lang.String)
      */
-    public boolean canModify(Object element, String property) {
+    public boolean canModify(final Object element, final String property) {
         int columnIndex = getColumnIndex(property);
         // get signal to analyze
         Signal s;
@@ -88,7 +88,7 @@ public class InputSignalModifier implements ICellModifier {
      * @see org.eclipse.jface.viewers.ICellModifier#getValue(java.lang.Object,
      * java.lang.String)
      */
-    public Object getValue(Object element, String property) {
+    public Object getValue(final Object element, final String property) {
         int columnIndex = getColumnIndex(property);
         // get signal to retrieve value
         Signal s;
@@ -121,7 +121,7 @@ public class InputSignalModifier implements ICellModifier {
      * @see org.eclipse.jface.viewers.ICellModifier#modify(java.lang.Object,
      * java.lang.String, java.lang.Object)
      */
-    public void modify(Object element, String property, Object value) {
+    public void modify(final Object element, final String property, final Object value) {
         int columnIndex = getColumnIndex(property);
         // get signal to modify
         Signal s;

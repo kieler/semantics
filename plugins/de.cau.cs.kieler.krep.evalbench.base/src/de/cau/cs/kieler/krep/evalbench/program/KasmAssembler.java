@@ -145,7 +145,8 @@ public final class KasmAssembler implements IAssembler {
                     if (i1 < 0 || i2 < 0 || i2 - i1 == 0) {
                         throw new ParseException(
                                 pos
-                                        + ": Syntax error in listing file: Curly braces with code information expected");
+                                        + ": Syntax error in listing file:"
+                                        + " Curly braces with code information expected");
                     }
                     instructions.add(line.substring(i1 + 1, i2));
                 }
@@ -252,7 +253,7 @@ public final class KasmAssembler implements IAssembler {
         return signalIndex;
     }
 
-    public int adr2row(int i) {
+    public int adr2row(final int i) {
         // each instruction is in its row
         return i;
     }

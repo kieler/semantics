@@ -30,7 +30,7 @@ public class Jmp extends Instruction {
      * @param label
      *            to jump to
      */
-    public Jmp(String label) {
+    public Jmp(final String label) {
         this.label = label;
     }
 
@@ -45,7 +45,7 @@ public class Jmp extends Instruction {
     }
 
     @Override
-    public void asmLabel(HashMap<String, Integer> label2addr)
+    public void asmLabel(final HashMap<String, Integer> label2addr)
             throws ParseException {
         Integer p = label2addr.get(label);
         if (p == null) {

@@ -47,7 +47,7 @@ public class ResetAction extends Action {
      * @param traces
      *            trace which inputs are read, it must be reseted as well
      */
-    public ResetAction(IStatusLineManager manager, TraceList traces) {
+    public ResetAction(final IStatusLineManager manager, final TraceList traces) {
         setId(ACTION_ID);
         setText("&Reset");
         setToolTipText("Reset the current program");

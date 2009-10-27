@@ -93,7 +93,7 @@ public class KlpWrapper implements IKrepWrapper {
 
     }
 
-    public void send(byte b) {
+    public void send(final byte b) {
         String msg = "";
         step();
         esi.write("RX(0x" + Integer.toHexString(b & 0xFF) + ")");
@@ -105,13 +105,13 @@ public class KlpWrapper implements IKrepWrapper {
 
     }
 
-    public static native byte klp_step(String msg);
+    public static native byte klp_step(final String msg);
 
-    public static native byte klp_recv(String msg);
+    public static native byte klp_recv(final String msg);
 
-    public static native void klp_reset(String msg);
+    public static native void klp_reset(final String msg);
 
-    public static native void klp_send(byte c, String msg);
+    public static native void klp_send(final byte c, final String msg);
 
     public final void saveEsi(final String esiFile) {
         BufferedWriter out = null;
@@ -138,7 +138,7 @@ public class KlpWrapper implements IKrepWrapper {
         return NAME;
     }
 
-    public void comment(String comment) {
+    public void comment(final String comment) {
         esi.comment(comment);
     }
 

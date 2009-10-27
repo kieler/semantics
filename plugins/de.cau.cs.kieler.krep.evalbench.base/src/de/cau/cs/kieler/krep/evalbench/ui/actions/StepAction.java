@@ -42,7 +42,7 @@ public class StepAction extends Action {
      * @param manager
      *            status line manager used to display action result
      */
-    public StepAction(IStatusLineManager manager) {
+    public StepAction(final IStatusLineManager manager) {
         setId(ACTION_ID);
         setText("&Step");
         setToolTipText("Perform a single step in the current program");

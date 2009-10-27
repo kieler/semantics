@@ -57,7 +57,7 @@ public class Mov extends Instruction {
      * @param from
      *            source register
      */
-    public Mov(Type t, String to, Read from) {
+    public Mov(final Type t, final String to, final Read from) {
         this.t = t;
         this.to = Register.get(to);
         this.from = from; // new Read(Register.get(v.toString()), pre);
@@ -106,7 +106,7 @@ public class Mov extends Instruction {
     }
 
     @Override
-    public void asmLabel(HashMap<String, Integer> label2addr)
+    public void asmLabel(final HashMap<String, Integer> label2addr)
             throws ParseException {
         // TODO nothing to do
     }

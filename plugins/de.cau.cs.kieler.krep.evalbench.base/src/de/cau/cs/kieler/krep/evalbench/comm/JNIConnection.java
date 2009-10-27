@@ -33,7 +33,7 @@ public class JNIConnection implements IConnectionProtocol {
 
     }
 
-    public String initialize(String protocol) throws CommunicationException {
+    public String initialize(final String protocol) throws CommunicationException {
         String name = "unknown";
         if (krep != null) {
             krep.terminate();
@@ -57,7 +57,7 @@ public class JNIConnection implements IConnectionProtocol {
                 + ((krep != null) ? krep.getName() : "unknown processor");
     }
 
-    public String initialize(final String device, int port)
+    public String initialize(final String device, final int port)
             throws CommunicationException {
         /*String name = "unknown";
         if (krep != null) {
@@ -108,7 +108,7 @@ public class JNIConnection implements IConnectionProtocol {
         return res.toString();
     }
 
-    public String receive(int n) throws CommunicationException {
+    public String receive(final int n) throws CommunicationException {
         StringBuffer res = new StringBuffer();
         while (res.length() < n) {
             krep.step();
@@ -119,34 +119,35 @@ public class JNIConnection implements IConnectionProtocol {
         return res.toString();
     }
 
-    public void send(String data) throws CommunicationException {
+    public void send(final String data) throws CommunicationException {
         for (byte b : data.getBytes()) {
             krep.send(b);
         }
     }
 
-    public void send(byte data) throws CommunicationException {
+    public void send(final byte data) throws CommunicationException {
         // for (byte b : data.getBytes()) {
         krep.send(data);
         // }
     }
 
-    public void comment(String comment) {
+    public void comment(final String comment) {
         krep.comment(comment);
     }
 
-    public LinkedList<Integer> receiveByte(int n) throws CommunicationException {
+    public LinkedList<Integer> receiveByte(final int n) throws CommunicationException {
         LinkedList<Integer> res = new LinkedList<Integer>();
+        final int maskByte  = 0xFF;
         while (res.size() < n) {
             krep.step();
             if (krep.hasOutput()) {
-                res.add(((int) krep.getOutput()) & 0xFF);
+                res.add(((int) krep.getOutput()) & maskByte);
             }
         }
         return res;
     }
 
-    public void send(byte[] data) throws CommunicationException {
+    public void send(final byte[] data) throws CommunicationException {
         for (byte b : data) {
             krep.send(b);
         }

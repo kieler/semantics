@@ -71,7 +71,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      * @throws IOException
      *             when the read operation throws an exception
      */
-    private static String readInputExit(InputStreamReader input, char x)
+    private static String readInputExit(final InputStreamReader input, final char x)
             throws IOException {
         StringBuffer stringBuffer = new StringBuffer();
         int c;
@@ -195,7 +195,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
      * 
      * @see krep.evalbench.comm.IConnectionProtocol#receive(char)
      */
-    public LinkedList<Integer> receiveByte(int n) throws CommunicationException {
+    public LinkedList<Integer> receiveByte(final int n) throws CommunicationException {
         InputStreamReader reader = null;
         try {
             InputStream inputStream = getInputStream();

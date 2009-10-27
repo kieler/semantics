@@ -95,7 +95,7 @@ public class TextViewer extends ContentViewer {
      * .ISelection, boolean)
      */
     @Override
-    public void setSelection(ISelection selection, boolean reveal) {
+    public void setSelection(final ISelection selection, final boolean reveal) {
         try {
             if (selection instanceof ITextSelection) {
                 ITextSelection textSelection = (ITextSelection) selection;
@@ -114,7 +114,7 @@ public class TextViewer extends ContentViewer {
      * @param s
      *            text to be displayed
      */
-    public void setText(String s) {
+    public void setText(final String s) {
         text.setText(s);
     }
 
@@ -124,7 +124,7 @@ public class TextViewer extends ContentViewer {
      * @param s
      *            text to be appended
      */
-    public void append(String s) {
+    public void append(final String s) {
         text.append(s);
     }
 

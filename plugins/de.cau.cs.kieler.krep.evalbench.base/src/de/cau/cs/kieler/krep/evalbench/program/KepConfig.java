@@ -60,7 +60,7 @@ public class KepConfig implements Config {
      * @param nThread
      *            the nThread to set
      */
-    public void setnThread(int nThread) {
+    public void setnThread(final int nThread) {
         this.nThread = nThread;
     }
 
@@ -75,7 +75,7 @@ public class KepConfig implements Config {
      * @param widthCounter
      *            the widthCounter to set
      */
-    public void setWidthCounter(int widthCounter) {
+    public void setWidthCounter(final int widthCounter) {
         this.widthCounter = widthCounter;
     }
 
@@ -90,7 +90,7 @@ public class KepConfig implements Config {
      * @param lTick
      *            the lTick to set
      */
-    public void setlTick(int lTick) {
+    public void setlTick(final int lTick) {
         this.lTick = lTick;
     }
 
@@ -105,7 +105,7 @@ public class KepConfig implements Config {
      * @param maxROM
      *            the maxROM to set
      */
-    public void setMaxROM(int maxROM) {
+    public void setMaxROM(final int maxROM) {
         this.maxROM = maxROM;
     }
 

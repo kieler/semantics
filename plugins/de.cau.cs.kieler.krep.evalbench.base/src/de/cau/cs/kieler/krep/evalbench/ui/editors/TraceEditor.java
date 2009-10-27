@@ -67,7 +67,7 @@ public abstract class TraceEditor extends EditorPart {
      * @throws ParseException
      *             when the assembler fails to parse the input
      */
-    private void updateProgram(File inputFile) throws IOException,
+    private void updateProgram(final File inputFile) throws IOException,
             ParseException {
         // read input file
         StringBuffer stringBuffer = new StringBuffer();
@@ -155,7 +155,7 @@ public abstract class TraceEditor extends EditorPart {
      * IProgressMonitor)
      */
     @Override
-    public void doSave(IProgressMonitor monitor) {
+    public void doSave(final IProgressMonitor monitor) {
         // Nothing to do
     }
 

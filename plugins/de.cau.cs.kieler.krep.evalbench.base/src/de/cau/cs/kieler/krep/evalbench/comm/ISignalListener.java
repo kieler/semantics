@@ -30,7 +30,7 @@ public interface ISignalListener {
      * @param outputs
      *            global output signal status
      */
-    public void tickPerformed(LinkedList<Signal> inputs,
+    void tickPerformed(LinkedList<Signal> inputs,
             LinkedList<Signal> outputs);
 
 }

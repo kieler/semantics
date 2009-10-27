@@ -31,7 +31,7 @@ public class TraceContentProvider implements IStructuredContentProvider {
      * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java
      * .lang.Object)
      */
-    public Object[] getElements(Object inputElement) {
+    public Object[] getElements(final Object inputElement) {
         if (inputElement instanceof String[][]) {
             return (String[][]) inputElement;
         } else {
@@ -44,7 +44,7 @@ public class TraceContentProvider implements IStructuredContentProvider {
 
     }
 
-    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+    public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {
         // noting to do
 
     }

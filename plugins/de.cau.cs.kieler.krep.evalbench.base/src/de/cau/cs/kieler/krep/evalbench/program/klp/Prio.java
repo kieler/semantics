@@ -23,14 +23,14 @@ public class Prio extends Instruction {
     private final Register reg;
     private final int val;
 
-    public Prio(String reg, int val) {
+    public Prio(final String reg, final int val) {
         super();
         this.reg = Register.get(reg);
         this.val = val;
     }
 
     @Override
-    public void asmLabel(HashMap<String, Integer> label2addr)
+    public void asmLabel(final HashMap<String, Integer> label2addr)
             throws ParseException {
         // Nothing to do
 

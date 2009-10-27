@@ -62,7 +62,7 @@ public class SetPC extends Instruction {
     }
 
     @Override
-    public void asmLabel(HashMap<String, Integer> label2addr)
+    public void asmLabel(final HashMap<String, Integer> label2addr)
             throws ParseException {
         if (label != null) {
             Integer p = label2addr.get(label);

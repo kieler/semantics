@@ -24,14 +24,15 @@ public interface ICommunicationListener {
      * Executed when data is sent to the target.
      * 
      * @param data
+     *            data to send
      */
-    public void dataSent(String data);
+    void dataSent(String data);
 
     /**
      * Executed when data is received from the target.
      * 
-     * @param data
+     * @param data that is received
      */
-    public void dataReceived(String data);
+    void dataReceived(String data);
 
 }

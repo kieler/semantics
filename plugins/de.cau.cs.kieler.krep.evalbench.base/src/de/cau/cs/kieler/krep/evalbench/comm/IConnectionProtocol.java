@@ -35,13 +35,12 @@ public interface IConnectionProtocol {
      * @throws CommunicationException
      *             when an error occurred during initialization
      */
-    public String initialize(String device, int port)
-            throws CommunicationException;
+    String initialize(String device, int port) throws CommunicationException;
 
     /**
      * Closes connection and removes locks on the involved device.
      */
-    public void dispose();
+    void dispose();
 
     /**
      * Sends data to the target.
@@ -51,7 +50,7 @@ public interface IConnectionProtocol {
      * @throws CommunicationException
      *             when an exception occurs while sending data
      */
-    public void send(String data) throws CommunicationException;
+    void send(String data) throws CommunicationException;
 
     /**
      * Sends data to the target.
@@ -61,7 +60,7 @@ public interface IConnectionProtocol {
      * @throws CommunicationException
      *             when an exception occurs while sending data
      */
-    public void send(byte data) throws CommunicationException;
+    void send(byte data) throws CommunicationException;
 
     /**
      * Sends data to the target.
@@ -71,7 +70,7 @@ public interface IConnectionProtocol {
      * @throws CommunicationException
      *             when an exception occurs while sending data
      */
-    public void send(byte[] data) throws CommunicationException;
+    void send(byte[] data) throws CommunicationException;
 
     /**
      * Tries to receive a sequence of characters until an exit character is
@@ -83,7 +82,7 @@ public interface IConnectionProtocol {
      * @throws CommunicationException
      *             when a timeout is reached before the exit character is read
      */
-    public String receive(char exit) throws CommunicationException;
+    String receive(char exit) throws CommunicationException;
 
     /**
      * Tries to receive a fixed number of characters.
@@ -94,7 +93,7 @@ public interface IConnectionProtocol {
      * @throws CommunicationException
      *             when a timeout is reached before the exit character is read
      */
-    public String receive(int n) throws CommunicationException;
+    String receive(int n) throws CommunicationException;
 
     /**
      * Tries to receive a fixed number of characters.
@@ -105,7 +104,7 @@ public interface IConnectionProtocol {
      * @throws CommunicationException
      *             when a timeout is reached before the exit character is read
      */
-    public LinkedList<Integer> receiveByte(int n) throws CommunicationException;
+    LinkedList<Integer> receiveByte(int n) throws CommunicationException;
 
     /**
      * Harks to incoming data.
@@ -116,8 +115,8 @@ public interface IConnectionProtocol {
      * @throws CommunicationException
      *             when an exception occurs while receiving data
      */
-    public String hark(int n) throws CommunicationException;
+    String hark(int n) throws CommunicationException;
 
-    public void comment(String comment);
+    void comment(String comment);
 
 }

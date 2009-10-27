@@ -28,7 +28,7 @@ public class Read {
      * @param pre
      *            true if previous value should be read
      */
-    public Read(String v, boolean pre) {
+    public Read(final String v, final boolean pre) {
         super();
         this.pre = pre;
         this.reg = Register.get(v);

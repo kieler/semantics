@@ -54,7 +54,7 @@ public class SignalLabelProvider implements ITableLabelProvider {
      * @param input
      *            if true, the icons for input editing are used
      */
-    public SignalLabelProvider(boolean input) {
+    public SignalLabelProvider(final boolean input) {
         // create list for label provider listeners
         listeners = new LinkedList<ILabelProviderListener>();
         // create images
@@ -85,7 +85,7 @@ public class SignalLabelProvider implements ITableLabelProvider {
      * org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang
      * .Object, int)
      */
-    public Image getColumnImage(Object element, int columnIndex) {
+    public Image getColumnImage(final Object element, final int columnIndex) {
         if (element instanceof Signal) {
             Signal s = (Signal) element;
             switch (columnIndex) {
@@ -106,7 +106,7 @@ public class SignalLabelProvider implements ITableLabelProvider {
      * org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang
      * .Object, int)
      */
-    public String getColumnText(Object element, int columnIndex) {
+    public String getColumnText(final Object element, final int columnIndex) {
         if (element instanceof Signal) {
             Signal s = (Signal) element;
             switch (columnIndex) {
@@ -138,7 +138,7 @@ public class SignalLabelProvider implements ITableLabelProvider {
      * org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.
      * jface.viewers.ILabelProviderListener)
      */
-    public void addListener(ILabelProviderListener listener) {
+    public void addListener(final ILabelProviderListener listener) {
         listeners.add(listener);
     }
 
@@ -149,7 +149,7 @@ public class SignalLabelProvider implements ITableLabelProvider {
      * org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse
      * .jface.viewers.ILabelProviderListener)
      */
-    public void removeListener(ILabelProviderListener listener) {
+    public void removeListener(final ILabelProviderListener listener) {
         listeners.remove(listener);
     }
 
@@ -173,7 +173,7 @@ public class SignalLabelProvider implements ITableLabelProvider {
      * org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang
      * .Object, java.lang.String)
      */
-    public boolean isLabelProperty(Object element, String property) {
+    public boolean isLabelProperty(final Object element, final String property) {
         return true;
     }
 
