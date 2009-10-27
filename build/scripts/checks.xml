@@ -38,6 +38,7 @@
   - haf: Removed some checks after internal discussion with msp and chsch
   - haf: Set default severity to warning
   - haf: WhitespaceAfter: Removed ARRAY_INIT token as not synchronized to formatter
+  - haf: allowed no statements in empty catch block (but explenary comment)
 
 -->
 
@@ -173,10 +174,17 @@
         <!-- Checks for blocks. You know, those {}'s         -->
         <!-- See http://checkstyle.sf.net/config_blocks.html -->
         <module name="AvoidNestedBlocks"/>
-        <module name="EmptyBlock"/>
         <module name="LeftCurly"/>
         <module name="NeedBraces"/>
         <module name="RightCurly"/>
+        <!--  haf: allow empty catch blocks if there is some comment -->
+        <module name="EmptyBlock">
+    		<property name="option" value="text"/>
+    		<property name="tokens" value="LITERAL_CATCH"/>
+		</module>
+		<module name="EmptyBlock">
+    		<property name="tokens" value="LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_IF, LITERAL_FOR, LITERAL_TRY, LITERAL_WHILE, INSTANCE_INIT, STATIC_INIT"/>
+		</module>
 
 
         <!-- Checks for common coding problems               -->
