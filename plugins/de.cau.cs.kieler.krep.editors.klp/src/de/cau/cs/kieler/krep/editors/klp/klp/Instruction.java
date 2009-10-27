@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see de.cau.cs.kieler.krep.editors.klp.klp.KlpPackage#getInstruction()
- * @model abstract="true"
+ * model abstract="true"
  * @generated
  */
 public interface Instruction extends EObject {

@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EReference;
  * </ul>
  * <!-- end-user-doc -->
  * @see de.cau.cs.kieler.krep.editors.klp.klp.KlpFactory
- * @model kind="package"
+ * 
  * @generated
  */
 public interface KlpPackage extends EPackage {
