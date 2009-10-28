@@ -107,6 +107,8 @@
 				     each folder should contain the subfolders 'features' and 'plugins'
 				     can be relative (to ${basedir})
 				     CAUTION: required features must not be JARed, plugins should be JARed (so far I figured out) -->
+			<arg value="-Dupdatesite.autobuild=${updatesite.autobuild}" />
+				<!-- location of the update site, default is defined in build.properties -->
 			<arg value="-Dfindbugs.classes=${findbugs.classes}" />
 				<!-- path to classes, jars to be examined by findbugs -->
 			<arg value="-Ddoc.excludes=${doc.excludes}" />
