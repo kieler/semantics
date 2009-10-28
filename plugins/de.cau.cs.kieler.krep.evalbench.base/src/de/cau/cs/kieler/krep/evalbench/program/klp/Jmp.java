@@ -26,12 +26,15 @@ public class Jmp extends Instruction {
     private String label;
     private int pos;
 
+
+    private static final int MASK_BYTE = 0xFF; 
+    
     /**
-     * @param label
+     * @param lab
      *            to jump to
      */
-    public Jmp(final String label) {
-        this.label = label;
+    public Jmp(final String lab) {
+        this.label = lab;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class Jmp extends Instruction {
 
     @Override
     public int[] getObj() {
-        return new int[] { Opcode.JMP.getCode(), pos >> 8, pos & 0xFF, 0 };
+        return new int[] { Opcode.JMP.getCode(), pos >> 8, pos & MASK_BYTE, 0 };
     }
 
     @Override

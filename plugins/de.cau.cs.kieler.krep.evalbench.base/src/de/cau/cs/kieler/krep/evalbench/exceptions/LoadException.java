@@ -27,11 +27,11 @@ public class LoadException extends Exception {
     private final String cause;
 
     /**
-     * @param cause
+     * @param c
      *            specific explanaition, while the download failed
      */
-    public LoadException(final String cause) {
-        this.cause = cause;
+    public LoadException(final String c) {
+        this.cause = c;
     }
 
     @Override

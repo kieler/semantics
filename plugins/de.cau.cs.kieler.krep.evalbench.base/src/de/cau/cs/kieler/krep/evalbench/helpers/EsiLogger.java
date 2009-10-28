@@ -18,10 +18,22 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * log communication with the processor to an esi trace file. This can be used for debugging of the
+ * processor in E-Studio.
+ * 
+ * @author ctr
+ * 
+ */
 public class EsiLogger {
 
     BufferedWriter esi = null;
 
+    /**
+     * 
+     * @param fileName
+     *            name of the log file
+     */
     public EsiLogger(final String fileName) {
         super();
         if (fileName != null && fileName.length() > 0) {
@@ -36,6 +48,9 @@ public class EsiLogger {
         }
     }
 
+    /**
+     * start a new trace.
+     */
     public void reset() {
         if (esi != null) {
             try {
@@ -47,6 +62,11 @@ public class EsiLogger {
         }
     }
 
+    /**
+     * @param io
+     *            string to add to the log file
+     * 
+     */
     public void write(final String io) {
         if (esi != null) {
             try {
@@ -59,6 +79,11 @@ public class EsiLogger {
         }
     }
 
+    /**
+     * 
+     * @param comment
+     *            the comment to add
+     */
     public void comment(final String comment) {
         if (esi != null) {
             try {

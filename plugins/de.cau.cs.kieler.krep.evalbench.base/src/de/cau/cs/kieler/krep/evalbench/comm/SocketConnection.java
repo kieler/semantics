@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
+import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
 /**
  * Connection that uses sockets from <code>java.net</code>.
@@ -33,38 +34,34 @@ public class SocketConnection extends ConnectionProtocol {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see krep.evalbench.comm.IConnectionProtocol#initialize(java.lang.String)
      */
-    public String initialize(final String device, final int port)
-            throws CommunicationException {
+    public String initialize(final String device, final int port) throws CommunicationException {
         try {
             socket = new Socket(device, port);
             return "Connected to host " + device + ", port " + port + ".";
         } catch (IOException e) {
-            throw new CommunicationException(
-                    "Error during initialization of host " + device
-                            + " on port " + port + ": " + e.getMessage());
+            throw new CommunicationException("Error during initialization of host " + device
+                    + " on port " + port + ": " + e.getMessage());
         }
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.IConnectionProtocol#dispose()
      */
     public void dispose() {
         try {
             socket.close();
         } catch (IOException e) {
             // Ignore silently
+
+            MessageView.print(e.getMessage());
         }
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#getInputStream()
      */
     @Override
     protected InputStream getInputStream() {
@@ -75,11 +72,6 @@ public class SocketConnection extends ConnectionProtocol {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see krep.evalbench.comm.ConnectionProtocol#getOutputStream()
-     */
     @Override
     protected OutputStream getOutputStream() {
         try {

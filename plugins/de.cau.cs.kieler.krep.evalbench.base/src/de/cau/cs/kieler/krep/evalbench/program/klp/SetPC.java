@@ -23,9 +23,8 @@ import de.cau.cs.kieler.krep.evalbench.program.Instruction;
  */
 public class SetPC extends Instruction {
 
-    /*
-     * public enum Type { C, V; }
-     */
+    static final int BYTE_MASK = 0xFF;
+    static final int BYTE_LENGTH = 8;
 
     // private Type t;
     private final Register reg;
@@ -37,13 +36,13 @@ public class SetPC extends Instruction {
     /**
      * @param name
      *            unique name of the register
-     * @param label
+     * @param lab
      *            label where the corresponding code starts
      */
-    public SetPC(final String name, final String label) {
+    public SetPC(final String name, final String lab) {
         super();
         this.reg = Register.get(name);
-        this.label = label;
+        this.label = lab;
     }
 
     @Override
@@ -57,13 +56,13 @@ public class SetPC extends Instruction {
 
     @Override
     protected int[] getObj() {
+
         Opcode op = Opcode.SETPC;
-        return new int[] { op.getCode(), reg.getId(), pos >> 8, pos & 0xFF };
+        return new int[] { op.getCode(), reg.getId(), pos >> BYTE_LENGTH, pos & BYTE_MASK };
     }
 
     @Override
-    public void asmLabel(final HashMap<String, Integer> label2addr)
-            throws ParseException {
+    public void asmLabel(final HashMap<String, Integer> label2addr) throws ParseException {
         if (label != null) {
             Integer p = label2addr.get(label);
             if (p == null) {

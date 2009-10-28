@@ -44,8 +44,8 @@ public class Signal implements Comparable<Signal> {
     private boolean status;
 
     /**
-     * Creates and initializes a signal. Depending of the input this will be
-     * either a valued or an unvalued signal.
+     * Creates and initializes a signal. Depending of the input this will be either a valued or an
+     * unvalued signal.
      * 
      * @param n
      *            signal name
@@ -58,8 +58,7 @@ public class Signal implements Comparable<Signal> {
      */
     public Signal(final String n, final boolean s, final Integer v,
             final HashMap<String, Integer> tIndex) {
-        IPreferenceStore preferenceStore = Activator.getDefault()
-                .getPreferenceStore();
+        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
         if (preferenceStore.getBoolean(VerifyPreferencePage.CASE_SENSITIVE)) {
             this.name = n;
         } else {
@@ -92,8 +91,7 @@ public class Signal implements Comparable<Signal> {
      */
     public Signal(final String tName, final boolean tStatus, final Integer tValue,
             final Integer tIndex) {
-        IPreferenceStore preferenceStore = Activator.getDefault()
-                .getPreferenceStore();
+        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
         if (preferenceStore.getBoolean(VerifyPreferencePage.CASE_SENSITIVE)) {
             this.name = tName;
         } else {
@@ -135,8 +133,7 @@ public class Signal implements Comparable<Signal> {
      *            initial value for a valued signal, null for a pure signal
      */
     public Signal(final String tName, final Integer tValue) {
-        IPreferenceStore preferenceStore = Activator.getDefault()
-                .getPreferenceStore();
+        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
         if (preferenceStore.getBoolean(VerifyPreferencePage.CASE_SENSITIVE)) {
 
             this.name = tName;
@@ -200,8 +197,7 @@ public class Signal implements Comparable<Signal> {
     /**
      * Get the signal value.
      * 
-     * @return current signal value, or null if its value has not been
-     *         initialized yet.
+     * @return current signal value, or null if its value has not been initialized yet.
      */
     public Object getValue() {
         return value;

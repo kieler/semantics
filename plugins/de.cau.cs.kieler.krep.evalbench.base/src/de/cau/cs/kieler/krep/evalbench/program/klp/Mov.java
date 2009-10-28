@@ -50,17 +50,17 @@ public class Mov extends Instruction {
     private Read from;
 
     /**
-     * @param t
+     * @param type
      *            type of this register to register move
-     * @param to
+     * @param target
      *            target register
-     * @param from
+     * @param source
      *            source register
      */
-    public Mov(final Type t, final String to, final Read from) {
-        this.t = t;
-        this.to = Register.get(to);
-        this.from = from; // new Read(Register.get(v.toString()), pre);
+    public Mov(final Type type, final String target, final Read source) {
+        this.t = type;
+        this.to = Register.get(target);
+        this.from = source; // new Read(Register.get(v.toString()), pre);
     }
 
     @Override

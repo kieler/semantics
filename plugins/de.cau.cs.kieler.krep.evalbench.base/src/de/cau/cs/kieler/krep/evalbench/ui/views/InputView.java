@@ -47,6 +47,8 @@ public class InputView extends ViewPart {
     /** Column identifiers for the embedded table. */
     public static final String[] COLUMN_NAMES = { "signal", "present", "value" };
 
+    private static final int[] COLUMN_WIDTH = { 150, 20, 80 };
+
     /** Table viewer where inputs are listed. */
     private TableViewer viewer = null;
 
@@ -62,26 +64,25 @@ public class InputView extends ViewPart {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
-     * .Composite)
+     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
      */
     @Override
     public void createPartControl(final Composite parent) {
         // create table
         Table table = new Table(parent, SWT.NONE);
-        TableColumn column0 = new TableColumn(table, SWT.NONE, 0);
-        column0.setText("Signal");
-        column0.setToolTipText("Signal name");
-        column0.setWidth(150);
-        TableColumn column1 = new TableColumn(table, SWT.NONE, 1);
-        column1.setText("P");
-        column1.setToolTipText("Signal presence status");
-        column1.setWidth(20);
-        TableColumn column2 = new TableColumn(table, SWT.NONE, 2);
-        column2.setText("Value");
-        column2.setToolTipText("Signal value");
-        column2.setWidth(80);
+
+        for (int i = 0; i < COLUMN_WIDTH.length; i++) {
+            TableColumn column = new TableColumn(table, SWT.NONE, i);
+            column.setText(COLUMN_NAMES[i]);
+            column.setWidth(COLUMN_WIDTH[i]);
+        }
+        /*
+         * column0.setText("Signal"); column0.setToolTipText("Signal name"); column0.setWidth(150);
+         * TableColumn column1 = new TableColumn(table, SWT.NONE, 1); column1.setText("P");
+         * column1.setToolTipText("Signal presence status"); column1.setWidth(20); TableColumn
+         * column2 = new TableColumn(table, SWT.NONE, 2); column2.setText("Value");
+         * column2.setToolTipText("Signal value"); column2.setWidth(80);
+         */
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
         // create table viewer
@@ -90,7 +91,7 @@ public class InputView extends ViewPart {
         viewer.setContentProvider(new SignalContentProvider());
         viewer.setLabelProvider(new SignalLabelProvider(true));
         // create cell editors
-        CellEditor[] editors = new CellEditor[3];
+        CellEditor[] editors = new CellEditor[COLUMN_WIDTH.length];
         editors[1] = new CheckboxCellEditor(table);
         editors[1].activate();
         editors[2] = new TextCellEditor(table);
@@ -98,10 +99,8 @@ public class InputView extends ViewPart {
         viewer.setCellEditors(editors);
         viewer.setCellModifier(new InputSignalModifier(viewer));
 
-        IToolBarManager toolBarManager = getViewSite().getActionBars()
-                .getToolBarManager();
-        IStatusLineManager statusLineManager = getViewSite().getActionBars()
-                .getStatusLineManager();
+        IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
+        IStatusLineManager statusLineManager = getViewSite().getActionBars().getStatusLineManager();
         // create reset action
         resetAction = new ResetAction(statusLineManager, null);
         toolBarManager.add(resetAction);
@@ -134,8 +133,7 @@ public class InputView extends ViewPart {
     }
 
     /**
-     * Changes the input of the embedded table viewer to the given list of
-     * signals.
+     * Changes the input of the embedded table viewer to the given list of signals.
      * 
      * @param input
      *            the new input

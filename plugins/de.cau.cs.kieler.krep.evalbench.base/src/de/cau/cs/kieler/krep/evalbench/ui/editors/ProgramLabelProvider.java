@@ -37,8 +37,8 @@ public class ProgramLabelProvider implements ITableLabelProvider {
         listeners = new LinkedList<ILabelProviderListener>();
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang
@@ -49,8 +49,8 @@ public class ProgramLabelProvider implements ITableLabelProvider {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang
@@ -65,8 +65,8 @@ public class ProgramLabelProvider implements ITableLabelProvider {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.
@@ -76,8 +76,8 @@ public class ProgramLabelProvider implements ITableLabelProvider {
         listeners.add(listener);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse
@@ -87,8 +87,8 @@ public class ProgramLabelProvider implements ITableLabelProvider {
         listeners.remove(listener);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
      */
@@ -97,8 +97,8 @@ public class ProgramLabelProvider implements ITableLabelProvider {
         listeners.clear();
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang

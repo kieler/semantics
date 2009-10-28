@@ -80,8 +80,6 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see krep.evalbench.comm.ICommunicationListener#dataReceived(java.lang.String)
      */
     public void dataReceived(final String data) {
         if (preferenceStore.getBoolean(ConnectionPreferencePage.LOG)) {
@@ -92,7 +90,6 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationListener#dataSent(java.lang.String)
      */
     public void dataSent(final String data) {
 

@@ -32,14 +32,14 @@ public class StreamGobbler extends Thread {
     String type;
 
     /**
-     * @param is
+     * @param input
      *            input stream from which messages are read
-     * @param type
+     * @param tType
      *            this prefix is written before each line on stdout
      */
-    public StreamGobbler(final InputStream is, final String type) {
-        this.is = is;
-        this.type = type;
+    public StreamGobbler(final InputStream input, final String tType) {
+        this.is = input;
+        this.type = tType;
     }
 
     @Override

@@ -42,7 +42,10 @@ public class TraceView extends ViewPart implements ITraceListener {
     public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.trace";
 
     /** Column identifiers for the embedded table. */
-    public static final String[] COLUMN_NAMES = { "tick", "status", "values" };
+    public static final String[] COLUMN_NAMES = { "Inputs", "Outputs", "Saved Outputs", "Checked",
+            "RT" };
+
+    private static final int[] COLUMN_WIDTH = { 150, 150, 150, 150, 150 };
 
     /**
      * status column.
@@ -68,39 +71,36 @@ public class TraceView extends ViewPart implements ITraceListener {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
-     * .Composite)
+     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
      */
     @Override
     public final void createPartControl(final Composite parent) {
         // create table
         table = new Table(parent, SWT.NONE);
 
-        TableColumn column0 = new TableColumn(table, SWT.NONE, 0);
-        column0.setText("Inputs");
-        column0.setToolTipText("Current Status and Values");
-        column0.setWidth(150);
-
-        TableColumn column1 = new TableColumn(table, SWT.NONE, 1);
-        column1.setText("Outputs");
-        column1.setToolTipText("Current Outputs");
-        column1.setWidth(150);
-
-        TableColumn column2 = new TableColumn(table, SWT.NONE, 2);
-        column2.setText("Saved Outputs");
-        column2.setToolTipText("Saved Outputs");
-        column2.setWidth(150);
-
-        TableColumn column3 = new TableColumn(table, SWT.NONE, 3);
-        column3.setText("Checked");
-        column3.setToolTipText("Checked");
-        column3.setWidth(150);
-
-        TableColumn column4 = new TableColumn(table, SWT.NONE, 4);
-        column4.setText("RT");
-        column4.setToolTipText("Reaction Time");
-        column4.setWidth(150);
+        TableColumn column;
+        for (int i = 0; i < COLUMN_WIDTH.length; i++) {
+            column = new TableColumn(table, SWT.NONE, i);
+            column.setText(COLUMN_NAMES[i]);
+            column.setWidth(COLUMN_WIDTH[i]);
+        }
+        /*
+         * TableColumn column0 = new TableColumn(table, SWT.NONE, 0); column0.setText("Inputs");
+         * column0.setToolTipText("Current Status and Values"); column0.setWidth(150);
+         * 
+         * TableColumn column1 = new TableColumn(table, SWT.NONE, 1); column1.setText("Outputs");
+         * column1.setToolTipText("Current Outputs"); column1.setWidth(150);
+         * 
+         * TableColumn column2 = new TableColumn(table, SWT.NONE, 2);
+         * column2.setText("Saved Outputs"); column2.setToolTipText("Saved Outputs");
+         * column2.setWidth(150);
+         * 
+         * TableColumn column3 = new TableColumn(table, SWT.NONE, 3); column3.setText("Checked");
+         * column3.setToolTipText("Checked"); column3.setWidth(150);
+         * 
+         * TableColumn column4 = new TableColumn(table, SWT.NONE, 4); column4.setText("RT");
+         * column4.setToolTipText("Reaction Time"); column4.setWidth(150);
+         */
 
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
@@ -111,31 +111,27 @@ public class TraceView extends ViewPart implements ITraceListener {
         viewer.setContentProvider(new TraceContentProvider());
         viewer.setLabelProvider(new TraceLabelProvider());
         if (Activator.getDefault().getTraces() != null) {
-            viewer.setInput(Activator.getDefault().getTraces().getTable()
-                    .toArray(new String[0][0]));
+            viewer
+                    .setInput(Activator.getDefault().getTraces().getTable().toArray(
+                            new String[0][0]));
             viewer.setSelection(new TraceSelectionProvider(), true);
             TraceList.addListener(this);
         }
 
-        IToolBarManager toolBarManager = getViewSite().getActionBars()
-                .getToolBarManager();
-        IStatusLineManager statusLineManager = getViewSite().getActionBars()
-                .getStatusLineManager();
+        IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
+        IStatusLineManager statusLineManager = getViewSite().getActionBars().getStatusLineManager();
         // create reset action
-        resetAction = new ResetAction(statusLineManager, Activator.getDefault()
-                .getTraces());
+        resetAction = new ResetAction(statusLineManager, Activator.getDefault().getTraces());
         toolBarManager.add(resetAction);
         resetAction.setEnabled(true);
 
         // create step action
-        stepAction = new StepTraceAction(statusLineManager, Activator
-                .getDefault().getTraces());
+        stepAction = new StepTraceAction(statusLineManager, Activator.getDefault().getTraces());
         toolBarManager.add(stepAction);
         stepAction.setEnabled(true);
 
         // create run action
-        runAction = new RunAction(statusLineManager, Activator.getDefault()
-                .getTraces());
+        runAction = new RunAction(statusLineManager, Activator.getDefault().getTraces());
         toolBarManager.add(runAction);
         runAction.setEnabled(true);
 
@@ -169,10 +165,14 @@ public class TraceView extends ViewPart implements ITraceListener {
         stopAction.setEnabled(enabled);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public final void traceChanged(final boolean newTrace) {
         if (newTrace) {
-            viewer.setInput(Activator.getDefault().getTraces().getTable()
-                    .toArray(new String[0][0]));
+            viewer
+                    .setInput(Activator.getDefault().getTraces().getTable().toArray(
+                            new String[0][0]));
         }
         int[] selection = { Activator.getDefault().getTraces().getTablePos() };
         table.select(selection);

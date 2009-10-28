@@ -24,6 +24,9 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
  */
 public abstract class Instruction {
 
+    /**
+     * all labels for this instruction.
+     */
     protected LinkedList<String> labels = new LinkedList<String>();
 
     /**
@@ -48,11 +51,11 @@ public abstract class Instruction {
     }
 
     /**
-     * @param labels
+     * @param labs
      *            list of labels for this instruction
      */
-    public void setLabels(final LinkedList<String> labels) {
-        for (String label : labels) {
+    public void setLabels(final LinkedList<String> labs) {
+        for (String label : labs) {
             this.labels.add(label);
         }
     }
@@ -85,6 +88,11 @@ public abstract class Instruction {
         }
     }
 
+    
+    /**
+     * 
+     * @return object code for the instruction.
+     */
     protected abstract int[] getObj();
 
     private static String padByte(final int b) {

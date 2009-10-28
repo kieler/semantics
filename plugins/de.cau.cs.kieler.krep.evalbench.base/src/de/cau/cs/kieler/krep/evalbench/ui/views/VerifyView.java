@@ -25,7 +25,6 @@ import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.krep.evalbench.ui.actions.VerifyAction;
 
-
 /**
  * A View for displaying a trace file.
  * 
@@ -37,11 +36,10 @@ public class VerifyView extends ViewPart {
     public static final String VIEW_ID = "de.cau.cs.kieler.krep.evalbench.ui.views.verify";
 
     /** Column identifiers for the embedded table. */
-    public static final String[] COLUMN_NAMES = { "file", "status", "wcrt",
-            "remark" };
+    public static final String[] COLUMN_NAMES = { "file", "status", "wcrt", "remark" };
 
-    private static final int[] COLUMN_WIDTH = {150, 50, 150, 250};
-    
+    private static final int[] COLUMN_WIDTH = { 150, 50, 150, 250 };
+
     /** Table viewer where inputs are listed. */
     private TableViewer viewer = null;
     private Table table = null;
@@ -49,12 +47,12 @@ public class VerifyView extends ViewPart {
     /** The reset action. */
     private IAction verifyAction = null;
 
+    private static final int ROW_CAUSE = 3;
+
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
-     * .Composite)
+     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
      */
     @Override
     public void createPartControl(final Composite parent) {
@@ -75,10 +73,10 @@ public class VerifyView extends ViewPart {
         column3.setToolTipText("Worst case reaction time");
         column3.setWidth(COLUMN_WIDTH[2]);
 
-        TableColumn column4 = new TableColumn(table, SWT.NONE, 3);
+        TableColumn column4 = new TableColumn(table, SWT.NONE, ROW_CAUSE);
         column4.setText("remark");
         column4.setToolTipText("Why did it fail?");
-        column4.setWidth(COLUMN_WIDTH[3]);
+        column4.setWidth(COLUMN_WIDTH[ROW_CAUSE]);
 
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
@@ -89,10 +87,8 @@ public class VerifyView extends ViewPart {
         viewer.setContentProvider(new TraceContentProvider());
         viewer.setLabelProvider(new VerifyLabelProvider());
 
-        IToolBarManager toolBarManager = getViewSite().getActionBars()
-                .getToolBarManager();
-        IStatusLineManager statusLineManager = getViewSite().getActionBars()
-                .getStatusLineManager();
+        IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
+        IStatusLineManager statusLineManager = getViewSite().getActionBars().getStatusLineManager();
         // create reset action
         verifyAction = new VerifyAction(statusLineManager, viewer);
         toolBarManager.add(verifyAction);

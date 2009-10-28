@@ -198,8 +198,8 @@ public enum Opcode {
 
     private final int code;
 
-    private Opcode(final int code) {
-        this.code = code;
+    private Opcode(final int c) {
+        this.code = c;
     }
 
     /**

@@ -26,21 +26,21 @@ public class BinOp extends Instruction {
     private OP op;
 
     /**
-     * @param to
+     * @param target
      *            variable that stores the result
-     * @param r1
+     * @param reg1
      *            first parameter
-     * @param r2
+     * @param reg2
      *            second parameter
-     * @param op
+     * @param operator
      *            operator
      */
-    public BinOp(final String to, final Read r1, final Read r2, final OP op) {
+    public BinOp(final String target, final Read reg1, final Read reg2, final OP operator) {
         super();
-        this.to = Register.get(to);
-        this.r1 = r1;
-        this.r2 = r2;
-        this.op = op;
+        this.to = Register.get(target);
+        this.r1 = reg1;
+        this.r2 = reg2;
+        this.op = operator;
     }
 
     @Override

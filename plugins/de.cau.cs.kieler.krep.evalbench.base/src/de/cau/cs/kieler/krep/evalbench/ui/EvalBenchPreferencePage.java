@@ -29,8 +29,8 @@ import de.cau.cs.kieler.krep.evalbench.program.KasmAssembler;
  * 
  * @author msp, ctr
  */
-public class EvalBenchPreferencePage extends FieldEditorPreferencePage
-        implements IWorkbenchPreferencePage {
+public class EvalBenchPreferencePage extends FieldEditorPreferencePage implements
+        IWorkbenchPreferencePage {
 
     /** Preference name for the default communication protocol. */
     public static final String PROTOCOL_TYPE = "EvalBench.protocol";
@@ -48,44 +48,37 @@ public class EvalBenchPreferencePage extends FieldEditorPreferencePage
         super(FieldEditorPreferencePage.GRID);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+     * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
      */
     public void init(final IWorkbench workbench) {
         // set the preference store
-        IPreferenceStore preferenceStore = Activator.getDefault()
-                .getPreferenceStore();
+        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
         setPreferenceStore(preferenceStore);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors
-     * ()
+     * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors ()
      */
     @Override
     protected void createFieldEditors() {
         // create field editor for the default communication protocol
         String[][] labels = new String[][] {
-                { "KIEL Esterel Processor Protocol",
-                        ICommunicationProtocol.P_KEP },
-                { "KIEL Reactive Processor Protocol",
-                        ICommunicationProtocol.P_KREP } };
+                { "KIEL Esterel Processor Protocol", ICommunicationProtocol.P_KEP },
+                { "KIEL Reactive Processor Protocol", ICommunicationProtocol.P_KREP } };
         FieldEditor fieldEditor = new RadioGroupFieldEditor(PROTOCOL_TYPE,
-                "Default communication protocol:", 1, labels,
-                getFieldEditorParent());
+                "Default communication protocol:", 1, labels, getFieldEditorParent());
         addField(fieldEditor);
 
         // create field editor for the KEP type:
         labels = new String[][] { { "Esterel KEP", KasmAssembler.S_KEPE },
                 { "VHDL KEP", KasmAssembler.S_KEPV } };
-        fieldEditor = new RadioGroupFieldEditor(KEP_TYPE, "KEP type to use:",
-                1, labels, getFieldEditorParent());
+        fieldEditor = new RadioGroupFieldEditor(KEP_TYPE, "KEP type to use:", 1, labels,
+                getFieldEditorParent());
         addField(fieldEditor);
 
         adjustGridLayout();

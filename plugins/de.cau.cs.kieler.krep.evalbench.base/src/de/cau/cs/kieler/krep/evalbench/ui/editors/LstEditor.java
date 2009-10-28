@@ -16,6 +16,13 @@ package de.cau.cs.kieler.krep.evalbench.ui.editors;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.program.KasmAssembler;
 
+/**
+ * Editor for original lst files of the KEP, generate dd by kasmlst.
+ * 
+ * @author ctr
+ * 
+ */
+
 public class LstEditor extends AssemblerEditor {
 
     /**
@@ -25,10 +32,9 @@ public class LstEditor extends AssemblerEditor {
         assembler = new KasmAssembler();
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see krep.evalbench.ui.editors.AssemblerEditor#getProtocolType()
      */
     @Override
     public String getProtocolType() {

@@ -33,8 +33,6 @@ public class JNIConnection implements IConnectionProtocol {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see krep.evalbench.comm.ConnectionProtocol#dispose()
      */
     public void dispose() {
         if (krep != null) {
@@ -51,13 +49,11 @@ public class JNIConnection implements IConnectionProtocol {
      *            use KEP or KReP protocol
      * @return String to indicate the status of the connection.
      * @throws CommunicationException
-     *             thrown for any connection errors, e.g., if the software
-     *             simulation is not found
+     *             thrown for any connection errors, e.g., if the software simulation is not found
      * 
      * 
      */
-    public String initialize(final String protocol)
-            throws CommunicationException {
+    public String initialize(final String protocol) throws CommunicationException {
         String name = "unknown";
         if (krep != null) {
             krep.terminate();
@@ -73,12 +69,10 @@ public class JNIConnection implements IConnectionProtocol {
                 krep = null;
             }
         } catch (final Throwable t) {
-            throw new CommunicationException("Error generating " + name + "\n"
-                    + t.getMessage() + "\nLibrary path: "
-                    + System.getProperty("java.library.path"));
+            throw new CommunicationException("Error generating " + name + "\n" + t.getMessage()
+                    + "\nLibrary path: " + System.getProperty("java.library.path"));
         }
-        return "started new "
-                + ((krep != null) ? krep.getName() : "unknown processor");
+        return "started new " + ((krep != null) ? krep.getName() : "unknown processor");
     }
 
     /**
@@ -86,10 +80,8 @@ public class JNIConnection implements IConnectionProtocol {
      * 
      * @see krep.evalbench.comm.ConnectionProtocol#initialize()
      */
-    public String initialize(final String device, final int port)
-            throws CommunicationException {
-        IPreferenceStore preferenceStore = Activator.getDefault()
-                .getPreferenceStore();
+    public String initialize(final String device, final int port) throws CommunicationException {
+        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
         String currentProtocolType = preferenceStore
                 .getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
         return initialize(currentProtocolType);
@@ -176,8 +168,7 @@ public class JNIConnection implements IConnectionProtocol {
      * 
      * @see krep.evalbench.comm.ConnectionProtocol#receiveByte()
      */
-    public LinkedList<Integer> receiveByte(final int n)
-            throws CommunicationException {
+    public LinkedList<Integer> receiveByte(final int n) throws CommunicationException {
         LinkedList<Integer> res = new LinkedList<Integer>();
         final int maskByte = 0xFF;
         while (res.size() < n) {

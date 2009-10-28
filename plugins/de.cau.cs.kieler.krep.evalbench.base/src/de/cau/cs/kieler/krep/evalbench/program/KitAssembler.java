@@ -52,7 +52,9 @@ public class KitAssembler implements IAssembler {
         kasm = new KepAssembler();
         instructions = new LinkedList<String>();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     public int adr2row(final int i) {
         if (lines != null) {
             Integer c = lines.get(i);

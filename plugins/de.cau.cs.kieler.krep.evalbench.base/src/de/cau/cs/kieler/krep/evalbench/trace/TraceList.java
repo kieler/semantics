@@ -36,8 +36,7 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 /**
  * @author ctr
  * 
- *         a list of different independent traces, as they are stored in esi
- *         files
+ *         a list of different independent traces, as they are stored in esi files
  */
 public class TraceList implements IPartListener {
 
@@ -63,12 +62,10 @@ public class TraceList implements IPartListener {
     private static LinkedList<ITraceListener> listeners = new LinkedList<ITraceListener>();
 
     /**
-     * Read a trace list from a trace file. Supported file types are esi, eso
-     * and rif.
+     * Read a trace list from a trace file. Supported file types are esi, eso and rif.
      * 
      * @param asm
-     *            Assembler, for which the test is. This is needed to generate
-     *            signal indices.
+     *            Assembler, for which the test is. This is needed to generate signal indices.
      * @param baseName
      *            name of the trace file without the file suffix
      */
@@ -77,11 +74,14 @@ public class TraceList implements IPartListener {
         traces = new LinkedList<Trace>();
         try {
             File traceFile = null; // = new File(baseName + ".rif");
-            if ((traceFile = new File(baseName + ".rif")).exists()) {
+            if ((new File(baseName + ".rif")).exists()) {
+                traceFile = new File(baseName + ".rif");
                 traces.add(rifParser.parse(asm, new FileReader(traceFile)));
-            } else if ((traceFile = new File(baseName + ".eso")).exists()) {
+            } else if ((new File(baseName + ".eso")).exists()) {
+                traceFile = new File(baseName + ".eso");
                 traces.addAll(esiParser.parse(asm, new FileReader(traceFile)));
-            } else if ((traceFile = new File(baseName + ".esi")).exists()) {
+            } else if (new File(baseName + ".esi").exists()) {
+                traceFile = new File(baseName + ".esi");
                 traces.addAll(esiParser.parse(asm, new FileReader(traceFile)));
             }
         } catch (FileNotFoundException e) {
@@ -155,17 +155,15 @@ public class TraceList implements IPartListener {
     }
 
     /**
-     * @return get absolute index of the current position, including all
-     *         preceding traces
+     * @return get absolute index of the current position, including all preceding traces
      */
     public int getTablePos() {
         return tablePos;
     }
 
     /**
-     * @return textual representation of the current trace, including input,
-     *         outputs, reaction time and additional remarks when an error
-     *         occurred during simulation
+     * @return textual representation of the current trace, including input, outputs, reaction time
+     *         and additional remarks when an error occurred during simulation
      * 
      */
     public LinkedList<String[]> getTable() {
@@ -204,38 +202,57 @@ public class TraceList implements IPartListener {
      * notify all listeners, that the status of the trace has changed.
      * 
      * @param newTrace
-     *            true if the complete trace has changed, false if only the
-     *            current step changed
+     *            true if the complete trace has changed, false if only the current step changed
      */
     public static void notifyListeners(final boolean newTrace) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                Iterator<ITraceListener> iterator = listeners.iterator();
-                while (iterator.hasNext()) {
-                    iterator.next().traceChanged(newTrace);
+                Iterator<ITraceListener> i = listeners.iterator();
+                while (i.hasNext()) {
+                    i.next().traceChanged(newTrace);
                 }
             }
         });
     }
 
     // Editor functions
+    /**
+     * {@inheritDoc}
+     * 
+     */
     public void partActivated(final IWorkbenchPart part) {
         // nothing to do
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     public void partBroughtToTop(final IWorkbenchPart part) {
         // nothing to do
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     public void partClosed(final IWorkbenchPart part) {
         // nothing to do
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     public void partDeactivated(final IWorkbenchPart part) {
         // nothing to do
 
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     public void partOpened(final IWorkbenchPart part) {
         notifyListeners(true);
 
@@ -270,8 +287,7 @@ public class TraceList implements IPartListener {
      * @throws CommunicationException
      *             thrown for any communication errors
      */
-    public boolean executeStep(final IStatusLineManager manager)
-            throws CommunicationException {
+    public boolean executeStep(final IStatusLineManager manager) throws CommunicationException {
         // System.out.println("execute step " + this.tablePos + "/" + size);
         if (hasNext()) {
             Tick tick = next();
@@ -294,13 +310,15 @@ public class TraceList implements IPartListener {
                 final int davg = avg;
                 final int dsize = size;
 
-                if (!hasNext() || pos % 128 == 0) {
+                /** update display each steps*/
+                final int updateEach = 128;
+                
+                if (!hasNext() || pos % updateEach == 0) {
                     Display.getDefault().asyncExec(new Runnable() {
                         public void run() {
                             if (!manager.isDirty()) {
-                                manager.setMessage("Tick " + pos + "/" + dsize
-                                        + ": " + rt + " {" + dmin + ", " + davg
-                                        / pos + ", " + dmax + "}");
+                                manager.setMessage("Tick " + pos + "/" + dsize + ": " + rt + " {"
+                                        + dmin + ", " + davg / pos + ", " + dmax + "}");
                             }
                         }
 
@@ -329,28 +347,28 @@ public class TraceList implements IPartListener {
      * @return String that contains minimal, average and maximal reaction time
      */
     public String getWCRT() {
-        int min = 0xFF;
-        int max = 0;
+        int minRT = Integer.MAX_VALUE;
+        int maxRT = 0;
         int n = 0;
         int sum = 0;
-        int avg = 0;
+        int avgRT = 0;
         for (final Trace trace : traces) {
             for (final Tick tick : trace.ticks) {
                 final int i = tick.getRT();
-                if (i < min) {
-                    min = i;
+                if (i < minRT) {
+                    minRT = i;
                 }
-                if (i > max) {
-                    max = i;
+                if (i > maxRT) {
+                    maxRT = i;
                 }
                 n++;
                 sum += i;
             }
         }
         if (n > 0) {
-            avg = sum / n;
+            avgRT = sum / n;
         }
-        return "{" + min + " / " + avg + " / " + max + "}";
+        return "{" + minRT + " / " + avgRT + " / " + maxRT + "}";
     }
 
     /**

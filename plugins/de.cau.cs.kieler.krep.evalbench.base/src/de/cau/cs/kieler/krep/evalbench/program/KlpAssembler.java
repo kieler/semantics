@@ -37,6 +37,7 @@ import de.cau.cs.kieler.krep.editors.klp.klp.SetPC;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
+import de.cau.cs.kieler.krep.evalbench.helpers.Tools;
 import de.cau.cs.kieler.krep.evalbench.program.klp.Opcode;
 
 /**
@@ -369,6 +370,9 @@ public class KlpAssembler implements IAssembler {
      * StringReader in = new StringReader(program); assemble(name, in); }
      */
 
+    /**
+     * {@inheritDoc}
+     */
     public String canExecute(final Config c) {
         // if (!(c instanceof KrepConfig)) {
         // return "wrong processor";
@@ -388,10 +392,16 @@ public class KlpAssembler implements IAssembler {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public LinkedList<Signal> getInputs() {
         return inputs;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String[][] getInstructions() {
         final LinkedList<String[]> res = new LinkedList<String[]>();
         int j = 0;
@@ -521,18 +531,19 @@ public class KlpAssembler implements IAssembler {
     public String[] getObj(final Config c) {
         int j = 0;
         LinkedList<String> obj = new LinkedList<String>();
-        /*
-         * if (instructions != null) { for (final Instruction i : instructions) { final String t =
-         * i.writeObj(); if (t != null) { obj.add(Tools.toHex(j++) + t); } } }
-         */
+
+        if (model != null) {
+            for (final Line l : model.getInstructions()) {
+                Instruction i = l.getInstruction();
+                final String t = "" + i.getOpcode0() + i.getOpcode1() + i.getOpcode2()
+                        + i.getOpcode3();
+                if (t != null) {
+                    obj.add(Tools.toHex(j++) + t);
+                }
+            }
+        }
+
         return obj.toArray(new String[obj.size()]);
-    }
-
-    private void clear() {
-        inputs.clear();
-        outputs.clear();
-
-        instructions.clear();
     }
 
     /**
@@ -571,12 +582,15 @@ public class KlpAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public void assemble(final String name, final String program) throws ParseException {
+    public void assemble(final String n, final String p) throws ParseException {
         // TODO Auto-generated method stub
 
     }
 
-    public void assemble(final String name, final Reader program) throws ParseException {
+    /**
+     * {@inheritDoc}
+     */
+    public void assemble(final String n, final Reader p) throws ParseException {
         // TODO Auto-generated method stub
 
     }

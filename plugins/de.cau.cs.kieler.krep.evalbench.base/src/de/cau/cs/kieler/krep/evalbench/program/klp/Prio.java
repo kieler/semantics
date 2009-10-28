@@ -11,40 +11,40 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.evalbench.program.klp;
-
-import java.util.HashMap;
-
-import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
-import de.cau.cs.kieler.krep.evalbench.program.Instruction;
-
-public class Prio extends Instruction {
-
-    private final Register reg;
-    private final int val;
-
-    public Prio(final String reg, final int val) {
-        super();
-        this.reg = Register.get(reg);
-        this.val = val;
-    }
-
-    @Override
-    public void asmLabel(final HashMap<String, Integer> label2addr)
-            throws ParseException {
-        // Nothing to do
-
-    }
-
-    @Override
-    protected int[] getObj() {
-        Opcode op = Opcode.PRIO;
-        return new int[] { op.getCode(), reg.getId(), val, 0 };
-    }
-
-    @Override
-    public String toString() {
-        return "PRIO " + reg.toString() + " " + val;
-    }
-
-}
+//package de.cau.cs.kieler.krep.evalbench.program.klp;
+//
+//import java.util.HashMap;
+//
+//import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
+//import de.cau.cs.kieler.krep.evalbench.program.Instruction;
+//
+//public class Prio extends Instruction {
+//
+//    private final Register reg;
+//    private final int val;
+//
+//    public Prio(final String reg, final int val) {
+//        super();
+//        this.reg = Register.get(reg);
+//        this.val = val;
+//    }
+//
+//    @Override
+//    public void asmLabel(final HashMap<String, Integer> label2addr)
+//            throws ParseException {
+//        // Nothing to do
+//
+//    }
+//
+//    @Override
+//    protected int[] getObj() {
+//        Opcode op = Opcode.PRIO;
+//        return new int[] { op.getCode(), reg.getId(), val, 0 };
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "PRIO " + reg.toString() + " " + val;
+//    }
+//
+//}

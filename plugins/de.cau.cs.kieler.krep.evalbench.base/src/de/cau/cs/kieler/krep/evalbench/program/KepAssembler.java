@@ -93,8 +93,8 @@ public class KepAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public void assemble(final String name, final Reader program) throws ParseException {
-        this.name = name;
+    public void assemble(final String progName, final Reader program) throws ParseException {
+        this.name = progName;
         boolean error = false;
         String errorMsg;
         // clear();
@@ -164,9 +164,9 @@ public class KepAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public void assemble(final String name, final String program) throws ParseException {
+    public void assemble(final String progName, final String program) throws ParseException {
         final StringReader in = new StringReader(program);
-        assemble(name, in);
+        assemble(progName, in);
     }
 
     /**

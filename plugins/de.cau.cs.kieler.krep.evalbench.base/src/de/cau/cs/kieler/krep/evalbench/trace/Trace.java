@@ -32,12 +32,16 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
  */
 public class Trace implements IPartListener, Iterator<Tick> {
 
+    /** List of ticks in this trace. */
     protected ArrayList<Tick> ticks = new ArrayList<Tick>();
 
     private ArrayList<Boolean> valid = new ArrayList<Boolean>();
 
     private int step = 0;
 
+    /**
+     *  Signal index for all signals in the trace.
+     */
     protected HashMap<String, Integer> index;
 
     /**
@@ -132,9 +136,12 @@ public class Trace implements IPartListener, Iterator<Tick> {
         return ticks.size();
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     public void remove() {
-
-        // current.remove();
+        // nothing to do
     }
 
     /**
@@ -160,8 +167,7 @@ public class Trace implements IPartListener, Iterator<Tick> {
                 Boolean.toString(isValid);
             }
             String[] t = { tick.toString(IO.INPUT), tick.toString(IO.OUTPUT),
-                    tick.toString(IO.SAVED_OUTPUT), v,
-                    String.valueOf(tick.getRT()) };
+                    tick.toString(IO.SAVED_OUTPUT), v, String.valueOf(tick.getRT()) };
             res.add(t);
         }
         return res;
@@ -205,8 +211,7 @@ public class Trace implements IPartListener, Iterator<Tick> {
     }
 
     /**
-     * @return true when the outputs of the current tick match the reference
-     *         outputs
+     * @return true when the outputs of the current tick match the reference outputs
      */
     public boolean validateCurrent() {
         int i = step - 1;
@@ -263,25 +268,45 @@ public class Trace implements IPartListener, Iterator<Tick> {
     }
 
     // Editor functions
+    /**
+     * {@inheritDoc}
+     * 
+     */
     public void partActivated(final IWorkbenchPart part) {
         // nothing to do
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     public void partBroughtToTop(final IWorkbenchPart part) {
         // nothing to do
 
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     public void partClosed(final IWorkbenchPart part) {
         // / nothing to do
 
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     public void partDeactivated(final IWorkbenchPart part) {
         // nothing to do
 
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     public void partOpened(final IWorkbenchPart part) {
         // nothing to do
 
@@ -291,7 +316,7 @@ public class Trace implements IPartListener, Iterator<Tick> {
      * @return String to indicate minimal, average and maximal execution times
      */
     public String getWCRT() {
-        int min = 0xFF;
+        int min = Integer.MAX_VALUE;
         int max = 0;
         int avg = 0;
         for (final Tick t : ticks) {
@@ -323,7 +348,8 @@ public class Trace implements IPartListener, Iterator<Tick> {
     /**
      * add an additional tick to the end of the trace.
      * 
-     * @param t the additional tick
+     * @param t
+     *            the additional tick
      */
     public void add(final Tick t) {
         if (ticks.isEmpty()) {

@@ -30,22 +30,22 @@ public class KrepConfig implements Config {
     private static final int WORD_SIZE = 32;
     
     /**
-     * @param cores
+     * @param ncores
      *            number of cores (for KRP)
-     * @param io
+     * @param nio
      *            (number of IO signals)
-     * @param regs
+     * @param nregs
      *            (number of registers)
-     * @param irom
+     * @param nirom
      *            (size of instruction ROM)
      */
-    public KrepConfig(final int cores, final int io, final int regs,
-            final int irom) {
+    public KrepConfig(final int ncores, final int nio, final int nregs,
+            final int nirom) {
 
-        this.cores = cores;
-        this.io = io;
-        this.regs = regs;
-        this.irom = irom;
+        this.cores = ncores;
+        this.io = nio;
+        this.regs = nregs;
+        this.irom = nirom;
     }
 
     /**

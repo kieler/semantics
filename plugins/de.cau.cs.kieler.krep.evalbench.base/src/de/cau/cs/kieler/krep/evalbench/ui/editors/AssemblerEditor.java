@@ -39,17 +39,18 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
 
 /**
- * The basic editor for displaying assembler instructions in the evaluation
- * bench. Subclasses of this abstract class must create a suitable
- * implementation of the <code>IAssembler</code> interface.
+ * The basic editor for displaying assembler instructions in the evaluation bench. Subclasses of
+ * this abstract class must create a suitable implementation of the <code>IAssembler</code>
+ * interface.
  * 
  * @author msp
  */
 public abstract class AssemblerEditor extends EditorPart {
 
     /** Column identifiers for the embedded table. */
-    private static final String[] COLUMN_NAMES = { "index", "label",
-            "instruction", "opcode" };
+    private static final String[] COLUMN_NAMES = { "index", "label", "instruction", "opcode" };
+
+    private static final int[] COLUMN_WIDTH = { 3, 300, 40, 90, 50 };
 
     /** The embedded table. */
     private Table table = null;;
@@ -57,23 +58,22 @@ public abstract class AssemblerEditor extends EditorPart {
     private TableViewer viewer;
 
     /**
-     * Assembler used to parse the input file. Subclasses must fill this field
-     * with their implementation.
+     * Assembler used to parse the input file. Subclasses must fill this field with their
+     * implementation.
      */
     protected IAssembler assembler;
 
     /**
-     * Gets the protocol type suited for the current editor implementation.
-     * Subclasses must extend this and return one of the constants defined in
-     * <code>ICommunicationProtocol</code>.
+     * Gets the protocol type suited for the current editor implementation. Subclasses must extend
+     * this and return one of the constants defined in <code>ICommunicationProtocol</code>.
      * 
      * @return communication protocol identifier
      */
     public abstract String getProtocolType();
 
     /**
-     * Reads an input file and executes an assembler to generate binary code and
-     * signals information.
+     * Reads an input file and executes an assembler to generate binary code and signals
+     * information.
      * 
      * @param inputFile
      *            assembler file to be read
@@ -82,8 +82,7 @@ public abstract class AssemblerEditor extends EditorPart {
      * @throws ParseException
      *             when the assembler fails to parse the input
      */
-    private void updateProgram(final File inputFile) throws IOException,
-            ParseException {
+    private void updateProgram(final File inputFile) throws IOException, ParseException {
         // read input file
         StringBuffer stringBuffer = new StringBuffer();
         FileReader reader = new FileReader(inputFile);
@@ -99,8 +98,7 @@ public abstract class AssemblerEditor extends EditorPart {
 
             String baseName = inputFile.getAbsolutePath();
             baseName = baseName.substring(0, baseName.lastIndexOf('.'));
-            Activator.getDefault()
-                    .setTraces(new TraceList(assembler, baseName));
+            Activator.getDefault().setTraces(new TraceList(assembler, baseName));
         } finally {
             reader.close();
         }
@@ -113,8 +111,7 @@ public abstract class AssemblerEditor extends EditorPart {
      * org.eclipse.ui.IEditorInput)
      */
     @Override
-    public void init(final IEditorSite site, final IEditorInput input)
-            throws PartInitException {
+    public void init(final IEditorSite site, final IEditorInput input) throws PartInitException {
         try {
             setSite(site);
             setInputWithNotify(input);
@@ -133,11 +130,10 @@ public abstract class AssemblerEditor extends EditorPart {
             updateProgram(file);
             setPartName(file.getName());
         } catch (IOException e) {
-            throw new PartInitException(new Status(Status.ERROR,
-                    Activator.PLUGIN_ID, "Could not read from input file.", e));
+            throw new PartInitException(new Status(Status.ERROR, Activator.PLUGIN_ID,
+                    "Could not read from input file.", e));
         } catch (ParseException e) {
-            throw new PartInitException(new Status(Status.ERROR,
-                    Activator.PLUGIN_ID,
+            throw new PartInitException(new Status(Status.ERROR, Activator.PLUGIN_ID,
                     "The assembler could not parse the input file.", e));
         }
     }
@@ -145,22 +141,22 @@ public abstract class AssemblerEditor extends EditorPart {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
-     * .Composite)
+     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
      */
     @Override
     public void createPartControl(final Composite parent) {
         // create table
         table = new Table(parent, SWT.MULTI);
-        TableColumn column0 = new TableColumn(table, SWT.RIGHT, 0);
-        column0.setWidth(40);
-        TableColumn column1 = new TableColumn(table, SWT.NONE, 1);
-        column1.setWidth(90);
-        TableColumn column2 = new TableColumn(table, SWT.NONE, 2);
-        column2.setWidth(300);
-        TableColumn column3 = new TableColumn(table, SWT.NONE, 3);
-        column3.setWidth(50);
+        for (int i = 0; i < COLUMN_WIDTH.length; i++) {
+            TableColumn column0 = new TableColumn(table, SWT.RIGHT, i);
+            column0.setWidth(COLUMN_WIDTH[i]);
+        }
+        /*
+         * TableColumn column0 = new TableColumn(table, SWT.RIGHT, 0); column0.setWidth(40);
+         * TableColumn column1 = new TableColumn(table, SWT.NONE, 1); column1.setWidth(90);
+         * TableColumn column2 = new TableColumn(table, SWT.NONE, 2); column2.setWidth(300);
+         * TableColumn column3 = new TableColumn(table, SWT.NONE, 3); column3.setWidth(50);
+         */
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
 
@@ -190,8 +186,7 @@ public abstract class AssemblerEditor extends EditorPart {
     /*
      * (non-Javadoc)
      * 
-     * @seeorg.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.
-     * IProgressMonitor)
+     * @seeorg.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime. IProgressMonitor)
      */
     @Override
     public void doSave(final IProgressMonitor monitor) {
@@ -266,8 +261,8 @@ public abstract class AssemblerEditor extends EditorPart {
     }
 
     /**
-     * Check whether the current program can be executed on this the given
-     * configuration. Should be accessed from the currently connected target.
+     * Check whether the current program can be executed on this the given configuration. Should be
+     * accessed from the currently connected target.
      * 
      * @param krp
      *            configuration of the current processor

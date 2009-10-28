@@ -39,15 +39,15 @@ public class OutputView extends ViewPart implements ISignalListener {
     /** Column identifiers for the embedded table. */
     private static final String[] COLUMN_NAMES = { "signal", "present", "value" };
 
+    private static final int[] COLUMN_WIDTH = { 150, 20, 80 };
+
     /** The viewer used to display output values. */
     private TableViewer viewer = null;
 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
-     * .Composite)
+     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
      */
     @Override
     public void createPartControl(final Composite parent) {
@@ -59,15 +59,15 @@ public class OutputView extends ViewPart implements ISignalListener {
         TableColumn column0 = new TableColumn(table, SWT.NONE, 0);
         column0.setText("Signal");
         column0.setToolTipText("Signal name");
-        column0.setWidth(150);
+        column0.setWidth(COLUMN_WIDTH[0]);
         TableColumn column1 = new TableColumn(table, SWT.NONE, 1);
         column1.setText("P");
         column1.setToolTipText("Signal presence status");
-        column1.setWidth(20);
+        column1.setWidth(COLUMN_WIDTH[1]);
         TableColumn column2 = new TableColumn(table, SWT.NONE, 2);
         column2.setText("Value");
         column2.setToolTipText("Signal value");
-        column2.setWidth(80);
+        column2.setWidth(COLUMN_WIDTH[2]);
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
         // create table viewer
@@ -100,22 +100,19 @@ public class OutputView extends ViewPart implements ISignalListener {
         super.dispose();
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * krep.evalbench.comm.ISignalListener#tickPerformed(krep.evalbench.comm
-     * .Signal[], krep.evalbench.comm.Signal[])
+     * @see krep.evalbench.comm.ISignalListener#tickPerformed(krep.evalbench.comm .Signal[],
+     *      krep.evalbench.comm.Signal[])
      */
-    public void tickPerformed(final LinkedList<Signal> inputs,
-            final LinkedList<Signal> outputs) {
+    public void tickPerformed(final LinkedList<Signal> inputs, final LinkedList<Signal> outputs) {
         // input signals are ignored
         viewer.setInput(outputs.toArray(new Signal[1]));
     }
 
     /**
-     * Changes the input of the embedded table viewer to the given list of
-     * signals.
+     * Changes the input of the embedded table viewer to the given list of signals.
      * 
      * @param input
      *            the new input

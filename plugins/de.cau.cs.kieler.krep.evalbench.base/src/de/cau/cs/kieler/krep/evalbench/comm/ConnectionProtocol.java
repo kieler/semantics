@@ -22,6 +22,7 @@ import java.io.OutputStreamWriter;
 import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
+import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
 /**
  * Abstract superclass for connection protocols that use input and output streams.
@@ -122,6 +123,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                     try {
                         Thread.sleep(SHORT_TIMEOUT);
                     } catch (InterruptedException e) {
+                        MessageView.print(e.getMessage());
                         // Ignore silently
                     }
                 }
@@ -163,6 +165,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                         Thread.sleep(SHORT_TIMEOUT);
                     } catch (InterruptedException e) {
                         // Ignore silently
+                        MessageView.print(e.getMessage());
                     }
                 }
                 if (System.currentTimeMillis() - startTime > LONG_TIMEOUT) {
@@ -179,7 +182,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    // silently ignore
+                    MessageView.print(e.getMessage());
                 }
             }
         }
@@ -188,7 +191,6 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.IConnectionProtocol#receive(char)
      */
     public LinkedList<Integer> receiveByte(final int n) throws CommunicationException {
         InputStreamReader reader = null;
@@ -209,6 +211,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                         Thread.sleep(SHORT_TIMEOUT);
                     } catch (InterruptedException e) {
                         // Ignore silently
+                        break;
                     }
                 }
                 if (System.currentTimeMillis() - startTime > LONG_TIMEOUT) {
@@ -308,6 +311,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                 try {
                     writer.close();
                 } catch (IOException e) {
+                    MessageView.print(e.getMessage());
                     // silently ignore
                 }
             }
@@ -338,6 +342,7 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
                     writer.close();
                 }
             } catch (IOException e) {
+                MessageView.print(e.getMessage());
                 // silently ignore
             }
         }

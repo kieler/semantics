@@ -25,8 +25,7 @@ import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 
 /**
- * @author ctr interface to external assembler to generate object code from the
- *         kep assembler file
+ * @author ctr interface to external assembler to generate object code from the kep assembler file
  */
 public final class KasmAssembler implements IAssembler {
 
@@ -66,8 +65,8 @@ public final class KasmAssembler implements IAssembler {
     }
 
     /**
-     * Gathers signal objects from a string of signal names and stores them into
-     * a list. Signal names are expected to be separated with a space character.
+     * Gathers signal objects from a string of signal names and stores them into a list. Signal
+     * names are expected to be separated with a space character.
      * 
      * @param list
      *            list where signals are to be stored
@@ -79,14 +78,14 @@ public final class KasmAssembler implements IAssembler {
      *            string of signal names
      * @return the signal index increased by the number of added signals
      */
-    private int gatherSignals(final LinkedList<Signal> list,
-            final int startIndex, final boolean valued, final String names) {
+    private int gatherSignals(final LinkedList<Signal> list, final int startIndex,
+            final boolean valued, final String names) {
         final StringTokenizer tokenizer = new StringTokenizer(names, " ");
         int newIndex = startIndex;
 
         while (tokenizer.hasMoreTokens()) {
-            final Signal signal = new Signal(tokenizer.nextToken(), false,
-                    valued ? 0 : null, newIndex);
+            final Signal signal = new Signal(tokenizer.nextToken(), false, valued ? 0 : null,
+                    newIndex);
             signalIndex.put(signal.getName(), signal.getIndex());
             newIndex++;
             list.add(signal);
@@ -94,14 +93,12 @@ public final class KasmAssembler implements IAssembler {
         return newIndex;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see krep.evalbench.program.IAssembler#assemble(java.lang.String)
      */
-    public void assemble(final String name, final String program)
-            throws ParseException {
-        this.name = name;
+    public void assemble(final String progName, final String program) throws ParseException {
+        this.name = progName;
         String[] result;
         // File listFile;
         // clear lists of inputs and outputs
@@ -111,54 +108,46 @@ public final class KasmAssembler implements IAssembler {
         // parse the listing file
         int pos = 0;
         try {
-            final LinkedList<String> instructions = new LinkedList<String>();
+            final LinkedList<String> instrs = new LinkedList<String>();
             // final BufferedReader reader = new BufferedReader(new FileReader(
             // listFile));
-            final BufferedReader reader = new BufferedReader(new StringReader(
-                    program));
-            int signalIndex = 1;
+            final BufferedReader reader = new BufferedReader(new StringReader(program));
+            int signalId = 1;
             String line;
             while ((line = reader.readLine()) != null) {
                 // detect list of valued input signals
                 if (line.startsWith("INPUTV")) {
-                    signalIndex = gatherSignals(inputs, signalIndex, true, line
-                            .substring(6));
+                    signalId = gatherSignals(inputs, signalId, true, line.substring("INPUTV".length()));
                     pos += line.length() + 1;
                 } else if (line.startsWith("INPUT")) {
                     // detect list of pure input signals
-                    signalIndex = gatherSignals(inputs, signalIndex, false,
-                            line.substring(5));
+                    signalId = gatherSignals(inputs, signalId, false, line.substring("INPUT".length()));
                     pos += line.length() + 1;
                 } else if (line.startsWith("OUTPUTV")) {
                     // detect list of valued output signals
-                    signalIndex = gatherSignals(outputs, signalIndex, true,
-                            line.substring(7));
+                    signalId = gatherSignals(outputs, signalId, true, line.substring("OUTPUTV".length()));
                     pos += line.length() + 1;
                 } else if (line.startsWith("OUTPUT")) {
                     // detect list of pure output signals
-                    signalIndex = gatherSignals(outputs, signalIndex, false,
-                            line.substring(6));
+                    signalId = gatherSignals(outputs, signalId, false, line.substring("OUTPUT".length()));
                     pos += line.length() + 1;
                 } else if (line.startsWith("[")) {
                     final int i1 = line.indexOf('{');
                     final int i2 = line.indexOf('}');
                     if (i1 < 0 || i2 < 0 || i2 - i1 == 0) {
-                        throw new ParseException(
-                                pos
-                                        + ": Syntax error in listing file:"
-                                        + " Curly braces with code information expected");
+                        throw new ParseException(pos + ": Syntax error in listing file:"
+                                + " Curly braces with code information expected");
                     }
-                    instructions.add(line.substring(i1 + 1, i2));
+                    instrs.add(line.substring(i1 + 1, i2));
                 }
             }
-            result = instructions.toArray(new String[1]);
+            result = instrs.toArray(new String[1]);
         } catch (final IOException e) {
-            throw new ParseException(pos
-                    + ": Could not read the listing file: " + e.getMessage());
+            throw new ParseException(pos + ": Could not read the listing file: " + e.getMessage());
         }
 
         // read the instructions and labels from the source string
-        final LinkedList<String[]> instructions = new LinkedList<String[]>();
+        final LinkedList<String[]> instrs = new LinkedList<String[]>();
         final StringTokenizer tokenizer = new StringTokenizer(program, "\n\r");
         String label = "";
         int instrCount = 0;
@@ -190,17 +179,19 @@ public final class KasmAssembler implements IAssembler {
                         newInstr[1] = "";
                     }
                     newInstr[2] = line;
-                    newInstr[3] = result[instructions.size()];
-                    instructions.add(newInstr);
+                    newInstr[3] = result[instrs.size()];
+                    instrs.add(newInstr);
                 }
             }
         }
-        this.instructions = instructions.toArray(new String[0][0]);
+        this.instructions = instrs.toArray(new String[0][0]);
         obj = result;
     }
 
-    public void assemble(final String name, final Reader program)
-            throws ParseException {
+    /**
+     * {@inheritDoc}
+     */
+    public void assemble(final String progName, final Reader program) throws ParseException {
         String s = "";
         try {
             while (program.ready()) {
@@ -210,11 +201,11 @@ public final class KasmAssembler implements IAssembler {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        assemble(name, s);
+        assemble(progName, s);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.program.IAssembler#getInputs()
      */
@@ -222,8 +213,8 @@ public final class KasmAssembler implements IAssembler {
         return inputs;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see krep.evalbench.program.IAssembler#getOutputs()
      */
@@ -231,37 +222,53 @@ public final class KasmAssembler implements IAssembler {
         return outputs;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see krep.evalbench.program.IAssembler#getInstructions()
+    /**
+     * {@inheritDoc}
      */
     public String[][] getInstructions() {
         return instructions;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String canExecute(final Config c) {
         // TODO: implement Configuration for KEP
         return "not yet implemented!";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String[] getObj(final Config c) {
         return obj;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public HashMap<String, Integer> getSignalIndex() {
         return signalIndex;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int adr2row(final int i) {
         // each instruction is in its row
         return i;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int size() {
         return obj.length;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getName() {
         return name;
     }

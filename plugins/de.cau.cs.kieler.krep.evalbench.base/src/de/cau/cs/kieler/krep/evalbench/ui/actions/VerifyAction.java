@@ -215,6 +215,8 @@ public class VerifyAction extends Action {
                                 out.close();
                             } catch (IOException e) {
                                 // silently ignore
+
+                                MessageView.print(e.getMessage());
                             }
                         }
                     }
@@ -232,12 +234,16 @@ public class VerifyAction extends Action {
             file = new File(prefix + ".lst");
             if (file.exists()) {
                 res = new KasmAssembler();
-            } else if ((file = new File(prefix + ".kasm")).exists()) {
-                res = new KepAssembler();
-            } else if ((file = new File(prefix + ".klp")).exists()) {
-                res = new KlpAssembler();
             } else {
-                throw new ParseException("No assembler found in " + path);
+                file = new File(prefix + ".kasm");
+                if (file.exists()) {
+                    res = new KepAssembler();
+                } else if (new File(prefix + ".klp").exists()) {
+                    file = new File(prefix + ".klp");
+                    res = new KlpAssembler();
+                } else {
+                    throw new ParseException("No assembler found in " + path);
+                }
             }
             res.assemble(file.getName(), new FileReader(file));
             return res;

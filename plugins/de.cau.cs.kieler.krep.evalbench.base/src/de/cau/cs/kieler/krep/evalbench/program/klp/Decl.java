@@ -56,11 +56,11 @@ public class Decl extends Instruction {
     /**
      * @param io
      *            scope of the signal (input, output, local)
-     * @param reg
+     * @param r
      *            unique name of the register
      */
-    public Decl(final Kind io, final String reg) {
-        this.reg = Register.get(reg);
+    public Decl(final Kind io, final String r) {
+        this.reg = Register.get(r);
         this.kind = io;
         if (io == Kind.INPUT) {
             id = nIn++;

@@ -284,7 +284,6 @@ public class KepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#continuousRun()
      */
     public void continuousRun() throws CommunicationException {
         send(RUN_COMMAND);
@@ -292,8 +291,6 @@ public class KepProtocol extends CommunicationProtocol {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#getExecutionTrace()
      */
     public int[] getExecutionTrace() throws CommunicationException {
         send(TRACE_COMMAND);
@@ -310,7 +307,6 @@ public class KepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#getTargetInfo()
      */
     public String getTargetInfo() throws CommunicationException {
         send(INFO_COMMAND);
@@ -345,7 +341,6 @@ public class KepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#loadProgram(java.lang.String)
      */
     public boolean loadProgram(final IAssembler program, final IProgressMonitor monitor)
             throws CommunicationException {
@@ -390,7 +385,6 @@ public class KepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#resetStatus()
      */
     public void resetStatus() throws CommunicationException {
         send(RESET_COMMAND);
@@ -400,7 +394,6 @@ public class KepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#stopContinuous()
      */
     public void stopContinuous() throws CommunicationException {
         send(STOP_COMMAND);
@@ -410,7 +403,6 @@ public class KepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#tick()
      */
     public int tick(final int maxSignals, final LinkedList<Signal> inputs,
             final LinkedList<Signal> outputs) throws CommunicationException {
@@ -500,7 +492,6 @@ public class KepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#verifyCommunication()
      */
     public String verifyCommunication() throws CommunicationException {
         send(VERIFY_COMMAND);

@@ -28,11 +28,11 @@ public class Done extends Instruction {
     private int pos;
 
     /**
-     * @param label
+     * @param lab
      *            label from where to start in the next tick
      */
-    public Done(final String label) {
-        this.label = label;
+    public Done(final String lab) {
+        this.label = lab;
     }
 
     @Override

@@ -38,6 +38,8 @@ public class AssemblerView extends ViewPart {
     /** Column identifiers for the embedded table. */
     private static final String[] COLUMN_NAMES = { "index", "label", "instruction", "opcode" };
 
+    private static final int[] COLUMN_WIDTH = { 40, 90, 300, 50 };
+
     /** Activator for this view. */
     public Activator activator = null;
 
@@ -65,14 +67,12 @@ public class AssemblerView extends ViewPart {
     public final void createPartControl(final Composite parent) {
         // create table
         table = new Table(parent, SWT.MULTI);
-        TableColumn column0 = new TableColumn(table, SWT.RIGHT, 0);
-        column0.setWidth(40);
-        TableColumn column1 = new TableColumn(table, SWT.NONE, 1);
-        column1.setWidth(90);
-        TableColumn column2 = new TableColumn(table, SWT.NONE, 2);
-        column2.setWidth(300);
-        TableColumn column3 = new TableColumn(table, SWT.NONE, 3);
-        column3.setWidth(50);
+
+        TableColumn column;
+        for (int i = 0; i < COLUMN_WIDTH.length; i++) {
+            column = new TableColumn(table, SWT.RIGHT, i);
+            column.setWidth(COLUMN_WIDTH[i]);
+        }
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
 
@@ -99,7 +99,7 @@ public class AssemblerView extends ViewPart {
      * Set the assembler that is displayed in the assembler view.
      * 
      * @param assembler
-     *            tye new assembler that shall be display.
+     *            the new assembler that shall be display.
      */
     public final void setAssembler(final IAssembler assembler) {
         if (viewer != null) {

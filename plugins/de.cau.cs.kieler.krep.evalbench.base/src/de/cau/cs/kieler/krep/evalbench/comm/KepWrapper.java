@@ -38,7 +38,8 @@ public class KepWrapper implements IKrepWrapper {
     private final EsiLogger esi;
 
     private static final String NAME = "kep";
-
+    private static final int   MASK_BYTE = 0xFF;
+    
     static {
         System.loadLibrary("kep");
     }
@@ -101,7 +102,7 @@ public class KepWrapper implements IKrepWrapper {
             if (msg.length() > 0) {
                 MessageView.print(msg);
             }
-            io += " %OUTPUT: TX(0x" + Integer.toHexString(c & 0xFF) + ")";
+            io += " %OUTPUT: TX(0x" + Integer.toHexString(c & MASK_BYTE) + ")";
             output.offer(c);
         }
         io += "\n";
@@ -114,7 +115,7 @@ public class KepWrapper implements IKrepWrapper {
     public void send(final byte b) {
         final String msg = "";
         step();
-        esi.write("RX(0x" + Integer.toHexString(b & 0xFF) + ")");
+        esi.write("RX(0x" + Integer.toHexString(b & MASK_BYTE) + ")");
         kep_send(b, msg);
         if (msg.length() > 0) {
             MessageView.print(msg);
@@ -148,6 +149,7 @@ public class KepWrapper implements IKrepWrapper {
                 try {
                     out.close();
                 } catch (final IOException e) {
+                    return;
                     // silently ignore
                 }
             }

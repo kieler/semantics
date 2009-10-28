@@ -23,8 +23,8 @@ import org.eclipse.jface.viewers.Viewer;
  */
 public class ProgramContentProvider implements IStructuredContentProvider {
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java
@@ -38,8 +38,8 @@ public class ProgramContentProvider implements IStructuredContentProvider {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see org.eclipse.jface.viewers.IContentProvider#dispose()
      */
@@ -47,8 +47,8 @@ public class ProgramContentProvider implements IStructuredContentProvider {
         // Nothing to do
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see
      * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface

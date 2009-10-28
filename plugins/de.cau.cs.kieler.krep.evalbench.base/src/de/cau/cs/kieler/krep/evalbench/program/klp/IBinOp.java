@@ -31,21 +31,21 @@ public class IBinOp extends Instruction {
     private OP op;
 
     /**
-     * @param to
+     * @param tTo
      *            variable that stores the result
-     * @param r1
+     * @param reg
      *            register that holds first parameter
      * @param c
      *            constant value as second parameter
-     * @param op
+     * @param tOp
      *            operation
      */
-    public IBinOp(final String to, final Read r1, final int c, final OP op) {
+    public IBinOp(final String tTo, final Read reg, final int c, final OP tOp) {
         super();
-        this.to = Register.get(to);
-        this.r1 = r1;
+        this.to = Register.get(tTo);
+        this.r1 = reg;
         this.val = c;
-        this.op = op;
+        this.op = tOp;
     }
 
     @Override

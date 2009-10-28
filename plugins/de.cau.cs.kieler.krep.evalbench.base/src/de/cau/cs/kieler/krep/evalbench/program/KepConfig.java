@@ -42,11 +42,11 @@ public class KepConfig implements Config {
     }
 
     /**
-     * @param nSignals
+     * @param nSig
      *            the number of signals
      */
-    public void setnSignals(final int nSignals) {
-        this.nSignals = nSignals;
+    public void setnSignals(final int nSig) {
+        this.nSignals = nSig;
     }
 
     /**
@@ -57,11 +57,11 @@ public class KepConfig implements Config {
     }
 
     /**
-     * @param nThread
-     *            the nThread to set
+     * @param nThr
+     *            the number of threads to set
      */
-    public void setnThread(final int nThread) {
-        this.nThread = nThread;
+    public void setnThread(final int nThr) {
+        this.nThread = nThr;
     }
 
     /**
@@ -72,11 +72,11 @@ public class KepConfig implements Config {
     }
 
     /**
-     * @param widthCounter
-     *            the widthCounter to set
+     * @param wCounter
+     *            the counter width to set
      */
-    public void setWidthCounter(final int widthCounter) {
-        this.widthCounter = widthCounter;
+    public void setWidthCounter(final int wCounter) {
+        this.widthCounter = wCounter;
     }
 
     /**
@@ -87,11 +87,11 @@ public class KepConfig implements Config {
     }
 
     /**
-     * @param lTick
-     *            the lTick to set
+     * @param lT
+     *            the length of a Tick to set
      */
-    public void setlTick(final int lTick) {
-        this.lTick = lTick;
+    public void setlTick(final int lT) {
+        this.lTick = lT;
     }
 
     /**
@@ -102,11 +102,11 @@ public class KepConfig implements Config {
     }
 
     /**
-     * @param maxROM
-     *            the maxROM to set
+     * @param tMaxROM
+     *            the tMaxROM to set
      */
-    public void setMaxROM(final int maxROM) {
-        this.maxROM = maxROM;
+    public void setMaxROM(final int tMaxROM) {
+        this.maxROM = tMaxROM;
     }
 
     private String type;

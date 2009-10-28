@@ -57,8 +57,8 @@ public class VerifyPreferencePage extends FieldEditorPreferencePage implements
         super(FieldEditorPreferencePage.GRID);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
      * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
      */

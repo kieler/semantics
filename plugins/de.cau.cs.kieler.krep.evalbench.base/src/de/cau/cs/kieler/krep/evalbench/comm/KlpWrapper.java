@@ -155,6 +155,7 @@ public class KlpWrapper implements IKrepWrapper {
                     out.close();
                 } catch (IOException e) {
                     // silently ignore
+                    MessageView.print(e.getMessage());
                 }
             }
         }

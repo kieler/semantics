@@ -53,17 +53,17 @@ public class CJmp extends Instruction {
     private int pos;
 
     /**
-     * @param cond
+     * @param c
      *            condition
-     * @param reg
+     * @param r
      *            register to check
      * @param l
      *            label of the target
      */
-    public CJmp(final Cond cond, final Read reg, final String l) {
+    public CJmp(final Cond c, final Read r, final String l) {
         super();
-        this.cond = cond;
-        this.reg = reg;
+        this.cond = c;
+        this.reg = r;
         label = l;
     }
 

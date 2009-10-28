@@ -34,8 +34,8 @@ public final class Register {
 
     private final int id; // 
 
-    private Register(final String name) {
-        this.name = name;
+    private Register(final String regName) {
+        this.name = regName;
         // this.isClock = false;
         // this.kind = Kind.TEMP;
         // Reg 0 is always true!

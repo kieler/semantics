@@ -25,12 +25,12 @@ public class Read {
     /**
      * @param v
      *            variable to read from
-     * @param pre
+     * @param isPre
      *            true if previous value should be read
      */
-    public Read(final String v, final boolean pre) {
+    public Read(final String v, final boolean isPre) {
         super();
-        this.pre = pre;
+        this.pre = isPre;
         this.reg = Register.get(v);
     }
 

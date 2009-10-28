@@ -36,31 +36,31 @@ public class IMov extends Instruction {
         IV;
     }
 
-    private Type t;
+    private Type type;
     private Register to;
     // private Type type;
-    private int val;
+    private int value;
 
     /**
      * move integer value to register.
      * 
      * @param t
      *            type of movement
-     * @param to
+     * @param target
      *            register that stores the value
      * @param val
      *            constant value to move
      */
-    public IMov(final Type t, final String to, final int val) {
-        this.t = t;
-        this.to = Register.get(to);
-        this.val = val; // new Read(Register.get(v.toString()), pre);
+    public IMov(final Type t, final String target, final int val) {
+        this.type = t;
+        this.to = Register.get(target);
+        this.value = val; 
     }
 
     @Override
     public String toString() {
         String res = "I";
-        switch (t) {
+        switch (type) {
         case IC:
             res += "C";
             break;
@@ -68,7 +68,7 @@ public class IMov extends Instruction {
             res += "V";
             break;
         }
-        res += "MOV\t" + to.toString() + "\t" + String.valueOf(val);
+        res += "MOV\t" + to.toString() + "\t" + String.valueOf(value);
 
         return res;
     }
@@ -76,7 +76,7 @@ public class IMov extends Instruction {
     @Override
     public int[] getObj() {
         Opcode op = null;
-        switch (t) {
+        switch (type) {
         case IC:
             op = Opcode.ICMOV;
             break;
@@ -84,7 +84,7 @@ public class IMov extends Instruction {
             op = Opcode.IVMOV;
             break;
         }
-        return new int[] { op.getCode(), 2 * to.getId(), val, 0 };
+        return new int[] { op.getCode(), 2 * to.getId(), value, 0 };
     }
 
     @Override

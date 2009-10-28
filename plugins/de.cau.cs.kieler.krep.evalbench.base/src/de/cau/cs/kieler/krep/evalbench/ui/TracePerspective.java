@@ -39,12 +39,10 @@ public class TracePerspective implements IPerspectiveFactory {
     /** Identifier string for the trace view. */
     private static final String ID_TRACE = "de.cau.cs.kieler.krep.evalbench.ui.views.trace";
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui
-     * .IPageLayout)
+     * @see org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui .IPageLayout)
      */
     public void createInitialLayout(final IPageLayout layout) {
 
@@ -52,8 +50,7 @@ public class TracePerspective implements IPerspectiveFactory {
         String editorArea = layout.getEditorArea();
 
         // bottom: Connection and Target view
-        IFolderLayout bottom = layout.createFolder("bottom",
-                IPageLayout.BOTTOM, 0.7f, editorArea);
+        IFolderLayout bottom = layout.createFolder("bottom", IPageLayout.BOTTOM, 0.7f, editorArea);
         bottom.addView(ID_CONNECTION);
         bottom.addView(ID_TARGET);
         bottom.addView(ID_MESSAGE);
@@ -62,8 +59,7 @@ public class TracePerspective implements IPerspectiveFactory {
         // layout.addStandaloneView(ID_TRACE, true, IPageLayout.RIGHT, 0.57f,
         // editorArea);
 
-        IFolderLayout left = layout.createFolder("left", IPageLayout.RIGHT,
-                0.57f, editorArea);
+        IFolderLayout left = layout.createFolder("left", IPageLayout.RIGHT, 0.57f, editorArea);
 
         left.addView(ID_TRACE);
 

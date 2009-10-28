@@ -105,6 +105,7 @@ public class TextViewer extends ContentViewer {
             }
         } catch (ClassCastException e) {
             // Ignore silently
+            MessageView.print(e.getMessage());
         }
     }
 

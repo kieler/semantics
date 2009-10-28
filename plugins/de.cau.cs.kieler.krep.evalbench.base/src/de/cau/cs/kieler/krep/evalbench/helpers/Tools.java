@@ -47,8 +47,10 @@ public final class Tools {
                     runnable);
         } catch (InvocationTargetException e) {
             // silently ignore exception
+            return;
         } catch (InterruptedException e) {
             // silently ignore exception
+            return;
         }
     }
 
@@ -126,7 +128,7 @@ public final class Tools {
             dTime = dTime % sec;
         }
         String ms = String.valueOf(dTime);
-        while (ms.length() < 3) {
+        while (ms.length() < "000".length()) {
             ms = "0" + ms;
         }
         res += ms + "s";

@@ -37,9 +37,8 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.TraceContentProvider;
 import de.cau.cs.kieler.krep.evalbench.ui.views.TraceLabelProvider;
 
 /**
- * The basic editor for displaying trace files. Subclasses of this abstract
- * class must create a suitable implementation of the <code>ITrace</code>
- * interface.
+ * The basic editor for displaying trace files. Subclasses of this abstract class must create a
+ * suitable implementation of the <code>ITrace</code> interface.
  * 
  * @author ctr
  */
@@ -49,6 +48,7 @@ public abstract class TraceEditor extends EditorPart {
     /** Column identifiers for the embedded table. */
     private static final String[] COLUMN_NAMES = { "tick", "values" };
 
+    private static final int[] COLUMN_WIDTH = { 200, 200 };
     /** The embedded table. */
     private Table table;
     /** The viewer used to display program instructions. */
@@ -57,8 +57,8 @@ public abstract class TraceEditor extends EditorPart {
     abstract TraceList openTrace(String source);
 
     /**
-     * Reads an input file and executes an assembler to generate binary code and
-     * signals information.
+     * Reads an input file and executes an assembler to generate binary code and signals
+     * information.
      * 
      * @param inputFile
      *            assembler file to be read
@@ -67,8 +67,7 @@ public abstract class TraceEditor extends EditorPart {
      * @throws ParseException
      *             when the assembler fails to parse the input
      */
-    private void updateProgram(final File inputFile) throws IOException,
-            ParseException {
+    private void updateProgram(final File inputFile) throws IOException, ParseException {
         // read input file
         StringBuffer stringBuffer = new StringBuffer();
         FileReader reader = new FileReader(inputFile);
@@ -92,8 +91,7 @@ public abstract class TraceEditor extends EditorPart {
      * org.eclipse.ui.IEditorInput)
      */
     @Override
-    public void init(final IEditorSite site, final IEditorInput input)
-            throws PartInitException {
+    public void init(final IEditorSite site, final IEditorInput input) throws PartInitException {
         try {
             setSite(site);
             setInputWithNotify(input);
@@ -112,11 +110,10 @@ public abstract class TraceEditor extends EditorPart {
             updateProgram(file);
             setPartName(file.getName());
         } catch (IOException e) {
-            throw new PartInitException(new Status(Status.ERROR,
-                    Activator.PLUGIN_ID, "Could not read from input file.", e));
+            throw new PartInitException(new Status(Status.ERROR, Activator.PLUGIN_ID,
+                    "Could not read from input file.", e));
         } catch (ParseException e) {
-            throw new PartInitException(new Status(Status.ERROR,
-                    Activator.PLUGIN_ID,
+            throw new PartInitException(new Status(Status.ERROR, Activator.PLUGIN_ID,
                     "The assembler could not parse the input file.", e));
         }
     }
@@ -124,18 +121,16 @@ public abstract class TraceEditor extends EditorPart {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
-     * .Composite)
+     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
      */
     @Override
     public void createPartControl(final Composite parent) {
         // create table
         table = new Table(parent, SWT.MULTI);
         TableColumn column0 = new TableColumn(table, SWT.LEFT, 0);
-        column0.setWidth(200);
+        column0.setWidth(COLUMN_WIDTH[0]);
         TableColumn column1 = new TableColumn(table, SWT.NONE, 1);
-        column1.setWidth(200);
+        column1.setWidth(COLUMN_WIDTH[1]);
         table.setLinesVisible(false);
         table.setHeaderVisible(false);
         // create table viewer
@@ -144,15 +139,13 @@ public abstract class TraceEditor extends EditorPart {
         viewer.setContentProvider(new TraceContentProvider());
         viewer.setLabelProvider(new TraceLabelProvider());
         // set viewer input
-        viewer.setInput(Activator.getDefault().getTraces().getTable().toArray(
-                new String[0][0]));
+        viewer.setInput(Activator.getDefault().getTraces().getTable().toArray(new String[0][0]));
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @seeorg.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.
-     * IProgressMonitor)
+     * @seeorg.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime. IProgressMonitor)
      */
     @Override
     public void doSave(final IProgressMonitor monitor) {

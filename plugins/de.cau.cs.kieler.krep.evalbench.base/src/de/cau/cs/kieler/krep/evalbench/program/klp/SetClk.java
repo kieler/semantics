@@ -30,13 +30,13 @@ public class SetClk extends Instruction {
     /**
      * @param name
      *            unique name of the register
-     * @param clock
+     * @param clk
      *            name of the clock register, null when on base clock
      */
-    public SetClk(final String name, final String clock) {
+    public SetClk(final String name, final String clk) {
         super();
         this.reg = Register.get(name);
-        this.clock = Register.get(clock);
+        this.clock = Register.get(clk);
 
     }
 
