@@ -72,6 +72,8 @@
 		</condition>
 	
 		<basename property="basename" file="${product}" suffix=".product" />
+		
+		<mkdir dir="${build.basedir}" />
 
 		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
 			<arg line="-configuration ${eclipseConfig}" />
@@ -352,6 +354,8 @@
 			 Therefor the builder property is defined, it points to the folder customTargets is expected to be in -->
 		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml" />
 		<property name="allElementsFile" location="${scriptdir}/allElements.xml" />
+				
+		<echo message="${basedir}" />
 				
 		<tstamp />
 		<property name="forceContextQualifier" value="v${DSTAMP}${TSTAMP}" />
