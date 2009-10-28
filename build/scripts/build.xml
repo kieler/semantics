@@ -86,7 +86,7 @@
 			<arg value="-Dbasedir=${build.basedir}" />
 				<!-- the workspace folder of the current job needed as Hudson is starting the build script
 				     from the containing folder (i.e. ${scriptdir}) - not from workspace root folder -->
-			<arg value="-DbuildDirectory=${system.WORKSPACE}" />
+			<arg value="-DbuildDirectory=${build.basedir}" />
 				<!-- the build root folder
 				     fed into the eclipse.generateScript task
 				     within genericTarget.xml, one of the PDE build scripts
@@ -130,6 +130,7 @@
 	</target>
 
 	<target name="init">
+		<property name="p2.category.site" value="file:${basedir}/../../ImportUpdatesiteCategoryDescriptors/workspace/de.cau.cs.kieler.updatesite/site.xml" />
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
 		<property name="configs"       value="${feature.configs}" />
@@ -354,8 +355,6 @@
 			 Therefor the builder property is defined, it points to the folder customTargets is expected to be in -->
 		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml" />
 		<property name="allElementsFile" location="${scriptdir}/allElements.xml" />
-				
-		<echo message="${basedir}" />
 				
 		<tstamp />
 		<property name="forceContextQualifier" value="v${DSTAMP}${TSTAMP}" />
