@@ -356,8 +356,12 @@
 		<property name="forceContextQualifier" value="v${DSTAMP}${TSTAMP}" />
 		<!-- <tstamp> provides the above referenced properties, they're not declared explicitly -->
 
+		<property name="p2.product.qualifier" value="${forceContextQualifier}" />
+		<!-- p2.product.qualifier will determine the product qualifier,
+		     forceContextQualifier is responsible for plugin / feature qualifiers (here used in krep evalbench) -->
+
 		<!-- extract product version from product file,
-		     replace v?qualifier by ${forceContextQualifier}
+		     replace v?qualifier by ${p2.product.qualifier}
 		     'p2.product.version' will be referenced in allElements.xml while creating the zip archives
 		     in order to add version and timestamp to zips' file name -->
 		<loadfile property="p2.product.version" srcfile="${product}">
@@ -368,7 +372,7 @@
 				<tokenfilter>
 					<stringtokenizer delims="&quot;" suppressdelims="true" />
 					<containsregex pattern="\d\.\d\.\d\." flags="i" />
-					<replaceregex pattern="\.\D+" replace=".${forceContextQualifier}" flags="i"/>
+					<replaceregex pattern="\.\D+" replace=".${p2.product.qualifier}" flags="i"/>
 					<!-- \d = digit, \D = non-digit, . = any character, \. = '.'  -->
 				</tokenfilter>
 			</filterchain>
