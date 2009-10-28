@@ -317,7 +317,8 @@ public class XtendJava {
 			expressionString += "(";
 			for (int c = 0; c < subExpressionList.size(); c++) {
 				Expression subExpression = subExpressionList.get(c);
-				if (!expressionString.equals("(")) expressionString += " " + operatorString + " ";
+				if ((!expressionString.equals("(") || (operatorString.equals("!"))))
+					expressionString += " " + operatorString + " ";
 				expressionString += buildExpression(subExpression);
 			}
 			expressionString += ")";
@@ -335,6 +336,8 @@ public class XtendJava {
 	}
 	
 private static final String translateOperator(String syncchartsOperator) {
+	System.out.println("OP   :   "+syncchartsOperator);
+	syncchartsOperator = syncchartsOperator.trim();
 	if (syncchartsOperator.equalsIgnoreCase("EQ")) return "==";
 	if (syncchartsOperator.equalsIgnoreCase("LT")) return "<";
 	if (syncchartsOperator.equalsIgnoreCase("LEQ")) return "<=";
