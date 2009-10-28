@@ -39,7 +39,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
     private static final String VIEW_KEV = "de.cau.cs.kieler.kev.views.EnvironmentView";
     private static final String VIEW_KIML_EXECUTION = "de.cau.cs.kieler.kiml.viewer.execution";
     private static final String VIEW_KIML_LAYOUTGRAPH = "de.cau.cs.kieler.kiml.viewer.layoutGraph";
-    private static final String VIEW_KIML_LAYOUT = "de.cau.cs.kieler.kiml.viewer.views.layout";
+    private static final String VIEW_KIML_LAYOUT = "de.cau.cs.kieler.kiml.views.layout";
     private static final String VIEW_KIEM = "de.cau.cs.kieler.sim.kiem.view";
     private static final String VIEW_KIEM_TABLE = "de.cau.cs.kieler.sim.table.views.KiemTable";
     private static final String VIEW_VIEWMANAGEMENT = "de.cau.cs.kieler.viewmanagement.VMControl";
