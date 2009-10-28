@@ -298,7 +298,11 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	 */
 	public void wrapup() {
 		//stop the model and unlink the PtolemyExecutor thread
-		PTOEXE.executionStop();
+		try {
+			PTOEXE.executionStop();
+		} catch(Exception e){
+			//we expect no serious errors here
+		}
 		PTOEXE = null;
 		System.gc();
 	}
