@@ -26,6 +26,7 @@
 	<property name="checkstyle.excludes" value=" "/>
 	<property name="build.jars"          value="true"/>
 	<property name="publish.feature"     value="true"/>
+	<property name="build.basedir"       value="${system.WORKSPACE}" />
 	<property name="findbugs.classes"    value="${system.WORKSPACE}/update-site/plugins" />
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${antContrib.home}/lib/ant-contrib.jar" />
@@ -80,7 +81,7 @@
 			<arg line="-buildfile ${scriptdir}/build.xml ${targetP}" />
 			<arg value="-Dscriptdir=${scriptdir}" />
 				<!-- the folder containing build.xml, build.properties -->
-			<arg value="-Dbasedir=${system.WORKSPACE}" />
+			<arg value="-Dbasedir=${build.basedir}" />
 				<!-- the workspace folder of the current job needed as Hudson is starting the build script
 				     from the containing folder (i.e. ${scriptdir}) - not from workspace root folder -->
 			<arg value="-DbuildDirectory=${system.WORKSPACE}" />
@@ -95,7 +96,7 @@
 				<!-- the plugin whose bin parts should be gathered (after building the feature) -->
 			<arg value="-Dfeature=${feature}" />
 				<!-- the feature whose plugins should be build -->
-			<arg value="-Dproduct=${system.WORKSPACE}/${product}" />
+			<arg value="-Dproduct=${product}" />
 				<!-- the product which should be build -->
 			<arg value="-Dbasename=${basename}" />
 				<!-- the name of RCA's zip file, ziped top folder & launcher determined of product's basename -->
