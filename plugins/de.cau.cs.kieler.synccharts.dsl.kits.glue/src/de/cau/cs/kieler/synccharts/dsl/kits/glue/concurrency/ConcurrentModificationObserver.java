@@ -29,7 +29,6 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -37,7 +36,6 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
@@ -259,12 +257,12 @@ public class ConcurrentModificationObserver implements IPartListener,
      * 
      * @return yesResult
      */
-    private boolean queryApplyChanges() {
-        DialogPrompter dialogPrompter = new DialogPrompter();
-        Display.getDefault().syncExec(dialogPrompter);
-        boolean yesResult = dialogPrompter.isYesResult();
-        return yesResult;
-    }
+    // private boolean queryApplyChanges() {
+    // DialogPrompter dialogPrompter = new DialogPrompter();
+    // Display.getDefault().syncExec(dialogPrompter);
+    // boolean yesResult = dialogPrompter.isYesResult();
+    // return yesResult;
+    // }
 
     /**
      * Ask user if the resource should be saved although the changes in the
@@ -314,7 +312,7 @@ public class ConcurrentModificationObserver implements IPartListener,
     // }
     // ================ HELPER METHODS ================ //
 
-    @SuppressWarnings("unused")
+    // @SuppressWarnings("unused")
     void ManualLayoutTrigger(IWorkbenchPart part) {
         if (part instanceof DiagramEditor) {
             // get the RegionEditPart
