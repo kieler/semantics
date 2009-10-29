@@ -14,63 +14,80 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.custom;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Ellipse;
+import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * A grey filled circle with a 'P' inside.
+ * 
  * @author schm
- *
+ * 
  */
 public class ConditionalStateFigure extends Ellipse {
-	
-	/**
-	 * The constructor.
-	 */
-	// A class that draws a 'C' inside of an ellipse
-	public ConditionalStateFigure() {
-		super();
-	}
 
-	/**
-	 * Draw the outline of the circle and a 'P' inside.
-	 */
-/*	@Override
-	protected void outlineShape(Graphics graphics) {
-		Rectangle t = Rectangle.SINGLETON;
-		t.setBounds(getBounds());
-		t.width--;
-		t.height--;
-		t.shrink((lineWidth - 1) / 2, (lineWidth - 1) / 2);
-		graphics.drawOval(t);
-		
-		// Calculate the bounds of the "P"
-		Rectangle f = Rectangle.SINGLETON;
-		Rectangle r = getBounds();
-		f.x = r.x + (r.width / 3);
-		f.y = r.y + (r.height / 3);
-		f.width = r.width / 3;
-		f.height = r.height / 3;
-		
-		// Draw the "P"
-		int hUnit = f.width / 4;
-		int vUnit = f.height / 6;
-		Point sP = new Point(f.x + hUnit, f.y + 6*vUnit);
-		Point bP1 = new Point(sP.x, sP.y - 6*vUnit);
-		Point bP2 = new Point(bP1.x + hUnit, bP1.y);
-		Point bP3 = new Point(bP2.x + hUnit, bP2.y + vUnit );
-		Point bP4 = new Point(bP3.x, bP3.y + hUnit);
-		Point bP5 = new Point(bP4.x - hUnit, bP4.y + vUnit);
-		Point eP = new Point(bP5.x - hUnit, bP5.y);
-		
-		graphics.drawLine(sP.x, sP.y, bP1.x, bP1.y);
-		graphics.drawLine(bP1.x, bP1.y, bP2.x, bP2.y);
-		graphics.drawLine(bP2.x, bP2.y, bP3.x, bP3.y);
-		graphics.drawLine(bP3.x, bP3.y, bP4.x, bP4.y);
-		graphics.drawLine(bP4.x, bP4.y, bP5.x, bP5.y);
-		graphics.drawLine(bP5.x, bP5.y, eP.x, eP.y);
-	}
-*/	
+    static final Font CONDITIONALFIGURE_FONT = new Font(Display.getCurrent(), "Sans", 12,
+            SWT.NORMAL);
+
+    /**
+     * The constructor.
+     */
+    // A class that draws a 'C' inside of an ellipse
+    public ConditionalStateFigure() {
+        super();
+        this.setFill(true);
+        this.setLineWidth(1);
+        this.setForegroundColor(ColorConstants.black);
+        this.setBackgroundColor(ColorConstants.black);
+    }
+
+    /*
+     * Overriding BackgroundColor because otherwise also conditional states will be set a background
+     * color automatically to the default background color set in the preferences...
+     * 
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.draw2d.Figure#getLocalBackgroundColor()
+     */
+    @Override
+    public Color getLocalBackgroundColor() {
+        return ColorConstants.black;
+    }
+
+    /**
+     * Draw the outline of the circle and a 'C' inside.
+     */
+    @Override
+    protected void outlineShape(Graphics graphics) {
+        Rectangle t = Rectangle.SINGLETON;
+        t.setBounds(getBounds());
+        t.width--;
+        t.height--;
+        t.shrink((lineWidth - 1) / 2, (lineWidth - 1) / 2);
+        graphics.setBackgroundColor(this.getBackgroundColor());
+        graphics.drawOval(t);
+        // graphics.fillOval(t);
+
+        // Calculate the bounds of the "C"
+        Rectangle f = Rectangle.SINGLETON;
+        Rectangle r = getBounds();
+        f.x = r.x + (r.width / 3);
+        f.y = r.y + (r.height / 3);
+        f.width = r.width / 3;
+        f.height = r.height / 3;
+
+        //Draw the "C" 
+        graphics.setForegroundColor(ColorConstants.white);
+        graphics.drawArc(f, 45, 270);
+    }
+
 }

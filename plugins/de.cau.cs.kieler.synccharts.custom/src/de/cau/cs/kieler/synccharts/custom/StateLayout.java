@@ -36,10 +36,9 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 
 /**
- * A special layout for states: If the state is simple, its name is written in
- * the center and the compartments are reduced in size to zero. If the state is
- * complex, the name is written on top and the compartments are laid out in a
- * column below the name.
+ * A special layout for states: If the state is simple, its name is written in the center and the
+ * compartments are reduced in size to zero. If the state is complex, the name is written on top and
+ * the compartments are laid out in a column below the name.
  * 
  * @author schm
  * 
@@ -47,10 +46,10 @@ import de.cau.cs.kieler.synccharts.StateType;
 
 public class StateLayout extends ConstrainedToolbarLayout {
 
-    public static final int MIN_HEIGHT = 20;
-    public static final int MIN_WIDTH = 20;
-    public static final int COND_HEIGHT = 10;
-    public static final int COND_WIDTH = 10;
+    public static final int MIN_HEIGHT = 25;
+    public static final int MIN_WIDTH = 25;
+    public static final int COND_HEIGHT = 20;
+    public static final int COND_WIDTH = 20;
 
     boolean containsRegions;
     boolean containsSignals;
@@ -78,37 +77,16 @@ public class StateLayout extends ConstrainedToolbarLayout {
         // Check if the figure is an attribute aware state and whether it is
         // a simple or a complex state
         if (parent instanceof AttributeAwareFigure) {
-            EObject modelElement = ((AttributeAwareFigure) parent)
-                    .getModelElement();
+            EObject modelElement = ((AttributeAwareFigure) parent).getModelElement();
             if (modelElement instanceof State) {
                 State state = (State) modelElement;
                 retrieveContents(state);
-                if (state.getType().equals(StateType.CONDITIONAL)) {
-                    height = 5;
-                    width = 5;
-                }
-                // sortFigures(parent);
+
                 if (isSimple(state)) {
                     simpleLayout(parent, children, x, y, height, width);
                 } else {
                     complexLayout(parent, children, x, y, height, width);
                 }
-            }
-        }
-    }
-
-    private void sortFigures(IFigure state) {
-        List<IFigure> children = state.getChildren();
-        for (int i = 0; i < children.size(); i++) {
-            IFigure child = children.get(i);
-            if (child instanceof Polyline) {
-                // if Polyline is not the last figure in the state,
-                // move it there
-                if (i < (children.size() - 1)) {
-                    state.remove(child);
-                    state.add(child);
-                }
-                break;
             }
         }
     }
@@ -145,8 +123,8 @@ public class StateLayout extends ConstrainedToolbarLayout {
             containsExitActions = true;
         }
         /*
-         * if ((state.getVariables() != null && state.getVariables().size() >
-         * 0)) { containsVariables = true; }
+         * if ((state.getVariables() != null && state.getVariables().size() > 0)) {
+         * containsVariables = true; }
          */
         if (state.getSuspensionTrigger() != null) {
             containsSuspensionTrigger = true;
@@ -170,8 +148,7 @@ public class StateLayout extends ConstrainedToolbarLayout {
      *            The width of the state figure.
      */
     // The layout for complex states
-    private void complexLayout(IFigure parent, List children, int x, int y,
-            int height, int width) {
+    private void complexLayout(IFigure parent, List children, int x, int y, int height, int width) {
 
         // Collect preferred widths and heights
         int numChildren = children.size();
@@ -196,8 +173,7 @@ public class StateLayout extends ConstrainedToolbarLayout {
                             || (compartmentName.equals("OnInsideAction:") && (!containsInnerActions))
                             || (compartmentName.equals("OnExitAction:") && (!containsExitActions))
                             || (compartmentName.equals("Suspend:") && (!containsSuspensionTrigger))
-                            || !((ResizableCompartmentFigure) child)
-                                    .isExpanded()) {
+                            || !((ResizableCompartmentFigure) child).isExpanded()) {
                         newWidth = 0;
                         newHeight = 0;
                         setCompartmentTitleVisibility(child, false);
@@ -254,8 +230,7 @@ public class StateLayout extends ConstrainedToolbarLayout {
                 Polyline regionSeparator = (Polyline) child;
                 PointList points = new PointList();
                 Point start = new Point(1, regionSeparatorHeight);
-                Point end = new Point(Math.max(0, totalWidth - 1),
-                        regionSeparatorHeight);
+                Point end = new Point(Math.max(0, totalWidth - 1), regionSeparatorHeight);
                 points.addPoint(start);
                 points.addPoint(end);
                 regionSeparator.setPoints(points);
@@ -299,8 +274,7 @@ public class StateLayout extends ConstrainedToolbarLayout {
      */
     // Method to make the compartment's title figure invisible
     private void setCompartmentTitleVisibility(Object child, boolean b) {
-        for (Object o : ((ShapeCompartmentFigure) child).getContentPane()
-                .getChildren()) {
+        for (Object o : ((ShapeCompartmentFigure) child).getContentPane().getChildren()) {
             if (o instanceof WrappingLabel) {
                 ((WrappingLabel) o).setVisible(b);
             }
@@ -345,8 +319,7 @@ public class StateLayout extends ConstrainedToolbarLayout {
      *            The width of the state figure.
      */
     // The layout for simple states
-    private void simpleLayout(IFigure parent, List children, int x, int y,
-            int height, int width) {
+    private void simpleLayout(IFigure parent, List children, int x, int y, int height, int width) {
         String name;
         int prefWidth = 0;
         int prefHeight = 0;
@@ -375,11 +348,10 @@ public class StateLayout extends ConstrainedToolbarLayout {
                     prefHeight = childFigure.getPreferredSize().height;
                     newBounds.x = x + (width / 2) - (prefWidth / 2);
                     newBounds.y = y + (height / 2) - (prefHeight / 2);
-                    newBounds.width = prefWidth+2;
+                    newBounds.width = prefWidth + 2;
                     newBounds.height = prefHeight;
                 } else if (child instanceof ResizableCompartmentFigure) {
-                    name = ((ResizableCompartmentFigure) child)
-                            .getCompartmentTitle();
+                    name = ((ResizableCompartmentFigure) child).getCompartmentTitle();
                     int offsetY = 0;
                     newBounds.x = x;
                     newBounds.y = y;
@@ -397,8 +369,8 @@ public class StateLayout extends ConstrainedToolbarLayout {
     }
 
     /**
-     * Gets the list of children after applying the layout options of ignore
-     * invisible children & reverse children
+     * Gets the list of children after applying the layout options of ignore invisible children &
+     * reverse children
      */
     private List getChildren(IFigure container) {
         List children = new ArrayList(container.getChildren());
@@ -426,12 +398,10 @@ public class StateLayout extends ConstrainedToolbarLayout {
     private boolean isSimple(State state) {
         if ((state.getRegions() == null || state.getRegions().size() == 0)
                 && (state.getSignals() == null || state.getSignals().size() == 0)
-                && (state.getEntryActions() == null || state.getEntryActions()
-                        .size() == 0)
-                && (state.getInnerActions() == null || state.getInnerActions()
-                        .size() == 0)
-                && (state.getExitActions() == null || state.getExitActions()
-                        .size() == 0) && (state.getSuspensionTrigger() == null)) {
+                && (state.getEntryActions() == null || state.getEntryActions().size() == 0)
+                && (state.getInnerActions() == null || state.getInnerActions().size() == 0)
+                && (state.getExitActions() == null || state.getExitActions().size() == 0)
+                && (state.getSuspensionTrigger() == null)) {
             return true;
         }
         return false;
@@ -449,8 +419,7 @@ public class StateLayout extends ConstrainedToolbarLayout {
     // however, empty compartments are not considered.
     @Override
     public Dimension calculateMinimumSize(IFigure parent, int hint, int hint2) {
-        EObject modelElement = ((AttributeAwareFigure) parent)
-                .getModelElement();
+        EObject modelElement = ((AttributeAwareFigure) parent).getModelElement();
         int prefWidth = 0;// super.getMinimumSize(hint, hint2).width;
         int prefHeight = 0;
         if (modelElement instanceof State) {
@@ -460,8 +429,7 @@ public class StateLayout extends ConstrainedToolbarLayout {
             int numChildren = children.size();
 
             if (state.getType().equals(StateType.CONDITIONAL)) {
-                return new Dimension(StateLayout.COND_WIDTH,
-                        StateLayout.COND_HEIGHT);
+                return new Dimension(StateLayout.COND_WIDTH, StateLayout.COND_HEIGHT);
             }
             if (isSimple(state)) {
                 Object child = children.get(0);
@@ -471,12 +439,11 @@ public class StateLayout extends ConstrainedToolbarLayout {
                 if (child != null && child instanceof WrappingLabel
                         && ((WrappingLabel) child).getText() != null
                         && !((WrappingLabel) child).getText().equals("")) {
-                    return new Dimension(((WrappingLabel) children.get(0))
-                            .getPreferredSize().width,((WrappingLabel) children.get(0))
-                            .getPreferredSize().height);
+                    return new Dimension(
+                            ((WrappingLabel) children.get(0)).getPreferredSize().width,
+                            ((WrappingLabel) children.get(0)).getPreferredSize().height);
                 } else {
-                    return new Dimension(StateLayout.MIN_WIDTH,
-                            StateLayout.MIN_HEIGHT);
+                    return new Dimension(StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT);
                 }
             } else {
 
@@ -485,22 +452,19 @@ public class StateLayout extends ConstrainedToolbarLayout {
 
                 for (int i = 0; i < numChildren; i++) {
                     Object child = children.get(i);
-                    if (child instanceof IFigure
-                            && !(child instanceof Polyline)) {
+                    if (child instanceof IFigure && !(child instanceof Polyline)) {
                         IFigure childFigure = (IFigure) child;
                         if (!(child instanceof ShapeCompartmentFigure)
-                                || !getName((ShapeCompartmentFigure) child)
-                                        .equals("RegionCompartment")) {
+                                || !getName((ShapeCompartmentFigure) child).equals(
+                                        "RegionCompartment")) {
                             Rectangle childBounds = childFigure.getBounds();
                             // if we have manually set the bounds to zero,
                             // ignore
                             // the bounds for min size calculations
-                            if (childBounds.height == 0
-                                    || childBounds.width == 0) {
+                            if (childBounds.height == 0 || childBounds.width == 0) {
                                 continue;
                             }
-                            Dimension preferredSize = childFigure
-                                    .getPreferredSize();
+                            Dimension preferredSize = childFigure.getPreferredSize();
                             if (preferredSize.width > prefWidth) {
                                 // add 1 pixel to avoid scroll bars (this was
                                 // added during layout above)
@@ -572,25 +536,17 @@ public class StateLayout extends ConstrainedToolbarLayout {
      */
     // Method to calculate the preferred size of a figure
     @Override
-    protected Dimension calculatePreferredSize(IFigure parent, int hint,
-            int hint2) {
-
+    protected Dimension calculatePreferredSize(IFigure parent, int hint, int hint2) {
+        return calculateMinimumSize(parent, hint, hint2);
         // The height of simple states is reduced,
         // the height of complex states considers only
         // the compartments with contents
-        if (parent instanceof AttributeAwareFigure) {
-            EObject modelElement = ((AttributeAwareFigure) parent)
-                    .getModelElement();
-            if (modelElement instanceof State) {
-                State state = (State) modelElement;
-                if (isSimple(state)) {
-                    Dimension newDimension = super.calculatePreferredSize(
-                            parent, hint, hint2);
-                    newDimension.height = MIN_HEIGHT;
-                    return newDimension;
-                }
-            }
-        }
-        return super.calculatePreferredSize(parent, hint, hint2);
+        /*
+         * if (parent instanceof AttributeAwareFigure) { EObject modelElement =
+         * ((AttributeAwareFigure) parent).getModelElement(); if (modelElement instanceof State) {
+         * State state = (State) modelElement; if (isSimple(state)) { Dimension newDimension =
+         * super.calculatePreferredSize(parent, hint, hint2); newDimension.height = MIN_HEIGHT;
+         * return newDimension; } } } return super.calculatePreferredSize(parent, hint, hint2);
+         */
     }
 }

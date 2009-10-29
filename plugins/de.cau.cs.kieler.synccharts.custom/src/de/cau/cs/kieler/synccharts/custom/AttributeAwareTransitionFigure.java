@@ -116,7 +116,7 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 		circleDecorationPoints.addPoint(2, 2);
 		circleDecorationPoints.addPoint(-2, -2);
 		circleDecoration.setTemplate(circleDecorationPoints);
-		circleDecoration.setScale(3, 3);
+		circleDecoration.setScale(2, 2);
 		return circleDecoration;
 	}
 	
@@ -140,7 +140,7 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 	 */
 	private RotatableDecoration createNormalTerminationDecoration() {
 		PolygonDecoration triangleDecoration = new PolygonDecoration();
-		triangleDecoration.setLineWidth(2);
+		triangleDecoration.setLineWidth(1);
 		triangleDecoration.setForegroundColor(ColorConstants.black);
 		triangleDecoration.setBackgroundColor(ColorConstants.green);
 		PointList triangleDecorationPoints = new PointList();
@@ -148,6 +148,7 @@ public class AttributeAwareTransitionFigure extends AttributeAwareConnection {
 		triangleDecorationPoints.addPoint(-2, 0);
 		triangleDecorationPoints.addPoint(0, -2);
 		triangleDecoration.setTemplate(triangleDecorationPoints);
+		triangleDecoration.setScale(4, 2.5);
 		return triangleDecoration;
 	}
 	

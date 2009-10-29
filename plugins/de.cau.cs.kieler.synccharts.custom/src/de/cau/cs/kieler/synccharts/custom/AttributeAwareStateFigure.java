@@ -111,10 +111,10 @@ public class AttributeAwareStateFigure extends AttributeAwareFigure {
         finalNChildrenStateFigure.setForegroundColor(ColorConstants.black);
 
         ConditionalStateFigure conditionalStateFigure = new ConditionalStateFigure();
-        conditionalStateFigure.setFill(true);
-        conditionalStateFigure.setLineWidth(1);
-        conditionalStateFigure.setForegroundColor(ColorConstants.black);
-        conditionalStateFigure.setBackgroundColor(ColorConstants.black);
+        //conditionalStateFigure.setFill(true);
+        //conditionalStateFigure.setLineWidth(1);
+        //conditionalStateFigure.setForegroundColor(ColorConstants.black);
+        //conditionalStateFigure.setBackgroundColor(ColorConstants.black);
 
         // Set default and current figure
         this.setDefaultFigure(normalStateFigure);
