@@ -1,13 +1,19 @@
 	<target name="checkstyle" unless="no.findbugs"
 	    description="running checkstyle (configured by ${scriptdir}/build.xml)">
+
+		<path id="checkstyle.classpath">
+			<fileset dir="${basedir}/plugins" includes="**/*.jar" />
+		</path> 
+
 			<checkstyle config="${scriptdir}/checks.xml"
-				failureProperty="checkstyle.failure"
-			    failOnViolation="false">
+			    failureProperty="checkstyle.failure"
+			    failOnViolation="false"
+			    classpathref="checkstyle.classpath">
 			<formatter type="xml"
-				   tofile="${basedir}/checkstyle.report.xml" />
+			    tofile="${basedir}/checkstyle.report.xml" />
 			<fileset dir="${checkstyle.sources}"
-				 includes="**/*.java"
-				 excludes="${checkstyle.excludes}" />
+			    includes="**/*.java"
+			    excludes="${checkstyle.excludes}" />
 		</checkstyle>
 	</target>
 
