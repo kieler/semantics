@@ -189,7 +189,7 @@
 				<fileset dir="plugins" includes="**/build.xml" />
 				<filterchain>
 					<linecontainsregexp>
-						<regexp pattern="&lt;pathelement path="../../" />
+						<regexp pattern="&lt;pathelement path=&quot;../../" />
 					</linecontainsregexp>
 					<linecontainsregexp negate="true">
 						<regexp pattern="/@dot&quot;" />
