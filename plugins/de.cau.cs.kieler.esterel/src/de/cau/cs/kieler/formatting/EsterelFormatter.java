@@ -8,8 +8,6 @@ import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 
-import sun.security.smartcardio.SunPCSC.Factory;
-
 /**
  * This class contains custom formatting description.
  * 
@@ -29,10 +27,12 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 		// remove space before ";" and "," . Add linewrap after ","
 		for (Keyword keyword : keywords) {
 			if ((";".equals(keyword.getValue()))
-					| (",".equals(keyword.getValue())))
+					| (",".equals(keyword.getValue()))) {
 				c.setNoSpace().before(keyword);
-			if (",".equals(keyword.getValue()))
+			}
+			if (",".equals(keyword.getValue())) {
 				c.setLinewrap().after(keyword);
+			}
 		}
 		/* ********************************************************************
 		 * Formatting for comments
@@ -251,8 +251,9 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 		// Max Indentation may be changed here
 		int maxIndent = keyword.length() + 1;
 		String indent = "";
-		for (int i = 0; i < maxIndent; i++)
+		for (int i = 0; i < maxIndent; i++) {
 			indent += " ";
+		}
 		return indent;
 	}
 }

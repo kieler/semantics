@@ -18,7 +18,6 @@ import de.cau.cs.kieler.esterel.DataCurrent;
 import de.cau.cs.kieler.esterel.DataFunction;
 import de.cau.cs.kieler.esterel.DataPre;
 import de.cau.cs.kieler.esterel.DataTrap;
-import de.cau.cs.kieler.esterel.DataUnaryExpr;
 import de.cau.cs.kieler.esterel.DelayEvent;
 import de.cau.cs.kieler.esterel.Emit;
 import de.cau.cs.kieler.esterel.Exit;
@@ -108,8 +107,9 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 	private ArrayList<IScopedElement> getInterfaceSignals(EObject context) {
 		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
 		EObject parent = context.eContainer();
-		while (!(parent instanceof ModuleInterface))
+		while (!(parent instanceof ModuleInterface)) {
 			parent = parent.eContainer();
+		}
 		EList<SignalDecl> intSignalDecl = ((ModuleInterface) parent)
 				.getIntSignalDecl();
 		if (!(intSignalDecl.isEmpty())) {
@@ -141,8 +141,9 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 			}
 			parent = parent.eContainer();
 		}
-		if (parent instanceof ModuleBody)
+		if (parent instanceof ModuleBody) {
 			parent = parent.eContainer();
+		}
 		// Get the Signals declared in this Module
 		ModuleInterface modInt = null;
 		if (parent instanceof Module) {
@@ -169,8 +170,9 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 				EList<TrapDecl> trapDecl = ((Trap) parent).getTrapDeclList()
 						.getTrapDecl();
 				// add Trap to the scope
-				for (TrapDecl trap : trapDecl)
+				for (TrapDecl trap : trapDecl) {
 					scopeElems.add(ScopedElement.create(trap.getName(), trap));
+				}
 			}
 			parent = parent.eContainer();
 		}
@@ -186,8 +188,9 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 				EList<TrapDecl> trapDecl = ((Trap) parent).getTrapDeclList()
 						.getTrapDecl();
 				// add Trap to the scope
-				for (TrapDecl trap : trapDecl)
+				for (TrapDecl trap : trapDecl) {
 					scopeElems.add(ScopedElement.create(trap.getName(), trap));
+				}
 			}
 			parent = parent.eContainer();
 		}
@@ -199,10 +202,12 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
 		EObject parent = context.eContainer();
 		// Go up in the Structure until Module/MainModule
-		while (!(parent instanceof ModuleBody))
+		while (!(parent instanceof ModuleBody)) {
 			parent = parent.eContainer();
-		if (parent instanceof ModuleBody)
+		}
+		if (parent instanceof ModuleBody) {
 			parent = parent.eContainer();
+		}
 		// Get the Functions declared in this Module
 		ModuleInterface modInt = null;
 		if (parent instanceof Module) {
@@ -231,13 +236,15 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 		ModuleInterface modInt = getModuleInterface(context);
 		if (!(modInt.equals(null))) {
 			EList<SignalDecl> intSignalDecl = modInt.getIntSignalDecl();
-			if (!(intSignalDecl.isEmpty()))
+			if (!(intSignalDecl.isEmpty())) {
 				for (SignalDecl sigDecl : intSignalDecl) {
 					EList<Signal> sigList = sigDecl.getSignal();
-					for (Signal sig : sigList)
+					for (Signal sig : sigList) {
 						scopeElems
 								.add(ScopedElement.create(sig.getName(), sig));
+					}
 				}
+			}
 		}
 		return new SimpleScope(scopeElems);
 
@@ -253,13 +260,15 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 		ModuleInterface modInt = getModuleInterface(context);
 		if (!(modInt.equals(null))) {
 			EList<TypeDecl> intTypeDecl = modInt.getIntTypeDecl();
-			if (!(intTypeDecl.isEmpty()))
+			if (!(intTypeDecl.isEmpty())) {
 				for (TypeDecl typeDecl : intTypeDecl) {
 					EList<Type> typeList = typeDecl.getType();
-					for (Type type : typeList)
+					for (Type type : typeList) {
 						scopeElems.add(ScopedElement.create(type.getName(),
 								type));
+					}
 				}
+			}
 		}
 		return new SimpleScope(scopeElems);
 	}
@@ -267,22 +276,27 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 	IScope scope_TypeRenaming_newName(TypeRenaming context, EReference ref) {
 		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
 		EObject parent = context.eContainer();
-		while (!(parent instanceof ModuleBody))
+		while (!(parent instanceof ModuleBody)) {
 			parent = parent.eContainer();
-		if (parent instanceof ModuleBody)
+		}
+		if (parent instanceof ModuleBody) {
 			parent = parent.eContainer();
+		}
 		ModuleInterface modInt = null;
-		if (parent instanceof Module)
+		if (parent instanceof Module) {
 			modInt = ((Module) parent).getModInt();
+		}
 		if (!(modInt.equals(null))) {
 			EList<TypeDecl> intTypeDecl = modInt.getIntTypeDecl();
-			if (!(intTypeDecl.isEmpty()))
+			if (!(intTypeDecl.isEmpty())) {
 				for (TypeDecl typeDecl : intTypeDecl) {
 					EList<Type> typeList = typeDecl.getType();
-					for (Type type : typeList)
+					for (Type type : typeList) {
 						scopeElems.add(ScopedElement.create(type.getName(),
 								type));
+					}
 				}
+			}
 		}
 		return new SimpleScope(scopeElems);
 	}
@@ -293,13 +307,15 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 		ModuleInterface modInt = getModuleInterface(context);
 		if (!(modInt.equals(null))) {
 			EList<FunctionDecl> intFunDecl = modInt.getIntFunctionDecl();
-			if (!(intFunDecl.isEmpty()))
+			if (!(intFunDecl.isEmpty())) {
 				for (FunctionDecl funDecl : intFunDecl) {
 					EList<Function> funList = funDecl.getFunction();
-					for (Function fun : funList)
+					for (Function fun : funList) {
 						scopeElems
 								.add(ScopedElement.create(fun.getName(), fun));
+					}
 				}
+			}
 		}
 		return new SimpleScope(scopeElems);
 	}
@@ -308,22 +324,27 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 			EReference ref) {
 		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
 		EObject parent = context.eContainer();
-		while (!(parent instanceof ModuleBody))
+		while (!(parent instanceof ModuleBody)) {
 			parent = parent.eContainer();
-		if (parent instanceof ModuleBody)
+		}
+		if (parent instanceof ModuleBody) {
 			parent = parent.eContainer();
+		}
 		ModuleInterface modInt = null;
-		if (parent instanceof Module)
+		if (parent instanceof Module) {
 			modInt = ((Module) parent).getModInt();
+		}
 		if (!(modInt.equals(null))) {
 			EList<FunctionDecl> intFunDecl = modInt.getIntFunctionDecl();
-			if (!(intFunDecl.isEmpty()))
+			if (!(intFunDecl.isEmpty())) {
 				for (FunctionDecl funDecl : intFunDecl) {
 					EList<Function> funList = funDecl.getFunction();
-					for (Function fun : funList)
+					for (Function fun : funList) {
 						scopeElems
 								.add(ScopedElement.create(fun.getName(), fun));
+					}
 				}
+			}
 		}
 		return new SimpleScope(scopeElems);
 	}
@@ -334,13 +355,15 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 		ModuleInterface modInt = getModuleInterface(context);
 		if (!(modInt.equals(null))) {
 			EList<ProcedureDecl> intProcDecl = modInt.getIntProcedureDecl();
-			if (!(intProcDecl.isEmpty()))
+			if (!(intProcDecl.isEmpty())) {
 				for (ProcedureDecl procDecl : intProcDecl) {
 					EList<Procedure> procList = procDecl.getProcedure();
-					for (Procedure proc : procList)
+					for (Procedure proc : procList) {
 						scopeElems.add(ScopedElement.create(proc.getName(),
 								proc));
+					}
 				}
+			}
 		}
 		return new SimpleScope(scopeElems);
 	}
@@ -349,22 +372,27 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 			EReference ref) {
 		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
 		EObject parent = context.eContainer();
-		while (!(parent instanceof ModuleBody))
+		while (!(parent instanceof ModuleBody)) {
 			parent = parent.eContainer();
-		if (parent instanceof ModuleBody)
+		}
+		if (parent instanceof ModuleBody) {
 			parent = parent.eContainer();
+		}
 		ModuleInterface modInt = null;
-		if (parent instanceof Module)
+		if (parent instanceof Module) {
 			modInt = ((Module) parent).getModInt();
+		}
 		if (!(modInt.equals(null))) {
 			EList<ProcedureDecl> intProcDecl = modInt.getIntProcedureDecl();
-			if (!(intProcDecl.isEmpty()))
+			if (!(intProcDecl.isEmpty())) {
 				for (ProcedureDecl procDecl : intProcDecl) {
 					EList<Procedure> procList = procDecl.getProcedure();
-					for (Procedure proc : procList)
+					for (Procedure proc : procList) {
 						scopeElems.add(ScopedElement.create(proc.getName(),
 								proc));
+					}
 				}
+			}
 		}
 		return new SimpleScope(scopeElems);
 	}
@@ -376,16 +404,20 @@ public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 	private ModuleInterface getModuleInterface(EObject context) {
 		EObject parent = context.eContainer();
 		// get the name of the module the reference points to
-		while (!(parent instanceof Run))
+		while (!(parent instanceof Run)) {
 			parent = parent.eContainer();
+		}
 		String moduleName = ((Run) parent).getModule().getModule().getName();
 		// find the module the reference points to
-		while (!(parent instanceof Program))
+		while (!(parent instanceof Program)) {
 			parent = parent.eContainer();
+		}
 		EList<Module> moduleList = ((Program) parent).getModule();
-		for (Module module : moduleList)
-			if (module.getName().equals(moduleName))
+		for (Module module : moduleList) {
+			if (module.getName().equals(moduleName)) {
 				return module.getModInt();
+			}
+		}
 		return null;
 
 	}
