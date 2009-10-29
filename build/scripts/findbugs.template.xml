@@ -1,7 +1,8 @@
 	<target name="findbugs" unless="no.findbugs"
 	    description="running findbugs (configured by ${scriptdir}/build.xml)">
 		<path id="findbugs.auxClasses">
-${feature.classpath}		</path>
+${feature.classpath}			<fileset dir="${basedir}/plugins" includes="**/*.jar" />
+		</path>
 
 		<path id="findbugs.sources">
 			<dirset dir="${findbugs.sources}" includes="**/src,**/srcgen,**/src-gen" />
