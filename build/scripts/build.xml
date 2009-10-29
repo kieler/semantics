@@ -444,6 +444,9 @@
 						<replacestring from="path=&quot;../../" to="path=&quot;" />
 					</tokenfilter>
 				</filterchain>
+				<footer filtering="no">
+					<fileset dir="${basedir}/../../" includes="**/plugins/**jar" />
+				</footer>
 			</concat>
 		</loadfile>
 		
