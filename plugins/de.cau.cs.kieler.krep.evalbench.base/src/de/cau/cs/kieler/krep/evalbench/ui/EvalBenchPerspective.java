@@ -54,21 +54,29 @@ public class EvalBenchPerspective implements IPerspectiveFactory {
      * @see org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui .IPageLayout)
      */
     public void createInitialLayout(final IPageLayout layout) {
+
+        final float ratioBottom = 0.7f;
+        final float ratioOutput = 0.7f;
+        final float ratioInput = 0.57f;
+
         // get the editor area.
         String editorArea = layout.getEditorArea();
 
         // bottom: Connection and Target view
-        IFolderLayout bottom = layout.createFolder("bottom", IPageLayout.BOTTOM, 0.7f, editorArea);
+        IFolderLayout bottom = layout.createFolder("bottom", IPageLayout.BOTTOM, ratioBottom,
+                editorArea);
         bottom.addView(ID_CONNECTION);
         bottom.addView(ID_TARGET);
         bottom.addView(ID_MESSAGE);
 
         // right 2: Output view
-        IFolderLayout right = layout.createFolder("right2", IPageLayout.RIGHT, 0.7f, editorArea);
+        IFolderLayout right = layout.createFolder("right2", IPageLayout.RIGHT, ratioOutput,
+                editorArea);
         right.addView(ID_OUTPUT);
 
         // right 1: Input view
-        IFolderLayout left = layout.createFolder("right1", IPageLayout.RIGHT, 0.57f, editorArea);
+        IFolderLayout left = layout.createFolder("right1", IPageLayout.RIGHT, ratioInput,
+                editorArea);
         left.addView(ID_INPUT);
         // left.addView(ID_TRACE);
 

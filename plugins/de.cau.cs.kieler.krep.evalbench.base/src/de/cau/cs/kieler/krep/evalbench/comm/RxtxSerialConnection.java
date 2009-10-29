@@ -60,7 +60,6 @@ public class RxtxSerialConnection extends ConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.IConnectionProtocol#initialize()
      */
     public String initialize(final String device, final int port)
             throws CommunicationException {
@@ -82,7 +81,6 @@ public class RxtxSerialConnection extends ConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.IConnectionProtocol#dispose()
      */
     public void dispose() {
         // serialPort.close();
@@ -91,7 +89,6 @@ public class RxtxSerialConnection extends ConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#getInputStream()
      */
     @Override
     protected InputStream getInputStream() {
@@ -105,7 +102,6 @@ public class RxtxSerialConnection extends ConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#getOutputStream()
      */
     @Override
     protected OutputStream getOutputStream() {
@@ -119,7 +115,6 @@ public class RxtxSerialConnection extends ConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#comment(String comment)
      */
     public void comment(final String comment) {
         // Nothing to do

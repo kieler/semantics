@@ -50,18 +50,24 @@ public class VerifyPerspective implements IPerspectiveFactory {
      * @see org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui .IPageLayout)
      */
     public void createInitialLayout(final IPageLayout layout) {
+        final float ratioBottom = 0.7f;
+        final float ratioLeft = 0.57f;
+         
+        
         // get the editor area.
         String editorArea = layout.getEditorArea();
 
+        
+        
         // bottom: Connection and Target view
-        IFolderLayout bottom = layout.createFolder("bottom", IPageLayout.BOTTOM, 0.7f, editorArea);
+        IFolderLayout bottom = layout.createFolder("bottom", IPageLayout.BOTTOM, ratioBottom, editorArea);
         bottom.addView(ID_CONNECTION);
         bottom.addView(ID_TARGET);
         bottom.addView(ID_MESSAGE);
         layout.setEditorAreaVisible(false);
 
         // right 1: Input view
-        IFolderLayout left = layout.createFolder("right1", IPageLayout.RIGHT, 0.57f, editorArea);
+        IFolderLayout left = layout.createFolder("right1", IPageLayout.RIGHT, ratioLeft, editorArea);
         left.addView(ID_VERIFY);
 
         // add all shown views as shortcuts

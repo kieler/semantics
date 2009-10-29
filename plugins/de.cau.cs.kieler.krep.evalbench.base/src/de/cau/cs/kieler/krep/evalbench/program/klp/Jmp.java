@@ -26,9 +26,9 @@ public class Jmp extends Instruction {
     private String label;
     private int pos;
 
+    private static final int BYTE_MASK = 0xFF;
+    private static final int BYTE_LEN = 8;
 
-    private static final int MASK_BYTE = 0xFF; 
-    
     /**
      * @param lab
      *            to jump to
@@ -44,12 +44,11 @@ public class Jmp extends Instruction {
 
     @Override
     public int[] getObj() {
-        return new int[] { Opcode.JMP.getCode(), pos >> 8, pos & MASK_BYTE, 0 };
+        return new int[] { Opcode.JMP.getCode(), pos >> BYTE_LEN, pos & BYTE_MASK, 0 };
     }
 
     @Override
-    public void asmLabel(final HashMap<String, Integer> label2addr)
-            throws ParseException {
+    public void asmLabel(final HashMap<String, Integer> label2addr) throws ParseException {
         Integer p = label2addr.get(label);
         if (p == null) {
             throw new ParseException("unknown label " + label);

@@ -89,6 +89,10 @@ public class KepProtocol extends CommunicationProtocol {
     /** base for number exchange in protocol. */
     private static final int NUMBASE = 16;
 
+    private static final int WORD_LEN = 4;
+
+    private static final int BYTE_LEN = 8;
+
     /** Description of received target information data. */
     private static final String[] INFO_DESC = { "KEP Type:                         ",
             "PRE support:                      ", "Data path width:                  ",
@@ -250,7 +254,7 @@ public class KepProtocol extends CommunicationProtocol {
         for (int i = 0; i < x.length; i++) {
             String s = Integer.toHexString((int) x[i]).toUpperCase();
             if (s.length() <= 1) {
-                if (n <= 8 * i + 4) {
+                if (n <= BYTE_LEN * i + BYTE_LEN / 2) {
                     stringBuffer.append(s);
                 } else {
                     stringBuffer.append(s + "0");
@@ -296,10 +300,10 @@ public class KepProtocol extends CommunicationProtocol {
         send(TRACE_COMMAND);
         String reply = receive(END_REPLY);
         // extract list of addresses from received string
-        int addressCount = (reply.length() - 1) / 4;
+        int addressCount = (reply.length() - 1) / WORD_LEN;
         int[] trace = new int[addressCount];
         for (int i = 0; i < addressCount; i++) {
-            trace[i] = parseIntRev(reply, 4 * i, 4);
+            trace[i] = parseIntRev(reply, WORD_LEN * i, WORD_LEN);
         }
         return trace;
     }
@@ -309,13 +313,14 @@ public class KepProtocol extends CommunicationProtocol {
      * 
      */
     public String getTargetInfo() throws CommunicationException {
+        final int typeID = 3;
         send(INFO_COMMAND);
         String reply = receive(END_REPLY);
         // construct info message from received string
         StringBuffer stringBuffer = new StringBuffer();
         // KEP Type
         int x = parseIntRev(reply, 0, 1);
-        if (((x >> 3) & 1) == 1) {
+        if (((x >> typeID) & 1) == 1) {
             stringBuffer.append(INFO_DESC[0] + "Esterel\n");
         } else {
             stringBuffer.append(INFO_DESC[0] + "VHDL\n");
@@ -324,7 +329,7 @@ public class KepProtocol extends CommunicationProtocol {
         stringBuffer.append(INFO_DESC[1] + (x & 1) + "\n");
         // other information items
         int pos = 1;
-        for (int i = 2; i < 15; i++) {
+        for (int i = 2; i < INFO_DESC.length; i++) {
             x = parseIntRev(reply, pos, INFO_LENGTH[i]);
             stringBuffer.append(INFO_DESC[i] + x + "\n");
             pos += INFO_LENGTH[i];
@@ -335,7 +340,7 @@ public class KepProtocol extends CommunicationProtocol {
     private int getTickLength() throws CommunicationException {
         send(TICK_LENGTH_COMMAND);
         String reply = receive(END_REPLY);
-        return parseIntRev(reply, 0, 4);
+        return parseIntRev(reply, 0, WORD_LEN);
     }
 
     /**
@@ -349,15 +354,15 @@ public class KepProtocol extends CommunicationProtocol {
         int n = prog.length;
         for (int i = 0; i < n; i++) {
             // send instruction for the first time
-            String data = INSTRUCTION1_COMMAND + toHexString(i, 4) + prog[i];
+            String data = INSTRUCTION1_COMMAND + toHexString(i, WORD_LEN) + prog[i];
             send(data);
             // send instruction for the second time
-            data = INSTRUCTION2_COMMAND + toHexString(i, 4) + prog[i];
+            data = INSTRUCTION2_COMMAND + toHexString(i, WORD_LEN) + prog[i];
             send(data);
             // sleep to make sure the communication word
             // TODO: implement acknowledgment into KEP protocol
             try {
-                Thread.sleep(prog.length / 10);
+                Thread.sleep(prog.length);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -411,13 +416,13 @@ public class KepProtocol extends CommunicationProtocol {
         send(INPUT_COMMAND);
         // int n = inputs.size() + outputs.size();
         int n = maxSignals;
-        char[] inputStatus = new char[(n + 7) / 8];
+        char[] inputStatus = new char[(n + BYTE_LEN - 1) / BYTE_LEN];
         Iterator<Signal> iterator = inputs.iterator();
         while (iterator.hasNext()) {
             Signal s = iterator.next();
             int index = s.getIndex() - 1;
             try {
-                inputStatus[index / 8] |= (s.getPresent() ? 1 : 0) << (index % 8);
+                inputStatus[index / BYTE_LEN] |= (s.getPresent() ? 1 : 0) << (index % BYTE_LEN);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new CommunicationException(e.getMessage());
@@ -441,7 +446,7 @@ public class KepProtocol extends CommunicationProtocol {
             send(END_COMMAND);
             // send data of valued signal; data is expected to be of type int
             send(SEND_VALUED_COMMAND);
-            String signalValue = toHexStringRev(((Integer) s.getValue()).intValue(), 8);
+            String signalValue = toHexStringRev(((Integer) s.getValue()).intValue(), BYTE_LEN);
             send(signalValue);
             send(END_COMMAND);
         }
@@ -459,7 +464,7 @@ public class KepProtocol extends CommunicationProtocol {
         while (iterator.hasNext()) {
             Signal s = iterator.next();
             int index = s.getIndex() - 1;
-            s.setPresent(((outputStatus[index / 8] >> (index % 8)) & 1) == 1);
+            s.setPresent(((outputStatus[index / BYTE_LEN] >> (index % BYTE_LEN)) & 1) == 1);
             if (s.isValued()) {
                 valuedOutputs.add(s);
             }

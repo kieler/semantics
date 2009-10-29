@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.krep.evalbench.comm;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -55,6 +56,8 @@ public class KrepProtocol extends CommunicationProtocol {
 
     private static final String VERIFICATION_STRING = "0123456789:)";
 
+    private static final int BASE_NUM = 16;
+
     /** Description of received target information data. */
     private static final String[] INFO_DESC = { "KIND:                   ",
             "Version:                    ", "#Cores:                     ",
@@ -63,7 +66,8 @@ public class KrepProtocol extends CommunicationProtocol {
 
     private KrepConfig krp = null;
 
-    private final int MASK_BYTE = 0xFF;
+    private static final int MASK_BYTE = 0xFF;
+    private static final int BYTE_LENGTH = 8;
 
     private void sendCmd(final byte data) throws CommunicationException {
         connection.send(data);
@@ -137,17 +141,18 @@ public class KrepProtocol extends CommunicationProtocol {
      * @see krep.evalbench.comm.ICommunicationProtocol#getExecutionTrace()
      */
     public int[] getExecutionTrace() throws CommunicationException {
+
         ArrayList<Integer> trace = new ArrayList<Integer>();
-        int bytes = (krp.getIrom()) / 8;
+        int bytes = (krp.getIrom()) / BYTE_LENGTH;
         sendCmd(TRACE_COMMAND);
         LinkedList<Integer> t = receiveByte(bytes);
         for (int i = 0; i < bytes; i++) {
             // String s = t.substring(2*i, 2*(i+1));
             int b = t.get(i);
             int mask = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < BYTE_LENGTH; j++) {
                 if ((b & mask) != 0) {
-                    trace.add(8 * i + j);
+                    trace.add(BYTE_LENGTH * i + j);
                 }
                 mask = (mask << 1);
             }
@@ -175,11 +180,14 @@ public class KrepProtocol extends CommunicationProtocol {
         for (int i = 0; i < INFO_DESC.length; i++) {
             stringBuffer.append(INFO_DESC[i] + "0x" + String.valueOf(msg.get(i)) + "\n");
         }
-       // int nKind = msg.get(0);
-        int nCores = msg.get(2);
-        int nIO = msg.get(3);
-        int nReg = msg.get(4);
-        int nROM = 1 << msg.get(5);
+        Iterator<Integer> i = msg.iterator();
+        // int nKind = msg.get(0);
+        i.next();
+
+        int nCores = i.next();
+        int nIO = i.next();
+        int nReg = i.next();
+        int nROM = 1 << i.next();
 
         krp = new KrepConfig(nCores, nIO, nReg, nROM);
 
@@ -193,6 +201,7 @@ public class KrepProtocol extends CommunicationProtocol {
      */
     public boolean loadProgram(final IAssembler program, final IProgressMonitor monitor)
             throws CommunicationException, LoadException {
+
         if (krp == null) {
             getTargetInfo();
         }
@@ -203,7 +212,7 @@ public class KrepProtocol extends CommunicationProtocol {
                 byte[] b = { 0, 0, 0, 0, 0 };
                 for (int j = 0; j < b.length; j++) {
                     String t = s.substring(2 * j, 2 * (j + 1));
-                    int i = Integer.parseInt(t, 16);
+                    int i = Integer.parseInt(t, BASE_NUM);
                     b[j] = (byte) (i & MASK_BYTE);
                 }
                 send(b);
@@ -253,17 +262,21 @@ public class KrepProtocol extends CommunicationProtocol {
         int rt = 0;
         // send inputs
         byte i = 0;
-        byte[] msg = new byte[5];
+        byte[] msg = { 0, 0, 0, 0, 0 };
         for (Signal s : inputs) {
             msg[0] = i; // Signal index
             if (s.isValued()) {
                 int v = (Integer) s.getValue();
                 for (int j = 0; j < msg.length - 1; j++) {
                     msg[j + 1] = (byte) (v & MASK_BYTE);
-                    v = v >> 8;
+                    v = v >> BYTE_LENGTH;
                 }
-             } else {
-                msg[4] = ((byte) (s.getPresent() ? 1 : 0));
+            } else {
+                if (s.getPresent()) {
+                    msg[msg.length - 1] = (byte) 1;
+                } else {
+                    msg[msg.length - 1] = (byte) 0;
+                }
             }
             sendCmd(SETVALUE_COMMAND);
             send(msg);
@@ -292,10 +305,11 @@ public class KrepProtocol extends CommunicationProtocol {
     }
 
     private Integer receiveInt() throws CommunicationException {
+        final int wordSize = 4;
         long tmp = 0;
-        LinkedList<Integer> bytes = receiveByte(4);
+        LinkedList<Integer> bytes = receiveByte(wordSize);
         for (Integer b : bytes) {
-            tmp = tmp << 8;
+            tmp = tmp << BYTE_LENGTH;
             tmp += b;
         }
         final long tmin = 0x80000000;

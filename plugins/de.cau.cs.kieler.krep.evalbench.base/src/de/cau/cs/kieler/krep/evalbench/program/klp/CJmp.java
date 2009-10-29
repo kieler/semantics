@@ -52,6 +52,9 @@ public class CJmp extends Instruction {
     private String label;
     private int pos;
 
+    private static final int BYTE_MASK = 0xFF;
+    private static final int BYTE_LEN = 8;
+
     /**
      * @param c
      *            condition
@@ -75,7 +78,7 @@ public class CJmp extends Instruction {
 
     @Override
     public int[] getObj() {
-        return new int[] { getOp(), pos >> 8, pos & 0xFF, reg.getId() };
+        return new int[] { getOp(), pos >> BYTE_LEN, pos & BYTE_MASK, reg.getId() };
     }
 
     private int getOp() {
@@ -100,8 +103,7 @@ public class CJmp extends Instruction {
     }
 
     @Override
-    public void asmLabel(final HashMap<String, Integer> label2addr)
-            throws ParseException {
+    public void asmLabel(final HashMap<String, Integer> label2addr) throws ParseException {
         Integer p = label2addr.get(label);
         if (p == null) {
             throw new ParseException("unknown label " + label);

@@ -117,19 +117,23 @@ public final class KasmAssembler implements IAssembler {
             while ((line = reader.readLine()) != null) {
                 // detect list of valued input signals
                 if (line.startsWith("INPUTV")) {
-                    signalId = gatherSignals(inputs, signalId, true, line.substring("INPUTV".length()));
+                    signalId = gatherSignals(inputs, signalId, true, line.substring("INPUTV"
+                            .length()));
                     pos += line.length() + 1;
                 } else if (line.startsWith("INPUT")) {
                     // detect list of pure input signals
-                    signalId = gatherSignals(inputs, signalId, false, line.substring("INPUT".length()));
+                    signalId = gatherSignals(inputs, signalId, false, line.substring("INPUT"
+                            .length()));
                     pos += line.length() + 1;
                 } else if (line.startsWith("OUTPUTV")) {
                     // detect list of valued output signals
-                    signalId = gatherSignals(outputs, signalId, true, line.substring("OUTPUTV".length()));
+                    signalId = gatherSignals(outputs, signalId, true, line.substring("OUTPUTV"
+                            .length()));
                     pos += line.length() + 1;
                 } else if (line.startsWith("OUTPUT")) {
                     // detect list of pure output signals
-                    signalId = gatherSignals(outputs, signalId, false, line.substring("OUTPUT".length()));
+                    signalId = gatherSignals(outputs, signalId, false, line.substring("OUTPUT"
+                            .length()));
                     pos += line.length() + 1;
                 } else if (line.startsWith("[")) {
                     final int i1 = line.indexOf('{');
@@ -169,17 +173,17 @@ public final class KasmAssembler implements IAssembler {
                     line = line.substring(colonIndex + 1);
                 }
                 if (line.length() >= 2) {
-                    final String[] newInstr = new String[4];
-                    newInstr[0] = Integer.toString(instrCount);
                     instrCount++;
+                    String l;
                     if (label != null) {
-                        newInstr[1] = label;
+                        l = label;
                         label = null;
                     } else {
-                        newInstr[1] = "";
+                        l = "";
                     }
-                    newInstr[2] = line;
-                    newInstr[3] = result[instrs.size()];
+
+                    final String[] newInstr = { Integer.toString(instrCount), l, line,
+                            result[instrs.size()] };
                     instrs.add(newInstr);
                 }
             }

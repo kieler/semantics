@@ -46,20 +46,19 @@ public class TracePerspective implements IPerspectiveFactory {
      */
     public void createInitialLayout(final IPageLayout layout) {
 
+        final float ratioBottom = 0.7f;
+        final float ratioLeft = 0.57f;  
+        
         // get the editor area.
         String editorArea = layout.getEditorArea();
 
         // bottom: Connection and Target view
-        IFolderLayout bottom = layout.createFolder("bottom", IPageLayout.BOTTOM, 0.7f, editorArea);
+        IFolderLayout bottom = layout.createFolder("bottom", IPageLayout.BOTTOM, ratioBottom, editorArea);
         bottom.addView(ID_CONNECTION);
         bottom.addView(ID_TARGET);
         bottom.addView(ID_MESSAGE);
 
-        // right 1: trace view view
-        // layout.addStandaloneView(ID_TRACE, true, IPageLayout.RIGHT, 0.57f,
-        // editorArea);
-
-        IFolderLayout left = layout.createFolder("left", IPageLayout.RIGHT, 0.57f, editorArea);
+        IFolderLayout left = layout.createFolder("left", IPageLayout.RIGHT, ratioLeft, editorArea);
 
         left.addView(ID_TRACE);
 
