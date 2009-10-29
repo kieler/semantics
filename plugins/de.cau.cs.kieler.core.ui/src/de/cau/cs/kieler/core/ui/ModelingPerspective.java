@@ -22,8 +22,7 @@ import org.eclipse.ui.PlatformUI;
  * A Perspective for the KIELER modeling application. It loads all available KIELER views and sets
  * some New-Wizards as shortcuts into the New-Menu.
  * 
- * @author haf
- * 
+ * @author <a href="mailto:haf@informatik.uni-kiel.de">Hauke Fuhrmann</a>
  */
 public class ModelingPerspective implements IPerspectiveFactory {
 
@@ -59,7 +58,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
     }
 
     /**
-     * Add KIELER Views (and some important Eclipse views) as shortcuts into the View menu
+     * Add KIELER Views (and some important Eclipse views) as shortcuts into the View menu.
      * 
      * @param layout
      */
