@@ -660,12 +660,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 			int listIndexMostTop = -1;
 			int listIndexMostBottom = -1;
 			for (int c = 0; c < selections.size(); c ++) {
-				dataComponentEx = (DataComponentEx)selections.toArray()[c];
-				int index = KIEMInstance.getDataComponentExList().indexOf(dataComponentEx);
-				if ((listIndexMostTop == -1)||(index < listIndexMostTop))
-					listIndexMostTop = index;
-				if ((listIndexMostBottom == -1)||(listIndexMostBottom < index))
-					listIndexMostBottom = index;
+				if (selections.toArray()[c] instanceof DataComponentEx) {
+					dataComponentEx = (DataComponentEx)selections.toArray()[c];
+					int index = KIEMInstance.getDataComponentExList().indexOf(dataComponentEx);
+					if ((listIndexMostTop == -1)||(index < listIndexMostTop))
+						listIndexMostTop = index;
+					if ((listIndexMostBottom == -1)||(listIndexMostBottom < index))
+						listIndexMostBottom = index;
+				}
 			}
 			if (listIndexMostTop <= 0) {
 				//currently top
@@ -1042,14 +1044,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 						.StructuredSelection)viewer.getSelection();
 				//go thru list from up to down!
 				for (int c = 0; c < selections.size(); c ++) {
-					DataComponentEx dataComponentEx = (DataComponentEx)selections.toArray()[c];
-					int listIndex = 
-						KIEMInstance.getDataComponentExList().indexOf(dataComponentEx);
-					if (listIndex > 0) {
-					   KIEMInstance.getDataComponentExList().remove(listIndex);
-					   KIEMInstance.getDataComponentExList().add(listIndex-1, dataComponentEx);
-					   setDirty(true);
-					}
+					if (selections.toArray()[c] instanceof DataComponentEx) {
+						DataComponentEx dataComponentEx = (DataComponentEx)selections.toArray()[c];
+						int listIndex = 
+							KIEMInstance.getDataComponentExList().indexOf(dataComponentEx);
+						if (listIndex > 0) {
+						   KIEMInstance.getDataComponentExList().remove(listIndex);
+						   KIEMInstance.getDataComponentExList().add(listIndex-1, dataComponentEx);
+						   setDirty(true);
+						}
+					}//end if DataComponent (not property)
 				}
 			    viewer.refresh();
 			    refreshEnabledDisabledTextColors();
@@ -1079,14 +1083,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 						.StructuredSelection)viewer.getSelection();
 				//go thru list from down to up!
 				for (int c = selections.size()-1; c >= 0; c --) {
-					DataComponentEx dataComponentEx = (DataComponentEx)selections.toArray()[c];
-					int listIndex = 
-						KIEMInstance.getDataComponentExList().indexOf(dataComponentEx);
-					if (listIndex < KIEMInstance.getDataComponentExList().size()-1) {
-						   KIEMInstance.getDataComponentExList().remove(listIndex);
-						   KIEMInstance.getDataComponentExList().add(listIndex+1, dataComponentEx);
-						   setDirty(true);
-						}
+					if (selections.toArray()[c] instanceof DataComponentEx) {
+						DataComponentEx dataComponentEx = (DataComponentEx)selections.toArray()[c];
+						int listIndex = 
+							KIEMInstance.getDataComponentExList().indexOf(dataComponentEx);
+						if (listIndex < KIEMInstance.getDataComponentExList().size()-1) {
+							   KIEMInstance.getDataComponentExList().remove(listIndex);
+							   KIEMInstance.getDataComponentExList().add(listIndex+1, dataComponentEx);
+							   setDirty(true);
+							}
+					}//if DataComponent (not Property)
 				}
 				viewer.refresh();
 				refreshEnabledDisabledTextColors();

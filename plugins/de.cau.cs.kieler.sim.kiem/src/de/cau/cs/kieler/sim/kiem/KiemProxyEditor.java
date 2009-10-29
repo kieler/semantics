@@ -27,6 +27,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.MultiPageEditorPart;
+import org.eclipse.ui.IViewPart;
 
 /**
  * The Class editor is a fake Eclipse EditorPart that handles a convenient
@@ -77,6 +78,16 @@ public class KiemProxyEditor extends MultiPageEditorPart
          //save the editor input for later find the edior in order to
          //close it
          this.editorInput = editorInputToOpen;
+         
+         //bring KIEM view to the front (lazy loading)
+         try{
+        	 IWorkbenchWindow window = this.getSite().getWorkbenchWindow();
+        	 IViewPart VP =  window.getActivePage()
+					.showView("de.cau.cs.kieler.sim.kiem.view");
+ 			 VP.setFocus();
+         }catch(Exception e){
+        	 e.printStackTrace();
+         }
          
          //call the KiemPlugin to open asynchronously
          (new Thread() {
