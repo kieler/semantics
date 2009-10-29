@@ -46,8 +46,8 @@ import de.cau.cs.kieler.synccharts.StateType;
 
 public class StateLayout extends ConstrainedToolbarLayout {
 
-    public static final int MIN_HEIGHT = 25;
-    public static final int MIN_WIDTH = 25;
+    public static final int MIN_HEIGHT = 30;
+    public static final int MIN_WIDTH = 30;
     public static final int COND_HEIGHT = 20;
     public static final int COND_WIDTH = 20;
 
@@ -440,8 +440,8 @@ public class StateLayout extends ConstrainedToolbarLayout {
                         && ((WrappingLabel) child).getText() != null
                         && !((WrappingLabel) child).getText().equals("")) {
                     return new Dimension(
-                            ((WrappingLabel) children.get(0)).getPreferredSize().width,
-                            ((WrappingLabel) children.get(0)).getPreferredSize().height);
+                            (Math.max(((WrappingLabel) children.get(0)).getPreferredSize().width, MIN_WIDTH)),
+                            (Math.max(((WrappingLabel) children.get(0)).getPreferredSize().height, MIN_HEIGHT)));
                 } else {
                     return new Dimension(StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT);
                 }
