@@ -82,7 +82,6 @@ public class OutputView extends ViewPart implements ISignalListener {
     /*
      * (non-Javadoc)
      * 
-     * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
      */
     @Override
     public void setFocus() {
@@ -92,7 +91,6 @@ public class OutputView extends ViewPart implements ISignalListener {
     /*
      * (non-Javadoc)
      * 
-     * @see org.eclipse.ui.part.WorkbenchPart#dispose()
      */
     @Override
     public void dispose() {
@@ -102,9 +100,6 @@ public class OutputView extends ViewPart implements ISignalListener {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see krep.evalbench.comm.ISignalListener#tickPerformed(krep.evalbench.comm .Signal[],
-     *      krep.evalbench.comm.Signal[])
      */
     public void tickPerformed(final LinkedList<Signal> inputs, final LinkedList<Signal> outputs) {
         // input signals are ignored

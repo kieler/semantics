@@ -129,7 +129,6 @@ public class KrepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#continuousRun()
      */
     public void continuousRun() throws CommunicationException {
         sendCmd(CONT_COMMAND);
@@ -138,7 +137,6 @@ public class KrepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#getExecutionTrace()
      */
     public int[] getExecutionTrace() throws CommunicationException {
 
@@ -170,7 +168,6 @@ public class KrepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#getTargetInfo()
      */
     public String getTargetInfo() throws CommunicationException {
         sendCmd(INFO_COMMAND);
@@ -196,8 +193,6 @@ public class KrepProtocol extends CommunicationProtocol {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#loadProgram(java.lang.String)
      */
     public boolean loadProgram(final IAssembler program, final IProgressMonitor monitor)
             throws CommunicationException, LoadException {
@@ -233,7 +228,6 @@ public class KrepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#resetStatus()
      */
     public void resetStatus() throws CommunicationException {
         sendCmd(RESET_COMMAND);
@@ -244,8 +238,7 @@ public class KrepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#stopContinuous()
-     */
+      */
     public void stopContinuous() throws CommunicationException {
         sendCmd(HALT_COMMAND);
     }
@@ -253,9 +246,7 @@ public class KrepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ICommunicationProtocol#tick(java.util.LinkedList,
-     *      java.util.LinkedList)
-     */
+      */
     public int tick(final int maxSignals, final LinkedList<Signal> inputs,
             final LinkedList<Signal> outputs) throws CommunicationException {
 

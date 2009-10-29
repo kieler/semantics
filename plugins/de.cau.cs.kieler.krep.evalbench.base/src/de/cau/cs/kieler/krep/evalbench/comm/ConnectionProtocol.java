@@ -102,7 +102,6 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.IConnectionProtocol#receive(char)
      */
     public String receive(final char exit) throws CommunicationException {
         try {
@@ -142,7 +141,6 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.IConnectionProtocol#receive(char)
      */
     public String receive(final int n) throws CommunicationException {
         InputStreamReader reader = null;
@@ -236,8 +234,6 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see krep.evalbench.comm.IConnectionProtocol#hark(int)
      */
     public String hark(final int n) throws CommunicationException {
         try {
@@ -291,7 +287,6 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.IConnectionProtocol#send(java.lang.String)
      */
     public void send(final String data) throws CommunicationException {
         OutputStreamWriter writer = null;
@@ -321,7 +316,6 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.IConnectionProtocol#send(java.lang.String)
      */
     public void send(final byte data) throws CommunicationException {
         OutputStreamWriter writer = null;
@@ -351,7 +345,6 @@ public abstract class ConnectionProtocol implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.IConnectionProtocol#send(java.lang.String)
      */
     public void send(final byte[] data) throws CommunicationException {
         try {

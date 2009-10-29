@@ -78,7 +78,6 @@ public class JNIConnection implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#initialize()
      */
     public String initialize(final String device, final int port) throws CommunicationException {
         IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
@@ -90,7 +89,6 @@ public class JNIConnection implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#hark()
      */
     public String hark(final int n) throws CommunicationException {
         StringBuffer res = new StringBuffer();
@@ -103,7 +101,6 @@ public class JNIConnection implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#receive()
      */
     public String receive(final char exit) throws CommunicationException {
         StringBuffer res = new StringBuffer();
@@ -121,7 +118,6 @@ public class JNIConnection implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#receive()
      */
     public String receive(final int n) throws CommunicationException {
         StringBuffer res = new StringBuffer();
@@ -137,7 +133,6 @@ public class JNIConnection implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#send()
      */
     public void send(final String data) throws CommunicationException {
         for (byte b : data.getBytes()) {
@@ -148,7 +143,6 @@ public class JNIConnection implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#send()
      */
     public void send(final byte data) throws CommunicationException {
         krep.send(data);
@@ -157,7 +151,6 @@ public class JNIConnection implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#comment()
      */
     public void comment(final String comment) {
         krep.comment(comment);
@@ -166,7 +159,6 @@ public class JNIConnection implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#receiveByte()
      */
     public LinkedList<Integer> receiveByte(final int n) throws CommunicationException {
         LinkedList<Integer> res = new LinkedList<Integer>();
@@ -183,7 +175,6 @@ public class JNIConnection implements IConnectionProtocol {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.comm.ConnectionProtocol#send()
      */
     public void send(final byte[] data) throws CommunicationException {
         for (byte b : data) {

@@ -211,7 +211,6 @@ public final class KasmAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.program.IAssembler#getInputs()
      */
     public LinkedList<Signal> getInputs() {
         return inputs;
@@ -220,7 +219,6 @@ public final class KasmAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      * 
-     * @see krep.evalbench.program.IAssembler#getOutputs()
      */
     public LinkedList<Signal> getOutputs() {
         return outputs;

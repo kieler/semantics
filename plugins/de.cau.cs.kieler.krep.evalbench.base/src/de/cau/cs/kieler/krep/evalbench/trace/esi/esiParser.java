@@ -23,7 +23,6 @@ import org.antlr.runtime.*;
 
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
-import de.cau.cs.kieler.krep.evalbench.program.krep.*;
 import de.cau.cs.kieler.krep.evalbench.trace.*;
 
 import java.util.Stack;
