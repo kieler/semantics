@@ -445,7 +445,7 @@
 					</tokenfilter>
 				</filterchain>
 				<footer filtering="no">
-					&lt;fileset dir=&quot;${basedir}/../../&quot; includes=&quot;**/plugins/**jar&quot; /&gt;
+					&lt;fileset dir=&quot;${basedir}/../../&quot; includes=&quot;**/plugins/**/*.jar&quot; /&gt;
 				</footer>
 			</concat>
 		</loadfile>
