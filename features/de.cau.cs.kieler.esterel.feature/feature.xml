@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.esterel.feature"
+      id="de.cau.cs.kieler.esterel"
       label="Esterel Editor"
       version="0.1.0.vqualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
