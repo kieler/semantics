@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.cau.cs.kieler.esterel.feature"
+      label="Esterel Editor"
+      version="0.1.0.vqualifier"
+      provider-name="Christian-Albrechts-Universität zu Kiel">
+
+   <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/Editors/Esterel">
+      Textual editor for the synchronous control flow based language
+Esterel
+   </description>
+
+   <copyright>
+      Copyright 2009 by Real-Time and Embedded Systems Group, Department
+of Computer Science, Christian-Albrechts-University of Kiel
+   </copyright>
+
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      This program and the accompanying materials are made available
+under the terms of the Eclipse Public License (EPL).
+   </license>
+
+   <url>
+      <update label="KIELER nightly builds Update Site" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/"/>
+   </url>
+
+   <plugin
+         id="de.cau.cs.kieler.esterel"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.esterel.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
