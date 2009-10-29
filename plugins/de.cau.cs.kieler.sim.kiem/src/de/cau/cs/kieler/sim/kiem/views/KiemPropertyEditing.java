@@ -55,17 +55,22 @@ public class KiemPropertyEditing extends EditingSupport {
 						  int columnIndex) {
 		super(viewer);
 		
-		// Create the correct editor based on the column index
-		switch (columnIndex) {
-		case 1:
-			//save the tree of the viewer inside tree for later
-			//register the appropriate cell editor for it
-			this.tree = ((TreeViewer)viewer).getTree();
-			break;
-		default:
-			throw new RuntimeException("Editing not supported");
+		try {
+			// Create the correct editor based on the column index
+			switch (columnIndex) {
+			case 1:
+				//save the tree of the viewer inside tree for later
+				//register the appropriate cell editor for it
+				this.tree = ((TreeViewer)viewer).getTree();
+				break;
+			default:
+				throw new RuntimeException("Editing not supported");
+			}
+			this.parent = parent;
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		this.parent = parent;
+		
 	}
 
 	//-------------------------------------------------------------------------
@@ -91,9 +96,16 @@ public class KiemPropertyEditing extends EditingSupport {
 		//this gets not a special (static) cell editor
 		//but a dynamic one that is based on the KiemPropertyType of
 		//the KiemProperty element
-		KiemProperty property = (KiemProperty)element;
-		property.getType().setCellEditor(tree);
-		return property.getType().getCellEditor();
+		CellEditor ce = null;
+		//no cell editor in case of errors
+		try {
+			KiemProperty property = (KiemProperty)element;
+			property.getType().setCellEditor(tree);
+			property.getType().getCellEditor();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return ce;
 	}
 
 	//-------------------------------------------------------------------------
@@ -104,8 +116,14 @@ public class KiemPropertyEditing extends EditingSupport {
 	@Override
 	protected Object getValue(Object element) {
 		//get the value using the getValue() method of the KiemPropertyType
-		KiemProperty property = (KiemProperty)element;
-		return property.getType().getValue(property);
+		Object obj = null;
+		try {
+			KiemProperty property = (KiemProperty)element;
+			obj = property.getType().getValue(property);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return obj;
 	}
 
 	//-------------------------------------------------------------------------
@@ -115,16 +133,21 @@ public class KiemPropertyEditing extends EditingSupport {
 	 */
 	@Override
 	protected void setValue(Object element, Object value) {
-		//set the value using the getValue() method of the KiemPropertyType
-		KiemProperty property = (KiemProperty)element;
-		String oldValue = ""+property.getValue();
-		property.getType().setValue(property, ""+value);
-		String newValue = ""+property.getValue();
-		boolean valueChanged
-					= !(newValue.equals(oldValue));
-		getViewer().update(element, null);
-		if (valueChanged)
-			parent.setDirty(true);
+		try {
+			
+			//set the value using the getValue() method of the KiemPropertyType
+			KiemProperty property = (KiemProperty)element;
+			String oldValue = ""+property.getValue();
+			property.getType().setValue(property, ""+value);
+			String newValue = ""+property.getValue();
+			boolean valueChanged
+						= !(newValue.equals(oldValue));
+			getViewer().update(element, null);
+			if (valueChanged)
+				parent.setDirty(true);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 }

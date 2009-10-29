@@ -243,6 +243,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 				        }		
 				        //update the KiemView table
 						KIEMViewInstance.updateViewAsync();
+						//reset the KIEM view (in cases it hangs because
+						//of faulty components)						
+						KIEMViewInstance.updateEnabledEnabledDisabledUpDownAddDelete();
 						//update the current file, dirty flag
 						KIEMViewInstance.setCurrentFile(
 								((IFileEditorInput)editorInputToOpen)
