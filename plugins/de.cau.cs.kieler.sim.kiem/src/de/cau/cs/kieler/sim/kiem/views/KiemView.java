@@ -122,11 +122,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	
 	/** The Constant columnBoundsCollapsed - no properties visible. */
 	public static final int[] columnBoundsCollapsed 
-								= { 220, 0 , 20, 120, 50, 50};
+								= { 250, 0 , 20, 120, 50, 50};
 	
 	/** The Constant columnBounds - properties visible. */
 	public static final int[] columnBounds 
-								= { 220, 200 , 20, 120, 50, 50};
+								= { 250, 200 , 20, 120, 50, 50};
 	
 	/** The column property user defined width, initially -1. */
 	public int columnProperty = -1;
