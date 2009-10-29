@@ -189,7 +189,7 @@
 				<fileset dir="plugins" includes="**/build.xml" />
 				<filterchain>
 					<linecontainsregexp>
-						<regexp pattern="&lt;pathelement" />
+						<regexp pattern="&lt;pathelement path="../../" />
 					</linecontainsregexp>
 					<linecontainsregexp negate="true">
 						<regexp pattern="/@dot&quot;" />
@@ -199,6 +199,9 @@
 					</linecontainsregexp>
 					<linecontainsregexp negate="true">
 						<regexp pattern="e4-workbench.jar" />
+					</linecontainsregexp>
+					<linecontainsregexp negate="true">
+						<regexp pattern="jdt.debug_(.)*/tools.jar" />
 					</linecontainsregexp>
 					<!-- separate enclosing tags to realize NOR function
 						 (multiple repexp conditions will be ANDed) -->
