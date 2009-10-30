@@ -162,6 +162,12 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 												KiemExecutionException {
 		
 		System.out.println("Step in Ptolemy Model...");
+
+		//the return object to construct
+		JSONObject returnObj = new JSONObject();
+		
+		//contains the current state
+		String currentState = "";
 		
 		try {
 			//set current input data
@@ -171,10 +177,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 			PTOEXE.executionStep();
 
 			//get the current states
-			String currentState = PTOEXE.getCurrentState();
-			
-			//the return object to construct
-			JSONObject returnObj = new JSONObject();
+			currentState = PTOEXE.getCurrentState();
 		}
 		catch(Exception e) {
 			new KiemInitializationException
@@ -199,7 +202,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		//the stateName is the second KIEM property
 		String stateName = this.getProperties()[1].getValue();
 
-		try {returnObj.accumulate(stateName,currentState);}catch(Exception e){}
+		try {returnObj.accumulate(stateName, currentState);}catch(Exception e){}
 		return returnObj;
 	}
 
