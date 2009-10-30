@@ -79,14 +79,39 @@ public class StateLayout extends ConstrainedToolbarLayout {
         if (parent instanceof AttributeAwareFigure) {
             EObject modelElement = ((AttributeAwareFigure) parent).getModelElement();
             if (modelElement instanceof State) {
+                invalidateLabels(parent);
                 State state = (State) modelElement;
                 retrieveContents(state);
-
                 if (isSimple(state)) {
                     simpleLayout(parent, children, x, y, height, width);
                 } else {
                     complexLayout(parent, children, x, y, height, width);
                 }
+            }
+        }
+    }
+
+    /**
+     * Invalidate all child labels of the given figure. This will cause
+     * all cached size values to be reset. This is necessary because of an
+     * GMF bug that does not invalidate a label when a font has changed.
+     * Hence all minimum and preffered sizes are cached wrongly.
+     * @param parent
+     */
+    private void invalidateLabels(IFigure parent) {
+        for (Object child : parent.getChildren()) {
+            if(child instanceof WrappingLabel){
+                ((WrappingLabel) child).invalidate();
+                invalidateChildren((IFigure) child);
+            }
+        }
+    }
+    
+    private void invalidateChildren(IFigure parent){
+        for (Object child : parent.getChildren()) {
+            if(child instanceof IFigure){
+                ((IFigure) child).invalidate();
+                invalidateChildren((IFigure)child);
             }
         }
     }
@@ -363,6 +388,7 @@ public class StateLayout extends ConstrainedToolbarLayout {
                 }
 
                 childFigure.setBounds(transposer.t(newBounds));
+                
 
             }
         }

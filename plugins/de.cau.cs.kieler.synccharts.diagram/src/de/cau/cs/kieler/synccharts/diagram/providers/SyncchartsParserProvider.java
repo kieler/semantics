@@ -28,8 +28,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 /**
  * @generated
  */
-public class SyncchartsParserProvider extends AbstractProvider implements
-        IParserProvider {
+public class SyncchartsParserProvider extends AbstractProvider implements IParserProvider {
 
     /**
      * @generated
@@ -207,10 +206,8 @@ public class SyncchartsParserProvider extends AbstractProvider implements
      * Utility method that consults ParserService
      * @generated
      */
-    public static IParser getParser(IElementType type, EObject object,
-            String parserHint) {
-        return ParserService.getInstance().getParser(
-                new HintAdapter(type, object, parserHint));
+    public static IParser getParser(IElementType type, EObject object, String parserHint) {
+        return ParserService.getInstance().getParser(new HintAdapter(type, object, parserHint));
     }
 
     /**

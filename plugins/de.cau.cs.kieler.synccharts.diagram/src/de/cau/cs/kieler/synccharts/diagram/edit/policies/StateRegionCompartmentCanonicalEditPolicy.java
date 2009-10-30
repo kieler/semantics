@@ -19,8 +19,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 /**
  * @generated
  */
-public class StateRegionCompartmentCanonicalEditPolicy extends
-        CanonicalEditPolicy {
+public class StateRegionCompartmentCanonicalEditPolicy extends CanonicalEditPolicy {
 
     /**
      * @generated
@@ -34,11 +33,9 @@ public class StateRegionCompartmentCanonicalEditPolicy extends
         View viewObject = (View) getHost().getModel();
         List result = new LinkedList();
         for (Iterator it = SyncchartsDiagramUpdater
-                .getStateRegionCompartment_7006SemanticChildren(viewObject)
-                .iterator(); it.hasNext();) {
-            result
-                    .add(((SyncchartsNodeDescriptor) it.next())
-                            .getModelElement());
+                .getStateRegionCompartment_7006SemanticChildren(viewObject).iterator(); it
+                .hasNext();) {
+            result.add(((SyncchartsNodeDescriptor) it.next()).getModelElement());
         }
         return result;
     }
@@ -70,8 +67,7 @@ public class StateRegionCompartmentCanonicalEditPolicy extends
     protected Set getFeaturesToSynchronize() {
         if (myFeaturesToSynchronize == null) {
             myFeaturesToSynchronize = new HashSet();
-            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE
-                    .getState_Regions());
+            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE.getState_Regions());
         }
         return myFeaturesToSynchronize;
     }

@@ -21,10 +21,6 @@
             xsi:type="gmfgraph:Label"
             name="StateNameFigure"
             text="">
-          <font
-              xsi:type="gmfgraph:BasicFont"
-              faceName="Sans"
-              height="12"/>
           <insets
               top="5"
               left="10"
@@ -52,12 +48,7 @@
         <children
             xsi:type="gmfgraph:Label"
             name="TransitionTriggersAndEffectsFigure"
-            text="">
-          <font
-              xsi:type="gmfgraph:BasicFont"
-              faceName="Sans"
-              height="12"/>
-        </children>
+            text=""/>
       </actualFigure>
       <accessors
           figure="//@figures.0/@descriptors.1/@actualFigure/@children.0"/>

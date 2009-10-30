@@ -32,12 +32,9 @@ public class StateOnInsideActionCanonicalEditPolicy extends CanonicalEditPolicy 
     protected List getSemanticChildrenList() {
         View viewObject = (View) getHost().getModel();
         List result = new LinkedList();
-        for (Iterator it = SyncchartsDiagramUpdater
-                .getStateOnInsideAction_7003SemanticChildren(viewObject)
-                .iterator(); it.hasNext();) {
-            result
-                    .add(((SyncchartsNodeDescriptor) it.next())
-                            .getModelElement());
+        for (Iterator it = SyncchartsDiagramUpdater.getStateOnInsideAction_7003SemanticChildren(
+                viewObject).iterator(); it.hasNext();) {
+            result.add(((SyncchartsNodeDescriptor) it.next()).getModelElement());
         }
         return result;
     }
@@ -69,8 +66,7 @@ public class StateOnInsideActionCanonicalEditPolicy extends CanonicalEditPolicy 
     protected Set getFeaturesToSynchronize() {
         if (myFeaturesToSynchronize == null) {
             myFeaturesToSynchronize = new HashSet();
-            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE
-                    .getState_InnerActions());
+            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE.getState_InnerActions());
         }
         return myFeaturesToSynchronize;
     }

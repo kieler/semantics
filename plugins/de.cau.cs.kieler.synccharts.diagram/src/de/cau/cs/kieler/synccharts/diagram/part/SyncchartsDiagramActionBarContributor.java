@@ -13,8 +13,7 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @generated
  */
-public class SyncchartsDiagramActionBarContributor extends
-        DiagramActionBarContributor {
+public class SyncchartsDiagramActionBarContributor extends DiagramActionBarContributor {
 
     /**
      * @generated

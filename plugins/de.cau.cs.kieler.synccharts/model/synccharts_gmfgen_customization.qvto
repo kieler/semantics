@@ -16,7 +16,6 @@ main() {
 	
 	// some general plugin settings	
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.custom";
-	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.diagram.custom";
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.labelparser.bridge";
 	model.plugin.version := "0.1.0.qualifier";
 	model.plugin.provider := "Christian-Albrechts-Universität zu Kiel";

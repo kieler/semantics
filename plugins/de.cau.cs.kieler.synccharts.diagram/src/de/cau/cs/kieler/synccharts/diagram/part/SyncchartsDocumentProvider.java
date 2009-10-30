@@ -58,14 +58,13 @@ import org.eclipse.ui.part.FileEditorInput;
 /**
  * @generated
  */
-public class SyncchartsDocumentProvider extends AbstractDocumentProvider
-        implements IDiagramDocumentProvider {
+public class SyncchartsDocumentProvider extends AbstractDocumentProvider implements
+        IDiagramDocumentProvider {
 
     /**
      * @generated
      */
-    protected ElementInfo createElementInfo(Object element)
-            throws CoreException {
+    protected ElementInfo createElementInfo(Object element) throws CoreException {
         if (false == element instanceof FileEditorInput
                 && false == element instanceof URIEditorInput) {
             throw new CoreException(
@@ -161,16 +160,13 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
      * @generated
      */
     private TransactionalEditingDomain createEditingDomain() {
-        TransactionalEditingDomain editingDomain = DiagramEditingDomainFactory
-                .getInstance().createEditingDomain();
-        editingDomain
-                .setID("de.cau.cs.kieler.synccharts.diagram.EditingDomain"); //$NON-NLS-1$
+        TransactionalEditingDomain editingDomain = DiagramEditingDomainFactory.getInstance()
+                .createEditingDomain();
+        editingDomain.setID("de.cau.cs.kieler.synccharts.diagram.EditingDomain"); //$NON-NLS-1$
         final NotificationFilter diagramResourceModifiedFilter = NotificationFilter
                 .createNotifierFilter(editingDomain.getResourceSet()).and(
-                        NotificationFilter
-                                .createEventTypeFilter(Notification.ADD)).and(
-                        NotificationFilter.createFeatureFilter(
-                                ResourceSet.class,
+                        NotificationFilter.createEventTypeFilter(Notification.ADD)).and(
+                        NotificationFilter.createFeatureFilter(ResourceSet.class,
                                 ResourceSet.RESOURCE_SET__RESOURCES));
         editingDomain.getResourceSet().eAdapters().add(new Adapter() {
 
@@ -211,23 +207,19 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
         TransactionalEditingDomain domain = diagramDocument.getEditingDomain();
         if (element instanceof FileEditorInput) {
             IStorage storage = ((FileEditorInput) element).getStorage();
-            Diagram diagram = DiagramIOUtil.load(domain, storage, true,
-                    getProgressMonitor());
+            Diagram diagram = DiagramIOUtil.load(domain, storage, true, getProgressMonitor());
             document.setContent(diagram);
         } else if (element instanceof URIEditorInput) {
             URI uri = ((URIEditorInput) element).getURI();
             Resource resource = null;
             try {
-                resource = domain.getResourceSet().getResource(
-                        uri.trimFragment(), false);
+                resource = domain.getResourceSet().getResource(uri.trimFragment(), false);
                 if (resource == null) {
-                    resource = domain.getResourceSet().createResource(
-                            uri.trimFragment());
+                    resource = domain.getResourceSet().createResource(uri.trimFragment());
                 }
                 if (!resource.isLoaded()) {
                     try {
-                        Map options = new HashMap(GMFResourceFactory
-                                .getDefaultLoadOptions());
+                        Map options = new HashMap(GMFResourceFactory.getDefaultLoadOptions());
                         // @see 171060 
                         // options.put(org.eclipse.emf.ecore.xmi.XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
                         resource.load(options);
@@ -243,8 +235,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                         return;
                     }
                 } else {
-                    for (Iterator it = resource.getContents().iterator(); it
-                            .hasNext();) {
+                    for (Iterator it = resource.getContents().iterator(); it.hasNext();) {
                         Object rootElement = it.next();
                         if (rootElement instanceof Diagram) {
                             document.setContent((Diagram) rootElement);
@@ -260,14 +251,9 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                     thrownExcp = (CoreException) e;
                 } else {
                     String msg = e.getLocalizedMessage();
-                    thrownExcp = new CoreException(
-                            new Status(
-                                    IStatus.ERROR,
-                                    SyncchartsDiagramEditorPlugin.ID,
-                                    0,
-                                    msg != null ? msg
-                                            : Messages.SyncchartsDocumentProvider_DiagramLoadingError,
-                                    e));
+                    thrownExcp = new CoreException(new Status(IStatus.ERROR,
+                            SyncchartsDiagramEditorPlugin.ID, 0, msg != null ? msg
+                                    : Messages.SyncchartsDocumentProvider_DiagramLoadingError, e));
                 }
                 throw thrownExcp;
             }
@@ -335,8 +321,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
     /**
      * @generated
      */
-    protected void doValidateState(Object element, Object computationContext)
-            throws CoreException {
+    protected void doValidateState(Object element, Object computationContext) throws CoreException {
         ResourceSetInfo info = getResourceSetInfo(element);
         if (info != null) {
             Collection/*<org.eclipse.core.resources.IFile>*/files2Validate = new ArrayList/*<org.eclipse.core.resources.IFile>*/();
@@ -349,8 +334,8 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                 }
             }
             ResourcesPlugin.getWorkspace().validateEdit(
-                    (IFile[]) files2Validate.toArray(new IFile[files2Validate
-                            .size()]), computationContext);
+                    (IFile[]) files2Validate.toArray(new IFile[files2Validate.size()]),
+                    computationContext);
         }
 
         super.doValidateState(element, computationContext);
@@ -367,8 +352,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                     updateCache(element);
                 } catch (CoreException ex) {
                     SyncchartsDiagramEditorPlugin.getInstance().logError(
-                            Messages.SyncchartsDocumentProvider_isModifiable,
-                            ex);
+                            Messages.SyncchartsDocumentProvider_isModifiable, ex);
                     // Error message to log was initially taken from org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide.internal.l10n.EditorMessages.StorageDocumentProvider_isModifiable
                 }
             }
@@ -382,8 +366,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
      */
     public boolean isModifiable(Object element) {
         if (!isStateValidated(element)) {
-            if (element instanceof FileEditorInput
-                    || element instanceof URIEditorInput) {
+            if (element instanceof FileEditorInput || element instanceof URIEditorInput) {
                 return true;
             }
         }
@@ -394,8 +377,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                     updateCache(element);
                 } catch (CoreException ex) {
                     SyncchartsDiagramEditorPlugin.getInstance().logError(
-                            Messages.SyncchartsDocumentProvider_isModifiable,
-                            ex);
+                            Messages.SyncchartsDocumentProvider_isModifiable, ex);
                     // Error message to log was initially taken from org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide.internal.l10n.EditorMessages.StorageDocumentProvider_isModifiable
                 }
             }
@@ -460,12 +442,11 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                 Resource nextResource = (Resource) it.next();
                 IFile file = WorkspaceSynchronizer.getFile(nextResource);
                 if (file != null) {
-                    rules.add(ResourcesPlugin.getWorkspace().getRuleFactory()
-                            .modifyRule(file));
+                    rules.add(ResourcesPlugin.getWorkspace().getRuleFactory().modifyRule(file));
                 }
             }
-            return new MultiRule((ISchedulingRule[]) rules
-                    .toArray(new ISchedulingRule[rules.size()]));
+            return new MultiRule((ISchedulingRule[]) rules.toArray(new ISchedulingRule[rules
+                    .size()]));
         }
         return null;
     }
@@ -485,8 +466,8 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                     rules.add(computeSchedulingRule(file));
                 }
             }
-            return new MultiRule((ISchedulingRule[]) rules
-                    .toArray(new ISchedulingRule[rules.size()]));
+            return new MultiRule((ISchedulingRule[]) rules.toArray(new ISchedulingRule[rules
+                    .size()]));
         }
         return null;
     }
@@ -503,12 +484,11 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                 Resource nextResource = (Resource) it.next();
                 IFile file = WorkspaceSynchronizer.getFile(nextResource);
                 if (file != null) {
-                    rules.add(ResourcesPlugin.getWorkspace().getRuleFactory()
-                            .refreshRule(file));
+                    rules.add(ResourcesPlugin.getWorkspace().getRuleFactory().refreshRule(file));
                 }
             }
-            return new MultiRule((ISchedulingRule[]) rules
-                    .toArray(new ISchedulingRule[rules.size()]));
+            return new MultiRule((ISchedulingRule[]) rules.toArray(new ISchedulingRule[rules
+                    .size()]));
         }
         return null;
     }
@@ -528,9 +508,8 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                     files.add(file);
                 }
             }
-            return ResourcesPlugin.getWorkspace().getRuleFactory()
-                    .validateEditRule(
-                            (IFile[]) files.toArray(new IFile[files.size()]));
+            return ResourcesPlugin.getWorkspace().getRuleFactory().validateEditRule(
+                    (IFile[]) files.toArray(new IFile[files.size()]));
         }
         return null;
     }
@@ -540,8 +519,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
      */
     private ISchedulingRule computeSchedulingRule(IResource toCreateOrModify) {
         if (toCreateOrModify.exists())
-            return ResourcesPlugin.getWorkspace().getRuleFactory().modifyRule(
-                    toCreateOrModify);
+            return ResourcesPlugin.getWorkspace().getRuleFactory().modifyRule(toCreateOrModify);
 
         IResource parent = toCreateOrModify;
         do {
@@ -555,15 +533,13 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
             parent = toCreateOrModify.getParent();
         } while (parent != null && !parent.exists());
 
-        return ResourcesPlugin.getWorkspace().getRuleFactory().createRule(
-                toCreateOrModify);
+        return ResourcesPlugin.getWorkspace().getRuleFactory().createRule(toCreateOrModify);
     }
 
     /**
      * @generated
      */
-    protected void doSynchronize(Object element, IProgressMonitor monitor)
-            throws CoreException {
+    protected void doSynchronize(Object element, IProgressMonitor monitor) throws CoreException {
         ResourceSetInfo info = getResourceSetInfo(element);
         if (info != null) {
             for (Iterator/*<org.eclipse.emf.ecore.resource.Resource>*/it = info
@@ -579,47 +555,38 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
     /**
      * @generated
      */
-    protected void doSaveDocument(IProgressMonitor monitor, Object element,
-            IDocument document, boolean overwrite) throws CoreException {
+    protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document,
+            boolean overwrite) throws CoreException {
 
         ValidateAction.runValidation((View) document.getContent());
         ResourceSetInfo info = getResourceSetInfo(element);
         if (info != null) {
             if (!overwrite && !info.isSynchronized()) {
-                throw new CoreException(
-                        new Status(
-                                IStatus.ERROR,
-                                SyncchartsDiagramEditorPlugin.ID,
-                                IResourceStatus.OUT_OF_SYNC_LOCAL,
-                                Messages.SyncchartsDocumentProvider_UnsynchronizedFileSaveError,
-                                null));
+                throw new CoreException(new Status(IStatus.ERROR,
+                        SyncchartsDiagramEditorPlugin.ID, IResourceStatus.OUT_OF_SYNC_LOCAL,
+                        Messages.SyncchartsDocumentProvider_UnsynchronizedFileSaveError, null));
             }
             info.stopResourceListening();
             fireElementStateChanging(element);
             try {
-                monitor.beginTask(
-                        Messages.SyncchartsDocumentProvider_SaveDiagramTask,
-                        info.getResourceSet().getResources().size() + 1); //"Saving diagram"
+                monitor.beginTask(Messages.SyncchartsDocumentProvider_SaveDiagramTask, info
+                        .getResourceSet().getResources().size() + 1); //"Saving diagram"
                 for (Iterator/*<org.eclipse.emf.ecore.resource.Resource>*/it = info
                         .getLoadedResourcesIterator(); it.hasNext();) {
                     Resource nextResource = (Resource) it.next();
-                    monitor
-                            .setTaskName(NLS
-                                    .bind(
-                                            Messages.SyncchartsDocumentProvider_SaveNextResourceTask,
-                                            nextResource.getURI()));
+                    monitor.setTaskName(NLS.bind(
+                            Messages.SyncchartsDocumentProvider_SaveNextResourceTask, nextResource
+                                    .getURI()));
                     if (nextResource.isLoaded()
-                            && !info.getEditingDomain()
-                                    .isReadOnly(nextResource)) {
+                            && !info.getEditingDomain().isReadOnly(nextResource)) {
                         try {
-                            nextResource.save(SyncchartsDiagramEditorUtil
-                                    .getSaveOptions());
+                            nextResource.save(SyncchartsDiagramEditorUtil.getSaveOptions());
                         } catch (IOException e) {
                             fireElementStateChangeFailed(element);
                             throw new CoreException(new Status(IStatus.ERROR,
                                     SyncchartsDiagramEditorPlugin.ID,
-                                    EditorStatusCodes.RESOURCE_FAILURE, e
-                                            .getLocalizedMessage(), null));
+                                    EditorStatusCodes.RESOURCE_FAILURE, e.getLocalizedMessage(),
+                                    null));
                         }
                     }
                     monitor.worked(1);
@@ -638,8 +605,8 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
             if (element instanceof FileEditorInput) {
                 IFile newFile = ((FileEditorInput) element).getFile();
                 affectedFiles = Collections.singletonList(newFile);
-                newResoruceURI = URI.createPlatformResourceURI(newFile
-                        .getFullPath().toString(), true);
+                newResoruceURI = URI.createPlatformResourceURI(newFile.getFullPath().toString(),
+                        true);
             } else if (element instanceof URIEditorInput) {
                 newResoruceURI = ((URIEditorInput) element).getURI();
             } else {
@@ -667,18 +634,15 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                                 "Incorrect document used: " + document + " instead of org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument", null)); //$NON-NLS-1$ //$NON-NLS-2$
             }
             IDiagramDocument diagramDocument = (IDiagramDocument) document;
-            final Resource newResource = diagramDocument.getEditingDomain()
-                    .getResourceSet().createResource(newResoruceURI);
-            final Diagram diagramCopy = (Diagram) EcoreUtil
-                    .copy(diagramDocument.getDiagram());
+            final Resource newResource = diagramDocument.getEditingDomain().getResourceSet()
+                    .createResource(newResoruceURI);
+            final Diagram diagramCopy = (Diagram) EcoreUtil.copy(diagramDocument.getDiagram());
             try {
-                new AbstractTransactionalCommand(diagramDocument
-                        .getEditingDomain(), NLS.bind(
-                        Messages.SyncchartsDocumentProvider_SaveAsOperation,
-                        diagramCopy.getName()), affectedFiles) {
-                    protected CommandResult doExecuteWithResult(
-                            IProgressMonitor monitor, IAdaptable info)
-                            throws ExecutionException {
+                new AbstractTransactionalCommand(diagramDocument.getEditingDomain(), NLS
+                        .bind(Messages.SyncchartsDocumentProvider_SaveAsOperation, diagramCopy
+                                .getName()), affectedFiles) {
+                    protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
+                            IAdaptable info) throws ExecutionException {
                         newResource.getContents().add(diagramCopy);
                         return CommandResult.newOKCommandResult();
                     }
@@ -687,13 +651,11 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
             } catch (ExecutionException e) {
                 fireElementStateChangeFailed(element);
                 throw new CoreException(new Status(IStatus.ERROR,
-                        SyncchartsDiagramEditorPlugin.ID, 0, e
-                                .getLocalizedMessage(), null));
+                        SyncchartsDiagramEditorPlugin.ID, 0, e.getLocalizedMessage(), null));
             } catch (IOException e) {
                 fireElementStateChangeFailed(element);
                 throw new CoreException(new Status(IStatus.ERROR,
-                        SyncchartsDiagramEditorPlugin.ID, 0, e
-                                .getLocalizedMessage(), null));
+                        SyncchartsDiagramEditorPlugin.ID, 0, e.getLocalizedMessage(), null));
             }
             newResource.unload();
         }
@@ -702,18 +664,15 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
     /**
      * @generated
      */
-    protected void handleElementChanged(ResourceSetInfo info,
-            Resource changedResource, IProgressMonitor monitor) {
+    protected void handleElementChanged(ResourceSetInfo info, Resource changedResource,
+            IProgressMonitor monitor) {
         IFile file = WorkspaceSynchronizer.getFile(changedResource);
         if (file != null) {
             try {
                 file.refreshLocal(IResource.DEPTH_INFINITE, monitor);
             } catch (CoreException ex) {
-                SyncchartsDiagramEditorPlugin
-                        .getInstance()
-                        .logError(
-                                Messages.SyncchartsDocumentProvider_handleElementContentChanged,
-                                ex);
+                SyncchartsDiagramEditorPlugin.getInstance().logError(
+                        Messages.SyncchartsDocumentProvider_handleElementContentChanged, ex);
                 // Error message to log was initially taken from org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide.internal.l10n.EditorMessages.FileDocumentProvider_handleElementContentChanged
             }
         }
@@ -741,8 +700,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
         if (input instanceof FileEditorInput) {
             IFile newFile = ResourcesPlugin.getWorkspace().getRoot().getFile(
                     new Path(URI.decode(uri.path())).removeFirstSegments(1));
-            fireElementMoved(input, newFile == null ? null
-                    : new FileEditorInput(newFile));
+            fireElementMoved(input, newFile == null ? null : new FileEditorInput(newFile));
             return;
         }
         // TODO: append suffix to the URI! (use diagram as a parameter)
@@ -828,8 +786,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
         /**
          * @generated
          */
-        public ResourceSetInfo(IDiagramDocument document,
-                IEditorInput editorInput) {
+        public ResourceSetInfo(IDiagramDocument document, IEditorInput editorInput) {
             super(document);
             myDocument = document;
             myEditorInput = editorInput;
@@ -870,8 +827,8 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
          * @generated
          */
         public Iterator/*<org.eclipse.emf.ecore.resource.Resource>*/getLoadedResourcesIterator() {
-            return new ArrayList/*<org.eclipse.emf.ecore.resource.Resource>*/(
-                    getResourceSet().getResources()).iterator();
+            return new ArrayList/*<org.eclipse.emf.ecore.resource.Resource>*/(getResourceSet()
+                    .getResources()).iterator();
         }
 
         /**
@@ -977,8 +934,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
         /**
          * @generated
          */
-        private class SynchronizerDelegate implements
-                WorkspaceSynchronizer.Delegate {
+        private class SynchronizerDelegate implements WorkspaceSynchronizer.Delegate {
 
             /**
              * @generated
@@ -998,8 +954,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                 }
                 Display.getDefault().asyncExec(new Runnable() {
                     public void run() {
-                        handleElementChanged(ResourceSetInfo.this, resource,
-                                null);
+                        handleElementChanged(ResourceSetInfo.this, resource, null);
                     }
                 });
                 return true;
@@ -1017,8 +972,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                 }
                 Display.getDefault().asyncExec(new Runnable() {
                     public void run() {
-                        fireElementDeleted(ResourceSetInfo.this
-                                .getEditorInput());
+                        fireElementDeleted(ResourceSetInfo.this.getEditorInput());
                     }
                 });
                 return true;
@@ -1027,8 +981,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
             /**
              * @generated
              */
-            public boolean handleResourceMoved(Resource resource,
-                    final URI newURI) {
+            public boolean handleResourceMoved(Resource resource, final URI newURI) {
                 synchronized (ResourceSetInfo.this) {
                     if (ResourceSetInfo.this.fCanBeSaved) {
                         ResourceSetInfo.this.setUnSynchronized(resource);
@@ -1038,8 +991,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                 if (myDocument.getDiagram().eResource() == resource) {
                     Display.getDefault().asyncExec(new Runnable() {
                         public void run() {
-                            handleElementMoved(ResourceSetInfo.this
-                                    .getEditorInput(), newURI);
+                            handleElementMoved(ResourceSetInfo.this.getEditorInput(), newURI);
                         }
                     });
                 } else {
@@ -1072,10 +1024,8 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
          */
         public ResourceSetModificationListener(ResourceSetInfo info) {
             myInfo = info;
-            myModifiedFilter = NotificationFilter.createEventTypeFilter(
-                    Notification.SET).or(
-                    NotificationFilter
-                            .createEventTypeFilter(Notification.UNSET)).and(
+            myModifiedFilter = NotificationFilter.createEventTypeFilter(Notification.SET).or(
+                    NotificationFilter.createEventTypeFilter(Notification.UNSET)).and(
                     NotificationFilter.createFeatureFilter(Resource.class,
                             Resource.RESOURCE__IS_MODIFIED));
         }
@@ -1087,15 +1037,13 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
             if (notification.getNotifier() instanceof ResourceSet) {
                 super.notifyChanged(notification);
             }
-            if (!notification.isTouch()
-                    && myModifiedFilter.matches(notification)) {
+            if (!notification.isTouch() && myModifiedFilter.matches(notification)) {
                 if (notification.getNotifier() instanceof Resource) {
                     Resource resource = (Resource) notification.getNotifier();
                     if (resource.isLoaded()) {
                         boolean modified = false;
                         for (Iterator/*<org.eclipse.emf.ecore.resource.Resource>*/it = myInfo
-                                .getLoadedResourcesIterator(); it.hasNext()
-                                && !modified;) {
+                                .getLoadedResourcesIterator(); it.hasNext() && !modified;) {
                             Resource nextResource = (Resource) it.next();
                             if (nextResource.isLoaded()) {
                                 modified = nextResource.isModified();
@@ -1112,12 +1060,10 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
                             }
                         }
                         if (dirtyStateChanged) {
-                            fireElementDirtyStateChanged(myInfo
-                                    .getEditorInput(), modified);
+                            fireElementDirtyStateChanged(myInfo.getEditorInput(), modified);
 
                             if (!modified) {
-                                myInfo
-                                        .setModificationStamp(computeModificationStamp(myInfo));
+                                myInfo.setModificationStamp(computeModificationStamp(myInfo));
                             }
                         }
                     }

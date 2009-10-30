@@ -68,8 +68,7 @@ public class State2EditPart extends ShapeNodeEditPart {
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-                new State2ItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new State2ItemSemanticEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -82,8 +81,7 @@ public class State2EditPart extends ShapeNodeEditPart {
         LayoutEditPolicy lep = new LayoutEditPolicy() {
 
             protected EditPolicy createChildEditPolicy(EditPart child) {
-                EditPolicy result = child
-                        .getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
                 if (result == null) {
                     result = new NonResizableEditPolicy();
                 }
@@ -355,19 +353,14 @@ public class State2EditPart extends ShapeNodeEditPart {
             fFigureStateNameFigure = new WrappingLabel();
             fFigureStateNameFigure.setText("");
 
-            fFigureStateNameFigure.setFont(FFIGURESTATENAMEFIGURE_FONT);
-
-            fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode()
-                    .DPtoLP(5), getMapMode().DPtoLP(10),
-                    getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+            fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5), getMapMode()
+                    .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureStateNameFigure);
 
             Polyline polyline0 = new Polyline();
-            polyline0.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode()
-                    .DPtoLP(20)));
-            polyline0.addPoint(new Point(getMapMode().DPtoLP(50), getMapMode()
-                    .DPtoLP(20)));
+            polyline0.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode().DPtoLP(20)));
+            polyline0.addPoint(new Point(getMapMode().DPtoLP(50), getMapMode().DPtoLP(20)));
             polyline0.setLineWidth(1);
 
             this.add(polyline0);
@@ -401,11 +394,5 @@ public class State2EditPart extends ShapeNodeEditPart {
         }
 
     }
-
-    /**
-     * @generated
-     */
-    static final Font FFIGURESTATENAMEFIGURE_FONT = new Font(Display
-            .getCurrent(), "Sans", 12, SWT.NORMAL);
 
 }

@@ -13,7 +13,6 @@ public class DiagramAppearancePreferencePage extends AppearancePreferencePage {
      * @generated
      */
     public DiagramAppearancePreferencePage() {
-        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance()
-                .getPreferenceStore());
+        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore());
     }
 }

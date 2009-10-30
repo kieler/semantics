@@ -27,8 +27,8 @@ public class SyncchartsValidationProvider {
     /**
      * @generated
      */
-    public static void runWithConstraints(
-            TransactionalEditingDomain editingDomain, Runnable operation) {
+    public static void runWithConstraints(TransactionalEditingDomain editingDomain,
+            Runnable operation) {
         final Runnable op = operation;
         Runnable task = new Runnable() {
             public void run() {
@@ -44,8 +44,7 @@ public class SyncchartsValidationProvider {
             try {
                 editingDomain.runExclusive(task);
             } catch (Exception e) {
-                SyncchartsDiagramEditorPlugin.getInstance().logError(
-                        "Validation failed", e); //$NON-NLS-1$
+                SyncchartsDiagramEditorPlugin.getInstance().logError("Validation failed", e); //$NON-NLS-1$
             }
         } else {
             task.run();
@@ -61,9 +60,8 @@ public class SyncchartsValidationProvider {
         }
         if (object instanceof View) {
             return constraintsActive
-                    && RegionEditPart.MODEL_ID
-                            .equals(SyncchartsVisualIDRegistry
-                                    .getModelID((View) object));
+                    && RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
+                            .getModelID((View) object));
         }
         return true;
     }
