@@ -162,17 +162,23 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		
 		System.out.println("Step in Ptolemy Model...");
 		
-		//set current input data
-		PTOEXE.setData(jSONObject);
-		
-		//perform an synchronous step in PtolemyExecutor
-		PTOEXE.executionStep();
+		try {
+			//set current input data
+			PTOEXE.setData(jSONObject);
+			
+			//perform an synchronous step in PtolemyExecutor
+			PTOEXE.executionStep();
 
-		//get the current states
-		String currentState = PTOEXE.getCurrentState();
-		
-		//the return object to construct
-		JSONObject returnObj = new JSONObject();
+			//get the current states
+			String currentState = PTOEXE.getCurrentState();
+			
+			//the return object to construct
+			JSONObject returnObj = new JSONObject();
+		}
+		catch(Exception e) {
+			new KiemInitializationException
+			("Ptolemy Model cannot make a step.", true, e);
+		}
 		
 		//get the output present signals
 		String[] presentSignals = PTOEXE.getModelOutputPresentSignals();
