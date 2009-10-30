@@ -445,8 +445,13 @@
 					</tokenfilter>
 				</filterchain>
 				<footer filtering="no">
-					&lt;fileset dir=&quot;${basedir}/../../&quot; includes=&quot;**/plugins/**/*.jar&quot; /&gt;
+						&lt;fileset dir=&quot;${basedir}/../../&quot;
+						    includes=&quot;**/plugins/**/*.jar&quot;
+						    excludes=&quot;**/update-site/**/*.*,**/buildrepo/**/*.*,**/buildRepo/**/*.*&quot;  /&gt;
 				</footer>
+				<!-- plain text equals the following:
+					 fileset dir="${basedir}/../../" includes="**/plugins/**/*.jar" excludes="**/update-site/**/*.*,**/buildrepo/**/*.*,**/buildRepo/**/*.*" /
+				     it's supposed to include library jars like ptolemy, antlr-runtime, ... for class resolution -->
 			</concat>
 		</loadfile>
 		
