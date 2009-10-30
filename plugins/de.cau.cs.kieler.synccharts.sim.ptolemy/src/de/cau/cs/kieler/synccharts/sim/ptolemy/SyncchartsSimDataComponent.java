@@ -145,7 +145,8 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		        System.out.print(issues.getErrors().toString());
 		 	}
 		 	catch(Exception e){
-		 		e.printStackTrace();
+				new KiemInitializationException
+				("Ptolemy Model could not be created.", true, e);
 		 		return false;
 		 	} 
 	        
