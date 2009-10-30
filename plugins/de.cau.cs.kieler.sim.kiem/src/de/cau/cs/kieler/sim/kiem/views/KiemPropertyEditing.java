@@ -99,9 +99,11 @@ public class KiemPropertyEditing extends EditingSupport {
 		CellEditor ce = null;
 		//no cell editor in case of errors
 		try {
-			KiemProperty property = (KiemProperty)element;
-			property.getType().setCellEditor(tree);
-			ce = property.getType().getCellEditor();
+			if (element instanceof KiemProperty) {
+				KiemProperty property = (KiemProperty)element;
+				property.getType().setCellEditor(tree);
+				ce = property.getType().getCellEditor();
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
