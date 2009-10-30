@@ -1,4 +1,4 @@
-/*
+/**
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
@@ -19,6 +19,8 @@ import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
+ * 
+ * @author Michael Matzen - mim AT informatik.uni-kiel.de
  */
 public class Activator extends AbstractUIPlugin {
 
@@ -29,7 +31,7 @@ public class Activator extends AbstractUIPlugin {
     private static Activator plugin;
 
     /**
-     * The constructor
+     * The constructor.
      */
     public Activator() {
     }
@@ -64,7 +66,7 @@ public class Activator extends AbstractUIPlugin {
     }
 
     /**
-     * Returns the shared instance
+     * Returns the shared instance.
      * 
      * @return the shared instance
      */
