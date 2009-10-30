@@ -8,7 +8,7 @@
             category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.sim.table.views.DataTableView"
             icon="icons/tableIcon.png"
-            id="de.cau.cs.kieler.sim.table.views.KiemTable"
+            id="de.cau.cs.kieler.sim.table.view"
             name="Data Table">
       </view>
    </extension>

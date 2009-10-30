@@ -1,5 +1,5 @@
-/*
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+/******************************************************************************
+ * KIELER - Kiel Integrated Environment for Layout for the Eclipse RCP
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
@@ -10,12 +10,18 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- */
+ ******************************************************************************/
 
 package de.cau.cs.kieler.sim.table;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.internal.Workbench;
 
 import de.cau.cs.kieler.sim.kiem.extension.IJSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
@@ -40,6 +46,10 @@ public class DataObserver extends JSONStringDataComponent implements
 	/** A temporary list that is used to remember updated values 
 	 * to set all not updated signals to absent within history steps. */
 	List<TableData> tableDataTmp;
+	
+	/** The id of the view for KIEM. */
+	private final String TABLEVIEWID = "de.cau.cs.kieler.sim.table.view";
+
 	
 	//-------------------------------------------------------------------------
 	
@@ -163,11 +173,32 @@ public class DataObserver extends JSONStringDataComponent implements
 	}
 
 	//-------------------------------------------------------------------------
-
+	
+	/**
+	 * This method brings the Table view to the front.
+	 */
+	public void bringToFront() {
+        //bring TABLE view to the front (lazy loading)
+        try {
+       	 	IWorkbenchWindow window = TablePlugin.getDefault().getWorkbench()
+       	 								.getActiveWorkbenchWindow();
+       	 	IViewPart VP =  window.getActivePage()
+					.showView(TABLEVIEWID);
+			VP.setFocus();
+        } catch(Exception e){
+       	 	e.printStackTrace();
+        }
+	}
+	
+	//-------------------------------------------------------------------------
+	
 	/* (non-Javadoc)
 	 * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
 	 */
 	public void initialize() {
+		//bring Table view to front
+		bringToFront();
+
 		//make an entry of all global interface variables/signals
 		String[] variableKeys = this.getInterfaceKeys();
 		for (int c = 0; c < variableKeys.length; c++) {
