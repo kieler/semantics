@@ -215,10 +215,14 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
 //            triggerEvent.setTriggerActive(false);
 //            trigger.notifyTrigger(triggerEvent);
 //        }
-        ActiveStateHighlightCombination.getInstance().undoLastEffect();
-        cachedEditParts.clear();
-        cachedElementURIs.clear();
-        lastHighlightedStates.clear();
+    	try {
+            ActiveStateHighlightCombination.getInstance().undoLastEffect();
+    	}catch(Exception e){}
+    	try {
+            cachedEditParts.clear();
+            cachedElementURIs.clear();
+            lastHighlightedStates.clear();
+    	}catch(Exception e){}
         rootEditPart = null;
     }
 	
