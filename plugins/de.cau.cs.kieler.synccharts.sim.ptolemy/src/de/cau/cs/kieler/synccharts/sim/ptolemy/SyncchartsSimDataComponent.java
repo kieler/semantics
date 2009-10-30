@@ -203,8 +203,15 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		//this may rise an exception
 		PTOEXE = null;
 		System.gc();
-		loadAndExecuteModel();
-		return PTOEXE.getInterfaceSignals();
+		String[] keys = null;
+		try {
+			loadAndExecuteModel();
+			keys = PTOEXE.getInterfaceSignals();
+		} catch (Exception e) {
+			new KiemInitializationException
+				("Ptolemy Model could not be generated", true, e);
+		}
+		return keys;
 	}	
 	
     //-------------------------------------------------------------------------	 
