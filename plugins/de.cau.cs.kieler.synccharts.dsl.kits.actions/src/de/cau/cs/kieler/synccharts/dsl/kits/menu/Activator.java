@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.synccharts.dsl.kits.actions;
+package de.cau.cs.kieler.synccharts.dsl.kits.menu;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.synccharts.dsl.kits.actions";
+	public static final String PLUGIN_ID = "de.cau.cs.kieler.synccharts.dsl.kits.menu";
 
 	// The shared instance
 	private static Activator plugin;

@@ -6,9 +6,9 @@
       <objectContribution
             adaptable="false"
             id="de.cau.cs.kieler.synccharts.dsl.kits.actions.objectContribution1"
-            objectClass="de.cau.cs.kieler.synccharts.dsl.kits.actions.object1">
+            objectClass="de.cau.cs.kieler.synccharts.dsl.kits.linking.KitsLazyLinkingResource">
             <action
-               class="org.eclipse.xtext.resource.XtextResource"
+               class="de.cau.cs.kieler.synccharts.dsl.kits.linking.KitsLazyLinkingResource"
                icon="icons/kiel.ico"
                id="de.cau.cs.kieler.synccharts.dsl.kits.glue.action1"
                label="Initialize XMI resource"
