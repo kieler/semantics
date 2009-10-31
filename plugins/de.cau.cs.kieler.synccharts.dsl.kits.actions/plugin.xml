@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="de.cau.cs.kieler.synccharts.dsl.kits.actions.objectContribution1"
+            objectClass="de.cau.cs.kieler.synccharts.dsl.kits.actions.object1">
+            <action
+               class="org.eclipse.xtext.resource.XtextResource"
+               icon="icons/kiel.ico"
+               id="de.cau.cs.kieler.synccharts.dsl.kits.glue.action1"
+               label="Initialize XMI resource"
+               tooltip="Creates an XMI resource from the Xtext resource">
+         </action>
+         <action
+               class="de.cau.cs.kieler.synccharts.dsl.kits.glue.Action2"
+               icon="icons/kiel.ico"
+               id="de.cau.cs.kieler.synccharts.dsl.kits.glue.action2"
+               label="Initialize KITS resource">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>
