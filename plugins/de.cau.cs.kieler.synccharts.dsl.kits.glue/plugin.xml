@@ -9,14 +9,11 @@
             objectClass="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor">
          <action
                class="de.cau.cs.kieler.synccharts.dsl.kits.glue.actions.GoToDeclaration"
+               icon="icons/kiel.ico"
                id="de.cau.cs.kieler.synccharts.dsl.kits.glue.action1"
                label="Open in KITS textual editor">
          </action>
-         <action
-               class="org.eclipse.xtext.resource.XtextResource"
-               id="de.cau.cs.kieler.synccharts.dsl.kits.glue.action1"
-               label="Initialize XMI resource">
-         </action>
+         
       </objectContribution>
    </extension>
    <extension

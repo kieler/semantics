@@ -10,6 +10,7 @@ import org.eclipse.xtext.parser.ParseException;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 import de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess;
 
@@ -21,13 +22,16 @@ public class KitsParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrPars
 	@Inject
 	private KitsGrammarAccess grammarAccess;
 	
+	@Inject
+	private Provider<de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsLexer> lexerProvider;
+	
 	@Override
 	protected IParseResult parse(String ruleName, ANTLRInputStream in) {
-		de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsLexer lexer = new de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsLexer(in);
+		de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsLexer lexer = lexerProvider.get();
+		lexer.setCharStream(in);
 		XtextTokenStream stream = new XtextTokenStream(lexer, antlrTokenDefProvider);
 		stream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
-		de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsParser parser = new de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsParser(
-				stream, getElementFactory(), grammarAccess);
+		de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsParser parser = createParser(stream);
 		parser.setTokenTypeMap(antlrTokenDefProvider.getTokenDefMap());
 		try {
 			if(ruleName != null)
@@ -36,6 +40,10 @@ public class KitsParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrPars
 		} catch (Exception re) {
 			throw new ParseException(re.getMessage(),re);
 		}
+	}
+	
+	protected de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsParser createParser(XtextTokenStream stream) {
+		return new de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsParser(stream, getElementFactory(), getGrammarAccess());
 	}
 	
 	@Override 
@@ -49,5 +57,13 @@ public class KitsParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrPars
 	
 	public void setGrammarAccess(KitsGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
+	}
+	
+	public Provider<de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsLexer> getLexerProvider() {
+		return this.lexerProvider;
+	}
+	
+	public void setGrammarAccess(Provider<de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsLexer> lexerProvider) {
+		this.lexerProvider = lexerProvider;
 	}
 }

@@ -1,2 +1,1 @@
-region myRegion
-	a
+init final NORMAL state SC {init final NORMAL state statestart}

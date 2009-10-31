@@ -15,8 +15,10 @@ package de.cau.cs.kieler.synccharts.dsl.kits.menu.actions;
 
 /**
  * @author oba
- *
+ * 
  */
 public class InitializeXMIResource {
-
+    public InitializeXMIResource() {
+        super();
+    }
 }

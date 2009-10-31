@@ -31,9 +31,9 @@ public class KitsRuntimeModule extends
      * 
      * @return custom implementation of the Scope Provider
      */
-    public Class<? extends IScopeProvider> bindIScopeProvider() {
-        return MyDefaultScopeProvider.class;
-    }
+//    public Class<? extends IScopeProvider> bindIScopeProvider() {
+//        return MyDefaultScopeProvider.class;
+//    }
 
     /*
      * (non-Javadoc)
@@ -42,11 +42,10 @@ public class KitsRuntimeModule extends
      * org.eclipse.xtext.service.DefaultRuntimeModule#bindITransientValueService
      * ()
      */
-    // @Override
-    // public Class<? extends ITransientValueService>
-    // bindITransientValueService() {
-    // return KitsTransientValueService.class;
-    // }
+//    @Override
+//    public Class<? extends ITransientValueService> bindITransientValueService() {
+//        return KitsTransientValueService.class;
+//    }
 
     @Override
     public Class<? extends ITransientValueService> bindITransientValueService() {

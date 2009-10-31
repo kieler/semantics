@@ -22,9 +22,11 @@ public class KitsTransformer extends
     /**
      * @modified oba
      */
-    private Provider<ContentOutlineNode> contentOutlineNodeprovider = getOutlineNodeProvider();
+    // private Provider<ContentOutlineNode> contentOutlineNodeprovider =
+    // getOutlineNodeProvider();
     List<ContentOutlineNode> myContentOutlineNodes;
-    private ILocationInFileProvider locationProvider;
+
+    // private ILocationInFileProvider locationProvider;
 
     /**
      * This method will be called by naming convention: - method name must be
@@ -65,57 +67,71 @@ public class KitsTransformer extends
         return node;
     }
 
-    // public ContentOutlineNode createNode(Action semanticAction,
-    // ContentOutlineNode parentNode) {
-    // ContentOutlineNode node = super.newOutlineNode(semanticAction,
-    // parentNode);
-    //
-    // String actionKeyword = null;
-    // // onexit "anExitAction" --> onExit : anExitAction
-    // if (semanticAction.eContainingFeature().getName() == "entryActions") {
-    // actionKeyword = "onEntry : "
-    // + semanticAction.getTriggersAndEffects();
-    // }
-    // if (semanticAction.eContainingFeature().getName() == "exitActions") {
-    // actionKeyword = "onExit : "
-    // + semanticAction.getTriggersAndEffects();
-    // }
-    // if (semanticAction.eContainingFeature().getName() == "innerActions") {
-    // actionKeyword = "onInner : "
-    // + semanticAction.getTriggersAndEffects();
-    // }
-    // if (semanticAction.eContainingFeature().getName() == "suspensionTrigger")
-    // {
-    // actionKeyword = "suspended when : "
-    // + semanticAction.getTriggersAndEffects();
-    // }
-    // if (semanticAction.isIsImmediate()) {
-    // actionKeyword = "# " + actionKeyword;
-    // }
-    // node.setLabel(actionKeyword);
-    // return node;
-    // }
+    public ContentOutlineNode createNode(Action semanticAction,
+            ContentOutlineNode parentNode) {
+        ContentOutlineNode node = super.newOutlineNode(semanticAction,
+                parentNode);
 
-    // public ContentOutlineNode createNode(Transition semanticTransition,
-    // ContentOutlineNode parentNode) {
-    // ContentOutlineNode node = super.newOutlineNode(semanticTransition,
-    // parentNode);
-    //
-    // String transitionLabel = null;
-    // if (semanticTransition.getType() != null)
-    // transitionLabel = // semanticTransition.getType().toString() + " " +
-    // semanticTransition.getTargetState().getId();
-    //
-    // node.setLabel(transitionLabel);
-    // return node;
-    // }
+        String actionKeyword = "";
+        // onexit "anExitAction" --> onExit : anExitAction
+        if (semanticAction.eContainingFeature().getName() == "entryActions") {
+            actionKeyword = "onEntry : "
+                    + semanticAction.getTriggersAndEffects();
+        }
+        if (semanticAction.eContainingFeature().getName() == "exitActions") {
+            actionKeyword = "onExit : "
+                    + semanticAction.getTriggersAndEffects();
+        }
+        if (semanticAction.eContainingFeature().getName() == "innerActions") {
+            actionKeyword = "onInner : "
+                    + semanticAction.getTriggersAndEffects();
+        }
+        if (semanticAction.eContainingFeature().getName() == "suspensionTrigger") {
+            actionKeyword = "suspended when : "
+                    + semanticAction.getTriggersAndEffects();
+        }
+        if (semanticAction.isIsImmediate()) {
+            actionKeyword = "# " + actionKeyword;
+        }
+        node.setLabel(actionKeyword);
+        return node;
+    }
+
+    public ContentOutlineNode createNode(Transition semanticTransition,
+            ContentOutlineNode parentNode) {
+        ContentOutlineNode node = super.newOutlineNode(semanticTransition,
+                parentNode);
+
+        /**
+         * Example: A --> B;
+         * note: each transition has a type
+         */
+        String transitionLabel = semanticTransition.getType().toString();
+
+        /**
+         * from A
+         */
+        if (semanticTransition.getSourceState() != null) {
+            transitionLabel = transitionLabel + " from "
+                    + semanticTransition.getSourceState().getId();
+        }
+        /**
+         * from A to B
+         */
+        if (semanticTransition.getTargetState() != null)
+            transitionLabel = transitionLabel + " to "
+                    + semanticTransition.getTargetState().getId();
+
+        node.setLabel(transitionLabel);
+        return node;
+    }
 
     public ContentOutlineNode createNode(Signal semanticSignal,
             ContentOutlineNode parentNode) {
         ContentOutlineNode node = super.newOutlineNode(semanticSignal,
                 parentNode);
 
-        String signalLabel = null;
+        String signalLabel = "";
         if (semanticSignal.isIsInput()) {
             signalLabel = "input " + semanticSignal.getName();
         }
