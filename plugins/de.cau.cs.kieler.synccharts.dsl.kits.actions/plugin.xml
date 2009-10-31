@@ -5,20 +5,32 @@
          point="org.eclipse.ui.popupMenus">
       <objectContribution
             adaptable="false"
-            id="de.cau.cs.kieler.synccharts.dsl.kits.actions.objectContribution1"
-            objectClass="de.cau.cs.kieler.synccharts.dsl.kits.linking.KitsLazyLinkingResource">
+            id="de.cau.cs.kieler.synccharts.dsl.kits.menu.initXMI"
+            nameFilter="*kits"
+            objectClass="org.eclipse.core.resources.IFile">
             <action
-               class="de.cau.cs.kieler.synccharts.dsl.kits.linking.KitsLazyLinkingResource"
-               icon="icons/kiel.ico"
-               id="de.cau.cs.kieler.synccharts.dsl.kits.glue.action1"
-               label="Initialize XMI resource"
-               tooltip="Creates an XMI resource from the Xtext resource">
+                  class="de.cau.cs.kieler.synccharts.dsl.kits.menu.actions.InitializeXMIResource"
+                  enablesFor="1"
+                  icon="icons/kiel.ico"
+                  id="de.cau.cs.kieler.synccharts.dsl.kits.menu.initxmiaction1"
+                  label="Initialize XMI resource"
+                  menubarPath="additions"
+                  tooltip="Creates an XMI file from the KITS (Xtext) file">
          </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="de.cau.cs.kieler.synccharts.dsl.kits.menu.initXtext"
+            nameFilter="*kixs"
+            objectClass="org.eclipse.core.resources.IFile">
          <action
-               class="de.cau.cs.kieler.synccharts.dsl.kits.glue.Action2"
+               class="de.cau.cs.kieler.synccharts.dsl.kits.menu.actions.InitializeXtextResource"
+               enablesFor="1"
                icon="icons/kiel.ico"
-               id="de.cau.cs.kieler.synccharts.dsl.kits.glue.action2"
-               label="Initialize KITS resource">
+               id="de.cau.cs.kieler.synccharts.dsl.kits.menu.initXtextAction1"
+               label="Initialize KITS resource"
+               menubarPath="additions"
+               tooltip="Creates a KITS (Xtext) file from an XMI file">
          </action>
       </objectContribution>
    </extension>
