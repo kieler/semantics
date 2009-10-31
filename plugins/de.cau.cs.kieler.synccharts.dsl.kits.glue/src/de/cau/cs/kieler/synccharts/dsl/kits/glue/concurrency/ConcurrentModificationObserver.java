@@ -1,3 +1,17 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright ${year} by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+
 package de.cau.cs.kieler.synccharts.dsl.kits.glue.concurrency;
 
 import java.util.ArrayList;
@@ -41,22 +55,28 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
 
 import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.dsl.kits.glue.Activator;
 
 /**
- * Detects concurrent modifications of diagrams and text files.
+ * Detects concurrent modifications of diagrams and text files. The CMO is an
+ * IPartListener because it reacts when an editor part is opened for instance,
+ * it is a resource-set listener because it reacts
  * 
- * @author koehnlein
+ * @author oba
  */
 public class ConcurrentModificationObserver implements IPartListener,
         ResourceSetListener, VerifyKeyListener {
 
     private IWorkbenchPage page;
+
     private Transformer transformer;
 
     /**
+     * public constructor for our listener
      * 
      * @param activePage
+     *            the currently active page
      */
     public ConcurrentModificationObserver(final IWorkbenchPage activePage) {
         this.transformer = new Transformer();
@@ -64,8 +84,11 @@ public class ConcurrentModificationObserver implements IPartListener,
         IEditorReference[] editorReferences = activePage.getEditorReferences();
 
         for (IEditorReference editorReference : editorReferences) {
+            /**
+             * get the editor from its reference without trying to restore it
+             */
             IEditorPart editor = editorReference.getEditor(false);
-            if (editor instanceof DiagramEditor) {
+            if (editor instanceof SyncchartsDiagramEditor) {
                 ((DiagramEditor) editor).getEditingDomain()
                         .addResourceSetListener(this);
             }
@@ -82,7 +105,7 @@ public class ConcurrentModificationObserver implements IPartListener,
 
     }
 
-    private URI getEditorInputURI(ITextEditor textEditor) {
+    private URI getEditorInputURI(final ITextEditor textEditor) {
         IEditorInput editorInput = textEditor.getEditorInput();
         if (editorInput instanceof FileEditorInput) {
             return URI.createPlatformResourceURI(
@@ -94,14 +117,18 @@ public class ConcurrentModificationObserver implements IPartListener,
         return null;
     }
 
-    public void partOpened(IWorkbenchPart part) {
+    /**
+     * @see IPartListener#partOpened(IWorkbenchPart)
+     */
+
+    public void partOpened(final IWorkbenchPart part) {
         if (part instanceof DiagramEditor) {
             TransactionalEditingDomain editingDomain = ((DiagramEditor) part)
                     .getEditingDomain();
             editingDomain.addResourceSetListener(this);
             // run layout
             // transformer.ManualLayoutTrigger(part);
-            ManualLayoutTrigger(part);
+            manualLayoutTrigger(part);
             transformer.setLabel2Id();
             // conflict with haf?
             System.out.println("==============================");
@@ -119,7 +146,7 @@ public class ConcurrentModificationObserver implements IPartListener,
         }
     }
 
-    public void partClosed(IWorkbenchPart part) {
+    public void partClosed(final IWorkbenchPart part) {
         if (part instanceof DiagramEditor) {
             TransactionalEditingDomain editingDomain = ((DiagramEditor) part)
                     .getEditingDomain();
@@ -135,15 +162,15 @@ public class ConcurrentModificationObserver implements IPartListener,
         }
     }
 
-    public void partActivated(IWorkbenchPart part) {
+    public void partActivated(final IWorkbenchPart part) {
         // do nothing
     }
 
-    public void partDeactivated(IWorkbenchPart part) {
+    public void partDeactivated(final IWorkbenchPart part) {
         // do nothing
     }
 
-    public void partBroughtToTop(IWorkbenchPart part) {
+    public void partBroughtToTop(final IWorkbenchPart part) {
         // do nothing
     }
 
@@ -163,7 +190,7 @@ public class ConcurrentModificationObserver implements IPartListener,
         return true;
     }
 
-    public void resourceSetChanged(ResourceSetChangeEvent event) {
+    public void resourceSetChanged(final ResourceSetChangeEvent event) {
         // do nothing
         System.out.println("==============================");
         System.out.println("I AM IN: resourceSetChanged");
@@ -171,7 +198,7 @@ public class ConcurrentModificationObserver implements IPartListener,
 
     }
 
-    public Command transactionAboutToCommit(ResourceSetChangeEvent event)
+    public Command transactionAboutToCommit(final ResourceSetChangeEvent event)
             throws RollbackException {
 
         List<Notification> notifications = event.getNotifications();
@@ -211,7 +238,7 @@ public class ConcurrentModificationObserver implements IPartListener,
         return null;
     }
 
-    public void verifyKey(VerifyEvent event) {
+    public void verifyKey(final VerifyEvent event) {
         IEditorPart editor = page.getActiveEditor();
         if (!editor.isDirty() && editor instanceof ITextEditor) {
             ITextEditor textEditor = (ITextEditor) editor;
@@ -227,7 +254,7 @@ public class ConcurrentModificationObserver implements IPartListener,
         }
     }
 
-    private List<IEditorPart> findConflictingEditors(URI resourceURI) {
+    private List<IEditorPart> findConflictingEditors(final URI resourceURI) {
         List<IEditorPart> conflictingDirtyEditors = new ArrayList<IEditorPart>();
         for (IEditorPart dirtyEditor : page.getDirtyEditors()) {
             if (dirtyEditor instanceof DiagramEditor) {
@@ -313,7 +340,7 @@ public class ConcurrentModificationObserver implements IPartListener,
     // ================ HELPER METHODS ================ //
 
     // @SuppressWarnings("unused")
-    void ManualLayoutTrigger(IWorkbenchPart part) {
+    void manualLayoutTrigger(final IWorkbenchPart part) {
         if (part instanceof DiagramEditor) {
             // get the RegionEditPart
             EditPart e = ((DiagramEditor) part).getDiagramEditPart().getRoot()

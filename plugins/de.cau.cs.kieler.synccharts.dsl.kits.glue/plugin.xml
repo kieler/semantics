@@ -6,11 +6,16 @@
       <objectContribution
             adaptable="false"
             id="de.cau.cs.kieler.synccharts.dsl.kits.glue.objectContribution1"
-            objectClass="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+            objectClass="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor">
          <action
                class="de.cau.cs.kieler.synccharts.dsl.kits.glue.actions.GoToDeclaration"
                id="de.cau.cs.kieler.synccharts.dsl.kits.glue.action1"
                label="Open in KITS textual editor">
+         </action>
+         <action
+               class="org.eclipse.xtext.resource.XtextResource"
+               id="de.cau.cs.kieler.synccharts.dsl.kits.glue.action1"
+               label="Initialize XMI resource">
          </action>
       </objectContribution>
    </extension>
