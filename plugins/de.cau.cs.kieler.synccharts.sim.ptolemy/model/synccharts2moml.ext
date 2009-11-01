@@ -212,7 +212,10 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     //delete termination output port that corrupts operation
     deleteModalModelPorts((List[EntityType])
    				(this.entity.select(e|e.name.startsWith(outerStateURIHash))),
-   				"terminated"+outerStateURIHash) 
+   				"terminated"+outerStateURIHash) -> 
+   				
+   //post processing: reconsider priorities
+   ConsiderTransitionPriorities(this, this.entity)   
 ;
 
 
@@ -245,6 +248,74 @@ Void deleteModalModelPorts(List[EntityType] entityList, String portName) :
  		deleteModalModelPorts(entityList.withoutLast(), portName) : null	
 ;	
 
+
+//-----------------------------------------------------------------------------
+//--     A U T O M A T I C   R E C O N S I D E R   P R I O R I T I E S       --
+//-----------------------------------------------------------------------------
+
+//Go thru each hierarchy stage
+//Go thru all ModalModels
+//Go thru all States
+//Go thru all outgoing transitions
+//For all (OTHER) outgoing transitions with higher priority:
+//    Add negated trigger with AND operator
+
+//Go thru all ModalModels
+Void ConsiderTransitionPriorities(EntityType baseEntity,
+								  List[EntityType] entityList) :
+	let firstEntity = entityList.first():
+	(firstEntity.class1.matches("ptolemy.domains.modal.modal.ModalModel")) ? 
+		ConsiderTransitionPriorities_ModalModel(baseEntity, 
+										        firstEntity,
+										        firstEntity.entity) : null ->
+	(entityList.size > 0) ?
+		ConsiderTransitionPriorities(baseEntity, entityList.withoutFirst()) : null
+;
+
+//Use ModalModel to go to deeper hierarchies (refinements!)
+Void ConsiderTransitionPriorities_ModalModel(EntityType baseEntity,
+											 EntityType modalModel,
+											 List[EntityType] entityList):
+   let firstEntity = entityList.first():
+   
+   //if this is a ModalController => Check all states
+   (firstEntity.class1.matches("ptolemy.domains.modal.modal.ModalController")) ?
+   			ConsiderTransitionPriorities_ModalController(baseEntity,
+   														 firstEntity,
+   														 firstEntity.entity)
+	: null ->   											
+		 
+	//if this is a Refinement => Recursively go into it		 
+   (firstEntity.class1.matches("ptolemy.domains.modal.modal.Refinement")) ?
+   			ConsiderTransitionPriorities(baseEntity,
+										 firstEntity.entity)
+	: null ->   											
+		 
+   dump("[Priorities - MM] ModalModel:"+ modalModel.name + 
+   				   ", State:"+ firstEntity.name + "(" + firstEntity.class1 + ")") ->
+   
+   (entityList.size > 0) ?
+		ConsiderTransitionPriorities_ModalModel(baseEntity, 
+												modalModel, 
+												entityList.withoutFirst()) 
+		: null
+;
+
+//User ModalController (of ModalModel) to go thru kernel.states
+Void ConsiderTransitionPriorities_ModalController(EntityType baseEntity,
+												  EntityType modalController,
+												  List[EntityType] entityList):
+   	let firstEntity = entityList.first():
+   	
+   dump(" [Priorities - MC] ModalController:"+ modalController.name + 
+   				   ", State:"+ firstEntity.name + "(" + firstEntity.class1 + ")") ->
+
+   	(entityList.size > 0) ?
+		ConsiderTransitionPriorities_ModalController(baseEntity, 
+												modalController, 
+												entityList.withoutFirst()) 
+		: null
+;
 
 //-----------------------------------------------------------------------------
 //--                 A U T O M A T I C - C O N N E N T I O N                 --
@@ -696,7 +767,8 @@ PropertyType newPropertyType
 
 //Decide whether a states is initial or final and add the appropriate
 //property to the entity.
-Void SetStateInitialFinalFlag(synccharts::State state, EntityType entity) :
+Void SetStateInitialFinalFlag(synccharts::State state, 
+									  EntityType entity) :
 	let p1a = new PropertyType:
 	let p1b = new PropertyType:
 	let p2 = new PropertyType:
@@ -925,6 +997,7 @@ create RelationType this createRelation(String name,
 	let p6 = new PropertyType:
 	let p7 = new PropertyType:
 	let p8 = new PropertyType:
+	let p9 = new PropertyType:
 		p1.setName("guardExpression") ->
 		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p2.setName("outputActions") ->
@@ -950,6 +1023,10 @@ create RelationType this createRelation(String name,
 		p7.setValue("false") ->
 		p8.setName("refinementName") ->
 		p8.setClass("ptolemy.kernel.util.StringAttribute") ->
+		//add priority as string value for post procession on ptolemy model
+		p9.setName("priority") ->
+		p9.setClass("ptolemy.kernel.util.StringAttribute") ->
+		p9.setValue(""+transition.priority) ->
     this.setName(name) ->
 	this.property.add(p1) ->
 	this.property.add(p2) ->
@@ -959,6 +1036,7 @@ create RelationType this createRelation(String name,
 	this.property.add(p6) ->
 	this.property.add(p7) ->
 	this.property.add(p8) ->
+	this.property.add(p9) ->
 	addTrigger(this, transition) ->
 	addEmission(this, transition)
 ;
