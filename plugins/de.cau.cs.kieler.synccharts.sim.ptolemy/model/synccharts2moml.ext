@@ -420,7 +420,8 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 		addLink(baseEntity, 
 				"KielerNormalTermination.all states terminated", 
 				"TERMINATION_RELATION") : null ->
-	//only (!!!) connect termination signals for abortion of outer/current state! (not INNER states)
+	//only (!!!) connect termination signals for abortion of outer/current state!
+	// (not INNER states)
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
 		addLink(baseEntity, 
 				"terminated" + baseEntity.name, 
@@ -664,8 +665,8 @@ Void dump(String s) :
 
 //Get URIFragment of an model element to identify it. 
 String getURIFragment(synccharts::State state) :
-	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			getURIFragment(de.cau.cs.kieler.synccharts.State)
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava
+			.getURIFragment(de.cau.cs.kieler.synccharts.State)
 ;
 
 //Get hash value of a string. 
@@ -708,10 +709,10 @@ Void SetStateInitialFinalFlag(synccharts::State state, EntityType entity) :
 		p2.setName("isFinalState") ->
 		p2.setClass("ptolemy.data.expr.Parameter") ->
 		p2.setValue("true") ->
-  	state.isInitial ? entity.property.add(p1a) : entity.property.add(p1b)
+  	state.isInitial ? entity.property.add(p1a) : entity.property.add(p1b) ->
   	//(do not set it to final, otherwise it can't even being reset!)
   	//this was unfortunately an error in ptolemt => flag them as final!
-  	state.stateFlag.toString().matches("FINAL") ? entity.property.add(p2) :null
+  	state.isFinal ? entity.property.add(p2) :null
 ;
 
 //Test whether a state is a macro state or a simple state.

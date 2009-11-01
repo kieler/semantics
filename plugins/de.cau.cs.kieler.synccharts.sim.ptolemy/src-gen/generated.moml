@@ -268,6 +268,7 @@
           <entity class="ptolemy.domains.modal.kernel.State" name="127641141">
             <property class="ptolemy.kernel.util.StringAttribute" name="elementURIFragment" value="//@innerStates.0/@regions.2/@innerStates.0/@regions.0/@innerStates.1"/>
             <property class="ptolemy.data.expr.Parameter" name="isInitialState" value="false"/>
+            <property class="ptolemy.data.expr.Parameter" name="isFinalState" value="true"/>
           </entity>
           <entity class="ptolemy.domains.modal.kernel.State" name="127641142">
             <property class="ptolemy.kernel.util.StringAttribute" name="elementURIFragment" value="//@innerStates.0/@regions.2/@innerStates.0/@regions.0/@innerStates.0"/>
