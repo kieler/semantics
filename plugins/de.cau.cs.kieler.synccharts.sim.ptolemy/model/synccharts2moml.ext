@@ -709,10 +709,12 @@ Void SetStateInitialFinalFlag(synccharts::State state, EntityType entity) :
 		p2.setName("isFinalState") ->
 		p2.setClass("ptolemy.data.expr.Parameter") ->
 		p2.setValue("true") ->
-  	state.isInitial ? entity.property.add(p1a) : entity.property.add(p1b) ->
+  	state.isInitial ? entity.property.add(p1a) : entity.property.add(p1b) 
   	//(do not set it to final, otherwise it can't even being reset!)
-  	//this was unfortunately an error in ptolemt => flag them as final!
-  	state.isFinal ? entity.property.add(p2) :null
+  	//this was unfortunately an error in ptolemy that was fixed
+  	//BUT the syncchart fixed point iteration does not work if we
+  	//cannot fire FSMs again (-> unknown inputs may remain)
+  	//state.isFinal ? entity.property.add(p2) :null
 ;
 
 //Test whether a state is a macro state or a simple state.
