@@ -90,7 +90,9 @@ Void addCombineFunction(EntityType baseEntity, String name) :
 
 //Add a KIELER combine function for environment signals (within baseEntity).
 //Only iff this actor does not already exist. 
-Void addEnvironmentCombineFunction(EntityType baseEntity, String name, String signalID) :
+Void addEnvironmentCombineFunction(EntityType baseEntity, 
+								   String name, 
+								   String signalID) :
    let e = new EntityType:
    let p1 = new PropertyType:
    let p2 = new PropertyType:
@@ -193,12 +195,14 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
    	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
   	//TODO: fix outer most local signal declarations
-   	this.createMainSyncChartDirector(mainRegion.innerStates.get(0).signals.select(e|e.isLocal()).name) ->
+   	this.createMainSyncChartDirector(mainRegion.innerStates.get(0).signals
+   												.select(e|e.isLocal()).name) ->
    	//mainRegion has exactly ONE top most state
    	//iterate over all regions within this top most state
    	//the  of this containing Entity is derived from this
    	//   top most state, w/ " simulation" added
-    IterateRegions(mainRegion.innerStates.get(0).regions, this, mainRegion.innerStates.get(0).signals) ->
+    IterateRegions(mainRegion.innerStates.get(0).regions, this, mainRegion
+    											.innerStates.get(0).signals) ->
     //add "this" EntityType so that IterateRegions is able to add 
     //new entities or properties
     
@@ -223,13 +227,18 @@ Void deleteModalModelPorts(List[EntityType] entityList, String portName) :
  	dump("DELETE "+portName +" IN " + modalmodel.name) ->
 
 	//delete port and links in modal model
-	modalmodel.port.remove(modalmodel.port.select(e|e.name.matches(portName)).first()) ->
-	modalmodel.relation.remove(modalmodel.relation.select(e|e.name.matches(portName+"Relation")).first()) ->
-	modalmodel.link.remove(modalmodel.link.select(e|e.relation.matches(portName+"Relation")).first()) ->
-	modalmodel.link.remove(modalmodel.link.select(e|e.relation.matches(portName+"Relation")).first()) ->
+	modalmodel.port.remove(modalmodel.port.select(e|e.name.matches(portName))
+			  .first()) ->
+	modalmodel.relation.remove(modalmodel.relation
+			  .select(e|e.name.matches(portName+"Relation")).first()) ->
+	modalmodel.link.remove(modalmodel.link
+			  .select(e|e.relation.matches(portName+"Relation")).first()) ->
+	modalmodel.link.remove(modalmodel.link
+			  .select(e|e.relation.matches(portName+"Relation")).first()) ->
  	
  	//delete port in controller
- 	controller.port.remove(controller.port.select(e|e.name.matches(portName)).first()) ->
+ 	controller.port.remove(controller.port
+ 			  .select(e|e.name.matches(portName)).first()) ->
 
 	//go thru the rest of the list, if any
  	(entityList.size > 1) ?
@@ -242,10 +251,13 @@ Void deleteModalModelPorts(List[EntityType] entityList, String portName) :
 //-----------------------------------------------------------------------------
 
 //Connect top most input signals.
-Void ConnectTopmostInputSignals(EntityType baseEntity, List[EntityType] entityList) :
+Void ConnectTopmostInputSignals(EntityType baseEntity, 
+							    List[EntityType] entityList) :
 	let firstEntity = entityList.first():
 	(firstEntity.class1.matches("ptolemy.domains.modal.modal.ModalModel")) ? 
-		ConnectTopmostInputSignalsHelper(baseEntity, firstEntity.name, firstEntity.port) : null ->
+		ConnectTopmostInputSignalsHelper(baseEntity, 
+										 firstEntity.name, 
+										 firstEntity.port) : null ->
 	(entityList.size > 0) ?
 		ConnectTopmostInputSignals(baseEntity, entityList.withoutFirst()) : null
 ;
@@ -255,61 +267,100 @@ Void ConnectTopmostInputSignalsHelper(EntityType baseEntity,
 	let firstPort = portList.first():
 	//for only input ports (that have a property with the name "*_input")
 	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
-		addVertexRelation(baseEntity, firstPort.name + "_RELATION", "environment_input") : null ->
+		addVertexRelation(baseEntity, 
+						  firstPort.name + "_RELATION", 
+						  "environment_input") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
-		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_RELATION") : null ->
+		addLink(baseEntity, 
+			    modalModelName + "." + firstPort.name, 
+			    firstPort.name + "_RELATION") : null ->
 		
 	//create kielerIO for every environment input and connect it	
 	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
-		addKielerIO(baseEntity, firstPort.name + "_KIELERIO", firstPort.name) : null ->
+		addKielerIO(baseEntity, 
+					firstPort.name + "_KIELERIO", 
+					firstPort.name) : null ->
 	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
-		addLink(baseEntity, firstPort.name + "_KIELERIO.signal", firstPort.name + "_RELATION") : null ->
+		addLink(baseEntity, 
+		        firstPort.name + "_KIELERIO.signal", 
+		        firstPort.name + "_RELATION") : null ->
 
 	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
-		addVertexRelation(baseEntity, firstPort.name + "_RELATION", "local_input") : null ->
+		addVertexRelation(baseEntity, 
+		                  firstPort.name + "_RELATION", 
+		                  "local_input") : null ->
 	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
-		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_RELATION") : null ->
+		addLink(baseEntity, 
+		        modalModelName + "." + firstPort.name, 
+		        firstPort.name + "_RELATION") : null ->
  
 	//generate KielerCombine-functions and connect local outputs to it
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addCombineFunction(baseEntity, firstPort.name + "_COMBINE") : null ->
+		addCombineFunction(baseEntity, 
+		                   firstPort.name + "_COMBINE") : null ->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addRelation(baseEntity, firstPort.name + modalModelName + "_COMBINERELATION", "local_output") : null ->
+		addRelation(baseEntity, 
+		            firstPort.name + modalModelName + "_COMBINERELATION", 
+		            "local_output") : null ->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addLink(baseEntity, firstPort.name + "_COMBINE.input", firstPort.name + modalModelName + "_COMBINERELATION" ) : null ->
+		addLink(baseEntity, 
+		        firstPort.name + "_COMBINE.input", 
+		        firstPort.name + modalModelName + "_COMBINERELATION" ) : null->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + modalModelName +"_COMBINERELATION") : null ->
+		addLink(baseEntity, 
+		        modalModelName + "." + firstPort.name, 
+		        firstPort.name + modalModelName + "_COMBINERELATION") : null ->
 
 	//connect local input vertex with output combine OR function operators
-	//be careful: local signals end with o or i now, oCombine must be linked with iVertex!!!
+	//be careful: local signals end with o or i now, oCombine must be 
+	//linked with iVertex!!!
 	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
-		addLink(baseEntity, firstPort.name.subString(0,firstPort.name.length-1) + "o_COMBINE.output", firstPort.name + "_RELATION") : null ->
+		addLink(baseEntity, 
+		        firstPort.name.subString(0,firstPort.name.length-1) 
+		         										+ "o_COMBINE.output",
+		        firstPort.name + "_RELATION") : null ->
 	
 	//generate ADD-functions and connect environment outputs to it
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addEnvironmentCombineFunction(baseEntity, firstPort.name + "_COMBINE", firstPort.name) : null ->
+		addEnvironmentCombineFunction(baseEntity, 
+									  firstPort.name + "_COMBINE", 
+									  firstPort.name) : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addRelation(baseEntity, firstPort.name + modalModelName + "_COMBINERELATION", "environment_output") : null ->
+		addRelation(baseEntity, 
+					firstPort.name + modalModelName + "_COMBINERELATION", 
+					"environment_output") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addLink(baseEntity, firstPort.name + "_COMBINE.input", firstPort.name + modalModelName + "_COMBINERELATION") : null ->
+		addLink(baseEntity, 
+				firstPort.name + "_COMBINE.input", 
+				firstPort.name + modalModelName + "_COMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + modalModelName + "_COMBINERELATION") : null ->
-
+		addLink(baseEntity, 
+				modalModelName + "." + firstPort.name, 
+				firstPort.name + modalModelName + "_COMBINERELATION") : null ->
 
 	(portList.size > 0) ?
-		ConnectTopmostInputSignalsHelper(baseEntity, modalModelName, portList.withoutFirst()) : null
+		ConnectTopmostInputSignalsHelper(baseEntity, 
+										 modalModelName, 
+										 portList.withoutFirst()) : null
 ;
 
 
 //Connect nested input signals.
-Void ConnectNestedInputSignals(EntityType baseEntity, List[EntityType] entityList) :
+Void ConnectNestedInputSignals(EntityType baseEntity, 
+							   List[EntityType] entityList) :
 	let firstEntity = entityList.first():
 	(firstEntity.class1.matches("ptolemy.domains.modal.modal.ModalModel")) ? 
-		ConnectNestedInputSignals_LocalToEnvironment_Helper(baseEntity, firstEntity.name, firstEntity.port) : null ->
+		ConnectNestedInputSignals_LocalToEnvironment_Helper
+										(baseEntity,
+					 					firstEntity.name,
+					 					firstEntity.port) : null ->
 	(firstEntity.class1.matches("ptolemy.domains.modal.modal.ModalModel")) ? 
-		ConnectNestedInputSignalsHelper(baseEntity, firstEntity.name, firstEntity.port) : null ->
+		ConnectNestedInputSignalsHelper(baseEntity, 
+										firstEntity.name, 
+										firstEntity.port) : null ->
 	(entityList.size > 0) ?
-		ConnectNestedInputSignals(baseEntity, entityList.withoutFirst()) : null
+		ConnectNestedInputSignals(baseEntity, 
+								  entityList.withoutFirst()) : null
 ;
 //Local signals for which exist input and output ports are treated as 
 //environment signals.
@@ -323,18 +374,22 @@ Void ConnectNestedInputSignals_LocalToEnvironment_Helper(EntityType baseEntity,
 	//the base entity is the one we check for the ports
 
 	((firstPort.property.select(e|e.name.matches("local_input")).size > 0)
-	 	&& (baseEntity.port.select(e|e.name.matches(firstPort.name)).size > 0)) ?
-	firstPort.property.select(e|e.name.matches("local_input")).setName("environment_input") 
+	  && (baseEntity.port.select(e|e.name.matches(firstPort.name)).size > 0)) ?
+	firstPort.property.select(e|e.name.matches("local_input"))
+				.setName("environment_input") 
 	: null ->
 			
 	((firstPort.property.select(e|e.name.matches("local_output")).size > 0) 
-	 	&& (baseEntity.port.select(e|e.name.matches(firstPort.name)).size > 0)) ?
-	firstPort.property.select(e|e.name.matches("local_output")).setName("environment_output") 
+	  && (baseEntity.port.select(e|e.name.matches(firstPort.name)).size > 0)) ?
+	firstPort.property.select(e|e.name.matches("local_output"))
+				.setName("environment_output") 
 	: null ->
 
-
 	(portList.size > 0) ?
-		ConnectNestedInputSignals_LocalToEnvironment_Helper(baseEntity, modalModelName, portList.withoutFirst()) : null
+		ConnectNestedInputSignals_LocalToEnvironment_Helper(
+										baseEntity,
+									 	modalModelName, 
+									 	portList.withoutFirst()) : null
 ;
 
 Void ConnectNestedInputSignalsHelper(EntityType baseEntity, 
@@ -343,77 +398,130 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 	let firstPort = portList.first():
 	//for termination ports
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		dump("Connect Termination for Port :"+firstPort.name+" in " + baseEntity.name) : null ->
+		dump("Connect Termination for Port :"
+			 +firstPort.name+" in " + baseEntity.name) : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addRelation(baseEntity, modalModelName + "_COMBINERELATION", "termination") : null ->
+		addRelation(baseEntity, 
+					modalModelName + "_COMBINERELATION", 
+					"termination") : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addLink(baseEntity, "KielerNormalTermination.state terminated", modalModelName  + "_COMBINERELATION") : null ->
+		addLink(baseEntity, 
+				"KielerNormalTermination.state terminated", 
+				modalModelName  + "_COMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addLink(baseEntity, modalModelName + ".terminated" + baseEntity.name , modalModelName  + "_COMBINERELATION") : null ->
+		addLink(baseEntity, 
+				modalModelName + ".terminated" + baseEntity.name, 
+				modalModelName  + "_COMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addRelation(baseEntity, "TERMINATION_RELATION", "termination") : null ->
+		addRelation(baseEntity, 
+					"TERMINATION_RELATION", 
+					"termination") : null ->
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addLink(baseEntity, "KielerNormalTermination.all states terminated", "TERMINATION_RELATION") : null ->
+		addLink(baseEntity, 
+				"KielerNormalTermination.all states terminated", 
+				"TERMINATION_RELATION") : null ->
 	//only (!!!) connect termination signals for abortion of outer/current state! (not INNER states)
 	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addLink(baseEntity, "terminated" + baseEntity.name, "TERMINATION_RELATION") : null ->
+		addLink(baseEntity, 
+				"terminated" + baseEntity.name, 
+				"TERMINATION_RELATION") : null ->
 	
 	//for only input ports (that have a property with the name "*_input")
 	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
-		addVertexRelation(baseEntity, firstPort.name + "_RELATION", "environment_input") : null ->
+		addVertexRelation(baseEntity, 
+						  firstPort.name + "_RELATION", 
+						  "environment_input") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
-		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_RELATION") : null ->
+		addLink(baseEntity, 
+				modalModelName + "." + 
+				firstPort.name, 
+				firstPort.name + "_RELATION") : null ->
 		
 	//connect every environment input to relation	
 	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
-		addLink(baseEntity, firstPort.name, firstPort.name + "_RELATION") : null ->
+		addLink(baseEntity, 
+				firstPort.name, 
+				firstPort.name + "_RELATION") : null ->
 
 	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
-		addVertexRelation(baseEntity, firstPort.name + "_RELATION", "local_input") : null ->
+		addVertexRelation(baseEntity, 
+						  firstPort.name + "_RELATION", 
+						  "local_input") : null ->
 	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
-		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + "_RELATION") : null ->
+		addLink(baseEntity, 
+				modalModelName + "." + firstPort.name, 
+				firstPort.name + "_RELATION") : null ->
  
 	//generate KielerCombine-functions and connect local outputs to it
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addCombineFunction(baseEntity, firstPort.name + "_COMBINE") : null ->
+		addCombineFunction(baseEntity, 
+						   firstPort.name + "_COMBINE") : null ->
 
  ///-----
-	//do this only, iff there are no input/output ports of this local signal, hence it is defined on this
-	//hierarchy layer! (= true local signals), local signals are treated as environment signals in nested hearchy layers!
+	//do this only, iff there are no input/output ports of this local signal,
+	// hence it is defined on this hierarchy layer! (= true local signals),
+	// local signals are treated as environment signals in nested hearchy 
+	//layers!
 	
 	//connect local input vertex with output combine operator
-	//be careful: local signals end with o or i now, oCombine must be linked with iVertex!!!
+	//be careful: local signals end with o or i now, oCombine must be linked 
+	//with iVertex!!!
 	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
-		addLink(baseEntity, firstPort.name.subString(0,firstPort.name.length-1) + "o_COMBINE.output", firstPort.name + "_RELATION") : null ->
+		addLink(baseEntity, 
+				firstPort.name.subString(0,firstPort.name.length-1) 
+							+ "o_COMBINE.output", 
+				firstPort.name + "_RELATION") : null ->
 	//connect local output vertex with input combine 
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addRelation(baseEntity, firstPort.name + modalModelName + "_COMBINERELATION", "local_output") : null ->
+		addRelation(baseEntity, 
+					firstPort.name + modalModelName + "_COMBINERELATION",
+					 "local_output") : null ->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addLink(baseEntity, firstPort.name + "_COMBINE.input", firstPort.name + modalModelName + "_COMBINERELATION" ) : null ->
+		addLink(baseEntity, 
+				firstPort.name + "_COMBINE.input", 
+				firstPort.name + modalModelName + "_COMBINERELATION" ) : null->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
-		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + modalModelName +"_COMBINERELATION") : null ->
+		addLink(baseEntity, 
+				modalModelName + "." + firstPort.name, 
+				firstPort.name + modalModelName +"_COMBINERELATION") : null ->
  ///-----
 
 	//generate KielerCombine-functions and connect environment outputs to it
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addEnvironmentCombineFunction(baseEntity, firstPort.name + "_COMBINE", firstPort.name) : null ->
+		addEnvironmentCombineFunction(baseEntity, 
+									  firstPort.name + "_COMBINE", 
+									  firstPort.name) : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addRelation(baseEntity, firstPort.name + modalModelName + "_COMBINERELATION", "environment_output") : null ->
+		addRelation(baseEntity, 
+					firstPort.name + modalModelName + "_COMBINERELATION", 
+					"environment_output") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addLink(baseEntity, firstPort.name + "_COMBINE.input", firstPort.name + modalModelName + "_COMBINERELATION") : null ->
+		addLink(baseEntity, 
+				firstPort.name + "_COMBINE.input", 
+				firstPort.name + modalModelName + "_COMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addLink(baseEntity, modalModelName + "." + firstPort.name, firstPort.name + modalModelName + "_COMBINERELATION") : null ->
+		addLink(baseEntity, 
+				modalModelName + "." + firstPort.name, 
+				firstPort.name + modalModelName + "_COMBINERELATION") : null ->
 
 	//connect combine function w/ output ports
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addVertexRelation(baseEntity, firstPort.name + "_RELATION", "environment_output") : null ->
+		addVertexRelation(baseEntity, 
+						  firstPort.name + "_RELATION", 
+						  "environment_output") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addLink(baseEntity, firstPort.name, firstPort.name + "_RELATION") : null ->
+		addLink(baseEntity, 
+				firstPort.name, 
+				firstPort.name + "_RELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
-		addLink(baseEntity, firstPort.name + "_COMBINE.output", firstPort.name + "_RELATION") : null ->
+		addLink(baseEntity, 
+				firstPort.name + "_COMBINE.output", 
+				firstPort.name + "_RELATION") : null ->
 
 	(portList.size > 0) ?
-		ConnectNestedInputSignalsHelper(baseEntity, modalModelName, portList.withoutFirst()) : null
+		ConnectNestedInputSignalsHelper(baseEntity, 
+										modalModelName, 
+										portList.withoutFirst()) : null
 ;
 
 
@@ -424,7 +532,7 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 //Create ModalModel == Region-Component. 
 create EntityType this createModalModelEntity(synccharts::Region region, 
 											  int number, 
-											  List[synccharts::Signal] signalList):
+									 	List[synccharts::Signal] signalList):
 	let p0 = new PropertyType:
 	let p1 = new PropertyType:
 		p0.setName("directorClass") ->
@@ -433,7 +541,8 @@ create EntityType this createModalModelEntity(synccharts::Region region,
 		p1.setName("_tableauFactory") ->
 		p1.setClass("ptolemy.vergil.modal.modal.ModalTableauFactory") ->
 	this.property.add(p1) ->
-   	this.setName(hash(getURIFragment(region.parentState)) + "_region_" + number) ->
+   	this.setName(hash(getURIFragment(region.parentState)) 
+   											 	+ "_region_" + number) ->
   	this.setClass1("ptolemy.domains.modal.modal.ModalModel") ->
   	//first add signals if any
   	(signalList.size > 0) ?
@@ -450,18 +559,23 @@ create EntityType this createModalModelEntity(synccharts::Region region,
 //Create ModalController == Region-Declaration (simple states and macro
 // states declarations).
 create EntityType this createModalControllerEntity(synccharts::Region region,
-												   List[synccharts::Signal] signalList):
+									 List[synccharts::Signal] signalList):
    	this.setName("_Controller") ->
   	this.setClass1("ptolemy.domains.modal.modal.ModalController") ->
   	//first add signals if any
   	(signalList.size > 0) ?
-		addSignalsToModalController(this, null, signalList, region, null) : null ->
+		addSignalsToModalController(this, 
+									null, 
+									signalList, 
+									region, 
+									null) : null ->
   	//add termination signal
 	this.addTerminationSignalToModalController(null, region.parentState) ->
   	//add termination signals 
 	this.addTerminationSignalsToModalController(null, region.innerStates) ->
   	//then iterated all states (if any in this region)
-	(region.innerStates.size > 0) ? IterateStates(region.innerStates, this) : null
+	(region.innerStates.size > 0) ? 
+		IterateStates(region.innerStates, this) : null
 ;
 
 
@@ -485,8 +599,10 @@ create EntityType this createMacroStateEntity(synccharts::State state):
 
 
 //Create ModalRefinement == State-Definition (of a macro state /w regions).
-create EntityType this createMacroStateRefinementEntity(synccharts::State state, EntityType modalModel,
-														List[synccharts::Signal] signalList):
+create EntityType this createMacroStateRefinementEntity(
+										synccharts::State state, 
+										EntityType modalModel,
+										List[synccharts::Signal] signalList):
    	this.setName(hash(getURIFragment(state))) ->
   	this.setClass1("ptolemy.domains.modal.modal.Refinement") ->
    	//getMovedSignalNames() contains names of moved signals
@@ -494,9 +610,12 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
 	//signalList.union(state.signals) ->
 	//FIXME: why does the added list gets empty?//
 	moveToSignalList(signalList, state.signals) ->
-   	//add signals to refinement (so that outer signals are visible inside), if any
+   	//add signals to refinement (so outer signals are visible inside), if any
    	(signalList.size > 0) ?
-	   	this.addSignalsToModalController(modalModel, signalList, state.parentRegion, getMovedSignalNames()) : null ->
+	   	this.addSignalsToModalController(modalModel, 
+	   									 signalList, 
+	   									 state.parentRegion, 
+	   									 getMovedSignalNames()) : null ->
    	//create SyncChartDirector
    	this.createSyncChartDirector(getMovedSignalNames()) ->
    	//add termination signal
@@ -526,9 +645,11 @@ create EntityType this createSimpleStateEntity(synccharts::State state):
 //-----------------------------------------------------------------------------
 
 //Move signalList to the other newList. 
-Void moveToSignalList(List[synccharts::Signal] newList, List[synccharts::Signal] signalList) :
+Void moveToSignalList(List[synccharts::Signal] newList, 
+					  List[synccharts::Signal] signalList) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			moveToSignalList(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList)
+			moveToSignalList(org.eclipse.emf.common.util.EList, 
+							 org.eclipse.emf.common.util.EList)
 ;
 List[String] getMovedSignalNames():
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
@@ -537,7 +658,8 @@ List[String] getMovedSignalNames():
 
 //Do some java console output for debugging purpose. 
 Void dump(String s) :
-	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.dump(java.lang.String)
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.dump(
+			 java.lang.String)
 ;
 
 //Get URIFragment of an model element to identify it. 
@@ -587,8 +709,9 @@ Void SetStateInitialFinalFlag(synccharts::State state, EntityType entity) :
 		p2.setClass("ptolemy.data.expr.Parameter") ->
 		p2.setValue("true") ->
   	state.isInitial ? entity.property.add(p1a) : entity.property.add(p1b)
-  	//do not set it to final, otherwise it can't even being reset! 
-  	//state.stateFlag.toString().matches("FINAL") ? entity.property.add(p2) : null
+  	//(do not set it to final, otherwise it can't even being reset!)
+  	//this was unfortunately an error in ptolemt => flag them as final!
+  	state.stateFlag.toString().matches("FINAL") ? entity.property.add(p2) :null
 ;
 
 //Test whether a state is a macro state or a simple state.
@@ -597,15 +720,19 @@ boolean isMacroState(synccharts::State state) :
 ; 
 
 //Construct the trigger.
-String buildTrigger(synccharts::Expression expression, String terminatedURIHash) :
+String buildTrigger(synccharts::Expression expression, 
+					String terminatedURIHash) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			buildTrigger(de.cau.cs.kieler.synccharts.Expression, java.lang.String)
+			buildTrigger(de.cau.cs.kieler.synccharts.Expression, 
+						 java.lang.String)
 ;
 
 //Construct the effect.
-String buildEffect(List[synccharts::Effect] effectList, String terminatedURIHash) :
+String buildEffect(List[synccharts::Effect] effectList, 
+				   String terminatedURIHash) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			buildEffect(org.eclipse.emf.common.util.EList, java.lang.String)
+			buildEffect(org.eclipse.emf.common.util.EList, 
+						java.lang.String)
 ;
 
 
@@ -619,11 +746,19 @@ String buildEffect(List[synccharts::Effect] effectList, String terminatedURIHash
 Void IterateTransitions(List[synccharts::Transition] transitionList,
 							 EntityType entity):
  	let transition = transitionList.last():
- 	(transitionList.size > 0) ? dump(hash(getURIFragment(transition.sourceState)) + " -> " + hash(getURIFragment(transition.targetState))) : null ->
-	(transitionList.size > 0) ? addTransition(transition,
-				  							  entity,
-				  							  hash(getURIFragment(transition.sourceState)) + "_transition_" + transitionList.size) :null -> 	
-    (transitionList.size > 1) ? IterateTransitions(transitionList.withoutLast(), entity) : null
+ 	(transitionList.size > 0) ? 
+ 			dump(hash(getURIFragment(transition.sourceState)) + " -> " + 
+ 			hash(getURIFragment(transition.targetState))) 
+ 			: null ->
+	(transitionList.size > 0) ? 
+			addTransition(transition,
+						  entity,
+				  		  hash(getURIFragment(transition.sourceState)) 
+				  		  + "_transition_" + transitionList.size) 
+		    : null -> 	
+    (transitionList.size > 1) ? 
+    		IterateTransitions(transitionList.withoutLast(), entity) 
+    		: null
 ;
 
 
@@ -633,10 +768,13 @@ Void IterateTransitions(List[synccharts::Transition] transitionList,
 Void IterateStates(List[synccharts::State] stateList, 
 						EntityType entity):
  	let state = stateList.last():
- 	state.isMacroState() ? entity.entity.add(createMacroStateEntity(state)) 
- 					    : entity.entity.add(createSimpleStateEntity(state)) ->
+ 	state.isMacroState() ? 
+ 			entity.entity.add(createMacroStateEntity(state)) 
+ 			: entity.entity.add(createSimpleStateEntity(state)) ->
  	IterateTransitions(state.outgoingTransitions, entity) ->
-    (stateList.size > 1) ? IterateStates(stateList.withoutLast(), entity) : null
+    (stateList.size > 1) ? 
+    		IterateStates(stateList.withoutLast(), entity) 
+    		: null
 ;
 
 
@@ -645,12 +783,16 @@ Void IterateStates(List[synccharts::State] stateList,
 //For simple states : do nothing
 Void IterateStatesRefinement(List[synccharts::State] stateList, 
 								  EntityType entity, 
-								  List[synccharts::Signal] signalList):
+								  List[synccharts::Signal] signalList) :
  	let state = stateList.last():
- 	state.isMacroState() ? entity.entity.add(
- 							createMacroStateRefinementEntity(state, entity, signalList)) 
- 						: null ->
-    (stateList.size > 1) ? IterateStatesRefinement(stateList.withoutLast(), entity, signalList) : null
+ 	state.isMacroState() ? 
+ 				entity.entity.add(
+ 					createMacroStateRefinementEntity(state, entity, signalList)) 
+ 				: null ->
+    (stateList.size > 1) ? 
+    			IterateStatesRefinement(stateList.withoutLast(), 
+    			entity, signalList) 
+    			: null
 ;
 
 
@@ -658,11 +800,16 @@ Void IterateStatesRefinement(List[synccharts::State] stateList,
 //Add an own modal model for each region
 //Define all signals that are defined until now!
 Void IterateRegions(List[synccharts::Region] regionList, 
-						EntityType entity, 
-						List[synccharts::Signal] signalList):
+					EntityType entity, 
+					List[synccharts::Signal] signalList):
  	let region = regionList.last():
- 	entity.entity.add(createModalModelEntity(region, regionList.size, signalList)) ->
-    (regionList.size > 1) ? IterateRegions(regionList.withoutLast(), entity, signalList) : null 
+ 	entity.entity.add(createModalModelEntity(region, 
+ 											 regionList.size, 
+ 											 signalList)) ->
+    (regionList.size > 1) ? 
+    				IterateRegions(regionList.withoutLast(), 
+    							   entity, 
+    							   signalList) : null 
 ; 
 
 
@@ -671,7 +818,8 @@ Void IterateRegions(List[synccharts::Region] regionList,
 //-----------------------------------------------------------------------------
 
 //Create a "SYNCCHART Director" (for macro state definition)
-Void createSyncChartDirector(EntityType entity, List[String] stateSignalNames):
+Void createSyncChartDirector(EntityType entity, 
+							 List[String] stateSignalNames):
     let p0 = new PropertyType:
 	 let p1 = new PropertyType:
 	 p1.setName("statesignals") ->
@@ -684,7 +832,8 @@ Void createSyncChartDirector(EntityType entity, List[String] stateSignalNames):
 ;
 
 //Create outer most "SYNCCHART Director" (ticks every seconds)
-Void createMainSyncChartDirector(EntityType entity, List[String] stateSignalNames):
+Void createMainSyncChartDirector(EntityType entity, 
+								 List[String] stateSignalNames):
     let p0 = new PropertyType:
 	 let p1 = new PropertyType:
 	 let p2 = new PropertyType:
@@ -727,9 +876,11 @@ Void addTransition(	synccharts::Transition transition,
 					String name) :
 	let link1 = new LinkType:
 	let link2 = new LinkType:
-	link1.setPort(hash(getURIFragment(transition.sourceState)) + ".outgoingPort") ->
+	link1.setPort(
+		hash(getURIFragment(transition.sourceState)) + ".outgoingPort") ->
 	link1.setRelation(name) ->
-	link2.setPort(hash(getURIFragment(transition.targetState)) + ".incomingPort") ->
+	link2.setPort(
+		hash(getURIFragment(transition.targetState)) + ".incomingPort") ->
 	link2.setRelation(name) ->
 	entity.relation.add(createRelation(name, transition)) ->
 	entity.link.add(link1) ->
@@ -788,7 +939,7 @@ create RelationType this createRelation(String name,
 								p5.setValue("true") : p5.setValue("false") ->
 		p6.setName("defaultTransition") ->
 		p6.setClass("ptolemy.data.expr.Parameter") ->
-		p6.setValue("false") -> //defaultTransition is NOT "normal termination" !!!
+		p6.setValue("false") -> //defaultTransition is NOT "normal termination"
 		//transition.transitionKind.toString().matches("NORMALTERMINATION") ? 
 		//						p6.setValue("true") : p6.setValue("false") ->
 		p7.setName("nondeterministic") ->
@@ -830,7 +981,8 @@ Void addTerminationSignalToModalController(EntityType entity,
 	//p1b.setName("input") ->
 	p2.setName("_type") ->
 	p2.setClass("ptolemy.actor.TypeAttribute") ->
-	p2.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
+	p2.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF 
+						  //KIELER-IO-ACTOR
 	p3.setName("termination") ->
    	p3.setClass("ptolemy.kernel.util.StringAttribute") ->
 	port.property.add(p1a) ->
@@ -840,8 +992,8 @@ Void addTerminationSignalToModalController(EntityType entity,
 	entity.port.add(port)
 ;
 Void addTerminationSignalsToModalController(EntityType entity, 
-										   EntityType parent, 
-										   List[synccharts::State] stateList) :
+										    EntityType parent, 
+										List[synccharts::State] stateList) :
 	let state = stateList.last():
 	//only for macro states
 	(state.isMacroState()) ?
@@ -852,7 +1004,8 @@ Void addTerminationSignalsToModalController(EntityType entity,
 		addTerminationSignalsToModalController(entity, parent, 
 										  	  stateList.withoutLast()) : null
 ;
-Void addTerminationSignalToModalModel(EntityType entity, synccharts::Region region) :
+Void addTerminationSignalToModalModel(EntityType entity, 
+									  synccharts::Region region) :
  	addTerminationSignalToModalModel(entity, region.parentState)
 ;
 Void addTerminationModalModelLink(EntityType entity, String stateURIHash) : 
@@ -861,7 +1014,8 @@ Void addTerminationModalModelLink(EntityType entity, String stateURIHash) :
 	l.setRelation("terminated" + stateURIHash + "Relation") ->
 	entity.link.add(l)	
 ;
-Void addTerminationSignalToModalModel(EntityType entity, synccharts::State state) :
+Void addTerminationSignalToModalModel(EntityType entity, 
+									  synccharts::State state) :
 	let port = new PortType:
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
@@ -871,7 +1025,8 @@ Void addTerminationSignalToModalModel(EntityType entity, synccharts::State state
 	p1.setName("output") ->
 	p2.setName("_type") ->
 	p2.setClass("ptolemy.actor.TypeAttribute") ->
-	p2.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
+	p2.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF 
+						  //KIELER-IO-ACTOR
 	p3.setName("termination") ->
    	p3.setClass("ptolemy.kernel.util.StringAttribute") ->
 	port.property.add(p1) ->
@@ -880,16 +1035,20 @@ Void addTerminationSignalToModalModel(EntityType entity, synccharts::State state
 	entity.port.add(port) ->  
 	addPortRelationAndLinks(entity, port.name)
 ;
-Void addTerminationSignalsToModalModel(EntityType entity, List[synccharts::State] stateList) :
+Void addTerminationSignalsToModalModel(EntityType entity, 
+									   List[synccharts::State] stateList) :
 	let state = stateList.last():
 	//only for macro states
 	(state.isMacroState()) ?
 		addTerminationSignalToModalModel(entity, state) : null ->  
 	(state.isMacroState()) ?
-	 	addTerminationModalModelLink(entity, ""+hash(getURIFragment(state))) : null ->
+	 	addTerminationModalModelLink(entity, 
+	 								 ""+hash(getURIFragment(state))) 
+	 	: null ->
 	(stateList.size > 1)?
 		addTerminationSignalsToModalModel(entity, 
-										  stateList.withoutLast()) : null
+										  stateList.withoutLast()) 
+		: null
 ;
 
 
@@ -947,7 +1106,8 @@ Void addSignalsToModalModel(EntityType entity,
 	portLocalOut.property.add(p2) ->
 	p3.setName("_type") ->
 	p3.setClass("ptolemy.actor.TypeAttribute") ->
-	p3.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
+	p3.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF 
+						  //KIELER-IO-ACTOR
 	port.property.add(p3) ->
 	port.property.add(portType) -> //input or real type
 	portLocalIn.property.add(p3) ->
@@ -955,12 +1115,18 @@ Void addSignalsToModalModel(EntityType entity,
 	portLocalOut.property.add(p3) ->
 	portLocalOut.property.add(portTypeLocalOut) -> //(local) output
 	
-	//only add ports that are used ( w/ type != 0 or -1) - do not handle local ports here
-	(!(portType.name.matches("0") || portType.name.matches("-1") || signal.isLocal()))  ?
+	//only add ports that are used ( w/ type != 0 or -1) 
+	//do not handle local ports here
+	(!(portType.name.matches("0") 
+		|| portType.name.matches("-1") 
+		|| signal.isLocal()))  ?
 			entity.port.add(port) : null ->
 			
-	//also add necessary relation that connect above ports with the controller
-	(!(portType.name.matches("0") || portType.name.matches("-1") || signal.isLocal()))  ?
+	//also add necessary relation that connect above ports with the 
+	//controller
+	(!(portType.name.matches("0") 
+		|| portType.name.matches("-1") 
+		|| signal.isLocal()))  ?
 			addPortRelationAndLinks(entity, port.name) : null ->
 	
 	//add local ports
@@ -1011,7 +1177,9 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	let portTypeLocalIn = new PropertyType:
 	let portTypeLocalOut = new PropertyType:
 	let signal = signalList.first():
-	let isStateSignal = (stateSignalNames != null) && (stateSignalNames.select(e|e.matches(signal.name)).size > 0 ):
+	let isStateSignal = (stateSignalNames != null) 
+						 && (stateSignalNames.select(e|e.matches(signal.name))
+						 										  .size > 0 ):
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	port.setName(signal.name) ->
 	portLocalIn.setClass("ptolemy.domains.modal.modal.ModalPort") ->
@@ -1050,7 +1218,8 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 
 	p3.setName("_type") ->
 	p3.setClass("ptolemy.actor.TypeAttribute") ->
-	p3.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF KIELER-IO-ACTOR
+	p3.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF 
+						  //KIELER-IO-ACTOR
 	port.property.add(p3) ->
 	port.property.add(portType) ->
 	portLocalIn.property.add(p3) ->
@@ -1059,11 +1228,15 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	portLocalOut.property.add(portTypeLocalOut) -> //(local) output
 	
 	//only add ports that are used ( w/ type != 0 or -1)
-	(!(portType.name.matches("0") || portType.name.matches("-1") || signal.isLocal()))  ?
+	(!(portType.name.matches("0") 
+			|| portType.name.matches("-1") 
+			|| signal.isLocal())) ?
 			entity.port.add(port) : null ->
 
 	//only link ports that are used ( w/ type != 0 or -1)
-	(!(portType.name.matches("0") || portType.name.matches("-1") || signal.isLocal()))  ?
+	(!(portType.name.matches("0") 
+			|| portType.name.matches("-1") 
+			|| signal.isLocal())) ?
 			linkSignalRelationToState(entity, parent, signal.name) : null ->
 	
 	//add local ports 
@@ -1072,20 +1245,24 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	(signal.isLocal() && !isStateSignal) ?
 			entity.port.add(portLocalOut) : null ->
 	(signal.isLocal() && !isStateSignal) ?
-			linkSignalRelationToState(entity, parent, signal.name+"i") : null ->
+			linkSignalRelationToState(entity, parent, signal.name+"i") 
+			: null ->
 	(signal.isLocal() && !isStateSignal) ?
-			linkSignalRelationToState(entity, parent, signal.name+"o") : null ->
+			linkSignalRelationToState(entity, parent, signal.name+"o") 
+			: null ->
 
 	//if still signals remain, continue
 	(signalList.size > 1) ? addSignalsToModalController(entity, parent,
-														signalList.withoutFirst(),
-														region,
-														stateSignalNames) : null	
+													signalList.withoutFirst(),
+													region,
+													stateSignalNames) : null	
 ;
 
 
 //Helperfunction connecting signals to a modalController.
-linkSignalRelationToState(EntityType modalController, EntityType parent, String signalName) :
+linkSignalRelationToState(EntityType modalController, 
+						  EntityType parent, 
+						  String signalName) :
 	let stateName = modalController.name:
 	let l = new LinkType:
 	l.setPort(stateName + "." + signalName) ->
@@ -1118,9 +1295,9 @@ Void addTrigger(RelationType relation, synccharts::Transition transition) :
 //Create outputActions.
 Void addEmission(RelationType relation, synccharts::Transition transition) :
 	let p1 = new PropertyType:
-	let terminatedURIHash = hash(getURIFragment(transition.targetState.parentRegion.parentState)):
+	let terminatedURIHash = hash(getURIFragment(
+							transition.targetState.parentRegion.parentState)):
 	p1.setName("outputActions") ->
-	//p1.setClass("ptolemy.domains.fsm.kernel.OutputActionsAttribute") -> CHANGED 16.09.2009
 	p1.setClass("ptolemy.domains.modal.kernel.OutputActionsAttribute") ->
 	//if target state is final state, then add termination-effect
 	(transition.targetState.isFinal) ?
