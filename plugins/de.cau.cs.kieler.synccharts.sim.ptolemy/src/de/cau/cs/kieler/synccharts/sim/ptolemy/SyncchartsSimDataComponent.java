@@ -180,8 +180,8 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 			currentState = PTOEXE.getCurrentState();
 		}
 		catch(Exception e) {
-			new KiemInitializationException
-			("Ptolemy Model cannot make a step.", true, e);
+			throw (new KiemExecutionException
+			("Ptolemy Model cannot make a step.", true, e));
 		}
 		
 		//get the output present signals
@@ -218,7 +218,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 			loadAndExecuteModel();
 			keys = PTOEXE.getInterfaceSignals();
 		} catch (Exception e) {
-			new KiemInitializationException
+			throw new KiemInitializationException
 				("Ptolemy Model could not be generated", true, e);
 		}
 		return keys;
@@ -277,7 +277,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 			System.out.println("Now executing Ptolemy Model...");
 		}//end if
 		else {
-			new KiemInitializationException
+			throw new KiemInitializationException
 				("Ptolemy Model could not be generated", true, null);
 		}
 	}

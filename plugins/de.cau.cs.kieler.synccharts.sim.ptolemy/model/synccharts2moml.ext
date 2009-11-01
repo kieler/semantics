@@ -2,10 +2,10 @@ import synccharts;
 import Moml;
 
 //-----------------------------------------------------------------------------
-//--            S S M - 2 - P T O       T R A N S F O R M A T I O N          --
+//--     S Y N C C H A R T S - 2 - P T O     T R A N S F O R M A T I O N     --
 //-----------------------------------------------------------------------------
 
-//Start Model Transformation here
+//Start Model Transformation here.
 create DocumentRoot this transform(synccharts::Region sc):
  	this.setEntity(createBaseEntity(sc))
 ;   
@@ -15,7 +15,8 @@ create DocumentRoot this transform(synccharts::Region sc):
 //--       B A S I C   M O M L - E N T I T I E S   C R E A T I O N           --
 //-----------------------------------------------------------------------------
 
-
+//Add a link between port and relation (within baseEntity).
+//Only iff this link does not already exist. 
 Void addLink(EntityType baseEntity, String port, String relation) :
 	let l = new LinkType:
 	l.setPort(port) ->
@@ -26,6 +27,9 @@ Void addLink(EntityType baseEntity, String port, String relation) :
 		baseEntity.link.add(l) : null
 ;
 
+
+//Add a relation (within baseEntity).
+//Only iff this relation does not already exist. 
 Void addRelation(EntityType baseEntity, String name, String property) :
 	let r = new RelationType:
     let p1 = new PropertyType:
@@ -44,6 +48,8 @@ Void addRelation(EntityType baseEntity, String name, String property) :
 ;
 
 
+//Add a vertex relation (within baseEntity).
+//Only iff this vertex relation does not already exist. 
 Void addVertexRelation(EntityType baseEntity, String name, String property) :
 	let r = new RelationType:
     let p1 = new PropertyType:
@@ -66,35 +72,12 @@ Void addVertexRelation(EntityType baseEntity, String name, String property) :
 ;
 
 
-Void addLocigalFunction(EntityType baseEntity, String name, String function) :
-   let e = new EntityType:
-   let p1 = new PropertyType:
-   let p2 = new PropertyType:
-   let p3 = new PropertyType:
-   e.setName(name) ->
-   e.setClass1("ptolemy.actor.lib.logic.LogicFunction") ->
-   	p1.setName("function") ->
-   	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
-   	p1.setValue(function) ->
-   	p2.setName("_icon") ->
-   	p2.setClass("ptolemy.vergil.icon.AttributeValueIcon") ->
-   		p3.setName("attributeName") ->
-   		p3.setClass("ptolemy.kernel.util.StringAttribute") ->
-   		p3.setValue("function") ->
-    p2.property.add(p3) ->
-   e.property.add(p1) ->
-   e.property.add(p2) ->
-   //if not already exists
-   (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) ?
-		  baseEntity.entity.add(e) : null
-; 
-
-
+//Add a KIELER combine function for local signals (within baseEntity).
+//Only iff this actor does not already exist. 
 Void addCombineFunction(EntityType baseEntity, String name) :
    let e = new EntityType:
    let p1 = new PropertyType:
    e.setName(name) ->
-   //e.setClass1("ptolemy.actor.lib.AddSubtract") ->
    e.setClass1("ptolemy.actor.kiel.KielerCombine") ->
    	p1.setName("combine function") ->
    	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
@@ -104,13 +87,15 @@ Void addCombineFunction(EntityType baseEntity, String name) :
 	   baseEntity.entity.add(e) : null
 ;   
 
+
+//Add a KIELER combine function for environment signals (within baseEntity).
+//Only iff this actor does not already exist. 
 Void addEnvironmentCombineFunction(EntityType baseEntity, String name, String signalID) :
    let e = new EntityType:
    let p1 = new PropertyType:
    let p2 = new PropertyType:
    e.setName(name) ->
    e.setClass1("ptolemy.actor.kiel.KielerCombine") ->
-//   e.setClass1("ptolemy.actor.lib.AddSubtract") ->
    	p2.setName("combine function") ->
    	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
    	p2.setValue("1") ->
@@ -125,6 +110,8 @@ Void addEnvironmentCombineFunction(EntityType baseEntity, String name, String si
 ;   
   
 
+//Add a KIELER normal termination actor (within baseEntity).
+//Only iff this actors does not already exist. 
 Void addKielerNormalTermination(EntityType baseEntity) :
    let e = new EntityType:
    e.setName("KielerNormalTermination") ->
@@ -134,6 +121,9 @@ Void addKielerNormalTermination(EntityType baseEntity) :
 	   baseEntity.entity.add(e) : null
 ;   
   
+
+//Add a KIELER IO actor (within baseEntity).
+//Only iff this actors does not already exist. 
 Void addKielerIO(EntityType baseEntity, String name, String signalID) :
    let e = new EntityType:
    let p1 = new PropertyType:
@@ -162,40 +152,42 @@ Void addKielerIO(EntityType baseEntity, String name, String signalID) :
 		  baseEntity.entity.add(e) : null
 ;
 
-Void addConstant(EntityType baseEntity, String value):
-   let e = new EntityType:
-   let p1 = new PropertyType:
-   let p2 = new PropertyType:
-   let p3 = new PropertyType:
-   let p4 = new PropertyType:
-   let p5 = new PropertyType:
-   p1.setName("Const") ->
-   p1.setClass("ptolemy.actor.lib.Const") ->
-   	p2.setName("value") ->
-   	p2.setClass("ptolemy.data.expr.Parameter") ->
-   	p2.setValue(value) ->
-   		p3.setName("_icon") ->
-   		p3.setClass("ptolemy.vergil.icon.BoxedValueIcon") ->
-   			p4.setName("attributeName") ->
-   			p4.setClass("ptolemy.kernel.util.StringAttribute") ->
-   			p4.setValue("value") ->
-   			p5.setName("displayWidth") ->
-   			p5.setClass("ptolemy.data.expr.Parameter") ->
-   			p5.setValue("60") ->
-   		p3.property.add(p4) ->
-   		p3.property.add(p5) ->
-   	p2.property.add(p3) ->
-   e.property.add(p1) ->
-   e.property.add(p2) ->
-   //if not already exists
-   (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) ?
-   			baseEntity.entity.add(e) : null
-;
+
+//Void addConstant(EntityType baseEntity, String value):
+//   let e = new EntityType:
+//   let p1 = new PropertyType:
+//   let p2 = new PropertyType:
+//   let p3 = new PropertyType:
+//   let p4 = new PropertyType:
+//   let p5 = new PropertyType:
+//   p1.setName("Const") ->
+//  p1.setClass("ptolemy.actor.lib.Const") ->
+//   	p2.setName("value") ->
+//   	p2.setClass("ptolemy.data.expr.Parameter") ->
+// 		p2.setValue(value) ->
+//   		p3.setName("_icon") ->
+//   		p3.setClass("ptolemy.vergil.icon.BoxedValueIcon") ->
+//   			p4.setName("attributeName") ->
+//   			p4.setClass("ptolemy.kernel.util.StringAttribute") ->
+//   			p4.setValue("value") ->
+//   			p5.setName("displayWidth") ->
+//   			p5.setClass("ptolemy.data.expr.Parameter") ->
+//   			p5.setValue("60") ->
+//   		p3.property.add(p4) ->
+//   		p3.property.add(p5) ->
+//   	p2.property.add(p3) ->
+//   e.property.add(p1) ->
+//   e.property.add(p2) ->
+//   //if not already exists
+//   (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) ?
+//   			baseEntity.entity.add(e) : null
+//;
 
 //-----------------------------------------------------------------------------
+//--                   T O P L E V E L    E N T I T I E S                    --
+//-----------------------------------------------------------------------------
 
-
-//create basic / outer most enclosing entity	
+//Create basic / outer most enclosing entity.	
 create EntityType this createBaseEntity(synccharts::Region mainRegion):
 	let outerStateURIHash = hash(getURIFragment(mainRegion.innerStates.get(0))):
    	this.setName(outerStateURIHash + "_simulation") ->
@@ -217,19 +209,16 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     deleteModalModelPorts((List[EntityType])
    				(this.entity.select(e|e.name.startsWith(outerStateURIHash))),
    				"terminated"+outerStateURIHash) 
-    
 ;
 
 
-//-----------------------------------------------------------------------------
 // Termination ports are not needed on the toplevel, so these can be deleted.
 // This is done by iterating thru the list of all modalmodels (and their
-// controller)
+// controller).
 Void deleteModalModelPorts(List[EntityType] entityList, String portName) :
  	let modalmodel = entityList.last() :
  	let controller = (EntityType) modalmodel.entity.select
  									(e|e.name.matches("_Controller")).first():
-	
 	//debug output
  	dump("DELETE "+portName +" IN " + modalmodel.name) ->
 
@@ -247,10 +236,12 @@ Void deleteModalModelPorts(List[EntityType] entityList, String portName) :
  		deleteModalModelPorts(entityList.withoutLast(), portName) : null	
 ;	
 
+
+//-----------------------------------------------------------------------------
+//--                 A U T O M A T I C - C O N N E N T I O N                 --
 //-----------------------------------------------------------------------------
 
-
-//connect top most input signals
+//Connect top most input signals.
 Void ConnectTopmostInputSignals(EntityType baseEntity, List[EntityType] entityList) :
 	let firstEntity = entityList.first():
 	(firstEntity.class1.matches("ptolemy.domains.modal.modal.ModalModel")) ? 
@@ -310,9 +301,7 @@ Void ConnectTopmostInputSignalsHelper(EntityType baseEntity,
 ;
 
 
-//-----------------------------------------------------------------------------
-
-//connect nested input signals
+//Connect nested input signals.
 Void ConnectNestedInputSignals(EntityType baseEntity, List[EntityType] entityList) :
 	let firstEntity = entityList.first():
 	(firstEntity.class1.matches("ptolemy.domains.modal.modal.ModalModel")) ? 
@@ -322,8 +311,9 @@ Void ConnectNestedInputSignals(EntityType baseEntity, List[EntityType] entityLis
 	(entityList.size > 0) ?
 		ConnectNestedInputSignals(baseEntity, entityList.withoutFirst()) : null
 ;
-//local signals for which exist input and output ports are treated as environment signals
-//because they are defined in an outer layer, so rename their type accordingly!
+//Local signals for which exist input and output ports are treated as 
+//environment signals.
+//Because they are defined in an outer layer, so rename their type accordingly!
 Void ConnectNestedInputSignals_LocalToEnvironment_Helper(EntityType baseEntity, 
 									  String modalModelName,
 						 			  List[PortType] portList) :
@@ -426,9 +416,12 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 		ConnectNestedInputSignalsHelper(baseEntity, modalModelName, portList.withoutFirst()) : null
 ;
 
+
+//-----------------------------------------------------------------------------
+//--            R E G I O N S     A N D     M A C R O S T A T E S            --
 //-----------------------------------------------------------------------------
 
-//create ModalModel == Region-Component 
+//Create ModalModel == Region-Component. 
 create EntityType this createModalModelEntity(synccharts::Region region, 
 											  int number, 
 											  List[synccharts::Signal] signalList):
@@ -438,11 +431,9 @@ create EntityType this createModalModelEntity(synccharts::Region region,
 		p0.setClass("ptolemy.data.expr.StringParameter") ->
 		p0.setValue("ptolemy.domains.modal.kernel.KielerFSMDirector") ->
 		p1.setName("_tableauFactory") ->
-		//p1.setClass("ptolemy.vergil.fsm.modal.ModalTableauFactory") -> //CHANGED 16.09.2009
 		p1.setClass("ptolemy.vergil.modal.modal.ModalTableauFactory") ->
 	this.property.add(p1) ->
    	this.setName(hash(getURIFragment(region.parentState)) + "_region_" + number) ->
-  	//this.setClass1("ptolemy.domains.fsm.modal.ModalModel") -> // CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.modal.ModalModel") ->
   	//first add signals if any
   	(signalList.size > 0) ?
@@ -456,11 +447,11 @@ create EntityType this createModalModelEntity(synccharts::Region region,
    	//then add macro state refinements (for all macro states)
    	IterateStatesRefinement(region.innerStates, this, signalList)
 ;
-//create ModalController == Region-Declaration (simple states and macro states declarations)
+//Create ModalController == Region-Declaration (simple states and macro
+// states declarations).
 create EntityType this createModalControllerEntity(synccharts::Region region,
 												   List[synccharts::Signal] signalList):
    	this.setName("_Controller") ->
-  	//this.setClass1("ptolemy.domains.fsm.modal.ModalController") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.modal.ModalController") ->
   	//first add signals if any
   	(signalList.size > 0) ?
@@ -474,7 +465,7 @@ create EntityType this createModalControllerEntity(synccharts::Region region,
 ;
 
 
-//create MacroState == State-Component (of a macro state)
+//Create MacroState == State-Component (of a macro state).
 create EntityType this createMacroStateEntity(synccharts::State state):
 	//elementURIFragment is *NOT* real XPATH!
 	let elementURIFragment = getURIFragment(state):
@@ -486,7 +477,6 @@ create EntityType this createMacroStateEntity(synccharts::State state):
 		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p1.setValue(hash(getURIFragment(state))) ->
    	this.setName(hash(getURIFragment(state))) ->
-  	//this.setClass1("ptolemy.domains.fsm.kernel.State") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.kernel.State") ->
 	this.property.add(p1) ->
 	this.property.add(elementURIFragmentProperty) ->
@@ -494,16 +484,15 @@ create EntityType this createMacroStateEntity(synccharts::State state):
 ;
 
 
-//create ModalRefinement == State-Definition (of a macro state /w regions)
+//Create ModalRefinement == State-Definition (of a macro state /w regions).
 create EntityType this createMacroStateRefinementEntity(synccharts::State state, EntityType modalModel,
 														List[synccharts::Signal] signalList):
    	this.setName(hash(getURIFragment(state))) ->
-  	//this.setClass1("ptolemy.domains.fsm.modal.Refinement") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.modal.Refinement") ->
    	//getMovedSignalNames() contains names of moved signals
 	//signalList.addAll(state.signals) ->
 	//signalList.union(state.signals) ->
-	//TODO: why does the added list gets empty?//
+	//FIXME: why does the added list gets empty?//
 	moveToSignalList(signalList, state.signals) ->
    	//add signals to refinement (so that outer signals are visible inside), if any
    	(signalList.size > 0) ?
@@ -518,7 +507,7 @@ create EntityType this createMacroStateRefinementEntity(synccharts::State state,
     //connect nested input signals
     ConnectNestedInputSignals(this, this.entity)
 ;
-//create SimpleState == State-Component 
+//Create SimpleState == State-Component.
 create EntityType this createSimpleStateEntity(synccharts::State state):
 	//elementURIFragment is *NOT* real XPATH!
 	let elementURIFragment = getURIFragment(state):
@@ -526,7 +515,6 @@ create EntityType this createSimpleStateEntity(synccharts::State state):
 							 		"ptolemy.kernel.util.StringAttribute",
 							 		elementURIFragment):
    	this.setName(hash(getURIFragment(state))) ->
-  	//this.setClass1("ptolemy.domains.fsm.kernel.State") -> //CHANGED 16.09.2009
   	this.setClass1("ptolemy.domains.modal.kernel.State") ->
 	this.property.add(elementURIFragmentProperty) ->
   	SetStateInitialFinalFlag(state, this)
@@ -534,11 +522,10 @@ create EntityType this createSimpleStateEntity(synccharts::State state):
 
 
 //-----------------------------------------------------------------------------
-//--                   H E L P E R    F U N C T I O N S                      --
+//--            (J A V A)   H E L P E R    F U N C T I O N S                 --
 //-----------------------------------------------------------------------------
 
-//XXX//
-//move signalList to the other newList 
+//Move signalList to the other newList. 
 Void moveToSignalList(List[synccharts::Signal] newList, List[synccharts::Signal] signalList) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
 			moveToSignalList(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList)
@@ -548,32 +535,31 @@ List[String] getMovedSignalNames():
 			 getMovedSignalNames()
 ;
 
-
-//do some java console output for debugging purpose 
+//Do some java console output for debugging purpose. 
 Void dump(String s) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.dump(java.lang.String)
 ;
 
-//get URIFragment of an model element to identify it 
+//Get URIFragment of an model element to identify it. 
 String getURIFragment(synccharts::State state) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
 			getURIFragment(de.cau.cs.kieler.synccharts.State)
 ;
 
-//get hash value of a string 
+//Get hash value of a string. 
 String hash(String s) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
 			hash(java.lang.String)
 ;
 
-
-//get URIFragment of an model element to identify it 
+//Get URIFragment of an model element to identify it. 
 int getPortType(synccharts::Signal signal, synccharts::Region region) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
 			getPortType(de.cau.cs.kieler.synccharts.Signal,
 						de.cau.cs.kieler.synccharts.Region)
 ;
 
+//Construct a new property entity.
 PropertyType newPropertyType
 								(String name,
 								String class,
@@ -585,8 +571,8 @@ PropertyType newPropertyType
 	p1
 ;
 
-//decide whether a states is initial or final and add the appropriate
-//property to the entity
+//Decide whether a states is initial or final and add the appropriate
+//property to the entity.
 Void SetStateInitialFinalFlag(synccharts::State state, EntityType entity) :
 	let p1a = new PropertyType:
 	let p1b = new PropertyType:
@@ -605,19 +591,31 @@ Void SetStateInitialFinalFlag(synccharts::State state, EntityType entity) :
   	//state.stateFlag.toString().matches("FINAL") ? entity.property.add(p2) : null
 ;
 
-//test whether a state is a macro state or a simple state
+//Test whether a state is a macro state or a simple state.
 boolean isMacroState(synccharts::State state) :
  	state.regions.size > 0
 ; 
 
+//Construct the trigger.
+String buildTrigger(synccharts::Expression expression, String terminatedURIHash) :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
+			buildTrigger(de.cau.cs.kieler.synccharts.Expression, java.lang.String)
+;
+
+//Construct the effect.
+String buildEffect(List[synccharts::Effect] effectList, String terminatedURIHash) :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
+			buildEffect(org.eclipse.emf.common.util.EList, java.lang.String)
+;
+
 
 //-----------------------------------------------------------------------------
-//--                       I T E R A T I O N S                               --
+//--               I T E R A T I O N S  ( STATES & REGIONS )                 --
 //-----------------------------------------------------------------------------
 
-//iteratate over all states (in a region)
-//for  macro states : add states entity AND list them as a refinement property
-//for simple states : add states
+//Iteratate over all states (in a region).
+//For  macro states : add states entity AND list them as a refinement property
+//For simple states : add states
 Void IterateTransitions(List[synccharts::Transition] transitionList,
 							 EntityType entity):
  	let transition = transitionList.last():
@@ -629,9 +627,9 @@ Void IterateTransitions(List[synccharts::Transition] transitionList,
 ;
 
 
-//iteratate over all states (in a region)
-//for  macro states : add states entity AND list them as a refinement property
-//for simple states : add states
+//Iteratate over all states (in a region).
+//For  macro states : add states entity AND list them as a refinement property
+//For simple states : add states
 Void IterateStates(List[synccharts::State] stateList, 
 						EntityType entity):
  	let state = stateList.last():
@@ -641,9 +639,10 @@ Void IterateStates(List[synccharts::State] stateList,
     (stateList.size > 1) ? IterateStates(stateList.withoutLast(), entity) : null
 ;
 
-//iteratate over all states (in a region)
-//for  macro states : define the refinement (and recursively add regions!)
-//for simple states : do nothing
+
+//Iteratate over all states (in a region)
+//For  macro states : define the refinement (and recursively add regions!)
+//For simple states : do nothing
 Void IterateStatesRefinement(List[synccharts::State] stateList, 
 								  EntityType entity, 
 								  List[synccharts::Signal] signalList):
@@ -655,9 +654,9 @@ Void IterateStatesRefinement(List[synccharts::State] stateList,
 ;
 
 
-//iterate over all regions (in a state)
-//add an own modal model for each region
-//define all signals that are defined until now!
+//Iterate over all regions (in a state)
+//Add an own modal model for each region
+//Define all signals that are defined until now!
 Void IterateRegions(List[synccharts::Region] regionList, 
 						EntityType entity, 
 						List[synccharts::Signal] signalList):
@@ -671,7 +670,7 @@ Void IterateRegions(List[synccharts::Region] regionList,
 //--                 C R E A T E     D I R E C T O R S                       --
 //-----------------------------------------------------------------------------
 
-//create a "SR Director" (for macro state definition)
+//Create a "SYNCCHART Director" (for macro state definition)
 Void createSyncChartDirector(EntityType entity, List[String] stateSignalNames):
     let p0 = new PropertyType:
 	 let p1 = new PropertyType:
@@ -679,13 +678,12 @@ Void createSyncChartDirector(EntityType entity, List[String] stateSignalNames):
 	 p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 	 p1.setValue(stateSignalNames.flatten().toString()) ->
     p0.setName("Kieler SyncChart Director") ->
-//	p0.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
 	p0.setClass("ptolemy.actor.kiel.SyncChartDirector") ->
 	p0.property.add(p1) ->
 	entity.property.add(p0) 
 ;
 
-//create outer most "SR Director" (ticks every seconds)
+//Create outer most "SYNCCHART Director" (ticks every seconds)
 Void createMainSyncChartDirector(EntityType entity, List[String] stateSignalNames):
     let p0 = new PropertyType:
 	 let p1 = new PropertyType:
@@ -709,7 +707,6 @@ Void createMainSyncChartDirector(EntityType entity, List[String] stateSignalName
 	 	p5.setClass("ptolemy.kernel.util.StringAttribute") ->
 	 	p5.setValue(stateSignalNames.flatten().toString()) ->
     p0.setName("Kieler SyncChart Director") ->
-//	p0.setClass("ptolemy.domains.sr.kernel.SRDirector") ->
 	p0.setClass("ptolemy.actor.kiel.SyncChartDirector") ->
 	p0.property.add(p1) ->
 	p0.property.add(p2) ->
@@ -720,33 +717,11 @@ Void createMainSyncChartDirector(EntityType entity, List[String] stateSignalName
 ;
 
 
-//create a "FSM Director" (for a region component)
-//create PropertyType this createFSMDirector():
-//    this.setName("directorClass") ->
-//    this.setValue("ptolemy.domains.fsm.kernel.FSMDirector") ->
-//	this.setClass("ptolemy.data.expr.StringParameter")
-//;
-
-//create a "DE Director" (for the outer most entity)
-create PropertyType this createDEDirector():
-	let p1 = new PropertyType:
-	let p2 = new PropertyType:
-		p1.setName("stopTime") ->
-		p1.setClass("ptolemy.data.expr.Parameter") ->
-		p1.setValue("Infinity") ->
-		p2.setName("synchronizeToRealTime") ->
-		p2.setClass("ptolemy.data.expr.Parameter") ->
-		p2.setValue("true") ->
-    this.setName("DE Director") ->
-	this.setClass("ptolemy.domains.de.kernel.DEDirector") ->
-	this.property.add(p1) ->
-	this.property.add(p2)
-;
-
 //-----------------------------------------------------------------------------
 //--         C R E A T E     R E L A T I O N S   &   L I N K S               --
 //-----------------------------------------------------------------------------
 
+//Add a state 2 state transition.
 Void addTransition(	synccharts::Transition transition, 
 					EntityType entity,
 					String name) :
@@ -761,7 +736,9 @@ Void addTransition(	synccharts::Transition transition,
 	entity.link.add(link2) 
 ;
 
-//create a Relation Type for a Port connection to a ModalController or ModalModel
+
+//Create a Relation Type for a Port connection to a ModalController or 
+//ModalModel.
 Void addPortRelationAndLinks(EntityType entity, String portName):
     let relation = new RelationType:
 	let p1 = new PropertyType:
@@ -783,7 +760,7 @@ Void addPortRelationAndLinks(EntityType entity, String portName):
 ;
 
 
-//create a Relation Type for State2State transitions
+//Create a Relation Type for State2State transitions.
 create RelationType this createRelation(String name,
 										synccharts::Transition transition):
 	let p1 = new PropertyType:
@@ -797,10 +774,8 @@ create RelationType this createRelation(String name,
 		p1.setName("guardExpression") ->
 		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p2.setName("outputActions") ->
-		//p2.setClass("ptolemy.domains.fsm.kernel.OutputActionsAttribute") -> //CHANGED 16.09.2009
 		p2.setClass("ptolemy.domains.modal.kernel.OutputActionsAttribute") ->
 		p3.setName("setActions") ->
-		//p3.setClass("ptolemy.domains.fsm.kernel.CommitActionsAttribute") -> //CHANGED 16.09.2009
 		p3.setClass("ptolemy.domains.modal.kernel.CommitActionsAttribute") ->
 		p4.setName("reset") ->
 		p4.setClass("ptolemy.data.expr.Parameter") ->
@@ -834,10 +809,13 @@ create RelationType this createRelation(String name,
 	addEmission(this, transition)
 ;
 
+
 //-----------------------------------------------------------------------------
-//--                    C R E A T E     S I G N A L S                        --
+//--                N O R M A L    T E R M I N A T I O N                     --
 //-----------------------------------------------------------------------------
 
+//Add termination signals so a normal termination (weak abortion) can be 
+//triggered.
 Void addTerminationSignalToModalController(EntityType entity, 
 										   EntityType parent, 
 										   synccharts::State state) :
@@ -861,7 +839,6 @@ Void addTerminationSignalToModalController(EntityType entity,
 	port.property.add(p3) ->
 	entity.port.add(port)
 ;
-
 Void addTerminationSignalsToModalController(EntityType entity, 
 										   EntityType parent, 
 										   List[synccharts::State] stateList) :
@@ -875,27 +852,20 @@ Void addTerminationSignalsToModalController(EntityType entity,
 		addTerminationSignalsToModalController(entity, parent, 
 										  	  stateList.withoutLast()) : null
 ;
-
-
 Void addTerminationSignalToModalModel(EntityType entity, synccharts::Region region) :
  	addTerminationSignalToModalModel(entity, region.parentState)
-// 	addTerminationModalModelLink(entity, hash(getURIFragment(region.parentState)))
 ;
-
 Void addTerminationModalModelLink(EntityType entity, String stateURIHash) : 
 	let l = new LinkType:
 	l.setPort(stateURIHash + ".terminated" + stateURIHash) ->
 	l.setRelation("terminated" + stateURIHash + "Relation") ->
 	entity.link.add(l)	
 ;
-
- 
 Void addTerminationSignalToModalModel(EntityType entity, synccharts::State state) :
 	let port = new PortType:
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
 	let p3 = new PropertyType:
-	
 	port.setName("terminated" + hash(getURIFragment(state))) ->
 	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	p1.setName("output") ->
@@ -909,9 +879,7 @@ Void addTerminationSignalToModalModel(EntityType entity, synccharts::State state
 	port.property.add(p3) ->
 	entity.port.add(port) ->  
 	addPortRelationAndLinks(entity, port.name)
-	
 ;
-
 Void addTerminationSignalsToModalModel(EntityType entity, List[synccharts::State] stateList) :
 	let state = stateList.last():
 	//only for macro states
@@ -924,6 +892,12 @@ Void addTerminationSignalsToModalModel(EntityType entity, List[synccharts::State
 										  stateList.withoutLast()) : null
 ;
 
+
+//-----------------------------------------------------------------------------
+//--                     A D D I N G     S I G N A L S                       --
+//-----------------------------------------------------------------------------
+
+//Add signals in signalsList to ModalModel entity.
 Void addSignalsToModalModel(EntityType entity, 
 							List[synccharts::Signal] signalList,
 							synccharts::Region region) :
@@ -941,7 +915,6 @@ Void addSignalsToModalModel(EntityType entity,
 	let portTypeLocalIn = new PropertyType:
 	let portTypeLocalOut = new PropertyType:
 	let signal = signalList.first():
-	//port.setClass("ptolemy.domains.fsm.modal.ModalPort") -> //CHANGED 16.09.2009
 	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	port.setName(signal.name) ->
 	portLocalIn.setClass("ptolemy.domains.modal.modal.ModalPort") ->
@@ -990,7 +963,6 @@ Void addSignalsToModalModel(EntityType entity,
 	(!(portType.name.matches("0") || portType.name.matches("-1") || signal.isLocal()))  ?
 			addPortRelationAndLinks(entity, port.name) : null ->
 	
-	
 	//add local ports
 	(signal.isLocal()) ?
 			entity.port.add(portLocalIn) : null ->
@@ -1008,14 +980,16 @@ Void addSignalsToModalModel(EntityType entity,
 ;
 
 
-//if signals is not input and signal is not output => signal is local
+//Helper function detecting local signals.
+//If signals is not input and signal is not output => signal is local.
 Boolean isLocal(synccharts::Signal signal) :
  (!signal.isInput && !signal.isOutput)
 ;
 
 
-//stateSignalList contains all local signals that are defined in this state
-//and that do not need to be added
+//Add signals in signalsList to ModalController entity.
+//StateSignalList contains all local signals that are defined in this state
+//and that do not need to be added.
 Void addSignalsToModalController(EntityType entity, EntityType parent,
 								 List[synccharts::Signal] signalList,
 								 synccharts::Region region,
@@ -1037,17 +1011,13 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	let portTypeLocalIn = new PropertyType:
 	let portTypeLocalOut = new PropertyType:
 	let signal = signalList.first():
-	//XXX//
 	let isStateSignal = (stateSignalNames != null) && (stateSignalNames.select(e|e.matches(signal.name)).size > 0 ):
-	//port.setClass("ptolemy.domains.fsm.modal.RefinementPort") -> //CHANGED 16.09.2009
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	port.setName(signal.name) ->
 	portLocalIn.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	portLocalIn.setName(signal.name+"i") ->
 	portLocalOut.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	portLocalOut.setName(signal.name+"o") ->
-//	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
-//	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
 	p4a.setName("environment_input") ->
 	p4b.setName("environment_output") ->
 	p4c.setName("local_input") ->
@@ -1065,7 +1035,6 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	p2.setName("output") ->
 	p1b.setName("input") ->
 	p2b.setName("output") ->
-//	p1c.setName("input") ->
 	portType.setName((getPortType(signal, region)).toString()) ->
 	//denote environmental and local input/output signals
 	(signal.isInput) ? port.property.add(p4a) : null ->
@@ -1077,7 +1046,6 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	portLocalIn.property.add(p4c) ->
  	portLocalOut.property.add(p4d) ->	
 	portLocalIn.property.add(p1b) -> //in only
-//	portLocalOut.property.add(p1c) -> //out & in
 	portLocalOut.property.add(p2b) ->
 
 	p3.setName("_type") ->
@@ -1098,18 +1066,6 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	(!(portType.name.matches("0") || portType.name.matches("-1") || signal.isLocal()))  ?
 			linkSignalRelationToState(entity, parent, signal.name) : null ->
 	
-	
-//	dump("S------------") ->
-//	(isStateSignal) ?
-//		dump(signal.name + " in " + parent.name ) : null ->
-//	(!isStateSignal) ?
-//		dump(signal.name + " NOT in " + parent.name )  : null ->
-//	dump("E------------") ->
-	
-	//add local ports (ONLY iff they are not defined in this state)
-//	(signal.isLocal() && (stateSignalList != null) && !stateSignalList.contains(signal)) ?
-	
-	
 	//add local ports 
 	(signal.isLocal() && !isStateSignal) ?
 			entity.port.add(portLocalIn) : null ->
@@ -1119,7 +1075,6 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 			linkSignalRelationToState(entity, parent, signal.name+"i") : null ->
 	(signal.isLocal() && !isStateSignal) ?
 			linkSignalRelationToState(entity, parent, signal.name+"o") : null ->
-			
 
 	//if still signals remain, continue
 	(signalList.size > 1) ? addSignalsToModalController(entity, parent,
@@ -1128,6 +1083,8 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 														stateSignalNames) : null	
 ;
 
+
+//Helperfunction connecting signals to a modalController.
 linkSignalRelationToState(EntityType modalController, EntityType parent, String signalName) :
 	let stateName = modalController.name:
 	let l = new LinkType:
@@ -1138,11 +1095,12 @@ linkSignalRelationToState(EntityType modalController, EntityType parent, String 
 	parent.link.add(l)
 ;
 
+
 //-----------------------------------------------------------------------------
 //--         C R E A T E     T R I G G E R   /   E M I S S I O N S           --
 //-----------------------------------------------------------------------------
 
-//create guardExpression
+//Create guardExpression.
 Void addTrigger(RelationType relation, synccharts::Transition transition) :
 	let p1 = new PropertyType:
 	//terminated source state triggers the normal termination
@@ -1156,7 +1114,8 @@ Void addTrigger(RelationType relation, synccharts::Transition transition) :
 	relation.property.add(p1)
 ;
 
-//create outputActions
+
+//Create outputActions.
 Void addEmission(RelationType relation, synccharts::Transition transition) :
 	let p1 = new PropertyType:
 	let terminatedURIHash = hash(getURIFragment(transition.targetState.parentRegion.parentState)):
@@ -1168,15 +1127,4 @@ Void addEmission(RelationType relation, synccharts::Transition transition) :
 		p1.setValue(buildEffect(transition.effects, terminatedURIHash)) :
 		p1.setValue(buildEffect(transition.effects, "")) ->
 	relation.property.add(p1) 
-;
-
-
-String buildTrigger(synccharts::Expression expression, String terminatedURIHash) :
-	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			buildTrigger(de.cau.cs.kieler.synccharts.Expression, java.lang.String)
-;
-
-String buildEffect(List[synccharts::Effect] effectList, String terminatedURIHash) :
-	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			buildEffect(org.eclipse.emf.common.util.EList, java.lang.String)
 ;
