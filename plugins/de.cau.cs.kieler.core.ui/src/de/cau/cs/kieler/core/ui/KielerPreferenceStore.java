@@ -37,274 +37,191 @@ public class KielerPreferenceStore implements IKielerPreferenceStore {
         this.preferenceStore = thepreferenceStore;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#contains(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public boolean contains(final String name) {
         return preferenceStore.contains(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#getBoolean(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public boolean getBoolean(final String name) {
         return preferenceStore.getBoolean(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#getDefaultBoolean(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public boolean getDefaultBoolean(final String name) {
         return preferenceStore.getDefaultBoolean(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#getDefaultDouble(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public double getDefaultDouble(final String name) {
         return preferenceStore.getDefaultDouble(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#getDefaultFloat(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public float getDefaultFloat(final String name) {
         return preferenceStore.getDefaultFloat(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#getDefaultInt(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public int getDefaultInt(final String name) {
         return preferenceStore.getDefaultInt(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#getDefaultLong(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public long getDefaultLong(final String name) {
         return preferenceStore.getDefaultLong(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#getDefaultString(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public String getDefaultString(final String name) {
         return preferenceStore.getDefaultString(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#getDouble(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public double getDouble(final String name) {
         return preferenceStore.getDouble(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#getFloat(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public float getFloat(final String name) {
         return preferenceStore.getFloat(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#getInt(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public int getInt(final String name) {
         return preferenceStore.getInt(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#getLong(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public long getLong(final String name) {
         return preferenceStore.getLong(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#getString(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public String getString(final String name) {
         return preferenceStore.getString(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#isDefault(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public boolean isDefault(final String name) {
         return preferenceStore.isDefault(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setDefault(java.lang.String, double)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setDefault(final String name, final double value) {
         preferenceStore.setDefault(name, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setDefault(java.lang.String, float)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setDefault(final String name, final float value) {
         preferenceStore.setDefault(name, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setDefault(java.lang.String, int)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setDefault(final String name, final int value) {
         preferenceStore.setDefault(name, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setDefault(java.lang.String, long)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setDefault(final String name, final long value) {
         preferenceStore.setDefault(name, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setDefault(java.lang.String,
-     *     java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setDefault(final String name, final String value) {
         preferenceStore.setDefault(name, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setDefault(java.lang.String, boolean)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setDefault(final String name, final boolean value) {
         preferenceStore.setDefault(name, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setToDefault(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setToDefault(final String name) {
         preferenceStore.setToDefault(name);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setValue(java.lang.String, double)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setValue(final String name, final double value) {
         preferenceStore.setValue(name, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setValue(java.lang.String, float)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setValue(final String name, final float value) {
         preferenceStore.setValue(name, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setValue(java.lang.String, int)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setValue(final String name, final int value) {
         preferenceStore.setValue(name, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setValue(java.lang.String, long)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setValue(final String name, final long value) {
         preferenceStore.setValue(name, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setValue(java.lang.String,
-     *     java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setValue(final String name, final String value) {
         preferenceStore.setValue(name, value);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.core.IKielerPreferenceStore#setValue(java.lang.String, boolean)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void setValue(final String name, final boolean value) {
         preferenceStore.setValue(name, value);
     }

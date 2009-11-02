@@ -36,10 +36,8 @@ public class KielerPreferencePage extends FieldEditorPreferencePage
         setDescription("Main preference page for the KIELER project");
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void createFieldEditors() {
@@ -47,12 +45,9 @@ public class KielerPreferencePage extends FieldEditorPreferencePage
         // according to Eclipse conventions
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public void init(final IWorkbench workbench) {
         setPreferenceStore(CoreUIPlugin.getDefault().getPreferenceStore());
     }

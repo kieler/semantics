@@ -30,14 +30,9 @@ import org.eclipse.ui.PlatformUI;
  */
 public class ZoomToFitHandler extends AbstractHandler {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
-     * ExecutionEvent)
+    /**
+     * {@inheritDoc}
      */
-    /** {@inheritDoc} */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
         IEditorPart editor = PlatformUI.getWorkbench()
                 .getActiveWorkbenchWindow().getActivePage().getActiveEditor();

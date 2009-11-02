@@ -36,9 +36,8 @@ public class CoreUIPlugin extends AbstractUIPlugin {
     public CoreUIPlugin() {
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void start(final BundleContext context) throws Exception {
@@ -46,9 +45,8 @@ public class CoreUIPlugin extends AbstractUIPlugin {
         plugin = this;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void stop(final BundleContext context) throws Exception {

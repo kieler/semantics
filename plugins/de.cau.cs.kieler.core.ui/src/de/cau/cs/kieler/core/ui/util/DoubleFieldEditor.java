@@ -53,10 +53,8 @@ public class DoubleFieldEditor extends StringFieldEditor {
                 + thelowerBound + "," + theupperBound + "]");
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.StringFieldEditor#checkState()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected boolean checkState() {
@@ -84,10 +82,8 @@ public class DoubleFieldEditor extends StringFieldEditor {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.StringFieldEditor#doLoad()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void doLoad() {
@@ -99,10 +95,8 @@ public class DoubleFieldEditor extends StringFieldEditor {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.StringFieldEditor#doLoadDefault()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void doLoadDefault() {
@@ -114,10 +108,8 @@ public class DoubleFieldEditor extends StringFieldEditor {
         valueChanged();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.StringFieldEditor#doStore()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void doStore() {

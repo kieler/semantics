@@ -39,10 +39,8 @@ public class FloatFieldEditor extends StringFieldEditor {
         super(name, labelText, parent);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.StringFieldEditor#checkState()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected boolean checkState() {
@@ -54,10 +52,8 @@ public class FloatFieldEditor extends StringFieldEditor {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.StringFieldEditor#doLoad()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void doLoad() {
@@ -65,10 +61,8 @@ public class FloatFieldEditor extends StringFieldEditor {
         setStringValue(Float.toString(value));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.StringFieldEditor#doLoadDefault()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void doLoadDefault() {
@@ -76,10 +70,8 @@ public class FloatFieldEditor extends StringFieldEditor {
         setStringValue(Float.toString(value));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.StringFieldEditor#doStore()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void doStore() {
