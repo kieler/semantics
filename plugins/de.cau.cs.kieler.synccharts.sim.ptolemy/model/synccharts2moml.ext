@@ -215,7 +215,7 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
    				"terminated"+outerStateURIHash) -> 
    				
    //post processing: reconsider priorities
-   ConsiderTransitionPriorities(this, this.entity)   
+   ConsiderTransitionPriorities(this.entity)   
 ;
 
 
@@ -261,61 +261,158 @@ Void deleteModalModelPorts(List[EntityType] entityList, String portName) :
 //    Add negated trigger with AND operator
 
 //Go thru all ModalModels
-Void ConsiderTransitionPriorities(EntityType baseEntity,
-								  List[EntityType] entityList) :
+Void ConsiderTransitionPriorities(List[EntityType] entityList) :
 	let firstEntity = entityList.first():
 	(firstEntity.class1.matches("ptolemy.domains.modal.modal.ModalModel")) ? 
-		ConsiderTransitionPriorities_ModalModel(baseEntity, 
-										        firstEntity,
+		ConsiderTransitionPriorities_ModalModel(firstEntity,
 										        firstEntity.entity) : null ->
-	(entityList.size > 0) ?
-		ConsiderTransitionPriorities(baseEntity, entityList.withoutFirst()) : null
+	(entityList.size > 1) ?
+		ConsiderTransitionPriorities(entityList.withoutFirst()) : null
 ;
 
 //Use ModalModel to go to deeper hierarchies (refinements!)
-Void ConsiderTransitionPriorities_ModalModel(EntityType baseEntity,
-											 EntityType modalModel,
+Void ConsiderTransitionPriorities_ModalModel(EntityType modalModel,
 											 List[EntityType] entityList):
    let firstEntity = entityList.first():
-   
    //if this is a ModalController => Check all states
-   (firstEntity.class1.matches("ptolemy.domains.modal.modal.ModalController")) ?
-   			ConsiderTransitionPriorities_ModalController(baseEntity,
-   														 firstEntity,
+   (firstEntity.class1.matches("ptolemy.domains.modal.modal.ModalController")
+    && firstEntity.link != null) ?
+   			ConsiderTransitionPriorities_ModalController(firstEntity,
    														 firstEntity.entity)
 	: null ->   											
 		 
 	//if this is a Refinement => Recursively go into it		 
    (firstEntity.class1.matches("ptolemy.domains.modal.modal.Refinement")) ?
-   			ConsiderTransitionPriorities(baseEntity,
-										 firstEntity.entity)
+   			ConsiderTransitionPriorities(firstEntity.entity)
 	: null ->   											
 		 
-   dump("[Priorities - MM] ModalModel:"+ modalModel.name + 
-   				   ", State:"+ firstEntity.name + "(" + firstEntity.class1 + ")") ->
+//   dump("[Priorities - MM] ModalModel:"+ modalModel.name + 
+//   		      ", State:"+ firstEntity.name + "(" + firstEntity.class1 + ")") ->
    
-   (entityList.size > 0) ?
-		ConsiderTransitionPriorities_ModalModel(baseEntity, 
-												modalModel, 
+   (entityList.size > 1) ?
+		ConsiderTransitionPriorities_ModalModel(modalModel, 
 												entityList.withoutFirst()) 
 		: null
 ;
 
-//User ModalController (of ModalModel) to go thru kernel.states
-Void ConsiderTransitionPriorities_ModalController(EntityType baseEntity,
-												  EntityType modalController,
+//Use ModalController (of ModalModel) to go thru kernel.states
+Void ConsiderTransitionPriorities_ModalController(EntityType modalController,
 												  List[EntityType] entityList):
-   	let firstEntity = entityList.first():
-   	
-   dump(" [Priorities - MC] ModalController:"+ modalController.name + 
-   				   ", State:"+ firstEntity.name + "(" + firstEntity.class1 + ")") ->
+   let firstEntity = entityList.first():
+   let linkList = modalController.link
+   						.select(e|e.port.matches(firstEntity.name + ".outgoingPort")):
+   let relationList = modalController.relation
+   						.select(e|RelationContainedInLinkList(e,linkList)):
+   
+//   dump(" [Priorities - MC] ModalController:"+ modalController.name + 
+//   		      ", State:"+ firstEntity.name + "(" + firstEntity.class1 + ")") ->
+   				   
+   (firstEntity.class1.matches("ptolemy.domains.modal.kernel.State")) ?
+   			ConsiderTransitionPriorities_State(
+   				modalController,
+   				firstEntity,
+   				relationList,
+   				relationList) 
+   	: null ->
 
-   	(entityList.size > 0) ?
-		ConsiderTransitionPriorities_ModalController(baseEntity, 
-												modalController, 
-												entityList.withoutFirst()) 
+   	(entityList.size > 1) ?
+		ConsiderTransitionPriorities_ModalController(modalController, 
+													 entityList.withoutFirst()) 
 		: null
 ;
+
+//Helper function
+Boolean RelationContainedInLinkList(RelationType relation, 
+									List[LinkType] linkList) :
+	let firstLink = linkList.first():
+	let match = firstLink.relation.matches(relation.name):
+    (linkList.size > 1) ?
+		 match || RelationContainedInLinkList(relation, linkList.withoutFirst())
+     :
+		 match
+;
+
+
+//Use Kernel.State to go thru all transitions
+Void ConsiderTransitionPriorities_State(EntityType modalController,
+										EntityType kernelState,
+										List[RelationType] outgoingRelations,
+										List[RelationType] relationList) :
+	let firstRelation = relationList.first():
+	let outgoingRelationsCopy = outgoingRelations.select(e|true):
+//   	dump("  [Priorities - ST] State:"+ kernelState.name + 
+//   		      ", Relation:"+ firstRelation.getTrigger() + " [" +firstRelation.getPriority()+"] --> " + relationList.size) ->
+   		      
+	ConsiderTransitionPriorities_Relation(firstRelation, outgoingRelationsCopy) ->
+   		      
+    (relationList.size > 1) ?
+    	ConsiderTransitionPriorities_State(modalController,
+										kernelState,
+										outgoingRelations,
+										relationList.withoutFirst())
+     	: null										
+;
+
+
+String getTrigger(Moml::RelationType relation) :
+	relation.property.select(e|e.name.matches("guardExpression")).get(0).value
+;
+
+Void setTrigger(RelationType relation, String trigger) :
+	dump("  SET TRIGGER:"+trigger) ->
+	relation.property.select(e|e.name.matches("guardExpression")).get(0)
+		.setValue(trigger)
+;
+
+int getPriority(RelationType relation) :
+	(relation.property.select(e|e.name.matches("priority")).get(0).value).asInteger()
+;
+
+Boolean isEmptyTrigger(RelationType relation) :
+	((relation == null) 
+	||
+	(relation.getTrigger() == null)
+	|| 
+	(relation.getTrigger().length == 0)) ?
+	 		true
+	 : false	
+;
+
+//For each transition (relation), add negated trigger of transition w/ 
+//lower priority value
+Void ConsiderTransitionPriorities_Relation(RelationType relation,
+										   List[RelationType] otherRelations):
+    let firstOtherRelation = otherRelations.first():
+
+   	dump("   [Priorities - RE] Compare:"+ relation.getTrigger() + "[" + relation.getPriority() + "] > " 
+   		      + firstOtherRelation.getTrigger() + " [" +firstOtherRelation.getPriority()+"] ---> " + otherRelations.size) ->
+    
+    //if other relation has higher priority - both triggers != null
+    (firstOtherRelation.getPriority() < relation.getPriority()
+      && (!firstOtherRelation.isEmptyTrigger())
+       && (!relation.isEmptyTrigger())) ?
+       relation.setTrigger("(!("+firstOtherRelation.getTrigger()+")) && "+relation.getTrigger())
+       : null ->
+
+    //if other relation has higher priority - relation.trigger = null
+    (firstOtherRelation.getPriority() < relation.getPriority()
+      && (!firstOtherRelation.isEmptyTrigger())
+       && (relation.isEmptyTrigger())) ?
+       relation.setTrigger("(!("+firstOtherRelation.getTrigger()+"))")
+       : null ->
+
+    //if other relation has higher priority - otherRelation.trigger = null
+    (firstOtherRelation.getPriority() < relation.getPriority()
+      && (firstOtherRelation.isEmptyTrigger())
+       && (!relation.isEmptyTrigger())) ?
+       relation.setTrigger("(false) && "+relation.getTrigger())
+       : null ->
+    
+    (otherRelations.size > 1) ?   
+     			ConsiderTransitionPriorities_Relation(relation, otherRelations.withoutFirst())
+				: null 								    										   	
+;										   
+
 
 //-----------------------------------------------------------------------------
 //--                 A U T O M A T I C - C O N N E N T I O N                 --
@@ -989,8 +1086,8 @@ Void addPortRelationAndLinks(EntityType entity, String portName):
 //Create a Relation Type for State2State transitions.
 create RelationType this createRelation(String name,
 										synccharts::Transition transition):
-	let p1 = new PropertyType:
-	let p2 = new PropertyType:
+//	let p1 = new PropertyType:
+//	let p2 = new PropertyType:
 	let p3 = new PropertyType:
 	let p4 = new PropertyType:
 	let p5 = new PropertyType:
@@ -998,10 +1095,10 @@ create RelationType this createRelation(String name,
 	let p7 = new PropertyType:
 	let p8 = new PropertyType:
 	let p9 = new PropertyType:
-		p1.setName("guardExpression") ->
-		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
-		p2.setName("outputActions") ->
-		p2.setClass("ptolemy.domains.modal.kernel.OutputActionsAttribute") ->
+//		p1.setName("guardExpression") ->
+//		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
+//		p2.setName("outputActions") ->
+//		p2.setClass("ptolemy.domains.modal.kernel.OutputActionsAttribute") ->
 		p3.setName("setActions") ->
 		p3.setClass("ptolemy.domains.modal.kernel.CommitActionsAttribute") ->
 		p4.setName("reset") ->
@@ -1028,8 +1125,8 @@ create RelationType this createRelation(String name,
 		p9.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p9.setValue(""+transition.priority) ->
     this.setName(name) ->
-	this.property.add(p1) ->
-	this.property.add(p2) ->
+//	this.property.add(p1) ->
+//	this.property.add(p2) ->
 	this.property.add(p3) ->
 	this.property.add(p4) ->
 	this.property.add(p5) ->

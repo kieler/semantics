@@ -6,18 +6,22 @@
     <signals name="L"/>
     <signals name="L2"/>
     <regions>
-      <innerStates id="S" label="" isInitial="true">
-        <outgoingTransitions triggersAndEffects="I / L2" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.0">
+      <innerStates id="I" label="I" isInitial="true" bodyText="">
+        <outgoingTransitions triggersAndEffects="not I / L2" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.1">
           <effects xsi:type="synccharts:Emission" signal="L2"/>
-          <trigger xsi:type="synccharts:SignalReference" signal="I"/>
-        </outgoingTransitions>
-        <outgoingTransitions triggersAndEffects="not I" priority="2" targetState="//@innerStates.0/@regions.0/@innerStates.1">
           <trigger xsi:type="synccharts:ComplexExpression" operator="not">
             <subExpressions xsi:type="synccharts:SignalReference" signal="I"/>
           </trigger>
         </outgoingTransitions>
+        <outgoingTransitions triggersAndEffects="/ O" targetState="//@innerStates.0/@regions.0/@innerStates.0">
+          <effects xsi:type="synccharts:Emission" signal="O"/>
+        </outgoingTransitions>
       </innerStates>
-      <innerStates id="S0" label="not_I"/>
+      <innerStates id="not_I" label="not_I">
+        <outgoingTransitions triggersAndEffects="I" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.0">
+          <trigger xsi:type="synccharts:SignalReference" signal="I"/>
+        </outgoingTransitions>
+      </innerStates>
     </regions>
     <regions>
       <innerStates id="state1" label="state1" isInitial="true">
@@ -31,8 +35,7 @@
       </innerStates>
     </regions>
     <regions>
-      <innerStates id="S" label="S" isInitial="true">
-        <signals name="ss"/>
+      <innerStates id="S" label="S" isInitial="true" bodyText="">
         <regions>
           <innerStates id="S" label="S" isInitial="true">
             <outgoingTransitions triggersAndEffects="L2 / L" priority="1" targetState="//@innerStates.0/@regions.2/@innerStates.0/@regions.0/@innerStates.1">
@@ -40,11 +43,13 @@
               <trigger xsi:type="synccharts:SignalReference" signal="L2"/>
             </outgoingTransitions>
           </innerStates>
-          <innerStates id="S0" label="f" isFinal="true"/>
+          <innerStates id="f" label="f" isFinal="true"/>
         </regions>
         <outgoingTransitions triggersAndEffects="" priority="1" type="NORMALTERMINATION" targetState="//@innerStates.0/@regions.2/@innerStates.1"/>
       </innerStates>
-      <innerStates id="S0"/>
+      <innerStates id="S0">
+        <outgoingTransitions priority="1" targetState="//@innerStates.0/@regions.2/@innerStates.0"/>
+      </innerStates>
     </regions>
   </innerStates>
 </synccharts:Region>

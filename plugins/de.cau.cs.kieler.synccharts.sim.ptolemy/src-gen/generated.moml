@@ -95,20 +95,32 @@
         <property class="ptolemy.kernel.util.StringAttribute" name="elementURIFragment" value="//@innerStates.0/@regions.2/@innerStates.1"/>
         <property class="ptolemy.data.expr.Parameter" name="isInitialState" value="false"/>
       </entity>
-      <entity class="ptolemy.domains.modal.kernel.State" name="1221655343">
-        <property class="ptolemy.kernel.util.StringAttribute" name="refinementName" value="1221655343"/>
-        <property class="ptolemy.kernel.util.StringAttribute" name="elementURIFragment" value="//@innerStates.0/@regions.2/@innerStates.0"/>
-        <property class="ptolemy.data.expr.Parameter" name="isInitialState" value="true"/>
-      </entity>
-      <relation name="1221655343_transition_1">
-        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression"/>
-        <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions"/>
+      <relation name="1221655342_transition_1">
         <property class="ptolemy.domains.modal.kernel.CommitActionsAttribute" name="setActions"/>
         <property class="ptolemy.data.expr.Parameter" name="reset" value="true"/>
         <property class="ptolemy.data.expr.Parameter" name="preemptive" value="false"/>
         <property class="ptolemy.data.expr.Parameter" name="defaultTransition" value="false"/>
         <property class="ptolemy.data.expr.Parameter" name="nondeterministic" value="false"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="1"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value=""/>
+        <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value=""/>
+      </relation>
+      <link port="1221655342.outgoingPort" relation="1221655342_transition_1"/>
+      <link port="1221655343.incomingPort" relation="1221655342_transition_1"/>
+      <entity class="ptolemy.domains.modal.kernel.State" name="1221655343">
+        <property class="ptolemy.kernel.util.StringAttribute" name="refinementName" value="1221655343"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="elementURIFragment" value="//@innerStates.0/@regions.2/@innerStates.0"/>
+        <property class="ptolemy.data.expr.Parameter" name="isInitialState" value="true"/>
+      </entity>
+      <relation name="1221655343_transition_1">
+        <property class="ptolemy.domains.modal.kernel.CommitActionsAttribute" name="setActions"/>
+        <property class="ptolemy.data.expr.Parameter" name="reset" value="true"/>
+        <property class="ptolemy.data.expr.Parameter" name="preemptive" value="false"/>
+        <property class="ptolemy.data.expr.Parameter" name="defaultTransition" value="false"/>
+        <property class="ptolemy.data.expr.Parameter" name="nondeterministic" value="false"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="1"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value="terminated1221655343_isPresent"/>
         <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value=""/>
       </relation>
@@ -143,7 +155,7 @@
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
       </port>
       <property class="ptolemy.actor.kiel.SyncChartDirector" name="Kieler SyncChart Director">
-        <property class="ptolemy.kernel.util.StringAttribute" name="statesignals" value="[ss]"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="statesignals" value="[]"/>
       </property>
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated1221655343">
         <property name="output"/>
@@ -195,27 +207,6 @@
         </relation>
         <link port="L2o" relation="L2oRelation"/>
         <link port="_Controller.L2o" relation="L2oRelation"/>
-        <port class="ptolemy.domains.modal.modal.ModalPort" name="ssi">
-          <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
-          <property name="input"/>
-          <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
-        </port>
-        <port class="ptolemy.domains.modal.modal.ModalPort" name="sso">
-          <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
-          <property name="output"/>
-          <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-          <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
-        </port>
-        <relation class="ptolemy.actor.TypedIORelation" name="ssiRelation">
-          <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
-        </relation>
-        <link port="ssi" relation="ssiRelation"/>
-        <link port="_Controller.ssi" relation="ssiRelation"/>
-        <relation class="ptolemy.actor.TypedIORelation" name="ssoRelation">
-          <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
-        </relation>
-        <link port="sso" relation="ssoRelation"/>
-        <link port="_Controller.sso" relation="ssoRelation"/>
         <port class="ptolemy.domains.modal.modal.ModalPort" name="terminated1221655343">
           <property name="output"/>
           <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
@@ -249,17 +240,6 @@
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
           </port>
-          <port class="ptolemy.domains.modal.modal.ModalPort" name="ssi">
-            <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
-            <property name="input"/>
-            <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
-          </port>
-          <port class="ptolemy.domains.modal.modal.ModalPort" name="sso">
-            <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
-            <property name="output"/>
-            <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-            <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
-          </port>
           <port class="ptolemy.domains.modal.modal.RefinementPort" name="terminated1221655343">
             <property name="output"/>
             <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
@@ -268,21 +248,19 @@
           <entity class="ptolemy.domains.modal.kernel.State" name="127641141">
             <property class="ptolemy.kernel.util.StringAttribute" name="elementURIFragment" value="//@innerStates.0/@regions.2/@innerStates.0/@regions.0/@innerStates.1"/>
             <property class="ptolemy.data.expr.Parameter" name="isInitialState" value="false"/>
-            <property class="ptolemy.data.expr.Parameter" name="isFinalState" value="true"/>
           </entity>
           <entity class="ptolemy.domains.modal.kernel.State" name="127641142">
             <property class="ptolemy.kernel.util.StringAttribute" name="elementURIFragment" value="//@innerStates.0/@regions.2/@innerStates.0/@regions.0/@innerStates.0"/>
             <property class="ptolemy.data.expr.Parameter" name="isInitialState" value="true"/>
           </entity>
           <relation name="127641142_transition_1">
-            <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression"/>
-            <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions"/>
             <property class="ptolemy.domains.modal.kernel.CommitActionsAttribute" name="setActions"/>
             <property class="ptolemy.data.expr.Parameter" name="reset" value="true"/>
             <property class="ptolemy.data.expr.Parameter" name="preemptive" value="false"/>
             <property class="ptolemy.data.expr.Parameter" name="defaultTransition" value="false"/>
             <property class="ptolemy.data.expr.Parameter" name="nondeterministic" value="false"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
+            <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="1"/>
             <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value="L2i_isPresent"/>
             <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="Lo=1; terminated1221655343=1"/>
           </relation>
@@ -332,18 +310,6 @@
       </relation>
       <link port="L2o" relation="L2o_RELATION"/>
       <link port="L2o_COMBINE.output" relation="L2o_RELATION"/>
-      <relation class="ptolemy.actor.TypedIORelation" name="ssi_RELATION">
-        <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-        <vertex name="ssi_RELATIONVERTEX" value="{0.0, 0.0}"/>
-      </relation>
-      <link port="1221655343_region_1.ssi" relation="ssi_RELATION"/>
-      <link port="sso_COMBINE.output" relation="ssi_RELATION"/>
-      <entity class="ptolemy.actor.kiel.KielerCombine" name="sso_COMBINE"/>
-      <relation class="ptolemy.actor.TypedIORelation" name="sso1221655343_region_1_COMBINERELATION">
-        <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-      </relation>
-      <link port="sso_COMBINE.input" relation="sso1221655343_region_1_COMBINERELATION"/>
-      <link port="1221655343_region_1.sso" relation="sso1221655343_region_1_COMBINERELATION"/>
       <relation class="ptolemy.actor.TypedIORelation" name="1221655343_region_1_COMBINERELATION">
         <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
       </relation>
@@ -409,27 +375,6 @@
     </relation>
     <link port="L2o" relation="L2oRelation"/>
     <link port="_Controller.L2o" relation="L2oRelation"/>
-    <port class="ptolemy.domains.modal.modal.ModalPort" name="ssi">
-      <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
-      <property name="input"/>
-      <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
-    </port>
-    <port class="ptolemy.domains.modal.modal.ModalPort" name="sso">
-      <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
-      <property name="output"/>
-      <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-      <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
-    </port>
-    <relation class="ptolemy.actor.TypedIORelation" name="ssiRelation">
-      <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
-    </relation>
-    <link port="ssi" relation="ssiRelation"/>
-    <link port="_Controller.ssi" relation="ssiRelation"/>
-    <relation class="ptolemy.actor.TypedIORelation" name="ssoRelation">
-      <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
-    </relation>
-    <link port="sso" relation="ssoRelation"/>
-    <link port="_Controller.sso" relation="ssoRelation"/>
     <entity class="ptolemy.domains.modal.modal.ModalController" name="_Controller">
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="O">
         <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
@@ -458,30 +403,18 @@
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
       </port>
-      <port class="ptolemy.domains.modal.modal.ModalPort" name="ssi">
-        <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
-        <property name="input"/>
-        <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
-      </port>
-      <port class="ptolemy.domains.modal.modal.ModalPort" name="sso">
-        <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
-        <property name="output"/>
-        <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-        <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
-      </port>
       <entity class="ptolemy.domains.modal.kernel.State" name="711121165">
         <property class="ptolemy.kernel.util.StringAttribute" name="elementURIFragment" value="//@innerStates.0/@regions.1/@innerStates.1"/>
         <property class="ptolemy.data.expr.Parameter" name="isInitialState" value="false"/>
       </entity>
       <relation name="711121165_transition_1">
-        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression"/>
-        <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions"/>
         <property class="ptolemy.domains.modal.kernel.CommitActionsAttribute" name="setActions"/>
         <property class="ptolemy.data.expr.Parameter" name="reset" value="true"/>
         <property class="ptolemy.data.expr.Parameter" name="preemptive" value="false"/>
         <property class="ptolemy.data.expr.Parameter" name="defaultTransition" value="false"/>
         <property class="ptolemy.data.expr.Parameter" name="nondeterministic" value="false"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="1"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value=""/>
         <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value=""/>
       </relation>
@@ -492,14 +425,13 @@
         <property class="ptolemy.data.expr.Parameter" name="isInitialState" value="true"/>
       </entity>
       <relation name="711121166_transition_1">
-        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression"/>
-        <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions"/>
         <property class="ptolemy.domains.modal.kernel.CommitActionsAttribute" name="setActions"/>
         <property class="ptolemy.data.expr.Parameter" name="reset" value="true"/>
         <property class="ptolemy.data.expr.Parameter" name="preemptive" value="false"/>
         <property class="ptolemy.data.expr.Parameter" name="defaultTransition" value="false"/>
         <property class="ptolemy.data.expr.Parameter" name="nondeterministic" value="false"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="1"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value="Li_isPresent"/>
         <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="O=1"/>
       </relation>
@@ -518,6 +450,15 @@
     </relation>
     <link port="I" relation="IRelation"/>
     <link port="_Controller.I" relation="IRelation"/>
+    <port class="ptolemy.domains.modal.modal.ModalPort" name="O">
+      <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
+      <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
+    </port>
+    <relation class="ptolemy.actor.TypedIORelation" name="ORelation">
+      <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
+    </relation>
+    <link port="O" relation="ORelation"/>
+    <link port="_Controller.O" relation="ORelation"/>
     <port class="ptolemy.domains.modal.modal.ModalPort" name="Li">
       <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
       <property name="input"/>
@@ -560,32 +501,16 @@
     </relation>
     <link port="L2o" relation="L2oRelation"/>
     <link port="_Controller.L2o" relation="L2oRelation"/>
-    <port class="ptolemy.domains.modal.modal.ModalPort" name="ssi">
-      <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
-      <property name="input"/>
-      <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
-    </port>
-    <port class="ptolemy.domains.modal.modal.ModalPort" name="sso">
-      <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
-      <property name="output"/>
-      <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-      <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
-    </port>
-    <relation class="ptolemy.actor.TypedIORelation" name="ssiRelation">
-      <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
-    </relation>
-    <link port="ssi" relation="ssiRelation"/>
-    <link port="_Controller.ssi" relation="ssiRelation"/>
-    <relation class="ptolemy.actor.TypedIORelation" name="ssoRelation">
-      <property class="ptolemy.data.expr.Parameter" name="width" value="Auto"/>
-    </relation>
-    <link port="sso" relation="ssoRelation"/>
-    <link port="_Controller.sso" relation="ssoRelation"/>
     <entity class="ptolemy.domains.modal.modal.ModalController" name="_Controller">
       <port class="ptolemy.domains.modal.modal.RefinementPort" name="I">
         <property class="ptolemy.kernel.util.StringAttribute" name="environment_input"/>
         <property name="input"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
+      </port>
+      <port class="ptolemy.domains.modal.modal.RefinementPort" name="O">
+        <property class="ptolemy.kernel.util.StringAttribute" name="environment_output"/>
+        <property name="output"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
       </port>
       <port class="ptolemy.domains.modal.modal.ModalPort" name="Li">
         <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
@@ -609,53 +534,53 @@
         <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
       </port>
-      <port class="ptolemy.domains.modal.modal.ModalPort" name="ssi">
-        <property class="ptolemy.kernel.util.StringAttribute" name="local_input"/>
-        <property name="input"/>
-        <property class="ptolemy.kernel.util.StringAttribute" name="1"/>
-      </port>
-      <port class="ptolemy.domains.modal.modal.ModalPort" name="sso">
-        <property class="ptolemy.kernel.util.StringAttribute" name="local_output"/>
-        <property name="output"/>
-        <property class="ptolemy.actor.TypeAttribute" name="_type" value="int"/>
-        <property class="ptolemy.kernel.util.StringAttribute" name="2"/>
-      </port>
       <entity class="ptolemy.domains.modal.kernel.State" name="200586988">
         <property class="ptolemy.kernel.util.StringAttribute" name="elementURIFragment" value="//@innerStates.0/@regions.0/@innerStates.1"/>
         <property class="ptolemy.data.expr.Parameter" name="isInitialState" value="false"/>
       </entity>
+      <relation name="200586988_transition_1">
+        <property class="ptolemy.domains.modal.kernel.CommitActionsAttribute" name="setActions"/>
+        <property class="ptolemy.data.expr.Parameter" name="reset" value="true"/>
+        <property class="ptolemy.data.expr.Parameter" name="preemptive" value="false"/>
+        <property class="ptolemy.data.expr.Parameter" name="defaultTransition" value="false"/>
+        <property class="ptolemy.data.expr.Parameter" name="nondeterministic" value="false"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="1"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value="I_isPresent"/>
+        <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value=""/>
+      </relation>
+      <link port="200586988.outgoingPort" relation="200586988_transition_1"/>
+      <link port="200586989.incomingPort" relation="200586988_transition_1"/>
       <entity class="ptolemy.domains.modal.kernel.State" name="200586989">
         <property class="ptolemy.kernel.util.StringAttribute" name="elementURIFragment" value="//@innerStates.0/@regions.0/@innerStates.0"/>
         <property class="ptolemy.data.expr.Parameter" name="isInitialState" value="true"/>
       </entity>
       <relation name="200586989_transition_2">
-        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression"/>
-        <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions"/>
         <property class="ptolemy.domains.modal.kernel.CommitActionsAttribute" name="setActions"/>
         <property class="ptolemy.data.expr.Parameter" name="reset" value="true"/>
         <property class="ptolemy.data.expr.Parameter" name="preemptive" value="false"/>
         <property class="ptolemy.data.expr.Parameter" name="defaultTransition" value="false"/>
         <property class="ptolemy.data.expr.Parameter" name="nondeterministic" value="false"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
-        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value="( ! I_isPresent)"/>
-        <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value=""/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="0"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value=""/>
+        <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="O=1"/>
       </relation>
       <link port="200586989.outgoingPort" relation="200586989_transition_2"/>
-      <link port="200586988.incomingPort" relation="200586989_transition_2"/>
+      <link port="200586989.incomingPort" relation="200586989_transition_2"/>
       <relation name="200586989_transition_1">
-        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression"/>
-        <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions"/>
         <property class="ptolemy.domains.modal.kernel.CommitActionsAttribute" name="setActions"/>
         <property class="ptolemy.data.expr.Parameter" name="reset" value="true"/>
         <property class="ptolemy.data.expr.Parameter" name="preemptive" value="false"/>
         <property class="ptolemy.data.expr.Parameter" name="defaultTransition" value="false"/>
         <property class="ptolemy.data.expr.Parameter" name="nondeterministic" value="false"/>
         <property class="ptolemy.kernel.util.StringAttribute" name="refinementName"/>
-        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value="I_isPresent"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="priority" value="1"/>
+        <property class="ptolemy.kernel.util.StringAttribute" name="guardExpression" value="(false) &amp;&amp; ( ! I_isPresent)"/>
         <property class="ptolemy.domains.modal.kernel.OutputActionsAttribute" name="outputActions" value="L2o=1"/>
       </relation>
       <link port="200586989.outgoingPort" relation="200586989_transition_1"/>
-      <link port="200586989.incomingPort" relation="200586989_transition_1"/>
+      <link port="200586988.incomingPort" relation="200586989_transition_1"/>
     </entity>
   </entity>
   <relation class="ptolemy.actor.TypedIORelation" name="Li_RELATION">
@@ -703,18 +628,6 @@
   </relation>
   <link port="L2o_COMBINE.input" relation="L2o918158682_region_2_COMBINERELATION"/>
   <link port="918158682_region_2.L2o" relation="L2o918158682_region_2_COMBINERELATION"/>
-  <relation class="ptolemy.actor.TypedIORelation" name="ssi_RELATION">
-    <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-    <vertex name="ssi_RELATIONVERTEX" value="{0.0, 0.0}"/>
-  </relation>
-  <link port="918158682_region_2.ssi" relation="ssi_RELATION"/>
-  <link port="sso_COMBINE.output" relation="ssi_RELATION"/>
-  <entity class="ptolemy.actor.kiel.KielerCombine" name="sso_COMBINE"/>
-  <relation class="ptolemy.actor.TypedIORelation" name="sso918158682_region_2_COMBINERELATION">
-    <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-  </relation>
-  <link port="sso_COMBINE.input" relation="sso918158682_region_2_COMBINERELATION"/>
-  <link port="918158682_region_2.sso" relation="sso918158682_region_2_COMBINERELATION"/>
   <relation class="ptolemy.actor.TypedIORelation" name="I_RELATION">
     <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
     <vertex name="I_RELATIONVERTEX" value="{0.0, 0.0}"/>
@@ -728,6 +641,11 @@
     <property class="ptolemy.data.expr.Parameter" name="signal name" value="'I'"/>
   </entity>
   <link port="I_KIELERIO.signal" relation="I_RELATION"/>
+  <relation class="ptolemy.actor.TypedIORelation" name="O918158682_region_1_COMBINERELATION">
+    <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
+  </relation>
+  <link port="O_COMBINE.input" relation="O918158682_region_1_COMBINERELATION"/>
+  <link port="918158682_region_1.O" relation="O918158682_region_1_COMBINERELATION"/>
   <link port="918158682_region_1.Li" relation="Li_RELATION"/>
   <relation class="ptolemy.actor.TypedIORelation" name="Lo918158682_region_1_COMBINERELATION">
     <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
@@ -740,10 +658,4 @@
   </relation>
   <link port="L2o_COMBINE.input" relation="L2o918158682_region_1_COMBINERELATION"/>
   <link port="918158682_region_1.L2o" relation="L2o918158682_region_1_COMBINERELATION"/>
-  <link port="918158682_region_1.ssi" relation="ssi_RELATION"/>
-  <relation class="ptolemy.actor.TypedIORelation" name="sso918158682_region_1_COMBINERELATION">
-    <property class="ptolemy.data.expr.Parameter" name="width" value="-1"/>
-  </relation>
-  <link port="sso_COMBINE.input" relation="sso918158682_region_1_COMBINERELATION"/>
-  <link port="918158682_region_1.sso" relation="sso918158682_region_1_COMBINERELATION"/>
 </entity>
