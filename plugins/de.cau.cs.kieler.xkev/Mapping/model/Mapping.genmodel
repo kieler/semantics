@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/Mapping/src"
+    modelPluginID="Mapping" modelName="Mapping" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>Mapping.ecore</foreignModel>
+  <genPackages prefix="Mapping" disposableProviderFactory="true" ecorePackage="Mapping.ecore#/">
+    <genClasses ecoreClass="Mapping.ecore#//SVGFile">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//SVGFile/filename"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Mapping.ecore#//SVGFile/svgElement"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//SVGElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Mapping.ecore#//SVGElement/animation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//SVGElement/id"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//Animation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Animation/port"/>
+      <genOperations ecoreOperation="Mapping.ecore#//Animation/animate"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//Move">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Move/input"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Move/x_range"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Move/y_range"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Mapping.ecore#//Move/move"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//Colorize">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Colorize/input"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Colorize/color"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Colorize/style"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Mapping.ecore#//Colorize/colorize"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//Textbox">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Textbox/visible"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Textbox/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Textbox/border"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Textbox/border_style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Textbox/border_color"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Mapping.ecore#//Textbox/textbox"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
