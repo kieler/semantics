@@ -81,6 +81,12 @@
 			<arg line="-application org.eclipse.ant.core.antRunner" />
 			<arg line="-consoleLog" />
 			<arg line="-buildfile ${scriptdir}/build.xml ${targetP}" />
+			<arg value="-DbaseLocation=${baseLocation}" />
+				<!-- the folder containing the folder 'plugins/<eclipseRuntimePlugins>' -->
+			<arg value="-DbaseDeltaPackLocation=${baseDeltaPackLocation}" />
+				<!-- the folder containing the folder 'plugins/<DeltaPackPlugins>' -->
+			<arg value="-eclipseLocation=${eclipseLocation}" />
+				<!-- the folder containing the Eclipse antRunner -->
 			<arg value="-Dscriptdir=${scriptdir}" />
 				<!-- the folder containing build.xml, build.properties -->
 			<arg value="-Dbasedir=${build.basedir}" />
