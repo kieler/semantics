@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Codegen
-Bundle-SymbolicName: de.cau.cs.kieler.synccharts.codegen;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.synccharts.codegen.sc;singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.Activator
 Require-Bundle: org.eclipse.ui,
@@ -9,21 +9,24 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core.ui;bundle-version="0.1.0",
  org.antlr.runtime;bundle-version="3.0.0",
  org.eclipse.emf.ecore.xmi;bundle-version="2.5.0",
- org.eclipse.emf.mwe.core;bundle-version="0.7.0",
- org.eclipse.emf.mwe.utils;bundle-version="0.8.0",
- org.eclipse.xpand;bundle-version="0.7.0",
+ org.eclipse.emf.mwe.core;bundle-version="0.7.2",
+ org.eclipse.emf.mwe.utils;bundle-version="0.7.2",
+ org.eclipse.xpand;bundle-version="0.7.2",
  com.ibm.icu;bundle-version="4.0.1",
  org.eclipse.xtend;bundle-version="0.7.1",
  org.eclipse.xtend.typesystem.emf;bundle-version="0.7.1",
  org.apache.commons.codec;bundle-version="1.3.0",
  org.apache.commons.lang;bundle-version="2.3.0",
  de.cau.cs.kieler.synccharts;bundle-version="0.1.0",
- de.cau.cs.kieler.synccharts.model;bundle-version="1.0.0",
- org.apache.commons.logging;bundle-version="1.1.1"
+ de.cau.cs.kieler.synccharts.model;bundle-version="0.1.0",
+ de.cau.cs.kieler.synccharts.diagram;bundle-version="0.1.0",
+ org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: de.cau.cs.kieler.synccharts,
  de.cau.cs.kieler.synccharts.impl,
+ org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts,
+ org.eclipse.gmf.runtime.notation,
  org.eclipse.ui.part
 Bundle-Vendor: Christian-Albrechts-University of Kiel
 Bundle-ClassPath: .

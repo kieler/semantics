@@ -15,8 +15,11 @@
 «DEFINE init FOR Region-»
 #include "sc.h"
 
+extern void JSONstate(char*);
+
 	«EXPAND generateSigType FOR innerStates.signals-»
 	«EXPAND generateSigArray FOR innerStates.signals-»
+
 	«FOREACH innerStates.signals AS signal-»
 		«IF signal.isInput-»
 			«EXPAND generateInputSignals FOR signal»
@@ -24,8 +27,8 @@
 	«ENDFOREACH-»
 	«EXPAND generateCheckOutputs FOR innerStates.signals»
 	«EXPAND generateReset-»
-int tick(int isInit)
-{
+int tick(int isInit){
+
 			TICKSTART(isInit, «EXPAND computeMaxThread-»);
 «ENDDEFINE»
 
@@ -43,15 +46,13 @@ const char *s2signame[] = {«FOREACH this AS signal SEPARATOR ", "-»
 «ENDDEFINE»
 
 «DEFINE generateInputSignals FOR Signal-»
-void «this.parentState.label»_I_«this.name»()
-{
+void «this.parentState.label»_I_«this.name»(){
 	signals = signals | (1 << «this.name»);
 }
 «ENDDEFINE»
 
 «DEFINE generateCheckOutputs FOR List-»
-void callOutputs()
-{
+void callOutputs(){
 	«FOREACH this AS signal-»
 		«IF ((Signal)signal).isOutput-»
 	if(signals & (1 << «((Signal)signal).name-»)){
@@ -63,14 +64,13 @@ void callOutputs()
 «ENDDEFINE»
 
 «DEFINE generateReset FOR Region-»
-void reset()
-{
+void reset(){
 	signals = 0;
 }
 
 «ENDDEFINE»
 
-«DEFINE computeMaxThread FOR Region-»4«ENDDEFINE»
+«DEFINE computeMaxThread FOR Region-»1«ENDDEFINE»
 
 «DEFINE start FOR Region-»
 	«FOREACH innerStates.regions.innerStates AS anyState-»
@@ -79,8 +79,8 @@ void reset()
 «ENDDEFINE»
 
 «DEFINE state FOR State-»
-
 «this.id-»:
+	«EXPAND callJSONState-»
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
 		«IF ((Transition)outTrans).isImmediate-»
 			«EXPAND transition FOR (Transition)outTrans-»
@@ -88,6 +88,7 @@ void reset()
 	«ENDFOREACH-»
 	
 «this.id»_depth:
+	«EXPAND callJSONState-»
 			PAUSE;
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
 		«EXPAND transition FOR (Transition)outTrans-»
@@ -133,4 +134,8 @@ void reset()
 «DEFINE finish FOR Region»
 			TICKEND;
 }
+«ENDDEFINE»
+
+«DEFINE callJSONState FOR State-»
+			JSONstate("«getURI(this)»");
 «ENDDEFINE»

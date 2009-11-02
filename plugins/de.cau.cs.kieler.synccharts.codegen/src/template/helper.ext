@@ -14,6 +14,7 @@ String getChildrenSet(List stateList):
 	
 List sortTransitionPrios(State transitions):
 	transitions.outgoingTransitions.sortBy(e|e.priority);
+
 	
-List putIntoList(State state):
-	state;
+String getURI(State s):
+	JAVA de.cau.cs.kieler.synccharts.codegen.Activator.getUri(de.cau.cs.kieler.synccharts.State);

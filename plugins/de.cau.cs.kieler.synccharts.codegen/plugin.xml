@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            category="de.cau.cs.kieler"
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.synccharts.codegen.SCGenerator"
+            description="Generate SC-Code"
+            id="de.cau.cs.kieler.synccharts.codegen.genSC"
+            name="genSC">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.synccharts.codegen.genSC"
+               label="generate SC-Code"
+               mnemonic="generate SC-Code"
+               style="push"
+               tooltip="generate SC-Code for the current SyncChart">
+         </command>
+      </menuContribution>
+   </extension>
 
 </plugin>

@@ -3,6 +3,8 @@ package de.cau.cs.kieler.synccharts.codegen;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.synccharts.State;
+
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -45,6 +47,10 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static Activator getDefault() {
 		return plugin;
+	}
+	
+	public static String getUri(State s){
+		return s.eResource().getURIFragment(s).toString();
 	}
 
 }
