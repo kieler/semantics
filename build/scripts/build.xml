@@ -85,7 +85,7 @@
 				<!-- the folder containing the folder 'plugins/<eclipseRuntimePlugins>' -->
 			<arg value="-DbaseDeltaPackLocation=${baseDeltaPackLocation}" />
 				<!-- the folder containing the folder 'plugins/<DeltaPackPlugins>' -->
-			<arg value="-eclipseLocation=${eclipseLocation}" />
+			<arg value="-DeclipseLocation=${eclipseLocation}" />
 				<!-- the folder containing the Eclipse antRunner -->
 			<arg value="-Dscriptdir=${scriptdir}" />
 				<!-- the folder containing build.xml, build.properties -->
