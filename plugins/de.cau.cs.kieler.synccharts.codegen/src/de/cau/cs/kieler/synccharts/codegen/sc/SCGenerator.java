@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.synccharts.codegen;
+package de.cau.cs.kieler.synccharts.codegen.sc;
 
 import java.io.File;
 

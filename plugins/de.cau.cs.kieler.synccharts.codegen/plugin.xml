@@ -6,7 +6,7 @@
       <command
             category="de.cau.cs.kieler"
             categoryId="de.cau.cs.kieler"
-            defaultHandler="de.cau.cs.kieler.synccharts.codegen.SCGenerator"
+            defaultHandler="de.cau.cs.kieler.synccharts.codegen.sc.SCGenerator"
             description="Generate SC-Code"
             id="de.cau.cs.kieler.synccharts.codegen.genSC"
             name="genSC">

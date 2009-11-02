@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Codegen
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.codegen.sc;singleton:=true
 Bundle-Version: 0.0.1.qualifier
-Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.Activator
+Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.sc.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime;bundle-version="3.5.0",
  de.cau.cs.kieler.core.ui;bundle-version="0.1.0",

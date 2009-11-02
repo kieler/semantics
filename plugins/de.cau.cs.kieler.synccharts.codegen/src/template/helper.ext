@@ -17,4 +17,4 @@ List sortTransitionPrios(State transitions):
 
 	
 String getURI(State s):
-	JAVA de.cau.cs.kieler.synccharts.codegen.Activator.getUri(de.cau.cs.kieler.synccharts.State);
+	JAVA de.cau.cs.kieler.synccharts.codegen.sc.Activator.getUri(de.cau.cs.kieler.synccharts.State);
