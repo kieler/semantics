@@ -21,12 +21,12 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.render.editparts.RenderedDiagramRootEditPart;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * A handler used to zoom the diagram to fit.
  *
- * @author ???
+ * @author <a href="haf@informatik.uni-kiel.de">Hauke Fuhrmann</a>
  */
 public class ZoomToFitHandler extends AbstractHandler {
 
@@ -34,12 +34,11 @@ public class ZoomToFitHandler extends AbstractHandler {
      * {@inheritDoc}
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
-        IEditorPart editor = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+        IEditorPart editor = HandlerUtil.getActiveEditor(event);
         if (editor instanceof DiagramEditor) {
-            DiagramEditPart diagramEdit = ((DiagramEditor) editor)
+            DiagramEditPart diagramEditPart = ((DiagramEditor) editor)
                     .getDiagramEditPart();
-            ZoomManager zoomManager = ((RenderedDiagramRootEditPart) diagramEdit.getRoot())
+            ZoomManager zoomManager = ((RenderedDiagramRootEditPart) diagramEditPart.getRoot())
                     .getZoomManager();
             zoomManager.setZoomAsText(ZoomManager.FIT_ALL);
         }

@@ -192,7 +192,6 @@
          point="org.eclipse.ui.bindings">
       <key
             commandId="de.cau.cs.kieler.core.ui.command.zoom"
-            contextId="org.eclipse.gmf.runtime.diagram.ui.diagramContext"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+K Z">
       </key>
