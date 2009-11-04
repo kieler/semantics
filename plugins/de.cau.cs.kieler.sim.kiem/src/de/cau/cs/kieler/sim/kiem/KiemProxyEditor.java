@@ -1,5 +1,5 @@
-/*
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+/******************************************************************************
+ * KIELER - Kiel Integrated Environment for Layout for the Eclipse RCP
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- */
+ ******************************************************************************/
 
 package de.cau.cs.kieler.sim.kiem;
 
@@ -44,6 +44,9 @@ public class KiemProxyEditor extends MultiPageEditorPart
 
 	/** The editor input to later find this editor for closing it. */
 	private IEditorInput editorInput;
+	
+	/** The id of the view for KIEM. */
+	private final String KIEMVIEWID = "de.cau.cs.kieler.sim.kiem.view";
 	
 	//-------------------------------------------------------------------------
 	
@@ -83,7 +86,7 @@ public class KiemProxyEditor extends MultiPageEditorPart
          try{
         	 IWorkbenchWindow window = this.getSite().getWorkbenchWindow();
         	 IViewPart VP =  window.getActivePage()
-					.showView("de.cau.cs.kieler.sim.kiem.view");
+					.showView(KIEMVIEWID);
  			 VP.setFocus();
          }catch(Exception e){
         	 e.printStackTrace();
