@@ -13,16 +13,20 @@
  */
 package de.cau.cs.kieler.synccharts.dsl.kits.tests;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.xtext.resource.XtextResourceSet;
+import org.xml.sax.InputSource;
 
 import com.google.inject.Injector;
 
@@ -70,7 +74,7 @@ public class KitsRuntimeTest {
         Region r;
         r = myText.createEMFModel();
         myText.saveModel(r);
-        myText.loadModel();
+        //        myText.loadModel();
     }
 
     /**
@@ -146,20 +150,29 @@ public class KitsRuntimeTest {
     private void saveModel(Region regionToSave) {
         // Create a resource for this file.
         Resource resource = resourceSet.createResource(fileURI);
-        if (resource != null) {
-            System.out.println("> Resource created: "
-                    + resource.getURI().toFileString());
-        } else {
-            System.out.println("> Your resource is null");
-            return;
+        // if (resource != null) {
+        // System.out.println("> Resource created: "
+        // + resource.getURI().toFileString());
+        // } else {
+        // System.out.println("> Your resource is null");
+        // return;
+        // }
+        // save from input stream
+        String myString = "content of your very own string";
+        ByteArrayInputStream in = new ByteArrayInputStream(myString.getBytes());
+        InputSource is = new InputSource();
+        is.setByteStream(in);
+        try {
+            resource.load(in, null);
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
+        EcoreUtil.resolveAll(resource);
+
         // Add the model objects to the contents.
-        if (resource.getContents() != null) {
-            resource.getContents().add(regionToSave);
-        } else {
-            System.out.println("> Your resource is empty");
-            return;
-        }
+//        resource.getContents().add(regionToSave);
+
         // Save the contents of the resource to the file system.
         try {
             System.out.println("-----------------------------------");
