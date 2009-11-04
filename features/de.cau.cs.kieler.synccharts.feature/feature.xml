@@ -149,4 +149,11 @@ under the terms of the Eclipse Public License (EPL).
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="de.cau.cs.kieler.synccharts.sbase"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>
