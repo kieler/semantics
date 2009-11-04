@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:synccharts="http://kieler.cs.cau.de/synccharts">
-  <innerStates label="lbel"/>
+  <innerStates label="state"/>
 </synccharts:Region>

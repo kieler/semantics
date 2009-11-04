@@ -6,15 +6,17 @@ package de.cau.cs.kieler.synccharts.dsl;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.resource.IFragmentProvider;
-import org.eclipse.xtext.scoping.IScopeProvider;
 
 import de.cau.cs.kieler.synccharts.dsl.kits.resource.KitsFragmentProvider;
-import de.cau.cs.kieler.synccharts.dsl.scoping.MyDefaultScopeProvider;
 import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
 import de.cau.cs.kieler.synccharts.formatting.TransitionLabelTransientValueService;
 
 /**
- * @author oba Use this class to register components to be used within the IDE.
+ * This class is the injector created also to setup the standalone Kits
+ * application, to get the implementations injected. Use this class to register
+ * components to be used within the IDE.
+ * 
+ * @author oba
  */
 public class KitsRuntimeModule extends
         de.cau.cs.kieler.synccharts.dsl.AbstractKitsRuntimeModule {
@@ -31,9 +33,9 @@ public class KitsRuntimeModule extends
      * 
      * @return custom implementation of the Scope Provider
      */
-//    public Class<? extends IScopeProvider> bindIScopeProvider() {
-//        return MyDefaultScopeProvider.class;
-//    }
+    // public Class<? extends IScopeProvider> bindIScopeProvider() {
+    // return MyDefaultScopeProvider.class;
+    // }
 
     /*
      * (non-Javadoc)
@@ -42,10 +44,11 @@ public class KitsRuntimeModule extends
      * org.eclipse.xtext.service.DefaultRuntimeModule#bindITransientValueService
      * ()
      */
-//    @Override
-//    public Class<? extends ITransientValueService> bindITransientValueService() {
-//        return KitsTransientValueService.class;
-//    }
+    // @Override
+    // public Class<? extends ITransientValueService>
+    // bindITransientValueService() {
+    // return KitsTransientValueService.class;
+    // }
 
     @Override
     public Class<? extends ITransientValueService> bindITransientValueService() {

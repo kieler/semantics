@@ -9,6 +9,7 @@ import org.eclipse.xtext.service.DefaultRuntimeModule;
 
 import com.google.inject.Binder;
 import com.google.inject.name.Names;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 
 /**
  * Manual modifications go to {de.cau.cs.kieler.synccharts.dsl.KitsRuntimeModule}
@@ -23,7 +24,7 @@ public abstract class AbstractKitsRuntimeModule extends DefaultRuntimeModule {
 	}
 	
 	
-	// contributed by org.eclipse.xtext.generator.grammarAccess.EmptyPackageAwareGrammarAccessFragment
+	// contributed by org.eclipse.xtext.generator.grammarAccess.GrammarAccessFragment
 	public Class<? extends org.eclipse.xtext.IGrammarAccess> bindIGrammarAccess() {
 		return de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess.class;
 	}

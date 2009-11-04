@@ -12,26 +12,22 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
-import org.eclipse.emf.ecore.xmi.XMIResource;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
-import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.xtext.parser.IParseResult;
-import org.eclipse.xtext.parser.ParseResult;
-import org.eclipse.xtext.parsetree.AbstractNode;
+import org.eclipse.xtext.parser.antlr.IAntlrParser;
 import org.eclipse.xtext.parsetree.reconstr.SerializerUtil;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
-import com.google.inject.Injector;
-import org.eclipse.ui.PlatformUI;
 
+import com.google.inject.Injector;
+
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.dsl.KitsStandaloneSetup;
-import de.cau.cs.kieler.synccharts.dsl.parser.antlr.KitsParser;
 
 public class StandaloneKitsTest {
     private static Injector injector;
     private static SerializerUtil serializerUtil;
+    private static IAntlrParser parser;
 
     public static void main(String[] args) {
         // get xmi res
@@ -41,41 +37,39 @@ public class StandaloneKitsTest {
         // .getActiveEditor()).getEditingDomain();
         // Resource xmires = ((Resource) diagramEditor.getResourceSet()
         // .getResources().get(0));
+        StandaloneKitsTest myTest = new StandaloneKitsTest();
+        myTest.setupStandaloneSerializerAndParser();
 
-        // new stand alone Kits application
-        injector = new KitsStandaloneSetup()
-                .createInjectorAndDoEMFRegistration();
-        // new serializer
-        serializerUtil = injector.getInstance(SerializerUtil.class);
-        KitsParser parser = (KitsParser) injector.getInstance(KitsParser.class);
-        FileInputStream filein;
-        try {
-            filein = new FileInputStream(
-                    "/home/oba/Desktop/workspaces/KIELER/de.cau.cs.kieler.synccharts.dsl.kits/examplemodels/xmires.kixs");
-            IParseResult parseRes = parser.doParse(filein);
-            System.out
-                    .println("===============================================");
-            System.out.println("-----------PARSE COMPLETED -----------");
-            System.out.println(parseRes.getRootNode().getElement().toString());
+        // FileInputStream filein;
+        // try {
+        // filein = new FileInputStream(
+        // "/home/oba/Desktop/workspaces/KIELER/de.cau.cs.kieler.synccharts.dsl.kits/examplemodels/xmires.kixs");
+        // // IParseResult parseRes = parser.doParse(filein);
+        // System.out
+        // .println("===============================================");
+        // System.out.println("-----------PARSE COMPLETED -----------");
+        // // System.out.println(parseRes.toString() + "toString completed");
+        // //
+        // System.out.println(parseRes.getRootNode().getElement().toString());
+        //
+        // System.out
+        // .println("===============================================");
+        // // serializerUtil.serialize(parseRes.getRootNode());
+        // System.out
+        // .println("-----------SERIALIZATION COMPLETED -----------");
+        // System.out
+        // .println("===============================================");
+        // for (AbstractNode e : parseRes.getRootNode().getChildren()) {
+        // System.out.print(e.serialize());
+        //
+        // }
 
-            System.out
-                    .println("===============================================");
-            serializerUtil.serialize(parseRes.getRootNode());
-            System.out
-                    .println("-----------SERIALIZATION COMPLETED -----------");
-            System.out
-                    .println("===============================================");
-            // for (AbstractNode e : parseRes.getRootNode().getChildren()) {
-            // System.out.print(e.serialize());
-            //
-            // }
+        // return parsedObject;
 
-            // return parsedObject;
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        // } catch (FileNotFoundException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
 
     }
 
@@ -85,6 +79,39 @@ public class StandaloneKitsTest {
     // e.printStackTrace();
     // }
     // }
+    private void setupStandaloneSerializerAndParser() {
+        /**
+         * setup parser and serializer first.
+         * 
+         */
+        new org.eclipse.emf.mwe.utils.StandaloneSetup().setPlatformUri("../");
+        System.out.println("> platform uri registered...");
+        injector = new KitsStandaloneSetup()
+                .createInjectorAndDoEMFRegistration();
+        System.out.println("> injector created and EMF registered...");
+        // serializerUtil = injector.getInstance(SerializerUtil.class);
+        parser = injector.getInstance(IAntlrParser.class);
+        System.out.println("> got IAntlrParser instance...");
+        XtextResourceSet resourceSet = injector
+                .getInstance(XtextResourceSet.class);
+        System.out.println("> got XtextResource set...");
+        resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL,
+                Boolean.TRUE);
+        System.out.println("> load options added...");
+        // why do I need this?:
+        // Load the EPackage class by using EcoreUtils
+//        EcoreUtil2
+//                .getEPackageByClassName("de.cau.cs.kieler.synccharts.SyncchartsPackage");
+        Resource resource = resourceSet
+                .getResource(
+                        URI
+                                .createURI("platform:/resource/de.cau.cs.kieler.synccharts.dsl.kits/examplemodels/model.kits"),
+                        true);
+        System.out.println("> resource created from URI...");
+        Region model = (Region) resource.getContents().get(0);
+        System.out.println("> the model has " + model.getId()
+                + "as its root element--DONE --");
+    }
 
     private static EObject parseAndSerialize(String inputFileName)
             throws IOException {

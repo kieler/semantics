@@ -23,397 +23,19 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRegionKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cIdIDTerminalRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Assignment cVariablesAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
+		private final RuleCall cVariablesVariableParserRuleCall_2_0_0 = (RuleCall)cVariablesAssignment_2_0.eContents().get(0);
+		private final Assignment cSignalsAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final RuleCall cSignalsSignalParserRuleCall_2_1_0 = (RuleCall)cSignalsAssignment_2_1.eContents().get(0);
+		private final Assignment cInnerStatesAssignment_2_2 = (Assignment)cAlternatives_2.eContents().get(2);
+		private final RuleCall cInnerStatesStateParserRuleCall_2_2_0 = (RuleCall)cInnerStatesAssignment_2_2.eContents().get(0);
 		
 		//Region returns sync::Region:
-		//  "region"? id=ID?; 
-		//      
-		//	  
-		//	
-		////	(	//variables+=Variable
-		////	|	signals+=Signal
-		//	 //|
-		////		(innerStates+=State)?
-		////	)+
-		//
-		////State returns sync::State:
-		////{sync::State}
-		////	
-		////(	  ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' id=FullStateID
-		////  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
-		////  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) id=FullStateID
-		////  	| ((isInitial?='init')(isFinal?='final')) 'state' id=FullStateID
-		////  	| ((isInitial?='init')(isFinal?='final')) (type=StateType)
-		////  	| ((isInitial?='init')(isFinal?='final')) 'state'
-		////  	| ((isInitial?='init')(isFinal?='final')) id=FullStateID
-		////  	| ((isInitial?='init')(isFinal?='final'))
-		////  	
-		////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' id=FullStateID
-		////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state'
-		////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) id=FullStateID
-		////  	| ((isFinal?='final')(isInitial?='init')) 'state' id=FullStateID
-		////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType)
-		////  	| ((isFinal?='final')(isInitial?='init')) 'state'
-		////  	| ((isFinal?='final')(isInitial?='init')) id=FullStateID
-		////  	| ((isFinal?='final')(isInitial?='init'))
-		////  	
-		////  	| (isInitial?='init') (type=StateType) 'state' id=FullStateID
-		////  	| (isInitial?='init') (type=StateType) 'state'
-		////  	| (isInitial?='init') (type=StateType) id=FullStateID  
-		////  	| (isInitial?='init') 'state' id=FullStateID
-		////  	| (isInitial?='init') (type=StateType) 
-		////  	| (isInitial?='init') 'state'
-		////  	| (isInitial?='init') id=FullStateID
-		////  	| (isInitial?='init')
-		////  	
-		////  	| (isFinal?='final')  (type=StateType) 'state' id=FullStateID
-		////  	| (isFinal?='final')  (type=StateType) 'state' 
-		////  	| (isFinal?='final')  (type=StateType) id=FullStateID
-		////  	| (isFinal?='final')  'state' id=FullStateID
-		////  	| (isFinal?='final')  (type=StateType)
-		////  	| (isFinal?='final')  'state' id=FullStateID
-		////  	| (isFinal?='final')  id=FullStateID
-		////  	| (isFinal?='final')
-		////  	
-		////  	| (type=StateType) 'state' id=FullStateID
-		////  	| (type=StateType) 'state'
-		////  	| (type=StateType) id=FullStateID
-		////  	| (type=StateType)
-		////  	
-		////  	| 'state' id=FullStateID
-		////  	| 'state'
-		////  		
-		////  	| id=FullStateID
-		////  )
-		//////change the datatype of label (from FullStateID) to STRING 
-		//////to prevent wrong parsing in this case: 
-		//////init A
-		//////final B
-		//////A --> B;
-		////  (label=STRING)? //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
-		////  (bodyText=STRING)? 
-		//  
-		////   ('{' 
-		////	    (	 	('onentry' entryActions+=Action) 
-		////	  		| 	('oninner' innerActions+=Action) 
-		////	  		|   ('onexit' exitActions+= Action) 
-		////	  		| 	('suspension' suspensionTrigger=Action) // kein effect, kein delay, kein immediate
-		////	  		| 	(signals+=Signal) 
-		////	  		|   
-		////(regions+=Region ('||' regions+=Region)*)
-		//	  	 //)+
-		////   	'}')?
-		////   	(outgoingTransitions+=Transition)* 
-		////;
-		////Renaming returns sync::Renaming: oldID=STRING'/'newID=STRING;
-		////FullStateID : ((ID'@')?ID);
-		//	 //========================================================================================
-		//	 //===  									    ACTIONS  					               ===
-		//	 //========================================================================================
-		////Action returns sync::Action:
-		////	((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))
-		////| 
-		////	Transition
-		////	
-		////;
-		//
-		//	//========================================================================================
-		//	 //===  									    TRANSITION 					               ===
-		//	 //========================================================================================
-		//	
-		////Transition returns sync::Transition:
-		////
-		////	(sourceState=[sync::State|FullStateID])? 
-		////	//either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-		////	//|({sync::State} name=FullStateID)
-		////	type=TransitionType
-		////	(targetState=[sync::State|FullStateID])
-		////	//|newTargetState=TransitionState )
-		////	( 'with' (isImmediate?='#')? (delay=INT)?
-		////		     (trigger=BooleanExpression)?
-		////		     ("/" (effects+=Effect (',')?)* )?
-		////			 
-		////	)?
-		////	(isHistory?=' history')?
-		////	';'
-		////;
-		//////TransitionState returns sync::State:
-		//////{sync::State}
-		//////	(	  ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' id=FullStateID
-		//////  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
-		//////  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) id=FullStateID
-		//////  	| ((isInitial?='init')(isFinal?='final')) 'state' id=FullStateID
-		//////  	| ((isInitial?='init')(isFinal?='final')) (type=StateType)
-		//////  	| ((isInitial?='init')(isFinal?='final')) 'state'
-		//////  	| ((isInitial?='init')(isFinal?='final')) id=FullStateID
-		//////  	| ((isInitial?='init')(isFinal?='final'))
-		//////  	
-		//////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' id=FullStateID
-		//////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state'
-		//////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) id=FullStateID
-		//////  	| ((isFinal?='final')(isInitial?='init')) 'state' id=FullStateID
-		//////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType)
-		//////  	| ((isFinal?='final')(isInitial?='init')) 'state'
-		//////  	| ((isFinal?='final')(isInitial?='init')) id=FullStateID
-		//////  	| ((isFinal?='final')(isInitial?='init'))
-		//////  	
-		//////  	| (isInitial?='init') (type=StateType) 'state' id=FullStateID
-		//////  	| (isInitial?='init') (type=StateType) 'state'
-		//////  	| (isInitial?='init') (type=StateType) id=FullStateID  
-		//////  	| (isInitial?='init') 'state' id=FullStateID
-		//////  	| (isInitial?='init') (type=StateType) 
-		//////  	| (isInitial?='init') 'state'
-		//////  	| (isInitial?='init') id=FullStateID
-		//////  	| (isInitial?='init')
-		//////  	
-		//////  	| (isFinal?='final')  (type=StateType) 'state' id=FullStateID
-		//////  	| (isFinal?='final')  (type=StateType) 'state' 
-		//////  	| (isFinal?='final')  (type=StateType) id=FullStateID
-		//////  	| (isFinal?='final')  'state' id=FullStateID
-		//////  	| (isFinal?='final')  (type=StateType)
-		//////  	| (isFinal?='final')  'state' id=FullStateID
-		//////  	| (isFinal?='final')  id=FullStateID
-		//////  	| (isFinal?='final')
-		//////  	
-		//////  	| (type=StateType) 'state' id=FullStateID
-		//////  	| (type=StateType) 'state'
-		//////  	| (type=StateType) id=FullStateID
-		//////  	| (type=StateType)
-		//////  	
-		//////  	| 'state' id=FullStateID
-		//////  	| 'state'
-		//////  		
-		//////  	| id=FullStateID
-		//////  )
-		//////;
-		////	//========================================================================================
-		////	//===  									    VAR,SIG  					               ===
-		////	//========================================================================================
-		////
-		////ValuedObject returns sync::ValuedObject:
-		////	Signal | Variable
-		////;
-		////Variable returns sync::Variable:
-		////	'var' name=ID 
-		////	( 
-		////	  (': ' type=ValueType)//or type only, type being either pre-defined or hostcode
-		////	| (':=' initialValue=ID ': ' type=ValueType) // either initial value and type 
-		////	)  
-		////;
-		////Signal returns sync::Signal:
-		////		(	(isInput?='input')
-		////		|
-		////		 	(isOutput?='output')
-		////		|
-		////		 	((isInput?='input')(isOutput?='output')))
-		////	
-		////	// Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-		////	name=QualifiedName 
-		////	(':=' initialValue=SignalValue)? 
-		////	// after the initial value, either the type or the combine type has to come
-		////	// if it is not set, the default type PURE
-		////	( 
-		////		(': ' type=ValueType)
-		////	| 	(': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING))
-		////	)?
-		////;
-		////SignalValue returns ecore::EString :(INT | ID | Boolean)+;
-		////QualifiedName :(ID".")*ID;
-		////enum StateType	returns sync::StateType	: NORMAL | CONDITIONAL='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
-		////enum CombineOperator returns sync::CombineOperator: NONE | ADD='+' | MULT='*' | AND='AND'| OR='OR' |HOST='hostCombineOperator';
-		////enum ValueType returns sync::ValueType: PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='hostType';	
-		////enum TransitionType returns sync::TransitionType: WEAKABORT='-->' |  STRONGABORT='o->' | NORMALTERMINATION='>->'; 
-		//////==============================================================================
-		////// THE REST IS COPY/PASTE 'd from 
-		//////{@link de.cau.cs.kieler.synccharts..labelparser.ActionLabel.xtext}
-		//////==============================================================================
-		//////==============================================================================
-		////// Basic Actions
-		//////==============================================================================
-		////
-		////Action returns sync::Action:
-		////{sync::Action}
-		////    (isImmediate?='#')? (delay=INT)? ({sync::Action.triggersAndEffects+=current}(trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?)
-		////;        
-		////
-		////Effect returns sync::Effect: 
-		////    Emission | Assignment | HostCode;
-		////        
-		////Emission returns sync::Emission:
-		////    signal=[sync::Signal] 
-		////    (("(" newValue=ValueExpression ")")
-		////   |("(" newValue=BooleanExpression ")") )?;
-		////
-		////Assignment returns sync::Assignment:
-		////    variable=[sync::Variable] ":=" 
-		////     ( expression=ValueExpression
-		////     | expression=BooleanExpression);
-		////
-		////SignalReference returns sync::SignalReference:
-		////    signal = [sync::Signal|QualifiedName];
-		////
-		////VariableReference returns sync::VariableReference:
-		////    variable = [sync::Variable];
-		////
-		//////Signal returns sync::Signal:
-		//////    name=ID;
-		//////    
-		//////Variable returns sync::Variable:
-		//////    name=ID;
-		////
-		//////==============================================================================
-		////// Values
-		//////==============================================================================
-		////
-		////// redefine INT terminal to allow negative numbers
-		////terminal INT returns ecore::EInt:
-		//// '-'?('0'..'9')+;
-		////
-		////IntValue returns sync::IntValue: 
-		////    value=INT;
-		////FloatValue returns sync::FloatValue:
-		////    value=Float ; 
-		////BooleanValue returns sync::BooleanValue :
-		////    value=Boolean;
-		////Value returns sync::Value:
-		////    IntValue | FloatValue | BooleanValue;
-		////
-		////// make sure the Float rule does not shadow the INT rule
-		////terminal Float returns ecore::EFloatObject : ((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
-		////terminal Boolean returns ecore::EBooleanObject : "true" | "false";
-		////
-		//////==============================================================================
-		////// Arithmetic Expressions
-		//////==============================================================================
-		////
-		////// Example: ?A  
-		////ValOperation returns sync::ComplexExpression:
-		////    operator=ValOperator subExpressions+=SignalReference;
-		////
-		////// everything that evaluates to a primitive number value
-		////ValueExpression returns sync::Expression:
-		////    PlusOperation;
-		////
-		////// Example: 42, 42.2, ?A, var1, (1+2*3)
-		////ParanthesedValueExpression returns sync::Expression:
-		////    IntValue | FloatValue | ValOperation | VariableReference | HostCode | '('PlusOperation')' | '('DivOperation')';
-		////
-		////// Example: 1 + 2, varA - ?B
-		////PlusOperation returns sync::Expression:
-		////    MultOrDivOperation ({sync::ComplexExpression.subExpressions+=current} operator=PlusOperator subExpressions+=MultOrDivOperation)*;
-		////
-		////MultOrDivOperation returns sync::Expression:
-		////    MultOperation | '('DivOperation')';
-		////
-		////// Example: 2 * 4, varA mod ?B
-		////MultOperation returns sync::Expression:
-		////    PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=MultOperator subExpressions+=PreOrNormalValueExpression)*;
-		////
-		////// Example: (2 / 4)
-		////// note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
-		////DivOperation returns sync::Expression:
-		////    PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)*;
-		////
-		////// Example: pre (? A)
-		////PreArithmOperation returns sync::ComplexExpression:
-		////    operator=UnaryParanthesedOperator '('subExpressions+=ValOperation')';
-		////    
-		////PreOrNormalValueExpression returns sync::Expression:
-		////    PreArithmOperation | ParanthesedValueExpression;
-		////
-		//////==============================================================================
-		////// Boolean Expressions
-		//////==============================================================================
-		////
-		////// Example: 42 <= ?A
-		////CompareOperation returns sync::Expression:
-		////    ValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);     
-		////
-		////// Example: not A, not false, not (A or B)
-		////// at the latter we need the parans to indicate the right binding
-		////UnaryOperation returns sync::ComplexExpression:
-		////    operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression;
-		////
-		////UnaryParanthesedOperation returns sync::ComplexExpression:
-		////    operator=UnaryParanthesedOperator '('subExpressions+=BooleanExpression ')';
-		////
-		////// Example: either negated or normal expression (with parantheses) 
-		////UnaryOrNormalExpression returns sync::Expression:
-		////    UnaryOperation | UnaryParanthesedOperation | ParanthesedBooleanExpression;
-		////
-		////// Example: A and B, not C and 42 <= ?D
-		////AndOperation returns sync::Expression:
-		////    UnaryOrNormalExpression ({sync::ComplexExpression.subExpressions+=current} operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*;
-		////
-		////// Example: A or B, C and B or D and not E 
-		////OrOperation returns sync::Expression:
-		////    AndOperation ({sync::ComplexExpression.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
-		////
-		////// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
-		////// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
-		////ParanthesedBooleanExpression returns sync::Expression:
-		////    BooleanValue | CompareOperation | SignalReference | HostCode | '('OrOperation')' ;
-		////
-		////// Example: not D and C or ?E = 42 or not (A and (B or C))
-		////BooleanExpression returns sync::Expression:
-		////    OrOperation;
-		////
-		//////==============================================================================
-		////// Operators
-		//////==============================================================================
-		////    
-		////enum OperatorType returns sync::OperatorType:
-		////    EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";
-		////
-		////enum ValOperator returns sync::OperatorType:
-		////    VAL="?";
-		////
-		////enum CompareOperator returns sync::OperatorType:
-		////    EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
-		////
-		////// not A    
-		////enum UnaryOperator returns sync::OperatorType:
-		////    NOT="not";
-		////
-		////// pre(A)
-		////enum UnaryParanthesedOperator returns sync::OperatorType:
-		////    PRE="pre";
-		////
-		////enum OperatorOr returns sync::OperatorType:
-		////    OR="or";
-		////
-		////enum OperatorAnd returns sync::OperatorType:
-		////    AND="and";
-		////
-		////enum OperatorPre returns sync::OperatorType:
-		////    PRE="pre";
-		////
-		////enum PlusOperator returns sync::OperatorType:
-		////    ADD="+" | SUB="-";
-		////    
-		////enum MultOperator returns sync::OperatorType: 
-		////    MULT="*" | MOD="mod";
-		////
-		////enum DivOperator returns sync::OperatorType:  
-		////    DIV="/";
-		//
-		//
-		////==============================================================================
-		//// Misc
-		//////==============================================================================
-		////    
-		////HostCode returns sync::HostCode:
-		////    //"'"code=STRING"'";
-		////    code=STRING ("(" type=ID ")")?;
+		//  "region"? id=ID? (variables+=Variable|signals+=Signal|innerStates+=State?)+;
 		public ParserRule getRule() { return rule; }
 
-		//"region"? id=ID? 
-		//	  
-		//	
-		////	(	//variables+=Variable
-		////	|	signals+=Signal
-		//	 //|
-		////		(innerStates+=State)?
-		////	)+
+		//"region"? id=ID? (variables+=Variable|signals+=Signal|innerStates+=State?)+
 		public Group getGroup() { return cGroup; }
 
 		//"region"?
@@ -424,10 +46,4767 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ID
 		public RuleCall getIdIDTerminalRuleCall_1_0() { return cIdIDTerminalRuleCall_1_0; }
+
+		//(variables+=Variable|signals+=Signal|innerStates+=State?)+
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+
+		//variables+=Variable
+		public Assignment getVariablesAssignment_2_0() { return cVariablesAssignment_2_0; }
+
+		//Variable
+		public RuleCall getVariablesVariableParserRuleCall_2_0_0() { return cVariablesVariableParserRuleCall_2_0_0; }
+
+		//signals+=Signal
+		public Assignment getSignalsAssignment_2_1() { return cSignalsAssignment_2_1; }
+
+		//Signal
+		public RuleCall getSignalsSignalParserRuleCall_2_1_0() { return cSignalsSignalParserRuleCall_2_1_0; }
+
+		//innerStates+=State?
+		public Assignment getInnerStatesAssignment_2_2() { return cInnerStatesAssignment_2_2; }
+
+		//State
+		public RuleCall getInnerStatesStateParserRuleCall_2_2_0() { return cInnerStatesStateParserRuleCall_2_2_0; }
+	}
+
+	public class StateElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "State");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cStateAction_0 = (Action)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Group cGroup_1_0_0 = (Group)cGroup_1_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_0_0_0 = (Assignment)cGroup_1_0_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_0_0_0_0 = (Keyword)cIsInitialAssignment_1_0_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_0_0_1 = (Assignment)cGroup_1_0_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_0_0_1_0 = (Keyword)cIsFinalAssignment_1_0_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_0_1_0 = (RuleCall)cTypeAssignment_1_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_0_2 = (Keyword)cGroup_1_0.eContents().get(2);
+		private final Assignment cIdAssignment_1_0_3 = (Assignment)cGroup_1_0.eContents().get(3);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_0_3_0 = (RuleCall)cIdAssignment_1_0_3.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Group cGroup_1_1_0 = (Group)cGroup_1_1.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_1_0_0 = (Assignment)cGroup_1_1_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_1_0_0_0 = (Keyword)cIsInitialAssignment_1_1_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_1_0_1 = (Assignment)cGroup_1_1_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_1_0_1_0 = (Keyword)cIsFinalAssignment_1_1_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_1_1_0 = (RuleCall)cTypeAssignment_1_1_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_1_2 = (Keyword)cGroup_1_1.eContents().get(2);
+		private final Group cGroup_1_2 = (Group)cAlternatives_1.eContents().get(2);
+		private final Group cGroup_1_2_0 = (Group)cGroup_1_2.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_2_0_0 = (Assignment)cGroup_1_2_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_2_0_0_0 = (Keyword)cIsInitialAssignment_1_2_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_2_0_1 = (Assignment)cGroup_1_2_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_2_0_1_0 = (Keyword)cIsFinalAssignment_1_2_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_2_1_0 = (RuleCall)cTypeAssignment_1_2_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_2_2 = (Assignment)cGroup_1_2.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_2_2_0 = (RuleCall)cIdAssignment_1_2_2.eContents().get(0);
+		private final Group cGroup_1_3 = (Group)cAlternatives_1.eContents().get(3);
+		private final Group cGroup_1_3_0 = (Group)cGroup_1_3.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_3_0_0 = (Assignment)cGroup_1_3_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_3_0_0_0 = (Keyword)cIsInitialAssignment_1_3_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_3_0_1 = (Assignment)cGroup_1_3_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_3_0_1_0 = (Keyword)cIsFinalAssignment_1_3_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_3_1 = (Keyword)cGroup_1_3.eContents().get(1);
+		private final Assignment cIdAssignment_1_3_2 = (Assignment)cGroup_1_3.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_3_2_0 = (RuleCall)cIdAssignment_1_3_2.eContents().get(0);
+		private final Group cGroup_1_4 = (Group)cAlternatives_1.eContents().get(4);
+		private final Group cGroup_1_4_0 = (Group)cGroup_1_4.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_4_0_0 = (Assignment)cGroup_1_4_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_4_0_0_0 = (Keyword)cIsInitialAssignment_1_4_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_4_0_1 = (Assignment)cGroup_1_4_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_4_0_1_0 = (Keyword)cIsFinalAssignment_1_4_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_4_1 = (Assignment)cGroup_1_4.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_4_1_0 = (RuleCall)cTypeAssignment_1_4_1.eContents().get(0);
+		private final Group cGroup_1_5 = (Group)cAlternatives_1.eContents().get(5);
+		private final Group cGroup_1_5_0 = (Group)cGroup_1_5.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_5_0_0 = (Assignment)cGroup_1_5_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_5_0_0_0 = (Keyword)cIsInitialAssignment_1_5_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_5_0_1 = (Assignment)cGroup_1_5_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_5_0_1_0 = (Keyword)cIsFinalAssignment_1_5_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_5_1 = (Keyword)cGroup_1_5.eContents().get(1);
+		private final Group cGroup_1_6 = (Group)cAlternatives_1.eContents().get(6);
+		private final Group cGroup_1_6_0 = (Group)cGroup_1_6.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_6_0_0 = (Assignment)cGroup_1_6_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_6_0_0_0 = (Keyword)cIsInitialAssignment_1_6_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_6_0_1 = (Assignment)cGroup_1_6_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_6_0_1_0 = (Keyword)cIsFinalAssignment_1_6_0_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_6_1 = (Assignment)cGroup_1_6.eContents().get(1);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_6_1_0 = (RuleCall)cIdAssignment_1_6_1.eContents().get(0);
+		private final Group cGroup_1_7 = (Group)cAlternatives_1.eContents().get(7);
+		private final Assignment cIsInitialAssignment_1_7_0 = (Assignment)cGroup_1_7.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_7_0_0 = (Keyword)cIsInitialAssignment_1_7_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_7_1 = (Assignment)cGroup_1_7.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_7_1_0 = (Keyword)cIsFinalAssignment_1_7_1.eContents().get(0);
+		private final Group cGroup_1_8 = (Group)cAlternatives_1.eContents().get(8);
+		private final Group cGroup_1_8_0 = (Group)cGroup_1_8.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_8_0_0 = (Assignment)cGroup_1_8_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_8_0_0_0 = (Keyword)cIsFinalAssignment_1_8_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_8_0_1 = (Assignment)cGroup_1_8_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_8_0_1_0 = (Keyword)cIsInitialAssignment_1_8_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_8_1 = (Assignment)cGroup_1_8.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_8_1_0 = (RuleCall)cTypeAssignment_1_8_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_8_2 = (Keyword)cGroup_1_8.eContents().get(2);
+		private final Assignment cIdAssignment_1_8_3 = (Assignment)cGroup_1_8.eContents().get(3);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_8_3_0 = (RuleCall)cIdAssignment_1_8_3.eContents().get(0);
+		private final Group cGroup_1_9 = (Group)cAlternatives_1.eContents().get(9);
+		private final Group cGroup_1_9_0 = (Group)cGroup_1_9.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_9_0_0 = (Assignment)cGroup_1_9_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_9_0_0_0 = (Keyword)cIsFinalAssignment_1_9_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_9_0_1 = (Assignment)cGroup_1_9_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_9_0_1_0 = (Keyword)cIsInitialAssignment_1_9_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_9_1 = (Assignment)cGroup_1_9.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_9_1_0 = (RuleCall)cTypeAssignment_1_9_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_9_2 = (Keyword)cGroup_1_9.eContents().get(2);
+		private final Group cGroup_1_10 = (Group)cAlternatives_1.eContents().get(10);
+		private final Group cGroup_1_10_0 = (Group)cGroup_1_10.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_10_0_0 = (Assignment)cGroup_1_10_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_10_0_0_0 = (Keyword)cIsFinalAssignment_1_10_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_10_0_1 = (Assignment)cGroup_1_10_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_10_0_1_0 = (Keyword)cIsInitialAssignment_1_10_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_10_1 = (Assignment)cGroup_1_10.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_10_1_0 = (RuleCall)cTypeAssignment_1_10_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_10_2 = (Assignment)cGroup_1_10.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_10_2_0 = (RuleCall)cIdAssignment_1_10_2.eContents().get(0);
+		private final Group cGroup_1_11 = (Group)cAlternatives_1.eContents().get(11);
+		private final Group cGroup_1_11_0 = (Group)cGroup_1_11.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_11_0_0 = (Assignment)cGroup_1_11_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_11_0_0_0 = (Keyword)cIsFinalAssignment_1_11_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_11_0_1 = (Assignment)cGroup_1_11_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_11_0_1_0 = (Keyword)cIsInitialAssignment_1_11_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_11_1 = (Keyword)cGroup_1_11.eContents().get(1);
+		private final Assignment cIdAssignment_1_11_2 = (Assignment)cGroup_1_11.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_11_2_0 = (RuleCall)cIdAssignment_1_11_2.eContents().get(0);
+		private final Group cGroup_1_12 = (Group)cAlternatives_1.eContents().get(12);
+		private final Group cGroup_1_12_0 = (Group)cGroup_1_12.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_12_0_0 = (Assignment)cGroup_1_12_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_12_0_0_0 = (Keyword)cIsFinalAssignment_1_12_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_12_0_1 = (Assignment)cGroup_1_12_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_12_0_1_0 = (Keyword)cIsInitialAssignment_1_12_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_12_1 = (Assignment)cGroup_1_12.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_12_1_0 = (RuleCall)cTypeAssignment_1_12_1.eContents().get(0);
+		private final Group cGroup_1_13 = (Group)cAlternatives_1.eContents().get(13);
+		private final Group cGroup_1_13_0 = (Group)cGroup_1_13.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_13_0_0 = (Assignment)cGroup_1_13_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_13_0_0_0 = (Keyword)cIsFinalAssignment_1_13_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_13_0_1 = (Assignment)cGroup_1_13_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_13_0_1_0 = (Keyword)cIsInitialAssignment_1_13_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_13_1 = (Keyword)cGroup_1_13.eContents().get(1);
+		private final Group cGroup_1_14 = (Group)cAlternatives_1.eContents().get(14);
+		private final Group cGroup_1_14_0 = (Group)cGroup_1_14.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_14_0_0 = (Assignment)cGroup_1_14_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_14_0_0_0 = (Keyword)cIsFinalAssignment_1_14_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_14_0_1 = (Assignment)cGroup_1_14_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_14_0_1_0 = (Keyword)cIsInitialAssignment_1_14_0_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_14_1 = (Assignment)cGroup_1_14.eContents().get(1);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_14_1_0 = (RuleCall)cIdAssignment_1_14_1.eContents().get(0);
+		private final Group cGroup_1_15 = (Group)cAlternatives_1.eContents().get(15);
+		private final Assignment cIsFinalAssignment_1_15_0 = (Assignment)cGroup_1_15.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_15_0_0 = (Keyword)cIsFinalAssignment_1_15_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_15_1 = (Assignment)cGroup_1_15.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_15_1_0 = (Keyword)cIsInitialAssignment_1_15_1.eContents().get(0);
+		private final Group cGroup_1_16 = (Group)cAlternatives_1.eContents().get(16);
+		private final Assignment cIsInitialAssignment_1_16_0 = (Assignment)cGroup_1_16.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_16_0_0 = (Keyword)cIsInitialAssignment_1_16_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_16_1 = (Assignment)cGroup_1_16.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_16_1_0 = (RuleCall)cTypeAssignment_1_16_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_16_2 = (Keyword)cGroup_1_16.eContents().get(2);
+		private final Assignment cIdAssignment_1_16_3 = (Assignment)cGroup_1_16.eContents().get(3);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_16_3_0 = (RuleCall)cIdAssignment_1_16_3.eContents().get(0);
+		private final Group cGroup_1_17 = (Group)cAlternatives_1.eContents().get(17);
+		private final Assignment cIsInitialAssignment_1_17_0 = (Assignment)cGroup_1_17.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_17_0_0 = (Keyword)cIsInitialAssignment_1_17_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_17_1 = (Assignment)cGroup_1_17.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_17_1_0 = (RuleCall)cTypeAssignment_1_17_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_17_2 = (Keyword)cGroup_1_17.eContents().get(2);
+		private final Group cGroup_1_18 = (Group)cAlternatives_1.eContents().get(18);
+		private final Assignment cIsInitialAssignment_1_18_0 = (Assignment)cGroup_1_18.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_18_0_0 = (Keyword)cIsInitialAssignment_1_18_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_18_1 = (Assignment)cGroup_1_18.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_18_1_0 = (RuleCall)cTypeAssignment_1_18_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_18_2 = (Assignment)cGroup_1_18.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_18_2_0 = (RuleCall)cIdAssignment_1_18_2.eContents().get(0);
+		private final Group cGroup_1_19 = (Group)cAlternatives_1.eContents().get(19);
+		private final Assignment cIsInitialAssignment_1_19_0 = (Assignment)cGroup_1_19.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_19_0_0 = (Keyword)cIsInitialAssignment_1_19_0.eContents().get(0);
+		private final Keyword cStateKeyword_1_19_1 = (Keyword)cGroup_1_19.eContents().get(1);
+		private final Assignment cIdAssignment_1_19_2 = (Assignment)cGroup_1_19.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_19_2_0 = (RuleCall)cIdAssignment_1_19_2.eContents().get(0);
+		private final Group cGroup_1_20 = (Group)cAlternatives_1.eContents().get(20);
+		private final Assignment cIsInitialAssignment_1_20_0 = (Assignment)cGroup_1_20.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_20_0_0 = (Keyword)cIsInitialAssignment_1_20_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_20_1 = (Assignment)cGroup_1_20.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_20_1_0 = (RuleCall)cTypeAssignment_1_20_1.eContents().get(0);
+		private final Group cGroup_1_21 = (Group)cAlternatives_1.eContents().get(21);
+		private final Assignment cIsInitialAssignment_1_21_0 = (Assignment)cGroup_1_21.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_21_0_0 = (Keyword)cIsInitialAssignment_1_21_0.eContents().get(0);
+		private final Keyword cStateKeyword_1_21_1 = (Keyword)cGroup_1_21.eContents().get(1);
+		private final Group cGroup_1_22 = (Group)cAlternatives_1.eContents().get(22);
+		private final Assignment cIsInitialAssignment_1_22_0 = (Assignment)cGroup_1_22.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_22_0_0 = (Keyword)cIsInitialAssignment_1_22_0.eContents().get(0);
+		private final Assignment cIdAssignment_1_22_1 = (Assignment)cGroup_1_22.eContents().get(1);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_22_1_0 = (RuleCall)cIdAssignment_1_22_1.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_23 = (Assignment)cAlternatives_1.eContents().get(23);
+		private final Keyword cIsInitialInitKeyword_1_23_0 = (Keyword)cIsInitialAssignment_1_23.eContents().get(0);
+		private final Group cGroup_1_24 = (Group)cAlternatives_1.eContents().get(24);
+		private final Assignment cIsFinalAssignment_1_24_0 = (Assignment)cGroup_1_24.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_24_0_0 = (Keyword)cIsFinalAssignment_1_24_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_24_1 = (Assignment)cGroup_1_24.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_24_1_0 = (RuleCall)cTypeAssignment_1_24_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_24_2 = (Keyword)cGroup_1_24.eContents().get(2);
+		private final Assignment cIdAssignment_1_24_3 = (Assignment)cGroup_1_24.eContents().get(3);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_24_3_0 = (RuleCall)cIdAssignment_1_24_3.eContents().get(0);
+		private final Group cGroup_1_25 = (Group)cAlternatives_1.eContents().get(25);
+		private final Assignment cIsFinalAssignment_1_25_0 = (Assignment)cGroup_1_25.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_25_0_0 = (Keyword)cIsFinalAssignment_1_25_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_25_1 = (Assignment)cGroup_1_25.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_25_1_0 = (RuleCall)cTypeAssignment_1_25_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_25_2 = (Keyword)cGroup_1_25.eContents().get(2);
+		private final Group cGroup_1_26 = (Group)cAlternatives_1.eContents().get(26);
+		private final Assignment cIsFinalAssignment_1_26_0 = (Assignment)cGroup_1_26.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_26_0_0 = (Keyword)cIsFinalAssignment_1_26_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_26_1 = (Assignment)cGroup_1_26.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_26_1_0 = (RuleCall)cTypeAssignment_1_26_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_26_2 = (Assignment)cGroup_1_26.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_26_2_0 = (RuleCall)cIdAssignment_1_26_2.eContents().get(0);
+		private final Group cGroup_1_27 = (Group)cAlternatives_1.eContents().get(27);
+		private final Assignment cIsFinalAssignment_1_27_0 = (Assignment)cGroup_1_27.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_27_0_0 = (Keyword)cIsFinalAssignment_1_27_0.eContents().get(0);
+		private final Keyword cStateKeyword_1_27_1 = (Keyword)cGroup_1_27.eContents().get(1);
+		private final Assignment cIdAssignment_1_27_2 = (Assignment)cGroup_1_27.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_27_2_0 = (RuleCall)cIdAssignment_1_27_2.eContents().get(0);
+		private final Group cGroup_1_28 = (Group)cAlternatives_1.eContents().get(28);
+		private final Assignment cIsFinalAssignment_1_28_0 = (Assignment)cGroup_1_28.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_28_0_0 = (Keyword)cIsFinalAssignment_1_28_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_28_1 = (Assignment)cGroup_1_28.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_28_1_0 = (RuleCall)cTypeAssignment_1_28_1.eContents().get(0);
+		private final Group cGroup_1_29 = (Group)cAlternatives_1.eContents().get(29);
+		private final Assignment cIsFinalAssignment_1_29_0 = (Assignment)cGroup_1_29.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_29_0_0 = (Keyword)cIsFinalAssignment_1_29_0.eContents().get(0);
+		private final Keyword cStateKeyword_1_29_1 = (Keyword)cGroup_1_29.eContents().get(1);
+		private final Assignment cIdAssignment_1_29_2 = (Assignment)cGroup_1_29.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_29_2_0 = (RuleCall)cIdAssignment_1_29_2.eContents().get(0);
+		private final Group cGroup_1_30 = (Group)cAlternatives_1.eContents().get(30);
+		private final Assignment cIsFinalAssignment_1_30_0 = (Assignment)cGroup_1_30.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_30_0_0 = (Keyword)cIsFinalAssignment_1_30_0.eContents().get(0);
+		private final Assignment cIdAssignment_1_30_1 = (Assignment)cGroup_1_30.eContents().get(1);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_30_1_0 = (RuleCall)cIdAssignment_1_30_1.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_31 = (Assignment)cAlternatives_1.eContents().get(31);
+		private final Keyword cIsFinalFinalKeyword_1_31_0 = (Keyword)cIsFinalAssignment_1_31.eContents().get(0);
+		private final Group cGroup_1_32 = (Group)cAlternatives_1.eContents().get(32);
+		private final Assignment cTypeAssignment_1_32_0 = (Assignment)cGroup_1_32.eContents().get(0);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_32_0_0 = (RuleCall)cTypeAssignment_1_32_0.eContents().get(0);
+		private final Keyword cStateKeyword_1_32_1 = (Keyword)cGroup_1_32.eContents().get(1);
+		private final Assignment cIdAssignment_1_32_2 = (Assignment)cGroup_1_32.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_32_2_0 = (RuleCall)cIdAssignment_1_32_2.eContents().get(0);
+		private final Group cGroup_1_33 = (Group)cAlternatives_1.eContents().get(33);
+		private final Assignment cTypeAssignment_1_33_0 = (Assignment)cGroup_1_33.eContents().get(0);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_33_0_0 = (RuleCall)cTypeAssignment_1_33_0.eContents().get(0);
+		private final Keyword cStateKeyword_1_33_1 = (Keyword)cGroup_1_33.eContents().get(1);
+		private final Group cGroup_1_34 = (Group)cAlternatives_1.eContents().get(34);
+		private final Assignment cTypeAssignment_1_34_0 = (Assignment)cGroup_1_34.eContents().get(0);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_34_0_0 = (RuleCall)cTypeAssignment_1_34_0.eContents().get(0);
+		private final Assignment cIdAssignment_1_34_1 = (Assignment)cGroup_1_34.eContents().get(1);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_34_1_0 = (RuleCall)cIdAssignment_1_34_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_35 = (Assignment)cAlternatives_1.eContents().get(35);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_35_0 = (RuleCall)cTypeAssignment_1_35.eContents().get(0);
+		private final Group cGroup_1_36 = (Group)cAlternatives_1.eContents().get(36);
+		private final Keyword cStateKeyword_1_36_0 = (Keyword)cGroup_1_36.eContents().get(0);
+		private final Assignment cIdAssignment_1_36_1 = (Assignment)cGroup_1_36.eContents().get(1);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_36_1_0 = (RuleCall)cIdAssignment_1_36_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_37 = (Keyword)cAlternatives_1.eContents().get(37);
+		private final Assignment cIdAssignment_1_38 = (Assignment)cAlternatives_1.eContents().get(38);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_38_0 = (RuleCall)cIdAssignment_1_38.eContents().get(0);
+		private final Assignment cLabelAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_2_0 = (RuleCall)cLabelAssignment_2.eContents().get(0);
+		private final Assignment cBodyTextAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cBodyTextSTRINGTerminalRuleCall_3_0 = (RuleCall)cBodyTextAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cLeftCurlyBracketKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Alternatives cAlternatives_4_1 = (Alternatives)cGroup_4.eContents().get(1);
+		private final Group cGroup_4_1_0 = (Group)cAlternatives_4_1.eContents().get(0);
+		private final Keyword cOnentryKeyword_4_1_0_0 = (Keyword)cGroup_4_1_0.eContents().get(0);
+		private final Assignment cEntryActionsAssignment_4_1_0_1 = (Assignment)cGroup_4_1_0.eContents().get(1);
+		private final RuleCall cEntryActionsActionParserRuleCall_4_1_0_1_0 = (RuleCall)cEntryActionsAssignment_4_1_0_1.eContents().get(0);
+		private final Group cGroup_4_1_1 = (Group)cAlternatives_4_1.eContents().get(1);
+		private final Keyword cOninnerKeyword_4_1_1_0 = (Keyword)cGroup_4_1_1.eContents().get(0);
+		private final Assignment cInnerActionsAssignment_4_1_1_1 = (Assignment)cGroup_4_1_1.eContents().get(1);
+		private final RuleCall cInnerActionsActionParserRuleCall_4_1_1_1_0 = (RuleCall)cInnerActionsAssignment_4_1_1_1.eContents().get(0);
+		private final Group cGroup_4_1_2 = (Group)cAlternatives_4_1.eContents().get(2);
+		private final Keyword cOnexitKeyword_4_1_2_0 = (Keyword)cGroup_4_1_2.eContents().get(0);
+		private final Assignment cExitActionsAssignment_4_1_2_1 = (Assignment)cGroup_4_1_2.eContents().get(1);
+		private final RuleCall cExitActionsActionParserRuleCall_4_1_2_1_0 = (RuleCall)cExitActionsAssignment_4_1_2_1.eContents().get(0);
+		private final Group cGroup_4_1_3 = (Group)cAlternatives_4_1.eContents().get(3);
+		private final Keyword cSuspensionKeyword_4_1_3_0 = (Keyword)cGroup_4_1_3.eContents().get(0);
+		private final Assignment cSuspensionTriggerAssignment_4_1_3_1 = (Assignment)cGroup_4_1_3.eContents().get(1);
+		private final RuleCall cSuspensionTriggerActionParserRuleCall_4_1_3_1_0 = (RuleCall)cSuspensionTriggerAssignment_4_1_3_1.eContents().get(0);
+		private final Assignment cSignalsAssignment_4_1_4 = (Assignment)cAlternatives_4_1.eContents().get(4);
+		private final RuleCall cSignalsSignalParserRuleCall_4_1_4_0 = (RuleCall)cSignalsAssignment_4_1_4.eContents().get(0);
+		private final Group cGroup_4_1_5 = (Group)cAlternatives_4_1.eContents().get(5);
+		private final Assignment cRegionsAssignment_4_1_5_0 = (Assignment)cGroup_4_1_5.eContents().get(0);
+		private final RuleCall cRegionsRegionParserRuleCall_4_1_5_0_0 = (RuleCall)cRegionsAssignment_4_1_5_0.eContents().get(0);
+		private final Group cGroup_4_1_5_1 = (Group)cGroup_4_1_5.eContents().get(1);
+		private final Keyword cVerticalLineVerticalLineKeyword_4_1_5_1_0 = (Keyword)cGroup_4_1_5_1.eContents().get(0);
+		private final Assignment cRegionsAssignment_4_1_5_1_1 = (Assignment)cGroup_4_1_5_1.eContents().get(1);
+		private final RuleCall cRegionsRegionParserRuleCall_4_1_5_1_1_0 = (RuleCall)cRegionsAssignment_4_1_5_1_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
+		private final Assignment cOutgoingTransitionsAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_5_0 = (RuleCall)cOutgoingTransitionsAssignment_5.eContents().get(0);
+		
+		//State returns sync::State:
+		//  {sync::State} ((isInitial?="init" isFinal?="final") type=StateType "state" id=
+		//  FullStateID|(isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial
+		//  ?="init" isFinal?="final") type=StateType id=FullStateID|(isInitial?="init" isFinal
+		//  ?="final") "state" id=FullStateID|(isInitial?="init" isFinal?="final") type=
+		//  StateType|(isInitial?="init" isFinal?="final") "state"|(isInitial?="init" isFinal?=
+		//  "final") id=FullStateID|isInitial?="init" isFinal?="final"|(isFinal?="final"
+		//  isInitial?="init") type=StateType "state" id=FullStateID|(isFinal?="final" isInitial
+		//  ?="init") type=StateType "state"|(isFinal?="final" isInitial?="init") type=StateType
+		//  id=FullStateID|(isFinal?="final" isInitial?="init") "state" id=FullStateID|(isFinal
+		//  ?="final" isInitial?="init") type=StateType|(isFinal?="final" isInitial?="init")
+		//  "state"|(isFinal?="final" isInitial?="init") id=FullStateID|isFinal?="final"
+		//  isInitial?="init"|isInitial?="init" type=StateType "state" id=FullStateID|isInitial
+		//  ?="init" type=StateType "state"|isInitial?="init" type=StateType id=FullStateID|
+		//  isInitial?="init" "state" id=FullStateID|isInitial?="init" type=StateType|isInitial
+		//  ?="init" "state"|isInitial?="init" id=FullStateID|isInitial?="init"|isFinal?=
+		//  "final" type=StateType "state" id=FullStateID|isFinal?="final" type=StateType "state"
+		//  |isFinal?="final" type=StateType id=FullStateID|isFinal?="final" "state" id=
+		//  FullStateID|isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID
+		//  |isFinal?="final" id=FullStateID|isFinal?="final"|type=StateType "state" id=
+		//  FullStateID|type=StateType "state"|type=StateType id=FullStateID|type=StateType|
+		//  "state" id=FullStateID|"state"|id=FullStateID) label=STRING? bodyText=STRING? ("{" (
+		//  "onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions
+		//  +=Action|"suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region (
+		//  "||" regions+=Region)*)+ "}")? outgoingTransitions+=Transition*; 
+		//
+		//    
+		//   
+		//          
+		//        
+		//        
+		//        
+		//      
+		//          
+		//    
+		//          
+		//        
+		//        
+		//        
+		//      
+		//      
+		//      
+		//    
+		//        
+		//      
+		//      
+		//      
+		//    
+		//    
+		//    
+		//  
+		//        
+		//      
+		//      
+		//      
+		//    
+		//      
+		//    
+		//  
+		//      
+		//    
+		//    
+		//  
+		//    
+		//  
+		//   
+		//  //change the datatype of label (from FullStateID) to STRING 
+		//   //to prevent wrong parsing in this case: 
+		//   //init A
+		//   //final B
+		//   //A --> B;
+		//     //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
+		//    
+		//   
+		//     
+		//     
+		//     
+		//     // kein effect, kein delay, kein immediate
+		public ParserRule getRule() { return rule; }
+
+		//{sync::State} ((isInitial?="init" isFinal?="final") type=StateType "state" id=
+		//FullStateID|(isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial
+		//?="init" isFinal?="final") type=StateType id=FullStateID|(isInitial?="init" isFinal
+		//?="final") "state" id=FullStateID|(isInitial?="init" isFinal?="final") type=
+		//StateType|(isInitial?="init" isFinal?="final") "state"|(isInitial?="init" isFinal?=
+		//"final") id=FullStateID|isInitial?="init" isFinal?="final"|(isFinal?="final"
+		//isInitial?="init") type=StateType "state" id=FullStateID|(isFinal?="final" isInitial
+		//?="init") type=StateType "state"|(isFinal?="final" isInitial?="init") type=StateType
+		//id=FullStateID|(isFinal?="final" isInitial?="init") "state" id=FullStateID|(isFinal
+		//?="final" isInitial?="init") type=StateType|(isFinal?="final" isInitial?="init")
+		//"state"|(isFinal?="final" isInitial?="init") id=FullStateID|isFinal?="final"
+		//isInitial?="init"|isInitial?="init" type=StateType "state" id=FullStateID|isInitial
+		//?="init" type=StateType "state"|isInitial?="init" type=StateType id=FullStateID|
+		//isInitial?="init" "state" id=FullStateID|isInitial?="init" type=StateType|isInitial
+		//?="init" "state"|isInitial?="init" id=FullStateID|isInitial?="init"|isFinal?=
+		//"final" type=StateType "state" id=FullStateID|isFinal?="final" type=StateType "state"
+		//|isFinal?="final" type=StateType id=FullStateID|isFinal?="final" "state" id=
+		//FullStateID|isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID
+		//|isFinal?="final" id=FullStateID|isFinal?="final"|type=StateType "state" id=
+		//FullStateID|type=StateType "state"|type=StateType id=FullStateID|type=StateType|
+		//"state" id=FullStateID|"state"|id=FullStateID) label=STRING? bodyText=STRING? ("{" (
+		//"onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions
+		//+=Action|"suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region (
+		//"||" regions+=Region)*)+ "}")? outgoingTransitions+=Transition* 
+		//   
+		//          
+		//        
+		//        
+		//        
+		//      
+		//          
+		//    
+		//          
+		//        
+		//        
+		//        
+		//      
+		//      
+		//      
+		//    
+		//        
+		//      
+		//      
+		//      
+		//    
+		//    
+		//    
+		//  
+		//        
+		//      
+		//      
+		//      
+		//    
+		//      
+		//    
+		//  
+		//      
+		//    
+		//    
+		//  
+		//    
+		//  
+		//   
+		//  //change the datatype of label (from FullStateID) to STRING 
+		//   //to prevent wrong parsing in this case: 
+		//   //init A
+		//   //final B
+		//   //A --> B;
+		//     //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
+		//    
+		//   
+		//     
+		//     
+		//     
+		//     // kein effect, kein delay, kein immediate
+		public Group getGroup() { return cGroup; }
+
+		//{sync::State}
+		public Action getStateAction_0() { return cStateAction_0; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType "state" id=FullStateID|(
+		//isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial?="init"
+		//isFinal?="final") type=StateType id=FullStateID|(isInitial?="init" isFinal?="final"
+		//) "state" id=FullStateID|(isInitial?="init" isFinal?="final") type=StateType|(
+		//isInitial?="init" isFinal?="final") "state"|(isInitial?="init" isFinal?="final") id=
+		//FullStateID|isInitial?="init" isFinal?="final"|(isFinal?="final" isInitial?="init"
+		//) type=StateType "state" id=FullStateID|(isFinal?="final" isInitial?="init") type=
+		//StateType "state"|(isFinal?="final" isInitial?="init") type=StateType id=FullStateID
+		//|(isFinal?="final" isInitial?="init") "state" id=FullStateID|(isFinal?="final"
+		//isInitial?="init") type=StateType|(isFinal?="final" isInitial?="init") "state"|(
+		//isFinal?="final" isInitial?="init") id=FullStateID|isFinal?="final" isInitial?=
+		//"init"|isInitial?="init" type=StateType "state" id=FullStateID|isInitial?="init"
+		//type=StateType "state"|isInitial?="init" type=StateType id=FullStateID|isInitial?=
+		//"init" "state" id=FullStateID|isInitial?="init" type=StateType|isInitial?="init"
+		//"state"|isInitial?="init" id=FullStateID|isInitial?="init"|isFinal?="final" type=
+		//StateType "state" id=FullStateID|isFinal?="final" type=StateType "state"|isFinal?=
+		//"final" type=StateType id=FullStateID|isFinal?="final" "state" id=FullStateID|
+		//isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID|isFinal?=
+		//"final" id=FullStateID|isFinal?="final"|type=StateType "state" id=FullStateID|type=
+		//StateType "state"|type=StateType id=FullStateID|type=StateType|"state" id=
+		//FullStateID|"state"|id=FullStateID  
+		//          
+		//        
+		//        
+		//        
+		//      
+		//          
+		//    
+		//          
+		//        
+		//        
+		//        
+		//      
+		//      
+		//      
+		//    
+		//        
+		//      
+		//      
+		//      
+		//    
+		//    
+		//    
+		//  
+		//        
+		//      
+		//      
+		//      
+		//    
+		//      
+		//    
+		//  
+		//      
+		//    
+		//    
+		//  
+		//    
+		//  
+		//   
+		//  //change the datatype of label (from FullStateID) to STRING 
+		//   //to prevent wrong parsing in this case: 
+		//   //init A
+		//   //final B
+		//   //A --> B;
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType "state" id=FullStateID
+		public Group getGroup_1_0() { return cGroup_1_0; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_0_0() { return cGroup_1_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_0_0_0() { return cIsInitialAssignment_1_0_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_0_0_0_0() { return cIsInitialInitKeyword_1_0_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_0_0_1() { return cIsFinalAssignment_1_0_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_0_0_1_0() { return cIsFinalFinalKeyword_1_0_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_0_1() { return cTypeAssignment_1_0_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_0_1_0() { return cTypeStateTypeEnumRuleCall_1_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_0_2() { return cStateKeyword_1_0_2; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_0_3() { return cIdAssignment_1_0_3; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_0_3_0() { return cIdFullStateIDParserRuleCall_1_0_3_0; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType "state"
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_1_0() { return cGroup_1_1_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_1_0_0() { return cIsInitialAssignment_1_1_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_1_0_0_0() { return cIsInitialInitKeyword_1_1_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_1_0_1() { return cIsFinalAssignment_1_1_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_1_0_1_0() { return cIsFinalFinalKeyword_1_1_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_1_1() { return cTypeAssignment_1_1_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_1_1_0() { return cTypeStateTypeEnumRuleCall_1_1_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_1_2() { return cStateKeyword_1_1_2; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType id=FullStateID
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_2_0() { return cGroup_1_2_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_2_0_0() { return cIsInitialAssignment_1_2_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_2_0_0_0() { return cIsInitialInitKeyword_1_2_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_2_0_1() { return cIsFinalAssignment_1_2_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_2_0_1_0() { return cIsFinalFinalKeyword_1_2_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_2_1() { return cTypeAssignment_1_2_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_2_1_0() { return cTypeStateTypeEnumRuleCall_1_2_1_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_2_2() { return cIdAssignment_1_2_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_2_2_0() { return cIdFullStateIDParserRuleCall_1_2_2_0; }
+
+		//(isInitial?="init" isFinal?="final") "state" id=FullStateID
+		public Group getGroup_1_3() { return cGroup_1_3; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_3_0() { return cGroup_1_3_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_3_0_0() { return cIsInitialAssignment_1_3_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_3_0_0_0() { return cIsInitialInitKeyword_1_3_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_3_0_1() { return cIsFinalAssignment_1_3_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_3_0_1_0() { return cIsFinalFinalKeyword_1_3_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_3_1() { return cStateKeyword_1_3_1; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_3_2() { return cIdAssignment_1_3_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_3_2_0() { return cIdFullStateIDParserRuleCall_1_3_2_0; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType
+		public Group getGroup_1_4() { return cGroup_1_4; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_4_0() { return cGroup_1_4_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_4_0_0() { return cIsInitialAssignment_1_4_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_4_0_0_0() { return cIsInitialInitKeyword_1_4_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_4_0_1() { return cIsFinalAssignment_1_4_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_4_0_1_0() { return cIsFinalFinalKeyword_1_4_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_4_1() { return cTypeAssignment_1_4_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_4_1_0() { return cTypeStateTypeEnumRuleCall_1_4_1_0; }
+
+		//(isInitial?="init" isFinal?="final") "state"
+		public Group getGroup_1_5() { return cGroup_1_5; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_5_0() { return cGroup_1_5_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_5_0_0() { return cIsInitialAssignment_1_5_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_5_0_0_0() { return cIsInitialInitKeyword_1_5_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_5_0_1() { return cIsFinalAssignment_1_5_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_5_0_1_0() { return cIsFinalFinalKeyword_1_5_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_5_1() { return cStateKeyword_1_5_1; }
+
+		//(isInitial?="init" isFinal?="final") id=FullStateID
+		public Group getGroup_1_6() { return cGroup_1_6; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_6_0() { return cGroup_1_6_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_6_0_0() { return cIsInitialAssignment_1_6_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_6_0_0_0() { return cIsInitialInitKeyword_1_6_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_6_0_1() { return cIsFinalAssignment_1_6_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_6_0_1_0() { return cIsFinalFinalKeyword_1_6_0_1_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_6_1() { return cIdAssignment_1_6_1; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_6_1_0() { return cIdFullStateIDParserRuleCall_1_6_1_0; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_7() { return cGroup_1_7; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_7_0() { return cIsInitialAssignment_1_7_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_7_0_0() { return cIsInitialInitKeyword_1_7_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_7_1() { return cIsFinalAssignment_1_7_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_7_1_0() { return cIsFinalFinalKeyword_1_7_1_0; }
+
+		//(isFinal?="final" isInitial?="init") type=StateType "state" id=FullStateID
+		public Group getGroup_1_8() { return cGroup_1_8; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_8_0() { return cGroup_1_8_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_8_0_0() { return cIsFinalAssignment_1_8_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_8_0_0_0() { return cIsFinalFinalKeyword_1_8_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_8_0_1() { return cIsInitialAssignment_1_8_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_8_0_1_0() { return cIsInitialInitKeyword_1_8_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_8_1() { return cTypeAssignment_1_8_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_8_1_0() { return cTypeStateTypeEnumRuleCall_1_8_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_8_2() { return cStateKeyword_1_8_2; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_8_3() { return cIdAssignment_1_8_3; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_8_3_0() { return cIdFullStateIDParserRuleCall_1_8_3_0; }
+
+		//(isFinal?="final" isInitial?="init") type=StateType "state"
+		public Group getGroup_1_9() { return cGroup_1_9; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_9_0() { return cGroup_1_9_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_9_0_0() { return cIsFinalAssignment_1_9_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_9_0_0_0() { return cIsFinalFinalKeyword_1_9_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_9_0_1() { return cIsInitialAssignment_1_9_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_9_0_1_0() { return cIsInitialInitKeyword_1_9_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_9_1() { return cTypeAssignment_1_9_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_9_1_0() { return cTypeStateTypeEnumRuleCall_1_9_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_9_2() { return cStateKeyword_1_9_2; }
+
+		//(isFinal?="final" isInitial?="init") type=StateType id=FullStateID
+		public Group getGroup_1_10() { return cGroup_1_10; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_10_0() { return cGroup_1_10_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_10_0_0() { return cIsFinalAssignment_1_10_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_10_0_0_0() { return cIsFinalFinalKeyword_1_10_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_10_0_1() { return cIsInitialAssignment_1_10_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_10_0_1_0() { return cIsInitialInitKeyword_1_10_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_10_1() { return cTypeAssignment_1_10_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_10_1_0() { return cTypeStateTypeEnumRuleCall_1_10_1_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_10_2() { return cIdAssignment_1_10_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_10_2_0() { return cIdFullStateIDParserRuleCall_1_10_2_0; }
+
+		//(isFinal?="final" isInitial?="init") "state" id=FullStateID
+		public Group getGroup_1_11() { return cGroup_1_11; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_11_0() { return cGroup_1_11_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_11_0_0() { return cIsFinalAssignment_1_11_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_11_0_0_0() { return cIsFinalFinalKeyword_1_11_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_11_0_1() { return cIsInitialAssignment_1_11_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_11_0_1_0() { return cIsInitialInitKeyword_1_11_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_11_1() { return cStateKeyword_1_11_1; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_11_2() { return cIdAssignment_1_11_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_11_2_0() { return cIdFullStateIDParserRuleCall_1_11_2_0; }
+
+		//(isFinal?="final" isInitial?="init") type=StateType
+		public Group getGroup_1_12() { return cGroup_1_12; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_12_0() { return cGroup_1_12_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_12_0_0() { return cIsFinalAssignment_1_12_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_12_0_0_0() { return cIsFinalFinalKeyword_1_12_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_12_0_1() { return cIsInitialAssignment_1_12_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_12_0_1_0() { return cIsInitialInitKeyword_1_12_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_12_1() { return cTypeAssignment_1_12_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_12_1_0() { return cTypeStateTypeEnumRuleCall_1_12_1_0; }
+
+		//(isFinal?="final" isInitial?="init") "state"
+		public Group getGroup_1_13() { return cGroup_1_13; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_13_0() { return cGroup_1_13_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_13_0_0() { return cIsFinalAssignment_1_13_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_13_0_0_0() { return cIsFinalFinalKeyword_1_13_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_13_0_1() { return cIsInitialAssignment_1_13_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_13_0_1_0() { return cIsInitialInitKeyword_1_13_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_13_1() { return cStateKeyword_1_13_1; }
+
+		//(isFinal?="final" isInitial?="init") id=FullStateID
+		public Group getGroup_1_14() { return cGroup_1_14; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_14_0() { return cGroup_1_14_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_14_0_0() { return cIsFinalAssignment_1_14_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_14_0_0_0() { return cIsFinalFinalKeyword_1_14_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_14_0_1() { return cIsInitialAssignment_1_14_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_14_0_1_0() { return cIsInitialInitKeyword_1_14_0_1_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_14_1() { return cIdAssignment_1_14_1; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_14_1_0() { return cIdFullStateIDParserRuleCall_1_14_1_0; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_15() { return cGroup_1_15; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_15_0() { return cIsFinalAssignment_1_15_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_15_0_0() { return cIsFinalFinalKeyword_1_15_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_15_1() { return cIsInitialAssignment_1_15_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_15_1_0() { return cIsInitialInitKeyword_1_15_1_0; }
+
+		//isInitial?="init" type=StateType "state" id=FullStateID
+		public Group getGroup_1_16() { return cGroup_1_16; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_16_0() { return cIsInitialAssignment_1_16_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_16_0_0() { return cIsInitialInitKeyword_1_16_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_16_1() { return cTypeAssignment_1_16_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_16_1_0() { return cTypeStateTypeEnumRuleCall_1_16_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_16_2() { return cStateKeyword_1_16_2; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_16_3() { return cIdAssignment_1_16_3; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_16_3_0() { return cIdFullStateIDParserRuleCall_1_16_3_0; }
+
+		//isInitial?="init" type=StateType "state"
+		public Group getGroup_1_17() { return cGroup_1_17; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_17_0() { return cIsInitialAssignment_1_17_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_17_0_0() { return cIsInitialInitKeyword_1_17_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_17_1() { return cTypeAssignment_1_17_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_17_1_0() { return cTypeStateTypeEnumRuleCall_1_17_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_17_2() { return cStateKeyword_1_17_2; }
+
+		//isInitial?="init" type=StateType id=FullStateID
+		public Group getGroup_1_18() { return cGroup_1_18; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_18_0() { return cIsInitialAssignment_1_18_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_18_0_0() { return cIsInitialInitKeyword_1_18_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_18_1() { return cTypeAssignment_1_18_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_18_1_0() { return cTypeStateTypeEnumRuleCall_1_18_1_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_18_2() { return cIdAssignment_1_18_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_18_2_0() { return cIdFullStateIDParserRuleCall_1_18_2_0; }
+
+		//isInitial?="init" "state" id=FullStateID
+		public Group getGroup_1_19() { return cGroup_1_19; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_19_0() { return cIsInitialAssignment_1_19_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_19_0_0() { return cIsInitialInitKeyword_1_19_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_19_1() { return cStateKeyword_1_19_1; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_19_2() { return cIdAssignment_1_19_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_19_2_0() { return cIdFullStateIDParserRuleCall_1_19_2_0; }
+
+		//isInitial?="init" type=StateType
+		public Group getGroup_1_20() { return cGroup_1_20; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_20_0() { return cIsInitialAssignment_1_20_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_20_0_0() { return cIsInitialInitKeyword_1_20_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_20_1() { return cTypeAssignment_1_20_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_20_1_0() { return cTypeStateTypeEnumRuleCall_1_20_1_0; }
+
+		//isInitial?="init" "state"
+		public Group getGroup_1_21() { return cGroup_1_21; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_21_0() { return cIsInitialAssignment_1_21_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_21_0_0() { return cIsInitialInitKeyword_1_21_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_21_1() { return cStateKeyword_1_21_1; }
+
+		//isInitial?="init" id=FullStateID
+		public Group getGroup_1_22() { return cGroup_1_22; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_22_0() { return cIsInitialAssignment_1_22_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_22_0_0() { return cIsInitialInitKeyword_1_22_0_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_22_1() { return cIdAssignment_1_22_1; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_22_1_0() { return cIdFullStateIDParserRuleCall_1_22_1_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_23() { return cIsInitialAssignment_1_23; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_23_0() { return cIsInitialInitKeyword_1_23_0; }
+
+		//isFinal?="final" type=StateType "state" id=FullStateID
+		public Group getGroup_1_24() { return cGroup_1_24; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_24_0() { return cIsFinalAssignment_1_24_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_24_0_0() { return cIsFinalFinalKeyword_1_24_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_24_1() { return cTypeAssignment_1_24_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_24_1_0() { return cTypeStateTypeEnumRuleCall_1_24_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_24_2() { return cStateKeyword_1_24_2; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_24_3() { return cIdAssignment_1_24_3; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_24_3_0() { return cIdFullStateIDParserRuleCall_1_24_3_0; }
+
+		//isFinal?="final" type=StateType "state"
+		public Group getGroup_1_25() { return cGroup_1_25; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_25_0() { return cIsFinalAssignment_1_25_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_25_0_0() { return cIsFinalFinalKeyword_1_25_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_25_1() { return cTypeAssignment_1_25_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_25_1_0() { return cTypeStateTypeEnumRuleCall_1_25_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_25_2() { return cStateKeyword_1_25_2; }
+
+		//isFinal?="final" type=StateType id=FullStateID
+		public Group getGroup_1_26() { return cGroup_1_26; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_26_0() { return cIsFinalAssignment_1_26_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_26_0_0() { return cIsFinalFinalKeyword_1_26_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_26_1() { return cTypeAssignment_1_26_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_26_1_0() { return cTypeStateTypeEnumRuleCall_1_26_1_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_26_2() { return cIdAssignment_1_26_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_26_2_0() { return cIdFullStateIDParserRuleCall_1_26_2_0; }
+
+		//isFinal?="final" "state" id=FullStateID
+		public Group getGroup_1_27() { return cGroup_1_27; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_27_0() { return cIsFinalAssignment_1_27_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_27_0_0() { return cIsFinalFinalKeyword_1_27_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_27_1() { return cStateKeyword_1_27_1; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_27_2() { return cIdAssignment_1_27_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_27_2_0() { return cIdFullStateIDParserRuleCall_1_27_2_0; }
+
+		//isFinal?="final" type=StateType
+		public Group getGroup_1_28() { return cGroup_1_28; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_28_0() { return cIsFinalAssignment_1_28_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_28_0_0() { return cIsFinalFinalKeyword_1_28_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_28_1() { return cTypeAssignment_1_28_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_28_1_0() { return cTypeStateTypeEnumRuleCall_1_28_1_0; }
+
+		//isFinal?="final" "state" id=FullStateID
+		public Group getGroup_1_29() { return cGroup_1_29; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_29_0() { return cIsFinalAssignment_1_29_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_29_0_0() { return cIsFinalFinalKeyword_1_29_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_29_1() { return cStateKeyword_1_29_1; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_29_2() { return cIdAssignment_1_29_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_29_2_0() { return cIdFullStateIDParserRuleCall_1_29_2_0; }
+
+		//isFinal?="final" id=FullStateID
+		public Group getGroup_1_30() { return cGroup_1_30; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_30_0() { return cIsFinalAssignment_1_30_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_30_0_0() { return cIsFinalFinalKeyword_1_30_0_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_30_1() { return cIdAssignment_1_30_1; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_30_1_0() { return cIdFullStateIDParserRuleCall_1_30_1_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_31() { return cIsFinalAssignment_1_31; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_31_0() { return cIsFinalFinalKeyword_1_31_0; }
+
+		//type=StateType "state" id=FullStateID
+		public Group getGroup_1_32() { return cGroup_1_32; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_32_0() { return cTypeAssignment_1_32_0; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_32_0_0() { return cTypeStateTypeEnumRuleCall_1_32_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_32_1() { return cStateKeyword_1_32_1; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_32_2() { return cIdAssignment_1_32_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_32_2_0() { return cIdFullStateIDParserRuleCall_1_32_2_0; }
+
+		//type=StateType "state"
+		public Group getGroup_1_33() { return cGroup_1_33; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_33_0() { return cTypeAssignment_1_33_0; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_33_0_0() { return cTypeStateTypeEnumRuleCall_1_33_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_33_1() { return cStateKeyword_1_33_1; }
+
+		//type=StateType id=FullStateID
+		public Group getGroup_1_34() { return cGroup_1_34; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_34_0() { return cTypeAssignment_1_34_0; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_34_0_0() { return cTypeStateTypeEnumRuleCall_1_34_0_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_34_1() { return cIdAssignment_1_34_1; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_34_1_0() { return cIdFullStateIDParserRuleCall_1_34_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_35() { return cTypeAssignment_1_35; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_35_0() { return cTypeStateTypeEnumRuleCall_1_35_0; }
+
+		//"state" id=FullStateID
+		public Group getGroup_1_36() { return cGroup_1_36; }
+
+		//"state"
+		public Keyword getStateKeyword_1_36_0() { return cStateKeyword_1_36_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_36_1() { return cIdAssignment_1_36_1; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_36_1_0() { return cIdFullStateIDParserRuleCall_1_36_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_37() { return cStateKeyword_1_37; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_38() { return cIdAssignment_1_38; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_38_0() { return cIdFullStateIDParserRuleCall_1_38_0; }
+
+		//label=STRING?
+		public Assignment getLabelAssignment_2() { return cLabelAssignment_2; }
+
+		//STRING
+		public RuleCall getLabelSTRINGTerminalRuleCall_2_0() { return cLabelSTRINGTerminalRuleCall_2_0; }
+
+		//bodyText=STRING?
+		public Assignment getBodyTextAssignment_3() { return cBodyTextAssignment_3; }
+
+		//STRING
+		public RuleCall getBodyTextSTRINGTerminalRuleCall_3_0() { return cBodyTextSTRINGTerminalRuleCall_3_0; }
+
+		//("{" ("onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit"
+		//exitActions+=Action|"suspension" suspensionTrigger=Action|signals+=Signal|regions
+		//+=Region ("||" regions+=Region)*)+ "}")?  
+		//     
+		//     
+		//     
+		//     // kein effect, kein delay, kein immediate
+		public Group getGroup_4() { return cGroup_4; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_4_0() { return cLeftCurlyBracketKeyword_4_0; }
+
+		//("onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions
+		//+=Action|"suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region (
+		//"||" regions+=Region)*)+  
+		//     
+		//     
+		//     
+		//     // kein effect, kein delay, kein immediate
+		public Alternatives getAlternatives_4_1() { return cAlternatives_4_1; }
+
+		//"onentry" entryActions+=Action
+		public Group getGroup_4_1_0() { return cGroup_4_1_0; }
+
+		//"onentry"
+		public Keyword getOnentryKeyword_4_1_0_0() { return cOnentryKeyword_4_1_0_0; }
+
+		//entryActions+=Action
+		public Assignment getEntryActionsAssignment_4_1_0_1() { return cEntryActionsAssignment_4_1_0_1; }
+
+		//Action
+		public RuleCall getEntryActionsActionParserRuleCall_4_1_0_1_0() { return cEntryActionsActionParserRuleCall_4_1_0_1_0; }
+
+		//"oninner" innerActions+=Action
+		public Group getGroup_4_1_1() { return cGroup_4_1_1; }
+
+		//"oninner"
+		public Keyword getOninnerKeyword_4_1_1_0() { return cOninnerKeyword_4_1_1_0; }
+
+		//innerActions+=Action
+		public Assignment getInnerActionsAssignment_4_1_1_1() { return cInnerActionsAssignment_4_1_1_1; }
+
+		//Action
+		public RuleCall getInnerActionsActionParserRuleCall_4_1_1_1_0() { return cInnerActionsActionParserRuleCall_4_1_1_1_0; }
+
+		//"onexit" exitActions+=Action
+		public Group getGroup_4_1_2() { return cGroup_4_1_2; }
+
+		//"onexit"
+		public Keyword getOnexitKeyword_4_1_2_0() { return cOnexitKeyword_4_1_2_0; }
+
+		//exitActions+=Action
+		public Assignment getExitActionsAssignment_4_1_2_1() { return cExitActionsAssignment_4_1_2_1; }
+
+		//Action
+		public RuleCall getExitActionsActionParserRuleCall_4_1_2_1_0() { return cExitActionsActionParserRuleCall_4_1_2_1_0; }
+
+		//"suspension" suspensionTrigger=Action
+		public Group getGroup_4_1_3() { return cGroup_4_1_3; }
+
+		//"suspension"
+		public Keyword getSuspensionKeyword_4_1_3_0() { return cSuspensionKeyword_4_1_3_0; }
+
+		//suspensionTrigger=Action
+		public Assignment getSuspensionTriggerAssignment_4_1_3_1() { return cSuspensionTriggerAssignment_4_1_3_1; }
+
+		//Action
+		public RuleCall getSuspensionTriggerActionParserRuleCall_4_1_3_1_0() { return cSuspensionTriggerActionParserRuleCall_4_1_3_1_0; }
+
+		//signals+=Signal
+		public Assignment getSignalsAssignment_4_1_4() { return cSignalsAssignment_4_1_4; }
+
+		//Signal
+		public RuleCall getSignalsSignalParserRuleCall_4_1_4_0() { return cSignalsSignalParserRuleCall_4_1_4_0; }
+
+		//regions+=Region ("||" regions+=Region)*
+		public Group getGroup_4_1_5() { return cGroup_4_1_5; }
+
+		//regions+=Region
+		public Assignment getRegionsAssignment_4_1_5_0() { return cRegionsAssignment_4_1_5_0; }
+
+		//Region
+		public RuleCall getRegionsRegionParserRuleCall_4_1_5_0_0() { return cRegionsRegionParserRuleCall_4_1_5_0_0; }
+
+		//("||" regions+=Region)*
+		public Group getGroup_4_1_5_1() { return cGroup_4_1_5_1; }
+
+		//"||"
+		public Keyword getVerticalLineVerticalLineKeyword_4_1_5_1_0() { return cVerticalLineVerticalLineKeyword_4_1_5_1_0; }
+
+		//regions+=Region
+		public Assignment getRegionsAssignment_4_1_5_1_1() { return cRegionsAssignment_4_1_5_1_1; }
+
+		//Region
+		public RuleCall getRegionsRegionParserRuleCall_4_1_5_1_1_0() { return cRegionsRegionParserRuleCall_4_1_5_1_1_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_4_2() { return cRightCurlyBracketKeyword_4_2; }
+
+		//outgoingTransitions+=Transition*
+		public Assignment getOutgoingTransitionsAssignment_5() { return cOutgoingTransitionsAssignment_5; }
+
+		//Transition
+		public RuleCall getOutgoingTransitionsTransitionParserRuleCall_5_0() { return cOutgoingTransitionsTransitionParserRuleCall_5_0; }
+	}
+
+	public class RenamingElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Renaming");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cOldIDAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cOldIDSTRINGTerminalRuleCall_0_0 = (RuleCall)cOldIDAssignment_0.eContents().get(0);
+		private final Keyword cSolidusKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cNewIDAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNewIDSTRINGTerminalRuleCall_2_0 = (RuleCall)cNewIDAssignment_2.eContents().get(0);
+		
+		//Renaming returns sync::Renaming:
+		//  oldID=STRING "/" newID=STRING;
+		public ParserRule getRule() { return rule; }
+
+		//oldID=STRING "/" newID=STRING
+		public Group getGroup() { return cGroup; }
+
+		//oldID=STRING
+		public Assignment getOldIDAssignment_0() { return cOldIDAssignment_0; }
+
+		//STRING
+		public RuleCall getOldIDSTRINGTerminalRuleCall_0_0() { return cOldIDSTRINGTerminalRuleCall_0_0; }
+
+		//"/"
+		public Keyword getSolidusKeyword_1() { return cSolidusKeyword_1; }
+
+		//newID=STRING
+		public Assignment getNewIDAssignment_2() { return cNewIDAssignment_2; }
+
+		//STRING
+		public RuleCall getNewIDSTRINGTerminalRuleCall_2_0() { return cNewIDSTRINGTerminalRuleCall_2_0; }
+	}
+
+	public class FullStateIDElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FullStateID");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_0_0 = (RuleCall)cGroup_0.eContents().get(0);
+		private final Keyword cCommercialAtKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		
+		//FullStateID returns ecore::EString:
+		//  (ID "@")? ID; 
+		//
+		//
+		//      
+		////========================================================================================
+		////===  									    ACTIONS  					               ===
+		////========================================================================================
+		//
+		//
+		////Action returns sync::Action:
+		////  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
+		////========================================================================================
+		////===  									    TRANSITION 					               ===
+		////========================================================================================
+		public ParserRule getRule() { return rule; }
+
+		//(ID "@")? ID
+		public Group getGroup() { return cGroup; }
+
+		//(ID "@")?
+		public Group getGroup_0() { return cGroup_0; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_0_0() { return cIDTerminalRuleCall_0_0; }
+
+		//"@"
+		public Keyword getCommercialAtKeyword_0_1() { return cCommercialAtKeyword_0_1; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
+	}
+
+	public class TransitionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Transition");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cSourceStateAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cSourceStateStateCrossReference_0_0 = (CrossReference)cSourceStateAssignment_0.eContents().get(0);
+		private final RuleCall cSourceStateStateFullStateIDParserRuleCall_0_0_1 = (RuleCall)cSourceStateStateCrossReference_0_0.eContents().get(1);
+		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTypeTransitionTypeEnumRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
+		private final Assignment cTargetStateAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cTargetStateStateCrossReference_2_0 = (CrossReference)cTargetStateAssignment_2.eContents().get(0);
+		private final RuleCall cTargetStateStateFullStateIDParserRuleCall_2_0_1 = (RuleCall)cTargetStateStateCrossReference_2_0.eContents().get(1);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cWithKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cIsImmediateAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final Keyword cIsImmediateNumberSignKeyword_3_1_0 = (Keyword)cIsImmediateAssignment_3_1.eContents().get(0);
+		private final Assignment cDelayAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cDelayINTTerminalRuleCall_3_2_0 = (RuleCall)cDelayAssignment_3_2.eContents().get(0);
+		private final Assignment cTriggerAssignment_3_3 = (Assignment)cGroup_3.eContents().get(3);
+		private final RuleCall cTriggerBooleanExpressionParserRuleCall_3_3_0 = (RuleCall)cTriggerAssignment_3_3.eContents().get(0);
+		private final Group cGroup_3_4 = (Group)cGroup_3.eContents().get(4);
+		private final Keyword cSolidusKeyword_3_4_0 = (Keyword)cGroup_3_4.eContents().get(0);
+		private final Group cGroup_3_4_1 = (Group)cGroup_3_4.eContents().get(1);
+		private final Assignment cEffectsAssignment_3_4_1_0 = (Assignment)cGroup_3_4_1.eContents().get(0);
+		private final RuleCall cEffectsEffectParserRuleCall_3_4_1_0_0 = (RuleCall)cEffectsAssignment_3_4_1_0.eContents().get(0);
+		private final Keyword cCommaKeyword_3_4_1_1 = (Keyword)cGroup_3_4_1.eContents().get(1);
+		private final Assignment cIsHistoryAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cIsHistoryHistoryKeyword_4_0 = (Keyword)cIsHistoryAssignment_4.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//Transition returns sync::Transition:
+		//  sourceState=[sync::State|FullStateID]? type=TransitionType targetState=[sync::
+		//  State|FullStateID] ("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? (
+		//  "/" (effects+=Effect ","?)*)?)? isHistory?=" history"? ";"; 
+		////========================================================================================
+		////===  									    ACTIONS  					               ===
+		////========================================================================================
+		//
+		//
+		////Action returns sync::Action:
+		////  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
+		////========================================================================================
+		////===  									    TRANSITION 					               ===
+		////========================================================================================
+		//
+		//
+		//    
+		//   
+		//  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+		//   //|({sync::State} name=FullStateID)
+		//      
+		//  //|newTargetState=TransitionState )
+		public ParserRule getRule() { return rule; }
+
+		//sourceState=[sync::State|FullStateID]? type=TransitionType targetState=[sync::
+		//State|FullStateID] ("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? (
+		//"/" (effects+=Effect ","?)*)?)? isHistory?=" history"? ";" 
+		//   
+		//  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+		//   //|({sync::State} name=FullStateID)
+		//      
+		//  //|newTargetState=TransitionState )
+		public Group getGroup() { return cGroup; }
+
+		//sourceState=[sync::State|FullStateID]?
+		public Assignment getSourceStateAssignment_0() { return cSourceStateAssignment_0; }
+
+		//[sync::State|FullStateID]
+		public CrossReference getSourceStateStateCrossReference_0_0() { return cSourceStateStateCrossReference_0_0; }
+
+		//FullStateID
+		public RuleCall getSourceStateStateFullStateIDParserRuleCall_0_0_1() { return cSourceStateStateFullStateIDParserRuleCall_0_0_1; }
+
+		//type=TransitionType  
+		//  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+		//   //|({sync::State} name=FullStateID)
+		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
+
+		//TransitionType
+		public RuleCall getTypeTransitionTypeEnumRuleCall_1_0() { return cTypeTransitionTypeEnumRuleCall_1_0; }
+
+		//targetState=[sync::State|FullStateID]
+		public Assignment getTargetStateAssignment_2() { return cTargetStateAssignment_2; }
+
+		//[sync::State|FullStateID]
+		public CrossReference getTargetStateStateCrossReference_2_0() { return cTargetStateStateCrossReference_2_0; }
+
+		//FullStateID
+		public RuleCall getTargetStateStateFullStateIDParserRuleCall_2_0_1() { return cTargetStateStateFullStateIDParserRuleCall_2_0_1; }
+
+		//("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect
+		//","?)*)?)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"with"
+		public Keyword getWithKeyword_3_0() { return cWithKeyword_3_0; }
+
+		//isImmediate?="#"?
+		public Assignment getIsImmediateAssignment_3_1() { return cIsImmediateAssignment_3_1; }
+
+		//"#"
+		public Keyword getIsImmediateNumberSignKeyword_3_1_0() { return cIsImmediateNumberSignKeyword_3_1_0; }
+
+		//delay=INT?
+		public Assignment getDelayAssignment_3_2() { return cDelayAssignment_3_2; }
+
+		//INT
+		public RuleCall getDelayINTTerminalRuleCall_3_2_0() { return cDelayINTTerminalRuleCall_3_2_0; }
+
+		//trigger=BooleanExpression?
+		public Assignment getTriggerAssignment_3_3() { return cTriggerAssignment_3_3; }
+
+		//BooleanExpression
+		public RuleCall getTriggerBooleanExpressionParserRuleCall_3_3_0() { return cTriggerBooleanExpressionParserRuleCall_3_3_0; }
+
+		//("/" (effects+=Effect ","?)*)?
+		public Group getGroup_3_4() { return cGroup_3_4; }
+
+		//"/"
+		public Keyword getSolidusKeyword_3_4_0() { return cSolidusKeyword_3_4_0; }
+
+		//(effects+=Effect ","?)*
+		public Group getGroup_3_4_1() { return cGroup_3_4_1; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_3_4_1_0() { return cEffectsAssignment_3_4_1_0; }
+
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_3_4_1_0_0() { return cEffectsEffectParserRuleCall_3_4_1_0_0; }
+
+		//","?
+		public Keyword getCommaKeyword_3_4_1_1() { return cCommaKeyword_3_4_1_1; }
+
+		//isHistory?=" history"?
+		public Assignment getIsHistoryAssignment_4() { return cIsHistoryAssignment_4; }
+
+		//" history"
+		public Keyword getIsHistoryHistoryKeyword_4_0() { return cIsHistoryHistoryKeyword_4_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+	}
+
+	public class TransitionStateElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TransitionState");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cStateAction_0 = (Action)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Group cGroup_1_0_0 = (Group)cGroup_1_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_0_0_0 = (Assignment)cGroup_1_0_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_0_0_0_0 = (Keyword)cIsInitialAssignment_1_0_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_0_0_1 = (Assignment)cGroup_1_0_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_0_0_1_0 = (Keyword)cIsFinalAssignment_1_0_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_0_1_0 = (RuleCall)cTypeAssignment_1_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_0_2 = (Keyword)cGroup_1_0.eContents().get(2);
+		private final Assignment cIdAssignment_1_0_3 = (Assignment)cGroup_1_0.eContents().get(3);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_0_3_0 = (RuleCall)cIdAssignment_1_0_3.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Group cGroup_1_1_0 = (Group)cGroup_1_1.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_1_0_0 = (Assignment)cGroup_1_1_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_1_0_0_0 = (Keyword)cIsInitialAssignment_1_1_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_1_0_1 = (Assignment)cGroup_1_1_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_1_0_1_0 = (Keyword)cIsFinalAssignment_1_1_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_1_1_0 = (RuleCall)cTypeAssignment_1_1_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_1_2 = (Keyword)cGroup_1_1.eContents().get(2);
+		private final Group cGroup_1_2 = (Group)cAlternatives_1.eContents().get(2);
+		private final Group cGroup_1_2_0 = (Group)cGroup_1_2.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_2_0_0 = (Assignment)cGroup_1_2_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_2_0_0_0 = (Keyword)cIsInitialAssignment_1_2_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_2_0_1 = (Assignment)cGroup_1_2_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_2_0_1_0 = (Keyword)cIsFinalAssignment_1_2_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_2_1_0 = (RuleCall)cTypeAssignment_1_2_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_2_2 = (Assignment)cGroup_1_2.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_2_2_0 = (RuleCall)cIdAssignment_1_2_2.eContents().get(0);
+		private final Group cGroup_1_3 = (Group)cAlternatives_1.eContents().get(3);
+		private final Group cGroup_1_3_0 = (Group)cGroup_1_3.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_3_0_0 = (Assignment)cGroup_1_3_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_3_0_0_0 = (Keyword)cIsInitialAssignment_1_3_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_3_0_1 = (Assignment)cGroup_1_3_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_3_0_1_0 = (Keyword)cIsFinalAssignment_1_3_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_3_1 = (Keyword)cGroup_1_3.eContents().get(1);
+		private final Assignment cIdAssignment_1_3_2 = (Assignment)cGroup_1_3.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_3_2_0 = (RuleCall)cIdAssignment_1_3_2.eContents().get(0);
+		private final Group cGroup_1_4 = (Group)cAlternatives_1.eContents().get(4);
+		private final Group cGroup_1_4_0 = (Group)cGroup_1_4.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_4_0_0 = (Assignment)cGroup_1_4_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_4_0_0_0 = (Keyword)cIsInitialAssignment_1_4_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_4_0_1 = (Assignment)cGroup_1_4_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_4_0_1_0 = (Keyword)cIsFinalAssignment_1_4_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_4_1 = (Assignment)cGroup_1_4.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_4_1_0 = (RuleCall)cTypeAssignment_1_4_1.eContents().get(0);
+		private final Group cGroup_1_5 = (Group)cAlternatives_1.eContents().get(5);
+		private final Group cGroup_1_5_0 = (Group)cGroup_1_5.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_5_0_0 = (Assignment)cGroup_1_5_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_5_0_0_0 = (Keyword)cIsInitialAssignment_1_5_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_5_0_1 = (Assignment)cGroup_1_5_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_5_0_1_0 = (Keyword)cIsFinalAssignment_1_5_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_5_1 = (Keyword)cGroup_1_5.eContents().get(1);
+		private final Group cGroup_1_6 = (Group)cAlternatives_1.eContents().get(6);
+		private final Group cGroup_1_6_0 = (Group)cGroup_1_6.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_6_0_0 = (Assignment)cGroup_1_6_0.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_6_0_0_0 = (Keyword)cIsInitialAssignment_1_6_0_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_6_0_1 = (Assignment)cGroup_1_6_0.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_6_0_1_0 = (Keyword)cIsFinalAssignment_1_6_0_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_6_1 = (Assignment)cGroup_1_6.eContents().get(1);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_6_1_0 = (RuleCall)cIdAssignment_1_6_1.eContents().get(0);
+		private final Group cGroup_1_7 = (Group)cAlternatives_1.eContents().get(7);
+		private final Assignment cIsInitialAssignment_1_7_0 = (Assignment)cGroup_1_7.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_7_0_0 = (Keyword)cIsInitialAssignment_1_7_0.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_7_1 = (Assignment)cGroup_1_7.eContents().get(1);
+		private final Keyword cIsFinalFinalKeyword_1_7_1_0 = (Keyword)cIsFinalAssignment_1_7_1.eContents().get(0);
+		private final Group cGroup_1_8 = (Group)cAlternatives_1.eContents().get(8);
+		private final Group cGroup_1_8_0 = (Group)cGroup_1_8.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_8_0_0 = (Assignment)cGroup_1_8_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_8_0_0_0 = (Keyword)cIsFinalAssignment_1_8_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_8_0_1 = (Assignment)cGroup_1_8_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_8_0_1_0 = (Keyword)cIsInitialAssignment_1_8_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_8_1 = (Assignment)cGroup_1_8.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_8_1_0 = (RuleCall)cTypeAssignment_1_8_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_8_2 = (Keyword)cGroup_1_8.eContents().get(2);
+		private final Assignment cIdAssignment_1_8_3 = (Assignment)cGroup_1_8.eContents().get(3);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_8_3_0 = (RuleCall)cIdAssignment_1_8_3.eContents().get(0);
+		private final Group cGroup_1_9 = (Group)cAlternatives_1.eContents().get(9);
+		private final Group cGroup_1_9_0 = (Group)cGroup_1_9.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_9_0_0 = (Assignment)cGroup_1_9_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_9_0_0_0 = (Keyword)cIsFinalAssignment_1_9_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_9_0_1 = (Assignment)cGroup_1_9_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_9_0_1_0 = (Keyword)cIsInitialAssignment_1_9_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_9_1 = (Assignment)cGroup_1_9.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_9_1_0 = (RuleCall)cTypeAssignment_1_9_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_9_2 = (Keyword)cGroup_1_9.eContents().get(2);
+		private final Group cGroup_1_10 = (Group)cAlternatives_1.eContents().get(10);
+		private final Group cGroup_1_10_0 = (Group)cGroup_1_10.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_10_0_0 = (Assignment)cGroup_1_10_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_10_0_0_0 = (Keyword)cIsFinalAssignment_1_10_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_10_0_1 = (Assignment)cGroup_1_10_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_10_0_1_0 = (Keyword)cIsInitialAssignment_1_10_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_10_1 = (Assignment)cGroup_1_10.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_10_1_0 = (RuleCall)cTypeAssignment_1_10_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_10_2 = (Assignment)cGroup_1_10.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_10_2_0 = (RuleCall)cIdAssignment_1_10_2.eContents().get(0);
+		private final Group cGroup_1_11 = (Group)cAlternatives_1.eContents().get(11);
+		private final Group cGroup_1_11_0 = (Group)cGroup_1_11.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_11_0_0 = (Assignment)cGroup_1_11_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_11_0_0_0 = (Keyword)cIsFinalAssignment_1_11_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_11_0_1 = (Assignment)cGroup_1_11_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_11_0_1_0 = (Keyword)cIsInitialAssignment_1_11_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_11_1 = (Keyword)cGroup_1_11.eContents().get(1);
+		private final Assignment cIdAssignment_1_11_2 = (Assignment)cGroup_1_11.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_11_2_0 = (RuleCall)cIdAssignment_1_11_2.eContents().get(0);
+		private final Group cGroup_1_12 = (Group)cAlternatives_1.eContents().get(12);
+		private final Group cGroup_1_12_0 = (Group)cGroup_1_12.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_12_0_0 = (Assignment)cGroup_1_12_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_12_0_0_0 = (Keyword)cIsFinalAssignment_1_12_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_12_0_1 = (Assignment)cGroup_1_12_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_12_0_1_0 = (Keyword)cIsInitialAssignment_1_12_0_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_12_1 = (Assignment)cGroup_1_12.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_12_1_0 = (RuleCall)cTypeAssignment_1_12_1.eContents().get(0);
+		private final Group cGroup_1_13 = (Group)cAlternatives_1.eContents().get(13);
+		private final Group cGroup_1_13_0 = (Group)cGroup_1_13.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_13_0_0 = (Assignment)cGroup_1_13_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_13_0_0_0 = (Keyword)cIsFinalAssignment_1_13_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_13_0_1 = (Assignment)cGroup_1_13_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_13_0_1_0 = (Keyword)cIsInitialAssignment_1_13_0_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_13_1 = (Keyword)cGroup_1_13.eContents().get(1);
+		private final Group cGroup_1_14 = (Group)cAlternatives_1.eContents().get(14);
+		private final Group cGroup_1_14_0 = (Group)cGroup_1_14.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_14_0_0 = (Assignment)cGroup_1_14_0.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_14_0_0_0 = (Keyword)cIsFinalAssignment_1_14_0_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_14_0_1 = (Assignment)cGroup_1_14_0.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_14_0_1_0 = (Keyword)cIsInitialAssignment_1_14_0_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_14_1 = (Assignment)cGroup_1_14.eContents().get(1);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_14_1_0 = (RuleCall)cIdAssignment_1_14_1.eContents().get(0);
+		private final Group cGroup_1_15 = (Group)cAlternatives_1.eContents().get(15);
+		private final Assignment cIsFinalAssignment_1_15_0 = (Assignment)cGroup_1_15.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_15_0_0 = (Keyword)cIsFinalAssignment_1_15_0.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_15_1 = (Assignment)cGroup_1_15.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_15_1_0 = (Keyword)cIsInitialAssignment_1_15_1.eContents().get(0);
+		private final Group cGroup_1_16 = (Group)cAlternatives_1.eContents().get(16);
+		private final Assignment cIsInitialAssignment_1_16_0 = (Assignment)cGroup_1_16.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_16_0_0 = (Keyword)cIsInitialAssignment_1_16_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_16_1 = (Assignment)cGroup_1_16.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_16_1_0 = (RuleCall)cTypeAssignment_1_16_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_16_2 = (Keyword)cGroup_1_16.eContents().get(2);
+		private final Assignment cIdAssignment_1_16_3 = (Assignment)cGroup_1_16.eContents().get(3);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_16_3_0 = (RuleCall)cIdAssignment_1_16_3.eContents().get(0);
+		private final Group cGroup_1_17 = (Group)cAlternatives_1.eContents().get(17);
+		private final Assignment cIsInitialAssignment_1_17_0 = (Assignment)cGroup_1_17.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_17_0_0 = (Keyword)cIsInitialAssignment_1_17_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_17_1 = (Assignment)cGroup_1_17.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_17_1_0 = (RuleCall)cTypeAssignment_1_17_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_17_2 = (Keyword)cGroup_1_17.eContents().get(2);
+		private final Group cGroup_1_18 = (Group)cAlternatives_1.eContents().get(18);
+		private final Assignment cIsInitialAssignment_1_18_0 = (Assignment)cGroup_1_18.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_18_0_0 = (Keyword)cIsInitialAssignment_1_18_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_18_1 = (Assignment)cGroup_1_18.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_18_1_0 = (RuleCall)cTypeAssignment_1_18_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_18_2 = (Assignment)cGroup_1_18.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_18_2_0 = (RuleCall)cIdAssignment_1_18_2.eContents().get(0);
+		private final Group cGroup_1_19 = (Group)cAlternatives_1.eContents().get(19);
+		private final Assignment cIsInitialAssignment_1_19_0 = (Assignment)cGroup_1_19.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_19_0_0 = (Keyword)cIsInitialAssignment_1_19_0.eContents().get(0);
+		private final Keyword cStateKeyword_1_19_1 = (Keyword)cGroup_1_19.eContents().get(1);
+		private final Assignment cIdAssignment_1_19_2 = (Assignment)cGroup_1_19.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_19_2_0 = (RuleCall)cIdAssignment_1_19_2.eContents().get(0);
+		private final Group cGroup_1_20 = (Group)cAlternatives_1.eContents().get(20);
+		private final Assignment cIsInitialAssignment_1_20_0 = (Assignment)cGroup_1_20.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_20_0_0 = (Keyword)cIsInitialAssignment_1_20_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_20_1 = (Assignment)cGroup_1_20.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_20_1_0 = (RuleCall)cTypeAssignment_1_20_1.eContents().get(0);
+		private final Group cGroup_1_21 = (Group)cAlternatives_1.eContents().get(21);
+		private final Assignment cIsInitialAssignment_1_21_0 = (Assignment)cGroup_1_21.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_21_0_0 = (Keyword)cIsInitialAssignment_1_21_0.eContents().get(0);
+		private final Keyword cStateKeyword_1_21_1 = (Keyword)cGroup_1_21.eContents().get(1);
+		private final Group cGroup_1_22 = (Group)cAlternatives_1.eContents().get(22);
+		private final Assignment cIsInitialAssignment_1_22_0 = (Assignment)cGroup_1_22.eContents().get(0);
+		private final Keyword cIsInitialInitKeyword_1_22_0_0 = (Keyword)cIsInitialAssignment_1_22_0.eContents().get(0);
+		private final Assignment cIdAssignment_1_22_1 = (Assignment)cGroup_1_22.eContents().get(1);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_22_1_0 = (RuleCall)cIdAssignment_1_22_1.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1_23 = (Assignment)cAlternatives_1.eContents().get(23);
+		private final Keyword cIsInitialInitKeyword_1_23_0 = (Keyword)cIsInitialAssignment_1_23.eContents().get(0);
+		private final Group cGroup_1_24 = (Group)cAlternatives_1.eContents().get(24);
+		private final Assignment cIsFinalAssignment_1_24_0 = (Assignment)cGroup_1_24.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_24_0_0 = (Keyword)cIsFinalAssignment_1_24_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_24_1 = (Assignment)cGroup_1_24.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_24_1_0 = (RuleCall)cTypeAssignment_1_24_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_24_2 = (Keyword)cGroup_1_24.eContents().get(2);
+		private final Assignment cIdAssignment_1_24_3 = (Assignment)cGroup_1_24.eContents().get(3);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_24_3_0 = (RuleCall)cIdAssignment_1_24_3.eContents().get(0);
+		private final Group cGroup_1_25 = (Group)cAlternatives_1.eContents().get(25);
+		private final Assignment cIsFinalAssignment_1_25_0 = (Assignment)cGroup_1_25.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_25_0_0 = (Keyword)cIsFinalAssignment_1_25_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_25_1 = (Assignment)cGroup_1_25.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_25_1_0 = (RuleCall)cTypeAssignment_1_25_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_25_2 = (Keyword)cGroup_1_25.eContents().get(2);
+		private final Group cGroup_1_26 = (Group)cAlternatives_1.eContents().get(26);
+		private final Assignment cIsFinalAssignment_1_26_0 = (Assignment)cGroup_1_26.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_26_0_0 = (Keyword)cIsFinalAssignment_1_26_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_26_1 = (Assignment)cGroup_1_26.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_26_1_0 = (RuleCall)cTypeAssignment_1_26_1.eContents().get(0);
+		private final Assignment cIdAssignment_1_26_2 = (Assignment)cGroup_1_26.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_26_2_0 = (RuleCall)cIdAssignment_1_26_2.eContents().get(0);
+		private final Group cGroup_1_27 = (Group)cAlternatives_1.eContents().get(27);
+		private final Assignment cIsFinalAssignment_1_27_0 = (Assignment)cGroup_1_27.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_27_0_0 = (Keyword)cIsFinalAssignment_1_27_0.eContents().get(0);
+		private final Keyword cStateKeyword_1_27_1 = (Keyword)cGroup_1_27.eContents().get(1);
+		private final Assignment cIdAssignment_1_27_2 = (Assignment)cGroup_1_27.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_27_2_0 = (RuleCall)cIdAssignment_1_27_2.eContents().get(0);
+		private final Group cGroup_1_28 = (Group)cAlternatives_1.eContents().get(28);
+		private final Assignment cIsFinalAssignment_1_28_0 = (Assignment)cGroup_1_28.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_28_0_0 = (Keyword)cIsFinalAssignment_1_28_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1_28_1 = (Assignment)cGroup_1_28.eContents().get(1);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_28_1_0 = (RuleCall)cTypeAssignment_1_28_1.eContents().get(0);
+		private final Group cGroup_1_29 = (Group)cAlternatives_1.eContents().get(29);
+		private final Assignment cIsFinalAssignment_1_29_0 = (Assignment)cGroup_1_29.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_29_0_0 = (Keyword)cIsFinalAssignment_1_29_0.eContents().get(0);
+		private final Keyword cStateKeyword_1_29_1 = (Keyword)cGroup_1_29.eContents().get(1);
+		private final Assignment cIdAssignment_1_29_2 = (Assignment)cGroup_1_29.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_29_2_0 = (RuleCall)cIdAssignment_1_29_2.eContents().get(0);
+		private final Group cGroup_1_30 = (Group)cAlternatives_1.eContents().get(30);
+		private final Assignment cIsFinalAssignment_1_30_0 = (Assignment)cGroup_1_30.eContents().get(0);
+		private final Keyword cIsFinalFinalKeyword_1_30_0_0 = (Keyword)cIsFinalAssignment_1_30_0.eContents().get(0);
+		private final Assignment cIdAssignment_1_30_1 = (Assignment)cGroup_1_30.eContents().get(1);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_30_1_0 = (RuleCall)cIdAssignment_1_30_1.eContents().get(0);
+		private final Assignment cIsFinalAssignment_1_31 = (Assignment)cAlternatives_1.eContents().get(31);
+		private final Keyword cIsFinalFinalKeyword_1_31_0 = (Keyword)cIsFinalAssignment_1_31.eContents().get(0);
+		private final Group cGroup_1_32 = (Group)cAlternatives_1.eContents().get(32);
+		private final Assignment cTypeAssignment_1_32_0 = (Assignment)cGroup_1_32.eContents().get(0);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_32_0_0 = (RuleCall)cTypeAssignment_1_32_0.eContents().get(0);
+		private final Keyword cStateKeyword_1_32_1 = (Keyword)cGroup_1_32.eContents().get(1);
+		private final Assignment cIdAssignment_1_32_2 = (Assignment)cGroup_1_32.eContents().get(2);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_32_2_0 = (RuleCall)cIdAssignment_1_32_2.eContents().get(0);
+		private final Group cGroup_1_33 = (Group)cAlternatives_1.eContents().get(33);
+		private final Assignment cTypeAssignment_1_33_0 = (Assignment)cGroup_1_33.eContents().get(0);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_33_0_0 = (RuleCall)cTypeAssignment_1_33_0.eContents().get(0);
+		private final Keyword cStateKeyword_1_33_1 = (Keyword)cGroup_1_33.eContents().get(1);
+		private final Group cGroup_1_34 = (Group)cAlternatives_1.eContents().get(34);
+		private final Assignment cTypeAssignment_1_34_0 = (Assignment)cGroup_1_34.eContents().get(0);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_34_0_0 = (RuleCall)cTypeAssignment_1_34_0.eContents().get(0);
+		private final Assignment cIdAssignment_1_34_1 = (Assignment)cGroup_1_34.eContents().get(1);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_34_1_0 = (RuleCall)cIdAssignment_1_34_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_35 = (Assignment)cAlternatives_1.eContents().get(35);
+		private final RuleCall cTypeStateTypeEnumRuleCall_1_35_0 = (RuleCall)cTypeAssignment_1_35.eContents().get(0);
+		private final Group cGroup_1_36 = (Group)cAlternatives_1.eContents().get(36);
+		private final Keyword cStateKeyword_1_36_0 = (Keyword)cGroup_1_36.eContents().get(0);
+		private final Assignment cIdAssignment_1_36_1 = (Assignment)cGroup_1_36.eContents().get(1);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_36_1_0 = (RuleCall)cIdAssignment_1_36_1.eContents().get(0);
+		private final Keyword cStateKeyword_1_37 = (Keyword)cAlternatives_1.eContents().get(37);
+		private final Assignment cIdAssignment_1_38 = (Assignment)cAlternatives_1.eContents().get(38);
+		private final RuleCall cIdFullStateIDParserRuleCall_1_38_0 = (RuleCall)cIdAssignment_1_38.eContents().get(0);
+		
+		//TransitionState returns sync::State:
+		//  {sync::State} ((isInitial?="init" isFinal?="final") type=StateType "state" id=
+		//  FullStateID|(isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial
+		//  ?="init" isFinal?="final") type=StateType id=FullStateID|(isInitial?="init" isFinal
+		//  ?="final") "state" id=FullStateID|(isInitial?="init" isFinal?="final") type=
+		//  StateType|(isInitial?="init" isFinal?="final") "state"|(isInitial?="init" isFinal?=
+		//  "final") id=FullStateID|isInitial?="init" isFinal?="final"|(isFinal?="final"
+		//  isInitial?="init") type=StateType "state" id=FullStateID|(isFinal?="final" isInitial
+		//  ?="init") type=StateType "state"|(isFinal?="final" isInitial?="init") type=StateType
+		//  id=FullStateID|(isFinal?="final" isInitial?="init") "state" id=FullStateID|(isFinal
+		//  ?="final" isInitial?="init") type=StateType|(isFinal?="final" isInitial?="init")
+		//  "state"|(isFinal?="final" isInitial?="init") id=FullStateID|isFinal?="final"
+		//  isInitial?="init"|isInitial?="init" type=StateType "state" id=FullStateID|isInitial
+		//  ?="init" type=StateType "state"|isInitial?="init" type=StateType id=FullStateID|
+		//  isInitial?="init" "state" id=FullStateID|isInitial?="init" type=StateType|isInitial
+		//  ?="init" "state"|isInitial?="init" id=FullStateID|isInitial?="init"|isFinal?=
+		//  "final" type=StateType "state" id=FullStateID|isFinal?="final" type=StateType "state"
+		//  |isFinal?="final" type=StateType id=FullStateID|isFinal?="final" "state" id=
+		//  FullStateID|isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID
+		//  |isFinal?="final" id=FullStateID|isFinal?="final"|type=StateType "state" id=
+		//  FullStateID|type=StateType "state"|type=StateType id=FullStateID|type=StateType|
+		//  "state" id=FullStateID|"state"|id=FullStateID); 
+		//
+		//    
+		//            
+		//        
+		//        
+		//          
+		//        
+		//        
+		//          
+		//        
+		//        
+		//          
+		//        
+		//        
+		//        
+		//          
+		//        
+		//      
+		//        
+		//          
+		//        
+		//        
+		//      
+		//        
+		//   
+		////========================================================================================
+		////===  									    VAR,SIG  					               ===
+		////========================================================================================
+		////
+		public ParserRule getRule() { return rule; }
+
+		//{sync::State} ((isInitial?="init" isFinal?="final") type=StateType "state" id=
+		//FullStateID|(isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial
+		//?="init" isFinal?="final") type=StateType id=FullStateID|(isInitial?="init" isFinal
+		//?="final") "state" id=FullStateID|(isInitial?="init" isFinal?="final") type=
+		//StateType|(isInitial?="init" isFinal?="final") "state"|(isInitial?="init" isFinal?=
+		//"final") id=FullStateID|isInitial?="init" isFinal?="final"|(isFinal?="final"
+		//isInitial?="init") type=StateType "state" id=FullStateID|(isFinal?="final" isInitial
+		//?="init") type=StateType "state"|(isFinal?="final" isInitial?="init") type=StateType
+		//id=FullStateID|(isFinal?="final" isInitial?="init") "state" id=FullStateID|(isFinal
+		//?="final" isInitial?="init") type=StateType|(isFinal?="final" isInitial?="init")
+		//"state"|(isFinal?="final" isInitial?="init") id=FullStateID|isFinal?="final"
+		//isInitial?="init"|isInitial?="init" type=StateType "state" id=FullStateID|isInitial
+		//?="init" type=StateType "state"|isInitial?="init" type=StateType id=FullStateID|
+		//isInitial?="init" "state" id=FullStateID|isInitial?="init" type=StateType|isInitial
+		//?="init" "state"|isInitial?="init" id=FullStateID|isInitial?="init"|isFinal?=
+		//"final" type=StateType "state" id=FullStateID|isFinal?="final" type=StateType "state"
+		//|isFinal?="final" type=StateType id=FullStateID|isFinal?="final" "state" id=
+		//FullStateID|isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID
+		//|isFinal?="final" id=FullStateID|isFinal?="final"|type=StateType "state" id=
+		//FullStateID|type=StateType "state"|type=StateType id=FullStateID|type=StateType|
+		//"state" id=FullStateID|"state"|id=FullStateID)
+		public Group getGroup() { return cGroup; }
+
+		//{sync::State}
+		public Action getStateAction_0() { return cStateAction_0; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType "state" id=FullStateID|(
+		//isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial?="init"
+		//isFinal?="final") type=StateType id=FullStateID|(isInitial?="init" isFinal?="final"
+		//) "state" id=FullStateID|(isInitial?="init" isFinal?="final") type=StateType|(
+		//isInitial?="init" isFinal?="final") "state"|(isInitial?="init" isFinal?="final") id=
+		//FullStateID|isInitial?="init" isFinal?="final"|(isFinal?="final" isInitial?="init"
+		//) type=StateType "state" id=FullStateID|(isFinal?="final" isInitial?="init") type=
+		//StateType "state"|(isFinal?="final" isInitial?="init") type=StateType id=FullStateID
+		//|(isFinal?="final" isInitial?="init") "state" id=FullStateID|(isFinal?="final"
+		//isInitial?="init") type=StateType|(isFinal?="final" isInitial?="init") "state"|(
+		//isFinal?="final" isInitial?="init") id=FullStateID|isFinal?="final" isInitial?=
+		//"init"|isInitial?="init" type=StateType "state" id=FullStateID|isInitial?="init"
+		//type=StateType "state"|isInitial?="init" type=StateType id=FullStateID|isInitial?=
+		//"init" "state" id=FullStateID|isInitial?="init" type=StateType|isInitial?="init"
+		//"state"|isInitial?="init" id=FullStateID|isInitial?="init"|isFinal?="final" type=
+		//StateType "state" id=FullStateID|isFinal?="final" type=StateType "state"|isFinal?=
+		//"final" type=StateType id=FullStateID|isFinal?="final" "state" id=FullStateID|
+		//isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID|isFinal?=
+		//"final" id=FullStateID|isFinal?="final"|type=StateType "state" id=FullStateID|type=
+		//StateType "state"|type=StateType id=FullStateID|type=StateType|"state" id=
+		//FullStateID|"state"|id=FullStateID
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType "state" id=FullStateID
+		public Group getGroup_1_0() { return cGroup_1_0; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_0_0() { return cGroup_1_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_0_0_0() { return cIsInitialAssignment_1_0_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_0_0_0_0() { return cIsInitialInitKeyword_1_0_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_0_0_1() { return cIsFinalAssignment_1_0_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_0_0_1_0() { return cIsFinalFinalKeyword_1_0_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_0_1() { return cTypeAssignment_1_0_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_0_1_0() { return cTypeStateTypeEnumRuleCall_1_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_0_2() { return cStateKeyword_1_0_2; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_0_3() { return cIdAssignment_1_0_3; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_0_3_0() { return cIdFullStateIDParserRuleCall_1_0_3_0; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType "state"
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_1_0() { return cGroup_1_1_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_1_0_0() { return cIsInitialAssignment_1_1_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_1_0_0_0() { return cIsInitialInitKeyword_1_1_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_1_0_1() { return cIsFinalAssignment_1_1_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_1_0_1_0() { return cIsFinalFinalKeyword_1_1_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_1_1() { return cTypeAssignment_1_1_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_1_1_0() { return cTypeStateTypeEnumRuleCall_1_1_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_1_2() { return cStateKeyword_1_1_2; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType id=FullStateID
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_2_0() { return cGroup_1_2_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_2_0_0() { return cIsInitialAssignment_1_2_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_2_0_0_0() { return cIsInitialInitKeyword_1_2_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_2_0_1() { return cIsFinalAssignment_1_2_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_2_0_1_0() { return cIsFinalFinalKeyword_1_2_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_2_1() { return cTypeAssignment_1_2_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_2_1_0() { return cTypeStateTypeEnumRuleCall_1_2_1_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_2_2() { return cIdAssignment_1_2_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_2_2_0() { return cIdFullStateIDParserRuleCall_1_2_2_0; }
+
+		//(isInitial?="init" isFinal?="final") "state" id=FullStateID
+		public Group getGroup_1_3() { return cGroup_1_3; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_3_0() { return cGroup_1_3_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_3_0_0() { return cIsInitialAssignment_1_3_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_3_0_0_0() { return cIsInitialInitKeyword_1_3_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_3_0_1() { return cIsFinalAssignment_1_3_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_3_0_1_0() { return cIsFinalFinalKeyword_1_3_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_3_1() { return cStateKeyword_1_3_1; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_3_2() { return cIdAssignment_1_3_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_3_2_0() { return cIdFullStateIDParserRuleCall_1_3_2_0; }
+
+		//(isInitial?="init" isFinal?="final") type=StateType
+		public Group getGroup_1_4() { return cGroup_1_4; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_4_0() { return cGroup_1_4_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_4_0_0() { return cIsInitialAssignment_1_4_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_4_0_0_0() { return cIsInitialInitKeyword_1_4_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_4_0_1() { return cIsFinalAssignment_1_4_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_4_0_1_0() { return cIsFinalFinalKeyword_1_4_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_4_1() { return cTypeAssignment_1_4_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_4_1_0() { return cTypeStateTypeEnumRuleCall_1_4_1_0; }
+
+		//(isInitial?="init" isFinal?="final") "state"
+		public Group getGroup_1_5() { return cGroup_1_5; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_5_0() { return cGroup_1_5_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_5_0_0() { return cIsInitialAssignment_1_5_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_5_0_0_0() { return cIsInitialInitKeyword_1_5_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_5_0_1() { return cIsFinalAssignment_1_5_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_5_0_1_0() { return cIsFinalFinalKeyword_1_5_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_5_1() { return cStateKeyword_1_5_1; }
+
+		//(isInitial?="init" isFinal?="final") id=FullStateID
+		public Group getGroup_1_6() { return cGroup_1_6; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_6_0() { return cGroup_1_6_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_6_0_0() { return cIsInitialAssignment_1_6_0_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_6_0_0_0() { return cIsInitialInitKeyword_1_6_0_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_6_0_1() { return cIsFinalAssignment_1_6_0_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_6_0_1_0() { return cIsFinalFinalKeyword_1_6_0_1_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_6_1() { return cIdAssignment_1_6_1; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_6_1_0() { return cIdFullStateIDParserRuleCall_1_6_1_0; }
+
+		//isInitial?="init" isFinal?="final"
+		public Group getGroup_1_7() { return cGroup_1_7; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_7_0() { return cIsInitialAssignment_1_7_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_7_0_0() { return cIsInitialInitKeyword_1_7_0_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_7_1() { return cIsFinalAssignment_1_7_1; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_7_1_0() { return cIsFinalFinalKeyword_1_7_1_0; }
+
+		//(isFinal?="final" isInitial?="init") type=StateType "state" id=FullStateID
+		public Group getGroup_1_8() { return cGroup_1_8; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_8_0() { return cGroup_1_8_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_8_0_0() { return cIsFinalAssignment_1_8_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_8_0_0_0() { return cIsFinalFinalKeyword_1_8_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_8_0_1() { return cIsInitialAssignment_1_8_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_8_0_1_0() { return cIsInitialInitKeyword_1_8_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_8_1() { return cTypeAssignment_1_8_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_8_1_0() { return cTypeStateTypeEnumRuleCall_1_8_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_8_2() { return cStateKeyword_1_8_2; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_8_3() { return cIdAssignment_1_8_3; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_8_3_0() { return cIdFullStateIDParserRuleCall_1_8_3_0; }
+
+		//(isFinal?="final" isInitial?="init") type=StateType "state"
+		public Group getGroup_1_9() { return cGroup_1_9; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_9_0() { return cGroup_1_9_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_9_0_0() { return cIsFinalAssignment_1_9_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_9_0_0_0() { return cIsFinalFinalKeyword_1_9_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_9_0_1() { return cIsInitialAssignment_1_9_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_9_0_1_0() { return cIsInitialInitKeyword_1_9_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_9_1() { return cTypeAssignment_1_9_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_9_1_0() { return cTypeStateTypeEnumRuleCall_1_9_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_9_2() { return cStateKeyword_1_9_2; }
+
+		//(isFinal?="final" isInitial?="init") type=StateType id=FullStateID
+		public Group getGroup_1_10() { return cGroup_1_10; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_10_0() { return cGroup_1_10_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_10_0_0() { return cIsFinalAssignment_1_10_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_10_0_0_0() { return cIsFinalFinalKeyword_1_10_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_10_0_1() { return cIsInitialAssignment_1_10_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_10_0_1_0() { return cIsInitialInitKeyword_1_10_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_10_1() { return cTypeAssignment_1_10_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_10_1_0() { return cTypeStateTypeEnumRuleCall_1_10_1_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_10_2() { return cIdAssignment_1_10_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_10_2_0() { return cIdFullStateIDParserRuleCall_1_10_2_0; }
+
+		//(isFinal?="final" isInitial?="init") "state" id=FullStateID
+		public Group getGroup_1_11() { return cGroup_1_11; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_11_0() { return cGroup_1_11_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_11_0_0() { return cIsFinalAssignment_1_11_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_11_0_0_0() { return cIsFinalFinalKeyword_1_11_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_11_0_1() { return cIsInitialAssignment_1_11_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_11_0_1_0() { return cIsInitialInitKeyword_1_11_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_11_1() { return cStateKeyword_1_11_1; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_11_2() { return cIdAssignment_1_11_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_11_2_0() { return cIdFullStateIDParserRuleCall_1_11_2_0; }
+
+		//(isFinal?="final" isInitial?="init") type=StateType
+		public Group getGroup_1_12() { return cGroup_1_12; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_12_0() { return cGroup_1_12_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_12_0_0() { return cIsFinalAssignment_1_12_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_12_0_0_0() { return cIsFinalFinalKeyword_1_12_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_12_0_1() { return cIsInitialAssignment_1_12_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_12_0_1_0() { return cIsInitialInitKeyword_1_12_0_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_12_1() { return cTypeAssignment_1_12_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_12_1_0() { return cTypeStateTypeEnumRuleCall_1_12_1_0; }
+
+		//(isFinal?="final" isInitial?="init") "state"
+		public Group getGroup_1_13() { return cGroup_1_13; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_13_0() { return cGroup_1_13_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_13_0_0() { return cIsFinalAssignment_1_13_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_13_0_0_0() { return cIsFinalFinalKeyword_1_13_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_13_0_1() { return cIsInitialAssignment_1_13_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_13_0_1_0() { return cIsInitialInitKeyword_1_13_0_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_13_1() { return cStateKeyword_1_13_1; }
+
+		//(isFinal?="final" isInitial?="init") id=FullStateID
+		public Group getGroup_1_14() { return cGroup_1_14; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_14_0() { return cGroup_1_14_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_14_0_0() { return cIsFinalAssignment_1_14_0_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_14_0_0_0() { return cIsFinalFinalKeyword_1_14_0_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_14_0_1() { return cIsInitialAssignment_1_14_0_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_14_0_1_0() { return cIsInitialInitKeyword_1_14_0_1_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_14_1() { return cIdAssignment_1_14_1; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_14_1_0() { return cIdFullStateIDParserRuleCall_1_14_1_0; }
+
+		//isFinal?="final" isInitial?="init"
+		public Group getGroup_1_15() { return cGroup_1_15; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_15_0() { return cIsFinalAssignment_1_15_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_15_0_0() { return cIsFinalFinalKeyword_1_15_0_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_15_1() { return cIsInitialAssignment_1_15_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_15_1_0() { return cIsInitialInitKeyword_1_15_1_0; }
+
+		//isInitial?="init" type=StateType "state" id=FullStateID
+		public Group getGroup_1_16() { return cGroup_1_16; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_16_0() { return cIsInitialAssignment_1_16_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_16_0_0() { return cIsInitialInitKeyword_1_16_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_16_1() { return cTypeAssignment_1_16_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_16_1_0() { return cTypeStateTypeEnumRuleCall_1_16_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_16_2() { return cStateKeyword_1_16_2; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_16_3() { return cIdAssignment_1_16_3; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_16_3_0() { return cIdFullStateIDParserRuleCall_1_16_3_0; }
+
+		//isInitial?="init" type=StateType "state"
+		public Group getGroup_1_17() { return cGroup_1_17; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_17_0() { return cIsInitialAssignment_1_17_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_17_0_0() { return cIsInitialInitKeyword_1_17_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_17_1() { return cTypeAssignment_1_17_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_17_1_0() { return cTypeStateTypeEnumRuleCall_1_17_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_17_2() { return cStateKeyword_1_17_2; }
+
+		//isInitial?="init" type=StateType id=FullStateID
+		public Group getGroup_1_18() { return cGroup_1_18; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_18_0() { return cIsInitialAssignment_1_18_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_18_0_0() { return cIsInitialInitKeyword_1_18_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_18_1() { return cTypeAssignment_1_18_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_18_1_0() { return cTypeStateTypeEnumRuleCall_1_18_1_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_18_2() { return cIdAssignment_1_18_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_18_2_0() { return cIdFullStateIDParserRuleCall_1_18_2_0; }
+
+		//isInitial?="init" "state" id=FullStateID
+		public Group getGroup_1_19() { return cGroup_1_19; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_19_0() { return cIsInitialAssignment_1_19_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_19_0_0() { return cIsInitialInitKeyword_1_19_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_19_1() { return cStateKeyword_1_19_1; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_19_2() { return cIdAssignment_1_19_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_19_2_0() { return cIdFullStateIDParserRuleCall_1_19_2_0; }
+
+		//isInitial?="init" type=StateType
+		public Group getGroup_1_20() { return cGroup_1_20; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_20_0() { return cIsInitialAssignment_1_20_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_20_0_0() { return cIsInitialInitKeyword_1_20_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_20_1() { return cTypeAssignment_1_20_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_20_1_0() { return cTypeStateTypeEnumRuleCall_1_20_1_0; }
+
+		//isInitial?="init" "state"
+		public Group getGroup_1_21() { return cGroup_1_21; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_21_0() { return cIsInitialAssignment_1_21_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_21_0_0() { return cIsInitialInitKeyword_1_21_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_21_1() { return cStateKeyword_1_21_1; }
+
+		//isInitial?="init" id=FullStateID
+		public Group getGroup_1_22() { return cGroup_1_22; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_22_0() { return cIsInitialAssignment_1_22_0; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_22_0_0() { return cIsInitialInitKeyword_1_22_0_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_22_1() { return cIdAssignment_1_22_1; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_22_1_0() { return cIdFullStateIDParserRuleCall_1_22_1_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1_23() { return cIsInitialAssignment_1_23; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_23_0() { return cIsInitialInitKeyword_1_23_0; }
+
+		//isFinal?="final" type=StateType "state" id=FullStateID
+		public Group getGroup_1_24() { return cGroup_1_24; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_24_0() { return cIsFinalAssignment_1_24_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_24_0_0() { return cIsFinalFinalKeyword_1_24_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_24_1() { return cTypeAssignment_1_24_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_24_1_0() { return cTypeStateTypeEnumRuleCall_1_24_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_24_2() { return cStateKeyword_1_24_2; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_24_3() { return cIdAssignment_1_24_3; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_24_3_0() { return cIdFullStateIDParserRuleCall_1_24_3_0; }
+
+		//isFinal?="final" type=StateType "state"
+		public Group getGroup_1_25() { return cGroup_1_25; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_25_0() { return cIsFinalAssignment_1_25_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_25_0_0() { return cIsFinalFinalKeyword_1_25_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_25_1() { return cTypeAssignment_1_25_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_25_1_0() { return cTypeStateTypeEnumRuleCall_1_25_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_25_2() { return cStateKeyword_1_25_2; }
+
+		//isFinal?="final" type=StateType id=FullStateID
+		public Group getGroup_1_26() { return cGroup_1_26; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_26_0() { return cIsFinalAssignment_1_26_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_26_0_0() { return cIsFinalFinalKeyword_1_26_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_26_1() { return cTypeAssignment_1_26_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_26_1_0() { return cTypeStateTypeEnumRuleCall_1_26_1_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_26_2() { return cIdAssignment_1_26_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_26_2_0() { return cIdFullStateIDParserRuleCall_1_26_2_0; }
+
+		//isFinal?="final" "state" id=FullStateID
+		public Group getGroup_1_27() { return cGroup_1_27; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_27_0() { return cIsFinalAssignment_1_27_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_27_0_0() { return cIsFinalFinalKeyword_1_27_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_27_1() { return cStateKeyword_1_27_1; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_27_2() { return cIdAssignment_1_27_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_27_2_0() { return cIdFullStateIDParserRuleCall_1_27_2_0; }
+
+		//isFinal?="final" type=StateType
+		public Group getGroup_1_28() { return cGroup_1_28; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_28_0() { return cIsFinalAssignment_1_28_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_28_0_0() { return cIsFinalFinalKeyword_1_28_0_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_28_1() { return cTypeAssignment_1_28_1; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_28_1_0() { return cTypeStateTypeEnumRuleCall_1_28_1_0; }
+
+		//isFinal?="final" "state" id=FullStateID
+		public Group getGroup_1_29() { return cGroup_1_29; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_29_0() { return cIsFinalAssignment_1_29_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_29_0_0() { return cIsFinalFinalKeyword_1_29_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_29_1() { return cStateKeyword_1_29_1; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_29_2() { return cIdAssignment_1_29_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_29_2_0() { return cIdFullStateIDParserRuleCall_1_29_2_0; }
+
+		//isFinal?="final" id=FullStateID
+		public Group getGroup_1_30() { return cGroup_1_30; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_30_0() { return cIsFinalAssignment_1_30_0; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_30_0_0() { return cIsFinalFinalKeyword_1_30_0_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_30_1() { return cIdAssignment_1_30_1; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_30_1_0() { return cIdFullStateIDParserRuleCall_1_30_1_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_1_31() { return cIsFinalAssignment_1_31; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_1_31_0() { return cIsFinalFinalKeyword_1_31_0; }
+
+		//type=StateType "state" id=FullStateID
+		public Group getGroup_1_32() { return cGroup_1_32; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_32_0() { return cTypeAssignment_1_32_0; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_32_0_0() { return cTypeStateTypeEnumRuleCall_1_32_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_32_1() { return cStateKeyword_1_32_1; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_32_2() { return cIdAssignment_1_32_2; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_32_2_0() { return cIdFullStateIDParserRuleCall_1_32_2_0; }
+
+		//type=StateType "state"
+		public Group getGroup_1_33() { return cGroup_1_33; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_33_0() { return cTypeAssignment_1_33_0; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_33_0_0() { return cTypeStateTypeEnumRuleCall_1_33_0_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_33_1() { return cStateKeyword_1_33_1; }
+
+		//type=StateType id=FullStateID
+		public Group getGroup_1_34() { return cGroup_1_34; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_34_0() { return cTypeAssignment_1_34_0; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_34_0_0() { return cTypeStateTypeEnumRuleCall_1_34_0_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_34_1() { return cIdAssignment_1_34_1; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_34_1_0() { return cIdFullStateIDParserRuleCall_1_34_1_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_1_35() { return cTypeAssignment_1_35; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_1_35_0() { return cTypeStateTypeEnumRuleCall_1_35_0; }
+
+		//"state" id=FullStateID
+		public Group getGroup_1_36() { return cGroup_1_36; }
+
+		//"state"
+		public Keyword getStateKeyword_1_36_0() { return cStateKeyword_1_36_0; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_36_1() { return cIdAssignment_1_36_1; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_36_1_0() { return cIdFullStateIDParserRuleCall_1_36_1_0; }
+
+		//"state"
+		public Keyword getStateKeyword_1_37() { return cStateKeyword_1_37; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_1_38() { return cIdAssignment_1_38; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_1_38_0() { return cIdFullStateIDParserRuleCall_1_38_0; }
+	}
+
+	public class ValuedObjectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedObject");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cSignalParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cVariableParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//ValuedObject returns sync::ValuedObject:
+		//  Signal|Variable;  
+		////========================================================================================
+		////===  									    VAR,SIG  					               ===
+		////========================================================================================
+		////
+		public ParserRule getRule() { return rule; }
+
+		//Signal|Variable  
+		////========================================================================================
+		////===  									    VAR,SIG  					               ===
+		////========================================================================================
+		////
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Signal
+		public RuleCall getSignalParserRuleCall_0() { return cSignalParserRuleCall_0; }
+
+		//Variable
+		public RuleCall getVariableParserRuleCall_1() { return cVariableParserRuleCall_1; }
+	}
+
+	public class VariableElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Variable");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cVarKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cColonSpaceKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Assignment cTypeAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_2_0_1_0 = (RuleCall)cTypeAssignment_2_0_1.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
+		private final Keyword cColonEqualsSignKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Assignment cInitialValueAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
+		private final RuleCall cInitialValueIDTerminalRuleCall_2_1_1_0 = (RuleCall)cInitialValueAssignment_2_1_1.eContents().get(0);
+		private final Keyword cColonSpaceKeyword_2_1_2 = (Keyword)cGroup_2_1.eContents().get(2);
+		private final Assignment cTypeAssignment_2_1_3 = (Assignment)cGroup_2_1.eContents().get(3);
+		private final RuleCall cTypeValueTypeEnumRuleCall_2_1_3_0 = (RuleCall)cTypeAssignment_2_1_3.eContents().get(0);
+		
+		//Variable returns sync::Variable:
+		//  "var" name=ID (": " type=ValueType|":=" initialValue=ID ": " type=ValueType); 
+		//
+		//    
+		//          //or type only, type being either pre-defined or hostcode
+		//        // either initial value and type
+		public ParserRule getRule() { return rule; }
+
+		//"var" name=ID (": " type=ValueType|":=" initialValue=ID ": " type=ValueType) 
+		//          //or type only, type being either pre-defined or hostcode
+		//        // either initial value and type
+		public Group getGroup() { return cGroup; }
+
+		//"var"
+		public Keyword getVarKeyword_0() { return cVarKeyword_0; }
+
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+
+		//": " type=ValueType|":=" initialValue=ID ": " type=ValueType       //or type only, type being either pre-defined or hostcode
+		//        // either initial value and type
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+
+		//": " type=ValueType
+		public Group getGroup_2_0() { return cGroup_2_0; }
+
+		//": "
+		public Keyword getColonSpaceKeyword_2_0_0() { return cColonSpaceKeyword_2_0_0; }
+
+		//type=ValueType
+		public Assignment getTypeAssignment_2_0_1() { return cTypeAssignment_2_0_1; }
+
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_2_0_1_0() { return cTypeValueTypeEnumRuleCall_2_0_1_0; }
+
+		//":=" initialValue=ID ": " type=ValueType
+		public Group getGroup_2_1() { return cGroup_2_1; }
+
+		//":="
+		public Keyword getColonEqualsSignKeyword_2_1_0() { return cColonEqualsSignKeyword_2_1_0; }
+
+		//initialValue=ID
+		public Assignment getInitialValueAssignment_2_1_1() { return cInitialValueAssignment_2_1_1; }
+
+		//ID
+		public RuleCall getInitialValueIDTerminalRuleCall_2_1_1_0() { return cInitialValueIDTerminalRuleCall_2_1_1_0; }
+
+		//": "
+		public Keyword getColonSpaceKeyword_2_1_2() { return cColonSpaceKeyword_2_1_2; }
+
+		//type=ValueType
+		public Assignment getTypeAssignment_2_1_3() { return cTypeAssignment_2_1_3; }
+
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_2_1_3_0() { return cTypeValueTypeEnumRuleCall_2_1_3_0; }
+	}
+
+	public class SignalElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Assignment cIsInputAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
+		private final Keyword cIsInputInputKeyword_0_0_0 = (Keyword)cIsInputAssignment_0_0.eContents().get(0);
+		private final Assignment cIsOutputAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final Keyword cIsOutputOutputKeyword_0_1_0 = (Keyword)cIsOutputAssignment_0_1.eContents().get(0);
+		private final Group cGroup_0_2 = (Group)cAlternatives_0.eContents().get(2);
+		private final Assignment cIsInputAssignment_0_2_0 = (Assignment)cGroup_0_2.eContents().get(0);
+		private final Keyword cIsInputInputKeyword_0_2_0_0 = (Keyword)cIsInputAssignment_0_2_0.eContents().get(0);
+		private final Assignment cIsOutputAssignment_0_2_1 = (Assignment)cGroup_0_2.eContents().get(1);
+		private final Keyword cIsOutputOutputKeyword_0_2_1_0 = (Keyword)cIsOutputAssignment_0_2_1.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameQualifiedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cColonEqualsSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cInitialValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cInitialValueSignalValueParserRuleCall_2_1_0 = (RuleCall)cInitialValueAssignment_2_1.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
+		private final Keyword cColonSpaceKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
+		private final Assignment cTypeAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_3_0_1_0 = (RuleCall)cTypeAssignment_3_0_1.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cAlternatives_3.eContents().get(1);
+		private final Keyword cCombineKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
+		private final Assignment cTypeAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_3_1_1_0 = (RuleCall)cTypeAssignment_3_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_3_1_2 = (Keyword)cGroup_3_1.eContents().get(2);
+		private final Alternatives cAlternatives_3_1_3 = (Alternatives)cGroup_3_1.eContents().get(3);
+		private final Assignment cCombineOperatorAssignment_3_1_3_0 = (Assignment)cAlternatives_3_1_3.eContents().get(0);
+		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_3_1_3_0_0 = (RuleCall)cCombineOperatorAssignment_3_1_3_0.eContents().get(0);
+		private final Assignment cHostCombineOperatorAssignment_3_1_3_1 = (Assignment)cAlternatives_3_1_3.eContents().get(1);
+		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_3_1_3_1_0 = (RuleCall)cHostCombineOperatorAssignment_3_1_3_1.eContents().get(0);
+		
+		//Signal returns sync::Signal:
+		//  (isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=
+		//  QualifiedName (":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=
+		//  ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING))?; 
+		//
+		//    
+		//    
+		//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		//         // after the initial value, either the type or the combine type has to come
+		//   // if it is not set, the default type PURE
+		public ParserRule getRule() { return rule; }
+
+		//(isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=
+		//QualifiedName (":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=
+		//ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING))? 
+		//    
+		//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		//         // after the initial value, either the type or the combine type has to come
+		//   // if it is not set, the default type PURE
+		public Group getGroup() { return cGroup; }
+
+		//isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output" 
+		//    
+		//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
+		//isInput?="input"
+		public Assignment getIsInputAssignment_0_0() { return cIsInputAssignment_0_0; }
+
+		//"input"
+		public Keyword getIsInputInputKeyword_0_0_0() { return cIsInputInputKeyword_0_0_0; }
+
+		//isOutput?="output"
+		public Assignment getIsOutputAssignment_0_1() { return cIsOutputAssignment_0_1; }
+
+		//"output"
+		public Keyword getIsOutputOutputKeyword_0_1_0() { return cIsOutputOutputKeyword_0_1_0; }
+
+		//isInput?="input" isOutput?="output"
+		public Group getGroup_0_2() { return cGroup_0_2; }
+
+		//isInput?="input"
+		public Assignment getIsInputAssignment_0_2_0() { return cIsInputAssignment_0_2_0; }
+
+		//"input"
+		public Keyword getIsInputInputKeyword_0_2_0_0() { return cIsInputInputKeyword_0_2_0_0; }
+
+		//isOutput?="output"
+		public Assignment getIsOutputAssignment_0_2_1() { return cIsOutputAssignment_0_2_1; }
+
+		//"output"
+		public Keyword getIsOutputOutputKeyword_0_2_1_0() { return cIsOutputOutputKeyword_0_2_1_0; }
+
+		//name=QualifiedName 
+		//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//QualifiedName
+		public RuleCall getNameQualifiedNameParserRuleCall_1_0() { return cNameQualifiedNameParserRuleCall_1_0; }
+
+		//(":=" initialValue=SignalValue)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//":="
+		public Keyword getColonEqualsSignKeyword_2_0() { return cColonEqualsSignKeyword_2_0; }
+
+		//initialValue=SignalValue
+		public Assignment getInitialValueAssignment_2_1() { return cInitialValueAssignment_2_1; }
+
+		//SignalValue
+		public RuleCall getInitialValueSignalValueParserRuleCall_2_1_0() { return cInitialValueSignalValueParserRuleCall_2_1_0; }
+
+		//(": " type=ValueType|": combine" type=ValueType "with" (combineOperator=
+		//CombineOperator|hostCombineOperator=STRING))?   // after the initial value, either the type or the combine type has to come
+		//   // if it is not set, the default type PURE
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+
+		//": " type=ValueType
+		public Group getGroup_3_0() { return cGroup_3_0; }
+
+		//": "
+		public Keyword getColonSpaceKeyword_3_0_0() { return cColonSpaceKeyword_3_0_0; }
+
+		//type=ValueType
+		public Assignment getTypeAssignment_3_0_1() { return cTypeAssignment_3_0_1; }
+
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_3_0_1_0() { return cTypeValueTypeEnumRuleCall_3_0_1_0; }
+
+		//": combine" type=ValueType "with" (combineOperator=CombineOperator|
+		//hostCombineOperator=STRING)
+		public Group getGroup_3_1() { return cGroup_3_1; }
+
+		//": combine"
+		public Keyword getCombineKeyword_3_1_0() { return cCombineKeyword_3_1_0; }
+
+		//type=ValueType
+		public Assignment getTypeAssignment_3_1_1() { return cTypeAssignment_3_1_1; }
+
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_3_1_1_0() { return cTypeValueTypeEnumRuleCall_3_1_1_0; }
+
+		//"with"
+		public Keyword getWithKeyword_3_1_2() { return cWithKeyword_3_1_2; }
+
+		//combineOperator=CombineOperator|hostCombineOperator=STRING
+		public Alternatives getAlternatives_3_1_3() { return cAlternatives_3_1_3; }
+
+		//combineOperator=CombineOperator
+		public Assignment getCombineOperatorAssignment_3_1_3_0() { return cCombineOperatorAssignment_3_1_3_0; }
+
+		//CombineOperator
+		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_3_1_3_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_3_1_3_0_0; }
+
+		//hostCombineOperator=STRING
+		public Assignment getHostCombineOperatorAssignment_3_1_3_1() { return cHostCombineOperatorAssignment_3_1_3_1; }
+
+		//STRING
+		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_3_1_3_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_3_1_3_1_0; }
+	}
+
+	public class SignalValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SignalValue");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cINTTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cBooleanTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//SignalValue returns ecore::EString:
+		//  (INT|ID|Boolean)+;
+		public ParserRule getRule() { return rule; }
+
+		//(INT|ID|Boolean)+
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//INT
+		public RuleCall getINTTerminalRuleCall_0() { return cINTTerminalRuleCall_0; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
+
+		//Boolean
+		public RuleCall getBooleanTerminalRuleCall_2() { return cBooleanTerminalRuleCall_2; }
+	}
+
+	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "QualifiedName");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_0_0 = (RuleCall)cGroup_0.eContents().get(0);
+		private final Keyword cFullStopKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		
+		//QualifiedName returns ecore::EString:
+		//  (ID ".")* ID;
+		public ParserRule getRule() { return rule; }
+
+		//(ID ".")* ID
+		public Group getGroup() { return cGroup; }
+
+		//(ID ".")*
+		public Group getGroup_0() { return cGroup_0; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_0_0() { return cIDTerminalRuleCall_0_0; }
+
+		//"."
+		public Keyword getFullStopKeyword_0_1() { return cFullStopKeyword_0_1; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
+	}
+
+	public class ActionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Action");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cActionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cIsImmediateAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cIsImmediateNumberSignKeyword_1_0 = (Keyword)cIsImmediateAssignment_1.eContents().get(0);
+		private final Assignment cDelayAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cDelayINTTerminalRuleCall_2_0 = (RuleCall)cDelayAssignment_2.eContents().get(0);
+		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTriggerBooleanExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cSolidusKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Group cGroup_4_1 = (Group)cGroup_4.eContents().get(1);
+		private final Assignment cEffectsAssignment_4_1_0 = (Assignment)cGroup_4_1.eContents().get(0);
+		private final RuleCall cEffectsEffectParserRuleCall_4_1_0_0 = (RuleCall)cEffectsAssignment_4_1_0.eContents().get(0);
+		private final Keyword cCommaKeyword_4_1_1 = (Keyword)cGroup_4_1.eContents().get(1);
+		
+		//Action returns sync::Action:
+		//  {sync::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects
+		//  +=Effect ","?)*)?;   ////==============================================================================
+		////// THE REST IS COPY/PASTE 'd from 
+		//////{@link de.cau.cs.kieler.synccharts..labelparser.ActionLabel.xtext}
+		//////==============================================================================
+		//////==============================================================================
+		////// Basic Actions
+		//////==============================================================================
+		public ParserRule getRule() { return rule; }
+
+		//{sync::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects
+		//+=Effect ","?)*)?
+		public Group getGroup() { return cGroup; }
+
+		//{sync::Action}
+		public Action getActionAction_0() { return cActionAction_0; }
+
+		//isImmediate?="#"?
+		public Assignment getIsImmediateAssignment_1() { return cIsImmediateAssignment_1; }
+
+		//"#"
+		public Keyword getIsImmediateNumberSignKeyword_1_0() { return cIsImmediateNumberSignKeyword_1_0; }
+
+		//delay=INT?
+		public Assignment getDelayAssignment_2() { return cDelayAssignment_2; }
+
+		//INT
+		public RuleCall getDelayINTTerminalRuleCall_2_0() { return cDelayINTTerminalRuleCall_2_0; }
+
+		//trigger=BooleanExpression?
+		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
+
+		//BooleanExpression
+		public RuleCall getTriggerBooleanExpressionParserRuleCall_3_0() { return cTriggerBooleanExpressionParserRuleCall_3_0; }
+
+		//("/" (effects+=Effect ","?)*)?
+		public Group getGroup_4() { return cGroup_4; }
+
+		//"/"
+		public Keyword getSolidusKeyword_4_0() { return cSolidusKeyword_4_0; }
+
+		//(effects+=Effect ","?)*
+		public Group getGroup_4_1() { return cGroup_4_1; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_4_1_0() { return cEffectsAssignment_4_1_0; }
+
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_4_1_0_0() { return cEffectsEffectParserRuleCall_4_1_0_0; }
+
+		//","?
+		public Keyword getCommaKeyword_4_1_1() { return cCommaKeyword_4_1_1; }
+	}
+
+	public class EffectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Effect");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cEmissionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cAssignmentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cHostCodeParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//Effect returns sync::Effect:
+		//  Emission|Assignment|HostCode;
+		public ParserRule getRule() { return rule; }
+
+		//Emission|Assignment|HostCode
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Emission
+		public RuleCall getEmissionParserRuleCall_0() { return cEmissionParserRuleCall_0; }
+
+		//Assignment
+		public RuleCall getAssignmentParserRuleCall_1() { return cAssignmentParserRuleCall_1; }
+
+		//HostCode
+		public RuleCall getHostCodeParserRuleCall_2() { return cHostCodeParserRuleCall_2; }
+	}
+
+	public class EmissionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Emission");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cSignalAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cSignalSignalCrossReference_0_0 = (CrossReference)cSignalAssignment_0.eContents().get(0);
+		private final RuleCall cSignalSignalIDTerminalRuleCall_0_0_1 = (RuleCall)cSignalSignalCrossReference_0_0.eContents().get(1);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
+		private final Assignment cNewValueAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cNewValueValueExpressionParserRuleCall_1_0_1_0 = (RuleCall)cNewValueAssignment_1_0_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_0_2 = (Keyword)cGroup_1_0.eContents().get(2);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
+		private final Assignment cNewValueAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cNewValueBooleanExpressionParserRuleCall_1_1_1_0 = (RuleCall)cNewValueAssignment_1_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_1_2 = (Keyword)cGroup_1_1.eContents().get(2);
+		
+		//Emission returns sync::Emission:
+		//  signal=[sync::Signal] ("(" newValue=ValueExpression ")"|"(" newValue=
+		//  BooleanExpression ")")?;
+		public ParserRule getRule() { return rule; }
+
+		//signal=[sync::Signal] ("(" newValue=ValueExpression ")"|"(" newValue=
+		//BooleanExpression ")")?
+		public Group getGroup() { return cGroup; }
+
+		//signal=[sync::Signal]
+		public Assignment getSignalAssignment_0() { return cSignalAssignment_0; }
+
+		//[sync::Signal]
+		public CrossReference getSignalSignalCrossReference_0_0() { return cSignalSignalCrossReference_0_0; }
+
+		//ID
+		public RuleCall getSignalSignalIDTerminalRuleCall_0_0_1() { return cSignalSignalIDTerminalRuleCall_0_0_1; }
+
+		//("(" newValue=ValueExpression ")"|"(" newValue=BooleanExpression ")")?
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//"(" newValue=ValueExpression ")"
+		public Group getGroup_1_0() { return cGroup_1_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1_0_0() { return cLeftParenthesisKeyword_1_0_0; }
+
+		//newValue=ValueExpression
+		public Assignment getNewValueAssignment_1_0_1() { return cNewValueAssignment_1_0_1; }
+
+		//ValueExpression
+		public RuleCall getNewValueValueExpressionParserRuleCall_1_0_1_0() { return cNewValueValueExpressionParserRuleCall_1_0_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_1_0_2() { return cRightParenthesisKeyword_1_0_2; }
+
+		//"(" newValue=BooleanExpression ")"
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1_1_0() { return cLeftParenthesisKeyword_1_1_0; }
+
+		//newValue=BooleanExpression
+		public Assignment getNewValueAssignment_1_1_1() { return cNewValueAssignment_1_1_1; }
+
+		//BooleanExpression
+		public RuleCall getNewValueBooleanExpressionParserRuleCall_1_1_1_0() { return cNewValueBooleanExpressionParserRuleCall_1_1_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_1_1_2() { return cRightParenthesisKeyword_1_1_2; }
+	}
+
+	public class AssignmentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Assignment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cVariableAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cVariableVariableCrossReference_0_0 = (CrossReference)cVariableAssignment_0.eContents().get(0);
+		private final RuleCall cVariableVariableIDTerminalRuleCall_0_0_1 = (RuleCall)cVariableVariableCrossReference_0_0.eContents().get(1);
+		private final Keyword cColonEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Assignment cExpressionAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
+		private final RuleCall cExpressionValueExpressionParserRuleCall_2_0_0 = (RuleCall)cExpressionAssignment_2_0.eContents().get(0);
+		private final Assignment cExpressionAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final RuleCall cExpressionBooleanExpressionParserRuleCall_2_1_0 = (RuleCall)cExpressionAssignment_2_1.eContents().get(0);
+		
+		//Assignment returns sync::Assignment:
+		//  variable=[sync::Variable] ":=" (expression=ValueExpression|expression=
+		//  BooleanExpression);
+		public ParserRule getRule() { return rule; }
+
+		//variable=[sync::Variable] ":=" (expression=ValueExpression|expression=
+		//BooleanExpression)
+		public Group getGroup() { return cGroup; }
+
+		//variable=[sync::Variable]
+		public Assignment getVariableAssignment_0() { return cVariableAssignment_0; }
+
+		//[sync::Variable]
+		public CrossReference getVariableVariableCrossReference_0_0() { return cVariableVariableCrossReference_0_0; }
+
+		//ID
+		public RuleCall getVariableVariableIDTerminalRuleCall_0_0_1() { return cVariableVariableIDTerminalRuleCall_0_0_1; }
+
+		//":="
+		public Keyword getColonEqualsSignKeyword_1() { return cColonEqualsSignKeyword_1; }
+
+		//expression=ValueExpression|expression=BooleanExpression
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+
+		//expression=ValueExpression
+		public Assignment getExpressionAssignment_2_0() { return cExpressionAssignment_2_0; }
+
+		//ValueExpression
+		public RuleCall getExpressionValueExpressionParserRuleCall_2_0_0() { return cExpressionValueExpressionParserRuleCall_2_0_0; }
+
+		//expression=BooleanExpression
+		public Assignment getExpressionAssignment_2_1() { return cExpressionAssignment_2_1; }
+
+		//BooleanExpression
+		public RuleCall getExpressionBooleanExpressionParserRuleCall_2_1_0() { return cExpressionBooleanExpressionParserRuleCall_2_1_0; }
+	}
+
+	public class SignalReferenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SignalReference");
+		private final Assignment cSignalAssignment = (Assignment)rule.eContents().get(1);
+		private final CrossReference cSignalSignalCrossReference_0 = (CrossReference)cSignalAssignment.eContents().get(0);
+		private final RuleCall cSignalSignalQualifiedNameParserRuleCall_0_1 = (RuleCall)cSignalSignalCrossReference_0.eContents().get(1);
+		
+		//SignalReference returns sync::SignalReference:
+		//  signal=[sync::Signal|QualifiedName];
+		public ParserRule getRule() { return rule; }
+
+		//signal=[sync::Signal|QualifiedName]
+		public Assignment getSignalAssignment() { return cSignalAssignment; }
+
+		//[sync::Signal|QualifiedName]
+		public CrossReference getSignalSignalCrossReference_0() { return cSignalSignalCrossReference_0; }
+
+		//QualifiedName
+		public RuleCall getSignalSignalQualifiedNameParserRuleCall_0_1() { return cSignalSignalQualifiedNameParserRuleCall_0_1; }
+	}
+
+	public class VariableReferenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableReference");
+		private final Assignment cVariableAssignment = (Assignment)rule.eContents().get(1);
+		private final CrossReference cVariableVariableCrossReference_0 = (CrossReference)cVariableAssignment.eContents().get(0);
+		private final RuleCall cVariableVariableIDTerminalRuleCall_0_1 = (RuleCall)cVariableVariableCrossReference_0.eContents().get(1);
+		
+		//VariableReference returns sync::VariableReference:
+		//  variable=[sync::Variable]; 
+		//
+		//    
+		//  
+		//////Signal returns sync::Signal:
+		//////    name=ID;
+		//////    
+		//////Variable returns sync::Variable:
+		//////    name=ID;
+		//
+		////==============================================================================
+		//// Values
+		////==============================================================================
+		//// redefine INT terminal to allow negative numbers
+		public ParserRule getRule() { return rule; }
+
+		//variable=[sync::Variable]
+		public Assignment getVariableAssignment() { return cVariableAssignment; }
+
+		//[sync::Variable]
+		public CrossReference getVariableVariableCrossReference_0() { return cVariableVariableCrossReference_0; }
+
+		//ID
+		public RuleCall getVariableVariableIDTerminalRuleCall_0_1() { return cVariableVariableIDTerminalRuleCall_0_1; }
+	}
+
+	public class IntValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IntValue");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueINTTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		
+		//IntValue returns sync::IntValue:
+		//  value=INT;
+		public ParserRule getRule() { return rule; }
+
+		//value=INT
+		public Assignment getValueAssignment() { return cValueAssignment; }
+
+		//INT
+		public RuleCall getValueINTTerminalRuleCall_0() { return cValueINTTerminalRuleCall_0; }
+	}
+
+	public class FloatValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FloatValue");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueFloatTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		
+		//FloatValue returns sync::FloatValue:
+		//  value=Float;
+		public ParserRule getRule() { return rule; }
+
+		//value=Float
+		public Assignment getValueAssignment() { return cValueAssignment; }
+
+		//Float
+		public RuleCall getValueFloatTerminalRuleCall_0() { return cValueFloatTerminalRuleCall_0; }
+	}
+
+	public class BooleanValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanValue");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueBooleanTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		
+		//BooleanValue returns sync::BooleanValue:
+		//  value=Boolean;
+		public ParserRule getRule() { return rule; }
+
+		//value=Boolean
+		public Assignment getValueAssignment() { return cValueAssignment; }
+
+		//Boolean
+		public RuleCall getValueBooleanTerminalRuleCall_0() { return cValueBooleanTerminalRuleCall_0; }
+	}
+
+	public class ValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Value");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cBooleanValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//Value returns sync::Value:
+		//  IntValue|FloatValue|BooleanValue; 
+		//
+		//    
+		//    //// make sure the Float rule does not shadow the INT rule
+		public ParserRule getRule() { return rule; }
+
+		//IntValue|FloatValue|BooleanValue 
+		//
+		//    
+		//    //// make sure the Float rule does not shadow the INT rule
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//IntValue
+		public RuleCall getIntValueParserRuleCall_0() { return cIntValueParserRuleCall_0; }
+
+		//FloatValue
+		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
+
+		//BooleanValue
+		public RuleCall getBooleanValueParserRuleCall_2() { return cBooleanValueParserRuleCall_2; }
+	}
+
+	public class ValOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cOperatorAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cOperatorValOperatorEnumRuleCall_0_0 = (RuleCall)cOperatorAssignment_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cSubExpressionsSignalReferenceParserRuleCall_1_0 = (RuleCall)cSubExpressionsAssignment_1.eContents().get(0);
+		
+		//ValOperation returns sync::ComplexExpression:
+		//  operator=ValOperator subExpressions+=SignalReference;   //
+		////==============================================================================
+		//// Arithmetic Expressions
+		////==============================================================================
+		//// Example: ?A  
+		//    
+		//      //
+		//// everything that evaluates to a primitive number value
+		public ParserRule getRule() { return rule; }
+
+		//operator=ValOperator subExpressions+=SignalReference
+		public Group getGroup() { return cGroup; }
+
+		//operator=ValOperator
+		public Assignment getOperatorAssignment_0() { return cOperatorAssignment_0; }
+
+		//ValOperator
+		public RuleCall getOperatorValOperatorEnumRuleCall_0_0() { return cOperatorValOperatorEnumRuleCall_0_0; }
+
+		//subExpressions+=SignalReference
+		public Assignment getSubExpressionsAssignment_1() { return cSubExpressionsAssignment_1; }
+
+		//SignalReference
+		public RuleCall getSubExpressionsSignalReferenceParserRuleCall_1_0() { return cSubExpressionsSignalReferenceParserRuleCall_1_0; }
+	}
+
+	public class ValueExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValueExpression");
+		private final RuleCall cPlusOperationParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//ValueExpression returns sync::Expression:
+		//  PlusOperation;   //
+		//// everything that evaluates to a primitive number value
+		//    
+		//   
+		//// Example: 42, 42.2, ?A, var1, (1+2*3)
+		public ParserRule getRule() { return rule; }
+
+		//PlusOperation
+		public RuleCall getPlusOperationParserRuleCall() { return cPlusOperationParserRuleCall; }
+	}
+
+	public class ParanthesedValueExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ParanthesedValueExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cValOperationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cVariableReferenceParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cHostCodeParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
+		private final Keyword cLeftParenthesisKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final RuleCall cPlusOperationParserRuleCall_5_1 = (RuleCall)cGroup_5.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
+		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
+		private final Keyword cLeftParenthesisKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final RuleCall cDivOperationParserRuleCall_6_1 = (RuleCall)cGroup_6.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
+		
+		//ParanthesedValueExpression returns sync::Expression:
+		//  IntValue|FloatValue|ValOperation|VariableReference|HostCode|"(" PlusOperation ")"|
+		//  "(" DivOperation ")";  
+		//// Example: 42, 42.2, ?A, var1, (1+2*3)
+		//    
+		//      
+		//      
+		//// Example: 1 + 2, varA - ?B
+		public ParserRule getRule() { return rule; }
+
+		//IntValue|FloatValue|ValOperation|VariableReference|HostCode|"(" PlusOperation ")"|
+		//"(" DivOperation ")"  
+		//// Example: 42, 42.2, ?A, var1, (1+2*3)
+		//    
+		//      
+		//      
+		//// Example: 1 + 2, varA - ?B
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//IntValue
+		public RuleCall getIntValueParserRuleCall_0() { return cIntValueParserRuleCall_0; }
+
+		//FloatValue
+		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
+
+		//ValOperation
+		public RuleCall getValOperationParserRuleCall_2() { return cValOperationParserRuleCall_2; }
+
+		//VariableReference
+		public RuleCall getVariableReferenceParserRuleCall_3() { return cVariableReferenceParserRuleCall_3; }
+
+		//HostCode
+		public RuleCall getHostCodeParserRuleCall_4() { return cHostCodeParserRuleCall_4; }
+
+		//"(" PlusOperation ")"
+		public Group getGroup_5() { return cGroup_5; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_5_0() { return cLeftParenthesisKeyword_5_0; }
+
+		//PlusOperation
+		public RuleCall getPlusOperationParserRuleCall_5_1() { return cPlusOperationParserRuleCall_5_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_5_2() { return cRightParenthesisKeyword_5_2; }
+
+		//"(" DivOperation ")"
+		public Group getGroup_6() { return cGroup_6; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_6_0() { return cLeftParenthesisKeyword_6_0; }
+
+		//DivOperation
+		public RuleCall getDivOperationParserRuleCall_6_1() { return cDivOperationParserRuleCall_6_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_6_2() { return cRightParenthesisKeyword_6_2; }
+	}
+
+	public class PlusOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PlusOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cMultOrDivOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cComplexExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorPlusOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsMultOrDivOperationParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		
+		//PlusOperation returns sync::Expression:
+		//  MultOrDivOperation ({sync::ComplexExpression.subExpressions+=current} operator=
+		//  PlusOperator subExpressions+=MultOrDivOperation)*; 
+		//// Example: 1 + 2, varA - ?B
+		public ParserRule getRule() { return rule; }
+
+		//MultOrDivOperation ({sync::ComplexExpression.subExpressions+=current} operator=
+		//PlusOperator subExpressions+=MultOrDivOperation)*
+		public Group getGroup() { return cGroup; }
+
+		//MultOrDivOperation
+		public RuleCall getMultOrDivOperationParserRuleCall_0() { return cMultOrDivOperationParserRuleCall_0; }
+
+		//({sync::ComplexExpression.subExpressions+=current} operator=PlusOperator
+		//subExpressions+=MultOrDivOperation)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{sync::ComplexExpression.subExpressions+=current}
+		public Action getComplexExpressionSubExpressionsAction_1_0() { return cComplexExpressionSubExpressionsAction_1_0; }
+
+		//operator=PlusOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+
+		//PlusOperator
+		public RuleCall getOperatorPlusOperatorEnumRuleCall_1_1_0() { return cOperatorPlusOperatorEnumRuleCall_1_1_0; }
+
+		//subExpressions+=MultOrDivOperation
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//MultOrDivOperation
+		public RuleCall getSubExpressionsMultOrDivOperationParserRuleCall_1_2_0() { return cSubExpressionsMultOrDivOperationParserRuleCall_1_2_0; }
+	}
+
+	public class MultOrDivOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MultOrDivOperation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cMultOperationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final RuleCall cDivOperationParserRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		
+		//MultOrDivOperation returns sync::Expression:
+		//  MultOperation|"(" DivOperation ")"; 
+		//
+		//    
+		//      
+		//// Example: 2 * 4, varA mod ?B
+		public ParserRule getRule() { return rule; }
+
+		//MultOperation|"(" DivOperation ")" 
+		//
+		//    
+		//      
+		//// Example: 2 * 4, varA mod ?B
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//MultOperation
+		public RuleCall getMultOperationParserRuleCall_0() { return cMultOperationParserRuleCall_0; }
+
+		//"(" DivOperation ")"
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+
+		//DivOperation
+		public RuleCall getDivOperationParserRuleCall_1_1() { return cDivOperationParserRuleCall_1_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
+	}
+
+	public class MultOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MultOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cPreOrNormalValueExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cComplexExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorMultOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		
+		//MultOperation returns sync::Expression:
+		//  PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current}
+		//  operator=MultOperator subExpressions+=PreOrNormalValueExpression)*; 
+		//// Example: 2 * 4, varA mod ?B
+		//
+		//
+		//    
+		//    
+		//     
+		//// Example: (2 / 4)
+		//// note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
+		public ParserRule getRule() { return rule; }
+
+		//PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current}
+		//operator=MultOperator subExpressions+=PreOrNormalValueExpression)*
+		public Group getGroup() { return cGroup; }
+
+		//PreOrNormalValueExpression
+		public RuleCall getPreOrNormalValueExpressionParserRuleCall_0() { return cPreOrNormalValueExpressionParserRuleCall_0; }
+
+		//({sync::ComplexExpression.subExpressions+=current} operator=MultOperator
+		//subExpressions+=PreOrNormalValueExpression)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{sync::ComplexExpression.subExpressions+=current}
+		public Action getComplexExpressionSubExpressionsAction_1_0() { return cComplexExpressionSubExpressionsAction_1_0; }
+
+		//operator=MultOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+
+		//MultOperator
+		public RuleCall getOperatorMultOperatorEnumRuleCall_1_1_0() { return cOperatorMultOperatorEnumRuleCall_1_1_0; }
+
+		//subExpressions+=PreOrNormalValueExpression
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//PreOrNormalValueExpression
+		public RuleCall getSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0() { return cSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0; }
+	}
+
+	public class DivOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DivOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cPreOrNormalValueExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cComplexExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorDivOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		
+		//DivOperation returns sync::Expression:
+		//  PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current}
+		//  operator=DivOperator subExpressions+=PreOrNormalValueExpression)*;  
+		//// Example: (2 / 4)
+		//// note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
+		//    
+		//    
+		//      // Example: pre (? A)
+		public ParserRule getRule() { return rule; }
+
+		//PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current}
+		//operator=DivOperator subExpressions+=PreOrNormalValueExpression)*
+		public Group getGroup() { return cGroup; }
+
+		//PreOrNormalValueExpression
+		public RuleCall getPreOrNormalValueExpressionParserRuleCall_0() { return cPreOrNormalValueExpressionParserRuleCall_0; }
+
+		//({sync::ComplexExpression.subExpressions+=current} operator=DivOperator
+		//subExpressions+=PreOrNormalValueExpression)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{sync::ComplexExpression.subExpressions+=current}
+		public Action getComplexExpressionSubExpressionsAction_1_0() { return cComplexExpressionSubExpressionsAction_1_0; }
+
+		//operator=DivOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+
+		//DivOperator
+		public RuleCall getOperatorDivOperatorEnumRuleCall_1_1_0() { return cOperatorDivOperatorEnumRuleCall_1_1_0; }
+
+		//subExpressions+=PreOrNormalValueExpression
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//PreOrNormalValueExpression
+		public RuleCall getSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0() { return cSubExpressionsPreOrNormalValueExpressionParserRuleCall_1_2_0; }
+	}
+
+	public class PreArithmOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PreArithmOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cOperatorAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cOperatorUnaryParanthesedOperatorEnumRuleCall_0_0 = (RuleCall)cOperatorAssignment_0.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cSubExpressionsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cSubExpressionsValOperationParserRuleCall_2_0 = (RuleCall)cSubExpressionsAssignment_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//PreArithmOperation returns sync::ComplexExpression:
+		//  operator=UnaryParanthesedOperator "(" subExpressions+=ValOperation ")";   // Example: pre (? A)
+		public ParserRule getRule() { return rule; }
+
+		//operator=UnaryParanthesedOperator "(" subExpressions+=ValOperation ")"
+		public Group getGroup() { return cGroup; }
+
+		//operator=UnaryParanthesedOperator
+		public Assignment getOperatorAssignment_0() { return cOperatorAssignment_0; }
+
+		//UnaryParanthesedOperator
+		public RuleCall getOperatorUnaryParanthesedOperatorEnumRuleCall_0_0() { return cOperatorUnaryParanthesedOperatorEnumRuleCall_0_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+
+		//subExpressions+=ValOperation
+		public Assignment getSubExpressionsAssignment_2() { return cSubExpressionsAssignment_2; }
+
+		//ValOperation
+		public RuleCall getSubExpressionsValOperationParserRuleCall_2_0() { return cSubExpressionsValOperationParserRuleCall_2_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+	}
+
+	public class PreOrNormalValueExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PreOrNormalValueExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cPreArithmOperationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cParanthesedValueExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//PreOrNormalValueExpression returns sync::Expression:
+		//  PreArithmOperation|ParanthesedValueExpression; 
+		//
+		//    
+		//   
+		////==============================================================================
+		//// Boolean Expressions
+		////==============================================================================
+		//// Example: 42 <= ?A
+		public ParserRule getRule() { return rule; }
+
+		//PreArithmOperation|ParanthesedValueExpression 
+		//
+		//    
+		//   
+		////==============================================================================
+		//// Boolean Expressions
+		////==============================================================================
+		//// Example: 42 <= ?A
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//PreArithmOperation
+		public RuleCall getPreArithmOperationParserRuleCall_0() { return cPreArithmOperationParserRuleCall_0; }
+
+		//ParanthesedValueExpression
+		public RuleCall getParanthesedValueExpressionParserRuleCall_1() { return cParanthesedValueExpressionParserRuleCall_1; }
+	}
+
+	public class CompareOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CompareOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cValueExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cComplexExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorCompareOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsValueExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		
+		//CompareOperation returns sync::Expression:
+		//  ValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=
+		//  CompareOperator subExpressions+=ValueExpression);  
+		////==============================================================================
+		//// Boolean Expressions
+		////==============================================================================
+		//// Example: 42 <= ?A
+		//    
+		//      
+		//      // Example: not A, not false, not (A or B)
+		//// at the latter we need the parans to indicate the right binding
+		public ParserRule getRule() { return rule; }
+
+		//ValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=
+		//CompareOperator subExpressions+=ValueExpression)
+		public Group getGroup() { return cGroup; }
+
+		//ValueExpression
+		public RuleCall getValueExpressionParserRuleCall_0() { return cValueExpressionParserRuleCall_0; }
+
+		//{sync::ComplexExpression.subExpressions+=current} operator=CompareOperator
+		//subExpressions+=ValueExpression
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{sync::ComplexExpression.subExpressions+=current}
+		public Action getComplexExpressionSubExpressionsAction_1_0() { return cComplexExpressionSubExpressionsAction_1_0; }
+
+		//operator=CompareOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+
+		//CompareOperator
+		public RuleCall getOperatorCompareOperatorEnumRuleCall_1_1_0() { return cOperatorCompareOperatorEnumRuleCall_1_1_0; }
+
+		//subExpressions+=ValueExpression
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//ValueExpression
+		public RuleCall getSubExpressionsValueExpressionParserRuleCall_1_2_0() { return cSubExpressionsValueExpressionParserRuleCall_1_2_0; }
+	}
+
+	public class UnaryOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UnaryOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cOperatorAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cOperatorUnaryOperatorEnumRuleCall_0_0 = (RuleCall)cOperatorAssignment_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0 = (RuleCall)cSubExpressionsAssignment_1.eContents().get(0);
+		
+		//UnaryOperation returns sync::ComplexExpression:
+		//  operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression;   // Example: not A, not false, not (A or B)
+		//// at the latter we need the parans to indicate the right binding
+		public ParserRule getRule() { return rule; }
+
+		//operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression
+		public Group getGroup() { return cGroup; }
+
+		//operator=UnaryOperator
+		public Assignment getOperatorAssignment_0() { return cOperatorAssignment_0; }
+
+		//UnaryOperator
+		public RuleCall getOperatorUnaryOperatorEnumRuleCall_0_0() { return cOperatorUnaryOperatorEnumRuleCall_0_0; }
+
+		//subExpressions+=ParanthesedBooleanExpression
+		public Assignment getSubExpressionsAssignment_1() { return cSubExpressionsAssignment_1; }
+
+		//ParanthesedBooleanExpression
+		public RuleCall getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0() { return cSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0; }
+	}
+
+	public class UnaryParanthesedOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UnaryParanthesedOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cOperatorAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cOperatorUnaryParanthesedOperatorEnumRuleCall_0_0 = (RuleCall)cOperatorAssignment_0.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cSubExpressionsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cSubExpressionsBooleanExpressionParserRuleCall_2_0 = (RuleCall)cSubExpressionsAssignment_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//UnaryParanthesedOperation returns sync::ComplexExpression:
+		//  operator=UnaryParanthesedOperator "(" subExpressions+=BooleanExpression ")"; 
+		//
+		//    
+		//          // Example: either negated or normal expression (with parantheses)
+		public ParserRule getRule() { return rule; }
+
+		//operator=UnaryParanthesedOperator "(" subExpressions+=BooleanExpression ")"
+		public Group getGroup() { return cGroup; }
+
+		//operator=UnaryParanthesedOperator
+		public Assignment getOperatorAssignment_0() { return cOperatorAssignment_0; }
+
+		//UnaryParanthesedOperator
+		public RuleCall getOperatorUnaryParanthesedOperatorEnumRuleCall_0_0() { return cOperatorUnaryParanthesedOperatorEnumRuleCall_0_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+
+		//subExpressions+=BooleanExpression
+		public Assignment getSubExpressionsAssignment_2() { return cSubExpressionsAssignment_2; }
+
+		//BooleanExpression
+		public RuleCall getSubExpressionsBooleanExpressionParserRuleCall_2_0() { return cSubExpressionsBooleanExpressionParserRuleCall_2_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+	}
+
+	public class UnaryOrNormalExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UnaryOrNormalExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cUnaryOperationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cUnaryParanthesedOperationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cParanthesedBooleanExpressionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//UnaryOrNormalExpression returns sync::Expression:
+		//  UnaryOperation|UnaryParanthesedOperation|ParanthesedBooleanExpression;   // Example: either negated or normal expression (with parantheses) 
+		//
+		//    
+		//    // Example: A and B, not C and 42 <= ?D
+		public ParserRule getRule() { return rule; }
+
+		//UnaryOperation|UnaryParanthesedOperation|ParanthesedBooleanExpression   // Example: either negated or normal expression (with parantheses) 
+		//
+		//    
+		//    // Example: A and B, not C and 42 <= ?D
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//UnaryOperation
+		public RuleCall getUnaryOperationParserRuleCall_0() { return cUnaryOperationParserRuleCall_0; }
+
+		//UnaryParanthesedOperation
+		public RuleCall getUnaryParanthesedOperationParserRuleCall_1() { return cUnaryParanthesedOperationParserRuleCall_1; }
+
+		//ParanthesedBooleanExpression
+		public RuleCall getParanthesedBooleanExpressionParserRuleCall_2() { return cParanthesedBooleanExpressionParserRuleCall_2; }
+	}
+
+	public class AndOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AndOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cUnaryOrNormalExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cComplexExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorOperatorAndEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsUnaryOrNormalExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		
+		//AndOperation returns sync::Expression:
+		//  UnaryOrNormalExpression ({sync::ComplexExpression.subExpressions+=current}
+		//  operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*;   // Example: A and B, not C and 42 <= ?D
+		//
+		//    
+		//    
+		//      // Example: A or B, C and B or D and not E
+		public ParserRule getRule() { return rule; }
+
+		//UnaryOrNormalExpression ({sync::ComplexExpression.subExpressions+=current}
+		//operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*
+		public Group getGroup() { return cGroup; }
+
+		//UnaryOrNormalExpression
+		public RuleCall getUnaryOrNormalExpressionParserRuleCall_0() { return cUnaryOrNormalExpressionParserRuleCall_0; }
+
+		//({sync::ComplexExpression.subExpressions+=current} operator=OperatorAnd
+		//subExpressions+=UnaryOrNormalExpression)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{sync::ComplexExpression.subExpressions+=current}
+		public Action getComplexExpressionSubExpressionsAction_1_0() { return cComplexExpressionSubExpressionsAction_1_0; }
+
+		//operator=OperatorAnd
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+
+		//OperatorAnd
+		public RuleCall getOperatorOperatorAndEnumRuleCall_1_1_0() { return cOperatorOperatorAndEnumRuleCall_1_1_0; }
+
+		//subExpressions+=UnaryOrNormalExpression
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//UnaryOrNormalExpression
+		public RuleCall getSubExpressionsUnaryOrNormalExpressionParserRuleCall_1_2_0() { return cSubExpressionsUnaryOrNormalExpressionParserRuleCall_1_2_0; }
+	}
+
+	public class OrOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "OrOperation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cAndOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cComplexExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorOperatorOrEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsAndOperationParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		
+		//OrOperation returns sync::Expression:
+		//  AndOperation ({sync::ComplexExpression.subExpressions+=current} operator=
+		//  OperatorOr subExpressions+=AndOperation)*;   // Example: A or B, C and B or D and not E 
+		//
+		//    
+		//      
+		//      // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+		//// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
+		public ParserRule getRule() { return rule; }
+
+		//AndOperation ({sync::ComplexExpression.subExpressions+=current} operator=
+		//OperatorOr subExpressions+=AndOperation)*
+		public Group getGroup() { return cGroup; }
+
+		//AndOperation
+		public RuleCall getAndOperationParserRuleCall_0() { return cAndOperationParserRuleCall_0; }
+
+		//({sync::ComplexExpression.subExpressions+=current} operator=OperatorOr
+		//subExpressions+=AndOperation)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{sync::ComplexExpression.subExpressions+=current}
+		public Action getComplexExpressionSubExpressionsAction_1_0() { return cComplexExpressionSubExpressionsAction_1_0; }
+
+		//operator=OperatorOr
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+
+		//OperatorOr
+		public RuleCall getOperatorOperatorOrEnumRuleCall_1_1_0() { return cOperatorOperatorOrEnumRuleCall_1_1_0; }
+
+		//subExpressions+=AndOperation
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//AndOperation
+		public RuleCall getSubExpressionsAndOperationParserRuleCall_1_2_0() { return cSubExpressionsAndOperationParserRuleCall_1_2_0; }
+	}
+
+	public class ParanthesedBooleanExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ParanthesedBooleanExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cBooleanValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cCompareOperationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cSignalReferenceParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cHostCodeParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
+		private final Keyword cLeftParenthesisKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final RuleCall cOrOperationParserRuleCall_4_1 = (RuleCall)cGroup_4.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
+		
+		//ParanthesedBooleanExpression returns sync::Expression:
+		//  BooleanValue|CompareOperation|SignalReference|HostCode|"(" OrOperation ")";   // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+		//// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
+		//
+		//    
+		//        // Example: not D and C or ?E = 42 or not (A and (B or C))
+		public ParserRule getRule() { return rule; }
+
+		//BooleanValue|CompareOperation|SignalReference|HostCode|"(" OrOperation ")"   // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+		//// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
+		//
+		//    
+		//        // Example: not D and C or ?E = 42 or not (A and (B or C))
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//BooleanValue
+		public RuleCall getBooleanValueParserRuleCall_0() { return cBooleanValueParserRuleCall_0; }
+
+		//CompareOperation
+		public RuleCall getCompareOperationParserRuleCall_1() { return cCompareOperationParserRuleCall_1; }
+
+		//SignalReference
+		public RuleCall getSignalReferenceParserRuleCall_2() { return cSignalReferenceParserRuleCall_2; }
+
+		//HostCode
+		public RuleCall getHostCodeParserRuleCall_3() { return cHostCodeParserRuleCall_3; }
+
+		//"(" OrOperation ")"
+		public Group getGroup_4() { return cGroup_4; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_4_0() { return cLeftParenthesisKeyword_4_0; }
+
+		//OrOperation
+		public RuleCall getOrOperationParserRuleCall_4_1() { return cOrOperationParserRuleCall_4_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_4_2() { return cRightParenthesisKeyword_4_2; }
+	}
+
+	public class BooleanExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanExpression");
+		private final RuleCall cOrOperationParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//BooleanExpression returns sync::Expression:
+		//  OrOperation;   // Example: not D and C or ?E = 42 or not (A and (B or C))
+		//
+		//    
+		//   
+		////==============================================================================
+		//// Operators
+		////==============================================================================
+		public ParserRule getRule() { return rule; }
+
+		//OrOperation
+		public RuleCall getOrOperationParserRuleCall() { return cOrOperationParserRuleCall; }
+	}
+
+	public class HostCodeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "HostCode");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cCodeAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cCodeSTRINGTerminalRuleCall_0_0 = (RuleCall)cCodeAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cTypeIDTerminalRuleCall_1_1_0 = (RuleCall)cTypeAssignment_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		
+		//HostCode returns sync::HostCode:
+		//  code=STRING ("(" type=ID ")")?;  
+		////==============================================================================
+		//// Misc
+		////==============================================================================
+		//    
+		////"'"code=STRING"'";
+		public ParserRule getRule() { return rule; }
+
+		//code=STRING ("(" type=ID ")")? 
+		////"'"code=STRING"'";
+		public Group getGroup() { return cGroup; }
+
+		//code=STRING 
+		////"'"code=STRING"'";
+		public Assignment getCodeAssignment_0() { return cCodeAssignment_0; }
+
+		//STRING
+		public RuleCall getCodeSTRINGTerminalRuleCall_0_0() { return cCodeSTRINGTerminalRuleCall_0_0; }
+
+		//("(" type=ID ")")?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+
+		//type=ID
+		public Assignment getTypeAssignment_1_1() { return cTypeAssignment_1_1; }
+
+		//ID
+		public RuleCall getTypeIDTerminalRuleCall_1_1_0() { return cTypeIDTerminalRuleCall_1_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
 	}
 	
 	
+	public class StateTypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "StateType");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cNORMALEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cNORMALNORMALKeyword_0_0 = (Keyword)cNORMALEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cCONDITIONALEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cCONDITIONALCondKeyword_1_0 = (Keyword)cCONDITIONALEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cREFERENCEEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cREFERENCERefKeyword_2_0 = (Keyword)cREFERENCEEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cTEXTUALEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cTEXTUALTextualKeyword_3_0 = (Keyword)cTEXTUALEnumLiteralDeclaration_3.eContents().get(0);
+		
+		//enum StateType returns sync::StateType:
+		//  NORMAL | CONDITIONAL="cond" | REFERENCE="ref" | TEXTUAL="textual";
+		public EnumRule getRule() { return rule; }
+
+		//NORMAL | CONDITIONAL="cond" | REFERENCE="ref" | TEXTUAL="textual"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//NORMAL
+		public EnumLiteralDeclaration getNORMALEnumLiteralDeclaration_0() { return cNORMALEnumLiteralDeclaration_0; }
+
+		//"NORMAL"
+		public Keyword getNORMALNORMALKeyword_0_0() { return cNORMALNORMALKeyword_0_0; }
+
+		//CONDITIONAL="cond"
+		public EnumLiteralDeclaration getCONDITIONALEnumLiteralDeclaration_1() { return cCONDITIONALEnumLiteralDeclaration_1; }
+
+		//"cond"
+		public Keyword getCONDITIONALCondKeyword_1_0() { return cCONDITIONALCondKeyword_1_0; }
+
+		//REFERENCE="ref"
+		public EnumLiteralDeclaration getREFERENCEEnumLiteralDeclaration_2() { return cREFERENCEEnumLiteralDeclaration_2; }
+
+		//"ref"
+		public Keyword getREFERENCERefKeyword_2_0() { return cREFERENCERefKeyword_2_0; }
+
+		//TEXTUAL="textual"
+		public EnumLiteralDeclaration getTEXTUALEnumLiteralDeclaration_3() { return cTEXTUALEnumLiteralDeclaration_3; }
+
+		//"textual"
+		public Keyword getTEXTUALTextualKeyword_3_0() { return cTEXTUALTextualKeyword_3_0; }
+	}
+
+	public class CombineOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "CombineOperator");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cNONEEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cNONENONEKeyword_0_0 = (Keyword)cNONEEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cADDPlusSignKeyword_1_0 = (Keyword)cADDEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cMULTAsteriskKeyword_2_0 = (Keyword)cMULTEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cANDANDKeyword_3_0 = (Keyword)cANDEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cOREnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cORORKeyword_4_0 = (Keyword)cOREnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cHOSTHostCombineOperatorKeyword_5_0 = (Keyword)cHOSTEnumLiteralDeclaration_5.eContents().get(0);
+		
+		//enum CombineOperator returns sync::CombineOperator:
+		//  NONE | ADD="+" | MULT="*" | AND | OR | HOST="hostCombineOperator";
+		public EnumRule getRule() { return rule; }
+
+		//NONE | ADD="+" | MULT="*" | AND | OR | HOST="hostCombineOperator"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//NONE
+		public EnumLiteralDeclaration getNONEEnumLiteralDeclaration_0() { return cNONEEnumLiteralDeclaration_0; }
+
+		//"NONE"
+		public Keyword getNONENONEKeyword_0_0() { return cNONENONEKeyword_0_0; }
+
+		//ADD="+"
+		public EnumLiteralDeclaration getADDEnumLiteralDeclaration_1() { return cADDEnumLiteralDeclaration_1; }
+
+		//"+"
+		public Keyword getADDPlusSignKeyword_1_0() { return cADDPlusSignKeyword_1_0; }
+
+		//MULT="*"
+		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration_2() { return cMULTEnumLiteralDeclaration_2; }
+
+		//"*"
+		public Keyword getMULTAsteriskKeyword_2_0() { return cMULTAsteriskKeyword_2_0; }
+
+		//AND
+		public EnumLiteralDeclaration getANDEnumLiteralDeclaration_3() { return cANDEnumLiteralDeclaration_3; }
+
+		//"AND"
+		public Keyword getANDANDKeyword_3_0() { return cANDANDKeyword_3_0; }
+
+		//OR
+		public EnumLiteralDeclaration getOREnumLiteralDeclaration_4() { return cOREnumLiteralDeclaration_4; }
+
+		//"OR"
+		public Keyword getORORKeyword_4_0() { return cORORKeyword_4_0; }
+
+		//HOST="hostCombineOperator"
+		public EnumLiteralDeclaration getHOSTEnumLiteralDeclaration_5() { return cHOSTEnumLiteralDeclaration_5; }
+
+		//"hostCombineOperator"
+		public Keyword getHOSTHostCombineOperatorKeyword_5_0() { return cHOSTHostCombineOperatorKeyword_5_0; }
+	}
+
+	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "ValueType");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cPUREEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cPUREPUREKeyword_0_0 = (Keyword)cPUREEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cBOOLEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cBOOLBooleanKeyword_1_0 = (Keyword)cBOOLEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cUNSIGNEDEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cUNSIGNEDUnsignedKeyword_2_0 = (Keyword)cUNSIGNEDEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cINTEGEREnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cINTEGERIntegerKeyword_3_0 = (Keyword)cINTEGEREnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cFLOATEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cFLOATFloatKeyword_4_0 = (Keyword)cFLOATEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cHOSTHostTypeKeyword_5_0 = (Keyword)cHOSTEnumLiteralDeclaration_5.eContents().get(0);
+		
+		//enum ValueType returns sync::ValueType:
+		//  PURE | BOOL="boolean" | UNSIGNED="unsigned" | INTEGER="integer" | FLOAT="float" | HOST=
+		//  "hostType";
+		public EnumRule getRule() { return rule; }
+
+		//PURE | BOOL="boolean" | UNSIGNED="unsigned" | INTEGER="integer" | FLOAT="float" | HOST=
+		//"hostType"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//PURE
+		public EnumLiteralDeclaration getPUREEnumLiteralDeclaration_0() { return cPUREEnumLiteralDeclaration_0; }
+
+		//"PURE"
+		public Keyword getPUREPUREKeyword_0_0() { return cPUREPUREKeyword_0_0; }
+
+		//BOOL="boolean"
+		public EnumLiteralDeclaration getBOOLEnumLiteralDeclaration_1() { return cBOOLEnumLiteralDeclaration_1; }
+
+		//"boolean"
+		public Keyword getBOOLBooleanKeyword_1_0() { return cBOOLBooleanKeyword_1_0; }
+
+		//UNSIGNED="unsigned"
+		public EnumLiteralDeclaration getUNSIGNEDEnumLiteralDeclaration_2() { return cUNSIGNEDEnumLiteralDeclaration_2; }
+
+		//"unsigned"
+		public Keyword getUNSIGNEDUnsignedKeyword_2_0() { return cUNSIGNEDUnsignedKeyword_2_0; }
+
+		//INTEGER="integer"
+		public EnumLiteralDeclaration getINTEGEREnumLiteralDeclaration_3() { return cINTEGEREnumLiteralDeclaration_3; }
+
+		//"integer"
+		public Keyword getINTEGERIntegerKeyword_3_0() { return cINTEGERIntegerKeyword_3_0; }
+
+		//FLOAT="float"
+		public EnumLiteralDeclaration getFLOATEnumLiteralDeclaration_4() { return cFLOATEnumLiteralDeclaration_4; }
+
+		//"float"
+		public Keyword getFLOATFloatKeyword_4_0() { return cFLOATFloatKeyword_4_0; }
+
+		//HOST="hostType"
+		public EnumLiteralDeclaration getHOSTEnumLiteralDeclaration_5() { return cHOSTEnumLiteralDeclaration_5; }
+
+		//"hostType"
+		public Keyword getHOSTHostTypeKeyword_5_0() { return cHOSTHostTypeKeyword_5_0; }
+	}
+
+	public class TransitionTypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "TransitionType");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cWEAKABORTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_0_0 = (Keyword)cWEAKABORTEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cSTRONGABORTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cSTRONGABORTOKeyword_1_0 = (Keyword)cSTRONGABORTEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cNORMALTERMINATIONEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0 = (Keyword)cNORMALTERMINATIONEnumLiteralDeclaration_2.eContents().get(0);
+		
+		//enum TransitionType returns sync::TransitionType:
+		//  WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->"; 
+		//
+		//      
+		//            ////==============================================================================
+		////// THE REST IS COPY/PASTE 'd from 
+		//////{@link de.cau.cs.kieler.synccharts..labelparser.ActionLabel.xtext}
+		//////==============================================================================
+		//////==============================================================================
+		////// Basic Actions
+		//////==============================================================================
+		public EnumRule getRule() { return rule; }
+
+		//WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->" 
+		//
+		//      
+		//            ////==============================================================================
+		////// THE REST IS COPY/PASTE 'd from 
+		//////{@link de.cau.cs.kieler.synccharts..labelparser.ActionLabel.xtext}
+		//////==============================================================================
+		//////==============================================================================
+		////// Basic Actions
+		//////==============================================================================
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//WEAKABORT="-->"
+		public EnumLiteralDeclaration getWEAKABORTEnumLiteralDeclaration_0() { return cWEAKABORTEnumLiteralDeclaration_0; }
+
+		//"-->"
+		public Keyword getWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_0_0() { return cWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_0_0; }
+
+		//STRONGABORT="o->"
+		public EnumLiteralDeclaration getSTRONGABORTEnumLiteralDeclaration_1() { return cSTRONGABORTEnumLiteralDeclaration_1; }
+
+		//"o->"
+		public Keyword getSTRONGABORTOKeyword_1_0() { return cSTRONGABORTOKeyword_1_0; }
+
+		//NORMALTERMINATION=">->"
+		public EnumLiteralDeclaration getNORMALTERMINATIONEnumLiteralDeclaration_2() { return cNORMALTERMINATIONEnumLiteralDeclaration_2; }
+
+		//">->"
+		public Keyword getNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0() { return cNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0; }
+	}
+
+	public class OperatorTypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OperatorType");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cEQEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cEQEqualsSignKeyword_0_0 = (Keyword)cEQEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cLTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cLTLessThanSignKeyword_1_0 = (Keyword)cLTEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cLEQEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cLEQLessThanSignEqualsSignKeyword_2_0 = (Keyword)cLEQEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cGTEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cGTGreaterThanSignKeyword_3_0 = (Keyword)cGTEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cGEQEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cGEQGreaterThanSignEqualsSignKeyword_4_0 = (Keyword)cGEQEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cNOTNotKeyword_5_0 = (Keyword)cNOTEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cANDAndKeyword_6_0 = (Keyword)cANDEnumLiteralDeclaration_6.eContents().get(0);
+		private final EnumLiteralDeclaration cOREnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
+		private final Keyword cOROrKeyword_7_0 = (Keyword)cOREnumLiteralDeclaration_7.eContents().get(0);
+		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration_8 = (EnumLiteralDeclaration)cAlternatives.eContents().get(8);
+		private final Keyword cADDPlusSignKeyword_8_0 = (Keyword)cADDEnumLiteralDeclaration_8.eContents().get(0);
+		private final EnumLiteralDeclaration cSUBEnumLiteralDeclaration_9 = (EnumLiteralDeclaration)cAlternatives.eContents().get(9);
+		private final Keyword cSUBHyphenMinusKeyword_9_0 = (Keyword)cSUBEnumLiteralDeclaration_9.eContents().get(0);
+		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration_10 = (EnumLiteralDeclaration)cAlternatives.eContents().get(10);
+		private final Keyword cMULTAsteriskKeyword_10_0 = (Keyword)cMULTEnumLiteralDeclaration_10.eContents().get(0);
+		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration_11 = (EnumLiteralDeclaration)cAlternatives.eContents().get(11);
+		private final Keyword cDIVSolidusKeyword_11_0 = (Keyword)cDIVEnumLiteralDeclaration_11.eContents().get(0);
+		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration_12 = (EnumLiteralDeclaration)cAlternatives.eContents().get(12);
+		private final Keyword cMODModKeyword_12_0 = (Keyword)cMODEnumLiteralDeclaration_12.eContents().get(0);
+		private final EnumLiteralDeclaration cVALEnumLiteralDeclaration_13 = (EnumLiteralDeclaration)cAlternatives.eContents().get(13);
+		private final Keyword cVALQuestionMarkKeyword_13_0 = (Keyword)cVALEnumLiteralDeclaration_13.eContents().get(0);
+		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration_14 = (EnumLiteralDeclaration)cAlternatives.eContents().get(14);
+		private final Keyword cPREPreKeyword_14_0 = (Keyword)cPREEnumLiteralDeclaration_14.eContents().get(0);
+		
+		//enum OperatorType returns sync::OperatorType:
+		//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | AND="and" | OR="or" | ADD="+" | SUB=
+		//  "-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";  
+		////==============================================================================
+		//// Operators
+		////==============================================================================
+		public EnumRule getRule() { return rule; }
+
+		//EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | AND="and" | OR="or" | ADD="+" | SUB=
+		//"-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre"  
+		////==============================================================================
+		//// Operators
+		////==============================================================================
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//EQ="="
+		public EnumLiteralDeclaration getEQEnumLiteralDeclaration_0() { return cEQEnumLiteralDeclaration_0; }
+
+		//"="
+		public Keyword getEQEqualsSignKeyword_0_0() { return cEQEqualsSignKeyword_0_0; }
+
+		//LT="<"
+		public EnumLiteralDeclaration getLTEnumLiteralDeclaration_1() { return cLTEnumLiteralDeclaration_1; }
+
+		//"<"
+		public Keyword getLTLessThanSignKeyword_1_0() { return cLTLessThanSignKeyword_1_0; }
+
+		//LEQ="<="
+		public EnumLiteralDeclaration getLEQEnumLiteralDeclaration_2() { return cLEQEnumLiteralDeclaration_2; }
+
+		//"<="
+		public Keyword getLEQLessThanSignEqualsSignKeyword_2_0() { return cLEQLessThanSignEqualsSignKeyword_2_0; }
+
+		//GT=">"
+		public EnumLiteralDeclaration getGTEnumLiteralDeclaration_3() { return cGTEnumLiteralDeclaration_3; }
+
+		//">"
+		public Keyword getGTGreaterThanSignKeyword_3_0() { return cGTGreaterThanSignKeyword_3_0; }
+
+		//GEQ=">="
+		public EnumLiteralDeclaration getGEQEnumLiteralDeclaration_4() { return cGEQEnumLiteralDeclaration_4; }
+
+		//">="
+		public Keyword getGEQGreaterThanSignEqualsSignKeyword_4_0() { return cGEQGreaterThanSignEqualsSignKeyword_4_0; }
+
+		//NOT="not"
+		public EnumLiteralDeclaration getNOTEnumLiteralDeclaration_5() { return cNOTEnumLiteralDeclaration_5; }
+
+		//"not"
+		public Keyword getNOTNotKeyword_5_0() { return cNOTNotKeyword_5_0; }
+
+		//AND="and"
+		public EnumLiteralDeclaration getANDEnumLiteralDeclaration_6() { return cANDEnumLiteralDeclaration_6; }
+
+		//"and"
+		public Keyword getANDAndKeyword_6_0() { return cANDAndKeyword_6_0; }
+
+		//OR="or"
+		public EnumLiteralDeclaration getOREnumLiteralDeclaration_7() { return cOREnumLiteralDeclaration_7; }
+
+		//"or"
+		public Keyword getOROrKeyword_7_0() { return cOROrKeyword_7_0; }
+
+		//ADD="+"
+		public EnumLiteralDeclaration getADDEnumLiteralDeclaration_8() { return cADDEnumLiteralDeclaration_8; }
+
+		//"+"
+		public Keyword getADDPlusSignKeyword_8_0() { return cADDPlusSignKeyword_8_0; }
+
+		//SUB="-"
+		public EnumLiteralDeclaration getSUBEnumLiteralDeclaration_9() { return cSUBEnumLiteralDeclaration_9; }
+
+		//"-"
+		public Keyword getSUBHyphenMinusKeyword_9_0() { return cSUBHyphenMinusKeyword_9_0; }
+
+		//MULT="*"
+		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration_10() { return cMULTEnumLiteralDeclaration_10; }
+
+		//"*"
+		public Keyword getMULTAsteriskKeyword_10_0() { return cMULTAsteriskKeyword_10_0; }
+
+		//DIV="/"
+		public EnumLiteralDeclaration getDIVEnumLiteralDeclaration_11() { return cDIVEnumLiteralDeclaration_11; }
+
+		//"/"
+		public Keyword getDIVSolidusKeyword_11_0() { return cDIVSolidusKeyword_11_0; }
+
+		//MOD="mod"
+		public EnumLiteralDeclaration getMODEnumLiteralDeclaration_12() { return cMODEnumLiteralDeclaration_12; }
+
+		//"mod"
+		public Keyword getMODModKeyword_12_0() { return cMODModKeyword_12_0; }
+
+		//VAL="?"
+		public EnumLiteralDeclaration getVALEnumLiteralDeclaration_13() { return cVALEnumLiteralDeclaration_13; }
+
+		//"?"
+		public Keyword getVALQuestionMarkKeyword_13_0() { return cVALQuestionMarkKeyword_13_0; }
+
+		//PRE="pre"
+		public EnumLiteralDeclaration getPREEnumLiteralDeclaration_14() { return cPREEnumLiteralDeclaration_14; }
+
+		//"pre"
+		public Keyword getPREPreKeyword_14_0() { return cPREPreKeyword_14_0; }
+	}
+
+	public class ValOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "ValOperator");
+		private final EnumLiteralDeclaration cVALEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cVALQuestionMarkKeyword_0 = (Keyword)cVALEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum ValOperator returns sync::OperatorType:
+		//  VAL="?";
+		public EnumRule getRule() { return rule; }
+
+		//VAL="?"
+		public EnumLiteralDeclaration getVALEnumLiteralDeclaration() { return cVALEnumLiteralDeclaration; }
+
+		//"?"
+		public Keyword getVALQuestionMarkKeyword_0() { return cVALQuestionMarkKeyword_0; }
+	}
+
+	public class CompareOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "CompareOperator");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cEQEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cEQEqualsSignKeyword_0_0 = (Keyword)cEQEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cLTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cLTLessThanSignKeyword_1_0 = (Keyword)cLTEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cLEQEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cLEQLessThanSignEqualsSignKeyword_2_0 = (Keyword)cLEQEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cGTEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cGTGreaterThanSignKeyword_3_0 = (Keyword)cGTEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cGEQEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cGEQGreaterThanSignEqualsSignKeyword_4_0 = (Keyword)cGEQEnumLiteralDeclaration_4.eContents().get(0);
+		
+		//enum CompareOperator returns sync::OperatorType:
+		//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">="; 
+		//
+		//      
+		//                   
+		//  // not A
+		public EnumRule getRule() { return rule; }
+
+		//EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" 
+		//
+		//      
+		//                   
+		//  // not A
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//EQ="="
+		public EnumLiteralDeclaration getEQEnumLiteralDeclaration_0() { return cEQEnumLiteralDeclaration_0; }
+
+		//"="
+		public Keyword getEQEqualsSignKeyword_0_0() { return cEQEqualsSignKeyword_0_0; }
+
+		//LT="<"
+		public EnumLiteralDeclaration getLTEnumLiteralDeclaration_1() { return cLTEnumLiteralDeclaration_1; }
+
+		//"<"
+		public Keyword getLTLessThanSignKeyword_1_0() { return cLTLessThanSignKeyword_1_0; }
+
+		//LEQ="<="
+		public EnumLiteralDeclaration getLEQEnumLiteralDeclaration_2() { return cLEQEnumLiteralDeclaration_2; }
+
+		//"<="
+		public Keyword getLEQLessThanSignEqualsSignKeyword_2_0() { return cLEQLessThanSignEqualsSignKeyword_2_0; }
+
+		//GT=">"
+		public EnumLiteralDeclaration getGTEnumLiteralDeclaration_3() { return cGTEnumLiteralDeclaration_3; }
+
+		//">"
+		public Keyword getGTGreaterThanSignKeyword_3_0() { return cGTGreaterThanSignKeyword_3_0; }
+
+		//GEQ=">="
+		public EnumLiteralDeclaration getGEQEnumLiteralDeclaration_4() { return cGEQEnumLiteralDeclaration_4; }
+
+		//">="
+		public Keyword getGEQGreaterThanSignEqualsSignKeyword_4_0() { return cGEQGreaterThanSignEqualsSignKeyword_4_0; }
+	}
+
+	public class UnaryOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "UnaryOperator");
+		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cNOTNotKeyword_0 = (Keyword)cNOTEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum UnaryOperator returns sync::OperatorType:
+		//  NOT="not";  
+		//  // not A    
+		//
+		//      
+		//   
+		//  // pre(A)
+		public EnumRule getRule() { return rule; }
+
+		//NOT="not"
+		public EnumLiteralDeclaration getNOTEnumLiteralDeclaration() { return cNOTEnumLiteralDeclaration; }
+
+		//"not"
+		public Keyword getNOTNotKeyword_0() { return cNOTNotKeyword_0; }
+	}
+
+	public class UnaryParanthesedOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "UnaryParanthesedOperator");
+		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cPREPreKeyword_0 = (Keyword)cPREEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum UnaryParanthesedOperator returns sync::OperatorType:
+		//  PRE="pre";  
+		//  // pre(A)
+		public EnumRule getRule() { return rule; }
+
+		//PRE="pre"
+		public EnumLiteralDeclaration getPREEnumLiteralDeclaration() { return cPREEnumLiteralDeclaration; }
+
+		//"pre"
+		public Keyword getPREPreKeyword_0() { return cPREPreKeyword_0; }
+	}
+
+	public class OperatorOrElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OperatorOr");
+		private final EnumLiteralDeclaration cOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cOROrKeyword_0 = (Keyword)cOREnumLiteralDeclaration.eContents().get(0);
+		
+		//enum OperatorOr returns sync::OperatorType:
+		//  OR="or";
+		public EnumRule getRule() { return rule; }
+
+		//OR="or"
+		public EnumLiteralDeclaration getOREnumLiteralDeclaration() { return cOREnumLiteralDeclaration; }
+
+		//"or"
+		public Keyword getOROrKeyword_0() { return cOROrKeyword_0; }
+	}
+
+	public class OperatorAndElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OperatorAnd");
+		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cANDAndKeyword_0 = (Keyword)cANDEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum OperatorAnd returns sync::OperatorType:
+		//  AND="and";
+		public EnumRule getRule() { return rule; }
+
+		//AND="and"
+		public EnumLiteralDeclaration getANDEnumLiteralDeclaration() { return cANDEnumLiteralDeclaration; }
+
+		//"and"
+		public Keyword getANDAndKeyword_0() { return cANDAndKeyword_0; }
+	}
+
+	public class OperatorPreElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OperatorPre");
+		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cPREPreKeyword_0 = (Keyword)cPREEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum OperatorPre returns sync::OperatorType:
+		//  PRE="pre";
+		public EnumRule getRule() { return rule; }
+
+		//PRE="pre"
+		public EnumLiteralDeclaration getPREEnumLiteralDeclaration() { return cPREEnumLiteralDeclaration; }
+
+		//"pre"
+		public Keyword getPREPreKeyword_0() { return cPREPreKeyword_0; }
+	}
+
+	public class PlusOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "PlusOperator");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cADDPlusSignKeyword_0_0 = (Keyword)cADDEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cSUBEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cSUBHyphenMinusKeyword_1_0 = (Keyword)cSUBEnumLiteralDeclaration_1.eContents().get(0);
+		
+		//enum PlusOperator returns sync::OperatorType:
+		//  ADD="+" | SUB="-";
+		public EnumRule getRule() { return rule; }
+
+		//ADD="+" | SUB="-"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//ADD="+"
+		public EnumLiteralDeclaration getADDEnumLiteralDeclaration_0() { return cADDEnumLiteralDeclaration_0; }
+
+		//"+"
+		public Keyword getADDPlusSignKeyword_0_0() { return cADDPlusSignKeyword_0_0; }
+
+		//SUB="-"
+		public EnumLiteralDeclaration getSUBEnumLiteralDeclaration_1() { return cSUBEnumLiteralDeclaration_1; }
+
+		//"-"
+		public Keyword getSUBHyphenMinusKeyword_1_0() { return cSUBHyphenMinusKeyword_1_0; }
+	}
+
+	public class MultOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "MultOperator");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cMULTAsteriskKeyword_0_0 = (Keyword)cMULTEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cMODModKeyword_1_0 = (Keyword)cMODEnumLiteralDeclaration_1.eContents().get(0);
+		
+		//enum MultOperator returns sync::OperatorType:
+		//  MULT="*" | MOD="mod";
+		public EnumRule getRule() { return rule; }
+
+		//MULT="*" | MOD="mod"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//MULT="*"
+		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration_0() { return cMULTEnumLiteralDeclaration_0; }
+
+		//"*"
+		public Keyword getMULTAsteriskKeyword_0_0() { return cMULTAsteriskKeyword_0_0; }
+
+		//MOD="mod"
+		public EnumLiteralDeclaration getMODEnumLiteralDeclaration_1() { return cMODEnumLiteralDeclaration_1; }
+
+		//"mod"
+		public Keyword getMODModKeyword_1_0() { return cMODModKeyword_1_0; }
+	}
+
+	public class DivOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "DivOperator");
+		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cDIVSolidusKeyword_0 = (Keyword)cDIVEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum DivOperator returns sync::OperatorType:
+		//  DIV="/"; 
+		//
+		//      
+		//   
+		////==============================================================================
+		//// Misc
+		////==============================================================================
+		public EnumRule getRule() { return rule; }
+
+		//DIV="/"
+		public EnumLiteralDeclaration getDIVEnumLiteralDeclaration() { return cDIVEnumLiteralDeclaration; }
+
+		//"/"
+		public Keyword getDIVSolidusKeyword_0() { return cDIVSolidusKeyword_0; }
+	}
+	
 	private RegionElements pRegion;
+	private StateElements pState;
+	private RenamingElements pRenaming;
+	private FullStateIDElements pFullStateID;
+	private TransitionElements pTransition;
+	private TransitionStateElements pTransitionState;
+	private ValuedObjectElements pValuedObject;
+	private VariableElements pVariable;
+	private SignalElements pSignal;
+	private SignalValueElements pSignalValue;
+	private QualifiedNameElements pQualifiedName;
+	private StateTypeElements unknownRuleStateType;
+	private CombineOperatorElements unknownRuleCombineOperator;
+	private ValueTypeElements unknownRuleValueType;
+	private TransitionTypeElements unknownRuleTransitionType;
+	private ActionElements pAction;
+	private EffectElements pEffect;
+	private EmissionElements pEmission;
+	private AssignmentElements pAssignment;
+	private SignalReferenceElements pSignalReference;
+	private VariableReferenceElements pVariableReference;
+	private TerminalRule tINT;
+	private IntValueElements pIntValue;
+	private FloatValueElements pFloatValue;
+	private BooleanValueElements pBooleanValue;
+	private ValueElements pValue;
+	private TerminalRule tFloat;
+	private TerminalRule tBoolean;
+	private ValOperationElements pValOperation;
+	private ValueExpressionElements pValueExpression;
+	private ParanthesedValueExpressionElements pParanthesedValueExpression;
+	private PlusOperationElements pPlusOperation;
+	private MultOrDivOperationElements pMultOrDivOperation;
+	private MultOperationElements pMultOperation;
+	private DivOperationElements pDivOperation;
+	private PreArithmOperationElements pPreArithmOperation;
+	private PreOrNormalValueExpressionElements pPreOrNormalValueExpression;
+	private CompareOperationElements pCompareOperation;
+	private UnaryOperationElements pUnaryOperation;
+	private UnaryParanthesedOperationElements pUnaryParanthesedOperation;
+	private UnaryOrNormalExpressionElements pUnaryOrNormalExpression;
+	private AndOperationElements pAndOperation;
+	private OrOperationElements pOrOperation;
+	private ParanthesedBooleanExpressionElements pParanthesedBooleanExpression;
+	private BooleanExpressionElements pBooleanExpression;
+	private OperatorTypeElements unknownRuleOperatorType;
+	private ValOperatorElements unknownRuleValOperator;
+	private CompareOperatorElements unknownRuleCompareOperator;
+	private UnaryOperatorElements unknownRuleUnaryOperator;
+	private UnaryParanthesedOperatorElements unknownRuleUnaryParanthesedOperator;
+	private OperatorOrElements unknownRuleOperatorOr;
+	private OperatorAndElements unknownRuleOperatorAnd;
+	private OperatorPreElements unknownRuleOperatorPre;
+	private PlusOperatorElements unknownRulePlusOperator;
+	private MultOperatorElements unknownRuleMultOperator;
+	private DivOperatorElements unknownRuleDivOperator;
+	private HostCodeElements pHostCode;
 	
 	private final GrammarProvider grammarProvider;
 
@@ -451,385 +4830,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Region returns sync::Region:
-	//  "region"? id=ID?; 
-	//      
-	//	  
-	//	
-	////	(	//variables+=Variable
-	////	|	signals+=Signal
-	//	 //|
-	////		(innerStates+=State)?
-	////	)+
-	//
-	////State returns sync::State:
-	////{sync::State}
-	////	
-	////(	  ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' id=FullStateID
-	////  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
-	////  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) id=FullStateID
-	////  	| ((isInitial?='init')(isFinal?='final')) 'state' id=FullStateID
-	////  	| ((isInitial?='init')(isFinal?='final')) (type=StateType)
-	////  	| ((isInitial?='init')(isFinal?='final')) 'state'
-	////  	| ((isInitial?='init')(isFinal?='final')) id=FullStateID
-	////  	| ((isInitial?='init')(isFinal?='final'))
-	////  	
-	////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' id=FullStateID
-	////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state'
-	////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) id=FullStateID
-	////  	| ((isFinal?='final')(isInitial?='init')) 'state' id=FullStateID
-	////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType)
-	////  	| ((isFinal?='final')(isInitial?='init')) 'state'
-	////  	| ((isFinal?='final')(isInitial?='init')) id=FullStateID
-	////  	| ((isFinal?='final')(isInitial?='init'))
-	////  	
-	////  	| (isInitial?='init') (type=StateType) 'state' id=FullStateID
-	////  	| (isInitial?='init') (type=StateType) 'state'
-	////  	| (isInitial?='init') (type=StateType) id=FullStateID  
-	////  	| (isInitial?='init') 'state' id=FullStateID
-	////  	| (isInitial?='init') (type=StateType) 
-	////  	| (isInitial?='init') 'state'
-	////  	| (isInitial?='init') id=FullStateID
-	////  	| (isInitial?='init')
-	////  	
-	////  	| (isFinal?='final')  (type=StateType) 'state' id=FullStateID
-	////  	| (isFinal?='final')  (type=StateType) 'state' 
-	////  	| (isFinal?='final')  (type=StateType) id=FullStateID
-	////  	| (isFinal?='final')  'state' id=FullStateID
-	////  	| (isFinal?='final')  (type=StateType)
-	////  	| (isFinal?='final')  'state' id=FullStateID
-	////  	| (isFinal?='final')  id=FullStateID
-	////  	| (isFinal?='final')
-	////  	
-	////  	| (type=StateType) 'state' id=FullStateID
-	////  	| (type=StateType) 'state'
-	////  	| (type=StateType) id=FullStateID
-	////  	| (type=StateType)
-	////  	
-	////  	| 'state' id=FullStateID
-	////  	| 'state'
-	////  		
-	////  	| id=FullStateID
-	////  )
-	//////change the datatype of label (from FullStateID) to STRING 
-	//////to prevent wrong parsing in this case: 
-	//////init A
-	//////final B
-	//////A --> B;
-	////  (label=STRING)? //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
-	////  (bodyText=STRING)? 
-	//  
-	////   ('{' 
-	////	    (	 	('onentry' entryActions+=Action) 
-	////	  		| 	('oninner' innerActions+=Action) 
-	////	  		|   ('onexit' exitActions+= Action) 
-	////	  		| 	('suspension' suspensionTrigger=Action) // kein effect, kein delay, kein immediate
-	////	  		| 	(signals+=Signal) 
-	////	  		|   
-	////(regions+=Region ('||' regions+=Region)*)
-	//	  	 //)+
-	////   	'}')?
-	////   	(outgoingTransitions+=Transition)* 
-	////;
-	////Renaming returns sync::Renaming: oldID=STRING'/'newID=STRING;
-	////FullStateID : ((ID'@')?ID);
-	//	 //========================================================================================
-	//	 //===  									    ACTIONS  					               ===
-	//	 //========================================================================================
-	////Action returns sync::Action:
-	////	((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))
-	////| 
-	////	Transition
-	////	
-	////;
-	//
-	//	//========================================================================================
-	//	 //===  									    TRANSITION 					               ===
-	//	 //========================================================================================
-	//	
-	////Transition returns sync::Transition:
-	////
-	////	(sourceState=[sync::State|FullStateID])? 
-	////	//either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-	////	//|({sync::State} name=FullStateID)
-	////	type=TransitionType
-	////	(targetState=[sync::State|FullStateID])
-	////	//|newTargetState=TransitionState )
-	////	( 'with' (isImmediate?='#')? (delay=INT)?
-	////		     (trigger=BooleanExpression)?
-	////		     ("/" (effects+=Effect (',')?)* )?
-	////			 
-	////	)?
-	////	(isHistory?=' history')?
-	////	';'
-	////;
-	//////TransitionState returns sync::State:
-	//////{sync::State}
-	//////	(	  ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state' id=FullStateID
-	//////  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) 'state'
-	//////  	| ((isInitial?='init')(isFinal?='final')) (type=StateType) id=FullStateID
-	//////  	| ((isInitial?='init')(isFinal?='final')) 'state' id=FullStateID
-	//////  	| ((isInitial?='init')(isFinal?='final')) (type=StateType)
-	//////  	| ((isInitial?='init')(isFinal?='final')) 'state'
-	//////  	| ((isInitial?='init')(isFinal?='final')) id=FullStateID
-	//////  	| ((isInitial?='init')(isFinal?='final'))
-	//////  	
-	//////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state' id=FullStateID
-	//////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) 'state'
-	//////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType) id=FullStateID
-	//////  	| ((isFinal?='final')(isInitial?='init')) 'state' id=FullStateID
-	//////  	| ((isFinal?='final')(isInitial?='init')) (type=StateType)
-	//////  	| ((isFinal?='final')(isInitial?='init')) 'state'
-	//////  	| ((isFinal?='final')(isInitial?='init')) id=FullStateID
-	//////  	| ((isFinal?='final')(isInitial?='init'))
-	//////  	
-	//////  	| (isInitial?='init') (type=StateType) 'state' id=FullStateID
-	//////  	| (isInitial?='init') (type=StateType) 'state'
-	//////  	| (isInitial?='init') (type=StateType) id=FullStateID  
-	//////  	| (isInitial?='init') 'state' id=FullStateID
-	//////  	| (isInitial?='init') (type=StateType) 
-	//////  	| (isInitial?='init') 'state'
-	//////  	| (isInitial?='init') id=FullStateID
-	//////  	| (isInitial?='init')
-	//////  	
-	//////  	| (isFinal?='final')  (type=StateType) 'state' id=FullStateID
-	//////  	| (isFinal?='final')  (type=StateType) 'state' 
-	//////  	| (isFinal?='final')  (type=StateType) id=FullStateID
-	//////  	| (isFinal?='final')  'state' id=FullStateID
-	//////  	| (isFinal?='final')  (type=StateType)
-	//////  	| (isFinal?='final')  'state' id=FullStateID
-	//////  	| (isFinal?='final')  id=FullStateID
-	//////  	| (isFinal?='final')
-	//////  	
-	//////  	| (type=StateType) 'state' id=FullStateID
-	//////  	| (type=StateType) 'state'
-	//////  	| (type=StateType) id=FullStateID
-	//////  	| (type=StateType)
-	//////  	
-	//////  	| 'state' id=FullStateID
-	//////  	| 'state'
-	//////  		
-	//////  	| id=FullStateID
-	//////  )
-	//////;
-	////	//========================================================================================
-	////	//===  									    VAR,SIG  					               ===
-	////	//========================================================================================
-	////
-	////ValuedObject returns sync::ValuedObject:
-	////	Signal | Variable
-	////;
-	////Variable returns sync::Variable:
-	////	'var' name=ID 
-	////	( 
-	////	  (': ' type=ValueType)//or type only, type being either pre-defined or hostcode
-	////	| (':=' initialValue=ID ': ' type=ValueType) // either initial value and type 
-	////	)  
-	////;
-	////Signal returns sync::Signal:
-	////		(	(isInput?='input')
-	////		|
-	////		 	(isOutput?='output')
-	////		|
-	////		 	((isInput?='input')(isOutput?='output')))
-	////	
-	////	// Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-	////	name=QualifiedName 
-	////	(':=' initialValue=SignalValue)? 
-	////	// after the initial value, either the type or the combine type has to come
-	////	// if it is not set, the default type PURE
-	////	( 
-	////		(': ' type=ValueType)
-	////	| 	(': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING))
-	////	)?
-	////;
-	////SignalValue returns ecore::EString :(INT | ID | Boolean)+;
-	////QualifiedName :(ID".")*ID;
-	////enum StateType	returns sync::StateType	: NORMAL | CONDITIONAL='cond' | REFERENCE='ref' | TEXTUAL='textual'; 
-	////enum CombineOperator returns sync::CombineOperator: NONE | ADD='+' | MULT='*' | AND='AND'| OR='OR' |HOST='hostCombineOperator';
-	////enum ValueType returns sync::ValueType: PURE | BOOL='boolean' | UNSIGNED='unsigned' | INTEGER='integer' | FLOAT='float' | HOST='hostType';	
-	////enum TransitionType returns sync::TransitionType: WEAKABORT='-->' |  STRONGABORT='o->' | NORMALTERMINATION='>->'; 
-	//////==============================================================================
-	////// THE REST IS COPY/PASTE 'd from 
-	//////{@link de.cau.cs.kieler.synccharts..labelparser.ActionLabel.xtext}
-	//////==============================================================================
-	//////==============================================================================
-	////// Basic Actions
-	//////==============================================================================
-	////
-	////Action returns sync::Action:
-	////{sync::Action}
-	////    (isImmediate?='#')? (delay=INT)? ({sync::Action.triggersAndEffects+=current}(trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?)
-	////;        
-	////
-	////Effect returns sync::Effect: 
-	////    Emission | Assignment | HostCode;
-	////        
-	////Emission returns sync::Emission:
-	////    signal=[sync::Signal] 
-	////    (("(" newValue=ValueExpression ")")
-	////   |("(" newValue=BooleanExpression ")") )?;
-	////
-	////Assignment returns sync::Assignment:
-	////    variable=[sync::Variable] ":=" 
-	////     ( expression=ValueExpression
-	////     | expression=BooleanExpression);
-	////
-	////SignalReference returns sync::SignalReference:
-	////    signal = [sync::Signal|QualifiedName];
-	////
-	////VariableReference returns sync::VariableReference:
-	////    variable = [sync::Variable];
-	////
-	//////Signal returns sync::Signal:
-	//////    name=ID;
-	//////    
-	//////Variable returns sync::Variable:
-	//////    name=ID;
-	////
-	//////==============================================================================
-	////// Values
-	//////==============================================================================
-	////
-	////// redefine INT terminal to allow negative numbers
-	////terminal INT returns ecore::EInt:
-	//// '-'?('0'..'9')+;
-	////
-	////IntValue returns sync::IntValue: 
-	////    value=INT;
-	////FloatValue returns sync::FloatValue:
-	////    value=Float ; 
-	////BooleanValue returns sync::BooleanValue :
-	////    value=Boolean;
-	////Value returns sync::Value:
-	////    IntValue | FloatValue | BooleanValue;
-	////
-	////// make sure the Float rule does not shadow the INT rule
-	////terminal Float returns ecore::EFloatObject : ((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
-	////terminal Boolean returns ecore::EBooleanObject : "true" | "false";
-	////
-	//////==============================================================================
-	////// Arithmetic Expressions
-	//////==============================================================================
-	////
-	////// Example: ?A  
-	////ValOperation returns sync::ComplexExpression:
-	////    operator=ValOperator subExpressions+=SignalReference;
-	////
-	////// everything that evaluates to a primitive number value
-	////ValueExpression returns sync::Expression:
-	////    PlusOperation;
-	////
-	////// Example: 42, 42.2, ?A, var1, (1+2*3)
-	////ParanthesedValueExpression returns sync::Expression:
-	////    IntValue | FloatValue | ValOperation | VariableReference | HostCode | '('PlusOperation')' | '('DivOperation')';
-	////
-	////// Example: 1 + 2, varA - ?B
-	////PlusOperation returns sync::Expression:
-	////    MultOrDivOperation ({sync::ComplexExpression.subExpressions+=current} operator=PlusOperator subExpressions+=MultOrDivOperation)*;
-	////
-	////MultOrDivOperation returns sync::Expression:
-	////    MultOperation | '('DivOperation')';
-	////
-	////// Example: 2 * 4, varA mod ?B
-	////MultOperation returns sync::Expression:
-	////    PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=MultOperator subExpressions+=PreOrNormalValueExpression)*;
-	////
-	////// Example: (2 / 4)
-	////// note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
-	////DivOperation returns sync::Expression:
-	////    PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)*;
-	////
-	////// Example: pre (? A)
-	////PreArithmOperation returns sync::ComplexExpression:
-	////    operator=UnaryParanthesedOperator '('subExpressions+=ValOperation')';
-	////    
-	////PreOrNormalValueExpression returns sync::Expression:
-	////    PreArithmOperation | ParanthesedValueExpression;
-	////
-	//////==============================================================================
-	////// Boolean Expressions
-	//////==============================================================================
-	////
-	////// Example: 42 <= ?A
-	////CompareOperation returns sync::Expression:
-	////    ValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);     
-	////
-	////// Example: not A, not false, not (A or B)
-	////// at the latter we need the parans to indicate the right binding
-	////UnaryOperation returns sync::ComplexExpression:
-	////    operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression;
-	////
-	////UnaryParanthesedOperation returns sync::ComplexExpression:
-	////    operator=UnaryParanthesedOperator '('subExpressions+=BooleanExpression ')';
-	////
-	////// Example: either negated or normal expression (with parantheses) 
-	////UnaryOrNormalExpression returns sync::Expression:
-	////    UnaryOperation | UnaryParanthesedOperation | ParanthesedBooleanExpression;
-	////
-	////// Example: A and B, not C and 42 <= ?D
-	////AndOperation returns sync::Expression:
-	////    UnaryOrNormalExpression ({sync::ComplexExpression.subExpressions+=current} operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*;
-	////
-	////// Example: A or B, C and B or D and not E 
-	////OrOperation returns sync::Expression:
-	////    AndOperation ({sync::ComplexExpression.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
-	////
-	////// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
-	////// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
-	////ParanthesedBooleanExpression returns sync::Expression:
-	////    BooleanValue | CompareOperation | SignalReference | HostCode | '('OrOperation')' ;
-	////
-	////// Example: not D and C or ?E = 42 or not (A and (B or C))
-	////BooleanExpression returns sync::Expression:
-	////    OrOperation;
-	////
-	//////==============================================================================
-	////// Operators
-	//////==============================================================================
-	////    
-	////enum OperatorType returns sync::OperatorType:
-	////    EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";
-	////
-	////enum ValOperator returns sync::OperatorType:
-	////    VAL="?";
-	////
-	////enum CompareOperator returns sync::OperatorType:
-	////    EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=";
-	////
-	////// not A    
-	////enum UnaryOperator returns sync::OperatorType:
-	////    NOT="not";
-	////
-	////// pre(A)
-	////enum UnaryParanthesedOperator returns sync::OperatorType:
-	////    PRE="pre";
-	////
-	////enum OperatorOr returns sync::OperatorType:
-	////    OR="or";
-	////
-	////enum OperatorAnd returns sync::OperatorType:
-	////    AND="and";
-	////
-	////enum OperatorPre returns sync::OperatorType:
-	////    PRE="pre";
-	////
-	////enum PlusOperator returns sync::OperatorType:
-	////    ADD="+" | SUB="-";
-	////    
-	////enum MultOperator returns sync::OperatorType: 
-	////    MULT="*" | MOD="mod";
-	////
-	////enum DivOperator returns sync::OperatorType:  
-	////    DIV="/";
-	//
-	//
-	////==============================================================================
-	//// Misc
-	//////==============================================================================
-	////    
-	////HostCode returns sync::HostCode:
-	////    //"'"code=STRING"'";
-	////    code=STRING ("(" type=ID ")")?;
+	//  "region"? id=ID? (variables+=Variable|signals+=Signal|innerStates+=State?)+;
 	public RegionElements getRegionAccess() {
 		return (pRegion != null) ? pRegion : (pRegion = new RegionElements());
 	}
@@ -838,16 +4839,891 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getRegionAccess().getRule();
 	}
 
+	//State returns sync::State:
+	//  {sync::State} ((isInitial?="init" isFinal?="final") type=StateType "state" id=
+	//  FullStateID|(isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial
+	//  ?="init" isFinal?="final") type=StateType id=FullStateID|(isInitial?="init" isFinal
+	//  ?="final") "state" id=FullStateID|(isInitial?="init" isFinal?="final") type=
+	//  StateType|(isInitial?="init" isFinal?="final") "state"|(isInitial?="init" isFinal?=
+	//  "final") id=FullStateID|isInitial?="init" isFinal?="final"|(isFinal?="final"
+	//  isInitial?="init") type=StateType "state" id=FullStateID|(isFinal?="final" isInitial
+	//  ?="init") type=StateType "state"|(isFinal?="final" isInitial?="init") type=StateType
+	//  id=FullStateID|(isFinal?="final" isInitial?="init") "state" id=FullStateID|(isFinal
+	//  ?="final" isInitial?="init") type=StateType|(isFinal?="final" isInitial?="init")
+	//  "state"|(isFinal?="final" isInitial?="init") id=FullStateID|isFinal?="final"
+	//  isInitial?="init"|isInitial?="init" type=StateType "state" id=FullStateID|isInitial
+	//  ?="init" type=StateType "state"|isInitial?="init" type=StateType id=FullStateID|
+	//  isInitial?="init" "state" id=FullStateID|isInitial?="init" type=StateType|isInitial
+	//  ?="init" "state"|isInitial?="init" id=FullStateID|isInitial?="init"|isFinal?=
+	//  "final" type=StateType "state" id=FullStateID|isFinal?="final" type=StateType "state"
+	//  |isFinal?="final" type=StateType id=FullStateID|isFinal?="final" "state" id=
+	//  FullStateID|isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID
+	//  |isFinal?="final" id=FullStateID|isFinal?="final"|type=StateType "state" id=
+	//  FullStateID|type=StateType "state"|type=StateType id=FullStateID|type=StateType|
+	//  "state" id=FullStateID|"state"|id=FullStateID) label=STRING? bodyText=STRING? ("{" (
+	//  "onentry" entryActions+=Action|"oninner" innerActions+=Action|"onexit" exitActions
+	//  +=Action|"suspension" suspensionTrigger=Action|signals+=Signal|regions+=Region (
+	//  "||" regions+=Region)*)+ "}")? outgoingTransitions+=Transition*; 
+	//
+	//    
+	//   
+	//          
+	//        
+	//        
+	//        
+	//      
+	//          
+	//    
+	//          
+	//        
+	//        
+	//        
+	//      
+	//      
+	//      
+	//    
+	//        
+	//      
+	//      
+	//      
+	//    
+	//    
+	//    
+	//  
+	//        
+	//      
+	//      
+	//      
+	//    
+	//      
+	//    
+	//  
+	//      
+	//    
+	//    
+	//  
+	//    
+	//  
+	//   
+	//  //change the datatype of label (from FullStateID) to STRING 
+	//   //to prevent wrong parsing in this case: 
+	//   //init A
+	//   //final B
+	//   //A --> B;
+	//     //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
+	//    
+	//   
+	//     
+	//     
+	//     
+	//     // kein effect, kein delay, kein immediate
+	public StateElements getStateAccess() {
+		return (pState != null) ? pState : (pState = new StateElements());
+	}
+	
+	public ParserRule getStateRule() {
+		return getStateAccess().getRule();
+	}
+
+	//Renaming returns sync::Renaming:
+	//  oldID=STRING "/" newID=STRING;
+	public RenamingElements getRenamingAccess() {
+		return (pRenaming != null) ? pRenaming : (pRenaming = new RenamingElements());
+	}
+	
+	public ParserRule getRenamingRule() {
+		return getRenamingAccess().getRule();
+	}
+
+	//FullStateID returns ecore::EString:
+	//  (ID "@")? ID; 
+	//
+	//
+	//      
+	////========================================================================================
+	////===  									    ACTIONS  					               ===
+	////========================================================================================
+	//
+	//
+	////Action returns sync::Action:
+	////  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
+	////========================================================================================
+	////===  									    TRANSITION 					               ===
+	////========================================================================================
+	public FullStateIDElements getFullStateIDAccess() {
+		return (pFullStateID != null) ? pFullStateID : (pFullStateID = new FullStateIDElements());
+	}
+	
+	public ParserRule getFullStateIDRule() {
+		return getFullStateIDAccess().getRule();
+	}
+
+	//Transition returns sync::Transition:
+	//  sourceState=[sync::State|FullStateID]? type=TransitionType targetState=[sync::
+	//  State|FullStateID] ("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? (
+	//  "/" (effects+=Effect ","?)*)?)? isHistory?=" history"? ";"; 
+	////========================================================================================
+	////===  									    ACTIONS  					               ===
+	////========================================================================================
+	//
+	//
+	////Action returns sync::Action:
+	////  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
+	////========================================================================================
+	////===  									    TRANSITION 					               ===
+	////========================================================================================
+	//
+	//
+	//    
+	//   
+	//  //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+	//   //|({sync::State} name=FullStateID)
+	//      
+	//  //|newTargetState=TransitionState )
+	public TransitionElements getTransitionAccess() {
+		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
+	}
+	
+	public ParserRule getTransitionRule() {
+		return getTransitionAccess().getRule();
+	}
+
+	//TransitionState returns sync::State:
+	//  {sync::State} ((isInitial?="init" isFinal?="final") type=StateType "state" id=
+	//  FullStateID|(isInitial?="init" isFinal?="final") type=StateType "state"|(isInitial
+	//  ?="init" isFinal?="final") type=StateType id=FullStateID|(isInitial?="init" isFinal
+	//  ?="final") "state" id=FullStateID|(isInitial?="init" isFinal?="final") type=
+	//  StateType|(isInitial?="init" isFinal?="final") "state"|(isInitial?="init" isFinal?=
+	//  "final") id=FullStateID|isInitial?="init" isFinal?="final"|(isFinal?="final"
+	//  isInitial?="init") type=StateType "state" id=FullStateID|(isFinal?="final" isInitial
+	//  ?="init") type=StateType "state"|(isFinal?="final" isInitial?="init") type=StateType
+	//  id=FullStateID|(isFinal?="final" isInitial?="init") "state" id=FullStateID|(isFinal
+	//  ?="final" isInitial?="init") type=StateType|(isFinal?="final" isInitial?="init")
+	//  "state"|(isFinal?="final" isInitial?="init") id=FullStateID|isFinal?="final"
+	//  isInitial?="init"|isInitial?="init" type=StateType "state" id=FullStateID|isInitial
+	//  ?="init" type=StateType "state"|isInitial?="init" type=StateType id=FullStateID|
+	//  isInitial?="init" "state" id=FullStateID|isInitial?="init" type=StateType|isInitial
+	//  ?="init" "state"|isInitial?="init" id=FullStateID|isInitial?="init"|isFinal?=
+	//  "final" type=StateType "state" id=FullStateID|isFinal?="final" type=StateType "state"
+	//  |isFinal?="final" type=StateType id=FullStateID|isFinal?="final" "state" id=
+	//  FullStateID|isFinal?="final" type=StateType|isFinal?="final" "state" id=FullStateID
+	//  |isFinal?="final" id=FullStateID|isFinal?="final"|type=StateType "state" id=
+	//  FullStateID|type=StateType "state"|type=StateType id=FullStateID|type=StateType|
+	//  "state" id=FullStateID|"state"|id=FullStateID); 
+	//
+	//    
+	//            
+	//        
+	//        
+	//          
+	//        
+	//        
+	//          
+	//        
+	//        
+	//          
+	//        
+	//        
+	//        
+	//          
+	//        
+	//      
+	//        
+	//          
+	//        
+	//        
+	//      
+	//        
+	//   
+	////========================================================================================
+	////===  									    VAR,SIG  					               ===
+	////========================================================================================
+	////
+	public TransitionStateElements getTransitionStateAccess() {
+		return (pTransitionState != null) ? pTransitionState : (pTransitionState = new TransitionStateElements());
+	}
+	
+	public ParserRule getTransitionStateRule() {
+		return getTransitionStateAccess().getRule();
+	}
+
+	//ValuedObject returns sync::ValuedObject:
+	//  Signal|Variable;  
+	////========================================================================================
+	////===  									    VAR,SIG  					               ===
+	////========================================================================================
+	////
+	public ValuedObjectElements getValuedObjectAccess() {
+		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
+	}
+	
+	public ParserRule getValuedObjectRule() {
+		return getValuedObjectAccess().getRule();
+	}
+
+	//Variable returns sync::Variable:
+	//  "var" name=ID (": " type=ValueType|":=" initialValue=ID ": " type=ValueType); 
+	//
+	//    
+	//          //or type only, type being either pre-defined or hostcode
+	//        // either initial value and type
+	public VariableElements getVariableAccess() {
+		return (pVariable != null) ? pVariable : (pVariable = new VariableElements());
+	}
+	
+	public ParserRule getVariableRule() {
+		return getVariableAccess().getRule();
+	}
+
+	//Signal returns sync::Signal:
+	//  (isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=
+	//  QualifiedName (":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=
+	//  ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING))?; 
+	//
+	//    
+	//    
+	//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+	//         // after the initial value, either the type or the combine type has to come
+	//   // if it is not set, the default type PURE
+	public SignalElements getSignalAccess() {
+		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
+	}
+	
+	public ParserRule getSignalRule() {
+		return getSignalAccess().getRule();
+	}
+
+	//SignalValue returns ecore::EString:
+	//  (INT|ID|Boolean)+;
+	public SignalValueElements getSignalValueAccess() {
+		return (pSignalValue != null) ? pSignalValue : (pSignalValue = new SignalValueElements());
+	}
+	
+	public ParserRule getSignalValueRule() {
+		return getSignalValueAccess().getRule();
+	}
+
+	//QualifiedName returns ecore::EString:
+	//  (ID ".")* ID;
+	public QualifiedNameElements getQualifiedNameAccess() {
+		return (pQualifiedName != null) ? pQualifiedName : (pQualifiedName = new QualifiedNameElements());
+	}
+	
+	public ParserRule getQualifiedNameRule() {
+		return getQualifiedNameAccess().getRule();
+	}
+
+	//enum StateType returns sync::StateType:
+	//  NORMAL | CONDITIONAL="cond" | REFERENCE="ref" | TEXTUAL="textual";
+	public StateTypeElements getStateTypeAccess() {
+		return (unknownRuleStateType != null) ? unknownRuleStateType : (unknownRuleStateType = new StateTypeElements());
+	}
+	
+	public EnumRule getStateTypeRule() {
+		return getStateTypeAccess().getRule();
+	}
+
+	//enum CombineOperator returns sync::CombineOperator:
+	//  NONE | ADD="+" | MULT="*" | AND | OR | HOST="hostCombineOperator";
+	public CombineOperatorElements getCombineOperatorAccess() {
+		return (unknownRuleCombineOperator != null) ? unknownRuleCombineOperator : (unknownRuleCombineOperator = new CombineOperatorElements());
+	}
+	
+	public EnumRule getCombineOperatorRule() {
+		return getCombineOperatorAccess().getRule();
+	}
+
+	//enum ValueType returns sync::ValueType:
+	//  PURE | BOOL="boolean" | UNSIGNED="unsigned" | INTEGER="integer" | FLOAT="float" | HOST=
+	//  "hostType";
+	public ValueTypeElements getValueTypeAccess() {
+		return (unknownRuleValueType != null) ? unknownRuleValueType : (unknownRuleValueType = new ValueTypeElements());
+	}
+	
+	public EnumRule getValueTypeRule() {
+		return getValueTypeAccess().getRule();
+	}
+
+	//enum TransitionType returns sync::TransitionType:
+	//  WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->"; 
+	//
+	//      
+	//            ////==============================================================================
+	////// THE REST IS COPY/PASTE 'd from 
+	//////{@link de.cau.cs.kieler.synccharts..labelparser.ActionLabel.xtext}
+	//////==============================================================================
+	//////==============================================================================
+	////// Basic Actions
+	//////==============================================================================
+	public TransitionTypeElements getTransitionTypeAccess() {
+		return (unknownRuleTransitionType != null) ? unknownRuleTransitionType : (unknownRuleTransitionType = new TransitionTypeElements());
+	}
+	
+	public EnumRule getTransitionTypeRule() {
+		return getTransitionTypeAccess().getRule();
+	}
+
+	//Action returns sync::Action:
+	//  {sync::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects
+	//  +=Effect ","?)*)?;   ////==============================================================================
+	////// THE REST IS COPY/PASTE 'd from 
+	//////{@link de.cau.cs.kieler.synccharts..labelparser.ActionLabel.xtext}
+	//////==============================================================================
+	//////==============================================================================
+	////// Basic Actions
+	//////==============================================================================
+	public ActionElements getActionAccess() {
+		return (pAction != null) ? pAction : (pAction = new ActionElements());
+	}
+	
+	public ParserRule getActionRule() {
+		return getActionAccess().getRule();
+	}
+
+	//Effect returns sync::Effect:
+	//  Emission|Assignment|HostCode;
+	public EffectElements getEffectAccess() {
+		return (pEffect != null) ? pEffect : (pEffect = new EffectElements());
+	}
+	
+	public ParserRule getEffectRule() {
+		return getEffectAccess().getRule();
+	}
+
+	//Emission returns sync::Emission:
+	//  signal=[sync::Signal] ("(" newValue=ValueExpression ")"|"(" newValue=
+	//  BooleanExpression ")")?;
+	public EmissionElements getEmissionAccess() {
+		return (pEmission != null) ? pEmission : (pEmission = new EmissionElements());
+	}
+	
+	public ParserRule getEmissionRule() {
+		return getEmissionAccess().getRule();
+	}
+
+	//Assignment returns sync::Assignment:
+	//  variable=[sync::Variable] ":=" (expression=ValueExpression|expression=
+	//  BooleanExpression);
+	public AssignmentElements getAssignmentAccess() {
+		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
+	}
+	
+	public ParserRule getAssignmentRule() {
+		return getAssignmentAccess().getRule();
+	}
+
+	//SignalReference returns sync::SignalReference:
+	//  signal=[sync::Signal|QualifiedName];
+	public SignalReferenceElements getSignalReferenceAccess() {
+		return (pSignalReference != null) ? pSignalReference : (pSignalReference = new SignalReferenceElements());
+	}
+	
+	public ParserRule getSignalReferenceRule() {
+		return getSignalReferenceAccess().getRule();
+	}
+
+	//VariableReference returns sync::VariableReference:
+	//  variable=[sync::Variable]; 
+	//
+	//    
+	//  
+	//////Signal returns sync::Signal:
+	//////    name=ID;
+	//////    
+	//////Variable returns sync::Variable:
+	//////    name=ID;
+	//
+	////==============================================================================
+	//// Values
+	////==============================================================================
+	//// redefine INT terminal to allow negative numbers
+	public VariableReferenceElements getVariableReferenceAccess() {
+		return (pVariableReference != null) ? pVariableReference : (pVariableReference = new VariableReferenceElements());
+	}
+	
+	public ParserRule getVariableReferenceRule() {
+		return getVariableReferenceAccess().getRule();
+	}
+
+	//terminal INT returns ecore::EInt:
+	//  "-"? "0".."9"+; 
+	//////Signal returns sync::Signal:
+	//////    name=ID;
+	//////    
+	//////Variable returns sync::Variable:
+	//////    name=ID;
+	//
+	////==============================================================================
+	//// Values
+	////==============================================================================
+	//// redefine INT terminal to allow negative numbers
+	public TerminalRule getINTRule() {
+		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
+	} 
+
+	//IntValue returns sync::IntValue:
+	//  value=INT;
+	public IntValueElements getIntValueAccess() {
+		return (pIntValue != null) ? pIntValue : (pIntValue = new IntValueElements());
+	}
+	
+	public ParserRule getIntValueRule() {
+		return getIntValueAccess().getRule();
+	}
+
+	//FloatValue returns sync::FloatValue:
+	//  value=Float;
+	public FloatValueElements getFloatValueAccess() {
+		return (pFloatValue != null) ? pFloatValue : (pFloatValue = new FloatValueElements());
+	}
+	
+	public ParserRule getFloatValueRule() {
+		return getFloatValueAccess().getRule();
+	}
+
+	//BooleanValue returns sync::BooleanValue:
+	//  value=Boolean;
+	public BooleanValueElements getBooleanValueAccess() {
+		return (pBooleanValue != null) ? pBooleanValue : (pBooleanValue = new BooleanValueElements());
+	}
+	
+	public ParserRule getBooleanValueRule() {
+		return getBooleanValueAccess().getRule();
+	}
+
+	//Value returns sync::Value:
+	//  IntValue|FloatValue|BooleanValue; 
+	//
+	//    
+	//    //// make sure the Float rule does not shadow the INT rule
+	public ValueElements getValueAccess() {
+		return (pValue != null) ? pValue : (pValue = new ValueElements());
+	}
+	
+	public ParserRule getValueRule() {
+		return getValueAccess().getRule();
+	}
+
+	//terminal Float returns ecore::EFloatObject:
+	//  (INT "." INT | INT ("." INT)? ("e" | "E") "+"? INT) "f"? | INT "f";   //// make sure the Float rule does not shadow the INT rule
+	public TerminalRule getFloatRule() {
+		return (tFloat != null) ? tFloat : (tFloat = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Float"));
+	} 
+
+	//terminal Boolean returns ecore::EBooleanObject:
+	//  "true" | "false"; 
+	//
+	//      
+	//        //
+	////==============================================================================
+	//// Arithmetic Expressions
+	////==============================================================================
+	//// Example: ?A
+	public TerminalRule getBooleanRule() {
+		return (tBoolean != null) ? tBoolean : (tBoolean = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Boolean"));
+	} 
+
+	//ValOperation returns sync::ComplexExpression:
+	//  operator=ValOperator subExpressions+=SignalReference;   //
+	////==============================================================================
+	//// Arithmetic Expressions
+	////==============================================================================
+	//// Example: ?A  
+	//    
+	//      //
+	//// everything that evaluates to a primitive number value
+	public ValOperationElements getValOperationAccess() {
+		return (pValOperation != null) ? pValOperation : (pValOperation = new ValOperationElements());
+	}
+	
+	public ParserRule getValOperationRule() {
+		return getValOperationAccess().getRule();
+	}
+
+	//ValueExpression returns sync::Expression:
+	//  PlusOperation;   //
+	//// everything that evaluates to a primitive number value
+	//    
+	//   
+	//// Example: 42, 42.2, ?A, var1, (1+2*3)
+	public ValueExpressionElements getValueExpressionAccess() {
+		return (pValueExpression != null) ? pValueExpression : (pValueExpression = new ValueExpressionElements());
+	}
+	
+	public ParserRule getValueExpressionRule() {
+		return getValueExpressionAccess().getRule();
+	}
+
+	//ParanthesedValueExpression returns sync::Expression:
+	//  IntValue|FloatValue|ValOperation|VariableReference|HostCode|"(" PlusOperation ")"|
+	//  "(" DivOperation ")";  
+	//// Example: 42, 42.2, ?A, var1, (1+2*3)
+	//    
+	//      
+	//      
+	//// Example: 1 + 2, varA - ?B
+	public ParanthesedValueExpressionElements getParanthesedValueExpressionAccess() {
+		return (pParanthesedValueExpression != null) ? pParanthesedValueExpression : (pParanthesedValueExpression = new ParanthesedValueExpressionElements());
+	}
+	
+	public ParserRule getParanthesedValueExpressionRule() {
+		return getParanthesedValueExpressionAccess().getRule();
+	}
+
+	//PlusOperation returns sync::Expression:
+	//  MultOrDivOperation ({sync::ComplexExpression.subExpressions+=current} operator=
+	//  PlusOperator subExpressions+=MultOrDivOperation)*; 
+	//// Example: 1 + 2, varA - ?B
+	public PlusOperationElements getPlusOperationAccess() {
+		return (pPlusOperation != null) ? pPlusOperation : (pPlusOperation = new PlusOperationElements());
+	}
+	
+	public ParserRule getPlusOperationRule() {
+		return getPlusOperationAccess().getRule();
+	}
+
+	//MultOrDivOperation returns sync::Expression:
+	//  MultOperation|"(" DivOperation ")"; 
+	//
+	//    
+	//      
+	//// Example: 2 * 4, varA mod ?B
+	public MultOrDivOperationElements getMultOrDivOperationAccess() {
+		return (pMultOrDivOperation != null) ? pMultOrDivOperation : (pMultOrDivOperation = new MultOrDivOperationElements());
+	}
+	
+	public ParserRule getMultOrDivOperationRule() {
+		return getMultOrDivOperationAccess().getRule();
+	}
+
+	//MultOperation returns sync::Expression:
+	//  PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current}
+	//  operator=MultOperator subExpressions+=PreOrNormalValueExpression)*; 
+	//// Example: 2 * 4, varA mod ?B
+	//
+	//
+	//    
+	//    
+	//     
+	//// Example: (2 / 4)
+	//// note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
+	public MultOperationElements getMultOperationAccess() {
+		return (pMultOperation != null) ? pMultOperation : (pMultOperation = new MultOperationElements());
+	}
+	
+	public ParserRule getMultOperationRule() {
+		return getMultOperationAccess().getRule();
+	}
+
+	//DivOperation returns sync::Expression:
+	//  PreOrNormalValueExpression ({sync::ComplexExpression.subExpressions+=current}
+	//  operator=DivOperator subExpressions+=PreOrNormalValueExpression)*;  
+	//// Example: (2 / 4)
+	//// note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
+	//    
+	//    
+	//      // Example: pre (? A)
+	public DivOperationElements getDivOperationAccess() {
+		return (pDivOperation != null) ? pDivOperation : (pDivOperation = new DivOperationElements());
+	}
+	
+	public ParserRule getDivOperationRule() {
+		return getDivOperationAccess().getRule();
+	}
+
+	//PreArithmOperation returns sync::ComplexExpression:
+	//  operator=UnaryParanthesedOperator "(" subExpressions+=ValOperation ")";   // Example: pre (? A)
+	public PreArithmOperationElements getPreArithmOperationAccess() {
+		return (pPreArithmOperation != null) ? pPreArithmOperation : (pPreArithmOperation = new PreArithmOperationElements());
+	}
+	
+	public ParserRule getPreArithmOperationRule() {
+		return getPreArithmOperationAccess().getRule();
+	}
+
+	//PreOrNormalValueExpression returns sync::Expression:
+	//  PreArithmOperation|ParanthesedValueExpression; 
+	//
+	//    
+	//   
+	////==============================================================================
+	//// Boolean Expressions
+	////==============================================================================
+	//// Example: 42 <= ?A
+	public PreOrNormalValueExpressionElements getPreOrNormalValueExpressionAccess() {
+		return (pPreOrNormalValueExpression != null) ? pPreOrNormalValueExpression : (pPreOrNormalValueExpression = new PreOrNormalValueExpressionElements());
+	}
+	
+	public ParserRule getPreOrNormalValueExpressionRule() {
+		return getPreOrNormalValueExpressionAccess().getRule();
+	}
+
+	//CompareOperation returns sync::Expression:
+	//  ValueExpression ({sync::ComplexExpression.subExpressions+=current} operator=
+	//  CompareOperator subExpressions+=ValueExpression);  
+	////==============================================================================
+	//// Boolean Expressions
+	////==============================================================================
+	//// Example: 42 <= ?A
+	//    
+	//      
+	//      // Example: not A, not false, not (A or B)
+	//// at the latter we need the parans to indicate the right binding
+	public CompareOperationElements getCompareOperationAccess() {
+		return (pCompareOperation != null) ? pCompareOperation : (pCompareOperation = new CompareOperationElements());
+	}
+	
+	public ParserRule getCompareOperationRule() {
+		return getCompareOperationAccess().getRule();
+	}
+
+	//UnaryOperation returns sync::ComplexExpression:
+	//  operator=UnaryOperator subExpressions+=ParanthesedBooleanExpression;   // Example: not A, not false, not (A or B)
+	//// at the latter we need the parans to indicate the right binding
+	public UnaryOperationElements getUnaryOperationAccess() {
+		return (pUnaryOperation != null) ? pUnaryOperation : (pUnaryOperation = new UnaryOperationElements());
+	}
+	
+	public ParserRule getUnaryOperationRule() {
+		return getUnaryOperationAccess().getRule();
+	}
+
+	//UnaryParanthesedOperation returns sync::ComplexExpression:
+	//  operator=UnaryParanthesedOperator "(" subExpressions+=BooleanExpression ")"; 
+	//
+	//    
+	//          // Example: either negated or normal expression (with parantheses)
+	public UnaryParanthesedOperationElements getUnaryParanthesedOperationAccess() {
+		return (pUnaryParanthesedOperation != null) ? pUnaryParanthesedOperation : (pUnaryParanthesedOperation = new UnaryParanthesedOperationElements());
+	}
+	
+	public ParserRule getUnaryParanthesedOperationRule() {
+		return getUnaryParanthesedOperationAccess().getRule();
+	}
+
+	//UnaryOrNormalExpression returns sync::Expression:
+	//  UnaryOperation|UnaryParanthesedOperation|ParanthesedBooleanExpression;   // Example: either negated or normal expression (with parantheses) 
+	//
+	//    
+	//    // Example: A and B, not C and 42 <= ?D
+	public UnaryOrNormalExpressionElements getUnaryOrNormalExpressionAccess() {
+		return (pUnaryOrNormalExpression != null) ? pUnaryOrNormalExpression : (pUnaryOrNormalExpression = new UnaryOrNormalExpressionElements());
+	}
+	
+	public ParserRule getUnaryOrNormalExpressionRule() {
+		return getUnaryOrNormalExpressionAccess().getRule();
+	}
+
+	//AndOperation returns sync::Expression:
+	//  UnaryOrNormalExpression ({sync::ComplexExpression.subExpressions+=current}
+	//  operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*;   // Example: A and B, not C and 42 <= ?D
+	//
+	//    
+	//    
+	//      // Example: A or B, C and B or D and not E
+	public AndOperationElements getAndOperationAccess() {
+		return (pAndOperation != null) ? pAndOperation : (pAndOperation = new AndOperationElements());
+	}
+	
+	public ParserRule getAndOperationRule() {
+		return getAndOperationAccess().getRule();
+	}
+
+	//OrOperation returns sync::Expression:
+	//  AndOperation ({sync::ComplexExpression.subExpressions+=current} operator=
+	//  OperatorOr subExpressions+=AndOperation)*;   // Example: A or B, C and B or D and not E 
+	//
+	//    
+	//      
+	//      // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+	//// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
+	public OrOperationElements getOrOperationAccess() {
+		return (pOrOperation != null) ? pOrOperation : (pOrOperation = new OrOperationElements());
+	}
+	
+	public ParserRule getOrOperationRule() {
+		return getOrOperationAccess().getRule();
+	}
+
+	//ParanthesedBooleanExpression returns sync::Expression:
+	//  BooleanValue|CompareOperation|SignalReference|HostCode|"(" OrOperation ")";   // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+	//// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
+	//
+	//    
+	//        // Example: not D and C or ?E = 42 or not (A and (B or C))
+	public ParanthesedBooleanExpressionElements getParanthesedBooleanExpressionAccess() {
+		return (pParanthesedBooleanExpression != null) ? pParanthesedBooleanExpression : (pParanthesedBooleanExpression = new ParanthesedBooleanExpressionElements());
+	}
+	
+	public ParserRule getParanthesedBooleanExpressionRule() {
+		return getParanthesedBooleanExpressionAccess().getRule();
+	}
+
+	//BooleanExpression returns sync::Expression:
+	//  OrOperation;   // Example: not D and C or ?E = 42 or not (A and (B or C))
+	//
+	//    
+	//   
+	////==============================================================================
+	//// Operators
+	////==============================================================================
+	public BooleanExpressionElements getBooleanExpressionAccess() {
+		return (pBooleanExpression != null) ? pBooleanExpression : (pBooleanExpression = new BooleanExpressionElements());
+	}
+	
+	public ParserRule getBooleanExpressionRule() {
+		return getBooleanExpressionAccess().getRule();
+	}
+
+	//enum OperatorType returns sync::OperatorType:
+	//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | AND="and" | OR="or" | ADD="+" | SUB=
+	//  "-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";  
+	////==============================================================================
+	//// Operators
+	////==============================================================================
+	public OperatorTypeElements getOperatorTypeAccess() {
+		return (unknownRuleOperatorType != null) ? unknownRuleOperatorType : (unknownRuleOperatorType = new OperatorTypeElements());
+	}
+	
+	public EnumRule getOperatorTypeRule() {
+		return getOperatorTypeAccess().getRule();
+	}
+
+	//enum ValOperator returns sync::OperatorType:
+	//  VAL="?";
+	public ValOperatorElements getValOperatorAccess() {
+		return (unknownRuleValOperator != null) ? unknownRuleValOperator : (unknownRuleValOperator = new ValOperatorElements());
+	}
+	
+	public EnumRule getValOperatorRule() {
+		return getValOperatorAccess().getRule();
+	}
+
+	//enum CompareOperator returns sync::OperatorType:
+	//  EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">="; 
+	//
+	//      
+	//                   
+	//  // not A
+	public CompareOperatorElements getCompareOperatorAccess() {
+		return (unknownRuleCompareOperator != null) ? unknownRuleCompareOperator : (unknownRuleCompareOperator = new CompareOperatorElements());
+	}
+	
+	public EnumRule getCompareOperatorRule() {
+		return getCompareOperatorAccess().getRule();
+	}
+
+	//enum UnaryOperator returns sync::OperatorType:
+	//  NOT="not";  
+	//  // not A    
+	//
+	//      
+	//   
+	//  // pre(A)
+	public UnaryOperatorElements getUnaryOperatorAccess() {
+		return (unknownRuleUnaryOperator != null) ? unknownRuleUnaryOperator : (unknownRuleUnaryOperator = new UnaryOperatorElements());
+	}
+	
+	public EnumRule getUnaryOperatorRule() {
+		return getUnaryOperatorAccess().getRule();
+	}
+
+	//enum UnaryParanthesedOperator returns sync::OperatorType:
+	//  PRE="pre";  
+	//  // pre(A)
+	public UnaryParanthesedOperatorElements getUnaryParanthesedOperatorAccess() {
+		return (unknownRuleUnaryParanthesedOperator != null) ? unknownRuleUnaryParanthesedOperator : (unknownRuleUnaryParanthesedOperator = new UnaryParanthesedOperatorElements());
+	}
+	
+	public EnumRule getUnaryParanthesedOperatorRule() {
+		return getUnaryParanthesedOperatorAccess().getRule();
+	}
+
+	//enum OperatorOr returns sync::OperatorType:
+	//  OR="or";
+	public OperatorOrElements getOperatorOrAccess() {
+		return (unknownRuleOperatorOr != null) ? unknownRuleOperatorOr : (unknownRuleOperatorOr = new OperatorOrElements());
+	}
+	
+	public EnumRule getOperatorOrRule() {
+		return getOperatorOrAccess().getRule();
+	}
+
+	//enum OperatorAnd returns sync::OperatorType:
+	//  AND="and";
+	public OperatorAndElements getOperatorAndAccess() {
+		return (unknownRuleOperatorAnd != null) ? unknownRuleOperatorAnd : (unknownRuleOperatorAnd = new OperatorAndElements());
+	}
+	
+	public EnumRule getOperatorAndRule() {
+		return getOperatorAndAccess().getRule();
+	}
+
+	//enum OperatorPre returns sync::OperatorType:
+	//  PRE="pre";
+	public OperatorPreElements getOperatorPreAccess() {
+		return (unknownRuleOperatorPre != null) ? unknownRuleOperatorPre : (unknownRuleOperatorPre = new OperatorPreElements());
+	}
+	
+	public EnumRule getOperatorPreRule() {
+		return getOperatorPreAccess().getRule();
+	}
+
+	//enum PlusOperator returns sync::OperatorType:
+	//  ADD="+" | SUB="-";
+	public PlusOperatorElements getPlusOperatorAccess() {
+		return (unknownRulePlusOperator != null) ? unknownRulePlusOperator : (unknownRulePlusOperator = new PlusOperatorElements());
+	}
+	
+	public EnumRule getPlusOperatorRule() {
+		return getPlusOperatorAccess().getRule();
+	}
+
+	//enum MultOperator returns sync::OperatorType:
+	//  MULT="*" | MOD="mod";
+	public MultOperatorElements getMultOperatorAccess() {
+		return (unknownRuleMultOperator != null) ? unknownRuleMultOperator : (unknownRuleMultOperator = new MultOperatorElements());
+	}
+	
+	public EnumRule getMultOperatorRule() {
+		return getMultOperatorAccess().getRule();
+	}
+
+	//enum DivOperator returns sync::OperatorType:
+	//  DIV="/"; 
+	//
+	//      
+	//   
+	////==============================================================================
+	//// Misc
+	////==============================================================================
+	public DivOperatorElements getDivOperatorAccess() {
+		return (unknownRuleDivOperator != null) ? unknownRuleDivOperator : (unknownRuleDivOperator = new DivOperatorElements());
+	}
+	
+	public EnumRule getDivOperatorRule() {
+		return getDivOperatorAccess().getRule();
+	}
+
+	//HostCode returns sync::HostCode:
+	//  code=STRING ("(" type=ID ")")?;  
+	////==============================================================================
+	//// Misc
+	////==============================================================================
+	//    
+	////"'"code=STRING"'";
+	public HostCodeElements getHostCodeAccess() {
+		return (pHostCode != null) ? pHostCode : (pHostCode = new HostCodeElements());
+	}
+	
+	public ParserRule getHostCodeRule() {
+		return getHostCodeAccess().getRule();
+	}
+
 	//terminal ID:
 	//  "^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
-	} 
-
-	//terminal INT returns ecore::EInt:
-	//  "0".."9"+;
-	public TerminalRule getINTRule() {
-		return gaTerminals.getINTRule();
 	} 
 
 	//terminal STRING:

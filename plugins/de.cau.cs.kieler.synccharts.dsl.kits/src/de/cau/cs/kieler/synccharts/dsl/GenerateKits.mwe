@@ -19,12 +19,15 @@
 		
 		<language uri="${grammarURI}" fileExtensions="${file.extensions}">
 			<!-- Java API to access grammar elements (required by several other fragments) -->
-			<!--fragment class="org.eclipse.xtext.generator.grammarAccess.GrammarAccessFragment"/-->
-			<fragment class="org.eclipse.xtext.generator.grammarAccess.EmptyPackageAwareGrammarAccessFragment"/>
+			<!--@modified oba {@link https://bugs.eclipse.org/bugs/show_bug.cgi?id=279093}
+			<fragment class="org.eclipse.xtext.generator.grammarAccess.EmptyPackageAwareGrammarAccessFragment"/-->
+			<fragment class="org.eclipse.xtext.generator.grammarAccess.GrammarAccessFragment"/>
 			
 			<!-- generates Java API for the generated EPackages -->
-			<fragment class="org.eclipse.xtext.generator.ecore.EcoreGeneratorFragment"
-					genModels="platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel"/>
+			<fragment class="org.eclipse.xtext.generator.ecore.EcoreGeneratorFragment"/>
+			<!--@modified oba We can move "genmodels" because we are not generating any EMF model,
+			we are only using the existing one
+			genModels="platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel"/-->
 			
 			<!-- the serialization component -->
 			<fragment class="org.eclipse.xtext.generator.parseTreeConstructor.ParseTreeConstructorFragment"/>
@@ -33,7 +36,7 @@
 			<fragment class="org.eclipse.xtext.generator.resourceFactory.ResourceFactoryFragment" 
 				fileExtensions="${file.extensions}"/>
 				
-			<!-- @modified(oba) AntlrParser -->
+			<!-- @modified oba AntlrParser -->
 			<fragment class="de.itemis.xtext.antlr.XtextAntlrGeneratorFragment">
    				<options backtrack="true"/>
 			</fragment>
