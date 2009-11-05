@@ -485,6 +485,17 @@
        fx="65"
        fy="265"
        r="44" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3528"
+       id="radialGradient2466"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,0.98913,0,1.336244)"
+       cx="124.75272"
+       cy="122.93433"
+       fx="124.75272"
+       fy="122.93433"
+       r="36.904343" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -665,5 +676,15 @@
        sodipodi:ry="36.503208"
        d="M 161.65707,122.93433 A 36.904343,36.503208 0 1 1 87.848381,122.93433 A 36.904343,36.503208 0 1 1 161.65707,122.93433 z"
        transform="matrix(1.224434,0,0,1.198537,131.3011,-30.81173)" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:1;fill:url(#radialGradient2466);fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path2464"
+       sodipodi:cx="124.75272"
+       sodipodi:cy="122.93433"
+       sodipodi:rx="36.904343"
+       sodipodi:ry="36.503208"
+       d="M 161.65707,122.93433 A 36.904343,36.503208 0 1 1 87.848381,122.93433 A 36.904343,36.503208 0 1 1 161.65707,122.93433 z"
+       transform="matrix(1.224434,0,0,1.198537,130.93532,78.778571)" />
   </g>
 </svg>
