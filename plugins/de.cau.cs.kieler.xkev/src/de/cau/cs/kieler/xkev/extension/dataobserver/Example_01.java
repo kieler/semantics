@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.xkev.extension;
+package de.cau.cs.kieler.xkev.extension.dataobserver;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -30,12 +30,12 @@ import de.cau.cs.kieler.xkev.mapping.SVGDocumentParser;
 import de.cau.cs.kieler.xkev.mapping.animations.Animations;
 import de.cau.cs.kieler.xkev.views.EnvironmentView;
 
-public class DataOberserver extends JSONObjectDataComponent implements
+public class Example_01 extends JSONObjectDataComponent implements
 		IJSONObjectDataComponent {
 
 	private int counter = 0;
 	private String cRed = "none", cYellow = "none", cGreen = "none";
-	public DataOberserver() {
+	public Example_01() {
 		// TODO Auto-generated method stu
 	}
 

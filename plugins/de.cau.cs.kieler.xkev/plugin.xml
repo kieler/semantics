@@ -2,14 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
-      <content
-            class="de.cau.cs.kieler.xkev.extension.DataOberserver"
-            id="de.cau.cs.kieler.xkev.extension.DataOberserver"
-            name="xKEV DataObserver">
-      </content>
-   </extension>
-   <extension
          point="org.eclipse.ui.views">
       <category
             id="de.cau.cs.kieler"
@@ -23,6 +15,30 @@
             name="KEV View"
             restorable="true">
       </view>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.xkev.extension.DataOberserver"
+            id="de.cau.cs.kieler.xkev.extension.DataOberserver"
+            name="xKEV DataObserver">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.xkev.extension.dataobserver.Example_01"
+            id="de.cau.cs.kieler.xkev.extension.DataOberserver01"
+            name="Example_01">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.xkev.extension.dataobserver.Example_02"
+            id="de.cau.cs.kieler.xkev.extension.DataOberserver02"
+            name="TrafficlightExample">
+      </content>
    </extension>
 
 </plugin>
