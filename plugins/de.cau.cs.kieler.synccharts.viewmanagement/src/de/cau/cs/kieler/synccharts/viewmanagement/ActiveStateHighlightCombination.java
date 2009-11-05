@@ -62,7 +62,7 @@ public class ActiveStateHighlightCombination extends ACombination {
     public boolean evaluate(TriggerEventObject triggerEvent) {
         if (rootEditPart != null) {
         	EditPart editPart = this.translateToEditPart(
-        							triggerEvent.getAffectedObject(),
+        							triggerEvent.getAffectedObject().eResource().getURIFragment(triggerEvent.getAffectedObject()), //???//
         							rootEditPart); 
         	if (editPart instanceof ShapeEditPart) {
                 triggerEvent.getAffectedObject();

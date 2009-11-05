@@ -25,9 +25,11 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
@@ -62,7 +64,16 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
      */
     public JSONObject step(JSONObject data) {
         StateActivityTrigger trigger = StateActivityTrigger.instance;
-        String stateVariableKey = this.getProperties()[0].getValue();
+        String stateVariableKey = this.getProperties()[1].getValue();
+        
+//        //debug!!!//
+//        try {
+//			data.accumulate("state", ", , , //@innerStates.0/@regions.0/@innerStates.0, , , //@innerStates.0/@regions.0/@innerStates.0/@regions.1/@innerStates.0, , //@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0");
+//		} catch (JSONException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+        
         try {
             // some sanity checks
             if (trigger != null && rootEditPart != null
@@ -92,7 +103,7 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                     		lastHighlightedStates.contains(stateName))
                         continue;
                     
-                    triggerEvent.setAffectedObject(stateName); //trigger.translateToURI((Object)affectedState));
+                    triggerEvent.setAffectedObject(trigger.translateToEObject(affectedState)); //???//
                     triggerEvent.setTriggerActive(true);
                     trigger.notifyTrigger(triggerEvent);
                 }
@@ -106,7 +117,7 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                     }
                     for (String editPartURI : lastHighlightedStates) {
                         TriggerEventObject triggerEvent = new TriggerEventObject();
-                        triggerEvent.setAffectedObject(editPartURI);
+                        triggerEvent.setAffectedObject(trigger.translateToEObject(editPartURI));
                         System.out.println("REMOVE:"+editPartURI);
                         triggerEvent.setTriggerActive(false);
                         trigger.notifyTrigger(triggerEvent);
@@ -129,30 +140,7 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
      */
     public void initialize() {
-        StringTokenizer tokenizer = new StringTokenizer(
-        		this.getProperties()[1].getValue(), " ()");
-        if (tokenizer.hasMoreTokens()) {
-        	String fileString = tokenizer.nextToken(); 
-        	String editorString = tokenizer.nextToken();
-
-             IEditorReference[] editorRefs = PlatformUI.getWorkbench()
-                     .getActiveWorkbenchWindow().getActivePage()
-                     .getEditorReferences();
-             for (int i = 0; i < editorRefs.length; i++) {
-                 if (editorRefs[i].getId().equals(editorString)) {
-                     IEditorPart editor = editorRefs[i].getEditor(true);
-                     if (editor instanceof DiagramEditor) {
-                    	 //test if correct file
-                    	 if (fileString.equals(editor.getTitle())) {
-                             rootEditPart = ((DiagramEditor) editor)
-                                     .getDiagramEditPart();
-                             break;
-                    	 }
-                     }
-                 }
-             }
-         }
-    	
+        rootEditPart = getInputEditor().getDiagramEditPart();
     }
 
     /*
@@ -194,9 +182,9 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
      */
     public KiemProperty[] provideProperties() {
         KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("state variable", "state");
-        properties[1] = new KiemProperty("editor",
-                new KiemPropertyTypeEditor(), "");
+        properties[0] = new KiemProperty("SyncChart Editor",
+        		new KiemPropertyTypeEditor(), "");
+        properties[1] = new KiemProperty("state variable", "state");
         return properties;
     }
 
@@ -309,5 +297,82 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     }
 
     //-------------------------------------------------------------------------
+    
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#testProperties(de.cau.cs.kieler.sim.kiem.data.KiemProperty[])
+	 */
+	@Override
+	public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
+		String kiemEditorProperty = this.getProperties()[0].getValue();
+		
+		//only check non-empty property (this is optional)
+		if (!kiemEditorProperty.equals("")) {
+			if (getEditor(kiemEditorProperty) == null) {
+				//this is an error, probably the selected editor isnt open any more
+				//or the file(name) opened has changed
+				throw new KiemPropertyException("The selected editor '"+kiemEditorProperty+"'" +
+						" does not exist. Please ensure that an opened editor is selected and" +
+						"the file name matches.\n\nIf you want the currently active editor to be" +
+						"simulated make sure the (optional) editor property is empty!");
+			}
+		}
+		
+    	
+	}
+	
+    //-------------------------------------------------------------------------	 
+
+	DiagramEditor getEditor(String kiemEditorProperty) {
+		if ((kiemEditorProperty == null)||(kiemEditorProperty.length() == 0))
+		 	return null;
+		
+        StringTokenizer tokenizer = new StringTokenizer(kiemEditorProperty, " ()");
+        if (tokenizer.hasMoreTokens()) {
+        	String fileString = tokenizer.nextToken(); 
+        	String editorString = tokenizer.nextToken();
+
+             IEditorReference[] editorRefs = PlatformUI.getWorkbench()
+                     .getActiveWorkbenchWindow().getActivePage()
+                     .getEditorReferences();
+             for (int i = 0; i < editorRefs.length; i++) {
+                 if (editorRefs[i].getId().equals(editorString)) {
+                     IEditorPart editor = editorRefs[i].getEditor(true);
+                     if (editor instanceof DiagramEditor) {
+                    	 //test if correct file
+                    	 if (fileString.equals(editor.getTitle())) {
+                    		 return (DiagramEditor) editor;
+//                             rootEditPart = ((DiagramEditor) editor)
+//                                     .getDiagramEditPart();
+//                             break;
+                    	 }
+                     }
+                 }
+             }
+         }
+		return null;
+	}
+	
+    //-------------------------------------------------------------------------	 
+	
+	DiagramEditor getInputEditor() {
+		String kiemEditorProperty = this.getProperties()[0].getValue();
+		DiagramEditor diagramEditor = null;
+		
+		//get the active editor as a default case (if property is empty)
+		IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		IEditorPart editor = activePage.getActiveEditor();
+	    if (editor instanceof DiagramEditor) {
+	                diagramEditor = (DiagramEditor) editor;
+	    }
+		
+		//only check non-empty and valid property (this is optional)
+		if (!kiemEditorProperty.equals("")) {
+			if (getEditor(kiemEditorProperty) != null) {
+					diagramEditor = getEditor(kiemEditorProperty);
+			}
+		}
+		return diagramEditor;
+	}
+		
 
 }
