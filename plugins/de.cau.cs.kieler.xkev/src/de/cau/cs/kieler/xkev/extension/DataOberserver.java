@@ -116,7 +116,7 @@ public class DataOberserver extends JSONObjectDataComponent implements
 	@Override
 	public boolean isProducer() {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
 	@Override
