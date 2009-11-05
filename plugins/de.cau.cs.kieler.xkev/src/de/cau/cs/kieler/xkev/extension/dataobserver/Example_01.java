@@ -60,7 +60,7 @@ public class Example_01 extends JSONObjectDataComponent implements
 				animation.changeColor("cYellow", cYellow);
 				animation.changeColor("cGreen", cGreen);
 				//Only if the Animation does change anything apply the Animation to the SVGDocument
-				if (animation.hasChanged()) animation.applyAnimation();
+				//if (animation.hasChanged()) animation.applyAnimation();
 			}
 		}
 		
