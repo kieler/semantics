@@ -103,7 +103,13 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                     		lastHighlightedStates.contains(stateName))
                         continue;
                     
-                    triggerEvent.setAffectedObject(trigger.translateToEObject(affectedState)); //???//
+
+                    //triggerEvent.setAffectedObject(stateName); 
+                    //trigger.translateToURI((Object)affectedState));
+                    triggerEvent.setAffectedObject(((View)affectedState.getModel()).getElement());
+
+                    //triggerEvent.setAffectedObject(trigger.translateToEObject(affectedState)); //???//
+
                     triggerEvent.setTriggerActive(true);
                     trigger.notifyTrigger(triggerEvent);
                 }
@@ -117,7 +123,12 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                     }
                     for (String editPartURI : lastHighlightedStates) {
                         TriggerEventObject triggerEvent = new TriggerEventObject();
-                        triggerEvent.setAffectedObject(trigger.translateToEObject(editPartURI));
+
+                        EObject eObject = ((View)ActiveStateHighlightCombination.getInstance().translateToEditPart(editPartURI, null).getModel()).getElement();
+                        triggerEvent.setAffectedObject(eObject);
+
+//                        triggerEvent.setAffectedObject(trigger.translateToEObject(editPartURI));
+
                         System.out.println("REMOVE:"+editPartURI);
                         triggerEvent.setTriggerActive(false);
                         trigger.notifyTrigger(triggerEvent);
