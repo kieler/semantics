@@ -36,6 +36,12 @@
    <feature url="features/de.cau.cs.kieler.synccharts.textual_0.1.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.textual" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.esterel_0.1.0.qualifier.jar" id="de.cau.cs.kieler.esterel" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.krep_0.1.0.qualifier.jar" id="de.cau.cs.kieler.krep" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
    <category-def name="KIELER" label="KIELER">
       <description>
          Kiel Integrated Environment for Layout for the Eclipse RichClientPlatform
