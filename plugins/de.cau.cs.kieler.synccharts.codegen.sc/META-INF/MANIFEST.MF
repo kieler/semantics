@@ -30,3 +30,4 @@ Import-Package: de.cau.cs.kieler.synccharts,
  org.eclipse.ui.part
 Bundle-Vendor: Christian-Albrechts-University of Kiel
 Bundle-ClassPath: .
+Export-Package: de.cau.cs.kieler.synccharts.codegen.sc

@@ -4,6 +4,7 @@
 
 «DEFINE main FOR Region-»
 	«FILE innerStates.first().label + ".c"-»
+	
 // generated SC-code //
 	«EXPAND init-»
 	«EXPAND start-»

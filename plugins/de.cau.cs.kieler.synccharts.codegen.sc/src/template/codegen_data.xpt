@@ -18,10 +18,12 @@
 
 cJSON* output = 0;
 cJSON* value = 0;
+cJSON* stateArray = 0;
 
 void JSONstate(char *state){
+	cJSON_AddItemToArray(stateArray, cJSON_CreateString(state));
 	if (cJSON_GetObjectItem(output, "state") == NULL){
-		cJSON_AddItemToObject(output, "state", cJSON_CreateString(state));
+		cJSON_AddItemToObject(output, "state", stateArray);
 	}
 }
 
@@ -82,6 +84,7 @@ void printOutputs(){
 «DEFINE generateMain FOR Region»
 int main(){
 	initServer(12345);
+	stateArray = cJSON_CreateArray();
 	output = cJSON_CreateObject();
 	setInputs();
 	tick(1);
@@ -89,13 +92,11 @@ int main(){
   	callOutputs();
 		char* outString = cJSON_Print(output);
 		strip_white_spaces(outString);
-		printf("------------------------");
-		printf("%s \n", outString);
-		printf("------------------------");
 		sndMessage(outString);
 		sndMessage("\n");
 		reset();
 		output = cJSON_CreateObject();
+		stateArray = cJSON_CreateArray();
 		setInputs();
 		tick(0);
 	}
