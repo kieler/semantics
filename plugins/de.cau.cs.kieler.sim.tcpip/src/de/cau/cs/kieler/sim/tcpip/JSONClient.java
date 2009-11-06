@@ -37,5 +37,9 @@ class JSONClient {
 	void close() throws IOException{
 		socket.close();
 	}
+	
+	boolean getBoundingStatus(){
+	    return socket.isBound();
+	}
 
 }

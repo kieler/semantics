@@ -33,6 +33,7 @@ public class DataObserver extends JSONStringDataComponent {
     @Override 
     public String step(String JSONString) throws KiemExecutionException {
         String out = "";
+        
         try {
             client.sndMessage(JSONString);
             out = client.rcvMessage();
