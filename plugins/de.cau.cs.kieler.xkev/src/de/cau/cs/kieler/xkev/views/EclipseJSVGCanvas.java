@@ -1,4 +1,19 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+
 package de.cau.cs.kieler.xkev.views;
+
 import java.util.Iterator;
 
 import org.apache.batik.swing.JSVGCanvas;
@@ -9,18 +24,17 @@ import org.apache.batik.util.ParsedURL;
 
 import de.cau.cs.kieler.xkev.helpers.Tools;
 
-
 /**
- * Modifies the regular JSVGCanvas in such a way that the EclipseDocumentLoader
- * class gets used instead of the standard DocumentLoader.
+ * Modifies the regular JSVGCanvas in such a way that the EclipseDocumentLoader class gets used
+ * instead of the standard DocumentLoader.
  * 
  */
 public class EclipseJSVGCanvas extends JSVGCanvas {
-    
+
     public EclipseJSVGCanvas(SVGUserAgent userAgent, boolean b1, boolean b2) {
         super(userAgent, b1, b2);
     }
-    
+
     public void loadSVGDocument(String url) {
         String oldURI = null;
         if (svgDocument != null) {
@@ -36,12 +50,11 @@ public class EclipseJSVGCanvas extends JSVGCanvas {
 
         Iterator it = svgDocumentLoaderListeners.iterator();
         while (it.hasNext()) {
-            nextDocumentLoader.addSVGDocumentLoaderListener
-                ((SVGDocumentLoaderListener)it.next());
+            nextDocumentLoader.addSVGDocumentLoaderListener((SVGDocumentLoaderListener) it.next());
         }
         startDocumentLoader();
     }
-    
+
     /**
      * Starts a loading thread.
      */
