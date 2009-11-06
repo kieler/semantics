@@ -8,6 +8,7 @@ import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.resource.IFragmentProvider;
 
 import de.cau.cs.kieler.synccharts.dsl.kits.resource.KitsFragmentProvider;
+import de.cau.cs.kieler.synccharts.dsl.kits.serialization.KitsTransientValueService;
 import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
 import de.cau.cs.kieler.synccharts.formatting.TransitionLabelTransientValueService;
 
@@ -52,7 +53,7 @@ public class KitsRuntimeModule extends
 
     @Override
     public Class<? extends ITransientValueService> bindITransientValueService() {
-        return TransitionLabelTransientValueService.class;
+        return KitsTransientValueService.class;
     }
 
     /*

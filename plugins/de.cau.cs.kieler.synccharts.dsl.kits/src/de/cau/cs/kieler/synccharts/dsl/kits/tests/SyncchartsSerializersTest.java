@@ -43,7 +43,7 @@ import de.cau.cs.kieler.synccharts.dsl.KitsStandaloneSetup;
  * @author oba
  * 
  */
-public class SyncChartsXmiTest {
+public class SyncchartsSerializersTest {
     private static SyncchartsFactory syncFac = null;
     private static ResourceSetImpl resourceSet = null;
     private static URI fileURI = null;
@@ -54,7 +54,7 @@ public class SyncChartsXmiTest {
      * constructors which allow initializing other resource sets and other file
      * URIs but ich bin grad zu faul dafuer...
      */
-    public SyncChartsXmiTest() {
+    public SyncchartsSerializersTest() {
         syncFac = SyncchartsFactory.eINSTANCE;
         resourceSet = new XtextResourceSet();
         fileURI = URI.createFileURI(new File("testRuntime.kits")
@@ -66,15 +66,23 @@ public class SyncChartsXmiTest {
      * @param args
      */
     public static void main(String[] args) {
-        SyncChartsXmiTest myText = new SyncChartsXmiTest();
+        SyncchartsSerializersTest myText = new SyncchartsSerializersTest();
         myText.registerResourceFactory("KITS");
         // now that we have registered the resource factory, we can create our
         // resource
+        // if (resourceSet instanceof XtextResourceSet) {
+        // ((XtextResourceSet) resourceSet).addLoadOption(
+        // XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
         resource = resourceSet.createResource(fileURI);
+        // } else {
+        // System.out.println("sth wrong in resource factory registry?");
+        // return;
+        // }
         Region r;
         r = myText.createEMFModel();
         myText.saveModel(r);
         myText.loadModel();
+
     }
 
     /**
@@ -82,13 +90,22 @@ public class SyncChartsXmiTest {
      */
     private Region createEMFModel() {
         Region r = syncFac.createRegion();
-        State s0 = syncFac.createState();
+        // r.setParentState(null);
         r.setId("syncchart");
-        s0.setId("state");
-        s0.setLabel("state");
+        State s0 = syncFac.createState();
+        s0.setId("S");
+        s0.setLabel("S");
+        s0.setBodyText("badi");
+        s0.setIsFinal(true);
+        s0.setIsInitial(true);
+        // s0.setSuspensionTrigger(null);
+        s0.setType(de.cau.cs.kieler.synccharts.StateType.CONDITIONAL);
+        s0.setParentRegion(r);
+        // s0.getEntryActions().
         r.getInnerStates().add(s0);
-        s0.setParentRegion(r);// isn't this done automatically? whatever, take
+        // isn't this done automatically? whatever, take
         // no risk
+        System.out.println("Body: " + s0.getBodyText());
         return r;
     }
 
@@ -115,7 +132,7 @@ public class SyncChartsXmiTest {
             case 1:
                 Injector injector = new KitsStandaloneSetup()
                         .createInjectorAndDoEMFRegistration();
-                // resourceSet = injector.getInstance(XtextResourceSet.class);
+                resourceSet = injector.getInstance(XtextResourceSet.class);
 
                 break;
             default:
@@ -138,9 +155,15 @@ public class SyncChartsXmiTest {
     private void saveModel(Region regionToSave) {
         // Add the model objects to the contents.
         resource.getContents().add(regionToSave);
+//        if (!(regionToSave.getInnerStates().isEmpty())) {
+//            for (State state : regionToSave.getInnerStates()) {
+//                resource.getContents().add(state);;
+//            }
+//        }
         // Save the contents of the resource to the file system.
         try {
             resource.save(System.out, Collections.EMPTY_MAP);
+            System.out.println();
             System.out.println("-----------------------------------");
         } catch (IOException e) {
             /* error handling */
@@ -155,8 +178,12 @@ public class SyncChartsXmiTest {
         EObject myModelObject = resource.getContents().get(0);
         // do something with the model
         if (myModelObject instanceof Region) {
-            for (State state : ((Region) myModelObject).getInnerStates()) {
-                System.out.println(state.getId());
+            System.out.println("Region with the ID: "
+                    + ((Region) myModelObject).getId());
+            if (!((Region) myModelObject).getInnerStates().isEmpty()) {
+                for (State state : ((Region) myModelObject).getInnerStates()) {
+                    System.out.println("Has inner state(s): "+state.getId());
+                }
             }
             System.out.println("-----------------------------------");
         }

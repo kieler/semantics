@@ -9,7 +9,6 @@ import org.eclipse.xtext.service.DefaultRuntimeModule;
 
 import com.google.inject.Binder;
 import com.google.inject.name.Names;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 
 /**
  * Manual modifications go to {de.cau.cs.kieler.synccharts.dsl.KitsRuntimeModule}
