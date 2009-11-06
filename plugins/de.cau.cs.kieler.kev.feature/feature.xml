@@ -2,7 +2,7 @@
 <feature
       id="edu.unikiel.rtsys.kev.feature"
       label="Environment Visualization"
-      version="0.1.0.vqualifier"
+      version="0.1.0.qualifier"
       provider-name="Christian-Albrechts-Universitär zu Kiel">
 
    <description url="http://www.example.com/description">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Evaluation Bench" uid="de.cau.cs.kieler.krep.evalbench.application.product" id="de.cau.cs.kieler.krep.evalbench.application.product" application="de.cau.cs.kieler.krep.evalbench.application.application" version="0.1.0.vqualifier" useFeatures="false" includeLaunchers="true">
+<product name="Evaluation Bench" uid="de.cau.cs.kieler.krep.evalbench.application.product" id="de.cau.cs.kieler.krep.evalbench.application.product" application="de.cau.cs.kieler.krep.evalbench.application.application" version="0.1.0.qualifier" useFeatures="false" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/de.cau.cs.kieler.krep.evalbench.application/icons/logo128.gif"/>

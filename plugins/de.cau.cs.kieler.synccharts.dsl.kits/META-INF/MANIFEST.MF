@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
-Bundle-Version: 0.1.0.vqualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.dsl.kits; singleton:=true
 Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
 Bundle-ActivationPolicy: lazy

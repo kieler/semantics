@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SyncChart Editor Transition Label Parser
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Bundle-Version: 0.1.0.vqualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.labelparser; singleton:=true
 Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
 Bundle-ActivationPolicy: lazy
