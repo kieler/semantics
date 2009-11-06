@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KReP Evaluation Bench RCA
 Bundle-SymbolicName: de.cau.cs.kieler.krep.evalbench.application;singleton:=true
-Bundle-Version: 0.1.0
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.krep.evalbench.application.Activator
 Bundle-Vendor: Real-Time and Embedded Systems group, CAU Kiel
 Require-Bundle: de.cau.cs.kieler.krep.evalbench.base;bundle-version="0.1.0";visibility:=reexport,

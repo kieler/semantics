@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.cau.cs.kieler.krep.editors.klp
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Bundle-Version: 0.1.0
+Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.krep.editors.klp; singleton:=true
 Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
 Bundle-ActivationPolicy: lazy
