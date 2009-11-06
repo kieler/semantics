@@ -176,7 +176,7 @@
 	    description="target for complete feature build and publishing">
 
 		<tstamp />
-		<property name="forceContextQualifier" value="${DSTAMP}${TSTAMP}" />
+		<property name="forceContextQualifier" value="v${DSTAMP}${TSTAMP}" />
 		<!-- <tstamp> provides the above referenced properties, they're not declared explicitly -->
 
 		<!-- generate build.xml scripts for feature and plugins -->
@@ -322,7 +322,7 @@
 		</ant>
 	</target>
 	
-	<target name="gather.plugin.bin.parts" if="eclipse.running" depends="init, generateScripts"
+	<target name="gather.plugin.bin.parts" if="eclipse.running" depends="init"
 		description="target for providing an unjared version of ${plugins}, needed if it contains library .jar files">
 		<!-- used in KIELER_klepto job -->
 
