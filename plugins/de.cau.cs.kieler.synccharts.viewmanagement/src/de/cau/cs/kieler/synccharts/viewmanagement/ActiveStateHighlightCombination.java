@@ -30,6 +30,7 @@ public class ActiveStateHighlightCombination extends ACombination {
 	public ActiveStateHighlightCombination() {
 		ActiveStateHighlightCombination.instance = this;
 		ActiveStateHighlightCombination.getInstance().setActive(true);
+		this.initialize();
     }
 
 	
@@ -77,7 +78,7 @@ public class ActiveStateHighlightCombination extends ACombination {
         					//HighlightEffect effect = new HighlightEffect();
         					effect.setTarget((ShapeEditPart)editPart);
         					//effect.setHighlightFigure(3, ColorConstants.red );
-        					effect.setColors(ColorConstants.red, ColorConstants.red);
+        					effect.setColors(ColorConstants.red, null);
         					
         					
         					effects.put(editPart, effect);

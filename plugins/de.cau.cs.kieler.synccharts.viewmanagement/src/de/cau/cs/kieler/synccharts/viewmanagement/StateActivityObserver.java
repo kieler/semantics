@@ -124,8 +124,13 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                     for (String editPartURI : lastHighlightedStates) {
                         TriggerEventObject triggerEvent = new TriggerEventObject();
 
-                        EObject eObject = ((View)ActiveStateHighlightCombination.getInstance().translateToEditPart(editPartURI, null).getModel()).getElement();
+                    	EditPart ep = getEditPart(editPartURI, rootEditPart);
+                        EObject eObject =  trigger.translateToEObject(ep);
                         triggerEvent.setAffectedObject(eObject);
+//                        
+//                        
+//                        	((View)ActiveStateHighlightCombination.getInstance()
+//                        		.translateToEditPart(editPartURI, rootEditPart).getModel()).getElement();
 
 //                        triggerEvent.setAffectedObject(trigger.translateToEObject(editPartURI));
 
