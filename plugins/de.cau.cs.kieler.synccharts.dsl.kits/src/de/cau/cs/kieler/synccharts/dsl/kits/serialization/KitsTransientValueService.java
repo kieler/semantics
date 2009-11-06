@@ -62,14 +62,15 @@ public class KitsTransientValueService implements ITransientValueService {
 //            System.out.println("feature " + feature.toString());
 //            System.out.println("=============================================");
             return true;
-        } else if (!(owner.eIsSet(feature))) {
+        } 
+//        else if (!(owner.eIsSet(feature))) {
 //            System.out.println("=============================================");
 //            System.out.println("======== NOT SERIALIZED =======");
 //            System.out.println("owner: " + owner.toString());
 //            System.out.println("feature " + feature.toString());
 //            System.out.println("=============================================");
-            return true;
-        }
+//            return true;
+//        }
         return false;
     }
 }
