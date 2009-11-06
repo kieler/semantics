@@ -13,20 +13,16 @@
  */
 package de.cau.cs.kieler.synccharts.dsl.kits.tests;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collections;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.xtext.resource.XtextResourceSet;
-import org.xml.sax.InputSource;
 
 import com.google.inject.Injector;
 
@@ -47,20 +43,21 @@ import de.cau.cs.kieler.synccharts.dsl.KitsStandaloneSetup;
  * @author oba
  * 
  */
-public class KitsRuntimeTest {
+public class SyncChartsXmiTest {
     private static SyncchartsFactory syncFac = null;
     private static ResourceSetImpl resourceSet = null;
     private static URI fileURI = null;
+    private static Resource resource = null;
 
     /**
      * The default constructor. Initialize fields, there should be other
      * constructors which allow initializing other resource sets and other file
      * URIs but ich bin grad zu faul dafuer...
      */
-    public KitsRuntimeTest() {
+    public SyncChartsXmiTest() {
         syncFac = SyncchartsFactory.eINSTANCE;
         resourceSet = new XtextResourceSet();
-        fileURI = URI.createFileURI(new File("testRuntime.xmi")
+        fileURI = URI.createFileURI(new File("testRuntime.kits")
                 .getAbsolutePath());
 
     }
@@ -69,12 +66,15 @@ public class KitsRuntimeTest {
      * @param args
      */
     public static void main(String[] args) {
-        KitsRuntimeTest myText = new KitsRuntimeTest();
+        SyncChartsXmiTest myText = new SyncChartsXmiTest();
         myText.registerResourceFactory("KITS");
+        // now that we have registered the resource factory, we can create our
+        // resource
+        resource = resourceSet.createResource(fileURI);
         Region r;
         r = myText.createEMFModel();
         myText.saveModel(r);
-        //        myText.loadModel();
+        myText.loadModel();
     }
 
     /**
@@ -115,20 +115,8 @@ public class KitsRuntimeTest {
             case 1:
                 Injector injector = new KitsStandaloneSetup()
                         .createInjectorAndDoEMFRegistration();
-                resourceSet = injector.getInstance(XtextResourceSet.class);
-                // // get the injector
-                // Injector injector = Guice
-                // .createInjector(new
-                // de.cau.cs.kieler.synccharts.dsl.KitsRuntimeModule());
-                // // get the resource factory from the injector
-                // org.eclipse.xtext.resource.IResourceFactory resourceFactory =
-                // injector
-                // .getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
-                // // change resourse set to the impl from the injector
                 // resourceSet = injector.getInstance(XtextResourceSet.class);
-                // resourceSet.getResourceFactoryRegistry()
-                // .getExtensionToFactoryMap()
-                // .put("kits", resourceFactory);
+
                 break;
             default:
                 // Register the default resource factory
@@ -148,35 +136,10 @@ public class KitsRuntimeTest {
      * save the model
      */
     private void saveModel(Region regionToSave) {
-        // Create a resource for this file.
-        Resource resource = resourceSet.createResource(fileURI);
-        // if (resource != null) {
-        // System.out.println("> Resource created: "
-        // + resource.getURI().toFileString());
-        // } else {
-        // System.out.println("> Your resource is null");
-        // return;
-        // }
-        // save from input stream
-        String myString = "content of your very own string";
-        ByteArrayInputStream in = new ByteArrayInputStream(myString.getBytes());
-        InputSource is = new InputSource();
-        is.setByteStream(in);
-        try {
-            resource.load(in, null);
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        EcoreUtil.resolveAll(resource);
-
         // Add the model objects to the contents.
-//        resource.getContents().add(regionToSave);
-
+        resource.getContents().add(regionToSave);
         // Save the contents of the resource to the file system.
         try {
-            System.out.println("-----------------------------------");
-            // the map can pass special options to save
             resource.save(System.out, Collections.EMPTY_MAP);
             System.out.println("-----------------------------------");
         } catch (IOException e) {
@@ -188,16 +151,10 @@ public class KitsRuntimeTest {
      * load the model
      */
     private void loadModel() {
-        // Demand load the resource for this file, here the actual loading is
-        // done.
-        Resource xtextResource = resourceSet.getResource(fileURI, true);
-
-        // get model elements from the resource, should check if "contents" is
-        // not null
-        EObject myModelObject = xtextResource.getContents().get(0);
-
-        // Do something with the model
-        if (myModelObject instanceof Region) { // Model is the root class
+        // get model elements from the resource
+        EObject myModelObject = resource.getContents().get(0);
+        // do something with the model
+        if (myModelObject instanceof Region) {
             for (State state : ((Region) myModelObject).getInnerStates()) {
                 System.out.println(state.getId());
             }

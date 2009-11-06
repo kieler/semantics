@@ -14,44 +14,44 @@ Region returns sync::Region:
 
 State returns sync::State:
   {sync::State} 
-  (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=FullStateID
-  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'
-  |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID
-  |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID
-  |((isInitial?='init') (isFinal?='final')) (type=StateType)
-  |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID
+  (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=FullStateID // State_Group_1_1
+  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
+  |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
+  |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
+  |((isInitial?='init') (isFinal?='final')) (type=StateType) // State_Group_1_5
+  |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID// State_Group_1_6
   |((isInitial?='init') (isFinal?='final'))
   |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=FullStateID
   |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'
   |((isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID
-  |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID
+  |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID// State_Group_1_11
   |((isFinal?='final') (isInitial?='init')) (type=StateType)
   |((isFinal?='final') (isInitial?='init')) 'state'
   |((isFinal?='final') (isInitial?='init')) id=FullStateID
   |((isFinal?='final') (isInitial?='init'))
-  |(isInitial?='init') (type=StateType) 'state' id=FullStateID
+  |(isInitial?='init') (type=StateType) 'state' id=FullStateID // // State_Group_1_16
   |(isInitial?='init') (type=StateType) 'state'
   |(isInitial?='init') (type=StateType) id=FullStateID
   |(isInitial?='init') 'state' id=FullStateID
   |(isInitial?='init') (type=StateType)
-  |(isInitial?='init') 'state'
+  |(isInitial?='init') 'state'// State_Group_1_21
   |(isInitial?='init') id=FullStateID
   |(isInitial?='init')
   |(isFinal?='final') (type=StateType) 'state' id=FullStateID
   |(isFinal?='final') (type=StateType) 'state'
-  |(isFinal?='final') (type=StateType) id=FullStateID
+  |(isFinal?='final') (type=StateType) id=FullStateID// State_Group_1_26
   |(isFinal?='final') 'state' id=FullStateID
   |(isFinal?='final') (type=StateType)
   |(isFinal?='final') 'state' id=FullStateID
   |(isFinal?='final') id=FullStateID
-  |(isFinal?='final')
+  |(isFinal?='final')// State_Group_1_31
   |(type=StateType) 'state' id=FullStateID
   |(type=StateType) 'state'
   |(type=StateType) id=FullStateID
   |(type=StateType)
-  |'state' id=FullStateID
+  |'state' id=FullStateID// State_Group_1_36
   |'state'
-  |id=FullStateID) 
+  |id=FullStateID)// State_Group_1_38 
   //change the datatype of label (from FullStateID) to STRING 
   //to prevent wrong parsing in this case: 
   //init A
