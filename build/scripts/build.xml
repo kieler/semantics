@@ -322,13 +322,12 @@
 		</ant>
 	</target>
 	
-	<target name="gather.plugin.bin.parts" if="eclipse.running" depends="init"
+	<target name="gather.plugin.bin.parts" if="eclipse.running" depends="init, setBuildTempFolder"
 		description="target for providing an unjared version of ${plugins}, needed if it contains library .jar files">
 		<!-- used in KIELER_klepto job -->
 
 		<ant antfile="build.xml" dir="${basedir}/plugins/${plugin}" target="gather.bin.parts">
 			<property name="destination.temp.folder" value="${basedir}/update-site/plugins" />
-			<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 		</ant>
 		
 		<delete>
