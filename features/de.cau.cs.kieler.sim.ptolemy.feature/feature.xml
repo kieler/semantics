@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.sim.ptolemy"
       label="Ptolemy simulation backend"
-      version="0.1.0.vqualifier"
+      version="0.1.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description>
@@ -53,7 +53,7 @@ COPYRIGHTENDKEY
          id="de.cau.cs.kieler.sim.ptolemy"
          download-size="0"
          install-size="0"
-         version="0.1.0.vqualifier"
+         version="0.1.0.qualifier"
          unpack="false"/>
 
 </feature>

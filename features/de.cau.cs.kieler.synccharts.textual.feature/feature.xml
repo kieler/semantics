@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.synccharts.textual"
       label="Textual Editing"
-      version="0.1.0.vqualifier"
+      version="0.1.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KiTE">
@@ -92,7 +92,7 @@ under the terms of the Eclipse Public License (EPL).
       <import plugin="org.eclipse.xtext.ui.common"/>
       <import plugin="org.eclipse.xtext.log4j" version="1.2.15" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
-      <import feature="de.cau.cs.kieler.synccharts" version="0.1.0.vqualifier"/>
+      <import feature="de.cau.cs.kieler.synccharts" version="0.1.0.qualifier"/>
    </requires>
 
    <plugin

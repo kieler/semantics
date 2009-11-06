@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.synccharts.sim.ptolemy"
       label="Ptolemy simulation for SyncCharts"
-      version="0.1.0.vqualifier"
+      version="0.1.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="http://www.example.com/description">
@@ -22,24 +22,24 @@
    </url>
 
    <requires>
-      <import feature="de.cau.cs.kieler.sim.kiem" version="0.1.0.vqualifier"/>
-      <import feature="de.cau.cs.kieler.sim.ptolemy" version="0.1.0.vqualifier"/>
-      <import feature="de.cau.cs.kieler.synccharts" version="0.1.0.vqualifier"/>
-      <import feature="de.cau.cs.kieler.viewmanagement" version="0.1.0.vqualifier"/>
+      <import feature="de.cau.cs.kieler.sim.kiem" version="0.1.0.qualifier"/>
+      <import feature="de.cau.cs.kieler.sim.ptolemy" version="0.1.0.qualifier"/>
+      <import feature="de.cau.cs.kieler.synccharts" version="0.1.0.qualifier"/>
+      <import feature="de.cau.cs.kieler.viewmanagement" version="0.1.0.qualifier"/>
    </requires>
 
    <plugin
          id="de.cau.cs.kieler.synccharts.sim.ptolemy"
          download-size="0"
          install-size="0"
-         version="0.1.0.vqualifier"
+         version="0.1.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.synccharts.viewmanagement"
          download-size="0"
          install-size="0"
-         version="0.1.0.vqualifier"
+         version="0.1.0.qualifier"
          unpack="false"/>
 
 </feature>

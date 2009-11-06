@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.core"
       label="Core"
-      version="0.1.0.vqualifier"
+      version="0.1.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="https://rtsys.informatik.uni-kiel.de/trac/kieler/wiki">

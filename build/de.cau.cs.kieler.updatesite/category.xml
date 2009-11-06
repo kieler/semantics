@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/de.cau.cs.kieler.core_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.core" version="0.1.0.vqualifier">
+   <feature url="features/de.cau.cs.kieler.core_0.1.0.qualifier.jar" id="de.cau.cs.kieler.core" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.dataflow_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.dataflow" version="0.1.0.vqualifier">
+   <feature url="features/de.cau.cs.kieler.dataflow_0.1.0.qualifier.jar" id="de.cau.cs.kieler.dataflow" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.kiml_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.kiml" version="0.1.0.vqualifier">
+   <feature url="features/de.cau.cs.kieler.kiml_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kiml" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.synccharts_0.1.0.vqualifier.jar" id="de.cau.cs.kieler.synccharts" version="0.1.0.vqualifier">
+   <feature url="features/de.cau.cs.kieler.synccharts_0.1.0.qualifier.jar" id="de.cau.cs.kieler.synccharts" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.sim.kiem_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sim.kiem" version="0.1.0.qualifier">
