@@ -14,74 +14,74 @@
 
 package de.cau.cs.kieler.sim.kiem.execution;
 
-import de.cau.cs.kieler.sim.kiem.json.*;
+import de.cau.cs.kieler.sim.kiem.json.JSONException;
+import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
 /**
- * The Class JSONMerger implements the merging functionality of used
- * by the DataPool. It is able to merge two JSONObjects (that are
- * lists of key-value-pairs) into one object.
- *
+ * The Class JSONMerger implements the merging functionality of used by the DataPool. It is able to
+ * merge two JSONObjects (that are lists of key-value-pairs) into one object.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * @author Stephan Knaur <skn@informatik.uni-kiel.de>
  * 
  */
 public class JSONMerger {
-	
-	//-------------------------------------------------------------------------
 
-	/**
-	 * Instantiates a new jSON merger.
-	 */
-	JSONMerger() {
-			
-	}
-	
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * Merges two JSON objects together (recursively), with values from
-	 * "merge" replacing values in "base" to produce a new object.
-	 * 
-	 * @param base The base object that values will be replaced into.
-	 * @param merge The object to merge values from.
-	 * 
-	 * @return the JSON object
-	 * 
-	 * @throws JSONException if the two objects can't be merged for some
-	 * reason.
-	 */
-	  public JSONObject mergeObjects(JSONObject base, JSONObject merge)
-	      throws JSONException {
-	    // Clone the initial object (JSONObject doesn't support "clone").
+    // -------------------------------------------------------------------------
 
-	    //JSONObject clone = new JSONObject(base, JSONObject.getNames(base));
-	    JSONObject clone = new JSONObject(base.toString());
-	    // Walk parameter list for the merged object and merge recursively.
-	    String[] fields = JSONObject.getNames(merge);
-	    if (fields != null && fields.length > 0) {
-		    for (String field : fields) {
-		    	  //opt = get object if exists otherwise set to null
-			      Object existing = clone.opt(field);
-			      //here the object does exists
-			      Object update = merge.get(field); 
-			      if (existing == null || update == null) {
-			        // New custom config, not referenced in the prototype, or
-			        // Removing a pre-configured value.
-			        clone.put(field, update);
-			      } else {
-			        // Merge if object type is JSONObject.
-			        if (update instanceof JSONObject &&
-			            existing instanceof JSONObject) {
-			          clone.put(field, mergeObjects((JSONObject)existing,
-			                                        (JSONObject)update));
-			        } else {
-			          // Otherwise we just overwrite it.
-			          clone.put(field, update);
-			        }
-			      }
-		    }//next field
-	    }//end if there are fields to add
-	    return clone;
-	  }
-	  
+    /**
+     * Instantiates a new jSON merger.
+     */
+    JSONMerger() {
+
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Merges two JSON objects together (recursively), with values from "merge" replacing values in
+     * "base" to produce a new object.
+     * 
+     * @param base
+     *            The base object that values will be replaced into.
+     * @param merge
+     *            The object to merge values from.
+     * 
+     * @return the JSON object
+     * 
+     * @throws JSONException
+     *             if the two objects can't be merged for some reason.
+     */
+    public JSONObject mergeObjects(final JSONObject base, final JSONObject merge)
+            throws JSONException {
+        // Clone the initial object (JSONObject doesn't support "clone").
+
+        // JSONObject clone = new JSONObject(base, JSONObject.getNames(base));
+        JSONObject clone = new JSONObject(base.toString());
+        // Walk parameter list for the merged object and merge recursively.
+        String[] fields = JSONObject.getNames(merge);
+        if (fields != null && fields.length > 0) {
+            for (String field : fields) {
+                // opt = get object if exists otherwise set to null
+                Object existing = clone.opt(field);
+                // here the object does exists
+                Object update = merge.get(field);
+                if (existing == null || update == null) {
+                    // New custom config, not referenced in the prototype, or
+                    // Removing a pre-configured value.
+                    clone.put(field, update);
+                } else {
+                    // Merge if object type is JSONObject.
+                    if (update instanceof JSONObject && existing instanceof JSONObject) {
+                        clone.put(field, mergeObjects((JSONObject) existing, (JSONObject) update));
+                    } else {
+                        // Otherwise we just overwrite it.
+                        clone.put(field, update);
+                    }
+                }
+            } // next field
+        } // end if there are fields to add
+        return clone;
+    }
+
 }

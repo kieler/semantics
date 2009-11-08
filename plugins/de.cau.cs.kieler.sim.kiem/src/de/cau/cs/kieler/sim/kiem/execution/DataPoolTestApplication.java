@@ -17,55 +17,65 @@ package de.cau.cs.kieler.sim.kiem.execution;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
 /**
- * The Class DataPoolTestApplication. It only exists for experimental use 
- * debug and testing of the {@link JSONDataPool}.
- *
+ * The Class DataPoolTestApplication. It only exists for experimental use debug and testing of the
+ * {@link JSONDataPool}.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public class DataPoolTestApplication {
+public final class DataPoolTestApplication {
 
-	/**
-	 * The main method. It creates some example data keys and puts the 
-	 * into the data pool. It then tries to get the data values back
-	 * from the pool using the different getData() variants.
-	 * 
-	 * @param args the args
-	 */
-	public static void main(String[] args) {
-		String[] filter = null;//{"key01","key03","key05","key07"};
-		
-		try {
-			JSONDataPool dataPool = new JSONDataPool();
-			//long index = dataPool.getPoolCounter();
-			dataPool.putData(new JSONObject("{key01={key01=value01}}"));
-			dataPool.putData(new JSONObject("{key02=value02}"));
-			dataPool.putData(new JSONObject("{key03=value03}"));
-			//can also put in null values
-			dataPool.putData(null);
-			dataPool.putData(new JSONObject("{key05=value05}"));
-			dataPool.putData(new JSONObject("{key06=value06}"));
-			dataPool.putData(new JSONObject("{key07={key07=value07}}"));
-			//System.out.println(dataPool.getDeltaData(filter,index).toString());
-			System.out.println(dataPool.getData(null).toString());
-			
+    /**
+     * Instantiates a new data pool test application.
+     */
+    private DataPoolTestApplication() {
+        // NOOP
+    }
 
-			System.out.println("");
-			System.out.println(dataPool.getPoolCounter());
-			System.out.println("");
-			System.out.println(dataPool.getDeltaData(filter,0).toString());
-			System.out.println(dataPool.getDeltaData(filter,1).toString());
-			System.out.println(dataPool.getDeltaData(filter,2).toString());
-			System.out.println(dataPool.getDeltaData(filter,3).toString());
-			System.out.println(dataPool.getDeltaData(filter,4).toString());
-			System.out.println(dataPool.getDeltaData(filter,5).toString());
-			System.out.println(dataPool.getDeltaData(filter,6).toString());
-			System.out.println(dataPool.getDeltaData(filter,7).toString());
-			
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+    // -------------------------------------------------------------------------
+
+    /**
+     * The main method. It creates some example data keys and puts the into the data pool. It then
+     * tries to get the data values back from the pool using the different getData() variants.
+     * 
+     * @param args
+     *            the args
+     */
+    public static void main(final String[] args) {
+        String[] filter = null;// {"key01","key03","key05","key07"};
+
+        try {
+            JSONDataPool dataPool = new JSONDataPool();
+            // long index = dataPool.getPoolCounter();
+            dataPool.putData(new JSONObject("{key01={key01=value01}}"));
+            dataPool.putData(new JSONObject("{key02=value02}"));
+            dataPool.putData(new JSONObject("{key03=value03}"));
+            // can also put in null values
+            dataPool.putData(null);
+            dataPool.putData(new JSONObject("{key05=value05}"));
+            dataPool.putData(new JSONObject("{key06=value06}"));
+            dataPool.putData(new JSONObject("{key07={key07=value07}}"));
+            // System.out.println(dataPool.getDeltaData(filter,index).toString());
+            System.out.println(dataPool.getData(null).toString());
+
+            System.out.println("");
+            System.out.println(dataPool.getPoolCounter());
+            System.out.println("");
+            // CHECKSTYLEOFF MagicNumber
+            // Rationale: This is just a test application
+            System.out.println(dataPool.getDeltaData(filter, 0).toString());
+            System.out.println(dataPool.getDeltaData(filter, 1).toString());
+            System.out.println(dataPool.getDeltaData(filter, 2).toString());
+            System.out.println(dataPool.getDeltaData(filter, 3).toString());
+            System.out.println(dataPool.getDeltaData(filter, 4).toString());
+            System.out.println(dataPool.getDeltaData(filter, 5).toString());
+            System.out.println(dataPool.getDeltaData(filter, 6).toString());
+            System.out.println(dataPool.getDeltaData(filter, 7).toString());
+            // CHECKSTYLEON MagicNumber
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
