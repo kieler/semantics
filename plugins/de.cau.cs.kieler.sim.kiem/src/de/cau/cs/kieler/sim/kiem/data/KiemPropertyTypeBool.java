@@ -23,77 +23,91 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * The Class KiemPropertyTypeBool.
- *
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public class KiemPropertyTypeBool extends KiemPropertyType
-									implements IKiemPropertyType {
-	
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = -5476290662796694133L;
-	
-	/** The Constant PROPERTY_BOOL. */
-	private static final Image PROPERTY_BOOL = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/propertyBoolIcon.png").createImage();
-	
-	/** The Constant BOOL_ITEMS. */
-	private static final String[] BOOL_ITEMS = {"false", "true"};
+public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPropertyType {
 
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * Instantiates a new KiemPropertyTypeBool.
-	 */
-	public KiemPropertyTypeBool() {
-		super();
-	}
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = -5476290662796694133L;
 
-	//-------------------------------------------------------------------------
-	
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets.Composite)
-	 */
-	@Override 
-	public CellEditor provideCellEditor(Composite parent) {
-		return new ComboBoxCellEditor(parent, 
-									BOOL_ITEMS, 
-									SWT.Deactivate);
-	}
+    /** The Constant PROPERTY_BOOL. */
+    private static final Image PROPERTY_BOOL = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.sim.kiem", "icons/propertyBoolIcon.png").createImage();
 
-	//-------------------------------------------------------------------------
+    /** The Constant BOOL_ITEMS. */
+    private static final String[] BOOL_ITEMS = {"false", "true"};
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
-	 */
-	public Object getValue(KiemProperty property) {
-		if (property.getValue().equals("true")) return 1;
-		else return 0;
-	}
+    // -------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
+    /**
+     * Instantiates a new KiemPropertyTypeBool.
+     */
+    public KiemPropertyTypeBool() {
+        super();
+    }
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
-	 */
-	public void setValue(KiemProperty property, Object value) {
-		if (Integer.parseInt((String)value) == 0) {
-			property.setValue("false");
-		}
-		else {
-			property.setValue("true");
-		}
-	}
+    // -------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets
+     * .Composite)
+     */
+    @Override
+    public CellEditor provideCellEditor(final Composite parent) {
+        return new ComboBoxCellEditor(parent, BOOL_ITEMS, SWT.Deactivate);
+    }
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()
-	 */
-	@Override
-	public Image provideIcon() {
-		return PROPERTY_BOOL;
-	}
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.
+     * KiemProperty)
+     */
+    @Override
+    public Object getValue(final KiemProperty property) {
+        if (property.getValue().equals("true")) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.
+     * KiemProperty, java.lang.Object)
+     */
+    @Override
+    public void setValue(final KiemProperty property, final Object value) {
+        if (Integer.parseInt((String) value) == 0) {
+            property.setValue("false");
+        } else {
+            property.setValue("true");
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()
+     */
+    @Override
+    public Image provideIcon() {
+        return PROPERTY_BOOL;
+    }
 
 }

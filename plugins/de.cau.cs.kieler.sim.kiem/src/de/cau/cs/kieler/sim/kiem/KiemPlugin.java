@@ -118,9 +118,12 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
      */
+    @Override
     public void start(final BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
@@ -128,9 +131,12 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
      */
+    @Override
     public void stop(final BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
@@ -295,11 +301,11 @@ public class KiemPlugin extends AbstractUIPlugin {
      * {@link de.cau.cs.kieler.sim.kiem.views.KiemView} so that this plug-in (or the execution
      * thread) is able to trigger updates on the view.
      * 
-     * @param kIEMViewInstanceTmp
+     * @param kIEMViewInstanceParam
      *            the one and only KiemView instance
      */
-    public void setKIEMViewInstance(final KiemView kIEMViewInstanceTmp) {
-        this.kIEMViewInstance = kIEMViewInstanceTmp;
+    public void setKIEMViewInstance(final KiemView kIEMViewInstanceParam) {
+        this.kIEMViewInstance = kIEMViewInstanceParam;
     }
 
     // -------------------------------------------------------------------------
@@ -357,14 +363,14 @@ public class KiemPlugin extends AbstractUIPlugin {
      * Tries to restore the data component list. If an item was not found it will be deleted and an
      * error message is shown.
      * 
-     * @param dataComponentExListTemp
+     * @param dataComponentExListParam
      *            a temporary (partial) DataComponentExList to restore the full one from
      */
-    public void restoreDataComponentListEx(final List<DataComponentEx> dataComponentExListTemp) {
+    public void restoreDataComponentListEx(final List<DataComponentEx> dataComponentExListParam) {
         List<DataComponent> dataComponentListTmp = getDataComponentList();
 
-        for (int c = 0; c < dataComponentExListTemp.size(); c++) {
-            DataComponentEx dataComponentEx = dataComponentExListTemp.get(c);
+        for (int c = 0; c < dataComponentExListParam.size(); c++) {
+            DataComponentEx dataComponentEx = dataComponentExListParam.get(c);
             String componentId = dataComponentEx.getComponentId();
             KiemProperty[] properties = dataComponentEx.getProperties();
 
@@ -391,15 +397,15 @@ public class KiemPlugin extends AbstractUIPlugin {
                     // everything restored correctly
                     componentRestored = true;
                     break;
-                } //end if
-            } //next cc
+                } // end if
+            } // next cc
 
             if (!componentRestored) {
                 this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
                         componentId), null, null);
-            } //end if - failed
+            } // end if - failed
 
-        } //next c
+        } // next c
     }
 
     // -------------------------------------------------------------------------
@@ -500,8 +506,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                 if (dataComponentEx.isObserver()) {
                     countEnabledObserver++;
                 }
-            } //end if enabled
-        } //next c
+            } // end if enabled
+        } // next c
         if (countEnabledProducer < 1) {
             this.kIEMViewInstance.setAllEnabled(true);
             this.showError(Messages.mErrorNoDataProducer, KiemPlugin.PLUGIN_ID, null);
@@ -548,8 +554,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                     return false;
                 }
 
-            } //if enabled
-        } //next c
+            } // if enabled
+        } // next c
 
         // distribute union of InterfaceKeys to all enabled components
         for (int c = 0; c < dataComponentExList.size(); c++) {
@@ -557,8 +563,8 @@ public class KiemPlugin extends AbstractUIPlugin {
             if (dataComponentEx.isEnabled()) {
                 dataComponentEx.setInterfaceKeys((String[]) globalInterfaceKeys
                         .toArray(new String[0]));
-            } //end if enabled
-        } //next c
+            } // end if enabled
+        } // next c
 
         // initialize all (enabled) data producer and Observer
         for (int c = 0; c < dataComponentExList.size(); c++) {
@@ -573,8 +579,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                             dataComponentEx.getDataComponent(), e);
                     return false;
                 }
-            } //end if enabled
-        } //next c
+            } // end if enabled
+        } // next c
 
         // now create and run the execution thread
         this.execution = new Execution(dataComponentExList);
@@ -764,7 +770,8 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param exception
      *            the exception
      */
-    public void showWarning(final String textMessage, final String pluginID, final Exception exception) {
+    public void showWarning(final String textMessage, final String pluginID,
+            final Exception exception) {
         try {
             String message = "";
 
@@ -790,9 +797,9 @@ public class KiemPlugin extends AbstractUIPlugin {
             } else {
                 pluginID2 = pluginID;
             }
-                
 
-            IStatus status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message, exception);
+            IStatus status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
+                    exception);
 
             StatusAdapter statusAdapter = new StatusAdapter(status);
             statusAdapter.setProperty(IStatusAdapterConstants.TIMESTAMP_PROPERTY, System

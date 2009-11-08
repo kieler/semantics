@@ -286,4 +286,5 @@ public class Messages extends NLS {
      */
     public Messages() {
     }
+
 }

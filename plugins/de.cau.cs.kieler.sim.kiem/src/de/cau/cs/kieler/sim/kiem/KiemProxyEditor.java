@@ -56,27 +56,37 @@ public class KiemProxyEditor extends MultiPageEditorPart {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.IProgressMonitor)
      */
+    @Override
     public void doSave(final IProgressMonitor monitor) {
         // do nothing
     }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.part.EditorPart#doSaveAs()
      */
+    @Override
     public void doSaveAs() {
         // do nothing
     }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.part.MultiPageEditorPart#init(org.eclipse.ui.IEditorSite,
+     * org.eclipse.ui.IEditorInput)
      */
+    @Override
     public void init(final IEditorSite site, final IEditorInput editorInputToOpen)
             throws PartInitException {
         super.init(site, editorInputToOpen);
@@ -106,27 +116,36 @@ public class KiemProxyEditor extends MultiPageEditorPart {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.part.MultiPageEditorPart#isDirty()
      */
+    @Override
     public boolean isDirty() {
         return false;
     }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.part.EditorPart#isSaveAsAllowed()
      */
+    @Override
     public boolean isSaveAsAllowed() {
         return false;
     }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.part.MultiPageEditorPart#setFocus()
      */
+    @Override
     public void setFocus() {
         // do nothing
     }
@@ -148,7 +167,7 @@ public class KiemProxyEditor extends MultiPageEditorPart {
                         page.closeEditor(editor, false);
                     }
                 } catch (Exception e) {
-                    //In an unlikely case of an error leave the editor open//
+                    // In an unlikely case of an error leave the editor open//
                 }
             }
         });
@@ -156,9 +175,12 @@ public class KiemProxyEditor extends MultiPageEditorPart {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.part.MultiPageEditorPart#createPages()
      */
+    @Override
     protected void createPages() {
         // create just an empty fake page
         Composite composite = new Composite(getContainer(), SWT.NONE);

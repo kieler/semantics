@@ -23,635 +23,643 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 
 /**
  * The Class DataComponentEx. Is a wrapper for the
- * {@link de.cau.cs.kieler.sim.kiem.extension.DataComponent} class.
- * It should enrich the above class with information that is only needed
- * for instances in the running execution manager and its view. For example
- * whether a DataComponent instance is enabled or disabled or the current
- * pool index for delta observer DataComponents.
- *
+ * {@link de.cau.cs.kieler.sim.kiem.extension.DataComponent} class. It should enrich the above class
+ * with information that is only needed for instances in the running execution manager and its view.
+ * For example whether a DataComponent instance is enabled or disabled or the current pool index for
+ * delta observer DataComponents.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class DataComponentEx implements Serializable {
-	
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = -4500131140237160894L;
 
-	/** The contained DataComponent. */
-	private transient DataComponent component;
-	
-	/** The pool indices for history steps. */
-	private transient HashMap<Long,Long> poolIndices;
-	
-	/** The currently stored delta index. */
-	private transient long deltaIndex;
-	
-	/** The boolean json flag indicating a JSON capable DataComponent. */
-	private transient Boolean json;
-	
-	/** Indicates that the properties are unfolded. */
-	private transient boolean unfolded;
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = -4500131140237160894L;
 
-	/** The boolean enabled flag indicating whether the DataComponent is 
-	 * enabled or not. */
-	private boolean enabled;
-	
-	/** Indicates that the properties are unfolded. */
-	private KiemProperty[] properties;
-	
-	/** The component id of the component for deserialization */
-	private String componentId;
-	
-	//------------------------------------------------------------------------- 
+    /** The contained DataComponent. */
+    private transient DataComponent component;
 
-//	private synchronized void writeObject( java.io.ObjectOutputStream s )
-//	  throws IOException {
-//		//do not save anything
-//		System.out.println("SAVING");
-//	}
-	
-	//------------------------------------------------------------------------- 
-	
-	/**
-	 * Instantiates a new DataComponentEx wrapping a DataComponent.
-	 * 
-	 * @param component the contained DataComponent
-	 */
-	public DataComponentEx(DataComponent component) {
-		super();
-		this.component = component;
-		this.enabled = true;
-		this.json = null;
-		this.poolIndices = new HashMap<Long,Long>();
-		this.deltaIndex = 0;
-		this.properties = this.component.getProperties();
-		this.componentId = component.getDataComponentId();
-	}
+    /** The pool indices for history steps. */
+    private transient HashMap<Long, Long> poolIndices;
 
-	//------------------------------------------------------------------------- 
+    /** The currently stored delta index. */
+    private transient long deltaIndex;
 
-	/**
-	 * Gets a component id to identify DataComponents during loading because
-	 * the DataComponents itself do not get serialized.
-	 * 
-	 * @return the component id
-	 */
-	public String getComponentId() {
-		return componentId;
-	}
+    /** The boolean json flag indicating a JSON capable DataComponent. */
+    private transient boolean json;
 
-	//------------------------------------------------------------------------- 
+    /** Indicates that the properties are unfolded. */
+    private transient boolean unfolded;
 
-	/**
-	 * Sets the properties for the DataComponent and this DataComponentEx
-	 * instance. These are just too links to the same properties.
-	 * 
-	 * @param properties the new properties
-	 */
-	public void setProperties(KiemProperty[] properties) {
-		this.component.setProperties(properties);
-		this.properties = properties;
-	}
-	
-	//------------------------------------------------------------------------- 
-	
-	/**
-	 * Checks whether this DataComponent is a JSON component that is able to
-	 * handle JSONObjects of the following Java implementation 
-	 * {@link "http://www.json.org/java"}.
-	 * 
-	 * @return true, if this DataComponent is JSON capable
-	 */
-	public boolean isJSON() {
-		if (this.json != null) return this.json.booleanValue();
-		if (this.getDataComponent() instanceof JSONObjectDataComponent)
-			this.json = new Boolean(true);
-		else
-			this.json = new Boolean(false);
-		return this.json.booleanValue();
-	}
-	
-	//------------------------------------------------------------------------- 
-	
-  	 /**
-	 * Checks whether the properties of this DataComponent are unfolded.
-	 * 
-	 * @return true, if properties are unfolded
-	 */
-	public boolean isUnfolded() {
-  		 return this.unfolded;
-  	 }
-  	 
- 	//-------------------------------------------------------------------------
-  	 
-  	 /**
-	  * Sets whether the properties of this DataComponent are unfolded.
-	  * 
-	  * @param unfolded set to true if they are unfolded
-	  */
-	 public void setUnfolded(boolean unfolded) {
-  		 this.unfolded = unfolded;
-  	 }
-  	 
-	//------------------------------------------------------------------------- 
-	
-	/**
-	 * Gets the contained DataComponent.
-	 * 
-	 * @return the contained DataComponent
-	 */
-	public DataComponent getDataComponent() {
-		return component;
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * The boolean enabled flag indicating whether the DataComponent is enabled or not.
+     */
+    private boolean enabled;
 
-	/**
-	 * Checks whether the DataComponent is enabled or disabled.
-	 * 
-	 * @return true, if is enabled
-	 */
-	public boolean isEnabled() {
-		return enabled;
-	}
-	
-	//------------------------------------------------------------------------- 
+    /** Indicates that the properties are unfolded. */
+    private KiemProperty[] properties;
 
-	/**
-	 * Sets the enabled flag of this DataComponent. This is also reflected by
-	 * the KiemView GUI whenever a refresh is triggered.
-	 * 
-	 * @param enabled true, if the DataComponent is enabled
-	 */
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-		//notify the DataComponent
-		this.component.notifyEnabled(enabled);
-	}
-	
-	//------------------------------------------------------------------------- 
+    /** The component id of the component for deserialization. */
+    private String componentId;
 
-	/**
-	 * Reset pool indices. This is called whenever the execution is reset.
-	 */
-	public void resetPoolIndices() {
-		poolIndices = new HashMap<Long,Long>();
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Adds a pool index for a given step. This is necessary to recover
-	 * delta pool indices of a history step.
-	 * 
-	 * @param poolIndex the pool index to add
-	 * @param stepCounter the related step counter 
-	 */
-	public void addPoolIndex(long poolIndex, 
-							  long stepCounter) {
-		if (!poolIndices.containsKey(stepCounter))
-			poolIndices.put(stepCounter, poolIndex);
-	}
-	
-	//------------------------------------------------------------------------- 
+    // private synchronized void writeObject( java.io.ObjectOutputStream s )
+    // throws IOException {
+    // //do not save anything
+    // System.out.println("SAVING");
+    // }
 
-	/**
-	 * Gets the pool index of a specific step. This is necessary to recover
-	 * delta pool indices of a history step.
-	 * 
-	 * @param stepCounter the step counter to find the related pool index
-	 * 
-	 * @return the related pool index
-	 */
-	public long getPoolIndex(long stepCounter) {
-		if (!poolIndices.containsKey(stepCounter)) return -1;
-		return poolIndices.get(stepCounter);
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Gets the delta index. This is used for delta DataComponents only.
-	 * The delta index is the last pool index when this DataComponent as
-	 * an observer did not get skipped.
-	 * 
-	 * @return the delta index
-	 */
-	public long getDeltaIndex() {
-		return this.deltaIndex;
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Instantiates a new DataComponentEx wrapping a DataComponent.
+     * 
+     * @param componentParam
+     *            the contained DataComponent
+     */
+    public DataComponentEx(final DataComponent componentParam) {
+        super();
+        this.component = componentParam;
+        this.enabled = true;
+        this.json = true;
+        this.poolIndices = new HashMap<Long, Long>();
+        this.deltaIndex = 0;
+        this.properties = this.component.getProperties();
+        this.componentId = component.getDataComponentId();
+    }
 
-	/**
-	 * Sets the delta index. This is used for delta DataComponents only.
-	 * The delta index is the last pool index when this DataComponent as
-	 * an observer did not get skipped.
-	 * 
-	 * @param deltaIndex the new delta index
-	 */
-	public void setDeltaIndex(long deltaIndex) {
-		this.deltaIndex = deltaIndex;
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Checks whether the DataComponent is a producer <B>AND</B> an observer at the
-	 * same time.
-	 * 
-	 * @return true, if it is a producer and an observer
-	 */
-	public boolean isProducerObserver() {
-		return (this.isProducer() && this.isObserver());
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Gets a component id to identify DataComponents during loading because the DataComponents
+     * itself do not get serialized.
+     * 
+     * @return the component id
+     */
+    public String getComponentId() {
+        return componentId;
+    }
 
-	/**
-	 * Checks whether the DataComponent is a pure producer only.
-	 * 
-	 * @return true, if it is a producer only
-	 */
-	public boolean isProducerOnly() {
-		return (this.isProducer() && !this.isObserver());
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Checks whether the DataComponent is a pure observer only.
-	 * 
-	 * @return true, if it is an observer only
-	 */
-	public boolean isObserverOnly() {
-		return (!this.isProducer() && this.isObserver());
-	}
-	
-	//-------------------------------------------------------------------------
-	//--                       PROXY METHODS                                 --                                 
-	//------------------------------------------------------------------------- 
+    /**
+     * Sets the properties for the DataComponent and this DataComponentEx instance. These are just
+     * too links to the same properties.
+     * 
+     * @param propertiesParam
+     *            the new properties
+     */
+    public void setProperties(final KiemProperty[] propertiesParam) {
+        this.component.setProperties(propertiesParam);
+        this.properties = propertiesParam;
+    }
 
-	/**
-	 * Checks whether the DataComponent is an producer.
-	 * 
-	 * @return true, if it is a producer
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isProducer()
-	 */
-	public boolean isProducer() {
-		return this.component.isProducer();
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Checks whether the DataComponent is an observer.
-	 * 
-	 * @return true, if it is an observer
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isObserver()
-	 */
-	public boolean isObserver() {
-		return this.component.isObserver();
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Checks whether this DataComponent is a JSON component that is able to handle JSONObjects of
+     * the following Java implementation {@link "http://www.json.org/java"}.
+     * 
+     * @return true, if this DataComponent is JSON capable
+     */
+    public boolean isJSON() {
+        if (this.getDataComponent() instanceof JSONObjectDataComponent) {
+            this.json = true;
+        } else {
+            this.json = false;
+        }
+        return this.json;
+    }
 
-	/**
-	 * Gets the name of the DataComponent.
-	 * 
-	 * @return the name
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#getName()
-	 */
-	public String getName() {
-		return this.component.getName();
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Gets the filter keys if the DataComponent provides any or null if it
-	 * is an observer and wants <B>ALL</B> complete data.
-	 * 
-	 * @return the filter keys
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideFilterKeys()
-	 */
-	public String[] provideFilterKeys() {
-		return this.component.provideFilterKeys();
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Checks whether the properties of this DataComponent are unfolded.
+     * 
+     * @return true, if properties are unfolded
+     */
+    public boolean isUnfolded() {
+        return this.unfolded;
+    }
 
-	/**
-	 * This method is implemented by the DataComponent if it provides a String[]
-	 * array of interface variables.
-	 * 
-	 * @return the String[] array of interface variables
-	 * 
-	 * @throws KiemInitializationException the KIEM initialization exception
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideInterfaceKeys()
-	 */
-	public String[] provideInterfaceKeys() throws KiemInitializationException {
-		return this.component.provideInterfaceKeys(); 
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Gets the KiemProperties of this DataComponent.
-	 * 
-	 * @return the KiemProperties
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#getProperties()
-	 */
-	public KiemProperty[] getProperties() {
-		return this.properties; 
-	}
+    /**
+     * Sets whether the properties of this DataComponent are unfolded.
+     * 
+     * @param unfoldedParam
+     *            set to true if they are unfolded
+     */
+    public void setUnfolded(final boolean unfoldedParam) {
+        this.unfolded = unfoldedParam;
+    }
 
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Checks whether the DataComponent is a delta observer.
-	 * 
-	 * @return true, if DataComponent is a delta observer
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isDeltaObserver()
-	 */
-	public boolean isDeltaObserver() {
-		return this.component.isDeltaObserver(); 
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Gets the contained DataComponent.
+     * 
+     * @return the contained DataComponent
+     */
+    public DataComponent getDataComponent() {
+        return component;
+    }
 
-	/**
-	 * Checks whether the DataComponent is a history observer.
-	 * 
-	 * @return true, if DataComponent is a history observer
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isHistoryObserver()
-	 */
-	public boolean isHistoryObserver() {
-		return this.component.isHistoryObserver();
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Checks if the current step is a history step. Normally only called by
-	 * the DataConsumer itself to implement special behavior within its step()
-	 * method.
-	 * 
-	 * @return true, if current step is a history step
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isHistoryStep()
-	 */
-	public boolean isHistoryStep() {
-		return this.component.isHistoryStep();
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Checks whether the DataComponent is enabled or disabled.
+     * 
+     * @return true, if is enabled
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	/**
-	 * Flag the current step as a history step. Called by the execution manager.
-	 * 
-	 * @param historyStep true, if the step is a history step
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#setHistoryStep(boolean)
-	 */
-	public void setHistoryStep(boolean historyStep) {
-		this.component.setHistoryStep(historyStep);
-	}
-	
-	//------------------------------------------------------------------------- 
-	
-	/**
-	 * Checks whether this DataComponent implements a master.
-	 * 
-	 * @return true, if the DataComponent is a master
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMaster()
-	 */
-	public boolean isMaster() {
-		return this.component.isMaster(); 
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Checks if is pause flag.
-	 * 
-	 * @return true, if is pause flag
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isPauseFlag()
-	 */
-	public boolean isPauseFlag() {
-		return this.component.isPauseFlag(); 
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Sets the enabled flag of this DataComponent. This is also reflected by the KiemView GUI
+     * whenever a refresh is triggered.
+     * 
+     * @param enabledParam
+     *            true, if the DataComponent is enabled
+     */
+    public void setEnabled(final boolean enabledParam) {
+        this.enabled = enabledParam;
+        // notify the DataComponent
+        this.component.notifyEnabled(enabledParam);
+    }
 
-	/**
-	 * Checks if is a macro step is finished.
-	 * 
-	 * @return true, if checks if is macro step done
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMacroStepDone()
-	 */
-	public boolean isMacroStepDone() {
-		return this.component.isMacroStepDone(); 
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Let the DataComponent check its properties. It is supposed to throw an
-	 * error if a property is not set correctly.
-	 * 
-	 * @param properties the KiemProperties of this component
-	 * 
-	 * @throws KiemPropertyException an Exception in case of an error
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#checkProperties(KiemProperty[])
-	 */
-	public void checkProperties(KiemProperty[] properties) 
-									throws KiemPropertyException {
-		this.component.checkProperties(properties);
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Reset pool indices. This is called whenever the execution is reset.
+     */
+    public void resetPoolIndices() {
+        poolIndices = new HashMap<Long, Long>();
+    }
 
-	/**
-	 * Sets the global interface variable keys. This method is called by the
-	 * execution manager after it collects the union of interface variable keys
-	 * of all DataComponents.
-	 * 
-	 * @param globalInterfaceKeys all interface variable keys
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#setInterfaceKeys(String[])
-	 */
-	public void setInterfaceKeys(String[] globalInterfaceKeys) {
-		this.component.setInterfaceKeys(globalInterfaceKeys); 
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Checks whether the master is implementing GUI buttons.
-	 * 
-	 * @return true, if is master DataComponent is implementing GUI buttons
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMasterImplementingGUI()
-	 */
-	public boolean isMasterImplementingGUI() {
-		return this.component.isMasterImplementingGUI();
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Adds a pool index for a given step. This is necessary to recover delta pool indices of a
+     * history step.
+     * 
+     * @param poolIndex
+     *            the pool index to add
+     * @param stepCounter
+     *            the related step counter
+     */
+    public void addPoolIndex(final long poolIndex, final long stepCounter) {
+        if (!poolIndices.containsKey(stepCounter)) {
+            poolIndices.put(stepCounter, poolIndex);
+        }
+    }
 
-	/**
-	 * Master component enables/disables and implements GUI button step back.
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIstepBack()
-	 */
-	public void	masterGUIstepBack() {
-		this.component.masterGUIstepBack();
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Master component enables/disables and implements GUI button step.
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIstep()
-	 */
-	public void	masterGUIstep() {
-		this.component.masterGUIstep();
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Gets the pool index of a specific step. This is necessary to recover delta pool indices of a
+     * history step.
+     * 
+     * @param stepCounter
+     *            the step counter to find the related pool index
+     * 
+     * @return the related pool index
+     */
+    public long getPoolIndex(final long stepCounter) {
+        if (!poolIndices.containsKey(stepCounter)) {
+            return -1;
+        }
+        return poolIndices.get(stepCounter);
+    }
 
-	/**
-	 * Master component enables/disables and implements GUI button macro step.
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUImacroStep()
-	 */
-	public void	masterGUImacroStep() {
-		this.component.masterGUImacroStep();
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Master component enables/disables and implements GUI button run.
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIrun()
-	 */
-	public void	masterGUIrun() {
-		this.component.masterGUIrun();
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Gets the delta index. This is used for delta DataComponents only. The delta index is the last
+     * pool index when this DataComponent as an observer did not get skipped.
+     * 
+     * @return the delta index
+     */
+    public long getDeltaIndex() {
+        return this.deltaIndex;
+    }
 
-	/**
-	 * Master component enables/disables and implements GUI button pause.
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIpause()
-	 */
-	public void	masterGUIpause() {
-		this.component.masterGUIpause();
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Master component enables/disables and implements GUI button stop.
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIstop()
-	 */
-	public void	masterGUIstop() {
-		this.component.masterGUIstop();
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Sets the delta index. This is used for delta DataComponents only. The delta index is the last
+     * pool index when this DataComponent as an observer did not get skipped.
+     * 
+     * @param deltaIndexParam
+     *            the new delta index
+     */
+    public void setDeltaIndex(final long deltaIndexParam) {
+        this.deltaIndex = deltaIndexParam;
+    }
 
-	/**
-	 * Master component enables/disables and implements GUI button step back.
-	 * 
-	 * @return true, if button is enabled
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledStepBack()
-	 */
-	public boolean masterGUIisEnabledStepBack() {
-		return this.component.masterGUIisEnabledStepBack();
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Master component enables/disables and implements GUI button step.
-	 * 
-	 * @return true, if button is enabled
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledStep()
-	 */
-	public boolean masterGUIisEnabledStep() {
-		return this.component.masterGUIisEnabledStep();
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Checks whether the DataComponent is a producer <B>AND</B> an observer at the same time.
+     * 
+     * @return true, if it is a producer and an observer
+     */
+    public boolean isProducerObserver() {
+        return (this.isProducer() && this.isObserver());
+    }
 
-	/**
-	 * Master component enables/disables and implements GUI button macro step.
-	 * 
-	 * @return true, if button is enabled
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledMacroStep()
-	 */
-	public boolean masterGUIisEnabledMacroStep() {
-		return this.component.masterGUIisEnabledMacroStep();
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Master component enables/disables and implements GUI button pause.
-	 * 
-	 * @return true, if button is enabled
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledPause()
-	 */
-	public boolean masterGUIisEnabledPause() {
-		return this.component.masterGUIisEnabledPause();
-	}
-	
-	//------------------------------------------------------------------------- 
+    /**
+     * Checks whether the DataComponent is a pure producer only.
+     * 
+     * @return true, if it is a producer only
+     */
+    public boolean isProducerOnly() {
+        return (this.isProducer() && !this.isObserver());
+    }
 
-	/**
-	 * Master component enables/disables and implements GUI button run.
-	 * 
-	 * @return true, if button is enabled
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledRun()
-	 */
-	public boolean masterGUIisEnabledRun() {
-		return this.component.masterGUIisEnabledRun();
-	}
-	
-	//------------------------------------------------------------------------- 
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Master component enables/disables and implements GUI button stop.
-	 * 
-	 * @return true, if button is enabled
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledStop()
-	 */
-	public boolean masterGUIisEnabledStop() {
-		return this.component.masterGUIisEnabledStop();
-	}
-	
+    /**
+     * Checks whether the DataComponent is a pure observer only.
+     * 
+     * @return true, if it is an observer only
+     */
+    public boolean isObserverOnly() {
+        return (!this.isProducer() && this.isObserver());
+    }
+
+    // -------------------------------------------------------------------------
+    // -- PROXY METHODS --
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks whether the DataComponent is an producer.
+     * 
+     * @return true, if it is a producer
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isProducer()
+     */
+    public boolean isProducer() {
+        return this.component.isProducer();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks whether the DataComponent is an observer.
+     * 
+     * @return true, if it is an observer
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isObserver()
+     */
+    public boolean isObserver() {
+        return this.component.isObserver();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the name of the DataComponent.
+     * 
+     * @return the name
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#getName()
+     */
+    public String getName() {
+        return this.component.getName();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the filter keys if the DataComponent provides any or null if it is an observer and wants
+     * <B>ALL</B> complete data.
+     * 
+     * @return the filter keys
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideFilterKeys()
+     */
+    public String[] provideFilterKeys() {
+        return this.component.provideFilterKeys();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * This method is implemented by the DataComponent if it provides a String[] array of interface
+     * variables.
+     * 
+     * @return the String[] array of interface variables
+     * 
+     * @throws KiemInitializationException
+     *             the KIEM initialization exception
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideInterfaceKeys()
+     */
+    public String[] provideInterfaceKeys() throws KiemInitializationException {
+        return this.component.provideInterfaceKeys();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the KiemProperties of this DataComponent.
+     * 
+     * @return the KiemProperties
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#getProperties()
+     */
+    public KiemProperty[] getProperties() {
+        return this.properties;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks whether the DataComponent is a delta observer.
+     * 
+     * @return true, if DataComponent is a delta observer
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isDeltaObserver()
+     */
+    public boolean isDeltaObserver() {
+        return this.component.isDeltaObserver();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks whether the DataComponent is a history observer.
+     * 
+     * @return true, if DataComponent is a history observer
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isHistoryObserver()
+     */
+    public boolean isHistoryObserver() {
+        return this.component.isHistoryObserver();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if the current step is a history step. Normally only called by the DataConsumer itself
+     * to implement special behavior within its step() method.
+     * 
+     * @return true, if current step is a history step
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isHistoryStep()
+     */
+    public boolean isHistoryStep() {
+        return this.component.isHistoryStep();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Flag the current step as a history step. Called by the execution manager.
+     * 
+     * @param historyStep
+     *            true, if the step is a history step
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#setHistoryStep(boolean)
+     */
+    public void setHistoryStep(final boolean historyStep) {
+        this.component.setHistoryStep(historyStep);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks whether this DataComponent implements a master.
+     * 
+     * @return true, if the DataComponent is a master
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMaster()
+     */
+    public boolean isMaster() {
+        return this.component.isMaster();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if is pause flag.
+     * 
+     * @return true, if is pause flag
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isPauseFlag()
+     */
+    public boolean isPauseFlag() {
+        return this.component.isPauseFlag();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if is a macro step is finished.
+     * 
+     * @return true, if checks if is macro step done
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMacroStepDone()
+     */
+    public boolean isMacroStepDone() {
+        return this.component.isMacroStepDone();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Let the DataComponent check its properties. It is supposed to throw an error if a property is
+     * not set correctly.
+     * 
+     * @param propertiesParam
+     *            the KiemProperties of this component
+     * 
+     * @throws KiemPropertyException
+     *             an Exception in case of an error
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#checkProperties(KiemProperty[])
+     */
+    public void checkProperties(final KiemProperty[] propertiesParam) throws KiemPropertyException {
+        this.component.checkProperties(propertiesParam);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the global interface variable keys. This method is called by the execution manager after
+     * it collects the union of interface variable keys of all DataComponents.
+     * 
+     * @param globalInterfaceKeys
+     *            all interface variable keys
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#setInterfaceKeys(String[])
+     */
+    public void setInterfaceKeys(final String[] globalInterfaceKeys) {
+        this.component.setInterfaceKeys(globalInterfaceKeys);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks whether the master is implementing GUI buttons.
+     * 
+     * @return true, if is master DataComponent is implementing GUI buttons
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isMasterImplementingGUI()
+     */
+    public boolean isMasterImplementingGUI() {
+        return this.component.isMasterImplementingGUI();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Master component enables/disables and implements GUI button step back.
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIstepBack()
+     */
+    public void masterGUIstepBack() {
+        this.component.masterGUIstepBack();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Master component enables/disables and implements GUI button step.
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIstep()
+     */
+    public void masterGUIstep() {
+        this.component.masterGUIstep();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Master component enables/disables and implements GUI button macro step.
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUImacroStep()
+     */
+    public void masterGUImacroStep() {
+        this.component.masterGUImacroStep();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Master component enables/disables and implements GUI button run.
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIrun()
+     */
+    public void masterGUIrun() {
+        this.component.masterGUIrun();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Master component enables/disables and implements GUI button pause.
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIpause()
+     */
+    public void masterGUIpause() {
+        this.component.masterGUIpause();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Master component enables/disables and implements GUI button stop.
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIstop()
+     */
+    public void masterGUIstop() {
+        this.component.masterGUIstop();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Master component enables/disables and implements GUI button step back.
+     * 
+     * @return true, if button is enabled
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledStepBack()
+     */
+    public boolean masterGUIisEnabledStepBack() {
+        return this.component.masterGUIisEnabledStepBack();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Master component enables/disables and implements GUI button step.
+     * 
+     * @return true, if button is enabled
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledStep()
+     */
+    public boolean masterGUIisEnabledStep() {
+        return this.component.masterGUIisEnabledStep();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Master component enables/disables and implements GUI button macro step.
+     * 
+     * @return true, if button is enabled
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledMacroStep()
+     */
+    public boolean masterGUIisEnabledMacroStep() {
+        return this.component.masterGUIisEnabledMacroStep();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Master component enables/disables and implements GUI button pause.
+     * 
+     * @return true, if button is enabled
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledPause()
+     */
+    public boolean masterGUIisEnabledPause() {
+        return this.component.masterGUIisEnabledPause();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Master component enables/disables and implements GUI button run.
+     * 
+     * @return true, if button is enabled
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledRun()
+     */
+    public boolean masterGUIisEnabledRun() {
+        return this.component.masterGUIisEnabledRun();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Master component enables/disables and implements GUI button stop.
+     * 
+     * @return true, if button is enabled
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#masterGUIisEnabledStop()
+     */
+    public boolean masterGUIisEnabledStop() {
+        return this.component.masterGUIisEnabledStop();
+    }
+
 }
