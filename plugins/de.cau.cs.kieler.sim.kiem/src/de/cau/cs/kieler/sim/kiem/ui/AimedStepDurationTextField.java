@@ -28,168 +28,183 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.Messages;
 
 /**
- * The Class AimedStepDurationTextField. This is the GUI component that shows
- * the currently set aimed step duration for the execution. It can also be used
- * to edit this duration. 
- *
+ * The Class AimedStepDurationTextField. This is the GUI component that shows the currently set
+ * aimed step duration for the execution. It can also be used to edit this duration.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class AimedStepDurationTextField extends ControlContribution implements KeyListener,
-																   FocusListener{
+        FocusListener {
 
-	/** The SWT text field. */
-	Text textfield;
-	
-	/** A reference to to the KIEM plug-in for triggering refreshes. */
-	private KiemPlugin KIEM;
-	
-	/** Indicates if the text field is currently enabled. */
-	boolean enabled;
+    /** The SWT text field. */
+    Text textfield;
 
-	//-------------------------------------------------------------------------
-		
-	/**
-	 * Instantiates a new aimed step duration text field.
-	 * 
-	 * @param KIEM a reference to to the KIEM plug-in 
-	 */
-	public AimedStepDurationTextField(KiemPlugin KIEM) {
-		super(Messages.mDurationTextFieldName);
-		this.KIEM = KIEM;
-	}
-	
-	//-------------------------------------------------------------------------
+    /** A reference to to the KIEM plug-in for triggering refreshes. */
+    private KiemPlugin kIEM;
 
-	/**
-	 * Enables or disables the text field. Only sets the status if there 
-	 * already is a text field created by the GUI createControl.
-	 * 
-	 * @param enabled the new status of the enableness
-	 */
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-		if (textfield == null) return;
-		if (enabled) {
-			Display.getDefault().asyncExec(
-					  new Runnable() {
-					    public void run(){
-							textfield.setEnabled(true);
-					    }
-			});		
-		}
-		else {
-			Display.getDefault().asyncExec(
-					  new Runnable() {
-					    public void run(){
-							textfield.setEnabled(false);
-					    }
-			});		
-		}
-	}
-	
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * Returns whether the text field is currently enabled or not.
-	 * 
-	 * @return true, if text field is enabled
-	 */
-	@Override
-	public boolean isEnabled() {
-		return this.enabled;
-	}
-	
-	//-------------------------------------------------------------------------
+    /** Indicates if the text field is currently enabled. */
+    boolean enabled;
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.action.ControlContribution#createControl(org.eclipse.swt.widgets.Composite)
-	 */
-	@Override
-	protected Control createControl(Composite parent) {
-		this.updateDuration();
-		textfield = new Text(parent,SWT.BORDER);
-		//per default enable it
-		this.textfield.setEnabled(this.enabled);
-		textfield.setToolTipText(Messages.mDurationTextFieldHint);
-		//reserve some amount of space and declare default value
-		textfield.setText(KiemPlugin.AIMED_STEP_DURATION_DEFAULT
-				+Messages.mDurationTextFieldSuffix
-				+Messages.mDurationTextFieldReserveSpace);
-		//add some listeners
-		textfield.addKeyListener(this);
-		textfield.addFocusListener(this);
-		return textfield;
-	}
+    // -------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
+    /**
+     * Instantiates a new aimed step duration text field.
+     * 
+     * @param kIEMParam
+     *            a reference to to the KIEM plug-in
+     */
+    public AimedStepDurationTextField(final KiemPlugin kIEMParam) {
+        super(Messages.mDurationTextFieldName);
+        this.kIEM = kIEMParam;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.swt.events.KeyListener#keyPressed(org.eclipse.swt.events.KeyEvent)
-	 */
-	public void keyPressed(KeyEvent e) {
-		if(e.character=='\r'){
-			updateDuration();
-			KiemPlugin.getDefault().setViewFocus();
-		}			
-	}
+    // -------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
-	
-	/* (non-Javadoc)
-	 * @see org.eclipse.swt.events.KeyListener#keyReleased(org.eclipse.swt.events.KeyEvent)
-	 */
-	public void keyReleased(KeyEvent e) {
-		/* nothing */
-	}
-	
-	//-------------------------------------------------------------------------
+    /**
+     * Enables or disables the text field. Only sets the status if there already is a text field
+     * created by the GUI createControl.
+     * 
+     * @param enabledParam
+     *            the new status of the enableness
+     */
+    public void setEnabled(final boolean enabledParam) {
+        this.enabled = enabledParam;
+        if (textfield == null) {
+            return;
+        }
+        if (enabled) {
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    textfield.setEnabled(true);
+                }
+            });
+        } else {
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    textfield.setEnabled(false);
+                }
+            });
+        }
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.swt.events.FocusListener#focusLost(org.eclipse.swt.events.FocusEvent)
-	 */
-	public void focusLost(FocusEvent e) {
-		updateDuration();
-		textfield.setText(""+KIEM.getAimedStepDuration()
-				+Messages.mDurationTextFieldSuffix);
-	}
+    // -------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
+    /**
+     * Returns whether the text field is currently enabled or not.
+     * 
+     * @return true, if text field is enabled
+     */
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
 
-	/**
-	 * Updates the step duration. This methods also checks the bounds and it 
-	 * checks if a valid integer has been entered. In case the bounds are not
-	 * met or the user entered an invalid integer number, the duration is
-	 * not updated and the text field is set back to the initial value.
+    // -------------------------------------------------------------------------
 
-	 */
-	private void updateDuration(){
-		if (textfield == null) return;
-		try{
-			int aimedStepDuration = Integer.parseInt(textfield.getText().trim());
-			if (aimedStepDuration < KiemPlugin.AIMED_STEP_DURATION_MIN)
-				throw(new NumberFormatException(
-						Messages.mWarningDurationTooSmall 
-						+KiemPlugin.AIMED_STEP_DURATION_MIN
-						+Messages.mDurationTextFieldSuffix+"!"));
-			if (aimedStepDuration > KiemPlugin.AIMED_STEP_DURATION_MAX) 
-				throw(new NumberFormatException(
-						Messages.mWarningDurationTooLarge
-						+KiemPlugin.AIMED_STEP_DURATION_MAX
-						+Messages.mDurationTextFieldSuffix+"!"));
-			KIEM.setAimedStepDuration(aimedStepDuration);
-		}catch(NumberFormatException exc){
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.jface.action.ControlContribution#createControl(org.eclipse.swt.widgets.Composite)
+     */
+    @Override
+    protected Control createControl(final Composite parent) {
+        this.updateDuration();
+        textfield = new Text(parent, SWT.BORDER);
+        // per default enable it
+        this.textfield.setEnabled(this.enabled);
+        textfield.setToolTipText(Messages.mDurationTextFieldHint);
+        // reserve some amount of space and declare default value
+        textfield.setText(KiemPlugin.AIMED_STEP_DURATION_DEFAULT
+                + Messages.mDurationTextFieldSuffix + Messages.mDurationTextFieldReserveSpace);
+        // add some listeners
+        textfield.addKeyListener(this);
+        textfield.addFocusListener(this);
+        return textfield;
+    }
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.swt.events.FocusListener#focusGained(org.eclipse.swt.events.FocusEvent)
-	 */
-	public void focusGained(FocusEvent e) {
-		//if the text field gets the focus, set the current duration
-		textfield.setText(""+KIEM.getAimedStepDuration());
-	}
-	
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.swt.events.KeyListener#keyPressed(org.eclipse.swt.events.KeyEvent)
+     */
+    @Override
+    public void keyPressed(final KeyEvent e) {
+        if (e.character == '\r') {
+            updateDuration();
+            KiemPlugin.getDefault().setViewFocus();
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.swt.events.KeyListener#keyReleased(org.eclipse.swt.events.KeyEvent)
+     */
+    @Override
+    public void keyReleased(final KeyEvent e) {
+        /* nothing */
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.swt.events.FocusListener#focusLost(org.eclipse.swt.events.FocusEvent)
+     */
+    @Override
+    public void focusLost(final FocusEvent e) {
+        updateDuration();
+        textfield.setText("" + kIEM.getAimedStepDuration() + Messages.mDurationTextFieldSuffix);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Updates the step duration. This methods also checks the bounds and it checks if a valid
+     * integer has been entered. In case the bounds are not met or the user entered an invalid
+     * integer number, the duration is not updated and the text field is set back to the initial
+     * value.
+     */
+    private void updateDuration() {
+        if (textfield == null) {
+            return;
+        }
+        try {
+            int aimedStepDuration = Integer.parseInt(textfield.getText().trim());
+            if (aimedStepDuration < KiemPlugin.AIMED_STEP_DURATION_MIN) {
+                throw (new NumberFormatException(Messages.mWarningDurationTooSmall
+                        + KiemPlugin.AIMED_STEP_DURATION_MIN + Messages.mDurationTextFieldSuffix
+                        + "!"));
+            }
+            if (aimedStepDuration > KiemPlugin.AIMED_STEP_DURATION_MAX) {
+                throw (new NumberFormatException(Messages.mWarningDurationTooLarge
+                        + KiemPlugin.AIMED_STEP_DURATION_MAX + Messages.mDurationTextFieldSuffix
+                        + "!"));
+            }
+            kIEM.setAimedStepDuration(aimedStepDuration);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.swt.events.FocusListener#focusGained(org.eclipse.swt.events.FocusEvent)
+     */
+    @Override
+    public void focusGained(final FocusEvent e) {
+        // if the text field gets the focus, set the current duration
+        textfield.setText("" + kIEM.getAimedStepDuration());
+    }
+
 }

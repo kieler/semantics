@@ -23,57 +23,60 @@ import org.eclipse.swt.widgets.Text;
 import de.cau.cs.kieler.sim.kiem.Messages;
 
 /**
- * The Class StepTextField. This is the GUI component that shows the
- * number of current steps during a running or paused execution.
- *
+ * The Class StepTextField. This is the GUI component that shows the number of current steps during
+ * a running or paused execution.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class StepTextField extends ControlContribution {
 
-	/** The SWT text field component. */
-	Text textfield;
-	
-	//-------------------------------------------------------------------------
-		
-	/**
-	 * Instantiates a new step text field GUI ControlContribution.
-	 */
-	public StepTextField() {
-		super(Messages.mStepTextFieldName);
-	}
-	
-	//-------------------------------------------------------------------------
+    /** The SWT text field component. */
+    Text textfield;
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.action.ControlContribution#createControl(org.eclipse.swt.widgets.Composite)
-	 */
-	@Override
-	protected Control createControl(Composite parent) {
-		textfield = new Text(parent,SWT.BORDER);
-		this.textfield.setEnabled(false);
-		textfield.setToolTipText(Messages.mStepTextFieldHint);
-		//reserver some amount of space
-		textfield.setText(Messages.mStepTextFieldReserveSpace);
-		return textfield;
-	}
-	
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Update the contents (i.e., the # of steps) of the text field.
-	 * 
-	 * @param text the text to display in the text field
-	 */
-	public void updateTextfield(String text) {
-		if (text == null) {
-			//this.textfield.setVisible(false);
-			this.textfield.setText(Messages.mStepTextFieldNoStep);
-		}
-		else {
-			this.textfield.setText(text);
-			//this.textfield.setVisible(true);
-		}
-	}
-	
+    /**
+     * Instantiates a new step text field GUI ControlContribution.
+     */
+    public StepTextField() {
+        super(Messages.mStepTextFieldName);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.jface.action.ControlContribution#createControl(org.eclipse.swt.widgets.Composite)
+     */
+    @Override
+    protected Control createControl(final Composite parent) {
+        textfield = new Text(parent, SWT.BORDER);
+        this.textfield.setEnabled(false);
+        textfield.setToolTipText(Messages.mStepTextFieldHint);
+        // reserver some amount of space
+        textfield.setText(Messages.mStepTextFieldReserveSpace);
+        return textfield;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Update the contents (i.e., the # of steps) of the text field.
+     * 
+     * @param text
+     *            the text to display in the text field
+     */
+    public void updateTextfield(final String text) {
+        if (text == null) {
+            // this.textfield.setVisible(false);
+            this.textfield.setText(Messages.mStepTextFieldNoStep);
+        } else {
+            this.textfield.setText(text);
+            // this.textfield.setVisible(true);
+        }
+    }
+
 }
