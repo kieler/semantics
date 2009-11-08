@@ -18,62 +18,58 @@ import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the SyncSignalReset plug-in's life cycle. This
- * KIEM DataComponent implements synchronous semantics for executions with
- * the KIELER Execution Manager. It should be scheduled to be the first or
- * the last DataComponent. It then resets all signals that are present to be
- * absent again. When there are no present signals, this DataComponent does
- * simply nothing.
- *
+ * The activator class controls the SyncSignalReset plug-in's life cycle. This KIEM DataComponent
+ * implements synchronous semantics for executions with the KIELER Execution Manager. It should be
+ * scheduled to be the first or the last DataComponent. It then resets all signals that are present
+ * to be absent again. When there are no present signals, this DataComponent does simply nothing.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class SyncSignalResetPlugin extends Plugin {
 
-	/** The Constant PLUGIN_ID. */
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.syncsignalreset";
+    /** The Constant PLUGIN_ID. */
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.syncsignalreset";
 
-	/** The shared instance. */
-	private static SyncSignalResetPlugin plugin;
-	
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * The constructor of the SyncSignalReset DataComponent.
-	 */
-	public SyncSignalResetPlugin() {
-	}
+    /** The shared instance. */
+    private static SyncSignalResetPlugin plugin;
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.core.runtime.Plugins#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-	}
+    /**
+     * The constructor of the SyncSignalReset DataComponent.
+     */
+    public SyncSignalResetPlugin() {
+    }
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void start(final BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
+    }
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Returns the shared instance of this plug-in.
-	 *
-	 * @return the shared instance
-	 */
-	public static SyncSignalResetPlugin getDefault() {
-		return plugin;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void stop(final BundleContext context) throws Exception {
+        plugin = null;
+        super.stop(context);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the shared instance of this plug-in.
+     * 
+     * @return the shared instance
+     */
+    public static SyncSignalResetPlugin getDefault() {
+        return plugin;
+    }
 
 }
