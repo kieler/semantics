@@ -13,10 +13,13 @@
 	<property name="antContrib.home"       location="/home/kieler/ant-contrib" />
 	<property name="findbugs.home"         location="/home/kieler/findbugs" />
 	<property name="checkstyle.home"       location="/home/kieler/checkstyle" />
- 
- 	<property name="equinoxLauncherPluginVersion" value="${system.equinoxLauncherPluginVersion}" />
-	 	
-	<!-- default definitions: should be overwritten while calling this script if necessary -->	
+	<property name="build.basedir"         location="${system.WORKSPACE}" />
+	<property name="findbugs.classes"      location="${system.WORKSPACE}/update-site/plugins" />
+
+	<property name="equinoxLauncherPluginVersion" value="${system.equinoxLauncherPluginVersion}" />
+	<property name="job.name"	                  value="${system.JOB_NAME}" />
+
+	<!-- default definitions: may be overwritten while calling this script if necessary -->	
 	<property name="target"	             value="noTargetInfo"/>
 	<property name="plugin"              value=" "/>
 	<property name="feature"             value=" "/>
@@ -26,8 +29,6 @@
 	<property name="checkstyle.excludes" value=" "/>
 	<property name="build.jars"          value="true"/>
 	<property name="publish.feature"     value="true"/>
-	<property name="build.basedir"       value="${system.WORKSPACE}" />
-	<property name="findbugs.classes"    value="${system.WORKSPACE}/update-site/plugins" />
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${antContrib.home}/lib/ant-contrib.jar" />
 	<taskdef resource="checkstyletask.properties" classpath="${checkstyle.home}/checkstyle-all-5.0.jar" />
@@ -49,18 +50,15 @@
 				 as the condition 'isset' doesn't work for system (environment) properties -->
 		</condition>
 		
-		<!-- the following lines allow to give a comma separated list of jobs
-		     replacing the list of relative paths to the jobs' workspace -->
-		<property name="jobs" value=" " />
+		<!-- the following lines compute the pluginPath property automatically;
+		     all archived artifacts will be considered except those produced by the current
+		     job itself in order to avoid any confusions while generating the build scripts;
+		     id and property have disjoint namespaces -->
 		<path id="pluginPath">
-			<dirset dir="${build.basedir}/../../"
-				includes="${jobs}/"
-				excludes="**/plugins/,**/features/,**/buildTempFolder/,**/update-site/" />
+			<dirset dir="${build.basedir}/../../" includes="*/lastSuccessful/archive/update-site" excludes="${job.name}/**" />
 		</path>
-		<property name="pluginPath2" value="${toString:pluginPath}" />
-		
-		<echo message="${pluginPath2}" />
-		
+		<property name="pluginPath" value="${toString:pluginPath}" />
+				
 		<!-- the following conditions will check the presence of certain properties
 		     and write definite values to new properties in order to pass them to the antRunner -->
 		<condition property="suppress.clean" value="true" else="false">
@@ -260,7 +258,7 @@
 
 	<target name="cleanFolders" unless="no.clean">
 		<!-- this is just a helper target, which is executed during normal feature builds
-		     but skipped in release build, if multiples feature should be build in one job -->
+		     but skipped in release build, if multiples features should be build in one job -->
 		
 		<mkdir dir="${basedir}/buildTempFolder" />
 		<mkdir dir="${basedir}/features" />
@@ -291,7 +289,7 @@
 		<property name="buildTempFolder" value="${basedir}/buildTempFolder" />
 	</target>
 
-	<target name="build.feature" if="eclipse.running" depends="init, generateScripts, editScripts, cleanFolders, setBuildTempFolder"
+	<target name="build.feature" if="eclipse.running" depends="init, cleanFolders, generateScripts, editScripts, setBuildTempFolder"
 	    description="target for complete feature building, checking and publishing">
 		
 		<!-- run feature's build.xml: clean, compile and jarUp, provide unjared feature, zip logs, generate javadoc -->		
