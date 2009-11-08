@@ -39,8 +39,8 @@ public class Execution implements Runnable {
 	/** Timeout for DataComponents. */
 	TimeoutThread timeout;
 	
-	/** The Constant TIMEOUT. 500 seconds. */
-	private static final int TIMEOUT = 50000; 
+	/** The Constant TIMEOUT. 5 seconds. */
+	private static final int TIMEOUT = 5000; 
 	
 	/** Delay to wait in paused state in ms. */
 	private static final int PAUSE_DEYLAY = 50; 

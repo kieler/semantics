@@ -1,5 +1,5 @@
-/******************************************************************************
- * KIELER - Kiel Integrated Environment for Layout for the Eclipse RCP
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- ******************************************************************************/
+ */
 
 package de.cau.cs.kieler.sim.kiem;
 
@@ -30,132 +30,142 @@ import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.IViewPart;
 
 /**
- * The Class editor is a fake Eclipse EditorPart that handles a convenient
- * way of opening *.execution files over the ProjectExplorer. The editor
- * is registered by the extension point with this file extension and
- * calls the openFile() method of the KiemPlugin. The latter then handles
- * the opening of the file. The editor is not needed anymore and closes
- * itself immediately.
- *
+ * The Class editor is a fake Eclipse EditorPart that handles a convenient way of opening
+ * *.execution files over the ProjectExplorer. The editor is registered by the extension point with
+ * this file extension and calls the openFile() method of the KiemPlugin. The latter then handles
+ * the opening of the file. The editor is not needed anymore and closes itself immediately.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
-public class KiemProxyEditor extends MultiPageEditorPart
- {
+public class KiemProxyEditor extends MultiPageEditorPart {
 
-	/** The editor input to later find this editor for closing it. */
-	private IEditorInput editorInput;
-	
-	/** The id of the view for KIEM. */
-	private final String KIEMVIEWID = "de.cau.cs.kieler.sim.kiem.view";
-	
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * Instantiates a new (fake) editor.
-	 */
-	public KiemProxyEditor() {
-		super();
-	}
+    /** The editor input to later find this editor for closing it. */
+    private IEditorInput editorInput;
 
-	//-------------------------------------------------------------------------
+    /** The id of the view for KIEM. */
+    private final String kIEMVIEWID = "de.cau.cs.kieler.sim.kiem.view";
 
-	@Override
-	public void doSave(IProgressMonitor monitor) {
-		//do nothing
-	}
+    // -------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
+    /**
+     * Instantiates a new (fake) editor.
+     */
+    public KiemProxyEditor() {
+        super();
+    }
 
-	@Override
-	public void doSaveAs() {
-		//do nothing
-	}
+    // -------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
+    public void doSave(final IProgressMonitor monitor) {
+        // do nothing
+    }
 
-	public void init(IEditorSite site, 
-					 IEditorInput editorInputToOpen)
-			throws PartInitException {
-         super.init(site, editorInputToOpen);
+    // -------------------------------------------------------------------------
 
-         //save the editor input for later find the edior in order to
-         //close it
-         this.editorInput = editorInputToOpen;
-         
-         //bring KIEM view to the front (lazy loading)
-         try{
-        	 IWorkbenchWindow window = this.getSite().getWorkbenchWindow();
-        	 IViewPart VP =  window.getActivePage()
-					.showView(KIEMVIEWID);
- 			 VP.setFocus();
-         }catch(Exception e){
-        	 e.printStackTrace();
-         }
-         
-         //call the KiemPlugin to open asynchronously
-         (new Thread() {
-        	 public void run() {
-        		 KiemPlugin.getDefault().openFile(editorInput);
-        	 }
-         }).start();
-         
-         closeEditor();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void doSaveAs() {
+        // do nothing
+    }
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	@Override
-	public boolean isDirty() {
-		return false;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void init(final IEditorSite site, final IEditorInput editorInputToOpen)
+            throws PartInitException {
+        super.init(site, editorInputToOpen);
 
-	//-------------------------------------------------------------------------
+        // save the editor input for later find the edior in order to
+        // close it
+        this.editorInput = editorInputToOpen;
 
-	@Override
-	public boolean isSaveAsAllowed() {
-		return false;
-	}
+        // bring KIEM view to the front (lazy loading)
+        try {
+            IWorkbenchWindow window = this.getSite().getWorkbenchWindow();
+            IViewPart vP = window.getActivePage().showView(kIEMVIEWID);
+            vP.setFocus();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	//-------------------------------------------------------------------------
+        // call the KiemPlugin to open asynchronously
+        (new Thread() {
+            public void run() {
+                KiemPlugin.getDefault().openFile(editorInput);
+            }
+        }).start();
 
-	@Override
-	public void setFocus() {
-		//do nothing
-	}
-	
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * This allows asynchronous closing of this fake editor.
-	 */
-	public void closeEditor() {
-		Display.getDefault().asyncExec(new Runnable(){
-			public void run(){
-				try {
-					IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-					IWorkbenchPage page = window.getActivePage();	
-					IEditorPart editor = page.findEditor(editorInput);
-					if (editor != null) {
-					   //page.activate(editor);
-					   page.closeEditor(editor, false);
-					}	
-					}catch(Exception e){}
-			}});            
-	}
-	
-	//-------------------------------------------------------------------------
+        closeEditor();
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.part.MultiPageEditorPart#createPages()
-	 */
-	@Override
-	protected void createPages() {
-		//create just an empty fake page
-		Composite composite = new Composite(getContainer(), SWT.NONE);
-		FillLayout layout = new FillLayout();
-		composite.setLayout(layout);
-		int index = addPage(composite);
-		setPageText(index, " ");
-	}
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isDirty() {
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isSaveAsAllowed() {
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setFocus() {
+        // do nothing
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * This allows asynchronous closing of this fake editor.
+     */
+    public void closeEditor() {
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                try {
+                    IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                    IWorkbenchPage page = window.getActivePage();
+                    IEditorPart editor = page.findEditor(editorInput);
+                    if (editor != null) {
+                        // page.activate(editor);
+                        page.closeEditor(editor, false);
+                    }
+                } catch (Exception e) {
+                    //In an unlikely case of an error leave the editor open//
+                }
+            }
+        });
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    protected void createPages() {
+        // create just an empty fake page
+        Composite composite = new Composite(getContainer(), SWT.NONE);
+        FillLayout layout = new FillLayout();
+        composite.setLayout(layout);
+        int index = addPage(composite);
+        setPageText(index, " ");
+    }
 
 }
