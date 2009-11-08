@@ -43,7 +43,7 @@ public class KiemProxyEditor extends MultiPageEditorPart {
     private IEditorInput editorInput;
 
     /** The id of the view for KIEM. */
-    private final String kIEMVIEWID = "de.cau.cs.kieler.sim.kiem.view";
+    private static final String KIEMVIEWID = "de.cau.cs.kieler.sim.kiem.view";
 
     // -------------------------------------------------------------------------
 
@@ -98,7 +98,7 @@ public class KiemProxyEditor extends MultiPageEditorPart {
         // bring KIEM view to the front (lazy loading)
         try {
             IWorkbenchWindow window = this.getSite().getWorkbenchWindow();
-            IViewPart vP = window.getActivePage().showView(kIEMVIEWID);
+            IViewPart vP = window.getActivePage().showView(KIEMVIEWID);
             vP.setFocus();
         } catch (Exception e) {
             e.printStackTrace();

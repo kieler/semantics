@@ -493,16 +493,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Show message dialog with the message.
-     * 
-     * @param message
-     *            the message to present
-     */
-    @SuppressWarnings("unused")
-    private void showMessage(final String message) {
-        showMessage(Messages.mViewTitle, message);
-    }
+//    /**
+//     * Show message dialog with the message.
+//     * 
+//     * @param message
+//     *            the message to present
+//     */
+//    @SuppressWarnings("unused")
+//    private void showMessage(final String message) {
+//        showMessage(Messages.mViewTitle, message);
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -1500,18 +1500,27 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     // if a master implements the action
                     currentMaster.masterGUIstop();
                 } else {
+                    long executionTime = 0;
+                    long minStepDuration = 0;
+                    long wavStepDuration = 0;
+                    long aveStepDuration = 0;
+                    long maxStepDuration = 0;
+                    long steps = 0;
+                    long aimedStepDuration = 0;
+
                     // otherwise default implementation
                     if (kIEMInstance.execution != null) {
                         kIEMInstance.execution.stopExecutionSync();
+
+                        // get results
+                        executionTime = kIEMInstance.execution.getExecutionDuration();
+                        minStepDuration = kIEMInstance.execution.getMinimumStepDuration();
+                        wavStepDuration = kIEMInstance.execution.getWeightedAverageStepDuration();
+                        aveStepDuration = kIEMInstance.execution.getAverageStepDuration();
+                        maxStepDuration = kIEMInstance.execution.getMaximumStepDuration();
+                        steps = kIEMInstance.execution.getMaximumSteps();
+                        aimedStepDuration = kIEMInstance.execution.getAimedStepDuration();
                     }
-                    // get results
-                    long executionTime = kIEMInstance.execution.getExecutionDuration();
-                    long minStepDuration = kIEMInstance.execution.getMinimumStepDuration();
-                    long wavStepDuration = kIEMInstance.execution.getWeightedAverageStepDuration();
-                    long aveStepDuration = kIEMInstance.execution.getAverageStepDuration();
-                    long maxStepDuration = kIEMInstance.execution.getMaximumStepDuration();
-                    long steps = kIEMInstance.execution.getMaximumSteps();
-                    long aimedStepDuration = kIEMInstance.execution.getAimedStepDuration();
 
                     kIEMInstance.execution = null;
                     updateView(true);

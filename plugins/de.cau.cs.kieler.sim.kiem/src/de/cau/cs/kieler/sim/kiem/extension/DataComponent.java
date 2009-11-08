@@ -83,8 +83,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
         if (this.provideProperties() != null) {
             KiemProperty[] propertiesTmp = this.provideProperties();
             for (int c = 0; c < propertiesTmp.length; c++) {
-                propertiesId += propertiesTmp[c].getKey();
-                propertiesId += propertiesTmp[c].getType().getClass().getName();
+                propertiesId = propertiesId + propertiesTmp[c].getKey();
+                propertiesId = propertiesId + propertiesTmp[c].getType().getClass().getName();
             }
         }
         String type = "";

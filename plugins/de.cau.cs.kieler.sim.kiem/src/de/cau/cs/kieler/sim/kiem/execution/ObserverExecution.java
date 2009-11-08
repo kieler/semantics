@@ -130,7 +130,9 @@ public class ObserverExecution implements Runnable {
                     this.done = true;
                     // System.out.println("  "+dataComponent.getName() +
                     // " (Pure Observer) calc end");
-                    this.wait();
+                    if (done) {
+                        this.wait();
+                    }
                 }
             } catch (Exception e) {
                 parent.showError(null, this.dataComponent.getPluginId(), e);
