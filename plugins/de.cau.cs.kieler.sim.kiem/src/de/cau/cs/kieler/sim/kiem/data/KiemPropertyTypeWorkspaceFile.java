@@ -67,28 +67,18 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType implements I
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.
-     * KiemProperty)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public Object getValue(final KiemProperty property) {
         return property.value;
     }
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.
-     * KiemProperty, java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public void setValue(final KiemProperty property, final Object value) {
         if (value != null) {
             property.setValue((String) value);

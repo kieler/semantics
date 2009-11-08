@@ -126,12 +126,9 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.swt.events.KeyListener#keyPressed(org.eclipse.swt.events.KeyEvent)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public void keyPressed(final KeyEvent e) {
         if (e.character == '\r') {
             updateDuration();
@@ -141,24 +138,18 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.swt.events.KeyListener#keyReleased(org.eclipse.swt.events.KeyEvent)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public void keyReleased(final KeyEvent e) {
         /* nothing */
     }
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.swt.events.FocusListener#focusLost(org.eclipse.swt.events.FocusEvent)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public void focusLost(final FocusEvent e) {
         updateDuration();
         textfield.setText("" + kIEM.getAimedStepDuration() + Messages.mDurationTextFieldSuffix);
@@ -196,12 +187,9 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.swt.events.FocusListener#focusGained(org.eclipse.swt.events.FocusEvent)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public void focusGained(final FocusEvent e) {
         // if the text field gets the focus, set the current duration
         textfield.setText("" + kIEM.getAimedStepDuration());

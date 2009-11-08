@@ -1648,13 +1648,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // MAKE PROPERTIES SAVEABLE
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
+    /**
+     * {@inheritDoc}
      */
-    @Override
-    public void doSave(final IProgressMonitor monitor) {
+   public void doSave(final IProgressMonitor monitor) {
         if (currentFile == null) {
             this.doSaveAs();
             return;
@@ -1724,13 +1721,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.ISaveablePart#doSaveAs()
+    /**
+     * {@inheritDoc}
      */
-    @Override
-    public void doSaveAs() {
+   public void doSaveAs() {
         SaveAsDialog dlg = new SaveAsDialog(this.getViewSite().getShell());
         dlg.setBlockOnOpen(true);
         dlg.setOriginalName(getActiveProjectName() + ".execution");
@@ -1742,13 +1736,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.ISaveablePart#isDirty()
-     */
-    @Override
-    public boolean isDirty() {
+   /**
+    * {@inheritDoc}
+    */
+   public boolean isDirty() {
         // isDirty is set to true iff table or properties are modified
         return isDirty;
 
@@ -1771,37 +1762,28 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.ISaveablePart#isSaveAsAllowed()
+    /**
+     * {@inheritDoc}
      */
-    @Override
-    public boolean isSaveAsAllowed() {
+   public boolean isSaveAsAllowed() {
         return true;
     }
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.ISaveablePart#isSaveOnCloseNeeded()
-     */
-    @Override
-    public boolean isSaveOnCloseNeeded() {
+   /**
+    * {@inheritDoc}
+    */
+   public boolean isSaveOnCloseNeeded() {
         return true;
     }
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.ISaveablePart2#promptToSaveOnClose()
-     */
-    @Override
-    public int promptToSaveOnClose() {
+   /**
+    * {@inheritDoc}
+    */
+   public int promptToSaveOnClose() {
         if (this.isDirty) {
             String fileName = "noname.execution";
             if (this.currentFile != null) {

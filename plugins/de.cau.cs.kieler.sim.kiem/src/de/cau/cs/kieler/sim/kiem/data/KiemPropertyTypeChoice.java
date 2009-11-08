@@ -69,14 +69,9 @@ public class KiemPropertyTypeChoice extends KiemPropertyType implements IKiemPro
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.
-     * KiemProperty)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public Object getValue(final KiemProperty property) {
         for (int c = 0; c < items.length; c++) {
             if (property.getValue().equals(items[c])) {
@@ -88,14 +83,9 @@ public class KiemPropertyTypeChoice extends KiemPropertyType implements IKiemPro
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.
-     * KiemProperty, java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public void setValue(final KiemProperty element, final Object value) {
         KiemProperty property = (KiemProperty) element;
         property.setValue(items[Integer.parseInt((String) value)]);

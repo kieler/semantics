@@ -903,12 +903,9 @@ public class Execution implements Runnable {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Runnable#run()
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public void run() {
         synchronized (this) {
             // this returns stepCounter and historyStepCounter and all other

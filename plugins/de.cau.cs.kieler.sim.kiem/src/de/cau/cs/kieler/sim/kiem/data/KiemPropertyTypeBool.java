@@ -64,14 +64,9 @@ public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPrope
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.
-     * KiemProperty)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public Object getValue(final KiemProperty property) {
         if (property.getValue().equals("true")) {
             return 1;
@@ -82,14 +77,9 @@ public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPrope
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.
-     * KiemProperty, java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public void setValue(final KiemProperty property, final Object value) {
         if (Integer.parseInt((String) value) == 0) {
             property.setValue("false");

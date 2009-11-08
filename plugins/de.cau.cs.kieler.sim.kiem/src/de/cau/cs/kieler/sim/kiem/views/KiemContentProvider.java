@@ -32,12 +32,9 @@ import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
  */
 public class KiemContentProvider implements ITreeContentProvider {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     @SuppressWarnings("unchecked")
     public Object[] getElements(final Object inputElement) {
         return ((List<DataComponent>) inputElement).toArray();
@@ -45,36 +42,25 @@ public class KiemContentProvider implements ITreeContentProvider {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.IContentProvider#dispose()
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public void dispose() {
     }
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer,
-     * java.lang.Object, java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {
     }
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public Object[] getChildren(final Object parentElement) {
         // only if component
         DataComponentEx dataComponentEx = (DataComponentEx) parentElement;
@@ -83,25 +69,19 @@ public class KiemContentProvider implements ITreeContentProvider {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.ITreeContentProvider#getParent(java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
-    @Override
-    public Object getParent(final Object element) {
+   public Object getParent(final Object element) {
         return null;
     }
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.ITreeContentProvider#hasChildren(java.lang.Object)
-     */
-    @Override
-    public boolean hasChildren(final Object element) {
+   /**
+    * {@inheritDoc}
+    */
+   public boolean hasChildren(final Object element) {
         // if property -> no children
         if (element instanceof KiemProperty) {
             return false;

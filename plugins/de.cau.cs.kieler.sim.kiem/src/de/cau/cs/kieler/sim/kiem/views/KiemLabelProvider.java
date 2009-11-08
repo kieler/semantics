@@ -34,19 +34,19 @@ public class KiemLabelProvider implements ITableLabelProvider {
 
     /** The parent view. This is used to trigger a refresh. */
     private KiemView parent;
-    
+
     /** The Constant COLUMN_0. */
     private static final int COLUMN_0 = 0;
-    
+
     /** The Constant COLUMN_1. */
     private static final int COLUMN_1 = 1;
-    
+
     /** The Constant COLUMN_2. */
     private static final int COLUMN_2 = 2;
-    
+
     /** The Constant COLUMN_3. */
     private static final int COLUMN_3 = 3;
-    
+
     /** The Constant COLUMN_4. */
     private static final int COLUMN_4 = 4;
 
@@ -68,14 +68,10 @@ public class KiemLabelProvider implements ITableLabelProvider {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang.Object, int)
+    /**
+     * {@inheritDoc}
      */
-    @Override
-    public Image getColumnImage(final Object element, 
-                                final int columnIndex) {
+    public Image getColumnImage(final Object element, final int columnIndex) {
         // if property
         if (element instanceof KiemProperty) {
             if (columnIndex == COLUMN_0) {
@@ -160,14 +156,10 @@ public class KiemLabelProvider implements ITableLabelProvider {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang.Object, int)
+    /**
+     * {@inheritDoc}
      */
-    @Override
-    public String getColumnText(final Object element, 
-                                final int columnIndex) {
+    public String getColumnText(final Object element, final int columnIndex) {
         if (element instanceof KiemProperty) {
             KiemProperty kiemProperty;
             switch (columnIndex) {
@@ -219,47 +211,34 @@ public class KiemLabelProvider implements ITableLabelProvider {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @seeorg.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.jface.viewers.
-     * ILabelProviderListener)
+    /**
+     * {@inheritDoc}
      */
-    @Override
-    public void addListener(final ILabelProviderListener listener) {
+   public void addListener(final ILabelProviderListener listener) {
     }
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
-     */
-    @Override
-    public void dispose() {
+   /**
+    * {@inheritDoc}
+    */
+   public void dispose() {
     }
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang.Object,
-     * java.lang.String)
-     */
-    @Override
-    public boolean isLabelProperty(final Object element, final String property) {
+   /**
+    * {@inheritDoc}
+    */
+   public boolean isLabelProperty(final Object element, final String property) {
         return false;
     }
 
     // -------------------------------------------------------------------------
 
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.viewers
-     * .IBaseLabelProvider#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)
-     */
-    @Override
+   /**
+    * {@inheritDoc}
+    */
     public void removeListener(final ILabelProviderListener listener) {
     }
 

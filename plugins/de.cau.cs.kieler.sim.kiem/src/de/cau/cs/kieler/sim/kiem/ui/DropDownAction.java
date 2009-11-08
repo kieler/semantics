@@ -135,12 +135,9 @@ public class DropDownAction extends Action implements IMenuCreator {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.action.IMenuCreator#dispose()
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public void dispose() {
         if (fMenu != null) {
             fMenu.dispose();
@@ -150,24 +147,18 @@ public class DropDownAction extends Action implements IMenuCreator {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.action.IMenuCreator#getMenu(org.eclipse.swt.widgets.Menu)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public Menu getMenu(final Menu parent) {
         return null;
     }
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.action.IMenuCreator#getMenu(org.eclipse.swt.widgets.Control)
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public Menu getMenu(final Control parent) {
         if (fMenu != null) {
             fMenu.dispose();

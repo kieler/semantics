@@ -140,12 +140,9 @@ public class ProducerExecution implements Runnable {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Runnable#run()
+    /**
+     * {@inheritDoc}
      */
-    @Override
     public void run() {
         while (!this.stop) {
             // caller step() must ensure that done == false (before)
