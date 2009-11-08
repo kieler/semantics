@@ -22,8 +22,7 @@ public class StateActivityTrigger extends ATrigger {
      * Overriding the protected superclass method in order to
      * make it public.
      */
-    @Override
-    public synchronized void notifyTrigger(TriggerEventObject triggerEvent) {
+    public synchronized void notifyTrigger2(TriggerEventObject triggerEvent) {
         super.notifyTrigger(triggerEvent);
     }
 }

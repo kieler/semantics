@@ -111,7 +111,7 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                     //triggerEvent.setAffectedObject(trigger.translateToEObject(affectedState)); //???//
 
                     triggerEvent.setTriggerActive(true);
-                    trigger.notifyTrigger(triggerEvent);
+                    trigger.notifyTrigger2(triggerEvent);
                 }
                 
                 // find all states that are not highlighted anymore
@@ -136,7 +136,7 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
 
                         System.out.println("REMOVE:"+editPartURI);
                         triggerEvent.setTriggerActive(false);
-                        trigger.notifyTrigger(triggerEvent);
+                        trigger.notifyTrigger2(triggerEvent);
                     }
                 }//end if
                 lastHighlightedStates = highlightedStatesURI;

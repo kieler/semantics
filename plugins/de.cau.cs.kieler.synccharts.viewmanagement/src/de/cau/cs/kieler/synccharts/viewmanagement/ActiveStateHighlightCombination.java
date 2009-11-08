@@ -143,11 +143,5 @@ public class ActiveStateHighlightCombination extends ACombination {
         this.resetHashedEditParts();
 		System.out.println("---------------------> undoLastEffect()");
 	}
-	
-	@Override
-	public void finalize() {
-		undoLastEffect();
-	}
-	
-   
+	  
 }
