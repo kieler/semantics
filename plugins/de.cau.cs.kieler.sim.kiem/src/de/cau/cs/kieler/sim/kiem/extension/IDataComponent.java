@@ -16,52 +16,52 @@ package de.cau.cs.kieler.sim.kiem.extension;
 
 /**
  * The Interface IDataComponent that a {@link DataComponent} implements.
- *
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public interface IDataComponent {
 
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * Initialize. Do some initializing prior to execution. If an error
-	 * occurs during initialization, the DataComponent should raise a
-	 * {@link KiemInitializationException}.
-	 * 
-	 * @throws KiemInitializationException a KiemInitializationException
-	 */
-	public void initialize() throws KiemInitializationException;
-	
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Wrap-up. Do some wrapping-up after execution has finished. If an error
-	 * occurs during wrap up, the DataComponent should raise a
-	 * {@link KiemInitializationException}.
-	 * 
-	 * @throws KiemInitializationException a KiemInitializationException
-	 */
-	public void wrapup() throws KiemInitializationException;
+    /**
+     * Initialize. Do some initializing prior to execution. If an error occurs during
+     * initialization, the DataComponent should raise a {@link KiemInitializationException}.
+     * 
+     * @throws KiemInitializationException
+     *             a KiemInitializationException
+     */
+    void initialize() throws KiemInitializationException;
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * To check whether the DataComponent is a producer. If the DataComponent
-	 * is a producer it should return != null in its step() method.
-	 * 
-	 * @return true, if is producer
-	 */
-	public boolean isProducer();
+    /**
+     * Wrap-up. Do some wrapping-up after execution has finished. If an error occurs during wrap up,
+     * the DataComponent should raise a {@link KiemInitializationException}.
+     * 
+     * @throws KiemInitializationException
+     *             a KiemInitializationException
+     */
+    void wrapup() throws KiemInitializationException;
 
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * To check whether the DataComponent is an observer. If the DataComponent
-	 * is an observer the arguments in its step() method will be != null.
-	 * 
-	 * @return true, if is observer
-	 */
-	public boolean isObserver();
-	
+    // -------------------------------------------------------------------------
+
+    /**
+     * To check whether the DataComponent is a producer. If the DataComponent is a producer it
+     * should return != null in its step() method.
+     * 
+     * @return true, if is producer
+     */
+    boolean isProducer();
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * To check whether the DataComponent is an observer. If the DataComponent is an observer the
+     * arguments in its step() method will be != null.
+     * 
+     * @return true, if is observer
+     */
+    boolean isObserver();
+
 }

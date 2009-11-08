@@ -15,24 +15,22 @@
 package de.cau.cs.kieler.sim.kiem.extension;
 
 /**
- * The Class JSONStringDataComponent. Implementation for the 
- * extension point JSONObjectDataComponent that implements the 
- * interface {@link IJSONObjectDataComponent}.
- *
+ * The Class JSONStringDataComponent. Implementation for the extension point JSONObjectDataComponent
+ * that implements the interface {@link IJSONObjectDataComponent}.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public abstract class JSONStringDataComponent 
-							extends DataComponent 
-							implements IJSONStringDataComponent {
-	
-	//-------------------------------------------------------------------------
+public abstract class JSONStringDataComponent extends DataComponent implements
+        IJSONStringDataComponent {
 
-	/**
-	 * Instantiates a new JSONStringDataComponent.
-	 */
-	public JSONStringDataComponent() {
-		super();
-	}
-	
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new JSONStringDataComponent.
+     */
+    public JSONStringDataComponent() {
+        super();
+    }
+
 }

@@ -15,63 +15,65 @@
 package de.cau.cs.kieler.sim.kiem.extension;
 
 /**
- * The Class KiemInitializationException. This exception is used by 
- * DataComponents to flag errors within their initialization() and their
- * wrapup() method during the initialization and wrap-up phase. 
- * If the {@link #mustStop} flag is set to true, then this means 
- * the execution <B>CANNOT</B> been started and the execution manager will
- * not do so if any DataComponent throws an error with this flag.
+ * The Class KiemInitializationException. This exception is used by DataComponents to flag errors
+ * within their initialization() and their wrapup() method during the initialization and wrap-up
+ * phase. If the {@link #mustStop} flag is set to true, then this means the execution <B>CANNOT</B>
+ * been started and the execution manager will not do so if any DataComponent throws an error with
+ * this flag.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class KiemInitializationException extends Exception {
 
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = -8183839879570123277L;
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = -8183839879570123277L;
 
-	/** The must stop. */
-	private boolean mustStop;
-	
-	/** The cause of this Exception. */
-	private Exception cause;
-	
-	//-------------------------------------------------------------------------
+    /** The must stop. */
+    private boolean mustStop;
 
-	/**
-	 * Instantiates a new KiemInitializationException.
-	 * 
-	 * @param message the message of this Exception to display to the user
-	 * @param mustStop the must stop flag indicating if the execution must stop
-	 * @param cause the cause of this Exception if any, or null otherwise
-	 */
-	public KiemInitializationException(String message, 
-									   boolean mustStop,
-									   Exception cause) {
-		super(message);
-		this.mustStop = mustStop;
-		this.cause = cause;
-	}
+    /** The cause of this Exception. */
+    private Exception cause;
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Checks if the execution must stop when this Exception occurs.
-	 * 
-	 * @return true, if execution must stop
-	 */
-	public boolean isMustStop() {
-		return this.mustStop;
-	}
+    /**
+     * Instantiates a new KiemInitializationException.
+     * 
+     * @param message
+     *            the message of this Exception to display to the user
+     * @param mustStopParam
+     *            the must stop flag indicating if the execution must stop
+     * @param causeParam
+     *            the cause of this Exception if any, or null otherwise
+     */
+    public KiemInitializationException(final String message, 
+                                       final boolean mustStopParam, 
+                                       final Exception causeParam) {
+        super(message);
+        this.mustStop = mustStopParam;
+        this.cause = causeParam;
+    }
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Gets the cause of this Exception.
-	 * 
-	 * @return the cause of this Exception, if any
-	 */
-	public Exception getCause() {
-		return cause;
-	}
+    /**
+     * Checks if the execution must stop when this Exception occurs.
+     * 
+     * @return true, if execution must stop
+     */
+    public boolean isMustStop() {
+        return this.mustStop;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the cause of this Exception.
+     * 
+     * @return the cause of this Exception, if any
+     */
+    public Exception getCause() {
+        return cause;
+    }
 
 }

@@ -15,40 +15,38 @@
 package de.cau.cs.kieler.sim.kiem.extension;
 
 /**
- * The Interface IJSONObjectDataComponent. If the DataComponent extends this
- * extension point it can handle JSON objects in String notation.
- * A JSON implementation for Java that can be found on 
+ * The Interface IJSONObjectDataComponent. If the DataComponent extends this extension point it can
+ * handle JSON objects in String notation. A JSON implementation for Java that can be found on
  * {@link "www.json.org/java"}.
- *
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public interface IJSONStringDataComponent  {
-	
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * Step method for a DataObserver and a DataProducer.
-	 * <BR><BR>
-	 * For a producer only the argument will always be null.
-	 * For an observer only this method will be called asynchronous. This
-	 * may mean that in case the observer is slow, it may be skipped at
-	 * some consecutive steps until it becomes ready again. If this is
-	 * not desired and the observer <B>MUST NOT</B> be skipped, then the
-	 * DataComponent should also be a DataProducer but return just null.
-	 * <BR><BR>
-	 * If an error occurs during the execution of the step method, a
-	 * DataComponent should raise a {@link KiemExecutionException} that is
-	 * then catched by the execution manager an brought to the user's
-	 * attention.
-	 * 
-	 * @param JSONString the concrete JSONString of input data (if observer) 
-	 * 
-	 * @return the JSONString with the output data (if producer)
-	 * 
-	 * @throws KiemExecutionException a KiemExecutionException
-	 */
-	public String step(String JSONString)
-										throws KiemExecutionException;   
+public interface IJSONStringDataComponent {
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Step method for a DataObserver and a DataProducer. <BR>
+     * <BR>
+     * For a producer only the argument will always be null. For an observer only this method will
+     * be called asynchronous. This may mean that in case the observer is slow, it may be skipped at
+     * some consecutive steps until it becomes ready again. If this is not desired and the observer
+     * <B>MUST NOT</B> be skipped, then the DataComponent should also be a DataProducer but return
+     * just null. <BR>
+     * <BR>
+     * If an error occurs during the execution of the step method, a DataComponent should raise a
+     * {@link KiemExecutionException} that is then catched by the execution manager an brought to
+     * the user's attention.
+     * 
+     * @param jSONString
+     *            the concrete JSONString of input data (if observer)
+     * 
+     * @return the JSONString with the output data (if producer)
+     * 
+     * @throws KiemExecutionException
+     *             a KiemExecutionException
+     */
+    String step(String jSONString) throws KiemExecutionException;
 
 }
