@@ -55,7 +55,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	 * @param KIEM a reference to to the KIEM plug-in 
 	 */
 	public AimedStepDurationTextField(KiemPlugin KIEM) {
-		super(Messages.DurationTextFieldName);
+		super(Messages.mDurationTextFieldName);
 		this.KIEM = KIEM;
 	}
 	
@@ -111,11 +111,11 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 		textfield = new Text(parent,SWT.BORDER);
 		//per default enable it
 		this.textfield.setEnabled(this.enabled);
-		textfield.setToolTipText(Messages.DurationTextFieldHint);
+		textfield.setToolTipText(Messages.mDurationTextFieldHint);
 		//reserve some amount of space and declare default value
 		textfield.setText(KiemPlugin.AIMED_STEP_DURATION_DEFAULT
-				+Messages.DurationTextFieldSuffix
-				+Messages.DurationTextFieldReserveSpace);
+				+Messages.mDurationTextFieldSuffix
+				+Messages.mDurationTextFieldReserveSpace);
 		//add some listeners
 		textfield.addKeyListener(this);
 		textfield.addFocusListener(this);
@@ -151,7 +151,7 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 	public void focusLost(FocusEvent e) {
 		updateDuration();
 		textfield.setText(""+KIEM.getAimedStepDuration()
-				+Messages.DurationTextFieldSuffix);
+				+Messages.mDurationTextFieldSuffix);
 	}
 
 	//-------------------------------------------------------------------------
@@ -169,14 +169,14 @@ public class AimedStepDurationTextField extends ControlContribution implements K
 			int aimedStepDuration = Integer.parseInt(textfield.getText().trim());
 			if (aimedStepDuration < KiemPlugin.AIMED_STEP_DURATION_MIN)
 				throw(new NumberFormatException(
-						Messages.WarningDurationTooSmall 
+						Messages.mWarningDurationTooSmall 
 						+KiemPlugin.AIMED_STEP_DURATION_MIN
-						+Messages.DurationTextFieldSuffix+"!"));
+						+Messages.mDurationTextFieldSuffix+"!"));
 			if (aimedStepDuration > KiemPlugin.AIMED_STEP_DURATION_MAX) 
 				throw(new NumberFormatException(
-						Messages.WarningDurationTooLarge
+						Messages.mWarningDurationTooLarge
 						+KiemPlugin.AIMED_STEP_DURATION_MAX
-						+Messages.DurationTextFieldSuffix+"!"));
+						+Messages.mDurationTextFieldSuffix+"!"));
 			KIEM.setAimedStepDuration(aimedStepDuration);
 		}catch(NumberFormatException exc){
 		}

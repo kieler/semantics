@@ -527,7 +527,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new KiemMasterException(Messages.ErrorKiemMasterException);
+		throw new KiemMasterException(Messages.mErrorKiemMasterException);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -553,7 +553,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new KiemMasterException(Messages.ErrorKiemMasterException);
+		throw new KiemMasterException(Messages.mErrorKiemMasterException);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -578,7 +578,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new KiemMasterException(Messages.ErrorKiemMasterException);
+		throw new KiemMasterException(Messages.mErrorKiemMasterException);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -602,7 +602,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new KiemMasterException(Messages.ErrorKiemMasterException);
+		throw new KiemMasterException(Messages.mErrorKiemMasterException);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -630,7 +630,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new KiemMasterException(Messages.ErrorKiemMasterException);
+		throw new KiemMasterException(Messages.mErrorKiemMasterException);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -655,7 +655,7 @@ public abstract class DataComponent implements IDataComponent,
 				return KIEMInstance.execution.getAimedStepDuration();
 			}
 		}
-		throw new KiemMasterException(Messages.ErrorKiemMasterException);
+		throw new KiemMasterException(Messages.mErrorKiemMasterException);
 	}
 
 	//-------------------------------------------------------------------------
@@ -679,7 +679,7 @@ public abstract class DataComponent implements IDataComponent,
 				return;
 			}
 		}
-		throw new KiemMasterException(Messages.ErrorKiemMasterException);
+		throw new KiemMasterException(Messages.mErrorKiemMasterException);
 	}
 
 	//-------------------------------------------------------------------------
@@ -704,7 +704,7 @@ public abstract class DataComponent implements IDataComponent,
 				return KIEMInstance.execution.isPaused();
 			}
 		}
-		throw new KiemMasterException(Messages.ErrorKiemMasterException);
+		throw new KiemMasterException(Messages.mErrorKiemMasterException);
 	}
 
 	//-------------------------------------------------------------------------
@@ -729,7 +729,7 @@ public abstract class DataComponent implements IDataComponent,
 				return KIEMInstance.execution.isRunning();
 			}
 		}
-		throw new KiemMasterException(Messages.ErrorKiemMasterException);
+		throw new KiemMasterException(Messages.mErrorKiemMasterException);
 	}
 
 	//-------------------------------------------------------------------------

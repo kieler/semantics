@@ -295,11 +295,11 @@ public class KiemPlugin extends AbstractUIPlugin {
      * {@link de.cau.cs.kieler.sim.kiem.views.KiemView} so that this plug-in (or the execution
      * thread) is able to trigger updates on the view.
      * 
-     * @param kIEMViewInstance
+     * @param kIEMViewInstanceTmp
      *            the one and only KiemView instance
      */
-    public void setKIEMViewInstance(final KiemView kIEMViewInstance) {
-        this.kIEMViewInstance = kIEMViewInstance;
+    public void setKIEMViewInstance(final KiemView kIEMViewInstanceTmp) {
+        this.kIEMViewInstance = kIEMViewInstanceTmp;
     }
 
     // -------------------------------------------------------------------------
@@ -361,7 +361,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      *            a temporary (partial) DataComponentExList to restore the full one from
      */
     public void restoreDataComponentListEx(final List<DataComponentEx> dataComponentExListTemp) {
-        List<DataComponent> dataComponentList = getDataComponentList();
+        List<DataComponent> dataComponentListTmp = getDataComponentList();
 
         for (int c = 0; c < dataComponentExListTemp.size(); c++) {
             DataComponentEx dataComponentEx = dataComponentExListTemp.get(c);
@@ -370,8 +370,8 @@ public class KiemPlugin extends AbstractUIPlugin {
 
             boolean componentRestored = false;
 
-            for (int cc = 0; cc < dataComponentList.size(); cc++) {
-                DataComponent dataComponent = dataComponentList.get(cc);
+            for (int cc = 0; cc < dataComponentListTmp.size(); cc++) {
+                DataComponent dataComponent = dataComponentListTmp.get(cc);
                 String vglComponentId = dataComponent.getDataComponentId();
 
                 if (vglComponentId.equals(componentId)) {
@@ -391,15 +391,15 @@ public class KiemPlugin extends AbstractUIPlugin {
                     // everything restored correctly
                     componentRestored = true;
                     break;
-                }// end if
-            }// next cc
+                } //end if
+            } //next cc
 
             if (!componentRestored) {
-                this.showWarning(Messages.WarningLoadingDataComponent.replace("%COMPONENTNAME",
+                this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
                         componentId), null, null);
-            }// end if - failed
+            } //end if - failed
 
-        }// next c
+        } //next c
     }
 
     // -------------------------------------------------------------------------
@@ -421,7 +421,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         if (dataComponentList != null) {
             return dataComponentList;
         }
-        // call garbage collector
+        // suggest calling the garbage collector
         System.gc();
         // get the available interfaces and initialize them
         IConfigurationElement[] jsonComponents = Platform.getExtensionRegistry()
@@ -433,7 +433,6 @@ public class KiemPlugin extends AbstractUIPlugin {
         dataComponentList = new ArrayList<DataComponent>(jsonComponents.length
                 + stringComponents.length);
 
-        // System.out.println("Found Controllers for "+Messages.extensionPointIDjsoncomponent+": "+jsonComponents.length);
         for (int i = 0; i < jsonComponents.length; i++) {
             try {
                 JSONObjectDataComponent dataComponent = (JSONObjectDataComponent) jsonComponents[i]
@@ -444,11 +443,10 @@ public class KiemPlugin extends AbstractUIPlugin {
             } catch (Exception e) {
                 // throw new RuntimeException
                 // ("Error at loading a KIEM data component plugin");
-                this.showWarning(Messages.WarningLoadingDataComponent.replace("%COMPONENTNAME",
+                this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
                         jsonComponents[i].getContributor().getName()), null, e);
             }
         }
-        // System.out.println("Found Controllers for "+Messages.extensionPointIDstringcomponent+": "+stringComponents.length);
         for (int i = 0; i < stringComponents.length; i++) {
             try {
                 JSONStringDataComponent dataComponent = (JSONStringDataComponent) stringComponents[i]
@@ -459,7 +457,7 @@ public class KiemPlugin extends AbstractUIPlugin {
             } catch (Exception e) {
                 // throw new RuntimeException
                 // ("Error at loading a KIEM data component plugin");
-                this.showWarning(Messages.WarningLoadingDataComponent.replace("%COMPONENTNAME",
+                this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
                         stringComponents[i].getContributor().getName()), null, e);
             }
         }
@@ -502,15 +500,15 @@ public class KiemPlugin extends AbstractUIPlugin {
                 if (dataComponentEx.isObserver()) {
                     countEnabledObserver++;
                 }
-            }// end if enabled
-        }// next c
+            } //end if enabled
+        } //next c
         if (countEnabledProducer < 1) {
             this.kIEMViewInstance.setAllEnabled(true);
-            this.showError(Messages.ErrorNoDataProducer, KiemPlugin.PLUGIN_ID, null);
+            this.showError(Messages.mErrorNoDataProducer, KiemPlugin.PLUGIN_ID, null);
             return false;
         } else if (countEnabledObserver < 1) {
             this.kIEMViewInstance.setAllEnabled(true);
-            showError(Messages.ErrorNoDataObserver, KiemPlugin.PLUGIN_ID, null);
+            showError(Messages.mErrorNoDataObserver, KiemPlugin.PLUGIN_ID, null);
             return false;
         }
 
@@ -550,8 +548,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                     return false;
                 }
 
-            }// if enabled
-        }// next c
+            } //if enabled
+        } //next c
 
         // distribute union of InterfaceKeys to all enabled components
         for (int c = 0; c < dataComponentExList.size(); c++) {
@@ -559,8 +557,8 @@ public class KiemPlugin extends AbstractUIPlugin {
             if (dataComponentEx.isEnabled()) {
                 dataComponentEx.setInterfaceKeys((String[]) globalInterfaceKeys
                         .toArray(new String[0]));
-            }// end if enabled
-        }// next c
+            } //end if enabled
+        } //next c
 
         // initialize all (enabled) data producer and Observer
         for (int c = 0; c < dataComponentExList.size(); c++) {
@@ -575,8 +573,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                             dataComponentEx.getDataComponent(), e);
                     return false;
                 }
-            }// end if enabled
-        }// next c
+            } //end if enabled
+        } //next c
 
         // now create and run the execution thread
         this.execution = new Execution(dataComponentExList);
@@ -603,7 +601,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @return the added dataComponentEx component
      */
     public DataComponentEx addTodataComponentExList(final DataComponent component) {
-        // call garbage collector
+        // suggest calling the garbage collector
         System.gc();
         IConfigurationElement componentConfigEle = component.getConfigurationElement();
         DataComponent componentClone;
@@ -635,7 +633,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @return the default DataComponentExList
      */
     public List<DataComponentEx> getDefaultComponentExList() {
-        // call garbage collector
+        // suggest calling the garbage collector
         System.gc();
         List<DataComponent> list = this.getDataComponentList();
         List<DataComponentEx> returnList = new LinkedList<DataComponentEx>();
@@ -688,7 +686,7 @@ public class KiemPlugin extends AbstractUIPlugin {
             dataComponentEx.getDataComponent()._DataComponent();
             dataComponentExList.remove(dataComponentEx);
         }
-        // call garbage collector
+        // suggest calling the garbage collector
         System.gc();
     }
 
@@ -761,7 +759,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * 
      * @param textMessage
      *            the text message
-     * @param PluginID
+     * @param pluginID
      *            the plug-in id
      * @param exception
      *            the exception
@@ -789,13 +787,12 @@ public class KiemPlugin extends AbstractUIPlugin {
             String pluginID2 = null;
             if (pluginID == null) {
                 pluginID2 = KiemPlugin.PLUGIN_ID;
-            }
-            else {
+            } else {
                 pluginID2 = pluginID;
             }
                 
 
-            IStatus status = new Status(IStatus.WARNING, pluginID2, 42, message, exception);
+            IStatus status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message, exception);
 
             StatusAdapter statusAdapter = new StatusAdapter(status);
             statusAdapter.setProperty(IStatusAdapterConstants.TIMESTAMP_PROPERTY, System
@@ -820,7 +817,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * 
      * @param textMessage
      *            the optional text message
-     * @param PluginID
+     * @param pluginID
      *            the plug-in id
      * @param exception
      *            the exception if any, null otherwise
@@ -848,12 +845,11 @@ public class KiemPlugin extends AbstractUIPlugin {
             String pluginID2 = null;
             if (pluginID == null) {
                 pluginID2 = KiemPlugin.PLUGIN_ID;
-            } 
-            else {
+            } else {
                 pluginID2 = pluginID;
             }
 
-            IStatus status = new Status(IStatus.ERROR, pluginID2, 42, message, exception);
+            IStatus status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message, exception);
 
             StatusAdapter statusAdapter = new StatusAdapter(status);
             statusAdapter.setProperty(IStatusAdapterConstants.TIMESTAMP_PROPERTY, System

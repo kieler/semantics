@@ -40,7 +40,7 @@ public class StepTextField extends ControlContribution {
 	 * Instantiates a new step text field GUI ControlContribution.
 	 */
 	public StepTextField() {
-		super(Messages.StepTextFieldName);
+		super(Messages.mStepTextFieldName);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -52,9 +52,9 @@ public class StepTextField extends ControlContribution {
 	protected Control createControl(Composite parent) {
 		textfield = new Text(parent,SWT.BORDER);
 		this.textfield.setEnabled(false);
-		textfield.setToolTipText(Messages.StepTextFieldHint);
+		textfield.setToolTipText(Messages.mStepTextFieldHint);
 		//reserver some amount of space
-		textfield.setText(Messages.StepTextFieldReserveSpace);
+		textfield.setText(Messages.mStepTextFieldReserveSpace);
 		return textfield;
 	}
 	
@@ -68,7 +68,7 @@ public class StepTextField extends ControlContribution {
 	public void updateTextfield(String text) {
 		if (text == null) {
 			//this.textfield.setVisible(false);
-			this.textfield.setText(Messages.StepTextFieldNoStep);
+			this.textfield.setText(Messages.mStepTextFieldNoStep);
 		}
 		else {
 			this.textfield.setText(text);

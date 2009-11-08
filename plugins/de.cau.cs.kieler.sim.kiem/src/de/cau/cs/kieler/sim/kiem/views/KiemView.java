@@ -133,35 +133,35 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
 	/** The Constant columnTitlesCollapsed - properties not visible. */
 	public static final String[] columnTitlesCollapsed = { 
-			Messages.TableComponentName,
-			Messages.TableValue, 
-			Messages.TableEnabled,
-			Messages.TableType, 
-			Messages.TableMaster};
+			Messages.mTableComponentName,
+			Messages.mTableValue, 
+			Messages.mTableEnabled,
+			Messages.mTableType, 
+			Messages.mTableMaster};
 	
 	/** The Constant columnTitles - properties visible. */
 	public static final String[] columnTitles = { 
-			Messages.TableComponentNameKey,
-			Messages.TableValue, 
-			Messages.TableEnabled,
-			Messages.TableType, 
-			Messages.TableMaster};
+			Messages.mTableComponentNameKey,
+			Messages.mTableValue, 
+			Messages.mTableEnabled,
+			Messages.mTableType, 
+			Messages.mTableMaster};
 	
 	/** The Constant columnToolTipCollapsed - properties not visible. */
 	public static final String[] columnToolTipCollapsed = { 
-			Messages.TableHintComponentName,
-			Messages.TableHintValue, 
-			Messages.TableHintEnabled,
-			Messages.TableHintType, 
-			Messages.TableHintMaster};
+			Messages.mTableHintComponentName,
+			Messages.mTableHintValue, 
+			Messages.mTableHintEnabled,
+			Messages.mTableHintType, 
+			Messages.mTableHintMaster};
 	
 	/** The Constant columnToolTip - properties visible. */
 	public static final String[] columnToolTip = { 
-			Messages.TableHintComponentNameKey,
-			Messages.TableHintValue, 
-			Messages.TableHintEnabled,
-			Messages.TableHintType, 
-			Messages.TableHintMaster};
+			Messages.mTableHintComponentNameKey,
+			Messages.mTableHintValue, 
+			Messages.mTableHintEnabled,
+			Messages.mTableHintType, 
+			Messages.mTableHintMaster};
 	
 	/** True if all actions are (temporary) disabled. */
 	private boolean allDisabled;
@@ -481,7 +481,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	 */
 	@SuppressWarnings("unused")
 	private void showMessage(String message) {
-		showMessage(Messages.ViewTitle,message);
+		showMessage(Messages.mViewTitle,message);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -524,7 +524,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	private void showMessage(String title, String message) {
 		MessageDialog.openInformation(
 				viewer.getControl().getShell(),
-				Messages.ViewTitle,
+				Messages.mViewTitle,
 				message);
 	}
 	
@@ -538,7 +538,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	private void showWarning(String message) {
 		MessageDialog.openWarning(
 			viewer.getControl().getShell(),
-			Messages.ViewTitle,
+			Messages.mViewTitle,
 			message);
 	}
 	
@@ -553,7 +553,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 	private void showError(String message) {
 		MessageDialog.openError(
 			viewer.getControl().getShell(),
-			Messages.ViewTitle,
+			Messages.mViewTitle,
 			message);
 	}
 	
@@ -645,13 +645,13 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 				getActionDelete().setEnabled(true);
 			if (dataComponentEx.isEnabled()) {
 				//currently enabled
-				actionEnableDisable.setText(Messages.ActionDisable);
-				actionEnableDisable.setToolTipText(Messages.ActionHintDisable);
+				actionEnableDisable.setText(Messages.mActionDisable);
+				actionEnableDisable.setToolTipText(Messages.mActionHintDisable);
 			}
 			else {
 				//currently disabled
-				actionEnableDisable.setText(Messages.ActionEnable);
-				actionEnableDisable.setToolTipText(Messages.ActionHintEnable);
+				actionEnableDisable.setText(Messages.mActionEnable);
+				actionEnableDisable.setToolTipText(Messages.mActionHintEnable);
 			}
 
 			//find index of top most and bottom most selection
@@ -946,8 +946,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 			  }
 			}
 		};
-		actionAdd.setText(Messages.ActionAdd);
-		actionAdd.setToolTipText(Messages.ActionHintAdd);
+		actionAdd.setText(Messages.mActionAdd);
+		actionAdd.setToolTipText(Messages.mActionHintAdd);
 		actionAdd.setImageDescriptor(KiemIcons.IMGDESCR_ADD);
 		return actionAdd;
 	}
@@ -982,8 +982,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 				updateView(true);
 			}
 		};
-		actionDelete.setText(Messages.ActionDelete);
-		actionDelete.setToolTipText(Messages.ActionHintDelete);
+		actionDelete.setText(Messages.mActionDelete);
+		actionDelete.setToolTipText(Messages.mActionHintDelete);
 		actionDelete.setImageDescriptor(KiemIcons.IMGDESCR_DELETE);
 		return actionDelete;
 	}
@@ -1023,8 +1023,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 				}catch(Exception e) {}
 			}
 		};
-		actionEnableDisable.setText(Messages.ActionEnable);
-		actionEnableDisable.setToolTipText(Messages.ActionHintEnable);
+		actionEnableDisable.setText(Messages.mActionEnable);
+		actionEnableDisable.setToolTipText(Messages.mActionHintEnable);
 		return actionEnableDisable;
 	}
 	
@@ -1060,8 +1060,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 				updateView(false);
 			}
 		};
-		actionUp.setText(Messages.ActionUp);
-		actionUp.setToolTipText(Messages.ActionHintUp);
+		actionUp.setText(Messages.mActionUp);
+		actionUp.setToolTipText(Messages.mActionHintUp);
 		actionUp.setImageDescriptor(KiemIcons.IMGDESCR_UP);
 		actionUp.setDisabledImageDescriptor(KiemIcons.IMGDESCR_UP_DISABLED);
 		return actionUp;
@@ -1099,8 +1099,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 				updateView(false);
 			}
 		};
-		actionDown.setText(Messages.ActionDown);
-		actionDown.setToolTipText(Messages.ActionHintDown);
+		actionDown.setText(Messages.mActionDown);
+		actionDown.setToolTipText(Messages.mActionHintDown);
 		actionDown.setImageDescriptor(KiemIcons.IMGDESCR_DOWN);
 		actionDown.setDisabledImageDescriptor(KiemIcons.IMGDESCR_DOWN_DISABLED);
 		return actionDown;
@@ -1136,8 +1136,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 					updateView(true);
 			}
 		};
-		actionStepBack.setText(Messages.ActionStepBack);
-		actionStepBack.setToolTipText(Messages.ActionHintStepBack);
+		actionStepBack.setText(Messages.mActionStepBack);
+		actionStepBack.setToolTipText(Messages.mActionHintStepBack);
 		actionStepBack.setImageDescriptor(KiemIcons.IMGDESCR_STEPBACK);
 		actionStepBack.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEPBACK_DISABLED);
 		return actionStepBack;
@@ -1173,8 +1173,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 					updateView(true);
 			}
 		};
-		actionStepFMC.setText(Messages.ActionStepFMC);
-		actionStepFMC.setToolTipText(Messages.ActionHintStepFMC);
+		actionStepFMC.setText(Messages.mActionStepFMC);
+		actionStepFMC.setToolTipText(Messages.mActionHintStepFMC);
 		actionStepFMC.setImageDescriptor(KiemIcons.IMGDESCR_STEP);
 		actionStepFMC.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
 		return actionStepFMC;
@@ -1203,8 +1203,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 					//otherwise default implementation
 					if (KIEMInstance.initExecution()) {
 						String value = showInputDialog(
-								Messages.ActionStepUserDialogTitle,
-								Messages.ActionStepUserDialogText,
+								Messages.mActionStepUserDialogTitle,
+								Messages.mActionStepUserDialogText,
 								""+KIEMInstance.execution.getMaximumSteps());
 						if (value != null) {
 							try {
@@ -1219,8 +1219,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 					updateView(true);
 			}
 		};
-		actionStepUser.setText(Messages.ActionStepUser);
-		actionStepUser.setToolTipText(Messages.ActionHintStepUser);
+		actionStepUser.setText(Messages.mActionStepUser);
+		actionStepUser.setToolTipText(Messages.mActionHintStepUser);
 		actionStepUser.setImageDescriptor(KiemIcons.IMGDESCR_STEP);
 		actionStepUser.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
 		return actionStepUser;
@@ -1249,8 +1249,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 					//otherwise default implementation
 					if (KIEMInstance.initExecution()) {
 						String value = showInputDialog(
-								Messages.ActionRunUserDialogTitle,
-								Messages.ActionRunUserDialogText,
+								Messages.mActionRunUserDialogTitle,
+								Messages.mActionRunUserDialogText,
 								""+KIEMInstance.execution.getMaximumSteps());
 						if (value != null) {
 							try {
@@ -1265,8 +1265,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 					updateView(true);
 			}
 		};
-		actionRunUser.setText(Messages.ActionRunUser);
-		actionRunUser.setToolTipText(Messages.ActionHintRunUser);
+		actionRunUser.setText(Messages.mActionRunUser);
+		actionRunUser.setToolTipText(Messages.mActionHintRunUser);
 		actionRunUser.setImageDescriptor(KiemIcons.IMGDESCR_STEP);
 		actionRunUser.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
 		return actionRunUser;
@@ -1302,8 +1302,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 					updateView(true);
 			}
 		};
-		actionStep.setText(Messages.ActionStep);
-		actionStep.setToolTipText(Messages.ActionHintStep);
+		actionStep.setText(Messages.mActionStep);
+		actionStep.setToolTipText(Messages.mActionHintStep);
 		actionStep.setImageDescriptor(KiemIcons.IMGDESCR_STEP);
 		actionStep.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
 		return actionStep;
@@ -1336,8 +1336,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 				updateView(true);
 			}
 		};
-		actionMacroStep.setText(Messages.ActionMacroStep);
-		actionMacroStep.setToolTipText(Messages.ActionHintMacroStep);
+		actionMacroStep.setText(Messages.mActionMacroStep);
+		actionMacroStep.setToolTipText(Messages.mActionHintMacroStep);
 		actionMacroStep.setImageDescriptor(KiemIcons.IMGDESCR_MACROSTEP);
 		actionMacroStep.setDisabledImageDescriptor(KiemIcons.IMGDESCR_MACROSTEP_DISABLED);
 		return actionMacroStep;
@@ -1370,8 +1370,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 				updateView(true);
 			}
 		};
-		actionRun.setText(Messages.ActionHintRun);
-		actionRun.setToolTipText(Messages.ActionHintRun);
+		actionRun.setText(Messages.mActionHintRun);
+		actionRun.setToolTipText(Messages.mActionHintRun);
 		actionRun.setImageDescriptor(KiemIcons.IMGDESCR_RUN);
 		actionRun.setDisabledImageDescriptor(KiemIcons.IMGDESCR_RUN_DISABLED);
 		return actionRun;
@@ -1404,8 +1404,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 				updateView(true);
 			}
 		};
-		actionPause.setText(Messages.ActionPause);
-		actionPause.setToolTipText(Messages.ActionHintPause);
+		actionPause.setText(Messages.mActionPause);
+		actionPause.setToolTipText(Messages.mActionHintPause);
 		actionPause.setImageDescriptor(KiemIcons.IMGDESCR_PAUSE);
 		actionPause.setDisabledImageDescriptor(KiemIcons.IMGDESCR_PAUSE_DISABLED);
 		return actionPause;
@@ -1457,27 +1457,27 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
 						//show execution results
 						showMessage(
-						Messages.TimingResultsTitle,
-						Messages.TimingResultsNumberOfSteps +
+						Messages.mTimingResultsTitle,
+						Messages.mTimingResultsNumberOfSteps +
 							+steps+"\n"+
-						Messages.TimingResultsOverallExecutionTime +
+						Messages.mTimingResultsOverallExecutionTime +
 							+executionTime+" ms\n\n"+
-						Messages.TimingResultsAimedStepDuration +
+						Messages.mTimingResultsAimedStepDuration +
 							+aimedStepDuration+ " ms\n"+
-						Messages.TimingResultsMinimumStepDuration+
+						Messages.mTimingResultsMinimumStepDuration+
 							+minStepDuration+ " ms\n"+
-						Messages.TimingResultsWheightedAverageStepDuration +
+						Messages.mTimingResultsWheightedAverageStepDuration +
 							+wavStepDuration+ " ms\n"+
-						Messages.TimingResultsAverageStepDuration + 
+						Messages.mTimingResultsAverageStepDuration + 
 							+aveStepDuration+ " ms\n"+
-						Messages.TimingResultsMaximumStepDuration +
+						Messages.mTimingResultsMaximumStepDuration +
 							+maxStepDuration+ " ms");
 				}
 				updateView(true);
 			}
 		};
-		actionStop.setText(Messages.ActionStop);
-		actionStop.setToolTipText(Messages.ActionHintStop);
+		actionStop.setText(Messages.mActionStop);
+		actionStop.setToolTipText(Messages.mActionHintStop);
 		actionStop.setImageDescriptor(KiemIcons.IMGDESCR_STOP);
 		actionStop.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STOP_DISABLED);
 		return actionStop;
@@ -1567,7 +1567,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 				} else {
 					if (!silent)
 						
-						showWarning(Messages.WarningAtMostOneMaster
+						showWarning(Messages.mWarningAtMostOneMaster
 								.replace("%COMPONENTNAME", dataComponentTemp.getName()));
 					//disable it//
 					dataComponentTemp.setEnabled(false);

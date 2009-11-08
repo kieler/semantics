@@ -180,13 +180,13 @@ public class KiemLabelProvider implements ITableLabelProvider {
 			case 3 : // TYPE_COLUMN
 				String type = "";
 				if (dataComponentEx.isProducerObserver())
-					type = Messages.ObserverProducerDataComponent;
+					type = Messages.mObserverProducerDataComponent;
 				else if (dataComponentEx.isProducer())
-					type = Messages.ProducerDataComponent;
+					type = Messages.mProducerDataComponent;
 				else if (dataComponentEx.isObserver())
-					type = Messages.ObserverDataComponent;
+					type = Messages.mObserverDataComponent;
 				else
-					type = Messages.InitializationDataComponent;
+					type = Messages.mInitializationDataComponent;
 				return type;
 			case 4 : // MASTER_COLUMN
 				return "";

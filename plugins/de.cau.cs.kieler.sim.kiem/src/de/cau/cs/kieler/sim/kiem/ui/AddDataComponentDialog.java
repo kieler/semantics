@@ -85,7 +85,7 @@ public class AddDataComponentDialog extends Dialog {
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		//set the title of this dialog
-		newShell.setText(Messages.AddDataComponentTitle);
+		newShell.setText(Messages.mAddDataComponentTitle);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -184,13 +184,13 @@ public class AddDataComponentDialog extends Dialog {
     	for (int c = 0; c < componentList.size(); c++) {
     		DataComponent component = componentList.get(c);
         	TableItem item = new TableItem(table, SWT.NULL);
-        	String type = Messages.InitializationDataComponent;
+        	String type = Messages.mInitializationDataComponent;
         	if (component.isObserver() && component.isProducer())
-        		type = Messages.ObserverProducerDataComponent;
+        		type = Messages.mObserverProducerDataComponent;
         	else if (component.isObserver())
-        		type = Messages.ObserverDataComponent;
+        		type = Messages.mObserverDataComponent;
         	else if (component.isProducer())
-        		type = Messages.ProducerDataComponent;
+        		type = Messages.mProducerDataComponent;
         	item.setText(component.getName()+ " (" + type+")");
         	item.setData(component);
         	if (component.isObserver() && component.isProducer())

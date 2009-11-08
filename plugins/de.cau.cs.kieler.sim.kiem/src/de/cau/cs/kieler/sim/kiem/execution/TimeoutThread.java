@@ -163,7 +163,7 @@ public class TimeoutThread extends Thread {
 				else if (System.currentTimeMillis() > stopTime) {
 					//timeout is triggered
 					this.execution.showError(
-							Messages.ErrorTimeoutExecution
+							Messages.mErrorTimeoutExecution
 								.replace("%JOBDESCRIPTION", this.jobDescription)
 								.replace("%COMPONENTNAME", dataComponentEx.getName())
 							, KiemPlugin.PLUGIN_ID,
