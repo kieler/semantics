@@ -207,7 +207,6 @@ public class ExecutePtolemyModel {
 		  		ModelOutput modelOutput = modelOutputList.get(c);
 		  		modelOutput.present = false;
 		  	  }
-			
 		  	  
 		  	  //iterate thru all kielerIOs = set the input signals
 		  	  for (int c = 0; c < kielerIOList.size(); c++) {

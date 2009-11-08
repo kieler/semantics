@@ -16,9 +16,11 @@ package de.cau.cs.kieler.synccharts.sim.ptolemy;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.StringTokenizer;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -28,12 +30,21 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend.XtendComponent;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.emf.mwe.utils.AbstractEMFWorkflowComponent;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.emf.common.util.URI;
 
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
@@ -42,6 +53,7 @@ import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.MomlWriter;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * The class SimpleRailCtrl DataComponent implements a KIELER Execution Manager
@@ -74,7 +86,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	private String kielerModel;
 	
 	/** The Ptolemy model. */
-	private String ptolemyModel;
+	private Resource ptolemyModel;
 	
 	/** The current workspace folder. */
 	private String workspaceFolder;
@@ -100,21 +112,24 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
      * @param outputModel the output Ptolemy model
      * 
      * @return true, if m2m transformation was successful
+	 * @throws KiemInitializationException 
      */
-    public boolean Model2ModelTransformation(String inputModel,
-			 								 String outputModel) {
+    public boolean Model2ModelTransformation() 
+    									throws KiemInitializationException {
 		 	try {
 		        //Workflow
 		        Workflow workflow = new Workflow();
 		        
 		        //EMF reader
 		        Reader emfReader = new Reader();
-		        emfReader.setUri(inputModel);
+		        emfReader.setUri(this.getInputModel());
 		        emfReader.setModelSlot("emfmodel");
+		        emfReader.setResourceSet(this.getInputResourceSet());
 
 		        //MOML writer
 		        MomlWriter momlWriter = new MomlWriter();
-		        momlWriter.setUri(outputModel);
+		        momlWriter.setUri(ptolemyModel.getURI().toString());
+		        momlWriter.setResourceSet(ptolemyModel.getResourceSet());
 		        momlWriter.setModelSlot("momlmodel");
 		        
 		        //Meta models
@@ -145,9 +160,8 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		        System.out.print(issues.getErrors().toString());
 		 	}
 		 	catch(Exception e){
-				new KiemInitializationException
-				("Ptolemy Model could not be created.", true, e);
-		 		return false;
+				throw (new KiemInitializationException
+				("Ptolemy Model could not be created.", true, e));
 		 	} 
 	        
 		    return true;
@@ -226,49 +240,68 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	
     //-------------------------------------------------------------------------	 
 	
+	DiagramEditor getInputEditor() {
+		String kiemEditorProperty = this.getProperties()[0].getValue();
+		DiagramEditor diagramEditor = null;
+		
+		//get the active editor as a default case (if property is empty)
+		IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		IEditorPart editor = activePage.getActiveEditor();
+	    if (editor instanceof DiagramEditor) {
+	                diagramEditor = (DiagramEditor) editor;
+	    }
+		
+		//only check non-empty and valid property (this is optional)
+		if (!kiemEditorProperty.equals("")) {
+			if (getEditor(kiemEditorProperty) != null) {
+					diagramEditor = getEditor(kiemEditorProperty);
+			}
+		}
+		return diagramEditor;
+	}
+
+	//-------------------------------------------------------------------------	 
+	
+	String getInputModel() {
+		DiagramEditor diagramEditor = this.getInputEditor();
+		//now extract the file
+	    View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
+	    EObject myModel = (EObject) notationElement.getElement();
+	    URI uri = myModel.eResource().getURI();
+		
+	    return uri.toPlatformString(false);
+	}
+	
+    //-------------------------------------------------------------------------
+	                     
+	ResourceSet getInputResourceSet() {
+		DiagramEditor diagramEditor = this.getInputEditor();
+		//now extract the file
+	    View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
+	    EObject myModel = (EObject) notationElement.getElement();
+	    URI uri = myModel.eResource().getURI();
+		
+	    return myModel.eResource().getResourceSet();
+	}
+	
+    //-------------------------------------------------------------------------
+	
 	public void loadAndExecuteModel() throws KiemInitializationException {
 		workspaceFolder = Platform.getLocation().toString();
 		
-		//the SimpleRailCtrl EMF model instance is the first KIEM property
-		kielerModel = this.getProperties()[0].getFilePath();
-		ptolemyModel = this.getProperties()[0].getDirectory() + "generated.moml";
+		//ptolemyModel = this.getInputModel() + ".moml"; //this.getProperties()[0].getDirectory() + "generated.moml";
+
+		ResourceSet resourceSet = new ResourceSetImpl();
+        URI fileUri = URI.createFileURI(new File("generated.moml").getAbsolutePath());
+        ptolemyModel = resourceSet.createResource(fileUri);
+        
+        String ptolemyModelFile = ptolemyModel.getURI().toFileString();
 		
-		String ptolemyModelFile = workspaceFolder + ptolemyModel;
+		//String ptolemyModelFile = workspaceFolder + ptolemyModel;
 		
-//		System.out.println("Now deleting old Ptolemy Model ..." + ptolemyModelFile);
-//		
-//	    ResourceSet resourceSet = new ResourceSetImpl();
-//	    Resource resource = resourceSet.createResource( URI.createFileURI( ptolemyModelFile) );
-//	    try {
-//			resource.unload();
-//			resource.delete(null);
-//		} catch (IOException e1) {
-//			e1.printStackTrace();
-//		}
-	    
-//		File f = new File(ptolemyModelFile);
-//		boolean exists = f.exists();
-//		if (exists) {
-//		    	boolean success = f.delete();
-//		    	if (success)
-//		    		System.out.println("Old Ptolemy Model deleted..." + ptolemyModelFile);
-//		    	else
-//		    		System.out.println("Old Ptolemy Model could not be deleted..." + ptolemyModelFile);
-//		    } else {
-//				System.out.println("No old Ptolemy Model found ..." + ptolemyModelFile);
-//		}
-//
-////		if ((new File(ptolemyModelFile)).exists()) {
-//		try {
-//				Thread.sleep(10000);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-////		}
-				
 		System.out.println("Now creating Ptolemy Model ..." + ptolemyModel);
 
-		if (this.Model2ModelTransformation(kielerModel, ptolemyModel)) {
+		if (this.Model2ModelTransformation()) {
 			System.out.println("Now loading Ptolemy Model..." + ptolemyModelFile);
 	        //load the Ptolemy Model
 	        PTOEXE = new ExecutePtolemyModel(ptolemyModelFile);
@@ -333,9 +366,9 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	public KiemProperty[] provideProperties() {
 		KiemProperty[] properties = new KiemProperty[2];
 		properties[0] = new KiemProperty(
-				"KIELER Model File",
-				new KiemPropertyTypeWorkspaceFile(),
-				"\\example\\default.kits");
+				"SyncChart Editor",
+				new KiemPropertyTypeEditor(),
+				"");
 		properties[1] = new KiemProperty(
 				"State Name",
 				"state");
@@ -349,10 +382,53 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	 */
 	@Override
 	public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
-		//check if any EMF model instance form the current workspace is selected
-		if (properties[0].getValue().trim().length() == 0) {
-			throw new KiemPropertyException("A Syncchart-Model File must be selected!");
+		String kiemEditorProperty = this.getProperties()[0].getValue();
+		
+		//only check non-empty property (this is optional)
+		if (!kiemEditorProperty.equals("")) {
+			if (getEditor(kiemEditorProperty) == null) {
+				//this is an error, probably the selected editor isnt open any more
+				//or the file(name) opened has changed
+				throw new KiemPropertyException("The selected editor '"+kiemEditorProperty+"'" +
+						" does not exist. Please ensure that an opened editor is selected and" +
+						"the file name matches.\n\nIf you want the currently active editor to be" +
+						"simulated make sure the (optional) editor property is empty!");
+			}
 		}
+		
+    	
+	}
+	
+    //-------------------------------------------------------------------------	 
+	
+	DiagramEditor getEditor(String kiemEditorProperty) {
+		if ((kiemEditorProperty == null)||(kiemEditorProperty.length() == 0))
+		 	return null;
+		
+        StringTokenizer tokenizer = new StringTokenizer(kiemEditorProperty, " ()");
+        if (tokenizer.hasMoreTokens()) {
+        	String fileString = tokenizer.nextToken(); 
+        	String editorString = tokenizer.nextToken();
+
+             IEditorReference[] editorRefs = PlatformUI.getWorkbench()
+                     .getActiveWorkbenchWindow().getActivePage()
+                     .getEditorReferences();
+             for (int i = 0; i < editorRefs.length; i++) {
+                 if (editorRefs[i].getId().equals(editorString)) {
+                     IEditorPart editor = editorRefs[i].getEditor(true);
+                     if (editor instanceof DiagramEditor) {
+                    	 //test if correct file
+                    	 if (fileString.equals(editor.getTitle())) {
+                    		 return (DiagramEditor) editor;
+//                             rootEditPart = ((DiagramEditor) editor)
+//                                     .getDiagramEditPart();
+//                             break;
+                    	 }
+                     }
+                 }
+             }
+         }
+		return null;
 	}
 	
 }
