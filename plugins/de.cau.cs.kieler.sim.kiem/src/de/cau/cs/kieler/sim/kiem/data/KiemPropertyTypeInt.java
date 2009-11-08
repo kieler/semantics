@@ -18,61 +18,71 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
- * The Class KiemPropertyTypeInt. This implements a sample KiemPropertyType for
- * an integer type.
- *
+ * The Class KiemPropertyTypeInt. This implements a sample KiemPropertyType for an integer type.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public class KiemPropertyTypeInt extends KiemPropertyType
-									implements IKiemPropertyType {
-	
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 8908596145125394334L;
-	
-	/** The Constant PROPERTY_INT. */
-	private static final Image PROPERTY_INT = AbstractUIPlugin
-	.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-			"icons/propertyIntIcon.png").createImage();
+public class KiemPropertyTypeInt extends KiemPropertyType implements IKiemPropertyType {
 
-	//-------------------------------------------------------------------------
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 8908596145125394334L;
 
-	/**
-	 * Instantiates a new KiemPropertyType int.
-	 */
-	public KiemPropertyTypeInt() {
-		super();
-	}
+    /** The Constant PROPERTY_INT. */
+    private static final Image PROPERTY_INT = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.sim.kiem", "icons/propertyIntIcon.png").createImage();
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
-	 */
-	public Object getValue(KiemProperty property) {
-		return property.value;
-	}
+    /**
+     * Instantiates a new KiemPropertyType int.
+     */
+    public KiemPropertyTypeInt() {
+        super();
+    }
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
-	 */
-	public void setValue(KiemProperty property, Object value) {
-		try {
-			property.setValue(""+Integer.valueOf((String)value));
-		}catch(Exception e) {
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.
+     * KiemProperty)
+     */
+    @Override
+    public Object getValue(final KiemProperty property) {
+        return property.value;
+    }
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()
-	 */
-	@Override
-	public Image provideIcon() {
-		return PROPERTY_INT;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.
+     * KiemProperty, java.lang.Object)
+     */
+    @Override
+    public void setValue(final KiemProperty property, final Object value) {
+        try {
+            property.setValue("" + Integer.valueOf((String) value));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()
+     */
+    @Override
+    public Image provideIcon() {
+        return PROPERTY_INT;
+    }
 
 }

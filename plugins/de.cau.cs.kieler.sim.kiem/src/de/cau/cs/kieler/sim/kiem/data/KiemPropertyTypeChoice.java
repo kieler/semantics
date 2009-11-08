@@ -22,80 +22,95 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
- * The Class KiemPropertyTypeChoice. This implements a sample KiemPropertyType for
- * selecting a String from a String[] array with a drop down list.
- *
+ * The Class KiemPropertyTypeChoice. This implements a sample KiemPropertyType for selecting a
+ * String from a String[] array with a drop down list.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public class KiemPropertyTypeChoice extends KiemPropertyType
-									implements IKiemPropertyType {
-	
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 922994563762566959L;
+public class KiemPropertyTypeChoice extends KiemPropertyType implements IKiemPropertyType {
 
-	/** The Constant PROPERTY_CHOICE. */
-	private static final Image PROPERTY_CHOICE = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sim.kiem",
-					"icons/propertyChoiceIcon.png").createImage();
-	
-	/** The items to display in the drop down list. */
-	private String[] items;
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 922994563762566959L;
 
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * Instantiates a new KiemPropertyType choice.
-	 * 
-	 * @param items the items
-	 */
-	public KiemPropertyTypeChoice(String[] items) {
-		super();
-		this.items = items;
-	}
-	
-	//-------------------------------------------------------------------------
+    /** The Constant PROPERTY_CHOICE. */
+    private static final Image PROPERTY_CHOICE = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.sim.kiem", "icons/propertyChoiceIcon.png").createImage();
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets.Composite)
-	 */
-	@Override 
-	public CellEditor provideCellEditor(Composite parent) {
-		return new ComboBoxCellEditor(parent, 
-									items, 
-									SWT.Deactivate);
-	}
+    /** The items to display in the drop down list. */
+    private String[] items;
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty)
-	 */
-	public Object getValue(KiemProperty property) {
-		for (int c = 0; c < items.length; c ++) {
-			if (property.getValue().equals(items[c])) return c;
-		}
-		return 0; //default is the first item
-	}
+    /**
+     * Instantiates a new KiemPropertyType choice.
+     * 
+     * @param itemsParam
+     *            the items
+     */
+    public KiemPropertyTypeChoice(final String[] itemsParam) {
+        super();
+        this.items = itemsParam;
+    }
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.KiemProperty, java.lang.Object)
-	 */
-	public void setValue(KiemProperty element, Object value) {
-		KiemProperty property = (KiemProperty)element;
-		property.setValue(items[Integer.parseInt((String)value)]);
-	}
-	
-	//-------------------------------------------------------------------------
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideCellEditor(org.eclipse.swt.widgets
+     * .Composite)
+     */
+    @Override
+    public CellEditor provideCellEditor(final Composite parent) {
+        return new ComboBoxCellEditor(parent, items, SWT.Deactivate);
+    }
 
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()
-	 */
-	@Override
-	public Image provideIcon() {
-		return PROPERTY_CHOICE;
-	}
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#getValue(de.cau.cs.kieler.sim.kiem.data.
+     * KiemProperty)
+     */
+    @Override
+    public Object getValue(final KiemProperty property) {
+        for (int c = 0; c < items.length; c++) {
+            if (property.getValue().equals(items[c])) {
+                return c;
+            }
+        }
+        return 0; // default is the first item
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.data.IKiemPropertyType#setValue(de.cau.cs.kieler.sim.kiem.data.
+     * KiemProperty, java.lang.Object)
+     */
+    @Override
+    public void setValue(final KiemProperty element, final Object value) {
+        KiemProperty property = (KiemProperty) element;
+        property.setValue(items[Integer.parseInt((String) value)]);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.data.KiemPropertyType#provideIcon()
+     */
+    @Override
+    public Image provideIcon() {
+        return PROPERTY_CHOICE;
+    }
 
 }
