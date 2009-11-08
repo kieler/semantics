@@ -44,10 +44,10 @@ public class DataComponent extends JSONStringDataComponent {
 					}
 					if (!s.isValued())
 						res.append("\"" + s.getName() + "\":{\""
-								+ JSONSignalValues.presentKey + "\":true}");
+								+ JSONSignalValues.PRESENT_KEY + "\":true}");
 					else
 						res.append("\"" + s.getName() + "\":{\""
-								+ JSONSignalValues.presentKey
+								+ JSONSignalValues.PRESENT_KEY
 								+ "\":true,\"value\":" + s.getVal() + "}");
 				}
 			}
