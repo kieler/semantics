@@ -19,46 +19,49 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
 /**
- * The Class DataTableViewer. This is just a TreeViewer, where it is possible
- * to add extensions or modifications in the future within this class 
- * declaration.
+ * The Class DataTableViewer. This is just a TreeViewer, where it is possible to add extensions or
+ * modifications in the future within this class declaration.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class DataTableViewer extends TreeViewer {
 
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * Instantiates a new DataTableViewer.
-	 * 
-	 * @param parent the composite parent
-	 * @param style the style
-	 */
-	public DataTableViewer(Composite parent, int style) {
-		super(parent, style);
-	}
+    // -------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
+    /**
+     * Instantiates a new DataTableViewer.
+     * 
+     * @param parent
+     *            the composite parent
+     * @param style
+     *            the style
+     */
+    public DataTableViewer(final Composite parent, final int style) {
+        super(parent, style);
+    }
 
-	/**
-	 * Instantiates a new DataTableViewer.
-	 * 
-	 * @param parent the composite parent
-	 */
-	public DataTableViewer(Composite parent) {
-		super(parent);
-	}
+    // -------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
+    /**
+     * Instantiates a new DataTableViewer.
+     * 
+     * @param parent
+     *            the composite parent
+     */
+    public DataTableViewer(final Composite parent) {
+        super(parent);
+    }
 
-	/**
-	 * Instantiates a new DataTableViewer.
-	 * 
-	 * @param table the table
-	 */
-	public DataTableViewer(Table table) {
-		super(table);
-	}
-	
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new DataTableViewer.
+     * 
+     * @param table
+     *            the table
+     */
+    public DataTableViewer(final Table table) {
+        super(table);
+    }
+
 }

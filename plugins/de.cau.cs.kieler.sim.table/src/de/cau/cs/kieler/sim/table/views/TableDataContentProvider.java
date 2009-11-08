@@ -14,42 +14,66 @@
 
 package de.cau.cs.kieler.sim.table.views;
 
-
-//import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-//IStructuredContentProvider
 /**
  * The Class TableDataContentProvider.
- *
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
-public class TableDataContentProvider implements ITreeContentProvider  {
+public class TableDataContentProvider implements ITreeContentProvider {
 
-	public Object[] getElements(Object inputElement) {
-		return ((TableDataList)inputElement).getArray();
-	}
+    // -------------------------------------------------------------------------
 
-	public void dispose() {
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public Object[] getElements(final Object inputElement) {
+        return ((TableDataList) inputElement).getArray();
+    }
 
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-	}
+    // -------------------------------------------------------------------------
 
-	public Object[] getChildren(Object parentElement) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void dispose() {
+    }
 
-	public Object getParent(Object element) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    // -------------------------------------------------------------------------
 
-	public boolean hasChildren(Object element) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public Object[] getChildren(final Object parentElement) {
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public Object getParent(final Object element) {
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean hasChildren(final Object element) {
+        return false;
+    }
 
 }
