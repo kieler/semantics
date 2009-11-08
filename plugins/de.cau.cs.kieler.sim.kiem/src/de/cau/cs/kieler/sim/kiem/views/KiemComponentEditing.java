@@ -23,122 +23,137 @@ import org.eclipse.swt.SWT;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 
 /**
- * The Class KiemComponentEditing. It handles the editing support for
- * DataComponentExs in the DataComponentExs table of the KiemView. It 
- * basically only allows the modification of the enabled tag of a 
- * DataComponentEx.
- *
+ * The Class KiemComponentEditing. It handles the editing support for DataComponentExs in the
+ * DataComponentExs table of the KiemView. It basically only allows the modification of the enabled
+ * tag of a DataComponentEx.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
 public class KiemComponentEditing extends EditingSupport {
-	
-	/** The cell editor. */
-	private CellEditor editor;
-	
-	/** The column index. */
-	private int columnIndex;
-	
-	/** The parent view used to trigger a refresh. */
-	private KiemView parent;
 
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * Instantiates a new KiemComponentEditing. This is only used in the
-	 * third column where the check-box for enabling or disabling a
-	 * DataComponent exists. For other columns this method generates an error.
-	 * 
-	 * @param parent the parent
-	 * @param viewer the viewer
-	 * @param columnIndex the column index
-	 */
-	public KiemComponentEditing(KiemView parent, 
-						  ColumnViewer viewer, 
-						  int columnIndex) {
-		super(viewer);
-		
-		// Create the correct editor based on the column index
-		switch (columnIndex) {
-		case 2:
-			//only in the third column, there should be a check box editing
-			editor = new CheckboxCellEditor(null, SWT.CHECK | SWT.READ_ONLY);
-			break;
-		default:
-			throw new RuntimeException("Editing not supported");
-		}
-		this.columnIndex = columnIndex;
-		this.parent = parent;
-	}
+    /** The cell editor. */
+    private CellEditor editor;
 
-	//-------------------------------------------------------------------------
+    /** The column index. */
+    private int columnIndex;
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
-	 */
-	@Override
-	protected boolean canEdit(Object element) {
-		//do not allow to modify enabled/disabled status during execution
-		if (parent.KIEMInstance.execution != null) 
-			return false;
-		return true;
-	}
+    /** The parent view used to trigger a refresh. */
+    private KiemView parent;
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.EditingSupport#getCellEditor(java.lang.Object)
-	 */
-	@Override
-	protected CellEditor getCellEditor(Object element) {
-		//return the registered cell editor 
-		return editor;
-	}
-	
-	//-------------------------------------------------------------------------
+    /**
+     * Instantiates a new KiemComponentEditing. This is only used in the third column where the
+     * check-box for enabling or disabling a DataComponent exists. For other columns this method
+     * generates an error.
+     * 
+     * @param parentParam
+     *            the parent
+     * @param viewer
+     *            the viewer
+     * @param columnIndexParam
+     *            the column index
+     */
+    public KiemComponentEditing(final KiemView parentParam, 
+                                final ColumnViewer viewer, 
+                                final int columnIndexParam) {
+        super(viewer);
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
-	 */
-	@Override
-	protected Object getValue(Object element) {
-		if (!(element instanceof DataComponentEx)) return null;
-		DataComponentEx dataComponentEx = (DataComponentEx)element;
+        // Create the correct editor based on the column index
+        switch (columnIndexParam) {
+        case 2:
+            // only in the third column, there should be a check box editing
+            editor = new CheckboxCellEditor(null, SWT.CHECK | SWT.READ_ONLY);
+            break;
+        default:
+            throw new RuntimeException("Editing not supported");
+        }
+        this.columnIndex = columnIndexParam;
+        this.parent = parentParam;
+    }
 
-		switch (this.columnIndex) {
-		case 2:
-			//only for the third column, return whether the component is 
-			//enabled
-			return dataComponentEx.isEnabled();
-		default:
-			break;
-		}
-		return null;
-	}
-	
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.EditingSupport#setValue(java.lang.Object, java.lang.Object)
-	 */
-	@Override
-	protected void setValue(Object element, Object value) {
-		if (!(element instanceof DataComponentEx)) return;
-		DataComponentEx dataComponentEx = (DataComponentEx)element;
-		switch (this.columnIndex) {
-		case 2:
-			dataComponentEx.setEnabled((Boolean)value);
-			break;
-		default:
-			break;
-		}
-		//update the table view
-		parent.updateView(true);
-		//modified
-		parent.setDirty(true);
-		//check for a single enabled master, because we could just have
-		//enabled a master where there may be already an enabled one
-		parent.checkForSingleEnabledMaster(false,dataComponentEx);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
+     */
+    @Override
+    protected boolean canEdit(final Object element) {
+        // do not allow to modify enabled/disabled status during execution
+        if (parent.kIEMInstance.execution != null) {
+            return false;
+        }
+        return true;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.viewers.EditingSupport#getCellEditor(java.lang.Object)
+     */
+    @Override
+    protected CellEditor getCellEditor(final Object element) {
+        // return the registered cell editor
+        return editor;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
+     */
+    @Override
+    protected Object getValue(final Object element) {
+        if (!(element instanceof DataComponentEx)) {
+            return null;
+        }
+        DataComponentEx dataComponentEx = (DataComponentEx) element;
+
+        switch (this.columnIndex) {
+        case 2:
+            // only for the third column, return whether the component is
+            // enabled
+            return dataComponentEx.isEnabled();
+        default:
+            break;
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.viewers.EditingSupport#setValue(java.lang.Object, java.lang.Object)
+     */
+    @Override
+    protected void setValue(final Object element, final Object value) {
+        if (!(element instanceof DataComponentEx)) {
+            return;
+        }
+        DataComponentEx dataComponentEx = (DataComponentEx) element;
+        switch (this.columnIndex) {
+        case 2:
+            dataComponentEx.setEnabled((Boolean) value);
+            break;
+        default:
+            break;
+        }
+        // update the table view
+        parent.updateView(true);
+        // modified
+        parent.setDirty(true);
+        // check for a single enabled master, because we could just have
+        // enabled a master where there may be already an enabled one
+        parent.checkForSingleEnabledMaster(false, dataComponentEx);
+    }
 
 }

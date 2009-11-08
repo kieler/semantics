@@ -662,4 +662,13 @@ public class DataComponentEx implements Serializable {
         return this.component.masterGUIisEnabledStop();
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Noop does nothing. It is used in switch/if branches to satisfy checkstyle.
+     */
+    public void noop() {
+       //do a lot of nothing 
+    }
+
 }

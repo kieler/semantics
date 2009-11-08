@@ -19,46 +19,49 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
 /**
- * The Class KiemTableViewer. This is just a TreeViewer, where it is possible
- * to add extensions or modifications in the future within this class 
- * declaration.
- *
+ * The Class KiemTableViewer. This is just a TreeViewer, where it is possible to add extensions or
+ * modifications in the future within this class declaration.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
-public class KiemTableViewer extends TreeViewer{
+public class KiemTableViewer extends TreeViewer {
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Instantiates a new KiemTableViewer.
-	 * 
-	 * @param table the table to use as a basis
-	 */
-	public KiemTableViewer(Table table) {
-		super(table);
-	}
+    /**
+     * Instantiates a new KiemTableViewer.
+     * 
+     * @param table
+     *            the table to use as a basis
+     */
+    public KiemTableViewer(final Table table) {
+        super(table);
+    }
 
-	//-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Instantiates a new KiemTableViewer.
-	 * 
-	 * @param parent the parent
-	 * @param style the style
-	 */
-	public KiemTableViewer(Composite parent, int style) {
-		super(parent, style);
-	}
-	
-	//-------------------------------------------------------------------------
+    /**
+     * Instantiates a new KiemTableViewer.
+     * 
+     * @param parent
+     *            the parent
+     * @param style
+     *            the style
+     */
+    public KiemTableViewer(final Composite parent, final int style) {
+        super(parent, style);
+    }
 
-	/**
-	 * Instantiates a new KiemTableViewer. Use the default style.
-	 * 
-	 * @param parent the parent
-	 */
-	public KiemTableViewer(Composite parent) {
-		super(parent);
-	}
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new KiemTableViewer. Use the default style.
+     * 
+     * @param parent
+     *            the parent
+     */
+    public KiemTableViewer(final Composite parent) {
+        super(parent);
+    }
 }
