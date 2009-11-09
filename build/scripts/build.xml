@@ -151,7 +151,10 @@
 		<property name="p2.category.site" value="file:${basedir}/../../ImportUpdatesiteCategoryDescriptors/workspace/de.cau.cs.kieler.updatesite/site.xml" />
 		<property name="p2.gathering"  value="true" />
 		<property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
-		<property name="configs"       value="${feature.configs}" />
+			<!-- property name="configs"       value="${feature.configs}" / -->
+		<property name="configs"       value="${product.configs}" />
+			<!-- we need the product.configs, i.e. the list of platforms, as kieler.krep contains platform specific fragments
+			     that won't be build when configs equals ${feature.configs} := *,*,* (os,ws,arch); -->
 		<property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
 		<!-- property name="customTargets"   location="${eclipse.pdebuild.templates}/headless-build/customTargets.xml"/ -->
 		    <!-- customTargets is not needed as we directly call the features buildfile -> no prebuild, postbuild, ... will be executed -->
