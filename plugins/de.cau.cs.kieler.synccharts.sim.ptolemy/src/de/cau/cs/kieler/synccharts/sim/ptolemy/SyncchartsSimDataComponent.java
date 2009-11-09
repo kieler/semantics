@@ -390,10 +390,17 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 				//this is an error, probably the selected editor isnt open any more
 				//or the file(name) opened has changed
 				throw new KiemPropertyException("The selected editor '"+kiemEditorProperty+"'" +
-						" does not exist. Please ensure that an opened editor is selected and" +
+						" does not exist.\nPlease ensure that an opened editor is selected and" +
 						"the file name matches.\n\nIf you want the currently active editor to be" +
 						"simulated make sure the (optional) editor property is empty!");
 			}
+		}
+		
+		if (this.getInputEditor() == null) {
+                    throw new KiemPropertyException("There exists no active editor.\n"+
+                            "Please ensure that an opened editor is selected and" +
+                            "the file name matches.\n\nIf you want the currently active editor to be" +
+                            "simulated make sure the (optional) editor property is empty!");
 		}
 		
     	
