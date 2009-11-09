@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,de.cau.cs.kiel
+ er.ksbase.ui,de.cau.cs.kieler.synccharts,de.cau.cs.kieler.synccharts.
+ diagram,org.eclipse.ui.ide;bundle-version="3.5.0",org.eclipse.gmf;bun
+ dle-version="1.2.0",org.eclipse.gmf.runtime.diagram.ui.resources.edit
+ or;bundle-version="1.2.0",org.eclipse.gmf.runtime.diagram.ui;bundle-v
+ ersion="1.2.0",de.cau.cs.kieler.ksbase
+Bundle-ActivationPolicy: lazy
+Bundle-Version: 0.1.0.vqualifier
+Bundle-Name: KSBasE Menu Contributions for de.cau.cs.kieler.synccharts
+ .diagram.part.SyncchartsDiagramEditor
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: de.cau.cs.kieler.synccharts.sbase.generated;singleton:=true
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Activator: de.cau.cs.kieler.synccharts.sbase.generated.Activator
+
