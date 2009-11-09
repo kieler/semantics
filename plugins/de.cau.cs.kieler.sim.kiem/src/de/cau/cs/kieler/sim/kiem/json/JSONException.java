@@ -4,6 +4,7 @@ package de.cau.cs.kieler.sim.kiem.json;
  * The JSONException is thrown by the JSON.org classes then things are amiss.
  * @author JSON.org
  * @version 2008-09-18
+ * @generated
  */
 public class JSONException extends Exception {
     private Throwable cause;

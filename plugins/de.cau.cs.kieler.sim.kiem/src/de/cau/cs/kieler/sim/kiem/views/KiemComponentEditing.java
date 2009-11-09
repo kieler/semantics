@@ -83,7 +83,7 @@ public class KiemComponentEditing extends EditingSupport {
     @Override
     protected boolean canEdit(final Object element) {
         // do not allow to modify enabled/disabled status during execution
-        if (parent.kIEMInstance.execution != null) {
+        if (parent.getKIEMInstance().getExecution() != null) {
             return false;
         }
         return true;

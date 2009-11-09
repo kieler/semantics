@@ -33,6 +33,7 @@ import java.util.Iterator;
  * the JsonML transform.
  * @author JSON.org
  * @version 2008-11-20
+ * @generated
  */
 public class JSONML {
 		

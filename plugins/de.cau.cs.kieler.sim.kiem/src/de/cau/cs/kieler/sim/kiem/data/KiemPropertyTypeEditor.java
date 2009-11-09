@@ -82,7 +82,11 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
         }
         String[] itemsTmp = new String[editors.length];
         for (int c = 0; c < editors.length; c++) {
-            items[c] = editors[c].getTitle() + " (" + editors[c].getId() + ")";
+            try {
+                itemsTmp[c] = editors[c].getTitle() + " (" + editors[c].getId() + ")";
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         this.items = itemsTmp;
     }

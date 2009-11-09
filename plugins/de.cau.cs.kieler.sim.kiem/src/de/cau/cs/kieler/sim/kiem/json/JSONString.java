@@ -6,6 +6,7 @@ package de.cau.cs.kieler.sim.kiem.json;
  * and <code>JSONWriter.value(</code>Object<code>)</code>. The 
  * <code>toJSONString</code> method will be used instead of the default behavior 
  * of using the Object's <code>toString()</code> method and quoting the result.
+ * @generated
  */
 public interface JSONString {
 	/**

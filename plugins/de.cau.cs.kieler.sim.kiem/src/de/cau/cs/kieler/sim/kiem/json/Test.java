@@ -8,6 +8,7 @@ import java.io.StringWriter;
 /**
  * Test class. This file is not formally a member of the org.json library.
  * It is just a casual test tool.
+ * @generated
  */
 public class Test {
 	

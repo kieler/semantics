@@ -58,26 +58,26 @@ public class AddDataComponentDialog extends Dialog {
     private static final int DISABLED_COLOR_GRAY = 150;
     
     /** The basic dialog SWT component. */
-    AddDataComponentDialog dialog;
+    private AddDataComponentDialog dialog;
 
     /** The temporary table that allows the user to select DataComponents. */
-    Table table;
+    private Table table;
 
     /** The list that holds the currently selected DataComponents. */
-    List<DataComponent> selectedList;
+    private List<DataComponent> selectedList;
 
     /**
      * The component list should hold all available default DataComponents and is used to update the
      * table.
      */
-    List<DataComponent> componentList;
+    private List<DataComponent> componentList;
 
     /**
      * The DataComponentExList. It is used to check for multiple instances. It should hold all
      * DataComponentEx's that are in the original list of the KiemView to check if another instance
      * of a DataComponent can safely be added.
      */
-    List<DataComponentEx> dataComponentExList;
+    private List<DataComponentEx> dataComponentExList;
 
     // -------------------------------------------------------------------------
 

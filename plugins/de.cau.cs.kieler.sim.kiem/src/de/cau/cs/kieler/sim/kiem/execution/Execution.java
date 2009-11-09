@@ -37,7 +37,7 @@ import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 public class Execution implements Runnable {
 
     /** Timeout for DataComponents. */
-    TimeoutThread timeout;
+    private TimeoutThread timeout;
 
     /** The Constant TIMEOUT. 5 seconds. */
     private static final int TIMEOUT = 5000;
@@ -684,7 +684,7 @@ public class Execution implements Runnable {
         this.steps = NO_STEPS;
         this.stop = true;
         // release the object
-        KiemPlugin.getDefault().execution = null;
+        KiemPlugin.getDefault().setExecution(null);
         // update the view
         KiemPlugin.getDefault().updateViewAsync();
         // try to stop all components, no blocking stopExecution() call

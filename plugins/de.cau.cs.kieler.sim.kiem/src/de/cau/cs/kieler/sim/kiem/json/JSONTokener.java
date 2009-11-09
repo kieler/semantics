@@ -35,6 +35,7 @@ SOFTWARE.
  * JSON source strings.
  * @author JSON.org
  * @version 2008-09-18
+ * @generated
  */
 public class JSONTokener {
 

@@ -29,6 +29,7 @@ SOFTWARE.
  * JSON and Cookies are both notations for name/value pairs.
  * @author JSON.org
  * @version 2008-09-18
+ * @generated
  */
 public class Cookie {
 

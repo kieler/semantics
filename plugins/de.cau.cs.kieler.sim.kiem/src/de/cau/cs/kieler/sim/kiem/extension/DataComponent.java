@@ -533,8 +533,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
             if ((kIEMInstance != null)) {
                 kIEMInstance.initExecution();
             }
-            if ((kIEMInstance != null) && (kIEMInstance.execution != null)) {
-                kIEMInstance.execution.stepExecutionSync();
+            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+                kIEMInstance.getExecution().stepExecutionSync();
                 kIEMViewInstance.updateViewAsync();
                 return;
             }
@@ -560,8 +560,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
             if ((kIEMInstance != null)) {
                 kIEMInstance.initExecution();
             }
-            if ((kIEMInstance != null) && (kIEMInstance.execution != null)) {
-                kIEMInstance.execution.macroStepExecutionSync();
+            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+                kIEMInstance.getExecution().macroStepExecutionSync();
                 kIEMViewInstance.updateViewAsync();
                 return;
             }
@@ -585,9 +585,9 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
             if (kIEMInstance != null) {
                 kIEMInstance.initExecution();
             }
-            if ((kIEMInstance != null) && (kIEMInstance.execution != null)) {
-                kIEMInstance.execution.stopExecutionSync();
-                kIEMInstance.execution = null;
+            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+                kIEMInstance.getExecution().stopExecutionSync();
+                kIEMInstance.setExecution(null);
                 kIEMViewInstance.updateViewAsync();
                 return;
             }
@@ -611,8 +611,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
             if ((kIEMInstance != null)) {
                 kIEMInstance.initExecution();
             }
-            if ((kIEMInstance != null) && (kIEMInstance.execution != null)) {
-                kIEMInstance.execution.pauseExecutionSync();
+            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+                kIEMInstance.getExecution().pauseExecutionSync();
                 kIEMViewInstance.updateViewAsync();
                 return;
             }
@@ -640,8 +640,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
             if (kIEMInstance != null) {
                 kIEMInstance.initExecution();
             }
-            if ((kIEMInstance != null) && (kIEMInstance.execution != null)) {
-                kIEMInstance.execution.setAimedStepDuration(aimedStepDuration);
+            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+                kIEMInstance.getExecution().setAimedStepDuration(aimedStepDuration);
                 kIEMViewInstance.updateViewAsync();
                 return;
             }
@@ -667,8 +667,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
             if (kIEMInstance != null) {
                 kIEMInstance.initExecution();
             }
-            if ((kIEMInstance != null) && (kIEMInstance.execution != null)) {
-                return kIEMInstance.execution.getAimedStepDuration();
+            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+                return kIEMInstance.getExecution().getAimedStepDuration();
             }
         }
         throw new KiemMasterException(Messages.mErrorKiemMasterException);
@@ -690,8 +690,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
             if ((kIEMInstance != null)) {
                 kIEMInstance.initExecution();
             }
-            if ((kIEMInstance != null) && (kIEMInstance.execution != null)) {
-                kIEMInstance.execution.runExecutionSync();
+            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+                kIEMInstance.getExecution().runExecutionSync();
                 kIEMViewInstance.updateViewAsync();
                 return;
             }
@@ -718,8 +718,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
             if (kIEMInstance != null) {
                 kIEMInstance.initExecution();
             }
-            if ((kIEMInstance != null) && (kIEMInstance.execution != null)) {
-                return kIEMInstance.execution.isPaused();
+            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+                return kIEMInstance.getExecution().isPaused();
             }
         }
         throw new KiemMasterException(Messages.mErrorKiemMasterException);
@@ -744,8 +744,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
             if (kIEMInstance != null) {
                 kIEMInstance.initExecution();
             }
-            if ((kIEMInstance != null) && (kIEMInstance.execution != null)) {
-                return kIEMInstance.execution.isRunning();
+            if ((kIEMInstance != null) && (kIEMInstance.getExecution() != null)) {
+                return kIEMInstance.getExecution().isRunning();
             }
         }
         throw new KiemMasterException(Messages.mErrorKiemMasterException);

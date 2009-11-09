@@ -14,11 +14,14 @@
 
 package de.cau.cs.kieler.sim.kiem.views;
 
-import java.io.FileOutputStream;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIConverter;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.List;
-
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Color;
@@ -41,7 +44,6 @@ import org.eclipse.swt.widgets.TreeColumn;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -136,7 +138,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     private DataComponentEx currentMaster;
 
     /** The KIEM instance to e.g., access the execution. */
-    public KiemPlugin kIEMInstance;
+    private KiemPlugin kIEMInstance;
 
     /** The Constant columnBoundsCollapsed - no properties visible. */
     public static final int[] COLUMN_BOUNDS_COLLAPSED = {250, 0, 20, 120, 50, 50};
@@ -145,7 +147,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     public static final int[] COLUMN_BOUNDS = {250, 200, 20, 120, 50, 50};
 
     /** The column property user defined width, initially -1. */
-    public int columnProperty = -1;
+    private int columnProperty = -1;
 
     /** The Constant columnTitlesCollapsed - properties not visible. */
     public static final String[] COLUMN_TITLES_COLLAPSED = {Messages.mTableComponentName,
@@ -199,7 +201,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the kIEM instance.
+     * 
+     * @return the kIEM instance
+     */
+    public KiemPlugin getKIEMInstance() {
+        return this.kIEMInstance;
+    }
 
+    // -------------------------------------------------------------------------
     /**
      * Sets the current file.
      * 
@@ -630,7 +642,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     public void updateEnabledEnabledDisabledUpDownAddDelete() {
         Object selection = ((org.eclipse.jface.viewers.StructuredSelection) viewer.getSelection())
                 .getFirstElement();
-        if (kIEMInstance.execution != null) {
+        if (kIEMInstance.getExecution() != null) {
             // execution is running
             if (getActionEnableDisable().isEnabled()) {
                 getActionEnableDisable().setEnabled(false);
@@ -764,16 +776,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     public void updateStepsAsync() {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                if (kIEMInstance.execution != null) {
+                if (kIEMInstance.getExecution() != null) {
                     // update step counter if run
-                    String steps = "" + kIEMInstance.execution.getSteps();
-                    if (kIEMInstance.execution.isHistoryStep()) {
+                    String steps = "" + kIEMInstance.getExecution().getSteps();
+                    if (kIEMInstance.getExecution().isHistoryStep()) {
                         steps = "[" + steps + "]";
                     }
                     getStepTextField().updateTextfield(steps);
                     // update StepBackButton
-                    if ((kIEMInstance.execution.getSteps() > 0)
-                            && (!kIEMInstance.execution.isRunning())
+                    if ((kIEMInstance.getExecution().getSteps() > 0)
+                            && (!kIEMInstance.getExecution().isRunning())
                             && (getActionStep().isEnabled())) {
                         getActionStepBack().setEnabled(true);
                     } else {
@@ -888,7 +900,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         if (allDisabled) {
             return;
         }
-        if (kIEMInstance.execution == null) {
+        if (kIEMInstance.getExecution() == null) {
             // execution is stopped
             if (getActionStepBack().isEnabled()) {
                 getActionStepBack().setEnabled(false);
@@ -911,7 +923,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             if (!getActionStepBack().isEnabled()) {
                 getAimedStepDurationTextField().setEnabled(true);
             }
-        } else if (kIEMInstance.execution.isRunning()) {
+        } else if (kIEMInstance.getExecution().isRunning()) {
             // execution is running
             if (getActionStepBack().isEnabled()) {
                 getActionStepBack().setEnabled(false);
@@ -936,7 +948,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             }
         } else {
             // execution is paused
-            if (kIEMInstance.execution.getSteps() > 0) {
+            if (kIEMInstance.getExecution().getSteps() > 0) {
                 if (!getActionStepBack().isEnabled()) {
                     getActionStepBack().setEnabled(true);
                 }
@@ -1019,7 +1031,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionDelete = new Action() {
             public void run() {
                 // do nothing if execution
-                if (kIEMInstance.execution != null) {
+                if (kIEMInstance.getExecution() != null) {
                     return;
                 }
                 IStructuredSelection selection = (org.eclipse.jface.viewers.StructuredSelection) viewer
@@ -1057,7 +1069,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionEnableDisable = new Action() {
             public void run() {
                 // do not change if executing
-                if (kIEMInstance.execution != null) {
+                if (kIEMInstance.getExecution() != null) {
                     return;
                 }
                 // this may not always be applicable e.g., if a property is selected
@@ -1188,14 +1200,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionStepBack = new Action() {
             public void run() {
                 // only update if first step in execution
-                boolean mustUpdate = (kIEMInstance.execution == null);
+                boolean mustUpdate = (kIEMInstance.getExecution() == null);
                 if ((currentMaster != null) && currentMaster.isMasterImplementingGUI()) {
                     // if a master implements the action
                     currentMaster.masterGUIstepBack();
                 } else {
                     // otherwise default implementation
                     if (kIEMInstance.initExecution()) {
-                        kIEMInstance.execution.stepBackExecutionSync();
+                        kIEMInstance.getExecution().stepBackExecutionSync();
                     }
                 }
                 if (mustUpdate) {
@@ -1225,14 +1237,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionStepFMC = new Action() {
             public void run() {
                 // only update if first step in execution
-                boolean mustUpdate = (kIEMInstance.execution == null);
+                boolean mustUpdate = (kIEMInstance.getExecution() == null);
                 if ((currentMaster != null) && currentMaster.isMasterImplementingGUI()) {
                     // unsupported
                     currentMaster.noop();
                 } else {
                     // otherwise default implementation
                     if (kIEMInstance.initExecution()) {
-                        kIEMInstance.execution.stepExecutionPause(kIEMInstance.execution
+                        kIEMInstance.getExecution().stepExecutionPause(kIEMInstance.getExecution()
                                 .getMaximumSteps());
                     }
                 }
@@ -1264,7 +1276,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionStepUser = new Action() {
             public void run() {
                 // only update if first step in execution
-                boolean mustUpdate = (kIEMInstance.execution == null);
+                boolean mustUpdate = (kIEMInstance.getExecution() == null);
                 if ((currentMaster != null) && currentMaster.isMasterImplementingGUI()) {
                     // unsupported
                     currentMaster.noop();
@@ -1273,11 +1285,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     if (kIEMInstance.initExecution()) {
                         String value = showInputDialog(Messages.mActionStepUserDialogTitle,
                                 Messages.mActionStepUserDialogText, ""
-                                        + kIEMInstance.execution.getMaximumSteps());
+                                        + kIEMInstance.getExecution().getMaximumSteps());
                         if (value != null) {
                             try {
                                 long step = Long.parseLong(value);
-                                kIEMInstance.execution.stepExecutionPause(step);
+                                kIEMInstance.getExecution().stepExecutionPause(step);
                             } catch (Exception e) {
                                 //no error should appear here
                             }
@@ -1312,7 +1324,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionRunUser = new Action() {
             public void run() {
                 // only update if first step in execution
-                boolean mustUpdate = (kIEMInstance.execution == null);
+                boolean mustUpdate = (kIEMInstance.getExecution() == null);
                 if ((currentMaster != null) && currentMaster.isMasterImplementingGUI()) {
                     // unsupported
                     currentMaster.noop();
@@ -1321,11 +1333,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     if (kIEMInstance.initExecution()) {
                         String value = showInputDialog(Messages.mActionRunUserDialogTitle,
                                 Messages.mActionRunUserDialogText, ""
-                                        + kIEMInstance.execution.getMaximumSteps());
+                                        + kIEMInstance.getExecution().getMaximumSteps());
                         if (value != null) {
                             try {
                                 long step = Long.parseLong(value);
-                                kIEMInstance.execution.runExecutionPause(step);
+                                kIEMInstance.getExecution().runExecutionPause(step);
                             } catch (Exception e) {
                                 //no error should appear here
                             }
@@ -1359,14 +1371,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionStep = new Action() {
             public void run() {
                 // only update if first step in execution
-                boolean mustUpdate = (kIEMInstance.execution == null);
+                boolean mustUpdate = (kIEMInstance.getExecution() == null);
                 if ((currentMaster != null) && currentMaster.isMasterImplementingGUI()) {
                     // if a master implements the action
                     currentMaster.masterGUIstep();
                 } else {
                     // otherwise default implementation
                     if (kIEMInstance.initExecution()) {
-                        kIEMInstance.execution.stepExecutionSync();
+                        kIEMInstance.getExecution().stepExecutionSync();
                     }
                 }
                 if (mustUpdate) {
@@ -1401,7 +1413,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 } else {
                     // otherwise default implementation
                     if (kIEMInstance.initExecution()) {
-                        kIEMInstance.execution.macroStepExecutionSync();
+                        kIEMInstance.getExecution().macroStepExecutionSync();
                     }
                 }
                 updateView(true);
@@ -1434,7 +1446,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 } else {
                     // otherwise default implementation
                     if (kIEMInstance.initExecution()) {
-                        kIEMInstance.execution.runExecutionSync();
+                        kIEMInstance.getExecution().runExecutionSync();
                     }
                 }
                 updateView(true);
@@ -1467,7 +1479,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 } else {
                     // otherwise default implementation
                     if (kIEMInstance.initExecution()) {
-                        kIEMInstance.execution.pauseExecutionSync();
+                        kIEMInstance.getExecution().pauseExecutionSync();
                     }
                 }
                 updateView(true);
@@ -1509,20 +1521,20 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     long aimedStepDuration = 0;
 
                     // otherwise default implementation
-                    if (kIEMInstance.execution != null) {
-                        kIEMInstance.execution.stopExecutionSync();
+                    if (kIEMInstance.getExecution() != null) {
+                        kIEMInstance.getExecution().stopExecutionSync();
 
                         // get results
-                        executionTime = kIEMInstance.execution.getExecutionDuration();
-                        minStepDuration = kIEMInstance.execution.getMinimumStepDuration();
-                        wavStepDuration = kIEMInstance.execution.getWeightedAverageStepDuration();
-                        aveStepDuration = kIEMInstance.execution.getAverageStepDuration();
-                        maxStepDuration = kIEMInstance.execution.getMaximumStepDuration();
-                        steps = kIEMInstance.execution.getMaximumSteps();
-                        aimedStepDuration = kIEMInstance.execution.getAimedStepDuration();
+                        executionTime = kIEMInstance.getExecution().getExecutionDuration();
+                        minStepDuration = kIEMInstance.getExecution().getMinimumStepDuration();
+                        wavStepDuration = kIEMInstance.getExecution().getWeightedAverageStepDuration();
+                        aveStepDuration = kIEMInstance.getExecution().getAverageStepDuration();
+                        maxStepDuration = kIEMInstance.getExecution().getMaximumStepDuration();
+                        steps = kIEMInstance.getExecution().getMaximumSteps();
+                        aimedStepDuration = kIEMInstance.getExecution().getAimedStepDuration();
                     }
 
-                    kIEMInstance.execution = null;
+                    kIEMInstance.setExecution(null);
                     updateView(true);
 
                     // show execution results
@@ -1666,37 +1678,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             return;
         }
         try {
-            String workspaceFolder = Platform.getLocation().toString();
-
-            FileOutputStream fileOut = new FileOutputStream(workspaceFolder
-                    + currentFile.toOSString());
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-
-            // List<ObjectStreamClass> oscList =
-            // new LinkedList<ObjectStreamClass>();
-            // for (int c = 0; c < KiemPlugin.getDefault()
-            // .getDataComponentExList().size(); c++) {
-            // DataComponentEx dataComponentEx =
-            // KiemPlugin.getDefault()
-            // .getDataComponentExList().get(c);
-            // KiemProperty[] properties = dataComponentEx
-            // .getDataComponent().getProperties();
-            // if (properties != null) {
-            // for (int cc = 0; cc < properties.length; cc++){
-            // KiemProperty property = properties[cc];
-            // ObjectStreamClass osc =
-            // java.io.ObjectStreamClass.lookup(property.getClass());
-            // oscList.add(osc);
-            // }
-            // }
-            // }
-            //            
-            // out.writeObject(oscList);
+            URI fileURI = URI.createFileURI(currentFile.toOSString());
+            //resolve relative workspace paths
+            URIConverter uriConverter = new ExtensibleURIConverterImpl();
+            OutputStream outputStream = uriConverter.createOutputStream(fileURI);
+            ObjectOutputStream out = new ObjectOutputStream(outputStream);
 
             out.writeObject(KiemPlugin.getDefault().getDataComponentExList());
 
             out.close();
-            fileOut.close();
+            outputStream.close();
 
         } catch (IOException e) {
             // TODO: error behavior

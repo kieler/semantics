@@ -29,6 +29,7 @@ SOFTWARE.
  * for the parsing of HTTP headers.
  * @author JSON.org
  * @version 2008-09-18
+ * @generated
  */
 public class HTTPTokener extends JSONTokener {
 

@@ -14,8 +14,8 @@
 
 package de.cau.cs.kieler.sim.kiem;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -26,6 +26,9 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
@@ -88,10 +91,10 @@ public class KiemPlugin extends AbstractUIPlugin {
     private List<DataComponentEx> dataComponentExList;
 
     /** Execution object. */
-    public Execution execution;
+    private Execution execution;
 
     /** Execution thread. */
-    public Thread executionThread;
+    private Thread executionThread;
 
     /** Current value of the aimed step duration in ms. */
     private int aimedStepDuration;
@@ -116,6 +119,29 @@ public class KiemPlugin extends AbstractUIPlugin {
         kIEMViewInstance = null;
     }
 
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Sets the execution.
+     * 
+     * @param executionParam
+     *            the new execution
+     */
+    public void setExecution(final Execution executionParam) {
+        this.execution = executionParam;
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the execution.
+     * 
+     * @return the execution
+     */
+    public Execution getExecution() {
+        return this.execution;
+    }
+    
     // -------------------------------------------------------------------------
 
     /*
@@ -198,26 +224,15 @@ public class KiemPlugin extends AbstractUIPlugin {
                     List<DataComponentEx> dataComponentExListTemp = null;
                     // try to load the components into a temporary list
                     try {
-                        String workspaceFolder = Platform.getLocation().toString();
-                        FileInputStream fileIn = new FileInputStream(workspaceFolder
-                                + ((IFileEditorInput) editorInputToOpen).getFile().getFullPath()
-                                        .toFile());
-                        ObjectInputStream in = new ObjectInputStream(fileIn);
+                        String fileString = ((IFileEditorInput) editorInputToOpen)
+                                                        .getFile().getFullPath().toOSString();
+                        URI fileURI = URI.createFileURI(fileString);
+                        //resolve relative workspace paths
+                        URIConverter uriConverter = new ExtensibleURIConverterImpl();
+                        InputStream inputStream = uriConverter.createInputStream(fileURI);
+                        
+                        ObjectInputStream in = new ObjectInputStream(inputStream);
                         Object object;
-                        // List<ObjectStreamClass> oscList;
-                        // try {
-                        // object = in.readObject();
-                        // if (object instanceof List<?>) {
-                        // oscList =
-                        // (List<ObjectStreamClass>)object;
-                        // }
-                        // } catch (ClassNotFoundException e) {
-                        // e.printStackTrace();
-                        // }
-                        // //resolve serialized classes for loading them...
-                        // for (int c = 0; c < oscList.size(); c++){
-                        // in.
-                        // }
                         try {
                             object = in.readObject();
                             if (object instanceof List<?>) {
@@ -228,7 +243,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                             // e.printStackTrace();
                         }
                         in.close();
-                        fileIn.close();
+                        
+                        inputStream.close();
 
                         // restore (full) DataComponentExList from
                         // temporary list, this for example contains

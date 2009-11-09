@@ -125,14 +125,14 @@ public class KiemLabelProvider implements ITableLabelProvider {
         } else if (columnIndex == COLUMN_2) {
             if (dataComponentEx.isEnabled()) {
                 // enabled
-                if (parent.kIEMInstance.execution == null) {
+                if (parent.getKIEMInstance().getExecution() == null) {
                     return KiemIcons.CHECKED;
                 } else {
                     return KiemIcons.CHECKED_DISABLED;
                 }
             } else {
                 // disabled
-                if (parent.kIEMInstance.execution == null) {
+                if (parent.getKIEMInstance().getExecution() == null) {
                     return KiemIcons.UNCHECKED;
                 } else {
                     return KiemIcons.UNCHECKED_DISABLED;

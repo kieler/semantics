@@ -21,6 +21,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyType;
 
 /**
  * The Class KiemPropertyEditing. It handles the editing support for KiemProperties in the
@@ -85,7 +86,7 @@ public class KiemPropertyEditing extends EditingSupport {
     @Override
     protected boolean canEdit(final Object element) {
         // do not allow to modify enabled/disabled status during execution
-        if (parent.kIEMInstance.execution != null) {
+        if (parent.getKIEMInstance().getExecution() != null) {
             return false;
         }
         return true;
@@ -108,10 +109,12 @@ public class KiemPropertyEditing extends EditingSupport {
         try {
             if (element instanceof KiemProperty) {
                 KiemProperty property = (KiemProperty) element;
-                property.getType().setCellEditor(tree);
-                ce = property.getType().getCellEditor();
+                KiemPropertyType type = property.getType();
+                type.setCellEditor(tree);
+                ce = type.getCellEditor();
             }
         } catch (Exception e) {
+            // hide any errors
             e.printStackTrace();
         }
         return ce;

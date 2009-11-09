@@ -55,6 +55,7 @@ import java.io.StringWriter;
  * This can sometimes be easier than using a JSONObject to build a string.
  * @author JSON.org
  * @version 2008-09-18
+ * @generated
  */
 public class JSONStringer extends JSONWriter {
     /**

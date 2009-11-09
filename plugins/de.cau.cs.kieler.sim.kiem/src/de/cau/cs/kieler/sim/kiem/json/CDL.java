@@ -42,6 +42,7 @@ SOFTWARE.
  * in the first row.
  * @author JSON.org
  * @version 2009-06-18
+ * @generated
  */
 public class CDL {
 

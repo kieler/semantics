@@ -85,6 +85,7 @@ import java.util.TreeSet;
  * </ul>
  * @author JSON.org
  * @version 2009-03-06
+ * @generated
  */
 public class JSONObject {
 

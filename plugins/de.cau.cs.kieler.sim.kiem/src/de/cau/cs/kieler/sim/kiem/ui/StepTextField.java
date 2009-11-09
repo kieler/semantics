@@ -32,7 +32,7 @@ import de.cau.cs.kieler.sim.kiem.Messages;
 public class StepTextField extends ControlContribution {
 
     /** The SWT text field component. */
-    Text textfield;
+    private Text textfield;
 
     // -------------------------------------------------------------------------
 

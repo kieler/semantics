@@ -38,13 +38,13 @@ public class AimedStepDurationTextField extends ControlContribution implements K
         FocusListener {
 
     /** The SWT text field. */
-    Text textfield;
+    private Text textfield;
 
     /** A reference to to the KIEM plug-in for triggering refreshes. */
     private KiemPlugin kIEM;
 
     /** Indicates if the text field is currently enabled. */
-    boolean enabled;
+    private boolean enabled;
 
     // -------------------------------------------------------------------------
 
