@@ -37,22 +37,22 @@ import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 public class DataComponent extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 
     /** The state ''wait for A''. */
-    boolean wA;
+    private boolean wA;
 
     /** The state ''wait for B''. */
-    boolean wB;
+    private boolean wB;
 
     /** The state ''done A''. */
-    boolean dA;
+    private boolean dA;
 
     /** The state ''done B''. */
-    boolean dB;
+    private boolean dB;
 
     /** The done state (got A and B). */
-    boolean done;
+    private boolean done;
 
     /** The name of the state variable to output. */
-    String stateName;
+    private String stateName;
 
     // -------------------------------------------------------------------------
 
