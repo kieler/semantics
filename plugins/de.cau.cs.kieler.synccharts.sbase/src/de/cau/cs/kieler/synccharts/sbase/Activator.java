@@ -17,7 +17,7 @@ package de.cau.cs.kieler.synccharts.sbase;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
  * 
  * @author Michael Matzen - mim AT informatik.uni-kiel.de
  */
