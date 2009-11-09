@@ -37,9 +37,6 @@ public class TableDataEditing extends EditingSupport {
 
     /** The column index. */
     private int columnIndex;
-
-    /** The DataTableViewer to set the currently editing flag. */
-    DataTableViewer viewer;
     
     /** The Constant COLUMN_0. */
     //private static final int COLUMN_0 = 0;
@@ -65,8 +62,6 @@ public class TableDataEditing extends EditingSupport {
      */
     public TableDataEditing(final DataTableViewer viewerParam, final int columnIndexParam) {
         super(viewerParam);
-
-        this.viewer = viewerParam;
 
         // Create the correct editor based on the column index
         switch (columnIndexParam) {

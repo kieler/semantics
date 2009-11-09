@@ -42,7 +42,7 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
      * A temporary list that is used to remember updated values to set all not updated signals to
      * absent within history steps.
      */
-    List<TableData> tableDataTmp;
+    private List<TableData> tableDataTmp;
 
     /** The id of the view for KIEM. */
     private static final String TABLEVIEWID = "de.cau.cs.kieler.sim.table.view";
