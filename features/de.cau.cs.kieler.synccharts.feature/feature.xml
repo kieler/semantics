@@ -150,7 +150,7 @@ under the terms of the Eclipse Public License (EPL).
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.dataflow.sbase.generated"
+         id="de.cau.cs.kieler.synccharts.sbase.generated"
          download-size="0"
          install-size="0"
          version="0.0.0"
