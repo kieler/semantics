@@ -16,7 +16,7 @@ public class RegisterCheckValidator implements IStartup {
         
         //additional checks for KLEPTO simulation restrictions
         CheckRegistry.getInstance().registerCheckFile(
-                SyncchartsPackage.eINSTANCE, "model/SyncchartsKleptoChecks.chk", false, new ArrayList());
+                SyncchartsPackage.eINSTANCE, "model/SyncchartsKleptoChecks.chk", true, new ArrayList());
     }
 
 }
