@@ -24,6 +24,7 @@ import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 public class WorkflowGenerator {
 
@@ -60,7 +61,7 @@ public class WorkflowGenerator {
 
     }
 
-    public void invokeWorkflow() {
+    public void invokeWorkflow(boolean sim) {
         // EMF reader
         Reader emfReader = new Reader();
         emfReader.setUri(uriString);
@@ -69,6 +70,9 @@ public class WorkflowGenerator {
         // Meta model
         EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
+        if (sim){
+            outPath = "/tmp/";
+        }
         
         // Outlet
         Outlet outlet = new Outlet();
@@ -79,7 +83,11 @@ public class WorkflowGenerator {
         generator.addMetaModel(metaModel);
         generator.addOutlet(outlet);
 
-        generator.setExpand("template::codegen::main FOR model");
+        if (sim){
+            generator.setExpand("template::simCodegen::main FOR model");
+        } else {
+            generator.setExpand("template::codegen::main FOR model");
+        }
 
         Workflow workflow = new Workflow();
 
@@ -92,9 +100,6 @@ public class WorkflowGenerator {
 
         workflow.invoke(wfx, monitor, issues);
 
-        System.out.println("SyncChart??:");
-        System.out.println(getSyncChartName());
-        
         StringBuffer issue = new StringBuffer(generator.getLogMessage() + "\n");
         for (MWEDiagnostic s : issues.getIssues()) {
             issue.append(s + "\n");
@@ -131,11 +136,5 @@ public class WorkflowGenerator {
         return out;
     }
     
-    public String getSyncChartName(){
-        String out = "";
-        out = ((DiagramEditor) editor).getTitle();
-        
-        return out;
-    }
 
 }

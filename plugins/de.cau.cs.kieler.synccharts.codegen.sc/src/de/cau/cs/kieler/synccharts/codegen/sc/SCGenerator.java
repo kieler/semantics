@@ -10,7 +10,7 @@ public class SCGenerator extends AbstractHandler implements IHandler {
     WorkflowGenerator wf = new WorkflowGenerator();
 
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        wf.invokeWorkflow();
+        wf.invokeWorkflow(false);
         
         return null;
     }

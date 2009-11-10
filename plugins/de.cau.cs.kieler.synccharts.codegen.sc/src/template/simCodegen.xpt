@@ -1,0 +1,142 @@
+«IMPORT synccharts»
+
+«EXTENSION template::helper»
+
+«DEFINE main FOR Region-»
+	«FILE "sim.c"-»
+	
+// generated SC-code //
+	«EXPAND init-»
+	«EXPAND start-»
+	«EXPAND finish-»
+	«ENDFILE-»
+	«EXPAND simCodegen_data::main»
+«ENDDEFINE»
+
+«DEFINE init FOR Region-»
+#include "sc.h"
+
+extern void JSONstate(char*);
+
+	«EXPAND generateSigType FOR innerStates.signals-»
+	«EXPAND generateSigArray FOR innerStates.signals-»
+
+	«FOREACH innerStates.signals AS signal-»
+		«IF signal.isInput-»
+			«EXPAND generateInputSignals FOR signal»
+		«ENDIF-»
+	«ENDFOREACH-»
+	«EXPAND generateCheckOutputs FOR innerStates.signals»
+	«EXPAND generateReset-»
+int tick(int isInit){
+
+			TICKSTART(isInit, «EXPAND computeMaxThread-»);
+«ENDDEFINE»
+
+«DEFINE generateSigType FOR List-»
+typedef enum {«FOREACH this AS signal SEPARATOR ", "-»
+«((Signal)signal).name-»
+«ENDFOREACH-»} signaltype;
+
+«ENDDEFINE»
+
+«DEFINE generateSigArray FOR List-»
+const char *s2signame[] = {«FOREACH this AS signal SEPARATOR ", "-»
+"«((Signal)signal).name-»"«ENDFOREACH-»};
+
+«ENDDEFINE»
+
+«DEFINE generateInputSignals FOR Signal-»
+void «this.parentState.label»_I_«this.name»(){
+	signals = signals | (1 << «this.name»);
+}
+«ENDDEFINE»
+
+«DEFINE generateCheckOutputs FOR List-»
+void callOutputs(){
+	«FOREACH this AS signal-»
+		«IF ((Signal)signal).isOutput-»
+	if(signals & (1 << «((Signal)signal).name-»)){
+	  SyncChart_O_«((Signal)signal).name-»();
+  }	
+		«ENDIF-»
+	«ENDFOREACH-»
+}
+«ENDDEFINE»
+
+«DEFINE generateReset FOR Region-»
+void reset(){
+	signals = 0;
+}
+
+«ENDDEFINE»
+
+«DEFINE computeMaxThread FOR Region-»1«ENDDEFINE»
+
+«DEFINE start FOR Region-»
+	«FOREACH innerStates.regions.innerStates AS anyState-»
+		«EXPAND state FOR anyState-»
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE state FOR State-»
+«this.id-»:
+	«EXPAND callJSONState-»
+	«FOREACH sortTransitionPrios(this) AS outTrans-»
+		«IF ((Transition)outTrans).isImmediate-»
+			«EXPAND transition FOR (Transition)outTrans-»
+		«ENDIF-»
+	«ENDFOREACH-»
+	
+«this.id»_depth:
+	«EXPAND callJSONState-»
+			PAUSE;
+	«FOREACH sortTransitionPrios(this) AS outTrans-»
+		«EXPAND transition FOR (Transition)outTrans-»
+	«ENDFOREACH-»
+			GOTO(«this.id»_depth);
+«ENDDEFINE»
+
+«DEFINE transition FOR Transition-»
+	«IF this.triggersAndEffects == null-»
+			GOTO(«this.targetState.id-»);
+	«ELSE-»
+		«IF !(this.trigger == null)-»
+			«IF (this.trigger.metaType == SignalReference)-»
+					«EXPAND simpleTrigger FOR this-»
+			«ELSE-»
+					«EXPAND complexTrigger FOR this-»
+			«ENDIF-»
+		«ELSE-»
+	«EXPAND transitionEffects FOR this-»
+		«ENDIF-»
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE simpleTrigger FOR Transition-»
+			if (PRESENT(«((SignalReference)this.trigger).signal.name-»)){
+	«EXPAND transitionEffects FOR this-»
+				GOTO(«this.targetState.id»);
+			}
+«ENDDEFINE»
+
+«DEFINE complexTrigger FOR Transition-»
+>>>> TODO complex Trigger
+«ENDDEFINE»
+
+«DEFINE transitionEffects FOR Transition-»
+	«IF !(effects.isEmpty)-»
+		«FOREACH this.effects AS effect-»
+				EMIT(«((Emission)effect).signal.name-»);
+		«ENDFOREACH-»
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE finish FOR Region»
+			TICKEND;
+}
+«ENDDEFINE»
+
+«DEFINE callJSONState FOR State-»
+			JSONstate("«getURI(this)»");
+«ENDDEFINE»

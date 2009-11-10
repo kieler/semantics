@@ -1,0 +1,104 @@
+«IMPORT synccharts»
+
+«DEFINE main FOR Region-»
+	«FILE "sim_data.c"-»
+// generated SC-code //
+	«EXPAND init-»
+	«EXPAND generateSetInputs-»
+	«EXPAND generatePrintOutputs-»
+	«EXPAND generateMain-»
+	«ENDFILE-»
+«ENDDEFINE»
+
+«DEFINE init FOR Region»
+#include "sc.h"
+#include "cJSON.h"
+#include "tcpip.h"
+#include <string.h>
+
+cJSON* output = 0;
+cJSON* value = 0;
+cJSON* stateArray = 0;
+
+void JSONstate(char *state){
+	cJSON_AddItemToArray(stateArray, cJSON_CreateString(state));
+	if (cJSON_GetObjectItem(output, "state") == NULL){
+		cJSON_AddItemToObject(output, "state", stateArray);
+	}
+}
+
+void selectCid() {
+	int act;
+
+	_cid = 0;
+	for (act = active; act > 1; act >>= 1){
+		_cid++;
+	}
+}
+	«FOREACH innerStates.signals AS signal-»
+		«IF signal.isOutput-»
+			«EXPAND generateOutputSignals FOR signal»
+		«ENDIF-»
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE generateOutputSignals FOR Signal»
+void «this.parentState.label»_O_«this.name»(){
+	value = cJSON_CreateObject();
+	cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
+	cJSON_AddItemToObject(output, "«this.name»", value);
+}
+«ENDDEFINE»
+
+«DEFINE generateSetInputs FOR Region»
+void setInputs(){
+  char* str = rcvMessage();
+	cJSON* object = 0;
+	cJSON* child = 0;
+	cJSON* present = 0;
+	cJSON* value = 0;
+
+	object = cJSON_Parse(str);
+	
+  «FOREACH innerStates.signals AS signal-»
+  	«IF signal.isInput-»
+  child = cJSON_GetObjectItem(object, "«signal.name»");
+	if (child != NULL){
+		present = cJSON_GetObjectItem(child, "present");
+		value = cJSON_GetObjectItem(child, "value");
+		if (present != NULL && present->type){
+			«innerStates.first().label»_I_«signal.name»();
+		}
+	}
+  	«ENDIF-»
+  «ENDFOREACH-»
+}
+«ENDDEFINE»
+
+«DEFINE generatePrintOutputs FOR Region»
+void printOutputs(){
+	printf("%s \n", cJSON_Print(output));
+}
+«ENDDEFINE»
+
+«DEFINE generateMain FOR Region»
+int main(){
+	initServer(12345);
+	stateArray = cJSON_CreateArray();
+	output = cJSON_CreateObject();
+	setInputs();
+	tick(1);
+	while(1){
+  	callOutputs();
+		char* outString = cJSON_Print(output);
+		strip_white_spaces(outString);
+		sndMessage(outString);
+		sndMessage("\n");
+		reset();
+		output = cJSON_CreateObject();
+		stateArray = cJSON_CreateArray();
+		setInputs();
+		tick(0);
+	}
+}
+«ENDDEFINE»
