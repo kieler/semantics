@@ -185,6 +185,23 @@
 		</condition>
 	</target>	
 
+	<target name="cleanFolders" unless="no.clean">
+		<!-- this is just a helper target, which is executed during normal feature builds
+		     but skipped in release build, if multiples features should be build in one job -->
+		
+		<mkdir dir="${basedir}/buildTempFolder" />
+		<mkdir dir="${basedir}/features" />
+		<mkdir dir="${basedir}/plugins" />
+		<mkdir dir="${basedir}/update-site/features" />
+		<mkdir dir="${basedir}/update-site/plugins" />		
+
+		<delete includeemptydirs="true">
+			<fileset dir="${basedir}/buildTempFolder/" includes="**/*"/>
+			<fileset dir="${basedir}/update-site/features/" includes="**/*"/>
+			<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
+		</delete>
+	</target>
+	
 	<target name="generateScripts" if="eclipse.running" depends="init"
 	    description="target for complete feature build and publishing">
 
@@ -259,23 +276,6 @@
 				 value="${doc.target}${findbugs.target}${checkstyle.target}&lt;/project&gt;" />
 	</target>
 
-	<target name="cleanFolders" unless="no.clean">
-		<!-- this is just a helper target, which is executed during normal feature builds
-		     but skipped in release build, if multiples features should be build in one job -->
-		
-		<mkdir dir="${basedir}/buildTempFolder" />
-		<mkdir dir="${basedir}/features" />
-		<mkdir dir="${basedir}/plugins" />
-		<mkdir dir="${basedir}/update-site/features" />
-		<mkdir dir="${basedir}/update-site/plugins" />		
-
-		<delete includeemptydirs="true">
-			<fileset dir="${basedir}/buildTempFolder/" includes="**/*"/>
-			<fileset dir="${basedir}/update-site/features/" includes="**/*"/>
-			<fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
-		</delete>
-	</target>
-	
 	<target name="setBuildTempFolder" if="eclipse.running" unless="no.publishing">
 		<!-- this target is a hack due to a bug in the publish-to-updatesite-script:
 		     running the publishing with default configuration will modify
@@ -348,16 +348,9 @@
 		</delete>
 	</target>
 	
-	<target name="gather.feature.bin.parts" if="eclipse.running" depends="init"
+	<target name="gather.feature.bin.parts" if="eclipse.running" depends="init, cleanFolders, generateScripts"
 		description="target for gathering feature's bin parts, i.e. timestamp the feature only. No children included!">
 		<!-- used in KIELER_dependencies job -->
-
-		<mkdir dir="${basedir}/update-site/features" />
-
-		<ant antfile="${genericTargets}" target="generateScript">
-			<property name="type" value="feature"/>
-			<property name="id" value="${feature}"/>
-		</ant>
 
 		<ant antfile="build.xml" dir="${basedir}/features/${feature}" target="gather.bin.parts">
 			<property name="feature.base" value="${basedir}/update-site/" />

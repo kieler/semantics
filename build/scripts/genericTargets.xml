@@ -260,14 +260,15 @@ set here?
 	</condition>
 	
 	<java jar="${equinoxLauncherJar}" fork="true" failonerror="false" resultproperty="p2.director.return.code" outputproperty="p2.director.java.output">
-		<arg line="-application org.eclipse.equinox.p2.director.app.application" />
+		<arg line="-application org.eclipse.equinox.p2.director" />
+		<!-- arg line="-application org.eclipse.equinox.p2.director.app.application" / --> <!-- CHSCH: new director app choosen -->
 		<arg line="-nosplash" />
 		<arg line="-data ${p2.director.workspace}" />   <!-- line introduced by CHSCH-->
-		<arg line="--launcher.suppressErrors" />
+		<!-- arg line="--launcher.suppressErrors" / -->  <!-- CHSCH: new director doesn't support this option -->
 		<arg line="-consoleLog" />
 		<arg line="-flavor ${p2.flavor}" />
 		<arg line="-installIU ${p2.director.iu}" />
-		<arg line="-version ${p2.director.version}" />
+		<!-- arg line="-version ${p2.director.version}" / -->   <!-- CHSCH: new director doesn't support this option -->
 		<!-- need to quote os,ws,arch so that '*' does not get expanded -->
 		<arg value="-p2.os" />
 		<arg value="${os}" />
