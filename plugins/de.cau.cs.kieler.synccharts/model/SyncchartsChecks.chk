@@ -1,6 +1,33 @@
 import synccharts;
 
 // ================================================================================================
+// Additional restrictions for simulation
+
+context Transition if (delay != 1) WARNING "Delays <> 1 cannot be simulated yet!" :
+  false;
+  
+context Transition WARNING "Immediate transitions cannot be simulated yet!" :
+  isImmediate == false;
+  
+context Signal if (type != ValueType::PURE) WARNING "Only pure signals are supported in the simulation!" :
+  false;  
+  
+context State if (type != StateType::NORMAL) WARNING "Only normal states are supported in the simulation!" :
+  false;  
+
+context State WARNING "Exit actions cannot be simulated yet!" :
+  exitActions.size == 0;
+
+context State WARNING "Enty actions cannot be simulated yet!" :
+  entryActions.size == 0;
+
+context State WARNING "Inner actions cannot be simulated yet!" :
+  innerActions.size == 0;
+
+context State WARNING "Suspend cannot be simulated yet!" :
+  suspensionTrigger == null;
+
+// ================================================================================================
 // Pseudo States 
 context State if (type == StateType::CONDITIONAL) ERROR "Conditional states must not be initial or final!" :
 	isInitial == false && isFinal == false;
