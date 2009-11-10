@@ -10,8 +10,13 @@ public class RegisterCheckValidator implements IStartup {
 
     
     public void earlyStartup() {
+        //normal SyncChart checks
         CheckRegistry.getInstance().registerCheckFile(
                 SyncchartsPackage.eINSTANCE, "model/SyncchartsChecks.chk", false, new ArrayList());
+        
+        //additional checks for KLEPTO simulation restrictions
+        CheckRegistry.getInstance().registerCheckFile(
+                SyncchartsPackage.eINSTANCE, "model/SyncchartsKleptoChecks.chk", false, new ArrayList());
     }
 
 }

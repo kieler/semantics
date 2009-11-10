@@ -1,0 +1,33 @@
+import synccharts;
+
+// ================================================================================================
+// Additional restrictions for KLEPTO simulation
+
+context Action if (delay != 1) WARNING "KLEPTO: Delays <> 1 cannot be simulated yet!" :
+  false;
+  
+context Action WARNING "KLEPTO: Immediate transitions cannot be simulated yet!" :
+  isImmediate == false;
+  
+context Signal if (type != ValueType::PURE) WARNING "KLEPTO: Only pure signals are supported in the simulation!" :
+  false;  
+  
+context State if (type != StateType::NORMAL) WARNING "KLEPTO: Only normal states are supported in the simulation!" :
+  false;  
+
+context State WARNING "KLEPTO: Exit actions cannot be simulated yet!" :
+  exitActions.size == 0;
+
+context State WARNING "KLEPTO: Enty actions cannot be simulated yet!" :
+  entryActions.size == 0;
+
+context State WARNING "KLEPTO: Inner actions cannot be simulated yet!" :
+  innerActions.size == 0;
+
+context State WARNING "KLEPTO: Suspend cannot be simulated yet!" :
+  suspensionTrigger == null;
+  
+context Region WARNING "KLEPTO: Variables are not supported in the simulation!" :
+  variables.size == 0;  
+  
+	
