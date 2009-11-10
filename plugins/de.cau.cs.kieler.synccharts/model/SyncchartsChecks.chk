@@ -26,6 +26,9 @@ context State WARNING "Inner actions cannot be simulated yet!" :
 
 context State WARNING "Suspend cannot be simulated yet!" :
   suspensionTrigger == null;
+  
+context Region WARNING "Variables are not supported in the simulation!" :
+  variables.size == 0;  
 
 // ================================================================================================
 // Pseudo States 
