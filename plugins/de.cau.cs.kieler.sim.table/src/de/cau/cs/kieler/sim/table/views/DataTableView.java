@@ -61,7 +61,7 @@ public class DataTableView extends ViewPart {
     private static final int COLUMN_0_WIDTH = 0;
     
     /** The Constant COLUMN_1_WIDTH. */
-    private static final int COLUMN_1_WIDTH = 25;
+    private static final int COLUMN_1_WIDTH = 38;
     
     /** The Constant COLUMN_2_WIDTH. */
     private static final int COLUMN_2_WIDTH = 120;
