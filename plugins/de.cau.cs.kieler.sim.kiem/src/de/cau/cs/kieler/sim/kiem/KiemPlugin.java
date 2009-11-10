@@ -539,7 +539,9 @@ public class KiemPlugin extends AbstractUIPlugin {
             DataComponentEx dataComponentEx = dataComponentExList.get(c);
             KiemProperty[] properties = dataComponentEx.getProperties();
             try {
-                dataComponentEx.checkProperties(properties);
+                if (dataComponentEx.isEnabled()) {
+                    dataComponentEx.checkProperties(properties);
+                }
             } catch (Exception e) {
                 this.kIEMViewInstance.setAllEnabled(true);
                 this.showError(e.getMessage(), dataComponentEx.getDataComponent()
@@ -554,7 +556,6 @@ public class KiemPlugin extends AbstractUIPlugin {
         for (int c = 0; c < dataComponentExList.size(); c++) {
             DataComponentEx dataComponentEx = dataComponentExList.get(c);
             if (dataComponentEx.isEnabled()) {
-
                 try {
                     String[] localInterfaceKeys = dataComponentEx.provideInterfaceKeys();
                     if (localInterfaceKeys != null) {
@@ -569,7 +570,6 @@ public class KiemPlugin extends AbstractUIPlugin {
                             dataComponentEx.getDataComponent(), e);
                     return false;
                 }
-
             } // if enabled
         } // next c
 
