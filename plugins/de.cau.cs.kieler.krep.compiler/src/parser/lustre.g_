@@ -1,0 +1,196 @@
+grammar lustre;
+
+@option{backtrack=true;}
+
+@lexer::header {
+  package parser;
+}
+
+@header {
+  package parser;
+  import java.util.LinkedList;
+  
+  import prog.Type;
+  import lustre.*;
+  import lustre.Number;
+  import lustre.Lustre;
+  import java.util.HashMap;
+  import krp.statement.Operator;
+}
+
+@members {
+  Lustre l;
+  Expression e;
+  
+  HashMap<String, Type> types = new HashMap<String, Type>();
+  HashMap<String, String> clocks = new HashMap<String, String>();
+  
+  public void setProg(Lustre l){
+    types.put("false", Type.BOOL);
+    types.put("true", Type.BOOL);
+    this.l=l;
+  }
+  
+  private Variable getVar(String name){
+    return new Variable(name, types.get(name), clocks.get(name));
+  }
+}
+
+prog : decl+ ;
+
+decl : constDecl {}
+     | typeDecl {}
+//     | funcDecl {}
+     | nodeDecl {}
+     ;
+
+idList : ID (',' ID)* {};
+
+typedIDs returns [Variable var] //[LinkedList<Variable> vars, String clock]
+	 : n=ID ':' t=type {types.put($n.text,$t.type); return new Variable($n.text, $t.type);};
+
+typedIDsList returns [LinkedList<Variable> vars]
+	 : {LinkedList<Variable> res = new LinkedList<Variable>();}
+	   id=typedIDs {res.add(id);} (';' id2=typedIDs {res.add(id);})* {};
+
+// constants
+constDecl
+	:	'const' constDeclList ';' {}
+	|	'const' constDeclList '.' {}
+	;
+
+constDeclList : constOneDecl (';' constOneDecl)* {};
+
+constOneDecl : ID ':' type {}; 
+
+// types
+typeDecl:	'type' typeDeclList ';' {}
+	|	'type' typeDeclList '.' {}
+	;
+         
+typeDeclList
+	:	typeOneDecl (',' typeOneDecl)* {};
+
+typeOneDecl : ID {};
+
+type returns [Type type]
+     : t=predefinedType  { $type=$t.t; }
+     | ID                { $type=Type.INT; }
+     ;
+
+typeList:	type (',' type)* {};
+
+predefinedType returns [Type t]
+	: 'bool' {$t=Type.BOOL;}
+    | 'int'  {$t=Type.INT;}
+    | 'real' {$t=Type.REAL;}
+    ;
+
+// functions
+
+// nodes
+nodeDecl : 'node' ID '(' in=varDeclList ')' 'returns' '(' out=varDeclList ')' ';'
+           loc=locals nodeBody 
+           {l.setInputs($in.vars); l.setOutputs($out.vars); l.setLocals($loc.vars);};
+          
+
+varDeclList returns [LinkedList<Variable> vars]
+	: {LinkedList<Variable> res = new LinkedList<Variable>();}
+	vs=varDecl {res.add($vs.var);}  (';' vs=varDecl {res.add($vs.var);})* 
+	{return res;};
+            
+varDecl returns [Variable  var]
+	: v=typedIDs                       { $var= $v.var; }
+    | v=typedIDs 'when' c=ID           { clocks.put($v.var.getName(), $c.text); $v.var.setClock($c.text); $var= $v.var; }
+    | '(' vs=typedIDs ')' 'when' c=ID  { clocks.put($vs.var.getName(), $c.text);  $vs.var.setClock($c.text); $var= $vs.var; } 
+    ;
+        
+locals returns [LinkedList<Variable>  vars]
+	: /* empty */ {$vars= new LinkedList<Variable>();}
+    | 'var' (res= varDeclList)? ';' {$vars= $res.vars;}
+    ;
+        
+nodeBody : 'let' equationList 'tel' (';' | '.')? {};
+
+// equations 
+equationList : equation* {};
+
+equation : 'assert' expression["assert"] ';' {}
+         | n=ID '=' e=expression[$n.text] ';' {l.addEq($n.text, $e.expr);}
+         ;
+
+/*left : leftItemList {};
+
+leftItemList : leftItem (',' leftItem)* {};*/
+     
+//leftItem : ID {};  
+
+// expressions
+expression[String name] returns [Expression expr]
+	: '(' n = NUMBER ')'                                 {$expr = new Number(name, Integer.parseInt($NUMBER.text));}
+	| '(' v=ID ')'                                       {$expr = getVar($v.text);}
+	| '(' 'not' e=expression[name] ')'           {$expr= new Not(name, $e.expr);}
+    | '(' 'pre' e=expression[name] ')'           {$expr = new Pre(name, $e.expr); }
+    | '(' 'current' e=expression[name] ')'       {$expr = new Current(name, $e.expr);}
+//  | 'int' e=expression {}
+//  | 'real' e=expression {}
+    | '(' 'if' e1=expression[name] 'then' e2=expression[name] 'else' e3=expression[name] ')'  
+                                                {$expr = new If(name, $e1.expr, $e2.expr, $e3.expr); }
+//		   | callExpression
+    | '(' e1=expression[name] rbinop[$e1.expr,name] {$expr=$rbinop.expr;} ')'
+ 
+//    | '(' e1=expression[name]{$expr=$e1.expr;} 
+//       	  (op=binop e2=expression[name] {$expr= new BinOp(name, $expr, $e2.expr, $op.op);})? 
+//      ')'	
+//         |  TK_DIESE TK_OPEN_PAR xecExpList2 TK_CLOSE_PAR {}
+//		   |  TK_OPEN_PAR xecExpList2 TK_CLOSE_PAR {}
+  //  | '(' e=expression[name] ')' {$expr=e.expr;}
+	;
+
+rbinop[Expression e1, String name] returns [Expression expr]
+  : '->' e2=expression[name]       {$expr=new Init(name, e1, $e2.expr);}
+  | 'when' v=ID                    {$expr=new When(name, e1, getVar($v.text));}  
+  | op=binop e2=expression[name]   {$expr=new BinOp(name, e1, $e2.expr, $op.op);}	
+  ;
+	
+binop returns [Operator op] 	
+	:   'xor'  {$op=Operator.XOR;}
+	|	'=>'   {$op=Operator.IMPL;}
+	|	'or'   {$op=Operator.OR;}
+	| 	'and'  {$op=Operator.AND;}
+	|	'='    {$op=Operator.EQ;}
+	|	'<>'   {$op=Operator.NEQ;}
+	|	'<'    {$op=Operator.LT;}
+	|	'<='   {$op=Operator.LE;}
+	|	'>='   {$op=Operator.GE;}
+	|	'>'    {$op=Operator.GT;}
+	|	'*'    {$op=Operator.MUL;}
+	|	'/'    {$op=Operator.DIV;}
+	|	'mod'  {$op=Operator.MOD;}
+	|	'div'  {$op=Operator.DIV;}
+	|	'+'    {$op=Operator.ADD;}
+	|	'-'    {$op=Operator.SUB;}
+	;
+           
+//constant:	//'true' {}
+	//| 	'false' {}
+	//| 	NUMBER {}
+	//;
+  
+/*------------------------------------------------------------------
+* LEXER RULES
+*------------------------------------------------------------------*/
+
+ID	: (Letter | '_') (Letter | Digit | '_')*;
+
+NUMBER	: ('+'|'-')?(Digit)+ ;
+
+WHITESPACE : ( '\t' | ' ' | '\r' | '\n'| '\u000C')+ 	{ $channel = HIDDEN; } ;
+
+COMMENT : 'assert' (options {greedy=false;}: .)* '\n' {$channel=HIDDEN;};
+
+fragment Digit	: '0'..'9' ;
+
+fragment Letter 
+	:	'a'..'z'|'A'..'Z';
+ 
