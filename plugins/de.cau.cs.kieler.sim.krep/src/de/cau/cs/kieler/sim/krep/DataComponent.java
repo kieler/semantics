@@ -76,7 +76,9 @@ public final class DataComponent extends JSONObjectDataComponent {
 
     private AssemblerView viewer = null;
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public JSONObject step(final JSONObject data) throws KiemExecutionException {
         JSONObject res = new JSONObject();
         LinkedList<Signal> inputs = assembler.getInputs();
@@ -84,22 +86,33 @@ public final class DataComponent extends JSONObjectDataComponent {
         int[] trace;
         try {
             for (Signal s : inputs) {
-                s.setPresent(data.has(s.getName())
-                        && (JSONSignalValues.isPresent(data.get(s.getName()))));
+                if (data.has(s.getName())) {
+                    Object obj = data.get(s.getName());
+                    s.setPresent(JSONSignalValues.isPresent(obj));
+                    Object val = JSONSignalValues.getSignalValue(obj);
+                    if (s.isValued() && val != null) {
+                        s.setValue(val);
+                    }
+                }
             }
-            protocol.tick(inputs.size() + outputs.size(), inputs, outputs);
+            int reactionTime = protocol.tick(inputs.size() + outputs.size(), inputs, outputs);
+            res.accumulate("Reaction Time", reactionTime);
             trace = protocol.getExecutionTrace();
             viewer.markTrace(trace);
         } catch (CommunicationException e) {
-            throw new KiemExecutionException(
-                    "Communication error performing tick", true, e);
+            throw new KiemExecutionException("Communication error performing tick", true, e);
         } catch (JSONException e) {
             throw new KiemExecutionException("Error in Data exchange", true, e);
         }
         try {
             for (Signal s : outputs) {
-                res.accumulate(s.getName(), JSONSignalValues.newValue(s
-                        .getPresent()));
+
+                if (s.isValued()) {
+                    res.accumulate(s.getName(), JSONSignalValues.newValue(s.getValue(), s
+                            .getPresent()));
+                } else {
+                    res.accumulate(s.getName(), JSONSignalValues.newValue(s.getPresent()));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -107,10 +120,11 @@ public final class DataComponent extends JSONObjectDataComponent {
         return res;
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public void initialize() throws KiemInitializationException {
-        IWorkbenchPage page = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow().getActivePage();
+        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         for (IViewReference view : page.getViewReferences()) {
             if (view.getId().equals(AssemblerView.VIEW_ID)) {
                 this.viewer = (AssemblerView) (view.getView(true));
@@ -121,17 +135,23 @@ public final class DataComponent extends JSONObjectDataComponent {
         }
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public boolean isObserver() {
         return true;
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public boolean isProducer() {
         return true;
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public void wrapup() throws KiemInitializationException {
         connection.dispose();
         connection = null;
@@ -144,10 +164,8 @@ public final class DataComponent extends JSONObjectDataComponent {
     public KiemProperty[] provideProperties() {
         LinkedList<KiemProperty> properties = new LinkedList<KiemProperty>();
         String[] items = { "KEP", "KLP" };
-        properties.add(new KiemProperty("Processor",
-                new KiemPropertyTypeChoice(items), items[0]));
-        KiemProperty fp = new KiemProperty("strl2kasm",
-                new KiemPropertyTypeFile());
+        properties.add(new KiemProperty("Processor", new KiemPropertyTypeChoice(items), items[0]));
+        KiemProperty fp = new KiemProperty("strl2kasm", new KiemPropertyTypeFile());
         fp.setValue("/home/esterel/bin/strl2kasm");
         properties.add(fp);
 
@@ -161,14 +179,13 @@ public final class DataComponent extends JSONObjectDataComponent {
 
         try {
 
-            IWorkbenchPage page = PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getActivePage();
+            IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                    .getActivePage();
             IEditorPart editor = page.getActiveEditor();
 
             if (editor.getEditorInput().exists()
                     && editor.getEditorInput() instanceof FileEditorInput) {
-                FileEditorInput input = (FileEditorInput) editor
-                        .getEditorInput();
+                FileEditorInput input = (FileEditorInput) editor.getEditorInput();
                 IFile file = input.getFile();
                 String name = editor.getEditorInput().getName();
                 if (file.getFileExtension().equals("klp")) {
@@ -179,15 +196,13 @@ public final class DataComponent extends JSONObjectDataComponent {
 
                     Injector injector = new KlpStandaloneSetup()
                             .createInjectorAndDoEMFRegistration();
-                    IAntlrParser parser = injector
-                            .getInstance(IAntlrParser.class);
+                    IAntlrParser parser = injector.getInstance(IAntlrParser.class);
                     IParseResult parseResult = parser.parse(in);
                     if (!parseResult.getParseErrors().isEmpty()) {
-                        throw new KiemInitializationException("Parse error",
-                                true, null);
+                        throw new KiemInitializationException("Parse error", true, null);
                     }
                     KLP model = (KLP) parseResult.getRootASTElement();
-                   // ((KlpAssembler) assembler).assemble("huhu", model);
+                    ((KlpAssembler) assembler).assemble("huhu", model);
                 } else if (file.getFileExtension().equals("kasm")) {
                     connection.initialize(ICommunicationProtocol.P_KEP);
                     protocol = new KepProtocol(connection);
@@ -195,35 +210,30 @@ public final class DataComponent extends JSONObjectDataComponent {
                     KepAssembler kep = new KepAssembler();
                     assembler = kep;
                     InputStream in = file.getContents();
-                    Reader reader = new BufferedReader(
-                            new InputStreamReader(in));
+                    Reader reader = new BufferedReader(new InputStreamReader(in));
                     kep.assemble(name, reader);
                 } else if (file.getFileExtension().equals("strl")) {
                     try {
                         String strl2kasm = getProperties()[1].getValue();
-                        String workspace = file.getWorkspace().getRoot()
-                                .getLocation().toOSString();
+                        String workspace = file.getWorkspace().getRoot().getLocation().toOSString();
                         connection.initialize(ICommunicationProtocol.P_KEP);
                         protocol = new KepProtocol(connection);
 
                         KepAssembler kep = new KepAssembler();
                         assembler = kep;
 
-                        IPath kasm = file.getFullPath().removeFileExtension()
-                                .addFileExtension("kasm");
+                        IPath kasm = file.getFullPath().removeFileExtension().addFileExtension(
+                                "kasm");
 
                         Runtime.getRuntime().exec(strl2kasm + " " + name, null,
                                 new File(workspace + file.getFullPath().removeLastSegments(1)));
-                        InputStream in = new FileInputStream(file
-                                .getWorkspace().getRoot().getLocation()
-                                .toOSString()
+                        InputStream in = new FileInputStream(file.getWorkspace().getRoot()
+                                .getLocation().toOSString()
                                 + kasm.toString());
-                        Reader reader = new BufferedReader(
-                                new InputStreamReader(in));
+                        Reader reader = new BufferedReader(new InputStreamReader(in));
                         kep.assemble(name, reader);
                     } catch (IOException e) {
-                        throw new KiemInitializationException(
-                                "Assembler file not found", true, e);
+                        throw new KiemInitializationException("Assembler file not found", true, e);
                     }
                 }
             }
@@ -246,12 +256,10 @@ public final class DataComponent extends JSONObjectDataComponent {
 
         } catch (FileNotFoundException e) {
             assembler = null;
-            throw new KiemInitializationException("Cannot find assembler file",
-                    true, e);
+            throw new KiemInitializationException("Cannot find assembler file", true, e);
         } catch (ParseException e) {
             assembler = null;
-            throw new KiemInitializationException(
-                    "Cannot parse assembler file", true, e);
+            throw new KiemInitializationException("Cannot parse assembler file", true, e);
         } catch (CommunicationException e) {
             assembler = null;
             throw new KiemInitializationException("Connection failed", true, e);
@@ -263,12 +271,10 @@ public final class DataComponent extends JSONObjectDataComponent {
                 protocol.loadProgram(assembler, null);
             } catch (CommunicationException e) {
                 e.printStackTrace();
-                throw new KiemInitializationException("Communication Error",
-                        true, e);
+                throw new KiemInitializationException("Communication Error", true, e);
             } catch (LoadException e) {
                 e.printStackTrace();
-                throw new KiemInitializationException("Cannot load program",
-                        true, e);
+                throw new KiemInitializationException("Cannot load program", true, e);
             }
             if (assembler != null) {
                 for (Signal s : assembler.getInputs()) {
