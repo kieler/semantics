@@ -204,11 +204,12 @@ public class KepAssembler implements IAssembler {
                 res.add(new String[] { num, label, instr, opcode });
             }
         }
-        return res.toArray(new String[0][0]);
+        return res.toArray(new String[res.size()][4]);
     }
 
     /**
      * {@inheritDoc}
+     * 
      */
     public String[] getObj(final Config c) {
         LinkedList<String> obj = new LinkedList<String>();

@@ -50,7 +50,9 @@ public abstract class AssemblerEditor extends EditorPart {
     /** Column identifiers for the embedded table. */
     private static final String[] COLUMN_NAMES = { "index", "label", "instruction", "opcode" };
 
-    private static final int[] COLUMN_WIDTH = { 3, 300, 40, 90, 50 };
+    private static final int[] COLUMN_WIDTH = { 40, 90, 300, 50 };
+
+    private static final int[] COLUMN_ALIGN = { SWT.RIGHT, SWT.NONE, SWT.NONE, SWT.NONE };
 
     /** The embedded table. */
     private Table table = null;;
@@ -148,7 +150,7 @@ public abstract class AssemblerEditor extends EditorPart {
         // create table
         table = new Table(parent, SWT.MULTI);
         for (int i = 0; i < COLUMN_WIDTH.length; i++) {
-            TableColumn column0 = new TableColumn(table, SWT.RIGHT, i);
+            TableColumn column0 = new TableColumn(table, COLUMN_ALIGN[i], i);
             column0.setWidth(COLUMN_WIDTH[i]);
         }
         /*
