@@ -95,7 +95,7 @@ public class SyncchartsSerializersTest {
         State s0 = syncFac.createState();
         s0.setId("S");
         s0.setLabel("S");
-//        s0.setBodyText("badi");
+        s0.setBodyText("badi");
         s0.setIsFinal(true);
         s0.setIsInitial(true);
         // s0.setSuspensionTrigger(null);

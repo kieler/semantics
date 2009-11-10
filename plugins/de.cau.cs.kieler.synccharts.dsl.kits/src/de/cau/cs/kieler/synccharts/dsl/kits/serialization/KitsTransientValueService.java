@@ -44,33 +44,34 @@ public class KitsTransientValueService implements ITransientValueService {
 
         if ((owner instanceof State
                 && (feature.equals(syncPack.getState_ParentRegion()))
-//                || (!(owner.eIsSet(feature))) 
-                || (feature.equals(syncPack.getState_SuspensionTrigger())))
-         || (owner instanceof Region 
-                && (feature.equals(syncPack.getRegion_ParentState())))
-         || (owner instanceof Expression
-                && (feature.equals(syncPack.getExpression_ParentAction()))
-                || (feature.equals(syncPack.getExpression_ParentAssignment()))
-                || (feature.equals(syncPack.getExpression_ParentEmisson())) 
-                || feature.equals(syncPack.getExpression_ParentExpression()))
-         || (owner instanceof Effect 
-                && (feature.equals(syncPack.getEffect_ParentEAction())))
-         || !(owner instanceof State || owner instanceof Region)) {
-//            System.out.println("=============================================");
-//            System.out.println("======== NOT SERIALIZED =======");
-//            System.out.println("owner: " + owner.toString());
-//            System.out.println("feature " + feature.toString());
-//            System.out.println("=============================================");
+        // || (!(owner.eIsSet(feature)))
+        || (feature.equals(syncPack.getState_SuspensionTrigger())))
+                || (owner instanceof Region && (feature.equals(syncPack
+                        .getRegion_ParentState())))
+                || (owner instanceof Expression
+                        && (feature.equals(syncPack
+                                .getExpression_ParentAction()))
+                        || (feature.equals(syncPack
+                                .getExpression_ParentAssignment()))
+                        || (feature.equals(syncPack
+                                .getExpression_ParentEmisson())) || feature
+                        .equals(syncPack.getExpression_ParentExpression()))
+                || (owner instanceof Effect && (feature.equals(syncPack
+                        .getEffect_ParentEAction())))
+                || !(owner instanceof State || owner instanceof Region)
+                /**
+                 * It is important that you mark features that are not set as
+                 * transient. See
+                 * {@link org.eclipse.xtext.parsetree.reconstr.impl. DefaultTransientValueService}
+                 */
+                || (!(owner.eIsSet(feature)))) {
+            // System.out.println("=============================================");
+            // System.out.println("======== NOT SERIALIZED =======");
+            // System.out.println("owner: " + owner.toString());
+            // System.out.println("feature " + feature.toString());
+            // System.out.println("=============================================");
             return true;
-        } 
-//        else if (!(owner.eIsSet(feature))) {
-//            System.out.println("=============================================");
-//            System.out.println("======== NOT SERIALIZED =======");
-//            System.out.println("owner: " + owner.toString());
-//            System.out.println("feature " + feature.toString());
-//            System.out.println("=============================================");
-//            return true;
-//        }
+        }
         return false;
     }
 }
