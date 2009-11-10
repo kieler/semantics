@@ -40,6 +40,7 @@ public class AssemblerView extends ViewPart {
 
     private static final int[] COLUMN_WIDTH = { 40, 90, 300, 50 };
 
+    private static final int[] COLUMN_ALIGN = { SWT.RIGHT, SWT.LEFT, SWT.LEFT, SWT.LEFT };
     /** Activator for this view. */
     public Activator activator = null;
 
@@ -70,7 +71,8 @@ public class AssemblerView extends ViewPart {
 
         TableColumn column;
         for (int i = 0; i < COLUMN_WIDTH.length; i++) {
-            column = new TableColumn(table, SWT.RIGHT, i);
+            column = new TableColumn(table, COLUMN_ALIGN[i], i);
+            column.setText(COLUMN_NAMES[i]);
             column.setWidth(COLUMN_WIDTH[i]);
         }
         table.setLinesVisible(true);
@@ -81,8 +83,6 @@ public class AssemblerView extends ViewPart {
         viewer.setColumnProperties(COLUMN_NAMES);
         viewer.setContentProvider(new ProgramContentProvider());
         viewer.setLabelProvider(new ProgramLabelProvider());
-
-        // viewer.setInput(Activator.getProgram().getInstructions());
     }
 
     /*

@@ -161,7 +161,7 @@ public class KrepProtocol extends CommunicationProtocol {
             res[i] = trace.get(i);
         }
         // int res[] = {1,2};
-        MessageView.print("TraceLength:" + trace.size());
+       // MessageView.print("TraceLength:" + trace.size());
         return res;
     }
 
@@ -179,8 +179,9 @@ public class KrepProtocol extends CommunicationProtocol {
         }
         Iterator<Integer> i = msg.iterator();
         // int nKind = msg.get(0);
-        i.next();
-
+        int kind = i.next();
+        int version =  i.next();
+        
         int nCores = i.next();
         int nIO = i.next();
         int nReg = i.next();
@@ -277,7 +278,7 @@ public class KrepProtocol extends CommunicationProtocol {
 
         // perform tick
         connection.send(TICK_COMMAND);
-        rt = receiveByte(1).getFirst(); // Integer.parseInt(receive(2), 16);
+        rt = receiveByte(1).getFirst(); 
         // receive outputs
         i = 0;
         for (Signal s : outputs) {

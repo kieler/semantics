@@ -54,13 +54,17 @@ public class KlpAssembler implements IAssembler {
     private HashMap<String, Integer> index;
 
     /** Internal array of assembler instructions. */
-    private LinkedList<de.cau.cs.kieler.krep.evalbench.program.Instruction> instructions;
+    //private LinkedList<de.cau.cs.kieler.krep.evalbench.program.Instruction> instructions;
 
     private KLP model = null;
 
     private HashMap<Integer, Integer> rows = new HashMap<Integer, Integer>();
 
     private String name;
+
+    private int nSig = 1;
+    private int nIn = 0;
+    private int nOut = 0;
 
     /**
      * generate empty assembler description.
@@ -70,6 +74,11 @@ public class KlpAssembler implements IAssembler {
         inputs = new LinkedList<Signal>();
         outputs = new LinkedList<Signal>();
         index = new HashMap<String, Integer>();
+        index.put("tick", 0);
+
+        nSig = 1;
+        nIn = 0;
+        nOut = 0;
     }
 
     /**
@@ -85,6 +94,7 @@ public class KlpAssembler implements IAssembler {
         this.model = tModel;
         HashMap<String, Integer> label2addr = new HashMap<String, Integer>();
         HashMap<String, Integer> regs = new HashMap<String, Integer>();
+        regs.put("tick", 0);
         int iIndex = 0;
         for (Line l : model.getInstructions()) {
             if (l.getLabels() != null) {
@@ -140,6 +150,7 @@ public class KlpAssembler implements IAssembler {
             if (i.getPc() != null) {
                 i.getPc().setAddr(label2addr.get(i.getPc().getName()));
             }
+            i.setOpcode1(i.getPc().getAddr());
         } else if (instruction instanceof Jmp) {
             Jmp i = (Jmp) instruction;
             i.setOpcode0(Opcode.JMP.getCode());
@@ -147,14 +158,9 @@ public class KlpAssembler implements IAssembler {
             i.setOpcode1(i.getLabel().getAddr());
         } else if (instruction instanceof Move) {
             Move i = (Move) instruction;
+            setRegs(i.getTo(), regs);
+            setOpcode(i);
 
-            // res = i.getType().getName().toUpperCase() + " " +
-            // printReg(i.getTo()) + " ";
-            // if (i.getFrom() != null) {
-            // res += i.getFrom().getReg();
-            // } else {
-            // res += i.getVal();
-            // }
         } else if (instruction instanceof Prio) {
             Prio i = (Prio) instruction;
             if (i.getReg() != null) {
@@ -174,21 +180,63 @@ public class KlpAssembler implements IAssembler {
         }
     }
 
+    private void setOpcode(final Move i) {
+        switch (i.getType()) {
+        case CCMOV:
+            i.setOpcode0(Opcode.CCMOV.getCode());
+            break;
+        case CMOV:
+            i.setOpcode0(Opcode.INT.getCode());
+            break;
+        case VCMOV:
+            i.setOpcode0(Opcode.BOOL.getCode());
+            break;
+        case ICMOV:
+            i.setOpcode0(Opcode.ICMOV.getCode());
+            break;
+        case IVMOV:
+            i.setOpcode0(Opcode.IVMOV.getCode());
+            break;
+        }
+        i.setOpcode1(2 * i.getTo().getId());
+
+        switch (i.getType()) {
+        case CCMOV:
+        case CMOV:
+        case VCMOV:
+            i.setOpcode2(getOpcode(i.getFrom()));
+            break;
+        case ICMOV:
+        case IVMOV:
+            i.setOpcode2(i.getVal());
+            break;
+        }
+    }
+
+    private int getOpcode(final Read read) {
+        int res = 2 * read.getReg().getId();
+        if (read.isPre()) {
+            res++;
+        }
+        return res;
+    }
+
     private void setOpcode(final Prio i) {
         i.setOpcode0(Opcode.PRIO.getCode());
-        i.setOpcode1(i.getPrio());
+        i.setOpcode1(i.getReg().getId());
+        i.setOpcode2(i.getPrio());
     }
 
     private void setOpcode(final SetClk i) {
         i.setOpcode0(Opcode.SETCLK.getCode());
         i.setOpcode1(i.getReg().getId());
-        i.setOpcode2(i.getClk().getId());
+        i.setOpcode3(i.getClk().getId());
     }
 
     private void setOpcode(final SetPC i) {
         i.setOpcode0(Opcode.SETPC.getCode());
         i.setOpcode1(i.getReg().getId());
-        i.setOpcode2(i.getLabel().getAddr());
+        i.setOpcode3(i.getLabel().getAddr());
     }
 
     private void setRegs(final Read reg, final HashMap<String, Integer> regs) {
@@ -210,13 +258,13 @@ public class KlpAssembler implements IAssembler {
             i.setOpcode0(Opcode.JNZ.getCode());
             break;
         }
-        i.setOpcode1(i.getReg().getReg().getId());
+        i.setOpcode1(getOpcode(i.getReg()));
         i.setOpcode2(i.getLabel().getAddr());
     }
 
     private void setOpcode(final Binop i) {
-        i.setOpcode1(i.getTo().getId());
-        i.setOpcode2(i.getArg1().getReg().getId());
+        i.setOpcode1(2 * i.getTo().getId());
+        i.setOpcode2(getOpcode(i.getArg1()));
         if (i.getArg2() != null) {
             switch (i.getOp()) {
             case ADD:
@@ -259,47 +307,47 @@ public class KlpAssembler implements IAssembler {
                 i.setOpcode0(Opcode.NEQ.getCode());
                 break;
             }
-            i.setOpcode3(i.getArg2().getReg().getId());
+            i.setOpcode3(getOpcode(i.getArg2()));
         } else {
             // immediate
             switch (i.getOp()) {
-            case ADD:
+            case IADD:
                 i.setOpcode0(Opcode.IADD.getCode());
                 break;
-            case SUB:
+            case ISUB:
                 i.setOpcode0(Opcode.ISUB.getCode());
                 break;
-            case DIV:
+            case IDIV:
                 i.setOpcode0(Opcode.IDIV.getCode());
                 break;
-            case MUL:
+            case IMUL:
                 i.setOpcode0(Opcode.IMUL.getCode());
                 break;
-            case AND:
+            case IAND:
                 i.setOpcode0(Opcode.IAND.getCode());
                 break;
-            case OR:
+            case IOR:
                 i.setOpcode0(Opcode.IOR.getCode());
                 break;
-            case XOR:
+            case IXOR:
                 i.setOpcode0(Opcode.IXOR.getCode());
                 break;
-            case LE:
+            case ILE:
                 i.setOpcode0(Opcode.ILE.getCode());
                 break;
-            case LT:
+            case ILT:
                 i.setOpcode0(Opcode.ILT.getCode());
                 break;
-            case EQ:
+            case IEQ:
                 i.setOpcode0(Opcode.IEQ.getCode());
                 break;
-            case GE:
+            case IGE:
                 i.setOpcode0(Opcode.IGE.getCode());
                 break;
-            case GT:
+            case IGT:
                 i.setOpcode0(Opcode.IGT.getCode());
                 break;
-            case NEQ:
+            case INEQ:
                 i.setOpcode0(Opcode.INEQ.getCode());
                 break;
             }
@@ -311,12 +359,14 @@ public class KlpAssembler implements IAssembler {
         switch (i.getScope()) {
         case INPUT:
             i.setOpcode0(Opcode.INPUT.getCode());
+            i.setOpcode1(nIn++);
             break;
         case OUTPUT:
             i.setOpcode0(Opcode.OUTPUT.getCode());
+            i.setOpcode1(nOut++);
             break;
         }
-        i.setOpcode1(i.getReg().getId());
+        i.setOpcode2(i.getReg().getId());
     }
 
     private void setRegs(final Reg reg, final HashMap<String, Integer> regs) {
@@ -331,7 +381,7 @@ public class KlpAssembler implements IAssembler {
     }
 
     private void addSignal(final Decl decl) {
-        Signal s = new Signal(decl.getReg().getName(), false, 0, 0);
+        Signal s = new Signal(decl.getReg().getName(), false, 0, nSig++);
         switch (decl.getScope()) {
         case INPUT:
             inputs.add(s);
@@ -374,21 +424,21 @@ public class KlpAssembler implements IAssembler {
      * {@inheritDoc}
      */
     public String canExecute(final Config c) {
-        // if (!(c instanceof KrepConfig)) {
-        // return "wrong processor";
-        // }
-        // final KrepConfig k = (KrepConfig) c;
-        // if (k.getIo() < inputs.size() || k.getIo() < outputs.size()) {
-        // return "not enough IO";
-        // }
-        //
-        // // if (k.getRegs() < Register.getMax()) {
-        // // return "not enough registers (" + k.getRegs() + "<";
-        // // + Register.getMax() + ")";
-        // // }
-        // if (k.getIrom() < size) {
-        // return "not enough ROM (" + k.getIrom() + "<" + size + ")";
-        // }
+         if (!(c instanceof KrepConfig)) {
+         return "wrong processor";
+         }
+         final KrepConfig k = (KrepConfig) c;
+         if (k.getIo() < inputs.size() || k.getIo() < outputs.size()) {
+         return "not enough IO";
+         }
+        
+         // if (k.getRegs() < Register.getMax()) {
+         // return "not enough registers (" + k.getRegs() + "<";
+         // + Register.getMax() + ")";
+         // }
+         if (k.getIrom() < size()) {
+         return "not enough ROM (" + k.getIrom() + "<" + size() + ")";
+         }
         return null;
     }
 
@@ -417,6 +467,7 @@ public class KlpAssembler implements IAssembler {
                 if (line.getInstruction() == null || line.getInstruction().getOpcode0() == 0) {
                     num = "";
                     opcode = "";
+                    j--;
                 }
                 res.add(new String[] { num, label, i, opcode });
             }
@@ -535,10 +586,12 @@ public class KlpAssembler implements IAssembler {
         if (model != null) {
             for (final Line l : model.getInstructions()) {
                 Instruction i = l.getInstruction();
-                final String t = "" + i.getOpcode0() + i.getOpcode1() + i.getOpcode2()
-                        + i.getOpcode3();
-                if (t != null) {
-                    obj.add(Tools.toHex(j++) + t);
+                if (i != null) {
+                    final String t = "" + padByte(i.getOpcode0()) + padByte(i.getOpcode1())
+                            + padByte(i.getOpcode2()) + padByte(i.getOpcode3());
+                    if (t != null) {
+                        obj.add(Tools.toHex(j++) + t);
+                    }
                 }
             }
         }
@@ -569,7 +622,7 @@ public class KlpAssembler implements IAssembler {
      * {@inheritDoc}
      */
     public int size() {
-        return instructions.size();
+        return model.getInstructions().size();
     }
 
     /**

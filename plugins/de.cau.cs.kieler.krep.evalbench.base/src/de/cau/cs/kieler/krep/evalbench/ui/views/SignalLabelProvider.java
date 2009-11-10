@@ -76,8 +76,6 @@ public class SignalLabelProvider implements ITableLabelProvider {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang .Object, int)
      */
     public Image getColumnImage(final Object element, final int columnIndex) {
         if (element instanceof Signal) {
@@ -96,7 +94,6 @@ public class SignalLabelProvider implements ITableLabelProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang .Object, int)
      */
     public String getColumnText(final Object element, final int columnIndex) {
         if (element instanceof Signal) {
@@ -126,8 +123,6 @@ public class SignalLabelProvider implements ITableLabelProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.
-     *      jface.viewers.ILabelProviderListener)
      */
     public void addListener(final ILabelProviderListener listener) {
         listeners.add(listener);
@@ -136,8 +131,6 @@ public class SignalLabelProvider implements ITableLabelProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse
-     *      .jface.viewers.ILabelProviderListener)
      */
     public void removeListener(final ILabelProviderListener listener) {
         listeners.remove(listener);
@@ -146,7 +139,6 @@ public class SignalLabelProvider implements ITableLabelProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
      */
     public void dispose() {
         // clear list of label provider listeners
@@ -159,8 +151,6 @@ public class SignalLabelProvider implements ITableLabelProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang .Object,
-     *      java.lang.String)
      */
     public boolean isLabelProperty(final Object element, final String property) {
         return true;
