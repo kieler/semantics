@@ -263,7 +263,7 @@ set here?
 		<arg line="-application org.eclipse.equinox.p2.director" />
 		<!-- arg line="-application org.eclipse.equinox.p2.director.app.application" / --> <!-- CHSCH: new director app choosen -->
 		<arg line="-nosplash" />
-		<arg line="-data ${p2.director.workspace}" />   <!-- line introduced by CHSCH-->
+		<arg line="-data ${p2.director.workspace}" />   <!-- CHSCH: line introduced -->
 		<!-- arg line="--launcher.suppressErrors" / -->  <!-- CHSCH: new director doesn't support this option -->
 		<arg line="-consoleLog" />
 		<arg line="-flavor ${p2.flavor}" />
