@@ -33,6 +33,8 @@ public class ModelingPerspective implements IPerspectiveFactory {
     /** A big view. */
     public static final float BIG = 0.7f;
 
+    // CHECKSTYLEOFF LineLength
+
     /* To find view IDs, see cookbook in project trac */
     /* IDs of views */
     private static final String VIEW_KEV = "de.cau.cs.kieler.kev.views.EnvironmentView";
@@ -50,6 +52,8 @@ public class ModelingPerspective implements IPerspectiveFactory {
     private static final String WIZ_FILE = "org.eclipse.ui.wizards.new.file";
     private static final String WIZ_PROJECT = "org.eclipse.ui.wizards.new.project";
 
+    // CHECKSTYLEON LineLength
+    
     /** {@inheritDoc} */
     public void createInitialLayout(final IPageLayout layout) {
         createNewWizardShortcuts(layout);

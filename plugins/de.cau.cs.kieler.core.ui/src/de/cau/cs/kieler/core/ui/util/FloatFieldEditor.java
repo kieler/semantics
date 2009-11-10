@@ -24,9 +24,9 @@ import org.eclipse.swt.widgets.Composite;
 public class FloatFieldEditor extends StringFieldEditor {
 
     /** lower bound for double values. */
-    float lowerBound = -Float.MAX_VALUE;
+    private float lowerBound = -Float.MAX_VALUE;
     /** upper bound for double values. */
-    float upperBound = Float.MAX_VALUE;
+    private float upperBound = Float.MAX_VALUE;
 
     /**
      * Creates a new float field editor.
