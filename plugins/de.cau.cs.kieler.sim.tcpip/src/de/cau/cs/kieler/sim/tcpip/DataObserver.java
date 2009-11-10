@@ -59,17 +59,18 @@ public class DataObserver extends JSONStringDataComponent {
     public void initialize() throws KiemInitializationException {
         // TODO Auto-generated method stub
 
-        // generate Code from SyncChart
-        wf.invokeWorkflow();
+        // generate Code from SyncChart 
+        // true sets the flag for simulation
+        wf.invokeWorkflow(true);
 
         // building relative path
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
         String bundleLocation = bundle.getLocation().replaceAll("reference:file:", "");
 
-        String compile = "gcc " + wf.getOutPath() + wf.getFileName() + ".c " + wf.getOutPath()
-                + wf.getFileName() + "_data.c " + bundleLocation + "simulation/cJSON.c "
-                + bundleLocation + "simulation/tcpip.c " + "-I " + bundleLocation + "simulation/ "
-                + "-o " + bundleLocation + "simulation/simulation -lm";
+        String compile = "gcc " + "/tmp/sim.c " + "/tmp/sim_data.c " + bundleLocation
+                + "simulation/cJSON.c " + bundleLocation + "simulation/tcpip.c " + "-I "
+                + bundleLocation + "simulation/ " + "-o " + bundleLocation
+                + "simulation/simulation -lm";
         String executable = bundleLocation + "simulation/simulation";
         try {
             // compile and start the c server
