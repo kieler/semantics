@@ -2658,26 +2658,10 @@ ruleTransition returns [EObject current=null]
     }:
 ((
 (
-		{
-			if ($current==null) {
-	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode, $current);
-	        }
-        }
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getSourceStateStateCrossReference_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_0_0(), currentNode); 
 	    }
-		ruleFullStateID		{ 
-	        currentNode = currentNode.getParent();
-	    }
-
-)
-)?(
-(
-		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_1_0(), currentNode); 
-	    }
-		lv_type_1_0=ruleTransitionType		{
+		lv_type_0_0=ruleTransitionType		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -2686,7 +2670,7 @@ ruleTransition returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"type",
-	        		lv_type_1_0, 
+	        		lv_type_0_0, 
 	        		"TransitionType", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -2698,6 +2682,12 @@ ruleTransition returns [EObject current=null]
 )
 )(
 (
+		{ 
+		  /* 
+		  dummy action to prevent antlr bug: if backtracking is enabled, antlr will
+		  create synpreds that cannot be compiled in some rare cases
+		  */ 
+		}
 		{
 			if ($current==null) {
 	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
@@ -2705,7 +2695,7 @@ ruleTransition returns [EObject current=null]
 	        }
         }
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_2_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_1_0(), currentNode); 
 	    }
 		ruleFullStateID		{ 
 	        currentNode = currentNode.getParent();
@@ -2714,13 +2704,13 @@ ruleTransition returns [EObject current=null]
 )
 )('with' 
     {
-        createLeafNode(grammarAccess.getTransitionAccess().getWithKeyword_3_0(), null); 
+        createLeafNode(grammarAccess.getTransitionAccess().getWithKeyword_2_0(), null); 
     }
 (
 (
-		lv_isImmediate_4_0='#' 
+		lv_isImmediate_3_0='#' 
     {
-        createLeafNode(grammarAccess.getTransitionAccess().getIsImmediateNumberSignKeyword_3_1_0(), "isImmediate"); 
+        createLeafNode(grammarAccess.getTransitionAccess().getIsImmediateNumberSignKeyword_2_1_0(), "isImmediate"); 
     }
  
 	    {
@@ -2739,9 +2729,9 @@ ruleTransition returns [EObject current=null]
 )
 )?(
 (
-		lv_delay_5_0=RULE_INT
+		lv_delay_4_0=RULE_INT
 		{
-			createLeafNode(grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_3_2_0(), "delay"); 
+			createLeafNode(grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_2_2_0(), "delay"); 
 		}
 		{
 	        if ($current==null) {
@@ -2752,7 +2742,7 @@ ruleTransition returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"delay",
-	        		lv_delay_5_0, 
+	        		lv_delay_4_0, 
 	        		"INT", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -2764,9 +2754,9 @@ ruleTransition returns [EObject current=null]
 )?(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getTriggerBooleanExpressionParserRuleCall_3_3_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getTriggerBooleanExpressionParserRuleCall_2_3_0(), currentNode); 
 	    }
-		lv_trigger_6_0=ruleBooleanExpression		{
+		lv_trigger_5_0=ruleBooleanExpression		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -2775,7 +2765,7 @@ ruleTransition returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"trigger",
-	        		lv_trigger_6_0, 
+	        		lv_trigger_5_0, 
 	        		"BooleanExpression", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -2787,14 +2777,14 @@ ruleTransition returns [EObject current=null]
 )
 )?('/' 
     {
-        createLeafNode(grammarAccess.getTransitionAccess().getSolidusKeyword_3_4_0(), null); 
+        createLeafNode(grammarAccess.getTransitionAccess().getSolidusKeyword_2_4_0(), null); 
     }
 ((
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_3_4_1_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_2_4_1_0_0(), currentNode); 
 	    }
-		lv_effects_8_0=ruleEffect		{
+		lv_effects_7_0=ruleEffect		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -2803,7 +2793,7 @@ ruleTransition returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"effects",
-	        		lv_effects_8_0, 
+	        		lv_effects_7_0, 
 	        		"Effect", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -2815,13 +2805,13 @@ ruleTransition returns [EObject current=null]
 )
 )(',' 
     {
-        createLeafNode(grammarAccess.getTransitionAccess().getCommaKeyword_3_4_1_1(), null); 
+        createLeafNode(grammarAccess.getTransitionAccess().getCommaKeyword_2_4_1_1(), null); 
     }
 )?)*)?)?(
 (
-		lv_isHistory_10_0=' history' 
+		lv_isHistory_9_0=' history' 
     {
-        createLeafNode(grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_4_0(), "isHistory"); 
+        createLeafNode(grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_3_0(), "isHistory"); 
     }
  
 	    {
@@ -2840,7 +2830,7 @@ ruleTransition returns [EObject current=null]
 )
 )?';' 
     {
-        createLeafNode(grammarAccess.getTransitionAccess().getSemicolonKeyword_5(), null); 
+        createLeafNode(grammarAccess.getTransitionAccess().getSemicolonKeyword_4(), null); 
     }
 );
 
@@ -3498,6 +3488,12 @@ ruleEmission returns [EObject current=null]
     }:
 ((
 (
+		{ 
+		  /* 
+		  dummy action to prevent antlr bug: if backtracking is enabled, antlr will
+		  create synpreds that cannot be compiled in some rare cases
+		  */ 
+		}
 		{
 			if ($current==null) {
 	            $current = factory.create(grammarAccess.getEmissionRule().getType().getClassifier());
@@ -3598,6 +3594,12 @@ ruleAssignment returns [EObject current=null]
     }:
 ((
 (
+		{ 
+		  /* 
+		  dummy action to prevent antlr bug: if backtracking is enabled, antlr will
+		  create synpreds that cannot be compiled in some rare cases
+		  */ 
+		}
 		{
 			if ($current==null) {
 	            $current = factory.create(grammarAccess.getAssignmentRule().getType().getClassifier());
@@ -3686,6 +3688,12 @@ ruleSignalReference returns [EObject current=null]
     }:
 (
 (
+		{ 
+		  /* 
+		  dummy action to prevent antlr bug: if backtracking is enabled, antlr will
+		  create synpreds that cannot be compiled in some rare cases
+		  */ 
+		}
 		{
 			if ($current==null) {
 	            $current = factory.create(grammarAccess.getSignalReferenceRule().getType().getClassifier());
@@ -3723,6 +3731,12 @@ ruleVariableReference returns [EObject current=null]
     }:
 (
 (
+		{ 
+		  /* 
+		  dummy action to prevent antlr bug: if backtracking is enabled, antlr will
+		  create synpreds that cannot be compiled in some rare cases
+		  */ 
+		}
 		{
 			if ($current==null) {
 	            $current = factory.create(grammarAccess.getVariableReferenceRule().getType().getClassifier());

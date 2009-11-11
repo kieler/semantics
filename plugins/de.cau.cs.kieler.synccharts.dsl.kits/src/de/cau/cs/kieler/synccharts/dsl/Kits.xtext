@@ -70,7 +70,8 @@ State returns sync::State:
      |(signals+=Signal)
      |(regions+=Region ('||' regions+=Region)*) 
      )+ 
-  '}')? (outgoingTransitions+=Transition)*
+  '}')? 
+  (outgoingTransitions+=Transition)*
 ;
 
 Renaming returns sync::Renaming:
@@ -88,7 +89,7 @@ FullStateID:
 
 
 Transition returns sync::Transition:
-  (sourceState=[sync::State|FullStateID])? //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+//  (sourceState=[sync::State|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
   //|({sync::State} name=FullStateID)
   type=TransitionType (targetState=[sync::State|FullStateID]) //|newTargetState=TransitionState )
   ('with' (isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=
@@ -168,6 +169,7 @@ enum TransitionType returns sync::TransitionType:
 
 
 Action returns sync::Action:
+// (parentStateExitAction=[sync::State])
   {sync::Action} (isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (
   effects+=Effect (',')?)*)?;
 

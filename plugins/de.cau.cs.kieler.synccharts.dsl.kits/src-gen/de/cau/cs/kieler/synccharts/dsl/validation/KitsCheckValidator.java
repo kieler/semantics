@@ -19,7 +19,7 @@ public class KitsCheckValidator extends org.eclipse.xtext.check.AbstractCheckVal
 	}
 	
 	@Override
-	protected List<? extends EPackage> getEPackages() {
+	protected List<EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>();
 		return result;
 	}

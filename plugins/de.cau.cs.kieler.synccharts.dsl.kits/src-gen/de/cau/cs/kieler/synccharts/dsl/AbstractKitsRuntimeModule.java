@@ -20,6 +20,11 @@ public abstract class AbstractKitsRuntimeModule extends DefaultRuntimeModule {
 		super.configure(binder);
 		binder.bind(String.class).annotatedWith(Names.named(Constants.LANGUAGE_NAME)).toInstance(
 			"de.cau.cs.kieler.synccharts.dsl.Kits");
+		bindProperties(binder);
+	}
+	
+	protected void bindProperties(Binder binder) {
+		bindProperties(binder, "/de/cau/cs/kieler/synccharts/dsl/Kits.properties");
 	}
 	
 	
@@ -49,8 +54,18 @@ public abstract class AbstractKitsRuntimeModule extends DefaultRuntimeModule {
 	}
 
 	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
-	public com.google.inject.Provider<org.eclipse.xtext.parser.antlr.Lexer> provideLexer() {
-		return new org.eclipse.xtext.parser.antlr.LexerProvider(de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsLexer.class);
+	public Class<? extends org.eclipse.xtext.parser.antlr.Lexer> bindLexer() {
+		return de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsLexer.class;
+	}
+
+	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
+	public com.google.inject.Provider<de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsLexer> provideInternalKitsLexer() {
+		return org.eclipse.xtext.parser.antlr.LexerProvider.create(de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsLexer.class);
+	}
+
+	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
+	public void configureRuntimeLexer(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.parser.antlr.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.parser.antlr.LexerBindings.RUNTIME)).to(de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsLexer.class);
 	}
 
 	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
@@ -86,6 +101,11 @@ public abstract class AbstractKitsRuntimeModule extends DefaultRuntimeModule {
 	// contributed by org.eclipse.xtext.generator.scoping.JavaScopingFragment
 	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
 		return de.cau.cs.kieler.synccharts.dsl.scoping.KitsScopeProvider.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.scoping.JavaScopingFragment
+	public void configureIScopeProviderDelegate(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.scoping.IScopeProvider.class).annotatedWith(com.google.inject.name.Names.named("org.eclipse.xtext.scoping.IScopeProvider.delegate")).to(org.eclipse.xtext.scoping.impl.SimpleNameScopeProvider.class);
 	}
 
 	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment

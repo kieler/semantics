@@ -503,14 +503,6 @@
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//Transition"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="sourceState" operator="=">
-          <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//State"/>
-            </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
-          </terminal>
-        </tokens>
         <tokens xsi:type="xtext:Assignment" feature="type" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.14"/>
         </tokens>
