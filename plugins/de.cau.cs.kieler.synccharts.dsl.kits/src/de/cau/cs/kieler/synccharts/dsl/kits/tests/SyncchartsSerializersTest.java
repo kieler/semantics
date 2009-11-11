@@ -32,22 +32,15 @@ import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.dsl.KitsStandaloneSetup;
 
 /**
- * This is just a test for creating, loading, saving and parsing of models. The
- * idea is to test the parser and serializer by using very simple examples
- * first. This is not a generic test class, it is written for SyncChart models
- * that are saved as xmi files and load again with default EMF ways. A
- * generalization for switching between different resource types, parsers and
- * serializers and between different ways of getting the resources, e.g. from an
- * open editor, should be supported.
- * 
  * @author oba
  * 
  */
+
 public class SyncchartsSerializersTest {
-    private static SyncchartsFactory syncFac = null;
-    private static ResourceSetImpl resourceSet = null;
-    private static URI fileURI = null;
-    private static Resource resource = null;
+    private static SyncchartsFactory syncFac = SyncchartsFactory.eINSTANCE;
+    private ResourceSetImpl resourceSet = null;
+    private URI fileURI = null;
+    private Resource resource = null;
 
     /**
      * The default constructor. Initialize fields, there should be other
@@ -55,7 +48,6 @@ public class SyncchartsSerializersTest {
      * URIs but ich bin grad zu faul dafuer...
      */
     public SyncchartsSerializersTest() {
-        syncFac = SyncchartsFactory.eINSTANCE;
         resourceSet = new XtextResourceSet();
         fileURI = URI.createFileURI(new File("testRuntime.kits")
                 .getAbsolutePath());
@@ -73,7 +65,7 @@ public class SyncchartsSerializersTest {
         // if (resourceSet instanceof XtextResourceSet) {
         // ((XtextResourceSet) resourceSet).addLoadOption(
         // XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-        resource = resourceSet.createResource(fileURI);
+        myText.resource = myText.resourceSet.createResource(myText.fileURI);
         // } else {
         // System.out.println("sth wrong in resource factory registry?");
         // return;
@@ -155,11 +147,11 @@ public class SyncchartsSerializersTest {
     private void saveModel(Region regionToSave) {
         // Add the model objects to the contents.
         resource.getContents().add(regionToSave);
-//        if (!(regionToSave.getInnerStates().isEmpty())) {
-//            for (State state : regionToSave.getInnerStates()) {
-//                resource.getContents().add(state);;
-//            }
-//        }
+        // if (!(regionToSave.getInnerStates().isEmpty())) {
+        // for (State state : regionToSave.getInnerStates()) {
+        // resource.getContents().add(state);;
+        // }
+        // }
         // Save the contents of the resource to the file system.
         try {
             resource.save(System.out, Collections.EMPTY_MAP);
@@ -182,7 +174,7 @@ public class SyncchartsSerializersTest {
                     + ((Region) myModelObject).getId());
             if (!((Region) myModelObject).getInnerStates().isEmpty()) {
                 for (State state : ((Region) myModelObject).getInnerStates()) {
-                    System.out.println("Has inner state(s): "+state.getId());
+                    System.out.println("Has inner state(s): " + state.getId());
                 }
             }
             System.out.println("-----------------------------------");

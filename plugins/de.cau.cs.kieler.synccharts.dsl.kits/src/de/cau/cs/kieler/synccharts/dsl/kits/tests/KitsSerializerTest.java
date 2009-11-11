@@ -1,5 +1,5 @@
 /*
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+o * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
@@ -27,6 +27,8 @@ import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
+import de.cau.cs.kieler.synccharts.Variable;
+import de.cau.cs.kieler.synccharts.VariableReference;
 import de.cau.cs.kieler.synccharts.dsl.KitsStandaloneSetup;
 
 /**
@@ -56,9 +58,11 @@ public class KitsSerializerTest {
         // }
         resource.getContents().add(createEMFModel());
         System.out.println("> EMF model added...");
+        System.out.println("------------------------------------");
         try {
             resource.save(System.out, Collections.EMPTY_MAP);
             System.out.println();
+            System.out.println("------------------------------------");
             System.out.println("> resource saved ...");
         } catch (IOException e) {
             /* do sth */
@@ -74,25 +78,28 @@ public class KitsSerializerTest {
         Region r = syncFac.createRegion();
         r.setParentState(null);// geht
         r.setId("syncchart");
-        // Variable v = syncFac.createVariable();
-        // v.setName("v1");
-        // v.setInitialValue("initialValue");
-        // r.getVariables().add(v);
+        Variable v = syncFac.createVariable();
+        v.setName("v1");
+        v.setInitialValue("initialValue");
+        r.getVariables().add(v);
         State s0 = syncFac.createState();
         s0.setId("S");
         s0.setLabel("S");
         s0.setBodyText("bodyText");
         s0.setIsFinal(true);
         s0.setIsInitial(true);
-        // Action a = syncFac.createAction();
-        // a.setDelay(0);
-        // s0.setSuspensionTrigger(a);
-        // s0.setType(de.cau.cs.kieler.synccharts.StateType.NORMAL);
+        Action a = syncFac.createAction();
+        a.setDelay(0);
+        a.setIsImmediate(true);
+        VariableReference varRef = syncFac.createVariableReference();
+        varRef.setVariable(v);
+        a.setTrigger(varRef);
+        a.setTriggersAndEffects("triggers / effects");
+        s0.setSuspensionTrigger(a);
+        s0.setType(de.cau.cs.kieler.synccharts.StateType.NORMAL);
         s0.setParentRegion(r);
-        // s0.getEntryActions().
-        r.getInnerStates().add(s0);
-        // isn't this done automatically? whatever, take
-        // no risk
+        r.getInnerStates().add(s0);// isn't this done automatically? whatever,
+        // take no risk
         return r;
     }
 }

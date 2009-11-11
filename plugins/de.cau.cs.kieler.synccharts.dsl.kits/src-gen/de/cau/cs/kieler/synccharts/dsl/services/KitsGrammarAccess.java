@@ -32,22 +32,29 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInnerStatesStateParserRuleCall_2_2_0 = (RuleCall)cInnerStatesAssignment_2_2.eContents().get(0);
 		
 		//Region returns sync::Region:
-		//  "region" id=ID (variables+=Variable|signals+=Signal|innerStates+=State?)*;
+		//  "region"? id=ID? (variables+=Variable|signals+=Signal|innerStates+=State)+; 
+		//
+		//    
+		//    
+		//  // a region declaration excepts at least one of the following three:
 		public ParserRule getRule() { return rule; }
 
-		//"region" id=ID (variables+=Variable|signals+=Signal|innerStates+=State?)*
+		//"region"? id=ID? (variables+=Variable|signals+=Signal|innerStates+=State)+ 
+		//    
+		//  // a region declaration excepts at least one of the following three:
 		public Group getGroup() { return cGroup; }
 
-		//"region"
+		//"region"?
 		public Keyword getRegionKeyword_0() { return cRegionKeyword_0; }
 
-		//id=ID
+		//id=ID?
 		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
 
 		//ID
 		public RuleCall getIdIDTerminalRuleCall_1_0() { return cIdIDTerminalRuleCall_1_0; }
 
-		//(variables+=Variable|signals+=Signal|innerStates+=State?)*
+		//(variables+=Variable|signals+=Signal|innerStates+=State)+ 
+		//  // a region declaration excepts at least one of the following three:
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//variables+=Variable
@@ -62,7 +69,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//Signal
 		public RuleCall getSignalsSignalParserRuleCall_2_1_0() { return cSignalsSignalParserRuleCall_2_1_0; }
 
-		//innerStates+=State?
+		//innerStates+=State
 		public Assignment getInnerStatesAssignment_2_2() { return cInnerStatesAssignment_2_2; }
 
 		//State
@@ -3955,156 +3962,134 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	public class SignalElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Assignment cIsInputAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
-		private final Keyword cIsInputInputKeyword_0_0_0 = (Keyword)cIsInputAssignment_0_0.eContents().get(0);
-		private final Assignment cIsOutputAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
-		private final Keyword cIsOutputOutputKeyword_0_1_0 = (Keyword)cIsOutputAssignment_0_1.eContents().get(0);
-		private final Group cGroup_0_2 = (Group)cAlternatives_0.eContents().get(2);
-		private final Assignment cIsInputAssignment_0_2_0 = (Assignment)cGroup_0_2.eContents().get(0);
-		private final Keyword cIsInputInputKeyword_0_2_0_0 = (Keyword)cIsInputAssignment_0_2_0.eContents().get(0);
-		private final Assignment cIsOutputAssignment_0_2_1 = (Assignment)cGroup_0_2.eContents().get(1);
-		private final Keyword cIsOutputOutputKeyword_0_2_1_0 = (Keyword)cIsOutputAssignment_0_2_1.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameQualifiedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cColonEqualsSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cInitialValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cInitialValueSignalValueParserRuleCall_2_1_0 = (RuleCall)cInitialValueAssignment_2_1.eContents().get(0);
-		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
-		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
-		private final Keyword cColonSpaceKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
-		private final Assignment cTypeAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
-		private final RuleCall cTypeValueTypeEnumRuleCall_3_0_1_0 = (RuleCall)cTypeAssignment_3_0_1.eContents().get(0);
-		private final Group cGroup_3_1 = (Group)cAlternatives_3.eContents().get(1);
-		private final Keyword cCombineKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
-		private final Assignment cTypeAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
-		private final RuleCall cTypeValueTypeEnumRuleCall_3_1_1_0 = (RuleCall)cTypeAssignment_3_1_1.eContents().get(0);
-		private final Keyword cWithKeyword_3_1_2 = (Keyword)cGroup_3_1.eContents().get(2);
-		private final Alternatives cAlternatives_3_1_3 = (Alternatives)cGroup_3_1.eContents().get(3);
-		private final Assignment cCombineOperatorAssignment_3_1_3_0 = (Assignment)cAlternatives_3_1_3.eContents().get(0);
-		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_3_1_3_0_0 = (RuleCall)cCombineOperatorAssignment_3_1_3_0.eContents().get(0);
-		private final Assignment cHostCombineOperatorAssignment_3_1_3_1 = (Assignment)cAlternatives_3_1_3.eContents().get(1);
-		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_3_1_3_1_0 = (RuleCall)cHostCombineOperatorAssignment_3_1_3_1.eContents().get(0);
+		private final Assignment cIsInputAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cIsInputInputKeyword_0_0 = (Keyword)cIsInputAssignment_0.eContents().get(0);
+		private final Assignment cIsOutputAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cIsOutputOutputKeyword_1_0 = (Keyword)cIsOutputAssignment_1.eContents().get(0);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameQualifiedNameParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cColonEqualsSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cInitialValueAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cInitialValueSignalValueParserRuleCall_3_1_0 = (RuleCall)cInitialValueAssignment_3_1.eContents().get(0);
+		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
+		private final Group cGroup_4_0 = (Group)cAlternatives_4.eContents().get(0);
+		private final Keyword cColonSpaceKeyword_4_0_0 = (Keyword)cGroup_4_0.eContents().get(0);
+		private final Assignment cTypeAssignment_4_0_1 = (Assignment)cGroup_4_0.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_4_0_1_0 = (RuleCall)cTypeAssignment_4_0_1.eContents().get(0);
+		private final Group cGroup_4_1 = (Group)cAlternatives_4.eContents().get(1);
+		private final Keyword cCombineKeyword_4_1_0 = (Keyword)cGroup_4_1.eContents().get(0);
+		private final Assignment cTypeAssignment_4_1_1 = (Assignment)cGroup_4_1.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_4_1_1_0 = (RuleCall)cTypeAssignment_4_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_4_1_2 = (Keyword)cGroup_4_1.eContents().get(2);
+		private final Alternatives cAlternatives_4_1_3 = (Alternatives)cGroup_4_1.eContents().get(3);
+		private final Assignment cCombineOperatorAssignment_4_1_3_0 = (Assignment)cAlternatives_4_1_3.eContents().get(0);
+		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_4_1_3_0_0 = (RuleCall)cCombineOperatorAssignment_4_1_3_0.eContents().get(0);
+		private final Assignment cHostCombineOperatorAssignment_4_1_3_1 = (Assignment)cAlternatives_4_1_3.eContents().get(1);
+		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_4_1_3_1_0 = (RuleCall)cHostCombineOperatorAssignment_4_1_3_1.eContents().get(0);
 		
 		//Signal returns sync::Signal:
-		//  (isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=
-		//  QualifiedName (":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=
-		//  ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING))?; 
+		//  isInput?="input"? isOutput?="output"? name=QualifiedName (":=" initialValue=
+		//  SignalValue)? (": " type=ValueType|": combine" type=ValueType "with" (combineOperator
+		//  =CombineOperator|hostCombineOperator=STRING))?; 
 		//
 		//    
-		//    
-		//    // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-		//         // after the initial value, either the type or the combine type has to come
-		//   // if it is not set, the default type PURE
+		//   
+		//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		//        
+		//  // after the initial value, either the type or the combine type has to come
+		//   //default signal type is PURE
 		public ParserRule getRule() { return rule; }
 
-		//(isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=
-		//QualifiedName (":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=
-		//ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING))? 
-		//    
-		//    // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-		//         // after the initial value, either the type or the combine type has to come
-		//   // if it is not set, the default type PURE
+		//isInput?="input"? isOutput?="output"? name=QualifiedName (":=" initialValue=
+		//SignalValue)? (": " type=ValueType|": combine" type=ValueType "with" (combineOperator
+		//=CombineOperator|hostCombineOperator=STRING))? 
+		//   
+		//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		//        
+		//  // after the initial value, either the type or the combine type has to come
+		//   //default signal type is PURE
 		public Group getGroup() { return cGroup; }
 
-		//isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output" 
-		//    
-		//    // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
-
-		//isInput?="input"
-		public Assignment getIsInputAssignment_0_0() { return cIsInputAssignment_0_0; }
+		//isInput?="input"?
+		public Assignment getIsInputAssignment_0() { return cIsInputAssignment_0; }
 
 		//"input"
-		public Keyword getIsInputInputKeyword_0_0_0() { return cIsInputInputKeyword_0_0_0; }
+		public Keyword getIsInputInputKeyword_0_0() { return cIsInputInputKeyword_0_0; }
 
-		//isOutput?="output"
-		public Assignment getIsOutputAssignment_0_1() { return cIsOutputAssignment_0_1; }
-
-		//"output"
-		public Keyword getIsOutputOutputKeyword_0_1_0() { return cIsOutputOutputKeyword_0_1_0; }
-
-		//isInput?="input" isOutput?="output"
-		public Group getGroup_0_2() { return cGroup_0_2; }
-
-		//isInput?="input"
-		public Assignment getIsInputAssignment_0_2_0() { return cIsInputAssignment_0_2_0; }
-
-		//"input"
-		public Keyword getIsInputInputKeyword_0_2_0_0() { return cIsInputInputKeyword_0_2_0_0; }
-
-		//isOutput?="output"
-		public Assignment getIsOutputAssignment_0_2_1() { return cIsOutputAssignment_0_2_1; }
+		//isOutput?="output"?
+		public Assignment getIsOutputAssignment_1() { return cIsOutputAssignment_1; }
 
 		//"output"
-		public Keyword getIsOutputOutputKeyword_0_2_1_0() { return cIsOutputOutputKeyword_0_2_1_0; }
+		public Keyword getIsOutputOutputKeyword_1_0() { return cIsOutputOutputKeyword_1_0; }
 
-		//name=QualifiedName   // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		//name=QualifiedName  
+		//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
 		//QualifiedName
-		public RuleCall getNameQualifiedNameParserRuleCall_1_0() { return cNameQualifiedNameParserRuleCall_1_0; }
+		public RuleCall getNameQualifiedNameParserRuleCall_2_0() { return cNameQualifiedNameParserRuleCall_2_0; }
 
 		//(":=" initialValue=SignalValue)?
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_3() { return cGroup_3; }
 
 		//":="
-		public Keyword getColonEqualsSignKeyword_2_0() { return cColonEqualsSignKeyword_2_0; }
+		public Keyword getColonEqualsSignKeyword_3_0() { return cColonEqualsSignKeyword_3_0; }
 
 		//initialValue=SignalValue
-		public Assignment getInitialValueAssignment_2_1() { return cInitialValueAssignment_2_1; }
+		public Assignment getInitialValueAssignment_3_1() { return cInitialValueAssignment_3_1; }
 
 		//SignalValue
-		public RuleCall getInitialValueSignalValueParserRuleCall_2_1_0() { return cInitialValueSignalValueParserRuleCall_2_1_0; }
+		public RuleCall getInitialValueSignalValueParserRuleCall_3_1_0() { return cInitialValueSignalValueParserRuleCall_3_1_0; }
 
 		//(": " type=ValueType|": combine" type=ValueType "with" (combineOperator=
-		//CombineOperator|hostCombineOperator=STRING))?   // after the initial value, either the type or the combine type has to come
-		//   // if it is not set, the default type PURE
-		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+		//CombineOperator|hostCombineOperator=STRING))?  
+		//  // after the initial value, either the type or the combine type has to come
+		//   //default signal type is PURE
+		public Alternatives getAlternatives_4() { return cAlternatives_4; }
 
 		//": " type=ValueType
-		public Group getGroup_3_0() { return cGroup_3_0; }
+		public Group getGroup_4_0() { return cGroup_4_0; }
 
 		//": "
-		public Keyword getColonSpaceKeyword_3_0_0() { return cColonSpaceKeyword_3_0_0; }
+		public Keyword getColonSpaceKeyword_4_0_0() { return cColonSpaceKeyword_4_0_0; }
 
 		//type=ValueType
-		public Assignment getTypeAssignment_3_0_1() { return cTypeAssignment_3_0_1; }
+		public Assignment getTypeAssignment_4_0_1() { return cTypeAssignment_4_0_1; }
 
 		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_3_0_1_0() { return cTypeValueTypeEnumRuleCall_3_0_1_0; }
+		public RuleCall getTypeValueTypeEnumRuleCall_4_0_1_0() { return cTypeValueTypeEnumRuleCall_4_0_1_0; }
 
 		//": combine" type=ValueType "with" (combineOperator=CombineOperator|
 		//hostCombineOperator=STRING)
-		public Group getGroup_3_1() { return cGroup_3_1; }
+		public Group getGroup_4_1() { return cGroup_4_1; }
 
 		//": combine"
-		public Keyword getCombineKeyword_3_1_0() { return cCombineKeyword_3_1_0; }
+		public Keyword getCombineKeyword_4_1_0() { return cCombineKeyword_4_1_0; }
 
 		//type=ValueType
-		public Assignment getTypeAssignment_3_1_1() { return cTypeAssignment_3_1_1; }
+		public Assignment getTypeAssignment_4_1_1() { return cTypeAssignment_4_1_1; }
 
 		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_3_1_1_0() { return cTypeValueTypeEnumRuleCall_3_1_1_0; }
+		public RuleCall getTypeValueTypeEnumRuleCall_4_1_1_0() { return cTypeValueTypeEnumRuleCall_4_1_1_0; }
 
 		//"with"
-		public Keyword getWithKeyword_3_1_2() { return cWithKeyword_3_1_2; }
+		public Keyword getWithKeyword_4_1_2() { return cWithKeyword_4_1_2; }
 
 		//combineOperator=CombineOperator|hostCombineOperator=STRING
-		public Alternatives getAlternatives_3_1_3() { return cAlternatives_3_1_3; }
+		public Alternatives getAlternatives_4_1_3() { return cAlternatives_4_1_3; }
 
 		//combineOperator=CombineOperator
-		public Assignment getCombineOperatorAssignment_3_1_3_0() { return cCombineOperatorAssignment_3_1_3_0; }
+		public Assignment getCombineOperatorAssignment_4_1_3_0() { return cCombineOperatorAssignment_4_1_3_0; }
 
 		//CombineOperator
-		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_3_1_3_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_3_1_3_0_0; }
+		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_4_1_3_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_4_1_3_0_0; }
 
 		//hostCombineOperator=STRING
-		public Assignment getHostCombineOperatorAssignment_3_1_3_1() { return cHostCombineOperatorAssignment_3_1_3_1; }
+		public Assignment getHostCombineOperatorAssignment_4_1_3_1() { return cHostCombineOperatorAssignment_4_1_3_1; }
 
 		//STRING
-		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_3_1_3_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_3_1_3_1_0; }
+		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_4_1_3_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_4_1_3_1_0; }
 	}
 
 	public class SignalValueElements extends AbstractParserRuleElementFinder {
@@ -5924,7 +5909,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Region returns sync::Region:
-	//  "region" id=ID (variables+=Variable|signals+=Signal|innerStates+=State?)*;
+	//  "region"? id=ID? (variables+=Variable|signals+=Signal|innerStates+=State)+; 
+	//
+	//    
+	//    
+	//  // a region declaration excepts at least one of the following three:
 	public RegionElements getRegionAccess() {
 		return (pRegion != null) ? pRegion : (pRegion = new RegionElements());
 	}
@@ -6161,15 +6150,16 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Signal returns sync::Signal:
-	//  (isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=
-	//  QualifiedName (":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=
-	//  ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING))?; 
+	//  isInput?="input"? isOutput?="output"? name=QualifiedName (":=" initialValue=
+	//  SignalValue)? (": " type=ValueType|": combine" type=ValueType "with" (combineOperator
+	//  =CombineOperator|hostCombineOperator=STRING))?; 
 	//
 	//    
-	//    
-	//    // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-	//         // after the initial value, either the type or the combine type has to come
-	//   // if it is not set, the default type PURE
+	//   
+	//  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+	//        
+	//  // after the initial value, either the type or the combine type has to come
+	//   //default signal type is PURE
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
 	}

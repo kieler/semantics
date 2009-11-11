@@ -10,7 +10,9 @@ sync //import "http://kieler.cs.cau.de/synccharts#//State" as state
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 Region returns sync::Region:
-  ('region') (id=ID) (variables+=Variable|signals+=Signal|(innerStates+=State)?)*;
+  ('region')? (id=ID)?
+  // a region declaration excepts at least one of the following three: 
+  (variables+=Variable|signals+=Signal|(innerStates+=State))+;
 
 State returns sync::State:
 //  {sync::State} 
@@ -130,12 +132,14 @@ Variable returns sync::Variable:
 );
 
 Signal returns sync::Signal:
-  ((isInput?='input')|(isOutput?='output')|((isInput?='input') (isOutput?='output')
-  )) // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-  name=QualifiedName (':=' initialValue=SignalValue)? // after the initial value, either the type or the combine type has to come
-  // if it is not set, the default type PURE
-  ((': ' type=ValueType)|(': combine' type=ValueType 'with' (combineOperator=
-  CombineOperator|hostCombineOperator=STRING)))?;
+  (isInput?='input')?(isOutput?='output')? 
+  // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+  name=QualifiedName (':=' initialValue=SignalValue)? 
+  // after the initial value, either the type or the combine type has to come
+  //default signal type is PURE
+  (  (': ' type=ValueType)
+    |(': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING))
+  )?;
 
 SignalValue returns ecore::EString:
   (INT|ID|Boolean)+;

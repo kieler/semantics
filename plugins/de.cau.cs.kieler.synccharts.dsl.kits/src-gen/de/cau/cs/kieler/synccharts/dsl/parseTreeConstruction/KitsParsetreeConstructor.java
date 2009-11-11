@@ -80,11 +80,17 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule Region ****************
  *
  * Region returns sync::Region:
- *   "region" id=ID (variables+=Variable|signals+=Signal|innerStates+=State?)*;
+ *   "region"? id=ID? (variables+=Variable|signals+=Signal|innerStates+=State)+; 
+ * 
+ *     
+ *     
+ *   // a region declaration excepts at least one of the following three:
  *
  **/
 
-// "region" id=ID (variables+=Variable|signals+=Signal|innerStates+=State?)*
+// "region"? id=ID? (variables+=Variable|signals+=Signal|innerStates+=State)+ 
+//     
+//   // a region declaration excepts at least one of the following three:
 protected class Region_Group extends GroupToken {
 	
 	public Region_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -100,7 +106,6 @@ protected class Region_Group extends GroupToken {
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
 			case 0: return new Region_Alternatives_2(parent, this, 0, inst);
-			case 1: return new Region_IdAssignment_1(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -112,28 +117,7 @@ protected class Region_Group extends GroupToken {
 	}
 }
 
-// "region"
-protected class Region_RegionKeyword_0 extends KeywordToken  {
-	
-	public Region_RegionKeyword_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getRegionAccess().getRegionKeyword_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-}
-
-// id=ID
+// id=ID?
 protected class Region_IdAssignment_1 extends AssignmentToken  {
 	
 	public Region_IdAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -148,14 +132,13 @@ protected class Region_IdAssignment_1 extends AssignmentToken  {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Region_RegionKeyword_0(parent, this, 0, inst);
-			default: return null;
+			default: return parent.createParentFollower(this, index, index, inst);
 		}	
 	}	
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("id",true)) == null) return null;
+		if((value = current.getConsumable("id",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("id");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
@@ -167,7 +150,8 @@ protected class Region_IdAssignment_1 extends AssignmentToken  {
 
 }
 
-// (variables+=Variable|signals+=Signal|innerStates+=State?)*
+// (variables+=Variable|signals+=Signal|innerStates+=State)+ 
+//   // a region declaration excepts at least one of the following three:
 protected class Region_Alternatives_2 extends AlternativesToken {
 
 	public Region_Alternatives_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -233,7 +217,7 @@ protected class Region_VariablesAssignment_2_0 extends AssignmentToken  {
 		switch(index) {
 			case 0: return new Region_Alternatives_2(parent, next, actIndex, consumed);
 			case 1: return new Region_IdAssignment_1(parent, next, actIndex, consumed);
-			default: return null;
+			default: return parent.createParentFollower(next, actIndex , index - 2, consumed);
 		}	
 	}	
 }
@@ -280,12 +264,12 @@ protected class Region_SignalsAssignment_2_1 extends AssignmentToken  {
 		switch(index) {
 			case 0: return new Region_Alternatives_2(parent, next, actIndex, consumed);
 			case 1: return new Region_IdAssignment_1(parent, next, actIndex, consumed);
-			default: return null;
+			default: return parent.createParentFollower(next, actIndex , index - 2, consumed);
 		}	
 	}	
 }
 
-// innerStates+=State?
+// innerStates+=State
 protected class Region_InnerStatesAssignment_2_2 extends AssignmentToken  {
 	
 	public Region_InnerStatesAssignment_2_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -307,7 +291,7 @@ protected class Region_InnerStatesAssignment_2_2 extends AssignmentToken  {
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("innerStates",false)) == null) return null;
+		if((value = current.getConsumable("innerStates",true)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("innerStates");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IInstanceDescription param = getDescr((EObject)value);
@@ -327,7 +311,7 @@ protected class Region_InnerStatesAssignment_2_2 extends AssignmentToken  {
 		switch(index) {
 			case 0: return new Region_Alternatives_2(parent, next, actIndex, consumed);
 			case 1: return new Region_IdAssignment_1(parent, next, actIndex, consumed);
-			default: return null;
+			default: return parent.createParentFollower(next, actIndex , index - 2, consumed);
 		}	
 	}	
 }
@@ -12968,25 +12952,27 @@ protected class Variable_TypeAssignment_2_1_3 extends AssignmentToken  {
 /************ begin Rule Signal ****************
  *
  * Signal returns sync::Signal:
- *   (isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=
- *   QualifiedName (":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=
- *   ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING))?; 
+ *   isInput?="input"? isOutput?="output"? name=QualifiedName (":=" initialValue=
+ *   SignalValue)? (": " type=ValueType|": combine" type=ValueType "with" (combineOperator
+ *   =CombineOperator|hostCombineOperator=STRING))?; 
  * 
  *     
- *     
- *     // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
- *          // after the initial value, either the type or the combine type has to come
- *    // if it is not set, the default type PURE
+ *    
+ *   // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+ *         
+ *   // after the initial value, either the type or the combine type has to come
+ *    //default signal type is PURE
  *
  **/
 
-// (isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output") name=
-// QualifiedName (":=" initialValue=SignalValue)? (": " type=ValueType|": combine" type=
-// ValueType "with" (combineOperator=CombineOperator|hostCombineOperator=STRING))? 
-//     
-//     // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-//          // after the initial value, either the type or the combine type has to come
-//    // if it is not set, the default type PURE
+// isInput?="input"? isOutput?="output"? name=QualifiedName (":=" initialValue=
+// SignalValue)? (": " type=ValueType|": combine" type=ValueType "with" (combineOperator
+// =CombineOperator|hostCombineOperator=STRING))? 
+//    
+//   // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+//         
+//   // after the initial value, either the type or the combine type has to come
+//    //default signal type is PURE
 protected class Signal_Group extends GroupToken {
 	
 	public Signal_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -13001,9 +12987,9 @@ protected class Signal_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_Alternatives_3(parent, this, 0, inst);
-			case 1: return new Signal_Group_2(parent, this, 1, inst);
-			case 2: return new Signal_NameAssignment_1(parent, this, 2, inst);
+			case 0: return new Signal_Alternatives_4(parent, this, 0, inst);
+			case 1: return new Signal_Group_3(parent, this, 1, inst);
+			case 2: return new Signal_NameAssignment_2(parent, this, 2, inst);
 			default: return null;
 		}	
 	}	
@@ -13015,42 +13001,16 @@ protected class Signal_Group extends GroupToken {
 	}
 }
 
-// isInput?="input"|isOutput?="output"|isInput?="input" isOutput?="output" 
-//     
-//     // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-protected class Signal_Alternatives_0 extends AlternativesToken {
-
-	public Signal_Alternatives_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
+// isInput?="input"?
+protected class Signal_IsInputAssignment_0 extends AssignmentToken  {
 	
-	@Override
-	public Alternatives getGrammarElement() {
-		return grammarAccess.getSignalAccess().getAlternatives_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Signal_IsInputAssignment_0_0(parent, this, 0, inst);
-			case 1: return new Signal_IsOutputAssignment_0_1(parent, this, 1, inst);
-			case 2: return new Signal_Group_0_2(parent, this, 2, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// isInput?="input"
-protected class Signal_IsInputAssignment_0_0 extends AssignmentToken  {
-	
-	public Signal_IsInputAssignment_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_IsInputAssignment_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getIsInputAssignment_0_0();
+		return grammarAccess.getSignalAccess().getIsInputAssignment_0();
 	}
 
     @Override
@@ -13062,11 +13022,11 @@ protected class Signal_IsInputAssignment_0_0 extends AssignmentToken  {
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isInput",true)) == null) return null;
+		if((value = current.getConsumable("isInput",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("isInput");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getSignalAccess().getIsInputInputKeyword_0_0_0();
+			element = grammarAccess.getSignalAccess().getIsInputInputKeyword_0_0();
 			return obj;
 		}
 		return null;
@@ -13074,32 +13034,33 @@ protected class Signal_IsInputAssignment_0_0 extends AssignmentToken  {
 
 }
 
-// isOutput?="output"
-protected class Signal_IsOutputAssignment_0_1 extends AssignmentToken  {
+// isOutput?="output"?
+protected class Signal_IsOutputAssignment_1 extends AssignmentToken  {
 	
-	public Signal_IsOutputAssignment_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_IsOutputAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getIsOutputAssignment_0_1();
+		return grammarAccess.getSignalAccess().getIsOutputAssignment_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
+			case 0: return new Signal_IsInputAssignment_0(parent, this, 0, inst);
+			default: return parent.createParentFollower(this, index, index - 1, inst);
 		}	
 	}	
 		
     @Override	
 	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isOutput",true)) == null) return null;
+		if((value = current.getConsumable("isOutput",false)) == null) return null;
 		IInstanceDescription obj = current.cloneAndConsume("isOutput");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KW;
-			element = grammarAccess.getSignalAccess().getIsOutputOutputKeyword_0_1_0();
+			element = grammarAccess.getSignalAccess().getIsOutputOutputKeyword_1_0();
 			return obj;
 		}
 		return null;
@@ -13107,114 +13068,25 @@ protected class Signal_IsOutputAssignment_0_1 extends AssignmentToken  {
 
 }
 
-// isInput?="input" isOutput?="output"
-protected class Signal_Group_0_2 extends GroupToken {
+// name=QualifiedName  
+//   // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
+protected class Signal_NameAssignment_2 extends AssignmentToken  {
 	
-	public Signal_Group_0_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getSignalAccess().getGroup_0_2();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Signal_IsOutputAssignment_0_2_1(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-}
-
-// isInput?="input"
-protected class Signal_IsInputAssignment_0_2_0 extends AssignmentToken  {
-	
-	public Signal_IsInputAssignment_0_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_NameAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getIsInputAssignment_0_2_0();
+		return grammarAccess.getSignalAccess().getNameAssignment_2();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			default: return parent.createParentFollower(this, index, index, inst);
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isInput",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isInput");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getSignalAccess().getIsInputInputKeyword_0_2_0_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-// isOutput?="output"
-protected class Signal_IsOutputAssignment_0_2_1 extends AssignmentToken  {
-	
-	public Signal_IsOutputAssignment_0_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getIsOutputAssignment_0_2_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Signal_IsInputAssignment_0_2_0(parent, this, 0, inst);
-			default: return null;
-		}	
-	}	
-		
-    @Override	
-	protected IInstanceDescription tryConsumeVal() {
-		if((value = current.getConsumable("isOutput",true)) == null) return null;
-		IInstanceDescription obj = current.cloneAndConsume("isOutput");
-		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
-			type = AssignmentType.KW;
-			element = grammarAccess.getSignalAccess().getIsOutputOutputKeyword_0_2_1_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-
-
-// name=QualifiedName   // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-protected class Signal_NameAssignment_1 extends AssignmentToken  {
-	
-	public Signal_NameAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
-		super(parent, next, no, current);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getNameAssignment_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IInstanceDescription inst) {
-		switch(index) {
-			case 0: return new Signal_Alternatives_0(parent, this, 0, inst);
-			default: return null;
+			case 0: return new Signal_IsOutputAssignment_1(parent, this, 0, inst);
+			case 1: return new Signal_IsInputAssignment_0(parent, this, 1, inst);
+			default: return parent.createParentFollower(this, index, index - 2, inst);
 		}	
 	}	
 		
@@ -13224,7 +13096,7 @@ protected class Signal_NameAssignment_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("name");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.DRC;
-			element = grammarAccess.getSignalAccess().getNameQualifiedNameParserRuleCall_1_0();
+			element = grammarAccess.getSignalAccess().getNameQualifiedNameParserRuleCall_2_0();
 			return obj;
 		}
 		return null;
@@ -13233,21 +13105,21 @@ protected class Signal_NameAssignment_1 extends AssignmentToken  {
 }
 
 // (":=" initialValue=SignalValue)?
-protected class Signal_Group_2 extends GroupToken {
+protected class Signal_Group_3 extends GroupToken {
 	
-	public Signal_Group_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_Group_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getSignalAccess().getGroup_2();
+		return grammarAccess.getSignalAccess().getGroup_3();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_InitialValueAssignment_2_1(parent, this, 0, inst);
+			case 0: return new Signal_InitialValueAssignment_3_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -13255,21 +13127,21 @@ protected class Signal_Group_2 extends GroupToken {
 }
 
 // ":="
-protected class Signal_ColonEqualsSignKeyword_2_0 extends KeywordToken  {
+protected class Signal_ColonEqualsSignKeyword_3_0 extends KeywordToken  {
 	
-	public Signal_ColonEqualsSignKeyword_2_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_ColonEqualsSignKeyword_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getSignalAccess().getColonEqualsSignKeyword_2_0();
+		return grammarAccess.getSignalAccess().getColonEqualsSignKeyword_3_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_NameAssignment_1(parent, this, 0, inst);
+			case 0: return new Signal_NameAssignment_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -13277,21 +13149,21 @@ protected class Signal_ColonEqualsSignKeyword_2_0 extends KeywordToken  {
 }
 
 // initialValue=SignalValue
-protected class Signal_InitialValueAssignment_2_1 extends AssignmentToken  {
+protected class Signal_InitialValueAssignment_3_1 extends AssignmentToken  {
 	
-	public Signal_InitialValueAssignment_2_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_InitialValueAssignment_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getInitialValueAssignment_2_1();
+		return grammarAccess.getSignalAccess().getInitialValueAssignment_3_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_ColonEqualsSignKeyword_2_0(parent, this, 0, inst);
+			case 0: return new Signal_ColonEqualsSignKeyword_3_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -13302,7 +13174,7 @@ protected class Signal_InitialValueAssignment_2_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("initialValue");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.DRC;
-			element = grammarAccess.getSignalAccess().getInitialValueSignalValueParserRuleCall_2_1_0();
+			element = grammarAccess.getSignalAccess().getInitialValueSignalValueParserRuleCall_3_1_0();
 			return obj;
 		}
 		return null;
@@ -13312,24 +13184,25 @@ protected class Signal_InitialValueAssignment_2_1 extends AssignmentToken  {
 
 
 // (": " type=ValueType|": combine" type=ValueType "with" (combineOperator=
-// CombineOperator|hostCombineOperator=STRING))?   // after the initial value, either the type or the combine type has to come
-//    // if it is not set, the default type PURE
-protected class Signal_Alternatives_3 extends AlternativesToken {
+// CombineOperator|hostCombineOperator=STRING))?  
+//   // after the initial value, either the type or the combine type has to come
+//    //default signal type is PURE
+protected class Signal_Alternatives_4 extends AlternativesToken {
 
-	public Signal_Alternatives_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_Alternatives_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Alternatives getGrammarElement() {
-		return grammarAccess.getSignalAccess().getAlternatives_3();
+		return grammarAccess.getSignalAccess().getAlternatives_4();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_Group_3_0(parent, this, 0, inst);
-			case 1: return new Signal_Group_3_1(parent, this, 1, inst);
+			case 0: return new Signal_Group_4_0(parent, this, 0, inst);
+			case 1: return new Signal_Group_4_1(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -13337,21 +13210,21 @@ protected class Signal_Alternatives_3 extends AlternativesToken {
 }
 
 // ": " type=ValueType
-protected class Signal_Group_3_0 extends GroupToken {
+protected class Signal_Group_4_0 extends GroupToken {
 	
-	public Signal_Group_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_Group_4_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getSignalAccess().getGroup_3_0();
+		return grammarAccess.getSignalAccess().getGroup_4_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_TypeAssignment_3_0_1(parent, this, 0, inst);
+			case 0: return new Signal_TypeAssignment_4_0_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -13359,22 +13232,22 @@ protected class Signal_Group_3_0 extends GroupToken {
 }
 
 // ": "
-protected class Signal_ColonSpaceKeyword_3_0_0 extends KeywordToken  {
+protected class Signal_ColonSpaceKeyword_4_0_0 extends KeywordToken  {
 	
-	public Signal_ColonSpaceKeyword_3_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_ColonSpaceKeyword_4_0_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getSignalAccess().getColonSpaceKeyword_3_0_0();
+		return grammarAccess.getSignalAccess().getColonSpaceKeyword_4_0_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_Group_2(parent, this, 0, inst);
-			case 1: return new Signal_NameAssignment_1(parent, this, 1, inst);
+			case 0: return new Signal_Group_3(parent, this, 0, inst);
+			case 1: return new Signal_NameAssignment_2(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -13382,21 +13255,21 @@ protected class Signal_ColonSpaceKeyword_3_0_0 extends KeywordToken  {
 }
 
 // type=ValueType
-protected class Signal_TypeAssignment_3_0_1 extends AssignmentToken  {
+protected class Signal_TypeAssignment_4_0_1 extends AssignmentToken  {
 	
-	public Signal_TypeAssignment_3_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_TypeAssignment_4_0_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getTypeAssignment_3_0_1();
+		return grammarAccess.getSignalAccess().getTypeAssignment_4_0_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_ColonSpaceKeyword_3_0_0(parent, this, 0, inst);
+			case 0: return new Signal_ColonSpaceKeyword_4_0_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -13407,7 +13280,7 @@ protected class Signal_TypeAssignment_3_0_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("type");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.ERC;
-			element = grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_3_0_1_0();
+			element = grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_4_0_1_0();
 			return obj;
 		}
 		return null;
@@ -13418,21 +13291,21 @@ protected class Signal_TypeAssignment_3_0_1 extends AssignmentToken  {
 
 // ": combine" type=ValueType "with" (combineOperator=CombineOperator|
 // hostCombineOperator=STRING)
-protected class Signal_Group_3_1 extends GroupToken {
+protected class Signal_Group_4_1 extends GroupToken {
 	
-	public Signal_Group_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_Group_4_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getSignalAccess().getGroup_3_1();
+		return grammarAccess.getSignalAccess().getGroup_4_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_Alternatives_3_1_3(parent, this, 0, inst);
+			case 0: return new Signal_Alternatives_4_1_3(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -13440,22 +13313,22 @@ protected class Signal_Group_3_1 extends GroupToken {
 }
 
 // ": combine"
-protected class Signal_CombineKeyword_3_1_0 extends KeywordToken  {
+protected class Signal_CombineKeyword_4_1_0 extends KeywordToken  {
 	
-	public Signal_CombineKeyword_3_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_CombineKeyword_4_1_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getSignalAccess().getCombineKeyword_3_1_0();
+		return grammarAccess.getSignalAccess().getCombineKeyword_4_1_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_Group_2(parent, this, 0, inst);
-			case 1: return new Signal_NameAssignment_1(parent, this, 1, inst);
+			case 0: return new Signal_Group_3(parent, this, 0, inst);
+			case 1: return new Signal_NameAssignment_2(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -13463,21 +13336,21 @@ protected class Signal_CombineKeyword_3_1_0 extends KeywordToken  {
 }
 
 // type=ValueType
-protected class Signal_TypeAssignment_3_1_1 extends AssignmentToken  {
+protected class Signal_TypeAssignment_4_1_1 extends AssignmentToken  {
 	
-	public Signal_TypeAssignment_3_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_TypeAssignment_4_1_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getTypeAssignment_3_1_1();
+		return grammarAccess.getSignalAccess().getTypeAssignment_4_1_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_CombineKeyword_3_1_0(parent, this, 0, inst);
+			case 0: return new Signal_CombineKeyword_4_1_0(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -13488,7 +13361,7 @@ protected class Signal_TypeAssignment_3_1_1 extends AssignmentToken  {
 		IInstanceDescription obj = current.cloneAndConsume("type");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.ERC;
-			element = grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_3_1_1_0();
+			element = grammarAccess.getSignalAccess().getTypeValueTypeEnumRuleCall_4_1_1_0();
 			return obj;
 		}
 		return null;
@@ -13497,21 +13370,21 @@ protected class Signal_TypeAssignment_3_1_1 extends AssignmentToken  {
 }
 
 // "with"
-protected class Signal_WithKeyword_3_1_2 extends KeywordToken  {
+protected class Signal_WithKeyword_4_1_2 extends KeywordToken  {
 	
-	public Signal_WithKeyword_3_1_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_WithKeyword_4_1_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getSignalAccess().getWithKeyword_3_1_2();
+		return grammarAccess.getSignalAccess().getWithKeyword_4_1_2();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_TypeAssignment_3_1_1(parent, this, 0, inst);
+			case 0: return new Signal_TypeAssignment_4_1_1(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -13519,22 +13392,22 @@ protected class Signal_WithKeyword_3_1_2 extends KeywordToken  {
 }
 
 // combineOperator=CombineOperator|hostCombineOperator=STRING
-protected class Signal_Alternatives_3_1_3 extends AlternativesToken {
+protected class Signal_Alternatives_4_1_3 extends AlternativesToken {
 
-	public Signal_Alternatives_3_1_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_Alternatives_4_1_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Alternatives getGrammarElement() {
-		return grammarAccess.getSignalAccess().getAlternatives_3_1_3();
+		return grammarAccess.getSignalAccess().getAlternatives_4_1_3();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_CombineOperatorAssignment_3_1_3_0(parent, this, 0, inst);
-			case 1: return new Signal_HostCombineOperatorAssignment_3_1_3_1(parent, this, 1, inst);
+			case 0: return new Signal_CombineOperatorAssignment_4_1_3_0(parent, this, 0, inst);
+			case 1: return new Signal_HostCombineOperatorAssignment_4_1_3_1(parent, this, 1, inst);
 			default: return null;
 		}	
 	}	
@@ -13542,21 +13415,21 @@ protected class Signal_Alternatives_3_1_3 extends AlternativesToken {
 }
 
 // combineOperator=CombineOperator
-protected class Signal_CombineOperatorAssignment_3_1_3_0 extends AssignmentToken  {
+protected class Signal_CombineOperatorAssignment_4_1_3_0 extends AssignmentToken  {
 	
-	public Signal_CombineOperatorAssignment_3_1_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_CombineOperatorAssignment_4_1_3_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getCombineOperatorAssignment_3_1_3_0();
+		return grammarAccess.getSignalAccess().getCombineOperatorAssignment_4_1_3_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_WithKeyword_3_1_2(parent, this, 0, inst);
+			case 0: return new Signal_WithKeyword_4_1_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -13567,7 +13440,7 @@ protected class Signal_CombineOperatorAssignment_3_1_3_0 extends AssignmentToken
 		IInstanceDescription obj = current.cloneAndConsume("combineOperator");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
 			type = AssignmentType.ERC;
-			element = grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_3_1_3_0_0();
+			element = grammarAccess.getSignalAccess().getCombineOperatorCombineOperatorEnumRuleCall_4_1_3_0_0();
 			return obj;
 		}
 		return null;
@@ -13576,21 +13449,21 @@ protected class Signal_CombineOperatorAssignment_3_1_3_0 extends AssignmentToken
 }
 
 // hostCombineOperator=STRING
-protected class Signal_HostCombineOperatorAssignment_3_1_3_1 extends AssignmentToken  {
+protected class Signal_HostCombineOperatorAssignment_4_1_3_1 extends AssignmentToken  {
 	
-	public Signal_HostCombineOperatorAssignment_3_1_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Signal_HostCombineOperatorAssignment_4_1_3_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalAccess().getHostCombineOperatorAssignment_3_1_3_1();
+		return grammarAccess.getSignalAccess().getHostCombineOperatorAssignment_4_1_3_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Signal_WithKeyword_3_1_2(parent, this, 0, inst);
+			case 0: return new Signal_WithKeyword_4_1_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -13601,7 +13474,7 @@ protected class Signal_HostCombineOperatorAssignment_3_1_3_1 extends AssignmentT
 		IInstanceDescription obj = current.cloneAndConsume("hostCombineOperator");
 		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for lexer rule
 			type = AssignmentType.LRC;
-			element = grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_3_1_3_1_0();
+			element = grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_4_1_3_1_0();
 			return obj;
 		}
 		return null;

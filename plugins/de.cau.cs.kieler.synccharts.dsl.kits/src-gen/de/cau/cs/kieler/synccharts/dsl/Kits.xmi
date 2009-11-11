@@ -12,18 +12,18 @@
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//Region"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Keyword" value="region"/>
-        <tokens xsi:type="xtext:Assignment" feature="id" operator="=">
+        <tokens xsi:type="xtext:Keyword" cardinality="?" value="region"/>
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="id" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
         </tokens>
-        <tokens xsi:type="xtext:Alternatives" cardinality="*">
+        <tokens xsi:type="xtext:Alternatives" cardinality="+">
           <groups xsi:type="xtext:Assignment" feature="variables" operator="+=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
           </groups>
           <groups xsi:type="xtext:Assignment" feature="signals" operator="+=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
           </groups>
-          <groups xsi:type="xtext:Assignment" cardinality="?" feature="innerStates" operator="+=">
+          <groups xsi:type="xtext:Assignment" feature="innerStates" operator="+=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
           </groups>
         </tokens>
@@ -989,21 +989,11 @@
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts#//Signal"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <tokens xsi:type="xtext:Alternatives">
-          <groups xsi:type="xtext:Assignment" feature="isInput" operator="?=">
-            <terminal xsi:type="xtext:Keyword" value="input"/>
-          </groups>
-          <groups xsi:type="xtext:Assignment" feature="isOutput" operator="?=">
-            <terminal xsi:type="xtext:Keyword" value="output"/>
-          </groups>
-          <groups xsi:type="xtext:Group">
-            <tokens xsi:type="xtext:Assignment" feature="isInput" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="input"/>
-            </tokens>
-            <tokens xsi:type="xtext:Assignment" feature="isOutput" operator="?=">
-              <terminal xsi:type="xtext:Keyword" value="output"/>
-            </tokens>
-          </groups>
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="isInput" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="input"/>
+        </tokens>
+        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="isOutput" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="output"/>
         </tokens>
         <tokens xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.10"/>
