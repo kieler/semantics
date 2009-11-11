@@ -42,6 +42,7 @@ public class GoToDeclaration implements IObjectActionDelegate {
      */
     public GoToDeclaration() {
         super();
+        System.out.println("go to erzeugt");
     }
 
     /**

@@ -63,7 +63,7 @@ public class OpenXtextDeclarationTool {
                         // semantic element was parsed
                         CompositeNode parserNode = nodeAdapter.getParserNode();
                         // open the editor whose ID is given above with the
-                        // calculated file editor input
+                        // selection set to the parserNode
                         if (parserNode != null) {
                             ITextEditor editor = (ITextEditor) targetPart
                                     .getSite().getPage().openEditor(
