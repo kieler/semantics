@@ -213,10 +213,10 @@ public class KiemPlugin extends AbstractUIPlugin {
                 if (execution != null) {
                     // stop any running execution
                     KiemPlugin.getDefault().execution.stopExecutionSync();
-                    // showError(Messages.ErrorOpenDuringExecution,
-                    // PLUGIN_ID,
-                    // null);
-                    // return;
+                     showError(Messages.mErrorOpenDuringExecution,
+                     PLUGIN_ID,
+                     null);
+                     return;
                 }
 
                 if (kIEMViewInstance.promptToSaveOnClose() == ISaveablePart2.NO) {
