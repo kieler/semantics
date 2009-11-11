@@ -23,12 +23,14 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
@@ -226,7 +228,11 @@ public class KiemPlugin extends AbstractUIPlugin {
                     try {
                         String fileString = ((IFileEditorInput) editorInputToOpen)
                                                         .getFile().getFullPath().toOSString();
-                        URI fileURI = URI.createFileURI(fileString);
+                        //IPath path = ((IFileEditorInput) editorInputToOpen).getFile().getFullPath();
+                        //String workspace = Platform.getLocation().toOSString();
+
+                        
+                        URI fileURI = URI.createPlatformResourceURI(fileString, true);
                         //resolve relative workspace paths
                         URIConverter uriConverter = new ExtensibleURIConverterImpl();
                         InputStream inputStream = uriConverter.createInputStream(fileURI);
@@ -457,11 +463,12 @@ public class KiemPlugin extends AbstractUIPlugin {
 
         for (int i = 0; i < jsonComponents.length; i++) {
             try {
+                System.out.println("KIEM loading component: " 
+                        + jsonComponents[i].getContributor().getName());
                 JSONObjectDataComponent dataComponent = (JSONObjectDataComponent) jsonComponents[i]
                         .createExecutableExtension("class");
                 dataComponent.setConfigurationElemenet(jsonComponents[i]);
                 dataComponentList.add(dataComponent);
-                // System.out.println(jsonComponents[i]);
             } catch (Exception e) {
                 // throw new RuntimeException
                 // ("Error at loading a KIEM data component plugin");
@@ -471,6 +478,8 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
         for (int i = 0; i < stringComponents.length; i++) {
             try {
+                System.out.println("KIEM loading component: " 
+                        + stringComponents[i].getContributor().getName());
                 JSONStringDataComponent dataComponent = (JSONStringDataComponent) stringComponents[i]
                         .createExecutableExtension("class");
                 dataComponent.setConfigurationElemenet(stringComponents[i]);

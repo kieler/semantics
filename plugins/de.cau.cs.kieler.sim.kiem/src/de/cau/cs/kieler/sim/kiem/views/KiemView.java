@@ -1678,7 +1678,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             return;
         }
         try {
-            URI fileURI = URI.createFileURI(currentFile.toOSString());
+            //URI fileURI = URI.createFileURI(currentFile.toOSString());
+            URI fileURI = URI.createPlatformResourceURI(currentFile.toOSString(), true);
+
             //resolve relative workspace paths
             URIConverter uriConverter = new ExtensibleURIConverterImpl();
             OutputStream outputStream = uriConverter.createOutputStream(fileURI);
