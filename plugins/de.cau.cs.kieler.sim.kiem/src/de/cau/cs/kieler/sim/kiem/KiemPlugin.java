@@ -228,9 +228,6 @@ public class KiemPlugin extends AbstractUIPlugin {
                     try {
                         String fileString = ((IFileEditorInput) editorInputToOpen)
                                                         .getFile().getFullPath().toOSString();
-                        //IPath path = ((IFileEditorInput) editorInputToOpen).getFile().getFullPath();
-                        //String workspace = Platform.getLocation().toOSString();
-
                         
                         URI fileURI = URI.createPlatformResourceURI(fileString, true);
                         //resolve relative workspace paths
