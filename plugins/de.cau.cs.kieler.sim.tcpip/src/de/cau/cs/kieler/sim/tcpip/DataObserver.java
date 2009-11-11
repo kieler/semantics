@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.sim.tcpip;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,9 +58,7 @@ public class DataObserver extends JSONStringDataComponent {
     }
 
     public void initialize() throws KiemInitializationException {
-        // TODO Auto-generated method stub
-
-        // generate Code from SyncChart 
+        // generate Code from SyncChart
         // true sets the flag for simulation
         wf.invokeWorkflow(true);
 
@@ -67,11 +66,11 @@ public class DataObserver extends JSONStringDataComponent {
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
         String bundleLocation = bundle.getLocation().replaceAll("reference:file:", "");
 
-        String compile = "gcc " + "/tmp/sim.c " + "/tmp/sim_data.c " + bundleLocation
-                + "simulation/cJSON.c " + bundleLocation + "simulation/tcpip.c " + "-I "
-                + bundleLocation + "simulation/ " + "-o " + bundleLocation
-                + "simulation/simulation -lm";
-        String executable = bundleLocation + "simulation/simulation";
+        String compile = "gcc " + wf.getOutPath() + "sim.c " + wf.getOutPath() + "sim_data.c "
+                + bundleLocation + "simulation/cJSON.c " + bundleLocation + "simulation/tcpip.c "
+                + "-I " + bundleLocation + "simulation/ " + "-o " + wf.getOutPath() + "simulation -lm";
+        System.out.println(compile);
+        String executable = wf.getOutPath() + "simulation";
         try {
             // compile and start the c server
             Process process;
@@ -126,6 +125,14 @@ public class DataObserver extends JSONStringDataComponent {
     public void wrapup() throws KiemInitializationException {
         try {
             client.close();
+            // delete temp folder
+            File folder = new File(wf.getOutPath());
+//            boolean folderDeleted = deleteFolder(folder);
+//            if (folderDeleted) {
+//                System.out.println("temp folder" + folder + "successfully deleted");
+//            } else {
+//                System.err.println("error while deleting temp folder: " + folder);
+//            }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -151,4 +158,22 @@ public class DataObserver extends JSONStringDataComponent {
         return out;
     }
 
+    public boolean deleteFolder(File dir) {
+        if (dir.isDirectory()) {
+            String[] entries = dir.list();
+            for (int x = 0; x < entries.length; x++) {
+                File aktFile = new File(dir.getPath(), entries[x]);
+                deleteFolder(aktFile);
+            }
+            if (dir.delete())
+                return true;
+            else
+                return false;
+        } else {
+            if (dir.delete())
+                return true;
+            else
+                return false;
+        }
+    }
 }
