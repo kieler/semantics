@@ -1,5 +1,7 @@
 package de.cau.cs.kieler.synccharts.codegen.sc;
 
+import java.util.Random;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
@@ -24,7 +26,6 @@ import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 public class WorkflowGenerator {
 
@@ -44,6 +45,19 @@ public class WorkflowGenerator {
         return out;
     }
 
+    public String randomString() {
+        String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";
+        Random random = new Random();
+        int max = allowedChars.length();
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < 16; i++) {
+            int value = random.nextInt(max);
+            buffer.append(allowedChars.charAt(value));
+        }
+        System.out.println(buffer.toString());
+        return buffer.toString();
+    }
+
     public WorkflowGenerator() {
         IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage();
@@ -58,7 +72,6 @@ public class WorkflowGenerator {
             uri = myModel.eResource().getURI();
             uriString = uri.toString();
         }
-
     }
 
     public void invokeWorkflow(boolean sim) {
@@ -70,10 +83,12 @@ public class WorkflowGenerator {
         // Meta model
         EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
-        if (sim){
-            outPath = "/tmp/";
+        if (sim) {
+            outPath = System.getProperty("java.io.tmpdir") + "/" + randomString() + "/";
+            outPath = "/home/tam/";
         }
         
+
         // Outlet
         Outlet outlet = new Outlet();
         outlet.setPath(outPath);
@@ -83,7 +98,7 @@ public class WorkflowGenerator {
         generator.addMetaModel(metaModel);
         generator.addOutlet(outlet);
 
-        if (sim){
+        if (sim) {
             generator.setExpand("template::simCodegen::main FOR model");
         } else {
             generator.setExpand("template::codegen::main FOR model");
@@ -121,20 +136,19 @@ public class WorkflowGenerator {
     public EObject getModel() {
         return myModel;
     }
-    
-    public URI getURI(){
+
+    public URI getURI() {
         return uri;
     }
-    
-    public String getOutPath(){
+
+    public String getOutPath() {
         return outPath;
     }
-    
-    public String getFileName(){
+
+    public String getFileName() {
         String out = "";
-        out = uri.lastSegment().replace("."+uri.fileExtension(), "");
+        out = uri.lastSegment().replace("." + uri.fileExtension(), "");
         return out;
     }
-    
 
 }
