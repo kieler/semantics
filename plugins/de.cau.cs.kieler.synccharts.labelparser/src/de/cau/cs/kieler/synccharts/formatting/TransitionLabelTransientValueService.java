@@ -55,15 +55,19 @@ public class TransitionLabelTransientValueService implements
      */
     public boolean isTransient(EObject owner, EStructuralFeature feature,
             int index) {
-        if ((owner instanceof Transition && (feature
-                .equals(SyncchartsPackage.eINSTANCE.getTransition_Priority())
+        if ((owner instanceof Transition && 
+        	(      feature.equals(SyncchartsPackage.eINSTANCE
+        			    .getTransition_Priority())
                 || feature.equals(SyncchartsPackage.eINSTANCE
                         .getTransition_Type())
                 || feature.equals(SyncchartsPackage.eINSTANCE
                         .getTransition_IsHistory())
                 || feature.equals(SyncchartsPackage.eINSTANCE
-                        .getTransition_SourceState()) || feature
-                .equals(SyncchartsPackage.eINSTANCE.getTransition_TargetState())))
+                        .getTransition_SourceState()) 
+                || feature.equals(SyncchartsPackage.eINSTANCE
+                		.getTransition_TargetState())
+             )
+             )
                 || (owner instanceof Action && (feature
                         .equals(SyncchartsPackage.eINSTANCE
                                 .getAction_ParentStateEntryAction())
