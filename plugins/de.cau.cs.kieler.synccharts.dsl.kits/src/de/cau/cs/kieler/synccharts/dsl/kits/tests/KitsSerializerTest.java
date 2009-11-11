@@ -36,58 +36,36 @@ import de.cau.cs.kieler.synccharts.dsl.KitsStandaloneSetup;
  * 
  */
 public class KitsSerializerTest {
-    public static void main(String[] args) {
-        Injector injector = new KitsStandaloneSetup()
-                .createInjectorAndDoEMFRegistration();
-        System.out.println("> injector created...");
-        XtextResourceSet resourceSet = injector
-                .getInstance(XtextResourceSet.class);
-        XtextResource resource = injector.getInstance(XtextResource.class);
-        URI fileURI = URI.createFileURI(new File("test2.kits")
-                .getAbsolutePath());
-        resource = (XtextResource) resourceSet.createResource(fileURI);
-        System.out.println("> resource created...");
-        // try {
-        // resource.load(new StringInputStream("init A"),
-        // Collections.EMPTY_MAP);
-        // } catch (IOException e1) {
-        // /* error */
-        // System.out.println("> i was loading while I was shot...");
-        // e1.printStackTrace();
-        // return;
-        // }
-        resource.getContents().add(createEMFModel());
-        System.out.println("> EMF model added...");
-        System.out.println("------------------------------------");
-        try {
-            resource.save(System.out, Collections.EMPTY_MAP);
-            System.out.println();
-            System.out.println("------------------------------------");
-            System.out.println("> resource saved ...");
-        } catch (IOException e) {
-            /* do sth */
-            e.printStackTrace();
-        }
-        System.out.println("> done");
-        // ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
+    /**
+     * the default constructor
+     */
+    public KitsSerializerTest() {
+        // should not be default but does not matter
     }
 
+    /**
+     * This manually creates an EMF model.
+     * 
+     * @return r Return the top element of the created EMF model.
+     */
     static Region createEMFModel() {
+        // region syncchart
         SyncchartsFactory syncFac = SyncchartsFactory.eINSTANCE;
         Region r = syncFac.createRegion();
-        r.setParentState(null);// geht
         r.setId("syncchart");
+        //var v1 := initialValue
         Variable v = syncFac.createVariable();
         v.setName("v1");
         v.setInitialValue("initialValue");
         r.getVariables().add(v);
+        // init final S "S" "bodyText" 
         State s0 = syncFac.createState();
         s0.setId("S");
         s0.setLabel("S");
         s0.setBodyText("bodyText");
         s0.setIsFinal(true);
         s0.setIsInitial(true);
+        //
         Action a = syncFac.createAction();
         a.setDelay(0);
         a.setIsImmediate(true);
@@ -101,5 +79,37 @@ public class KitsSerializerTest {
         r.getInnerStates().add(s0);// isn't this done automatically? whatever,
         // take no risk
         return r;
+    }
+
+    /**
+     * do everything
+     * 
+     * @param args arguments
+     */
+    public static void main(final String[] args) {
+        Injector injector = new KitsStandaloneSetup()
+                .createInjectorAndDoEMFRegistration();
+        System.out.println("> injector created...");
+        XtextResourceSet resourceSet = injector
+                .getInstance(XtextResourceSet.class);
+        XtextResource resource = injector.getInstance(XtextResource.class);
+        URI fileURI = URI.createFileURI(new File("test2.kits")
+                .getAbsolutePath());
+        resource = (XtextResource) resourceSet.createResource(fileURI);
+        System.out.println("> resource created...");
+        resource.getContents().add(createEMFModel());
+        System.out.println("> EMF model added...");
+        System.out.println("------------------------------------");
+        try {
+            resource.save(System.out, Collections.EMPTY_MAP);
+            System.out.println("\n" + "------------------------------------");
+            System.out.println("> resource saved ...");
+        } catch (IOException e) {
+            /* do sth */
+            e.printStackTrace();
+        }
+        System.out.println("> done");
+        // ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
     }
 }

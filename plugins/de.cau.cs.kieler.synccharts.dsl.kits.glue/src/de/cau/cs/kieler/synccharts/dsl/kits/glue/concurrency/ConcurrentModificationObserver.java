@@ -68,9 +68,9 @@ import de.cau.cs.kieler.synccharts.dsl.kits.glue.Activator;
 public class ConcurrentModificationObserver implements IPartListener,
         ResourceSetListener, VerifyKeyListener {
 
-    private IWorkbenchPage page;
+    private final IWorkbenchPage page;
 
-    private Transformer transformer;
+    private final Transformer transformer;
 
     /**
      * public constructor for our listener
@@ -231,6 +231,8 @@ public class ConcurrentModificationObserver implements IPartListener,
                     Activator.PLUGIN_ID, "Transaction aborted by user"));
         }
         // do nothing
+        // transformer.setLabel2Id();
+        // transaction fails !!
         System.out.println("==============================");
         System.out.println("I AM IN: transactionAboutToCommit");
         System.out.println("==============================");

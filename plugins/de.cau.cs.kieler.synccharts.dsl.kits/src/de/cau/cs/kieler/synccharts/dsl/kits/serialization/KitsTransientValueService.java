@@ -13,6 +13,7 @@ import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.Variable;
 
 /**
  * @author oba
@@ -43,29 +44,34 @@ public class KitsTransientValueService implements ITransientValueService {
     public boolean isTransient(EObject owner, EStructuralFeature feature,
             int index) {
 
-        if ((owner instanceof State
-                && (feature.equals(syncPack.getState_ParentRegion()))
+        if ((owner instanceof State && 
+                (  (feature.equals(syncPack.getState_ParentRegion()))
                 || (feature.equals(syncPack.getState_SuspensionTrigger()))
-                || (feature.equals(syncPack.getState_Type())))
+                || (feature.equals(syncPack.getState_Type()))
+//                || ((owner.eGet(syncPack.getState_Type())).equals(syncPack.getStateType().getEEnumLiteral("NORMAL"))))
+                )
+              )
          || (owner instanceof Region 
-                && (feature.equals(syncPack.getRegion_ParentState())))
+                        && (feature.equals(syncPack.getRegion_ParentState())))
          || (owner instanceof Expression
-                && (feature.equals(syncPack.getExpression_ParentAction()))
-                || (feature.equals(syncPack.getExpression_ParentAssignment()))
-                || (feature.equals(syncPack.getExpression_ParentEmisson()))
-                || (feature.equals(syncPack.getExpression_ParentExpression())))
+                        && (feature.equals(syncPack.getExpression_ParentAction()))
+                        || (feature.equals(syncPack.getExpression_ParentAssignment()))
+                        || (feature.equals(syncPack.getExpression_ParentEmisson())) 
+                        || (feature.equals(syncPack.getExpression_ParentExpression())))
          || (owner instanceof Effect 
-                && (feature.equals(syncPack.getEffect_ParentEAction())))
-         || (owner instanceof Signal 
-                && (feature.equals(syncPack.getSignal_ParentRegion()))
-                || (feature.equals(syncPack.getSignal_ParentState())))
-//         || !(owner instanceof State || owner instanceof Region)
-        /**
-         * It is important that you mark features that are not set as
-         * transient. See
-         * {@link org.eclipse.xtext.parsetree.reconstr.impl. DefaultTransientValueService}
-         */
-         || (!(owner.eIsSet(feature)))) {
+                        && (feature.equals(syncPack.getEffect_ParentEAction())))
+         || (owner instanceof Signal
+                        && (feature.equals(syncPack.getSignal_ParentRegion())) 
+                        || (feature.equals(syncPack.getSignal_ParentState())))
+         || (owner instanceof Variable 
+                        && (feature.equals(syncPack.getVariable_ParentRegion())))
+                /**
+                 * It is important that you mark features that are not set as
+                 * transient. See
+                 * {@link org.eclipse.xtext.parsetree.reconstr.impl. DefaultTransientValueService}
+                 */
+         || (!(owner.eIsSet(feature)))
+         ) {
             // System.out.println("=============================================");
             // System.out.println("======== NOT SERIALIZED =======");
             // System.out.println("owner: " + owner.toString());
