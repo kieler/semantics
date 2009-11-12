@@ -135,7 +135,7 @@ public class ActiveStateHighlightCombination extends ACombination {
     
     
 	@Override
-	public void undoLastEffect() {
+	public void undoEffects() {
         for (ShapeHighlightEffect effect : effects.values()) {
     		effect.undo();
         }

@@ -53,8 +53,8 @@ public class AutoLayoutCombination extends ACombination {
 	 */
 	@Override
 	public boolean evaluate(TriggerEventObject triggerEvent) {
-		EditPart affectedObject = translateToEditPart(triggerEvent
-				.getAffectedObject(), parent);
+		EditPart affectedObject = getEditPart(triggerEvent
+				.getAffectedObject());
 		if (affectedObject instanceof DiagramEditPart) {
 			this.targetEditPart = (DiagramEditPart) affectedObject;
 			// Add editorPart if supplied
@@ -90,7 +90,7 @@ public class AutoLayoutCombination extends ACombination {
 	 */
 	@Override
 	public List<ATrigger> getTriggers() {
-		this.trigger = (AutoLayoutTrigger) RunLogic
+		this.trigger = (AutoLayoutTrigger) RunLogic.getInstance()
 				.getTrigger("de.cau.cs.kieler.synccharts.dsl.kits.autolayout.AutoLayoutTrigger");
 		List<ATrigger> triggerList = new ArrayList<ATrigger>();
 		triggerList.add(trigger);
@@ -103,7 +103,7 @@ public class AutoLayoutCombination extends ACombination {
 	 * @see de.cau.cs.kieler.viewmanagement.ACombination#undoLastEffect()
 	 */
 	@Override
-	public void undoLastEffect() {
+	public void undoEffects() {
 		// TODO Auto-generated method stub
 
 	}
