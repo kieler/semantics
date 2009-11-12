@@ -127,7 +127,7 @@ public class ActiveStateHighlightCombination extends ACombination {
     @Override
     public List<ATrigger> getTriggers() {
         List<ATrigger> triggers = new ArrayList<ATrigger>();
-        trigger = (StateActivityTrigger) RunLogic
+        trigger = (StateActivityTrigger) RunLogic.getInstance()
                 .getTrigger("State Activity Trigger");
         triggers.add(trigger);
         return triggers;
