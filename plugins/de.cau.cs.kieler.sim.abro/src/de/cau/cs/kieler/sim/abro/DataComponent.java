@@ -237,15 +237,21 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideInterfaceKeys()
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#provideInitialVariables()
      */
     @Override
-    public String[] provideInterfaceKeys() {
-        String[] signals = {getProperties()[0].getValue(), "A", "B", "R", "O", "E"};
-        return signals;
+    public JSONObject provideInitialVariables() {
+        JSONObject returnObj = new JSONObject();
+        try {
+            returnObj.accumulate("A", JSONSignalValues.newValue(false));
+            returnObj.accumulate("B", JSONSignalValues.newValue(false));
+            returnObj.accumulate("R", JSONSignalValues.newValue(false));
+            returnObj.accumulate("O", JSONSignalValues.newValue(false));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnObj;
     }
 
     // -------------------------------------------------------------------------
