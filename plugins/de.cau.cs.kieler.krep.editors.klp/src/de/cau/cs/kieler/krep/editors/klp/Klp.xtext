@@ -1,4 +1,4 @@
-grammar de.cau.cs.kieler.krep.editors.klp.Klp with org.eclipse.xtext.common.Terminals
+grammar de.cau.cs.kieler.krep.editors.klp.Klp with org.eclipse.xtext.common.Terminals hidden (COMMENT, WS)
 
 //generate klp "http://www.cau.de/cs/kieler/krep/editors/klp/Klp2"
 

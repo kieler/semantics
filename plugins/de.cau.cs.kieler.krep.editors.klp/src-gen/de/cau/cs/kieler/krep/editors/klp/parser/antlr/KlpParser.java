@@ -25,7 +25,7 @@ public class KlpParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 	protected IParseResult parse(String ruleName, ANTLRInputStream in) {
 		de.cau.cs.kieler.krep.editors.klp.parser.antlr.internal.InternalKlpLexer lexer = new de.cau.cs.kieler.krep.editors.klp.parser.antlr.internal.InternalKlpLexer(in);
 		XtextTokenStream stream = new XtextTokenStream(lexer, antlrTokenDefProvider);
-		stream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
+		stream.setInitialHiddenTokens("RULE_COMMENT", "RULE_WS");
 		de.cau.cs.kieler.krep.editors.klp.parser.antlr.internal.InternalKlpParser parser = new de.cau.cs.kieler.krep.editors.klp.parser.antlr.internal.InternalKlpParser(
 				stream, getElementFactory(), grammarAccess);
 		parser.setTokenTypeMap(antlrTokenDefProvider.getTokenDefMap());
