@@ -275,7 +275,10 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      * initialization phase every DataComponent may receive the union of all those variable keys by
      * calling the {@link #getInterfaceKeys()} method.
      * <BR><BR>
-     * <B>DEPRECATED: Use {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#provideInitialVariables()} or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#provideInitialVariables()} instead!</B>
+     * <B>DEPRECATED: Use 
+{@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#provideInitialVariables()} or 
+{@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#provideInitialVariables()}
+ instead!</B>
      * 
      * @return the local interface variable keys
      * @throws KiemInitializationException
@@ -293,7 +296,11 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      * Sets the global interface variable keys. Is called by the execution manager during the
      * initialization phase.
      * <BR><BR>
-     * <B>DEPRECATED: Use {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#setInitialVariables(de.cau.cs.kieler.sim.kiem.json.JSONObject)} or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitialVariables(String)} instead!</B>
+     * <B>DEPRECATED: Use 
+{@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#setInitialVariables
+(de.cau.cs.kieler.sim.kiem.json.JSONObject)} 
+or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitialVariables(String)}
+ instead!</B>
      * 
      * @param globalInterfaceKeysParam
      *            the new global interface variable keys
@@ -309,7 +316,11 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      * Gets the (global) interface variable keys. Can be used by the DataComponent
      * itself to retrieve information about global interface keys.
      * <BR><BR>
-     * <B>DEPRECATED: Use {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#getInitialVariables()()} or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#getInitialVariables()} instead!</B>
+     * <B>DEPRECATED: Use 
+{@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#getInitialVariables()()}
+ or 
+ {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#getInitialVariables()} 
+ instead!</B>
      * 
      * @return the global interface variables
      */

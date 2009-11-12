@@ -27,7 +27,7 @@ public abstract class JSONObjectDataComponent extends DataComponent implements
         IJSONObjectDataComponent {
 
     /** The global initial variables as JSONObjects. */
-    JSONObject globalInitialVariables;
+    private JSONObject globalInitialVariables;
 
     // -------------------------------------------------------------------------
 
