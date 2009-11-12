@@ -29,6 +29,9 @@ public class KiemProperty implements Serializable {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6897758298476417410L;
 
+    // CHECKSTYLEOFF VisibilityModifier
+    // Rationale: It should be simple to provide new derived KiemProperty types
+
     /** The String key of the KiemProperty. */
     protected String key;
 
@@ -38,6 +41,8 @@ public class KiemProperty implements Serializable {
     /** The KiemPropertyType of the KiemProperty. */
     protected transient KiemPropertyType type;
 
+    // CHECKSTYLEON VisibilityModifier
+    
     /** The propertyType id of the component for deserialization. */
     @SuppressWarnings("unused")
     private String propertyTypeId;

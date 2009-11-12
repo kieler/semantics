@@ -24,6 +24,9 @@ package de.cau.cs.kieler.sim.kiem.extension;
 public abstract class JSONStringDataComponent extends DataComponent implements
         IJSONStringDataComponent {
 
+    /** The global initial variables as JSON Strings. */
+    String globalInitialVariables;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -31,6 +34,55 @@ public abstract class JSONStringDataComponent extends DataComponent implements
      */
     public JSONStringDataComponent() {
         super();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the global interface variables and their initial values. This method is called by the
+     * execution manager during the initialization phase.
+     * 
+     * @param globalInitialVariablesParam
+     *            the global initial variables
+     */
+    public final void setInitialVariables(final String globalInitialVariablesParam) {
+        this.globalInitialVariables = globalInitialVariablesParam;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the (global) interface variables. Can be used by the DataComponent itself to retrieve
+     * information about global interface variables.
+     * 
+     * @return the global initial variables
+     */
+    protected final String getInitialVariables() {
+        if (globalInitialVariables == null) {
+            // probably not initialized or there are no such
+            // variable keys
+            return null;
+        } else {
+            return globalInitialVariables;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Provide (local) interface variables and possible initial values. This is an optional method
+     * that will provide some interface variable keys and values that can be used by other
+     * DataComponents within and after the initialization phase every DataComponent may receive the
+     * union of all those variable keys by calling the {@link #getInitialVariables()} method.
+     * 
+     * @return the local initial variables as a JSON String
+     * 
+     * @throws KiemInitializationException
+     *             if a property prevents the execution of this DataComponent this error should be
+     *             thrown
+     */
+    public String provideInitialVariables() throws KiemInitializationException {
+        return null;
     }
 
 }

@@ -23,14 +23,12 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
-import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
@@ -44,12 +42,16 @@ import org.osgi.framework.BundleContext;
 import de.cau.cs.kieler.sim.kiem.data.DataComponentEx;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
+import de.cau.cs.kieler.sim.kiem.execution.JSONMerger;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.views.KiemView;
+import de.cau.cs.kieler.sim.kiem.json.JSONException;
+import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import de.cau.cs.kieler.sim.kiem.execution.JSONMerger;
 
 /**
  * This activator class controls the life cycle of the KiemPlugin. It also provides the access to
@@ -122,7 +124,7 @@ public class KiemPlugin extends AbstractUIPlugin {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Sets the execution.
      * 
@@ -132,9 +134,9 @@ public class KiemPlugin extends AbstractUIPlugin {
     public void setExecution(final Execution executionParam) {
         this.execution = executionParam;
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the execution.
      * 
@@ -143,7 +145,7 @@ public class KiemPlugin extends AbstractUIPlugin {
     public Execution getExecution() {
         return this.execution;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /*
@@ -213,10 +215,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                 if (execution != null) {
                     // stop any running execution
                     KiemPlugin.getDefault().execution.stopExecutionSync();
-                     showError(Messages.mErrorOpenDuringExecution,
-                     PLUGIN_ID,
-                     null);
-                     return;
+                    showError(Messages.mErrorOpenDuringExecution, PLUGIN_ID, null);
+                    return;
                 }
 
                 if (kIEMViewInstance.promptToSaveOnClose() == ISaveablePart2.NO) {
@@ -226,14 +226,14 @@ public class KiemPlugin extends AbstractUIPlugin {
                     List<DataComponentEx> dataComponentExListTemp = null;
                     // try to load the components into a temporary list
                     try {
-                        String fileString = ((IFileEditorInput) editorInputToOpen)
-                                                        .getFile().getFullPath().toOSString();
-                        
+                        String fileString = ((IFileEditorInput) editorInputToOpen).getFile()
+                                .getFullPath().toOSString();
+
                         URI fileURI = URI.createPlatformResourceURI(fileString, true);
-                        //resolve relative workspace paths
+                        // resolve relative workspace paths
                         URIConverter uriConverter = new ExtensibleURIConverterImpl();
                         InputStream inputStream = uriConverter.createInputStream(fileURI);
-                        
+
                         ObjectInputStream in = new ObjectInputStream(inputStream);
                         Object object;
                         try {
@@ -246,7 +246,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                             // e.printStackTrace();
                         }
                         in.close();
-                        
+
                         inputStream.close();
 
                         // restore (full) DataComponentExList from
@@ -460,7 +460,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 
         for (int i = 0; i < jsonComponents.length; i++) {
             try {
-                System.out.println("KIEM loading component: " 
+                System.out.println("KIEM loading component: "
                         + jsonComponents[i].getContributor().getName());
                 JSONObjectDataComponent dataComponent = (JSONObjectDataComponent) jsonComponents[i]
                         .createExecutableExtension("class");
@@ -475,7 +475,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
         for (int i = 0; i < stringComponents.length; i++) {
             try {
-                System.out.println("KIEM loading component: " 
+                System.out.println("KIEM loading component: "
                         + stringComponents[i].getContributor().getName());
                 JSONStringDataComponent dataComponent = (JSONStringDataComponent) stringComponents[i]
                         .createExecutableExtension("class");
@@ -556,6 +556,14 @@ public class KiemPlugin extends AbstractUIPlugin {
             }
         }
 
+        // DEPRECATED PART FOLLOWING -------------------------------------------
+        // Handling interface keys as a list of strings turned out to be not sufficient
+        // for example when data components want to provide variables with special
+        // initial values (e.g., mark variables as signals using a convention on their
+        // values).
+        // This part may be removed in future releases. Do not use interface key methods
+        // in DataComponent implementations any further!
+
         // get all InterfaceKeys from (enabled) data producer
         // and combine them into globalInterfaceKeys
         List<String> globalInterfaceKeys = new LinkedList<String>();
@@ -588,6 +596,39 @@ public class KiemPlugin extends AbstractUIPlugin {
             } // end if enabled
         } // next c
 
+        // DEPRECATED PART END -------------------------------------------------
+
+        // get all InitialValues from (enabled) data producer
+        // and combine them into globalInitialVariables
+        JSONObject globalInitialVariables = new JSONObject();
+        for (int c = 0; c < dataComponentExList.size(); c++) {
+            DataComponentEx dataComponentEx = dataComponentExList.get(c);
+            if (dataComponentEx.isEnabled()) {
+                try {
+                    JSONObject localInitialVariables = dataComponentEx.provideInitialVariables();
+                    if (localInitialVariables != null) {
+                        JSONMerger jsonMerger = new JSONMerger();
+                        JSONObject merged = jsonMerger.mergeObjects(globalInitialVariables,
+                                localInitialVariables);
+                        globalInitialVariables = merged;
+                    } // end if not null
+                } catch (Exception e) {
+                    this.kIEMViewInstance.setAllEnabled(true);
+                    KiemPlugin.getDefault().handleComponentError(
+                            dataComponentEx.getDataComponent(), e);
+                    return false;
+                }
+            } // if enabled
+        } // next c
+
+        // distribute union of globalInitialVariables to all enabled components
+        for (int c = 0; c < dataComponentExList.size(); c++) {
+            DataComponentEx dataComponentEx = dataComponentExList.get(c);
+            if (dataComponentEx.isEnabled()) {
+                dataComponentEx.setInitialVariables(globalInitialVariables);
+            } // end if enabled
+        } // next c
+        
         // initialize all (enabled) data producer and Observer
         for (int c = 0; c < dataComponentExList.size(); c++) {
             DataComponentEx dataComponentEx = dataComponentExList.get(c);
@@ -608,6 +649,14 @@ public class KiemPlugin extends AbstractUIPlugin {
         this.execution = new Execution(dataComponentExList);
         // take the last set delay
         this.execution.setAimedStepDuration(this.getAimedStepDuration());
+        // initialize the dataPool with this data
+        try {
+            this.execution.getDataPool().putData(globalInitialVariables);
+        } catch (JSONException e) {
+            //this should not happen
+            e.printStackTrace();
+        }
+        
         this.executionThread = new Thread(this.execution);
         this.executionThread.start();
 

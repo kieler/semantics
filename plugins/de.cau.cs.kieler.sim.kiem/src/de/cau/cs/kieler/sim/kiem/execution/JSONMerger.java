@@ -32,7 +32,7 @@ public class JSONMerger {
     /**
      * Instantiates a new jSON merger.
      */
-    JSONMerger() {
+    public JSONMerger() {
 
     }
 

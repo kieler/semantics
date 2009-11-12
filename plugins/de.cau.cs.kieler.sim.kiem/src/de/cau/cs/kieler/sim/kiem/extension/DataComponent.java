@@ -182,9 +182,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
     /**
      * {@inheritDoc}
      */
-    public final void setInitializationData(final IConfigurationElement config, 
-                                            final String propertyName,
-                                            final Object data) throws CoreException {
+    public final void setInitializationData(final IConfigurationElement config,
+            final String propertyName, final Object data) throws CoreException {
         this.name = config.getAttribute("name");
     }
 
@@ -217,7 +216,7 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
     /**
      * If this DataComponent implements an observer, provide some key's of interest. If you use null
      * then not filter is being used and the component will get all values.
-     * 
+     *
      * @return a String array with the keys of interest
      */
     public String[] provideFilterKeys() {
@@ -275,12 +274,15 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      * interface variable keys that can be used by other DataComponents within and after the
      * initialization phase every DataComponent may receive the union of all those variable keys by
      * calling the {@link #getInterfaceKeys()} method.
+     * <BR><BR>
+     * <B>DEPRECATED: Use {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#provideInitialVariables()} or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#provideInitialVariables()} instead!</B>
      * 
      * @return the local interface variable keys
      * @throws KiemInitializationException
      *             if a property prevents the execution of this DataComponent this error should be
      *             thrown
      */
+    @Deprecated
     public String[] provideInterfaceKeys() throws KiemInitializationException {
         return null;
     }
@@ -290,10 +292,13 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
     /**
      * Sets the global interface variable keys. Is called by the execution manager during the
      * initialization phase.
+     * <BR><BR>
+     * <B>DEPRECATED: Use {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#setInitialVariables(de.cau.cs.kieler.sim.kiem.json.JSONObject)} or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitialVariables(String)} instead!</B>
      * 
      * @param globalInterfaceKeysParam
      *            the new global interface variable keys
      */
+    @Deprecated
     public final void setInterfaceKeys(final String[] globalInterfaceKeysParam) {
         this.globalInterfaceKeys = globalInterfaceKeysParam;
     }
@@ -301,11 +306,14 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the (global) interface variable keys. Is called by the execution manager during the
-     * initialization phase.
+     * Gets the (global) interface variable keys. Can be used by the DataComponent
+     * itself to retrieve information about global interface keys.
+     * <BR><BR>
+     * <B>DEPRECATED: Use {@link de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#getInitialVariables()()} or {@link de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#getInitialVariables()} instead!</B>
      * 
      * @return the global interface variables
      */
+    @Deprecated
     protected final String[] getInterfaceKeys() {
         if (globalInterfaceKeys == null) {
             // probably not initialized or there are no such
@@ -634,8 +642,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      * @throws KiemMasterException
      *             a KiemMasterException
      */
-    public final void masterSetAimedStepDuration(final int aimedStepDuration) 
-                                                        throws KiemMasterException {
+    public final void masterSetAimedStepDuration(final int aimedStepDuration)
+            throws KiemMasterException {
         if (this.isMaster()) {
             if (kIEMInstance != null) {
                 kIEMInstance.initExecution();
@@ -764,8 +772,8 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
      * @param kIEMViewInstanceParam
      *            the KIEM view instance
      */
-    public final void masterSetKIEMInstances(final KiemPlugin kIEMInstanceParam, 
-                                             final KiemView kIEMViewInstanceParam) {
+    public final void masterSetKIEMInstances(final KiemPlugin kIEMInstanceParam,
+            final KiemView kIEMViewInstanceParam) {
         this.kIEMInstance = kIEMInstanceParam;
         this.kIEMViewInstance = kIEMViewInstanceParam;
     }
@@ -916,6 +924,7 @@ public abstract class DataComponent implements IDataComponent, IExecutableExtens
     // Rationale: Explicit destructors (in C++) use to start with a underline
     public void _DataComponent() {
     }
+
     // CHECKSTYLEON Name
 
     // -------------------------------------------------------------------------

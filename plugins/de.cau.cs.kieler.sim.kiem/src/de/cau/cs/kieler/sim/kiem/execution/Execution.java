@@ -171,6 +171,18 @@ public class Execution implements Runnable {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the data pool. Be careful with using the DataPool after starting
+     * the thread!
+     * 
+     * @return the data pool
+     */
+    public JSONDataPool getDataPool() {
+        return this.dataPool;
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the currently set aimed step duration.

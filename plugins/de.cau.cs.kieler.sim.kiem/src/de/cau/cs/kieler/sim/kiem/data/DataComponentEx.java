@@ -19,7 +19,10 @@ import java.util.HashMap;
 
 import de.cau.cs.kieler.sim.kiem.extension.DataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.json.JSONException;
+import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
 /**
  * The Class DataComponentEx. Is a wrapper for the
@@ -362,8 +365,43 @@ public class DataComponentEx implements Serializable {
      * 
      * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#provideInterfaceKeys()
      */
+    @Deprecated
     public String[] provideInterfaceKeys() throws KiemInitializationException {
         return this.component.provideInterfaceKeys();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * This method is implemented by the DataComponent if it provides a JSONObject of initial
+     * variables.
+     * 
+     * @return the JSONObject of initial variables
+     * 
+     * @throws KiemInitializationException
+     *             the KIEM initialization exception
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#provideInitialVariables()
+     * @see de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#provideInitialVariables()
+     */
+    public JSONObject provideInitialVariables() throws KiemInitializationException {
+        JSONObject initialVariables = null;
+        if (isJSON()) {
+            initialVariables = ((JSONObjectDataComponent) this.component).provideInitialVariables();
+        } else {
+            String initialVariablesString = ((JSONStringDataComponent) this.component)
+                    .provideInitialVariables();
+            //only try this with valid Strings
+            if (initialVariablesString != null) {
+                try {
+                    initialVariables = new JSONObject(initialVariablesString);
+                } catch (JSONException e) {
+                    throw new KiemInitializationException(
+                            "Cannot parse initial variables into JSONObject.", false, e);
+                }
+            }
+        }
+        return initialVariables;
     }
 
     // -------------------------------------------------------------------------
@@ -501,8 +539,30 @@ public class DataComponentEx implements Serializable {
      * 
      * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#setInterfaceKeys(String[])
      */
+    @Deprecated
     public void setInterfaceKeys(final String[] globalInterfaceKeys) {
         this.component.setInterfaceKeys(globalInterfaceKeys);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the global initial variables. This method is called by the execution manager after it
+     * collects the union of initial variables of all DataComponents.
+     * 
+     * @param globalInitialVariables
+     *            all interface variable keys
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent#setInitialVariables(JSONObject)
+     * @see de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent#setInitialVariables(String)
+     */
+    public void setInitialVariables(final JSONObject globalInitialVariables) {
+        if (isJSON()) {
+            ((JSONObjectDataComponent) this.component).setInitialVariables(globalInitialVariables);
+        } else {
+            ((JSONStringDataComponent) this.component).setInitialVariables(globalInitialVariables
+                    .toString());
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -668,7 +728,7 @@ public class DataComponentEx implements Serializable {
      * Noop does nothing. It is used in switch/if branches to satisfy checkstyle.
      */
     public void noop() {
-       //do a lot of nothing 
+        // do a lot of nothing
     }
 
 }
