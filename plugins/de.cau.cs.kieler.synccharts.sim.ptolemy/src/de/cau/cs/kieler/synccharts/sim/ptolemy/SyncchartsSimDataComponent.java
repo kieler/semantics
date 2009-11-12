@@ -222,8 +222,10 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
     //-------------------------------------------------------------------------	 
 
-	public String[] provideInterfaceKeys() throws KiemInitializationException {
-		//do the initialization prior to providing the interface keys
+	public JSONObject provideInitialVariables() throws KiemInitializationException {
+             JSONObject returnObj = new JSONObject();
+
+	    //do the initialization prior to providing the interface keys
 		//this may rise an exception
 		PTOEXE = null;
 		System.gc();
@@ -231,11 +233,14 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		try {
 			loadAndExecuteModel();
 			keys = PTOEXE.getInterfaceSignals();
+			for (String key:keys) {
+		             returnObj.accumulate(key, JSONSignalValues.newValue(false));
+			}
 		} catch (Exception e) {
 			throw new KiemInitializationException
 				("Ptolemy Model could not be generated", true, e);
 		}
-		return keys;
+		return returnObj;
 	}	
 	
     //-------------------------------------------------------------------------	 

@@ -57,6 +57,21 @@ public class XtendJava {
 		return myState.eResource().getURIFragment(myState).toString();
 	}
 	
+        //-------------------------------------------------------------------------
+
+        /**
+         * Gets the URIFragment of a Transition.
+         * 
+         * @param myNode the Node
+         * 
+         * @return the URIFragment
+         */
+        public final static String getURIFragment(Transition myTransition) {
+                //Returns the URI fragment that, when passed to getEObject will
+                //return the given object.
+                return myTransition.eResource().getURIFragment(myTransition).toString();
+        }
+	
 	//-------------------------------------------------------------------------
 
 	/**

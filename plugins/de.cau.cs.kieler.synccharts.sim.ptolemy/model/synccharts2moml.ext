@@ -837,6 +837,12 @@ String getURIFragment(synccharts::State state) :
 			.getURIFragment(de.cau.cs.kieler.synccharts.State)
 ;
 
+//Get URIFragment of an model element to identify it. 
+String getURIFragment(synccharts::Transition transition) :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava
+			.getURIFragment(de.cau.cs.kieler.synccharts.Transition)
+;
+
 //Get hash value of a string. 
 String hash(String s) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
@@ -1086,7 +1092,7 @@ Void addPortRelationAndLinks(EntityType entity, String portName):
 //Create a Relation Type for State2State transitions.
 create RelationType this createRelation(String name,
 										synccharts::Transition transition):
-//	let p1 = new PropertyType:
+	let p1 = new PropertyType:
 //	let p2 = new PropertyType:
 	let p3 = new PropertyType:
 	let p4 = new PropertyType:
@@ -1095,8 +1101,9 @@ create RelationType this createRelation(String name,
 	let p7 = new PropertyType:
 	let p8 = new PropertyType:
 	let p9 = new PropertyType:
-//		p1.setName("guardExpression") ->
-//		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
+		p1.setName("EmfFragmentURI") ->
+		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
+		p1.setValue(getURIFragment(transition)) ->
 //		p2.setName("outputActions") ->
 //		p2.setClass("ptolemy.domains.modal.kernel.OutputActionsAttribute") ->
 		p3.setName("setActions") ->
@@ -1125,7 +1132,7 @@ create RelationType this createRelation(String name,
 		p9.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p9.setValue(""+transition.priority) ->
     this.setName(name) ->
-//	this.property.add(p1) ->
+	this.property.add(p1) ->
 //	this.property.add(p2) ->
 	this.property.add(p3) ->
 	this.property.add(p4) ->
