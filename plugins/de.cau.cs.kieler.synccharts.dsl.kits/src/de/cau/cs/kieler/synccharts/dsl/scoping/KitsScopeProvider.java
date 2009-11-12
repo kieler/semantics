@@ -5,10 +5,14 @@ package de.cau.cs.kieler.synccharts.dsl.scoping;
 
 import java.util.ArrayList;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.linking.impl.SimpleAttributeResolver;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.IScopedElement;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
+import org.eclipse.xtext.scoping.impl.DefaultScope;
 import org.eclipse.xtext.scoping.impl.ScopedElement;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
@@ -37,6 +41,14 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
      *            the reference
      * @return new scope for target states
      */
+    @Override
+    protected IScope createScope(Resource resource, EClass type) {
+        System.out.println("cross ref's are now made by id per default");
+        return new DefaultScope(resource, type, getImportUriResolver(),
+                SimpleAttributeResolver.newResolver(String.class, "id"));
+
+    }
+
     IScope scope_Transition_targetState(Transition context, EReference reference) {
         State sourceState = (State) context.eContainer();
         Region parentRegion = sourceState.getParentRegion();
@@ -117,7 +129,8 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
             }
         }
         // ============ end of region ============//
-        System.out.println("--------------END OF SCOPE CALC--------------");
+        System.out
+                .println("--------------END OF SCOPE CALC (Emission_signal)--------------");
         return new SimpleScope(scopeElems);
     }
 
@@ -136,7 +149,8 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 
         ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
         // this is my transition
-        Action a = context.getParentAction();
+        Action a = context.getParentExpression().getParentAction();
+        // Action a = context.getParentAction();
         if (a instanceof Transition) {
             Transition t = (Transition) a;
             System.out.println(context.toString() + " has the source state: "
@@ -180,7 +194,8 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
             }
         }
         // ============ end of region ============//
-        System.out.println("--------------END OF SCOPE CALC--------------");
+        System.out
+                .println("--------------END OF SCOPE CALC (SigRef)--------------");
         return new SimpleScope(scopeElems);
 
     }
