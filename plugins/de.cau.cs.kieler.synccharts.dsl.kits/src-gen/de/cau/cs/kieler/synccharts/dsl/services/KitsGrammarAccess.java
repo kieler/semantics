@@ -2656,22 +2656,15 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIsImmediateNumberSignKeyword_2_1_0 = (Keyword)cIsImmediateAssignment_2_1.eContents().get(0);
 		private final Assignment cDelayAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
 		private final RuleCall cDelayINTTerminalRuleCall_2_2_0 = (RuleCall)cDelayAssignment_2_2.eContents().get(0);
-		private final Assignment cTriggerAssignment_2_3 = (Assignment)cGroup_2.eContents().get(3);
-		private final RuleCall cTriggerBooleanExpressionParserRuleCall_2_3_0 = (RuleCall)cTriggerAssignment_2_3.eContents().get(0);
-		private final Group cGroup_2_4 = (Group)cGroup_2.eContents().get(4);
-		private final Keyword cSolidusKeyword_2_4_0 = (Keyword)cGroup_2_4.eContents().get(0);
-		private final Group cGroup_2_4_1 = (Group)cGroup_2_4.eContents().get(1);
-		private final Assignment cEffectsAssignment_2_4_1_0 = (Assignment)cGroup_2_4_1.eContents().get(0);
-		private final RuleCall cEffectsEffectParserRuleCall_2_4_1_0_0 = (RuleCall)cEffectsAssignment_2_4_1_0.eContents().get(0);
-		private final Keyword cCommaKeyword_2_4_1_1 = (Keyword)cGroup_2_4_1.eContents().get(1);
+		private final Assignment cTriggersAndEffectsAssignment_2_3 = (Assignment)cGroup_2.eContents().get(3);
+		private final RuleCall cTriggersAndEffectsSTRINGTerminalRuleCall_2_3_0 = (RuleCall)cTriggersAndEffectsAssignment_2_3.eContents().get(0);
 		private final Assignment cIsHistoryAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cIsHistoryHistoryKeyword_3_0 = (Keyword)cIsHistoryAssignment_3.eContents().get(0);
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Transition returns sync::Transition:
 		//  type=TransitionType targetState=[sync::State|FullStateID] ("with" isImmediate?="#"?
-		//  delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?)? isHistory?=
-		//  " history"? ";";   //========================================================================================
+		//  delay=INT? triggersAndEffects=STRING)? isHistory?=" history"? ";";   //========================================================================================
 		////===  									    ACTIONS  					               ===
 		////========================================================================================
 		////Action returns sync::Action:
@@ -2688,8 +2681,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		public ParserRule getRule() { return rule; }
 
 		//type=TransitionType targetState=[sync::State|FullStateID] ("with" isImmediate?="#"?
-		//delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?)? isHistory?=
-		//" history"? ";" 
+		//delay=INT? triggersAndEffects=STRING)? isHistory?=" history"? ";" 
 		////  (sourceState=[sync::State|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 		//   //|({sync::State} name=FullStateID)
 		//       //|newTargetState=TransitionState )
@@ -2712,8 +2704,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//FullStateID
 		public RuleCall getTargetStateStateFullStateIDParserRuleCall_1_0_1() { return cTargetStateStateFullStateIDParserRuleCall_1_0_1; }
 
-		//("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect
-		//","?)*)?)?
+		//("with" isImmediate?="#"? delay=INT? triggersAndEffects=STRING)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//"with"
@@ -2731,29 +2722,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getDelayINTTerminalRuleCall_2_2_0() { return cDelayINTTerminalRuleCall_2_2_0; }
 
-		//trigger=BooleanExpression?
-		public Assignment getTriggerAssignment_2_3() { return cTriggerAssignment_2_3; }
+		//triggersAndEffects=STRING
+		public Assignment getTriggersAndEffectsAssignment_2_3() { return cTriggersAndEffectsAssignment_2_3; }
 
-		//BooleanExpression
-		public RuleCall getTriggerBooleanExpressionParserRuleCall_2_3_0() { return cTriggerBooleanExpressionParserRuleCall_2_3_0; }
-
-		//("/" (effects+=Effect ","?)*)?
-		public Group getGroup_2_4() { return cGroup_2_4; }
-
-		//"/"
-		public Keyword getSolidusKeyword_2_4_0() { return cSolidusKeyword_2_4_0; }
-
-		//(effects+=Effect ","?)*
-		public Group getGroup_2_4_1() { return cGroup_2_4_1; }
-
-		//effects+=Effect
-		public Assignment getEffectsAssignment_2_4_1_0() { return cEffectsAssignment_2_4_1_0; }
-
-		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_2_4_1_0_0() { return cEffectsEffectParserRuleCall_2_4_1_0_0; }
-
-		//","?
-		public Keyword getCommaKeyword_2_4_1_1() { return cCommaKeyword_2_4_1_1; }
+		//STRING
+		public RuleCall getTriggersAndEffectsSTRINGTerminalRuleCall_2_3_0() { return cTriggersAndEffectsSTRINGTerminalRuleCall_2_3_0; }
 
 		//isHistory?=" history"?
 		public Assignment getIsHistoryAssignment_3() { return cIsHistoryAssignment_3; }
@@ -6053,8 +6026,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Transition returns sync::Transition:
 	//  type=TransitionType targetState=[sync::State|FullStateID] ("with" isImmediate?="#"?
-	//  delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?)? isHistory?=
-	//  " history"? ";";   //========================================================================================
+	//  delay=INT? triggersAndEffects=STRING)? isHistory?=" history"? ";";   //========================================================================================
 	////===  									    ACTIONS  					               ===
 	////========================================================================================
 	////Action returns sync::Action:

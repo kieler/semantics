@@ -6,11 +6,12 @@ package de.cau.cs.kieler.synccharts.dsl;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.resource.IFragmentProvider;
+import org.eclipse.xtext.scoping.IScopeProvider;
 
 import de.cau.cs.kieler.synccharts.dsl.kits.resource.KitsFragmentProvider;
 import de.cau.cs.kieler.synccharts.dsl.kits.serialization.KitsTransientValueService;
+import de.cau.cs.kieler.synccharts.dsl.scoping.ReferenceByIdScopeProvider;
 import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
-import de.cau.cs.kieler.synccharts.formatting.TransitionLabelTransientValueService;
 
 /**
  * This class is the injector created also to setup the standalone Kits
@@ -34,9 +35,9 @@ public class KitsRuntimeModule extends
      * 
      * @return custom implementation of the Scope Provider
      */
-    // public Class<? extends IScopeProvider> bindIScopeProvider() {
-    // return MyDefaultScopeProvider.class;
-    // }
+     public Class<? extends IScopeProvider> bindIScopeProvider() {
+     return ReferenceByIdScopeProvider.class;
+     }
 
     /*
      * (non-Javadoc)

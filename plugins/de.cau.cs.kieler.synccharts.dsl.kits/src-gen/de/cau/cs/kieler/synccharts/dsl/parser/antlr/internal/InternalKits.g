@@ -2704,6 +2704,12 @@ ruleTransition returns [EObject current=null]
 )
 )(
 (
+		{ 
+		  /* 
+		  dummy action to prevent antlr bug: if backtracking is enabled, antlr will
+		  create synpreds that cannot be compiled in some rare cases
+		  */ 
+		}
 		{
 			if ($current==null) {
 	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
@@ -2769,63 +2775,31 @@ ruleTransition returns [EObject current=null]
 )
 )?(
 (
-		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getTriggerBooleanExpressionParserRuleCall_2_3_0(), currentNode); 
-	    }
-		lv_trigger_5_0=ruleBooleanExpression		{
+		lv_triggersAndEffects_5_0=RULE_STRING
+		{
+			createLeafNode(grammarAccess.getTransitionAccess().getTriggersAndEffectsSTRINGTerminalRuleCall_2_3_0(), "triggersAndEffects"); 
+		}
+		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	            associateNodeWithAstElement(currentNode, $current);
 	        }
 	        try {
 	       		set(
 	       			$current, 
-	       			"trigger",
-	        		lv_trigger_5_0, 
-	        		"BooleanExpression", 
-	        		currentNode);
+	       			"triggersAndEffects",
+	        		lv_triggersAndEffects_5_0, 
+	        		"STRING", 
+	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
-	        currentNode = currentNode.getParent();
 	    }
 
 )
-)?('/' 
-    {
-        createLeafNode(grammarAccess.getTransitionAccess().getSolidusKeyword_2_4_0(), null); 
-    }
-((
+))?(
 (
-		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_2_4_1_0_0(), currentNode); 
-	    }
-		lv_effects_7_0=ruleEffect		{
-	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode.getParent(), $current);
-	        }
-	        try {
-	       		add(
-	       			$current, 
-	       			"effects",
-	        		lv_effects_7_0, 
-	        		"Effect", 
-	        		currentNode);
-	        } catch (ValueConverterException vce) {
-				handleValueConverterException(vce);
-	        }
-	        currentNode = currentNode.getParent();
-	    }
-
-)
-)(',' 
-    {
-        createLeafNode(grammarAccess.getTransitionAccess().getCommaKeyword_2_4_1_1(), null); 
-    }
-)?)*)?)?(
-(
-		lv_isHistory_9_0=' history' 
+		lv_isHistory_6_0=' history' 
     {
         createLeafNode(grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_3_0(), "isHistory"); 
     }
@@ -3504,6 +3478,12 @@ ruleEmission returns [EObject current=null]
     }:
 ((
 (
+		{ 
+		  /* 
+		  dummy action to prevent antlr bug: if backtracking is enabled, antlr will
+		  create synpreds that cannot be compiled in some rare cases
+		  */ 
+		}
 		{
 			if ($current==null) {
 	            $current = factory.create(grammarAccess.getEmissionRule().getType().getClassifier());
@@ -3604,6 +3584,12 @@ ruleAssignment returns [EObject current=null]
     }:
 ((
 (
+		{ 
+		  /* 
+		  dummy action to prevent antlr bug: if backtracking is enabled, antlr will
+		  create synpreds that cannot be compiled in some rare cases
+		  */ 
+		}
 		{
 			if ($current==null) {
 	            $current = factory.create(grammarAccess.getAssignmentRule().getType().getClassifier());
@@ -3692,6 +3678,12 @@ ruleSignalReference returns [EObject current=null]
     }:
 (
 (
+		{ 
+		  /* 
+		  dummy action to prevent antlr bug: if backtracking is enabled, antlr will
+		  create synpreds that cannot be compiled in some rare cases
+		  */ 
+		}
 		{
 			if ($current==null) {
 	            $current = factory.create(grammarAccess.getSignalReferenceRule().getType().getClassifier());
@@ -3729,6 +3721,12 @@ ruleVariableReference returns [EObject current=null]
     }:
 (
 (
+		{ 
+		  /* 
+		  dummy action to prevent antlr bug: if backtracking is enabled, antlr will
+		  create synpreds that cannot be compiled in some rare cases
+		  */ 
+		}
 		{
 			if ($current==null) {
 	            $current = factory.create(grammarAccess.getVariableReferenceRule().getType().getClassifier());
