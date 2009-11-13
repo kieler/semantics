@@ -93,10 +93,12 @@ context State if(outgoingTransitions.size > 1)
 
 // ================================================================================================
 // Expressions
+// FIXME: Problem is that checks done in a strange context are not displayed in the model as markers, 
+// Use only valid contexts for checks. Otherwise only the problem view shows the error.
 context ComplexExpression if ((operator == OperatorType::NOT) || (operator == OperatorType::VAL)) ERROR "Unary operators may not have more or less than one operand!" :
 	subExpressions.size == 1;
 	
-context ComplexExpression if (!((operator == OperatorType::NOT) || (operator == OperatorType::VAL))) ERROR "Binary operators may not have more or less than two operands!" :
+context ComplexExpression if (!((operator == OperatorType::NOT) || (operator == OperatorType::VAL) || (operator == OperatorType::PRE))) ERROR "Binary operators may not have more or less than two operands!" :
 	subExpressions.size == 2;
 
 // ================================================================================================
