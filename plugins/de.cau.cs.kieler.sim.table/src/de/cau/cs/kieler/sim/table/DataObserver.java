@@ -200,6 +200,11 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
             TableDataList.getInstance().add(
                     new TableData(TableDataList.getInstance(), false, key, value));
         }
+        
+        
+        // consider global variable initializations
+        step(this.getInitialVariables());
+        
         // update the table
         TableDataList.getInstance().updateViewAsync();
     }
