@@ -1,0 +1,135 @@
+<introContent>
+    <extensionContent
+        id="de.cau.cs.kieler.intro.overview"
+        name="KIELER Overview"
+        path="overview/@"
+        style="css/intro.css">
+        <group
+            label=""
+            id="de.cau.cs.kieler.intro.overview.group"
+            style-id="content-group">
+            <link 
+                label="KIELER Modeling Tools Overview"
+                url="http://www.informatik.uni-kiel.de/rtsys/kieler"
+                id="kieler-overview-link"
+                style-id="content-link">
+                <text>The KIELER project aims at enhancing the pragmatics of graphical model-based system design.</text>
+            </link>
+        </group>
+    </extensionContent>
+    
+    <extensionContent
+        id="de.cau.cs.kieler.intro.firststeps"
+        name="KIELER First Steps"
+        path="firststeps/@"
+        style="css/intro.css">
+        <group
+            label=""
+            id="de.cau.cs.kieler.intro.firststeps.group"
+            style-id="content-group">
+            <link
+                label="Doing first steps"
+                url="http://www.informatik.uni-kiel.de/rtsys/kieler"
+                id="kieler-firststeps-link"
+                style-id="content-link">
+                <text>... to be completed</text>
+            </link>
+        </group>
+    </extensionContent>
+ 
+   	<extensionContent
+        id="de.cau.cs.kieler.intro.tutorials"
+        name="KIELER Tutorials"
+        path="tutorials/@"
+        style="css/intro.css">
+        <group
+            label=""
+            id="de.cau.cs.kieler.intro.tutorials.group"
+            style-id="content-group">
+            <link
+                label="KIELER Tutorials"
+                url="http://www.informatik.uni-kiel.de/rtsys/kieler"
+                id="kieler-tutorials-link"
+                style-id="content-link">
+                <text>... to be completed</text>
+            </link>
+        </group>
+  	</extensionContent>
+   
+    <extensionContent
+        id="de.cau.cs.kieler.intro.samples"
+        name="KIELER Samples"
+        path="samples/@"
+        style="css/intro.css">
+        <group
+            label=""
+            id="de.cau.cs.kieler.intro.samples.group"
+            style-id="content-group">
+            <link
+                label="KIELER Samples"
+                url="http://www.informatik.uni-kiel.de/rtsys/kieler"
+                id="kieler-whatsnew-link"
+                style-id="content-link">
+				<text>... to be completed</text>
+            </link>
+        </group>
+    </extensionContent>
+   
+    <extensionContent
+        id="de.cau.cs.kieler.intro.whatsnew"
+        name="KIELER What's new"
+        path="whatsnew/@"
+        style="css/intro.css">
+        <group
+            label=""
+            id="de.cau.cs.kieler.intro.whatsnew.group"
+            style-id="content-group">
+            <link
+                label="What's new"
+                url="http://www.informatik.uni-kiel.de/rtsys/kieler"
+                id="kieler-whatsnew-link"
+                style-id="content-link">
+				<text>... to be completed</text>
+            </link>
+        </group>
+    </extensionContent>
+   
+    <extensionContent
+        id="de.cau.cs.kieler.intro.webresources"
+        name="KIELER Web Resources"
+        path="webresources/@"
+        style="css/intro.css">
+        <group
+            label=""
+            id="de.cau.cs.kieler.intro.webresources.group"
+            style-id="content-group">
+            <link
+                label="Web Resources"
+                url="http://www.informatik.uni-kiel.de/rtsys/kieler"
+                id="kieler-webresources-link"
+                style-id="content-link">
+                <text>... to be completed</text>
+            </link>
+        </group>
+    </extensionContent>
+   
+    <extensionContent
+        id="de.cau.cs.kieler.intro.migrate"
+        name="KIELER migrate"
+        path="migrate/@"
+        style="css/intro.css">
+        <group
+            label=""
+            id="de.cau.cs.kieler.intro.migrate.group"
+            style-id="content-group">
+            <link
+                label="Migrate"
+                url="http://www.informatik.uni-kiel.de/rtsys/kieler"
+                id="kieler-migrate-link"
+                style-id="content-link">
+                <text>... to be completed</text>
+            </link>
+        </group>
+    </extensionContent>
+
+</introContent>

@@ -185,7 +185,7 @@
          point="org.eclipse.ui.intro.configExtension">
       <configExtension
             configId="org.eclipse.ui.intro.universalConfig"
-            content="help/introContent.xml">
+            content="intro/introContent.xml">
       </configExtension>
    </extension>
    <extension
