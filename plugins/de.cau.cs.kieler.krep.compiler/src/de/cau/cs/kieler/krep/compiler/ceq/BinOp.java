@@ -5,7 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.*;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
 import de.cau.cs.kieler.krep.compiler.lustre.Operator;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
@@ -18,7 +19,7 @@ public class BinOp extends Expression {
     private Operator op;
 
     /**
-     * construct binary operator
+     * Generate binary operator.
      * 
      * @param name
      *            name of this expression
@@ -29,7 +30,7 @@ public class BinOp extends Expression {
      * @param op
      *            Operator
      */
-    public BinOp(String name, Expression e1, Expression e2, Operator op) {
+    public BinOp(final String name, final Expression e1, final Expression e2, Operator op) {
         super(name);
         this.e1 = e1;
         this.e2 = e2;
@@ -51,7 +52,7 @@ public class BinOp extends Expression {
     }
 
     @Override
-    public Expression flatten(String name, HashMap<String, Variable> vars, LinkedList<Expression> es) {
+    public Expression flatten(final String name, final HashMap<String, Variable> vars, LinkedList<Expression> es) {
         boolean atom1 = e1.isAtom();
         boolean atom2 = e2.isAtom();
         Debug.low("flatten: " + toString());
@@ -176,14 +177,14 @@ public class BinOp extends Expression {
     }
 
     @Override
-    public Expression padDelay(HashMap<String, Integer> delay, int n) {
+    public Expression padDelay(final HashMap<String, Integer> delay, int n) {
         e1 = e1.padDelay(delay, n);
         e2 = e2.padDelay(delay, n);
         return this;
     }
 
     @Override
-    public Const propagateConst(HashMap<String, Const> con) {
+    public Const propagateConst(final HashMap<String, Const> con) {
         Const c1 = e1.propagateConst(con);
         Const c2 = e2.propagateConst(con);
         if (c1 != null) {

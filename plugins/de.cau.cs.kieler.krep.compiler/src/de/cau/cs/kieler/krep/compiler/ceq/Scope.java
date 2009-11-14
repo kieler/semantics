@@ -4,12 +4,12 @@ import java.util.LinkedList;
 
 public interface Scope {
 
-    public void add(LinkedList<Variable> vars);
+     void add(LinkedList<Variable> vars);
 
-    public void add(Automaton ssm);
+    void add(Automaton ssm);
 
-    public void add(Equation eq);
+    void add(Equation eq);
 
-    public void addEq(LinkedList<Equation> eq);
+    void addEq(LinkedList<Equation> eq);
 
 }

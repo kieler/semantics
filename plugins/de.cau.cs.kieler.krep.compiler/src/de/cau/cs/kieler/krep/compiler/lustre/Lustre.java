@@ -44,7 +44,7 @@ public class Lustre {
      * @throws ClockException
      * @throws TypeException
      */
-    public Lustre(InputStream in) throws IOException, ClockException, TypeException {
+    public Lustre(final InputStream in) throws IOException, ClockException, TypeException {
         super();
 
         lustreLexer lex = new lustreLexer(new ANTLRInputStream(in));
@@ -134,7 +134,7 @@ public class Lustre {
      * @param e
      *            expression to compute the value
      */
-    public void addEq(String s, Expression e) {
+    public void addEq(final String s, final Expression e) {
         eqs.put(s, e);
     }
 
@@ -142,7 +142,7 @@ public class Lustre {
      * @param in
      *            new input list
      */
-    public void setInputs(LinkedList<de.cau.cs.kieler.krep.compiler.lustre.Variable> in) {
+    public void setInputs(final LinkedList<de.cau.cs.kieler.krep.compiler.lustre.Variable> in) {
         this.input = in;
         for (Variable v : in) {
             vars.put(v.getName(), v);
@@ -164,7 +164,7 @@ public class Lustre {
      * @param loc
      *            list of local variables
      */
-    public void setLocals(LinkedList<de.cau.cs.kieler.krep.compiler.lustre.Variable> loc) {
+    public void setLocals(final LinkedList<de.cau.cs.kieler.krep.compiler.lustre.Variable> loc) {
         this.local = loc;
         for (Variable v : loc) {
             vars.put(v.getName(), v);
@@ -197,7 +197,7 @@ public class Lustre {
         return res;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 

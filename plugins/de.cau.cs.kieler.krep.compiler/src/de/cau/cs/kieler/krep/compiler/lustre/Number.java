@@ -20,7 +20,7 @@ public class Number extends Expression {
      * @param num
      *            constant value
      */
-    public Number(String name, int num) {
+    public Number(String name, final int num) {
         super(name);
         this.num = num;
         this.type = Type.INT;
@@ -38,7 +38,7 @@ public class Number extends Expression {
     }
 
     @Override
-    public Expression propagatePre(HashMap<String, Expression> eqs) {
+    public Expression propagatePre(final HashMap<String, Expression> eqs) {
         return this;
     }
 
@@ -76,8 +76,8 @@ public class Number extends Expression {
     }
 
     @Override
-    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(String basename, int stage,
-            String C, LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename, final int stage,
+            final String C, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
                 new de.cau.cs.kieler.krep.compiler.ceq.Const(name, num));
     }

@@ -105,7 +105,7 @@ public class DepGraph {
      * @param n
      *            number of clusters
      */
-    public void split(int n) {
+    public void split(final int n) {
         core.clear();
         Set<String> toVisit = new HashSet<String>(nodes.keySet());
         for (Node node : nodes.values()) {
@@ -140,7 +140,7 @@ public class DepGraph {
     /**
      * @return description of the dependency graph in the dot-format
      */
-    public String toDot(boolean printHeader) {
+    public String toDot(final boolean printHeader) {
         final String[] colors = { "BLACK", "RED", "BLUE", "GREEN", "YELLOW" };
         String res = "";
         if (printHeader) {
@@ -172,7 +172,7 @@ public class DepGraph {
         return res;
     }
 
-    public int getPrio(String name) {
+    public int getPrio(final String name) {
         return nodes.get(name).getPrio();
     }
 
@@ -188,11 +188,11 @@ public class DepGraph {
         return maxPrio;
     }
 
-    public int getCore(String name) {
+    public int getCore(final String name) {
         return core.get(name);
     }
 
-    public void addSubGraph(String name, DepGraph d) {
+    public void addSubGraph(final String name, final DepGraph d) {
         subGraphs.put(name, d);
     }
 }
