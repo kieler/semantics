@@ -14,9 +14,9 @@
 package de.cau.cs.kieler.sim.krep;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +37,8 @@ import org.eclipse.xtext.parser.antlr.IAntlrParser;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.dataflow.diagram.part.DataflowDiagramEditor;
+import de.cau.cs.kieler.krep.compiler.main.Ec2klp;
 import de.cau.cs.kieler.krep.editors.klp.KlpStandaloneSetup;
 import de.cau.cs.kieler.krep.editors.klp.klp.KLP;
 import de.cau.cs.kieler.krep.evalbench.comm.CommunicationProtocol;
@@ -61,6 +63,8 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+
+import de.cau.cs.kieler.dataflow.codegen.LustreGenerator;
 
 /**
  * Integrates the KReP execution into KIELER.
@@ -173,8 +177,8 @@ public final class DataComponent extends JSONObjectDataComponent {
     }
 
     @Override
-    public String[] provideInterfaceKeys() throws KiemInitializationException {
-        LinkedList<String> signals = new LinkedList<String>();
+    public JSONObject provideInitialVariables() throws KiemInitializationException {
+        JSONObject signals = new JSONObject();
         connection = new JNIConnection();
 
         try {
@@ -188,7 +192,57 @@ public final class DataComponent extends JSONObjectDataComponent {
                 FileEditorInput input = (FileEditorInput) editor.getEditorInput();
                 IFile file = input.getFile();
                 String name = editor.getEditorInput().getName();
-                if (file.getFileExtension().equals("klp")) {
+                if (editor instanceof DataflowDiagramEditor) {
+                    String workspace = file.getWorkspace().getRoot().getLocation().toOSString();
+
+                    /*
+                     * DataflowDiagramEditor dEditor = (DataflowDiagramEditor) editor; View
+                     * notationElement = ((View) dEditor.getDiagramEditPart().getModel()); EObject
+                     * myModel = (EObject) notationElement.getElement();
+                     */
+                    LustreGenerator gen = new LustreGenerator();
+                    String lus = gen.generateLus() + "Dummy.lus";
+
+                    String lus2ec = "/home/esterel/bin/lus2ec";
+
+                    connection.initialize(ICommunicationProtocol.P_KREP);
+                    protocol = new KrepProtocol(connection);
+                    KlpAssembler klpAsm = new KlpAssembler();
+
+                    assembler = klpAsm;
+
+                    File path = new File(workspace + file.getFullPath().removeLastSegments(1));
+
+                    String cmd = lus2ec + " " + lus + " MAIN";
+                    String[] env = new String[] { "PATH=/usr/bin/:/home/esterel/bin" };
+                    Process p = Runtime.getRuntime().exec(cmd, env, path);
+                    Reader out = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+                    StringBuffer s = new StringBuffer();
+                    while (out.ready()) {
+                        s.append(Character.toChars(out.read()));
+                    }
+                    if (s.length() > 0) {
+                        throw new KiemInitializationException(s.toString(), false, null);
+                    }
+                    System.out.println(s.toString());
+
+                    InputStream in = new FileInputStream(path + "/MAIN.ec");
+                    Ec2klp ec2klp = new Ec2klp();
+                    String ec = ec2klp.compile("Dummy", in);
+                    ByteArrayInputStream klp = new ByteArrayInputStream(ec.getBytes());
+
+                    Injector injector = new KlpStandaloneSetup()
+                            .createInjectorAndDoEMFRegistration();
+                    IAntlrParser parser = injector.getInstance(IAntlrParser.class);
+                    IParseResult parseResult = parser.parse(klp);
+                    if (!parseResult.getParseErrors().isEmpty()) {
+                        System.out.println(parseResult.getParseErrors().toString());
+                        // syntax errors occured - handle them properly
+                    }
+                    KLP model = (KLP) parseResult.getRootASTElement();
+                    klpAsm.assemble(name, model);
+
+                } else if (file.getFileExtension().equals("klp")) {
                     connection.initialize(ICommunicationProtocol.P_KREP);
                     protocol = new KrepProtocol(connection);
                     assembler = new KlpAssembler();
@@ -202,7 +256,7 @@ public final class DataComponent extends JSONObjectDataComponent {
                         throw new KiemInitializationException("Parse error", true, null);
                     }
                     KLP model = (KLP) parseResult.getRootASTElement();
-                    ((KlpAssembler) assembler).assemble("huhu", model);
+                    ((KlpAssembler) assembler).assemble(file.getName(), model);
                 } else if (file.getFileExtension().equals("kasm")) {
                     connection.initialize(ICommunicationProtocol.P_KEP);
                     protocol = new KepProtocol(connection);
@@ -213,28 +267,25 @@ public final class DataComponent extends JSONObjectDataComponent {
                     Reader reader = new BufferedReader(new InputStreamReader(in));
                     kep.assemble(name, reader);
                 } else if (file.getFileExtension().equals("strl")) {
-                    try {
-                        String strl2kasm = getProperties()[1].getValue();
-                        String workspace = file.getWorkspace().getRoot().getLocation().toOSString();
-                        connection.initialize(ICommunicationProtocol.P_KEP);
-                        protocol = new KepProtocol(connection);
 
-                        KepAssembler kep = new KepAssembler();
-                        assembler = kep;
+                    String strl2kasm = getProperties()[1].getValue();
+                    String workspace = file.getWorkspace().getRoot().getLocation().toOSString();
+                    connection.initialize(ICommunicationProtocol.P_KEP);
+                    protocol = new KepProtocol(connection);
 
-                        IPath kasm = file.getFullPath().removeFileExtension().addFileExtension(
-                                "kasm");
+                    KepAssembler kep = new KepAssembler();
+                    assembler = kep;
 
-                        Runtime.getRuntime().exec(strl2kasm + " " + name, null,
-                                new File(workspace + file.getFullPath().removeLastSegments(1)));
-                        InputStream in = new FileInputStream(file.getWorkspace().getRoot()
-                                .getLocation().toOSString()
-                                + kasm.toString());
-                        Reader reader = new BufferedReader(new InputStreamReader(in));
-                        kep.assemble(name, reader);
-                    } catch (IOException e) {
-                        throw new KiemInitializationException("Assembler file not found", true, e);
-                    }
+                    IPath kasm = file.getFullPath().removeFileExtension().addFileExtension("kasm");
+
+                    Runtime.getRuntime().exec(strl2kasm + " " + name, null,
+                            new File(workspace + file.getFullPath().removeLastSegments(1)));
+                    InputStream in = new FileInputStream(file.getWorkspace().getRoot()
+                            .getLocation().toOSString()
+                            + kasm.toString());
+                    Reader reader = new BufferedReader(new InputStreamReader(in));
+                    kep.assemble(name, reader);
+
                 }
             }
 
@@ -253,10 +304,8 @@ public final class DataComponent extends JSONObjectDataComponent {
                     assembler.assemble(getProperties()[1].getValue(), in);
                 }
             }
-
-        } catch (FileNotFoundException e) {
-            assembler = null;
-            throw new KiemInitializationException("Cannot find assembler file", true, e);
+        } catch (IOException e) {
+            throw new KiemInitializationException("Assembler file not found", true, e);
         } catch (ParseException e) {
             assembler = null;
             throw new KiemInitializationException("Cannot parse assembler file", true, e);
@@ -268,6 +317,7 @@ public final class DataComponent extends JSONObjectDataComponent {
         }
         if (assembler != null) {
             try {
+
                 protocol.loadProgram(assembler, null);
             } catch (CommunicationException e) {
                 e.printStackTrace();
@@ -277,15 +327,21 @@ public final class DataComponent extends JSONObjectDataComponent {
                 throw new KiemInitializationException("Cannot load program", true, e);
             }
             if (assembler != null) {
-                for (Signal s : assembler.getInputs()) {
-                    signals.add(s.getName());
-                }
-                for (Signal s : assembler.getOutputs()) {
-                    signals.add(s.getName());
+                try {
+                    for (Signal s : assembler.getInputs()) {
+
+                        signals.accumulate(s.getName(), JSONSignalValues.newValue(s.getValue(), s
+                                .getPresent()));
+                    }
+                    for (Signal s : assembler.getOutputs()) {
+                        signals.accumulate(s.getName(), JSONSignalValues.newValue(s.getValue(), s
+                                .getPresent()));
+                    }
+                } catch (JSONException e) {
+                   throw new KiemInitializationException("JSON error", false, e); 
                 }
             }
         }
-        return signals.toArray(new String[signals.size()]);
+        return signals;
     }
-
 }
