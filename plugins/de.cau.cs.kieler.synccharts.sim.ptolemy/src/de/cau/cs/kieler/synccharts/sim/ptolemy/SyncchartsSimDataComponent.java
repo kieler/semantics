@@ -16,6 +16,7 @@ package de.cau.cs.kieler.synccharts.sim.ptolemy;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.runtime.Platform;
@@ -28,6 +29,7 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
+import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.ui.IEditorPart;
@@ -35,6 +37,7 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend.XtendComponent;
+import org.eclipse.xtend.expression.ExecutionContextImpl;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.emf.mwe.utils.AbstractEMFWorkflowComponent;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
@@ -54,6 +57,15 @@ import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.MomlWriter;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import de.cau.cs.kieler.core.alg.BasicProgressMonitor;
+import de.cau.cs.kieler.core.alg.IKielerProgressMonitor;
+import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.core.util.Maybe;
 
 /**
  * The class SimpleRailCtrl DataComponent implements a KIELER Execution Manager
@@ -90,6 +102,12 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	
 	/** The current workspace folder. */
 	private String workspaceFolder;
+	
+	/** The transformation completed flag. */
+	private boolean transformationCompleted;
+	
+	/** The transformation error flag. */
+	private boolean transformationError;
 
 	//-------------------------------------------------------------------------
 	
@@ -100,22 +118,85 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	public SyncchartsSimDataComponent() {
 	}
 
-    //-------------------------------------------------------------------------
-	 
-	 /**
-     * Transform KIELER SimpleRailCtrl model into a semantically equivalent 
-     * Ptolemy model.
-     * <BR>
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class M2MProgressMonitor implements ProgressMonitor {
+    
+        private KielerProgressMonitor kielerProgressMonitor;
+        private int numberOfComponents = 1;
+        private int numberOfComponentsDone = 0;
+        
+        public M2MProgressMonitor(KielerProgressMonitor kielerProgressMonitorParam,
+                                  int numberOfComponentsParam) {
+            kielerProgressMonitor = kielerProgressMonitorParam;
+            numberOfComponents = numberOfComponentsParam;
+            numberOfComponentsDone = 0;
+        }
+
+        public void beginTask(String name, int totalWork) {
+            kielerProgressMonitor.begin(name, numberOfComponents);
+        }
+
+        public void done() {
+            //is called by the workflow wrapper
+        }
+
+        public void finished(Object element, Object context) {
+        }
+
+        public void internalWorked(double work) {
+        }
+
+        public boolean isCanceled() {
+            return (kielerProgressMonitor.isCanceled());
+        }
+
+        public void postTask(Object element, Object context) {
+            kielerProgressMonitor.worked(numberOfComponentsDone);
+            numberOfComponentsDone++;
+        }
+
+        public void preTask(Object element, Object context) {
+            //kielerProgressMonitor.begin(element.toString(), 1);
+            kielerProgressMonitor.worked(numberOfComponentsDone);
+        }
+
+        public void setCanceled(boolean value) {
+        }
+
+        public void setTaskName(String name) {
+        }
+
+        public void started(Object element, Object context) {
+        }
+
+        public void subTask(String name) {
+            kielerProgressMonitor.subTask(UNKNOWN);
+        }
+
+        public void worked(int work) {
+            kielerProgressMonitor.worked(work);
+        }
+	    
+	}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+    /**
+     * Transform KIELER SimpleRailCtrl model into a semantically equivalent Ptolemy model. <BR>
      * This transformation uses the Xtend transformation language.
      * 
-     * @param inputModel the input EMF model instance
-     * @param outputModel the output Ptolemy model
+     * @param progressBar
+     *            if true a progress bar is displayed
      * 
      * @return true, if m2m transformation was successful
-	 * @throws KiemInitializationException 
+     * 
+     * @throws KiemInitializationException
+     *             the kiem initialization exception
      */
-    public boolean Model2ModelTransformation() 
-    									throws KiemInitializationException {
+    public IStatus Model2ModelTransformation(KielerProgressMonitor monitor) 
+    							throws KiemInitializationException {
+       monitor.begin("Model2Model transformation", 4);
 		 	try {
 		        //Workflow
 		        Workflow workflow = new Workflow();
@@ -146,12 +227,14 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		        //workflow
 		        WorkflowContext wfx = new WorkflowContextDefaultImpl();
 		        Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
-		        NullProgressMonitor monitor = new NullProgressMonitor();
+		        NullProgressMonitor nullMonitor = new NullProgressMonitor();
+		        M2MProgressMonitor m2mMonitor = new M2MProgressMonitor(monitor,3);
 		        
 		        workflow.addComponent(emfReader);
 		        workflow.addComponent(xtendComponent);
 		        workflow.addComponent(momlWriter);
-		        workflow.invoke(wfx, monitor, issues);
+		        //workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80), issues);
+                        workflow.invoke(wfx, m2mMonitor, issues);
 		        
 		        System.out.print(xtendComponent.getLogMessage());
 		        System.out.print(issues.getInfos());
@@ -160,11 +243,18 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 		        System.out.print(issues.getErrors().toString());
 		 	}
 		 	catch(Exception e){
-				throw (new KiemInitializationException
-				("Ptolemy Model could not be created.", true, e));
+	                        monitor.done();
+	                        e.printStackTrace();
+	                        transformationCompleted = true;
+	                        transformationError = true;
+		 	        return new Status(IStatus.ERROR, SyncchartsSimPtolemyPlugin.PLUGIN_ID,
+		 	                          "Ptolemy Model could not be created.", e);
 		 	} 
-	        
-		    return true;
+                        monitor.done();
+                        transformationCompleted = true;
+                        transformationError = false;
+		        return new Status(IStatus.OK, SyncchartsSimPtolemyPlugin.PLUGIN_ID, 
+		                            IStatus.OK, null, null);
 	}
 	 
     //-------------------------------------------------------------------------	 
@@ -292,21 +382,53 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
     //-------------------------------------------------------------------------
 	
 	public void loadAndExecuteModel() throws KiemInitializationException {
-		workspaceFolder = Platform.getLocation().toString();
-		
-		//ptolemyModel = this.getInputModel() + ".moml"; //this.getProperties()[0].getDirectory() + "generated.moml";
+            workspaceFolder = Platform.getLocation().toString();
+            
+            //ptolemyModel = this.getInputModel() + ".moml"; //this.getProperties()[0].getDirectory() + "generated.moml";
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-        URI fileUri = URI.createFileURI(new File("generated.moml").getAbsolutePath());
-        ptolemyModel = resourceSet.createResource(fileUri);
-        
-        String ptolemyModelFile = ptolemyModel.getURI().toFileString();
-		
-		//String ptolemyModelFile = workspaceFolder + ptolemyModel;
-		
-		System.out.println("Now creating Ptolemy Model ..." + ptolemyModel);
+            ResourceSet resourceSet = new ResourceSetImpl();
+            URI fileUri = URI.createFileURI(new File("generated.moml").getAbsolutePath());
+            ptolemyModel = resourceSet.createResource(fileUri);
+    
+            String ptolemyModelFile = ptolemyModel.getURI().toFileString();
+            
+            System.out.println("Now creating Ptolemy Model ..." + ptolemyModel);
+	    
+	    
+                transformationCompleted = false;
+                transformationError = false;
+	        
+                final Maybe<IStatus> status = new Maybe<IStatus>();
+	        try {
+                    PlatformUI.getWorkbench().getProgressService().run(false, false,
+                        new IRunnableWithProgress() {
+                            public void run(final IProgressMonitor monitor) {
+                                try {
+                                    status.setObject(Model2ModelTransformation(
+                                            new KielerProgressMonitor(monitor)));
+                                } catch (KiemInitializationException e) {
+                                    transformationError = true;
+                                    e.printStackTrace();
+                                }
+                            }
+                });
+                } catch (InvocationTargetException e) {
+                    transformationError = true;
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    transformationError = true;
+                    e.printStackTrace();
+                }
+	        
+	        //wait until error or transformation completed
+	        while (!transformationCompleted && !transformationError) {
+	            try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) { /*hide sleep error*/ }
+	        }//end while
 
-		if (this.Model2ModelTransformation()) {
+	        
+		if (!transformationError) {
 			System.out.println("Now loading Ptolemy Model..." + ptolemyModelFile);
 	        //load the Ptolemy Model
 	        PTOEXE = new ExecutePtolemyModel(ptolemyModelFile);

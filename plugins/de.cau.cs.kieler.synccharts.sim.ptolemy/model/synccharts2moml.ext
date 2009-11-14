@@ -408,6 +408,13 @@ Void ConsiderTransitionPriorities_Relation(RelationType relation,
        relation.setTrigger("(false) && "+relation.getTrigger())
        : null ->
     
+    //if other relation has higher priority - both triggers = null
+    (firstOtherRelation.getPriority() < relation.getPriority()
+      && (firstOtherRelation.isEmptyTrigger())
+       && (relation.isEmptyTrigger())) ?
+       relation.setTrigger("(false)")
+       : null ->
+       
     (otherRelations.size > 1) ?   
      			ConsiderTransitionPriorities_Relation(relation, otherRelations.withoutFirst())
 				: null 								    										   	
@@ -756,12 +763,17 @@ create EntityType this createMacroStateEntity(synccharts::State state):
 							 		"ptolemy.kernel.util.StringAttribute",
 							 		elementURIFragment):
 	let p1 = new PropertyType:
+	let p2 = new PropertyType:
 		p1.setName("refinementName") ->
 		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p1.setValue(hash(getURIFragment(state))) ->
+		p2.setName("originalName") ->
+		p2.setClass("ptolemy.kernel.util.StringAttribute") ->
+		p2.setValue(state.label+" ("+state.id+")") ->
    	this.setName(hash(getURIFragment(state))) ->
   	this.setClass1("ptolemy.domains.modal.kernel.State") ->
 	this.property.add(p1) ->
+	this.property.add(p2) ->
 	this.property.add(elementURIFragmentProperty) ->
   	SetStateInitialFinalFlag(state, this)
 ;
@@ -827,6 +839,7 @@ List[String] getMovedSignalNames():
 
 //Do some java console output for debugging purpose. 
 Void dump(String s) :
+//	null
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.dump(
 			 java.lang.String)
 ;
