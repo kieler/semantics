@@ -97,9 +97,6 @@ public class ProgramLabelProvider implements ITableLabelProvider {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang .Object,
-     *      java.lang.String)
      */
     public boolean isLabelProperty(final Object element, final String property) {
         return true;

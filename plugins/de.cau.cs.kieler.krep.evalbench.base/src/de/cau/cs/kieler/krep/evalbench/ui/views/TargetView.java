@@ -33,12 +33,8 @@ public class TargetView extends ViewPart {
     /** The viewer used to display target info. */
     private TextViewer viewer = null;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
-     * .Composite)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void createPartControl(final Composite parent) {

@@ -54,7 +54,7 @@ public class KlpAssembler implements IAssembler {
     private HashMap<String, Integer> index;
 
     /** Internal array of assembler instructions. */
-    //private LinkedList<de.cau.cs.kieler.krep.evalbench.program.Instruction> instructions;
+    // private LinkedList<de.cau.cs.kieler.krep.evalbench.program.Instruction> instructions;
 
     private KLP model = null;
 
@@ -122,7 +122,20 @@ public class KlpAssembler implements IAssembler {
 
     private void initialize(final Instruction instruction,
             final HashMap<String, Integer> label2addr, final HashMap<String, Integer> regs) {
-        if (instruction instanceof Decl) {
+
+        if (instruction == null || instruction instanceof Done || instruction == null) {
+            Done i = null;
+            if (instruction == null) {
+                i = new de.cau.cs.kieler.krep.editors.klp.klp.impl.DoneImpl();
+            } else {
+                i = (Done) instruction;
+            }
+            i.setOpcode0(Opcode.DONE.getCode());
+            if (i.getPc() != null) {
+                i.getPc().setAddr(label2addr.get(i.getPc().getName()));
+                i.setOpcode1(i.getPc().getAddr());
+            }
+        } else if (instruction instanceof Decl) {
             Decl i = (Decl) instruction;
             setRegs(i.getReg(), regs);
             setOpcode(i);
@@ -139,18 +152,6 @@ public class KlpAssembler implements IAssembler {
             setOpcode(i);
             setRegs(i.getReg(), regs);
             i.getLabel().setAddr(label2addr.get(i.getLabel().getName()));
-        } else if (instruction instanceof Done || instruction == null) {
-            Done i = null;
-            if (instruction == null) {
-                i = new de.cau.cs.kieler.krep.editors.klp.klp.impl.DoneImpl();
-            } else {
-                i = (Done) instruction;
-            }
-            i.setOpcode0(Opcode.DONE.getCode());
-            if (i.getPc() != null) {
-                i.getPc().setAddr(label2addr.get(i.getPc().getName()));
-            }
-            i.setOpcode1(i.getPc().getAddr());
         } else if (instruction instanceof Jmp) {
             Jmp i = (Jmp) instruction;
             i.setOpcode0(Opcode.JMP.getCode());
@@ -178,6 +179,7 @@ public class KlpAssembler implements IAssembler {
             i.getLabel().setAddr(label2addr.get(i.getLabel().getName()));
             setOpcode(i);
         }
+
     }
 
     private void setOpcode(final Move i) {
@@ -424,21 +426,21 @@ public class KlpAssembler implements IAssembler {
      * {@inheritDoc}
      */
     public String canExecute(final Config c) {
-         if (!(c instanceof KrepConfig)) {
-         return "wrong processor";
-         }
-         final KrepConfig k = (KrepConfig) c;
-         if (k.getIo() < inputs.size() || k.getIo() < outputs.size()) {
-         return "not enough IO";
-         }
-        
-         // if (k.getRegs() < Register.getMax()) {
-         // return "not enough registers (" + k.getRegs() + "<";
-         // + Register.getMax() + ")";
-         // }
-         if (k.getIrom() < size()) {
-         return "not enough ROM (" + k.getIrom() + "<" + size() + ")";
-         }
+        if (!(c instanceof KrepConfig)) {
+            return "wrong processor";
+        }
+        final KrepConfig k = (KrepConfig) c;
+        if (k.getIo() < inputs.size() || k.getIo() < outputs.size()) {
+            return "not enough IO";
+        }
+
+        // if (k.getRegs() < Register.getMax()) {
+        // return "not enough registers (" + k.getRegs() + "<";
+        // + Register.getMax() + ")";
+        // }
+        if (k.getIrom() < size()) {
+            return "not enough ROM (" + k.getIrom() + "<" + size() + ")";
+        }
         return null;
     }
 
@@ -637,15 +639,12 @@ public class KlpAssembler implements IAssembler {
      */
     public void assemble(final String n, final String p) throws ParseException {
         // TODO Auto-generated method stub
-
     }
 
     /**
      * {@inheritDoc}
      */
     public void assemble(final String n, final Reader p) throws ParseException {
-        // TODO Auto-generated method stub
-
     }
 
 }

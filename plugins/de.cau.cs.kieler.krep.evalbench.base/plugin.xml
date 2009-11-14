@@ -77,7 +77,7 @@
       </category>
       <view
             allowMultiple="false"
-            category="de.cau.cs.kieler.krep.evalbench.ui.categories.evalBench"
+            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView"
             icon="icons/connection.gif"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.connection"
@@ -85,7 +85,7 @@
       </view>
       <view
             allowMultiple="false"
-            category="de.cau.cs.kieler.krep.evalbench.ui.categories.evalBench"
+            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.TargetView"
             icon="icons/krep.gif"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.target"
@@ -93,7 +93,7 @@
       </view>
       <view
             allowMultiple="false"
-            category="de.cau.cs.kieler.krep.evalbench.ui.categories.evalBench"
+            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.InputView"
             icon="icons/input.gif"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.input"
@@ -101,7 +101,7 @@
       </view>
       <view
             allowMultiple="false"
-            category="de.cau.cs.kieler.krep.evalbench.ui.categories.evalBench"
+            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.OutputView"
             icon="icons/output.gif"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.output"
@@ -109,7 +109,7 @@
       </view>
       <view
             allowMultiple="false"
-            category="de.cau.cs.kieler.krep.evalbench.ui.categories.evalBench"
+            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.TraceView"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.trace"
             name="Trace"
@@ -117,7 +117,7 @@
       </view>
       <view
             allowMultiple="false"
-            category="de.cau.cs.kieler.krep.evalbench.ui.categories.evalBench"
+            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.VerifyView"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.verify"
             name="Verify"
@@ -125,13 +125,13 @@
       </view>
       <view
             allowMultiple="false"
-            category="de.cau.cs.kieler.krep.evalbench.ui.categories.evalBench"
+            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.MessageView"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.message"
             name="Message">
       </view>
       <view
-            category="de.cau.cs.kieler.krep.evalbench.ui.categories.evalBench"
+            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.assembler"
             name="Assembler View"
