@@ -30,7 +30,7 @@ context State WARNING "KLEPTO: Suspend cannot be simulated yet!" :
 context Region WARNING "KLEPTO: Variables are not supported in the simulation!" :
   variables.size == 0;  
 
-//TODO: Exprimental check in order to display the warning in the correct context
+//TODO: Experimental check in order to display the warning in the correct context
 //context Transition WARNING "KLEPTO: Output signals that also occur within a trigger are not supported in the simulation!" : 
 //  (((SignalReference)trigger).signal == null) || ((SignalReference)trigger).signal.isOutput == false;
 
@@ -41,4 +41,9 @@ context Emission WARNING "KLEPTO: Input signals that are also emitted are not su
 //FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
 context SignalReference WARNING "KLEPTO: Output signals that also occur within a trigger are not supported in the simulation!" :
   signal.isOutput == false;
+  
+//FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
+context Emission if ((Transition)parentEAction).type == TransitionType::NORMALTERMINATION WARNING "KLEPTO: Local signals ("+signal.name+") that occur within a trigger of a normal termination transition are not supported in the simulation! Please consider using a weak abort instead." :
+//context SignalReference if (((Transition)parentAction).type == TransitionType::NORMALTERMINATION) WARNING "KLEPTO: Local signals ("+signal.name+") that occur within a trigger of a normal termination transition are not supported in the simulation! Please consider using a weak abort instead." :
+  (signal.isOutput == true || signal.isInput == true);
 	
