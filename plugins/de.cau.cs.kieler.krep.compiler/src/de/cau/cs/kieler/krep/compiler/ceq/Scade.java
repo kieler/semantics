@@ -14,18 +14,16 @@ import de.cau.cs.kieler.krep.compiler.parser.scadeLexer;
 import de.cau.cs.kieler.krep.compiler.parser.scadeParser;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
-
-
 /**
  * @author ctr
  * 
- *         Container class to hold parsed lustre or ec file. Contains methods
- *         for type and clock inference.
+ *         Container class to hold parsed lustre or ec file. Contains methods for type and clock
+ *         inference.
  */
 public class Scade extends Program implements Scope {
 
     public Scade(String name) {
-	super(name);
+        super(name);
     }
 
     /**
@@ -36,52 +34,51 @@ public class Scade extends Program implements Scope {
      * @throws ClockException
      * @throws TypeException
      */
-    public Scade(InputStream in) throws IOException, ClockException,
-	    TypeException {
-	super("Scade");
+    public Scade(InputStream in) throws IOException, ClockException, TypeException {
+        super("Scade");
 
-	scadeLexer lex = new scadeLexer(new ANTLRInputStream(in));
-	CommonTokenStream tokens = new CommonTokenStream(lex);
+        scadeLexer lex = new scadeLexer(new ANTLRInputStream(in));
+        CommonTokenStream tokens = new CommonTokenStream(lex);
 
-	scadeParser parser = new scadeParser(tokens);
+        scadeParser parser = new scadeParser(tokens);
 
-	try {
-	    parser.setProg(this);
-	    parser.program();
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
-	for(Automaton ssm: ssms){
-	    ssm.setIO();
-	}
-	this.propagateConst();
-	this.simplify();
+        try {
+            parser.setProg(this);
+            parser.program();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for (Automaton ssm : ssms) {
+            ssm.setIO();
+        }
+        this.propagateConst();
+        this.simplify();
     }
 
     public void setIO() {
-	for(Equation eq: eqs){
-	    Variable v = Variable.get(eq.getName());
-	    if(!locals.contains(v)){
-		outputs.add(v);
-		if(!vars.containsKey(v.getName())){
-		    vars.put(v.getName(), v);
-		}
-	    }
-	}
-	
-	for(Equation eq:eqs){
-	    for(Variable v: eq.getDeps()){
-		if (!vars.containsKey(v.getName())){
-		    inputs.add(v);
-		    vars.put(v.getName(), v);
-		}
-	    }
-	}
-	    
-	for(Automaton ssm: ssms){
-	    ssm.setIO();
-	}
-	
+        for (Equation eq : eqs) {
+            Variable v = Variable.get(eq.getName());
+            if (!locals.contains(v)) {
+                outputs.add(v);
+                if (!vars.containsKey(v.getName())) {
+                    vars.put(v.getName(), v);
+                }
+            }
+        }
+
+        for (Equation eq : eqs) {
+            for (Variable v : eq.getDeps()) {
+                if (!vars.containsKey(v.getName())) {
+                    inputs.add(v);
+                    vars.put(v.getName(), v);
+                }
+            }
+        }
+
+        for (Automaton ssm : ssms) {
+            ssm.setIO();
+        }
+
     }
 
     /**
@@ -90,7 +87,7 @@ public class Scade extends Program implements Scope {
      * @returns the simplified program
      */
     public de.cau.cs.kieler.krep.compiler.ceq.Program getCEQ() {
-	return this;
+        return this;
 
     }
 
@@ -101,52 +98,50 @@ public class Scade extends Program implements Scope {
      *            expression to compute the value
      */
     public void addEq(String s, Expression e) {
-	eqs.add(new Equation(s, e));
+        eqs.add(new Equation(s, e));
     }
 
     public void addVar(Variable v) {
-	vars.put(v.getName(), v);
-	if (v.isInput()) {
-	    inputs.add(v);
-	} else if (v.isOutput()) {
-	    outputs.add(v);
-	} else {
-	    locals.add(v);
-	}
+        vars.put(v.getName(), v);
+        if (v.isInput()) {
+            inputs.add(v);
+        } else if (v.isOutput()) {
+            outputs.add(v);
+        } else {
+            locals.add(v);
+        }
     }
 
     public void addInput(String s, Type t) {
-	Variable v = Variable.get(s, Kind.INPUT, t);
-	addVar(v);
+        Variable v = Variable.get(s, Kind.INPUT, t);
+        addVar(v);
     }
 
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     public void add(Automaton a) {
-	ssms.add(a);
+        ssms.add(a);
 
     }
 
     public void add(LinkedList<Variable> vars) {
-	for (Variable v : vars) {
-	    addVar(v);
-	}
+        for (Variable v : vars) {
+            addVar(v);
+        }
 
     }
-
 
     public void add(Equation eq) {
-	eqs.add(eq);
+        eqs.add(eq);
 
     }
 
-   
     public void addEq(LinkedList<Equation> eq) {
-	for (Equation e : eq) {
-	    add(e);
-	}
+        for (Equation e : eq) {
+            add(e);
+        }
 
     }
 

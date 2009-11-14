@@ -1,6 +1,5 @@
 package de.cau.cs.kieler.krep.compiler.main;
 
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -20,8 +19,6 @@ import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
 import de.cau.cs.kieler.krep.compiler.helper.Debug;
 import de.cau.cs.kieler.krep.compiler.klp.Klp;
 import de.cau.cs.kieler.krep.compiler.lustre.Lustre;
-
-
 
 /**
  * @author ctr Compile Lustre ec-file to KLP assembler
@@ -99,7 +96,7 @@ public class Ec2klp {
             Klp prog = new Klp(name, ceq);
 
             prog.propagateConst();
-           
+
             prog.compile(useclocks, "");
             return prog.toString();
         } catch (IOException e) {

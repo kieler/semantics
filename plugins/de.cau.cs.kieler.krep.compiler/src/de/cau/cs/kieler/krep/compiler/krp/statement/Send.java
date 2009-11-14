@@ -1,22 +1,19 @@
 package de.cau.cs.kieler.krep.compiler.krp.statement;
 
-
 public class Send extends Statement {
 
-    String Name; 
+    String Name;
     Integer ID;
-    Integer Reg;  
-    
-        
+    Integer Reg;
+
     public Send(String name) {
-	super();
-	Name = name;
+        super();
+        Name = name;
     }
 
-    
     @Override
-    public String toString(){
-	return "SEND " + Name;
+    public String toString() {
+        return "SEND " + Name;
     }
-	
+
 }

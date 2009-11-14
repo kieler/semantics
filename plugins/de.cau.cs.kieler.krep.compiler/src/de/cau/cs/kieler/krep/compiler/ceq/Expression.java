@@ -7,17 +7,15 @@ import java.util.List;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
-
-
 /**
- * @author ctr Abstract superclass for all ceq Expressions Not that every
- *         sub-expression should have a unique name
+ * @author ctr Abstract superclass for all ceq Expressions Not that every sub-expression should have
+ *         a unique name
  */
 abstract public class Expression {
     protected String name;
 
     protected Expression(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     /**
@@ -34,9 +32,8 @@ abstract public class Expression {
     abstract public List<String> getVars();
 
     /**
-     * compute List of all variables, on which current value the expression
-     * depends. This is the same as getVars without the variables which pre
-     * value is used.
+     * compute List of all variables, on which current value the expression depends. This is the
+     * same as getVars without the variables which pre value is used.
      * 
      * @return list of variables this expression depends on
      */
@@ -58,14 +55,16 @@ abstract public class Expression {
      *            additionally added expression
      * @return expression without complex operations
      */
-    abstract public Expression flatten(String name,
-	    HashMap<String, Variable> vars, LinkedList<Expression> es);
+    abstract public Expression flatten(String name, HashMap<String, Variable> vars,
+            LinkedList<Expression> es);
 
     /**
      * add additional pre operators, to use all variables with the right tick
      * 
-     * @param delay: delay for all variables
-     * @param n: delay of the output
+     * @param delay
+     *            : delay for all variables
+     * @param n
+     *            : delay of the output
      * @return additional equation to store previous values
      */
     abstract public Expression padDelay(HashMap<String, Integer> delay, int n);
@@ -90,20 +89,21 @@ abstract public class Expression {
      * @return name of the expression
      */
     public String getName() {
-	return name;
+        return name;
     }
 
     /**
-     * @param con mapping variable to constant values, if they can be evaluated
-     * @return  a constant when the expression can be completely evaluated
+     * @param con
+     *            mapping variable to constant values, if they can be evaluated
+     * @return a constant when the expression can be completely evaluated
      */
     abstract public Const propagateConst(HashMap<String, Const> con);
-    
+
     abstract public Expression staticEval();
 
     abstract public void replaceVar(HashMap<String, Variable> equiv);
-    
+
     abstract public int wcrt();
 
-    abstract public Expression replace(String var, Expression expr); 
+    abstract public Expression replace(String var, Expression expr);
 }

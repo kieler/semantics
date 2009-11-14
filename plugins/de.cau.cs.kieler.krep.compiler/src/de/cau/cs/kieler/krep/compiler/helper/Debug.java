@@ -11,7 +11,7 @@ public class Debug {
     public final static int SILENT = 10;
 
     /**
-     * Print only relevant info 
+     * Print only relevant info
      */
     public final static int NORMAL = 5;
     /**
@@ -24,43 +24,48 @@ public class Debug {
      */
     private static int level = ALL;
 
-    
-    public static void setLevel(int l){
-	level=l;
+    public static void setLevel(int l) {
+        level = l;
     }
-    
+
     /**
      * print with low priority (only in verbose mode)
-     * @param s debug information
+     * 
+     * @param s
+     *            debug information
      */
     public static void low(String s) {
-	Debug.print(1, s);
+        Debug.print(1, s);
     }
 
     /**
      * print with high priority (in any case)
-     * @param s debug information
+     * 
+     * @param s
+     *            debug information
      */
     public static void high(String s) {
-	Debug.print(9, s);
+        Debug.print(9, s);
     }
 
     /**
      * print with medium priority
-     * @param s debug information
+     * 
+     * @param s
+     *            debug information
      */
     public static void medium(String s) {
-	Debug.print(5, s);
+        Debug.print(5, s);
     }
 
-    public static boolean isHigh(){
-	return level >= ALL;
+    public static boolean isHigh() {
+        return level >= ALL;
     }
-    
+
     private static void print(int l, String s) {
-	if (l >= level) {
-	    System.out.println(s);
+        if (l >= level) {
+            System.out.println(s);
 
-	}
+        }
     }
 }

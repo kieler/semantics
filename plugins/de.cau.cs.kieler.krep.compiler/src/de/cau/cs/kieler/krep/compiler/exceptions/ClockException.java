@@ -29,36 +29,36 @@ public class ClockException extends Exception {
      * @param actual
      *            clock list inferred for the expression
      */
-    public ClockException(Expression context, ClockList expected,
-	    ClockList actual) {
-	super();
-	this.context = context;
-	this.actual = actual;
-	this.expected = expected;
-	this.msg=toString();
+    public ClockException(Expression context, ClockList expected, ClockList actual) {
+        super();
+        this.context = context;
+        this.actual = actual;
+        this.expected = expected;
+        this.msg = toString();
     }
 
     /**
-     * @param msg message that describes the clock failure
+     * @param msg
+     *            message that describes the clock failure
      */
     public ClockException(final String msg) {
-	super(msg);
+        super(msg);
     }
 
     @Override
     public String toString() {
-	if (msg != null) {
-	    return msg;
-	} else {
-	    String res = "Clock Exception in expression: ";
-	    if (context == null) {
-		res += "try to remove non-existing clock";
-	    } else {
-		res += context.toString() + "\n";
-		res += "expected:" + expected.toString() + "\n";
-		res += "actual:" + actual.toString() + "\n";
-	    }
-	    return res;
-	}
+        if (msg != null) {
+            return msg;
+        } else {
+            String res = "Clock Exception in expression: ";
+            if (context == null) {
+                res += "try to remove non-existing clock";
+            } else {
+                res += context.toString() + "\n";
+                res += "expected:" + expected.toString() + "\n";
+                res += "actual:" + actual.toString() + "\n";
+            }
+            return res;
+        }
     }
 }

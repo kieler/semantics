@@ -1,8 +1,7 @@
 package de.cau.cs.kieler.krep.compiler.prog;
 
 /**
- * @author ctr
- * Basic Lustre types
+ * @author ctr Basic Lustre types
  */
 public enum Type {
     /**
@@ -12,19 +11,22 @@ public enum Type {
     /**
      * boolean values
      */
-    BOOL, 
+    BOOL,
     /**
      * double values (32 Bit)
      */
     REAL;
-    
+
     @Override
-    public String toString(){
-	switch(this){
-	case INT: return "int";
-	case BOOL: return "bool";
-	case REAL: return "real";
-	}
-	return "";
+    public String toString() {
+        switch (this) {
+        case INT:
+            return "int";
+        case BOOL:
+            return "bool";
+        case REAL:
+            return "real";
+        }
+        return "";
     }
 }
