@@ -182,6 +182,42 @@ public class SyncChartDirector extends FixedPointDirector {
         super(container, name);
         _init();
     }
+    
+    
+    private  List possiblyEnabledTransitions(List transitionList, 
+                                             ModalModel modalModel) {
+        LinkedList possiblyEnabledTransitions = new LinkedList();
+        
+        for (Object object: transitionList) {
+            if (object instanceof Transition) {
+                Transition transition = (Transition)object;
+                
+                //create a new list and ask FSMActor to extract enabled
+                //transitions it knows for sure
+                LinkedList tmpTransitionList = new LinkedList();
+                tmpTransitionList.add(transition);
+                List<Transition> enabledTransitions = null;
+                try {
+                    enabledTransitions = modalModel.getController().enabledTransitions(tmpTransitionList);
+                } catch(Exception e){
+                    //hide this error => it means transition is not enabled
+                }
+                boolean foundUnknown = modalModel.getController().foundUnknown();
+                
+                //possibly enabled transitions are ALL transitions that evaluate to true and
+                //also all transitions that cannot be evaluated to false yet due to unknown
+                //inputs!
+                if ((enabledTransitions != null && enabledTransitions.size() > 0)
+                    || (foundUnknown)) {
+                    possiblyEnabledTransitions.add(transition);
+                }//end if
+                
+            }//end if a Transition
+        }//end for each Transition
+        
+        return possiblyEnabledTransitions;
+    }
+    
 
     ///////////////////////////////////////////////////////////////////
     ////                         parameters                        ////
@@ -226,30 +262,39 @@ public class SyncChartDirector extends FixedPointDirector {
         		List realtionList = currentState.linkedRelationList();
         		
                 List transitionList = currentState.outgoingPort.linkedRelationList();
-                List<Transition> enabledTransitions;
-				try {
-					enabledTransitions = modalModel.getController().enabledTransitions(transitionList);
-	                //go thru all enabled transitions, these outputs are possibly emmitted (= NOT in mustnot)!
-	                for (Transition transition: enabledTransitions) {
-	                	OutputActionsAttribute outputActions = transition.outputActions;
-						if (outputActions != null) {
-							OutputActionsAttribute outputActionsAttribute = (OutputActionsAttribute)outputActions;
-							String output = outputActionsAttribute.getValueAsString();
-							output = output.replaceAll("=1", "");
-							output = output.replaceAll("=2", "");
-							String[] signals = output.split(",");
-							if (signals != null && signals.length > 0) {
-								for (String signal: signals) {
-									returnList.add(signal);
-								}
-							}
-						}//end if output attribute
-	                }//next enabled transition
-				} catch (IllegalActionException e) {e.printStackTrace();}
+                //List<Transition> enabledTransitions;
+                List<Transition> possiblyEnabledTransitions;
+
+                possiblyEnabledTransitions =
+				            this.possiblyEnabledTransitions(transitionList,
+				                                            modalModel);
+                //enabledTransitions = modalModel.getController().enabledTransitions(transitionList);
+
+			
+                //go thru all enabled transitions, these outputs are possibly emmitted (= NOT in mustnot)!
+//              for (Transition transition: enabledTransitions) {
+                for (Transition transition: possiblyEnabledTransitions) {
+                        OutputActionsAttribute outputActions = transition.outputActions;
+                                        if (outputActions != null) {
+                                                OutputActionsAttribute outputActionsAttribute = (OutputActionsAttribute)outputActions;
+                                                String output = outputActionsAttribute.getValueAsString();
+                                                System.out.println("Output Actions of '"+transition.getFullName()+"': " + output);
+                                                output = output.replaceAll("=1", "");
+                                                output = output.replaceAll("=2", "");
+                                                String[] signals = output.split(",");
+                                                if (signals != null && signals.length > 0) {
+                                                        for (String signal: signals) {
+                                                                returnList.add(signal);
+                                                        }
+                                                }
+                                        }//end if output attribute
+                }//next enabled transition
 				
 				//if active state has a refinement, do the same analysis for this refinement too
 				try {
 				if (currentState.getRefinement() != null) {
+		                        String currentStateName = ((StringAttribute)currentState.getAttribute("originalName")).getValueAsString();
+                                    System.out.println("MacroState:" + currentStateName);
 					Director director = currentState.getRefinement()[0].getDirector();
 					if (director instanceof SyncChartDirector) {
 						SyncChartDirector syncChartDirector = (SyncChartDirector)director;
@@ -337,6 +382,7 @@ public class SyncChartDirector extends FixedPointDirector {
         //converged BUT no test if any local signals (defined on this level)
         //can be set to absent (=cannot be emmitted by any statemachine)
         //this also propagates the unlock!
+        System.out.println("CHECKING MUSTCANNOT FOR STATE '"+this.getFullName()+"'");
         String[] possibleSignals = getMustCannotSignals();
         
         //debug printout
@@ -370,6 +416,14 @@ public class SyncChartDirector extends FixedPointDirector {
         			found = true;
         			break;
         		}
+                        if (possibleSignal.equals(stateSignal+"i")) {
+                                found = true;
+                                break;
+                        }
+                        if (possibleSignal.equals(stateSignal+"o")) {
+                                found = true;
+                                break;
+                        }
         	}//next stateSignal
         	if (!found) {
         		//the following signal CANNOT be emitted!
@@ -396,18 +450,31 @@ public class SyncChartDirector extends FixedPointDirector {
                     if (!receiver.isKnown()) {
                     	try {
                             String receiverSignalName = receiver.getContainer().getName();
+                            boolean doubleContainter = false;
+                            if (receiverSignalName.equals("input")) {
+                                //this is true for the combine function
+                                receiverSignalName = receiver.getContainer().getContainer().getName();
+                                doubleContainter = true;
+                            }
                             boolean cannotEmmit = false;
                             for (String cannotSignal: cannotSignals) {
                             	cannotSignal = cannotSignal.replaceAll("\"", "");
                             	
                                 System.out.println("TEST FOR "+receiverSignalName+" == "+ cannotSignal );
                             	if ((receiverSignalName.equals(cannotSignal))
-                                        	|| receiverSignalName.equals(cannotSignal+"i")) {
+                                        	|| receiverSignalName.equals(cannotSignal+"i")
+                                        	|| receiverSignalName.equals(cannotSignal+"o_COMBINE")) {
                                    	//clear the port
-                                	//if (receiver.getContainer().attributeList().contains("definition_level")) {
-                                    	System.out.println("Sending CLEAR on receiver port "+receiver.getContainer().getName() +
-                                    			" of actor " + receiver.getContainer().getContainer().getName());
-                                    	receiver.clear();
+                            	    
+                            	        if (this._isTopLevel()) {
+                                            //if (receiver.getContainer().attributeList().contains("definition_level")) {
+                                            System.out.println("Sending CLEAR on receiver port "+receiver.getContainer().getName() +
+                                                            " of actor " + receiver.getContainer().getContainer().getName());
+                                            receiver.clear();
+                            	        } else {
+                                            System.out.println("NOT Sending CLEAR on receiver port (not top level) "+receiver.getContainer().getName() +
+                                                    " of actor " + receiver.getContainer().getContainer().getName());
+                            	        }
                                     	
                                     	//signal status has changed, so we need a new fixed point!
                                     	//=> _hasIterationConverged will result false now again!
