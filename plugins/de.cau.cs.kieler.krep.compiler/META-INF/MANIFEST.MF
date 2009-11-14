@@ -4,8 +4,8 @@ Bundle-Name: Compiler
 Bundle-SymbolicName: de.cau.cs.kieler.krep.compiler
 Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: compiler.jar,
- ctr/tools/antlr/antlr-runtime-3.1.jar,
- lib/commons-cli-1.0.jar
+ lib/commons-cli-1.0.jar,
+ lib/antlr-runtime-3.1.jar
 Export-Package: de.cau.cs.kieler.krep.compiler.ceq,
  de.cau.cs.kieler.krep.compiler.dependencies,
  de.cau.cs.kieler.krep.compiler.exceptions,
