@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin> 
-	<extension
+ <extension
        point="de.cau.cs.kieler.ksbase.configuration">
-		<configuration XtendFile="src/transformations/feature.ext"
-			contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
-			defautlIcon="icons/obj16/State.gif"
-			editor="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor"
-			packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage">
+       
+       		<configuration
+               XtendFile="src/transformations/feature.ext"
+               contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+               defautlIcon="icons/obj16/State.gif"
+               editorId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
+               packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage">
 			<transformations>
 				<transformation keyboardShortcut="M1+K S"
 					name="Add Successor State" transformation="addSuccessorState"
@@ -118,6 +120,6 @@
 
 			</menus>
 		</configuration>
-	</extension>
+ </extension>
  
 </plugin>
