@@ -8,9 +8,9 @@ Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,de.cau.cs.kiel
 Bundle-ActivationPolicy: lazy
 Bundle-Version: 0.1.0.vqualifier
 Bundle-Name: KSBasE Menu Contributions for de.cau.cs.kieler.synccharts
- .diagram.part.SyncchartsDiagramEditor
+ .diagram.part.SyncchartsDiagramEditorID
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: de.cau.cs.kieler.synccharts.sbase.generated;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.synccharts.sbase.generated;singl
+ eton:=true
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-Activator: de.cau.cs.kieler.synccharts.sbase.generated.Activator
 

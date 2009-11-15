@@ -1,0 +1,175 @@
+import synccharts;
+///////////////////////////////////////////
+//More ore less usefull transformations ///
+///////////////////////////////////////////
+
+//Adds a successor to the given state 
+Void addSuccessorState(State source):
+ let target = new State:
+ connectStates(source, target) ->
+ source.parentRegion.innerStates.add(target)
+;
+
+//Adds a predecessor to the given state
+Void addPredecessorState(State target):
+let source = new State:
+ connectStates(source, target) ->
+ target.parentRegion.innerStates.add(source)
+;
+
+//Adds a choice to the given state
+//by adding a conditional with two
+//targets. This won't set any priorities
+//so resulting model may be invalid.
+Void addChoice(State source):
+let choice = new State:
+let opt1 = new State:
+let opt2 = new State:
+choice.setLabel("C1") ->
+choice.setType(StateType::CONDITIONAL) ->
+opt1.setLabel("S0") ->
+opt2.setLabel("S1") ->
+connectStates(source,choice) ->
+connectStates(choice,opt1) ->
+connectStates(choice,opt2) ->
+source.parentRegion.innerStates.add(choice) ->
+source.parentRegion.innerStates.add(opt1) ->
+source.parentRegion.innerStates.add(opt2)
+;
+
+//Flips source and target of the 
+//given transition.
+Void flipTransition(Transition t):
+ let source = t.sourceState:
+ let target = t.targetState: 
+ t.setSourceState(target) ->
+ t.setTargetState(source)
+;
+
+//Connects two states
+Void connectStates(State source, State target):
+let transition = new Transition:
+transition.setSourceState(source) ->
+transition.setTargetState(target) ->
+source.outgoingTransitions.add(transition)
+;
+
+//Reroutes the target of the given transition
+//to the given state
+Void rerouteTransitionTarget(Transition t, State target):
+t.setTargetState(target)
+;
+
+//Reroutes the source of the given transition
+//to the given state
+Void rerouteTransitionSource(Transition t, State source):
+t.sourceState.outgoingTransitions.remove(t) ->
+t.setSourceState(source) ->
+source.outgoingTransitions.add(t)
+;
+
+//Adds a parallel region to the given state
+Void addParallelRegion(State parentState):
+let region = new Region:
+let state = new State:
+state.setIsInitial(true) ->
+state.setLabel("S") ->
+region.innerStates.add(state) ->
+parentState.regions.add(region)
+;
+
+/////////////////////////
+//     Templates      ///
+/////////////////////////
+
+//Creates a default StateChart
+Void createDefault(Region rootRegion):
+let state = new State:
+let innerState = new State:
+let region = new Region:
+state.setLabel("SyncChart") ->
+state.regions.add(region) ->
+innerState.setLabel("Initial") ->
+innerState.setIsInitial(true) -> 
+region.innerStates.add(innerState) ->
+rootRegion.innerStates.add(state)
+;
+
+//Good ol' ABRO
+Void addABRO(Region rootRegion):
+let reset = new Transition:
+let waitABToFinal = new Transition:
+let ABOFinal = new State:
+let wATrans = new Transition:
+let wBTrans = new Transition:
+let wAInitial = new State:
+let wAFinal = new State:
+let wBInitial = new State:
+let wBFinal = new State:
+let wA = new Region:
+let wB = new Region:
+let waitAB = new State:
+let ABORegion = new Region:
+let ABO = new State:
+let innerRootRegion = new Region:
+let sigA = new Signal:
+let sigB = new Signal:
+let sigR = new Signal:
+let sigO = new Signal:
+let root = new State:
+//ABRO Root State
+root.setLabel("ABRO") ->
+//ABRO Signal definition:
+sigA.setName("A") ->
+sigB.setName("B") ->
+sigR.setName("R") ->
+sigO.setName("O") ->
+root.signals.add(sigA) ->
+root.signals.add(sigB) ->
+root.signals.add(sigR) ->
+root.signals.add(sigO) ->
+//Inner State ABO
+ABO.setLabel("ABO") ->
+//Inner state Wait A and B
+waitAB.setLabel("Wait A and B") ->
+//Region for 'wait for a' 
+wAInitial.setLabel("wA") ->
+wAInitial.setIsInitial(true) ->
+wA.innerStates.add(wAInitial) ->
+wAFinal.setLabel("dA") ->
+wAFinal.setIsFinal(true) ->
+wA.innerStates.add(wAFinal) ->
+wATrans.setIsImmediate(true) ->
+wATrans.setSourceState(wAInitial) ->
+wATrans.setTargetState(wAFinal) ->
+wAInitial.outgoingTransitions.add(wATrans) ->
+waitAB.regions.add(wA) ->
+//Region for 'wait for b'
+wBInitial.setLabel("wB") ->
+wBInitial.setIsInitial(true) ->
+wB.innerStates.add(wBInitial) ->
+wBFinal.setLabel("dB") ->
+wBFinal.setIsFinal(true) ->
+wB.innerStates.add(wBFinal) ->
+wBTrans.setIsImmediate(true) ->
+wBTrans.setSourceState(wBInitial) ->
+wBTrans.setTargetState(wBFinal) ->
+wBInitial.outgoingTransitions.add(wBTrans) ->
+waitAB.regions.add(wB) ->
+//ABO final state
+ABOFinal.setLabel("done") ->
+ABOFinal.setIsFinal(true) ->
+waitABToFinal.setSourceState(waitAB) ->
+waitABToFinal.setTargetState(ABOFinal) ->
+waitAB.outgoingTransitions.add(waitABToFinal)  ->
+ABORegion.innerStates.add(waitAB) ->
+ABORegion.innerStates.add(ABOFinal) ->
+ABO.regions.add(ABORegion)->
+reset.setIsImmediate(true) ->
+reset.setSourceState(ABO) ->
+reset.setTargetState(ABO) ->
+ABO.outgoingTransitions.add(reset) ->
+innerRootRegion.innerStates.add(ABO) ->
+root.regions.add(innerRootRegion) ->
+rootRegion.innerStates.add(root)
+;
