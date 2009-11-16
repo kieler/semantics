@@ -25,7 +25,9 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
@@ -33,15 +35,19 @@ import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.viewmanagement.ATrigger;
+import de.cau.cs.kieler.viewmanagement.RunLogic;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 
 
 public class StateActivityObserver extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
+    
+    private static final String VMID = "de.cau.cs.kieler.viewmanagement.VMControl";
 
 //    private KiemProperty stateVariableProperty;
 //    private KiemProperty editorProperty;
@@ -54,6 +60,25 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     
     /** The last highlighted states. */
     private List<String> lastHighlightedStates;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * This method brings the VM view to the front.
+     */
+    public void bringToFront() {
+        // bring VM view to the front (lazy loading)
+        try {
+            IWorkbenchWindow window = Activator.getDefault().getWorkbench()
+                    .getActiveWorkbenchWindow();
+            IViewPart vP = window.getActivePage().showView(VMID);
+            vP.setFocus();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // -------------------------------------------------------------------------
 
     /*
      * (non-Javadoc)
@@ -155,8 +180,18 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
      * 
      * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
      */
-    public void initialize() {
-        rootEditPart = getInputEditor().getDiagramEditPart();
+    public void initialize() throws KiemInitializationException {
+        try {
+            //bring to front VM
+            bringToFront();
+            rootEditPart = getInputEditor().getDiagramEditPart();
+            if (RunLogic.getInstance() == null) 
+                throw new KiemInitializationException("Cannot initialize view management!", true, null);
+            RunLogic.getInstance().registerListeners();
+        }
+        catch(Exception e) {
+            throw new KiemInitializationException("Cannot initialize view management!", true, e);
+        }
     }
 
     /*
