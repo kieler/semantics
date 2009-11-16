@@ -191,7 +191,7 @@ Void addKielerIO(EntityType baseEntity, String name, String signalID) :
 
 //Create basic / outer most enclosing entity.	
 create EntityType this createBaseEntity(synccharts::Region mainRegion):
-	let outerStateURIHash = hash(getURIFragment(mainRegion.innerStates.get(0))):
+	let outerStateURIHash = getStateId(mainRegion.innerStates.get(0)):
    	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
   	//TODO: fix outer most local signal declarations
@@ -717,7 +717,7 @@ create EntityType this createModalModelEntity(synccharts::Region region,
 		p1.setName("_tableauFactory") ->
 		p1.setClass("ptolemy.vergil.modal.modal.ModalTableauFactory") ->
 	this.property.add(p1) ->
-   	this.setName(hash(getURIFragment(region.parentState)) 
+   	this.setName(getStateId(region.parentState) 
    											 	+ "_region_" + number) ->
   	this.setClass1("ptolemy.domains.modal.modal.ModalModel") ->
   	//first add signals if any
@@ -766,11 +766,11 @@ create EntityType this createMacroStateEntity(synccharts::State state):
 	let p2 = new PropertyType:
 		p1.setName("refinementName") ->
 		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
-		p1.setValue(hash(getURIFragment(state))) ->
+		p1.setValue(getStateId(state)) ->
 		p2.setName("originalName") ->
 		p2.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p2.setValue(state.label+" ("+state.id+")") ->
-   	this.setName(hash(getURIFragment(state))) ->
+   	this.setName(getStateId(state)) ->
   	this.setClass1("ptolemy.domains.modal.kernel.State") ->
 	this.property.add(p1) ->
 	this.property.add(p2) ->
@@ -784,7 +784,7 @@ create EntityType this createMacroStateRefinementEntity(
 										synccharts::State state, 
 										EntityType modalModel,
 										List[synccharts::Signal] signalList):
-   	this.setName(hash(getURIFragment(state))) ->
+   	this.setName(getStateId(state)) ->
   	this.setClass1("ptolemy.domains.modal.modal.Refinement") ->
    	//getMovedSignalNames() contains names of moved signals
 	//signalList.addAll(state.signals) ->
@@ -814,7 +814,7 @@ create EntityType this createSimpleStateEntity(synccharts::State state):
 	let elementURIFragmentProperty = newPropertyType("elementURIFragment",
 							 		"ptolemy.kernel.util.StringAttribute",
 							 		elementURIFragment):
-   	this.setName(hash(getURIFragment(state))) ->
+   	this.setName(getStateId(state)) ->
   	this.setClass1("ptolemy.domains.modal.kernel.State") ->
 	this.property.add(elementURIFragmentProperty) ->
   	SetStateInitialFinalFlag(state, this)
@@ -848,6 +848,12 @@ Void dump(String s) :
 String getURIFragment(synccharts::State state) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava
 			.getURIFragment(de.cau.cs.kieler.synccharts.State)
+;
+
+//Get State Id of an model element to identify it. 
+String getStateId(synccharts::State state) :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava
+			.getStateId(de.cau.cs.kieler.synccharts.State)
 ;
 
 //Get URIFragment of an model element to identify it. 
@@ -938,13 +944,13 @@ Void IterateTransitions(List[synccharts::Transition] transitionList,
 							 EntityType entity):
  	let transition = transitionList.last():
  	(transitionList.size > 0) ? 
- 			dump(hash(getURIFragment(transition.sourceState)) + " -> " + 
- 			hash(getURIFragment(transition.targetState))) 
+ 			dump(getStateId(transition.sourceState) + " -> " + 
+ 			getStateId(transition.targetState)) 
  			: null ->
 	(transitionList.size > 0) ? 
 			addTransition(transition,
 						  entity,
-				  		  hash(getURIFragment(transition.sourceState)) 
+				  		  getStateId(transition.sourceState) 
 				  		  + "_transition_" + transitionList.size) 
 		    : null -> 	
     (transitionList.size > 1) ? 
@@ -1068,10 +1074,10 @@ Void addTransition(	synccharts::Transition transition,
 	let link1 = new LinkType:
 	let link2 = new LinkType:
 	link1.setPort(
-		hash(getURIFragment(transition.sourceState)) + ".outgoingPort") ->
+		getStateId(transition.sourceState) + ".outgoingPort") ->
 	link1.setRelation(name) ->
 	link2.setPort(
-		hash(getURIFragment(transition.targetState)) + ".incomingPort") ->
+		getStateId(transition.targetState) + ".incomingPort") ->
 	link2.setRelation(name) ->
 	entity.relation.add(createRelation(name, transition)) ->
 	entity.link.add(link1) ->
@@ -1173,7 +1179,7 @@ Void addTerminationSignalToModalController(EntityType entity,
 	//let p1b = new PropertyType:
 	let p2 = new PropertyType:
 	let p3 = new PropertyType:
-	port.setName("terminated" + hash(getURIFragment(state))) ->
+	port.setName("terminated" + getStateId(state)) ->
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	p1a.setName("output") ->
 	//p1b.setName("input") ->
@@ -1218,7 +1224,7 @@ Void addTerminationSignalToModalModel(EntityType entity,
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
 	let p3 = new PropertyType:
-	port.setName("terminated" + hash(getURIFragment(state))) ->
+	port.setName("terminated" + getStateId(state)) ->
 	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	p1.setName("output") ->
 	p2.setName("_type") ->
@@ -1241,7 +1247,7 @@ Void addTerminationSignalsToModalModel(EntityType entity,
 		addTerminationSignalToModalModel(entity, state) : null ->  
 	(state.isMacroState()) ?
 	 	addTerminationModalModelLink(entity, 
-	 								 ""+hash(getURIFragment(state))) 
+	 								 ""+getStateId(state)) 
 	 	: null ->
 	(stateList.size > 1)?
 		addTerminationSignalsToModalModel(entity, 
@@ -1479,7 +1485,7 @@ linkSignalRelationToState(EntityType modalController,
 Void addTrigger(RelationType relation, synccharts::Transition transition) :
 	let p1 = new PropertyType:
 	//terminated source state triggers the normal termination
-	let terminatedURIHash = hash(getURIFragment(transition.sourceState)):
+	let terminatedURIHash = getStateId(transition.sourceState):
 	p1.setName("guardExpression") ->
 	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 	//if normal termination, replace trigger by termination-trigger
@@ -1493,8 +1499,8 @@ Void addTrigger(RelationType relation, synccharts::Transition transition) :
 //Create outputActions.
 Void addEmission(RelationType relation, synccharts::Transition transition) :
 	let p1 = new PropertyType:
-	let terminatedURIHash = hash(getURIFragment(
-							transition.targetState.parentRegion.parentState)):
+	let terminatedURIHash = getStateId(
+							transition.targetState.parentRegion.parentState):
 	p1.setName("outputActions") ->
 	p1.setClass("ptolemy.domains.modal.kernel.OutputActionsAttribute") ->
 	//if target state is final state, then add termination-effect

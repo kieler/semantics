@@ -75,12 +75,13 @@ public class XtendJava {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Returns a hash value of a Node.
-	 * 
-	 * @param myNode the Node
-	 * 
-	 * @return the hash value as a String
-	 */
+     * Returns a hash value of a Node.
+     * 
+     * @param myState
+     *            the my state
+     * 
+     * @return the hash value as a String
+     */
 //	public final static String hash(Node myNode) {
 //		//int i = myNode.eContainer().eContents().indexOf(myNode);
 //		//return ""+i;//myNode.hashCode();
@@ -101,6 +102,18 @@ public class XtendJava {
 //	}
 
 	//-------------------------------------------------------------------------
+        
+        public final static String getStateId(State myState) {
+            if ((myState.getLabel() != null)&&(myState.getLabel().length() > 0)) {
+                return (myState.getLabel()+"_"+hash(getURIFragment(myState)));
+            }
+            else {
+                return (myState.getId()+"_"+hash(getURIFragment(myState)));
+            }
+//            return hash(getURIFragment(myState));
+        }
+        
+        //-------------------------------------------------------------------------
 
 	/**
 	 * Returns a hash value of a String..
