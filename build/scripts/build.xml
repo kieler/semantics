@@ -13,6 +13,7 @@
 	<property name="antContrib.home"       location="/home/kieler/ant-contrib" />
 	<property name="findbugs.home"         location="/home/kieler/findbugs" />
 	<property name="checkstyle.home"       location="/home/kieler/checkstyle" />
+	<property name="pmd.home"              location="/home/kieler/pmd" />
 	<property name="build.basedir"         location="${system.WORKSPACE}" />
 	<property name="findbugs.classes"      location="${system.WORKSPACE}/update-site/plugins" />
 
@@ -20,21 +21,31 @@
 	<property name="job.name"	                  value="${system.JOB_NAME}" />
 
 	<!-- default definitions: may be overwritten while calling this script if necessary -->	
-	<property name="target"	             value="noTargetInfo"/>
+	<!-- property name="target"	             value="noTargetInfo"/ -->
 	<property name="plugin"              value=" "/>
 	<property name="feature"             value=" "/>
 	<property name="product"             value=" "/>
 	<!-- property name="pluginPath"          value=" "/ -->
 	<property name="doc.excludes"        value=" "/>
 	<property name="checkstyle.excludes" value=" "/>
+	<property name="pmd.excludes"        value=" "/>
 	<property name="build.jars"          value="true"/>
 	<property name="publish.feature"     value="true"/>
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${antContrib.home}/lib/ant-contrib.jar" />
 	<taskdef resource="checkstyletask.properties" classpath="${checkstyle.home}/checkstyle-all-5.0.jar" />
 	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="${findbugs.home}/lib/findbugs-ant.jar" />
+	<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
+		<classpath>
+			<fileset dir="${pmd.home}/lib" includes="*.jar" />
+		</classpath>
+	</taskdef>
 
-	<target name="call.antRunner">
+	<target name="noTargetInfo" unless="target">
+		<fail message="No build target given. Please give a target explicitly by setting -Dtarget=&lt;{build.feature,build.rca}&gt;" />
+	</target>	
+
+	<target name="call.antRunner" depends="noTargetInfo">
 		<!-- delete dir="${eclipseConfig}" />
 		<delete dir="${eclipseWorkspace}" />
 		<delete dir="${p2.director.workspace}" / -->
@@ -79,6 +90,10 @@
 	
 		<condition property="suppress.checkstyle" value="true" else="false">
 			<isset property="no.checkstyle" />
+		</condition>
+	
+		<condition property="suppress.pmd" value="true" else="false">
+			<isset property="no.pmd" />
 		</condition>
 	
 		<basename property="basename" file="${product}" suffix=".product" />
@@ -141,6 +156,8 @@
 				<!-- set to true to suppress running findbugs, default is false -->
 			<arg value="-Dsuppress.checkstyle=${suppress.checkstyle}" />
 				<!-- set to true to suppress running checkstyle, default is false -->
+			<arg value="-Dsuppress.pmd=${suppress.pmd}" />
+				<!-- set to true to suppress running pmd, default is false -->
 			<classpath>
 				<pathelement location="${eclipseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>
@@ -178,6 +195,10 @@
 	
 		<condition property="no.checkstyle" value="true">
 			<istrue value="${suppress.checkstyle}" />
+		</condition>	
+
+		<condition property="no.pmd" value="true">
+			<istrue value="${suppress.pmd}" />
 		</condition>	
 
 		<condition property="no.publishing" value="true">
@@ -270,10 +291,17 @@
 			</filterchain>
 		</loadfile>
 		
+		<!-- load pmd target template -->		
+		<loadfile property="pmd.target" srcfile="${scriptdir}/pmd.template.xml">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadfile>
+		
 		<!-- insert javadoc, findbugs, checkstyle target in feature's build.xml -->		
 		<replace file="${basedir}/features/${feature}/build.xml"
 				 token="&lt;/project&gt;"
-				 value="${doc.target}${findbugs.target}${checkstyle.target}&lt;/project&gt;" />
+				 value="${doc.target}${findbugs.target}${checkstyle.target}${pmd.target}&lt;/project&gt;" />
 	</target>
 
 	<target name="setBuildTempFolder" if="eclipse.running" unless="no.publishing">
@@ -306,6 +334,7 @@
 			<!-- property name="findbugs.classes" value="${basedir}/update-site/plugins" / --><!-- defined above -->
 			<property name="findbugs.sources" value="${basedir}/plugins" />
 			<property name="checkstyle.sources" value="${basedir}/plugins" />
+			<property name="pmd.sources" value="${basedir}/plugins" />
 			<target name="clean" />
 			<target name="build.update.jar" />
 			<target name="gather.bin.parts" />
@@ -313,6 +342,7 @@
 			<target name="doc" />
 			<target name="findbugs" />
 			<target name="checkstyle" />
+			<target name="pmd" />
 			<!-- gather.bin.parts copies customized feature.xml into update-site/features folder
 			     needed by succeeding feature builds while resolving dependencies -->		
 		</ant>
@@ -487,8 +517,4 @@
 		<!-- finally, invoke the generated build file -->
 		<ant antfile="${basedir}/build.javadoc.xml" dir="${basedir}" />
 	</target>
-
-	<target name="noTargetInfo">
-		<fail message="No build target given. Please give a target explicitly by setting -Dtarget=&lt;{build.feature,build.rca}&gt;" />
-	</target>	
 </project>
