@@ -36,18 +36,19 @@ public class BinOp extends Expression {
      * 
      * @param name
      *            name of this expression
-     * @param e1
+     * @param expr1
      *            first expression
-     * @param e2
+     * @param expr2
      *            second expression
-     * @param op
+     * @param operator
      *            Operator
      */
-    public BinOp(final String name, final Expression e1, final Expression e2, Operator op) {
+    public BinOp(final String name, final Expression expr1, final Expression expr2,
+            final Operator operator) {
         super(name);
-        this.e1 = e1;
-        this.e2 = e2;
-        this.op = op;
+        this.e1 = expr1;
+        this.e2 = expr2;
+        this.op = operator;
     }
 
     @Override
@@ -65,7 +66,8 @@ public class BinOp extends Expression {
     }
 
     @Override
-    public Expression flatten(final String name, final HashMap<String, Variable> vars, LinkedList<Expression> es) {
+    public Expression flatten(final String name, final HashMap<String, Variable> vars,
+            final LinkedList<Expression> es) {
         boolean atom1 = e1.isAtom();
         boolean atom2 = e2.isAtom();
         Debug.low("flatten: " + toString());
@@ -130,7 +132,7 @@ public class BinOp extends Expression {
     }
 
     @Override
-    public LinkedList<Instruction> toKlp(Variable r) {
+    public LinkedList<Instruction> toKlp(final Variable r) {
         LinkedList<Instruction> instr = new LinkedList<Instruction>();
         VarAccess v1 = null, v2 = null;
         Const c1 = null, c2 = null;
@@ -190,7 +192,7 @@ public class BinOp extends Expression {
     }
 
     @Override
-    public Expression padDelay(final HashMap<String, Integer> delay, int n) {
+    public Expression padDelay(final HashMap<String, Integer> delay, final int n) {
         e1 = e1.padDelay(delay, n);
         e2 = e2.padDelay(delay, n);
         return this;
@@ -312,7 +314,7 @@ public class BinOp extends Expression {
     }
 
     @Override
-    public void replaceVar(HashMap<String, Variable> equiv) {
+    public void replaceVar(final HashMap<String, Variable> equiv) {
         e1.replaceVar(equiv);
         e2.replaceVar(equiv);
 
@@ -326,12 +328,12 @@ public class BinOp extends Expression {
         if (e1 instanceof VarAccess) {
             v1 = (VarAccess) e1;
         } else if (e1 instanceof Const) {
-            // c1 = (Const) e1;
+             c1 = (Const) e1;
         }
         if (e2 instanceof VarAccess) {
             v2 = (VarAccess) e2;
         } else if (e2 instanceof Const) {
-            // c2 = (Const) e2;
+             c2 = (Const) e2;
         }
 
         if (v1 != null && v2 != null) {
@@ -354,7 +356,7 @@ public class BinOp extends Expression {
     }
 
     @Override
-    public Expression replace(String var, Expression expr) {
+    public Expression replace(final String var, final Expression expr) {
         e1 = e1.replace(var, expr);
         e2 = e2.replace(var, expr);
         return this;

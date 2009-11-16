@@ -30,8 +30,6 @@ import de.cau.cs.kieler.krep.compiler.prog.Type;
 /**
  * @author ctr
  * 
- *         Container class to hold parsed lustre or ec file. Contains methods for type and clock
- *         inference.
  */
 public class Scade extends Program implements Scope {
 

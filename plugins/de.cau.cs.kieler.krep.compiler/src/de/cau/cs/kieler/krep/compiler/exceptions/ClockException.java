@@ -35,27 +35,27 @@ public class ClockException extends Exception {
     private String msg = null;
 
     /**
-     * @param context
+     * @param ctxt
      *            Expression in which the error occurs
-     * @param expected
+     * @param expc
      *            clock list expected for this expression
-     * @param actual
+     * @param act
      *            clock list inferred for the expression
      */
-    public ClockException(Expression context, ClockList expected, ClockList actual) {
+    public ClockException(final Expression ctxt, final ClockList expc, final ClockList act) {
         super();
-        this.context = context;
-        this.actual = actual;
-        this.expected = expected;
+        this.context = ctxt;
+        this.actual = act;
+        this.expected = expc;
         this.msg = toString();
     }
 
     /**
-     * @param msg
+     * @param messsage
      *            message that describes the clock failure
      */
-    public ClockException(final String msg) {
-        super(msg);
+    public ClockException(final String messsage) {
+        super(messsage);
     }
 
     @Override

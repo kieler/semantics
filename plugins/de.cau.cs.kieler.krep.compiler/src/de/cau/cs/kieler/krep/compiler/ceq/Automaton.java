@@ -25,6 +25,13 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.Prio;
 
+/**
+ * Implement automaton as part of clocked equations. An automaton contains other automata and
+ * dataflow equations.
+ * 
+ * @author ctr
+ * 
+ */
 public class Automaton {
     private String name;
 
@@ -36,22 +43,38 @@ public class Automaton {
 
     private LinkedList<Variable> outputs = new LinkedList<Variable>();
 
+    /**
+     * @return all inputs for the automaton
+     */
     public LinkedList<Variable> getInputs() {
         return inputs;
     }
 
+    /**
+     * @return all output signals for the automaton
+     */
     public LinkedList<Variable> getOutputs() {
         return outputs;
     }
 
-    public Automaton(String name) {
-        this.name = name;
+    /**
+     * Generate an empty automaton.
+     * 
+     * @param n
+     *            name of the automaton
+     */
+    public Automaton(final String n) {
+        this.name = n;
     }
 
+    /**
+     * @return name of the automaton
+     */
     public String getName() {
         return name;
     }
 
+    @Override
     public String toString() {
         String res = "automaton " + name + "\n";
         for (State s : states) {
@@ -60,14 +83,23 @@ public class Automaton {
         return res;
     }
 
-    public void add(State s) {
+    /**
+     * @param s
+     *            add new state to the automaton
+     */
+    public void add(final State s) {
         states.add(s);
         if (s.isInitial()) {
             initial = s;
         }
     }
 
-    public LinkedList<Instruction> compile(int prioOffset) {
+    /**
+     * @param prioOffset
+     *            minimal priority that can be used
+     * @return klp assembler that implements the automaton
+     */
+    public LinkedList<Instruction> compile(final int prioOffset) {
         LinkedList<Instruction> res = new LinkedList<Instruction>();
         HashMap<String, State> name2state = new HashMap<String, State>();
         for (State s : states) {
@@ -91,28 +123,31 @@ public class Automaton {
         return res;
     }
 
+    /**
+     * propagate constant values in equations.
+     */
     public void propagateConst() {
-        for (State s : states) {
+        for (final State s : states) {
             s.propagateConst();
         }
 
     }
 
+    /**
+     * 
+     */
     public void simplify() {
-        for (State s : states) {
+        for (final State s : states) {
             s.simplify();
         }
 
     }
 
-    public String getKlpHeader() {
-        String res = "  LOCAL " + name + "\n";
-
-        return res;
-    }
-
+    /**
+     * extract io of the automaton from the initial state.
+     */
     public void setIO() {
-        for (State s : states) {
+        for (final State s : states) {
             s.setIO();
         }
         inputs.addAll(initial.getInputs());
@@ -120,7 +155,19 @@ public class Automaton {
 
     }
 
-    public LinkedList<Instruction> compileInit(boolean setInputs, boolean setOutputs, int prioOffset) {
+    /**
+     * Generate initialization code for the klp, which initializes the registers.
+     * 
+     * @param setInputs
+     *            should input registered be initialized?
+     * @param setOutputs
+     *            should output registered be initialized?
+     * @param prioOffset
+     *            minimal priority that can be used.
+     * @return Klp instructions to initialize the register required by the automaton
+     */
+    public LinkedList<Instruction> compileInit(final boolean setInputs, final boolean setOutputs,
+            final int prioOffset) {
         LinkedList<Instruction> res = new LinkedList<Instruction>();
         if (setInputs) {
             res.add(new DeclareReg(name, Kind.LOCAL));
@@ -137,11 +184,18 @@ public class Automaton {
         }
     }
 
+    /**
+     * @return dependency graph of the initial state
+     */
     public DepGraph getDepGraph() {
         return initial.getDepGraph();
     }
 
-    public void replace(HashMap<String, Variable> equiv) {
+    /**
+     * @param equiv
+     *            map of equivalent variables
+     */
+    public void replace(final HashMap<String, Variable> equiv) {
         LinkedList<Variable> tmp = new LinkedList<Variable>();
         for (Variable v : inputs) {
             if (equiv.containsKey(v.getName())) {

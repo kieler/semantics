@@ -22,7 +22,12 @@ import de.cau.cs.kieler.krep.compiler.ceq.Program;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable;
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 import de.cau.cs.kieler.krep.compiler.helper.Debug;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.*;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.DeclareReg;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Done;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.InitReg;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Prio;
 
 /**
  * @author ctr Klp Assembler
@@ -49,7 +54,8 @@ public class Klp extends Program {
     private LinkedList<Instruction> instr = new LinkedList<Instruction>();
 
     /**
-     * @param name name of the main node
+     * @param name
+     *            name of the main node
      */
     public Klp(final String name) {
         super(name);
@@ -69,9 +75,15 @@ public class Klp extends Program {
 
     /**
      * generate KLP instructions for all equations.
+     * 
+     * @param useHWClocks
+     *            use hardware clocks, if false, a software test for clocks is generated
+     * @param scope
+     *            scope, if the equations is in a state
+     * @return klp instructions that implement the program
      */
-    public LinkedList<Instruction> compile(final boolean useClocks, final String scope) {
-        this.useClocks = useClocks;
+    public LinkedList<Instruction> compile(final boolean useHWClocks, final String scope) {
+        this.useClocks = useHWClocks;
         init();
 
         // compute priorities
@@ -94,7 +106,7 @@ public class Klp extends Program {
             // done = Label.get(e.getName() + "_done" + scope);
             // instr.add(new CJmp(CJmp.Cond.F, new Read(Variable.get(e.getClock()),false), done));
             // }
-            instr.addAll(e.toKlp(useClocks, scope, vars));
+            instr.addAll(e.toKlp(useHWClocks, scope, vars));
             // if(!useClocks && e.hasClock()){
             // instr.add(done);
             // }
@@ -147,10 +159,21 @@ public class Klp extends Program {
         return eqs.size();
     }
 
+    /**
+     * @return dot description of the dependency graph
+     */
     public String toDot() {
         return depGraph.toDot(true);
     }
 
+    /**
+     * @param useClocks
+     * @param scope
+     * @param setInputs
+     * @param setOutputs
+     * @param prioOffset
+     * @return
+     */
     public LinkedList<Instruction> compileInit(final boolean useClocks, final String scope,
             final boolean setInputs, final boolean setOutputs, final int prioOffset) {
         LinkedList<Instruction> res = new LinkedList<Instruction>();

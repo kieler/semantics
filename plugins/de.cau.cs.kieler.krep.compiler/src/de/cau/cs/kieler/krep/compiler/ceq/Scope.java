@@ -17,7 +17,7 @@ import java.util.LinkedList;
 
 public interface Scope {
 
-     void add(LinkedList<Variable> vars);
+    void add(LinkedList<Variable> vars);
 
     void add(Automaton ssm);
 

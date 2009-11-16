@@ -24,10 +24,10 @@ import de.cau.cs.kieler.krep.compiler.prog.Type;
  * @author ctr Abstract superclass for all ceq Expressions Not that every sub-expression should have
  *         a unique name
  */
-abstract public class Expression {
+public abstract class Expression {
     protected String name;
 
-    protected Expression(String name) {
+    protected Expression(final String name) {
         this.name = name;
     }
 
@@ -35,14 +35,14 @@ abstract public class Expression {
      * 
      * @return type of the current expression
      */
-    abstract public Type getType();
+    public abstract Type getType();
 
     /**
      * compute list of all variables that syntactically occur in the expression
      * 
      * @return list of used variables
      */
-    abstract public List<String> getVars();
+    public abstract List<String> getVars();
 
     /**
      * compute List of all variables, on which current value the expression depends. This is the
@@ -50,7 +50,7 @@ abstract public class Expression {
      * 
      * @return list of variables this expression depends on
      */
-    abstract public List<Variable> getDeps();
+    public abstract List<Variable> getDeps();
 
     @Override
     abstract public String toString();
@@ -68,7 +68,7 @@ abstract public class Expression {
      *            additionally added expression
      * @return expression without complex operations
      */
-    abstract public Expression flatten(String name, HashMap<String, Variable> vars,
+    public abstract Expression flatten(String name, HashMap<String, Variable> vars,
             LinkedList<Expression> es);
 
     /**
@@ -80,14 +80,14 @@ abstract public class Expression {
      *            : delay of the output
      * @return additional equation to store previous values
      */
-    abstract public Expression padDelay(HashMap<String, Integer> delay, int n);
+    public abstract Expression padDelay(HashMap<String, Integer> delay, int n);
 
     /**
      * compute whether this is an atomic expression
      * 
      * @return true if expression contains no sub-expression
      */
-    abstract public boolean isAtom();
+    public abstract boolean isAtom();
 
     /**
      * compute instructions to execute this expression on the KLP
@@ -96,7 +96,7 @@ abstract public class Expression {
      *            Register to store the result
      * @return list of KLP instructions that compute this expression
      */
-    abstract public LinkedList<Instruction> toKlp(Variable to);
+    public abstract LinkedList<Instruction> toKlp(Variable to);
 
     /**
      * @return name of the expression
@@ -110,13 +110,13 @@ abstract public class Expression {
      *            mapping variable to constant values, if they can be evaluated
      * @return a constant when the expression can be completely evaluated
      */
-    abstract public Const propagateConst(HashMap<String, Const> con);
+    public abstract Const propagateConst(HashMap<String, Const> con);
 
-    abstract public Expression staticEval();
+    public abstract Expression staticEval();
 
-    abstract public void replaceVar(HashMap<String, Variable> equiv);
+    public abstract void replaceVar(HashMap<String, Variable> equiv);
 
-    abstract public int wcrt();
+    public abstract int wcrt();
 
-    abstract public Expression replace(String var, Expression expr);
+    public abstract Expression replace(String var, Expression expr);
 }

@@ -11,18 +11,9 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.compiler.krp.statement;
-//
-//public class Jmp extends Statement {
-//
-//    String label;
-//
-//    public Jmp(String label) {
-//        this.label = label;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "JMP " + label;
-//    }
-//}
+
+/**
+ * Implementation of clocked equations.
+ */
+package de.cau.cs.kieler.krep.compiler.ceq;
+

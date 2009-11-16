@@ -18,17 +18,33 @@ import java.util.LinkedList;
 
 import de.cau.cs.kieler.krep.compiler.dependencies.DepGraph;
 import de.cau.cs.kieler.krep.compiler.klp.Klp;
-import de.cau.cs.kieler.krep.compiler.klp.instructions.*;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Comment;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Done;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Jmp;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Label;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Prio;
 
+/**
+ * @author ctr
+ * 
+ */
 public class State implements Scope {
-    public State(String name, boolean initial) {
 
-        this.initial = initial;
-        this.name = name;
-        content = new Scade(name);
+    /**
+     * @param n
+     *            unique name of the state
+     * @param initial
+     *            true if this is an initial state
+     */
+    public State(final String n, final boolean initial) {
+
+        this.isInitial = initial;
+        this.name = n;
+        content = new Scade(n);
     }
 
-    private boolean initial;
+    private boolean isInitial;
 
     private String name;
 
@@ -37,16 +53,29 @@ public class State implements Scope {
     private LinkedList<Transition> saborts = new LinkedList<Transition>();
     private LinkedList<Transition> waborts = new LinkedList<Transition>();
 
-    public void addSAbort(Transition t) {
+    /**
+     * Add outgoing strong abort.
+     * 
+     * @param t
+     *            new transitions
+     */
+    public void addSAbort(final Transition t) {
         saborts.add(t);
     }
 
-    public void addWAbort(Transition t) {
+    /**
+     * Add outgoing weak abort.
+     * 
+     * @param t
+     *            new transitions
+     */
+    public void addWAbort(final Transition t) {
         waborts.add(t);
     }
 
+    @Override
     public String toString() {
-        String res = (initial ? "initial " : "") + "state " + name + "\n";
+        String res = (isInitial ? "initial " : "") + "state " + name + "\n";
         if (!saborts.isEmpty()) {
             res += "unless\n";
             for (Transition t : saborts) {
@@ -64,7 +93,11 @@ public class State implements Scope {
         return res;
     }
 
-    public void add(LinkedList<Variable> vars) {
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void add(final LinkedList<Variable> vars) {
         if (vars != null) {
             for (Variable v : vars) {
                 content.addVar(v);
@@ -72,48 +105,83 @@ public class State implements Scope {
         }
     }
 
-    public void add(Automaton ssm) {
+    /**
+     * {@inheritDoc}
+     */
+    public void add(final Automaton ssm) {
         content.add(ssm);
-
     }
 
-    public void add(Equation eq) {
+    /**
+     * {@inheritDoc}
+     */
+    public void add(final Equation eq) {
         content.add(eq);
     }
 
-    public void addEq(LinkedList<Equation> eq) {
+    /**
+     * {@inheritDoc}
+     */
+    public void addEq(final LinkedList<Equation> eq) {
         content.addEq(eq);
 
     }
 
+    /**
+     * propagate constant values .
+     */
     public void propagateConst() {
         content.propagateConst();
     }
 
+    /**
+     * simplify contained equations.
+     */
     public void simplify() {
         content.simplify();
 
     }
 
+    /**
+     * @return name of the state
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return true if the state is an initial state.
+     */
     public boolean isInitial() {
-        return initial;
+        return isInitial;
     }
 
+    /**
+     * @return klp code that implements the body of the state
+     */
     public LinkedList<Instruction> compileBody() {
-        Klp klp = new Klp(name, content);
+        final Klp klp = new Klp(name, content);
         return klp.compile(true, name);
     }
 
+    /**
+     * 
+     */
     public void setIO() {
         content.setIO();
     }
 
-    public LinkedList<Instruction> compileCtrl(String ssm, HashMap<String, State> states,
-            int prioOffset) {
+    /**
+     * @param ssm
+     *            the name of the ssm that constains this state
+     * @param states
+     *            all states in the fsm
+     * @param prioOffset
+     *            minimal priority to use
+     * @return klp code that implemenst the controller, ie, checks for abortions
+     */
+    public LinkedList<Instruction> compileCtrl(final String ssm,
+            final HashMap<String, State> states, final int prioOffset) {
         LinkedList<Instruction> res = new LinkedList<Instruction>();
 
         res.add(new Comment("check strong aborts"));
@@ -148,19 +216,38 @@ public class State implements Scope {
         return res;
     }
 
-    public LinkedList<Instruction> compileInit(boolean setInputs, boolean setOutputs, int prioOffset) {
+    /**
+     * @param setInputs
+     *            initialize inputs?
+     * @param setOutputs
+     *            initialize outputs?
+     * @param prioOffset
+     *            minimal priority to use
+     * @return klp instructions to initialize the used registers
+     */
+    public LinkedList<Instruction> compileInit(final boolean setInputs, final boolean setOutputs,
+            final int prioOffset) {
         Klp klp = new Klp(name, content);
         return klp.compileInit(true, name, false, setOutputs, prioOffset);
     }
 
+    /**
+     * @return maximal used priority
+     */
     public int getMaxPrio() {
         return content.depGraph.getMaxPrio();
     }
 
+    /**
+     * @return all input signals of the state
+     */
     public LinkedList<Variable> getInputs() {
         return content.inputs;
     }
 
+    /**
+     * @return all output signals of the state
+     */
     public LinkedList<Variable> getOutputs() {
         return content.outputs;
     }
@@ -169,11 +256,17 @@ public class State implements Scope {
         content.init();
     }
 
+    /**
+     * @return dependency graph
+     */
     public DepGraph getDepGraph() {
         return content.depGraph;
     }
 
-    public void replace(HashMap<String, Variable> equiv) {
+    /**
+     * @param equiv list of equivalent variables
+     */
+    public void replace(final HashMap<String, Variable> equiv) {
         content.replace(equiv);
         for (Transition t : waborts) {
             t.replace(equiv);

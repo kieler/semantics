@@ -30,18 +30,18 @@ public class TypeException extends Exception {
     private String actual;
 
     /**
-     * @param context
+     * @param ctxt
      *            Expression in which the error occurs
-     * @param expected
+     * @param expct
      *            type expected for this expression
-     * @param actual
+     * @param act
      *            type inferred for the expression
      */
-    public TypeException(Expression context, String expected, String actual) {
+    public TypeException(final Expression ctxt, final String expct, final String act) {
         super();
-        this.actual = actual;
-        this.context = context;
-        this.expected = expected;
+        this.actual = act;
+        this.context = ctxt;
+        this.expected = expct;
     }
 
     @Override

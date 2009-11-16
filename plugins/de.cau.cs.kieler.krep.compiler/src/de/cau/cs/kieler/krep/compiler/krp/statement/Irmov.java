@@ -12,22 +12,22 @@
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.krep.compiler.krp.statement;
-
-public class Irmov extends Statement {
-
-    String to;
-    Integer val;
-    Integer R_to;
-
-    public Irmov(String to, Integer val) {
-        super();
-        this.to = to;
-        this.val = val;
-    }
-
-    @Override
-    public String toString() {
-        return "IRMOV " + to + " " + val;
-    }
-
-}
+//
+//public class Irmov extends Statement {
+//
+//    String to;
+//    Integer val;
+//    Integer R_to;
+//
+//    public Irmov(String to, Integer val) {
+//        super();
+//        this.to = to;
+//        this.val = val;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "IRMOV " + to + " " + val;
+//    }
+//
+//}

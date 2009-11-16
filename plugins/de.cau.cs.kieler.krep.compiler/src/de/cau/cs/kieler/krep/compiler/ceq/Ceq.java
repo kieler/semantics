@@ -18,13 +18,18 @@ import java.util.LinkedList;
 /**
  * @author ctr static helper classes for clocked equations
  */
-public class Ceq {
+public final class Ceq {
+
+    private Ceq() {
+    }
+
     /**
-     * @param name
-     * @param inputs
-     * @param outputs
-     * @param locals
-     * @param eqs
+     * @param name name of the main node
+     * @param inputs list of all input signals
+     * @param outputs list of all output singals
+     * @param locals list of all local signals
+     * @param eqs all clocked equations
+     * @param ssms all automata
      * @return generate Lustre code for a given set of clocked equations
      */
     public static String toLustre(final String name, final LinkedList<? extends Variable> inputs,

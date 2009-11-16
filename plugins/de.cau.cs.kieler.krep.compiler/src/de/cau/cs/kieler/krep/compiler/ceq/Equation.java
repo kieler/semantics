@@ -50,15 +50,15 @@ public class Equation {
      *            expression to compute the initial value
      * @param expr
      *            expression to compute the value during runtim
-     * @param clock
+     * @param clk
      *            the clock on which the equation is evaluated
      * @param type
      *            type of the result
      */
     public Equation(final String id, final Expression init, final Expression expr,
-            final String clock) {
+            final String clk) {
         super();
-        this.clock = clock;
+        this.clock = clk;
         this.expr = expr;
         this.init = init;
         this.id = id;
@@ -165,8 +165,8 @@ public class Equation {
      * @param vars
      * @return list ofKLP instructions to compute the value
      */
-    public LinkedList<Instruction> toKlp(boolean useClocks, String scope,
-            HashMap<String, Variable> vars) {
+    public LinkedList<Instruction> toKlp(final boolean useClocks, final String scope,
+            final HashMap<String, Variable> vars) {
         Debug.low("to KLP: " + id);
         Debug.low(toString());
         LinkedList<Instruction> instr = new LinkedList<Instruction>();
@@ -215,7 +215,7 @@ public class Equation {
      * @param vars
      * @return list ofKLP instructions to compute the value
      */
-    public LinkedList<Instruction> toKrp(HashMap<String, Variable> vars) {
+    public LinkedList<Instruction> toKrp(final HashMap<String, Variable> vars) {
         Debug.low("to KLP: " + id);
         Debug.low(toString());
         LinkedList<Instruction> instr = new LinkedList<Instruction>();
@@ -251,12 +251,6 @@ public class Equation {
         return expr.getType();
     }
 
-    /**
-     * @return additional equations, that are needed to save to new values
-     */
-    public void padDelay(HashMap<String, Integer> delay) {
-        expr = expr.padDelay(delay, delay.get(id));
-    }
 
     /**
      * @param con
@@ -324,7 +318,7 @@ public class Equation {
 
     }
 
-    public void replaceVar(HashMap<String, Variable> equiv) {
+    public void replaceVar(final HashMap<String, Variable> equiv) {
         if (init != null) {
             init.replaceVar(equiv);
         }
@@ -350,7 +344,7 @@ public class Equation {
         return prio;
     }
 
-    public void setPrio(int prio) {
+    public void setPrio(final int prio) {
         this.prio = prio;
     }
 
@@ -358,7 +352,7 @@ public class Equation {
         return expr.getVars();
     }
 
-    public boolean replace(Equation eq) {
+    public boolean replace(final Equation eq) {
         if (eq.init != null) {
             // TODO: check for clocks
             // || !eq.clock.equals(clock)){

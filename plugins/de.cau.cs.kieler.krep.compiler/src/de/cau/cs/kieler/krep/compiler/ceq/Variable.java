@@ -29,19 +29,19 @@ public class Variable {
      */
     public enum Kind {
         /**
-         * input variable
+         * input variable.
          */
         INPUT,
         /**
-         * output variable
+         * output variable.
          */
         OUTPUT,
         /**
-         * local variable
+         * local variable.
          */
         LOCAL,
         /**
-         * temporary variable, without pre value
+         * temporary variable, without pre value.
          */
         TEMP
     }
@@ -50,82 +50,78 @@ public class Variable {
 
     private Type type;
 
-    private Kind kind;
+    private Kind io;
 
     private int id;
-
-    /** core on which this variable is computed */
-    // public Integer core = null;
-
-    /** delay between computation of the variable and the global input */
-    // public Integer delay = null;
 
     private static HashMap<String, Variable> vars = new HashMap<String, Variable>();
 
     private static HashMap<String, Integer> temps = new HashMap<String, Integer>();
 
-    // private static int[] nClock = new int[] {0,0,2,0};
-    /** count number of variables for each kin */
+    /** count number of variables for each kind. */
     private static int[] nValue = new int[] { 0, 0, 0, 0 };
+
+    private static final int ID_IN = 0;
+    private static final int ID_OUT = 1;
+    private static final int ID_LOCAL = 2;
+    private static final int ID_TEMP = 3;
 
     private int getKindId(final Kind k) {
         switch (k) {
         case INPUT:
-            return 0;
+            return ID_IN;
         case OUTPUT:
-            return 1;
+            return ID_OUT;
         case LOCAL:
-            return 2;
+            return ID_LOCAL;
         case TEMP:
-            return 3;
+            return ID_TEMP;
         }
         return 0;
     }
 
     /**
-     * generate new Variable declaration
+     * generate new Variable declaration.
      * 
-     * @param name
+     * @param n
      *            name of the variable
      * @param kind
      *            kind of the variable
-     * @param type
+     * @param t
      *            type of the variable
-     * @param clock
      */
-    public Variable(String name, Kind kind, Type type) {
+    public Variable(final String n, final Kind kind, final Type t) {
         super();
-        this.name = name;
-        this.kind = kind;
-        this.type = type;
+        this.name = n;
+        this.io = kind;
+        this.type = t;
         id = nValue[getKindId(kind)]++;
-        if (vars.containsKey(name)) {
-            System.err.println("variable " + name + " already defined");
+        if (vars.containsKey(n)) {
+            System.err.println("variable " + n + " already defined");
         }
-        vars.put(name, this);
+        vars.put(n, this);
     }
 
     /**
-     * Create Variable with the same information as an existing Lustre Variable
+     * Create Variable with the same information as an existing Lustre Variable.
      * 
      * @param var
-     *            lustre variable
+     *            Lustre variable
      * @param kind
+     *            io kind
      */
     public Variable(final de.cau.cs.kieler.krep.compiler.lustre.Variable var, final Kind kind) {
         this(var.getName(), kind, var.getType());
     }
 
     /**
-     * implement singleton pattern
+     * Generate new variable. Implements singleton pattern.
      * 
      * @param name
      *            name of the variable
-     * @param t
-     *            type of the variable
      * @return variable with same name if it exists, new temp variable otherwise
      */
-    public static Variable get(String name) {
+    public static Variable get(final String name) {
         Variable v = vars.get(name);
         if (v == null) {
             System.err.println("variable " + name + " not defined");
@@ -133,7 +129,18 @@ public class Variable {
         return v;
     }
 
-    public static Variable get(String name, Kind kind, Type type) {
+    /**
+     * Generate new variable. Implements singleton pattern.
+     * 
+     * @param name
+     *            name of the variable
+     * @param kind
+     *            io kind of the variable
+     * @param type
+     *            type of the variable
+     * @return variable with same name if it exists, new temp variable otherwise
+     */
+    public static Variable get(final String name, final Kind kind, final Type type) {
         Variable v = vars.get(name);
         if (v == null) {
             v = new Variable(name, kind, type);
@@ -146,7 +153,7 @@ public class Variable {
      * @return variable kind, ie, input, output, local or temp
      */
     public Kind getKind() {
-        return kind;
+        return io;
     }
 
     /**
@@ -172,28 +179,28 @@ public class Variable {
      * @return true if the variable is an input
      */
     public boolean isInput() {
-        return kind == Kind.INPUT;
+        return io == Kind.INPUT;
     }
 
     /**
      * @return true if the variable is an output
      */
     public boolean isOutput() {
-        return kind == Kind.OUTPUT;
+        return io == Kind.OUTPUT;
     }
 
     /**
      * @return true if the variable is local
      */
     public boolean isLocal() {
-        return kind == Kind.LOCAL;
+        return io == Kind.LOCAL;
     }
 
     /**
      * @return true if the variable is only temporary defined
      */
     public boolean isTemp() {
-        return kind == Kind.TEMP;
+        return io == Kind.TEMP;
     }
 
     /**
@@ -201,9 +208,9 @@ public class Variable {
      *            clock on which the variable runs
      * @return KLP assembler to initialize variable
      */
-    public String toKlp(String clock) {
+    public String toKlp(final String clock) {
         String res = "";
-        switch (kind) {
+        switch (io) {
         case INPUT:
             res += "  INPUT\t\t" + name + "\n";
             break;
@@ -217,7 +224,7 @@ public class Variable {
             break;
 
         }
-        if (kind == Kind.LOCAL || kind == Kind.OUTPUT) {
+        if (io == Kind.LOCAL || io == Kind.OUTPUT) {
             res += "  INIT";
             switch (type) {
             case BOOL:
@@ -237,13 +244,12 @@ public class Variable {
     }
 
     /**
-     * give register id of this variable
      * 
-     * @return register id
+     * @return register id of this variable
      */
     public int getId() {
         int i = 0;
-        switch (kind) {
+        switch (io) {
         case INPUT:
             i = 0;
             break;
@@ -283,6 +289,12 @@ public class Variable {
         }
     }
 
+    /**
+     * Remove temporary variables.
+     * 
+     * @param prefix
+     *            prefix of the variables to reset
+     */
     public static void destroyTemp(final String prefix) {
         Integer i = temps.get(prefix);
         if (i == null) {
@@ -292,6 +304,10 @@ public class Variable {
         temps.put(prefix, i);
     }
 
+    /**
+     * 
+     * @return number of defined variables
+     */
     public static int getMax() {
         return vars.size();
     }

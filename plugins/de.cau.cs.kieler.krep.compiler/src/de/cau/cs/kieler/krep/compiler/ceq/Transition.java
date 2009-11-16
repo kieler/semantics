@@ -24,25 +24,51 @@ import de.cau.cs.kieler.krep.compiler.klp.instructions.Read;
 import de.cau.cs.kieler.krep.compiler.klp.instructions.CJmp.Cond;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
+/**
+ * A transition in an ssm.
+ * 
+ * @author ctr
+ * 
+ */
 public class Transition {
     private String target;
     private Expression trigger;
 
-    public Transition(Expression trigger, String target) {
-        this.trigger = trigger;
-        this.target = target;
+    /**
+     * @param triggerExpr
+     *            trigger of the expression
+     * 
+     * @param targetState
+     *            id of the target state
+     */
+    public Transition(final Expression triggerExpr, final String targetState) {
+        this.trigger = triggerExpr;
+        this.target = targetState;
     }
 
+    @Override
     public String toString() {
         String res = "if " + trigger.toString() + " restart " + target;
         return res;
     }
 
+    /**
+     * @return id of the target state
+     */
     public String getTarget() {
         return target;
     }
 
-    public LinkedList<Instruction> compile(String ssm, String source, String suffix) {
+    /**
+     * 
+     * 
+     * @param ssm name of the ssm that contains the transitions
+     * @param source source state
+     * @param suffix additional suffix to allow uniqe transition names
+     * @return klp instructions to implement the transitions
+     */
+    public LinkedList<Instruction> compile(final String ssm, final String source,
+            final String suffix) {
         LinkedList<Instruction> res = new LinkedList<Instruction>();
         Read r;
         if (trigger instanceof VarAccess) {
@@ -56,7 +82,10 @@ public class Transition {
         return res;
     }
 
-    public void replace(HashMap<String, Variable> equiv) {
+    /**
+     * @param equiv map of equivalent variables
+     */
+    public void replace(final HashMap<String, Variable> equiv) {
         trigger.replaceVar(equiv);
 
     }

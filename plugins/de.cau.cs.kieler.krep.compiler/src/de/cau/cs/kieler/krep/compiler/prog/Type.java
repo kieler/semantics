@@ -18,15 +18,15 @@ package de.cau.cs.kieler.krep.compiler.prog;
  */
 public enum Type {
     /**
-     * integer values (32 Bit)
+     * integer values (32 Bit).
      */
     INT,
     /**
-     * boolean values
+     * boolean values.
      */
     BOOL,
     /**
-     * double values (32 Bit)
+     * double values (32 Bit).
      */
     REAL;
 

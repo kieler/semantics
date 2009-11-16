@@ -18,7 +18,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.cau.cs.kieler.krep.compiler.klp.instructions.*;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.IMov;
+import de.cau.cs.kieler.krep.compiler.klp.instructions.Instruction;
 import de.cau.cs.kieler.krep.compiler.prog.Type;
 
 /**
@@ -29,30 +30,30 @@ public class Const extends Expression {
     private Type type;
 
     /**
-     * new integer constant
+     * new integer constant.
      * 
      * @param name
      *            name of the constant
-     * @param val
+     * @param value
      *            integer value
      */
-    public Const(String name, int val) {
+    public Const(final String name, final int value) {
         super(name);
-        this.val = val;
+        this.val = value;
         type = Type.INT;
     }
 
     /**
-     * new boolean constant
+     * new boolean constant.
      * 
      * @param name
      *            name of the constant
-     * @param val
+     * @param value
      *            boolean value
      */
-    public Const(String name, boolean val) {
+    public Const(final String name, final boolean value) {
         super(name);
-        this.val = val ? 1 : 0;
+        this.val = value ? 1 : 0;
         type = Type.BOOL;
     }
 
@@ -67,7 +68,8 @@ public class Const extends Expression {
     }
 
     @Override
-    public Expression flatten(String name, HashMap<String, Variable> vars, LinkedList<Expression> es) {
+    public Expression flatten(final String name, final HashMap<String, Variable> vars,
+            final LinkedList<Expression> es) {
         return this;
     }
 
@@ -82,7 +84,7 @@ public class Const extends Expression {
     }
 
     @Override
-    public LinkedList<Instruction> toKlp(Variable r) {
+    public LinkedList<Instruction> toKlp(final Variable r) {
         LinkedList<Instruction> instr = new LinkedList<Instruction>();
         instr.add(new IMov(r, val));
         return instr;
@@ -101,12 +103,12 @@ public class Const extends Expression {
     }
 
     @Override
-    public Expression padDelay(HashMap<String, Integer> delay, int n) {
+    public Expression padDelay(final HashMap<String, Integer> delay, final int n) {
         return this;
     }
 
     @Override
-    public Const propagateConst(HashMap<String, Const> con) {
+    public Const propagateConst(final HashMap<String, Const> con) {
         return this;
     }
 
@@ -116,7 +118,7 @@ public class Const extends Expression {
     }
 
     @Override
-    public void replaceVar(HashMap<String, Variable> equiv) {
+    public void replaceVar(final HashMap<String, Variable> equiv) {
         // nothing to do
 
     }
@@ -127,7 +129,7 @@ public class Const extends Expression {
     }
 
     @Override
-    public Expression replace(String var, Expression expr) {
+    public Expression replace(final String var, final Expression expr) {
         return this;
     }
 }
