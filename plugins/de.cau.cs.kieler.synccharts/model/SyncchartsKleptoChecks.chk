@@ -48,7 +48,7 @@ context Emission if ((Transition)parentEAction).type == TransitionType::NORMALTE
   (signal.isOutput == true || signal.isInput == true);
 	
 //FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
-context ComplexExpression WARNING "KLEPTO: VAL and PRE operators are currently not supported in the simulation!" :
-   (operator.metaType != OperatorType::VAL)
-   &&(operator.metaType != OperatorType::PRE);	
+context ComplexExpression if ((operator == OperatorType::VAL) ||
+							   (operator == OperatorType::PRE)) WARNING "KLEPTO: VAL and PRE operators are currently not supported in the simulation!" :
+	false;
 	
