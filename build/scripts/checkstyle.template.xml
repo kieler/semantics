@@ -5,10 +5,10 @@
 			<fileset dir="${basedir}/plugins" includes="**/*.jar" />
 		</path> 
 
-			<checkstyle config="${scriptdir}/checks.xml"
-			    failureProperty="checkstyle.failure"
-			    failOnViolation="false"
-			    classpathref="checkstyle.classpath">
+		<checkstyle config="${scriptdir}/checks.xml"
+		    failureProperty="checkstyle.failure"
+		    failOnViolation="false"
+		    classpathref="checkstyle.classpath">
 			<formatter type="xml"
 			    tofile="${basedir}/checkstyle.report.xml" />
 			<fileset dir="${checkstyle.sources}"

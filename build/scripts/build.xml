@@ -297,7 +297,7 @@
 				<expandproperties />
 			</filterchain>
 		</loadfile -->  <!-- deactivated analysis as it is pretty much similar to checkstyle -->
-		<property name=pmd.target value="" />
+		<property name="pmd.target" value="" />
 		
 		<!-- insert javadoc, findbugs, checkstyle target in feature's build.xml -->		
 		<replace file="${basedir}/features/${feature}/build.xml"
