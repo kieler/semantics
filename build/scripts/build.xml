@@ -292,11 +292,12 @@
 		</loadfile>
 		
 		<!-- load pmd target template -->		
-		<loadfile property="pmd.target" srcfile="${scriptdir}/pmd.template.xml">
+		<!-- loadfile property="pmd.target" srcfile="${scriptdir}/pmd.template.xml">
 			<filterchain>
 				<expandproperties />
 			</filterchain>
-		</loadfile>
+		</loadfile -->  <!-- deactivated analysis as it is pretty much similar to checkstyle -->
+		<property name=pmd.target value="" />
 		
 		<!-- insert javadoc, findbugs, checkstyle target in feature's build.xml -->		
 		<replace file="${basedir}/features/${feature}/build.xml"
@@ -342,7 +343,7 @@
 			<target name="doc" />
 			<target name="findbugs" />
 			<target name="checkstyle" />
-			<target name="pmd" />
+			<!-- target name="pmd" / --> <!-- deactivated pmd analysis as it is pretty much similar to checkstyle -->
 			<!-- gather.bin.parts copies customized feature.xml into update-site/features folder
 			     needed by succeeding feature builds while resolving dependencies -->		
 		</ant>
