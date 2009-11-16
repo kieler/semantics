@@ -47,3 +47,8 @@ context Emission if ((Transition)parentEAction).type == TransitionType::NORMALTE
 //context SignalReference if (((Transition)parentAction).type == TransitionType::NORMALTERMINATION) WARNING "KLEPTO: Local signals ("+signal.name+") that occur within a trigger of a normal termination transition are not supported in the simulation! Please consider using a weak abort instead." :
   (signal.isOutput == true || signal.isInput == true);
 	
+//FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
+context ComplexExpression WARNING "KLEPTO: VAL and PRE operators are currently not supported in the simulation!" :
+   (operator.metaType != OperatorType::VAL)
+   &&(operator.metaType != OperatorType::PRE);	
+	
