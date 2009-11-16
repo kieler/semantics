@@ -146,6 +146,10 @@
          id="org.eclipse.xtend.source"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.mwe.ui.source"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.jdt.core"
          download-size="0"
