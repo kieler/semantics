@@ -2,8 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin> 
  <extension
-       point="de.cau.cs.kieler.ksbase.configuration">
-       
+       point="de.cau.cs.kieler.ksbase.configurations">
        		<configuration
                XtendFile="src/transformations/feature.ext"
                contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"

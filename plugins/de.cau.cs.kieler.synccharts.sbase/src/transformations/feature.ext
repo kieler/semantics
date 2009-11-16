@@ -78,6 +78,24 @@ region.innerStates.add(state) ->
 parentState.regions.add(region)
 ;
 
+//Copies a state, i.e. stores a reference in a 
+//Java class
+Void copyState(State source):
+JAVA de.cau.cs.kieler.synccharts.sbase.Utils.copyState(de.cau.cs.kieler.synccharts.State)
+;
+
+Void copyStates(List[State] states) :
+JAVA de.cau.cs.kieler.synccharts.sbase.Utils.copyStates(org.eclipse.emf.common.util.EList)
+;
+
+State getCopiedState():
+JAVA de.cau.cs.kieler.synccharts.sbase.Utils.getBufferedState();
+
+Void moveState(Region target):
+let source = getCopiedState():
+source.setParentRegion(target)
+;
+
 /////////////////////////
 //     Templates      ///
 /////////////////////////
