@@ -38,9 +38,7 @@ import de.cau.cs.kieler.krep.compiler.lustre.Lustre;
  */
 public final class Ec2klp {
 
-    private Ec2klp() {
 
-    }
 
     private String inputFile = null;
     private String outputFile = null;
