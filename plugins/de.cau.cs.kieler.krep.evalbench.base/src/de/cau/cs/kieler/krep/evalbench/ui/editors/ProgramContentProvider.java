@@ -26,9 +26,6 @@ public class ProgramContentProvider implements IStructuredContentProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java
-     * .lang.Object)
      */
     public Object[] getElements(final Object inputElement) {
         if (inputElement instanceof String[][]) {
@@ -41,7 +38,6 @@ public class ProgramContentProvider implements IStructuredContentProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.viewers.IContentProvider#dispose()
      */
     public void dispose() {
         // Nothing to do
@@ -50,9 +46,6 @@ public class ProgramContentProvider implements IStructuredContentProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface
-     * .viewers.Viewer, java.lang.Object, java.lang.Object)
      */
     public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {
         // Nothing to do

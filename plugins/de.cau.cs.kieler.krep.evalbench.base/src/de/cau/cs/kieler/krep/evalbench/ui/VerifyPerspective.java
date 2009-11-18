@@ -47,7 +47,6 @@ public class VerifyPerspective implements IPerspectiveFactory {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui .IPageLayout)
      */
     public void createInitialLayout(final IPageLayout layout) {
         final float ratioBottom = 0.7f;
@@ -60,7 +59,8 @@ public class VerifyPerspective implements IPerspectiveFactory {
         
         
         // bottom: Connection and Target view
-        IFolderLayout bottom = layout.createFolder("bottom", IPageLayout.BOTTOM, ratioBottom, editorArea);
+        IFolderLayout bottom 
+        = layout.createFolder("bottom", IPageLayout.BOTTOM, ratioBottom, editorArea);
         bottom.addView(ID_CONNECTION);
         bottom.addView(ID_TARGET);
         bottom.addView(ID_MESSAGE);

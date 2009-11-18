@@ -25,7 +25,6 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KrepConfig;
-import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
 /**
  * Implementation of the communication protocol interface that uses the KREP protocol.
@@ -161,7 +160,7 @@ public class KrepProtocol extends CommunicationProtocol {
             res[i] = trace.get(i);
         }
         // int res[] = {1,2};
-       // MessageView.print("TraceLength:" + trace.size());
+        // MessageView.print("TraceLength:" + trace.size());
         return res;
     }
 
@@ -180,8 +179,12 @@ public class KrepProtocol extends CommunicationProtocol {
         Iterator<Integer> i = msg.iterator();
         // int nKind = msg.get(0);
         int kind = i.next();
-        int version =  i.next();
-        
+        if (kind != 1) {
+            throw new CommunicationException("Wrong processor");
+        }
+        // int version =
+        i.next();
+
         int nCores = i.next();
         int nIO = i.next();
         int nReg = i.next();
@@ -239,7 +242,7 @@ public class KrepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-      */
+     */
     public void stopContinuous() throws CommunicationException {
         sendCmd(HALT_COMMAND);
     }
@@ -247,7 +250,7 @@ public class KrepProtocol extends CommunicationProtocol {
     /**
      * {@inheritDoc}
      * 
-      */
+     */
     public int tick(final int maxSignals, final LinkedList<Signal> inputs,
             final LinkedList<Signal> outputs) throws CommunicationException {
 
@@ -278,7 +281,7 @@ public class KrepProtocol extends CommunicationProtocol {
 
         // perform tick
         connection.send(TICK_COMMAND);
-        rt = receiveByte(1).getFirst(); 
+        rt = receiveByte(1).getFirst();
         // receive outputs
         i = 0;
         for (Signal s : outputs) {

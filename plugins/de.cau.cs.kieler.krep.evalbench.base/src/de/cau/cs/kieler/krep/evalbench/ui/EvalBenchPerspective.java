@@ -51,7 +51,6 @@ public class EvalBenchPerspective implements IPerspectiveFactory {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.ui.IPerspectiveFactory#createInitialLayout(org.eclipse.ui .IPageLayout)
      */
     public void createInitialLayout(final IPageLayout layout) {
 

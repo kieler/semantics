@@ -26,7 +26,6 @@ public class TraceContentProvider implements IStructuredContentProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java .lang.Object)
      */
     public Object[] getElements(final Object inputElement) {
         if (inputElement instanceof String[][]) {

@@ -61,7 +61,6 @@ public class VerifyLabelProvider implements ITableLabelProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang .Object, int)
      */
     public Image getColumnImage(final Object element, final int columnIndex) {
         if (element instanceof String[]) {
@@ -89,8 +88,7 @@ public class VerifyLabelProvider implements ITableLabelProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang .Object, int)
-     */
+     * */
     public final String getColumnText(final Object element, final int columnIndex) {
         if (element instanceof String[]) {
             String[] line = (String[]) element;
@@ -103,8 +101,6 @@ public class VerifyLabelProvider implements ITableLabelProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.
-     *      jface.viewers.ILabelProviderListener)
      */
     public void addListener(final ILabelProviderListener listener) {
         listeners.add(listener);
@@ -113,8 +109,6 @@ public class VerifyLabelProvider implements ITableLabelProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse
-     *      .jface.viewers.ILabelProviderListener)
      */
     public void removeListener(final ILabelProviderListener listener) {
         listeners.remove(listener);
@@ -123,7 +117,6 @@ public class VerifyLabelProvider implements ITableLabelProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
      */
     public void dispose() {
         // clear list of label provider listeners
