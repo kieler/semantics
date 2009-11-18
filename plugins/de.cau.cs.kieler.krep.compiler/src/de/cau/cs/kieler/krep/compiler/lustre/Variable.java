@@ -30,45 +30,45 @@ public class Variable {
     private String name;
 
     /**
-     * @param name
+     * @param n
      *            name of the variable
      * @param t
      *            type of the variable This assumes that the variable runs on the base clock.
      */
-    public Variable(String name, Type t) {
-        this(name, t, null);
+    public Variable(final String n, final Type t) {
+        this(n, t, null);
 
     }
 
     /**
-     * @param name
+     * @param n
      *            name of the variable
      * @param t
      *            type of the variable
-     * @param clock
+     * @param clk
      *            clock on which this variable runs
      */
-    public Variable(String name, Type t, String clock) {
+    public Variable(final String n, final Type t, final String clk) {
         // super(name);
-        this.name = name;
-        if (vars.containsKey(name)) {
-            System.err.println("Variabel " + name + " allready defined");
+        this.name = n;
+        if (vars.containsKey(n)) {
+            System.err.println("Variabel " + n + " allready defined");
         }
         this.type = t;
         this.clock = new ClockList();
-        if (clock != null) {
-            this.clock.addClock(clock);
+        if (clk != null) {
+            this.clock.addClock(clk);
         }
-        vars.put(name, this);
+        vars.put(n, this);
     }
 
     /**
-     * @param clock
+     * @param clk
      *            on which the variable shall run
      */
-    public void setClock(String clock) {
-        if (clock != null) {
-            this.clock.addClock(clock);
+    public void setClock(final String clk) {
+        if (clk != null) {
+            this.clock.addClock(clk);
         }
     }
 
@@ -77,14 +77,23 @@ public class Variable {
         return name;
     }
 
+    /**
+     * @return name of the variable
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return infered type of the variable
+     */
     public Type getType() {
         return type;
     }
 
+    /**
+     * @return clocks on which the variable runs.
+     */
     public ClockList getClock() {
         return clock;
     }
@@ -92,9 +101,13 @@ public class Variable {
     /**
      * @param prefix
      *            prefix of the temporary variable
+     * @param type
+     *            type of the variable
+     * @param clock
+     *            clock on whoch the vriable runs
      * @return a new variable with a unique name
      */
-    public static Variable getTemp(String prefix, Type type, String clock) {
+    public static Variable getTemp(final String prefix, final Type type, final String clock) {
         if (!temps.containsKey(prefix)) {
             temps.put(prefix, 0);
         }
@@ -103,7 +116,12 @@ public class Variable {
         return new Variable(prefix + "_" + temps.get(prefix), type, clock);
     }
 
-    public static Variable get(String name) {
+    /**
+     * @param name
+     *            name of the variable
+     * @return unique variable with that name
+     */
+    public static Variable get(final String name) {
         Variable res = vars.get(name);
         if (res == null) {
             System.err.println("Variable " + name + " not defined");
@@ -113,7 +131,34 @@ public class Variable {
         }
     }
 
-    public boolean equals(final Variable v) {
-        return name.equals(v.name);
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
     }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Variable other = (Variable) obj;
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        } else if (!name.equals(other.name)) {
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -25,7 +25,7 @@ import de.cau.cs.kieler.krep.compiler.prog.Type;
  * @author ctr integer constant in a Lustre program
  */
 public class Number extends Expression {
-    int num;
+    private int value;
 
     /**
      * @param name
@@ -33,21 +33,27 @@ public class Number extends Expression {
      * @param num
      *            constant value
      */
-    public Number(String name, final int num) {
+    public Number(final String name, final int num) {
         super(name);
-        this.num = num;
+        this.value = num;
         this.type = Type.INT;
     }
 
-    public Number(String name, boolean val) {
+    /**
+     * @param name
+     *            name of the expression
+     * @param val
+     *            value of the constant number
+     */
+    public Number(final String name, final boolean val) {
         super(name);
-        this.num = val ? 1 : 0;
+        this.value = val ? 1 : 0;
         this.type = Type.BOOL;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(num);
+        return String.valueOf(value);
     }
 
     @Override
@@ -77,22 +83,23 @@ public class Number extends Expression {
     }
 
     @Override
-    public ClockList inferClock(HashMap<String, Variable> env) throws ClockException {
+    public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
         clock = new ClockList();
         return clock;
     }
 
     @Override
-    public void propagateClock(ClockList l) {
+    public void propagateClock(final ClockList l) {
         clock = l.clone();
         Debug.low(clock.toString() + " " + this.toString());
     }
 
     @Override
-    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename, final int stage,
-            final String C, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
+            final int stage, final String c,
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
-                new de.cau.cs.kieler.krep.compiler.ceq.Const(name, num));
+                new de.cau.cs.kieler.krep.compiler.ceq.Const(name, value));
     }
 
     @Override
@@ -101,7 +108,7 @@ public class Number extends Expression {
     }
 
     @Override
-    public Expression extractPre(HashMap<String, Expression> eqs) {
+    public Expression extractPre(final HashMap<String, Expression> eqs) {
         return this;
     }
 }

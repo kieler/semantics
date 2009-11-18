@@ -50,12 +50,16 @@ public class Lustre {
     private LinkedList<Variable> local = new LinkedList<Variable>();
 
     /**
-     * parse input stream which is expected to be a Lustre file
+     * parse input stream which is expected to be a Lustre file.
      * 
      * @param in
+     *            the Lustre program
      * @throws IOException
+     *             thrown when the input stream cannot be read
      * @throws ClockException
+     *             thrown when errors with the clock calculus
      * @throws TypeException
+     *             thrown when errors are detected in the type inference
      */
     public Lustre(final InputStream in) throws IOException, ClockException, TypeException {
         super();
@@ -88,7 +92,6 @@ public class Lustre {
                 e.getValue().propagateClock(new ClockList());
             } catch (TypeException e1) {
                 e1.printStackTrace();
-                System.exit(1);
             }
         }
 
@@ -104,9 +107,9 @@ public class Lustre {
     }
 
     /**
-     * Transform Lustre program into simplified ceq
+     * Transform Lustre program into simplified ceq.
      * 
-     * @returns the simplified program
+     * @return the simplified program
      */
     public de.cau.cs.kieler.krep.compiler.ceq.Program getCEQ() {
         de.cau.cs.kieler.krep.compiler.ceq.Program res = new de.cau.cs.kieler.krep.compiler.ceq.Program(
@@ -125,7 +128,8 @@ public class Lustre {
 
         // copy eqs
         for (Entry<String, Expression> e : eqs.entrySet()) {
-            LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux = new LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation>();
+            LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux 
+            = new LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation>();
             Expression expr = e.getValue();
             de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(e.getKey(), 0, null, aux);
             eq.setName(e.getKey());
@@ -166,7 +170,7 @@ public class Lustre {
      * @param out
      *            new output list
      */
-    public void setOutputs(LinkedList<de.cau.cs.kieler.krep.compiler.lustre.Variable> out) {
+    public void setOutputs(final LinkedList<de.cau.cs.kieler.krep.compiler.lustre.Variable> out) {
         this.output = out;
         for (Variable v : out) {
             vars.put(v.getName(), v);
@@ -210,8 +214,12 @@ public class Lustre {
         return res;
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    /**
+     * @param n
+     *            name of the program
+     */
+    public void setName(final String n) {
+        this.name = n;
     }
 
 }

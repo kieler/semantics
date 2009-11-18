@@ -21,13 +21,13 @@ import de.cau.cs.kieler.krep.compiler.exceptions.TypeException;
 import de.cau.cs.kieler.krep.compiler.helper.Debug;
 
 /**
- * Lustre clock operator current
+ * Lustre clock operator current.
  * 
  * @author ctr
  * 
  */
 public class Current extends Expression {
-    Expression e;
+    private Expression expr;
 
     /**
      * @param name
@@ -35,14 +35,14 @@ public class Current extends Expression {
      * @param e
      *            body of current expression
      */
-    public Current(String name, Expression e) {
+    public Current(final String name, final Expression e) {
         super(name);
-        this.e = e;
+        this.expr = e;
     }
 
     @Override
     public String toString() {
-        return "(current " + e.toString() + ")";
+        return "(current " + expr.toString() + ")";
     }
 
     @Override
@@ -51,43 +51,35 @@ public class Current extends Expression {
     }
 
     @Override
-    public Expression propagatePre(HashMap<String, Expression> eqs) {
-        return e.propagatePre(eqs);
+    public Expression propagatePre(final HashMap<String, Expression> eqs) {
+        return expr.propagatePre(eqs);
     }
-
-    // @Override
-    // public ceq.Expression toCEQ() {
-    // System.err.printf("found current inside ceq");
-    // System.exit(1);
-    // return null;
-    // }
-
     @Override
     protected void inferType() throws TypeException {
-        e.inferType();
-        this.type = e.type;
+        expr.inferType();
+        this.type = expr.type;
     }
 
     @Override
-    public ClockList inferClock(HashMap<String, Variable> env) throws ClockException {
-        clock = e.inferClock(env).clone();
+    public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
+        clock = expr.inferClock(env).clone();
         clock.removeClock();
         return clock;
     }
 
     @Override
-    public void propagateClock(ClockList l) {
+    public void propagateClock(final ClockList l) {
         clock = l.clone();
-        e.propagateClock(clock);
+        expr.propagateClock(clock);
         Debug.low(clock.toString() + " " + this.toString());
     }
 
     @Override
-    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(String basename, int stage,
-            String C, LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        de.cau.cs.kieler.krep.compiler.ceq.Equation res = e.declock(basename, 1, C, aux);
+    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename, final int stage,
+            final String c, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+        de.cau.cs.kieler.krep.compiler.ceq.Equation res = expr.declock(basename, 1, c, aux);
         if (stage == 0) {
-            if (!(e instanceof When)) {
+            if (!(expr instanceof When)) {
                 System.err.println("internal error: no when inside current");
             }
             return res;
@@ -103,13 +95,13 @@ public class Current extends Expression {
 
     @Override
     public Expression liftClock() {
-        e = e.liftClock();
+        expr = expr.liftClock();
         return this;
     }
 
     @Override
-    public Expression extractPre(HashMap<String, Expression> eqs) {
-        e = e.extractPre(eqs);
+    public Expression extractPre(final HashMap<String, Expression> eqs) {
+        expr = expr.extractPre(eqs);
         return this;
     }
 }

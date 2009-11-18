@@ -28,14 +28,14 @@ public class ClockList implements Cloneable {
      * @param clock
      *            additional clock
      */
-    public void addClock(String clock) {
+    public void addClock(final String clock) {
         clocks.addFirst(clock);
     }
 
     /**
-     * remove outermost clock
+     * remove outermost clock.
      * 
-     * @throws ClockException
+     * @throws ClockException if no clock can be removed
      */
     public void removeClock() throws ClockException {
         if (clocks.isEmpty()) {
@@ -57,6 +57,12 @@ public class ClockList implements Cloneable {
 
     @Override
     public ClockList clone() {
+        try {
+            super.clone();
+        } catch (CloneNotSupportedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         ClockList res = new ClockList();
         for (String c : clocks) {
             res.clocks.add(c);
@@ -67,15 +73,20 @@ public class ClockList implements Cloneable {
     @Override
     public int hashCode() {
         assert false : "hashCode not designed";
-        return 42; // any arbitrary constant will do
+        return 0; // any arbitrary constant will do
     }
 
     /**
-     * @param l
+     * @param o
      *            list of clocks to compare to
      * @return true if both lists are syntactically identical
      */
-    public boolean equals(final ClockList l) {
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof ClockList)) {
+            return false;
+        }
+        final ClockList l = (ClockList) o;
         if (clocks.size() != l.clocks.size()) {
             return false;
         }

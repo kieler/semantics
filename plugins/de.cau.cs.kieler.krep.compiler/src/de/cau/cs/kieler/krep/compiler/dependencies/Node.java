@@ -33,11 +33,11 @@ public class Node {
     private Set<Edge> out = new HashSet<Edge>();
 
     /**
-     * @param name
+     * @param n
      *            name of the new node
      */
-    public Node(final String name) {
-        this.name = name;
+    public Node(final String n) {
+        this.name = n;
     }
 
     /**
@@ -105,11 +105,15 @@ public class Node {
         return name;
     }
 
+    
+    /**
+     * @return priority of this node
+     */
     public int getPrio() {
         if (prio == null) {
             prio = 0;
-            for (Edge e : in) {
-                int p = e.getNode().getPrio();
+            for (final Edge e : in) {
+                final int p = e.getNode().getPrio();
                 if (prio < p + 1) {
                     prio = p + 1;
                 }

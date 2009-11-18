@@ -13,19 +13,15 @@
  */
 package de.cau.cs.kieler.krep.compiler.lustre;
 
-import de.cau.cs.kieler.krep.compiler.ceq.Const;
-import de.cau.cs.kieler.krep.compiler.ceq.Expression;
-
 public enum Operator {
     ADD, SUB, MUL, DIV, MOD, AND, OR, XOR,
-    // NOT,
-    IMPL,
+   IMPL,
 
     LT, LE, EQ, GE, GT, NEQ;
 
     @Override
     public String toString() {
-        String res = new String();
+        String res = "";
         switch (this) {
         case ADD:
             res = "+";
@@ -124,78 +120,17 @@ public enum Operator {
         return res;
     }
 
-    public String toKrp() {
-        String res = new String();
-        switch (this) {
-        case ADD:
-            res = "ADD";
-            break;
-        case SUB:
-            res = "SUB";
-            break;
-        case MUL:
-            res = "MUL";
-            break;
-        case DIV:
-            res = "DIV";
-            break;
-        case MOD:
-            res = "MOD";
-            break;
-
-        case AND:
-            res = "AND";
-            break;
-        case OR:
-            res = "OR";
-            break;
-        case XOR:
-            res = "XOR";
-            break;
-        case IMPL:
-            res = "IMPL";
-            break;
-        case LT:
-            res = "LT";
-            break;
-        case LE:
-            res = "LE";
-            break;
-        case EQ:
-            res = "EQ";
-            break;
-        case GE:
-            res = "GE";
-            break;
-        case GT:
-            res = "GT";
-            break;
-        case NEQ:
-            res = "NEQ";
-            break;
-        }
-        return res;
-    }
+ 
 
     /**
-     * static evluation
+     * static evaluation.
      * 
-     * @param x
-     * @param y
+     * @param a1
+     * @param a2
      * @param op
      * @return evaluation of the operator
      */
-    /*
-     * public static int eval(final int x, final int y, final Operator op) { int res=0; switch (op)
-     * { case AND: res = x != 0 && y != 0 ? 1 : 0; break; case OR: res = x != 0 || y != 0 ? 1 : 0;
-     * break; case XOR: res = x != 0 ^ y != 0 ? 1 : 0; break; case LT: res = x < y ? 1 : 0; break;
-     * case LE: res = x <= y ? 1 : 0; break; case EQ: res = x == y ? 1 : 0; break; case GE: res = x
-     * >= y ? 1 : 0; break; case GT: res = x > y ? 1 : 0; break; case NEQ: res = x != y ? 1 : 0;
-     * break; case ADD: res = x + y; break; case SUB: res = x - y; break; case MUL: res = x * y;
-     * break; case DIV: res = x / y; break; } return res; }
-     */
-
-    public static int eval(int a1, int a2, Operator op) {
+    public static int eval(final int a1, final int a2, final Operator op) {
         boolean b1 = a1 != 0;
         boolean b2 = a2 != 0;
         switch (op) {

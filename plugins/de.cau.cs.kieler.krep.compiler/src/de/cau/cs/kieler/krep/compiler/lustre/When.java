@@ -25,27 +25,27 @@ import de.cau.cs.kieler.krep.compiler.prog.Type;
  * @author ctr Lustre binary expression this includes when and ->
  */
 public class When extends Expression {
-    private Expression e;
+    private Expression expr;
 
     private VarAccess c;
 
     /**
-     * generate new binary operation
+     * generate new binary operation.
      * 
      * @param name
      *            of the expression
      * @param e
      * @param c
      */
-    public When(String name, Expression e, VarAccess c) {
+    public When(final String name, final Expression e, final VarAccess c) {
         super(name);
-        this.e = e;
+        this.expr = e;
         this.c = c;
     }
 
     @Override
     public String toString() {
-        return "(" + e.toString() + " when " + c.toString() + ")";
+        return "(" + expr.toString() + " when " + c.toString() + ")";
     }
 
     @Override
@@ -63,8 +63,8 @@ public class When extends Expression {
 
     @Override
     protected void inferType() throws TypeException {
-        e.inferType();
-        Type t1 = e.type;
+        expr.inferType();
+        Type t1 = expr.type;
         c.inferType();
         Type t2 = c.type;
 
@@ -77,14 +77,14 @@ public class When extends Expression {
     }
 
     @Override
-    public Expression propagatePre(HashMap<String, Expression> eqs) {
-        e = e.propagatePre(eqs);
+    public Expression propagatePre(final HashMap<String, Expression> eqs) {
+        expr = expr.propagatePre(eqs);
         return this;
     }
 
     @Override
-    public ClockList inferClock(HashMap<String, Variable> env) throws ClockException {
-        ClockList l1 = e.inferClock(env);
+    public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
+        ClockList l1 = expr.inferClock(env);
         ClockList l2 = c.inferClock(env);
         if (!l1.equals(l2)) {
             throw new ClockException(this, l1, l2);
@@ -95,27 +95,26 @@ public class When extends Expression {
     }
 
     @Override
-    public void propagateClock(ClockList l) {
+    public void propagateClock(final ClockList l) {
         clock = l.clone();
         ClockList c2 = clock.clone();
         c2.addClock(c.getName());
-        e.propagateClock(c2);
+        expr.propagateClock(c2);
         c.propagateClock(clock);
 
         Debug.low(clock.toString() + " " + this.toString());
     }
 
     @Override
-    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(String basename, int stage,
-            String C, LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        de.cau.cs.kieler.krep.compiler.ceq.Equation res = e.declock(basename, 2, c.getName(), aux);
+    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename, final int stage,
+            final String C, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+        de.cau.cs.kieler.krep.compiler.ceq.Equation res = expr.declock(basename, 2, c.getName(), aux);
         if (stage < 2) { // not inside when
             res.setClock(c.getName());
             return res;
         } else {
             de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
                     .getTemp(basename, type);
-            // , clock.getClock());
 
             res.setName(v.getName());
             aux.add(res);
@@ -128,25 +127,25 @@ public class When extends Expression {
 
     @Override
     public Expression liftClock() {
-        e = e.liftClock();
+        expr = expr.liftClock();
         return this;
     }
 
-    public void setExpression(Expression e) {
-        this.e = e;
+    public void setExpression(final Expression e) {
+        this.expr = e;
     }
 
     public Expression getExpression() {
-        return e;
+        return expr;
     }
 
-    public boolean sameClock(When w) {
+    public boolean sameClock(final When w) {
         return c.equals(w.c);
     }
 
     @Override
-    public Expression extractPre(HashMap<String, Expression> eqs) {
-        e = e.extractPre(eqs);
+    public Expression extractPre(final HashMap<String, Expression> eqs) {
+        expr = expr.extractPre(eqs);
         return this;
     }
 }

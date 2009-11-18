@@ -24,7 +24,7 @@ import de.cau.cs.kieler.krep.compiler.helper.Debug;
  * @author ctr Lustre previous expression
  */
 public class Pre extends Expression {
-    Expression e;
+    private Expression expr;
 
     /**
      * @param name
@@ -32,20 +32,20 @@ public class Pre extends Expression {
      * @param e
      *            expression which previous value is computed
      */
-    public Pre(String name, Expression e) {
+    public Pre(final String name, final Expression e) {
         super(name);
-        this.e = e;
+        this.expr = e;
     }
 
     @Override
     public String toString() {
-        return "(pre " + e.toString() + ")";
+        return "(pre " + expr.toString() + ")";
     }
 
     @Override
-    public Expression propagatePre(HashMap<String, Expression> eqs) {
-        Variable t = Variable.getTemp("pre_", e.type, null);
-        eqs.put(t.getName(), e);
+    public Expression propagatePre(final HashMap<String, Expression> eqs) {
+        Variable t = Variable.getTemp("pre_", expr.type, null);
+        eqs.put(t.getName(), expr);
         return new Pre(t.getName(), new VarAccess(t));
     }
 
@@ -69,28 +69,29 @@ public class Pre extends Expression {
 
     @Override
     protected void inferType() throws TypeException {
-        e.inferType();
-        type = e.type;
+        expr.inferType();
+        type = expr.type;
     }
 
     @Override
-    public ClockList inferClock(HashMap<String, Variable> env) throws ClockException {
-        clock = e.inferClock(env);
+    public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
+        clock = expr.inferClock(env);
         return clock;
     }
 
     @Override
-    public void propagateClock(ClockList l) {
+    public void propagateClock(final ClockList l) {
         clock = l.clone();
-        e.propagateClock(l);
+        expr.propagateClock(l);
         Debug.low(clock.toString() + " " + this.toString());
     }
 
     @Override
-    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(String basename, int stage,
-            String C, LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        if (e instanceof VarAccess) {
-            VarAccess v = (VarAccess) e;
+    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
+            final int stage, final String c,
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+        if (expr instanceof VarAccess) {
+            VarAccess v = (VarAccess) expr;
 
             return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
                     new de.cau.cs.kieler.krep.compiler.ceq.VarAccess(
@@ -103,10 +104,10 @@ public class Pre extends Expression {
 
     @Override
     public Expression liftClock() {
-        e = e.liftClock();
-        if (e instanceof When) {
-            When w = (When) e;
-            e = w.getExpression();
+        expr = expr.liftClock();
+        if (expr instanceof When) {
+            When w = (When) expr;
+            expr = w.getExpression();
             w.setExpression(this);
             return w;
         } else {
@@ -116,13 +117,13 @@ public class Pre extends Expression {
     }
 
     @Override
-    public Expression extractPre(HashMap<String, Expression> eqs) {
-        if (e instanceof VarAccess) {
+    public Expression extractPre(final HashMap<String, Expression> eqs) {
+        if (expr instanceof VarAccess) {
             return this;
         } else {
-            Variable v = Variable.getTemp("pre_", e.getType(), e.getClock());
-            eqs.put(v.getName(), e.extractPre(eqs));
-            e = new VarAccess(v);
+            Variable v = Variable.getTemp("pre_", expr.getType(), expr.getClock());
+            eqs.put(v.getName(), expr.extractPre(eqs));
+            expr = new VarAccess(v);
             return this;
         }
     }

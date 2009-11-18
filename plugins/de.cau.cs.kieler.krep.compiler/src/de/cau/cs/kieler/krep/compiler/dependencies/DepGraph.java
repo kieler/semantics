@@ -38,7 +38,7 @@ public class DepGraph {
     private int maxPrio = 0;
 
     /**
-     * generate dependency graph for the program
+     * generate dependency graph for the program.
      * 
      * @param eqs
      *            equations of the program
@@ -59,7 +59,7 @@ public class DepGraph {
     }
 
     /**
-     * add a new dependency from s to t
+     * add a new dependency from s to t.
      * 
      * @param s
      *            source of the dependency
@@ -113,7 +113,7 @@ public class DepGraph {
     }
 
     /**
-     * Cluster all nodes, cluster 0 are inputs, cluster n are outputs
+     * Cluster all nodes, cluster 0 are inputs, cluster n are outputs.
      * 
      * @param n
      *            number of clusters
@@ -151,6 +151,7 @@ public class DepGraph {
     }
 
     /**
+     * @param printHeader print initialization code?
      * @return description of the dependency graph in the dot-format
      */
     public String toDot(final boolean printHeader) {
@@ -185,14 +186,21 @@ public class DepGraph {
         return res;
     }
 
+    /**
+     * @param name of  a node
+     * @return priority of that node
+     */
     public int getPrio(final String name) {
         return nodes.get(name).getPrio();
     }
 
+    /**
+     * @return maximal used priority
+     */
     public int getMaxPrio() {
         if (maxPrio == 0) {
-            for (Node n : nodes.values()) {
-                int p = n.getPrio();
+            for (final Node n : nodes.values()) {
+                final int p = n.getPrio();
                 if (p > maxPrio) {
                     maxPrio = p;
                 }
@@ -201,10 +209,12 @@ public class DepGraph {
         return maxPrio;
     }
 
-    public int getCore(final String name) {
-        return core.get(name);
-    }
+ 
 
+    /**
+     * @param name name of the subgraph 
+     * @param d a dependency graph that is added
+     */
     public void addSubGraph(final String name, final DepGraph d) {
         subGraphs.put(name, d);
     }

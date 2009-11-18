@@ -167,14 +167,14 @@ public class Klp extends Program {
     }
 
     /**
-     * @param useClocks
-     * @param scope
-     * @param setInputs
-     * @param setOutputs
-     * @param prioOffset
-     * @return
+     * @param useHWClocks should the hw clocks of the klp be used?
+     * @param scope scope of this program, if it is inside of an automaton
+     * @param setInputs should inputs be initialized (for initial states)
+     * @param setOutputs should outputs be initialized (for initial states)
+     * @param prioOffset minimal priority to use
+     * @return klp code to initialize the registers 
      */
-    public LinkedList<Instruction> compileInit(final boolean useClocks, final String scope,
+    public LinkedList<Instruction> compileInit(final boolean useHWClocks, final String scope,
             final boolean setInputs, final boolean setOutputs, final int prioOffset) {
         LinkedList<Instruction> res = new LinkedList<Instruction>();
         if (setInputs) {
@@ -192,7 +192,7 @@ public class Klp extends Program {
                     res.add(new DeclareReg(v.getName(), v.getKind()));
                 }
                 res.add(new InitReg(v.getName(), v.getKind(), v.getName() + scope,
-                        useClocks ? clock : null));
+                        useHWClocks ? clock : null));
                 res.add(new Prio(v.getName(), prioOffset + e.getPrio()));
             }
         }

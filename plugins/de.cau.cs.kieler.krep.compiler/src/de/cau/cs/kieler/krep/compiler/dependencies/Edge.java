@@ -18,18 +18,18 @@ package de.cau.cs.kieler.krep.compiler.dependencies;
  */
 public class Edge {
 
-    private Node n;
+    private Node node;
     private int delay;
 
     /**
-     * @param n
-     * @param delay
+     * @param n taget node
+     * @param del
      *            of this dependency
      */
-    public Edge(final Node n, final int delay) {
+    public Edge(final Node n, final int del) {
         super();
-        this.n = n;
-        this.delay = delay;
+        this.node = n;
+        this.delay = del;
     }
 
     /**
@@ -43,10 +43,11 @@ public class Edge {
      * @return corresponding node
      */
     public Node getNode() {
-        return n;
+        return node;
     }
 
+    @Override
     public String toString() {
-        return "->" + n;
+        return "->" + node;
     }
 }

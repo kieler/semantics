@@ -25,29 +25,32 @@ import de.cau.cs.kieler.krep.compiler.prog.Type;
  * @author ctr Lustre binary expression this includes when and ->
  */
 public class BinOp extends Expression {
-    private Expression e1, e2;
+    private Expression expr1, expr2;
 
-    private final Operator op;
+    private final Operator oper;
 
     /**
-     * generate new binary operation
+     * generate new binary operation.
      * 
      * @param name
      *            of the expression
      * @param e1
+     *            first expression
      * @param e2
+     *            second expresssion
      * @param op
+     *            operator to combine them
      */
-    public BinOp(String name, Expression e1, Expression e2, Operator op) {
+    public BinOp(final String name, final Expression e1, final Expression e2, final Operator op) {
         super(name);
-        this.op = op;
-        this.e1 = e1;
-        this.e2 = e2;
+        this.oper = op;
+        this.expr1 = e1;
+        this.expr2 = e2;
     }
 
     @Override
     public String toString() {
-        return "(" + e1.toString() + " " + op.toString() + " " + e2.toString() + ")";
+        return "(" + expr1.toString() + " " + oper.toString() + " " + expr2.toString() + ")";
     }
 
     @Override
@@ -55,19 +58,13 @@ public class BinOp extends Expression {
         return false;
     }
 
-    // //@Override
-    // public ceq.Expression toCEQ() {
-    // ceq.Expression res = null;
-    // return res;
-    // }
-
     @Override
     protected void inferType() throws TypeException {
-        e1.inferType();
-        Type t1 = e1.type;
-        e2.inferType();
-        Type t2 = e2.type;
-        switch (op) {
+        expr1.inferType();
+        Type t1 = expr1.type;
+        expr2.inferType();
+        Type t2 = expr2.type;
+        switch (oper) {
         case ADD:
         case SUB:
         case MUL:
@@ -112,16 +109,16 @@ public class BinOp extends Expression {
     }
 
     @Override
-    public Expression propagatePre(HashMap<String, Expression> eqs) {
-        e1 = e1.propagatePre(eqs);
-        e2 = e2.propagatePre(eqs);
+    public Expression propagatePre(final HashMap<String, Expression> eqs) {
+        expr1 = expr1.propagatePre(eqs);
+        expr2 = expr2.propagatePre(eqs);
         return this;
     }
 
     @Override
-    public ClockList inferClock(HashMap<String, Variable> env) throws ClockException {
-        ClockList l1 = e1.inferClock(env);
-        ClockList l2 = e2.inferClock(env);
+    public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
+        ClockList l1 = expr1.inferClock(env);
+        ClockList l2 = expr2.inferClock(env);
         if (!l1.equals(l2)) {
             throw new ClockException(this, l1, l2);
         }
@@ -130,33 +127,36 @@ public class BinOp extends Expression {
     }
 
     @Override
-    public void propagateClock(ClockList l) {
+    public void propagateClock(final ClockList l) {
         clock = l.clone();
-        e1.propagateClock(clock);
-        e2.propagateClock(clock);
+        expr1.propagateClock(clock);
+        expr2.propagateClock(clock);
         Debug.low(clock.toString() + " " + this.toString());
     }
 
     @Override
-    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(String basename, int stage,
-            String clock, LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        de.cau.cs.kieler.krep.compiler.ceq.Equation eq1 = e1.declock(basename, 3, clock, aux);
-        de.cau.cs.kieler.krep.compiler.ceq.Equation eq2 = e2.declock(basename, 3, clock, aux);
-        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(
-                name,
-                new de.cau.cs.kieler.krep.compiler.ceq.BinOp(name, eq1.getExpr(), eq2.getExpr(), op));
+    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
+            final int stage, final String clock,
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+        de.cau.cs.kieler.krep.compiler.ceq.Equation eq1 = expr1.declock(basename,
+                Expression.STAGE_INIT, clock, aux);
+        de.cau.cs.kieler.krep.compiler.ceq.Equation eq2 = expr2.declock(basename,
+                Expression.STAGE_INIT, clock, aux);
+        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
+                new de.cau.cs.kieler.krep.compiler.ceq.BinOp(name, eq1.getExpr(), eq2.getExpr(),
+                        oper));
     }
 
     @Override
     public Expression liftClock() {
-        e1 = e1.liftClock();
-        e2 = e2.liftClock();
-        if (e1 instanceof When && e2 instanceof When) {
-            When w1 = (When) e1;
-            When w2 = (When) e2;
+        expr1 = expr1.liftClock();
+        expr2 = expr2.liftClock();
+        if (expr1 instanceof When && expr2 instanceof When) {
+            When w1 = (When) expr1;
+            When w2 = (When) expr2;
             if (w1.sameClock(w2)) {
-                e1 = w1.getExpression();
-                e2 = w2.getExpression();
+                expr1 = w1.getExpression();
+                expr2 = w2.getExpression();
                 w1.setExpression(this);
                 return w1;
             } else {
@@ -168,9 +168,9 @@ public class BinOp extends Expression {
     }
 
     @Override
-    public Expression extractPre(HashMap<String, Expression> eqs) {
-        e1 = e1.extractPre(eqs);
-        e2 = e2.extractPre(eqs);
+    public Expression extractPre(final HashMap<String, Expression> eqs) {
+        expr1 = expr1.extractPre(eqs);
+        expr2 = expr2.extractPre(eqs);
         return this;
     }
 

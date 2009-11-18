@@ -25,7 +25,7 @@ import de.cau.cs.kieler.krep.compiler.prog.Type;
  * @author ctr Lustre "not" operator
  */
 public class Not extends Expression {
-    private Expression e;
+    private Expression expr;
 
     /**
      * @param name
@@ -33,19 +33,19 @@ public class Not extends Expression {
      * @param e
      *            expression to negate
      */
-    public Not(String name, Expression e) {
+    public Not(final String name, final Expression e) {
         super(name);
-        this.e = e;
+        this.expr = e;
     }
 
     @Override
     public String toString() {
-        return "(not " + e.toString() + ")";
+        return "(not " + expr.toString() + ")";
     }
 
     @Override
-    public Expression propagatePre(HashMap<String, Expression> eqs) {
-        e = e.propagatePre(eqs);
+    public Expression propagatePre(final HashMap<String, Expression> eqs) {
+        expr = expr.propagatePre(eqs);
         return this;
     }
 
@@ -61,30 +61,30 @@ public class Not extends Expression {
 
     @Override
     protected void inferType() throws TypeException {
-        e.inferType();
-        type = e.type;
+        expr.inferType();
+        type = expr.type;
         if (type != Type.BOOL) {
-            throw new TypeException(e, Type.BOOL.toString(), e.type.toString());
+            throw new TypeException(expr, Type.BOOL.toString(), expr.type.toString());
         }
     }
 
     @Override
-    public ClockList inferClock(HashMap<String, Variable> env) throws ClockException {
-        clock = e.inferClock(env);
+    public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
+        clock = expr.inferClock(env);
         return clock;
     }
 
     @Override
-    public void propagateClock(ClockList l) {
+    public void propagateClock(final ClockList l) {
         clock = l.clone();
-        e.propagateClock(clock);
+        expr.propagateClock(clock);
         Debug.low(clock.toString() + " " + this.toString());
     }
 
     @Override
-    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(String basename, int stage,
-            String C, LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        de.cau.cs.kieler.krep.compiler.ceq.Equation eq = e.declock(basename, 3, C, aux);
+    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename, final int stage,
+            final String c, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+        de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(basename, 3, c, aux);
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
                 new de.cau.cs.kieler.krep.compiler.ceq.Not(name, eq.getExpr()));
 
@@ -92,10 +92,10 @@ public class Not extends Expression {
 
     @Override
     public Expression liftClock() {
-        e = e.liftClock();
-        if (e instanceof When) {
-            When w = (When) e;
-            e = w.getExpression();
+        expr = expr.liftClock();
+        if (expr instanceof When) {
+            When w = (When) expr;
+            expr = w.getExpression();
             w.setExpression(this);
             return w;
         } else {
@@ -104,8 +104,8 @@ public class Not extends Expression {
     }
 
     @Override
-    public Expression extractPre(HashMap<String, Expression> eqs) {
-        e = e.extractPre(eqs);
+    public Expression extractPre(final HashMap<String, Expression> eqs) {
+        expr = expr.extractPre(eqs);
         return this;
     }
 }
