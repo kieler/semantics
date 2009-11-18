@@ -18,8 +18,13 @@ import java.util.HashMap;
 /**
  * @author ctr compute unique temporary names
  */
-public class TempName {
-    static HashMap<String, Integer> names = new HashMap<String, Integer>();
+public final class TempName {
+
+    private TempName() {
+
+    }
+
+   private  static HashMap<String, Integer> names = new HashMap<String, Integer>();
 
     /**
      * 
@@ -27,7 +32,7 @@ public class TempName {
      *            of the unique name
      * @return a unique name of the form prefix_N
      */
-    static public String get(String prefix) {
+    public static String get(final String prefix) {
         Integer i = names.get(prefix);
         if (i == null) {
             names.put(prefix, 1);

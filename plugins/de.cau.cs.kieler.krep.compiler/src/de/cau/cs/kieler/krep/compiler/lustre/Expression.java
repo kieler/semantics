@@ -63,12 +63,6 @@ public abstract class Expression {
      */
     public abstract boolean isAtom();
 
-    /**
-     * convert to clocked equations, this terminates if expression is too complex
-     * 
-     * @return expression as clocked equation
-     */
-    // abstract public ceq.Expression toCEQ();
 
     /**
      * clock for this expression, null if on base clock.

@@ -13,11 +13,44 @@
  */
 package de.cau.cs.kieler.krep.compiler.lustre;
 
-public enum Operator {
-    ADD, SUB, MUL, DIV, MOD, AND, OR, XOR,
-   IMPL,
+/**
+ * Implement binary operators.
+ * 
+ * @author ctr
+ */
 
-    LT, LE, EQ, GE, GT, NEQ;
+public enum Operator {
+    /** Add. */
+    ADD, 
+    /** Sub. */
+    SUB, 
+    /** Multiply. */
+    MUL, 
+    /** divide. */
+    DIV, 
+    /** modulo operator. */
+    MOD, 
+    /** logical and. */
+    AND, 
+    /** logical or. */
+    OR,
+    /** logical exclusive or. */
+    XOR,
+    /** logical imply. */
+    IMPL,
+
+    /** less than. */
+    LT, 
+    /** less than or equal. */
+    LE,
+    /** equal.*/
+    EQ, 
+    /** greater than or equal.*/
+    GE,
+    /** greater than. */
+    GT,
+    /** not equal. */
+    NEQ;
 
     @Override
     public String toString() {
@@ -74,6 +107,11 @@ public enum Operator {
         return res;
     }
 
+    
+    /**
+     * 
+     * @return Klp identifier for the operator.
+     */
     public String toKlp() {
         String res = null;
         switch (this) {
@@ -125,9 +163,9 @@ public enum Operator {
     /**
      * static evaluation.
      * 
-     * @param a1
-     * @param a2
-     * @param op
+     * @param a1 first parameter
+     * @param a2 second parameter
+     * @param op operator to eval
      * @return evaluation of the operator
      */
     public static int eval(final int a1, final int a2, final Operator op) {

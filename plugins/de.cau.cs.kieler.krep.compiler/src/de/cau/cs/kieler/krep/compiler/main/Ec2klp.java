@@ -36,7 +36,11 @@ import de.cau.cs.kieler.krep.compiler.lustre.Lustre;
 /**
  * @author ctr Compile Lustre ec-file to KLP assembler
  */
-public class Ec2klp {
+public final class Ec2klp {
+
+    private Ec2klp() {
+
+    }
 
     private String inputFile = null;
     private String outputFile = null;
@@ -46,7 +50,7 @@ public class Ec2klp {
     private boolean genDot = false;
     private boolean useclocks = true;
 
-    private void parseArgs(String[] args) {
+    private void parseArgs(final String[] args) {
         CommandLine cmd = null;
         CommandLineParser parser = new GnuParser();
 
@@ -93,10 +97,14 @@ public class Ec2klp {
     private void usage() {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("ec2klp [options] input-file", options);
-        System.exit(1);
     }
 
-    public String compile(String name, InputStream ec) {
+    /**
+     * @param name name of the program
+     * @param ec input stream with ec code
+     * @return klp code
+     */
+    public String compile(final String name, final InputStream ec) {
         try {
             Lustre lustre;
 
@@ -180,8 +188,9 @@ public class Ec2klp {
 
     /**
      * @param args
+     *            compiler arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         Ec2klp comp = new Ec2klp();
         comp.parseArgs(args);
         comp.execute();

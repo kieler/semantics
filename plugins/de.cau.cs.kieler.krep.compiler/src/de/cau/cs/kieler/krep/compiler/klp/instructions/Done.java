@@ -18,25 +18,18 @@ package de.cau.cs.kieler.krep.compiler.klp.instructions;
  */
 public class Done extends Instruction {
 
-    private Label l;
+    private Label label;
 
     /**
      * @param l
      *            label from where to start in the next tick
      */
-    public Done(Label l) {
-        this.l = l;
+    public Done(final Label l) {
+        this.label = l;
     }
 
     @Override
     public String toString() {
-        return "  " + "DONE" + "\t" + l.getName();
+        return "  " + "DONE" + "\t" + label.getName();
     }
-
-    // @Override
-    // public String getObj() {
-    //	
-    // return writeObj(Opcode.DONE.getCode(), l.getPos(),0,0);
-    // }
-
 }

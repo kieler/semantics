@@ -15,16 +15,26 @@ package de.cau.cs.kieler.krep.compiler.klp.instructions;
 
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 
+/**
+ * @author ctr
+ * Initialize register.
+ */
 public class InitReg extends Instruction {
 
     private String reg;
     private String clock;
     private String label;
 
-    public InitReg(String reg, Kind kind, String label, String clock) {
-        this.reg = reg;
-        this.clock = clock;
-        this.label = label;
+    /**
+     * @param r register to initialize
+     * @param kind io kind of register
+     * @param l label with runtime code
+     * @param clk clock of the register
+     */
+    public InitReg(final String r, final Kind kind, final String l, final String clk) {
+        this.reg = r;
+        this.clock = clk;
+        this.label = l;
     }
 
     @Override

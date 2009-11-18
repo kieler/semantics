@@ -29,11 +29,11 @@ import de.cau.cs.kieler.krep.compiler.prog.Type;
  * @author ctr A clocked equation
  */
 public class Equation {
-    private String id;
+    private String name;
 
-    private Expression expr;
+    private Expression expression;
 
-    private Expression init;
+    private Expression initialize;
 
     private Type type;
 
@@ -42,34 +42,32 @@ public class Equation {
     private int prio;
 
     /**
-     * Construct a new clocked equation
+     * Construct a new clocked equation.
      * 
      * @param id
      *            name of the value that is computed
-     * @param init
+     * @param i
      *            expression to compute the initial value
-     * @param expr
+     * @param e
      *            expression to compute the value during runtim
      * @param clk
      *            the clock on which the equation is evaluated
-     * @param type
-     *            type of the result
+     *
      */
-    public Equation(final String id, final Expression init, final Expression expr,
-            final String clk) {
+    public Equation(final String id, final Expression i, final Expression e, final String clk) {
         super();
         this.clock = clk;
-        this.expr = expr;
-        this.init = init;
-        this.id = id;
-        this.type = expr.getType();
+        this.expression = e;
+        this.initialize = i;
+        this.name = id;
+        this.type = e.getType();
     }
 
     /**
-     * generate Equation without initializer which runs on the base clock
+     * generate Equation without initializer which runs on the base clock.
      * 
-     * @param id
-     * @param expr
+     * @param id name of the equation
+     * @param expr expression to compute the equation.
      */
     public Equation(final String id, final Expression expr) {
         this(id, null, expr, null);
@@ -77,15 +75,15 @@ public class Equation {
 
     @Override
     public String toString() {
-        String res = id + " = ";
+        String res = name + " = ";
         if (clock != null) {
             res += " current((";
         }
-        if (init != null) {
-            res += init.toString() + "->";
+        if (initialize != null) {
+            res += initialize.toString() + "->";
         }
 
-        res += expr.toString();
+        res += expression.toString();
         if (clock != null) {
             res += ") when " + clock + ")";
         }
@@ -107,26 +105,29 @@ public class Equation {
      * @return list of variables this expression depends on
      */
     public List<Variable> getDeps() {
-        return expr.getDeps();
+        return expression.getDeps();
     }
 
     /**
      * @return name of the value that is computed
      */
     public String getName() {
-        return id;
-    }
-
-    public Expression getInit() {
-        return init;
+        return name;
     }
 
     /**
-     * @param name
-     *            of the variable that is computed by this equation
+     * @return expression to initialize the equation
      */
-    public void setName(final String name) {
-        this.id = name;
+    public Expression getInit() {
+        return initialize;
+    }
+
+    /**
+     * @param n
+     *            name of the variable that is computed by this equation
+     */
+    public void setName(final String n) {
+        this.name = n;
     }
 
     /**
@@ -136,20 +137,23 @@ public class Equation {
         return clock;
     }
 
+    /**
+     * @return true if the equation has a clock
+     */
     public boolean hasClock() {
         return clock != null;
     }
 
     /**
-     * @param vars
+     * @param vars list of new introduced variables
      * @return replace complex expressions
      */
     public LinkedList<Equation> flatten(final HashMap<String, Variable> vars) {
         LinkedList<Expression> es = new LinkedList<Expression>();
         LinkedList<Equation> res = new LinkedList<Equation>();
-        if (init != null && !init.isAtom()) {
-            init.flatten(id, vars, es);
-            init = es.getFirst();
+        if (initialize != null && !initialize.isAtom()) {
+            initialize.flatten(name, vars, es);
+            initialize = es.getFirst();
 
             for (Expression e : es) {
                 res.add(new Equation(e.getName(), null, e, clock));
@@ -160,21 +164,23 @@ public class Equation {
     }
 
     /**
-     * generate KLP code to compute this equation
+     * generate KLP code to compute this equation.
+     * @param useClocks true if hw clocks f the klp are used
+     * @param scope scope of the equation
      * 
-     * @param vars
+     * @param vars list of all used variables
      * @return list ofKLP instructions to compute the value
      */
     public LinkedList<Instruction> toKlp(final boolean useClocks, final String scope,
             final HashMap<String, Variable> vars) {
-        Debug.low("to KLP: " + id);
+        Debug.low("to KLP: " + name);
         Debug.low(toString());
         LinkedList<Instruction> instr = new LinkedList<Instruction>();
         LinkedList<Expression> es = new LinkedList<Expression>();
-        Label l = Label.get(id + scope);
-        Label lInit = Label.get(id + "_init" + scope);
-        Label lRun = Label.get(id + "_run" + scope);
-        Label lDone = Label.get(id + "_done" + scope);
+        Label l = Label.get(name + scope);
+        Label lInit = Label.get(name + "_init" + scope);
+        Label lRun = Label.get(name + "_run" + scope);
+        Label lDone = Label.get(name + "_done" + scope);
 
         instr.add(l);
         if (!useClocks && hasClock()) {
@@ -182,14 +188,14 @@ public class Equation {
             instr.add(new Done(l));
             instr.add(lInit);
         }
-        if (init != null) {
+        if (initialize != null) {
             // init.flatten(id, vars, es);
 
             for (Expression e : es) {
                 instr.addAll(e.toKlp(Variable.get(e.name)));
                 Debug.low(e.toString());
             }
-            instr.addAll(init.toKlp(Variable.get(id)));
+            instr.addAll(initialize.toKlp(Variable.get(name)));
             es.clear();
             instr.add(new Done(lRun));
         }
@@ -202,7 +208,7 @@ public class Equation {
             instr.addAll(e.toKlp(Variable.get(e.name)));
             Debug.low(e.toString());
         }
-        instr.addAll(expr.toKlp(Variable.get(id)));
+        instr.addAll(expression.toKlp(Variable.get(name)));
         if (!useClocks && hasClock()) {
             instr.add(lDone);
         }
@@ -210,63 +216,27 @@ public class Equation {
     }
 
     /**
-     * generate KLP code to compute this equation
-     * 
-     * @param vars
-     * @return list ofKLP instructions to compute the value
-     */
-    public LinkedList<Instruction> toKrp(final HashMap<String, Variable> vars) {
-        Debug.low("to KLP: " + id);
-        Debug.low(toString());
-        LinkedList<Instruction> instr = new LinkedList<Instruction>();
-        LinkedList<Expression> es = new LinkedList<Expression>();
-        Label l_init = Label.get(id);
-        Label l_run = Label.get(id + "_run");
-        instr.add(l_init);
-        if (init != null) {
-            init.flatten(id, vars, es);
-
-            for (Expression e : es) {
-                instr.addAll(e.toKlp(Variable.get(e.name)));
-                Debug.low(e.toString());
-            }
-            instr.addAll(init.toKlp(Variable.get(id)));
-            es.clear();
-            instr.add(new Done(l_run));
-        }
-        instr.add(l_run);
-        expr.flatten(id, vars, es);
-        for (Expression e : es) {
-            instr.addAll(e.toKlp(Variable.get(e.name)));
-            Debug.low(e.toString());
-        }
-        instr.addAll(expr.toKlp(Variable.get(id)));
-        return instr;
-    }
-
-    /**
      * @return type of these equation
      */
     public Type getType() {
-        return expr.getType();
+        return expression.getType();
     }
 
-
     /**
-     * @param con
+     * @param con constant values.
      * @return propagate constant values
      */
     public Const propagateConst(final HashMap<String, Const> con) {
         Debug.low("propagate const");
         Const cInit = null;
-        if (init != null) {
-            cInit = init.propagateConst(con);
+        if (initialize != null) {
+            cInit = initialize.propagateConst(con);
             if (cInit != null) {
-                init = cInit;
+                initialize = cInit;
             }
         }
 
-        Const c = expr.propagateConst(con);
+        Const c = expression.propagateConst(con);
         if (c == null) {
             return null;
         } else {
@@ -284,7 +254,7 @@ public class Equation {
      *            expression to compute this equation
      */
     public void setExpr(final Expression expr) {
-        this.expr = expr;
+        this.expression = expr;
     }
 
     /**
@@ -292,74 +262,97 @@ public class Equation {
      *            expression to initialize this equation
      */
     public void setInit(final Expression init) {
-        this.init = init;
+        this.initialize = init;
     }
 
     /**
-     * @param clock
+     * @param clk
      *            new clock on which this equation runs
      */
-    public void setClock(final String clock) {
-        this.clock = clock;
+    public void setClock(final String clk) {
+        this.clock = clk;
     }
 
     /**
      * @return expression that computes this equation
      */
     public Expression getExpr() {
-        return expr;
+        return expression;
     }
 
+    /**
+     * static evaluation.
+     */
     public void staticEval() {
-        if (init != null) {
-            init = init.staticEval();
+        if (initialize != null) {
+            initialize = initialize.staticEval();
         }
-        expr = expr.staticEval();
+        expression = expression.staticEval();
 
     }
 
+    /**
+     * @param equiv list of equivalent variables.
+     */
     public void replaceVar(final HashMap<String, Variable> equiv) {
-        if (init != null) {
-            init.replaceVar(equiv);
+        if (initialize != null) {
+            initialize.replaceVar(equiv);
         }
-        expr.replaceVar(equiv);
+        expression.replaceVar(equiv);
         Variable v = equiv.get(clock);
         if (v != null) {
             clock = v.getName();
         }
     }
 
+    /**
+     * @return estimated wcrt for the equation.
+     */
     public int wcrt() {
         int res;
-        if (init != null) {
-            res = Math.max(init.wcrt(), expr.wcrt());
+        if (initialize != null) {
+            res = Math.max(initialize.wcrt(), expression.wcrt());
         } else {
-            res = expr.wcrt();
+            res = expression.wcrt();
         }
 
         return res + 1; // 1 for DONE
     }
 
+    /**
+     * @return priotrity for the equation.
+     */
     public int getPrio() {
         return prio;
     }
 
-    public void setPrio(final int prio) {
-        this.prio = prio;
+    /**
+     * @param pr
+     *            priority
+     */
+    public void setPrio(final int pr) {
+        this.prio = pr;
     }
 
+    /**
+     * @return all depdencies of the equation.
+     */
     public List<String> getPDeps() {
-        return expr.getVars();
+        return expression.getVars();
     }
 
+    /**
+     * @param eq equation to replace.
+     * @return true if the replacement was succesful. 
+     */
     public boolean replace(final Equation eq) {
-        if (eq.init != null) {
+        if (eq.initialize != null) {
             // TODO: check for clocks
             // || !eq.clock.equals(clock)){
 
             return false;
         } else {
-            expr = expr.replace(eq.getName(), eq.expr);
+            expression = expression.replace(eq.getName(), eq.expression);
             return true;
         }
 

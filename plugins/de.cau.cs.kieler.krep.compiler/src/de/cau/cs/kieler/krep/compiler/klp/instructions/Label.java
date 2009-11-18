@@ -23,7 +23,7 @@ import de.cau.cs.kieler.krep.compiler.helper.Debug;
  * @author ctr
  * 
  */
-public class Label extends Instruction {
+public final class Label extends Instruction {
 
     private static HashMap<String, Label> labels = new HashMap<String, Label>();
 
@@ -34,7 +34,7 @@ public class Label extends Instruction {
      * @param name
      *            unique identifier of the label
      */
-    private Label(String name) {
+    private Label(final String name) {
         label = name;
     }
 
@@ -43,7 +43,7 @@ public class Label extends Instruction {
      *            of the label
      * @return Label with this name, if it exists, null otherwise
      */
-    public static Label get(String name) {
+    public static Label get(final String name) {
         Label l = labels.get(name);
         if (l == null) {
             l = new Label(name);

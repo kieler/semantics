@@ -32,16 +32,21 @@ import de.cau.cs.kieler.krep.compiler.klp.Klp;
 /**
  * @author ctr Compile Lustre ec-file to KLP assembler
  */
-public class Scade2klp {
+public final class Scade2klp {
+
+    private Scade2klp() {
+
+    }
+
     private String inputFile = null;
     private String outputFile = null;
 
     private Options options = new Options();
 
-    boolean genDot = false;
-    boolean genLus = false;
+    private boolean genDot = false;
+    private boolean genLus = false;
 
-    private void parseArgs(String[] args) {
+    private void parseArgs(final String[] args) {
         CommandLine cmd = null;
         CommandLineParser parser = new GnuParser();
 
@@ -87,7 +92,7 @@ public class Scade2klp {
     private void usage() {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("ec2klp [options] input-file", options);
-        System.exit(1);
+
     }
 
     private void execute() {
@@ -153,8 +158,9 @@ public class Scade2klp {
 
     /**
      * @param args
+     *            source file
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         Scade2klp comp = new Scade2klp();
         comp.parseArgs(args);
         comp.execute();

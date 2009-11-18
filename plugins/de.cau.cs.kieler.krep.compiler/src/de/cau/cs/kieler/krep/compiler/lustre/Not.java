@@ -54,10 +54,6 @@ public class Not extends Expression {
         return false;
     }
 
-    // @Override
-    // public ceq.Expression toCEQ() {
-    // return new ceq.Not(name, e.toCEQ());
-    // }
 
     @Override
     protected void inferType() throws TypeException {
@@ -84,7 +80,7 @@ public class Not extends Expression {
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename, final int stage,
             final String c, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(basename, 3, c, aux);
+        de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(basename, STAGE_INIT, c, aux);
         return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
                 new de.cau.cs.kieler.krep.compiler.ceq.Not(name, eq.getExpr()));
 

@@ -21,39 +21,39 @@ import de.cau.cs.kieler.krep.compiler.prog.Type;
  * @author ctr Reading access to a register. Can read either previous or current value.
  */
 public class Read {
-    private Variable v;
+    private Variable var;
 
     private boolean pre;
 
     /**
      * @param v
      *            variable to read from
-     * @param pre
+     * @param isPre
      *            true if previous value should be read
      */
-    public Read(Variable v, boolean pre) {
+    public Read(final Variable v, final boolean isPre) {
         super();
-        this.pre = pre;
-        this.v = v;
+        this.pre = isPre;
+        this.var = v;
     }
 
     /**
      * @param v
      *            CEQ access to a variable
      */
-    public Read(VarAccess v) {
+    public Read(final VarAccess v) {
         super();
         this.pre = v.isPre();
-        this.v = Variable.get(v.getName());
+        this.var = Variable.get(v.getName());
     }
 
     @Override
     public String toString() {
-        String res = new String();
+        String res = "";
         if (pre) {
             res += "pre(";
         }
-        res += v.getName();
+        res += var.getName();
         if (pre) {
             res += ")";
         }
@@ -64,7 +64,7 @@ public class Read {
      * @return Type of the variable
      */
     public Type getType() {
-        return v.getType();
+        return var.getType();
     }
 
     /**
@@ -73,7 +73,7 @@ public class Read {
      * 
      */
     public int getId() {
-        return 2 * v.getId() + (pre ? 1 : 0);
+        return 2 * var.getId() + (pre ? 1 : 0);
     }
 
 }

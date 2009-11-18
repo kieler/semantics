@@ -29,35 +29,35 @@ public class CJmp extends Instruction {
      */
     public enum Cond {
         /**
-         * jump when true
+         * jump when true.
          */
         T,
         /**
-         * jump when false
+         * jump when false.
          */
         F,
         /**
-         * jump when zero
+         * jump when zero.
          */
         Z,
         /**
-         * jump when not zero
+         * jump when not zero.
          */
         NZ;
     }
 
     /**
-     * @param cond
+     * @param conditional
      *            condition
-     * @param reg
+     * @param read
      *            register to check
      * @param l
      *            label of the target
      */
-    public CJmp(Cond cond, Read reg, Label l) {
+    public CJmp(final Cond conditional, final Read read, final Label l) {
         super();
-        this.cond = cond;
-        this.reg = reg;
+        this.cond = conditional;
+        this.reg = read;
         label = l;
     }
 

@@ -24,14 +24,14 @@ public class Mov extends Instruction {
     private Read from;
 
     /**
-     * @param to
+     * @param toReg
      *            target register
-     * @param from
+     * @param fromReg
      *            source register
      */
-    public Mov(Variable to, Read from) {
-        this.to = to;
-        this.from = from; // new Read(Register.get(v.toString()), pre);
+    public Mov(final Variable toReg, final Read fromReg) {
+        this.to = toReg;
+        this.from = fromReg; // new Read(Register.get(v.toString()), pre);
     }
 
     @Override

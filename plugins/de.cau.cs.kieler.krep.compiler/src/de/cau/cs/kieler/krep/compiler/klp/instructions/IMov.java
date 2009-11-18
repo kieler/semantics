@@ -21,35 +21,32 @@ import de.cau.cs.kieler.krep.compiler.ceq.Variable;
 public class IMov extends Instruction {
 
     private Variable to;
-    // private Type type;
-    private int val;
+    private int value;
 
     /**
-     * move integer value to register
+     * move integer value to register.
      * 
-     * @param to
+     * @param toVar
      *            register that stores the value
      * @param val
      *            constant value to move
      */
-    public IMov(Variable to, int val) {
-        this.to = to;
-        this.val = val; // new Read(Register.get(v.toString()), pre);
-        // this.type=Type.INT;
+    public IMov(final Variable toVar, final int val) {
+        this.to = toVar;
+        this.value = val; 
     }
 
     /**
-     * move boolean value to register
+     * move boolean value to register.
      * 
-     * @param to
+     * @param toVar
      *            register that stores the value
      * @param val
      *            constant value to move
      */
-    public IMov(Variable to, boolean val) {
-        this.to = to;
-        this.val = val ? 1 : 0; // new Read(Register.get(v.toString()), pre);
-        // this.type=Type.BOOL;
+    public IMov(final Variable toVar, final boolean val) {
+        this.to = toVar;
+        this.value = val ? 1 : 0;
     }
 
     @Override
@@ -65,7 +62,7 @@ public class IMov extends Instruction {
         case REAL:
             break;
         }
-        res += "MOV\t" + to.getName() + "\t" + String.valueOf(val);
+        res += "MOV\t" + to.getName() + "\t" + String.valueOf(value);
 
         return res;
     }

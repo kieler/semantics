@@ -13,10 +13,19 @@
  */
 package de.cau.cs.kieler.krep.compiler.klp.instructions;
 
+/**
+ * @author ctr
+ * Comment for some program part.
+ */
 public class Comment extends Instruction {
 
-    public Comment(String comment) {
-        this.comment = comment;
+    private String comment;
+    
+    /**
+     * @param com to add for this program part.
+     */
+    public Comment(final String com) {
+        this.comment = com;
     }
 
     @Override
@@ -24,6 +33,7 @@ public class Comment extends Instruction {
         return "";
     }
 
+    @Override
     public String getComment() {
         return "# " + comment;
     }

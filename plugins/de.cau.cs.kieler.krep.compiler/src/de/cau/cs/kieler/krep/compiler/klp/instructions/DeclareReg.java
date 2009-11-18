@@ -15,14 +15,22 @@ package de.cau.cs.kieler.krep.compiler.klp.instructions;
 
 import de.cau.cs.kieler.krep.compiler.ceq.Variable.Kind;
 
+/**
+ * @author ctr
+ *
+ */
 public class DeclareReg extends Instruction {
 
     private String reg;
     private Kind kind;
 
-    public DeclareReg(String reg, Kind kind) {
-        this.reg = reg;
-        this.kind = kind;
+    /**
+     * @param r register ot declare
+     * @param ioKind input, output, local
+     */
+    public DeclareReg(final String r, final Kind ioKind) {
+        this.reg = r;
+        this.kind = ioKind;
     }
 
     @Override

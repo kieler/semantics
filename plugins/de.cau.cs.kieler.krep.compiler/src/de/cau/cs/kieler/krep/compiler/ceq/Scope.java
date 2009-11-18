@@ -15,14 +15,30 @@ package de.cau.cs.kieler.krep.compiler.ceq;
 
 import java.util.LinkedList;
 
+/**
+ * @author ctr
+ * Scope of a program. This is either  a complete program or a state.
+ */
 public interface Scope {
 
+    /**
+     * @param vars local variables
+     */
     void add(LinkedList<Variable> vars);
 
+    /**
+     * @param ssm additional automaton
+     */
     void add(Automaton ssm);
 
+    /**
+     * @param eq additional equation.
+     */
     void add(Equation eq);
 
+    /**
+     * @param eq additional equations.
+     */
     void addEq(LinkedList<Equation> eq);
 
 }

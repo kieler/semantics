@@ -27,25 +27,27 @@ import de.cau.cs.kieler.krep.compiler.prog.Type;
 public class When extends Expression {
     private Expression expr;
 
-    private VarAccess c;
+    private VarAccess cName;
 
     /**
-     * generate new binary operation.
+     * generate new when operator.
      * 
      * @param name
      *            of the expression
      * @param e
+     *            expression
      * @param c
+     *            clock on which the expression runs
      */
     public When(final String name, final Expression e, final VarAccess c) {
         super(name);
         this.expr = e;
-        this.c = c;
+        this.cName = c;
     }
 
     @Override
     public String toString() {
-        return "(" + expr.toString() + " when " + c.toString() + ")";
+        return "(" + expr.toString() + " when " + cName.toString() + ")";
     }
 
     @Override
@@ -53,25 +55,17 @@ public class When extends Expression {
         return false;
     }
 
-    // @Override
-    // public ceq.Expression toCEQ() {
-    // ceq.Expression res = null;
-    // System.err.println("found nestet when in ceq: " + toString());
-    // System.exit(1);
-    // return res;
-    // }
-
     @Override
     protected void inferType() throws TypeException {
         expr.inferType();
         Type t1 = expr.type;
-        c.inferType();
-        Type t2 = c.type;
+        cName.inferType();
+        Type t2 = cName.type;
 
         if (t2 == Type.BOOL) {
             type = t1;
         } else {
-            throw new TypeException(c, "BOOL", t2.toString());
+            throw new TypeException(cName, "BOOL", t2.toString());
         }
 
     }
@@ -85,12 +79,12 @@ public class When extends Expression {
     @Override
     public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
         ClockList l1 = expr.inferClock(env);
-        ClockList l2 = c.inferClock(env);
+        ClockList l2 = cName.inferClock(env);
         if (!l1.equals(l2)) {
             throw new ClockException(this, l1, l2);
         }
         clock = l1.clone();
-        clock.addClock(c.getName());
+        clock.addClock(cName.getName());
         return clock;
     }
 
@@ -98,19 +92,21 @@ public class When extends Expression {
     public void propagateClock(final ClockList l) {
         clock = l.clone();
         ClockList c2 = clock.clone();
-        c2.addClock(c.getName());
+        c2.addClock(cName.getName());
         expr.propagateClock(c2);
-        c.propagateClock(clock);
+        cName.propagateClock(clock);
 
         Debug.low(clock.toString() + " " + this.toString());
     }
 
     @Override
-    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename, final int stage,
-            final String C, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        de.cau.cs.kieler.krep.compiler.ceq.Equation res = expr.declock(basename, 2, c.getName(), aux);
+    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
+            final int stage, final String c,
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+        de.cau.cs.kieler.krep.compiler.ceq.Equation res = expr.declock(basename, 2,
+                cName.getName(), aux);
         if (stage < 2) { // not inside when
-            res.setClock(c.getName());
+            res.setClock(cName.getName());
             return res;
         } else {
             de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
@@ -120,8 +116,8 @@ public class When extends Expression {
             aux.add(res);
             return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name, null,
                     new de.cau.cs.kieler.krep.compiler.ceq.VarAccess(
-                            de.cau.cs.kieler.krep.compiler.ceq.Variable.get(v.getName()), false), c
-                            .getName());
+                            de.cau.cs.kieler.krep.compiler.ceq.Variable.get(v.getName()), false),
+                    cName.getName());
         }
     }
 
@@ -131,16 +127,28 @@ public class When extends Expression {
         return this;
     }
 
+    /**
+     * @param e
+     *            new expression for the when
+     */
     public void setExpression(final Expression e) {
         this.expr = e;
     }
 
+    /**
+     * @return expression of the when
+     */
     public Expression getExpression() {
         return expr;
     }
 
+    /**
+     * @param w
+     *            another when operator
+     * @return true, if both use the same clock.
+     */
     public boolean sameClock(final When w) {
-        return c.equals(w.c);
+        return cName.equals(w.cName);
     }
 
     @Override

@@ -21,11 +21,11 @@ public class Jmp extends Instruction {
     private Label label;
 
     /**
-     * @param label
-     *            to jump to
+     * @param l
+     *            label to jump to
      */
-    public Jmp(Label label) {
-        this.label = label;
+    public Jmp(final Label l) {
+        this.label = l;
     }
 
     @Override

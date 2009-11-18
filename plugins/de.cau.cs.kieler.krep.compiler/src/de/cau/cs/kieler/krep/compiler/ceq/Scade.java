@@ -33,19 +33,23 @@ import de.cau.cs.kieler.krep.compiler.prog.Type;
  */
 public class Scade extends Program implements Scope {
 
-    public Scade(String name) {
+    /**
+     * @param name
+     *            name of the scade program.
+     */
+    public Scade(final String name) {
         super(name);
     }
 
     /**
-     * parse input stream which is expected to be a Scade textual file
+     * parse input stream which is expected to be a Scade textual file.
      * 
-     * @param in
-     * @throws IOException
-     * @throws ClockException
-     * @throws TypeException
+     * @param in input stream with scade program.
+     * @throws IOException thrown when the input stream cannot be read
+     * @throws ClockException thrown at errors in clock inference
+     * @throws TypeException thrown at errors in type inference
      */
-    public Scade(InputStream in) throws IOException, ClockException, TypeException {
+    public Scade(final InputStream in) throws IOException, ClockException, TypeException {
         super("Scade");
 
         scadeLexer lex = new scadeLexer(new ANTLRInputStream(in));
@@ -66,9 +70,12 @@ public class Scade extends Program implements Scope {
         this.simplify();
     }
 
+    /**
+     * infer io from equations.
+     */
     public void setIO() {
-        for (Equation eq : eqs) {
-            Variable v = Variable.get(eq.getName());
+        for (final Equation eq : eqs) {
+            final Variable v = Variable.get(eq.getName());
             if (!locals.contains(v)) {
                 outputs.add(v);
                 if (!vars.containsKey(v.getName())) {
@@ -77,8 +84,8 @@ public class Scade extends Program implements Scope {
             }
         }
 
-        for (Equation eq : eqs) {
-            for (Variable v : eq.getDeps()) {
+        for (final Equation eq : eqs) {
+            for (final Variable v : eq.getDeps()) {
                 if (!vars.containsKey(v.getName())) {
                     inputs.add(v);
                     vars.put(v.getName(), v);
@@ -86,18 +93,18 @@ public class Scade extends Program implements Scope {
             }
         }
 
-        for (Automaton ssm : ssms) {
+        for (final Automaton ssm : ssms) {
             ssm.setIO();
         }
 
     }
 
     /**
-     * Transform Lustre program into simplified ceq
+     * Transform Lustre program into simplified ceq.
      * 
-     * @returns the simplified program
+     * @return the simplified program
      */
-    public de.cau.cs.kieler.krep.compiler.ceq.Program getCEQ() {
+    public Program getCEQ() {
         return this;
 
     }
@@ -108,11 +115,12 @@ public class Scade extends Program implements Scope {
      * @param e
      *            expression to compute the value
      */
-    public void addEq(String s, Expression e) {
+    public void addEq(final String s, final Expression e) {
         eqs.add(new Equation(s, e));
     }
 
-    public void addVar(Variable v) {
+    @Override
+    public void addVar(final Variable v) {
         vars.put(v.getName(), v);
         if (v.isInput()) {
             inputs.add(v);
@@ -123,33 +131,54 @@ public class Scade extends Program implements Scope {
         }
     }
 
-    public void addInput(String s, Type t) {
+    /**
+     * @param s name of input signal
+     * @param t type of new input signal
+     */
+    public void addInput(final String s, final Type t) {
         Variable v = Variable.get(s, Kind.INPUT, t);
         addVar(v);
     }
 
-    public void setName(String name) {
+    @Override
+    public void setName(final String name) {
         this.name = name;
     }
 
-    public void add(Automaton a) {
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void add(final Automaton a) {
         ssms.add(a);
 
     }
 
-    public void add(LinkedList<Variable> vars) {
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void add(final LinkedList<Variable> vars) {
         for (Variable v : vars) {
             addVar(v);
         }
 
     }
 
-    public void add(Equation eq) {
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void add(final Equation eq) {
         eqs.add(eq);
 
     }
 
-    public void addEq(LinkedList<Equation> eq) {
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void addEq(final LinkedList<Equation> eq) {
         for (Equation e : eq) {
             add(e);
         }

@@ -33,13 +33,18 @@ import de.cau.cs.kieler.krep.compiler.lustre.Lustre;
 /**
  * @author ctr Compile ec file inte clock equations and write them again as lustre (or ec) files
  */
-public class Ec2ceq {
+public final class Ec2ceq {
+
+    private Ec2ceq() {
+
+    }
+
     private String inputFile = null;
     private String outputFile = null;
 
     private Options options = new Options();
 
-    private void parseArgs(String[] args) {
+    private void parseArgs(final String[] args) {
         CommandLine cmd = null;
         CommandLineParser parser = new GnuParser();
 
@@ -85,7 +90,7 @@ public class Ec2ceq {
     private void usage() {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("ec2ceq [options] input-file [output-file]", options);
-        System.exit(1);
+
     }
 
     private void execute() {
@@ -118,8 +123,9 @@ public class Ec2ceq {
 
     /**
      * @param args
+     *            file name
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         Ec2ceq comp = new Ec2ceq();
         comp.parseArgs(args);
         comp.execute();

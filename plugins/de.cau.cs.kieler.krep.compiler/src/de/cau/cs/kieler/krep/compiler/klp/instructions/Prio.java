@@ -13,14 +13,25 @@
  */
 package de.cau.cs.kieler.krep.compiler.klp.instructions;
 
+/**
+ * 
+ * Prio statement to change the priority of a thread.
+ * @author ctr
+ *
+ */
 public class Prio extends Instruction {
 
     private int prio;
     private String reg;
 
-    public Prio(String reg, int prio) {
-        this.reg = reg;
-        this.prio = prio;
+    /**
+     * 
+     * @param register associated with the thread thats priority is changed
+     * @param priority new priority
+     */
+    public Prio(final String register, final int priority) {
+        this.reg = register;
+        this.prio = priority;
     }
 
     @Override

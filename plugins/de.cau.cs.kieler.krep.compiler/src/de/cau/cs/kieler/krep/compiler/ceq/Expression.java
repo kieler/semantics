@@ -25,10 +25,17 @@ import de.cau.cs.kieler.krep.compiler.prog.Type;
  *         a unique name
  */
 public abstract class Expression {
+    /**
+     * unique name of the expression.
+     */
     protected String name;
 
-    protected Expression(final String name) {
-        this.name = name;
+    /**
+     * 
+     * @param n name of the expression.
+     */
+    protected Expression(final String n) {
+        this.name = n;
     }
 
     /**
@@ -38,7 +45,7 @@ public abstract class Expression {
     public abstract Type getType();
 
     /**
-     * compute list of all variables that syntactically occur in the expression
+     * compute list of all variables that syntactically occur in the expression.
      * 
      * @return list of used variables
      */
@@ -53,26 +60,24 @@ public abstract class Expression {
     public abstract List<Variable> getDeps();
 
     @Override
-    abstract public String toString();
+    public abstract String toString();
 
     /**
-     * extract sub-expressions from operations
+     * extract sub-expressions from operations.
      * 
-     * @param name
+     * @param n
      *            name of the expression
      * @param vars
      *            holds additionally added variables
-     * @param vs
-     *            auxiliary variables
      * @param es
      *            additionally added expression
      * @return expression without complex operations
      */
-    public abstract Expression flatten(String name, HashMap<String, Variable> vars,
+    public abstract Expression flatten(String n, HashMap<String, Variable> vars,
             LinkedList<Expression> es);
 
     /**
-     * add additional pre operators, to use all variables with the right tick
+     * add additional pre operators, to use all variables with the right tick.
      * 
      * @param delay
      *            : delay for all variables
@@ -83,14 +88,14 @@ public abstract class Expression {
     public abstract Expression padDelay(HashMap<String, Integer> delay, int n);
 
     /**
-     * compute whether this is an atomic expression
+     * compute whether this is an atomic expression.
      * 
      * @return true if expression contains no sub-expression
      */
     public abstract boolean isAtom();
 
     /**
-     * compute instructions to execute this expression on the KLP
+     * compute instructions to execute this expression on the KLP.
      * 
      * @param to
      *            Register to store the result
@@ -112,11 +117,25 @@ public abstract class Expression {
      */
     public abstract Const propagateConst(HashMap<String, Const> con);
 
+    /**
+     * @return evaluate static expressions.
+     */
     public abstract Expression staticEval();
 
+    /**
+     * @param equiv list of equivalent variables.
+     */
     public abstract void replaceVar(HashMap<String, Variable> equiv);
 
+    /**
+     * @return estimated wcrt for the expression.
+     */
     public abstract int wcrt();
 
+    /**
+     * @param var name of the expression to replace
+     * @param expr expression by which the variable is replaced.
+     * @return new expression 
+     */
     public abstract Expression replace(String var, Expression expr);
 }
