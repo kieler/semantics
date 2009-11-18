@@ -114,6 +114,8 @@ public class ActiveStateHighlightCombination extends ACombination {
 
     @Override
     public void execute() {
+        this.resetHashedEditParts();
+        
 //        for (HighlightEffect effect : effects.values()) {
 //            effect.execute();
 //        }
