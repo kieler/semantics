@@ -48,8 +48,15 @@ import ptolemy.actor.sched.ScheduleElement;
 import ptolemy.actor.sched.StaticSchedulingDirector;
 import ptolemy.data.BooleanToken;
 import ptolemy.data.IntToken;
+import ptolemy.data.Token;
+import ptolemy.data.expr.ASTPtRootNode;
 import ptolemy.data.expr.Parameter;
+import ptolemy.data.expr.ParseTreeEvaluator;
+import ptolemy.data.expr.ParserScope;
+import ptolemy.data.expr.PtParser;
+import ptolemy.data.expr.UndefinedConstantOrIdentifierException;
 import ptolemy.data.type.BaseType;
+import ptolemy.domains.modal.kernel.FSMActor;
 import ptolemy.domains.modal.kernel.OutputActionsAttribute;
 import ptolemy.domains.modal.kernel.State;
 import ptolemy.domains.modal.kernel.Transition;
@@ -60,6 +67,7 @@ import ptolemy.kernel.util.Attribute;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.NameDuplicationException;
 import ptolemy.kernel.util.Nameable;
+import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.Settable;
 import ptolemy.kernel.util.StringAttribute;
 import ptolemy.kernel.util.Workspace;
@@ -183,7 +191,49 @@ public class SyncChartDirector extends FixedPointDirector {
         _init();
     }
     
+
+    /**
+     * Checks whether a transition can possibly be taken. That is the case if
+     * this transition is already enabled. It is also the case if it cannot be
+     * evaluated because an important signal-status is missing (unknown). In
+     * this case an UndefinedConstantOrIdentifierException is raised by Ptolemy
+     * and this is also interpreted as a possibly enabled transition because
+     * the trigger could not be evaluated to false unambiguously with this 
+     * signal being still unknown.
+     * 
+     * @param transition
+     *            the transition
+     * 
+     * @return true, if is possibly enabled
+     * 
+     * @throws IllegalActionException
+     *             the illegal action exception
+     */
+    public boolean isPossiblyEnabled(Transition transition) throws IllegalActionException {
+        try {
+            //if we for sure know this transition is enabled we can return true
+            if (transition.isEnabled()) {
+                return true;
+            }
+        } catch(UndefinedConstantOrIdentifierException e) {
+            //if we cannot evaluate the transition trigger because of a missing
+            //signal status, we must return also true here
+            return true;
+        }
+        //if we for sure know this transition is disabled we can return false
+        return false;
+    }
     
+    /**
+     * List all possibly enabled transitions here.
+     * 
+     * @param transitionList
+     *            the transition list
+     * @param modalModel
+     *            the modal model
+     * 
+     * @return the list
+     */
     private  List possiblyEnabledTransitions(List transitionList, 
                                              ModalModel modalModel) {
         LinkedList possiblyEnabledTransitions = new LinkedList();
@@ -191,27 +241,15 @@ public class SyncChartDirector extends FixedPointDirector {
         for (Object object: transitionList) {
             if (object instanceof Transition) {
                 Transition transition = (Transition)object;
-                
-                //create a new list and ask FSMActor to extract enabled
-                //transitions it knows for sure
-                LinkedList tmpTransitionList = new LinkedList();
-                tmpTransitionList.add(transition);
-                List<Transition> enabledTransitions = null;
+
                 try {
-                    enabledTransitions = modalModel.getController().enabledTransitions(tmpTransitionList);
-                } catch(Exception e){
-                    //hide this error => it means transition is not enabled
+                    if (isPossiblyEnabled(transition)) {
+                        possiblyEnabledTransitions.add(transition);
                 }
-                boolean foundUnknown = modalModel.getController().foundUnknown();
-                
-                //possibly enabled transitions are ALL transitions that evaluate to true and
-                //also all transitions that cannot be evaluated to false yet due to unknown
-                //inputs!
-                if ((enabledTransitions != null && enabledTransitions.size() > 0)
-                    || (foundUnknown)) {
-                    possiblyEnabledTransitions.add(transition);
-                }//end if
-                
+                } catch(Exception e){
+                    //hide this error => it means transition is not
+                    //possibly enabled
+                }
             }//end if a Transition
         }//end for each Transition
         
