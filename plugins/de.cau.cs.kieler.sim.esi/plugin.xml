@@ -11,9 +11,6 @@
 	
   </extension>
   <extension
-        point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
-  </extension>
-  <extension
         point="de.cau.cs.kieler.sim.kiem.string.datacomponent">
      <content
            class="de.cau.cs.kieler.sim.esi.DataComponent"

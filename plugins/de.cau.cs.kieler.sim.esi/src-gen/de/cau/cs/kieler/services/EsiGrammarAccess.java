@@ -87,13 +87,14 @@ public class EsiGrammarAccess implements IGrammarAccess {
 		private final Keyword cColonKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		private final Assignment cOutputAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
 		private final RuleCall cOutputSignalParserRuleCall_1_3_0 = (RuleCall)cOutputAssignment_1_3.eContents().get(0);
-		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cNAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cNSemicolonKeyword_2_0 = (Keyword)cNAssignment_2.eContents().get(0);
 		
 		//tick:
-		//  input+=signal* ("%" "Output" ":" output+=signal*)? ";";
+		//  input+=signal* ("%" "Output" ":" output+=signal*)? n=";";
 		public ParserRule getRule() { return rule; }
 
-		//input+=signal* ("%" "Output" ":" output+=signal*)? ";"
+		//input+=signal* ("%" "Output" ":" output+=signal*)? n=";"
 		public Group getGroup() { return cGroup; }
 
 		//input+=signal*
@@ -120,8 +121,11 @@ public class EsiGrammarAccess implements IGrammarAccess {
 		//signal
 		public RuleCall getOutputSignalParserRuleCall_1_3_0() { return cOutputSignalParserRuleCall_1_3_0; }
 
+		//n=";"
+		public Assignment getNAssignment_2() { return cNAssignment_2; }
+
 		//";"
-		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
+		public Keyword getNSemicolonKeyword_2_0() { return cNSemicolonKeyword_2_0; }
 	}
 
 	public class SignalElements implements IParserRuleAccess {
@@ -222,7 +226,7 @@ public class EsiGrammarAccess implements IGrammarAccess {
 	}
 
 	//tick:
-	//  input+=signal* ("%" "Output" ":" output+=signal*)? ";";
+	//  input+=signal* ("%" "Output" ":" output+=signal*)? n=";";
 	public TickElements getTickAccess() {
 		return (pTick != null) ? pTick : (pTick = new TickElements());
 	}

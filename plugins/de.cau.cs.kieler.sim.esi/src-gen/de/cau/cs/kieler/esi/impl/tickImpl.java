@@ -11,6 +11,7 @@ import de.cau.cs.kieler.esi.tick;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -18,6 +19,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -32,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esi.impl.tickImpl#getInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esi.impl.tickImpl#getOutput <em>Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esi.impl.tickImpl#getN <em>N</em>}</li>
  * </ul>
  * </p>
  *
@@ -58,6 +61,26 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
    * @ordered
    */
   protected EList<signal> output;
+
+  /**
+   * The default value of the '{@link #getN() <em>N</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getN()
+   * @generated
+   * @ordered
+   */
+  protected static final String N_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getN() <em>N</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getN()
+   * @generated
+   * @ordered
+   */
+  protected String n = N_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -113,6 +136,29 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getN()
+  {
+    return n;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setN(String newN)
+  {
+    String oldN = n;
+    n = newN;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsiPackage.TICK__N, oldN, n));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -140,6 +186,8 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
         return getInput();
       case EsiPackage.TICK__OUTPUT:
         return getOutput();
+      case EsiPackage.TICK__N:
+        return getN();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -163,6 +211,9 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
         getOutput().clear();
         getOutput().addAll((Collection<? extends signal>)newValue);
         return;
+      case EsiPackage.TICK__N:
+        setN((String)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -183,6 +234,9 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
       case EsiPackage.TICK__OUTPUT:
         getOutput().clear();
         return;
+      case EsiPackage.TICK__N:
+        setN(N_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -201,8 +255,27 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
         return input != null && !input.isEmpty();
       case EsiPackage.TICK__OUTPUT:
         return output != null && !output.isEmpty();
+      case EsiPackage.TICK__N:
+        return N_EDEFAULT == null ? n != null : !N_EDEFAULT.equals(n);
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (n: ");
+    result.append(n);
+    result.append(')');
+    return result.toString();
   }
 
 } //tickImpl

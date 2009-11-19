@@ -6,6 +6,13 @@ package de.cau.cs.kieler;
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class EsiUiModule extends de.cau.cs.kieler.AbstractEsiUiModule {
+public final class EsiUiModule extends de.cau.cs.kieler.AbstractEsiUiModule {
+	  public Class bindSemanticHighlightingCalculator() {
+		    return EsiSemanticHighlightingCalculator.class;
+		  }
+
+		  public Class bindSemanticConfig() {
+		    return EsiSemanticHighlightingConfiguration.class;
+		  }
 
 }

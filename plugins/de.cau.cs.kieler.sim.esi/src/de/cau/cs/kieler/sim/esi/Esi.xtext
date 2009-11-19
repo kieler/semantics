@@ -17,7 +17,7 @@ trace:
    ;
   
 tick:
-   (input+=signal)* ('%' 'Output' ':' (output+=signal)*)? ';' 
+   (input+=signal)* ('%' 'Output' ':' (output+=signal)*)? n=';' 
    ; 
 
 signal:     

@@ -144,13 +144,22 @@ public interface EsiPackage extends EPackage
   int TICK__OUTPUT = 1;
 
   /**
+   * The feature id for the '<em><b>N</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TICK__N = 2;
+
+  /**
    * The number of structural features of the '<em>tick</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TICK_FEATURE_COUNT = 2;
+  int TICK_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esi.impl.signalImpl <em>signal</em>}' class.
@@ -272,6 +281,17 @@ public interface EsiPackage extends EPackage
    * @generated
    */
   EReference gettick_Output();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esi.tick#getN <em>N</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>N</em>'.
+   * @see de.cau.cs.kieler.esi.tick#getN()
+   * @see #gettick()
+   * @generated
+   */
+  EAttribute gettick_N();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esi.signal <em>signal</em>}'.
@@ -400,6 +420,14 @@ public interface EsiPackage extends EPackage
      * @generated
      */
     EReference TICK__OUTPUT = eINSTANCE.gettick_Output();
+
+    /**
+     * The meta object literal for the '<em><b>N</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TICK__N = eINSTANCE.gettick_N();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esi.impl.signalImpl <em>signal</em>}' class.

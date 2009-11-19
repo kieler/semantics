@@ -254,11 +254,28 @@ ruletick returns [EObject current=null]
 	        currentNode = currentNode.getParent();
 	    }
 	
-)*)?';' 
+)*)?(	
+	
+	    lv_n_5=';' 
     {
-        createLeafNode(grammarAccess.getTickAccess().getSemicolonKeyword_2(), null); 
+        createLeafNode(grammarAccess.getTickAccess().getNSemicolonKeyword_2_0(), "n"); 
     }
-);
+
+ 
+	    {
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getTickRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        
+	        try {
+	       		set($current, "n", /* lv_n_5 */ input.LT(-1), ";", lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
+	
+));
 
 
 

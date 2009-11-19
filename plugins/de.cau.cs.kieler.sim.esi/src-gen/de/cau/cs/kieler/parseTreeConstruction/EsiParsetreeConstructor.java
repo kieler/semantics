@@ -301,11 +301,11 @@ protected class Trace_TicksAssignment extends AssignmentToken  {
 /************ begin Rule tick ****************
  *
  * tick:
- *   input+=signal* ("%" "Output" ":" output+=signal*)? ";";
+ *   input+=signal* ("%" "Output" ":" output+=signal*)? n=";";
  *
  **/
 
-// input+=signal* ("%" "Output" ":" output+=signal*)? ";"
+// input+=signal* ("%" "Output" ":" output+=signal*)? n=";"
 protected class Tick_Group extends GroupToken {
 	
 	public Tick_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -318,7 +318,7 @@ protected class Tick_Group extends GroupToken {
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
 		switch(index) {
-			case 0: return new Tick_SemicolonKeyword_2(parent, this, 0, inst);
+			case 0: return new Tick_NAssignment_2(parent, this, 0, inst);
 			default: return null;
 		}	
 	}	
@@ -496,15 +496,15 @@ protected class Tick_OutputAssignment_1_3 extends AssignmentToken  {
 }
 
 
-// ";"
-protected class Tick_SemicolonKeyword_2 extends KeywordToken  {
+// n=";"
+protected class Tick_NAssignment_2 extends AssignmentToken  {
 	
-	public Tick_SemicolonKeyword_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+	public Tick_NAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
 		super(parent, next, no, current);
 	}
 	
-	public Keyword getGrammarElement() {
-		return grammarAccess.getTickAccess().getSemicolonKeyword_2();
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTickAccess().getNAssignment_2();
 	}
 
 	public AbstractToken createFollower(int index, IInstanceDescription inst) {
@@ -515,6 +515,17 @@ protected class Tick_SemicolonKeyword_2 extends KeywordToken  {
 		}	
 	}	
 		
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("n",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("n");
+		if(";".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getTickAccess().getNSemicolonKeyword_2_0();
+			return obj;
+		}
+		return null;
+	}
+
 }
 
 

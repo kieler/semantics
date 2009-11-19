@@ -48,7 +48,9 @@
           <terminal xsi:type="xtext:RuleCall" rule="//@rules.3"/>
         </tokens>
       </tokens>
-      <tokens xsi:type="xtext:Keyword" value=";"/>
+      <tokens xsi:type="xtext:Assignment" feature="n" operator="=">
+        <terminal xsi:type="xtext:Keyword" value=";"/>
+      </tokens>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="signal">

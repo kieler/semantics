@@ -18,6 +18,7 @@
     <genClasses ecoreClass="Esi.ecore#//tick">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esi.ecore#//tick/input"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esi.ecore#//tick/output"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//tick/n"/>
     </genClasses>
     <genClasses ecoreClass="Esi.ecore#//signal">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//signal/name"/>

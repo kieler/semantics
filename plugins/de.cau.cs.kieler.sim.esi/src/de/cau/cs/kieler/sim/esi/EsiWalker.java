@@ -21,7 +21,6 @@ import de.cau.cs.kieler.esi.tracelist;
  */
 public class EsiWalker extends de.cau.cs.kieler.esi.util.EsiSwitch<String> {
   public String caseTraceList(tracelist tl){
-	  System.out.println("Huhu" + tl.toString());
 	  return "";
   }
 }

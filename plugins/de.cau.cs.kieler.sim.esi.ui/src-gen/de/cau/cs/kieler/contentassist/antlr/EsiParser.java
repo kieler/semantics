@@ -53,6 +53,7 @@ public class EsiParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTraceAccess().getTicksAssignment(), "rule__Trace__TicksAssignment");
 					put(grammarAccess.getTickAccess().getInputAssignment_0(), "rule__Tick__InputAssignment_0");
 					put(grammarAccess.getTickAccess().getOutputAssignment_1_3(), "rule__Tick__OutputAssignment_1_3");
+					put(grammarAccess.getTickAccess().getNAssignment_2(), "rule__Tick__NAssignment_2");
 					put(grammarAccess.getSignalAccess().getNameAssignment_0(), "rule__Signal__NameAssignment_0");
 					put(grammarAccess.getSignalAccess().getValuedAssignment_1_0(), "rule__Signal__ValuedAssignment_1_0");
 					put(grammarAccess.getSignalAccess().getValAssignment_1_1(), "rule__Signal__ValAssignment_1_1");

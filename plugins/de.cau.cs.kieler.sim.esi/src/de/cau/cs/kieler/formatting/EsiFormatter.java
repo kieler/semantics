@@ -18,8 +18,8 @@ public class EsiFormatter extends AbstractDeclarativeFormatter {
 	
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
-		de.cau.cs.kieler.services.EsiGrammarAccess f = (de.cau.cs.kieler.services.EsiGrammarAccess) getGrammarAccess();
-
+		//de.cau.cs.kieler.services.EsiGrammarAccess f = (de.cau.cs.kieler.services.EsiGrammarAccess) getGrammarAccess();
+		
 		//...
 	}
 }

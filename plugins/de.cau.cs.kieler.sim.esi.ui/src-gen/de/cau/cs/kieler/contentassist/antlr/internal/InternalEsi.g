@@ -347,11 +347,9 @@ rule__Tick__Group__2
     }
 :
 (
-{ before(grammarAccess.getTickAccess().getSemicolonKeyword_2()); }
-
-	';' 
-
-{ after(grammarAccess.getTickAccess().getSemicolonKeyword_2()); }
+{ before(grammarAccess.getTickAccess().getNAssignment_2()); }
+(rule__Tick__NAssignment_2)
+{ after(grammarAccess.getTickAccess().getNAssignment_2()); }
 )
 
 ;
@@ -619,6 +617,29 @@ rule__Tick__OutputAssignment_1_3
 (
 { before(grammarAccess.getTickAccess().getOutputSignalParserRuleCall_1_3_0()); }
 	rulesignal{ after(grammarAccess.getTickAccess().getOutputSignalParserRuleCall_1_3_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Tick__NAssignment_2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getTickAccess().getNSemicolonKeyword_2_0()); }
+(
+{ before(grammarAccess.getTickAccess().getNSemicolonKeyword_2_0()); }
+
+	';' 
+
+{ after(grammarAccess.getTickAccess().getNSemicolonKeyword_2_0()); }
+)
+
+{ after(grammarAccess.getTickAccess().getNSemicolonKeyword_2_0()); }
 )
 
 ;
