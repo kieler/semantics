@@ -11,7 +11,7 @@
 	
   </extension>
   <extension
-        point="de.cau.cs.kieler.sim.kiem.string.datacomponent">
+        point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
      <content
            class="de.cau.cs.kieler.sim.esi.DataComponent"
            id="de.cau.cs.kieler.sim.esi"
