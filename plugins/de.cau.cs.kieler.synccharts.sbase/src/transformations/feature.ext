@@ -148,8 +148,10 @@ root.signals.add(sigR) ->
 root.signals.add(sigO) ->
 //Inner State ABO
 ABO.setLabel("ABO") ->
+ABO.setIsInitial(true) ->
 //Inner state Wait A and B
-waitAB.setLabel("Wait A and B") ->
+waitAB.setLabel("WaitAB") ->
+waitAB.setIsInitial(true) ->
 //Region for 'wait for a' 
 wAInitial.setLabel("wA") ->
 wAInitial.setIsInitial(true) ->
