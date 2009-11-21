@@ -12,35 +12,14 @@
 
 package de.cau.cs.kieler.xkev.extension.dataobserver;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Enumeration;
-import java.util.HashMap;
-
-import org.apache.batik.swing.JSVGCanvas;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.views.IViewDescriptor;
-import org.osgi.framework.Bundle;
-import org.w3c.dom.DocumentFragment;
-import org.w3c.dom.svg.SVGDocument;
-
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
-import de.cau.cs.kieler.xkev.Activator;
-import de.cau.cs.kieler.xkev.helpers.Tools;
-import de.cau.cs.kieler.xkev.mapping.SVGDocumentParser;
 import de.cau.cs.kieler.xkev.mapping.animations.Animations;
-import de.cau.cs.kieler.xkev.views.EnvironmentView;
+import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
 
 
 /**
@@ -105,6 +84,11 @@ public class Example_02 extends JSONObjectDataComponent implements IJSONObjectDa
         if (last != stepCounter) {
             switchTrafficLight(stepCounter % 6, animation);
         }
+       if (button) {
+           MapAnimations mapAnimations = new MapAnimations();
+           //mapAnimations.printit();
+       }
+        
         // System.out.println(stepCounter+" "+button+" "+personCounterGreenphase);
         return null;// Because it's only an Observer right now
     }

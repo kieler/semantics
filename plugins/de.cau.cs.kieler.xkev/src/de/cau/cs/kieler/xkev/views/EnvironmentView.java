@@ -23,6 +23,8 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
@@ -48,11 +50,22 @@ public class EnvironmentView extends ViewPart {
      * ID declares the name of the KEV-View. 
      */
     public static final String ID = "de.cau.cs.kieler.xkev.views.EnvironmentView";
-
+    
+    /**
+     * INSTANCE is a static Reference to the single instance of KEV View.
+     */
+    public static EnvironmentView INSTANCE = null;
+    
     /**
      * The constructor.
      */
     public EnvironmentView() {
+        /**
+         * Link to the first INSTANCE of EnvironmentView 
+         */
+        if (INSTANCE == null) {
+            INSTANCE = this;
+        }
     }
 
     /**
@@ -136,6 +149,6 @@ public class EnvironmentView extends ViewPart {
     }
 
     public JSVGCanvas getSVGCanvas() {
-        return svg.getSvgCanvas();
+        return svg.getSVGCanvas();
     }
 }

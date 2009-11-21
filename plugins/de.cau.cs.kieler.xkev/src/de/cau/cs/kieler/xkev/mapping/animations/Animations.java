@@ -24,6 +24,7 @@ import org.w3c.dom.svg.SVGDocument;
 import de.cau.cs.kieler.xkev.views.EnvironmentView;
 
 /**
+ * This class is only used in Exmaple_01, Example_02;
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
  * 

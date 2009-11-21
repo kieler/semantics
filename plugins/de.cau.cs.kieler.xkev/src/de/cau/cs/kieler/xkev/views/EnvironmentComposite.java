@@ -65,6 +65,8 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -337,7 +339,7 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
         }
     }
 
-    public JSVGCanvas getSvgCanvas() {
+    public JSVGCanvas getSVGCanvas() {
         return svgCanvas;
     }
 

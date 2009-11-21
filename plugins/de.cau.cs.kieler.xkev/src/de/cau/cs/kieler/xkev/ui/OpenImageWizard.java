@@ -57,13 +57,13 @@ import de.cau.cs.kieler.xkev.views.EnvironmentView;
 public class OpenImageWizard extends Wizard {
 
     /** The actual wizard page that will be shown. */
-    OpenImageWizardPage page;
-    /** A map of predefined images (Names) to their URLs. This map will be generated from extensions */
-    Map<String, URL> imageUrlMap;
-    /** Text field for the file url */
-    Text resourceNameField;
-    /** Checkbox to remember the file */
-    Button rememberCheckbox;
+    private OpenImageWizardPage page;
+    /** A map of predefined images (Names) to their URLs. This map will be generated from extensions. */
+    private Map<String, URL> imageUrlMap;
+    /** Text field for the file url. */
+    private Text resourceNameField;
+    /** Checkbox to remember the file. */
+    private Button rememberCheckbox;
     /**
      * Parent dialog to have access to window controls, e.g. closing the dialog (by double click in
      * List for example

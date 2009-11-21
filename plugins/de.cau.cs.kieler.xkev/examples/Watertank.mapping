@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0">
+  <svgElement id="water">
+    <animation xsi:type="mapping:Move" input="1..20" x_range="0" y_range="-10"/>
+    <animation xsi:type="mapping:Move" input="21..40" x_range="0" y_range="10"/>
+  </svgElement>
+  <svgElement id="text">
+    <animation xsi:type="mapping:Textbox" input="0==0" value="text.value"/>
+  </svgElement>
+</mapping:SVGFile>

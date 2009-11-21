@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ASCII"?>
+<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0">
+  <svgElement id="cRed">
+    <animation xsi:type="mapping:Colorize" input="on" color="red"/>
+    <animation xsi:type="mapping:Colorize" input="off" color="#626262"/>
+  </svgElement>
+  <svgElement id="cYellow">
+    <animation xsi:type="mapping:Colorize" input="on" color="yellow"/>
+    <animation xsi:type="mapping:Colorize" input="off" color="#626262"/>
+  </svgElement>
+  <svgElement id="cGreen">
+    <animation xsi:type="mapping:Colorize" input="on" color="lime"/>
+    <animation xsi:type="mapping:Colorize" input="off" color="#626262"/>
+  </svgElement>
+  <svgElement id="pRed">
+    <animation xsi:type="mapping:Colorize" input="on" color="red"/>
+    <animation xsi:type="mapping:Colorize" input="off" color="#626262"/>
+  </svgElement>
+  <svgElement id="pGreen">
+    <animation xsi:type="mapping:Colorize" input="on" color="lime"/>
+    <animation xsi:type="mapping:Colorize" input="off" color="#626262"/>
+  </svgElement>
+</mapping:SVGFile>
