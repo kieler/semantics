@@ -97,7 +97,7 @@ create PropertyType this createMainSRDirector():
 //create a "FSM Director" (for a Thread component)
 create PropertyType this createFSMDirector():
     this.setName("directorClass") ->
-    this.setValue("ptolemy.domains.fsm.kernel.FSMDirector") ->
+    this.setValue("ptolemy.domains.modal.kernel.FSMDirector") ->
 	this.setClass("ptolemy.data.expr.StringParameter")
 ;
 
@@ -191,10 +191,10 @@ create EntityType this createThread(simplerailctrl::Node initialNode,
 	let p1 = new PropertyType:
 	let threadName = "Thread" + threadId:
 		p1.setName("_tableauFactory") ->
-		p1.setClass("ptolemy.vergil.fsm.modal.ModalTableauFactory") ->
+		p1.setClass("ptolemy.vergil.modal.modal.ModalTableauFactory") ->
 	//TODO: check if can be left out?! this.property.add(p1) ->
    	this.setName(threadName) ->
-  	this.setClass1("ptolemy.domains.fsm.modal.ModalModel") ->
+  	this.setClass1("ptolemy.domains.modal.modal.ModalModel") ->
   	//first add ports
 	this.port.add(createModelPort(true,false,"contact","arrayType(int,48)")) ->
 	this.port.add(createModelPort(true,false,"occupied","arrayType(int,48)")) ->
@@ -220,7 +220,7 @@ create EntityType this createThread(simplerailctrl::Node initialNode,
 create EntityType this createThreadRefinement(simplerailctrl::Node initialNode,
 											  String threadId):
    	this.setName("_Controller") ->
-  	this.setClass1("ptolemy.domains.fsm.modal.ModalController") ->
+  	this.setClass1("ptolemy.domains.modal.modal.ModalController") ->
   	//first add ports
 	this.port.add(createModelRefinementPort(true,false,"contact",
 											"arrayType(int,48)")) ->
@@ -359,7 +359,7 @@ boolean createSimpleStateEntity(EntityType baseEntity,
 	newState.setName(state.getMetaType()+hash(state)) ->
 	newState.property.add(p1) ->
 	//newState.setName(getMetaType(state)+hash(state)) ->
-  	newState.setClass1("ptolemy.domains.fsm.kernel.State") ->
+  	newState.setClass1("ptolemy.domains.modal.kernel.State") ->
 	if (!markedBefore) then baseEntity.entity.add(newState) ->
 	if (!markedBefore) then addSelfTransition(baseEntity, state) ->
 	//this inicates that we are done with this state//
@@ -370,7 +370,7 @@ boolean createSimpleStateEntity(EntityType baseEntity,
 Void createInitialStateEntity(EntityType baseEntity):
 	let newState = new EntityType:
 	newState.setName("initial") ->
-  	newState.setClass1("ptolemy.domains.fsm.kernel.State") ->
+  	newState.setClass1("ptolemy.domains.modal.kernel.State") ->
 	baseEntity.entity.add(newState)
 ;
 
@@ -504,9 +504,9 @@ RelationType createRelation(String name,
 		p1.setName("guardExpression") ->
 		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p2.setName("outputActions") ->
-		p2.setClass("ptolemy.domains.fsm.kernel.OutputActionsAttribute") ->
+		p2.setClass("ptolemy.domains.modal.kernel.OutputActionsAttribute") ->
 		p3.setName("setActions") ->
-		p3.setClass("ptolemy.domains.fsm.kernel.CommitActionsAttribute") ->
+		p3.setClass("ptolemy.domains.modal.kernel.CommitActionsAttribute") ->
 		p4.setName("reset") ->
 		p4.setClass("ptolemy.data.expr.Parameter") ->
 		(reset) ? p4.setValue("true") : p4.setValue("false")->
@@ -562,7 +562,7 @@ Void addEmission(RelationType relation, simplerailctrl::Node node) :
 	//buildEmission -> JAVA escape
 	let value = buildEmission(node):
 	p1.setName("outputActions") ->
-	p1.setClass("ptolemy.domains.fsm.kernel.OutputActionsAttribute") ->
+	p1.setClass("ptolemy.domains.modal.kernel.OutputActionsAttribute") ->
 	p1.setValue(value) ->
 	if (!value.matches("")) then relation.property.add(p1) 
 ;
@@ -571,7 +571,7 @@ Void addEmission(RelationType relation, simplerailctrl::Node node) :
 Void addSetAction(RelationType relation, String value) :
 	let p1 = new PropertyType:
 	p1.setName("setActions") ->
-	p1.setClass("ptolemy.domains.fsm.kernel.CommitActionsAttribute") ->
+	p1.setClass("ptolemy.domains.modal.kernel.CommitActionsAttribute") ->
 	p1.setValue(value) ->
 	relation.property.add(p1) 
 ;
@@ -607,7 +607,7 @@ PortType createModelPort(boolean input,
 	let prop1 = new PropertyType:
 	let prop2 = new PropertyType:
 	let prop3 = new PropertyType:
-	port.setClass("ptolemy.domains.fsm.modal.ModalPort") ->
+	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	port.setName(name) ->
 	prop1.setClass("ptolemy.actor.TypeAttribute") ->
 	prop1.setName("_type") ->
@@ -629,7 +629,7 @@ PortType createModelRefinementPort(boolean input,
 	let prop1 = new PropertyType:
 	let prop2 = new PropertyType:
 	let prop3 = new PropertyType:
-	port.setClass("ptolemy.domains.fsm.modal.RefinementPort") ->
+	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	port.setName(name) ->
 	prop1.setClass("ptolemy.actor.TypeAttribute") ->
 	prop1.setName("_type") ->

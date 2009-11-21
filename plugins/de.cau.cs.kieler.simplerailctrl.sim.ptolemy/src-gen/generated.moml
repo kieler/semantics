@@ -1,0 +1,467 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+<entity name="generated" class="ptolemy.actor.TypedCompositeActor">
+    <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="8.1.devel">
+    </property>
+    <property name="SR Director" class="ptolemy.domains.sr.kernel.SRDirector">
+        <property name="iterations" class="ptolemy.data.expr.Parameter" value="0">
+        </property>
+        <property name="synchronizeToRealTime" class="ptolemy.data.expr.Parameter" value="false">
+        </property>
+        <property name="timeResolution" class="ptolemy.actor.parameters.SharedParameter" value="1.0E-10">
+        </property>
+        <property name="period" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-580.0, 240.0]">
+        </property>
+    </property>
+    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={-1, 1, 1439, 587}, maximized=false}">
+    </property>
+    <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[1224, 474]">
+    </property>
+    <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="0.8">
+    </property>
+    <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{114.5252525252524, 183.9861111111111}">
+    </property>
+    <entity name="ModelRailwayIO" class="ptolemy.actor.kiel.ModelRailwayIO">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-454.0, -44.5]">
+        </property>
+        <port name="contact" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="arrayType(int,48)">
+            </property>
+        </port>
+        <port name="occupied" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="arrayType(int,48)">
+            </property>
+        </port>
+    </entity>
+    <entity name="Thread92361528" class="ptolemy.domains.fsm.modal.ModalModel">
+        <property name="_Director" class="ptolemy.domains.fsm.kernel.FSMDirector">
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{420.0, 278.2921875}">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-150.0, -25.0]">
+        </property>
+        <port name="contact" class="ptolemy.domains.fsm.modal.ModalPort">
+            <property name="input"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="arrayType(int,48)">
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{173.109375, 138.72562499999998}">
+            </property>
+        </port>
+        <port name="occupied" class="ptolemy.domains.fsm.modal.ModalPort">
+            <property name="input"/>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="arrayType(int,48)">
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{168.296875, 329.07218750000004}">
+            </property>
+        </port>
+        <port name="tracks" class="ptolemy.domains.fsm.modal.ModalPort">
+            <property name="output"/>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{176.84375, 264.9071875}">
+            </property>
+        </port>
+        <port name="points" class="ptolemy.domains.fsm.modal.ModalPort">
+            <property name="output"/>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{176.6328125, 76.91218749999999}">
+            </property>
+        </port>
+        <port name="signals" class="ptolemy.domains.fsm.modal.ModalPort">
+            <property name="output"/>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{172.921875, 203.0625}">
+            </property>
+        </port>
+        <entity name="_Controller" class="ptolemy.domains.fsm.modal.ModalController">
+            <property name="count" class="ptolemy.data.expr.Parameter" value="0">
+                <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+                </property>
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{420.0, 120.7625}">
+            </property>
+            <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={-4, -4, 1448, 880}, maximized=true}">
+            </property>
+            <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[1233, 771]">
+            </property>
+            <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.0">
+            </property>
+            <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{616.5, 385.5}">
+            </property>
+            <port name="contact" class="ptolemy.domains.fsm.modal.RefinementPort">
+                <property name="input"/>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="arrayType(int,48)">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[170.0, 395.0]">
+                </property>
+            </port>
+            <port name="occupied" class="ptolemy.domains.fsm.modal.RefinementPort">
+                <property name="input"/>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="arrayType(int,48)">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[170.0, 440.0]">
+                </property>
+            </port>
+            <port name="tracks" class="ptolemy.domains.fsm.modal.RefinementPort">
+                <property name="input"/>
+                <property name="output"/>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[330.0, 395.0]">
+                </property>
+            </port>
+            <port name="points" class="ptolemy.domains.fsm.modal.RefinementPort">
+                <property name="input"/>
+                <property name="output"/>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[330.0, 485.0]">
+                </property>
+            </port>
+            <port name="signals" class="ptolemy.domains.fsm.modal.RefinementPort">
+                <property name="input"/>
+                <property name="output"/>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[330.0, 440.0]">
+                </property>
+            </port>
+            <entity name="initial" class="ptolemy.domains.fsm.kernel.State">
+                <property name="isInitialState" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+                <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{170.0, 315.0}">
+                </property>
+            </entity>
+            <entity name="SetPoint92361528" class="ptolemy.domains.fsm.kernel.State">
+                <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="elementURIFragment" class="ptolemy.kernel.util.StringAttribute" value="//@nodes.1">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[210.0, 200.0]">
+                </property>
+            </entity>
+            <entity name="SetSpeed1720854532" class="ptolemy.domains.fsm.kernel.State">
+                <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="elementURIFragment" class="ptolemy.kernel.util.StringAttribute" value="//@nodes.0">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[415.0, 200.0]">
+                </property>
+            </entity>
+            <entity name="SetSpeed1837007962" class="ptolemy.domains.fsm.kernel.State">
+                <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="elementURIFragment" class="ptolemy.kernel.util.StringAttribute" value="//@nodes.2">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[540.0, 425.0]">
+                </property>
+            </entity>
+            <entity name="SetSpeed220424415" class="ptolemy.domains.fsm.kernel.State">
+                <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="elementURIFragment" class="ptolemy.kernel.util.StringAttribute" value="//@nodes.3">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[690.0, 195.0]">
+                </property>
+            </entity>
+            <relation name="initialTransition" class="ptolemy.domains.fsm.kernel.Transition">
+                <property name="outputActions" class="ptolemy.domains.fsm.kernel.OutputActionsAttribute" value="points={point20={turn=1},point24={turn=1}};signals={signal12345={lights=0}};tracks={track12345={speed=0, motormode=0}}">
+                </property>
+                <property name="setActions" class="ptolemy.domains.fsm.kernel.CommitActionsAttribute" value="count = 0">
+                </property>
+                <property name="reset" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="preemptive" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="defaultTransition" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+                <property name="nondeterministic" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+            </relation>
+            <relation name="92361528" class="ptolemy.domains.fsm.kernel.Transition">
+                <property name="setActions" class="ptolemy.domains.fsm.kernel.CommitActionsAttribute" value="count = count + 1">
+                </property>
+                <property name="exitAngle" class="ptolemy.data.expr.Parameter" value="2.3675241001917753">
+                </property>
+                <property name="gamma" class="ptolemy.data.expr.Parameter" value="-2.790704604690147">
+                </property>
+                <property name="reset" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="preemptive" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="defaultTransition" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+                <property name="nondeterministic" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+            </relation>
+            <relation name="1175870334" class="ptolemy.domains.fsm.kernel.Transition">
+                <property name="guardExpression" class="ptolemy.kernel.util.StringAttribute" value="count &gt; 25*2">
+                </property>
+                <property name="outputActions" class="ptolemy.domains.fsm.kernel.OutputActionsAttribute" value="tracks={track0={speed=100, motormode=1},track1={speed=100, motormode=1},track2={speed=100, motormode=1},track3={speed=100, motormode=1},track4={speed=100, motormode=1},track5={speed=100, motormode=1},track6={speed=100, motormode=1},track7={speed=100, motormode=1},track10={speed=100, motormode=1},track11={speed=100, motormode=1}};signals={signal12345={lights=0}};points={point12345={turn=0}}">
+                </property>
+                <property name="setActions" class="ptolemy.domains.fsm.kernel.CommitActionsAttribute" value="count = 0">
+                </property>
+                <property name="reset" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+                <property name="preemptive" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="defaultTransition" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="nondeterministic" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+            </relation>
+            <relation name="1837007962" class="ptolemy.domains.fsm.kernel.Transition">
+                <property name="setActions" class="ptolemy.domains.fsm.kernel.CommitActionsAttribute" value="count = count + 1">
+                </property>
+                <property name="exitAngle" class="ptolemy.data.expr.Parameter" value="2.2839466292626875">
+                </property>
+                <property name="gamma" class="ptolemy.data.expr.Parameter" value="3.6215526003096596">
+                </property>
+                <property name="reset" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="preemptive" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="defaultTransition" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+                <property name="nondeterministic" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+            </relation>
+            <relation name="1469198150" class="ptolemy.domains.fsm.kernel.Transition">
+                <property name="guardExpression" class="ptolemy.kernel.util.StringAttribute" value="contact(10) == 0">
+                </property>
+                <property name="outputActions" class="ptolemy.domains.fsm.kernel.OutputActionsAttribute" value="tracks={track7={speed=30, motormode=1},track10={speed=30, motormode=1}};signals={signal12345={lights=0}};points={point12345={turn=0}}">
+                </property>
+                <property name="setActions" class="ptolemy.domains.fsm.kernel.CommitActionsAttribute" value="count = 0">
+                </property>
+                <property name="reset" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+                <property name="preemptive" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="defaultTransition" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="nondeterministic" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+            </relation>
+            <relation name="220424415" class="ptolemy.domains.fsm.kernel.Transition">
+                <property name="setActions" class="ptolemy.domains.fsm.kernel.CommitActionsAttribute" value="count = count + 1">
+                </property>
+                <property name="exitAngle" class="ptolemy.data.expr.Parameter" value="2.0866052828013713">
+                </property>
+                <property name="gamma" class="ptolemy.data.expr.Parameter" value="-2.369767511555549">
+                </property>
+                <property name="reset" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="preemptive" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="defaultTransition" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+                <property name="nondeterministic" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+            </relation>
+            <relation name="174639979" class="ptolemy.domains.fsm.kernel.Transition">
+                <property name="guardExpression" class="ptolemy.kernel.util.StringAttribute" value="contact(10) == 1">
+                </property>
+                <property name="outputActions" class="ptolemy.domains.fsm.kernel.OutputActionsAttribute" value="tracks={track10={speed=0, motormode=1}};signals={signal12345={lights=0}};points={point12345={turn=0}}">
+                </property>
+                <property name="setActions" class="ptolemy.domains.fsm.kernel.CommitActionsAttribute" value="count = 0">
+                </property>
+                <property name="reset" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+                <property name="preemptive" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="defaultTransition" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="nondeterministic" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+            </relation>
+            <relation name="1479194195" class="ptolemy.domains.fsm.kernel.Transition">
+                <property name="guardExpression" class="ptolemy.kernel.util.StringAttribute" value="count &gt; 25*10">
+                </property>
+                <property name="outputActions" class="ptolemy.domains.fsm.kernel.OutputActionsAttribute" value="tracks={track0={speed=100, motormode=1},track1={speed=100, motormode=1},track2={speed=100, motormode=1},track3={speed=100, motormode=1},track4={speed=100, motormode=1},track5={speed=100, motormode=1},track6={speed=100, motormode=1},track7={speed=100, motormode=1},track10={speed=100, motormode=1},track11={speed=100, motormode=1}};signals={signal12345={lights=0}};points={point12345={turn=0}}">
+                </property>
+                <property name="setActions" class="ptolemy.domains.fsm.kernel.CommitActionsAttribute" value="count = 0">
+                </property>
+                <property name="reset" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+                <property name="preemptive" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="defaultTransition" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="nondeterministic" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+            </relation>
+            <relation name="1720854532" class="ptolemy.domains.fsm.kernel.Transition">
+                <property name="setActions" class="ptolemy.domains.fsm.kernel.CommitActionsAttribute" value="count = count + 1">
+                </property>
+                <property name="exitAngle" class="ptolemy.data.expr.Parameter" value="2.2635813789937744">
+                </property>
+                <property name="gamma" class="ptolemy.data.expr.Parameter" value="2.79401865588035">
+                </property>
+                <property name="reset" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="preemptive" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="defaultTransition" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+                <property name="nondeterministic" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+            </relation>
+            <link port="initial.outgoingPort" relation="initialTransition"/>
+            <link port="SetPoint92361528.incomingPort" relation="initialTransition"/>
+            <link port="SetPoint92361528.incomingPort" relation="92361528"/>
+            <link port="SetPoint92361528.outgoingPort" relation="92361528"/>
+            <link port="SetPoint92361528.outgoingPort" relation="1175870334"/>
+            <link port="SetSpeed1720854532.incomingPort" relation="1175870334"/>
+            <link port="SetSpeed1720854532.incomingPort" relation="1479194195"/>
+            <link port="SetSpeed1720854532.incomingPort" relation="1720854532"/>
+            <link port="SetSpeed1720854532.outgoingPort" relation="1469198150"/>
+            <link port="SetSpeed1720854532.outgoingPort" relation="1720854532"/>
+            <link port="SetSpeed1837007962.incomingPort" relation="1837007962"/>
+            <link port="SetSpeed1837007962.incomingPort" relation="1469198150"/>
+            <link port="SetSpeed1837007962.outgoingPort" relation="1837007962"/>
+            <link port="SetSpeed1837007962.outgoingPort" relation="174639979"/>
+            <link port="SetSpeed220424415.incomingPort" relation="220424415"/>
+            <link port="SetSpeed220424415.incomingPort" relation="174639979"/>
+            <link port="SetSpeed220424415.outgoingPort" relation="220424415"/>
+            <link port="SetSpeed220424415.outgoingPort" relation="1479194195"/>
+        </entity>
+        <relation name="contactRelation" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+            </property>
+        </relation>
+        <relation name="occupiedRelation" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+            </property>
+        </relation>
+        <relation name="tracksRelation" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+            </property>
+        </relation>
+        <relation name="pointsRelation" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+            </property>
+        </relation>
+        <relation name="signalsRelation" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+            </property>
+        </relation>
+        <link port="contact" relation="contactRelation"/>
+        <link port="occupied" relation="occupiedRelation"/>
+        <link port="tracks" relation="tracksRelation"/>
+        <link port="points" relation="pointsRelation"/>
+        <link port="signals" relation="signalsRelation"/>
+        <link port="_Controller.contact" relation="contactRelation"/>
+        <link port="_Controller.occupied" relation="occupiedRelation"/>
+        <link port="_Controller.tracks" relation="tracksRelation"/>
+        <link port="_Controller.points" relation="pointsRelation"/>
+        <link port="_Controller.signals" relation="signalsRelation"/>
+    </entity>
+    <entity name="delayContact" class="ptolemy.domains.sr.lib.NonStrictDelay">
+        <property name="initialValue" class="ptolemy.data.expr.Parameter" value="{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-290.0, -55.0]">
+        </property>
+    </entity>
+    <entity name="delayOccupied" class="ptolemy.domains.sr.lib.NonStrictDelay">
+        <property name="initialValue" class="ptolemy.data.expr.Parameter" value="{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-290.0, 10.0]">
+        </property>
+    </entity>
+    <entity name="mergeTracks" class="ptolemy.actor.kiel.ModelRailwayMerge">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-555.0, -80.0]">
+        </property>
+    </entity>
+    <entity name="mergePoints" class="ptolemy.actor.kiel.ModelRailwayMerge">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-550.0, -30.0]">
+        </property>
+    </entity>
+    <entity name="mergeSignals" class="ptolemy.actor.kiel.ModelRailwayMerge">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-550.0, 30.0]">
+        </property>
+    </entity>
+    <relation name="delayContactRelation" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+    </relation>
+    <relation name="delayOccupiedRelation" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+    </relation>
+    <relation name="mergeTracksRelation" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+    </relation>
+    <relation name="mergePointsRelation" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+    </relation>
+    <relation name="mergeSignalsRelation" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+    </relation>
+    <relation name="relation" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+            <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+            </property>
+        </property>
+        <vertex name="vertex1" value="[-60.0, 175.0]">
+        </vertex>
+    </relation>
+    <relation name="relation2" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+        <vertex name="vertex1" value="[-80.0, 155.0]">
+        </vertex>
+    </relation>
+    <relation name="relation3" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+        <vertex name="vertex1" value="[-100.0, 135.0]">
+        </vertex>
+    </relation>
+    <relation name="relation4" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation5" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation6" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+            <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+            </property>
+        </property>
+        <vertex name="vertex1" value="[-625.0, 175.0]">
+        </vertex>
+    </relation>
+    <relation name="relation8" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+        <vertex name="vertex1" value="[-585.0, 135.0]">
+        </vertex>
+    </relation>
+    <relation name="relation7" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="1">
+        </property>
+        <vertex name="vertex1" value="[-605.0, 155.0]">
+        </vertex>
+    </relation>
+    <link port="ModelRailwayIO.tracks" relation="mergeTracksRelation"/>
+    <link port="ModelRailwayIO.points" relation="mergePointsRelation"/>
+    <link port="ModelRailwayIO.signals" relation="mergeSignalsRelation"/>
+    <link port="ModelRailwayIO.contact" relation="delayContactRelation"/>
+    <link port="ModelRailwayIO.occupied" relation="delayOccupiedRelation"/>
+    <link port="Thread92361528.contact" relation="relation4"/>
+    <link port="Thread92361528.occupied" relation="relation5"/>
+    <link port="Thread92361528.tracks" relation="relation"/>
+    <link port="Thread92361528.points" relation="relation2"/>
+    <link port="Thread92361528.signals" relation="relation3"/>
+    <link port="delayContact.input" relation="delayContactRelation"/>
+    <link port="delayContact.output" relation="relation4"/>
+    <link port="delayOccupied.input" relation="delayOccupiedRelation"/>
+    <link port="delayOccupied.output" relation="relation5"/>
+    <link port="mergeTracks.output" relation="mergeTracksRelation"/>
+    <link port="mergeTracks.input" relation="relation6"/>
+    <link port="mergePoints.output" relation="mergePointsRelation"/>
+    <link port="mergePoints.input" relation="relation7"/>
+    <link port="mergeSignals.output" relation="mergeSignalsRelation"/>
+    <link port="mergeSignals.input" relation="relation8"/>
+    <link relation1="relation" relation2="relation6"/>
+    <link relation1="relation2" relation2="relation7"/>
+    <link relation1="relation3" relation2="relation8"/>
+</entity>

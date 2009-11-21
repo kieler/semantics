@@ -24,8 +24,8 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 
 import ptolemy.actor.CompositeActor;
 import ptolemy.actor.Manager;
-import ptolemy.domains.fsm.modal.ModalController;
-import ptolemy.domains.fsm.modal.ModalModel;
+import ptolemy.domains.modal.modal.ModalController;
+import ptolemy.domains.modal.modal.ModalModel;
 import ptolemy.kernel.InstantiableNamedObj;
 import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;

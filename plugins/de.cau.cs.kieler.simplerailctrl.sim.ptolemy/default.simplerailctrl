@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<simplerailctrl:RailController xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simplerailctrl="http://simplerailctrl/1.0">
+<simplerailctrl:RailController xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simplerailctrl="de.cau.cs.kieler.simplerailctrl">
   <nodes xsi:type="simplerailctrl:SetSpeed" speed="100">
     <outTransitions xsi:type="simplerailctrl:EventContact" destination="//@nodes.2" track="IC_ST_3"/>
     <track>IC_JCT_0</track>
