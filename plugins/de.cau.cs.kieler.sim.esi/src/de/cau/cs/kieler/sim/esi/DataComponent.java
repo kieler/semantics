@@ -35,8 +35,11 @@ import org.eclipse.xtext.ui.core.editor.model.IXtextDocument;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.EsiStandaloneSetup;
-import de.cau.cs.kieler.esi.*;
+import de.cau.cs.kieler.sim.esi.EsiStandaloneSetup;
+import de.cau.cs.kieler.sim.esi.esi.signal;
+import de.cau.cs.kieler.sim.esi.esi.tick;
+import de.cau.cs.kieler.sim.esi.esi.trace;
+import de.cau.cs.kieler.sim.esi.esi.tracelist;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
