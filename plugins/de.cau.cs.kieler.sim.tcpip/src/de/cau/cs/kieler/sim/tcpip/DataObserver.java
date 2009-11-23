@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.osgi.framework.Bundle;
@@ -63,14 +64,25 @@ public class DataObserver extends JSONStringDataComponent {
         wf.invokeWorkflow(true);
 
         // building relative path
+        /*
+         * REALY REALY BAD!!!!
+         * 
+         * But i do not find a solution and do not know if it works
+         */
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
-        String bundleLocation = bundle.getLocation().replaceAll("reference:file:", "");
+        String bundleLocation = bundle.getLocation();
+
+        Path path = new Path(bundleLocation);
+        bundleLocation = "/home/" + path.toString();
+        System.out.println(bundleLocation);
 
         String compile = "gcc " + wf.getOutPath() + "sim.c " + wf.getOutPath() + "sim_data.c "
                 + bundleLocation + "simulation/cJSON.c " + bundleLocation + "simulation/tcpip.c "
-                + "-I " + bundleLocation + "simulation/ " + "-o " + wf.getOutPath() + "simulation -lm";
+                + "-I " + bundleLocation + "simulation/ " + "-o " + wf.getOutPath()
+                + "simulation -lm";
         System.out.println(compile);
         String executable = wf.getOutPath() + "simulation";
+        System.out.println(executable);
         try {
             // compile and start the c server
             Process process;
@@ -79,6 +91,11 @@ public class DataObserver extends JSONStringDataComponent {
 
             System.out.println("compiling ready");
             process = Runtime.getRuntime().exec(executable);
+            System.out.println("server startet");
+            System.out.println("server startet");
+            System.out.println("server startet");
+            System.out.println("server startet");
+            System.out.println("server startet");
             // start client
             int clientConnectionTrails = 10;
             client = new JSONClient(Integer.parseInt(getProperties()[0].getValue()));
@@ -126,13 +143,13 @@ public class DataObserver extends JSONStringDataComponent {
         try {
             client.close();
             // delete temp folder
-            File folder = new File(wf.getOutPath());
-//            boolean folderDeleted = deleteFolder(folder);
-//            if (folderDeleted) {
-//                System.out.println("temp folder" + folder + "successfully deleted");
-//            } else {
-//                System.err.println("error while deleting temp folder: " + folder);
-//            }
+            // File folder = new File(wf.getOutPath());
+            // boolean folderDeleted = deleteFolder(folder);
+            // if (folderDeleted) {
+            // System.out.println("temp folder" + folder + "successfully deleted");
+            // } else {
+            // System.err.println("error while deleting temp folder: " + folder);
+            // }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
