@@ -2,8 +2,11 @@ package de.cau.cs.kieler.sim.tcpip;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -25,6 +28,7 @@ public class DataObserver extends JSONStringDataComponent {
 
     JSONClient client = null;
     WorkflowGenerator wf = null;
+    Process process = null;
 
     public String step(String JSONString) throws KiemExecutionException {
         String out = "";
@@ -34,7 +38,7 @@ public class DataObserver extends JSONStringDataComponent {
             System.out.println(out);
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
         try {
             JSONObject receivedObject = new JSONObject(out);
@@ -53,7 +57,7 @@ public class DataObserver extends JSONStringDataComponent {
             out = receivedObject.toString();
         } catch (JSONException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
         return out;
     }
@@ -75,30 +79,41 @@ public class DataObserver extends JSONStringDataComponent {
         Path path = new Path(bundleLocation);
         bundleLocation = "/home/" + path.toString();
         System.out.println(bundleLocation);
+        
+        // find free port
+        boolean findNewPort = false;
+        int port = 0;
+        do {
+            Random random = new Random();
+            port = random.nextInt(65535);
+            try {
+                testPort(port);
+                findNewPort = true;
+            } catch (IOException e1) {
+                findNewPort = false;
+            }
+        } while (findNewPort);
 
         String compile = "gcc " + wf.getOutPath() + "sim.c " + wf.getOutPath() + "sim_data.c "
                 + bundleLocation + "simulation/cJSON.c " + bundleLocation + "simulation/tcpip.c "
                 + "-I " + bundleLocation + "simulation/ " + "-o " + wf.getOutPath()
                 + "simulation -lm";
         System.out.println(compile);
-        String executable = wf.getOutPath() + "simulation";
+        String executable = wf.getOutPath() + "simulation " + port;
         System.out.println(executable);
+
         try {
             // compile and start the c server
-            Process process;
             process = Runtime.getRuntime().exec(compile);
             process.waitFor();
 
             System.out.println("compiling ready");
             process = Runtime.getRuntime().exec(executable);
             System.out.println("server startet");
-            System.out.println("server startet");
-            System.out.println("server startet");
-            System.out.println("server startet");
-            System.out.println("server startet");
             // start client
             int clientConnectionTrails = 10;
-            client = new JSONClient(Integer.parseInt(getProperties()[0].getValue()));
+            // client = new JSONClient(Integer.parseInt(getProperties()[0].getValue()));
+            client = new JSONClient(port);
             while (clientConnectionTrails > 0) {
                 if (client.getBoundingStatus()) {
                     // client has connection
@@ -106,19 +121,20 @@ public class DataObserver extends JSONStringDataComponent {
                 } else {
                     if (clientConnectionTrails == 1) {
                         System.out.println("Fehler");
-                        clientConnectionTrails--;
                     } else {
                         Thread.sleep(500);
-                        clientConnectionTrails--;
                     }
+                    clientConnectionTrails--;
                 }
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.err.println(e.getMessage());
+            process.destroy();
+            initialize();
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
 
     }
@@ -142,14 +158,17 @@ public class DataObserver extends JSONStringDataComponent {
     public void wrapup() throws KiemInitializationException {
         try {
             client.close();
+            process.destroy();
             // delete temp folder
-            // File folder = new File(wf.getOutPath());
-            // boolean folderDeleted = deleteFolder(folder);
-            // if (folderDeleted) {
-            // System.out.println("temp folder" + folder + "successfully deleted");
-            // } else {
-            // System.err.println("error while deleting temp folder: " + folder);
-            // }
+            File folder = new File(wf.getOutPath());
+            if (folder.getAbsolutePath().contains("tmp")){
+                boolean folderDeleted = deleteFolder(folder);
+                if (folderDeleted) {
+                    System.out.println("temp folder" + folder + "successfully deleted");
+                } else {
+                    System.err.println("error while deleting temp folder: " + folder);
+                }
+            }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -172,6 +191,22 @@ public class DataObserver extends JSONStringDataComponent {
             tmp.add(signalList.get(i).getName());
         }
         out = tmp.toArray(new String[tmp.size()]);
+        return out;
+    }
+
+    public boolean testPort(int port) throws IOException {
+        boolean out = false;
+        Socket socket = null;
+        try {
+            socket = new Socket();
+            socket.connect(new InetSocketAddress("localhost", port), 1000);
+
+        } finally {
+            if (socket != null) {
+                socket.close();
+                out = true;
+            }
+        }
         return out;
     }
 

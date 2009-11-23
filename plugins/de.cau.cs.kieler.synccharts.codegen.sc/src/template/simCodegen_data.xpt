@@ -82,8 +82,8 @@ void printOutputs(){
 «ENDDEFINE»
 
 «DEFINE generateMain FOR Region»
-int main(){
-	initServer(12345);
+int main(int argc, const char* argv[]){
+	initServer(atoi(argv[1]));
 	stateArray = cJSON_CreateArray();
 	output = cJSON_CreateObject();
 	setInputs();
