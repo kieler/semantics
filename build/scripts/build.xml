@@ -270,6 +270,13 @@
 					<!-- separate enclosing tags to realize NOR function
 						 (multiple repexp conditions will be ANDed) -->
 				</filterchain>
+				<footer filtering="no">
+						&lt;fileset dir=&quot;${basedir}&quot;
+						    includes=&quot;plugins/**/*.jar&quot; /&gt;
+				</footer>
+				<!-- plain text equals the following:
+					 fileset dir="${basedir}/../../" includes="**/plugins/**/*.jar" excludes="**/update-site/**/*.*,**/buildrepo/**/*.*,**/buildRepo/**/*.*" /
+				     it's supposed to include library jars like ptolemy, antlr-runtime, ... for class resolution -->
 			</concat>
 		</loadfile> 
 
