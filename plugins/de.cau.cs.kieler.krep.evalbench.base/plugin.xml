@@ -42,15 +42,6 @@
             name="KREP Editor">
       </editor>
       <editor
-            class="de.cau.cs.kieler.krep.evalbench.ui.editors.KlpEditor"
-            contributorClass="org.eclipse.ui.part.EditorActionBarContributor"
-            default="false"
-            extensions="klp"
-            icon="icons/kiel_file.gif"
-            id="de.cau.cs.kieler.krep.evalbench.ui.editors.klp"
-            name="KLP Editor">
-      </editor>
-      <editor
             class="de.cau.cs.kieler.krep.evalbench.ui.editors.KitEditor"
             contributorClass="org.eclipse.ui.part.EditorActionBarContributor"
             default="false"

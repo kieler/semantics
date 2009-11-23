@@ -21,10 +21,12 @@ import java.util.LinkedList;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
 
+import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KrepConfig;
+import de.cau.cs.kieler.krep.evalbench.ui.views.TargetView;
 
 /**
  * Implementation of the communication protocol interface that uses the KREP protocol.
@@ -159,8 +161,6 @@ public class KrepProtocol extends CommunicationProtocol {
 
             res[i] = trace.get(i);
         }
-        // int res[] = {1,2};
-        // MessageView.print("TraceLength:" + trace.size());
         return res;
     }
 
@@ -179,9 +179,9 @@ public class KrepProtocol extends CommunicationProtocol {
         Iterator<Integer> i = msg.iterator();
         // int nKind = msg.get(0);
         int kind = i.next();
-        if (kind != 1) {
-            throw new CommunicationException("Wrong processor");
-        }
+        // if (kind != 1) {
+        // throw new CommunicationException("Wrong processor");
+        // }
         // int version =
         i.next();
 
@@ -191,6 +191,7 @@ public class KrepProtocol extends CommunicationProtocol {
         int nROM = 1 << i.next();
 
         krp = new KrepConfig(nCores, nIO, nReg, nROM);
+        TargetView.getDefault().show(stringBuffer.toString());
 
         return stringBuffer.toString();
     }
@@ -215,14 +216,20 @@ public class KrepProtocol extends CommunicationProtocol {
                     b[j] = (byte) (i & MASK_BYTE);
                 }
                 send(b);
-                receiveByte(1);
+                LinkedList<Integer> i = receiveByte(1);
+                if (i.size() != 1 || i.getFirst() != 0xFF) {
+                    throw new LoadException("wrong acknowledgement");
+                }
                 if (monitor != null) {
                     monitor.worked(1);
                 }
             }
             sendCmd(RESET_COMMAND);
             sendCmd(TICK_COMMAND); // Initialize
-            receiveByte(1);
+            LinkedList<Integer> i = receiveByte(1);
+            if (i.size() != 1) {
+                throw new LoadException("wrong acknowledgement");
+            }
             return true;
         } else {
             throw new LoadException("Cannot execute program: " + error);

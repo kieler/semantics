@@ -54,7 +54,7 @@ public class RxtxSerialConnection extends ConnectionProtocol {
          * portNames.add(identifier.getName()); } }
          */
         portNames.add("no serial port available");
-        return portNames.toArray(new String[1]);
+        return portNames.toArray(new String[portNames.size()]);
     }
 
     /**

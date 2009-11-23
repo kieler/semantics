@@ -73,7 +73,7 @@ public class CJmp extends Instruction {
     @Override
     public String toString() {
 
-        return "JF\t" + reg.toString() + "\t" + label;
+        return "J\t" + reg.toString() + "\t" + label.toString();
     }
 
     @Override

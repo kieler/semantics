@@ -59,11 +59,6 @@ public class AssemblerView extends ViewPart {
         activator.setViewer(this);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
-     */
     @Override
     public final void createPartControl(final Composite parent) {
         // create table

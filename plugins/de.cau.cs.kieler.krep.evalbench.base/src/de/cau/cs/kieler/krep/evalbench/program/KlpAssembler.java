@@ -53,9 +53,6 @@ public class KlpAssembler implements IAssembler {
 
     private HashMap<String, Integer> index;
 
-    /** Internal array of assembler instructions. */
-    // private LinkedList<de.cau.cs.kieler.krep.evalbench.program.Instruction> instructions;
-
     private KLP model = null;
 
     private HashMap<Integer, Integer> rows = new HashMap<Integer, Integer>();
@@ -65,6 +62,7 @@ public class KlpAssembler implements IAssembler {
     private int nSig = 1;
     private int nIn = 0;
     private int nOut = 0;
+    private int nRegs = 0;
 
     /**
      * generate empty assembler description.
@@ -113,11 +111,11 @@ public class KlpAssembler implements IAssembler {
                 }
             }
         }
-
+        
         for (Line l : model.getInstructions()) {
             initialize(l.getInstruction(), label2addr, regs);
         }
-
+        nRegs = regs.size();
     }
 
     private void initialize(final Instruction instruction,
@@ -149,17 +147,21 @@ public class KlpAssembler implements IAssembler {
             setOpcode(i);
         } else if (instruction instanceof CJmp) {
             CJmp i = (CJmp) instruction;
-            setOpcode(i);
             setRegs(i.getReg(), regs);
             i.getLabel().setAddr(label2addr.get(i.getLabel().getName()));
+            setOpcode(i);
         } else if (instruction instanceof Jmp) {
             Jmp i = (Jmp) instruction;
-            i.setOpcode0(Opcode.JMP.getCode());
             i.getLabel().setAddr(label2addr.get(i.getLabel().getName()));
-            i.setOpcode1(i.getLabel().getAddr());
+            setOpcode(i, Opcode.JMP.getCode(), i.getLabel().getAddr() >> Config.BYTE_LEN, i
+                    .getLabel().getAddr()
+                    & Config.BYTE_MASK, 0);
         } else if (instruction instanceof Move) {
             Move i = (Move) instruction;
             setRegs(i.getTo(), regs);
+            if (i.getFrom() != null) {
+                setRegs(i.getFrom().getReg(), regs);
+            }
             setOpcode(i);
 
         } else if (instruction instanceof Prio) {
@@ -199,13 +201,17 @@ public class KlpAssembler implements IAssembler {
         case IVMOV:
             i.setOpcode0(Opcode.IVMOV.getCode());
             break;
+        case VVMOV:
+            i.setOpcode0(Opcode.VVMOV.getCode());
+            break;
+
         }
         i.setOpcode1(2 * i.getTo().getId());
-
         switch (i.getType()) {
         case CCMOV:
         case CMOV:
         case VCMOV:
+        case VVMOV:
             i.setOpcode2(getOpcode(i.getFrom()));
             break;
         case ICMOV:
@@ -260,8 +266,9 @@ public class KlpAssembler implements IAssembler {
             i.setOpcode0(Opcode.JNZ.getCode());
             break;
         }
-        i.setOpcode1(getOpcode(i.getReg()));
-        i.setOpcode2(i.getLabel().getAddr());
+        i.setOpcode3(getOpcode(i.getReg()));
+        i.setOpcode1(i.getLabel().getAddr() >> Config.BYTE_LEN);
+        i.setOpcode2(i.getLabel().getAddr() & Config.BYTE_MASK);
     }
 
     private void setOpcode(final Binop i) {
@@ -434,10 +441,9 @@ public class KlpAssembler implements IAssembler {
             return "not enough IO";
         }
 
-        // if (k.getRegs() < Register.getMax()) {
-        // return "not enough registers (" + k.getRegs() + "<";
-        // + Register.getMax() + ")";
-        // }
+        if (k.getRegs() < nRegs) {
+            return "not enough registers (" + k.getRegs() + "<" + nRegs + ")";
+        }
         if (k.getIrom() < size()) {
             return "not enough ROM (" + k.getIrom() + "<" + size() + ")";
         }
@@ -538,7 +544,7 @@ public class KlpAssembler implements IAssembler {
             }
         } else if (instr instanceof CJmp) {
             CJmp i = (CJmp) instr;
-            res = "J" + i.getCond() + " " + printLabel(i.getLabel()) + " " + i.getReg() + "(";
+            res = i.getCond() + " " + printLabel(i.getLabel()) + " " + printRead(i.getReg()) + ")";
         } else if (instr instanceof Done) {
             Done i = (Done) instr;
             res = "DONE";
@@ -552,7 +558,7 @@ public class KlpAssembler implements IAssembler {
             Move i = (Move) instr;
             res = i.getType().getName().toUpperCase() + " " + printReg(i.getTo()) + " ";
             if (i.getFrom() != null) {
-                res += i.getFrom().getReg();
+                res += printReg(i.getFrom().getReg());
             } else {
                 res += i.getVal();
             }
@@ -561,7 +567,7 @@ public class KlpAssembler implements IAssembler {
             res = "PRIO " + printReg(i.getReg()) + " " + i.getPrio();
         } else if (instr instanceof SetClk) {
             SetClk i = (SetClk) instr;
-            res = "SETCLK " + printReg(i.getReg()) + " " + i.getClk();
+            res = "SETCLK " + printReg(i.getReg()) + " " + printReg(i.getClk());
         } else if (instr instanceof SetPC) {
             SetPC i = (SetPC) instr;
             res = "SETPC " + printReg(i.getReg()) + " " + printLabel(i.getLabel());
@@ -645,6 +651,13 @@ public class KlpAssembler implements IAssembler {
      * {@inheritDoc}
      */
     public void assemble(final String n, final Reader p) throws ParseException {
+    }
+
+    private void setOpcode(Instruction i, int op0, int op1, int op2, int op3) {
+        i.setOpcode0(op0);
+        i.setOpcode1(op1);
+        i.setOpcode2(op2);
+        i.setOpcode3(op3);
     }
 
 }

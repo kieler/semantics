@@ -19,6 +19,17 @@ package de.cau.cs.kieler.krep.evalbench.program;
 public interface Config {
 
     /**
+     * number of bits in a byte.
+     */
+    int BYTE_LEN = 8;
+    
+    
+    /**
+     * mask to extract lowest order byte. 
+     */
+     int BYTE_MASK = 0xFF; 
+    
+    /**
      * @return true if the current processor is a Lustre processor
      */
     boolean isKLP();

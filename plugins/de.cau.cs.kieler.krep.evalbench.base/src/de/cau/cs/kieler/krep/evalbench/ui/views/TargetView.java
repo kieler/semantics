@@ -19,7 +19,6 @@ import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.krep.evalbench.ui.actions.TargetInfoAction;
 
-
 /**
  * A View for displaying target information.
  * 
@@ -33,6 +32,13 @@ public class TargetView extends ViewPart {
     /** The viewer used to display target info. */
     private TextViewer viewer = null;
 
+    private static TargetView instance = null;;
+
+    public TargetView() {
+        super();
+        instance = this;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -41,16 +47,11 @@ public class TargetView extends ViewPart {
         // create text viewer
         viewer = new TextViewer(parent);
         // create actions
-        IToolBarManager manager = getViewSite().getActionBars()
-                .getToolBarManager();
+        IToolBarManager manager = getViewSite().getActionBars().getToolBarManager();
         manager.add(new TargetInfoAction());
+        // instance = this;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
-     */
     @Override
     public void setFocus() {
         viewer.getControl().setFocus();
@@ -63,5 +64,26 @@ public class TargetView extends ViewPart {
      */
     public TextViewer getViewer() {
         return viewer;
+    }
+
+    /**
+     * @return unique instance of the TargetView
+     */
+    public static TargetView getDefault() {
+        if (instance == null) {
+            instance = new TargetView();
+            // TODO open Target view
+            // Activator.getDefault().getWorkbench().openWorkbenchWindow(perspectiveId, input)
+        }
+        return instance;
+    }
+
+    /**
+     * @param string target information to show.
+     */
+    public void show(final String string) {
+        if (viewer != null) {
+            viewer.setText(string);
+        }
     }
 }

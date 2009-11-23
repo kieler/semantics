@@ -19,6 +19,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
+import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
+import de.cau.cs.kieler.krep.evalbench.program.Config;
 import de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage;
 
 /**
@@ -30,6 +32,8 @@ import de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage;
 public class JNIConnection implements IConnectionProtocol {
 
     private IKrepWrapper krep = null;
+
+    private EsiLogger esi;
 
     /**
      * {@inheritDoc}
@@ -108,6 +112,7 @@ public class JNIConnection implements IConnectionProtocol {
         do {
             while (!krep.hasOutput()) {
                 krep.step();
+                log(";");
             }
             c = (char) krep.getOutput();
             res.append(c);
@@ -123,6 +128,7 @@ public class JNIConnection implements IConnectionProtocol {
         StringBuffer res = new StringBuffer();
         while (res.length() < n) {
             krep.step();
+            log(";");
             if (krep.hasOutput()) {
                 res.append((char) krep.getOutput());
             }
@@ -137,6 +143,7 @@ public class JNIConnection implements IConnectionProtocol {
     public void send(final String data) throws CommunicationException {
         for (byte b : data.getBytes()) {
             krep.send(b);
+            log(b);
         }
     }
 
@@ -146,6 +153,7 @@ public class JNIConnection implements IConnectionProtocol {
      */
     public void send(final byte data) throws CommunicationException {
         krep.send(data);
+        log(data);
     }
 
     /**
@@ -154,6 +162,9 @@ public class JNIConnection implements IConnectionProtocol {
      */
     public void comment(final String comment) {
         krep.comment(comment);
+        if (esi != null) {
+            esi.comment(comment);
+        }
     }
 
     /**
@@ -165,6 +176,7 @@ public class JNIConnection implements IConnectionProtocol {
         final int maskByte = 0xFF;
         while (res.size() < n) {
             krep.step();
+            log(";");
             if (krep.hasOutput()) {
                 res.add(((int) krep.getOutput()) & maskByte);
             }
@@ -179,7 +191,31 @@ public class JNIConnection implements IConnectionProtocol {
     public void send(final byte[] data) throws CommunicationException {
         for (byte b : data) {
             krep.send(b);
+            log(b);
         }
+    }
+
+    private void log(final byte b) {
+        if (esi != null) {
+            esi.write("RX(0x" + Integer.toHexString(b & Config.BYTE_MASK) + ");\n");
+        }
+    }
+
+    /**
+     * @param s
+     */
+    private void log(final String s) {
+        if (esi != null) {
+            esi.write(s + "\n");
+        }
+    }
+
+    /**
+     * @param fileName
+     *            name of the log file
+     */
+    public void setLogFile(final String fileName) {
+        esi = new EsiLogger(fileName);
     }
 
 }
