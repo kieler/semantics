@@ -6,41 +6,60 @@
 ${feature.classpath}
 		</path> 
 
-		<javadoc access="protected"
-			 author="true"
-			 destdir="${basedir}/${docdir}"
-			 doctitle="KIELER API Specification"
-			 nodeprecated="false"
-			 nodeprecatedlist="false"
-			 noindex="false"
-			 nonavbar="false"
-			 docletpath="${doclet.path}"
-			 doclet="${doclet}"
-			 notree="false"
-			 packagenames="de.cau.cs.kieler.*"
-			 classpathref="doc.classpath"
-			 source="1.5"
-			 splitindex="true"
-			 use="true"
-			 maxmemory="1024m"
-			 version="true">
-			<fileset dir="${basedir}/plugins" includes="**/*.java" excludes="${doc.excludes}" />
-			<!-- tag name="generated" description="Generated Code" / -->
-			<!-- tag name="ordered" / -->
-			<!-- tag name="model" / -->
-			<taglet name="de.cau.cs.kieler.taglets.RatingTaglet" path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
-			<taglet name="de.cau.cs.kieler.taglets.GeneratedTaglet" path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
-			<taglet name="de.cau.cs.kieler.taglets.ModelTaglet"     path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
-			<taglet name="de.cau.cs.kieler.taglets.OrderedTaglet"   path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
-			<link offline="true" packagelistLoc="${doc.packages}/java"                        href="http://java.sun.com/javase/6/docs/api" />
-			<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.platform"        href="http://help.eclipse.org/galileo/topic/org.eclipse.platform.doc.isv/reference/api" />
-			<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.draw2d"          href="http://help.eclipse.org/galileo/topic/org.eclipse.draw2d.doc.isv/reference/api/" />
-			<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.gef"             href="http://help.eclipse.org/galileo/topic/org.eclipse.gef.doc.isv/reference/api/" />
-			<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.emf"             href="http://help.eclipse.org/galileo/topic/org.eclipse.emf.doc/references/javadoc/" />
-			<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.emf.transaction" href="http://help.eclipse.org/galileo/topic/org.eclipse.emf.transaction.doc/references/javadoc/" />
-			<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.emf.validation"  href="http://help.eclipse.org/galileo/topic/org.eclipse.emf.validation.doc/references/javadoc/" />
-			<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.emf.workspace"   href="http://help.eclipse.org/galileo/topic/org.eclipse.emf.workspace.doc/references/javadoc/" />
-			<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.gmf.runtime"     href="http://help.eclipse.org/galileo/topic/org.eclipse.gmf.doc/reference/api/runtime" />
-		</javadoc>
+        <if>
+        <equals arg1="${doclet}" arg2="com.sun.tools.doclets.standard.Standard" />
+        <!-- argument set for the standard doclet -->
+        <then>
+	        <javadoc access="protected"
+    			 author="true"
+    			 destdir="${basedir}/${docdir}"
+    			 doctitle="KIELER API Specification"
+    			 nodeprecated="false"
+	    		 nodeprecatedlist="false"
+	    		 noindex="false"
+	    		 nonavbar="false"
+	    		 docletpath="${doclet.path}"
+	    		 doclet="${doclet}"
+	    		 notree="false"
+	    		 packagenames="de.cau.cs.kieler.*"
+	    		 classpathref="doc.classpath"
+	    		 source="1.5"
+	    		 splitindex="true"
+	    		 use="true"
+	    		 maxmemory="1024m"
+	    		 version="true">
+	    		<fileset dir="${basedir}/plugins" includes="**/*.java" excludes="${doc.excludes}" />
+	    		<!-- tag name="generated" description="Generated Code" / -->
+	    		<!-- tag name="ordered" / -->
+	    		<!-- tag name="model" / -->
+	    		<taglet name="de.cau.cs.kieler.taglets.RatingTaglet" path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
+	    		<taglet name="de.cau.cs.kieler.taglets.GeneratedTaglet" path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
+	    		<taglet name="de.cau.cs.kieler.taglets.ModelTaglet"     path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
+	    		<taglet name="de.cau.cs.kieler.taglets.OrderedTaglet"   path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
+	    		<link offline="true" packagelistLoc="${doc.packages}/java"                        href="http://java.sun.com/javase/6/docs/api" />
+	    		<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.platform"        href="http://help.eclipse.org/galileo/topic/org.eclipse.platform.doc.isv/reference/api" />
+	    		<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.draw2d"          href="http://help.eclipse.org/galileo/topic/org.eclipse.draw2d.doc.isv/reference/api/" />
+	    		<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.gef"             href="http://help.eclipse.org/galileo/topic/org.eclipse.gef.doc.isv/reference/api/" />
+	    		<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.emf"             href="http://help.eclipse.org/galileo/topic/org.eclipse.emf.doc/references/javadoc/" />
+	    		<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.emf.transaction" href="http://help.eclipse.org/galileo/topic/org.eclipse.emf.transaction.doc/references/javadoc/" />
+	    		<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.emf.validation"  href="http://help.eclipse.org/galileo/topic/org.eclipse.emf.validation.doc/references/javadoc/" />
+	    		<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.emf.workspace"   href="http://help.eclipse.org/galileo/topic/org.eclipse.emf.workspace.doc/references/javadoc/" />
+	    		<link offline="true" packagelistLoc="${doc.packages}/org.eclipse.gmf.runtime"     href="http://help.eclipse.org/galileo/topic/org.eclipse.gmf.doc/reference/api/runtime" />
+	    	</javadoc>
+	    </then>
+	    <!-- argument set for other doclets -->
+	    <else>
+	        <javadoc access="protected"
+    			 destdir="${basedir}/${docdir}"
+	    		 docletpath="${doclet.path}"
+	    		 doclet="${doclet}"
+	    		 packagenames="de.cau.cs.kieler.*"
+	    		 classpathref="doc.classpath"
+	    		 maxmemory="1024m">
+	    		<fileset dir="${basedir}/plugins" includes="**/*.java" excludes="${doc.excludes}" />
+	    	</javadoc>
+	    </else>
+	    </if>
+		
 	</target>
 	
