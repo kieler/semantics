@@ -20,6 +20,10 @@
 	<property name="equinoxLauncherPluginVersion" value="${system.equinoxLauncherPluginVersion}" />
 	<property name="job.name"	                  value="${system.JOB_NAME}" />
 
+	<property name="docdir"	             value="doc" />
+	<property name="doclet"	             value="com.sun.tools.doclets.standard.Standard" />
+	<property name="doclet.path"	     value="." />
+
 	<!-- default definitions: may be overwritten while calling this script if necessary -->	
 	<!-- property name="target"	             value="noTargetInfo"/ -->
 	<property name="plugin"              value=" "/>
@@ -144,6 +148,9 @@
 				<!-- path to classes, jars to be examined by findbugs -->
 			<arg value="-Ddoc.excludes=${doc.excludes}" />
 				<!-- comma separated path patterns excluded at javadoc generation -->
+			<arg value="-Ddocdir=${docdir}" />
+			<arg value="-Ddoclet=${doclet}" />
+			<arg value="-Ddoclet.path=${doclet.path}" />
 			<arg value="-Dcheckstyle.excludes=${checkstyle.excludes}" />
 				<!-- comma separated path patterns excluded at checkstyle examination -->
 			<arg value="-Dsuppress.clean=${suppress.clean}" />
