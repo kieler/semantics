@@ -17,7 +17,9 @@ import de.cau.cs.kieler.krep.compiler.lustre.ClockList;
 import de.cau.cs.kieler.krep.compiler.lustre.Expression;
 
 /**
- * @author ctr Exception to indicate an error in the type inference
+ * @author ctr 
+ * 
+ * Exception to indicate an error in the type inference
  */
 public class ClockException extends Exception {
 

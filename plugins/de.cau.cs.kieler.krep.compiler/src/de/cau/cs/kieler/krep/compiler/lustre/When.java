@@ -58,12 +58,12 @@ public class When extends Expression {
     @Override
     protected void inferType() throws TypeException {
         expr.inferType();
-        Type t1 = expr.type;
+        Type t1 = expr.getType();
         cName.inferType();
-        Type t2 = cName.type;
+        Type t2 = cName.getType();
 
         if (t2 == Type.BOOL) {
-            type = t1;
+            setType(t1);
         } else {
             throw new TypeException(cName, "BOOL", t2.toString());
         }
@@ -83,20 +83,20 @@ public class When extends Expression {
         if (!l1.equals(l2)) {
             throw new ClockException(this, l1, l2);
         }
-        clock = l1.clone();
-        clock.addClock(cName.getName());
-        return clock;
+        setClock(l1.clone());
+        getClock().addClock(cName.getName());
+        return getClock();
     }
 
     @Override
     public void propagateClock(final ClockList l) {
-        clock = l.clone();
-        ClockList c2 = clock.clone();
+        setClock(l.clone());
+        ClockList c2 = getClock().clone();
         c2.addClock(cName.getName());
         expr.propagateClock(c2);
-        cName.propagateClock(clock);
+        cName.propagateClock(getClock());
 
-        Debug.low(clock.toString() + " " + this.toString());
+        Debug.low(getClock().toString() + " " + this.toString());
     }
 
     @Override
@@ -110,11 +110,11 @@ public class When extends Expression {
             return res;
         } else {
             de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
-                    .getTemp(basename, type);
+                    .getTemp(basename, getType());
 
             res.setName(v.getName());
             aux.add(res);
-            return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name, null,
+            return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(), null,
                     new de.cau.cs.kieler.krep.compiler.ceq.VarAccess(
                             de.cau.cs.kieler.krep.compiler.ceq.Variable.get(v.getName()), false),
                     cName.getName());

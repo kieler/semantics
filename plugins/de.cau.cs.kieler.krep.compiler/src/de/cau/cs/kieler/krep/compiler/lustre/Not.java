@@ -58,31 +58,31 @@ public class Not extends Expression {
     @Override
     protected void inferType() throws TypeException {
         expr.inferType();
-        type = expr.type;
-        if (type != Type.BOOL) {
-            throw new TypeException(expr, Type.BOOL.toString(), expr.type.toString());
+        setType(expr.getType());
+        if (getType() != Type.BOOL) {
+            throw new TypeException(expr, Type.BOOL.toString(), expr.getType().toString());
         }
     }
 
     @Override
     public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
-        clock = expr.inferClock(env);
-        return clock;
+        setClock(expr.inferClock(env));
+        return getClock();
     }
 
     @Override
     public void propagateClock(final ClockList l) {
-        clock = l.clone();
-        expr.propagateClock(clock);
-        Debug.low(clock.toString() + " " + this.toString());
+        setClock(l.clone());
+        expr.propagateClock(getClock());
+        Debug.low(getClock().toString() + " " + this.toString());
     }
 
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename, final int stage,
             final String c, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq = expr.declock(basename, STAGE_INIT, c, aux);
-        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
-                new de.cau.cs.kieler.krep.compiler.ceq.Not(name, eq.getExpr()));
+        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
+                new de.cau.cs.kieler.krep.compiler.ceq.Not(getName(), eq.getExpr()));
 
     }
 

@@ -45,8 +45,8 @@ public class VarAccess extends Expression {
     public VarAccess(final Variable v) {
         super(v.getName());
         this.var = v;
-        this.type = var.getType();
-        this.clock = var.getClock().clone();
+        setType(var.getType());
+        this.setClock(var.getClock().clone());
     }
 
     /**
@@ -54,24 +54,19 @@ public class VarAccess extends Expression {
      *            on which the variable shall run
      */
     public void setClock(final String clock) {
-        if (clock != null) {
-            this.clock.addClock(clock);
+        if (getClock() != null) {
+            getClock().addClock(clock);
         }
     }
 
     @Override
     public String toString() {
-        return name;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+        return getName();
     }
 
     @Override
     public Expression propagatePre(final HashMap<String, Expression> eqs) {
-        return new Pre("pre_" + this.name, this);
+        return new Pre("pre_" + this.getName(), this);
     }
 
     @Override
@@ -86,29 +81,29 @@ public class VarAccess extends Expression {
 
     @Override
     public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
-        clock = var.getClock().clone();// new ClockList();
+        setClock(var.getClock().clone());// new ClockList();
         return new ClockList();
     }
 
     @Override
     public void propagateClock(final ClockList l) {
-        clock = l.clone();
-        Debug.low(clock.toString() + " " + this.toString());
+        setClock(l.clone());
+        Debug.low(getClock().toString() + " " + this.toString());
     }
 
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
             final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
+        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
                 new de.cau.cs.kieler.krep.compiler.ceq.VarAccess(
                         de.cau.cs.kieler.krep.compiler.ceq.Variable.get(var.getName()), false));
     }
 
     @Override
     public Expression liftClock() {
-        if (!clock.isBase()) {
-            return new When(this.name, this, new VarAccess(Variable.get(clock.getClock())));
+        if (!getClock().isBase()) {
+            return new When(this.getName(), this, new VarAccess(Variable.get(getClock().getClock())));
         } else {
             return this;
         }

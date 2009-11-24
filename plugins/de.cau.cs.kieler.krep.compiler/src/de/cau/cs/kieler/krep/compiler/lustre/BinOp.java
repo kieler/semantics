@@ -61,9 +61,9 @@ public class BinOp extends Expression {
     @Override
     protected void inferType() throws TypeException {
         expr1.inferType();
-        Type t1 = expr1.type;
+        Type t1 = expr1.getType();
         expr2.inferType();
-        Type t2 = expr2.type;
+        Type t2 = expr2.getType();
         switch (oper) {
         case ADD:
         case SUB:
@@ -71,7 +71,7 @@ public class BinOp extends Expression {
         case DIV:
         case MOD:
             if (t1 == Type.INT && t2 == Type.INT) {
-                type = Type.INT;
+                setType(Type.INT);
             } else {
                 throw new TypeException(this, "INT x INT", t1.toString() + " x " + t2.toString());
             }
@@ -81,7 +81,7 @@ public class BinOp extends Expression {
         case XOR:
         case IMPL:
             if (t1 == Type.BOOL && t2 == Type.BOOL) {
-                type = Type.BOOL;
+                setType(Type.BOOL);
             } else {
                 throw new TypeException(this, "BOOL x BOOL", t1.toString() + " x " + t2.toString());
             }
@@ -92,7 +92,7 @@ public class BinOp extends Expression {
         case LE:
         case LT:
             if (t1 == Type.INT && t2 == Type.INT) {
-                type = Type.BOOL;
+                setType(Type.BOOL);
             } else {
                 throw new TypeException(this, "INT x INT", t1.toString() + " x " + t2.toString());
             }
@@ -100,7 +100,7 @@ public class BinOp extends Expression {
         case EQ:
         case NEQ:
             if ((t1 == Type.INT && t2 == Type.INT) || (t1 == Type.BOOL && t2 == Type.BOOL)) {
-                type = Type.BOOL;
+                setType(Type.BOOL);
             } else {
                 throw new TypeException(this, "INT x INT", t1.toString() + " x " + t2.toString());
             }
@@ -122,16 +122,16 @@ public class BinOp extends Expression {
         if (!l1.equals(l2)) {
             throw new ClockException(this, l1, l2);
         }
-        clock = l1;
-        return clock;
+        setClock(l1);
+        return getClock();
     }
 
     @Override
     public void propagateClock(final ClockList l) {
-        clock = l.clone();
-        expr1.propagateClock(clock);
-        expr2.propagateClock(clock);
-        Debug.low(clock.toString() + " " + this.toString());
+        setClock(l.clone());
+        expr1.propagateClock(getClock());
+        expr2.propagateClock(getClock());
+        Debug.low(getClock().toString() + " " + this.toString());
     }
 
     @Override
@@ -142,8 +142,8 @@ public class BinOp extends Expression {
                 Expression.STAGE_INIT, clock, aux);
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq2 = expr2.declock(basename,
                 Expression.STAGE_INIT, clock, aux);
-        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
-                new de.cau.cs.kieler.krep.compiler.ceq.BinOp(name, eq1.getExpr(), eq2.getExpr(),
+        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
+                new de.cau.cs.kieler.krep.compiler.ceq.BinOp(getName(), eq1.getExpr(), eq2.getExpr(),
                         oper));
     }
 

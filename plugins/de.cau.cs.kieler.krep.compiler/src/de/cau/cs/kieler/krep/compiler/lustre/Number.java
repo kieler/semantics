@@ -36,7 +36,7 @@ public class Number extends Expression {
     public Number(final String name, final int num) {
         super(name);
         this.value = num;
-        this.type = Type.INT;
+        setType(Type.INT);
     }
 
     /**
@@ -48,7 +48,7 @@ public class Number extends Expression {
     public Number(final String name, final boolean val) {
         super(name);
         this.value = val ? 1 : 0;
-        this.type = Type.BOOL;
+        setType(Type.BOOL);
     }
 
     @Override
@@ -66,17 +66,6 @@ public class Number extends Expression {
         return true;
     }
 
-    // @Override
-    // public ceq.Expression toCEQ() {
-    // ceq.Expression res = null;
-    // switch(type){
-    // case BOOL: res = new ceq.Const(name, num!=0); break;
-    // case INT: res = new ceq.Const(name, num); break;
-    // case REAL: break;
-    // }
-    // return res;
-    // }
-
     @Override
     protected void inferType() throws TypeException {
         // nothing to do
@@ -84,22 +73,22 @@ public class Number extends Expression {
 
     @Override
     public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
-        clock = new ClockList();
-        return clock;
+        setClock(new ClockList());
+        return getClock();
     }
 
     @Override
     public void propagateClock(final ClockList l) {
-        clock = l.clone();
-        Debug.low(clock.toString() + " " + this.toString());
+        setClock(l.clone());
+        Debug.low(getClock().toString() + " " + this.toString());
     }
 
     @Override
     public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
             final int stage, final String c,
             final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
-        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
-                new de.cau.cs.kieler.krep.compiler.ceq.Const(name, value));
+        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
+                new de.cau.cs.kieler.krep.compiler.ceq.Const(getName(), value));
     }
 
     @Override

@@ -72,14 +72,14 @@ public class If extends Expression {
         expr1.inferType();
         expr2.inferType();
         expr3.inferType();
-        if (expr1.type != Type.BOOL) {
-            throw new TypeException(expr1, Type.BOOL.toString(), expr1.type.toString());
+        if (expr1.getType() != Type.BOOL) {
+            throw new TypeException(expr1, Type.BOOL.toString(), expr1.getType().toString());
         }
-        if (expr2.type != expr3.type) {
-            throw new TypeException(this, "BOOL x T x T", expr1.type.toString() + " x "
-                    + expr2.type.toString() + " x " + expr3.type.toString());
+        if (expr2.getType() != expr3.getType()) {
+            throw new TypeException(this, "BOOL x T x T", expr1.getType().toString() + " x "
+                    + expr2.getType().toString() + " x " + expr3.getType().toString());
         }
-        type = expr2.type;
+        setType(expr2.getType());
     }
 
     @Override
@@ -93,17 +93,17 @@ public class If extends Expression {
         if (!l1.equals(l3)) {
             throw new ClockException(this, l1, l3);
         }
-        clock = l1;
-        return clock;
+        setClock(l1);
+        return getClock();
     }
 
     @Override
     public void propagateClock(final ClockList l) {
-        clock = l.clone();
-        expr1.propagateClock(clock);
-        expr2.propagateClock(clock);
-        expr3.propagateClock(clock);
-        Debug.low(clock.toString() + " " + this.toString());
+        setClock(l.clone());
+        expr1.propagateClock(getClock());
+        expr2.propagateClock(getClock());
+        expr3.propagateClock(getClock());
+        Debug.low(getClock().toString() + " " + this.toString());
     }
 
     @Override
@@ -116,8 +116,8 @@ public class If extends Expression {
                 Expression.STAGE_INIT, c, aux);
         de.cau.cs.kieler.krep.compiler.ceq.Equation eq3 = expr3.declock(basename,
                 Expression.STAGE_INIT, c, aux);
-        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
-                new de.cau.cs.kieler.krep.compiler.ceq.If(name, eq1.getExpr(), eq2.getExpr(), eq3
+        return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
+                new de.cau.cs.kieler.krep.compiler.ceq.If(getName(), eq1.getExpr(), eq2.getExpr(), eq3
                         .getExpr()));
     }
 

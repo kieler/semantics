@@ -44,7 +44,7 @@ public class Pre extends Expression {
 
     @Override
     public Expression propagatePre(final HashMap<String, Expression> eqs) {
-        Variable t = Variable.getTemp("pre_", expr.type, null);
+        Variable t = Variable.getTemp("pre_", expr.getType(), null);
         eqs.put(t.getName(), expr);
         return new Pre(t.getName(), new VarAccess(t));
     }
@@ -70,20 +70,20 @@ public class Pre extends Expression {
     @Override
     protected void inferType() throws TypeException {
         expr.inferType();
-        type = expr.type;
+        setType(expr.getType());
     }
 
     @Override
     public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
-        clock = expr.inferClock(env);
-        return clock;
+        setClock(expr.inferClock(env));
+        return getClock();
     }
 
     @Override
     public void propagateClock(final ClockList l) {
-        clock = l.clone();
+        setClock(l.clone());
         expr.propagateClock(l);
-        Debug.low(clock.toString() + " " + this.toString());
+        Debug.low(getClock().toString() + " " + this.toString());
     }
 
     @Override
@@ -93,7 +93,7 @@ public class Pre extends Expression {
         if (expr instanceof VarAccess) {
             VarAccess v = (VarAccess) expr;
 
-            return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
+            return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
                     new de.cau.cs.kieler.krep.compiler.ceq.VarAccess(
                             de.cau.cs.kieler.krep.compiler.ceq.Variable.get(v.getName()), true));
         } else {
@@ -121,7 +121,7 @@ public class Pre extends Expression {
         if (expr instanceof VarAccess) {
             return this;
         } else {
-            Variable v = Variable.getTemp("pre_", expr.getType(), expr.getClock());
+            Variable v = Variable.getTemp("pre_", expr.getType(), expr.getClock().getClock());
             eqs.put(v.getName(), expr.extractPre(eqs));
             expr = new VarAccess(v);
             return this;

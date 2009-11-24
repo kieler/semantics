@@ -54,29 +54,31 @@ public class Current extends Expression {
     public Expression propagatePre(final HashMap<String, Expression> eqs) {
         return expr.propagatePre(eqs);
     }
+
     @Override
     protected void inferType() throws TypeException {
         expr.inferType();
-        this.type = expr.type;
+        setType(expr.getType());
     }
 
     @Override
     public ClockList inferClock(final HashMap<String, Variable> env) throws ClockException {
-        clock = expr.inferClock(env).clone();
-        clock.removeClock();
-        return clock;
+        setClock(expr.inferClock(env).clone());
+        getClock().removeClock();
+        return getClock();
     }
 
     @Override
     public void propagateClock(final ClockList l) {
-        clock = l.clone();
-        expr.propagateClock(clock);
-        Debug.low(clock.toString() + " " + this.toString());
+        setClock(l.clone());
+        expr.propagateClock(getClock());
+        Debug.low(getClock().toString() + " " + this.toString());
     }
 
     @Override
-    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename, final int stage,
-            final String c, final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
+    public de.cau.cs.kieler.krep.compiler.ceq.Equation declock(final String basename,
+            final int stage, final String c,
+            final LinkedList<de.cau.cs.kieler.krep.compiler.ceq.Equation> aux) {
         de.cau.cs.kieler.krep.compiler.ceq.Equation res = expr.declock(basename, 1, c, aux);
         if (stage == 0) {
             if (!(expr instanceof When)) {
@@ -85,10 +87,10 @@ public class Current extends Expression {
             return res;
         } else {
             de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
-                    .getTemp(basename, type);
+                    .getTemp(basename, getType());
             res.setName(v.getName());
             aux.add(res);
-            return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
+            return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
                     new de.cau.cs.kieler.krep.compiler.ceq.VarAccess(v, false));
         }
     }

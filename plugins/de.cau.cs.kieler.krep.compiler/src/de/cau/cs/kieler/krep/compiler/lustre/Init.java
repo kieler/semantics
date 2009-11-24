@@ -64,11 +64,11 @@ public class Init extends Expression {
     @Override
     protected void inferType() throws TypeException {
         expr1.inferType();
-        Type t1 = expr1.type;
+        Type t1 = expr1.getType();
         expr2.inferType();
-        Type t2 = expr2.type;
+        Type t2 = expr2.getType();
         if (t1 == t2) {
-            type = t1;
+            setType(t1);
         } else {
             throw new TypeException(this, "T x T", t1.toString() + " x " + t2.toString());
         }
@@ -88,16 +88,16 @@ public class Init extends Expression {
         if (!l1.equals(l2)) {
             throw new ClockException(this, l1, l2);
         }
-        clock = l1;
-        return clock;
+        setClock(l1);
+        return getClock();
     }
 
     @Override
     public void propagateClock(final ClockList l) {
-        clock = l.clone();
-        expr1.propagateClock(clock);
-        expr2.propagateClock(clock);
-        Debug.low(clock.toString() + " " + this.toString());
+        setClock(l.clone());
+        expr1.propagateClock(getClock());
+        expr2.propagateClock(getClock());
+        Debug.low(getClock().toString() + " " + this.toString());
     }
 
     @Override
@@ -113,7 +113,7 @@ public class Init extends Expression {
             // e2.clock = this.clock;
         } else {
             de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
-                    .getTemp(basename, type);
+                    .getTemp(basename, getType());
             if (c != null) {
                 eq1.setClock(c);
             }
@@ -125,13 +125,13 @@ public class Init extends Expression {
             return eq2;
         } else {
             de.cau.cs.kieler.krep.compiler.ceq.Variable v = de.cau.cs.kieler.krep.compiler.ceq.Variable
-                    .getTemp(basename, type);
+                    .getTemp(basename, getType());
             if (c != null) {
                 eq2.setClock(c);
             }
             eq2.setName(v.getName());
             aux.add(eq2);
-            return new de.cau.cs.kieler.krep.compiler.ceq.Equation(name,
+            return new de.cau.cs.kieler.krep.compiler.ceq.Equation(getName(),
                     new de.cau.cs.kieler.krep.compiler.ceq.VarAccess(v, false));
         }
     }

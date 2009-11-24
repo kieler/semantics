@@ -28,9 +28,17 @@ import de.cau.cs.kieler.krep.compiler.prog.Type;
  */
 public abstract class Expression {
     /** type of this expression. */
-    protected Type type = null;
+    private Type type = null;
+
+    /**
+     * @param t type of the expression
+     */
+    protected void setType(final Type t) {
+        type = t;
+    }
+
     /** unique name of the expression. */
-    protected String name;
+    private String name;
     private Expression init;
 
     /**
@@ -38,7 +46,7 @@ public abstract class Expression {
      *            unique name of the expression
      */
     protected Expression(final String n) {
-        this.name = n;
+        this.setName(n);
     }
 
     /**
@@ -63,16 +71,16 @@ public abstract class Expression {
      */
     public abstract boolean isAtom();
 
-
     /**
      * clock for this expression, null if on base clock.
      */
-    protected ClockList clock;
+    private ClockList clock;
 
     /**
      * Compute clock on which this expression runs.
      * 
-     * @param vars list of all defined variables
+     * @param vars
+     *            list of all defined variables
      * @return list of all sub-clocks
      * @throws ClockException
      *             thrown if any clock error occurs
@@ -105,7 +113,8 @@ public abstract class Expression {
      * @param stage
      *            indicate what clock operators have already been in this equation: 0: on top level
      *            1: beyond current 2: beyond when 3: beyond ->
-     * @param c clock
+     * @param c
+     *            clock
      * @param aux
      *            additional equations
      * @return new expression, without current, ->, and when
@@ -117,8 +126,8 @@ public abstract class Expression {
      * 
      * @return name of the clock on which this expression runs
      */
-    public String getClock() {
-        return clock.getClock();
+    public ClockList getClock() {
+        return clock;
     }
 
     /**
@@ -159,19 +168,32 @@ public abstract class Expression {
         return init;
     }
 
-    
-    /** 
+    /**
      * 
      * @return equivalent expression with clocks lifted as much as possible.
      */
     public abstract Expression liftClock();
 
-    
     /**
-     * @param c additional clock for this expression.
+     * @param c
+     *            additional clock for this expression.
      */
     public void addClock(final String c) {
         clock.addClock(c);
 
+    }
+
+    /**
+     * @param n the name to set
+     */
+    protected void setName(final String n) {
+        this.name = n;
+    }
+
+    /**
+     * @param clk the clock to set
+     */
+    protected void setClock(final ClockList clk) {
+        this.clock = clk;
     }
 }
