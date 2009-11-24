@@ -17,22 +17,16 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
-import java.net.URL;
 import java.util.LinkedList;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
@@ -64,6 +58,7 @@ import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
+import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeString;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
@@ -86,6 +81,12 @@ public final class DataComponent extends JSONObjectDataComponent {
     private IAssembler assembler = null;
 
     private AssemblerView viewer = null;
+
+    private final int propertyConnection = 0;
+    private final int propertyPort = 1;
+    private final int propertyHost = 2;
+    private final int propertyCom = 3;
+    private final int propertyLog = 4;
 
     /**
      * {@inheritDoc}
@@ -167,15 +168,24 @@ public final class DataComponent extends JSONObjectDataComponent {
     @Override
     public KiemProperty[] provideProperties() {
         LinkedList<KiemProperty> properties = new LinkedList<KiemProperty>();
-        String[] items = { "KEP", "KLP" };
-        properties.add(new KiemProperty("Processor", new KiemPropertyTypeChoice(items), items[0]));
-        KiemProperty fp = new KiemProperty("strl2kasm", new KiemPropertyTypeFile());
-        fp.setValue("/home/esterel/bin/strl2kasm");
-        properties.add(fp);
+        String[] items = { "JNI", "TCP/IP", "RS232" };
+        properties.add(new KiemProperty("Connection", new KiemPropertyTypeChoice(items), items[0]));
 
-        KiemProperty log = new KiemProperty("logFile", new KiemPropertyTypeFile());
-        log.setValue("klp.esi");
-        properties.add(log);
+        KiemProperty p = new KiemProperty("Port", new KiemPropertyTypeString());
+        p.setValue("1234");
+        properties.add(p);
+
+        p = new KiemProperty("Host", new KiemPropertyTypeString());
+        p.setValue("localhost");
+        properties.add(p);
+
+        String[] ports = {};
+        p = new KiemProperty("RS232 port", new KiemPropertyTypeChoice(ports));
+        properties.add(p);
+
+        p = new KiemProperty("logFile", new KiemPropertyTypeFile());
+        p.setValue("klp.esi");
+        properties.add(p);
 
         return properties.toArray(new KiemProperty[properties.size()]);
     }
@@ -191,196 +201,22 @@ public final class DataComponent extends JSONObjectDataComponent {
 
         JSONObject signals = new JSONObject();
         connection = new JNIConnection();
-        connection.setLogFile(getProperties()[2].getValue());
+        connection.setLogFile(getProperties()[propertyLog].getValue());
         try {
-
             IEditorPart editor = page.getActiveEditor();
-
             if (editor.getEditorInput().exists()
                     && editor.getEditorInput() instanceof FileEditorInput) {
                 FileEditorInput input = (FileEditorInput) editor.getEditorInput();
                 IFile file = input.getFile();
                 String name = editor.getEditorInput().getName();
                 if (editor instanceof DataflowDiagramEditor) {
-                    String workspace = file.getWorkspace().getRoot().getLocation().toOSString();
-
-                    /*
-                     * DataflowDiagramEditor dEditor = (DataflowDiagramEditor) editor; View
-                     * notationElement = ((View) dEditor.getDiagramEditPart().getModel()); EObject
-                     * myModel = (EObject) notationElement.getElement();
-                     */
-                    LustreGenerator gen = new LustreGenerator();
-                    String lus = gen.generateLus() + "Dummy.lus";
-
-                    String lus2ec = "/home/esterel/bin/lus2ec";
-
-                    connection.initialize(ICommunicationProtocol.P_KREP);
-                    protocol = new KrepProtocol(connection);
-                    KlpAssembler klpAsm = new KlpAssembler();
-
-                    assembler = klpAsm;
-
-                    File path = new File(workspace + file.getFullPath().removeLastSegments(1));
-
-                    String cmd = lus2ec + " " + lus + " MAIN";
-                    String[] env = new String[] { "PATH=/usr/bin/:/home/esterel/bin" };
-                    Process p = Runtime.getRuntime().exec(cmd, env, path);
-                    Reader out = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-                    StringBuffer s = new StringBuffer();
-                    while (out.ready()) {
-                        s.append(Character.toChars(out.read()));
-                    }
-                    if (s.length() > 0) {
-                        throw new KiemInitializationException(s.toString(), false, null);
-                    }
-
-                    InputStream in = new FileInputStream(path + "/MAIN.ec");
-                    Ec2klp ec2klp = new Ec2klp();
-                    String ec = ec2klp.compile("Dummy", in);
-                    ByteArrayInputStream klp = new ByteArrayInputStream(ec.getBytes());
-
-                    Injector injector = new KlpStandaloneSetup()
-                            .createInjectorAndDoEMFRegistration();
-                    IAntlrParser parser = injector.getInstance(IAntlrParser.class);
-                    IParseResult parseResult = parser.parse(klp);
-                    if (!parseResult.getParseErrors().isEmpty()) {
-                        throw new KiemInitializationException(parseResult.getParseErrors()
-                                .toString(), false, null);
-                    }
-                    KLP model = (KLP) parseResult.getRootASTElement();
-                    klpAsm.assemble(name, model);
+                    data2klp(name, file);
                 } else if (file.getFileExtension().equals("klp")) {
-                    connection.initialize(ICommunicationProtocol.P_KREP);
-                    protocol = new KrepProtocol(connection);
-                    assembler = new KlpAssembler();
-                    InputStream in = file.getContents();
-
-                    Injector injector = new KlpStandaloneSetup()
-                            .createInjectorAndDoEMFRegistration();
-                    IAntlrParser parser = injector.getInstance(IAntlrParser.class);
-                    IParseResult parseResult = parser.parse(in);
-                    if (!parseResult.getParseErrors().isEmpty()) {
-                        throw new KiemInitializationException("Parse error", true, null);
-                    }
-                    KLP model = (KLP) parseResult.getRootASTElement();
-                    ((KlpAssembler) assembler).assemble(file.getName(), model);
+                    klp2klp(name, file);
                 } else if (file.getFileExtension().equals("kasm")) {
-                    connection.initialize(ICommunicationProtocol.P_KEP);
-                    protocol = new KepProtocol(connection);
-
-                    KepAssembler kep = new KepAssembler();
-                    assembler = kep;
-                    InputStream in = file.getContents();
-                    Reader reader = new BufferedReader(new InputStreamReader(in));
-                    kep.assemble(name, reader);
+                    kasm2kep(name, file);
                 } else if (file.getFileExtension().equals("strl")) {
-
-                    // String strl2kasm = getProperties()[1].getValue();
-                    // String workspace = file.getWorkspace().getRoot().getLocation().toOSString();
-
-                    InputStream strl = file.getContents();
-                    // IPath path = new Path("cec-strlxml");
-                    // File tmp = FileLocator.getBundleFile(Activator.getDefault().getBundle());
-                    // String tmp = FileLocator.find(new URL("file:cec/cec-strlxml")).toString();
-                    // Activator.getDefault().
-                    // Platform.getF.getBundle("de.cau.cs.kieler.krep.compiler.strl2kasm")
-                    // .getBundleContext().getBundle().getLocation();
-
-                    Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
-
-                    if (fragments.length != 1) {
-                        throw new KiemInitializationException("strl2kasm compiler not found",
-                                false, null);
-                    }
-                    Bundle compiler = fragments[0];
-                    String path = compiler.getLocation();
-                    path =  path.substring("reference:file:".length());
-
-                    Process p = Runtime.getRuntime().exec(path + "cec-strlxml");
-                    // Process p = Runtime.getRuntime().exec();
-                    InputStream xml = p.getInputStream();
-                    InputStream stderr = p.getErrorStream();
-                    OutputStream stdin = p.getOutputStream();
-
-                    while (strl.available() > 0) {
-                        stdin.write(strl.read());
-                    }
-                    stdin.close();
-
-                    checkErrors(stderr);
-
-                    // expand modules
-                    p = Runtime.getRuntime().exec(path + "cec-expandmodules");
-                    InputStream exp = p.getInputStream();
-                    stdin = p.getOutputStream();
-                    stderr = p.getErrorStream();
-                    while (xml.available() > 0) {
-                        int r = xml.read();
-                        stdin.write(r);
-                        System.out.print(Character.toChars(r));
-                    }
-                    stdin.close();
-                    checkErrors(stderr);
-
-                    // dismantle
-                    String kepdismantle = path + "cec-kepdismantle";
-                    String[] cmds = new String[] { kepdismantle, "-d ALL" };
-
-                    p = Runtime.getRuntime().exec(kepdismantle);
-                    InputStream dis = p.getInputStream();
-                    stdin = p.getOutputStream();
-                    stderr = p.getErrorStream();
-
-                    while (exp.available() > 0) {
-                        int r = exp.read();
-                        stdin.write(r);
-                        System.out.print(Character.toChars(r));
-                    }
-                    stdin.close();
-                    checkErrors(stderr);
-
-                    // to KEP
-                    p = Runtime.getRuntime().exec(new String[] { path + "cec-astkep", "-o" });
-                    InputStream k = p.getInputStream();
-                    stdin = p.getOutputStream();
-                    stderr = p.getErrorStream();
-
-                    while (dis.available() > 0) {
-                        int r = dis.read();
-                        stdin.write(r);
-                        System.out.print(Character.toChars(r));
-                    }
-                    stdin.close();
-                    checkErrors(stderr);
-
-                    // to kasm
-                    p = Runtime.getRuntime().exec(path + "cec-xmlkasm");
-                    InputStream kasm = p.getInputStream();
-                    stdin = p.getOutputStream();
-                    stderr = p.getErrorStream();
-                    while (k.available() > 0) {
-                        stdin.write(k.read());
-                    }
-                    stdin.close();
-                    checkErrors(stderr);
-
-                    connection.initialize(ICommunicationProtocol.P_KEP);
-                    protocol = new KepProtocol(connection);
-
-                    KepAssembler kep = new KepAssembler();
-                    assembler = kep;
-
-                    // IPath kasm =
-                    // file.getFullPath().removeFileExtension().addFileExtension("kasm");
-
-                    // Runtime.getRuntime().exec(strl2kasm + " " + name, null,
-                    // new File(workspace + file.getFullPath().removeLastSegments(1)));
-                    // InputStream in = new FileInputStream(file.getWorkspace().getRoot()
-                    // .getLocation().toOSString()
-                    // + kasm.toString());
-                    Reader reader = new BufferedReader(new InputStreamReader(kasm));
-                    kep.assemble(name, reader);
-
+                    strl2kep(name, file);
                 }
             }
 
@@ -430,6 +266,207 @@ public final class DataComponent extends JSONObjectDataComponent {
             }
         }
         return signals;
+    }
+
+    /**
+     * @param name
+     * @param file
+     * @throws CommunicationException
+     * @throws IOException
+     * @throws KiemInitializationException
+     * @throws FileNotFoundException
+     * @throws ParseException
+     */
+    private void data2klp(final String name, final IFile file) throws CommunicationException,
+            IOException, KiemInitializationException, ParseException {
+        String workspace = file.getWorkspace().getRoot().getLocation().toOSString();
+
+        /*
+         * DataflowDiagramEditor dEditor = (DataflowDiagramEditor) editor; View notationElement =
+         * ((View) dEditor.getDiagramEditPart().getModel()); EObject myModel = (EObject)
+         * notationElement.getElement();
+         */
+        LustreGenerator gen = new LustreGenerator();
+        String lus = gen.generateLus() + "Dummy.lus";
+
+        String lus2ec = "/home/esterel/bin/lus2ec";
+
+        connection.initialize(ICommunicationProtocol.P_KREP);
+        protocol = new KrepProtocol(connection);
+        KlpAssembler klpAsm = new KlpAssembler();
+
+        assembler = klpAsm;
+
+        File path = new File(workspace + file.getFullPath().removeLastSegments(1));
+
+        String cmd = lus2ec + " " + lus + " MAIN";
+        String[] env = new String[] { "PATH=/usr/bin/:/home/esterel/bin" };
+        Process p = Runtime.getRuntime().exec(cmd, env, path);
+        Reader out = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+        StringBuffer s = new StringBuffer();
+        while (out.ready()) {
+            s.append(Character.toChars(out.read()));
+        }
+        if (s.length() > 0) {
+            throw new KiemInitializationException(s.toString(), false, null);
+        }
+
+        InputStream in = new FileInputStream(path + "/MAIN.ec");
+        Ec2klp ec2klp = new Ec2klp();
+        String ec = ec2klp.compile("Dummy", in);
+        ByteArrayInputStream klp = new ByteArrayInputStream(ec.getBytes());
+
+        Injector injector = new KlpStandaloneSetup().createInjectorAndDoEMFRegistration();
+        IAntlrParser parser = injector.getInstance(IAntlrParser.class);
+        IParseResult parseResult = parser.parse(klp);
+        if (!parseResult.getParseErrors().isEmpty()) {
+            throw new KiemInitializationException(parseResult.getParseErrors().toString(), false,
+                    null);
+        }
+        KLP model = (KLP) parseResult.getRootASTElement();
+        klpAsm.assemble(name, model);
+    }
+
+    /**
+     * @param file
+     * @throws CommunicationException
+     * @throws CoreException
+     * @throws KiemInitializationException
+     * @throws ParseException
+     */
+    private void klp2klp(final String name, final IFile file) throws CommunicationException,
+            CoreException, KiemInitializationException, ParseException {
+        connection.initialize(ICommunicationProtocol.P_KREP);
+        protocol = new KrepProtocol(connection);
+        assembler = new KlpAssembler();
+        InputStream in = file.getContents();
+
+        Injector injector = new KlpStandaloneSetup().createInjectorAndDoEMFRegistration();
+        IAntlrParser parser = injector.getInstance(IAntlrParser.class);
+        IParseResult parseResult = parser.parse(in);
+        if (!parseResult.getParseErrors().isEmpty()) {
+            throw new KiemInitializationException("Parse error", true, null);
+        }
+        KLP model = (KLP) parseResult.getRootASTElement();
+        ((KlpAssembler) assembler).assemble(file.getName(), model);
+    }
+
+    /**
+     * @param name
+     * @param file
+     * @throws CommunicationException
+     * @throws CoreException
+     * @throws ParseException
+     */
+    private void kasm2kep(final String name, final IFile file) throws CommunicationException,
+            CoreException, ParseException {
+        connection.initialize(ICommunicationProtocol.P_KEP);
+        protocol = new KepProtocol(connection);
+
+        KepAssembler kep = new KepAssembler();
+        assembler = kep;
+        InputStream in = file.getContents();
+        Reader reader = new BufferedReader(new InputStreamReader(in));
+        kep.assemble(name, reader);
+    }
+
+    /**
+     * @param file
+     * @throws CoreException
+     * @throws KiemInitializationException
+     * @throws IOException
+     * @throws ParseException
+     * @throws CommunicationException
+     */
+    private void strl2kep(final String name, final IFile file) throws CoreException,
+            KiemInitializationException, IOException, ParseException, CommunicationException {
+        InputStream strl = file.getContents();
+        Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
+
+        if (fragments.length != 1) {
+            throw new KiemInitializationException("strl2kasm compiler not found", false, null);
+        }
+        Bundle compiler = fragments[0];
+        String path = compiler.getLocation();
+        path = path.substring("reference:file:".length());
+
+        System.out.println("Expect strl2kasm compiler in:" + path);
+        Process p = Runtime.getRuntime().exec(path + "cec-strlxml");
+        // Process p = Runtime.getRuntime().exec();
+        InputStream xml = p.getInputStream();
+        InputStream stderr = p.getErrorStream();
+        OutputStream stdin = p.getOutputStream();
+
+        while (strl.available() > 0) {
+            stdin.write(strl.read());
+        }
+        stdin.close();
+
+        checkErrors(stderr);
+
+        // expand modules
+        p = Runtime.getRuntime().exec(path + "cec-expandmodules");
+        InputStream exp = p.getInputStream();
+        stdin = p.getOutputStream();
+        stderr = p.getErrorStream();
+        while (xml.available() > 0) {
+            int r = xml.read();
+            stdin.write(r);
+            System.out.print(Character.toChars(r));
+        }
+        stdin.close();
+        checkErrors(stderr);
+
+        // dismantle
+        String kepdismantle = path + "cec-kepdismantle";
+        //String[] cmds = new String[] { kepdismantle, "-d ALL" };
+
+        p = Runtime.getRuntime().exec(kepdismantle);
+        InputStream dis = p.getInputStream();
+        stdin = p.getOutputStream();
+        stderr = p.getErrorStream();
+
+        while (exp.available() > 0) {
+            int r = exp.read();
+            stdin.write(r);
+            System.out.print(Character.toChars(r));
+        }
+        stdin.close();
+        checkErrors(stderr);
+
+        // to KEP
+        p = Runtime.getRuntime().exec(new String[] { path + "cec-astkep", "-o" });
+        InputStream k = p.getInputStream();
+        stdin = p.getOutputStream();
+        stderr = p.getErrorStream();
+
+        while (dis.available() > 0) {
+            int r = dis.read();
+            stdin.write(r);
+            System.out.print(Character.toChars(r));
+        }
+        stdin.close();
+        checkErrors(stderr);
+
+        // to kasm
+        p = Runtime.getRuntime().exec(path + "cec-xmlkasm");
+        InputStream kasm = p.getInputStream();
+        stdin = p.getOutputStream();
+        stderr = p.getErrorStream();
+        while (k.available() > 0) {
+            stdin.write(k.read());
+        }
+        stdin.close();
+        checkErrors(stderr);
+
+        connection.initialize(ICommunicationProtocol.P_KEP);
+        protocol = new KepProtocol(connection);
+
+        KepAssembler kep = new KepAssembler();
+        assembler = kep;
+
+        Reader reader = new BufferedReader(new InputStreamReader(kasm));
+        kep.assemble(name, reader);
     }
 
     /**
