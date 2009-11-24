@@ -43,6 +43,16 @@ context State
 	ERROR "Names and IDs should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
 	(id.matches("\\w*") && label.matches("\\w*"));
 
+
+// Root state
+context State if (parentRegion == null || parentRegion.parentState == null)
+  WARNING "Model has no inputs":
+   (signals.exists(s | s.isInput));
+
+context State if (parentRegion == null || parentRegion.parentState == null)
+  WARNING "Model has no outputs":
+   (signals.exists(s | s.isOutput));
+
 // ================================================================================================
 // Regions
 
@@ -59,7 +69,7 @@ context Region
 context Signal if (parentState != null && parentState.parentRegion != null && parentState.parentRegion.parentState != null) 
     ERROR "Only signals in the root state may be global inputs or outputs." :
 	((!isInput) && (!isOutput));
-	
+
 context Signal if ((initialValue == null) || (initialValue == "")) 
     ERROR "Only valued signals may have a combine type other than NONE!" :
 	combineOperator == CombineOperator::NONE;
