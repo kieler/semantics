@@ -21,7 +21,6 @@ import java.util.LinkedList;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
 
-import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
@@ -58,6 +57,8 @@ public class KrepProtocol extends CommunicationProtocol {
     private static final String VERIFICATION_STRING = "0123456789:)";
 
     private static final int BASE_NUM = 16;
+
+    private static final int ACK = 0xFF;
 
     /** Description of received target information data. */
     private static final String[] INFO_DESC = { "KIND:                   ",
@@ -179,9 +180,9 @@ public class KrepProtocol extends CommunicationProtocol {
         Iterator<Integer> i = msg.iterator();
         // int nKind = msg.get(0);
         int kind = i.next();
-        // if (kind != 1) {
-        // throw new CommunicationException("Wrong processor");
-        // }
+        if (kind != 0x1) {
+            throw new CommunicationException("Wrong processor");
+        }
         // int version =
         i.next();
 
@@ -217,7 +218,7 @@ public class KrepProtocol extends CommunicationProtocol {
                 }
                 send(b);
                 LinkedList<Integer> i = receiveByte(1);
-                if (i.size() != 1 || i.getFirst() != 0xFF) {
+                if (i.size() != 1 || i.getFirst() != ACK) {
                     throw new LoadException("wrong acknowledgement");
                 }
                 if (monitor != null) {

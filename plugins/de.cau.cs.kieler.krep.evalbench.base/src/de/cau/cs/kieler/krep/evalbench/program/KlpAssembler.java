@@ -594,7 +594,7 @@ public class KlpAssembler implements IAssembler {
         if (model != null) {
             for (final Line l : model.getInstructions()) {
                 Instruction i = l.getInstruction();
-                if (i != null) {
+                if (i != null && i.getOpcode0()!=0) {
                     final String t = "" + padByte(i.getOpcode0()) + padByte(i.getOpcode1())
                             + padByte(i.getOpcode2()) + padByte(i.getOpcode3());
                     if (t != null) {
