@@ -9,7 +9,7 @@ options {
 }
 
 @lexer::header {
-package de.cau.cs.kieler.contentassist.antlr.internal;
+package de.cau.cs.kieler.sim.esi.contentassist.antlr.internal;
 
 // Hack: Use our own Lexer superclass by means of import. 
 // Currently there is no other way to specify the superclass for the lexer.
@@ -17,7 +17,7 @@ import org.eclipse.xtext.ui.common.editor.contentassist.antlr.internal.Lexer;
 }
 
 @parser::header {
-package de.cau.cs.kieler.contentassist.antlr.internal; 
+package de.cau.cs.kieler.sim.esi.contentassist.antlr.internal; 
 
 import java.io.InputStream;
 import org.eclipse.xtext.*;
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream.HiddenTokens;
 import org.eclipse.xtext.ui.common.editor.contentassist.antlr.internal.AbstractInternalContentAssistParser;
-import de.cau.cs.kieler.services.EsiGrammarAccess;
+import de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess;
 
 }
 

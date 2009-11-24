@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.contentassist.antlr.internal;
+package de.cau.cs.kieler.sim.esi.contentassist.antlr.internal;
 
 // Hack: Use our own Lexer superclass by means of import. 
 // Currently there is no other way to specify the superclass for the lexer.
@@ -31,14 +31,14 @@ public class InternalEsiLexer extends Lexer {
     public InternalEsiLexer(CharStream input) {
         super(input);
     }
-    public String getGrammarFileName() { return "../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g"; }
+    public String getGrammarFileName() { return "../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g"; }
 
     // $ANTLR start T10
     public final void mT10() throws RecognitionException {
         try {
             int _type = T10;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:10:5: ( '!' )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:10:7: '!'
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:10:5: ( '!' )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:10:7: '!'
             {
             match('!'); 
 
@@ -55,8 +55,8 @@ public class InternalEsiLexer extends Lexer {
     public final void mT11() throws RecognitionException {
         try {
             int _type = T11;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:11:5: ( 'reset' )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:11:7: 'reset'
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:11:5: ( 'reset' )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:11:7: 'reset'
             {
             match("reset"); 
 
@@ -74,8 +74,8 @@ public class InternalEsiLexer extends Lexer {
     public final void mT12() throws RecognitionException {
         try {
             int _type = T12;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:12:5: ( ';' )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:12:7: ';'
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:12:5: ( ';' )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:12:7: ';'
             {
             match(';'); 
 
@@ -92,8 +92,8 @@ public class InternalEsiLexer extends Lexer {
     public final void mT13() throws RecognitionException {
         try {
             int _type = T13;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:13:5: ( '%' )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:13:7: '%'
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:13:5: ( '%' )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:13:7: '%'
             {
             match('%'); 
 
@@ -110,8 +110,8 @@ public class InternalEsiLexer extends Lexer {
     public final void mT14() throws RecognitionException {
         try {
             int _type = T14;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:14:5: ( 'Output' )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:14:7: 'Output'
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:14:5: ( 'Output' )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:14:7: 'Output'
             {
             match("Output"); 
 
@@ -129,8 +129,8 @@ public class InternalEsiLexer extends Lexer {
     public final void mT15() throws RecognitionException {
         try {
             int _type = T15;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:15:5: ( ':' )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:15:7: ':'
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:15:5: ( ':' )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:15:7: ':'
             {
             match(':'); 
 
@@ -147,8 +147,8 @@ public class InternalEsiLexer extends Lexer {
     public final void mT16() throws RecognitionException {
         try {
             int _type = T16;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:16:5: ( ')' )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:16:7: ')'
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:16:5: ( ')' )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:16:7: ')'
             {
             match(')'); 
 
@@ -165,8 +165,8 @@ public class InternalEsiLexer extends Lexer {
     public final void mT17() throws RecognitionException {
         try {
             int _type = T17;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:17:5: ( '(' )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:17:7: '('
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:17:5: ( '(' )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:17:7: '('
             {
             match('('); 
 
@@ -183,8 +183,8 @@ public class InternalEsiLexer extends Lexer {
     public final void mRULE_ID() throws RecognitionException {
         try {
             int _type = RULE_ID;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:704:9: ( ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )* )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:704:11: ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )*
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:704:9: ( ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )* )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:704:11: ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -196,7 +196,7 @@ public class InternalEsiLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:704:29: ( RULE_LETTER | RULE_DIGIT | '_' )*
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:704:29: ( RULE_LETTER | RULE_DIGIT | '_' )*
             loop1:
             do {
                 int alt1=2;
@@ -209,7 +209,7 @@ public class InternalEsiLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:
+            	    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:
             	    {
             	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -244,10 +244,10 @@ public class InternalEsiLexer extends Lexer {
     public final void mRULE_NUM() throws RecognitionException {
         try {
             int _type = RULE_NUM;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:706:10: ( ( '+' | '-' )? ( RULE_DIGIT )+ )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:706:12: ( '+' | '-' )? ( RULE_DIGIT )+
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:706:10: ( ( '+' | '-' )? ( RULE_DIGIT )+ )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:706:12: ( '+' | '-' )? ( RULE_DIGIT )+
             {
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:706:12: ( '+' | '-' )?
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:706:12: ( '+' | '-' )?
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -256,7 +256,7 @@ public class InternalEsiLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:
+                    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:
                     {
                     if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
                         input.consume();
@@ -274,7 +274,7 @@ public class InternalEsiLexer extends Lexer {
 
             }
 
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:706:23: ( RULE_DIGIT )+
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:706:23: ( RULE_DIGIT )+
             int cnt3=0;
             loop3:
             do {
@@ -288,7 +288,7 @@ public class InternalEsiLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:706:23: RULE_DIGIT
+            	    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:706:23: RULE_DIGIT
             	    {
             	    mRULE_DIGIT(); 
 
@@ -318,8 +318,8 @@ public class InternalEsiLexer extends Lexer {
     public final void mRULE_WS() throws RecognitionException {
         try {
             int _type = RULE_WS;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:708:9: ( ( '\\t' | ' ' | '\\r' | '\\n' ) )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:708:11: ( '\\t' | ' ' | '\\r' | '\\n' )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:708:9: ( ( '\\t' | ' ' | '\\r' | '\\n' ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:708:11: ( '\\t' | ' ' | '\\r' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -345,8 +345,8 @@ public class InternalEsiLexer extends Lexer {
     public final void mRULE_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_COMMENT;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:710:14: ( '%' ( 'A' .. 'N' | 'P' .. 'Z' ) ( options {greedy=false; } : . )* '\\n' )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:710:16: '%' ( 'A' .. 'N' | 'P' .. 'Z' ) ( options {greedy=false; } : . )* '\\n'
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:710:14: ( '%' ( 'A' .. 'N' | 'P' .. 'Z' ) ( options {greedy=false; } : . )* '\\n' )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:710:16: '%' ( 'A' .. 'N' | 'P' .. 'Z' ) ( options {greedy=false; } : . )* '\\n'
             {
             match('%'); 
             if ( (input.LA(1)>='A' && input.LA(1)<='N')||(input.LA(1)>='P' && input.LA(1)<='Z') ) {
@@ -359,7 +359,7 @@ public class InternalEsiLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:710:40: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:710:40: ( options {greedy=false; } : . )*
             loop4:
             do {
                 int alt4=2;
@@ -375,7 +375,7 @@ public class InternalEsiLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:710:68: .
+            	    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:710:68: .
             	    {
             	    matchAny(); 
 
@@ -402,8 +402,8 @@ public class InternalEsiLexer extends Lexer {
     public final void mRULE_DIGIT() throws RecognitionException {
         try {
             int _type = RULE_DIGIT;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:712:12: ( '0' .. '9' )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:712:14: '0' .. '9'
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:712:12: ( '0' .. '9' )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:712:14: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -420,8 +420,8 @@ public class InternalEsiLexer extends Lexer {
     public final void mRULE_LETTER() throws RecognitionException {
         try {
             int _type = RULE_LETTER;
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:714:13: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:714:15: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:714:13: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:714:15: ( 'a' .. 'z' | 'A' .. 'Z' )
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -444,7 +444,7 @@ public class InternalEsiLexer extends Lexer {
     // $ANTLR end RULE_LETTER
 
     public void mTokens() throws RecognitionException {
-        // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:8: ( T10 | T11 | T12 | T13 | T14 | T15 | T16 | T17 | RULE_ID | RULE_NUM | RULE_WS | RULE_COMMENT | RULE_DIGIT | RULE_LETTER )
+        // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:8: ( T10 | T11 | T12 | T13 | T14 | T15 | T16 | T17 | RULE_ID | RULE_NUM | RULE_WS | RULE_COMMENT | RULE_DIGIT | RULE_LETTER )
         int alt5=14;
         switch ( input.LA(1) ) {
         case '!':
@@ -655,98 +655,98 @@ public class InternalEsiLexer extends Lexer {
 
         switch (alt5) {
             case 1 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:10: T10
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:10: T10
                 {
                 mT10(); 
 
                 }
                 break;
             case 2 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:14: T11
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:14: T11
                 {
                 mT11(); 
 
                 }
                 break;
             case 3 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:18: T12
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:18: T12
                 {
                 mT12(); 
 
                 }
                 break;
             case 4 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:22: T13
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:22: T13
                 {
                 mT13(); 
 
                 }
                 break;
             case 5 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:26: T14
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:26: T14
                 {
                 mT14(); 
 
                 }
                 break;
             case 6 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:30: T15
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:30: T15
                 {
                 mT15(); 
 
                 }
                 break;
             case 7 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:34: T16
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:34: T16
                 {
                 mT16(); 
 
                 }
                 break;
             case 8 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:38: T17
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:38: T17
                 {
                 mT17(); 
 
                 }
                 break;
             case 9 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:42: RULE_ID
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:42: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
             case 10 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:50: RULE_NUM
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:50: RULE_NUM
                 {
                 mRULE_NUM(); 
 
                 }
                 break;
             case 11 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:59: RULE_WS
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:59: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
             case 12 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:67: RULE_COMMENT
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:67: RULE_COMMENT
                 {
                 mRULE_COMMENT(); 
 
                 }
                 break;
             case 13 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:80: RULE_DIGIT
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:80: RULE_DIGIT
                 {
                 mRULE_DIGIT(); 
 
                 }
                 break;
             case 14 :
-                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/contentassist/antlr/internal/InternalEsi.g:1:91: RULE_LETTER
+                // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/contentassist/antlr/internal/InternalEsi.g:1:91: RULE_LETTER
                 {
                 mRULE_LETTER(); 
 
