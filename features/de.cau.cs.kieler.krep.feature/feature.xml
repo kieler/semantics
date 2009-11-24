@@ -270,4 +270,11 @@ litigation.
          install-size="0"
          version="0.0.0"/>
 
+   <plugin
+         id="de.cau.cs.kieler.krep.compiler.strl2kasm"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
 </feature>
