@@ -106,7 +106,7 @@ public class Not extends Expression {
         if (c == null) {
             return null;
         } else {
-            return new Const(c.name, c.getVal() == 0 ? 1 : 0);
+            return new Const(c.getName(), c.getVal() == 0 ? 1 : 0);
         }
     }
 
@@ -115,7 +115,7 @@ public class Not extends Expression {
         expr = expr.staticEval();
         if (expr instanceof Const) {
             Const c = (Const) expr;
-            return new Const(c.name, c.getVal() == 0 ? 1 : 0);
+            return new Const(c.getName(), c.getVal() == 0 ? 1 : 0);
         } else {
             return this;
         }

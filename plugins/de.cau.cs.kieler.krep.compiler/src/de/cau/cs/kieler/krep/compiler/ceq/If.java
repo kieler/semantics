@@ -99,10 +99,10 @@ public class If extends Expression {
         if (expr1 instanceof VarAccess) {
             test = new Read((VarAccess) expr1);
         } else {
-            Variable v = Variable.getTemp(name, Type.BOOL);
+            Variable v = Variable.getTemp(getName(), Type.BOOL);
             instr.addAll(expr1.toKlp(v));
             test = new Read(v, false);
-            Variable.destroyTemp(name);
+            Variable.destroyTemp(getName());
         }
         instr.add(new CJmp(Cond.F, test, lElse));
         instr.addAll(expr2.toKlp(r));

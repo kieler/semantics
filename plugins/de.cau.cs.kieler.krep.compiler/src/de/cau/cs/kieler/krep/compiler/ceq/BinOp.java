@@ -76,7 +76,7 @@ public class BinOp extends Expression {
             Variable v = Variable.getTemp(name, e1.getType());
             vars.put(v.getName(), v);
             VarAccess t = new VarAccess(v, false);
-            expr.name = t.getName();
+            expr.setName(t.getName());
             Debug.low("flatten: " + expr.toString() + "->" + t.getName());
             es.add(expr);
             e1 = t;
@@ -86,7 +86,7 @@ public class BinOp extends Expression {
             Variable v = Variable.getTemp(name, e2.getType());
             vars.put(v.getName(), v);
             VarAccess t = new VarAccess(v, false);
-            expr.name = t.getName();
+            expr.setName(t.getName());
             es.add(expr);
             e2 = t;
         }
@@ -170,17 +170,17 @@ public class BinOp extends Expression {
             instr.add(new de.cau.cs.kieler.krep.compiler.klp.instructions.IBinOp(r, new Read(r,
                     false), c2.getVal(), op));
         } else {
-            Variable var1 = Variable.getTemp(name, e1.getType());
+            Variable var1 = Variable.getTemp(getName(), e1.getType());
             VarAccess temp1 = new VarAccess(var1, false);
             instr.addAll(e1.toKlp(var1));
-            Variable var2 = Variable.getTemp(name, e2.getType());
+            Variable var2 = Variable.getTemp(getName(), e2.getType());
             VarAccess temp2 = new VarAccess(var2, false);
             instr.addAll(e2.toKlp(var2));
 
             instr.add(new de.cau.cs.kieler.krep.compiler.klp.instructions.BinOp(r, new Read(temp1),
                     new Read(temp2), op));
-            Variable.destroyTemp(name);
-            Variable.destroyTemp(name);
+            Variable.destroyTemp(getName());
+            Variable.destroyTemp(getName());
             // System.err.println("non trivial binary operator: " + toString());
         }
         return instr;
@@ -209,7 +209,7 @@ public class BinOp extends Expression {
             e2 = c2;
         }
         if (c1 != null && c2 != null) {
-            return new Const(name, Operator.eval(c1.getVal(), c2.getVal(), op));
+            return new Const(getName(), Operator.eval(c1.getVal(), c2.getVal(), op));
         }
         return null;
 
@@ -229,7 +229,7 @@ public class BinOp extends Expression {
             c2 = (Const) e2;
         }
         if (c1 != null && c2 != null) {
-            return new Const(name, Operator.eval(c1.getVal(), c2.getVal(), op));
+            return new Const(getName(), Operator.eval(c1.getVal(), c2.getVal(), op));
         } else if (c1 != null) {
             switch (op) {
             case ADD:

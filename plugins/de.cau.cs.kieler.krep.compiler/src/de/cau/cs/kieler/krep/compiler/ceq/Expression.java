@@ -28,14 +28,14 @@ public abstract class Expression {
     /**
      * unique name of the expression.
      */
-    protected String name;
+    private String name;
 
     /**
      * 
      * @param n name of the expression.
      */
     protected Expression(final String n) {
-        this.name = n;
+        this.setName(n);
     }
 
     /**
@@ -138,4 +138,11 @@ public abstract class Expression {
      * @return new expression 
      */
     public abstract Expression replace(String var, Expression expr);
+
+    /**
+     * @param n the name to set
+     */
+    protected void setName(final String n) {
+        this.name = n;
+    }
 }

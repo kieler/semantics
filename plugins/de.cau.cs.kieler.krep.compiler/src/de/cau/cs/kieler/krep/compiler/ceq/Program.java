@@ -28,42 +28,42 @@ public class Program {
     /**
      * name of the program.
      */
-    protected String name;
+    private String name;
 
     /**
      * all used variables.
      */
-    protected HashMap<String, Variable> vars = new HashMap<String, Variable>();
+    private HashMap<String, Variable> vars = new HashMap<String, Variable>();
 
     /**
      * input signals.
      */
-    protected LinkedList<Variable> inputs = new LinkedList<Variable>();
+    private LinkedList<Variable> inputs = new LinkedList<Variable>();
 
     /**
      * output signals.
      */
-    protected LinkedList<Variable> outputs = new LinkedList<Variable>();
+    private LinkedList<Variable> outputs = new LinkedList<Variable>();
 
     /**
      * local variables.
      */
-    protected LinkedList<Variable> locals = new LinkedList<Variable>();
+    private LinkedList<Variable> locals = new LinkedList<Variable>();
 
     /**
      * equations.
      */
-    protected LinkedList<Equation> eqs = new LinkedList<Equation>();
+    private LinkedList<Equation> eqs = new LinkedList<Equation>();
 
     /**
      * safe state machines.
      */
-    protected LinkedList<Automaton> ssms = new LinkedList<Automaton>();
+    private LinkedList<Automaton> ssms = new LinkedList<Automaton>();
 
     /**
      * dependency graph.
      */
-    protected DepGraph depGraph = null;
+    private DepGraph depGraph = null;
 
     /**
      * generate empty program.
@@ -72,7 +72,7 @@ public class Program {
      *            of the main node
      */
     public Program(final String n) {
-        this.name = n;
+        this.setName(n);
     }
 
     /**
@@ -82,14 +82,14 @@ public class Program {
      * @param p program to copy.
      */
     public Program(final String n, final Program p) {
-        this.name = n;
-        this.vars = p.vars;
-        this.inputs = p.inputs;
-        this.outputs = p.outputs;
-        this.locals = p.locals;
-        this.eqs = p.eqs;
-        this.depGraph = p.depGraph;
-        this.ssms = p.ssms;
+        this.setName(n);
+        this.setVars(p.getVars());
+        this.setInputs(p.getInputs());
+        this.setOutputs(p.getOutputs());
+        this.setLocals(p.getLocals());
+        this.setEqs(p.getEqs());
+        this.setDepGraph(p.getDepGraph());
+        this.setSsms(p.getSsms());
     }
 
     /**
@@ -97,7 +97,7 @@ public class Program {
      */
     public void init() {
         HashMap<String, LinkedList<String>> deps = new HashMap<String, LinkedList<String>>();
-        for (Equation e : eqs) {
+        for (Equation e : getEqs()) {
             LinkedList<String> d = new LinkedList<String>();
             for (Variable v : e.getDeps()) {
                 d.add(v.getName());
@@ -108,7 +108,7 @@ public class Program {
             deps.put(e.getName(), d);
         }
 
-        for (Automaton a : ssms) {
+        for (Automaton a : getSsms()) {
             LinkedList<String> d = new LinkedList<String>();
             for (Variable in : a.getInputs()) {
                 d.add(in.getName());
@@ -125,22 +125,22 @@ public class Program {
             a.init();
         }
 
-        depGraph = new DepGraph(deps);
-        for (Automaton ssm : ssms) {
-            depGraph.addSubGraph(ssm.getName(), ssm.getDepGraph());
+        setDepGraph(new DepGraph(deps));
+        for (Automaton ssm : getSsms()) {
+            getDepGraph().addSubGraph(ssm.getName(), ssm.getDepGraph());
         }
         // make sure that outputs are not reordered
      
         LinkedList<Equation> tmp = new LinkedList<Equation>();
-        List<String> sort = depGraph.sort();
+        List<String> sort = getDepGraph().sort();
         for (String s : sort) {
-            for (Equation e : eqs) {
+            for (Equation e : getEqs()) {
                 if (s.equals(e.getName())) {
                     tmp.add(e);
                 }
             }
         }
-        eqs = tmp;
+        setEqs(tmp);
     }
 
     /**
@@ -148,10 +148,10 @@ public class Program {
      */
     public void flatten() {
         final LinkedList<Equation> aux = new LinkedList<Equation>();
-        for (final Equation eq : eqs) {
-            aux.addAll(eq.flatten(vars));
+        for (final Equation eq : getEqs()) {
+            aux.addAll(eq.flatten(getVars()));
         }
-        eqs.addAll(aux);
+        getEqs().addAll(aux);
     }
 
     @Override
@@ -164,13 +164,13 @@ public class Program {
      */
     public String toLustre() {
         // LinkedList<Variable> local = new LinkedList<Variable>();
-        for (Variable v : vars.values()) {
-            if (!v.isInput() && !v.isOutput() && !locals.contains(v)) {
-                locals.add(v);
+        for (Variable v : getVars().values()) {
+            if (!v.isInput() && !v.isOutput() && !getLocals().contains(v)) {
+                getLocals().add(v);
             }
         }
 
-        return Ceq.toLustre(name, inputs, outputs, locals, eqs, ssms);
+        return Ceq.toLustre(getName(), getInputs(), getOutputs(), getLocals(), getEqs(), getSsms());
     }
 
     /**
@@ -190,7 +190,7 @@ public class Program {
         boolean done = false;
         while (!done) {
             done = true;
-            for (final Equation e : eqs) {
+            for (final Equation e : getEqs()) {
                 final Const c = e.propagateConst(con);
                 if (c != null && !con.containsKey(e.getName())) {
                     con.put(e.getName(), c);
@@ -200,12 +200,12 @@ public class Program {
         }
         final LinkedList<Equation> keep = new LinkedList<Equation>();
         final HashSet<String> out = new HashSet<String>();
-        for (final Variable o : outputs) {
+        for (final Variable o : getOutputs()) {
             out.add(o.getName());
         }
-        for (final Equation e : eqs) {
+        for (final Equation e : getEqs()) {
             if (con.containsKey(e.getName()) && !out.contains(e.getName())) {
-                vars.remove(e.getName());
+                getVars().remove(e.getName());
             } else {
                 Const c = con.get(e.getClock());
                 if (c != null) {
@@ -214,8 +214,8 @@ public class Program {
                 keep.add(e);
             }
         }
-        eqs = keep;
-        for (Automaton ssm : ssms) {
+        setEqs(keep);
+        for (Automaton ssm : getSsms()) {
             ssm.propagateConst();
         }
 
@@ -225,7 +225,7 @@ public class Program {
      * perform static evaluation.
      */
     public void staticEval() {
-        for (final Equation e : eqs) {
+        for (final Equation e : getEqs()) {
             e.staticEval();
         }
     }
@@ -256,13 +256,13 @@ public class Program {
      *            additional variable
      */
     public void addVar(final Variable v) {
-        vars.put(v.getName(), v);
+        getVars().put(v.getName(), v);
         if (v.isInput()) {
-            inputs.add(v);
+            getInputs().add(v);
         } else if (v.isOutput()) {
-            outputs.add(v);
+            getOutputs().add(v);
         } else {
-            locals.add(v);
+            getLocals().add(v);
         }
     }
 
@@ -271,7 +271,7 @@ public class Program {
      *            additional equation
      */
     public void addEq(final Equation eq) {
-        eqs.add(eq);
+        getEqs().add(eq);
     }
 
     /**
@@ -281,7 +281,7 @@ public class Program {
         Debug.low("remove equivalent equations");
 
         HashMap<String, Variable> equiv = new HashMap<String, Variable>();
-        for (Equation e : eqs) {
+        for (Equation e : getEqs()) {
             Expression expr = e.getExpr();
             if (expr instanceof VarAccess) {
                 VarAccess v = (VarAccess) expr;
@@ -293,7 +293,7 @@ public class Program {
             }
         }
         // make sure that outputs are not removed
-        for (Variable v : outputs) {
+        for (Variable v : getOutputs()) {
             if (equiv.containsKey(v.getName())) {
                 equiv.remove(v.getName());
             }
@@ -308,19 +308,19 @@ public class Program {
     public void replace(final HashMap<String, Variable> equiv) {
         if (!equiv.isEmpty()) {
             LinkedList<Equation> keep = new LinkedList<Equation>();
-            for (Equation eq : eqs) {
+            for (Equation eq : getEqs()) {
                 eq.replaceVar(equiv);
                 if (!equiv.containsKey(eq.getName())) {
                     keep.add(eq);
                 } else {
                     Variable v = Variable.get(eq.getName());
-                    vars.remove(eq.getName());
-                    locals.remove(v);
+                    getVars().remove(eq.getName());
+                    getLocals().remove(v);
                 }
             }
-            eqs = keep;
+            setEqs(keep);
 
-            for (Automaton ssm : ssms) {
+            for (Automaton ssm : getSsms()) {
                 ssm.replace(equiv);
             }
         }
@@ -332,7 +332,7 @@ public class Program {
     public int wcrt() {
         Debug.low("WCRT:");
         int res = 0;
-        for (final Equation e : eqs) {
+        for (final Equation e : getEqs()) {
             final int t = e.wcrt();
             Debug.low(e.getName() + "->" + t);
             res += t;
@@ -344,21 +344,21 @@ public class Program {
      * @param v new local variable
      */
     public void addLocal(final Variable v) {
-        locals.add(v);
+        getLocals().add(v);
     }
 
     /**
      * @param v new output variable
      */
     public void addOutput(final Variable v) {
-        outputs.add(v);
+        getOutputs().add(v);
     }
 
     /**
      * @param v new input variable
      */
     public void addInput(final Variable v) {
-        inputs.add(v);
+        getInputs().add(v);
     }
 
     /**
@@ -368,14 +368,14 @@ public class Program {
         // Count number of readers for each flow
         final HashMap<String, Integer> index = new HashMap<String, Integer>();
         int i = 0;
-        for (final Equation eq : eqs) {
+        for (final Equation eq : getEqs()) {
             index.put(eq.getName(), i);
             i++;
         }
 
-        final int[] nReader = new int[eqs.size()];
+        final int[] nReader = new int[getEqs().size()];
 
-        for (final Equation eq : eqs) {
+        for (final Equation eq : getEqs()) {
             for (final String v : eq.getPDeps()) {
                 final Integer k = index.get(v);
                 if (k != null) {
@@ -385,31 +385,115 @@ public class Program {
         }
 
         final LinkedList<Equation> keep = new LinkedList<Equation>();
-        for (i = 0; i < eqs.size(); i++) {
-            final Equation eq = eqs.get(i);
-            if (nReader[i] == 1 && locals.contains(Variable.get(eq.getName()))) {
+        for (i = 0; i < getEqs().size(); i++) {
+            final Equation eq = getEqs().get(i);
+            if (nReader[i] == 1 && getLocals().contains(Variable.get(eq.getName()))) {
                 Debug.low("replace " + eq.getName());
                 boolean ok = true;
-                for (final Equation e : eqs) {
+                for (final Equation e : getEqs()) {
                     if (!e.replace(eq)) {
                         keep.add(eq);
                         ok = false;
                     }
                 }
                 if (ok) {
-                    vars.remove(Variable.get(eq.getName()).getName());
+                    getVars().remove(Variable.get(eq.getName()).getName());
                 }
             } else {
                 keep.add(eq);
             }
         }
 
-        eqs = keep;
+        setEqs(keep);
 
-        for (final Automaton ssm : ssms) {
+        for (final Automaton ssm : getSsms()) {
             ssm.simplify();
         }
 
         removeEquiv();
+    }
+
+    /**
+     * @param dG the depGraph to set
+     */
+    protected void setDepGraph(final DepGraph dG) {
+        this.depGraph = dG;
+    }
+
+    /**
+     * @return the depGraph
+     */
+    protected DepGraph getDepGraph() {
+        return depGraph;
+    }
+
+    /**
+     * @param s the ssms to set
+     */
+    protected void setSsms(final LinkedList<Automaton> s) {
+        this.ssms = s;
+    }
+
+    /**
+     * @return the ssms
+     */
+    protected LinkedList<Automaton> getSsms() {
+        return ssms;
+    }
+
+    /**
+     * @param equations the eqs to set
+     */
+    protected void setEqs(final LinkedList<Equation> equations) {
+        this.eqs = equations;
+    }
+
+    /**
+     * @return the eqs
+     */
+    protected LinkedList<Equation> getEqs() {
+        return eqs;
+    }
+
+    /**
+     * @param loc the locals to set
+     */
+    protected void setLocals(final LinkedList<Variable> loc) {
+        this.locals = loc;
+    }
+
+    /**
+     * @return the locals
+     */
+    protected LinkedList<Variable> getLocals() {
+        return locals;
+    }
+
+    /**
+     * @param outs the outputs to set
+     */
+    protected void setOutputs(final LinkedList<Variable> outs) {
+        this.outputs = outs;
+    }
+
+    /**
+     * @param i the inputs to set
+     */
+    protected void setInputs(final LinkedList<Variable> i) {
+        this.inputs = i;
+    }
+
+    /**
+     * @param v the vars to set
+     */
+    protected void setVars(final HashMap<String, Variable> v) {
+        this.vars = v;
+    }
+
+    /**
+     * @return the vars
+     */
+    protected HashMap<String, Variable> getVars() {
+        return vars;
     }
 }

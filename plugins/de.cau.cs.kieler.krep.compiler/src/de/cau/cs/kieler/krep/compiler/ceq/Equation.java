@@ -192,7 +192,7 @@ public class Equation {
             // init.flatten(id, vars, es);
 
             for (Expression e : es) {
-                instr.addAll(e.toKlp(Variable.get(e.name)));
+                instr.addAll(e.toKlp(Variable.get(e.getName())));
                 Debug.low(e.toString());
             }
             instr.addAll(initialize.toKlp(Variable.get(name)));
@@ -205,7 +205,7 @@ public class Equation {
         }
         // expr.flatten(id, vars, es);
         for (Expression e : es) {
-            instr.addAll(e.toKlp(Variable.get(e.name)));
+            instr.addAll(e.toKlp(Variable.get(e.getName())));
             Debug.low(e.toString());
         }
         instr.addAll(expression.toKlp(Variable.get(name)));

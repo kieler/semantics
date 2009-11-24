@@ -188,7 +188,7 @@ public class State implements Scope {
         for (Transition t : saborts) {
             res.addAll(t.compile(ssm, name, "S"));
         }
-        Instruction i = new Prio(ssm, prioOffset + content.depGraph.getMaxPrio() + 1);
+        Instruction i = new Prio(ssm, prioOffset + content.getDepGraph().getMaxPrio() + 1);
         i.setComment("Execute state");
         res.add(i);
         res.add(new Prio(ssm, prioOffset));
@@ -235,21 +235,21 @@ public class State implements Scope {
      * @return maximal used priority
      */
     public int getMaxPrio() {
-        return content.depGraph.getMaxPrio();
+        return content.getDepGraph().getMaxPrio();
     }
 
     /**
      * @return all input signals of the state
      */
     public LinkedList<Variable> getInputs() {
-        return content.inputs;
+        return content.getInputs();
     }
 
     /**
      * @return all output signals of the state
      */
     public LinkedList<Variable> getOutputs() {
-        return content.outputs;
+        return content.getOutputs();
     }
 
     void init() {
@@ -260,11 +260,12 @@ public class State implements Scope {
      * @return dependency graph
      */
     public DepGraph getDepGraph() {
-        return content.depGraph;
+        return content.getDepGraph();
     }
 
     /**
-     * @param equiv list of equivalent variables
+     * @param equiv
+     *            list of equivalent variables
      */
     public void replace(final HashMap<String, Variable> equiv) {
         content.replace(equiv);

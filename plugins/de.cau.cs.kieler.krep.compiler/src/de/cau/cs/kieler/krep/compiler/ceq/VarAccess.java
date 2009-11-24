@@ -55,7 +55,7 @@ public class VarAccess extends Expression {
     @Override
     public List<String> getVars() {
         List<String> res = new ArrayList<String>();
-        res.add(name);
+        res.add(getName());
         return res;
     }
 
@@ -63,7 +63,7 @@ public class VarAccess extends Expression {
     public List<Variable> getDeps() {
         List<Variable> res = new ArrayList<Variable>();
         if (pre == 0) {
-            res.add(Variable.get(name));
+            res.add(Variable.get(getName()));
         }
         return res;
     }
@@ -74,7 +74,7 @@ public class VarAccess extends Expression {
         for (int i = 0; i < pre; i++) {
             res += "pre(";
         }
-        res += name;
+        res += getName();
         for (int i = 0; i < pre; i++) {
             res += ")";
         }
@@ -125,14 +125,14 @@ public class VarAccess extends Expression {
          * }else{ pre=d-n; }
          */
         if (pre < 0) {
-            System.err.println("try to access future value of " + name);
+            System.err.println("try to access future value of " + getName());
         }
         return this;
     }
 
     @Override
     public Const propagateConst(final HashMap<String, Const> con) {
-        return con.get(name);
+        return con.get(getName());
     }
 
     @Override
@@ -142,10 +142,10 @@ public class VarAccess extends Expression {
 
     @Override
     public void replaceVar(final HashMap<String, Variable> equiv) {
-        Variable v = equiv.get(name);
+        Variable v = equiv.get(getName());
         if (v != null) {
             var = v;
-            this.name = v.getName();
+            this.setName(v.getName());
         }
 
     }
@@ -157,7 +157,7 @@ public class VarAccess extends Expression {
 
     @Override
     public Expression replace(final String variable, final Expression expr) {
-        if (variable.equals(name)) {
+        if (variable.equals(getName())) {
             if (isPre()) {
                 Debug.high("try to replace pre access to " + variable);
             }

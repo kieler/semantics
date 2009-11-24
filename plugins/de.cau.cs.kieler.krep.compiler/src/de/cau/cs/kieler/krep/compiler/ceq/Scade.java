@@ -63,7 +63,7 @@ public class Scade extends Program implements Scope {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for (Automaton ssm : ssms) {
+        for (Automaton ssm : getSsms()) {
             ssm.setIO();
         }
         this.propagateConst();
@@ -74,26 +74,26 @@ public class Scade extends Program implements Scope {
      * infer io from equations.
      */
     public void setIO() {
-        for (final Equation eq : eqs) {
+        for (final Equation eq : getEqs()) {
             final Variable v = Variable.get(eq.getName());
-            if (!locals.contains(v)) {
-                outputs.add(v);
-                if (!vars.containsKey(v.getName())) {
-                    vars.put(v.getName(), v);
+            if (!getLocals().contains(v)) {
+                getOutputs().add(v);
+                if (!getVars().containsKey(v.getName())) {
+                    getVars().put(v.getName(), v);
                 }
             }
         }
 
-        for (final Equation eq : eqs) {
+        for (final Equation eq : getEqs()) {
             for (final Variable v : eq.getDeps()) {
-                if (!vars.containsKey(v.getName())) {
-                    inputs.add(v);
-                    vars.put(v.getName(), v);
+                if (!getVars().containsKey(v.getName())) {
+                    getInputs().add(v);
+                    getVars().put(v.getName(), v);
                 }
             }
         }
 
-        for (final Automaton ssm : ssms) {
+        for (final Automaton ssm : getSsms()) {
             ssm.setIO();
         }
 
@@ -116,18 +116,18 @@ public class Scade extends Program implements Scope {
      *            expression to compute the value
      */
     public void addEq(final String s, final Expression e) {
-        eqs.add(new Equation(s, e));
+        getEqs().add(new Equation(s, e));
     }
 
     @Override
     public void addVar(final Variable v) {
-        vars.put(v.getName(), v);
+        getVars().put(v.getName(), v);
         if (v.isInput()) {
-            inputs.add(v);
+            getInputs().add(v);
         } else if (v.isOutput()) {
-            outputs.add(v);
+            getOutputs().add(v);
         } else {
-            locals.add(v);
+            getLocals().add(v);
         }
     }
 
@@ -140,17 +140,13 @@ public class Scade extends Program implements Scope {
         addVar(v);
     }
 
-    @Override
-    public void setName(final String name) {
-        this.name = name;
-    }
-
+   
     /**
      * 
      * {@inheritDoc}
      */
     public void add(final Automaton a) {
-        ssms.add(a);
+        getSsms().add(a);
 
     }
 
@@ -170,7 +166,7 @@ public class Scade extends Program implements Scope {
      * {@inheritDoc}
      */
     public void add(final Equation eq) {
-        eqs.add(eq);
+        getEqs().add(eq);
 
     }
 
