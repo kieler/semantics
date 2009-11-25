@@ -57,7 +57,7 @@ void callOutputs(){
 	«FOREACH this AS signal-»
 		«IF ((Signal)signal).isOutput-»
 	if(signals & (1 << «((Signal)signal).name-»)){
-	  SyncChart_O_«((Signal)signal).name-»();
+	  «((Signal)signal).parentState.label»_O_«((Signal)signal).name-»();
   }	
 		«ENDIF-»
 	«ENDFOREACH-»
