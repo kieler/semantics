@@ -85,7 +85,6 @@ public class WorkflowGenerator {
 
         if (sim) {
             outPath = System.getProperty("java.io.tmpdir") + "/" + randomString() + "/";
-            outPath = "/home/tam/sctemp/";
         }
         
 
