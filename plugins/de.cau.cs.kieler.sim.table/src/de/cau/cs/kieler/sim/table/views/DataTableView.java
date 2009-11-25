@@ -367,6 +367,10 @@ public class DataTableView extends ViewPart {
                 for (int c = 0; c < selection.size(); c++) {
                     TableData tableData = (TableData) selection.toArray()[c];
                     tableData.setPermanent(permanentValue);
+                    //if this is a signal and set to permanent, set it to present status by default!
+                    if (tableData.isPermanent() && tableData.isSignal()) {
+                        tableData.setPresent(true);
+                    } //end if
                 }
                 // enable updates for the table because we cannot edit the element anyway
                 if (permanentValue) {

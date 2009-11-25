@@ -89,9 +89,7 @@ public class TableDataEditing extends EditingSupport {
      */
     @Override
     protected boolean canEdit(final Object element) {
-        TableData tableData = (TableData) element;
-        // only *NOT* permanent entries are editable
-        return (!tableData.isPermanent());
+        return true;
     }
 
     // -------------------------------------------------------------------------
@@ -149,6 +147,11 @@ public class TableDataEditing extends EditingSupport {
     @Override
     protected void setValue(final Object element, final Object value) {
         TableData tableData = (TableData) element;
+
+        //only allow to modify present status of permanent entries (for convenience)
+        if (tableData.isPermanent()) {
+            return;
+        }
 
         switch (this.columnIndex) {
         case COLUMN_1:
