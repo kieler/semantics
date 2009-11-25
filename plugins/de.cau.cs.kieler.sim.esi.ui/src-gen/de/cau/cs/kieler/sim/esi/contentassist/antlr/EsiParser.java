@@ -18,6 +18,7 @@ import com.google.inject.Inject;
 
 import de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess;
 
+/** @generated */
 public class EsiParser extends AbstractContentAssistParser {
 	
 	@Inject

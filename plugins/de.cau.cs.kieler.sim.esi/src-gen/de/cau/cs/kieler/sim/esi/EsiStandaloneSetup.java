@@ -9,6 +9,7 @@ import com.google.inject.Injector;
 
 /**
  * Generated from StandaloneSetup.xpt!
+ * @generated
  */
 public class EsiStandaloneSetup implements ISetup {
 

@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator;
 import org.eclipse.xtext.validation.ComposedChecks;
 
+/** @generated */
 @ComposedChecks(validators= {org.eclipse.xtext.validation.ImportUriValidator.class})
 public class AbstractEsiJavaValidator extends AbstractDeclarativeValidator {
 

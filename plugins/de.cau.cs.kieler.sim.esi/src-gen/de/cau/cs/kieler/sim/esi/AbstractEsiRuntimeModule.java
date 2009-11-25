@@ -12,6 +12,7 @@ import com.google.inject.name.Names;
 
 /**
  * Manual modifications go to {de.cau.cs.kieler.sim.esi.EsiRuntimeModule}
+ * @generated
  */
 public abstract class AbstractEsiRuntimeModule extends DefaultRuntimeModule {
 	

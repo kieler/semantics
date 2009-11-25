@@ -12,6 +12,7 @@ import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 
 
+/** @generated */
 @Singleton
 public class EsiGrammarAccess implements IGrammarAccess {
 	

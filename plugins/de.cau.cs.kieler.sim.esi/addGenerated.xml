@@ -1,0 +1,65 @@
+<project name="Add @generated Tags" default="addGenerated" basedir=".">
+	<target name="addGenerated">
+		<replace dir="src-gen" summary="true">
+			<include name="**/*.java"/>
+  			<replacetoken><![CDATA[
+
+public class]]></replacetoken>
+  			<replacevalue><![CDATA[
+
+/** @generated */
+public class]]></replacevalue>
+		</replace>
+		<replace dir="src-gen" summary="true">
+			<include name="**/*.java"/>
+  			<replacetoken><![CDATA[;
+public class]]></replacetoken>
+  			<replacevalue><![CDATA[;
+
+/** @generated */
+public class]]></replacevalue>
+		</replace>
+		<replace dir="src-gen" summary="true">
+			<include name="**/*.java"/>
+  			<replacetoken><![CDATA[
+
+@Singleton
+public class]]></replacetoken>
+  			<replacevalue><![CDATA[
+
+/** @generated */
+@Singleton
+public class]]></replacevalue>
+		</replace>
+		<replace dir="src-gen" summary="true">
+			<include name="**/*.java"/>
+  			<replacetoken><![CDATA[
+
+@ComposedChecks]]></replacetoken>
+  			<replacevalue><![CDATA[
+
+/** @generated */
+@ComposedChecks]]></replacevalue>
+		</replace>
+		<replace dir="src-gen" summary="true">
+			<include name="**/*.java"/>
+  			<replacetoken><![CDATA[RuntimeModule}
+ */
+public abstract]]></replacetoken>
+  			<replacevalue><![CDATA[RuntimeModule}
+ * @generated
+ */
+public abstract]]></replacevalue>
+		</replace>
+		<replace dir="src-gen" summary="true">
+			<include name="**/*.java"/>
+  			<replacetoken><![CDATA[StandaloneSetup.xpt!
+ */
+public class]]></replacetoken>
+  			<replacevalue><![CDATA[StandaloneSetup.xpt!
+ * @generated
+ */
+public class]]></replacevalue>
+		</replace>
+	</target>
+</project>

@@ -12,6 +12,7 @@ import de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess;
 
 import com.google.inject.Inject;
 
+/** @generated */
 public class EsiParsetreeConstructor extends AbstractParseTreeConstructor {
 		
 	@Inject

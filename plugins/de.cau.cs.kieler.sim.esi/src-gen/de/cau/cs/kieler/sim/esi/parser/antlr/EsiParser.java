@@ -13,6 +13,7 @@ import com.google.inject.Inject;
 
 import de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess;
 
+/** @generated */
 public class EsiParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
 	
 	@Inject 
