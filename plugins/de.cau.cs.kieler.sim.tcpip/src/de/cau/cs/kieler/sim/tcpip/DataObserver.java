@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
@@ -74,10 +76,22 @@ public class DataObserver extends JSONStringDataComponent {
          * But i do not find a solution and do not know if it works
          */
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
-        String bundleLocation = bundle.getLocation();
+        
+       
+        
+        URL url = null;
+        try {
+            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("simulation"), null));
+        } catch (IOException e2) {
+            // TODO Auto-generated catch block
+            e2.printStackTrace();
+        }
+        System.out.println(url.toExternalForm());
+
+        String bundleLocation = url.getPath();// bundle.getLocation();
 
         Path path = new Path(bundleLocation);
-        bundleLocation = "/home/" + path.toString();
+        bundleLocation =  path.toString();
         System.out.println(bundleLocation);
         
         // find free port
@@ -95,8 +109,8 @@ public class DataObserver extends JSONStringDataComponent {
         } while (findNewPort);
 
         String compile = "gcc " + wf.getOutPath() + "sim.c " + wf.getOutPath() + "sim_data.c "
-                + bundleLocation + "simulation/cJSON.c " + bundleLocation + "simulation/tcpip.c "
-                + "-I " + bundleLocation + "simulation/ " + "-o " + wf.getOutPath()
+                + bundleLocation + "cJSON.c " + bundleLocation + "tcpip.c "
+                + "-I " + bundleLocation + " " + "-o " + wf.getOutPath()
                 + "simulation -lm";
         System.out.println(compile);
         String executable = wf.getOutPath() + "simulation " + port;
