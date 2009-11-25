@@ -26,6 +26,8 @@ import java.util.LinkedList;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewReference;
@@ -111,6 +113,9 @@ public final class DataComponent extends JSONObjectDataComponent {
             int reactionTime = protocol.tick(inputs.size() + outputs.size(), inputs, outputs);
             res.accumulate("Reaction Time", reactionTime);
             trace = protocol.getExecutionTrace();
+            for (int i = 0; i < trace.length; i++) {
+                trace[i] = assembler.adr2row(trace[i]);
+            }
             viewer.markTrace(trace);
         } catch (CommunicationException e) {
             throw new KiemExecutionException("Communication error performing tick", true, e);
@@ -179,7 +184,7 @@ public final class DataComponent extends JSONObjectDataComponent {
         p.setValue("localhost");
         properties.add(p);
 
-        String[] ports = {};
+        String[] ports = { "No port found" };
         p = new KiemProperty("RS232 port", new KiemPropertyTypeChoice(ports));
         properties.add(p);
 
@@ -386,9 +391,10 @@ public final class DataComponent extends JSONObjectDataComponent {
         if (fragments.length != 1) {
             throw new KiemInitializationException("strl2kasm compiler not found", false, null);
         }
-        Bundle compiler = fragments[0];
+        Bundle compiler = fragments[0];      
         String path = compiler.getLocation();
-        path = path.substring("reference:file:".length());
+        path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""), null)).getPath();
+        //path = path.substring("reference:file:".length());
 
         System.out.println("Expect strl2kasm compiler in:" + path);
         Process p = Runtime.getRuntime().exec(path + "cec-strlxml");
@@ -419,7 +425,7 @@ public final class DataComponent extends JSONObjectDataComponent {
 
         // dismantle
         String kepdismantle = path + "cec-kepdismantle";
-        //String[] cmds = new String[] { kepdismantle, "-d ALL" };
+        // String[] cmds = new String[] { kepdismantle, "-d ALL" };
 
         p = Runtime.getRuntime().exec(kepdismantle);
         InputStream dis = p.getInputStream();
