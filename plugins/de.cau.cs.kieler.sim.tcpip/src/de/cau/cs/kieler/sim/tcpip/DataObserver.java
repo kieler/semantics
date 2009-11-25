@@ -15,8 +15,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.extension.JSONStringDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONArray;
@@ -26,25 +26,31 @@ import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
-public class DataObserver extends JSONStringDataComponent {
+public class DataObserver extends JSONObjectDataComponent {
 
     JSONClient client = null;
     WorkflowGenerator wf = null;
     Process process = null;
 
-    public String step(String JSONString) throws KiemExecutionException {
-        String out = "";
+    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
+        JSONObject out = null;
         try {
-            client.sndMessage(JSONString);
-            out = client.rcvMessage();
-            System.out.println(out);
+            System.out.println(jSONObject.toString());
+            client.sndMessage(jSONObject.toString());
+            String receivedMessage = client.rcvMessage();
+            System.out.println("rcv from server: " + receivedMessage);
+//            out.getString(client.rcvMessage());
+            out = new JSONObject(receivedMessage);
+            System.out.println("out is: " + out.toString());
         } catch (IOException e) {
             // TODO Auto-generated catch block
             System.err.println(e.getMessage());
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
         try {
-            JSONObject receivedObject = new JSONObject(out);
-            JSONArray stateArray = receivedObject.getJSONArray("state");
+            JSONArray stateArray = out.getJSONArray("state");
             String allStates = "";
 
             for (int i = 0; i < stateArray.length(); i++) {
@@ -54,9 +60,8 @@ public class DataObserver extends JSONStringDataComponent {
             }
             allStates = allStates.substring(0, allStates.length() - 1);
             System.out.println(allStates);
-            receivedObject.remove("state");
-            receivedObject.put("state", allStates);
-            out = receivedObject.toString();
+            out.remove("state");
+            out.put("state", allStates);
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             System.err.println(e.getMessage());
@@ -69,15 +74,8 @@ public class DataObserver extends JSONStringDataComponent {
         // true sets the flag for simulation
         wf.invokeWorkflow(true);
 
-        // building relative path
-        /*
-         * REALY REALY BAD!!!!
-         * 
-         * But i do not find a solution and do not know if it works
-         */
+        // building path to bundle
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
-        
-       
         
         URL url = null;
         try {
@@ -86,14 +84,9 @@ public class DataObserver extends JSONStringDataComponent {
             // TODO Auto-generated catch block
             e2.printStackTrace();
         }
-        System.out.println(url.toExternalForm());
 
-        String bundleLocation = url.getPath();// bundle.getLocation();
+        String bundleLocation = url.getPath();
 
-        Path path = new Path(bundleLocation);
-        bundleLocation =  path.toString();
-        System.out.println(bundleLocation);
-        
         // find free port
         boolean findNewPort = false;
         int port = 0;
@@ -149,6 +142,7 @@ public class DataObserver extends JSONStringDataComponent {
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             System.err.println(e.getMessage());
+            process.destroy();
         }
 
     }
@@ -189,10 +183,25 @@ public class DataObserver extends JSONStringDataComponent {
         }
     }
 
-    public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[1];
-        properties[0] = new KiemProperty("port", "12345");
-        return properties;
+//    public KiemProperty[] provideProperties() {
+//        KiemProperty[] properties = new KiemProperty[1];
+//        properties[0] = new KiemProperty("port", "12345");
+//        return properties;
+//    }
+    
+    @Override
+    public JSONObject provideInitialVariables() {
+        JSONObject returnObj = new JSONObject();
+        EObject myModel = wf.getModel();
+        List<Signal> signalList = ((Region) myModel).getInnerStates().get(0).getSignals();
+        for (int i = 0; i < signalList.size(); i++) {
+            try {
+                returnObj.accumulate(signalList.get(i).getName(), JSONSignalValues.newValue(false));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return returnObj;
     }
 
     public String[] getSignals() {
@@ -242,4 +251,5 @@ public class DataObserver extends JSONStringDataComponent {
                 return false;
         }
     }
+
 }

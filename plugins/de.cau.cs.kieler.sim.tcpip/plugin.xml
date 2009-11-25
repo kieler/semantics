@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="de.cau.cs.kieler.sim.kiem.string.datacomponent">
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
             class="de.cau.cs.kieler.sim.tcpip.DataObserver"
             id="de.cau.cs.kieler.sim.tcpip.content3"
