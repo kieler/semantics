@@ -115,8 +115,8 @@ rootRegion.innerStates.add(state)
 
 //Good ol' ABRO
 Void addABRO(Region rootRegion):
-let reset = new Transition:
 let waitABToFinal = new Transition:
+let reset = new Transition:
 let ABOFinal = new State:
 let wATrans = new Transition:
 let wBTrans = new Transition:
@@ -139,9 +139,13 @@ let root = new State:
 root.setLabel("ABRO") ->
 //ABRO Signal definition:
 sigA.setName("A") ->
+sigA.setIsInput(true) ->
 sigB.setName("B") ->
+sigB.setIsInput(true) ->
 sigR.setName("R") ->
+sigR.setIsInput(true) ->
 sigO.setName("O") ->
+sigO.setIsOutput(true) ->
 root.signals.add(sigA) ->
 root.signals.add(sigB) ->
 root.signals.add(sigR) ->
@@ -159,9 +163,9 @@ wA.innerStates.add(wAInitial) ->
 wAFinal.setLabel("dA") ->
 wAFinal.setIsFinal(true) ->
 wA.innerStates.add(wAFinal) ->
-wATrans.setIsImmediate(true) ->
 wATrans.setSourceState(wAInitial) ->
 wATrans.setTargetState(wAFinal) ->
+wATrans.setTriggersAndEffects("A") ->
 wAInitial.outgoingTransitions.add(wATrans) ->
 waitAB.regions.add(wA) ->
 //Region for 'wait for b'
@@ -171,9 +175,9 @@ wB.innerStates.add(wBInitial) ->
 wBFinal.setLabel("dB") ->
 wBFinal.setIsFinal(true) ->
 wB.innerStates.add(wBFinal) ->
-wBTrans.setIsImmediate(true) ->
 wBTrans.setSourceState(wBInitial) ->
 wBTrans.setTargetState(wBFinal) ->
+wBTrans.setTriggersAndEffects("B") ->
 wBInitial.outgoingTransitions.add(wBTrans) ->
 waitAB.regions.add(wB) ->
 //ABO final state
@@ -181,13 +185,15 @@ ABOFinal.setLabel("done") ->
 ABOFinal.setIsFinal(true) ->
 waitABToFinal.setSourceState(waitAB) ->
 waitABToFinal.setTargetState(ABOFinal) ->
+waitABToFinal.setType(TransitionType::NORMALTERMINATION) ->
+waitABToFinal.setTriggersAndEffects("/O") ->
 waitAB.outgoingTransitions.add(waitABToFinal)  ->
 ABORegion.innerStates.add(waitAB) ->
 ABORegion.innerStates.add(ABOFinal) ->
 ABO.regions.add(ABORegion)->
-reset.setIsImmediate(true) ->
 reset.setSourceState(ABO) ->
 reset.setTargetState(ABO) ->
+reset.setTriggersAndEffects("R") ->
 ABO.outgoingTransitions.add(reset) ->
 innerRootRegion.innerStates.add(ABO) ->
 root.regions.add(innerRootRegion) ->
