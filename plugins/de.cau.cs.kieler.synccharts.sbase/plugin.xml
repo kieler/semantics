@@ -12,113 +12,784 @@
 			<transformations>
 				<transformation keyboardShortcut="M1+K S"
 					name="Add Successor State" transformation="addSuccessorState"
-					transformationId="de.cau.cs.kieler.sbase.addSuc">
+					transformationId="de.cau.cs.kieler.ksbase.addSuc">
 				</transformation>
 				<transformation keyboardShortcut="M1+K P"
 					name="Add Predecessor State" transformation="addPredecessorState"
-					transformationId="de.cau.cs.kieler.sbase.addPred">
+					transformationId="de.cau.cs.kieler.ksbase.addPred">
 				</transformation>
 				<transformation keyboardShortcut="M1+K C" name="Add Choice"
 					transformation="addChoice"
-					transformationId="de.cau.cs.kieler.sbase.addChoice">
+					transformationId="de.cau.cs.kieler.ksbase.addChoice">
 				</transformation>
 				<transformation icon="icons/obj16/Transition.gif"
 					keyboardShortcut="M1+K F" name="Flip Transition" 
-					transformation="flipTransition" transformationId="de.cau.cs.kieler.sbase.flip">
+					transformation="flipTransition" transformationId="de.cau.cs.kieler.ksbase.flip">
 				</transformation>
 				<transformation icon="icons/obj16/Action.gif"
 					keyboardShortcut="M1+K W" name="Connect States" 
-					transformation="connectStates" transformationId="de.cau.cs.kieler.sbase.connect">
+					transformation="connectStates" transformationId="de.cau.cs.kieler.ksbase.connect">
 				</transformation>
 				<transformation icon="icons/obj16/Region.gif" name="Add ABRO"
-					transformation="addABRO" transformationId="de.cau.cs.kieler.sbase.addABRO">
+					transformation="addABRO" transformationId="de.cau.cs.kieler.ksbase.addABRO">
 				</transformation>
 				<transformation icon="icons/obj16/Signal.gif" name="Create Default"
-					transformation="createDefault" transformationId="de.cau.cs.kieler.sbase.empty">
+					transformation="createDefault" transformationId="de.cau.cs.kieler.ksbase.empty">
 				</transformation>
     <transformation
           keyboardShortcut="M1+K Q"
           name="Set Transition Target"
           transformation="rerouteTransitionTarget"
-          transformationId="de.cau.cs.kieler.sbase.rerouteTarget">
+          transformationId="de.cau.cs.kieler.ksbase.rerouteTarget">
        </transformation>
        <transformation
              keyboardShortcut="M1+K J"
              name="Set Transition Source"
              transformation="rerouteTransitionSource"
-             transformationId="de.cau.cs.kieler.sbase.rerouteSource">
+             transformationId="de.cau.cs.kieler.ksbase.rerouteSource">
     	</transformation>
        <transformation
              icon="icons/obj16/Region.gif"
              keyboardShortcut="M1+K R"
              name="Add Region"
              transformation="addParallelRegion"
-             transformationId="de.cau.cs.kieler.sbase.addRegion">
+             transformationId="de.cau.cs.kieler.ksbase.addRegion">
        </transformation>
 			</transformations>
 			<menus>
 				<menuContribution locationURI="menu:de.cau.cs.kieler">
-					<menu label="Templates" id="de.cau.cs.kieler.synccharts.sbase.templates">
-						<transformationCommand transformationId="de.cau.cs.kieler.sbase.addABRO"></transformationCommand>
-						<transformationCommand transformationId="de.cau.cs.kieler.sbase.empty">
+					<menu label="Templates" id="de.cau.cs.kieler.synccharts.ksbase.templates">
+						<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addABRO"></transformationCommand>
+						<transformationCommand transformationId="de.cau.cs.kieler.ksbase.empty">
 						</transformationCommand>
 					</menu>
-					<menu label="Transitions" id="de.cau.cs.kieler.synccharts.sbase.trans">
+					<menu label="Transitions" id="de.cau.cs.kieler.synccharts.ksbase.trans">
         <transformationCommand
-              transformationId="de.cau.cs.kieler.sbase.connect">
+              transformationId="de.cau.cs.kieler.ksbase.connect">
         </transformationCommand>
-						<transformationCommand transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
+						<transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip"></transformationCommand>
       <transformationCommand
-            transformationId="de.cau.cs.kieler.sbase.rerouteTarget">
+            transformationId="de.cau.cs.kieler.ksbase.rerouteTarget">
       </transformationCommand>
       <transformationCommand
-            transformationId="de.cau.cs.kieler.sbase.rerouteSource">
+            transformationId="de.cau.cs.kieler.ksbase.rerouteSource">
       </transformationCommand>
 					</menu>
-					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addPred"></transformationCommand>
-					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addChoice">
+					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addPred"></transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addChoice">
 					</transformationCommand>
-					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addSuc"></transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addSuc"></transformationCommand>
      <transformationCommand
-           transformationId="de.cau.cs.kieler.sbase.addRegion">
+           transformationId="de.cau.cs.kieler.ksbase.addRegion">
      </transformationCommand>
 				</menuContribution>
 				<menuContribution locationURI="toolbar:de.cau.cs.kieler">
        <transformationCommand
-             transformationId="de.cau.cs.kieler.sbase.addSuc">
+             transformationId="de.cau.cs.kieler.ksbase.addSuc">
        </transformationCommand>
-					<transformationCommand transformationId="de.cau.cs.kieler.sbase.addRegion">
+					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addRegion">
 					</transformationCommand>
-					<transformationCommand transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
+					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip"></transformationCommand>
 				</menuContribution>
     <menuContribution
           locationURI="popup:de.cau.cs.kieler">
        <transformationCommand
-             transformationId="de.cau.cs.kieler.sbase.addSuc">
+             transformationId="de.cau.cs.kieler.ksbase.addSuc">
        </transformationCommand>
        <transformationCommand
-             transformationId="de.cau.cs.kieler.sbase.addPred">
+             transformationId="de.cau.cs.kieler.ksbase.addPred">
        </transformationCommand>
        <transformationCommand
-             transformationId="de.cau.cs.kieler.sbase.addRegion">
+             transformationId="de.cau.cs.kieler.ksbase.addRegion">
        </transformationCommand>
        <transformationCommand
-             transformationId="de.cau.cs.kieler.sbase.addChoice">
+             transformationId="de.cau.cs.kieler.ksbase.addChoice">
        </transformationCommand>
        <transformationCommand
-             transformationId="de.cau.cs.kieler.sbase.connect">
+             transformationId="de.cau.cs.kieler.ksbase.connect">
        </transformationCommand>
-          <transformationCommand transformationId="de.cau.cs.kieler.sbase.flip"></transformationCommand>
+          <transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip"></transformationCommand>
           <transformationCommand
-                transformationId="de.cau.cs.kieler.sbase.rerouteTarget">
+                transformationId="de.cau.cs.kieler.ksbase.rerouteTarget">
           </transformationCommand>
           <transformationCommand
-                transformationId="de.cau.cs.kieler.sbase.rerouteSource">
+                transformationId="de.cau.cs.kieler.ksbase.rerouteSource">
           </transformationCommand>
     </menuContribution>
 
 			</menus>
 		</configuration>
  </extension>
- 
+ <extension point="org.eclipse.ui.commands">
+		<command categoryId="de.cau.cs.kieler.ksbase.ui.ksbaseCategory"
+			id="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Successor_State"
+			name="Add Successor State">
+			<commandParameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				name="editor" />
+			<commandParameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				name="transformation" />
+		</command>
+		<command categoryId="de.cau.cs.kieler.ksbase.ui.ksbaseCategory"
+			id="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Predecessor_State"
+			name="Add Predecessor State">
+			<commandParameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				name="editor" />
+			<commandParameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				name="transformation" />
+		</command>
+		<command categoryId="de.cau.cs.kieler.ksbase.ui.ksbaseCategory"
+			id="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Choice"
+			name="Add Choice">
+			<commandParameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				name="editor" />
+			<commandParameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				name="transformation" />
+		</command>
+		<command categoryId="de.cau.cs.kieler.ksbase.ui.ksbaseCategory"
+			id="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Flip_Transition"
+			name="Flip Transition">
+			<commandParameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				name="editor" />
+			<commandParameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				name="transformation" />
+		</command>
+		<command categoryId="de.cau.cs.kieler.ksbase.ui.ksbaseCategory"
+			id="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Connect_States"
+			name="Connect States">
+			<commandParameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				name="editor" />
+			<commandParameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				name="transformation" />
+		</command>
+		<command categoryId="de.cau.cs.kieler.ksbase.ui.ksbaseCategory"
+			id="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Set_Transition_Target"
+			name="Set Transition Target">
+			<commandParameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				name="editor" />
+			<commandParameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				name="transformation" />
+		</command>
+		<command categoryId="de.cau.cs.kieler.ksbase.ui.ksbaseCategory"
+			id="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Set_Transition_Source"
+			name="Set Transition Source">
+			<commandParameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				name="editor" />
+			<commandParameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				name="transformation" />
+		</command>
+		<command categoryId="de.cau.cs.kieler.ksbase.ui.ksbaseCategory"
+			id="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Region"
+			name="Add Region">
+			<commandParameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				name="editor" />
+			<commandParameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				name="transformation" />
+		</command>
+		<command categoryId="de.cau.cs.kieler.ksbase.ui.ksbaseCategory"
+			id="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Create_Default"
+			name="Create Default">
+			<commandParameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				name="editor" />
+			<commandParameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				name="transformation" />
+		</command>
+		<command categoryId="de.cau.cs.kieler.ksbase.ui.ksbaseCategory"
+			id="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_ABRO"
+			name="Add ABRO">
+			<commandParameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				name="editor" />
+			<commandParameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				name="transformation" />
+		</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="menu:de.cau.cs.kieler">
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Predecessor_State"
+				icon="icons/obj16/State.gif" label="Add Predecessor State">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="addPredecessorState" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Choice"
+				icon="icons/obj16/State.gif" label="Add Choice">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="addChoice" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Successor_State"
+				icon="icons/obj16/State.gif" label="Add Successor State">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="addSuccessorState" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Region"
+				icon="icons/obj16/Region.gif" label="Add Region">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="addParallelRegion" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<menu id="de.cau.cs.kieler.synccharts.ksbase.templates" label="Templates">
+				<command
+					commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_ABRO"
+					icon="icons/obj16/Region.gif" label="Add ABRO">
+					<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+						value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+					<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+						value="addABRO" />
+					<visibleWhen checkEnabled="false">
+						<iterate ifEmpty="false" operator="or">
+							<with variable="activeEditorId">
+								<equals
+									value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+							</with>
+						</iterate>
+					</visibleWhen>
+				</command>
+				<command
+					commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Create_Default"
+					icon="icons/obj16/Signal.gif" label="Create Default">
+					<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+						value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+					<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+						value="createDefault" />
+					<visibleWhen checkEnabled="false">
+						<iterate ifEmpty="false" operator="or">
+							<with variable="activeEditorId">
+								<equals
+									value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+							</with>
+						</iterate>
+					</visibleWhen>
+				</command>
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</menu>
+			<menu id="de.cau.cs.kieler.synccharts.ksbase.trans" label="Transitions">
+				<command
+					commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Connect_States"
+					icon="icons/obj16/Action.gif" label="Connect States">
+					<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+						value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+					<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+						value="connectStates" />
+					<visibleWhen checkEnabled="false">
+						<iterate ifEmpty="false" operator="or">
+							<with variable="activeEditorId">
+								<equals
+									value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+							</with>
+						</iterate>
+					</visibleWhen>
+				</command>
+				<command
+					commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Flip_Transition"
+					icon="icons/obj16/Transition.gif" label="Flip Transition">
+					<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+						value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+					<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+						value="flipTransition" />
+					<visibleWhen checkEnabled="false">
+						<iterate ifEmpty="false" operator="or">
+							<with variable="activeEditorId">
+								<equals
+									value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+							</with>
+						</iterate>
+					</visibleWhen>
+				</command>
+				<command
+					commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Set_Transition_Target"
+					icon="icons/obj16/State.gif" label="Set Transition Target">
+					<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+						value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+					<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+						value="rerouteTransitionTarget" />
+					<visibleWhen checkEnabled="false">
+						<iterate ifEmpty="false" operator="or">
+							<with variable="activeEditorId">
+								<equals
+									value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+							</with>
+						</iterate>
+					</visibleWhen>
+				</command>
+				<command
+					commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Set_Transition_Source"
+					icon="icons/obj16/State.gif" label="Set Transition Source">
+					<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+						value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+					<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+						value="rerouteTransitionSource" />
+					<visibleWhen checkEnabled="false">
+						<iterate ifEmpty="false" operator="or">
+							<with variable="activeEditorId">
+								<equals
+									value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+							</with>
+						</iterate>
+					</visibleWhen>
+				</command>
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</menu>
+		</menuContribution>
+		<menuContribution locationURI="toolbar:de.cau.cs.kieler">
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Successor_State"
+				icon="icons/obj16/State.gif" label="Add Successor State">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="addSuccessorState" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Region"
+				icon="icons/obj16/Region.gif" label="Add Region">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="addParallelRegion" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Flip_Transition"
+				icon="icons/obj16/Transition.gif" label="Flip Transition">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="flipTransition" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="popup:de.cau.cs.kieler">
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Successor_State"
+				icon="icons/obj16/State.gif" label="Add Successor State">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="addSuccessorState" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Predecessor_State"
+				icon="icons/obj16/State.gif" label="Add Predecessor State">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="addPredecessorState" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Region"
+				icon="icons/obj16/Region.gif" label="Add Region">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="addParallelRegion" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Choice"
+				icon="icons/obj16/State.gif" label="Add Choice">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="addChoice" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Connect_States"
+				icon="icons/obj16/Action.gif" label="Connect States">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="connectStates" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Flip_Transition"
+				icon="icons/obj16/Transition.gif" label="Flip Transition">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="flipTransition" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Set_Transition_Target"
+				icon="icons/obj16/State.gif" label="Set Transition Target">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="rerouteTransitionTarget" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command
+				commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Set_Transition_Source"
+				icon="icons/obj16/State.gif" label="Set Transition Source">
+				<parameter name="de.cau.cs.kieler.ksbase.editorParameter"
+					value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+				<parameter name="de.cau.cs.kieler.ksbase.transformationParameter"
+					value="rerouteTransitionSource" />
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="or">
+						<with variable="activeEditorId">
+							<equals
+								value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+						</with>
+					</iterate>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.bindings">
+		<key
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Successor_State"
+			contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+K S">
+			<parameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+			<parameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				value="addSuccessorState" />
+		</key>
+		<key
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Predecessor_State"
+			contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+K P">
+			<parameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+			<parameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				value="addPredecessorState" />
+		</key>
+		<key
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Choice"
+			contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+K C">
+			<parameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+			<parameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				value="addChoice" />
+		</key>
+		<key
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Flip_Transition"
+			contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+K F">
+			<parameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+			<parameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				value="flipTransition" />
+		</key>
+		<key
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Connect_States"
+			contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+K W">
+			<parameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+			<parameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				value="connectStates" />
+		</key>
+		<key
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Set_Transition_Target"
+			contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+K Q">
+			<parameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+			<parameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				value="rerouteTransitionTarget" />
+		</key>
+		<key
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Set_Transition_Source"
+			contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+K J">
+			<parameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+			<parameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				value="rerouteTransitionSource" />
+		</key>
+		<key
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Region"
+			contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+K R">
+			<parameter id="de.cau.cs.kieler.ksbase.editorParameter"
+				value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID" />
+			<parameter id="de.cau.cs.kieler.ksbase.transformationParameter"
+				value="addParallelRegion" />
+		</key>
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+		<handler
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Successor_State">
+			<class
+				class="de.cau.cs.kieler.ksbase.ui.handler.TransformationCommandHandler" />
+			<enabledWhen>
+				<with variable="selection">
+					<iterate ifEmpty="false" operator="and">
+						<test
+							args="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID,de.cau.cs.kieler.ksbase.addSuc"
+							forcePluginActivation="true"
+							property="de.cau.cs.kieler.ksbase.ui.modelTesting.isModelInstance" />
+					</iterate>
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Predecessor_State">
+			<class
+				class="de.cau.cs.kieler.ksbase.ui.handler.TransformationCommandHandler" />
+			<enabledWhen>
+				<with variable="selection">
+					<iterate ifEmpty="false" operator="and">
+						<test
+							args="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID,de.cau.cs.kieler.ksbase.addPred"
+							forcePluginActivation="true"
+							property="de.cau.cs.kieler.ksbase.ui.modelTesting.isModelInstance" />
+					</iterate>
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Choice">
+			<class
+				class="de.cau.cs.kieler.ksbase.ui.handler.TransformationCommandHandler" />
+			<enabledWhen>
+				<with variable="selection">
+					<iterate ifEmpty="false" operator="and">
+						<test
+							args="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID,de.cau.cs.kieler.ksbase.addChoice"
+							forcePluginActivation="true"
+							property="de.cau.cs.kieler.ksbase.ui.modelTesting.isModelInstance" />
+					</iterate>
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Flip_Transition">
+			<class
+				class="de.cau.cs.kieler.ksbase.ui.handler.TransformationCommandHandler" />
+			<enabledWhen>
+				<with variable="selection">
+					<iterate ifEmpty="false" operator="and">
+						<test
+							args="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID,de.cau.cs.kieler.ksbase.flip"
+							forcePluginActivation="true"
+							property="de.cau.cs.kieler.ksbase.ui.modelTesting.isModelInstance" />
+					</iterate>
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Connect_States">
+			<class
+				class="de.cau.cs.kieler.ksbase.ui.handler.TransformationCommandHandler" />
+			<enabledWhen>
+				<with variable="selection">
+					<iterate ifEmpty="false" operator="and">
+						<test
+							args="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID,de.cau.cs.kieler.ksbase.connect"
+							forcePluginActivation="true"
+							property="de.cau.cs.kieler.ksbase.ui.modelTesting.isModelInstance" />
+					</iterate>
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Set_Transition_Target">
+			<class
+				class="de.cau.cs.kieler.ksbase.ui.handler.TransformationCommandHandler" />
+			<enabledWhen>
+				<with variable="selection">
+					<iterate ifEmpty="false" operator="and">
+						<test
+							args="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID,de.cau.cs.kieler.ksbase.rerouteTarget"
+							forcePluginActivation="true"
+							property="de.cau.cs.kieler.ksbase.ui.modelTesting.isModelInstance" />
+					</iterate>
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Set_Transition_Source">
+			<class
+				class="de.cau.cs.kieler.ksbase.ui.handler.TransformationCommandHandler" />
+			<enabledWhen>
+				<with variable="selection">
+					<iterate ifEmpty="false" operator="and">
+						<test
+							args="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID,de.cau.cs.kieler.ksbase.rerouteSource"
+							forcePluginActivation="true"
+							property="de.cau.cs.kieler.ksbase.ui.modelTesting.isModelInstance" />
+					</iterate>
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_Region">
+			<class
+				class="de.cau.cs.kieler.ksbase.ui.handler.TransformationCommandHandler" />
+			<enabledWhen>
+				<with variable="selection">
+					<iterate ifEmpty="false" operator="and">
+						<test
+							args="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID,de.cau.cs.kieler.ksbase.addRegion"
+							forcePluginActivation="true"
+							property="de.cau.cs.kieler.ksbase.ui.modelTesting.isModelInstance" />
+					</iterate>
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Create_Default">
+			<class
+				class="de.cau.cs.kieler.ksbase.ui.handler.TransformationCommandHandler" />
+			<enabledWhen>
+				<with variable="selection">
+					<iterate ifEmpty="false" operator="and">
+						<test
+							args="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID,de.cau.cs.kieler.ksbase.empty"
+							forcePluginActivation="true"
+							property="de.cau.cs.kieler.ksbase.ui.modelTesting.isModelInstance" />
+					</iterate>
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler
+			commandId="de.cau.cs.kieler.ksbase.de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID.Add_ABRO">
+			<class
+				class="de.cau.cs.kieler.ksbase.ui.handler.TransformationCommandHandler" />
+			<enabledWhen>
+				<with variable="selection">
+					<iterate ifEmpty="false" operator="and">
+						<test
+							args="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID,de.cau.cs.kieler.ksbase.addABRO"
+							forcePluginActivation="true"
+							property="de.cau.cs.kieler.ksbase.ui.modelTesting.isModelInstance" />
+					</iterate>
+				</with>
+			</enabledWhen>
+		</handler>
+	</extension>
 </plugin>
