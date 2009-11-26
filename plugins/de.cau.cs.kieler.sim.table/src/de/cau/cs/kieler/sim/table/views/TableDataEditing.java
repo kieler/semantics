@@ -89,7 +89,15 @@ public class TableDataEditing extends EditingSupport {
      */
     @Override
     protected boolean canEdit(final Object element) {
-        return true;
+        TableData tableData = (TableData) element;
+
+        // allow to edit the present status any time
+        if (this.columnIndex == COLUMN_1) {
+            return true;
+        }
+        
+        //otherwise only allow changes if NOT permanent!
+        return (!tableData.isPermanent());
     }
 
     // -------------------------------------------------------------------------
@@ -149,36 +157,35 @@ public class TableDataEditing extends EditingSupport {
         TableData tableData = (TableData) element;
 
         //only allow to modify present status of permanent entries (for convenience)
-        if (tableData.isPermanent()) {
-            return;
-        }
-
-        switch (this.columnIndex) {
-        case COLUMN_1:
-            // noop
-            break;
-        case COLUMN_2:
-            try {
+        if (!tableData.isPermanent()) {
+            switch (this.columnIndex) {
+            case COLUMN_1:
+                // noop
+                break;
+            case COLUMN_2:
+                try {
+                    String newValue = String.valueOf(value);
+                    if (!tableData.getKey().equals(newValue)) {
+                        tableData.setModified(true);
+                    }
+                    tableData.setKey(newValue);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // do not set the key//
+                }
+                break;
+            case COLUMN_3:
                 String newValue = String.valueOf(value);
-                if (!tableData.getKey().equals(newValue)) {
+                if (!tableData.getValue().equals(newValue)) {
                     tableData.setModified(true);
                 }
-                tableData.setKey(newValue);
-            } catch (Exception e) {
-                e.printStackTrace();
-                // do not set the key//
+                tableData.setValue(newValue);
+                break;
+            default:
+                break;
             }
-            break;
-        case COLUMN_3:
-            String newValue = String.valueOf(value);
-            if (!tableData.getValue().equals(newValue)) {
-                tableData.setModified(true);
-            }
-            tableData.setValue(newValue);
-            break;
-        default:
-            break;
         }
+
         // table data is not being edited any more and can be
         // updated by observer again
         DataTableView.getInstance().setCurrentlyEditing(false);
