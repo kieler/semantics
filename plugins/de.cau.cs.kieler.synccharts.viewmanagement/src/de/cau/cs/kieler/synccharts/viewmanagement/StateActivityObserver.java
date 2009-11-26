@@ -127,7 +127,7 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                     EditPart affectedState = getEditPart(stateName, rootEditPart);
                     
                     if (affectedState == null) {
-                        throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occured.", false,
+                        throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.", false,
                            new Exception());                                
                     }
                     
@@ -170,7 +170,7 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
 
                     	EditPart ep = getEditPart(editPartURI, rootEditPart);
                         if (ep == null) {
-                            throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occured.", false,  new Exception());
+                            throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.", false,  new Exception());
                         }
                     	
                         EObject eObject =  trigger.translateToEObject(ep);
@@ -192,8 +192,9 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
             }
         } catch (JSONException e) {
             /* nothing */
+            throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occured.", false,  new Exception());
         } finally {
-            ;
+            ;        
         }
         return null;
     }
@@ -340,35 +341,39 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
       cachedEditParts = new HashMap<String,EditPart>();
       cachedElementURIs = new HashMap<EditPart,String>();
     	
-        List<EditPart> children = parent.getChildren();
-        for (Object child : children) {
-            if (child instanceof ShapeEditPart) {
-                View view = (View) ((ShapeEditPart) child).getModel();
-                EObject modelElement = view.getElement();
-    			if (modelElement.equals(
-    					modelElement.eResource()
-    					.getEObject(elementURIFragment))) {
-                	//first cache for later calls
-                	cachedEditParts.put(
-                			elementURIFragment, 
-                			(ShapeEditPart) child);
-                	cachedElementURIs.put(
-                			(ShapeEditPart) child, 
-                			elementURIFragment);
-                	//then return
-                	return (ShapeEditPart) child;
-    			}
-    			
-            }
-            // if node was not found yet, search recursively
-            if (child instanceof EditPart) {
-                EditPart result = getEditPart(elementURIFragment,
-                							  (EditPart) child);
-                if (result != null) {
-                    return result;
-                }
-            }
-        }
+      try {
+          List<EditPart> children = parent.getChildren();
+          for (Object child : children) {
+              if (child instanceof ShapeEditPart) {
+                  View view = (View) ((ShapeEditPart) child).getModel();
+                  EObject modelElement = view.getElement();
+                          if (modelElement.equals(
+                                          modelElement.eResource()
+                                          .getEObject(elementURIFragment))) {
+                          //first cache for later calls
+                          cachedEditParts.put(
+                                          elementURIFragment, 
+                                          (ShapeEditPart) child);
+                          cachedElementURIs.put(
+                                          (ShapeEditPart) child, 
+                                          elementURIFragment);
+                          //then return
+                          return (ShapeEditPart) child;
+                          }
+                          
+              }
+              // if node was not found yet, search recursively
+              if (child instanceof EditPart) {
+                  EditPart result = getEditPart(elementURIFragment,
+                                                                            (EditPart) child);
+                  if (result != null) {
+                      return result;
+                  }
+              }
+          }
+      }catch(Exception e) {
+          return null;
+      }
         // we did not find anything in this trunk
         return null;
     }
