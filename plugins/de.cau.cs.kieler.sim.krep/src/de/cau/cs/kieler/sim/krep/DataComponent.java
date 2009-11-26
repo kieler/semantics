@@ -84,10 +84,10 @@ public final class DataComponent extends JSONObjectDataComponent {
 
     private AssemblerView viewer = null;
 
-    private final int propertyConnection = 0;
-    private final int propertyPort = 1;
-    private final int propertyHost = 2;
-    private final int propertyCom = 3;
+    //private final int propertyConnection = 0;
+    //private final int propertyPort = 1;
+    //private final int propertyHost = 2;
+   //private final int propertyCom = 3;
     private final int propertyLog = 4;
 
     /**
@@ -112,6 +112,10 @@ public final class DataComponent extends JSONObjectDataComponent {
             }
             int reactionTime = protocol.tick(inputs.size() + outputs.size(), inputs, outputs);
             res.accumulate("Reaction Time", reactionTime);
+            if (reactionTime > assembler.getTickLen()) {
+                res.accumulate("TickWarn", JSONSignalValues.newValue(true));
+            }
+
             trace = protocol.getExecutionTrace();
             for (int i = 0; i < trace.length; i++) {
                 trace[i] = assembler.adr2row(trace[i]);
@@ -391,12 +395,11 @@ public final class DataComponent extends JSONObjectDataComponent {
         if (fragments.length != 1) {
             throw new KiemInitializationException("strl2kasm compiler not found", false, null);
         }
-        Bundle compiler = fragments[0];      
-        String path = compiler.getLocation();
-        path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""), null)).getPath();
-        //path = path.substring("reference:file:".length());
+        Bundle compiler = fragments[0];
+        // String path = compiler.getLocation();
+        String path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""), null))
+                .getPath();
 
-        System.out.println("Expect strl2kasm compiler in:" + path);
         Process p = Runtime.getRuntime().exec(path + "cec-strlxml");
         // Process p = Runtime.getRuntime().exec();
         InputStream xml = p.getInputStream();
@@ -418,7 +421,7 @@ public final class DataComponent extends JSONObjectDataComponent {
         while (xml.available() > 0) {
             int r = xml.read();
             stdin.write(r);
-            System.out.print(Character.toChars(r));
+            //System.out.print(Character.toChars(r));
         }
         stdin.close();
         checkErrors(stderr);
@@ -435,7 +438,7 @@ public final class DataComponent extends JSONObjectDataComponent {
         while (exp.available() > 0) {
             int r = exp.read();
             stdin.write(r);
-            System.out.print(Character.toChars(r));
+            //System.out.print(Character.toChars(r));
         }
         stdin.close();
         checkErrors(stderr);
@@ -449,7 +452,7 @@ public final class DataComponent extends JSONObjectDataComponent {
         while (dis.available() > 0) {
             int r = dis.read();
             stdin.write(r);
-            System.out.print(Character.toChars(r));
+            //System.out.print(Character.toChars(r));
         }
         stdin.close();
         checkErrors(stderr);
