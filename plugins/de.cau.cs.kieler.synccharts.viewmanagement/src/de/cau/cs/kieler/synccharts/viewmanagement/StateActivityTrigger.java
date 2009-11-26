@@ -13,7 +13,7 @@ public class StateActivityTrigger extends ATrigger {
 
     @Override
     public void finalize() {
-       instance = null;
+       //instance = null;
     }
     
     /**

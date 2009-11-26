@@ -35,6 +35,7 @@ import de.cau.cs.kieler.sim.kiem.data.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
@@ -49,6 +50,8 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     
     private static final String VMID = "de.cau.cs.kieler.viewmanagement.VMControl";
 
+    private StateActivityTrigger trigger;
+    
     private boolean broughtToTheFront = false;
 //    private KiemProperty stateVariableProperty;
 //    private KiemProperty editorProperty;
@@ -91,8 +94,8 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
      * de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent#step(de.
      * cau.cs.kieler.sim.kiem.json.JSONObject)
      */
-    public JSONObject step(JSONObject data) {
-        StateActivityTrigger trigger = StateActivityTrigger.instance;
+    public JSONObject step(JSONObject data) throws KiemExecutionException {
+        trigger = StateActivityTrigger.instance;
         String stateVariableKey = this.getProperties()[1].getValue();
         
 //        //debug!!!//
@@ -122,6 +125,12 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                     // notify the viewmanagement about this active state
                     TriggerEventObject triggerEvent = new TriggerEventObject();
                     EditPart affectedState = getEditPart(stateName, rootEditPart);
+                    
+                    if (affectedState == null) {
+                        throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occured.", false,
+                           new Exception());                                
+                    }
+                    
                     highlightedStates.add(affectedState);
                     // a state is already highlighted
                     System.out.println("VIEW MANAGEMENT:"+stateName);
@@ -160,6 +169,10 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                         TriggerEventObject triggerEvent = new TriggerEventObject();
 
                     	EditPart ep = getEditPart(editPartURI, rootEditPart);
+                        if (ep == null) {
+                            throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occured.", false,  new Exception());
+                        }
+                    	
                         EObject eObject =  trigger.translateToEObject(ep);
                         triggerEvent.setAffectedObject(eObject);
 //                        
