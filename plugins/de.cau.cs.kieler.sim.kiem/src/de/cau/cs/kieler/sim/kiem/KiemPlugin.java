@@ -51,7 +51,6 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.views.KiemView;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
-import de.cau.cs.kieler.sim.kiem.execution.JSONMerger;
 
 /**
  * This activator class controls the life cycle of the KiemPlugin. It also provides the access to
@@ -815,7 +814,8 @@ public class KiemPlugin extends AbstractUIPlugin {
         // show error or warning message dialog
         if (mustStop) {
             // first terminate the execution
-            KiemPlugin.getDefault().execution.errorTerminate();
+            if (KiemPlugin.getDefault().execution != null)
+                KiemPlugin.getDefault().execution.errorTerminate();
             // then show modal error dialog
             KiemPlugin.getDefault().showError(null, dataComponent.getPluginId(), exception);
         } else {
