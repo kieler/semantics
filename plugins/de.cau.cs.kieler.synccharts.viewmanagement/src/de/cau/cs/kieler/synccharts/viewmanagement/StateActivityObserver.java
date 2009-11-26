@@ -49,14 +49,15 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     
     private static final String VMID = "de.cau.cs.kieler.viewmanagement.VMControl";
 
+    private boolean broughtToTheFront = false;
 //    private KiemProperty stateVariableProperty;
 //    private KiemProperty editorProperty;
 
     EditPart rootEditPart;
 
-	/** The cached edit parts t be matched with FragmentURLs. */
-	private HashMap<String,EditPart> cachedEditParts;
-	private HashMap<EditPart,String> cachedElementURIs;
+    /** The cached edit parts t be matched with FragmentURLs. */
+    private HashMap<String,EditPart> cachedEditParts;
+    private HashMap<EditPart,String> cachedElementURIs;
     
     /** The last highlighted states. */
     private List<String> lastHighlightedStates;
@@ -67,6 +68,9 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
      * This method brings the VM view to the front.
      */
     public void bringToFront() {
+        //just do this once in the lifetime of this plugin
+        if (broughtToTheFront) return;
+        else broughtToTheFront = true;
         // bring VM view to the front (lazy loading)
         try {
             IWorkbenchWindow window = Activator.getDefault().getWorkbench()
@@ -131,7 +135,13 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
 
                     //triggerEvent.setAffectedObject(stateName); 
                     //trigger.translateToURI((Object)affectedState));
-                    triggerEvent.setAffectedObject(((View)affectedState.getModel()).getElement());
+                    try {
+                        triggerEvent.setAffectedObject(((View)affectedState.getModel()).getElement());
+                    }
+                    catch(Exception e){
+                        //if this fails, most likely the EditPart does not exist anymore
+                        e.printStackTrace();
+                    }
 
                     //triggerEvent.setAffectedObject(trigger.translateToEObject(affectedState)); //???//
 
@@ -303,16 +313,19 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     @SuppressWarnings("unchecked")
 	public EditPart getEditPart(String elementURIFragment, 
     								   EditPart parent) {
-    	if (cachedEditParts == null) {
-        	// if hashmap is not initialized, create it
-    		cachedEditParts = new HashMap<String,EditPart>();
-    		cachedElementURIs = new HashMap<EditPart,String>();
-    	}
-    	else {
-        	//try to get from hashmap first
-    		if (cachedEditParts.containsKey(elementURIFragment))
-    			return cachedEditParts.get(elementURIFragment);
-    	}
+//cache turned off, EditParts seem to be volatile
+//    	if (cachedEditParts == null) {
+//        	// if hashmap is not initialized, create it
+//    		cachedEditParts = new HashMap<String,EditPart>();
+//    		cachedElementURIs = new HashMap<EditPart,String>();
+//    	}
+//    	else {
+//        	//try to get from hashmap first
+//    		if (cachedEditParts.containsKey(elementURIFragment))
+//    			return cachedEditParts.get(elementURIFragment);
+//    	}
+      cachedEditParts = new HashMap<String,EditPart>();
+      cachedElementURIs = new HashMap<EditPart,String>();
     	
         List<EditPart> children = parent.getChildren();
         for (Object child : children) {
