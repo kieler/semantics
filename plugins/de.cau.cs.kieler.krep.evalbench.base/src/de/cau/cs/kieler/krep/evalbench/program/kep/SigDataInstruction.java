@@ -65,4 +65,8 @@ public class SigDataInstruction extends SigInstruction {
         return res;
     }
 
+    public Data getData(){
+        return data;
+    }
+    
 }

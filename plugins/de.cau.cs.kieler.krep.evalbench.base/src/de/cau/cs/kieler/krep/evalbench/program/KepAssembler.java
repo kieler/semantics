@@ -28,6 +28,7 @@ import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.kep.AddrInstruction;
 import de.cau.cs.kieler.krep.evalbench.program.kep.AddrSigWatchInstruction;
+import de.cau.cs.kieler.krep.evalbench.program.kep.Emit;
 import de.cau.cs.kieler.krep.evalbench.program.kep.Instruction;
 import de.cau.cs.kieler.krep.evalbench.program.kep.Label;
 import de.cau.cs.kieler.krep.evalbench.program.kep.Watcher;
@@ -135,7 +136,7 @@ public class KepAssembler implements IAssembler {
 
             for (final Signal s : outputs) {
                 signalIndex.put(s.getName(), s.getIndex());
-                signalIndex.put("TICKWARN", s.getIndex());
+                // signalIndex.put("TICKWARN", s.getIndex());
             }
 
             for (final Signal s : locals) {
@@ -153,7 +154,7 @@ public class KepAssembler implements IAssembler {
                 pos++;
             }
             this.postProcess();
-            outputs.add(new Signal("TickWarn", false, null, signalIndex));
+            // outputs.add(new Signal("TickWarn", false, null, signalIndex));
             /*
              * for (final Instruction i : instructions) { i.setLabel(uniqueLabel.get(i.getLabel()));
              * i.asmLabel(label2addr); i.asmSignal(signalIndex); }
@@ -300,4 +301,20 @@ public class KepAssembler implements IAssembler {
         return name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public int getTickLen() {
+        if (instructions == null || instructions.size() == 0) {
+            return Integer.MAX_VALUE;
+        }
+        if (!(instructions.getFirst() instanceof Emit)) {
+            return Integer.MAX_VALUE;
+        }
+        Emit e = (Emit) instructions.getFirst();
+        if (!e.getSig().getName().equals("_TICKLEN")) {
+            return Integer.MAX_VALUE;
+        }
+        return e.getData().getId();
+    }
 }

@@ -275,4 +275,11 @@ public final class KasmAssembler implements IAssembler {
         return name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public int getTickLen() {
+        return 0;
+    }
+
 }

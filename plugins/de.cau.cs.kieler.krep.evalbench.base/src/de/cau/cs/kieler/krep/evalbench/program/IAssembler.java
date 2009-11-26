@@ -135,4 +135,9 @@ public interface IAssembler {
      */
     int size();
 
+    /**
+     * @return
+     */
+    int getTickLen();
+
 }

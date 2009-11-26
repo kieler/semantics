@@ -94,7 +94,9 @@ public class KlpAssembler implements IAssembler {
         HashMap<String, Integer> regs = new HashMap<String, Integer>();
         regs.put("tick", 0);
         int iIndex = 0;
+        int lineNumber=0;
         for (Line l : model.getInstructions()) {
+            
             if (l.getLabels() != null) {
                 for (String s : l.getLabels()) {
                     label2addr.put(s, iIndex);
@@ -110,6 +112,8 @@ public class KlpAssembler implements IAssembler {
                     iIndex--;
                 }
             }
+            lineNumber++;
+            rows.put(iIndex, lineNumber);
         }
         
         for (Line l : model.getInstructions()) {
@@ -658,6 +662,14 @@ public class KlpAssembler implements IAssembler {
         i.setOpcode1(op1);
         i.setOpcode2(op2);
         i.setOpcode3(op3);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int getTickLen() {
+       
+        return Integer.MAX_VALUE;
     }
 
 }

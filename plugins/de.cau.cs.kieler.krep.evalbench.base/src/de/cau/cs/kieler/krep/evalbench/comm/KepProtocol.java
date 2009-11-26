@@ -487,9 +487,9 @@ public class KepProtocol extends CommunicationProtocol {
 
         int len = getTickLength();
 
-        if (maxTicklen > 0 && len > maxTicklen) {
-            outputs.getLast().setPresent(true);
-        }
+        //if (maxTicklen > 0 && len > maxTicklen) {
+        //    outputs.getLast().setPresent(true);
+        //}
 
         return len;
     }
@@ -507,13 +507,4 @@ public class KepProtocol extends CommunicationProtocol {
             return "Return string is invalid!";
         }
     }
-
-    /**
-     * @return true if a tick warn occurred
-     */
-    public final boolean getTickWarn() {
-        // TODO: implement
-        return true;
-    }
-
 }

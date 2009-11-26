@@ -212,4 +212,10 @@ public class KitAssembler implements IAssembler {
     public String getName() {
         return kasm.getName();
     }
+    /**
+     * {@inheritDoc}
+     */
+    public int getTickLen() {       
+        return kasm.getTickLen();
+    }
 }

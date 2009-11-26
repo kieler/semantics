@@ -180,7 +180,7 @@ public class KrepProtocol extends CommunicationProtocol {
         Iterator<Integer> i = msg.iterator();
         // int nKind = msg.get(0);
         int kind = i.next();
-        if (kind != 0x1) {
+        if (kind != 0x2) {
             throw new CommunicationException("Wrong processor");
         }
         // int version =
