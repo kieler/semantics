@@ -1,78 +1,73 @@
-grammar de.cau.cs.kieler.synccharts.dsl.Kits with org.eclipse.xtext.common.
-Terminals //generate kits "http://www.cau.de/cs/kieler/synccharts/dsl/Kits"
-
-
-import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as
-sync //import "http://kieler.cs.cau.de/synccharts#//State" as state
-//import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore#
-
-
+grammar de.cau.cs.kieler.synccharts.dsl.Kits with org.eclipse.xtext.common.Terminals 
+import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as sync 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 Region returns sync::Region:
 // GMF does not like empty models so avoid them:
 {sync::Region}
   ('region')? (id=ID)?
-  // a region declaration excepts at least one of the following three: 
-  (variables+=Variable|signals+=Signal|(innerStates+=State))+;
+  // IO Declarations --- come before state declarations #2009-11-26
+  // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
+  (variables+=Variable|signals+=Signal)*
+  // Inner states --- a region has to have at least one state#2009-11-26
+  (innerStates+=State)+;
 
 State returns sync::State:
   {sync::State} 
-    (
-  (isInitial?='init') (isFinal?='final') (type=StateType) 'state' id=FullStateID // State_Group_1_1
-    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
-    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
-    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
-    |((isInitial?='init') (isFinal?='final')) (type=StateType) // State_Group_1_5
-    |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID// State_Group_1_6
-    |((isInitial?='init') (isFinal?='final'))
-    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=FullStateID// State_Group_1_8
-    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'
-    |((isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID
-    |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID// State_Group_1_11
-    |((isFinal?='final') (isInitial?='init')) (type=StateType)
-    |((isFinal?='final') (isInitial?='init')) 'state'
-    |((isFinal?='final') (isInitial?='init')) id=FullStateID
-    |((isFinal?='final') (isInitial?='init'))
-    |(isInitial?='init') (type=StateType) 'state' id=FullStateID // // State_Group_1_16
-    |(isInitial?='init') (type=StateType) 'state'
-    |(isInitial?='init') (type=StateType) id=FullStateID
-    |(isInitial?='init') 'state' id=FullStateID
-    |(isInitial?='init') (type=StateType)
-    |(isInitial?='init') 'state'// State_Group_1_21
-    |(isInitial?='init') id=FullStateID
-    |(isInitial?='init')
-    |(isFinal?='final') (type=StateType) 'state' id=FullStateID
-    |(isFinal?='final') (type=StateType) 'state'
-    |(isFinal?='final') (type=StateType) id=FullStateID// State_Group_1_26
-    |(isFinal?='final') 'state' id=FullStateID
-    |(isFinal?='final') (type=StateType)
-    |(isFinal?='final') 'state' id=FullStateID
-    |(isFinal?='final') id=FullStateID
-    |(isFinal?='final')// State_Group_1_31
-    |(type=StateType) 'state' id=FullStateID
-    |(type=StateType) 'state'
-    |(type=StateType) id=FullStateID
-    |(type=StateType)
-    |'state' id=FullStateID// State_Group_1_36
-    |'state'
-    |id=FullStateID)// State_Group_1_38 
+  // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
+  (isInitial?='init')?(isFinal?='final')?(type=StateType)?'state'(label=FullStateID)?// State_Group_1_1
+//    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
+//    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
+//    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
+//    |((isInitial?='init') (isFinal?='final')) (type=StateType) // State_Group_1_5
+//    |((isInitial?='init') (isFinal?='final')) 'state'|((isInitial?='init') (isFinal?='final')) id=FullStateID// State_Group_1_6
+//    |((isInitial?='init') (isFinal?='final'))
+//    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=FullStateID// State_Group_1_8
+//    |((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'
+//    |((isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID
+//    |((isFinal?='final') (isInitial?='init')) 'state' id=FullStateID// State_Group_1_11
+//    |((isFinal?='final') (isInitial?='init')) (type=StateType)
+//    |((isFinal?='final') (isInitial?='init')) 'state'
+//    |((isFinal?='final') (isInitial?='init')) id=FullStateID
+//    |((isFinal?='final') (isInitial?='init'))
+//    |(isInitial?='init') (type=StateType) 'state' id=FullStateID // // State_Group_1_16
+//    |(isInitial?='init') (type=StateType) 'state'
+//    |(isInitial?='init') (type=StateType) id=FullStateID
+//    |(isInitial?='init') 'state' id=FullStateID
+//    |(isInitial?='init') (type=StateType)
+//    |(isInitial?='init') 'state'// State_Group_1_21
+//    |(isInitial?='init') id=FullStateID
+//    |(isInitial?='init')
+//    |(isFinal?='final') (type=StateType) 'state' id=FullStateID
+//    |(isFinal?='final') (type=StateType) 'state'
+//    |(isFinal?='final') (type=StateType) id=FullStateID// State_Group_1_26
+//    |(isFinal?='final') 'state' id=FullStateID
+//    |(isFinal?='final') (type=StateType)
+//    |(isFinal?='final') 'state' id=FullStateID
+//    |(isFinal?='final') id=FullStateID
+//    |(isFinal?='final')// State_Group_1_31
+//    |(type=StateType) 'state' id=FullStateID
+//    |(type=StateType) 'state'
+//    |(type=StateType) id=FullStateID
+//    |(type=StateType)
+//    |'state' id=FullStateID// State_Group_1_36
+//    |'state'
+//    |id=FullStateID)// State_Group_1_38 
   //change the datatype of label (from FullStateID) to STRING 
   //to prevent wrong parsing in this case: 
   //init A
   //final B
   //A --> B;
-  (label=STRING)? //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
+   //	('['(signalRenamings+=Renaming ',')* signalRenamings+=Renaming']')?
+  (id=STRING)?
   (bodyText=STRING)? 
-  ('{' 
-     (('onentry' entryActions+=Action)
-     |('oninner' innerActions+=Action)
-     |('onexit'  exitActions+=Action)
-     |('suspension' suspensionTrigger=Action) // kein effect, kein delay, kein immediate
-     |(signals+=Signal)
-     |(regions+=Region ('||' regions+=Region)*) 
-     )+ 
-  '}')? 
+  // order of actions has been fixed ---conform to thinkccharts#2009-11-26
+  (signals+=Signal)*
+  ('onentry' entryActions+=Action)*
+  ('oninner' innerActions+=Action)*
+  ('onexit'  exitActions+=Action)*
+  ('suspension' suspensionTrigger=Action)?// kein effect, kein delay, kein immediate
+  ('{'regions+=Region ('||' regions+=Region)*'}')? 
   (outgoingTransitions+=Transition)*
 ;
 
@@ -80,7 +75,8 @@ Renaming returns sync::Renaming:
   oldID=STRING '/' newID=STRING;
 
 FullStateID:
-  ((ID '@')? ID); //========================================================================================
+  ((ID '@')? ID); 
+//========================================================================================
 //===  									    ACTIONS  					               ===
 //========================================================================================
 //Action returns sync::Action:
@@ -91,35 +87,37 @@ FullStateID:
 
 
 Transition returns sync::Transition:
-//  (sourceState=[sync::State|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+//  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
   //|({sync::State} name=FullStateID)
-  type=TransitionType (targetState=[sync::State|FullStateID]) //|newTargetState=TransitionState )
+  type=TransitionType ('<'priority=INT'>')? (targetState=[sync::State|FullStateID]) //|newTargetState=TransitionState )
   ('with' (isImmediate?='#')? (delay=INT)? triggersAndEffects=STRING )? (isHistory?=' history')? ';';
 
-TransitionState returns sync::State:
-  {sync::State} (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=
-  FullStateID|((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
-  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
-  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
-  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
-  isInitial?='init') (isFinal?='final')) id=FullStateID|((isInitial?='init') (isFinal
-  ?='final'))|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=
-  FullStateID|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'|((
-  isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID|((isFinal?=
-  'final') (isInitial?='init')) 'state' id=FullStateID|((isFinal?='final') (isInitial
-  ?='init')) (type=StateType)|((isFinal?='final') (isInitial?='init')) 'state'|((
-  isFinal?='final') (isInitial?='init')) id=FullStateID|((isFinal?='final') (
-  isInitial?='init'))|(isInitial?='init') (type=StateType) 'state' id=FullStateID|(
-  isInitial?='init') (type=StateType) 'state'|(isInitial?='init') (type=StateType) id=
-  FullStateID|(isInitial?='init') 'state' id=FullStateID|(isInitial?='init') (type=
-  StateType)|(isInitial?='init') 'state'|(isInitial?='init') id=FullStateID|(
-  isInitial?='init')|(isFinal?='final') (type=StateType) 'state' id=FullStateID|(
-  isFinal?='final') (type=StateType) 'state'|(isFinal?='final') (type=StateType) id=
-  FullStateID|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') (type=
-  StateType)|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') id=
-  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
-  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
-  FullStateID|'state'|id=FullStateID); //========================================================================================
+//TransitionState returns sync::State:
+//  {sync::State} (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=
+//  FullStateID|((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+//  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
+//  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
+//  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
+//  isInitial?='init') (isFinal?='final')) id=FullStateID|((isInitial?='init') (isFinal
+//  ?='final'))|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=
+//  FullStateID|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'|((
+//  isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID|((isFinal?=
+//  'final') (isInitial?='init')) 'state' id=FullStateID|((isFinal?='final') (isInitial
+//  ?='init')) (type=StateType)|((isFinal?='final') (isInitial?='init')) 'state'|((
+//  isFinal?='final') (isInitial?='init')) id=FullStateID|((isFinal?='final') (
+//  isInitial?='init'))|(isInitial?='init') (type=StateType) 'state' id=FullStateID|(
+//  isInitial?='init') (type=StateType) 'state'|(isInitial?='init') (type=StateType) id=
+//  FullStateID|(isInitial?='init') 'state' id=FullStateID|(isInitial?='init') (type=
+//  StateType)|(isInitial?='init') 'state'|(isInitial?='init') id=FullStateID|(
+//  isInitial?='init')|(isFinal?='final') (type=StateType) 'state' id=FullStateID|(
+//  isFinal?='final') (type=StateType) 'state'|(isFinal?='final') (type=StateType) id=
+//  FullStateID|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') (type=
+//  StateType)|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') id=
+//  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
+//  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
+//  FullStateID|'state'|id=FullStateID); 
+  
+ //========================================================================================
 //===  									    VAR,SIG  					               ===
 //========================================================================================
 //
@@ -129,22 +127,24 @@ ValuedObject returns sync::ValuedObject:
   Signal|Variable;
 
 Variable returns sync::Variable:
-  'var' name=ID ((': ' type=ValueType) //or type only, type being either pre-defined or hostcode
-|(':=' initialValue=ID ': ' type=ValueType) // either initial value and type 
-);
+  'var' name=ID ((':=' initialValue=VariableSignalValue )? ': ' type=ValueType) 
+ ;
 
 Signal returns sync::Signal:
   (isInput?='input')?(isOutput?='output')? 
   // Signal names are of type QualifiedName because signals could have names like "main.fork", c.f. rvh_Program.kit
-  name=QualifiedName (':=' initialValue=SignalValue)? 
-  // after the initial value, either the type or the combine type has to come
+  name=QualifiedName  
   //default signal type is PURE
-  (  (': ' type=ValueType)
-    |(': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING))
-  )?;
+  // after the initial value, either the type or the combine type has to come
+  (  (':=' initialValue=VariableSignalValue)
+     	( (': ' type=ValueType)
+      	 |(': combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING))
+     	)
+  )?
+;
 
-SignalValue returns ecore::EString:
-  (INT|ID|Boolean)+;
+VariableSignalValue returns ecore::EString:
+  (INT|ID|Boolean|STRING)+;
 
 QualifiedName:
   (ID ".")* ID;

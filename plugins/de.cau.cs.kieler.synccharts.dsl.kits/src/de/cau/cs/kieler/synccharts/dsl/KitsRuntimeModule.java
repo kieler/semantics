@@ -8,7 +8,7 @@ import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.resource.IFragmentProvider;
 import org.eclipse.xtext.scoping.IScopeProvider;
 
-import de.cau.cs.kieler.synccharts.dsl.kits.resource.KitsFragmentProvider;
+//import de.cau.cs.kieler.synccharts.dsl.kits.resource.KitsFragmentProvider;
 import de.cau.cs.kieler.synccharts.dsl.kits.serialization.KitsTransientValueService;
 import de.cau.cs.kieler.synccharts.dsl.scoping.ReferenceByIdScopeProvider;
 import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
@@ -22,13 +22,13 @@ import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
  */
 public class KitsRuntimeModule extends
         de.cau.cs.kieler.synccharts.dsl.AbstractKitsRuntimeModule {
-    @Override
-    /*
-     * binds the fragment provider. it is used for the Glue code
-     */
-    public Class<? extends IFragmentProvider> bindIFragmentProvider() {
-        return KitsFragmentProvider.class;
-    }
+//    @Override
+//    /*
+//     * binds the fragment provider. it is used for the Glue code
+//     */
+//    public Class<? extends IFragmentProvider> bindIFragmentProvider() {
+//        return KitsFragmentProvider.class;
+//    }
 
     /**
      * binds the custom scope provider.

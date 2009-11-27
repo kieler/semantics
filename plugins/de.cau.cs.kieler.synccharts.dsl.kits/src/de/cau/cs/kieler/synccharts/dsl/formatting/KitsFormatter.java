@@ -14,102 +14,107 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
  * 
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an
  * example
- * ================================================================================
- * Also note that when you change your grammar, the numbering of keywords,
- * groups etc will change causing you having to re-implement this formatter
+ * ======================================================================
+ * ========== Also note that when you change your grammar, the numbering of
+ * keywords, groups etc will change causing you having to re-implement this
+ * formatter
  */
 public class KitsFormatter extends AbstractDeclarativeFormatter {
 
-    @Override
-    protected void configureFormatting(FormattingConfig c) {
-        // de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess f =
-        // (de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess)
-        // getGrammarAccess();
-        // c.setLinewrap(1).after(
-        // f.getStateAccess().getLeftCurlyBracketKeyword_4_0());
-        // c.setLinewrap(2).after(
-        // // f.getStateAccess().getRightCurlyBracketKeyword_4_2());
-        // c.setLinewrap().after(f.getStateAccess().getGroup());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_1_0());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_1());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_10());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_10_0());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_11());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_11_0());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_12());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_12_0());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_13());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_13_0());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_14());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_14_0());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_15());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_16());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_17());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_18());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_19());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_2());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_2_0());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_20());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_21());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_22());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_24());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_25());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_26());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_27());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_28());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_29());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_3());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_30());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_32());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_33());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_34());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_3_0());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_36());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_4());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_4_0());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_5());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_5_0());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_6());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_6_0());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_7());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_8());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_8_0());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_9());
-        // c.setLinewrap().after(f.getStateAccess().getGroup_0_9_0());
-        // c.setLinewrap().after(
-        // f.getStateAccess().getEntryActionsAssignment_3_1_0_1());
-        // c.setLinewrap().after(
-        // f.getStateAccess()
-        // .getExitActionsActionParserRuleCall_3_1_2_1_0());
-        // c.setLinewrap().after(
-        // f.getStateAccess().getInnerActionsAssignment_3_1_1_1());
-        //
-        // c.setIndentation(f.getStateAccess().getLeftCurlyBracketKeyword_3_0(),
-        // f
-        // .getStateAccess().getRightCurlyBracketKeyword_3_2());
-        // c.setIndentation(f.getStateAccess().getRegionsAssignment_3_1_5_0(), f
-        // .getStateAccess().getRegionsAssignment_3_1_5_1_1());
-        // c.setLinewrap().before(f.getStateAccess().getSignalsAssignment_3_1_4());
-        // c.setLinewrap().before(
-        // f.getStateAccess().getEntryActionsAssignment_3_1_0_1());
-        // c.setLinewrap().before(
-        // f.getStateAccess().getExitActionsAssignment_3_1_2_1());
-        // c.setLinewrap().before(
-        // f.getStateAccess().getInnerActionsAssignment_3_1_1_1());
-        // c.setLinewrap().after(
-        // f.getStateAccess().getOutgoingTransitionsAssignment_4());
-        // c.setLinewrap().before(
-        // f.getStateAccess().getOutgoingTransitionsAssignment_4());
-        // c.setLinewrap().before(
-        // f.getStateAccess().getRegionsAssignment_3_1_5_0());
-        // c.setLinewrap()
-        // .after(f.getStateAccess().getRegionsAssignment_3_1_5_0());
-        // c.setLinewrap().before(
-        // f.getStateAccess().getRegionsAssignment_3_1_5_1_1());
-        // c.setLinewrap().after(
-        // f.getStateAccess().getRegionsAssignment_3_1_5_1_1());
+	@Override
+	protected void configureFormatting(FormattingConfig config) {
+		// TODO Auto-generated method stub
+		
+	}
 
-        // ...
-    }
+//	@Override
+//	protected void configureFormatting(FormattingConfig c) {
+//		de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess f = (de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess) getGrammarAccess();
+//		c.setLinewrap(1).after(
+//				f.getStateAccess().getLeftCurlyBracketKeyword_4_0());
+//		c.setLinewrap(2).after(
+//				f.getStateAccess().getRightCurlyBracketKeyword_4_2());
+//		c.setLinewrap().after(f.getStateAccess().getGroup());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_1());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_10());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_10_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_11());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_11_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_12());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_12_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_13());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_13());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_13_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_14());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_14_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_15());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_5_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_16());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_1_17());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_2_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_20());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_21());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_22());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_24());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_25());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_26());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_27());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_28());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_29());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_3());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_30());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_32());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_33());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_34());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_3_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_36());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_4());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_4_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_5());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_5_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_6());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_6_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_7());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_8());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_8_0());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_9());
+//		c.setLinewrap().after(f.getStateAccess().getGroup_0_9_0());
+//		c.setLinewrap().before(f.getTransitionRule().getType());
+//		c.setLinewrap().after(
+//				f.getStateAccess().getEntryActionsAssignment_4_1_0_1());
+//		c.setLinewrap().after(
+//				f.getStateAccess()
+//						.getExitActionsActionParserRuleCall_4_1_2_1_0());
+//		c.setLinewrap().after(
+//				f.getStateAccess().getInnerActionsAssignment_4_1_1_1());
+//
+//		c.setIndentation(f.getStateAccess().getLeftCurlyBracketKeyword_4_0(), f
+//				.getStateAccess().getRightCurlyBracketKeyword_4_2());
+//		c.setIndentation(f.getStateAccess().getRegionsAssignment_4_1_5_0(), f
+//				.getStateAccess().getRegionsAssignment_4_1_5_0());
+//		c.setLinewrap().before(f.getStateAccess().getSignalsAssignment_4_1_4());
+//		c.setLinewrap().before(
+//				f.getStateAccess().getEntryActionsAssignment_4_1_0_1());
+//		c.setLinewrap().before(
+//				f.getStateAccess().getExitActionsAssignment_4_1_2_1());
+//		c.setLinewrap().before(
+//				f.getStateAccess().getInnerActionsAssignment_4_1_1_1());
+//		c.setLinewrap().after(
+//				f.getStateAccess().getOutgoingTransitionsAssignment_5());
+//		c.setLinewrap().before(
+//				f.getStateAccess().getOutgoingTransitionsAssignment_5());
+//		c.setLinewrap().before(
+//				f.getStateAccess().getRegionsAssignment_4_1_5_0());
+//		c.setLinewrap()
+//				.after(f.getStateAccess().getRegionsAssignment_4_1_5_0());
+//		c.setLinewrap().before(
+//				f.getStateAccess().getRegionsAssignment_4_1_5_0());
+//		c.setLinewrap().after(
+//				f.getStateAccess().getRegionsAssignment_4_1_5_0());
+
+		// ...
+//	}
 
 }

@@ -77,7 +77,8 @@ public class KitsTransientValueService implements ITransientValueService {
 						.getVariable_ParentRegion())))
 				// Transition > unset SourceState
 				|| (owner instanceof Transition && ((feature.equals(syncPack
-						.getTransition_SourceState())))) 
+						.getTransition_SourceState()))
+						|| (feature.equals(syncPack.getTransition_Priority()) && feature.getDefaultValue().equals(syncPack.getTransition_Priority())))) 
 					//&& !(owner.eIsSet(feature))))
 		/**
 		 * It is important that you mark features that are not set as transient.
