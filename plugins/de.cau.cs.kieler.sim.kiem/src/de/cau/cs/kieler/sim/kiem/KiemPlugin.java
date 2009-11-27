@@ -870,7 +870,7 @@ public class KiemPlugin extends AbstractUIPlugin {
             }
 
             IStatus status;
-            if (exception == null) {
+            if ((exception == null) || (exception instanceof RuntimeException)) {
                 status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
                         exception);
             } else {
@@ -939,7 +939,7 @@ public class KiemPlugin extends AbstractUIPlugin {
             }
 
             IStatus status;
-            if (exception == null) {
+            if ((exception == null) || (exception instanceof RuntimeException)) {
                 status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message,
                         exception);
             } else {
