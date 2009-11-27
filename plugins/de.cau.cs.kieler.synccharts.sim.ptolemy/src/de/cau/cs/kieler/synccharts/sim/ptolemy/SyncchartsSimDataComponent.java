@@ -341,7 +341,9 @@ class M2MProgressMonitor implements ProgressMonitor {
 			}
 		} catch (Exception e) {
 			throw new KiemInitializationException
-				("Ptolemy Model could not be generated", true, e);
+				("Ptolemy Model could not be generated\n\n" +
+				"Please ensure that all simulation warnings in the " +
+                                "respective Eclipse Problems View have been cleared.\n\n", true, e);
 		}
 		return returnObj;
 	}	
