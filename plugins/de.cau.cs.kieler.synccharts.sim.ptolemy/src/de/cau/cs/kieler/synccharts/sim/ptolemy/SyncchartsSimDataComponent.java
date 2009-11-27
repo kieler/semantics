@@ -294,7 +294,11 @@ class M2MProgressMonitor implements ProgressMonitor {
 		}
 		catch(Exception e) {
 			throw (new KiemExecutionException
-			("Ptolemy Model cannot make a step.", true, e));
+			("Ptolemy Model cannot make a step.\n\n" +
+					"Please ensure that all simulation warnings in the " +
+					"respective Eclipse Problems View have been cleared. If" +
+					" all warings have been cleared and still 'unknown " +
+					" inputs remain', possibly your model is not constructive.\n\n", true, e));
 		}
 		
 		//get the output present signals
