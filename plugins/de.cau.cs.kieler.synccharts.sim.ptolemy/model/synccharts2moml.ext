@@ -190,6 +190,7 @@ Void addKielerIO(EntityType baseEntity, String name, String signalID) :
 
 Void localSignalRenamingPreprocessingRegion(List[synccharts::State] stateList) :
   let state = stateList.first():
+  dump("SEARCH STATE "+state.getStateId()) ->
   (stateList.withoutFirst().size > 0) ?
      localSignalRenamingPreprocessingRegion(stateList.withoutFirst()) : null ->
   (state.isMacroState()) ?
@@ -200,16 +201,22 @@ Void localSignalRenamingPreprocessingRegion(List[synccharts::State] stateList) :
 
 Void localSignalRenamingPreprocessingState(List[synccharts::Region] regionList) :
   let region = regionList.first():
+  dump("SEARCH REGION OF STATE "+region.parentState.getStateId()) ->
   (regionList.withoutFirst().size > 0) ?
-     localSignalRenamingPreprocessingState(regionList.withoutFirst()) : null
+     localSignalRenamingPreprocessingState(regionList.withoutFirst()) : null ->
+  (region.innerStates.size > 0) ?
+  	 localSignalRenamingPreprocessingRegion(region.innerStates) : null
 ;
 
 Void localSignalRenamingPreprocessingSignal(List[synccharts::Signal] signalList, synccharts::State state) :
   let signal = signalList.first():
+  dump("CONSIDER SIGNAL "+signal.name) ->
   (signalList.withoutFirst().size > 0) ?
      localSignalRenamingPreprocessingSignal(signalList.withoutFirst(), state) : null ->
   (signal.isLocal()) ?
-  	signal.setName(signal.name + state.getURIFragment().hash()) : null
+  	signal.setName(signal.name + "_" + state.getURIFragment().hash()) : null ->
+  (signal.isLocal()) ?
+    dump("RENAMED SIGNAL "+signal.name) :null
 ;
 
 //-----------------------------------------------------------------------------
