@@ -188,6 +188,36 @@ Void addKielerIO(EntityType baseEntity, String name, String signalID) :
 
 //-----------------------------------------------------------------------------
 
+Void localSignalShiftPreprocessingRegion(List[synccharts::State] stateList, synccharts::State mainState) :
+  let state = stateList.first():
+  (stateList.withoutFirst().size > 0) ?
+     localSignalShiftPreprocessingRegion(stateList.withoutFirst(), mainState) : null ->
+  (state.isMacroState()) ?
+  	localSignalShiftPreprocessingState(state.regions, mainState) : null ->
+  (!state.signals.isEmpty && state != mainState) ?
+  	localSignalShiftPreprocessingSignal(state.signals, state, mainState) : null
+;
+
+Void localSignalShiftPreprocessingState(List[synccharts::Region] regionList, synccharts::State mainState) :
+  let region = regionList.first():
+  (regionList.withoutFirst().size > 0) ?
+     localSignalShiftPreprocessingState(regionList.withoutFirst(), mainState) : null ->
+  (region.innerStates.size > 0) ?
+  	 localSignalShiftPreprocessingRegion(region.innerStates, mainState) : null
+;
+
+Void localSignalShiftPreprocessingSignal(List[synccharts::Signal] signalList, synccharts::State state, synccharts::State mainState) :
+  let signal = signalList.first():
+  (signalList.withoutFirst().size > 0) ?
+     localSignalShiftPreprocessingSignal(signalList.withoutFirst(), state, mainState) : null ->
+  (signal.isLocal()) ?
+    mainState.signals.add(signal) : null ->
+  (signal.isLocal()) ?
+    state.signals.remove(signal) : null
+;
+
+//-----------------------------------------------------------------------------
+
 Void localSignalRenamingPreprocessingRegion(List[synccharts::State] stateList) :
   let state = stateList.first():
   dump("SEARCH STATE "+state.getStateId()) ->
@@ -228,7 +258,10 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
 	let outerStateURIHash = getStateId(mainRegion.innerStates.get(0)):
    	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
+  	//rename all local signals (in order to shift them later)
     localSignalRenamingPreprocessingRegion(mainRegion.innerStates) ->
+    //shift them to the upper most state!
+    localSignalShiftPreprocessingRegion(mainRegion.innerStates, mainRegion.innerStates.get(0)) ->
   	
   	//TODO: fix outer most local signal declarations
    	this.createMainSyncChartDirector(mainRegion.innerStates.get(0).signals
