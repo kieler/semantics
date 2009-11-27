@@ -132,43 +132,36 @@ public class KielerCombine extends TypedAtomicActor {
      */
     public void fire() throws IllegalActionException {
         super.fire();
-        
-        //Actor is scheduled
-        if (_debugging) {
-            _debug("KIELER combine scheduled.");
-        }
-        
-    	//check if any ports have known inputs
-    	for (int i = 0; i < input.getWidth(); i++) {
-    		if (input.isKnown(i) && input.hasToken(i)) {
-    	        _present = true;
-    	        if (_debugging) {
-    	            _debug("KIELER combine: Port " + i + " has token.");
-    	        }
-    	        
-    	        IntToken in = (IntToken) input.get(i);
-                if (in != null) {
-                    _value = _updateFunction(in.intValue(), _value);
-                }    	        
-    		}
-    	}
 
-    	if (!_present) {
-        	//check if all ports are cleared (known w/o any token)
-        	boolean allKnown = true;
-        	for (int i = 0; i < input.getWidth(); i++) {
-        		allKnown &= input.isKnown(i);
-        	}
-        	if (allKnown) {
-            	output.sendClear(0);
-            	value.sendClear(0);
-        	}
-    	}
-    	else  {
-        	//send out integer token if presentToken
-        	output.send(0, new IntToken(1));
-        	value.send(0, new IntToken(_value));
-    	}
+        // check if any ports have known inputs
+        for (int i = 0; i < input.getWidth(); i++) {
+            if (input.isKnown(i) && input.hasToken(i)) {
+                _present = true;
+                // get the token
+                IntToken in = (IntToken) input.get(i);
+                if (in != null) {
+                    // apply commutative+associative combine function 
+                    _value = _updateFunction(in.intValue(), _value);
+                }
+            }
+        }
+
+        if (!_present) {
+            // check if all ports are cleared (known w/o any token)
+            boolean allKnown = true;
+            for (int i = 0; i < input.getWidth(); i++) {
+                allKnown &= input.isKnown(i);
+            }
+            // if no token can arrive, clear the output
+            if (allKnown) {
+                output.sendClear(0);
+                value.sendClear(0);
+            }
+        } else {
+            // send out combined integer token if presentToken
+            output.send(0, new IntToken(1));
+            value.send(0, new IntToken(_value));
+        }
 
     }
 
