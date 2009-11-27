@@ -203,7 +203,9 @@ class M2MProgressMonitor implements ProgressMonitor {
 		        Reader emfReader = new Reader();
 		        emfReader.setUri(this.getInputModel());
 		        emfReader.setModelSlot("emfmodel");
-		        emfReader.setResourceSet(this.getInputResourceSet());
+		        //DO NOT USE THE SAME INPUT RESOUCRCE SET
+		        //OTHERWISE WE MAY CHANGE THE INPUT MODEL!
+//		        emfReader.setResourceSet(this.getInputResourceSet());
 
 		        //MOML writer
 		        MomlWriter momlWriter = new MomlWriter();
@@ -392,9 +394,15 @@ class M2MProgressMonitor implements ProgressMonitor {
             //workspaceFolder = Platform.getLocation().toString();
             
             //ptolemyModel = this.getInputModel() + ".moml"; //this.getProperties()[0].getDirectory() + "generated.moml";
+            int randomNumber = 0;
+	    try {
+	        randomNumber = this.getInputEditor().getEditorInput().hashCode();
+	    } catch(Exception e) {
+	        //if no editor input, an exception will be raised anyways
+	    }
 
             ResourceSet resourceSet = new ResourceSetImpl();
-            URI fileUri = URI.createFileURI(new File("generated.moml").getAbsolutePath());
+            URI fileUri = URI.createFileURI(new File("generated"+randomNumber+".moml").getAbsolutePath());
             ptolemyModel = resourceSet.createResource(fileUri);
     
             String ptolemyModelFile = ptolemyModel.getURI().toFileString();

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<conf:ConfModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:conf="org.eclipse.jwt.conf">
+  <enrichedModel href="step-activitydiagram.workflow#/"/>
+</conf:ConfModel>
