@@ -123,7 +123,7 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 
     /** The PTOEXE thread. */
     private Thread PTOEXE_Thread;
-    
+
     /** The Ptolemy Executor. */
     private ExecutePtolemyModel PTOEXE;
 
@@ -135,6 +135,16 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 
     /** The transformation error flag. */
     private boolean transformationError;
+
+    /** The editor of the model being simulated. */
+    private DiagramEditor modelEditor;
+
+    /** The model time stamp. */
+    private long modelTimeStamp;
+    /**
+     * A flag that becomes true if the user was warned about unsaved changes during the simulation.
+     */
+    private boolean simulatingOldModelVersion;
 
     // -----------------------------------------------------------------------------
     // -----------------------------------------------------------------------------
@@ -374,6 +384,18 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
      * .json.JSONObject)
      */
     public JSONObject step(JSONObject JSONobject) throws KiemExecutionException {
+        long newModelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
+        // check the dirty state of the editor containing the simulated model
+        if (((newModelTimeStamp != modelTimeStamp) || modelEditor.isDirty()) 
+                                    && !simulatingOldModelVersion) {
+            // remember that we warned the user (do this only once)
+            simulatingOldModelVersion = true;
+            // warn the user
+            throw new KiemExecutionException("The simulated model changed since the simulation "
+                    + "was started.\n\nYou should restart the simulation in order to "
+                    + "simulate the changed version of your model.", false, null);
+        }
+
         JSONObject returnObj = null;
         try {
             // perform an asynchronous step in PtolemyExecutor
@@ -450,15 +472,14 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
      * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
      */
     public void initialize() throws KiemInitializationException {
-        //do the initialization prior to providing the interface keys
-        //this may rise an exception
+        // do the initialization prior to providing the interface keys
+        // this may rise an exception
         PTOEXE = null;
         System.gc();
         try {
-                loadAndExecuteModel();
+            loadAndExecuteModel();
         } catch (Exception e) {
-                throw new KiemInitializationException
-                        ("Ptolemy Model could not be generated", true, e);
+            throw new KiemInitializationException("Ptolemy Model could not be generated", true, e);
         }
         return;
     }
@@ -520,12 +541,10 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
         if (!transformationError) {
             String host = this.getProperties()[2].getValue();
             String port = this.getProperties()[3].getValue();
-            
+
             System.out.println("Now loading Ptolemy Model..." + ptolemyModelFile);
             // load the Ptolemy Model
-            PTOEXE = new ExecutePtolemyModel(ptolemyModelFile,
-                                             host,
-                                             port);
+            PTOEXE = new ExecutePtolemyModel(ptolemyModelFile, host, port);
             System.out.println("Now initializing Ptolemy Model...");
             PTOEXE_Thread = new Thread(PTOEXE);
             PTOEXE_Thread.start();
@@ -599,6 +618,15 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
 
     // -------------------------------------------------------------------------
 
+    EObject getInputModelEObject(DiagramEditor diagramEditor) {
+        // now extract the file
+        View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
+        EObject myModel = (EObject) notationElement.getElement();
+
+        return myModel;
+    }
+
+    // -------------------------------------------------------------------------
     /*
      * (non-Javadoc)
      * 
@@ -628,6 +656,16 @@ public class SimplerailctrlDataComponent extends JSONObjectDataComponent {
                     + "the file name matches.\n\nIf you want the currently active editor to be"
                     + "simulated make sure the (optional) editor property is empty!");
         }
+
+        if (this.getInputEditor().isDirty()) {
+            throw new KiemPropertyException("There are unsaved changes of the model opened "
+                    + "in the editor to simulate.\n\nPlease save these changes before "
+                    + "starting the simulation!");
+        }
+
+        modelEditor = this.getInputEditor();
+        modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
+        simulatingOldModelVersion = false;
     }
 
     // -------------------------------------------------------------------------

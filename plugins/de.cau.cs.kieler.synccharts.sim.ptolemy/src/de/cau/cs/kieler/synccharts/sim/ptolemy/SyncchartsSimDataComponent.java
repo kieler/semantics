@@ -114,6 +114,9 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
     /** The editor of the model being simulated. */
     private DiagramEditor modelEditor;
+    
+    /** The model time stamp. */
+    private long modelTimeStamp;
 
     /**
      * A flag that becomes true if the user was warned about unsaved changes during the simulation.
@@ -279,8 +282,10 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
      * .json.JSONObject)
      */
     public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
+        long newModelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
         // check the dirty state of the editor containing the simulated model
-        if (modelEditor.isDirty() && !simulatingOldModelVersion) {
+        if (((newModelTimeStamp != modelTimeStamp) || modelEditor.isDirty()) 
+                                    && !simulatingOldModelVersion) {
             // remember that we warned the user (do this only once)
             simulatingOldModelVersion = true;
             // warn the user
@@ -355,7 +360,8 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
 		//Check if the model conforms to all check files and no warnings left!
                 Diagnostician diagnostician = new Diagnostician();
-                Diagnostic diagnostic = diagnostician.validate(this.getInputModelEObject());
+                Diagnostic diagnostic = diagnostician.validate(this.getInputModelEObject(
+                        this.getInputEditor()));
                 boolean ok = diagnostic.getSeverity() == Diagnostic.OK;
                 
                 if (!ok) {
@@ -417,8 +423,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
     // -------------------------------------------------------------------------
 
-    EObject getInputModelEObject() {
-        DiagramEditor diagramEditor = this.getInputEditor();
+    EObject getInputModelEObject(DiagramEditor diagramEditor) {
         // now extract the file
         View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
         EObject myModel = (EObject) notationElement.getElement();
@@ -631,11 +636,12 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
         if (this.getInputEditor().isDirty()) {
             throw new KiemPropertyException("There are unsaved changes of the model opened "
-                    + "in the editor to simulate.\n\nPlease save this changes before "
+                    + "in the editor to simulate.\n\nPlease save these changes before "
                     + "starting the simulation!");
         }
 
         modelEditor = this.getInputEditor();
+        modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
         simulatingOldModelVersion = false;
     }
 
