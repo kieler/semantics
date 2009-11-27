@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.parser.IParseResult;
@@ -84,10 +85,10 @@ public final class DataComponent extends JSONObjectDataComponent {
 
     private AssemblerView viewer = null;
 
-    //private final int propertyConnection = 0;
-    //private final int propertyPort = 1;
-    //private final int propertyHost = 2;
-   //private final int propertyCom = 3;
+    // private final int propertyConnection = 0;
+    // private final int propertyPort = 1;
+    // private final int propertyHost = 2;
+    // private final int propertyCom = 3;
     private final int propertyLog = 4;
 
     /**
@@ -205,6 +206,14 @@ public final class DataComponent extends JSONObjectDataComponent {
         for (IViewReference view : page.getViewReferences()) {
             if (view.getId().equals(AssemblerView.VIEW_ID)) {
                 this.viewer = (AssemblerView) (view.getView(true));
+                break;
+            }
+        }
+        if (viewer == null) {
+            try {
+                viewer = (AssemblerView)(page.showView(AssemblerView.VIEW_ID));
+            } catch (PartInitException e) {
+                throw new KiemInitializationException("Cannot show assembler view", true, e);
             }
         }
 
@@ -421,7 +430,7 @@ public final class DataComponent extends JSONObjectDataComponent {
         while (xml.available() > 0) {
             int r = xml.read();
             stdin.write(r);
-            //System.out.print(Character.toChars(r));
+            // System.out.print(Character.toChars(r));
         }
         stdin.close();
         checkErrors(stderr);
@@ -438,7 +447,7 @@ public final class DataComponent extends JSONObjectDataComponent {
         while (exp.available() > 0) {
             int r = exp.read();
             stdin.write(r);
-            //System.out.print(Character.toChars(r));
+            // System.out.print(Character.toChars(r));
         }
         stdin.close();
         checkErrors(stderr);
@@ -452,7 +461,7 @@ public final class DataComponent extends JSONObjectDataComponent {
         while (dis.available() > 0) {
             int r = dis.read();
             stdin.write(r);
-            //System.out.print(Character.toChars(r));
+            // System.out.print(Character.toChars(r));
         }
         stdin.close();
         checkErrors(stderr);
