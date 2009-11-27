@@ -185,6 +185,33 @@ Void addKielerIO(EntityType baseEntity, String name, String signalID) :
 //   			baseEntity.entity.add(e) : null
 //;
 
+
+//-----------------------------------------------------------------------------
+
+Void localSignalRenamingPreprocessingRegion(List[synccharts::State] stateList) :
+  let state = stateList.first():
+  (stateList.withoutFirst().size > 0) ?
+     localSignalRenamingPreprocessingRegion(stateList.withoutFirst()) : null ->
+  (state.isMacroState()) ?
+  	localSignalRenamingPreprocessingState(state.regions) : null ->
+  (!state.signals.isEmpty) ?
+  	localSignalRenamingPreprocessingSignal(state.signals, state) : null
+;
+
+Void localSignalRenamingPreprocessingState(List[synccharts::Region] regionList) :
+  let region = regionList.first():
+  (regionList.withoutFirst().size > 0) ?
+     localSignalRenamingPreprocessingState(regionList.withoutFirst()) : null
+;
+
+Void localSignalRenamingPreprocessingSignal(List[synccharts::Signal] signalList, synccharts::State state) :
+  let signal = signalList.first():
+  (signalList.withoutFirst().size > 0) ?
+     localSignalRenamingPreprocessingSignal(signalList.withoutFirst(), state) : null ->
+  (signal.isLocal()) ?
+  	signal.setName(signal.name + state.getURIFragment().hash()) : null
+;
+
 //-----------------------------------------------------------------------------
 //--                   T O P L E V E L    E N T I T I E S                    --
 //-----------------------------------------------------------------------------
@@ -194,6 +221,8 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
 	let outerStateURIHash = getStateId(mainRegion.innerStates.get(0)):
    	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
+    localSignalRenamingPreprocessingRegion(mainRegion.innerStates) ->
+  	
   	//TODO: fix outer most local signal declarations
    	this.createMainSyncChartDirector(mainRegion.innerStates.get(0).signals
    												.select(e|e.isLocal()).name) ->
