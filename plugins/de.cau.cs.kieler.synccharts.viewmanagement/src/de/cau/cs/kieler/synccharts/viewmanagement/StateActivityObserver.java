@@ -39,8 +39,6 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
-import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.viewmanagement.ATrigger;
 import de.cau.cs.kieler.viewmanagement.RunLogic;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 
@@ -48,25 +46,36 @@ import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 public class StateActivityObserver extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
     
-    private static final String VMID = "de.cau.cs.kieler.viewmanagement.VMControl";
+    /** FIXME: haf workaround: Singleton pattern to get simple access to the rootEditPart */
+    public static StateActivityObserver INSTANCE = null;
 
-    private StateActivityTrigger trigger;
+    private static final String VMID = "de.cau.cs.kieler.viewmanagement.VMControl";
     
     private boolean broughtToTheFront = false;
 //    private KiemProperty stateVariableProperty;
 //    private KiemProperty editorProperty;
 
-    EditPart rootEditPart;
-
     /** The cached edit parts t be matched with FragmentURLs. */
-    private HashMap<String,EditPart> cachedEditParts;
+    private HashMap<String, EditPart> cachedEditParts;
+
     private HashMap<EditPart,String> cachedElementURIs;
-    
+
     /** The last highlighted states. */
     private List<String> lastHighlightedStates;
+    EditPart rootEditPart;
+    
+    private StateActivityTrigger trigger;
 
     // -------------------------------------------------------------------------
 
+    /**
+     * 
+     */
+    public StateActivityObserver() {
+        super();
+        INSTANCE = this;
+    }
+    
     /**
      * This method brings the VM view to the front.
      */
@@ -84,10 +93,252 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
             e.printStackTrace();
         }
     }
+    
+    /* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#testProperties(de.cau.cs.kieler.sim.kiem.data.KiemProperty[])
+	 */
+	@Override
+	public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
+		String kiemEditorProperty = this.getProperties()[0].getValue();
+		
+		//only check non-empty property (this is optional)
+		if (!kiemEditorProperty.equals("")) {
+			if (getEditor(kiemEditorProperty) == null) {
+				//this is an error, probably the selected editor isnt open any more
+				//or the file(name) opened has changed
+				throw new KiemPropertyException("The selected editor '"+kiemEditorProperty+"'" +
+						" does not exist. Please ensure that an opened editor is selected and" +
+						"the file name matches.\n\nIf you want the currently active editor to be" +
+						"simulated make sure the (optional) editor property is empty!");
+			}
+		}
+                if (this.getInputEditor() == null) {
+                    throw new KiemPropertyException("There exists no active editor.\n"+
+                            "Please ensure that an opened editor is selected and" +
+                            "the file name matches.\n\nIf you want the currently active editor to be" +
+                            "simulated make sure the (optional) editor property is empty!");
+                }
+		
+    	
+	}
 
     // -------------------------------------------------------------------------
 
+    DiagramEditor getEditor(String kiemEditorProperty) {
+		if ((kiemEditorProperty == null)||(kiemEditorProperty.length() == 0))
+		 	return null;
+		
+        StringTokenizer tokenizer = new StringTokenizer(kiemEditorProperty, " ()");
+        if (tokenizer.hasMoreTokens()) {
+        	String fileString = tokenizer.nextToken(); 
+        	String editorString = tokenizer.nextToken();
+
+             IEditorReference[] editorRefs = PlatformUI.getWorkbench()
+                     .getActiveWorkbenchWindow().getActivePage()
+                     .getEditorReferences();
+             for (int i = 0; i < editorRefs.length; i++) {
+                 if (editorRefs[i].getId().equals(editorString)) {
+                     IEditorPart editor = editorRefs[i].getEditor(true);
+                     if (editor instanceof DiagramEditor) {
+                    	 //test if correct file
+                    	 if (fileString.equals(editor.getTitle())) {
+                    		 return (DiagramEditor) editor;
+//                             rootEditPart = ((DiagramEditor) editor)
+//                                     .getDiagramEditPart();
+//                             break;
+                    	 }
+                     }
+                 }
+             }
+         }
+		return null;
+	}
+
+    @SuppressWarnings("unchecked")
+	public EditPart getEditPart(String elementURIFragment, 
+    								   EditPart parent) {
+//cache turned off, EditParts seem to be volatile
+//    	if (cachedEditParts == null) {
+//        	// if hashmap is not initialized, create it
+//    		cachedEditParts = new HashMap<String,EditPart>();
+//    		cachedElementURIs = new HashMap<EditPart,String>();
+//    	}
+//    	else {
+//        	//try to get from hashmap first
+//    		if (cachedEditParts.containsKey(elementURIFragment))
+//    			return cachedEditParts.get(elementURIFragment);
+//    	}
+      cachedEditParts = new HashMap<String,EditPart>();
+      cachedElementURIs = new HashMap<EditPart,String>();
+    	
+      try {
+          List<EditPart> children = parent.getChildren();
+          for (Object child : children) {
+              if (child instanceof ShapeEditPart) {
+                  View view = (View) ((ShapeEditPart) child).getModel();
+                  EObject modelElement = view.getElement();
+                          if (modelElement.equals(
+                                          modelElement.eResource()
+                                          .getEObject(elementURIFragment))) {
+                          //first cache for later calls
+                          cachedEditParts.put(
+                                          elementURIFragment, 
+                                          (ShapeEditPart) child);
+                          cachedElementURIs.put(
+                                          (ShapeEditPart) child, 
+                                          elementURIFragment);
+                          //then return
+                          return (ShapeEditPart) child;
+                          }
+                          
+              }
+              // if node was not found yet, search recursively
+              if (child instanceof EditPart) {
+                  EditPart result = getEditPart(elementURIFragment,
+                                                                            (EditPart) child);
+                  if (result != null) {
+                      return result;
+                  }
+              }
+          }
+      }catch(Exception e) {
+          return null;
+      }
+        // we did not find anything in this trunk
+        return null;
+    }
+
+    /**
+     * This method searches recursively for an EditPart using the 
+     * modelElement URIFragment provided. The latter can be 
+     * obtained by calling:
+     * 
+     * myEObject.eResource().getURIFragment(myEObject).toString();
+     * 
+     * This returns the URI fragment that, when passed to getEObject
+     * will return the given object.
+     * 
+     * @param elementURIFragment the URIFragment of the EObject to 
+     * 		  search for
+     * @param parent the parent EditPart
+     * 
+     * @return the EditPart of the EObject
+     */
+    @SuppressWarnings("unchecked")
+	public String getElementURIFragment(EditPart editPart) {
+    	if (cachedElementURIs != null) {
+    		if (cachedElementURIs.containsKey(editPart))
+    			return cachedElementURIs.get(editPart);
+    	}
+    	return "";   	
+    }
+    
+    
+    DiagramEditor getInputEditor() {
+		String kiemEditorProperty = this.getProperties()[0].getValue();
+		DiagramEditor diagramEditor = null;
+		
+		//get the active editor as a default case (if property is empty)
+		IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		IEditorPart editor = activePage.getActiveEditor();
+	    if (editor instanceof DiagramEditor) {
+	                diagramEditor = (DiagramEditor) editor;
+	    }
+		
+		//only check non-empty and valid property (this is optional)
+		if (!kiemEditorProperty.equals("")) {
+			if (getEditor(kiemEditorProperty) != null) {
+					diagramEditor = getEditor(kiemEditorProperty);
+			}
+		}
+		return diagramEditor;
+	}
+    
+    
+    /**
+     * @return the rootEditPart
+     */
+    public EditPart getRootEditPart() {
+        return rootEditPart;
+    }
+    
     /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
+     */
+    public void initialize() throws KiemInitializationException {
+        try {
+            //bring to front VM
+            bringToFront();
+            rootEditPart = getInputEditor().getDiagramEditPart();
+            if (RunLogic.getInstance() == null) 
+                throw new KiemInitializationException("Cannot initialize view management!", true, null);
+            RunLogic.getInstance().registerListeners();
+        }
+        catch(Exception e) {
+            throw new KiemInitializationException("Cannot initialize view management!", true, e);
+        }
+    }
+      
+    public boolean isDeltaObserver() {
+    	return false;
+    }
+
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isHistoryObserver()
+     */
+    public boolean isHistoryObserver() {
+        return true;
+    }
+	
+
+    //-------------------------------------------------------------------------
+
+//    String translateToURI(EditPart editPart) {
+//    	return ((EObject)editPart).eResource().getURIFragment((EObject)editPart).toString();
+//    }
+    
+    //-------------------------------------------------------------------------
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
+     */
+    public boolean isObserver() {
+        return true;
+    }
+    
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
+     */
+    public boolean isProducer() {
+        return false;
+    }
+
+    //-------------------------------------------------------------------------
+    
+	/*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.extension.DataComponent#initializeProperties()
+     */
+    public KiemProperty[] provideProperties() {
+        KiemProperty[] properties = new KiemProperty[2];
+        properties[0] = new KiemProperty("SyncChart Editor",
+        		new KiemPropertyTypeEditor(), "");
+        properties[1] = new KiemProperty("state variable", "state");
+        return properties;
+    }
+	
+    //-------------------------------------------------------------------------	 
+
+	/*
      * (non-Javadoc)
      * 
      * @see
@@ -198,72 +449,10 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
         }
         return null;
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
-     */
-    public void initialize() throws KiemInitializationException {
-        try {
-            //bring to front VM
-            bringToFront();
-            rootEditPart = getInputEditor().getDiagramEditPart();
-            if (RunLogic.getInstance() == null) 
-                throw new KiemInitializationException("Cannot initialize view management!", true, null);
-            RunLogic.getInstance().registerListeners();
-        }
-        catch(Exception e) {
-            throw new KiemInitializationException("Cannot initialize view management!", true, e);
-        }
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
-     */
-    public boolean isObserver() {
-        return true;
-    }
-    
-    
-    public boolean isDeltaObserver() {
-    	return false;
-    }
-    
-    
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#isHistoryObserver()
-     */
-    public boolean isHistoryObserver() {
-        return true;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
-     */
-    public boolean isProducer() {
-        return false;
-    }
-      
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.cau.cs.kieler.sim.kiem.extension.DataComponent#initializeProperties()
-     */
-    public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("SyncChart Editor",
-        		new KiemPropertyTypeEditor(), "");
-        properties[1] = new KiemProperty("state variable", "state");
-        return properties;
-    }
-
-    /*
+	
+    //-------------------------------------------------------------------------	 
+	
+	/*
      * (non-Javadoc)
      * 
      * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
@@ -288,179 +477,6 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     	}catch(Exception e){}
         rootEditPart = null;
     }
-	
-
-    //-------------------------------------------------------------------------
-
-//    String translateToURI(EditPart editPart) {
-//    	return ((EObject)editPart).eResource().getURIFragment((EObject)editPart).toString();
-//    }
-    
-    //-------------------------------------------------------------------------
-    
-    /**
-     * This method searches recursively for an EditPart using the 
-     * modelElement URIFragment provided. The latter can be 
-     * obtained by calling:
-     * 
-     * myEObject.eResource().getURIFragment(myEObject).toString();
-     * 
-     * This returns the URI fragment that, when passed to getEObject
-     * will return the given object.
-     * 
-     * @param elementURIFragment the URIFragment of the EObject to 
-     * 		  search for
-     * @param parent the parent EditPart
-     * 
-     * @return the EditPart of the EObject
-     */
-    @SuppressWarnings("unchecked")
-	public String getElementURIFragment(EditPart editPart) {
-    	if (cachedElementURIs != null) {
-    		if (cachedElementURIs.containsKey(editPart))
-    			return cachedElementURIs.get(editPart);
-    	}
-    	return "";   	
-    }
-    
-    
-    @SuppressWarnings("unchecked")
-	public EditPart getEditPart(String elementURIFragment, 
-    								   EditPart parent) {
-//cache turned off, EditParts seem to be volatile
-//    	if (cachedEditParts == null) {
-//        	// if hashmap is not initialized, create it
-//    		cachedEditParts = new HashMap<String,EditPart>();
-//    		cachedElementURIs = new HashMap<EditPart,String>();
-//    	}
-//    	else {
-//        	//try to get from hashmap first
-//    		if (cachedEditParts.containsKey(elementURIFragment))
-//    			return cachedEditParts.get(elementURIFragment);
-//    	}
-      cachedEditParts = new HashMap<String,EditPart>();
-      cachedElementURIs = new HashMap<EditPart,String>();
-    	
-      try {
-          List<EditPart> children = parent.getChildren();
-          for (Object child : children) {
-              if (child instanceof ShapeEditPart) {
-                  View view = (View) ((ShapeEditPart) child).getModel();
-                  EObject modelElement = view.getElement();
-                          if (modelElement.equals(
-                                          modelElement.eResource()
-                                          .getEObject(elementURIFragment))) {
-                          //first cache for later calls
-                          cachedEditParts.put(
-                                          elementURIFragment, 
-                                          (ShapeEditPart) child);
-                          cachedElementURIs.put(
-                                          (ShapeEditPart) child, 
-                                          elementURIFragment);
-                          //then return
-                          return (ShapeEditPart) child;
-                          }
-                          
-              }
-              // if node was not found yet, search recursively
-              if (child instanceof EditPart) {
-                  EditPart result = getEditPart(elementURIFragment,
-                                                                            (EditPart) child);
-                  if (result != null) {
-                      return result;
-                  }
-              }
-          }
-      }catch(Exception e) {
-          return null;
-      }
-        // we did not find anything in this trunk
-        return null;
-    }
-
-    //-------------------------------------------------------------------------
-    
-	/* (non-Javadoc)
-	 * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#testProperties(de.cau.cs.kieler.sim.kiem.data.KiemProperty[])
-	 */
-	@Override
-	public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
-		String kiemEditorProperty = this.getProperties()[0].getValue();
-		
-		//only check non-empty property (this is optional)
-		if (!kiemEditorProperty.equals("")) {
-			if (getEditor(kiemEditorProperty) == null) {
-				//this is an error, probably the selected editor isnt open any more
-				//or the file(name) opened has changed
-				throw new KiemPropertyException("The selected editor '"+kiemEditorProperty+"'" +
-						" does not exist. Please ensure that an opened editor is selected and" +
-						"the file name matches.\n\nIf you want the currently active editor to be" +
-						"simulated make sure the (optional) editor property is empty!");
-			}
-		}
-                if (this.getInputEditor() == null) {
-                    throw new KiemPropertyException("There exists no active editor.\n"+
-                            "Please ensure that an opened editor is selected and" +
-                            "the file name matches.\n\nIf you want the currently active editor to be" +
-                            "simulated make sure the (optional) editor property is empty!");
-                }
-		
-    	
-	}
-	
-    //-------------------------------------------------------------------------	 
-
-	DiagramEditor getEditor(String kiemEditorProperty) {
-		if ((kiemEditorProperty == null)||(kiemEditorProperty.length() == 0))
-		 	return null;
-		
-        StringTokenizer tokenizer = new StringTokenizer(kiemEditorProperty, " ()");
-        if (tokenizer.hasMoreTokens()) {
-        	String fileString = tokenizer.nextToken(); 
-        	String editorString = tokenizer.nextToken();
-
-             IEditorReference[] editorRefs = PlatformUI.getWorkbench()
-                     .getActiveWorkbenchWindow().getActivePage()
-                     .getEditorReferences();
-             for (int i = 0; i < editorRefs.length; i++) {
-                 if (editorRefs[i].getId().equals(editorString)) {
-                     IEditorPart editor = editorRefs[i].getEditor(true);
-                     if (editor instanceof DiagramEditor) {
-                    	 //test if correct file
-                    	 if (fileString.equals(editor.getTitle())) {
-                    		 return (DiagramEditor) editor;
-//                             rootEditPart = ((DiagramEditor) editor)
-//                                     .getDiagramEditPart();
-//                             break;
-                    	 }
-                     }
-                 }
-             }
-         }
-		return null;
-	}
-	
-    //-------------------------------------------------------------------------	 
-	
-	DiagramEditor getInputEditor() {
-		String kiemEditorProperty = this.getProperties()[0].getValue();
-		DiagramEditor diagramEditor = null;
-		
-		//get the active editor as a default case (if property is empty)
-		IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		IEditorPart editor = activePage.getActiveEditor();
-	    if (editor instanceof DiagramEditor) {
-	                diagramEditor = (DiagramEditor) editor;
-	    }
-		
-		//only check non-empty and valid property (this is optional)
-		if (!kiemEditorProperty.equals("")) {
-			if (getEditor(kiemEditorProperty) != null) {
-					diagramEditor = getEditor(kiemEditorProperty);
-			}
-		}
-		return diagramEditor;
-	}
 		
 
 }
