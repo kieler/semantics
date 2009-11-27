@@ -549,7 +549,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                 }
             } catch (Exception e) {
                 this.kIEMViewInstance.setAllEnabled(true);
-                this.showError(e.getMessage(), dataComponentEx.getDataComponent()
+                this.showError(null, dataComponentEx.getDataComponent()
                         .getConfigurationElement().getContributor().getName(), e);
                 return false;
             }
