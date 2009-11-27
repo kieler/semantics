@@ -300,7 +300,7 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.krep.proc.kep.macos"
-         os="macos"
+         os="macosx"
          arch="x86,x86_64"
          download-size="0"
          install-size="0"
