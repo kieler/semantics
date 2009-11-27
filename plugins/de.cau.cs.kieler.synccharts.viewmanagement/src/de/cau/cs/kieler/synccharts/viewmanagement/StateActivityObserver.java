@@ -380,7 +380,7 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                     if (affectedState == null) {
                         throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.\n\n" +
                         		"You should stop (and restart) the currently running simulation!\n\n", false,
-                           new Exception());                                
+                           null);                                
                     }
                     
                     highlightedStates.add(affectedState);
@@ -422,7 +422,9 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
 
                     	EditPart ep = getEditPart(editPartURI, rootEditPart);
                         if (ep == null) {
-                            throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.", false,  new Exception());
+                            throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.\n\n" +
+                                    "You should stop (and restart) the currently running simulation!\n\n", false,
+                       null);                                
                         }
                     	
                         EObject eObject =  trigger.translateToEObject(ep);
