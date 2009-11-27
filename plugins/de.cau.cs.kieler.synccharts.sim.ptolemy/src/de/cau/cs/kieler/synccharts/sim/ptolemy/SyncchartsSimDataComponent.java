@@ -91,23 +91,21 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 	/** The Ptolemy Executor */
 	private ExecutePtolemyModel PTOEXE;
 	
-	/** The thread of the Ptolemy Executor */
-	private Thread PTOEXE_Thread;
-	
-	/** The KIELER model. */
-	private String kielerModel;
-	
 	/** The Ptolemy model. */
 	private Resource ptolemyModel;
-	
-	/** The current workspace folder. */
-	private String workspaceFolder;
 	
 	/** The transformation completed flag. */
 	private boolean transformationCompleted;
 	
 	/** The transformation error flag. */
 	private boolean transformationError;
+	
+	/** The editor of the model being simulated. */
+	private DiagramEditor modelEditor;
+	
+	/** A flag that becomes true if the user was warned about unsaved changes
+	 * during the simulation. */
+	private boolean simulatingOldModelVersion;
 
 	//-------------------------------------------------------------------------
 	
@@ -264,7 +262,16 @@ class M2MProgressMonitor implements ProgressMonitor {
 	 */
 	public JSONObject step(JSONObject jSONObject) throws
 												KiemExecutionException {
-		
+                //check the dirty state of the editor containing the simulated model
+	        if (modelEditor.isDirty() && !simulatingOldModelVersion) {
+                    //remember that we warned the user (do this only once)
+                    simulatingOldModelVersion = true;
+                    //warn the user
+                    throw new KiemExecutionException("The simulated model changed since the simulation " +
+                            "was started.\n\nYou should restart the simulation in order to " +
+                            "simulate the changed version of your model.", false, null);
+                }
+	    
 		System.out.println("Step in Ptolemy Model...");
 
 		//the return object to construct
@@ -382,7 +389,7 @@ class M2MProgressMonitor implements ProgressMonitor {
     //-------------------------------------------------------------------------
 	
 	public void loadAndExecuteModel() throws KiemInitializationException {
-            workspaceFolder = Platform.getLocation().toString();
+            //workspaceFolder = Platform.getLocation().toString();
             
             //ptolemyModel = this.getInputModel() + ".moml"; //this.getProperties()[0].getDirectory() + "generated.moml";
 
@@ -530,7 +537,14 @@ class M2MProgressMonitor implements ProgressMonitor {
                             "simulated make sure the (optional) editor property is empty!");
 		}
 		
-    	
+		if (this.getInputEditor().isDirty()) {
+                    throw new KiemPropertyException("There are unsaved changes of the model opened " +
+                    		"in the editor to simulate.\n\nPlease save this changes before " +
+                    		"starting the simulation!");
+		}
+		
+                modelEditor = this.getInputEditor();
+                simulatingOldModelVersion = false;
 	}
 	
     //-------------------------------------------------------------------------	 

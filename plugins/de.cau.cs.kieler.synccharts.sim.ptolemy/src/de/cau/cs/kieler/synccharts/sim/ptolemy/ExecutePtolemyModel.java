@@ -208,8 +208,7 @@ public class ExecutePtolemyModel {
             }
 
             // iterate thru all kielerIOs = set the input signals
-            for (int c = 0; c < kielerIOList.size(); c++) {
-                KielerIO kielerIO = kielerIOList.get(c);
+            for (KielerIO kielerIO : kielerIOList) {
                 String signalName = kielerIO.getSignalName();
                 // remove quotation marks
                 signalName = signalName.replaceAll("'", "");
@@ -444,22 +443,22 @@ public class ExecutePtolemyModel {
 
                 System.out.println("MODALCONTR:" + modalController.getName());
                 System.out.println("         ->" + modalController.currentState().getName());
-                
+
                 ModalController ctrl = modalController;
                 Director director = ctrl.getDirector();
                 if (director instanceof FSMDirector) {
                     FSMDirector fsmDirector = (FSMDirector) director;
-                    //fsmDirector._getLastChosenTransition();
+                    // fsmDirector._getLastChosenTransition();
                 }
                 Transition transition = ctrl.getLastChosenTransition();
                 if (transition != null) {
-                    System.out.println("LAST CHOSEN TRANSITION:" 
+                    System.out.println("LAST CHOSEN TRANSITION:"
                             + transition.getAttribute("EmfFragmentURI").toString());
-                    
+
                 } else {
-                    System.out.println("LAST CHOSEN TRANSITION == NULL"); 
+                    System.out.println("LAST CHOSEN TRANSITION == NULL");
                 }
-                
+
                 // if it contains any more children...
                 // denote current state
                 activeStates += searchForActiveStates(modalController.entityList(), modalController
