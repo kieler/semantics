@@ -58,5 +58,15 @@
          </toolbar>
       </menuContribution>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.core.examples.SplineTestView"
+            id="de.cau.cs.kieler.core.examples.splineView"
+            name="Spline Test View"
+            restorable="true">
+      </view>
+   </extension>
 
 </plugin>
