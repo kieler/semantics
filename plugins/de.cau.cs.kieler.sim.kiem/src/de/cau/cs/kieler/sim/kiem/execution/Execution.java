@@ -134,13 +134,17 @@ public class Execution implements Runnable {
     // -------------------------------------------------------------------------
     
     /**
-     * Gets the timeout which is the TIMEOUTMULTIPLICITY x aimedStepDuration.
+     * Gets the timeout which is the TIMEOUTMULTIPLICITY x aimedStepDuration but 
+     * minimally a timeout of Execution.SECOND_WAITTIMEOUT.
      * 
      * @return the timeout
      */
     private int getTimeout() {
         int aimedStepDurationTmp = KiemPlugin.getDefault().getAimedStepDuration();
         int returnValue = Execution.TIMEOUTMULTIPLICITY * aimedStepDurationTmp;
+        if (returnValue < Execution.SECOND_WAITTIMEOUT) {
+            returnValue = Execution.SECOND_WAITTIMEOUT;
+        }
         return (returnValue);
     }
 
