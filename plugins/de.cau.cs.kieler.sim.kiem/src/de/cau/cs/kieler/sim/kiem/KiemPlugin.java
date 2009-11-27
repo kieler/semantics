@@ -869,8 +869,19 @@ public class KiemPlugin extends AbstractUIPlugin {
                 pluginID2 = pluginID;
             }
 
-            IStatus status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
-                    exception);
+            IStatus status;
+            if (exception == null) {
+                status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
+                        exception);
+            } else {
+                try {
+                    status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
+                            exception.getCause());
+                } catch (Exception e) {
+                    status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
+                            exception);
+                }
+            }
 
             StatusAdapter statusAdapter = new StatusAdapter(status);
             statusAdapter.setProperty(IStatusAdapterConstants.TIMESTAMP_PROPERTY, System
@@ -927,7 +938,19 @@ public class KiemPlugin extends AbstractUIPlugin {
                 pluginID2 = pluginID;
             }
 
-            IStatus status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message, exception);
+            IStatus status;
+            if (exception == null) {
+                status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message,
+                        exception);
+            } else {
+                try {
+                    status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message,
+                            exception.getCause());
+                } catch (Exception e) {
+                    status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message,
+                            exception);
+                }
+            }
 
             StatusAdapter statusAdapter = new StatusAdapter(status);
             statusAdapter.setProperty(IStatusAdapterConstants.TIMESTAMP_PROPERTY, System
