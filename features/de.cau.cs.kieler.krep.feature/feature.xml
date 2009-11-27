@@ -273,7 +273,6 @@ litigation.
    <plugin
          id="de.cau.cs.kieler.krep.proc.kep.linux32"
          os="linux"
-         ws="gtk"
          arch="x86,x86_64"
          download-size="0"
          install-size="0"
@@ -283,7 +282,6 @@ litigation.
    <plugin
          id="de.cau.cs.kieler.krep.proc.kep.solaris"
          os="solaris"
-         ws="gtk"
          arch="sparc"
          download-size="0"
          install-size="0"
@@ -294,6 +292,15 @@ litigation.
          id="de.cau.cs.kieler.krep.proc.kep.win32"
          os="win32"
          ws="win32"
+         arch="x86,x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="de.cau.cs.kieler.krep.proc.kep.macos"
+         os="macos"
          arch="x86,x86_64"
          download-size="0"
          install-size="0"
