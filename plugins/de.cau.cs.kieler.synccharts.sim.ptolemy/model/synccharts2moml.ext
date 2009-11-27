@@ -1339,6 +1339,8 @@ Void addSignalsToModalModel(EntityType entity,
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
 	let p3 = new PropertyType:
+	let p3a = new PropertyType:
+	let p3b = new PropertyType:
 	let p4a = new PropertyType:
 	let p4b = new PropertyType:
 	let p4c = new PropertyType:
@@ -1381,11 +1383,19 @@ Void addSignalsToModalModel(EntityType entity,
 	p3.setClass("ptolemy.actor.TypeAttribute") ->
 	p3.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF 
 						  //KIELER-IO-ACTOR
+	p3a.setName("_type") ->
+	p3a.setClass("ptolemy.actor.TypeAttribute") ->
+	p3a.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF 
+						  //KIELER-IO-ACTOR
+	p3b.setName("_type") ->
+	p3b.setClass("ptolemy.actor.TypeAttribute") ->
+	p3b.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF 
+						  //KIELER-IO-ACTOR
 	port.property.add(p3) ->
 	port.property.add(portType) -> //input or real type
-	portLocalIn.property.add(p3) ->
+	portLocalIn.property.add(p3a) ->
 	portLocalIn.property.add(portTypeLocalIn) -> //(local) input
-	portLocalOut.property.add(p3) ->
+	portLocalOut.property.add(p3b) ->
 	portLocalOut.property.add(portTypeLocalOut) -> //(local) output
 	
 	//only add ports that are used ( w/ type != 0 or -1) 
@@ -1441,6 +1451,8 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	let p1b = new PropertyType:
 	let p2b = new PropertyType:
 	let p3 = new PropertyType:
+	let p3a = new PropertyType:
+	let p3b = new PropertyType:
 	let p1c = new PropertyType:
 	let p4a = new PropertyType:
 	let p4b = new PropertyType:
@@ -1493,11 +1505,19 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	p3.setClass("ptolemy.actor.TypeAttribute") ->
 	p3.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF 
 						  //KIELER-IO-ACTOR
+	p3a.setName("_type") ->
+	p3a.setClass("ptolemy.actor.TypeAttribute") ->
+	p3a.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF 
+						  //KIELER-IO-ACTOR
+	p3b.setName("_type") ->
+	p3b.setClass("ptolemy.actor.TypeAttribute") ->
+	p3b.setValue("int") -> //ALWAYS DEAL W/ INTEGER VALUES BECAUSE OF 
+						  //KIELER-IO-ACTOR
 	port.property.add(p3) ->
 	port.property.add(portType) ->
-	portLocalIn.property.add(p3) ->
+	portLocalIn.property.add(p3a) ->
 	portLocalIn.property.add(portTypeLocalIn) -> //(local) input
-	portLocalOut.property.add(p3) ->
+	portLocalOut.property.add(p3b) ->
 	portLocalOut.property.add(portTypeLocalOut) -> //(local) output
 	
 	//only add ports that are used ( w/ type != 0 or -1)
