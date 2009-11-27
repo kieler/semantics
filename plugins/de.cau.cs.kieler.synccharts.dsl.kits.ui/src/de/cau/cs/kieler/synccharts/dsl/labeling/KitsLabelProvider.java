@@ -39,12 +39,12 @@ public class KitsLabelProvider extends DefaultLabelProvider {
 	// return transitionLabelImage;
 	// }
 	String image(Action a) {
-		String image = "Action.gif";
+		String image = "action.gif";
 		if (a.eContainingFeature().getName() == "suspensionTrigger") {
 			image = "SuspensionSD.gif";
 		}
 		if (a.eContainingFeature().getName() == "entryActions") {
-			image = "onentry.gif";
+			image = "action.gif";
 		}
 		// if (a.eContainingFeature().getName() == "innerActions") {
 		// image = "...";

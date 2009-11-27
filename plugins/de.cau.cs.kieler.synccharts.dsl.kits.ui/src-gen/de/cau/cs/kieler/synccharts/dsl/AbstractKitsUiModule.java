@@ -142,6 +142,16 @@ public abstract class AbstractKitsUiModule extends KitsRuntimeModule {
 		return org.eclipse.xtext.ui.core.editor.XtextDamagerRepairer.class;
 	}
 
+	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
+	public void configureHighlightingLexer(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.parser.antlr.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.core.LexerUIBindings.HIGHLIGHTING)).to(de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal.InternalKitsLexer.class);
+	}
+
+	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
+	public void configureHighlightingTokenDefProvider(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.parser.antlr.ITokenDefProvider.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.core.LexerUIBindings.HIGHLIGHTING)).to(org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class);
+	}
+
 	// contributed by org.eclipse.xtext.ui.generator.labeling.LabelProviderFragment
 	public Class<? extends org.eclipse.jface.viewers.ILabelProvider> bindILabelProvider() {
 		return de.cau.cs.kieler.synccharts.dsl.labeling.KitsLabelProvider.class;
@@ -170,6 +180,16 @@ public abstract class AbstractKitsUiModule extends KitsRuntimeModule {
 	// contributed by de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment
 	public Class<? extends org.eclipse.xtext.ui.common.editor.contentassist.antlr.IContentAssistParser> bindIContentAssistParser() {
 		return de.cau.cs.kieler.synccharts.dsl.contentassist.antlr.KitsParser.class;
+	}
+
+	// contributed by de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment
+	public void configureContentAssistLexerProvider(com.google.inject.Binder binder) {
+		binder.bind(de.cau.cs.kieler.synccharts.dsl.contentassist.antlr.internal.InternalKitsLexer.class).toProvider(org.eclipse.xtext.parser.antlr.LexerProvider.create(de.cau.cs.kieler.synccharts.dsl.contentassist.antlr.internal.InternalKitsLexer.class));
+	}
+
+	// contributed by de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment
+	public void configureContentAssistLexer(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.ui.common.editor.contentassist.antlr.internal.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.core.LexerUIBindings.CONTENT_ASSIST)).to(de.cau.cs.kieler.synccharts.dsl.contentassist.antlr.internal.InternalKitsLexer.class);
 	}
 
 
