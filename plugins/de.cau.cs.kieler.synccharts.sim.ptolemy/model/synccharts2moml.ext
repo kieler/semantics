@@ -389,7 +389,7 @@ Void localSignalRenamingPreprocessingSignal(List[synccharts::Signal] signalList,
   (signalList.withoutFirst().size > 0) ?
      localSignalRenamingPreprocessingSignal(signalList.withoutFirst(), state) : null ->
   (signal.isLocal()) ?
-  	signal.setName(signal.name + "_" + state.getURIFragment().hash()) : null
+  	signal.setName(signal.name + "_" + state.getStateId()) : null
 ;
 
 //-----------------------------------------------------------------------------
