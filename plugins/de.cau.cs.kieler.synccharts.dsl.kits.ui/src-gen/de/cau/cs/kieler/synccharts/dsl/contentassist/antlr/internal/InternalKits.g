@@ -169,6 +169,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleVariable
 entryRuleVariable :
 { before(grammarAccess.getVariableRule()); }
@@ -2927,6 +2929,7 @@ finally {
 
 
 
+
 rule__Variable__Group__0
     @init {
 		int stackSize = keepStackSize();
@@ -5472,6 +5475,10 @@ rule__Transition__IsHistoryAssignment_4
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+
+
 
 rule__Variable__NameAssignment_1
     @init {

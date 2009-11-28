@@ -7,11 +7,11 @@ import java.util.List;
 
 import org.eclipse.xtext.ui.common.editor.outline.ContentOutlineNode;
 import org.eclipse.xtext.ui.common.editor.outline.transformer.AbstractDeclarativeSemanticModelTransformer;
-import org.eclipse.xtext.ui.core.ILocationInFileProvider;
 
-import com.google.inject.Provider;
-
-import de.cau.cs.kieler.synccharts.*;
+import de.cau.cs.kieler.synccharts.Action;
+import de.cau.cs.kieler.synccharts.Signal;
+import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.Transition;
 
 /**
  * customization of the default outline structure
@@ -51,17 +51,22 @@ public class KitsTransformer extends
 			myStateType = semanticState.getType().getName();
 			nodeLabel = myStateType + " state";
 		}
-		if (semanticState.getLabel() != null) {
+		if (semanticState.getLabel() != null
+				&& !(semanticState.getLabel().trim().equals(""))) {
 			myStateName = semanticState.getLabel();
 			nodeLabel = nodeLabel + myStateName;
 		} else {
 			myStateName = "<no label>";
 			nodeLabel = nodeLabel + myStateName;
+			// if no label, note to it and add the corresponding id
+			if (semanticState.getId() != null
+					&& !(semanticState.getId().trim().equals(""))) {
+				myStateLabel = semanticState.getId();
+				nodeLabel = nodeLabel + " : \" " + myStateLabel + "\"";
+			}
 		}
-
-		if (semanticState.getId() != null) {
-			myStateLabel = semanticState.getId();
-			nodeLabel = nodeLabel + " : \" " + myStateLabel + "\"";
+		if (nodeLabel.trim().equals("")) {
+			node.setLabel("anonymous state"); // congrats to the user
 		}
 		node.setLabel(nodeLabel);
 		return node;
@@ -123,16 +128,38 @@ public class KitsTransformer extends
 		 * from A
 		 */
 		if (semanticTransition.getSourceState() != null) {
-			transitionLabel = transitionLabel + " from "
-					+ semanticTransition.getSourceState().getLabel();
+			State semanticSource = semanticTransition.getSourceState();
+			if (semanticSource.getLabel() != null
+					&& !(semanticSource.getLabel().trim().equals("")))
+
+			{
+				transitionLabel = transitionLabel + " from "
+						+ semanticTransition.getSourceState().getLabel();
+			}
 		}
 		/**
 		 * from A to B
 		 */
-		if (semanticTransition.getTargetState() != null)
-			transitionLabel = transitionLabel + " to "
-					+ semanticTransition.getTargetState().getLabel();
+		if (semanticTransition.getTargetState() != null) {
+			State semanticTarget = semanticTransition.getTargetState();
+			if (semanticTarget.getLabel() != null
+					&& !(semanticTarget.getLabel().trim().equals(""))) {
+				{
+					transitionLabel = transitionLabel + " to "
+							+ semanticTransition.getTargetState().getLabel();
+					node.setLabel(transitionLabel);
+				}
+				return node;
+			}
+			if (semanticTarget.getId() != null
+					&& !(semanticTarget.getId().trim().equals(""))) {
+				transitionLabel = transitionLabel + " to "
+						+ semanticTransition.getTargetState().getId();
+				node.setLabel(transitionLabel);
+			}
+			return node;
 
+		}
 		node.setLabel(transitionLabel);
 		return node;
 	}
