@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class Prio extends Instruction {
+/** @generated */public class Prio extends Instruction {
 
     ThreadID thread;
 

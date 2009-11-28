@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class SCLine {
+/** @generated */public class SCLine {
 
     String content;
     int number;

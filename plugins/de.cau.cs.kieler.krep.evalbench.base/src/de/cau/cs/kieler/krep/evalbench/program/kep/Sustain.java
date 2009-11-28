@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class Sustain extends SigDataInstruction {
+/** @generated */public class Sustain extends SigDataInstruction {
 
     public Sustain(KepSignal sig, SCLine sc) {
         super(Constants.SUSTAIN.getOpcode(), Constants.SUSTAIN.getInfo(), sig,

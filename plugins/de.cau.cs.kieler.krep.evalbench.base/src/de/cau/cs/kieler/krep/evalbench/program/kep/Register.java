@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class Register extends Identifer {
+/** @generated */public class Register extends Identifer {
 
     public Register(String name, Integer reg) {
         super(name, reg);

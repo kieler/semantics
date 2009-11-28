@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class RegContainer {
+/** @generated */public class RegContainer {
 
     Register target;
     Register source;

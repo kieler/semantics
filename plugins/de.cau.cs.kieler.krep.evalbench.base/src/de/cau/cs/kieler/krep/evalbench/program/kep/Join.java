@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class Join extends Instruction {
+/** @generated */public class Join extends Instruction {
 
     PrioID prio;
 

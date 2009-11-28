@@ -12,7 +12,10 @@
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
-
+/**
+ * @generated
+ * 
+ */
 public class Cmps_Data extends RegisterDataInst {
 
     public Cmps_Data(Register target, Data data, SCLine sc) {

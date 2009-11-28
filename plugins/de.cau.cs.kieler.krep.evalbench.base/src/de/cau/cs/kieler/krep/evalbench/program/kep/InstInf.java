@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public interface InstInf {
+/** @generated */public interface InstInf {
 
     public String toString();
 

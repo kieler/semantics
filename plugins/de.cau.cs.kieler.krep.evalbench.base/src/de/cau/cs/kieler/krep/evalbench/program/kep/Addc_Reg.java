@@ -12,7 +12,10 @@
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
-
+/**
+ * @generated
+ * 
+ */
 public class Addc_Reg extends RegisterRegInst {
 
     public Addc_Reg(Register target, Register source, SCLine sc) {

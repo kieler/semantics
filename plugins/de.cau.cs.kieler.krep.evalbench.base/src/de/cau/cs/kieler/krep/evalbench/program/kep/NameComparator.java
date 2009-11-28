@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-/*package krep.evalbench.program.kep;
+/** @generated *//*package krep.evalbench.program.kep;
 
  import java.util.Comparator;
 

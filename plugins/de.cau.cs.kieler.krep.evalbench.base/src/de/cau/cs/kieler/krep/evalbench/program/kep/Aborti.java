@@ -12,7 +12,10 @@
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
-
+/**
+ * @generated
+ * 
+ */
 public class Aborti extends AddrSigWatchInstruction {
 
     public Aborti(KepSignal sig, Label addr, Watcher watch, SCLine sc) {

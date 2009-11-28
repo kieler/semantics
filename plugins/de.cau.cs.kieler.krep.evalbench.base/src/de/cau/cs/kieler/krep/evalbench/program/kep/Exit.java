@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class Exit extends AddrInstruction {
+/** @generated */public class Exit extends AddrInstruction {
     Label fromAddr;
 
     public Exit(Label toAddr, Label fromAddr, SCLine sc) {

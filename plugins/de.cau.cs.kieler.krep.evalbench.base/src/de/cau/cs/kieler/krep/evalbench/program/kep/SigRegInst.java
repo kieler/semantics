@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class SigRegInst extends SigInstruction {
+/** @generated */public class SigRegInst extends SigInstruction {
 
     Register reg;
 

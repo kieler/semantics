@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class SigDataInstruction extends SigInstruction {
+/** @generated */public class SigDataInstruction extends SigInstruction {
 
     Data data;
 

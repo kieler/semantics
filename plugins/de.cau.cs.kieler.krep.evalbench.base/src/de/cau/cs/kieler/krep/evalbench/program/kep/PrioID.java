@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class PrioID extends Identifer {
+/** @generated */public class PrioID extends Identifer {
 
     public PrioID(int val) throws IllegalArgumentException {
 

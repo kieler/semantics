@@ -79,7 +79,7 @@ public abstract class AbstractTickManager implements ISignalListener {
      * Updates the signal views of the evaluation bench.
      */
     protected final void updateSignalViews() {
-        Activator.getDefault().commonLayer.updateSignalViews();
+       // Activator.getDefault().commonLayer.updateSignalViews();
     }
 
 }

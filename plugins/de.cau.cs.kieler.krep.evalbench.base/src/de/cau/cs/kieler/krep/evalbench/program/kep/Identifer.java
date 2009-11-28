@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-import java.util.Locale;
+/** @generated */import java.util.Locale;
 
 public abstract class Identifer {
 

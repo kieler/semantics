@@ -10,16 +10,6 @@
             id="de.cau.cs.kieler.krep.evalbench.ui.perspective"
             name="Evaluation Bench">
       </perspective>
-      <perspective
-            class="de.cau.cs.kieler.krep.evalbench.ui.VerifyPerspective"
-            id="de.cau.cs.kieler.krep.evalbench.ui.verify.perspective"
-            name="Verify">
-      </perspective>
-      <perspective
-            class="de.cau.cs.kieler.krep.evalbench.ui.TracePerspective"
-            id="de.cau.cs.kieler.krep.evalbench.ui.traceperspective"
-            name="Trace">
-      </perspective>
    </extension>
    <extension
          point="org.eclipse.ui.editors">
@@ -85,22 +75,6 @@
       <view
             allowMultiple="false"
             category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.krep.evalbench.ui.views.InputView"
-            icon="icons/input.gif"
-            id="de.cau.cs.kieler.krep.evalbench.ui.views.input"
-            name="Input">
-      </view>
-      <view
-            allowMultiple="false"
-            category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.krep.evalbench.ui.views.OutputView"
-            icon="icons/output.gif"
-            id="de.cau.cs.kieler.krep.evalbench.ui.views.output"
-            name="Output">
-      </view>
-      <view
-            allowMultiple="false"
-            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.TraceView"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.trace"
             name="Trace"
@@ -124,6 +98,7 @@
       <view
             category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView"
+            icon="icons/krep.gif"
             id="de.cau.cs.kieler.krep.evalbench.ui.views.assembler"
             name="Assembler View"
             restorable="true">

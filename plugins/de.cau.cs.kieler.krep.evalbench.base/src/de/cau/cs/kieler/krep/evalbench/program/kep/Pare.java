@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class Pare extends AddrInstruction {
+/** @generated */public class Pare extends AddrInstruction {
 
     PrioID prio;
 

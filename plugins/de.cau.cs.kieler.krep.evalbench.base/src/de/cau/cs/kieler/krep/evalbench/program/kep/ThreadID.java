@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class ThreadID extends Identifer {
+/** @generated */public class ThreadID extends Identifer {
     PrioID prio;
 
     public ThreadID(int ident, int prio_val) throws IllegalArgumentException {

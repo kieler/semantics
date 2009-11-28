@@ -34,10 +34,6 @@ public class TargetView extends ViewPart {
 
     private static TargetView instance = null;;
 
-    public TargetView() {
-        super();
-        instance = this;
-    }
 
     /**
      * {@inheritDoc}

@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
+/** @generated */
 public class Constants {
 
     public final static int addr_width = 16;

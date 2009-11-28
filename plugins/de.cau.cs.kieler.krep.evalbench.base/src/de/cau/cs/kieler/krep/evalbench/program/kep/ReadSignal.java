@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-import de.cau.cs.kieler.krep.evalbench.program.kep.Constants.*;
+/** @generated */import de.cau.cs.kieler.krep.evalbench.program.kep.Constants.*;
 
 public class ReadSignal extends Identifer {
 

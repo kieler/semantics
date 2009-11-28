@@ -12,7 +12,10 @@
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
-
+/**
+ * @generated
+ * 
+ */
 public class Add_Sig extends SigRegInst {
 
     public Add_Sig(Register reg, KepSignal sig, SCLine sc) {

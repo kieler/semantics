@@ -41,9 +41,7 @@ import de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.ui.editors.AssemblerEditor;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
-import de.cau.cs.kieler.krep.evalbench.ui.views.InputView;
 import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
-import de.cau.cs.kieler.krep.evalbench.ui.views.OutputView;
 import de.cau.cs.kieler.krep.evalbench.ui.views.TargetView;
 
 /**
@@ -591,22 +589,22 @@ public class CommonLayer implements IPartListener {
     /**
      * Updates the signal views of the evaluation bench.
      */
-    public void updateSignalViews() {
-        if (currentEditor != null) {
-            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getActivePage();
-            // find and update input view
-            IViewPart inputView = workbenchPage.findView(InputView.VIEW_ID);
-            if (inputView != null) {
-                ((InputView) inputView).setInput(currentEditor.getInputs());
-            }
-            // find and update output view
-            IViewPart outputView = workbenchPage.findView(OutputView.VIEW_ID);
-            if (outputView != null) {
-                ((OutputView) outputView).setInput(currentEditor.getOutputs());
-            }
-        }
-    }
+//    public void updateSignalViews() {
+//        if (currentEditor != null) {
+//            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
+//                    .getActiveWorkbenchWindow().getActivePage();
+//            // find and update input view
+//            IViewPart inputView = workbenchPage.findView(InputView.VIEW_ID);
+//            if (inputView != null) {
+//                ((InputView) inputView).setInput(currentEditor.getInputs());
+//            }
+//            // find and update output view
+//            IViewPart outputView = workbenchPage.findView(OutputView.VIEW_ID);
+//            if (outputView != null) {
+//                ((OutputView) outputView).setInput(currentEditor.getOutputs());
+//            }
+//        }
+//    }
 
     /**
      * {@inheritDoc}
@@ -615,22 +613,11 @@ public class CommonLayer implements IPartListener {
      * org.eclipse.ui.IPartListener#partBroughtToTop(org.eclipse.ui.IWorkbenchPart
      * )
      */
-    public void partBroughtToTop(final IWorkbenchPart part) {
+        public void partBroughtToTop(final IWorkbenchPart part) {
         if (part instanceof AssemblerEditor) {
             // set current editor to the activated editor part
             currentEditor = (AssemblerEditor) part;
-            // refresh input and output views
-            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getActivePage();
-            IViewPart inputView = workbenchPage.findView(InputView.VIEW_ID);
-            if (inputView != null) {
-                ((InputView) inputView).setInput(currentEditor.getInputs());
-            }
-            IViewPart outputView = workbenchPage.findView(OutputView.VIEW_ID);
-            if (outputView != null) {
-                ((OutputView) outputView).setInput(currentEditor.getOutputs());
-            }
-            // select proper protocol
+              // select proper protocol
             currentProtocolType = currentEditor.getProtocolType();
             if (currentProtocolType.equals(ICommunicationProtocol.P_KEP)) {
                 currentProtocol = kepProtocol;
@@ -648,34 +635,34 @@ public class CommonLayer implements IPartListener {
      * org.eclipse.ui.IPartListener#partOpened(org.eclipse.ui.IWorkbenchPart)
      */
     public void partOpened(final IWorkbenchPart part) {
-        if (part instanceof AssemblerEditor) {
-            // activate editor specific actions
-            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getActivePage();
-            IViewPart inputView = workbenchPage.findView(InputView.VIEW_ID);
-            if (inputView != null) {
-                ((InputView) inputView).setActionsEnabled(true);
-            }
-            IViewPart connectionView = workbenchPage
-                    .findView(ConnectionView.VIEW_ID);
-            if (connectionView != null) {
-                ((ConnectionView) connectionView).setActionsEnabled(true);
-            }
-        } else if (part instanceof ConnectionView) {
-            if (kepProtocol != null) {
-                kepProtocol.addCommunicationListener((ConnectionView) part);
-            }
-            if (krepProtocol != null) {
-                krepProtocol.addCommunicationListener((ConnectionView) part);
-            }
-        } else if (part instanceof OutputView) {
-            addSignalListener((OutputView) part);
-            if (currentEditor != null) {
-                ((OutputView) part).setInput(currentEditor.getOutputs());
-            }
-        } else if (part instanceof InputView && currentEditor != null) {
-            ((InputView) part).setInput(currentEditor.getInputs());
-        }
+//        if (part instanceof AssemblerEditor) {
+//            // activate editor specific actions
+//            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
+//                    .getActiveWorkbenchWindow().getActivePage();
+//            IViewPart inputView = workbenchPage.findView(InputView.VIEW_ID);
+//            if (inputView != null) {
+//                ((InputView) inputView).setActionsEnabled(true);
+//            }
+//            IViewPart connectionView = workbenchPage
+//                    .findView(ConnectionView.VIEW_ID);
+//            if (connectionView != null) {
+//                ((ConnectionView) connectionView).setActionsEnabled(true);
+//            }
+//        } else if (part instanceof ConnectionView) {
+//            if (kepProtocol != null) {
+//                kepProtocol.addCommunicationListener((ConnectionView) part);
+//            }
+//            if (krepProtocol != null) {
+//                krepProtocol.addCommunicationListener((ConnectionView) part);
+//            }
+//        } else if (part instanceof OutputView) {
+//            addSignalListener((OutputView) part);
+//            if (currentEditor != null) {
+//                ((OutputView) part).setInput(currentEditor.getOutputs());
+//            }
+//        } else if (part instanceof InputView && currentEditor != null) {
+//            ((InputView) part).setInput(currentEditor.getInputs());
+//        }
     }
 
     /**
@@ -693,20 +680,7 @@ public class CommonLayer implements IPartListener {
                 IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
                         .getActiveWorkbenchWindow().getActivePage();
                 if (workbenchPage != null) {
-                    IViewPart inputView = workbenchPage
-                            .findView(InputView.VIEW_ID);
-                    if (inputView != null) {
-                        ((InputView) inputView)
-                                .setInput(new LinkedList<Signal>());
-                        ((InputView) inputView).setActionsEnabled(false);
-                    }
-                    IViewPart outputView = workbenchPage
-                            .findView(OutputView.VIEW_ID);
-                    if (outputView != null) {
-                        ((OutputView) outputView)
-                                .setInput(new LinkedList<Signal>());
-                    }
-                    IViewPart connectionView = workbenchPage
+                     IViewPart connectionView = workbenchPage
                             .findView(ConnectionView.VIEW_ID);
                     if (connectionView != null) {
                         ((ConnectionView) connectionView)
@@ -732,9 +706,7 @@ public class CommonLayer implements IPartListener {
             if (krepProtocol != null) {
                 krepProtocol.removeCommunicationListener((ConnectionView) part);
             }
-        } else if (part instanceof OutputView) {
-            removeSignalListener((OutputView) part);
-        }
+        } 
     }
 
     /**

@@ -11,8 +11,12 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.krep.evalbench.program.kep;
 
+package de.cau.cs.kieler.krep.evalbench.program.kep;
+/**
+ * @generated
+ * 
+ */
 public class Add_Data extends RegisterDataInst {
 
     public Add_Data(Register target, Data data, SCLine sc) {

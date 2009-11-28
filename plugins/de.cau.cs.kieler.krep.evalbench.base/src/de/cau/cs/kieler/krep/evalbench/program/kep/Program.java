@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-import java.io.FileWriter;
+/** @generated */import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 

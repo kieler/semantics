@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class Par extends AddrInstruction {
+/** @generated */public class Par extends AddrInstruction {
     ThreadID thread;
 
     public Par(Label addr, ThreadID thread, SCLine sc) {

@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class RegisterRegInst extends RegisterInst {
+/** @generated */public class RegisterRegInst extends RegisterInst {
 
     Register source;
 

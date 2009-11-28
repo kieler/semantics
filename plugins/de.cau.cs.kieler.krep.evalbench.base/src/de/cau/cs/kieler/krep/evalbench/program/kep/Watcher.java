@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class Watcher extends Identifer {
+/** @generated */public class Watcher extends Identifer {
 
     public Watcher(int ident) {
 

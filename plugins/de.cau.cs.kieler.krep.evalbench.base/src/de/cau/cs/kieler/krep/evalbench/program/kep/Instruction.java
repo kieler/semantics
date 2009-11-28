@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-import java.util.HashMap;
+/** @generated */import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class Instruction extends

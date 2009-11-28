@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class Label extends Identifer {
+/** @generated */public class Label extends Identifer {
     int line;
 
     public Label(String name, Integer addr, int line) {

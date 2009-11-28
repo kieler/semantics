@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class Opcode {
+/** @generated */public class Opcode {
 
     String opcode;
     String info;

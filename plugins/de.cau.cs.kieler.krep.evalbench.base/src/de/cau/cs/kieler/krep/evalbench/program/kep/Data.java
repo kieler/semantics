@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program.kep;
 
-public class Data extends Identifer {
+/** @generated */public class Data extends Identifer {
 
     public Data(String val) throws IllegalArgumentException {
         int value = Integer.parseInt(val.trim());
