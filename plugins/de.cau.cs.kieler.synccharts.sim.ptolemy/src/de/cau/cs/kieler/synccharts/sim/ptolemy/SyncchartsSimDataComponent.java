@@ -37,8 +37,11 @@ import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -76,6 +79,7 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.osgi.framework.Bundle;
 
@@ -283,6 +287,8 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
      */
     public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
         long newModelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
+        System.out.println("TIMESTAMP NEW " +newModelTimeStamp);
+
         // check the dirty state of the editor containing the simulated model
         if (((newModelTimeStamp != modelTimeStamp) || modelEditor.isDirty()) 
                                     && !simulatingOldModelVersion) {
@@ -627,22 +633,48 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
             }
         }
 
-        if (this.getInputEditor() == null) {
+        modelEditor = this.getInputEditor();
+
+        if (modelEditor == null) {
             throw new KiemPropertyException("There exists no active editor.\n"
                     + "Please ensure that an opened editor is selected and"
                     + "the file name matches.\n\nIf you want the currently active editor to be"
                     + "simulated make sure the (optional) editor property is empty!");
         }
 
-        if (this.getInputEditor().isDirty()) {
-            throw new KiemPropertyException("There are unsaved changes of the model opened "
-                    + "in the editor to simulate.\n\nPlease save these changes before "
-                    + "starting the simulation!");
+        if (modelEditor.isDirty()) {
+            try {
+            final Shell shell = Display.getCurrent().getShells()[0];
+            boolean b = MessageDialog.openQuestion(shell, 
+                    "Save Resource", "'"+
+                    modelEditor.getEditorInput().getName()+ "'" +
+                    		" has been modified. Save changes before simulating?");
+            if (b) {
+                IEditorSite part = modelEditor.getEditorSite();
+                part.getPage().saveEditor((IEditorPart)part.getPart(), false);
+                //modelEditor.doSaveAs(); // doSave(new IProgressMonitor());
+                modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
+                simulatingOldModelVersion = false;
+            }
+            else {
+                simulatingOldModelVersion = true;
+                modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
+            }
+            }catch(Exception e) {
+                //if dialog cannot be opened, throw error 
+                throw new KiemPropertyException("There are unsaved changes of the model opened "
+                        + "in the editor to simulate.\n\nPlease save these changes before "
+                        + "starting the simulation!");
+            }
         }
+        else {
+            //not dirty
+            modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
+            simulatingOldModelVersion = false;
+        }
+        
+        System.out.println("TIMESTAMP" +modelTimeStamp);
 
-        modelEditor = this.getInputEditor();
-        modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
-        simulatingOldModelVersion = false;
     }
 
     // -------------------------------------------------------------------------
