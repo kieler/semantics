@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.cau.cs.kieler.krep.proc.solaris
+Bundle-Name: de.cau.cs.kieler.krep.proc.kep.solaris.sparc
 Bundle-SymbolicName: de.cau.cs.kieler.krep.proc.kep.solaris.sparc
 Bundle-Version: 0.1.0.qualifier
 Fragment-Host: de.cau.cs.kieler.krep.evalbench.base;bundle-version="0.1.0"

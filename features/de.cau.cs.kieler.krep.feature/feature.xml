@@ -307,7 +307,7 @@ litigation.
          fragment="true"/>
 
    <plugin
-         id="de.cau.cs.kieler.krep.proc.kep.win.x86"
+         id="de.cau.cs.kieler.krep.proc.kep.win32.x86"
          os="win32"
          arch="x86"
          download-size="0"
