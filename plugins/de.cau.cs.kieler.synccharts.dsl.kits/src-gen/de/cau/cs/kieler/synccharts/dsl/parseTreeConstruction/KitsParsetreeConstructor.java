@@ -39,37 +39,38 @@ protected class ThisRootNode extends RootToken {
 			case 1: return new State_Group(this, this, 1, inst);
 			case 2: return new Renaming_Group(this, this, 2, inst);
 			case 3: return new Transition_Group(this, this, 3, inst);
-			case 4: return new ValuedObject_Alternatives(this, this, 4, inst);
-			case 5: return new Variable_Group(this, this, 5, inst);
-			case 6: return new Signal_Group(this, this, 6, inst);
-			case 7: return new Action_Group(this, this, 7, inst);
-			case 8: return new Effect_Alternatives(this, this, 8, inst);
-			case 9: return new Emission_Group(this, this, 9, inst);
-			case 10: return new Assignment_Group(this, this, 10, inst);
-			case 11: return new SignalReference_SignalAssignment(this, this, 11, inst);
-			case 12: return new VariableReference_VariableAssignment(this, this, 12, inst);
-			case 13: return new IntValue_ValueAssignment(this, this, 13, inst);
-			case 14: return new FloatValue_ValueAssignment(this, this, 14, inst);
-			case 15: return new BooleanValue_ValueAssignment(this, this, 15, inst);
-			case 16: return new Value_Alternatives(this, this, 16, inst);
-			case 17: return new ValOperation_Group(this, this, 17, inst);
-			case 18: return new ValueExpression_PlusOperationParserRuleCall(this, this, 18, inst);
-			case 19: return new ParanthesedValueExpression_Alternatives(this, this, 19, inst);
-			case 20: return new PlusOperation_Group(this, this, 20, inst);
-			case 21: return new MultOrDivOperation_Alternatives(this, this, 21, inst);
-			case 22: return new MultOperation_Group(this, this, 22, inst);
-			case 23: return new DivOperation_Group(this, this, 23, inst);
-			case 24: return new PreArithmOperation_Group(this, this, 24, inst);
-			case 25: return new PreOrNormalValueExpression_Alternatives(this, this, 25, inst);
-			case 26: return new CompareOperation_Group(this, this, 26, inst);
-			case 27: return new UnaryOperation_Group(this, this, 27, inst);
-			case 28: return new UnaryParanthesedOperation_Group(this, this, 28, inst);
-			case 29: return new UnaryOrNormalExpression_Alternatives(this, this, 29, inst);
-			case 30: return new AndOperation_Group(this, this, 30, inst);
-			case 31: return new OrOperation_Group(this, this, 31, inst);
-			case 32: return new ParanthesedBooleanExpression_Alternatives(this, this, 32, inst);
-			case 33: return new BooleanExpression_OrOperationParserRuleCall(this, this, 33, inst);
-			case 34: return new HostCode_Group(this, this, 34, inst);
+			case 4: return new TransitionState_Group(this, this, 4, inst);
+			case 5: return new ValuedObject_Alternatives(this, this, 5, inst);
+			case 6: return new Variable_Group(this, this, 6, inst);
+			case 7: return new Signal_Group(this, this, 7, inst);
+			case 8: return new Action_Group(this, this, 8, inst);
+			case 9: return new Effect_Alternatives(this, this, 9, inst);
+			case 10: return new Emission_Group(this, this, 10, inst);
+			case 11: return new Assignment_Group(this, this, 11, inst);
+			case 12: return new SignalReference_SignalAssignment(this, this, 12, inst);
+			case 13: return new VariableReference_VariableAssignment(this, this, 13, inst);
+			case 14: return new IntValue_ValueAssignment(this, this, 14, inst);
+			case 15: return new FloatValue_ValueAssignment(this, this, 15, inst);
+			case 16: return new BooleanValue_ValueAssignment(this, this, 16, inst);
+			case 17: return new Value_Alternatives(this, this, 17, inst);
+			case 18: return new ValOperation_Group(this, this, 18, inst);
+			case 19: return new ValueExpression_PlusOperationParserRuleCall(this, this, 19, inst);
+			case 20: return new ParanthesedValueExpression_Alternatives(this, this, 20, inst);
+			case 21: return new PlusOperation_Group(this, this, 21, inst);
+			case 22: return new MultOrDivOperation_Alternatives(this, this, 22, inst);
+			case 23: return new MultOperation_Group(this, this, 23, inst);
+			case 24: return new DivOperation_Group(this, this, 24, inst);
+			case 25: return new PreArithmOperation_Group(this, this, 25, inst);
+			case 26: return new PreOrNormalValueExpression_Alternatives(this, this, 26, inst);
+			case 27: return new CompareOperation_Group(this, this, 27, inst);
+			case 28: return new UnaryOperation_Group(this, this, 28, inst);
+			case 29: return new UnaryParanthesedOperation_Group(this, this, 29, inst);
+			case 30: return new UnaryOrNormalExpression_Alternatives(this, this, 30, inst);
+			case 31: return new AndOperation_Group(this, this, 31, inst);
+			case 32: return new OrOperation_Group(this, this, 32, inst);
+			case 33: return new ParanthesedBooleanExpression_Alternatives(this, this, 33, inst);
+			case 34: return new BooleanExpression_OrOperationParserRuleCall(this, this, 34, inst);
+			case 35: return new HostCode_Group(this, this, 35, inst);
 			default: return null;
 		}	
 	}	
@@ -1648,43 +1649,20 @@ protected class Renaming_NewIDAssignment_2 extends AssignmentToken  {
  * //========================================================================================
  * //===  									    TRANSITION 					               ===
  * //========================================================================================
- * 
- * 
  *     
  * //  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
  *    //|({sync::State} name=FullStateID)
- *          //|newTargetState=TransitionState )
+ *       
+ *     //| 'final')
+ * //  |
+ * //  (TransitionState))
  *                
- * 
- * //TransitionState returns sync::State:
- * //  {sync::State} (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=
- * //  FullStateID|((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
- * //  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
- * //  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
- * //  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
- * //  isInitial?='init') (isFinal?='final')) id=FullStateID|((isInitial?='init') (isFinal
- * //  ?='final'))|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=
- * //  FullStateID|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'|((
- * //  isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID|((isFinal?=
- * //  'final') (isInitial?='init')) 'state' id=FullStateID|((isFinal?='final') (isInitial
- * //  ?='init')) (type=StateType)|((isFinal?='final') (isInitial?='init')) 'state'|((
- * //  isFinal?='final') (isInitial?='init')) id=FullStateID|((isFinal?='final') (
- * //  isInitial?='init'))|(isInitial?='init') (type=StateType) 'state' id=FullStateID|(
- * //  isInitial?='init') (type=StateType) 'state'|(isInitial?='init') (type=StateType) id=
- * //  FullStateID|(isInitial?='init') 'state' id=FullStateID|(isInitial?='init') (type=
- * //  StateType)|(isInitial?='init') 'state'|(isInitial?='init') id=FullStateID|(
- * //  isInitial?='init')|(isFinal?='final') (type=StateType) 'state' id=FullStateID|(
- * //  isFinal?='final') (type=StateType) 'state'|(isFinal?='final') (type=StateType) id=
- * //  FullStateID|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') (type=
- * //  StateType)|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') id=
- * //  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
- * //  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
- * //  FullStateID|'state'|id=FullStateID); 
- *   
- *  //========================================================================================
- * //===  									    VAR,SIG  					               ===
- * //========================================================================================
- * //
+ * //  (trigger=BooleanExpression)? ("/" (effects+=Effect (',')?)*)?;
+ * //TargetState returns sync::Transition:
+ * //	{sync::Transition}
+ * //	//(isInitial?='init')? (isFinal?='final')
+ * //	'bliub'
+ * //;
  *
  **/
 
@@ -1693,7 +1671,10 @@ protected class Renaming_NewIDAssignment_2 extends AssignmentToken  {
 // " history"? ";" 
 // //  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 //    //|({sync::State} name=FullStateID)
-//          //|newTargetState=TransitionState )
+//       
+//     //| 'final')
+// //  |
+// //  (TransitionState))
 protected class Transition_Group extends GroupToken {
 	
 	public Transition_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -1856,7 +1837,10 @@ protected class Transition_GreaterThanSignKeyword_1_2 extends KeywordToken  {
 }
 
 
-// targetState=[sync::State|FullStateID]
+// targetState=[sync::State|FullStateID]  
+//     //| 'final')
+// //  |
+// //  (TransitionState))
 protected class Transition_TargetStateAssignment_2 extends AssignmentToken  {
 	
 	public Transition_TargetStateAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
@@ -2107,14 +2091,273 @@ protected class Transition_SemicolonKeyword_5 extends KeywordToken  {
 /************ end Rule Transition ****************/
 
 
+/************ begin Rule TransitionState ****************
+ *
+ * TransitionState returns sync::State:
+ *   {sync::State} isInitial?="init" isFinal?="final" type=StateType "state" id=
+ *   FullStateID; 
+ * //  (trigger=BooleanExpression)? ("/" (effects+=Effect (',')?)*)?;
+ * //TargetState returns sync::Transition:
+ * //	{sync::Transition}
+ * //	//(isInitial?='init')? (isFinal?='final')
+ * //	'bliub'
+ * //;
+ * 
+ *     
+ *             
+ * //  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+ * //  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
+ * //  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
+ * //  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
+ * //  isInitial?='init') (isFinal?='final')) id=FullStateID|((isInitial?='init') (isFinal
+ * //  ?='final'))|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=
+ * //  FullStateID|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'|((
+ * //  isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID|((isFinal?=
+ * //  'final') (isInitial?='init')) 'state' id=FullStateID|((isFinal?='final') (isInitial
+ * //  ?='init')) (type=StateType)|((isFinal?='final') (isInitial?='init')) 'state'|((
+ * //  isFinal?='final') (isInitial?='init')) id=FullStateID|((isFinal?='final') (
+ * //  isInitial?='init'))|(isInitial?='init') (type=StateType) 'state' id=FullStateID|(
+ * //  isInitial?='init') (type=StateType) 'state'|(isInitial?='init') (type=StateType) id=
+ * //  FullStateID|(isInitial?='init') 'state' id=FullStateID|(isInitial?='init') (type=
+ * //  StateType)|(isInitial?='init') 'state'|(isInitial?='init') id=FullStateID|(
+ * //  isInitial?='init')|(isFinal?='final') (type=StateType) 'state' id=FullStateID|(
+ * //  isFinal?='final') (type=StateType) 'state'|(isFinal?='final') (type=StateType) id=
+ * //  FullStateID|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') (type=
+ * //  StateType)|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') id=
+ * //  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
+ * //  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
+ * //  FullStateID|'state'|id=FullStateID); 
+ *   
+ *  //========================================================================================
+ * //===  									    VAR,SIG  					               ===
+ * //========================================================================================
+ * //
+ *
+ **/
+
+// {sync::State} isInitial?="init" isFinal?="final" type=StateType "state" id=
+// FullStateID
+protected class TransitionState_Group extends GroupToken {
+	
+	public TransitionState_Group(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTransitionStateAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TransitionState_IdAssignment_5(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override
+	public IInstanceDescription tryConsume() {
+		if(!current.isInstanceOf(grammarAccess.getTransitionStateRule().getType().getClassifier())) return null;
+		return tryConsumeVal();
+	}
+}
+
+// {sync::State}
+protected class TransitionState_StateAction_0 extends ActionToken  {
+
+	public TransitionState_StateAction_0(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Action getGrammarElement() {
+		return grammarAccess.getTransitionStateAccess().getStateAction_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			default: return parent.createParentFollower(this, index, index, inst);
+		}	
+	}	
+		
+	
+    @Override
+	protected IInstanceDescription tryConsumeVal() {
+		if(!current.isInstanceOf(grammarAccess.getTransitionStateAccess().getStateAction_0().getType().getClassifier())) return null;
+		if(!current.isConsumed()) return null;
+		return current;
+	}
+}
+
+// isInitial?="init"
+protected class TransitionState_IsInitialAssignment_1 extends AssignmentToken  {
+	
+	public TransitionState_IsInitialAssignment_1(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTransitionStateAccess().getIsInitialAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TransitionState_StateAction_0(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("isInitial",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isInitial");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getTransitionStateAccess().getIsInitialInitKeyword_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// isFinal?="final"
+protected class TransitionState_IsFinalAssignment_2 extends AssignmentToken  {
+	
+	public TransitionState_IsFinalAssignment_2(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTransitionStateAccess().getIsFinalAssignment_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TransitionState_IsInitialAssignment_1(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("isFinal",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("isFinal");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KW;
+			element = grammarAccess.getTransitionStateAccess().getIsFinalFinalKeyword_2_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// type=StateType
+protected class TransitionState_TypeAssignment_3 extends AssignmentToken  {
+	
+	public TransitionState_TypeAssignment_3(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTransitionStateAccess().getTypeAssignment_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TransitionState_IsFinalAssignment_2(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("type",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("type");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.ERC;
+			element = grammarAccess.getTransitionStateAccess().getTypeStateTypeEnumRuleCall_3_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// "state"
+protected class TransitionState_StateKeyword_4 extends KeywordToken  {
+	
+	public TransitionState_StateKeyword_4(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getTransitionStateAccess().getStateKeyword_4();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TransitionState_TypeAssignment_3(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+}
+
+// id=FullStateID
+protected class TransitionState_IdAssignment_5 extends AssignmentToken  {
+	
+	public TransitionState_IdAssignment_5(AbstractToken parent, AbstractToken next, int no, IInstanceDescription current) {
+		super(parent, next, no, current);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTransitionStateAccess().getIdAssignment_5();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IInstanceDescription inst) {
+		switch(index) {
+			case 0: return new TransitionState_StateKeyword_4(parent, this, 0, inst);
+			default: return null;
+		}	
+	}	
+		
+    @Override	
+	protected IInstanceDescription tryConsumeVal() {
+		if((value = current.getConsumable("id",true)) == null) return null;
+		IInstanceDescription obj = current.cloneAndConsume("id");
+		if(Boolean.TRUE.booleanValue()) { // org::eclipse::xtext::impl::RuleCallImpl FIXME: check if value is valid for datatype rule
+			type = AssignmentType.DRC;
+			element = grammarAccess.getTransitionStateAccess().getIdFullStateIDParserRuleCall_5_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+/************ end Rule TransitionState ****************/
+
+
 /************ begin Rule ValuedObject ****************
  *
  * ValuedObject returns sync::ValuedObject:
  *   Signal|Variable; 
- * 
- * //TransitionState returns sync::State:
- * //  {sync::State} (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=
- * //  FullStateID|((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+ * //  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
  * //  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
  * //  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
  * //  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
@@ -2145,10 +2388,7 @@ protected class Transition_SemicolonKeyword_5 extends KeywordToken  {
  **/
 
 // Signal|Variable 
-// 
-// //TransitionState returns sync::State:
-// //  {sync::State} (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=
-// //  FullStateID|((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+// //  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
 // //  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
 // //  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
 // //  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((

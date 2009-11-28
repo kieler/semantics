@@ -24,6 +24,23 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
 	@Override
 	protected void configureFormatting(FormattingConfig config) {
 		// TODO Auto-generated method stub
+		de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess f = (de.cau.cs.kieler.synccharts.dsl.services.KitsGrammarAccess) getGrammarAccess();
+//		config.setLinewrap().after(f.getSignalAccess().getAlternatives_3_1());
+//		config.setLinewrap().after(f.getSignalAccess().getAlternatives_3_1_1_3());
+		config.setLinewrap().before(f.getSignalRule());
+		config.setLinewrap().before(f.getSignalAccess().getIsInputInputKeyword_0_0());
+		config.setLinewrap().before(f.getActionRule());
+		config.setLinewrap().before(f.getTransitionRule());
+		config.setLinewrap().before(f.getActionRule());
+		config.setLinewrap().after(f.getRegionRule());
+		config.setLinewrap().before(f.getVariableRule());
+		config.setLinewrap().before(f.getStateRule());
+		config.setLinewrap().before(f.getRegionAccess().getInnerStatesAssignment_4());
+		config.setLinewrap().before(f.getRegionAccess().getInnerStatesStateParserRuleCall_4_0());
+		config.setLinewrap().before(f.getStateAccess().getStateKeyword_4());
+		config.setLinewrap().after(f.getStateAccess().getRightCurlyBracketKeyword_13_3());
+		config.setLinewrap().after(f.getStateAccess().getLeftCurlyBracketKeyword_13_0());
+		//config.setIndentation(f.getStateAccess().getRightCurlyBracketKeyword_13_3(), f.getStateRule());
 		
 	}
 

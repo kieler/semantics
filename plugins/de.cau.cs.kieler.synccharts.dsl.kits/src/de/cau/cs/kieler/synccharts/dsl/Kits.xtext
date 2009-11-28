@@ -68,9 +68,9 @@ State returns sync::State:
   ('onexit'  exitActions+=Action)*
   ('suspension' suspensionTrigger=Action)?// kein effect, kein delay, kein immediate
   ('{'regions+=Region ('||' regions+=Region)*'}')? 
+ 
   (outgoingTransitions+=Transition)*
 ;
-
 Renaming returns sync::Renaming:
   oldID=STRING '/' newID=STRING;
 
@@ -84,17 +84,24 @@ FullStateID:
 //========================================================================================
 //===  									    TRANSITION 					               ===
 //========================================================================================
-
-
 Transition returns sync::Transition:
 //  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
   //|({sync::State} name=FullStateID)
-  type=TransitionType ('<'priority=INT'>')? (targetState=[sync::State|FullStateID]) //|newTargetState=TransitionState )
+  type=TransitionType ('<'priority=INT'>')? 
+  targetState=([sync::State|FullStateID]) //| 'final')
+//  |
+//  (TransitionState))
   ('with' (isImmediate?='#')? (delay=INT)? triggersAndEffects=STRING )? (isHistory?=' history')? ';';
+//  (trigger=BooleanExpression)? ("/" (effects+=Effect (',')?)*)?;
+//TargetState returns sync::Transition:
+//	{sync::Transition}
+//	//(isInitial?='init')? (isFinal?='final')
+//	'bliub'
+//;
 
-//TransitionState returns sync::State:
-//  {sync::State} (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=
-//  FullStateID|((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+TransitionState returns sync::State:
+  {sync::State} (isInitial?='init') (isFinal?='final') (type=StateType) 'state' id=FullStateID;
+//  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
 //  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
 //  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
 //  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((

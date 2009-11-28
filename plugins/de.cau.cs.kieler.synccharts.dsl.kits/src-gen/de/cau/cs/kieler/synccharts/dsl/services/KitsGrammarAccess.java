@@ -506,43 +506,20 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		////========================================================================================
 		////===  									    TRANSITION 					               ===
 		////========================================================================================
-		//
-		//
 		//    
 		////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 		//   //|({sync::State} name=FullStateID)
-		//         //|newTargetState=TransitionState )
+		//      
+		//    //| 'final')
+		////  |
+		////  (TransitionState))
 		//               
-		//
-		////TransitionState returns sync::State:
-		////  {sync::State} (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=
-		////  FullStateID|((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
-		////  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
-		////  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
-		////  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
-		////  isInitial?='init') (isFinal?='final')) id=FullStateID|((isInitial?='init') (isFinal
-		////  ?='final'))|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=
-		////  FullStateID|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'|((
-		////  isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID|((isFinal?=
-		////  'final') (isInitial?='init')) 'state' id=FullStateID|((isFinal?='final') (isInitial
-		////  ?='init')) (type=StateType)|((isFinal?='final') (isInitial?='init')) 'state'|((
-		////  isFinal?='final') (isInitial?='init')) id=FullStateID|((isFinal?='final') (
-		////  isInitial?='init'))|(isInitial?='init') (type=StateType) 'state' id=FullStateID|(
-		////  isInitial?='init') (type=StateType) 'state'|(isInitial?='init') (type=StateType) id=
-		////  FullStateID|(isInitial?='init') 'state' id=FullStateID|(isInitial?='init') (type=
-		////  StateType)|(isInitial?='init') 'state'|(isInitial?='init') id=FullStateID|(
-		////  isInitial?='init')|(isFinal?='final') (type=StateType) 'state' id=FullStateID|(
-		////  isFinal?='final') (type=StateType) 'state'|(isFinal?='final') (type=StateType) id=
-		////  FullStateID|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') (type=
-		////  StateType)|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') id=
-		////  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
-		////  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
-		////  FullStateID|'state'|id=FullStateID); 
-		//  
-		// //========================================================================================
-		////===  									    VAR,SIG  					               ===
-		////========================================================================================
-		////
+		////  (trigger=BooleanExpression)? ("/" (effects+=Effect (',')?)*)?;
+		////TargetState returns sync::Transition:
+		////	{sync::Transition}
+		////	//(isInitial?='init')? (isFinal?='final')
+		////	'bliub'
+		////;
 		public ParserRule getRule() { return rule; }
 
 		//type=TransitionType ("<" priority=INT ">")? targetState=[sync::State|FullStateID] (
@@ -550,7 +527,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//" history"? ";" 
 		////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 		//   //|({sync::State} name=FullStateID)
-		//         //|newTargetState=TransitionState )
+		//      
+		//    //| 'final')
+		////  |
+		////  (TransitionState))
 		public Group getGroup() { return cGroup; }
 
 		//type=TransitionType 
@@ -576,7 +556,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//">"
 		public Keyword getGreaterThanSignKeyword_1_2() { return cGreaterThanSignKeyword_1_2; }
 
-		//targetState=[sync::State|FullStateID]
+		//targetState=[sync::State|FullStateID]  
+		//    //| 'final')
+		////  |
+		////  (TransitionState))
 		public Assignment getTargetStateAssignment_2() { return cTargetStateAssignment_2; }
 
 		//[sync::State|FullStateID]
@@ -619,6 +602,96 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
 
+	public class TransitionStateElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TransitionState");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cStateAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cIsInitialAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cIsInitialInitKeyword_1_0 = (Keyword)cIsInitialAssignment_1.eContents().get(0);
+		private final Assignment cIsFinalAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cIsFinalFinalKeyword_2_0 = (Keyword)cIsFinalAssignment_2.eContents().get(0);
+		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTypeStateTypeEnumRuleCall_3_0 = (RuleCall)cTypeAssignment_3.eContents().get(0);
+		private final Keyword cStateKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cIdAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cIdFullStateIDParserRuleCall_5_0 = (RuleCall)cIdAssignment_5.eContents().get(0);
+		
+		//TransitionState returns sync::State:
+		//  {sync::State} isInitial?="init" isFinal?="final" type=StateType "state" id=
+		//  FullStateID; 
+		////  (trigger=BooleanExpression)? ("/" (effects+=Effect (',')?)*)?;
+		////TargetState returns sync::Transition:
+		////	{sync::Transition}
+		////	//(isInitial?='init')? (isFinal?='final')
+		////	'bliub'
+		////;
+		//
+		//    
+		//            
+		////  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+		////  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
+		////  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
+		////  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
+		////  isInitial?='init') (isFinal?='final')) id=FullStateID|((isInitial?='init') (isFinal
+		////  ?='final'))|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state' id=
+		////  FullStateID|((isFinal?='final') (isInitial?='init')) (type=StateType) 'state'|((
+		////  isFinal?='final') (isInitial?='init')) (type=StateType) id=FullStateID|((isFinal?=
+		////  'final') (isInitial?='init')) 'state' id=FullStateID|((isFinal?='final') (isInitial
+		////  ?='init')) (type=StateType)|((isFinal?='final') (isInitial?='init')) 'state'|((
+		////  isFinal?='final') (isInitial?='init')) id=FullStateID|((isFinal?='final') (
+		////  isInitial?='init'))|(isInitial?='init') (type=StateType) 'state' id=FullStateID|(
+		////  isInitial?='init') (type=StateType) 'state'|(isInitial?='init') (type=StateType) id=
+		////  FullStateID|(isInitial?='init') 'state' id=FullStateID|(isInitial?='init') (type=
+		////  StateType)|(isInitial?='init') 'state'|(isInitial?='init') id=FullStateID|(
+		////  isInitial?='init')|(isFinal?='final') (type=StateType) 'state' id=FullStateID|(
+		////  isFinal?='final') (type=StateType) 'state'|(isFinal?='final') (type=StateType) id=
+		////  FullStateID|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') (type=
+		////  StateType)|(isFinal?='final') 'state' id=FullStateID|(isFinal?='final') id=
+		////  FullStateID|(isFinal?='final')|(type=StateType) 'state' id=FullStateID|(type=
+		////  StateType) 'state'|(type=StateType) id=FullStateID|(type=StateType)|'state' id=
+		////  FullStateID|'state'|id=FullStateID); 
+		//  
+		// //========================================================================================
+		////===  									    VAR,SIG  					               ===
+		////========================================================================================
+		////
+		public ParserRule getRule() { return rule; }
+
+		//{sync::State} isInitial?="init" isFinal?="final" type=StateType "state" id=
+		//FullStateID
+		public Group getGroup() { return cGroup; }
+
+		//{sync::State}
+		public Action getStateAction_0() { return cStateAction_0; }
+
+		//isInitial?="init"
+		public Assignment getIsInitialAssignment_1() { return cIsInitialAssignment_1; }
+
+		//"init"
+		public Keyword getIsInitialInitKeyword_1_0() { return cIsInitialInitKeyword_1_0; }
+
+		//isFinal?="final"
+		public Assignment getIsFinalAssignment_2() { return cIsFinalAssignment_2; }
+
+		//"final"
+		public Keyword getIsFinalFinalKeyword_2_0() { return cIsFinalFinalKeyword_2_0; }
+
+		//type=StateType
+		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
+
+		//StateType
+		public RuleCall getTypeStateTypeEnumRuleCall_3_0() { return cTypeStateTypeEnumRuleCall_3_0; }
+
+		//"state"
+		public Keyword getStateKeyword_4() { return cStateKeyword_4; }
+
+		//id=FullStateID
+		public Assignment getIdAssignment_5() { return cIdAssignment_5; }
+
+		//FullStateID
+		public RuleCall getIdFullStateIDParserRuleCall_5_0() { return cIdFullStateIDParserRuleCall_5_0; }
+	}
+
 	public class ValuedObjectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedObject");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -627,10 +700,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ValuedObject returns sync::ValuedObject:
 		//  Signal|Variable; 
-		//
-		////TransitionState returns sync::State:
-		////  {sync::State} (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=
-		////  FullStateID|((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+		////  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
 		////  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
 		////  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
 		////  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
@@ -660,10 +730,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		public ParserRule getRule() { return rule; }
 
 		//Signal|Variable 
-		//
-		////TransitionState returns sync::State:
-		////  {sync::State} (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=
-		////  FullStateID|((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+		////  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
 		////  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
 		////  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
 		////  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
@@ -2648,6 +2715,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	private RenamingElements pRenaming;
 	private FullStateIDElements pFullStateID;
 	private TransitionElements pTransition;
+	private TransitionStateElements pTransitionState;
 	private ValuedObjectElements pValuedObject;
 	private VariableElements pVariable;
 	private SignalElements pSignal;
@@ -2854,17 +2922,41 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	////========================================================================================
 	////===  									    TRANSITION 					               ===
 	////========================================================================================
-	//
-	//
 	//    
 	////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 	//   //|({sync::State} name=FullStateID)
-	//         //|newTargetState=TransitionState )
+	//      
+	//    //| 'final')
+	////  |
+	////  (TransitionState))
 	//               
+	////  (trigger=BooleanExpression)? ("/" (effects+=Effect (',')?)*)?;
+	////TargetState returns sync::Transition:
+	////	{sync::Transition}
+	////	//(isInitial?='init')? (isFinal?='final')
+	////	'bliub'
+	////;
+	public TransitionElements getTransitionAccess() {
+		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
+	}
+	
+	public ParserRule getTransitionRule() {
+		return getTransitionAccess().getRule();
+	}
+
+	//TransitionState returns sync::State:
+	//  {sync::State} isInitial?="init" isFinal?="final" type=StateType "state" id=
+	//  FullStateID; 
+	////  (trigger=BooleanExpression)? ("/" (effects+=Effect (',')?)*)?;
+	////TargetState returns sync::Transition:
+	////	{sync::Transition}
+	////	//(isInitial?='init')? (isFinal?='final')
+	////	'bliub'
+	////;
 	//
-	////TransitionState returns sync::State:
-	////  {sync::State} (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=
-	////  FullStateID|((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+	//    
+	//            
+	////  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
 	////  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
 	////  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
 	////  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((
@@ -2891,20 +2983,17 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	////===  									    VAR,SIG  					               ===
 	////========================================================================================
 	////
-	public TransitionElements getTransitionAccess() {
-		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
+	public TransitionStateElements getTransitionStateAccess() {
+		return (pTransitionState != null) ? pTransitionState : (pTransitionState = new TransitionStateElements());
 	}
 	
-	public ParserRule getTransitionRule() {
-		return getTransitionAccess().getRule();
+	public ParserRule getTransitionStateRule() {
+		return getTransitionStateAccess().getRule();
 	}
 
 	//ValuedObject returns sync::ValuedObject:
 	//  Signal|Variable; 
-	//
-	////TransitionState returns sync::State:
-	////  {sync::State} (((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' id=
-	////  FullStateID|((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
+	////  |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state'|((
 	////  isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID|((isInitial
 	////  ?='init') (isFinal?='final')) 'state' id=FullStateID|((isInitial?='init') (isFinal?=
 	////  'final')) (type=StateType)|((isInitial?='init') (isFinal?='final')) 'state'|((

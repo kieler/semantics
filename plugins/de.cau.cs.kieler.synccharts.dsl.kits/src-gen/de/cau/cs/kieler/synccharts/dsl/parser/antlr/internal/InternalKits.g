@@ -840,6 +840,8 @@ ruleTransition returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRuleVariable
 entryRuleVariable returns [EObject current=null] :
 	{ currentNode = createCompositeNode(grammarAccess.getVariableRule(), currentNode); }

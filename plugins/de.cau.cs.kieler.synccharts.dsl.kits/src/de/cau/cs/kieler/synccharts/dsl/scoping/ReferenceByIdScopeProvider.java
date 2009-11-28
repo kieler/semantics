@@ -13,7 +13,7 @@ public class ReferenceByIdScopeProvider extends SimpleNameScopeProvider {
 	protected IScope createScope(Resource resource, EClass type) {
 		System.out.println("cross ref's are now made by id per default");
 		return new DefaultScope(resource, type, getImportUriResolver(),
-				SimpleAttributeResolver.newResolver(String.class, "label"));
+				SimpleAttributeResolver.newResolver(String.class, "id"));
 
 	}
 }

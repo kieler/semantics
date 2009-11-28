@@ -34,5 +34,6 @@ Export-Package: de.cau.cs.kieler.synccharts.dsl,
  de.cau.cs.kieler.synccharts.dsl.validation,
  de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal
 Import-Package: de.cau.cs.kieler.synccharts.formatting,
- org.eclipse.ui,
- org.apache.log4j
+ de.cau.cs.kieler.synccharts.labelparser.bridge,
+ org.apache.log4j,
+ org.eclipse.ui
