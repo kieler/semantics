@@ -221,6 +221,9 @@ Void n2wTransition(List[synccharts::Transition] transitionList, synccharts::Stat
     n2wBuildTriggerState(state.regions, 
   						 state.parentRegion.parentState,
   						 transition) : null ->
+  //test how many trigges are in, if only one delete AND if non, delete complexExpression
+  (complexExpression.subExpressions.size == 1) ?
+     transition.setTrigger(complexExpression.subExpressions.get(0)) : null ->
   //modify the type from NORMALTERMINATION to WEAKABORT   
   (transition.type.toString().matches("NORMALTERMINATION")) ? 
     transition.setType(synccharts::TransitionType::WEAKABORT) : null
