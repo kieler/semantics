@@ -118,7 +118,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
     /** The editor of the model being simulated. */
     private DiagramEditor modelEditor;
-    
+
     /** The model time stamp. */
     private long modelTimeStamp;
 
@@ -225,7 +225,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
             emfReader.setModelSlot("emfmodel");
             // DO NOT USE THE SAME INPUT RESOUCRCE SET
             // OTHERWISE WE MAY CHANGE THE INPUT MODEL!
-            //emfReader.setResourceSet(this.getInputResourceSet());
+            // emfReader.setResourceSet(this.getInputResourceSet());
 
             // MOML writer
             MomlWriter momlWriter = new MomlWriter();
@@ -286,18 +286,24 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
      * .json.JSONObject)
      */
     public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
-        long newModelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
-        System.out.println("TIMESTAMP NEW " +newModelTimeStamp);
+        try {
+            long newModelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource()
+                    .getTimeStamp();
+            System.out.println("TIMESTAMP NEW " + newModelTimeStamp);
 
-        // check the dirty state of the editor containing the simulated model
-        if (((newModelTimeStamp != modelTimeStamp) || modelEditor.isDirty()) 
-                                    && !simulatingOldModelVersion) {
-            // remember that we warned the user (do this only once)
-            simulatingOldModelVersion = true;
-            // warn the user
-            throw new KiemExecutionException("The simulated model changed since the simulation "
-                    + "was started.\n\nYou should restart the simulation in order to "
-                    + "simulate the changed version of your model.", false, null);
+            // check the dirty state of the editor containing the simulated model
+            if (((newModelTimeStamp != modelTimeStamp) || modelEditor.isDirty())
+                    && !simulatingOldModelVersion) {
+                // remember that we warned the user (do this only once)
+                simulatingOldModelVersion = true;
+                // warn the user
+                throw new KiemExecutionException(
+                        "The simulated model changed since the simulation "
+                                + "was started.\n\nYou should restart the simulation in order to "
+                                + "simulate the changed version of your model.", false, null);
+            }
+        } catch (Exception e) {
+            // editor might have been closed -> no problem
         }
 
         System.out.println("Step in Ptolemy Model...");
@@ -356,43 +362,41 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
     // -------------------------------------------------------------------------
 
     public JSONObject provideInitialVariables() throws KiemInitializationException {
-             JSONObject returnObj = new JSONObject();
+        JSONObject returnObj = new JSONObject();
 
-	    //do the initialization prior to providing the interface keys
-		//this may rise an exception
-		PTOEXE = null;
-		System.gc();
-		String[] keys = null;
+        // do the initialization prior to providing the interface keys
+        // this may rise an exception
+        PTOEXE = null;
+        System.gc();
+        String[] keys = null;
 
-		//Check if the model conforms to all check files and no warnings left!
-                Diagnostician diagnostician = new Diagnostician();
-                Diagnostic diagnostic = diagnostician.validate(this.getInputModelEObject(
-                        this.getInputEditor()));
-                boolean ok = diagnostic.getSeverity() == Diagnostic.OK;
-                
-                if (!ok) {
-                        //bring Problems View to the front otherwise
-                        bringProblemsViewToFront();
-                        //and rise error
-                        throw new KiemInitializationException
-                                           ("Please fix all errors and KlePto simulation warnings listed " +
-                                           "in the Eclipse Problems View before simulating.\n\n"
-                                           , true, null); 
-                }               
-		try {
-			loadAndExecuteModel();
-			keys = PTOEXE.getInterfaceSignals();
-			for (String key:keys) {
-		             returnObj.accumulate(key, JSONSignalValues.newValue(false));
-			}
-		} catch (Exception e) {
-			throw new KiemInitializationException
-				("Ptolemy Model could not be generated\n\n" +
-				"Please ensure that all simulation warnings in the " +
-                                "respective Eclipse Problems View have been cleared.\n\n", true, e);
-		}
-		return returnObj;
-	}    // -------------------------------------------------------------------------
+        // Check if the model conforms to all check files and no warnings left!
+        Diagnostician diagnostician = new Diagnostician();
+        Diagnostic diagnostic = diagnostician.validate(this.getInputModelEObject(this
+                .getInputEditor()));
+        boolean ok = diagnostic.getSeverity() == Diagnostic.OK;
+
+        if (!ok) {
+            // bring Problems View to the front otherwise
+            bringProblemsViewToFront();
+            // and rise error
+            throw new KiemInitializationException(
+                    "Please fix all errors and KlePto simulation warnings listed "
+                            + "in the Eclipse Problems View before simulating.\n\n", true, null);
+        }
+        try {
+            loadAndExecuteModel();
+            keys = PTOEXE.getInterfaceSignals();
+            for (String key : keys) {
+                returnObj.accumulate(key, JSONSignalValues.newValue(false));
+            }
+        } catch (Exception e) {
+            throw new KiemInitializationException("Ptolemy Model could not be generated\n\n"
+                    + "Please ensure that all simulation warnings in the "
+                    + "respective Eclipse Problems View have been cleared.\n\n", true, e);
+        }
+        return returnObj;
+    } // -------------------------------------------------------------------------
 
     DiagramEditor getInputEditor() {
         String kiemEditorProperty = this.getProperties()[0].getValue();
@@ -544,10 +548,9 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
     // -------------------------------------------------------------------------
     public void bringProblemsViewToFront() {
         try {
-            IWorkbenchWindow window = PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow();
+            IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
             IViewPart vP = window.getActivePage().showView(
-                                org.eclipse.ui.IPageLayout.ID_PROBLEM_VIEW);
+                    org.eclipse.ui.IPageLayout.ID_PROBLEM_VIEW);
             vP.setFocus();
         } catch (Exception e) {
             e.printStackTrace();
@@ -644,36 +647,35 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
         if (modelEditor.isDirty()) {
             try {
-            final Shell shell = Display.getCurrent().getShells()[0];
-            boolean b = MessageDialog.openQuestion(shell, 
-                    "Save Resource", "'"+
-                    modelEditor.getEditorInput().getName()+ "'" +
-                    		" has been modified. Save changes before simulating?");
-            if (b) {
-                IEditorSite part = modelEditor.getEditorSite();
-                part.getPage().saveEditor((IEditorPart)part.getPart(), false);
-                //modelEditor.doSaveAs(); // doSave(new IProgressMonitor());
-                modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
-                simulatingOldModelVersion = false;
-            }
-            else {
-                simulatingOldModelVersion = true;
-                modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
-            }
-            }catch(Exception e) {
-                //if dialog cannot be opened, throw error 
+                final Shell shell = Display.getCurrent().getShells()[0];
+                boolean b = MessageDialog.openQuestion(shell, "Save Resource", "'"
+                        + modelEditor.getEditorInput().getName() + "'"
+                        + " has been modified. Save changes before simulating?");
+                if (b) {
+                    IEditorSite part = modelEditor.getEditorSite();
+                    part.getPage().saveEditor((IEditorPart) part.getPart(), false);
+                    // modelEditor.doSaveAs(); // doSave(new IProgressMonitor());
+                    modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource()
+                            .getTimeStamp();
+                    simulatingOldModelVersion = false;
+                } else {
+                    simulatingOldModelVersion = true;
+                    modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource()
+                            .getTimeStamp();
+                }
+            } catch (Exception e) {
+                // if dialog cannot be opened, throw error
                 throw new KiemPropertyException("There are unsaved changes of the model opened "
                         + "in the editor to simulate.\n\nPlease save these changes before "
                         + "starting the simulation!");
             }
-        }
-        else {
-            //not dirty
+        } else {
+            // not dirty
             modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
             simulatingOldModelVersion = false;
         }
-        
-        System.out.println("TIMESTAMP" +modelTimeStamp);
+
+        System.out.println("TIMESTAMP" + modelTimeStamp);
 
     }
 
