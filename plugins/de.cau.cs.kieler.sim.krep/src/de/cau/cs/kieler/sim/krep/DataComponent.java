@@ -30,7 +30,6 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -203,18 +202,10 @@ public final class DataComponent extends JSONObjectDataComponent {
     @Override
     public JSONObject provideInitialVariables() throws KiemInitializationException {
         IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        for (IViewReference view : page.getViewReferences()) {
-            if (view.getId().equals(AssemblerView.VIEW_ID)) {
-                this.viewer = (AssemblerView) (view.getView(true));
-                break;
-            }
-        }
-        if (viewer == null) {
-            try {
-                viewer = (AssemblerView)(page.showView(AssemblerView.VIEW_ID));
-            } catch (PartInitException e) {
-                throw new KiemInitializationException("Cannot show assembler view", true, e);
-            }
+        try {
+            viewer = (AssemblerView) (page.showView(AssemblerView.VIEW_ID));
+        } catch (PartInitException e) {
+            throw new KiemInitializationException("Cannot show assembler view", true, e);
         }
 
         JSONObject signals = new JSONObject();
@@ -237,16 +228,6 @@ public final class DataComponent extends JSONObjectDataComponent {
                     strl2kep(name, file);
                 }
             }
-
-            /*
-             * if (assembler == null) { if (getProperties()[0].getValue().equals("KLP")) {
-             * connection.initialize(ICommunicationProtocol.P_KREP); protocol = new
-             * KrepProtocol(connection); assembler = new KlpAssembler(); } else {
-             * connection.initialize(ICommunicationProtocol.P_KEP); protocol = new
-             * KepProtocol(connection); assembler = new KepAssembler(); } FileReader in = new
-             * FileReader(getProperties()[1].getValue()); if (in != null) {
-             * assembler.assemble(getProperties()[1].getValue(), in); } }
-             */
         } catch (IOException e) {
             throw new KiemInitializationException("Assembler file not found", true, e);
         } catch (ParseException e) {
@@ -282,7 +263,11 @@ public final class DataComponent extends JSONObjectDataComponent {
             } catch (JSONException e) {
                 throw new KiemInitializationException("JSON error", false, e);
             }
+        } else {
+            throw new KiemInitializationException(
+                    "Active editor cannot be executed on a reactive processor.", false, null);
         }
+
         return signals;
     }
 
