@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:synccharts="http://kieler.cs.cau.de/synccharts">
+  <innerStates id="S0" label="simple">
+    <signals name="O" isOutput="true"/>
+    <signals name="I" isInput="true"/>
+    <regions>
+      <innerStates id="S3" label="final"/>
+      <innerStates id="S4" label="start" isInitial="true">
+        <outgoingTransitions triggersAndEffects="I / O" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.0">
+          <effects xsi:type="synccharts:Emission" signal="O"/>
+          <trigger xsi:type="synccharts:SignalReference" signal="I"/>
+        </outgoingTransitions>
+      </innerStates>
+    </regions>
+  </innerStates>
+</synccharts:Region>

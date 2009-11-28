@@ -185,7 +185,150 @@ Void addKielerIO(EntityType baseEntity, String name, String signalID) :
 //   			baseEntity.entity.add(e) : null
 //;
 
+//-----------------------------------------------------------------------------
+//--     P R E P R O C E S S I N G  :  NORMAL TERMINATION 2 WEAK ABORT       --
+//-----------------------------------------------------------------------------
 
+Void n2wRegion(List[synccharts::State] stateList) :
+  let state = stateList.first():
+  (stateList.withoutFirst().size > 0) ?
+     n2wRegion(stateList.withoutFirst()) : null ->
+  (state.isMacroState()) ?
+  	n2wState(state.regions) : null ->
+  (!state.outgoingTransitions.isEmpty) ?
+  	n2wTransition(state.outgoingTransitions, state) : null
+;
+
+Void n2wState(List[synccharts::Region] regionList) :
+  let region = regionList.first():
+  (regionList.withoutFirst().size > 0) ?
+     n2wState(regionList.withoutFirst()) : null ->
+  (region.innerStates.size > 0) ?
+  	 n2wRegion(region.innerStates) : null
+;
+
+Void n2wTransition(List[synccharts::Transition] transitionList, synccharts::State state) :
+  let transition = transitionList.first():
+  let complexExpression = new synccharts::ComplexExpression:
+  dump("TEST TRANSITION "+getURIFragment(transition)) ->
+  (transitionList.withoutFirst().size > 0) ?
+     n2wTransition(transitionList.withoutFirst(), state) : null ->
+   //add a new complex expression trigger (will be filled recusively)
+   complexExpression.setOperator(OperatorType::AND) ->
+  (transition.type.toString().matches("NORMALTERMINATION") && (state.regions.size > 0)) ?
+    transition.setTrigger(complexExpression) : null ->
+  (transition.type.toString().matches("NORMALTERMINATION") && (state.regions.size > 0)) ?
+    n2wBuildTriggerState(state.regions, 
+  						 state.parentRegion.parentState,
+  						 transition) : null ->
+  //modify the type from NORMALTERMINATION to WEAKABORT   
+  (transition.type.toString().matches("NORMALTERMINATION")) ? 
+    transition.setType(synccharts::TransitionType::WEAKABORT) : null
+;
+
+Void n2wBuildTriggerState(List[synccharts::Region] regionList, 
+					             synccharts::State mainState, 
+					        synccharts::Transition weakAbortTransition) :
+  let region = regionList.first():
+  let regionSignalName = "finished_" + hash(region.innerStates.flatten().toString()):
+  let regionSignal = new synccharts::Signal:
+  let signalReference = new synccharts::SignalReference:
+  let trigger = weakAbortTransition.trigger:
+   //construct a new (local) signal
+   regionSignal.setName(regionSignalName) ->
+   regionSignal.setType(ValueType::PURE) ->
+   //add signal to main state
+   mainState.signals.add(regionSignal) ->
+   //construct a new signal reference (for trigger) and add it
+   signalReference.setSignal(regionSignal) ->
+   ((ComplexExpression)trigger).subExpressions.add(signalReference) ->
+ 
+  (regionList.withoutFirst().size > 0) ?
+  	 n2wBuildTriggerState(regionList.withoutFirst(), mainState, weakAbortTransition) : null ->
+  (region.innerStates.size > 0) ?
+  	n2wBuildTriggerRegion(region.innerStates, mainState, weakAbortTransition, regionSignal) : ""
+;
+
+Void n2wBuildTriggerRegion(List[synccharts::State] stateList, 
+								   synccharts::State mainState, 
+							  synccharts::Transition weakAbortTransition,
+							  synccharts::Signal regionSignal) :
+  let newTransition = new synccharts::Transition:
+  let state = stateList.first():
+  (stateList.withoutFirst().size > 0) ?
+  	 n2wBuildTriggerRegion(stateList.withoutFirst(), mainState, weakAbortTransition,regionSignal) : null ->
+  (state.isFinal) ?
+    dump("FINAL STATE FOUND "+state.getStateId()) : null ->
+  (state.isFinal) ?
+    n2wBuildTriggerFinalState(state, mainState, weakAbortTransition,regionSignal) : null
+;
+
+Void n2wBuildTriggerFinalState(synccharts::State finalState, 
+							   synccharts::State mainState, 
+						  synccharts::Transition weakAbortTransition,
+						  synccharts::Signal regionSignal) :
+  let newTransition = new synccharts::Transition:
+   //construct a new self transition 
+   newTransition.setTargetState(finalState) ->
+   //add self transition
+   finalState.outgoingTransitions.add(newTransition) ->
+   //add emission for all incoming transitions
+   n2wBuildTriggerFinalStateTransitions(finalState.incomingTransitions(),
+    									 weakAbortTransition, regionSignal)
+;							  
+
+Void n2wBuildTriggerFinalStateTransitions(List[synccharts::Transition] transitionList,
+								 synccharts::Transition weakAbortTransition,
+								 synccharts::Signal regionSignal) :
+    let transition = transitionList.first():
+	let signalEmission = new synccharts::Emission:
+    signalEmission.setSignal(regionSignal) ->
+    dump("FINAL TRANSITION SIGNAL "+regionSignal.name + " FOR "+ transition.getURIFragment()) ->
+	transition.effects.add(signalEmission) ->
+    (transitionList.withoutFirst().size > 0) ?
+		    n2wBuildTriggerFinalStateTransitions(transitionList.withoutFirst(),
+			  						  weakAbortTransition,
+								 	  regionSignal) : null
+;
+
+
+//-----------------------------------------------------------------------------
+//--    E x t e n s i o n        for calculating incoming transitions        --
+//-----------------------------------------------------------------------------
+
+List[synccharts::Transition] incomingTransitions(synccharts::State targetState) :
+  let parentRegion = (synccharts::Region)targetState.eContainer:
+  let list = createTransitionList():
+  list.removeAll(list) ->
+  (parentRegion != null) ?
+      incomgingTransitionsHelperStates(parentRegion.innerStates, targetState, list) : null ->
+  list
+;
+create List[synccharts::Transition] createTransitionList () :
+  null
+;
+Void incomgingTransitionsHelperStates(List[synccharts::State] stateList,
+				         synccharts::State targetState, 
+				         List[synccharts::Transition] list) :
+  let state = stateList.first():
+  (state.outgoingTransitions.size > 0) ?
+       incomgingTransitionsHelperTransitions(state.outgoingTransitions, targetState, list) : null ->
+  (stateList.withoutFirst().size > 0) ?
+       incomgingTransitionsHelperStates(stateList.withoutFirst(), targetState, list) : null
+;        
+Void incomgingTransitionsHelperTransitions(List[synccharts::Transition] transitionList,
+				         synccharts::State targetState, 
+				         List[synccharts::Transition] list) :
+  let transition = transitionList.first():
+  (transition.targetState == targetState) ?
+  		list.add(transition) : null ->
+  (transitionList.withoutFirst().size > 0) ?
+       incomgingTransitionsHelperTransitions(transitionList.withoutFirst(), targetState, list) : null
+;       
+
+
+//-----------------------------------------------------------------------------
+//--     P R E P R O C E S S I N G  :  RAISE ALL LOCAL VARS TO UPPER LEVEL   --
 //-----------------------------------------------------------------------------
 
 Void localSignalShiftPreprocessingRegion(List[synccharts::State] stateList, synccharts::State mainState) :
@@ -217,10 +360,11 @@ Void localSignalShiftPreprocessingSignal(List[synccharts::Signal] signalList, sy
 ;
 
 //-----------------------------------------------------------------------------
+//--     P R E P R O C E S S I N G  :  RENAME ALL LOCAL VARS 4 UNIFICATION   --
+//-----------------------------------------------------------------------------
 
 Void localSignalRenamingPreprocessingRegion(List[synccharts::State] stateList) :
   let state = stateList.first():
-  dump("SEARCH STATE "+state.getStateId()) ->
   (stateList.withoutFirst().size > 0) ?
      localSignalRenamingPreprocessingRegion(stateList.withoutFirst()) : null ->
   (state.isMacroState()) ?
@@ -231,7 +375,6 @@ Void localSignalRenamingPreprocessingRegion(List[synccharts::State] stateList) :
 
 Void localSignalRenamingPreprocessingState(List[synccharts::Region] regionList) :
   let region = regionList.first():
-  dump("SEARCH REGION OF STATE "+region.parentState.getStateId()) ->
   (regionList.withoutFirst().size > 0) ?
      localSignalRenamingPreprocessingState(regionList.withoutFirst()) : null ->
   (region.innerStates.size > 0) ?
@@ -240,13 +383,10 @@ Void localSignalRenamingPreprocessingState(List[synccharts::Region] regionList) 
 
 Void localSignalRenamingPreprocessingSignal(List[synccharts::Signal] signalList, synccharts::State state) :
   let signal = signalList.first():
-  dump("CONSIDER SIGNAL "+signal.name) ->
   (signalList.withoutFirst().size > 0) ?
      localSignalRenamingPreprocessingSignal(signalList.withoutFirst(), state) : null ->
   (signal.isLocal()) ?
-  	signal.setName(signal.name + "_" + state.getURIFragment().hash()) : null ->
-  (signal.isLocal()) ?
-    dump("RENAMED SIGNAL "+signal.name) :null
+  	signal.setName(signal.name + "_" + state.getURIFragment().hash()) : null
 ;
 
 //-----------------------------------------------------------------------------
@@ -258,6 +398,9 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
 	let outerStateURIHash = getStateId(mainRegion.innerStates.get(0)):
    	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
+  	//normal termination preprocessing
+    n2wRegion(mainRegion.innerStates) ->
+  	
   	//rename all local signals (in order to shift them later)
     localSignalRenamingPreprocessingRegion(mainRegion.innerStates) ->
     //shift them to the upper most state!
@@ -278,10 +421,10 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     //connect most top input signals
     ConnectTopmostInputSignals(this, this.entity) ->
 
-    //delete termination output port that corrupts operation
-    deleteModalModelPorts((List[EntityType])
-   				(this.entity.select(e|e.name.startsWith(outerStateURIHash))),
-   				"terminated"+outerStateURIHash) -> 
+//    //delete termination output port that corrupts operation
+//    deleteModalModelPorts((List[EntityType])
+//  				(this.entity.select(e|e.name.startsWith(outerStateURIHash))),
+//  				"terminated"+outerStateURIHash) -> 
    				
    //post processing: reconsider priorities
    ConsiderTransitionPriorities(this.entity)   
@@ -641,36 +784,36 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 						 			  List[PortType] portList) :
 	let firstPort = portList.first():
 	//for termination ports
-	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		dump("Connect Termination for Port :"
-			 +firstPort.name+" in " + baseEntity.name) : null ->
-	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addRelation(baseEntity, 
-					modalModelName + "_COMBINERELATION", 
-					"termination") : null ->
-	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addLink(baseEntity, 
-				"KielerNormalTermination.state terminated", 
-				modalModelName  + "_COMBINERELATION") : null ->
-	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addLink(baseEntity, 
-				modalModelName + ".terminated" + baseEntity.name, 
-				modalModelName  + "_COMBINERELATION") : null ->
-	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addRelation(baseEntity, 
-					"TERMINATION_RELATION", 
-					"termination") : null ->
-	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addLink(baseEntity, 
-				"KielerNormalTermination.all states terminated", 
-				"TERMINATION_RELATION") : null ->
+//	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+//		dump("Connect Termination for Port :"
+//			 +firstPort.name+" in " + baseEntity.name) : null ->
+//	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+//		addRelation(baseEntity, 
+//					modalModelName + "_COMBINERELATION", 
+//					"termination") : null ->
+//	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+//		addLink(baseEntity, 
+//				"KielerNormalTermination.state terminated", 
+//				modalModelName  + "_COMBINERELATION") : null ->
+//	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+//		addLink(baseEntity, 
+//				modalModelName + ".terminated" + baseEntity.name, 
+//				modalModelName  + "_COMBINERELATION") : null ->
+//	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+//		addRelation(baseEntity, 
+//					"TERMINATION_RELATION", 
+//					"termination") : null ->
+//	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+//		addLink(baseEntity, 
+//				"KielerNormalTermination.all states terminated", 
+//				"TERMINATION_RELATION") : null ->
 	//only (!!!) connect termination signals for abortion of outer/current state!
 	// (not INNER states)
-	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
-		addLink(baseEntity, 
-				"terminated" + baseEntity.name, 
-				"TERMINATION_RELATION") : null ->
-	
+//	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
+//		addLink(baseEntity, 
+//				"terminated" + baseEntity.name, 
+//				"TERMINATION_RELATION") : null ->
+//	
 	//for only input ports (that have a property with the name "*_input")
 	(firstPort.property.select(e|e.name.matches("environment_input")).size > 0) ?
 		addVertexRelation(baseEntity, 
@@ -792,10 +935,10 @@ create EntityType this createModalModelEntity(synccharts::Region region,
   	//first add signals if any
   	(signalList.size > 0) ?
   		addSignalsToModalModel(this, signalList, region) : null ->
-  	//then add termination signal (outer)
-  	addTerminationSignalToModalModel(this, region) ->
-  	//then add termination signals (inner)
-  	addTerminationSignalsToModalModel(this, region.innerStates) ->
+//  	//then add termination signal (outer)
+//  	addTerminationSignalToModalModel(this, region) ->
+//  	//then add termination signals (inner)
+//  	addTerminationSignalsToModalModel(this, region.innerStates) ->
   	//then create simple states and macro state declarations
    	this.entity.add(createModalControllerEntity(region, signalList)) ->
    	//then add macro state refinements (for all macro states)
@@ -814,10 +957,10 @@ create EntityType this createModalControllerEntity(synccharts::Region region,
 									signalList, 
 									region, 
 									null) : null ->
-  	//add termination signal
-	this.addTerminationSignalToModalController(null, region.parentState) ->
-  	//add termination signals 
-	this.addTerminationSignalsToModalController(null, region.innerStates) ->
+//  	//add termination signal
+//	this.addTerminationSignalToModalController(null, region.parentState) ->
+//  	//add termination signals 
+//	this.addTerminationSignalsToModalController(null, region.innerStates) ->
   	//then iterated all states (if any in this region)
 	(region.innerStates.size > 0) ? 
 		IterateStates(region.innerStates, this) : null
@@ -868,10 +1011,10 @@ create EntityType this createMacroStateRefinementEntity(
 	   									 getMovedSignalNames()) : null ->
    	//create SyncChartDirector
    	this.createSyncChartDirector(getMovedSignalNames()) ->
-   	//add termination signal
-   	this.addTerminationSignalToModalController(modalModel, state) ->
-   	//add KielerNormalTermination
-   	this.addKielerNormalTermination() ->
+//   	//add termination signal
+//   	this.addTerminationSignalToModalController(modalModel, state) ->
+//   	//add KielerNormalTermination
+//   	this.addKielerNormalTermination() ->
    	IterateRegions(state.regions, this, signalList) ->
     //connect nested input signals
     ConnectNestedInputSignals(this, this.entity)
@@ -1592,9 +1735,9 @@ Void addEmission(RelationType relation, synccharts::Transition transition) :
 							transition.targetState.parentRegion.parentState):
 	p1.setName("outputActions") ->
 	p1.setClass("ptolemy.domains.modal.kernel.OutputActionsAttribute") ->
-	//if target state is final state, then add termination-effect
-	(transition.targetState.isFinal) ?
-		p1.setValue(buildEffect(transition.effects, terminatedURIHash)) :
+//	//if target state is final state, then add termination-effect
+//	(transition.targetState.isFinal) ?
+//		p1.setValue(buildEffect(transition.effects, terminatedURIHash)) :
 		p1.setValue(buildEffect(transition.effects, "")) ->
 	relation.property.add(p1) 
 ;

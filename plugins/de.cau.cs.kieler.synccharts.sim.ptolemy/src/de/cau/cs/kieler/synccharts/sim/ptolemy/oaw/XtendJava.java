@@ -104,6 +104,7 @@ public class XtendJava {
 	//-------------------------------------------------------------------------
         
         public final static String getStateId(State myState) {
+            if (myState == null) return "";
             if ((myState.getLabel() != null)&&(myState.getLabel().length() > 0)) {
                 return (myState.getLabel()+"_"+hash(getURIFragment(myState)));
             }
