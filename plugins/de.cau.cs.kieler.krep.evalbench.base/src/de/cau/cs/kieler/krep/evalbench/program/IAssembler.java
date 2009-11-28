@@ -136,7 +136,7 @@ public interface IAssembler {
     int size();
 
     /**
-     * @return
+     * @return maximal number of instructions in one tick for this program
      */
     int getTickLen();
 

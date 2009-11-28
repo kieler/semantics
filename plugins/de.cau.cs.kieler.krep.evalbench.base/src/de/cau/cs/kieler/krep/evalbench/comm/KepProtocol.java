@@ -106,8 +106,7 @@ public class KepProtocol extends CommunicationProtocol {
     /** Length of information items for target information. */
     private static final int[] INFO_LENGTH = { 0, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4, 2 };
 
-    private int maxTicklen = 0;
-
+    
     /**
      * Constructs a new instance of the KEP protocol.
      * 
