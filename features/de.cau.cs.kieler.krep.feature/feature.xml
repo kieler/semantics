@@ -324,4 +324,13 @@ litigation.
          version="0.0.0"
          fragment="true"/>
 
+   <plugin
+         id="de.cau.cs.kieler.krep.compiler.strl2kasm.solaris.sparc"
+         os="solaris"
+         arch="sparc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
 </feature>
