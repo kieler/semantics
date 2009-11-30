@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.cau.cs.kieler.krep.compiler.strl2kasm.solaris.sparc
+Bundle-SymbolicName: de.cau.cs.kieler.krep.compiler.strl2kasm.solaris.sparc
+Bundle-Version: 0.1.0.qualifier
+Fragment-Host: de.cau.cs.kieler.sim.krep;bundle-version="0.0.1"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-PlatformFilter: (&(osgi.os=solaris) (osgi.arch=sparc))
