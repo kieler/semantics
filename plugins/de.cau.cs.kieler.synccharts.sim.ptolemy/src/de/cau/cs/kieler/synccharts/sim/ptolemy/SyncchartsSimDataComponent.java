@@ -126,7 +126,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
      * A flag that becomes true if the user was warned about unsaved changes during the simulation.
      */
     private boolean simulatingOldModelVersion;
-
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -379,10 +379,20 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
         if (!ok) {
             // bring Problems View to the front otherwise
             bringProblemsViewToFront();
-            // and rise error
-            throw new KiemInitializationException(
-                    "Please fix all errors and KlePto simulation warnings listed "
-                            + "in the Eclipse Problems View before simulating.\n\n", true, null);
+            // prompt the user
+            try {
+                final Shell shell = Display.getCurrent().getShells()[0];
+                MessageDialog.openWarning(shell, "Errors or Warnings exist", "'"
+                        + modelEditor.getEditorInput().getName() + "'"
+                        + " contains unsolved problems. Please check the Eclipse Problems View to fix these" +
+                        		".\n\nNote that while errors or simulation warnings exist, the" +
+                        		" execution of the model is rather unpredictable.");
+            } catch (Exception e) {
+                //in case of an error here, do not start simulation
+                throw new KiemInitializationException(
+                        "Please fix all errors and KlePto simulation warnings listed "
+                                + "in the Eclipse Problems View before simulating.\n\n", false, null);
+            }
         }
         try {
             loadAndExecuteModel();

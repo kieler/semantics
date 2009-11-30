@@ -249,14 +249,13 @@ Void n2wBuildTriggerState(List[synccharts::Region] regionList,
   (regionList.withoutFirst().size > 0) ?
   	 n2wBuildTriggerState(regionList.withoutFirst(), mainState, weakAbortTransition) : null ->
   (region.innerStates.size > 0) ?
-  	n2wBuildTriggerRegion(region.innerStates, mainState, weakAbortTransition, regionSignal) : ""
+  	n2wBuildTriggerRegion(region.innerStates, mainState, weakAbortTransition, regionSignal) : null
 ;
 
 Void n2wBuildTriggerRegion(List[synccharts::State] stateList, 
 								   synccharts::State mainState, 
 							  synccharts::Transition weakAbortTransition,
 							  synccharts::Signal regionSignal) :
-  let newTransition = new synccharts::Transition:
   let state = stateList.first():
   (stateList.withoutFirst().size > 0) ?
   	 n2wBuildTriggerRegion(stateList.withoutFirst(), mainState, weakAbortTransition,regionSignal) : null ->
@@ -409,7 +408,6 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     //shift them to the upper most state!
     localSignalShiftPreprocessingRegion(mainRegion.innerStates, mainRegion.innerStates.get(0)) ->
   	
-  	//TODO: fix outer most local signal declarations
    	this.createMainSyncChartDirector(mainRegion.innerStates.get(0).signals
    												.select(e|e.isLocal()).name) ->
    	//mainRegion has exactly ONE top most state
