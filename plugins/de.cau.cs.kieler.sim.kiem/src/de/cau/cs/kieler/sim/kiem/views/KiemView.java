@@ -1042,6 +1042,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                         dataComponentEx.getDataComponent()._DataComponent();
                         kIEMInstance.getDataComponentExList().remove(dataComponentEx);
                         setDirty(true);
+                        checkForSingleEnabledMaster(false);
                         // call garbage collector
                         System.gc();
                     }
