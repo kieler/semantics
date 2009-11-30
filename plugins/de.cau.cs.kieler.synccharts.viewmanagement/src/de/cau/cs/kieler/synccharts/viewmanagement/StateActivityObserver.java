@@ -15,6 +15,7 @@ package de.cau.cs.kieler.synccharts.viewmanagement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -370,9 +371,28 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                         .toString(), " ,");
                 List<EditPart> highlightedStates = new ArrayList<EditPart>();
                 List<String> highlightedStatesURI = new ArrayList<String>();
+                
+                //remember what states already were considered 
+                LinkedList<String> consideredStates = new LinkedList<String>(); 
 
                 while (tokenizer.hasMoreElements()) {
                     String stateName = tokenizer.nextToken();
+                    
+                    //check if this is a new state (no duplicate)
+                    boolean newState = true;
+                    for (String consideredState: consideredStates) {
+                        if (consideredState.equals(stateName)) {
+                            newState = false;
+                            break;
+                        }
+                    }
+                    if (!newState) {
+                        //do not consider already considered states
+                        continue;
+                    }
+                    //add to considered states
+                    consideredStates.add(stateName);
+                    
                     // notify the viewmanagement about this active state
                     TriggerEventObject triggerEvent = new TriggerEventObject();
                     EditPart affectedState = getEditPart(stateName, rootEditPart);
