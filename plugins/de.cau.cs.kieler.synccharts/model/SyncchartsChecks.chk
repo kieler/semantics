@@ -107,6 +107,12 @@ context State if(outgoingTransitions.size > 1)
     ERROR "Priorities of outgoing transitions need to be distinct!" :
     (outgoingTransitions.forAll(t| outgoingTransitions.forAll(s| (s.priority != t.priority) || s == t)));
 
+
+context State if(outgoingTransitions.size > 1) 
+  ERROR "A state can only have one outgoing normal termination!" :
+    (outgoingTransitions.select(t|t.type == TransitionType::NORMALTERMINATION).size<=1 );
+   
+
 // ================================================================================================
 // Expressions
 // FIXME: Problem is that checks done in a strange context are not displayed in the model as markers, 
