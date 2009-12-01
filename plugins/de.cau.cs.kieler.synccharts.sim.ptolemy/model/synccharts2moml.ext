@@ -201,7 +201,7 @@ Void outputSignalTransformation(State topState):
   let signalList = topState.signals:
   //add new output signals (with the same names)
   (outputSignalList.size > 0) ?
-  	outputSignalTransformationNewSignals(outputSignalList, signalList)
+  	outputSignalTransformationNewSignals(outputSignalList)
   	: null ->
   //add new emissions of new output signals wherever the original outputs where emitted
   outputSignalTransformationNewEmissionsRegions(topState.regions, outputSignalList, topState) ->
@@ -298,7 +298,7 @@ Void outputSignalTransformationNewEmissionsEmission(Transition transition,
 
 //renames all output signals to signals with l
 //adds new output signals
-Void outputSignalTransformationNewSignals(List[Signal] outputSignalList, List[Signal] signalList) :
+Void outputSignalTransformationNewSignals(List[Signal] outputSignalList) :
  let outputSignal = outputSignalList.first():
  let newSignal = new Signal:
  //set new output signal's name and output type
@@ -309,7 +309,7 @@ Void outputSignalTransformationNewSignals(List[Signal] outputSignalList, List[Si
  //make original signal a local signal
  outputSignal.setIsOutput(false) ->
  (outputSignalList.withoutFirst().size > 0) ? 
- 		outputSignalTransformationNewSignals(outputSignalList.withoutFirst(), signalList) 
+ 		outputSignalTransformationNewSignals(outputSignalList.withoutFirst()) 
  		: null
 ;
 
@@ -322,6 +322,82 @@ Void outputSignalTransformationRenameSignals(List[Signal] outputSignalList, List
  outputSignal.setName(uniqueName) ->
  (outputSignalList.withoutFirst().size > 0) ? 
  		outputSignalTransformationRenameSignals(outputSignalList.withoutFirst(), signalList) 
+ 		: null
+;
+//adds "local" to a name (until it is unique)
+String getUniqueName(String name, List[Signal] signalList):
+   let newName = name + "local":
+   (signalList.select(e|e.name.matches(newName)).size > 0) ?
+      getUniqueName(newName, signalList): newName
+;      
+
+//-----------------------------------------------------------------------------
+
+
+//-----------------------------------------------------------------------------
+//--     P R E P R O C E S S I N G  :  TRANSFORM INPUT SIGNALS              --
+//-----------------------------------------------------------------------------
+//Transforms input signals that might be used in emissions to input signals 
+//that are not used in emissions and auxiliary local signals that can be used in
+//emissions.
+//@author cmot, 01. Dec 2009
+
+//Main function should be called for the top most state
+Void inputSignalTransformation(State topState):
+  //get the input signals, for these local signals must be defined
+  let inputSignalList = topState.signals.select(e|e.isInput):
+  let signalList = topState.signals:
+  //add parallel regions with new input signals (with the same names)
+  (inputSignalList.size > 0) ?
+  	inputSignalTransformationNewSignals(inputSignalList, topState)
+  	: null ->
+  //rename original signals that are local signals now
+  (inputSignalList.size > 0) ?
+  	inputSignalTransformationRenameSignals(inputSignalList, signalList)
+  	: null
+;
+
+//for every input signal construct a new region
+Void inputSignalTransformationNewSignals(List[Signal] inputSignalList, State topState) :
+ let inputSignal = inputSignalList.first():
+
+ let newSignal = new Signal:
+ let newRegion = new Region:
+ let newState = new State:
+ let newTransition = new Transition:
+ let newSignalReference = new SignalReference:
+ let newEmission = new Emission: 
+ //set new input signal's name and input type
+ newSignal.setIsInput(true) ->
+ newSignal.setName(inputSignal.name) ->
+ //construct new region
+ newSignalReference.setSignal(newSignal) ->
+ newEmission.setSignal(inputSignal) ->
+ newTransition.setTrigger(newSignalReference) ->
+ newTransition.effects.add(newEmission) ->
+ newTransition.setTargetState(newState) ->
+ newState.outgoingTransitions.add(newTransition) ->
+ newState.setIsInitial(true) ->
+ newRegion.innerStates.add(newState) ->
+ //add new region to original state
+ ((State)inputSignal.eContainer).regions.add(newRegion) ->
+ //add new signal to the original state (the top most)
+ ((State)inputSignal.eContainer).signals.add(newSignal) ->
+ //make original signal a local signal
+ inputSignal.setIsInput(false) ->
+ (inputSignalList.withoutFirst().size > 0) ? 
+ 		inputSignalTransformationNewSignals(inputSignalList.withoutFirst(), topState) 
+ 		: null
+;
+
+//renames all input signals to signals with "local"
+Void inputSignalTransformationRenameSignals(List[Signal] inputSignalList, List[Signal] signalList) :
+ let inputSignal = inputSignalList.first():
+ let uniqueName = getUniqueName(inputSignal.name, signalList):
+ //rename original signal
+ inputSignal.setName(uniqueName) ->
+ (inputSignalList.withoutFirst().size > 0) ? 
+ 		inputSignalTransformationRenameSignals(inputSignalList.withoutFirst(), signalList) 
  		: null
 ;
 //adds "local" to a name (until it is unique)
@@ -552,6 +628,9 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
   	//consider output signals that may be used in triggers 
     outputSignalTransformation(mainRegion.innerStates.get(0)) ->  	
   	
+  	//consider input signals that may be used in triggers 
+    inputSignalTransformation(mainRegion.innerStates.get(0)) ->  	
+
   	//normal termination preprocessing
     n2wRegion(mainRegion.innerStates) ->
   	
