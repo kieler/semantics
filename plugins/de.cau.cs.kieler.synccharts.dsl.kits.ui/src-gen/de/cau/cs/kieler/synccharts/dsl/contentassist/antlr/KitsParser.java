@@ -73,6 +73,9 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getGroup(), "rule__Transition__Group__0");
 					put(grammarAccess.getTransitionAccess().getGroup_1(), "rule__Transition__Group_1__0");
 					put(grammarAccess.getTransitionAccess().getGroup_3(), "rule__Transition__Group_3__0");
+					put(grammarAccess.getTransitionAccess().getGroup_3_3(), "rule__Transition__Group_3_3__0");
+					put(grammarAccess.getTransitionAccess().getGroup_3_3_1(), "rule__Transition__Group_3_3_1__0");
+					put(grammarAccess.getTransitionAccess().getGroup_3_3_1_1(), "rule__Transition__Group_3_3_1_1__0");
 					put(grammarAccess.getTransitionStateAccess().getGroup(), "rule__TransitionState__Group__0");
 					put(grammarAccess.getVariableAccess().getGroup(), "rule__Variable__Group__0");
 					put(grammarAccess.getVariableAccess().getGroup_2(), "rule__Variable__Group_2__0");
@@ -138,7 +141,8 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getTargetStateAssignment_2(), "rule__Transition__TargetStateAssignment_2");
 					put(grammarAccess.getTransitionAccess().getIsImmediateAssignment_3_1(), "rule__Transition__IsImmediateAssignment_3_1");
 					put(grammarAccess.getTransitionAccess().getDelayAssignment_3_2(), "rule__Transition__DelayAssignment_3_2");
-					put(grammarAccess.getTransitionAccess().getTriggersAndEffectsAssignment_3_3(), "rule__Transition__TriggersAndEffectsAssignment_3_3");
+					put(grammarAccess.getTransitionAccess().getTriggerAssignment_3_3_0(), "rule__Transition__TriggerAssignment_3_3_0");
+					put(grammarAccess.getTransitionAccess().getEffectsAssignment_3_3_1_1_0(), "rule__Transition__EffectsAssignment_3_3_1_1_0");
 					put(grammarAccess.getTransitionAccess().getIsHistoryAssignment_4(), "rule__Transition__IsHistoryAssignment_4");
 					put(grammarAccess.getTransitionStateAccess().getIsInitialAssignment_1(), "rule__TransitionState__IsInitialAssignment_1");
 					put(grammarAccess.getTransitionStateAccess().getIsFinalAssignment_2(), "rule__TransitionState__IsFinalAssignment_2");
