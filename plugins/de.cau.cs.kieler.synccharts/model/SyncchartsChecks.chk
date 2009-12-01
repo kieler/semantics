@@ -63,6 +63,12 @@ context Region if (parentState != null) // not checked for root state
 context Region
 	ERROR "Names and IDs should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
 	id.matches("\\w*");
+	
+context Region if ((parentState.parentRegion.parentState != null) && 
+				   (parentState.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION)))
+	ERROR "A hierarchical state with an outgoing normal termination \n"
+		+ "has to contain at least one final state in every parallel region." :
+	(innerStates.select(s|s.isFinal).size > 0);
 
 // ================================================================================================
 // Signals
