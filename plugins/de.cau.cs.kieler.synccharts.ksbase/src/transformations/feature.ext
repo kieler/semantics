@@ -25,13 +25,19 @@ Void addChoice(State source):
 let choice = new State:
 let opt1 = new State:
 let opt2 = new State:
+let t1 = new Transition:
+let t2 = new Transition:
 choice.setLabel("C1") ->
 choice.setType(StateType::CONDITIONAL) ->
 opt1.setLabel("S0") ->
 opt2.setLabel("S1") ->
 connectStates(source,choice) ->
-connectStates(choice,opt1) ->
-connectStates(choice,opt2) ->
+t1.setSourceState(choice) ->
+t1.setTargetState(opt1) ->
+t1.setPriority(0) ->
+t2.setSourceState(choice) ->
+t2.setTargetState(opt2) ->
+t2.setPriority(1) ->
 source.parentRegion.innerStates.add(choice) ->
 source.parentRegion.innerStates.add(opt1) ->
 source.parentRegion.innerStates.add(opt2)
@@ -50,8 +56,7 @@ Void flipTransition(Transition t):
 Void connectStates(State source, State target):
 let transition = new Transition:
 transition.setSourceState(source) ->
-transition.setTargetState(target) ->
-source.outgoingTransitions.add(transition)
+transition.setTargetState(target)
 ;
 
 //Reroutes the target of the given transition
@@ -166,7 +171,6 @@ wA.innerStates.add(wAFinal) ->
 wATrans.setSourceState(wAInitial) ->
 wATrans.setTargetState(wAFinal) ->
 wATrans.setTriggersAndEffects("A") ->
-wAInitial.outgoingTransitions.add(wATrans) ->
 waitAB.regions.add(wA) ->
 //Region for 'wait for b'
 wBInitial.setLabel("wB") ->
@@ -178,7 +182,6 @@ wB.innerStates.add(wBFinal) ->
 wBTrans.setSourceState(wBInitial) ->
 wBTrans.setTargetState(wBFinal) ->
 wBTrans.setTriggersAndEffects("B") ->
-wBInitial.outgoingTransitions.add(wBTrans) ->
 waitAB.regions.add(wB) ->
 //ABO final state
 ABOFinal.setLabel("done") ->
@@ -187,14 +190,12 @@ waitABToFinal.setSourceState(waitAB) ->
 waitABToFinal.setTargetState(ABOFinal) ->
 waitABToFinal.setType(TransitionType::NORMALTERMINATION) ->
 waitABToFinal.setTriggersAndEffects("/O") ->
-waitAB.outgoingTransitions.add(waitABToFinal)  ->
 ABORegion.innerStates.add(waitAB) ->
 ABORegion.innerStates.add(ABOFinal) ->
 ABO.regions.add(ABORegion)->
 reset.setSourceState(ABO) ->
 reset.setTargetState(ABO) ->
 reset.setTriggersAndEffects("R") ->
-ABO.outgoingTransitions.add(reset) ->
 innerRootRegion.innerStates.add(ABO) ->
 root.regions.add(innerRootRegion) ->
 rootRegion.innerStates.add(root)
