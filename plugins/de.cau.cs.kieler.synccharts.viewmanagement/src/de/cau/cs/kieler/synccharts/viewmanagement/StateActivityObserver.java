@@ -398,9 +398,15 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                     EditPart affectedState = getEditPart(stateName, rootEditPart);
                     
                     if (affectedState == null) {
-                        throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.\n\n" +
-                        		"You should stop (and restart) the currently running simulation!\n\n", false,
-                           null);                                
+                        //this might be a harmless error trying to view something that
+                        //is permanently not there
+                        //the conclusion is wrong that the editor is closed!
+                        //this is more likely if something that was there, isnt any more
+                        //(see below)
+                        continue;
+                        //throw new KiemExecutionException("SyncChart View Management cannot visualize. Either the editor was closed or an internal error occurred.\n\n" +
+                        // 		"You should stop (and restart) the currently running simulation!\n\n", false,
+                        //   null);                                
                     }
                     
                     highlightedStates.add(affectedState);
