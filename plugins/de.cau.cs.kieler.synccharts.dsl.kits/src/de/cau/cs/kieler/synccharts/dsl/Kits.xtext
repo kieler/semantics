@@ -3,19 +3,22 @@ import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" a
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 Region returns sync::Region:
-// GMF does not like empty models so avoid them:
+
 {sync::Region}
-  ('region')? (id=ID)?
+  ('region')? (id=ID)? 
+  (variables+=Variable|signals+=Signal)*
+  (innerStates+=State)+
+ ;
+
+ // GMF does not like empty models so avoid them:
   // IO Declarations --- come before state declarations #2009-11-26
   // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
-  (variables+=Variable|signals+=Signal)*
   // Inner states --- a region has to have at least one state#2009-11-26
-  (innerStates+=State)+;
-
 State returns sync::State:
   {sync::State} 
   // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
-  (isInitial?='init')?(isFinal?='final')?(type=StateType)?'state'(label=FullStateID)?// State_Group_1_1
+  (isInitial?='init')?(isFinal?='final')?(type=StateType)? ('state')?
+  (label=FullStateID)// State_Group_1_1
 //    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
 //    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
 //    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
@@ -81,22 +84,33 @@ FullStateID:
 //========================================================================================
 //Action returns sync::Action:
 //  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
+
+
 //========================================================================================
 //===  									    TRANSITION 					               ===
 //========================================================================================
+
+
 Transition returns sync::Transition:
+  type=TransitionType ('<'priority=INT'>')? 
+  targetState=[sync::State|FullStateID]
+  (  'with' (isImmediate?='#')? (delay=INT)? 
+    ( ((trigger=BooleanExpression)? ('/' (effects+=Effect (',')?)*)?)) 
+  )? 
+  (isHistory?=' history')? ';' 
+ ;
+
+
+
+
+
 //  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
   //|({sync::State} name=FullStateID)
-  type=TransitionType ('<'priority=INT'>')? 
-  targetState=([sync::State|FullStateID]) //| 'final')
 //  |
 //  (TransitionState))
-  ('with' (isImmediate?='#')? (delay=INT)? triggersAndEffects=STRING )? (isHistory?=' history')? ';';
-//  (trigger=BooleanExpression)? ("/" (effects+=Effect (',')?)*)?;
 //TargetState returns sync::Transition:
 //	{sync::Transition}
 //	//(isInitial?='init')? (isFinal?='final')
-//	'bliub'
 //;
 
 TransitionState returns sync::State:

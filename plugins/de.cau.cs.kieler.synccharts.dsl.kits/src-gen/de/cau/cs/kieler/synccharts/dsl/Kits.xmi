@@ -53,8 +53,8 @@
         <tokens xsi:type="xtext:Assignment" cardinality="?" feature="type" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
         </tokens>
-        <tokens xsi:type="xtext:Keyword" value="state"/>
-        <tokens xsi:type="xtext:Assignment" cardinality="?" feature="label" operator="=">
+        <tokens xsi:type="xtext:Keyword" cardinality="?" value="state"/>
+        <tokens xsi:type="xtext:Assignment" feature="label" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </tokens>
         <tokens xsi:type="xtext:Assignment" cardinality="?" feature="id" operator="=">
@@ -165,8 +165,19 @@
           <tokens xsi:type="xtext:Assignment" cardinality="?" feature="delay" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.21"/>
           </tokens>
-          <tokens xsi:type="xtext:Assignment" feature="triggersAndEffects" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+          <tokens xsi:type="xtext:Group">
+            <tokens xsi:type="xtext:Assignment" cardinality="?" feature="trigger" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.44"/>
+            </tokens>
+            <tokens xsi:type="xtext:Group" cardinality="?">
+              <tokens xsi:type="xtext:Keyword" value="/"/>
+              <tokens xsi:type="xtext:Group" cardinality="*">
+                <tokens xsi:type="xtext:Assignment" feature="effects" operator="+=">
+                  <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.16"/>
+                </tokens>
+                <tokens xsi:type="xtext:Keyword" cardinality="?" value=","/>
+              </tokens>
+            </tokens>
           </tokens>
         </tokens>
         <tokens xsi:type="xtext:Assignment" cardinality="?" feature="isHistory" operator="?=">

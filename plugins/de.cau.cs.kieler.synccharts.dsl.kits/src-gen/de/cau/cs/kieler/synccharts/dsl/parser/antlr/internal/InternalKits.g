@@ -295,11 +295,11 @@ ruleState returns [EObject current=null]
 	    }
 
 )
-)?'state' 
+)?('state' 
     {
         createLeafNode(grammarAccess.getStateAccess().getStateKeyword_4(), null); 
     }
-(
+)?(
 (
 		{ 
 	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getLabelFullStateIDParserRuleCall_5_0(), currentNode); 
@@ -323,7 +323,7 @@ ruleState returns [EObject current=null]
 	    }
 
 )
-)?(
+)(
 (
 		lv_id_6_0=RULE_STRING
 		{
@@ -783,33 +783,65 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-)?(
+)?((
 (
-		lv_triggersAndEffects_8_0=RULE_STRING
-		{
-			createLeafNode(grammarAccess.getTransitionAccess().getTriggersAndEffectsSTRINGTerminalRuleCall_3_3_0(), "triggersAndEffects"); 
-		}
-		{
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getTriggerBooleanExpressionParserRuleCall_3_3_0_0(), currentNode); 
+	    }
+		lv_trigger_8_0=ruleBooleanExpression		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode, $current);
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
 	       		set(
 	       			$current, 
-	       			"triggersAndEffects",
-	        		lv_triggersAndEffects_8_0, 
-	        		"STRING", 
-	        		lastConsumedNode);
+	       			"trigger",
+	        		lv_trigger_8_0, 
+	        		"BooleanExpression", 
+	        		currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
+	        currentNode = currentNode.getParent();
 	    }
 
 )
-))?(
+)?('/' 
+    {
+        createLeafNode(grammarAccess.getTransitionAccess().getSolidusKeyword_3_3_1_0(), null); 
+    }
+((
 (
-		lv_isHistory_9_0=' history' 
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_3_3_1_1_0_0(), currentNode); 
+	    }
+		lv_effects_10_0=ruleEffect		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		add(
+	       			$current, 
+	       			"effects",
+	        		lv_effects_10_0, 
+	        		"Effect", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
+)(',' 
+    {
+        createLeafNode(grammarAccess.getTransitionAccess().getCommaKeyword_3_3_1_1_1(), null); 
+    }
+)?)*)?))?(
+(
+		lv_isHistory_12_0=' history' 
     {
         createLeafNode(grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_4_0(), "isHistory"); 
     }

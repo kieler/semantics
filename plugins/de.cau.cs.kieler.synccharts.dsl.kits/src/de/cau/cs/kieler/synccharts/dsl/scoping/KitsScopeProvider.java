@@ -5,8 +5,10 @@ package de.cau.cs.kieler.synccharts.dsl.scoping;
 
 import java.util.ArrayList;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.Scopes;
 import org.eclipse.xtext.scoping.IScopedElement;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.ScopedElement;
@@ -78,6 +80,8 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	 *            the reference
 	 * @return new scope for signals in emissions
 	 */
+
+
 	IScope scope_Emission_signal(Emission context, EReference reference) {
 		ArrayList<IScopedElement> scopeElems = new ArrayList<IScopedElement>();
 		// this is my transition
@@ -129,7 +133,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 		// .println("--------------END OF SCOPE CALC (Emission_signal)--------------");
 		else if (context instanceof Emission)
 			a = context.getParentEAction();
-			if(a instanceof Action) {
+		if (a instanceof Action) {
 			System.out.println("im in");
 			Action act = (Action) a;
 			State parentState = null;

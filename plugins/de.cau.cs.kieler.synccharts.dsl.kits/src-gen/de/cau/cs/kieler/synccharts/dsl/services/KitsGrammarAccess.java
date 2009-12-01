@@ -37,28 +37,24 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//  State+; 
 		//
 		//    
-		//// GMF does not like empty models so avoid them:
 		//
-		//    
-		//  // IO Declarations --- come before state declarations #2009-11-26
+		//
+		//     
+		//  
+		//  
+		// 
+		//
+		// // GMF does not like empty models so avoid them:
+		//   // IO Declarations --- come before state declarations #2009-11-26
 		//   // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
-		//   
-		//  // Inner states --- a region has to have at least one state#2009-11-26
+		//   // Inner states --- a region has to have at least one state#2009-11-26
 		public ParserRule getRule() { return rule; }
 
 		//{sync::Region} "region"? id=ID? (variables+=Variable|signals+=Signal)* innerStates+=
-		//State+ 
-		//// GMF does not like empty models so avoid them:
-		//
-		//    
-		//  // IO Declarations --- come before state declarations #2009-11-26
-		//   // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
-		//   
-		//  // Inner states --- a region has to have at least one state#2009-11-26
+		//State+
 		public Group getGroup() { return cGroup; }
 
-		//{sync::Region} 
-		//// GMF does not like empty models so avoid them:
+		//{sync::Region}
 		public Action getRegionAction_0() { return cRegionAction_0; }
 
 		//"region"?
@@ -70,9 +66,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIdIDTerminalRuleCall_2_0() { return cIdIDTerminalRuleCall_2_0; }
 
-		//(variables+=Variable|signals+=Signal)* 
-		//  // IO Declarations --- come before state declarations #2009-11-26
-		//   // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26
+		//(variables+=Variable|signals+=Signal)*
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//variables+=Variable
@@ -142,16 +136,21 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_14_0 = (RuleCall)cOutgoingTransitionsAssignment_14.eContents().get(0);
 		
 		//State returns sync::State:
-		//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state" label=
-		//  FullStateID? id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
+		//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? label=
+		//  FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
 		//  Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 		//  "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
 		//  "}")? outgoingTransitions+=Transition*; 
 		//
+		// // GMF does not like empty models so avoid them:
+		//   // IO Declarations --- come before state declarations #2009-11-26
+		//   // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
+		//   // Inner states --- a region has to have at least one state#2009-11-26
 		//    
 		//   
 		//  // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
-		//   // State_Group_1_1
+		//     
+		//  // State_Group_1_1
 		////    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
 		////    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
 		////    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
@@ -205,14 +204,15 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//    // kein effect, kein delay, kein immediate
 		public ParserRule getRule() { return rule; }
 
-		//{sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state" label=
-		//FullStateID? id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
+		//{sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? label=
+		//FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
 		//Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 		//"suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
 		//"}")? outgoingTransitions+=Transition* 
 		//   
 		//  // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
-		//   // State_Group_1_1
+		//     
+		//  // State_Group_1_1
 		////    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
 		////    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
 		////    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
@@ -289,10 +289,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//StateType
 		public RuleCall getTypeStateTypeEnumRuleCall_3_0() { return cTypeStateTypeEnumRuleCall_3_0; }
 
-		//"state"
+		//"state"?
 		public Keyword getStateKeyword_4() { return cStateKeyword_4; }
 
-		//label=FullStateID?
+		//label=FullStateID
 		public Assignment getLabelAssignment_5() { return cLabelAssignment_5; }
 
 		//FullStateID
@@ -448,6 +448,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		////========================================================================================
 		////Action returns sync::Action:
 		////  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
+		//
+		//
 		////========================================================================================
 		////===  									    TRANSITION 					               ===
 		////========================================================================================
@@ -488,54 +490,64 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIsImmediateNumberSignKeyword_3_1_0 = (Keyword)cIsImmediateAssignment_3_1.eContents().get(0);
 		private final Assignment cDelayAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
 		private final RuleCall cDelayINTTerminalRuleCall_3_2_0 = (RuleCall)cDelayAssignment_3_2.eContents().get(0);
-		private final Assignment cTriggersAndEffectsAssignment_3_3 = (Assignment)cGroup_3.eContents().get(3);
-		private final RuleCall cTriggersAndEffectsSTRINGTerminalRuleCall_3_3_0 = (RuleCall)cTriggersAndEffectsAssignment_3_3.eContents().get(0);
+		private final Group cGroup_3_3 = (Group)cGroup_3.eContents().get(3);
+		private final Assignment cTriggerAssignment_3_3_0 = (Assignment)cGroup_3_3.eContents().get(0);
+		private final RuleCall cTriggerBooleanExpressionParserRuleCall_3_3_0_0 = (RuleCall)cTriggerAssignment_3_3_0.eContents().get(0);
+		private final Group cGroup_3_3_1 = (Group)cGroup_3_3.eContents().get(1);
+		private final Keyword cSolidusKeyword_3_3_1_0 = (Keyword)cGroup_3_3_1.eContents().get(0);
+		private final Group cGroup_3_3_1_1 = (Group)cGroup_3_3_1.eContents().get(1);
+		private final Assignment cEffectsAssignment_3_3_1_1_0 = (Assignment)cGroup_3_3_1_1.eContents().get(0);
+		private final RuleCall cEffectsEffectParserRuleCall_3_3_1_1_0_0 = (RuleCall)cEffectsAssignment_3_3_1_1_0.eContents().get(0);
+		private final Keyword cCommaKeyword_3_3_1_1_1 = (Keyword)cGroup_3_3_1_1.eContents().get(1);
 		private final Assignment cIsHistoryAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Keyword cIsHistoryHistoryKeyword_4_0 = (Keyword)cIsHistoryAssignment_4.eContents().get(0);
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//Transition returns sync::Transition:
 		//  type=TransitionType ("<" priority=INT ">")? targetState=[sync::State|FullStateID] (
-		//  "with" isImmediate?="#"? delay=INT? triggersAndEffects=STRING)? isHistory?=
-		//  " history"? ";";  
+		//  "with" isImmediate?="#"? delay=INT? (trigger=BooleanExpression? ("/" (effects+=Effect
+		//  ","?)*)?))? isHistory?=" history"? ";";  
 		////========================================================================================
 		////===  									    ACTIONS  					               ===
 		////========================================================================================
 		////Action returns sync::Action:
 		////  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
+		//
+		//
 		////========================================================================================
 		////===  									    TRANSITION 					               ===
 		////========================================================================================
+		//
+		//
 		//    
+		//     
+		//  
+		//          
+		//             
+		//   
+		//     
+		// 
+		//
+		//
+		//
+		//
+		//
 		////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 		//   //|({sync::State} name=FullStateID)
-		//      
-		//    //| 'final')
 		////  |
 		////  (TransitionState))
-		//               
-		////  (trigger=BooleanExpression)? ("/" (effects+=Effect (',')?)*)?;
 		////TargetState returns sync::Transition:
 		////	{sync::Transition}
 		////	//(isInitial?='init')? (isFinal?='final')
-		////	'bliub'
 		////;
 		public ParserRule getRule() { return rule; }
 
 		//type=TransitionType ("<" priority=INT ">")? targetState=[sync::State|FullStateID] (
-		//"with" isImmediate?="#"? delay=INT? triggersAndEffects=STRING)? isHistory?=
-		//" history"? ";" 
-		////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-		//   //|({sync::State} name=FullStateID)
-		//      
-		//    //| 'final')
-		////  |
-		////  (TransitionState))
+		//"with" isImmediate?="#"? delay=INT? (trigger=BooleanExpression? ("/" (effects+=Effect
+		//","?)*)?))? isHistory?=" history"? ";"
 		public Group getGroup() { return cGroup; }
 
-		//type=TransitionType 
-		////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
-		//   //|({sync::State} name=FullStateID)
+		//type=TransitionType
 		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
 
 		//TransitionType
@@ -556,10 +568,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//">"
 		public Keyword getGreaterThanSignKeyword_1_2() { return cGreaterThanSignKeyword_1_2; }
 
-		//targetState=[sync::State|FullStateID]  
-		//    //| 'final')
-		////  |
-		////  (TransitionState))
+		//targetState=[sync::State|FullStateID]
 		public Assignment getTargetStateAssignment_2() { return cTargetStateAssignment_2; }
 
 		//[sync::State|FullStateID]
@@ -568,7 +577,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//FullStateID
 		public RuleCall getTargetStateStateFullStateIDParserRuleCall_2_0_1() { return cTargetStateStateFullStateIDParserRuleCall_2_0_1; }
 
-		//("with" isImmediate?="#"? delay=INT? triggersAndEffects=STRING)?
+		//("with" isImmediate?="#"? delay=INT? (trigger=BooleanExpression? ("/" (effects+=
+		//Effect ","?)*)?))?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//"with"
@@ -586,11 +596,32 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getDelayINTTerminalRuleCall_3_2_0() { return cDelayINTTerminalRuleCall_3_2_0; }
 
-		//triggersAndEffects=STRING
-		public Assignment getTriggersAndEffectsAssignment_3_3() { return cTriggersAndEffectsAssignment_3_3; }
+		//trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?
+		public Group getGroup_3_3() { return cGroup_3_3; }
 
-		//STRING
-		public RuleCall getTriggersAndEffectsSTRINGTerminalRuleCall_3_3_0() { return cTriggersAndEffectsSTRINGTerminalRuleCall_3_3_0; }
+		//trigger=BooleanExpression?
+		public Assignment getTriggerAssignment_3_3_0() { return cTriggerAssignment_3_3_0; }
+
+		//BooleanExpression
+		public RuleCall getTriggerBooleanExpressionParserRuleCall_3_3_0_0() { return cTriggerBooleanExpressionParserRuleCall_3_3_0_0; }
+
+		//("/" (effects+=Effect ","?)*)?
+		public Group getGroup_3_3_1() { return cGroup_3_3_1; }
+
+		//"/"
+		public Keyword getSolidusKeyword_3_3_1_0() { return cSolidusKeyword_3_3_1_0; }
+
+		//(effects+=Effect ","?)*
+		public Group getGroup_3_3_1_1() { return cGroup_3_3_1_1; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_3_3_1_1_0() { return cEffectsAssignment_3_3_1_1_0; }
+
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_3_3_1_1_0_0() { return cEffectsEffectParserRuleCall_3_3_1_1_0_0; }
+
+		//","?
+		public Keyword getCommaKeyword_3_3_1_1_1() { return cCommaKeyword_3_3_1_1_1; }
 
 		//isHistory?=" history"?
 		public Assignment getIsHistoryAssignment_4() { return cIsHistoryAssignment_4; }
@@ -619,11 +650,18 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//TransitionState returns sync::State:
 		//  {sync::State} isInitial?="init" isFinal?="final" type=StateType "state" id=
 		//  FullStateID; 
-		////  (trigger=BooleanExpression)? ("/" (effects+=Effect (',')?)*)?;
+		//
+		//
+		//
+		//
+		//
+		////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+		//   //|({sync::State} name=FullStateID)
+		////  |
+		////  (TransitionState))
 		////TargetState returns sync::Transition:
 		////	{sync::Transition}
 		////	//(isInitial?='init')? (isFinal?='final')
-		////	'bliub'
 		////;
 		//
 		//    
@@ -2794,13 +2832,17 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//  State+; 
 	//
 	//    
-	//// GMF does not like empty models so avoid them:
 	//
-	//    
-	//  // IO Declarations --- come before state declarations #2009-11-26
+	//
+	//     
+	//  
+	//  
+	// 
+	//
+	// // GMF does not like empty models so avoid them:
+	//   // IO Declarations --- come before state declarations #2009-11-26
 	//   // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
-	//   
-	//  // Inner states --- a region has to have at least one state#2009-11-26
+	//   // Inner states --- a region has to have at least one state#2009-11-26
 	public RegionElements getRegionAccess() {
 		return (pRegion != null) ? pRegion : (pRegion = new RegionElements());
 	}
@@ -2810,16 +2852,21 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//State returns sync::State:
-	//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state" label=
-	//  FullStateID? id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
+	//  {sync::State} isInitial?="init"? isFinal?="final"? type=StateType? "state"? label=
+	//  FullStateID id=STRING? bodyText=STRING? signals+=Signal* ("onentry" entryActions+=
 	//  Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
 	//  "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
 	//  "}")? outgoingTransitions+=Transition*; 
 	//
+	// // GMF does not like empty models so avoid them:
+	//   // IO Declarations --- come before state declarations #2009-11-26
+	//   // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
+	//   // Inner states --- a region has to have at least one state#2009-11-26
 	//    
 	//   
 	//  // order of state modifiers and type has been fixed --- could be relaxed in future#2009-11-26 
-	//   // State_Group_1_1
+	//     
+	//  // State_Group_1_1
 	////    |((isInitial?='init') (isFinal?='final')) (type=StateType) 'state' // State_Group_1_2
 	////    |((isInitial?='init') (isFinal?='final')) (type=StateType) id=FullStateID // State_Group_1_3
 	////    |((isInitial?='init') (isFinal?='final')) 'state' id=FullStateID // State_Group_1_4
@@ -2899,6 +2946,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	////========================================================================================
 	////Action returns sync::Action:
 	////  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
+	//
+	//
 	////========================================================================================
 	////===  									    TRANSITION 					               ===
 	////========================================================================================
@@ -2912,29 +2961,40 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Transition returns sync::Transition:
 	//  type=TransitionType ("<" priority=INT ">")? targetState=[sync::State|FullStateID] (
-	//  "with" isImmediate?="#"? delay=INT? triggersAndEffects=STRING)? isHistory?=
-	//  " history"? ";";  
+	//  "with" isImmediate?="#"? delay=INT? (trigger=BooleanExpression? ("/" (effects+=Effect
+	//  ","?)*)?))? isHistory?=" history"? ";";  
 	////========================================================================================
 	////===  									    ACTIONS  					               ===
 	////========================================================================================
 	////Action returns sync::Action:
 	////  ((isImmediate?='#')? (delay=INT ';')? (triggersAndEffects=STRING))|Transition; 
+	//
+	//
 	////========================================================================================
 	////===  									    TRANSITION 					               ===
 	////========================================================================================
+	//
+	//
 	//    
+	//     
+	//  
+	//          
+	//             
+	//   
+	//     
+	// 
+	//
+	//
+	//
+	//
+	//
 	////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
 	//   //|({sync::State} name=FullStateID)
-	//      
-	//    //| 'final')
 	////  |
 	////  (TransitionState))
-	//               
-	////  (trigger=BooleanExpression)? ("/" (effects+=Effect (',')?)*)?;
 	////TargetState returns sync::Transition:
 	////	{sync::Transition}
 	////	//(isInitial?='init')? (isFinal?='final')
-	////	'bliub'
 	////;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
@@ -2947,11 +3007,18 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//TransitionState returns sync::State:
 	//  {sync::State} isInitial?="init" isFinal?="final" type=StateType "state" id=
 	//  FullStateID; 
-	////  (trigger=BooleanExpression)? ("/" (effects+=Effect (',')?)*)?;
+	//
+	//
+	//
+	//
+	//
+	////  (sourceState=[State|FullStateID])// sync::State//|FullStateID]) //either reference existing state or create a new one or leave it blank (in that case, the transition belongs to the containing state)
+	//   //|({sync::State} name=FullStateID)
+	////  |
+	////  (TransitionState))
 	////TargetState returns sync::Transition:
 	////	{sync::Transition}
 	////	//(isInitial?='init')? (isFinal?='final')
-	////	'bliub'
 	////;
 	//
 	//    

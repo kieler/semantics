@@ -1,13 +1,19 @@
 package de.cau.cs.kieler.synccharts.dsl.validation;
- 
+
+import org.eclipse.xtext.validation.Check;
+
+import de.cau.cs.kieler.synccharts.Emission;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 public class KitsJavaValidator extends AbstractKitsJavaValidator {
 
-//	@Check
-//	public void checkTypeNameStartsWithCapital(Type type) {
-//		if (!Character.isUpperCase(type.getName().charAt(0))) {
-//			warning("Name should start with a capital", MyDslPackage.TYPE__NAME);
-//		}
-//	}
+	@Check
+	public void checkEmitOnlyOutput(Emission emission) {
+		if (!(emission.getSignal().isIsOutput())) {
+			warning("Only output signals can be emitted!",
+					SyncchartsPackage.EMISSION__SIGNAL);
+
+		}
+	}
 
 }

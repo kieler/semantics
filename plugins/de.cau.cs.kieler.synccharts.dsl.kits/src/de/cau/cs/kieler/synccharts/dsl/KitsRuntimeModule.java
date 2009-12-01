@@ -5,10 +5,9 @@ package de.cau.cs.kieler.synccharts.dsl;
 
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
-import org.eclipse.xtext.scoping.IScopeProvider;
 
 import de.cau.cs.kieler.synccharts.dsl.kits.serialization.KitsTransientValueService;
-import de.cau.cs.kieler.synccharts.dsl.scoping.ReferenceByIdScopeProvider;
+import de.cau.cs.kieler.synccharts.dsl.scoping.KitsScopeProvider;
 import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
 
 /**
@@ -20,10 +19,10 @@ import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
  */
 public class KitsRuntimeModule extends
 		de.cau.cs.kieler.synccharts.dsl.AbstractKitsRuntimeModule {
-	//    
+	// influence linking for target state creation
 	@Override
 	public java.lang.Class<? extends org.eclipse.xtext.resource.XtextResource> bindXtextResource() {
-		return de.cau.cs.kieler.synccharts.dsl.kits.resource.KitsEagerResolverResource.class;
+		return de.cau.cs.kieler.synccharts.dsl.kits.linking.KitsLazyLinkingResource.class;
 	};
 
 	// /*
@@ -34,12 +33,24 @@ public class KitsRuntimeModule extends
 	// }
 
 	/**
-	 * binds the custom scope provider.
+	 * delegates to custom scope provider if scope is undefined in
+	 * KitsScopeProvider.
+	 * 
+	 * @see AbstractKitsRuntimeModule for the default binding
+	 * @see KitsScopeProvider for the declarative scoping implementation
+	 * 
 	 * 
 	 * @return custom implementation of the Scope Provider
 	 */
-	public Class<? extends IScopeProvider> bindIScopeProvider() {
-		return ReferenceByIdScopeProvider.class;
+	@Override
+	public void configureIScopeProviderDelegate(com.google.inject.Binder binder) {
+		binder
+				.bind(org.eclipse.xtext.scoping.IScopeProvider.class)
+				.annotatedWith(
+						com.google.inject.name.Names
+								.named("org.eclipse.xtext.scoping.IScopeProvider.delegate"))
+				.to(
+						de.cau.cs.kieler.synccharts.dsl.scoping.ReferenceByIdScopeProvider.class);
 	}
 
 	/*
