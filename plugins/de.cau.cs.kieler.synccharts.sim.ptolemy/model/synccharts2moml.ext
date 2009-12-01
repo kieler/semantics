@@ -185,6 +185,155 @@ Void addKielerIO(EntityType baseEntity, String name, String signalID) :
 //   			baseEntity.entity.add(e) : null
 //;
 
+
+//-----------------------------------------------------------------------------
+//--     P R E P R O C E S S I N G  :  TRANSFORM OUTPUT SIGNALS              --
+//-----------------------------------------------------------------------------
+//Transforms output signals that might be used in triggers to output signals 
+//that are not used in triggers and auxiliary local signals that can be used in
+//triggers.
+//@author cmot, 01. Dec 2009
+
+//Main function should be called for the top most state
+Void outputSignalTransformation(State topState):
+  //get the output signals, for these local signals must be defined
+  let outputSignalList = topState.signals.select(e|e.isOutput):
+  let signalList = topState.signals:
+  //add new output signals (with the same names)
+  (outputSignalList.size > 0) ?
+  	outputSignalTransformationNewSignals(outputSignalList, signalList)
+  	: null ->
+  //add new emissions of new output signals wherever the original outputs where emitted
+  outputSignalTransformationNewEmissionsRegions(topState.regions, outputSignalList, topState) ->
+  //rename original signals
+  (outputSignalList.size > 0) ?
+  	outputSignalTransformationRenameSignals(outputSignalList, signalList)
+  	: null
+;
+//Recursive traverses all regions
+Void outputSignalTransformationNewEmissionsRegions(List[Region] regionList,
+											 List[Signal] outputSignalList,
+											 State topState) :
+   let region = regionList.first():
+   (regionList.withoutFirst().size > 0) ?
+    	outputSignalTransformationNewEmissionsRegions(regionList.withoutFirst(), 
+    											outputSignalList, 
+    											topState) 
+    	: null ->
+   (region.innerStates.size > 0) ?
+   		outputSignalTransformationNewEmissionsStates(region.innerStates, 
+   											   outputSignalList, 
+   											   topState) 
+   		: null
+   
+;
+//Recursive traverses all states
+Void outputSignalTransformationNewEmissionsStates(List[State] stateList,
+											 List[Signal] outputSignalList,
+											 State topState) :
+   let state = stateList.first():
+   (stateList.withoutFirst().size > 0) ?
+    	outputSignalTransformationNewEmissionsStates(stateList.withoutFirst(), 
+    										   outputSignalList, 
+    										   topState) 
+    	: null ->
+   (state.regions.size > 0) ?
+   		outputSignalTransformationNewEmissionsRegions(state.regions, 
+   												outputSignalList, 
+   												topState) 
+   		: null ->
+   (state.outgoingTransitions.size > 0) ?
+   		outputSignalTransformationNewEmissionsTransitions(state.outgoingTransitions, 
+   													outputSignalList, 
+   													topState)
+		: null
+;
+//Recusrive traverses all transitions
+Void outputSignalTransformationNewEmissionsTransitions(List[Transition] transitionList,
+ 												 List[Signal] outputSignalList,
+ 												 State topState) :
+ let transition = transitionList.first():
+ (transitionList.withoutFirst().size > 0) ?
+ 		outputSignalTransformationNewEmissionsTransitions(transitionList.withoutFirst(),
+ 													outputSignalList,
+ 													topState)
+ 		: null ->
+  (transition.effects.size > 0) ?
+  	outputSignalTransformationNewEmissionsEffects(transition.effects, 
+  												  transition, 
+  												  outputSignalList, 
+  												  topState)
+  	: null		
+;
+//Recursive traverses all effects
+Void outputSignalTransformationNewEmissionsEffects(List[Effect] effectList,
+										Transition transition,
+										List[Signal] outputSignalList,
+										State topState) :
+ let effect = effectList.first():
+ (effectList.withoutFirst().size > 0) ?
+ 		outputSignalTransformationNewEmissionsEffects(effectList.withoutFirst(),
+ 												transition,
+ 												outputSignalList,
+ 												topState)
+ 		: null ->
+  (effect.metaType.name.matches("synccharts::Emission") 
+    && (outputSignalList.contains(((Emission)effect).signal))) ?
+    	outputSignalTransformationNewEmissionsEmission(transition, 
+    												   ((Emission)effect).signal, 
+    												   topState)
+    	: null
+;
+//If an emission is found, add a new one for the new output signal
+Void outputSignalTransformationNewEmissionsEmission(Transition transition,
+											  Signal outputSignal,
+											  State topState) :
+  let newEmission = new Emission:
+  //note, that the original signal (outputSignal) is of type local NOW
+  let newSignal = topState.signals.select(e|e.name.matches(outputSignal.name) && e.isOutput).get(0):
+  newEmission.setSignal(newSignal) ->
+  //add a new emission to the transition
+  transition.effects.add(newEmission)
+;											  
+
+//renames all output signals to signals with l
+//adds new output signals
+Void outputSignalTransformationNewSignals(List[Signal] outputSignalList, List[Signal] signalList) :
+ let outputSignal = outputSignalList.first():
+ let newSignal = new Signal:
+ //set new output signal's name and output type
+ newSignal.setIsOutput(true) ->
+ newSignal.setName(outputSignal.name) ->
+ //add it to the original state (the top most)
+ ((State)outputSignal.eContainer).signals.add(newSignal) ->
+ //make original signal a local signal
+ outputSignal.setIsOutput(false) ->
+ (outputSignalList.withoutFirst().size > 0) ? 
+ 		outputSignalTransformationNewSignals(outputSignalList.withoutFirst(), signalList) 
+ 		: null
+;
+
+//renames all output signals to signals with l
+//adds new output signals
+Void outputSignalTransformationRenameSignals(List[Signal] outputSignalList, List[Signal] signalList) :
+ let outputSignal = outputSignalList.first():
+ let uniqueName = getUniqueName(outputSignal.name, signalList):
+ //rename original signal
+ outputSignal.setName(uniqueName) ->
+ (outputSignalList.withoutFirst().size > 0) ? 
+ 		outputSignalTransformationRenameSignals(outputSignalList.withoutFirst(), signalList) 
+ 		: null
+;
+//adds "local" to a name (until it is unique)
+String getUniqueName(String name, List[Signal] signalList):
+   let newName = name + "local":
+   (signalList.select(e|e.name.matches(newName)).size > 0) ?
+      getUniqueName(newName, signalList): newName
+;      
+
+//-----------------------------------------------------------------------------
+
+
 //-----------------------------------------------------------------------------
 //--     P R E P R O C E S S I N G  :  NORMAL TERMINATION 2 WEAK ABORT       --
 //-----------------------------------------------------------------------------
@@ -400,6 +549,9 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
 	let outerStateURIHash = getStateId(mainRegion.innerStates.get(0)):
    	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
+  	//consider output signals that may be used in triggers 
+    outputSignalTransformation(mainRegion.innerStates.get(0)) ->  	
+  	
   	//normal termination preprocessing
     n2wRegion(mainRegion.innerStates) ->
   	

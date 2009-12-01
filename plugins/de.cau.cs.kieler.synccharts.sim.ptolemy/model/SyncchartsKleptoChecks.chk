@@ -38,11 +38,12 @@ context Region WARNING "KLEPTO: Variables are not supported in the simulation!" 
 context Emission WARNING "KLEPTO: Input signals ("+signal.name+") that are also emitted are not supported in the simulation!" :
   signal.isInput == false;
 
+//since 01.12. not a warning any more
 //FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
-context SignalReference WARNING "KLEPTO: Output signals ("+signal.name+") that also occur within a trigger are not supported in the simulation!" :
-  signal.isOutput == false;
+//context SignalReference WARNING "KLEPTO: Output signals ("+signal.name+") that also occur within a trigger are not supported in the simulation!" :
+//  signal.isOutput == false;
   
-//since 28.12. not a warning any more
+//since 28.11. not a warning any more
 //FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
 //context Emission if ((Transition)parentEAction).type == TransitionType::NORMALTERMINATION WARNING "KLEPTO: Local signals ("+signal.name+") that occur within a trigger of a normal termination transition are not supported in the simulation! Please consider using a weak abort instead." :
 //context SignalReference if (((Transition)parentAction).type == TransitionType::NORMALTERMINATION) WARNING "KLEPTO: Local signals ("+signal.name+") that occur within a trigger of a normal termination transition are not supported in the simulation! Please consider using a weak abort instead." :
