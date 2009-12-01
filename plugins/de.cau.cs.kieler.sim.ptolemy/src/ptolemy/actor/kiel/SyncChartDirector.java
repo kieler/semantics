@@ -319,10 +319,10 @@ public class SyncChartDirector extends FixedPointDirector {
                                                 System.out.println("Output Actions of '"+transition.getFullName()+"': " + output);
                                                 output = output.replaceAll("=1", "");
                                                 output = output.replaceAll("=2", "");
-                                                String[] signals = output.split(",");
+                                                String[] signals = output.split(";");
                                                 if (signals != null && signals.length > 0) {
                                                         for (String signal: signals) {
-                                                                returnList.add(signal);
+                                                                returnList.add(signal.trim());
                                                         }
                                                 }
                                         }//end if output attribute
