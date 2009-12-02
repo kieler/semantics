@@ -15,16 +15,13 @@ package de.cau.cs.kieler.core.ui.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.EcoreUtil.ContentTreeIterator;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
@@ -123,7 +120,11 @@ public final class ModelingUtil {
         return null;
     }
 
-    /** Finds an editpart given a starting editpart and an EObject. Won't find connections. */
+    /**
+     * Finds an editpart given a starting editpart and an EObject. Won't find connections.
+     * 
+     * @author haf
+     **/
     private static EditPart findEditPart(final EditPart epBegin, final EObject theElement) {
         if (theElement == null || epBegin == null) {
             return null;
@@ -154,6 +155,7 @@ public final class ModelingUtil {
      * Get all objects that are direct or indirect children of the given root EObject if they are of
      * the specified type.
      * 
+     * @author haf
      * @param eObjectClass
      *            The type of object
      * @param rootObject
@@ -167,32 +169,35 @@ public final class ModelingUtil {
                 eObjectClass);
         return elements;
     }
-    
-    /** 
-     * Get all objects that are direct or indirect parents of the given root EObject if
-     * they are of the given type-
+
+    /**
+     * Get all objects that are direct or indirect parents of the given root EObject if they are of
+     * the given type.
+     * 
+     * @author haf
      * @param eObjectClass
-     *          The type of object
+     *            The type of object
      * @param rootObject
-     *          The root object to start the search
+     *            The root object to start the search
      * @return Collection of found EObject matching the type
      */
     public static Collection<EObject> getAllAncestorsByType(final EClassifier eObjectClass,
             final EObject rootObject) {
         Collection<EObject> ancestors = new ArrayList<EObject>();
         EObject parent = rootObject.eContainer();
-        while(parent != null){
+        while (parent != null) {
             ancestors.add(parent);
             parent = rootObject.eContainer();
         }
-        Collection<EObject> elements = EcoreUtil.getObjectsByType(ancestors,
-                eObjectClass);
+        Collection<EObject> elements = EcoreUtil.getObjectsByType(ancestors, eObjectClass);
         return elements;
     }
-            
+
     /**
      * Get all objects that are direct or indirect children of the given root EObject corresponding
      * to the given EditPart if they are of the specified type.
+     * 
+     * @author haf
      * 
      * @param eObjectClass
      *            The type of object
@@ -209,6 +214,18 @@ public final class ModelingUtil {
         return elements;
     }
 
+    /**
+     * Convert an Iterator to a Collection. Useful if some method returns only an iterator but some
+     * other method takes a Collection as input to iterate over that collection. However, it has
+     * linear runtime and many such transformations should be avoided.
+     * 
+     * @author haf
+     * @param <T>
+     *            the base type
+     * @param iter
+     *            The input Iterator
+     * @return A Collection containing all elements of the Iterator.
+     */
     public static <T> Collection<T> iterator2Collection(final Iterator<T> iter) {
         ArrayList<T> list = new ArrayList<T>();
         for (; iter.hasNext();) {
