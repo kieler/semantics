@@ -1,0 +1,508 @@
+grammar de.cau.cs.kieler.esterel.Esterel with org.eclipse.xtext.common.Terminals
+
+generate esterel "http://www.cau.de/cs/kieler/esterel/Esterel"
+
+// ==============================================
+// ===              B.5 Modules               ===
+// ==============================================
+
+//	help function to allow multiple modules in one document
+Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
+	module+=Module (module+=Module)*;
+
+Module:
+	"module" name=EsterelID ":" (modInt=ModuleInterface)? modBody=ModuleBody EndModule;
+
+EndModule:
+	"end" "module"
+	|	"."; //deprecated
+
+// help function to clearly divide a Module into interface and body	
+ModuleBody:
+	statement+=Statement;
+
+ModuleInterface:
+	(intSignalDecl+=SignalDecl
+	|	intTypeDecl+=TypeDecl
+	|	intSensorDecl+=SensorDecl
+	|	intConstantDecl+=ConstantDecl
+	|	intRelationDecl+=RelationDecl
+	|	intFunctionDecl+=FunctionDecl
+	|	intProcedureDecl+=ProcedureDecl)+;
+
+// ----------------------------------------------
+//            Interface Declarations
+// ----------------------------------------------
+	
+// ==> Signals and Sensors <==
+
+SignalDecl:
+	{Input} "input" signal+=Signal ("," signal+=Signal)* ";"
+	|	{Output} "output" signal+=Signal ("," signal+=Signal)* ";"
+	|	{InputOutput} "inputoutput" signal+=Signal ("," signal+=Signal)* ";"
+	|	{Return} "return" signal+=Signal ("," signal+=Signal)* ";";
+
+	
+//ChannelType:
+//	//make reference to declared types
+	//Problem: Need reference OR BaseType
+	
+SensorDecl:
+	"sensor" sensor+=Sensor ("," sensor+=Sensor)* ";";
+	
+// ==> Relations
+RelationDecl:
+	{Relation} "relation" relation+=RelationType ("," relation+=RelationType)* ";";
+	
+RelationType:
+	RelationImplication|RelationIncompatibility;
+
+RelationImplication :
+	first=[Signal|EsterelID] type="=>" second=[Signal|EsterelID];
+	
+RelationIncompatibility :
+	incomp+=[Signal|EsterelID] type="#" incomp+=[Signal|EsterelID] ("#" incomp+=[Signal|EsterelID])*;
+
+// ==> Types
+
+TypeDecl:
+	"type" type+=Type ("," type+=Type)* ";"; 
+
+Type:
+	name=EsterelID;
+
+	
+// ==> Constants
+ConstantDecl:
+	"constant" constant+=OneTypeConstantDecl ("," constant+=OneTypeConstantDecl)* ";";
+
+OneTypeConstantDecl:
+	constant+=Constant ("," constant+=Constant)* ":" (type=EsterelID | type=BaseType);
+	
+Constant:
+	name=EsterelID ("=" value=ConstantValue)?;
+
+ConstantValue:
+	EsterelID
+	| ('-')? INT
+	| STRING
+	| Float
+	| Boolean;
+	
+// ==> Functions
+
+FunctionDecl:
+	"function" function+=Function ("," function+=Function)* ";";
+	
+Function:
+	name=EsterelID "(" (idList+=(EsterelID|BaseType) ("," idList+=(EsterelID|BaseType))*)? ")" ":" (type=EsterelID | type=BaseType);
+
+// ==> Procedures
+
+ProcedureDecl:
+	"procedure" procedure+=Procedure ("," procedure+=Procedure)* ";";
+
+Procedure:
+	name=EsterelID 
+	"(" (idList+=(EsterelID|BaseType) ("," idList+=(EsterelID|BaseType))*)? ")"
+	"(" (idList+=(EsterelID|BaseType) ("," idList+=(EsterelID|BaseType))*)? ")";
+
+// ==============================================
+// ===            B.4 Statements              ===
+// ==============================================
+
+Statement:
+	Sequence ( {Parallel.left=current} "||" right=Sequence)*;
+	
+AtomicStatement returns Statement:
+	Abort 
+	|	Assignment
+	|	Await
+	|	Block
+	|	Do
+	|	Emit
+	|	EveryDo
+	|	Exit
+	|	Halt
+	|	IfTest
+	|	LocalSignalDecl
+	|	Loop
+	|	Nothing
+	|	Pause
+	|	Present
+	|	Repeat
+	|	Run
+	|	Suspend
+	|	Sustain
+	|	Trap
+	|	Variable
+	|	WeakAbort;
+	
+// --> B.4.1 Control Flow Operators <--	
+	
+Sequence returns Statement:
+	AtomicStatement ({Sequence.left=current} ";" right=AtomicStatement)* ";"?;
+	
+Block:
+	"["statement=Statement"]";
+	
+Assignment:
+	variable=EsterelID ":=" expr=DataExpr;
+
+// --> B.4.2 abort: Strong Preemption
+Abort:
+	"abort" statement=Statement "when" body=AbortBody;
+//	("abort" statement=Statement "when" delay=DelayExpr "do" statement=Statement end=AbortEnd)
+//	|	("abort" statement=Statement "when" delay=DelayExpr)
+//	|	("abort" statement=Statement "when" cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=AbortEnd);
+
+AbortBody:
+	AbortInstance | AbortCase;
+		
+AbortEnd:
+	"end" "abort"?;
+
+AbortInstance:
+	delay=DelayExpr ("do" statement=Statement end=AbortEnd)?; 
+	
+AbortCase:
+	cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=AbortEnd;
+	
+AbortCaseSingle:
+	"case" delay=DelayExpr ("do" statement=Statement)?;
+	
+// --> B.4.3 await: Strong Preemption
+Await:
+	"await" body=AwaitBody;
+
+AwaitBody:
+	AwaitInstance | AwaitCase;	
+	
+AwaitEnd:
+	"end" "await"?;
+
+AwaitInstance:
+	DelayExpr ("do" statement=Statement end=AwaitEnd)?; 
+	
+AwaitCase:
+	cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=AwaitEnd;
+	
+// --> B.4.5 do-upto: Conditional Iteration (deprecated)
+// --> B.4.6 do-watching: Strong Preemption (deprecated)
+Do:
+	"do" statement=Statement (end=DoUpto | end=DoWatching);
+	
+DoUpto:
+	"upto" expr=DelayExpr;
+
+DoWatching:
+	"watching" delay=DelayExpr (end=DoWatchingEnd)?;
+
+DoWatchingEnd:
+	"timeout" statement=Statement "end" "timeout"?;
+	
+// --> B.4.7 emit: Signal Emission <--
+	
+Emit: 
+	"emit" ((signal=[Signal|EsterelID]) | tick=Tick) ("(" expr=DataExpr")")?;
+	
+// --> B.4.8 every-do: Conditional Iteration
+EveryDo:
+	"every" delay=DelayExpr "do" statement=Statement "end" "every"?;
+
+// --> B.4.10 exit: Trap Exit
+Exit:
+	"exit" trap=[TrapDecl|EsterelID] ("(" dataExpr=DataExpr ")")?;
+	
+// --> B.4.11 halt: Wait Forever
+Halt:
+	"halt" {Halt};
+	
+// --> B.4.12: if: Conditional for Data
+IfTest:
+	"if" expr=DataExpr (then=ThenPart)? 
+	(elseIf=ElsIfPart)? (else=ElsePart)? 
+	"end" "if"?;
+	
+ElsIfPart:
+	elsif+=ElsIf (elsif+=ElsIf)*;
+	
+ElsIf:
+	"elsif" expr=DataExpr (then=ThenPart)?;
+	
+ThenPart:
+	"then" statement=Statement;
+
+ElsePart:
+	"else" statement=Statement;
+	
+// --> B.4.13 loop: Infinite Loop
+// --> B.4.14 loop-each: Condition Iteration
+Loop:
+	"loop" body=LoopBody (EndLoop | end=LoopEach);
+
+EndLoop:
+	"end" "loop"?;
+	
+LoopEach:
+	"each" LoopDelay;
+	
+LoopDelay:
+	delay=DelayExpr;
+	 
+LoopBody:
+	statement=Statement;
+	
+// --> B.4.15 nothing: No Operation
+Nothing:
+	"nothing" {Nothing};
+
+// --> B.4.16 pause: Unit Delay
+Pause: 
+	"pause" {Pause};
+	
+// --> B.4.17 present: Conditional for Signals
+
+Present:
+	"present" body=PresentBody
+	(elsePart=ElsePart)? "end" "present"?;
+
+PresentBody:
+	PresentEventBody
+	| PresentCaseList;
+	
+PresentEventBody:
+	event=PresentEvent (thenPart=ThenPart)?;
+
+PresentCaseList:
+	case+=PresentCase (case+=PresentCase)*;
+
+PresentCase:
+	"case" event=PresentEvent ("do" statement=Statement)?;
+
+PresentEvent:
+	expression=SigExpr
+	|	"[" expression=SigExpr "]";
+
+// --> B.4.18 repeat: Iterate a Fixed Number of Times
+Repeat:
+	(positive?="positive")? "repeat" dataExpr=DataExpr "times" statement=Statement "end" "repeat"?;
+// --> B.4.19 run: Module Instantiation
+
+Run:
+	"run" module=ModuleRenaming ("[" list=RenamingList"]")?
+	|	"copymodule" module=ModuleRenaming ("[" list=RenamingList"]")?; //deprecated
+
+ModuleRenaming:
+	module=[Module|EsterelID] (renamed?="/" newName=EsterelID)?;
+	
+RenamingList:
+	list+=Renaming (";" list+=Renaming)*;
+	
+Renaming:
+	"type" renaming+=TypeRenaming ("," renaming+=TypeRenaming)*
+	|	"constant" renaming+=ConstantRenaming ("," renaming+=ConstantRenaming)*
+	|	"function" renaming+=FunctionRenaming ("," renaming+=FunctionRenaming)* 
+	|	"signal" renaming+=SignalRenaming ("," renaming+=SignalRenaming)*;
+	
+TypeRenaming:
+	newName=[Type|EsterelID] "/" oldName=[Type|EsterelID];
+	
+ConstantRenaming:
+	value=ConstantValue "/" newName=EsterelID;
+	
+FunctionRenaming:
+	newName=[Function|EsterelID] "/" oldName=[Function|EsterelID];
+	
+ProcedureRenaming:
+	newName=[Procedure|EsterelID] "/" oldName=[Procedure|EsterelID];
+
+SignalRenaming:
+	newName=[Signal|EsterelID] "/" oldName=[Signal|EsterelID];
+	
+// --> B.4.20 signal: Local Signal Declaration <--
+	
+LocalSignalDecl:
+	"signal" signalList=LocalSignalList "in" statement=Statement "end" "signal"?;
+	
+LocalSignalList:
+	{LocalSignal} signal+=Signal 
+	("," signal+=Signal)*;
+	
+// --> B.4.21 suspend: Preemption with State Freeze
+Suspend:
+	"suspend" statement=Statement "when" delay=DelayExpr;
+
+// --> B.4.22 sustain: Emit a Signal Indefinitely
+Sustain:
+	"sustain" ((signal=[Signal|EsterelID]) | tick=Tick) ("(" dataExpr=DataExpr ")")?;
+	
+// --> B.4.23 trap: TrapDeclaration and Handling
+Trap:
+	"trap" trapDeclList=TrapDeclList "in" statement=Statement (trapHandlerList=TrapHandlerList)? "end" "trap"?;
+
+TrapDeclList:
+	trapDecl+=TrapDecl ("," trapDecl+=TrapDecl)*;
+	
+TrapDecl:
+	name=EsterelID (channelDesc=ChannelDescription)?;
+	
+TrapHandlerList:
+	trapHandler+=TrapHandler (trapHandler+=TrapHandler)*;
+	
+TrapHandler:
+	"handle" trapExpr=TrapExpr "do" statement=Statement;
+	
+// --> B.4.24 var: Local Variable Declaration
+Variable:
+	"var" varDecl=VariableDecl "in" statement=Statement "end" "var"?;
+
+VariableDecl:
+	varList=VariableList ":" (type=EsterelID | type=BaseType)
+	({VariableDecl.left=current}"," varList=VariableList ":" (type=EsterelID | type=BaseType))*;
+	
+VariableList:
+	variable=EsterelID (":=" expression=DataExpr)? 
+	({VariableList.left=current} "," variable=EsterelID (":=" expression=DataExpr)?)*;
+
+// --> B.4.25 weak abort: Weak Preemption
+WeakAbort:
+	"weak" "abort" statement=Statement "when" weakAbortBody=WeakAbortBody;
+	
+WeakAbortBody:
+	WeakAbortInstance | WeakAbortCase;
+		
+WeakAbortEnd:
+	"end" ("weak"? "abort")?;
+
+WeakAbortInstance:
+	delay=DelayExpr ("do" statement=Statement end=WeakAbortEnd)?; 
+	
+WeakAbortCase:
+	cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=WeakAbortEnd;
+
+
+// ==============================================
+// ===            B.3 Expressions             ===
+// ==============================================
+
+// --> B.3.1 Data Expressions
+DataExpr:
+	(DataUnaryExpr ( {DataExpr.left=current} op=DataOp  right=DataExpr)?)
+	|	(op=DataOp  expr=DataExpr);
+
+DataOp:
+	"and"
+	|	"or"
+	|	"not"
+	|	"<"
+	|	">"
+	|	"<="
+	|	">="
+	|	"<>"
+	|	"="
+	|	"+"
+	|	"-"
+	|	"*"
+	|	"/"
+	|	"mod";	
+
+DataUnaryExpr:
+	DataValueFloat
+	| DataValueBoolean
+	| DataValueInt
+	| DataValueString
+	| DataValueID
+	| DataBlock
+	| DataCurrent
+	| DataPre
+	| DataTrap
+	| DataFunction;
+		
+DataValueID:
+	value = EsterelID;
+	
+DataValueFloat:
+	value = Float;
+	
+DataValueBoolean:
+	value = Boolean;
+	
+DataValueInt:
+	value = INT;
+	
+DataValueString:
+	value = STRING;
+	
+DataBlock:
+	"(" dataExpr=DataExpr ")";
+	
+DataCurrent:
+	"?" ((signal=[Signal|EsterelID]) | tick=Tick);
+	
+DataPre:
+	"pre" "(" "?" ((signal=[Signal|EsterelID]) | tick=Tick) ")";
+
+DataTrap:
+	"??" trap=[TrapDecl|EsterelID];
+	
+DataFunction:
+	function=[Function|EsterelID] "(" dataExpr+=DataExpr ("," dataExpr+=DataExpr)* ")";
+
+// --> B.3.3 Signal Expressions <--
+// --> B.3.5 Trap Expressions <--
+TrapExpr:
+	SigExpr;
+	
+SigExpr:
+	andExpr+=SigExprAND ("or" andExpr+=SigExprAND)*;
+	
+SigExprAND:
+	unaExpr+=SigExprUnary ("and" unaExpr+=SigExprUnary)*;
+
+SigExprUnary:
+	expr=EsterelID
+	|	"(" sigExpr=SigExpr ")"
+	|	"not" sigExpr=SigExprUnary;
+	
+// --> B.3.4 Delay Expressions <--
+DelayExpr:
+	event=DelayEvent
+	|	(expr=DataExpr event=DelayEvent);
+	
+DelayEvent:
+	((signal=[Signal|EsterelID]) | tick=Tick)
+	|	"pre" "(" SigExpr ")"
+	|	"[" SigExpr"]";
+	
+
+
+	
+// ==============================================
+// === B.2 Namespaces and Predefined Objects  ===
+// ==============================================
+
+// ==> Signals <==
+ChannelDescription:
+	(":" (type=EsterelID | type=BaseType))
+	|	("(" (type=EsterelID | type=BaseType) ")")
+	|	(":=" dataExpr=DataExpr ":" (type=EsterelID | type=BaseType));
+	
+Signal:
+	name=EsterelID (channel=ChannelDescription)?;
+
+Tick:
+	"tick";
+
+	
+Sensor:
+	(name=EsterelID ":" (type=EsterelID | type=BaseType))
+	|	(name=EsterelID "(" (type=EsterelID | type=BaseType) ")");
+
+
+terminal Float: ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
+terminal Boolean : "true" | "false";
+terminal BaseType: 	"boolean" | "integer" | "float" | "double" | "string";
+terminal Esterel_SL_Comment: '%' !('\n'|'\r')* ('\r'? '\n')?;
+terminal Esterel_ML_Comment: ('%''{') -> ('}''%');
+terminal EsterelID: ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
