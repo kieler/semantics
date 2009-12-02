@@ -18,6 +18,12 @@ context State if (type == StateType::CONDITIONAL) ERROR "Conditional states must
 	
 context State if (type == StateType::CONDITIONAL) ERROR "Conditional states must not contain a suspension trigger!" :
 	suspensionTrigger == null;
+	
+context State if (type == StateType::CONDITIONAL) 
+	ERROR "Conditional states must have outgoing transitions" :
+	outgoingTransitions.size>0;	
+	
+	
 // ================================================================================================
 // Reference States 
 //context State if (type != StateType::REFERENCE) ERROR "only reference states may contain signal renamings!" :
