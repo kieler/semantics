@@ -13,10 +13,18 @@
  */
 package de.cau.cs.kieler.core.ui.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreUtil.ContentTreeIterator;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
@@ -26,6 +34,7 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * Utility class with static methods to handle EMF models and GEF EditParts.
+ * 
  * @author haf
  */
 public final class ModelingUtil {
@@ -141,4 +150,71 @@ public final class ModelingUtil {
         return null;
     }
 
+    /**
+     * Get all objects that are direct or indirect children of the given root EObject if they are of
+     * the specified type.
+     * 
+     * @param eObjectClass
+     *            The type of object
+     * @param rootObject
+     *            The root object
+     * @return Collection of found EObject matching the type
+     */
+    public static Collection<EObject> getAllByType(final EClassifier eObjectClass,
+            final EObject rootObject) {
+        TreeIterator<Object> iterator = EcoreUtil.getAllContents(rootObject, true);
+        Collection<EObject> elements = EcoreUtil.getObjectsByType(iterator2Collection(iterator),
+                eObjectClass);
+        return elements;
+    }
+    
+    /** 
+     * Get all objects that are direct or indirect parents of the given root EObject if
+     * they are of the given type-
+     * @param eObjectClass
+     *          The type of object
+     * @param rootObject
+     *          The root object to start the search
+     * @return Collection of found EObject matching the type
+     */
+    public static Collection<EObject> getAllAncestorsByType(final EClassifier eObjectClass,
+            final EObject rootObject) {
+        Collection<EObject> ancestors = new ArrayList<EObject>();
+        EObject parent = rootObject.eContainer();
+        while(parent != null){
+            ancestors.add(parent);
+            parent = rootObject.eContainer();
+        }
+        Collection<EObject> elements = EcoreUtil.getObjectsByType(ancestors,
+                eObjectClass);
+        return elements;
+    }
+            
+    /**
+     * Get all objects that are direct or indirect children of the given root EObject corresponding
+     * to the given EditPart if they are of the specified type.
+     * 
+     * @param eObjectClass
+     *            The type of object
+     * @param rootEditPart
+     *            The root object
+     * @return Collection of found EObject matching the type
+     */
+    public static Collection<EObject> getAllByType(final EClassifier eObjectClass,
+            final EditPart rootEditPart) {
+        EObject rootObject = ((View) rootEditPart.getModel()).getElement();
+        TreeIterator<Object> iterator = EcoreUtil.getAllContents(rootObject, true);
+        Collection<EObject> elements = EcoreUtil.getObjectsByType(iterator2Collection(iterator),
+                eObjectClass);
+        return elements;
+    }
+
+    public static <T> Collection<T> iterator2Collection(final Iterator<T> iter) {
+        ArrayList<T> list = new ArrayList<T>();
+        for (; iter.hasNext();) {
+            T item = iter.next();
+            list.add(item);
+        }
+        return list;
+    }
 }
