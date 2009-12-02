@@ -52,6 +52,14 @@ context State
 context State if(outgoingTransitions.size > 1) 
   ERROR "A state can only have one outgoing normal termination!" :
     (outgoingTransitions.select(t|t.type == TransitionType::NORMALTERMINATION).size<=1 );
+    
+context State if(outgoingTransitions.size > 1) 
+    ERROR "Priorities of outgoing transitions need to be distinct!" :
+    (outgoingTransitions.forAll(t| outgoingTransitions.forAll(s| (s.priority != t.priority) || s == t)));
+    
+context State if(outgoingTransitions.size > 1) 
+  WARNING "At least one of the transitions will never be taken." :
+    (outgoingTransitions.select(t|t.trigger == null).size <= 1);
 
 
 
@@ -114,10 +122,6 @@ context Transition if (isImmediate) ERROR "Immediate transitions must not have a
 	
 context Transition ERROR "Delays have to be at least 1!" :
 	(delay == null) || (delay >= 1);
-
-context State if(outgoingTransitions.size > 1) 
-    ERROR "Priorities of outgoing transitions need to be distinct!" :
-    (outgoingTransitions.forAll(t| outgoingTransitions.forAll(s| (s.priority != t.priority) || s == t)));
 
 context Transition if (type == TransitionType::NORMALTERMINATION)
    	ERROR "Normal termination may not have a trigger!" :
