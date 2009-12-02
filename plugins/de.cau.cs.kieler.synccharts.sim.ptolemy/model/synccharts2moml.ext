@@ -303,6 +303,7 @@ Void outputSignalTransformationNewSignals(List[Signal] outputSignalList) :
  let newSignal = new Signal:
  //set new output signal's name and output type
  newSignal.setIsOutput(true) ->
+ newSignal.setIsInput(false) ->
  newSignal.setName(outputSignal.name) ->
  //add it to the original state (the top most)
  ((State)outputSignal.eContainer).signals.add(newSignal) ->
@@ -349,27 +350,34 @@ Void inputSignalTransformation(State topState):
   let signalList = topState.signals:
   //add parallel regions with new input signals (with the same names)
   (inputSignalList.size > 0) ?
-  	inputSignalTransformationNewSignals(inputSignalList, topState)
-  	: null ->
-  //rename original signals that are local signals now
-  (inputSignalList.size > 0) ?
-  	inputSignalTransformationRenameSignals(inputSignalList, signalList)
-  	: null
+  	inputSignalTransformationNewSignals(inputSignalList, topState, signalList)
+  	: null 
 ;
 
 //for every input signal construct a new region
-Void inputSignalTransformationNewSignals(List[Signal] inputSignalList, State topState) :
+Void inputSignalTransformationNewSignals(List[Signal] inputSignalList, 
+										 State topState,
+										 List[Signal] signalList) :
  let inputSignal = inputSignalList.first():
 
+ let uniqueName = getUniqueName(inputSignal.name, signalList):
+ let newSignalName = inputSignal.name:
  let newSignal = new Signal:
  let newRegion = new Region:
  let newState = new State:
  let newTransition = new Transition:
  let newSignalReference = new SignalReference:
  let newEmission = new Emission: 
+ //make original signal a local signal
+ inputSignal.setIsInput(false) ->
+ //rename original signal
+ inputSignal.setName(uniqueName) ->
+ //add new signal to the original state (the top most)
+ ((State)inputSignal.eContainer).signals.add(newSignal) ->
  //set new input signal's name and input type
  newSignal.setIsInput(true) ->
- newSignal.setName(inputSignal.name) ->
+ newSignal.setIsOutput(false) ->
+ newSignal.setName(newSignalName) ->
  //construct new region
  newSignalReference.setSignal(newSignal) ->
  newEmission.setSignal(inputSignal) ->
@@ -381,25 +389,12 @@ Void inputSignalTransformationNewSignals(List[Signal] inputSignalList, State top
  newRegion.innerStates.add(newState) ->
  //add new region to original state
  ((State)inputSignal.eContainer).regions.add(newRegion) ->
- //add new signal to the original state (the top most)
- ((State)inputSignal.eContainer).signals.add(newSignal) ->
- //make original signal a local signal
- inputSignal.setIsInput(false) ->
  (inputSignalList.withoutFirst().size > 0) ? 
- 		inputSignalTransformationNewSignals(inputSignalList.withoutFirst(), topState) 
+ 		inputSignalTransformationNewSignals(inputSignalList.withoutFirst(), topState, signalList) 
  		: null
 ;
 
-//renames all input signals to signals with "local"
-Void inputSignalTransformationRenameSignals(List[Signal] inputSignalList, List[Signal] signalList) :
- let inputSignal = inputSignalList.first():
- let uniqueName = getUniqueName(inputSignal.name, signalList):
- //rename original signal
- inputSignal.setName(uniqueName) ->
- (inputSignalList.withoutFirst().size > 0) ? 
- 		inputSignalTransformationRenameSignals(inputSignalList.withoutFirst(), signalList) 
- 		: null
-;
+
 //adds "local" to a name (until it is unique)
 String getUniqueName(String name, List[Signal] signalList):
    let newName = name + "local":
@@ -633,12 +628,18 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
 
   	//normal termination preprocessing
     n2wRegion(mainRegion.innerStates) ->
-  	
+
   	//rename all local signals (in order to shift them later)
     localSignalRenamingPreprocessingRegion(mainRegion.innerStates) ->
     //shift them to the upper most state!
     localSignalShiftPreprocessingRegion(mainRegion.innerStates, mainRegion.innerStates.get(0)) ->
   	
+
+    dump("signalList after renaming2: "+mainRegion.innerStates.get(0).signals.flatten().toString()) -> 
+    
+    dump("REGIONS COUNT:" + mainRegion.innerStates.get(0).regions.size) ->
+  	
+
    	this.createMainSyncChartDirector(mainRegion.innerStates.get(0).signals
    												.select(e|e.isLocal()).name) ->
    	//mainRegion has exactly ONE top most state

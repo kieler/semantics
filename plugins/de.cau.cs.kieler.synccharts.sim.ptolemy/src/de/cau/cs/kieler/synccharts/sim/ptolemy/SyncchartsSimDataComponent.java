@@ -226,6 +226,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
             // DO NOT USE THE SAME INPUT RESOUCRCE SET
             // OTHERWISE WE MAY CHANGE THE INPUT MODEL!
             //emfReader.setResourceSet(this.getInputResourceSet());
+            //emfReader.setResourceSet(ptolemyModel.getResourceSet());
 
             // MOML writer
             MomlWriter momlWriter = new MomlWriter();

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:synccharts="http://kieler.cs.cau.de/synccharts">
+  <innerStates id="S0" label="DVDPlayer">
+    <signals name="POWER" isInput="true"/>
+    <signals name="EJECT" isInput="true"/>
+    <signals name="PLAY" isInput="true"/>
+    <signals name="STOP" isInput="true"/>
+    <signals name="AUDIO" isInput="true"/>
+    <regions>
+      <innerStates id="S" label="Off" isInitial="true">
+        <outgoingTransitions triggersAndEffects="POWER" targetState="//@innerStates.0/@regions.0/@innerStates.1">
+          <trigger xsi:type="synccharts:SignalReference" signal="POWER"/>
+        </outgoingTransitions>
+      </innerStates>
+      <innerStates id="S0" label="On">
+        <regions>
+          <innerStates id="S" label="OpenTray" isInitial="true">
+            <outgoingTransitions triggersAndEffects="EJECT" targetState="//@innerStates.0/@regions.0/@innerStates.1/@regions.0/@innerStates.1">
+              <trigger xsi:type="synccharts:SignalReference" signal="EJECT"/>
+            </outgoingTransitions>
+          </innerStates>
+          <innerStates id="S0" label="ClosedTray">
+            <regions>
+              <innerStates id="S" label="PAUSE" isInitial="true">
+                <outgoingTransitions triggersAndEffects="PLAY" targetState="//@innerStates.0/@regions.0/@innerStates.1/@regions.0/@innerStates.1/@regions.0/@innerStates.1">
+                  <trigger xsi:type="synccharts:SignalReference" signal="PLAY"/>
+                </outgoingTransitions>
+              </innerStates>
+              <innerStates id="S0" label="Play">
+                <outgoingTransitions triggersAndEffects="PLAY" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.1/@regions.0/@innerStates.1/@regions.0/@innerStates.0">
+                  <trigger xsi:type="synccharts:SignalReference" signal="PLAY"/>
+                </outgoingTransitions>
+                <outgoingTransitions triggersAndEffects="STOP" targetState="//@innerStates.0/@regions.0/@innerStates.1/@regions.0/@innerStates.1/@regions.0/@innerStates.2">
+                  <trigger xsi:type="synccharts:SignalReference" signal="STOP"/>
+                </outgoingTransitions>
+              </innerStates>
+              <innerStates id="S1" label="Stop" isFinal="true"/>
+            </regions>
+            <regions>
+              <innerStates id="S" label="English" isInitial="true">
+                <outgoingTransitions triggersAndEffects="AUDIO" targetState="//@innerStates.0/@regions.0/@innerStates.1/@regions.0/@innerStates.1/@regions.1/@innerStates.1">
+                  <trigger xsi:type="synccharts:SignalReference" signal="AUDIO"/>
+                </outgoingTransitions>
+              </innerStates>
+              <innerStates id="S0" label="German">
+                <outgoingTransitions triggersAndEffects="AUDIO" targetState="//@innerStates.0/@regions.0/@innerStates.1/@regions.0/@innerStates.1/@regions.1/@innerStates.2">
+                  <trigger xsi:type="synccharts:SignalReference" signal="AUDIO"/>
+                </outgoingTransitions>
+              </innerStates>
+              <innerStates id="S1" label="French">
+                <outgoingTransitions triggersAndEffects="AUDIO" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.1/@regions.0/@innerStates.1/@regions.1/@innerStates.0">
+                  <trigger xsi:type="synccharts:SignalReference" signal="AUDIO"/>
+                </outgoingTransitions>
+              </innerStates>
+            </regions>
+            <outgoingTransitions triggersAndEffects="EJECT" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.1/@regions.0/@innerStates.0">
+              <trigger xsi:type="synccharts:SignalReference" signal="EJECT"/>
+            </outgoingTransitions>
+          </innerStates>
+        </regions>
+        <outgoingTransitions triggersAndEffects="POWER" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.0">
+          <trigger xsi:type="synccharts:SignalReference" signal="POWER"/>
+        </outgoingTransitions>
+      </innerStates>
+    </regions>
+  </innerStates>
+</synccharts:Region>

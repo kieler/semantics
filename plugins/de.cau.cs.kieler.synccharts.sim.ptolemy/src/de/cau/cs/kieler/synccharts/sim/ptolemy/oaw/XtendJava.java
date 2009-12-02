@@ -178,18 +178,19 @@ public class XtendJava {
 	//2  == output, used in effects
 	//-1 == error, used in in expression AND effects
 	public final static int getPortType(Signal signal, Region region) {
-		System.out.println("Checking for signal:"+signal.getName());
-		boolean isOutput = isOutputPort(signal, region);
-		boolean isInput = isInputPort(signal, region);
-		System.out.println("out:" + isOutput + ",  in:"+ isInput);
-		if (isOutput && isInput)
-			return -1;
-		else if (isInput)
-			return 1;
-		else if (isOutput)
-			return 2;
-		else
-			return 0;
+                System.out.println("Checking "+ region.getInnerStates().size()+" inner states for signal:"+signal.getName());
+                boolean isOutput = isOutputPort(signal, region);
+                System.out.println("Again Checking for signal:"+signal.getName());
+                boolean isInput = isInputPort(signal, region);
+                System.out.println("out:" + isOutput + ",  in:"+ isInput);
+                if (isOutput && isInput)
+                        return -1;
+                else if (isInput)
+                        return 1;
+                else if (isOutput)
+                        return 2;
+                else
+                        return 0;
 	}
 	
 	public final static boolean isOutputPort(Signal signal, Region region) {
