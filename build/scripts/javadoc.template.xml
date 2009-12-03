@@ -4,6 +4,8 @@
 		
 		<path id="doc.classpath"> 
 ${feature.classpath}
+            
+            <fileset dir="${basedir}" includes="${doc.includes}" />
 		</path> 
 
         <if>
@@ -32,7 +34,7 @@ ${feature.classpath}
 	    		<!-- tag name="generated" description="Generated Code" / -->
 	    		<!-- tag name="ordered" / -->
 	    		<!-- tag name="model" / -->
-	    		<taglet name="de.cau.cs.kieler.taglets.RatingTaglet" path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
+	    		<taglet name="de.cau.cs.kieler.taglets.RatingTaglet"    path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
 	    		<taglet name="de.cau.cs.kieler.taglets.GeneratedTaglet" path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
 	    		<taglet name="de.cau.cs.kieler.taglets.ModelTaglet"     path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
 	    		<taglet name="de.cau.cs.kieler.taglets.OrderedTaglet"   path="${basedir}/../../ImportJavadocTaglets/workspace/de.cau.cs.kieler.taglets/tags.jar" />
