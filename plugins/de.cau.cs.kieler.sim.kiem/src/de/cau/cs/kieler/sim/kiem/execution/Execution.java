@@ -256,7 +256,15 @@ public class Execution implements Runnable {
      * @return the average step duration
      */
     public int getAverageStepDuration() {
-        return (int) (this.accumulatedStepDurations / this.stepCounter);
+        int returnValue;
+        try {
+            returnValue = (int) (this.accumulatedStepDurations / this.stepCounter);
+        }
+        catch(Exception e) {
+            //handle null case
+            returnValue = 0;
+        }
+        return returnValue;
     }
 
     // -------------------------------------------------------------------------
