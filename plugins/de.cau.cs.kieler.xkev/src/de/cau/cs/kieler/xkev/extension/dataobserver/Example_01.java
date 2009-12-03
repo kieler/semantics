@@ -12,24 +12,34 @@
 
 package de.cau.cs.kieler.xkev.extension.dataobserver;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Scanner;
+
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.json.JSONArray;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
-import de.cau.cs.kieler.xkev.mapping.animations.Animations;
+import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
 
 /**
- * A simple Example for changing the color of an Trafficlight.
+ * A simple Example for changing the color of the Trafficlight.svg.
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
  * 
  */
 public class Example_01 extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 
-    private String cRed = "none", cYellow = "none", cGreen = "none";
-
+    private boolean flag = true;
+    private int counter = 0;
+    private MapAnimations mapAnimation;
+    private JSONArray jsonArray;
+    
     public Example_01() {
         // TODO Auto-generated method stu
     }
@@ -38,51 +48,53 @@ public class Example_01 extends JSONObjectDataComponent implements IJSONObjectDa
     public JSONObject step(JSONObject JSONobject) throws KiemExecutionException {
         // TODO The new JSON Data must be connected with
         // the old SVG-Graphic and updated afterwards
-
-        Animations animation = new Animations();
-        boolean changed = false;
+        
         try {
-            if (JSONobject.has("Ampel_Licht_1")) {
-                if (!cRed.equals(JSONobject.getString("Ampel_Licht_1"))) {
-                    cRed = JSONobject.getString("Ampel_Licht_1");
-                    changed = true;
-                }
+            if (!((String) JSONobject.get("Ampelknopf")).isEmpty() && JSONobject.getBoolean("Ampelknopf")) {
+                flag = !flag;
             }
-            if (JSONobject.has("Ampel_Licht_2")) {
-                if (!cYellow.equals(JSONobject.getString("Ampel_Licht_2"))) {
-                    cYellow = JSONobject.getString("Ampel_Licht_2");
-                    changed = true;
-                }
+            jsonArray = new JSONArray();
+            if (flag) {
+                jsonArray.put("on");jsonArray.put("off");
+                JSONobject.put("pLight", jsonArray);
+            } else {
+                jsonArray.put("off");jsonArray.put("on");
+                JSONobject.put("pLight", jsonArray);
             }
-            if (JSONobject.has("Ampel_Licht_3")) {
-                if (!cGreen.equals(JSONobject.getString("Ampel_Licht_3"))) {
-                    cGreen = JSONobject.getString("Ampel_Licht_3");
-                    changed = true;
-                }
+            jsonArray = new JSONArray();
+            switch (counter) {
+            case 0: jsonArray.put("on");jsonArray.put("off");jsonArray.put("off");
+                    JSONobject.put("cLight", jsonArray); 
+                    break;
+            case 1: jsonArray.put("on");jsonArray.put("on");jsonArray.put("off");
+                    JSONobject.put("cLight", jsonArray);
+                    break;
+            case 2: jsonArray.put("off");jsonArray.put("off");jsonArray.put("on");
+                    JSONobject.put("cLight", jsonArray);                    
+                    break;
+            case 3: jsonArray.put("off");jsonArray.put("on");jsonArray.put("off");
+                    JSONobject.put("cLight", jsonArray);
+                    counter = -1;
+                    break;
             }
+            counter++;
+            mapAnimation.doAnimations(JSONobject);
+            
+            
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        synchronized (animation) {
-            // Only if the Animation does change anything apply the Animation to the SVGDocument
-            if (changed) {
-                if (animation.isReady()) {
-                    animation.changeColor("cRed", cRed);
-                    animation.changeColor("cYellow", cYellow);
-                    animation.changeColor("cGreen", cGreen);
-                    animation.applyAnimation();
-                }
-            }
-        }
+        //Now the SVG graphic needs to be refreshed
+        //mapAnimation.getJSVGCanvas().setSVGDocument(mapAnimation.getSVGDocument());
+        //mapAnimation.updateSVGGraphik();
         return null;// Because it's only an Observer right now
     }
 
     @Override
     public void initialize() throws KiemInitializationException {
         // TODO Auto-generated method stub
-
+        mapAnimation = new MapAnimations("Trafficlight_array.mapping", true);
     }
 
     @Override
@@ -100,7 +112,7 @@ public class Example_01 extends JSONObjectDataComponent implements IJSONObjectDa
     @Override
     public void wrapup() throws KiemInitializationException {
         // TODO Auto-generated method stub
-
+        counter = 0;
     }
 
     // @Override

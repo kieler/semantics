@@ -93,12 +93,40 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
     private Frame frame;
 
     private MyUserAgent userAgent;
+    
+    /**
+     * Create a single instance of EnvironmentComposite
+     */
+    private static EnvironmentComposite INSTANCE = null;
+    private static boolean loadingComplete = false;
 
     public MyUserAgent getUserAgent() {
         return userAgent;
     }
-
-    public EnvironmentComposite(Composite parent, int style, boolean showScrollbars) {
+    
+    public static synchronized boolean createSingleInstance(Composite parent, int style, boolean showScrollbars) {
+        if (INSTANCE == null) {
+            INSTANCE = new EnvironmentComposite(parent, style, showScrollbars);
+            return true;
+        }
+        return false;
+    }
+    
+    public static EnvironmentComposite getInstance() {
+        return INSTANCE;
+    }    
+    
+    
+    public boolean SVGDocumentLoadingSuccessful() {
+        if (loadingComplete) {
+            loadingComplete = false;
+            return true;
+        } else {
+            return false;        
+        }
+    }
+    
+    private EnvironmentComposite(Composite parent, int style, boolean showScrollbars) {
         super(parent, SWT.EMBEDDED);
 
         shell = parent.getShell();
@@ -124,6 +152,14 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
 
         try {
             userAgent = new MyUserAgent();
+
+//            if (EclipseJSVGCanvas.getInstance() == null) {
+//                while (!EclipseJSVGCanvas.createInstance(userAgent, true, true)) {
+//                  //Do nothing until the single instance is successfully created
+//                }
+//            }
+//            //Get the single instance of the EclipseJSVGCanvas
+//            svgCanvas = EclipseJSVGCanvas.getInstance();
             svgCanvas = new EclipseJSVGCanvas(userAgent, true, true);
             svgCanvas.setLayout(new BorderLayout());
 
@@ -138,10 +174,22 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
             // Set the JSVGCanvas listeners.
             svgCanvas.addSVGDocumentLoaderListener(new SVGDocumentLoaderAdapter() {
                 public void documentLoadingStarted(SVGDocumentLoaderEvent e) {
+                    System.out.println("Loading svg file...");
                 }
 
                 public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
+                    System.out.println("Loading svg file... complete!");
+                    loadingComplete = true;
                 }
+                
+                public void documentLoadingCancelled(SVGDocumentLoaderEvent e) {
+                    System.out.println("Loading svg file... cancelled!");
+
+                }
+                
+                public void documentLoadingFailed(SVGDocumentLoaderEvent e) {
+                    System.out.println("Loading svg file... failed!");
+                }                
             });
 
             svgCanvas.addGVTTreeBuilderListener(new GVTTreeBuilderAdapter() {
@@ -343,12 +391,12 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
         return svgCanvas;
     }
 
-    public URI getSvgFile() throws URISyntaxException {
-        if (svgURI == null) {
-            throw new URISyntaxException("null", "No URI available: " + svgURI);
-        }
-        return svgURI;
-    }
+//    public URI getSvgFile() throws URISyntaxException {
+//        if (svgURI == null) {
+//            throw new URISyntaxException("null", "No URI available: " + svgURI);
+//        }
+//        return svgURI;
+//    }
 
     //
     // UserAgent

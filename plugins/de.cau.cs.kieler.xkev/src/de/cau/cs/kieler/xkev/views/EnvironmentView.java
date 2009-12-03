@@ -51,21 +51,12 @@ public class EnvironmentView extends ViewPart {
      */
     public static final String ID = "de.cau.cs.kieler.xkev.views.EnvironmentView";
     
-    /**
-     * INSTANCE is a static Reference to the single instance of KEV View.
-     */
-    public static EnvironmentView INSTANCE = null;
     
     /**
      * The constructor.
      */
     public EnvironmentView() {
-        /**
-         * Link to the first INSTANCE of EnvironmentView 
-         */
-        if (INSTANCE == null) {
-            INSTANCE = this;
-        }
+
     }
 
     /**
@@ -74,8 +65,17 @@ public class EnvironmentView extends ViewPart {
     public void createPartControl(Composite parent) {
         parent.setLayout(new FillLayout());
 
-        svg = new EnvironmentComposite(parent, SWT.NONE, false);
-        // animationManager = new AnimationManager(this);
+        if (EnvironmentComposite.getInstance() == null) {
+            while (!EnvironmentComposite.createSingleInstance(parent, SWT.NONE, false)) {
+              //Do nothing until the single instance is successfully created
+            }
+        }
+        //Get the single instance of the EclipseJSVGCanvas
+        svg = EnvironmentComposite.getInstance();
+        
+        //svg = new EnvironmentComposite(parent, SWT.NONE, false);
+        
+         // animationManager = new AnimationManager(this);
         getViewSite().getPage().addSelectionListener(svg);
         // getViewSite().getPage().addSelectionListener(animationManager);
         // listen to the event that rendering was finished

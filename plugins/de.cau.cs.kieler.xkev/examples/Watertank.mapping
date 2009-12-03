@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0">
+<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0" filename="resource:examples/Watertank.svg">
   <svgElement id="water">
-    <animation xsi:type="mapping:Move" input="1..20" x_range="0" y_range="-10"/>
-    <animation xsi:type="mapping:Move" input="21..40" x_range="0" y_range="10"/>
+    <animation xsi:type="mapping:Move" input="[0...28];[29..57]" x_range="" y_range="[70:80..400];[360:350...65]"/>
   </svgElement>
   <svgElement id="text">
-    <animation xsi:type="mapping:Textbox" input="0==0" value="text.value"/>
+    <animation xsi:type="mapping:Textbox" input="[0..57]" key="water" value="$text"/>
   </svgElement>
 </mapping:SVGFile>

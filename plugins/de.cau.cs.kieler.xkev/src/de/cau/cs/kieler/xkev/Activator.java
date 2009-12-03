@@ -14,8 +14,11 @@
 
 package de.cau.cs.kieler.xkev;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -77,4 +80,33 @@ public class Activator extends AbstractUIPlugin {
     public ImageDescriptor getImageDescriptor(String path) {
         return imageDescriptorFromPlugin(PLUGIN_ID, path);
     }
+    
+    /**
+     * Reports an error message to the eclipse Error Log.
+     * @param message
+     */
+    public static void reportErrorMessage(String message) {
+        Status myStatus = new Status(IStatus.ERROR, PLUGIN_ID, message);
+        StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+    }
+    
+    /**
+     * Reports an error message to the eclipse Error Log, with an exception e
+     * @param message
+     * @parame e
+     */
+    public static void reportErrorMessage(String message, Exception e) {
+        Status myStatus = new Status(IStatus.ERROR, PLUGIN_ID, message, e);
+        StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+    }
+    /**
+     * Only logs messages for debugging. (use Eclipse -consoleLog) for displaying debug messages
+     * @param message
+     */
+    public static void reportDebugMessage(String message) {
+        Status myStatus = new Status(IStatus.INFO, PLUGIN_ID, message);
+        StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+    }
+    
+    
 }

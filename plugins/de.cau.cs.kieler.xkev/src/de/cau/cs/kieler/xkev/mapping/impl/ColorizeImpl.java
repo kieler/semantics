@@ -6,24 +6,30 @@
  */
 package de.cau.cs.kieler.xkev.mapping.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.Colorize;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
-import de.cau.cs.kieler.xkev.mapping.SVGElement;
-import de.cau.cs.kieler.xkev.views.EnvironmentView;
 
-import java.math.BigInteger;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
+
+import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
+import de.cau.cs.kieler.sim.kiem.json.JSONArray;
+import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,8 +38,6 @@ import org.w3c.dom.svg.SVGDocument;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.ColorizeImpl#getAccessID <em>Access ID</em>}</li>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.ColorizeImpl#getInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.ColorizeImpl#getColor <em>Color</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.ColorizeImpl#getStyle <em>Style</em>}</li>
  * </ul>
@@ -41,47 +45,7 @@ import org.w3c.dom.svg.SVGDocument;
  *
  * @generated
  */
-public class ColorizeImpl extends EObjectImpl implements Colorize {
-    /**
-     * The default value of the '{@link #getAccessID() <em>Access ID</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getAccessID()
-     * @generated
-     * @ordered
-     */
-    protected static final String ACCESS_ID_EDEFAULT = "";
-
-    /**
-     * The cached value of the '{@link #getAccessID() <em>Access ID</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getAccessID()
-     * @generated
-     * @ordered
-     */
-    protected String accessID = ACCESS_ID_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getInput() <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getInput()
-     * @generated
-     * @ordered
-     */
-    protected static final String INPUT_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getInput() <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getInput()
-     * @generated
-     * @ordered
-     */
-    protected String input = INPUT_EDEFAULT;
-
+public class ColorizeImpl extends AnimationImpl implements Colorize {
     /**
      * The default value of the '{@link #getColor() <em>Color</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -122,12 +86,7 @@ public class ColorizeImpl extends EObjectImpl implements Colorize {
      */
     protected String style = STYLE_EDEFAULT;
 
-    //my own values for an extended antimate()-method
-    protected String value = null;
-    protected String elementId = null;
-    protected SVGDocument svgDoc = null;
-    
-    /**
+/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -144,48 +103,6 @@ public class ColorizeImpl extends EObjectImpl implements Colorize {
     @Override
     protected EClass eStaticClass() {
         return MappingPackage.Literals.COLORIZE;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getAccessID() {
-        return accessID;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setAccessID(String newAccessID) {
-        String oldAccessID = accessID;
-        accessID = newAccessID;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__ACCESS_ID, oldAccessID, accessID));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getInput() {
-        return input;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setInput(String newInput) {
-        String oldInput = input;
-        input = newInput;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__INPUT, oldInput, input));
     }
 
     /**
@@ -230,44 +147,190 @@ public class ColorizeImpl extends EObjectImpl implements Colorize {
             eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.COLORIZE__STYLE, oldStyle, style));
     }
 
-//    /**
-//     * 
-//     * @generated NOT
-//     */
-//    public SVGDocument getSVGDocument() {
-//        IWorkbenchWindow window = PlatformUI.getWorkbench().getWorkbenchWindows()[0];
-//        EnvironmentView view = (EnvironmentView) window.getActivePage().findView(EnvironmentView.ID);
-//        if (view != null) {
-//            if (view.getSVGCanvas() != null) {
-//                return view.getSVGCanvas().getSVGDocument();
-//            }
-//        }
-//        return null;
-//    }
     
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated NOT
-     */
-    public void applyAnimation(SVGDocument svgDoc, String elementId, String value) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        if (svgDoc != null) {
-            Element e = svgDoc.getElementById(elementId);
+    
+    private void colorizeAnimation(String svgElementID, String jsonValue) {
+        MapAnimations mapAnimation = new MapAnimations();
+        SVGDocument svgDoc = mapAnimation.getSVGDocument();
+
+        Element e = svgDoc.getElementById(svgElementID);
+        if (e != null) {
             String oldStr, newStr, s;
             int start, end;
 
             s = e.getAttribute("style");
-            start = s.indexOf("fill:");// +"fill:".length();
-            //todo: if fill does not exists, insert new style-tag
-            end = s.substring(start).indexOf(";") + 1;
-            oldStr = s.substring(start, start + end);
-            newStr = "fill:" + value + ";";
-            e.setAttribute("style", s.replace(oldStr, newStr));
+            if (s != null && !s.isEmpty()) {
+                start = s.indexOf("fill:");// +"fill:".length();
+                //todo: if fill does not exists, insert new style-tag
+                end = s.substring(start).indexOf(";") + 1;
+                oldStr = s.substring(start, start + end);
+                newStr = "fill:" + jsonValue + ";";
+                e.setAttribute("style", s.replace(oldStr, newStr));
+            } else {
+                Activator.reportErrorMessage("\"style\"-tag doesn't exists in "+svgDoc.getURL());
+            }
+        } else {
+            Activator.reportErrorMessage("SVGElement with ID: "+svgElementID+" doesn't exists in "+svgDoc.getURL()); 
+        }
+
+    }
+    
+    /**
+     * Applies the animation and replaces the current style-tag with an new fill value.
+     * @param jsonObject
+     * @param svgElementID
+     */
+    public void applyAnimation(JSONObject jsonObject, String svgElementID) {
+        MapAnimations mapAnimation = new MapAnimations();
+        String jsonValue = getActualJSONValue(jsonObject, svgElementID);
+        ArrayList<HashMap<String,String>> hashMapArray;
+        HashMap<String,String> hashMap;
+        
+        if (jsonValue != null) {
+            hashMapArray = mapAnimation.mapInputToOutput(getInput(), getColor());
+            for (int i = 0; i < hashMapArray.size(); i++) {
+                hashMap = hashMapArray.get(i);
+                //If the value is in the hashMap, we can apply the animation
+                if (hashMap.containsKey(jsonValue)) {
+                    colorizeAnimation(svgElementID, hashMap.get(jsonValue));
+//                    System.out.println("ElementID: "+svgElementID+ " JSONValue: "+jsonValue+" MappedValue: "+hashMap.get(jsonValue));
+                }
+                
+            }
         }
     }
+  
+    /**
+     * Does some checks an runs the colorizeAnimation()-method, if the checks were successful.
+     * This method is equal for all Animations (Don't know where to put it else)
+     */
+    /*
+    public String getActualJSONValue(JSONObject jsonObject, String svgElementId) {
+        //Create a new Instance of MapAnimations for Method access and SVGCanvas-Reference
+        MapAnimations mapAnimation = new MapAnimations();
+        ArrayList<HashMap<String,String>> hashMapArray;
+        HashMap<String,String> hashMap;
+        String jsonValue = null;
+        
+        //if the input-tag exists and if it's not empty than do use it, otherwise ignore it
+        if (getInput() != null && !getInput().isEmpty()) {
+            //check whether the value contains an id or not
+            
+            //Wenn der Key leer ist, setzt ihn per default auf die svgElementId
+            if (getKey() == null || getKey().isEmpty()) {
+                setKey(svgElementId);
+            }
+            
+            //If we have an accessID, the jsonValue must be an JSONArray
+            if (getAccessID() != null && !getAccessID().isEmpty()) {
+                try {
+                    int pos = Integer.parseInt(getAccessID());
+                    JSONArray jsonArray = jsonObject.optJSONArray(getKey());
+                    
+                    //check, whether the value is in a valid array-range
+                    if (pos < 0 || pos >= jsonArray.length()) {
+                        Activator.reportErrorMessage("Value out of Range: The value of the \"accessID\" attribute is not in the valid array-range! [SVGElement:"+svgElementId+"]");
+                        return null;
+                    }
 
+                    if (jsonArray != null) {
+                        jsonValue = jsonArray.optString(pos);
+                    } else {
+                        //It makes no sense to go on without an array here, so return
+                        return null;
+                    }
+                } catch (NumberFormatException e) {
+                    // TODO Auto-generated catch block
+                    Activator.reportErrorMessage("NumberFormatException: The value of the \"accessID\" attribute is not a valid integer value! [SVGElement:"+svgElementId+"]");
+                }
+            } else {
+                //If the accessID is either empty or null, we treat the JSONValue as a normal value instead of an JSONArray
+                jsonValue = jsonObject.optString(getKey());
+                //Only if the jsonValue exists do the animation
+            }
+//            //If we have a valid jsonValue, we map the input and apply the animation
+//            if (jsonValue != null) {
+//                hashMapArray = mapAnimation.mapInputToOutput(getInput(), getColor());
+//                for (int i = 0; i < hashMapArray.size(); i++) {
+//                    hashMap = hashMapArray.get(i);
+//                    colorizeAnimation(svgElementId, hashMap.get(jsonValue));
+//                }
+//            }
+        }
+        //The value is null if something went wrong.
+        return jsonValue;
+    }*/
+
+    
+    /**
+     * <!-- begin-user-doc -->
+     * The apply-Method applies the Animation to the SVG-Document
+     * <!-- end-user-doc -->
+     * @generated NOT
+     */
+/*    
+    public void apply(JSONObject jsonObject, String svgElementId) {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        MapAnimations mapAnimation;
+        SVGDocument svgDoc;
+        String value;
+
+        //Create a new Instance of MapAnimations for Method access and SVGCanvas-Reference
+        mapAnimation = new MapAnimations();
+        svgDoc = mapAnimation.getSVGDocument();
+
+        //Makes no sense to go on if there doesn't exists an SVG document
+        if (svgDoc == null) {
+            return;
+        }
+        
+        //if the input-tag exists and if it's not empty than do use it, otherwise ignore it
+        if (getInput() != null && !getInput().isEmpty()) {
+            //check whether the value contains an id or not
+            value = mapAnimation.valueContainsID(jsonObject, getColor());
+            if (value == null) {
+                value = getColor();
+            }
+            
+            //Wenn der Key leer ist, setzt ihn per default auf die svgElementId
+            if (getKey() == null || getKey().isEmpty()) {
+                setKey(svgElementId);
+            }
+            
+            //If getAccessID() is not empty, the JSON-value must be an JSON-Array.
+            //getAccessID() must be an valid integer and represents the position within
+            //the JSON-Array (must between 0 and Array.length()-1)
+            if (getAccessID() != null && !getAccessID().isEmpty()) {
+                try {
+                    int pos = Integer.parseInt(getAccessID());
+
+                    JSONArray jsonArray = jsonObject.optJSONArray(getKey());
+                    if (jsonArray != null) {
+                        //check, whether the value is in a valid array-range
+                        if (pos < 0 || pos >= jsonArray.length()) {
+                            Activator.reportErrorMessage("Value out of Range: The value of the \"accessID\" attribute is not in the valid array-range! [SVGElement:"+svgElementId+"]");
+                            return;
+                        }
+                        //check whether the jsonArray matches one of the input values
+                        if (mapAnimation.valueMatchesInputArray(jsonArray, pos, getInput())) {
+                            colorizeAnimation(svgElementId, value);
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    // TODO Auto-generated catch block
+                    Activator.reportErrorMessage("NumberFormatException: The value of the \"accessID\" attribute is not a valid integer value! [SVGElement:"+svgElementId+"]");
+                }
+                
+            } else {
+                //wenn getKey() nicht der leere String oder null ist, übergebe key statt svgElementid
+                if (mapAnimation.valueMatchesInput(jsonObject, getKey(), getInput())) {
+                    colorizeAnimation(svgElementId, value);
+                }
+            }
+        }
+    }
+*/
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -276,10 +339,6 @@ public class ColorizeImpl extends EObjectImpl implements Colorize {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case MappingPackage.COLORIZE__ACCESS_ID:
-                return getAccessID();
-            case MappingPackage.COLORIZE__INPUT:
-                return getInput();
             case MappingPackage.COLORIZE__COLOR:
                 return getColor();
             case MappingPackage.COLORIZE__STYLE:
@@ -296,12 +355,6 @@ public class ColorizeImpl extends EObjectImpl implements Colorize {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case MappingPackage.COLORIZE__ACCESS_ID:
-                setAccessID((String)newValue);
-                return;
-            case MappingPackage.COLORIZE__INPUT:
-                setInput((String)newValue);
-                return;
             case MappingPackage.COLORIZE__COLOR:
                 setColor((String)newValue);
                 return;
@@ -320,12 +373,6 @@ public class ColorizeImpl extends EObjectImpl implements Colorize {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case MappingPackage.COLORIZE__ACCESS_ID:
-                setAccessID(ACCESS_ID_EDEFAULT);
-                return;
-            case MappingPackage.COLORIZE__INPUT:
-                setInput(INPUT_EDEFAULT);
-                return;
             case MappingPackage.COLORIZE__COLOR:
                 setColor(COLOR_EDEFAULT);
                 return;
@@ -344,10 +391,6 @@ public class ColorizeImpl extends EObjectImpl implements Colorize {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case MappingPackage.COLORIZE__ACCESS_ID:
-                return ACCESS_ID_EDEFAULT == null ? accessID != null : !ACCESS_ID_EDEFAULT.equals(accessID);
-            case MappingPackage.COLORIZE__INPUT:
-                return INPUT_EDEFAULT == null ? input != null : !INPUT_EDEFAULT.equals(input);
             case MappingPackage.COLORIZE__COLOR:
                 return COLOR_EDEFAULT == null ? color != null : !COLOR_EDEFAULT.equals(color);
             case MappingPackage.COLORIZE__STYLE:
@@ -366,11 +409,7 @@ public class ColorizeImpl extends EObjectImpl implements Colorize {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (accessID: ");
-        result.append(accessID);
-        result.append(", input: ");
-        result.append(input);
-        result.append(", color: ");
+        result.append(" (color: ");
         result.append(color);
         result.append(", style: ");
         result.append(style);
@@ -379,11 +418,13 @@ public class ColorizeImpl extends EObjectImpl implements Colorize {
     }
 
     /* (non-Javadoc)
-     * @see de.cau.cs.kieler.xkev.mapping.Animation#applyAnimation()
+     * @see de.cau.cs.kieler.xkev.mapping.Colorize#apply(de.cau.cs.kieler.sim.kiem.json.JSONObject, java.lang.String)
      */
     @Override
-    public void applyAnimation() {
+    public void apply(JSONObject jsonObject, String svgElementId) {
         // TODO Auto-generated method stub
         
     }
+
+
 } //ColorizeImpl

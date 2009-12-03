@@ -2,23 +2,31 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="390"
    height="437"
    id="svg2"
    viewBox="0 0 390 437"
    sodipodi:version="0.32"
-   inkscape:version="0.43"
+   inkscape:version="0.46"
    sodipodi:docbase="/home/sja/workspaces/eclipse/svn/modelgui/examples"
-   sodipodi:docname="watertank.svg"
-   version="1.0">
+   sodipodi:docname="Watertank.svg"
+   version="1.0"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 218.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="390 : 218.5 : 1"
+       inkscape:persp3d-origin="195 : 145.66667 : 1"
+       id="perspective34" />
     <marker
        inkscape:stockid="TriangleInL"
        orient="auto"
@@ -92,14 +100,15 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.4719077"
      inkscape:cx="129.47046"
-     inkscape:cy="147.58677"
+     inkscape:cy="260.03718"
      inkscape:document-units="px"
      inkscape:current-layer="svg2"
-     inkscape:window-width="1276"
-     inkscape:window-height="936"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     borderlayer="top" />
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     borderlayer="top"
+     showgrid="false" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -116,8 +125,8 @@
      id="water"
      width="213.20778"
      height="283.54437"
-     x="173.53751"
-     y="269.90704"
+     x="174"
+     y="71.455627"
      inkscape:label="#rect3269" />
   <path
      style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"

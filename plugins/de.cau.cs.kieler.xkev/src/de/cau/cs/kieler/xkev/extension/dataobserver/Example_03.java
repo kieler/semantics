@@ -12,15 +12,12 @@
 
 package de.cau.cs.kieler.xkev.extension.dataobserver;
 
-import org.apache.batik.swing.JSVGCanvas;
-
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
-import de.cau.cs.kieler.xkev.mapping.animations.Animations;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
 
 /**
@@ -75,16 +72,16 @@ public class Example_03 extends JSONObjectDataComponent implements IJSONObjectDa
                     break;
             }
             counter++;
+            mapAnimation.doAnimations(JSONobject);
 
         
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        mapAnimation.doAnimation(JSONobject);
         //Now the SVG graphic needs to be refreshed
         //mapAnimation.getJSVGCanvas().setSVGDocument(mapAnimation.getSVGDocument());
-        mapAnimation.updateSVGGraphik();
+        //mapAnimation.updateSVGGraphik();
         return null;// Because it's only an Observer right now
     }
 
@@ -109,7 +106,7 @@ public class Example_03 extends JSONObjectDataComponent implements IJSONObjectDa
     @Override
     public void wrapup() throws KiemInitializationException {
         // TODO Auto-generated method stub
-
+        counter = 0;
     }
 
     // @Override

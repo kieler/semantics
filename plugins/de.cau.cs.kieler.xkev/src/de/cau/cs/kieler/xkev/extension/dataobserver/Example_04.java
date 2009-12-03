@@ -18,7 +18,6 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
-import de.cau.cs.kieler.xkev.mapping.animations.Animations;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
 
 /**
@@ -42,16 +41,21 @@ public class Example_04 extends JSONObjectDataComponent implements IJSONObjectDa
         // the old SVG-Graphic and updated afterwards
         try {
            JSONobject.put("water", Integer.toString(counter));
-           JSONobject.put("text", Double.toString(counter*10.5));
-           mapAnimation.doAnimation(JSONobject);
-           mapAnimation.updateSVGGraphik();
+           if (counter <= 29) {
+               JSONobject.put("text", Double.toString((29-counter)*10.5));
+           } else {
+               JSONobject.put("text", Double.toString((counter-29)*10.5));
+           }
+           
+           
+           mapAnimation.doAnimations(JSONobject);
             
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        if (counter<=40) counter++;
+        if (counter<58) counter++;
         else counter = 0;
 
         return null;// Because it's only an Observer right now

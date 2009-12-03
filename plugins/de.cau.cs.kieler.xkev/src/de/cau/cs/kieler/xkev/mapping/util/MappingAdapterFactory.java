@@ -80,6 +80,10 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
                 return createSVGElementAdapter();
             }
             @Override
+            public Adapter caseIAnimation(IAnimation object) {
+                return createIAnimationAdapter();
+            }
+            @Override
             public Adapter caseAnimation(Animation object) {
                 return createAnimationAdapter();
             }
@@ -140,6 +144,20 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createSVGElementAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.xkev.mapping.IAnimation <em>IAnimation</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.xkev.mapping.IAnimation
+     * @generated
+     */
+    public Adapter createIAnimationAdapter() {
         return null;
     }
 

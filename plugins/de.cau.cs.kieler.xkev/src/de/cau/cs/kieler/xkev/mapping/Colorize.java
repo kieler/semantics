@@ -8,6 +8,8 @@ package de.cau.cs.kieler.xkev.mapping;
 
 import org.w3c.dom.svg.SVGDocument;
 
+import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -17,7 +19,6 @@ import org.w3c.dom.svg.SVGDocument;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.Colorize#getInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.Colorize#getColor <em>Color</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.Colorize#getStyle <em>Style</em>}</li>
  * </ul>
@@ -28,32 +29,6 @@ import org.w3c.dom.svg.SVGDocument;
  * @generated
  */
 public interface Colorize extends Animation {
-    /**
-     * Returns the value of the '<em><b>Input</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Input</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Input</em>' attribute.
-     * @see #setInput(String)
-     * @see de.cau.cs.kieler.xkev.mapping.MappingPackage#getColorize_Input()
-     * @model
-     * @generated
-     */
-    String getInput();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.xkev.mapping.Colorize#getInput <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Input</em>' attribute.
-     * @see #getInput()
-     * @generated
-     */
-    void setInput(String value);
-
     /**
      * Returns the value of the '<em><b>Color</b></em>' attribute.
      * <!-- begin-user-doc -->
@@ -108,10 +83,10 @@ public interface Colorize extends Animation {
     void setStyle(String value);
 
     /**
-     * @param svgDocument
-     * @param id
-     * @param color
+     * This function applies the Animation to the SVG-Document.
+     * @param jsonObject
+     * @param svgElementId
      */
-    void applyAnimation(SVGDocument svgDocument, String id, String color);
+    void apply(JSONObject jsonObject, String svgElementId);
 
 } // Colorize

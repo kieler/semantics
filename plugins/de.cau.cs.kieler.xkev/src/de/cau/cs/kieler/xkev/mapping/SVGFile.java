@@ -40,7 +40,7 @@ public interface SVGFile extends EObject {
      * @return the value of the '<em>Filename</em>' attribute.
      * @see #setFilename(String)
      * @see de.cau.cs.kieler.xkev.mapping.MappingPackage#getSVGFile_Filename()
-     * @model default="" unique="false" required="true" transient="true"
+     * @model default="" unique="false"
      * @generated
      */
     String getFilename();

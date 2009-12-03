@@ -6,11 +6,19 @@
  */
 package de.cau.cs.kieler.xkev.mapping.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+import java.util.regex.Pattern;
+
+import de.cau.cs.kieler.sim.kiem.json.JSONArray;
+import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 import de.cau.cs.kieler.xkev.mapping.Move;
-
-import java.math.BigInteger;
-import java.util.List;
+import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -28,8 +36,6 @@ import org.w3c.dom.svg.SVGDocument;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.MoveImpl#getAccessID <em>Access ID</em>}</li>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.MoveImpl#getInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.MoveImpl#getX_range <em>Xrange</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.MoveImpl#getY_range <em>Yrange</em>}</li>
  * </ul>
@@ -37,47 +43,7 @@ import org.w3c.dom.svg.SVGDocument;
  *
  * @generated
  */
-public class MoveImpl extends EObjectImpl implements Move {
-    /**
-     * The default value of the '{@link #getAccessID() <em>Access ID</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getAccessID()
-     * @generated
-     * @ordered
-     */
-    protected static final String ACCESS_ID_EDEFAULT = "";
-
-    /**
-     * The cached value of the '{@link #getAccessID() <em>Access ID</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getAccessID()
-     * @generated
-     * @ordered
-     */
-    protected String accessID = ACCESS_ID_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getInput() <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getInput()
-     * @generated
-     * @ordered
-     */
-    protected static final String INPUT_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getInput() <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getInput()
-     * @generated
-     * @ordered
-     */
-    protected String input = INPUT_EDEFAULT;
-
+public class MoveImpl extends AnimationImpl implements Move {
     /**
      * The default value of the '{@link #getX_range() <em>Xrange</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -142,48 +108,6 @@ public class MoveImpl extends EObjectImpl implements Move {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getAccessID() {
-        return accessID;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setAccessID(String newAccessID) {
-        String oldAccessID = accessID;
-        accessID = newAccessID;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__ACCESS_ID, oldAccessID, accessID));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getInput() {
-        return input;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setInput(String newInput) {
-        String oldInput = input;
-        input = newInput;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__INPUT, oldInput, input));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public String getX_range() {
         return x_range;
     }
@@ -220,7 +144,42 @@ public class MoveImpl extends EObjectImpl implements Move {
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__YRANGE, oldY_range, y_range));
     }
+    
+    
+    private void moveAnimation(String svgElementId, String xValue, String yValue) {
+        //Create a new Instance of MapAnimations for Method access and SVGDocument-Reference
+        MapAnimations mapAnimation = new MapAnimations();
+        SVGDocument svgDoc = mapAnimation.getSVGDocument();
+//        System.out.println("xRange: "+xValue+" yRange:"+yValue);
+        
+        Element e = svgDoc.getElementById(svgElementId);
+        //Test whether the svg element exists or not
+        if (e != null) {
+            float xPos, yPos;
 
+            try {
+                xPos = Float.parseFloat(e.getAttribute("x"));
+                yPos = Float.parseFloat(e.getAttribute("y"));
+//                System.out.println("xPos: "+xPos+"  yPos: "+yPos);
+                
+                if (xValue != null) {
+//                    xPos += Float.parseFloat(xRange);
+//                    e.setAttribute("x",Float.toString(xPos));
+                    e.setAttribute("x",xValue);
+                }
+                if (yValue != null) {
+//                    yPos += Float.parseFloat(yRange);
+//                    e.setAttribute("y",Float.toString(yPos));
+                    e.setAttribute("y",yValue);
+                }
+            } catch (NumberFormatException  e1) {
+                Activator.reportErrorMessage("Attribute in "+svgDoc.getURL()+" has a wrong NumberFormat!", e1);
+            }
+        } else {
+            Activator.reportErrorMessage("SVGElement with ID: "+svgElementId+" doesn't exists in "+svgDoc.getURL());
+        }
+       
+    }
     
     
     
@@ -229,29 +188,57 @@ public class MoveImpl extends EObjectImpl implements Move {
      * <!-- end-user-doc -->
      * @generated NOT
      */
-    public void applyAnimation(SVGDocument svgDoc, String elementId, String xRange, String yRange) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        if (svgDoc != null) {
-            Element e = svgDoc.getElementById(elementId);
-            float xPos, yPos;
-
-            try {
-                xPos = Float.parseFloat(e.getAttribute("x"));
-                yPos = Float.parseFloat(e.getAttribute("y"));
-                System.out.println("xPos: "+xPos+"  yPos: "+yPos);
-                
-                xPos += Float.parseFloat(xRange);
-                yPos += Float.parseFloat(yRange);
-
-                e.setAttribute("x",Float.toString(xPos));
-                e.setAttribute("y",Float.toString(yPos));
-            } catch (NumberFormatException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+    public void applyAnimation(JSONObject jsonObject, String svgElementID) {
+        MapAnimations mapAnimation = new MapAnimations();
+        String jsonValue = getActualJSONValue(jsonObject, svgElementID);
+        ArrayList<HashMap<String,String>> hashMapArray_XRange, hashMapArray_YRange;
+        HashMap<String,String> hashMap_XRange, hashMap_YRange;
+        
+        if (jsonValue != null) {
+            hashMapArray_XRange = mapAnimation.mapInputToOutput(getInput(), getX_range(), true);
+            hashMapArray_YRange = mapAnimation.mapInputToOutput(getInput(), getY_range(), true);
+            int xRangeSize = hashMapArray_XRange.size();
+            int yRangeSize = hashMapArray_YRange.size();
+            int maxSize = Math.max(xRangeSize, yRangeSize);
+            
+            if (maxSize == xRangeSize) {
+                //Now we know, that yRangeSize is the minimum
+                for (int i = 0; i < yRangeSize; i++) {
+                    hashMap_XRange = hashMapArray_XRange.get(i);
+                    hashMap_YRange = hashMapArray_YRange.get(i);
+                    if (hashMap_XRange.containsKey(jsonValue) || hashMap_YRange.containsKey(jsonValue)) {
+                        moveAnimation(svgElementID, hashMap_XRange.get(jsonValue), hashMap_YRange.get(jsonValue));
+                        //System.out.println("ElementID: "+svgElementID+ " JSONValue: "+jsonValue+" MappedValue x-range: "+hashMap_XRange.get(jsonValue)+" MappedValue y-range: "+hashMap_YRange.get(jsonValue));
+                    }
+                }
+                //Now go on for the rest (until maxSize == xRangeSize)
+                for (int i = yRangeSize; i < maxSize; i++) {
+                    hashMap_XRange = hashMapArray_XRange.get(i);
+                    if (hashMap_XRange.containsKey(jsonValue)) {
+                        moveAnimation(svgElementID, hashMap_XRange.get(jsonValue), null);
+                    }
+                }
+            } else {
+                //Now we know, that xRangeSize is the minimum
+                for (int i = 0; i < xRangeSize; i++) {
+                    hashMap_XRange = hashMapArray_XRange.get(i);
+                    hashMap_YRange = hashMapArray_YRange.get(i);
+                    if (hashMap_XRange.containsKey(jsonValue) || hashMap_YRange.containsKey(jsonValue)) {
+                        moveAnimation(svgElementID, hashMap_XRange.get(jsonValue), hashMap_YRange.get(jsonValue));
+                        //System.out.println("ElementID: "+svgElementID+ " JSONValue: "+jsonValue+" MappedValue x-range: "+hashMap_XRange.get(jsonValue)+" MappedValue y-range: "+hashMap_YRange.get(jsonValue));
+                    }
+                }
+                //Now go on for the rest (until maxSize == yRangeSize)
+                for (int i = xRangeSize; i < maxSize; i++) {
+                    hashMap_YRange = hashMapArray_YRange.get(i);
+                    if (hashMap_YRange.containsKey(jsonValue)) {
+                        moveAnimation(svgElementID, null, hashMap_YRange.get(jsonValue));
+                    }
+                }
             }
         }
     }
+     
 
     /**
      * <!-- begin-user-doc -->
@@ -261,10 +248,6 @@ public class MoveImpl extends EObjectImpl implements Move {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case MappingPackage.MOVE__ACCESS_ID:
-                return getAccessID();
-            case MappingPackage.MOVE__INPUT:
-                return getInput();
             case MappingPackage.MOVE__XRANGE:
                 return getX_range();
             case MappingPackage.MOVE__YRANGE:
@@ -281,12 +264,6 @@ public class MoveImpl extends EObjectImpl implements Move {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case MappingPackage.MOVE__ACCESS_ID:
-                setAccessID((String)newValue);
-                return;
-            case MappingPackage.MOVE__INPUT:
-                setInput((String)newValue);
-                return;
             case MappingPackage.MOVE__XRANGE:
                 setX_range((String)newValue);
                 return;
@@ -305,12 +282,6 @@ public class MoveImpl extends EObjectImpl implements Move {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case MappingPackage.MOVE__ACCESS_ID:
-                setAccessID(ACCESS_ID_EDEFAULT);
-                return;
-            case MappingPackage.MOVE__INPUT:
-                setInput(INPUT_EDEFAULT);
-                return;
             case MappingPackage.MOVE__XRANGE:
                 setX_range(XRANGE_EDEFAULT);
                 return;
@@ -329,10 +300,6 @@ public class MoveImpl extends EObjectImpl implements Move {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case MappingPackage.MOVE__ACCESS_ID:
-                return ACCESS_ID_EDEFAULT == null ? accessID != null : !ACCESS_ID_EDEFAULT.equals(accessID);
-            case MappingPackage.MOVE__INPUT:
-                return INPUT_EDEFAULT == null ? input != null : !INPUT_EDEFAULT.equals(input);
             case MappingPackage.MOVE__XRANGE:
                 return XRANGE_EDEFAULT == null ? x_range != null : !XRANGE_EDEFAULT.equals(x_range);
             case MappingPackage.MOVE__YRANGE:
@@ -351,25 +318,12 @@ public class MoveImpl extends EObjectImpl implements Move {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (accessID: ");
-        result.append(accessID);
-        result.append(", input: ");
-        result.append(input);
-        result.append(", x_range: ");
+        result.append(" (x_range: ");
         result.append(x_range);
         result.append(", y_range: ");
         result.append(y_range);
         result.append(')');
         return result.toString();
-    }
-
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.xkev.mapping.Animation#applyAnimation()
-     */
-    @Override
-    public void applyAnimation() {
-        // TODO Auto-generated method stub
-        
     }
 
 } //MoveImpl

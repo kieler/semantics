@@ -8,6 +8,7 @@ package de.cau.cs.kieler.xkev.mapping.impl;
 
 import de.cau.cs.kieler.xkev.mapping.Animation;
 import de.cau.cs.kieler.xkev.mapping.Colorize;
+import de.cau.cs.kieler.xkev.mapping.IAnimation;
 import de.cau.cs.kieler.xkev.mapping.MappingFactory;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 import de.cau.cs.kieler.xkev.mapping.Move;
@@ -42,6 +43,13 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * @generated
      */
     private EClass svgElementEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass iAnimationEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -191,8 +199,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getAnimation() {
-        return animationEClass;
+    public EClass getIAnimation() {
+        return iAnimationEClass;
     }
 
     /**
@@ -200,8 +208,35 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getAnimation_AccessID() {
-        return (EAttribute)animationEClass.getEStructuralFeatures().get(0);
+    public EAttribute getIAnimation_Input() {
+        return (EAttribute)iAnimationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getIAnimation_AccessID() {
+        return (EAttribute)iAnimationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getIAnimation_Key() {
+        return (EAttribute)iAnimationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getAnimation() {
+        return animationEClass;
     }
 
     /**
@@ -218,7 +253,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getMove_Input() {
+    public EAttribute getMove_X_range() {
         return (EAttribute)moveEClass.getEStructuralFeatures().get(0);
     }
 
@@ -227,17 +262,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getMove_X_range() {
-        return (EAttribute)moveEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getMove_Y_range() {
-        return (EAttribute)moveEClass.getEStructuralFeatures().get(2);
+        return (EAttribute)moveEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -254,7 +280,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getColorize_Input() {
+    public EAttribute getColorize_Color() {
         return (EAttribute)colorizeEClass.getEStructuralFeatures().get(0);
     }
 
@@ -263,17 +289,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getColorize_Color() {
-        return (EAttribute)colorizeEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getColorize_Style() {
-        return (EAttribute)colorizeEClass.getEStructuralFeatures().get(2);
+        return (EAttribute)colorizeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -290,7 +307,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getTextbox_Input() {
+    public EAttribute getTextbox_Visible() {
         return (EAttribute)textboxEClass.getEStructuralFeatures().get(0);
     }
 
@@ -299,7 +316,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getTextbox_Visible() {
+    public EAttribute getTextbox_Value() {
         return (EAttribute)textboxEClass.getEStructuralFeatures().get(1);
     }
 
@@ -308,7 +325,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getTextbox_Value() {
+    public EAttribute getTextbox_Border() {
         return (EAttribute)textboxEClass.getEStructuralFeatures().get(2);
     }
 
@@ -317,7 +334,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getTextbox_Border() {
+    public EAttribute getTextbox_Border_style() {
         return (EAttribute)textboxEClass.getEStructuralFeatures().get(3);
     }
 
@@ -326,17 +343,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getTextbox_Border_style() {
-        return (EAttribute)textboxEClass.getEStructuralFeatures().get(4);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getTextbox_Border_color() {
-        return (EAttribute)textboxEClass.getEStructuralFeatures().get(5);
+        return (EAttribute)textboxEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -375,21 +383,22 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         createEReference(svgElementEClass, SVG_ELEMENT__ANIMATION);
         createEAttribute(svgElementEClass, SVG_ELEMENT__ID);
 
+        iAnimationEClass = createEClass(IANIMATION);
+        createEAttribute(iAnimationEClass, IANIMATION__INPUT);
+        createEAttribute(iAnimationEClass, IANIMATION__ACCESS_ID);
+        createEAttribute(iAnimationEClass, IANIMATION__KEY);
+
         animationEClass = createEClass(ANIMATION);
-        createEAttribute(animationEClass, ANIMATION__ACCESS_ID);
 
         moveEClass = createEClass(MOVE);
-        createEAttribute(moveEClass, MOVE__INPUT);
         createEAttribute(moveEClass, MOVE__XRANGE);
         createEAttribute(moveEClass, MOVE__YRANGE);
 
         colorizeEClass = createEClass(COLORIZE);
-        createEAttribute(colorizeEClass, COLORIZE__INPUT);
         createEAttribute(colorizeEClass, COLORIZE__COLOR);
         createEAttribute(colorizeEClass, COLORIZE__STYLE);
 
         textboxEClass = createEClass(TEXTBOX);
-        createEAttribute(textboxEClass, TEXTBOX__INPUT);
         createEAttribute(textboxEClass, TEXTBOX__VISIBLE);
         createEAttribute(textboxEClass, TEXTBOX__VALUE);
         createEAttribute(textboxEClass, TEXTBOX__BORDER);
@@ -425,36 +434,40 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        animationEClass.getESuperTypes().add(this.getIAnimation());
         moveEClass.getESuperTypes().add(this.getAnimation());
         colorizeEClass.getESuperTypes().add(this.getAnimation());
         textboxEClass.getESuperTypes().add(this.getAnimation());
 
         // Initialize classes and features; add operations and parameters
         initEClass(svgFileEClass, SVGFile.class, "SVGFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getSVGFile_Filename(), ecorePackage.getEString(), "filename", "", 1, 1, SVGFile.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSVGFile_Filename(), ecorePackage.getEString(), "filename", "", 0, 1, SVGFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSVGFile_SvgElement(), this.getSVGElement(), null, "svgElement", null, 0, -1, SVGFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(svgElementEClass, SVGElement.class, "SVGElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSVGElement_Animation(), this.getAnimation(), null, "animation", null, 1, -1, SVGElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSVGElement_Id(), ecorePackage.getEString(), "id", null, 1, 1, SVGElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(animationEClass, Animation.class, "Animation", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getAnimation_AccessID(), ecorePackage.getEString(), "accessID", "", 0, 1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(iAnimationEClass, IAnimation.class, "IAnimation", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIAnimation_Input(), ecorePackage.getEString(), "input", null, 0, 1, IAnimation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIAnimation_AccessID(), ecorePackage.getEString(), "accessID", "", 0, 1, IAnimation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIAnimation_Key(), ecorePackage.getEString(), "key", "", 0, 1, IAnimation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(animationEClass, Animation.class, "Animation", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        addEOperation(animationEClass, ecorePackage.getEString(), "getActualJSONValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         addEOperation(animationEClass, null, "applyAnimation", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         initEClass(moveEClass, Move.class, "Move", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getMove_Input(), ecorePackage.getEString(), "input", null, 0, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMove_X_range(), ecorePackage.getEString(), "x_range", null, 1, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMove_Y_range(), ecorePackage.getEString(), "y_range", null, 1, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(colorizeEClass, Colorize.class, "Colorize", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getColorize_Input(), ecorePackage.getEString(), "input", null, 0, 1, Colorize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getColorize_Color(), ecorePackage.getEString(), "color", null, 1, 1, Colorize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getColorize_Style(), ecorePackage.getEString(), "style", "solid", 0, 1, Colorize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(textboxEClass, Textbox.class, "Textbox", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getTextbox_Input(), ecorePackage.getEString(), "input", null, 0, 1, Textbox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTextbox_Visible(), ecorePackage.getEBoolean(), "visible", "true", 0, 1, Textbox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTextbox_Value(), ecorePackage.getEString(), "value", null, 1, 1, Textbox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTextbox_Border(), ecorePackage.getEString(), "border", "none", 0, 1, Textbox.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

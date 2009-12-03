@@ -6,8 +6,14 @@
  */
 package de.cau.cs.kieler.xkev.mapping.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 import de.cau.cs.kieler.xkev.mapping.Textbox;
+import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -25,8 +31,6 @@ import org.w3c.dom.svg.SVGDocument;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.TextboxImpl#getAccessID <em>Access ID</em>}</li>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.TextboxImpl#getInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.TextboxImpl#isVisible <em>Visible</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.TextboxImpl#getValue <em>Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.impl.TextboxImpl#getBorder <em>Border</em>}</li>
@@ -37,47 +41,7 @@ import org.w3c.dom.svg.SVGDocument;
  *
  * @generated
  */
-public class TextboxImpl extends EObjectImpl implements Textbox {
-    /**
-     * The default value of the '{@link #getAccessID() <em>Access ID</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getAccessID()
-     * @generated
-     * @ordered
-     */
-    protected static final String ACCESS_ID_EDEFAULT = "";
-
-    /**
-     * The cached value of the '{@link #getAccessID() <em>Access ID</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getAccessID()
-     * @generated
-     * @ordered
-     */
-    protected String accessID = ACCESS_ID_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getInput() <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getInput()
-     * @generated
-     * @ordered
-     */
-    protected static final String INPUT_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getInput() <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getInput()
-     * @generated
-     * @ordered
-     */
-    protected String input = INPUT_EDEFAULT;
-
+public class TextboxImpl extends AnimationImpl implements Textbox {
     /**
      * The default value of the '{@link #isVisible() <em>Visible</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -202,48 +166,6 @@ public class TextboxImpl extends EObjectImpl implements Textbox {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getAccessID() {
-        return accessID;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setAccessID(String newAccessID) {
-        String oldAccessID = accessID;
-        accessID = newAccessID;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TEXTBOX__ACCESS_ID, oldAccessID, accessID));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getInput() {
-        return input;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setInput(String newInput) {
-        String oldInput = input;
-        input = newInput;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.TEXTBOX__INPUT, oldInput, input));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public boolean isVisible() {
         return visible;
     }
@@ -347,32 +269,11 @@ public class TextboxImpl extends EObjectImpl implements Textbox {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated NOT
-     */
-    public void applyAnimation(SVGDocument svgDoc, String elementId, String textValue) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        if (svgDoc != null) {
-            Element e = svgDoc.getElementById(elementId);
-            //We need to read the first child, to get the textcontent of the tag
-            if (e.getChildNodes() != null) {
-                e.getChildNodes().item(0).setNodeValue(textValue);
-            }
-        }
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case MappingPackage.TEXTBOX__ACCESS_ID:
-                return getAccessID();
-            case MappingPackage.TEXTBOX__INPUT:
-                return getInput();
             case MappingPackage.TEXTBOX__VISIBLE:
                 return isVisible();
             case MappingPackage.TEXTBOX__VALUE:
@@ -395,12 +296,6 @@ public class TextboxImpl extends EObjectImpl implements Textbox {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case MappingPackage.TEXTBOX__ACCESS_ID:
-                setAccessID((String)newValue);
-                return;
-            case MappingPackage.TEXTBOX__INPUT:
-                setInput((String)newValue);
-                return;
             case MappingPackage.TEXTBOX__VISIBLE:
                 setVisible((Boolean)newValue);
                 return;
@@ -428,12 +323,6 @@ public class TextboxImpl extends EObjectImpl implements Textbox {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case MappingPackage.TEXTBOX__ACCESS_ID:
-                setAccessID(ACCESS_ID_EDEFAULT);
-                return;
-            case MappingPackage.TEXTBOX__INPUT:
-                setInput(INPUT_EDEFAULT);
-                return;
             case MappingPackage.TEXTBOX__VISIBLE:
                 setVisible(VISIBLE_EDEFAULT);
                 return;
@@ -461,10 +350,6 @@ public class TextboxImpl extends EObjectImpl implements Textbox {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case MappingPackage.TEXTBOX__ACCESS_ID:
-                return ACCESS_ID_EDEFAULT == null ? accessID != null : !ACCESS_ID_EDEFAULT.equals(accessID);
-            case MappingPackage.TEXTBOX__INPUT:
-                return INPUT_EDEFAULT == null ? input != null : !INPUT_EDEFAULT.equals(input);
             case MappingPackage.TEXTBOX__VISIBLE:
                 return visible != VISIBLE_EDEFAULT;
             case MappingPackage.TEXTBOX__VALUE:
@@ -489,11 +374,7 @@ public class TextboxImpl extends EObjectImpl implements Textbox {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (accessID: ");
-        result.append(accessID);
-        result.append(", input: ");
-        result.append(input);
-        result.append(", visible: ");
+        result.append(" (visible: ");
         result.append(visible);
         result.append(", value: ");
         result.append(value);
@@ -507,13 +388,54 @@ public class TextboxImpl extends EObjectImpl implements Textbox {
         return result.toString();
     }
 
+    
+     public void textboxAnimation(String elementID, String jsonValue) {
+         MapAnimations mapAnimation = new MapAnimations();
+         SVGDocument svgDoc = mapAnimation.getSVGDocument();
+         
+         if (svgDoc != null) {
+             Element e = svgDoc.getElementById(elementID);
+             //We need to read the first child, to get the textcontent of the tag
+             if (e.getChildNodes() != null) {
+                 e.getChildNodes().item(0).setNodeValue(jsonValue);
+             }
+         }
+     }
+     
+     
     /* (non-Javadoc)
-     * @see de.cau.cs.kieler.xkev.mapping.Animation#applyAnimation()
+     * @see de.cau.cs.kieler.xkev.mapping.Animation#applyAnimation(de.cau.cs.kieler.sim.kiem.json.JSONObject, java.lang.String)
      */
     @Override
-    public void applyAnimation() {
-        // TODO Auto-generated method stub
+    public void applyAnimation(JSONObject jsonObject, String svgElementID) {
+        MapAnimations mapAnimation = new MapAnimations();
+        String jsonValue = getActualJSONValue(jsonObject, svgElementID);
+        ArrayList<HashMap<String,String>> hashMapArray;
+        HashMap<String,String> hashMap;
         
+        if (jsonValue != null) {
+            hashMapArray = mapAnimation.mapInputToOutput(getInput(), getValue());
+            for (int i = 0; i < hashMapArray.size(); i++) {
+                hashMap = hashMapArray.get(i);
+                //If the value is in the hashMap, we can apply the animation
+                if (hashMap.containsKey(jsonValue)) {
+                    String value = hashMap.get(jsonValue);
+                    //Check if the value is a JSON Key (indicated by "$")
+                    if (value.indexOf("$") == 0) {
+                        //Now we need to load the JSON value from object
+                        value = jsonObject.optString(value.substring(1));
+                        if (value != null) { 
+                            textboxAnimation(svgElementID, value);
+                            System.out.println("SVGElementID: "+svgElementID+ " Value: "+value);
+                        }
+                    } else {
+                        textboxAnimation(svgElementID, hashMap.get(jsonValue));
+                        System.out.println("ElementID: "+svgElementID+ " JSONValue: "+jsonValue+" MappedValue: "+hashMap.get(jsonValue));
+                    }
+                }
+                
+            }
+        }
     }
 
 } //TextboxImpl

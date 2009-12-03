@@ -8,6 +8,7 @@
             name="KIELER">
       </category>
       <view
+            allowMultiple="false"
             category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.xkev.views.EnvironmentView"
             icon="icons/view/kieler.png"
@@ -30,6 +31,14 @@
             class="de.cau.cs.kieler.xkev.extension.dataobserver.Example_04"
             id="de.cau.cs.kieler.xkev.extension.DataOberserver04"
             name="Watertank (Move Demo)">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.xkev.extension.dataobserver.Example_01"
+            id="de.cau.cs.kieler.xkev.extension.DataOberserver01"
+            name="Trafficlight with JSONArray">
       </content>
    </extension>
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ASCII"?>
+<mapping:SVGFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mapping="http://de.cau.cs.kieler.xkev.mapping/1.0" filename="resource:examples/Trafficlight.svg">
+  <svgElement id="cRed">
+    <animation xsi:type="mapping:Colorize" input="[off];on" color="[#626262];red" key="cLight" accessID="0"/>
+  </svgElement>
+  <svgElement id="cYellow">
+    <animation xsi:type="mapping:Colorize" input="[on,off];pink" color="[yellow,#626262,pink]; pink" key="cLight" accessID="1"/>
+  </svgElement>
+  <svgElement id="cGreen">
+    <animation xsi:type="mapping:Colorize" input="on;off" color="green; #626262" key="cLight" accessID="2"/>
+  </svgElement>
+  <svgElement id="pRed">
+    <animation xsi:type="mapping:Colorize" input="[on,off,an,aus]" color="[red,  #626262]" key="pLight" accessID="0"/>
+  </svgElement>
+  <svgElement id="pGreen">
+    <animation xsi:type="mapping:Colorize" input="off;on" color="#626262;green;  [none  ,  black]" key="pLight" accessID="1"/>
+  </svgElement>
+</mapping:SVGFile>

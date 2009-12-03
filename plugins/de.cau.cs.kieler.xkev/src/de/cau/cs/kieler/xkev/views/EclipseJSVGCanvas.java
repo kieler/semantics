@@ -22,7 +22,6 @@ import org.apache.batik.swing.svg.SVGDocumentLoaderListener;
 import org.apache.batik.swing.svg.SVGUserAgent;
 import org.apache.batik.util.ParsedURL;
 
-import de.cau.cs.kieler.xkev.helpers.Tools;
 
 /**
  * Modifies the regular JSVGCanvas in such a way that the EclipseDocumentLoader class gets used
@@ -31,10 +30,48 @@ import de.cau.cs.kieler.xkev.helpers.Tools;
  */
 public class EclipseJSVGCanvas extends JSVGCanvas {
 
+//    /**
+//     * The single instace of the EclipseJSVGCanvas.
+//     */
+//    private static EclipseJSVGCanvas INSTANCE = null;
+    
+    /**
+     * This method needs to be private in order to create only one single instance.
+     * @param userAgent
+     * @param b1
+     * @param b2
+     */
     public EclipseJSVGCanvas(SVGUserAgent userAgent, boolean b1, boolean b2) {
         super(userAgent, b1, b2);
     }
 
+//    /**
+//     * This method creates a single Instance of the EclipseJSVGCanvas.
+//     * 
+//     * @param userAgent
+//     * @param b1
+//     * @param b2
+//     * @return
+//     */
+//    public static synchronized boolean createInstance(SVGUserAgent userAgent, boolean b1, boolean b2) {
+//        if (INSTANCE == null) {
+//            INSTANCE = new EclipseJSVGCanvas(userAgent, b1, b2);
+//            return true;
+//        }
+//        return false;
+//    }
+//    
+//    /**
+//     * Returns the single instance of the EclipseJSVGCanvas.
+//     * @return INSTANCE
+//     */
+//    public static EclipseJSVGCanvas getInstance() {
+//        return INSTANCE;
+//    }
+    
+    
+    
+    
     public void loadSVGDocument(String url) {
         String oldURI = null;
         if (svgDocument != null) {

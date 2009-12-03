@@ -8,6 +8,8 @@ package de.cau.cs.kieler.xkev.mapping;
 
 import org.w3c.dom.svg.SVGDocument;
 
+import de.cau.cs.kieler.sim.kiem.json.JSONObject;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -17,7 +19,6 @@ import org.w3c.dom.svg.SVGDocument;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.xkev.mapping.Textbox#getInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.Textbox#isVisible <em>Visible</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.Textbox#getValue <em>Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.xkev.mapping.Textbox#getBorder <em>Border</em>}</li>
@@ -31,32 +32,6 @@ import org.w3c.dom.svg.SVGDocument;
  * @generated
  */
 public interface Textbox extends Animation {
-    /**
-     * Returns the value of the '<em><b>Input</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Input</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Input</em>' attribute.
-     * @see #setInput(String)
-     * @see de.cau.cs.kieler.xkev.mapping.MappingPackage#getTextbox_Input()
-     * @model
-     * @generated
-     */
-    String getInput();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.xkev.mapping.Textbox#getInput <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Input</em>' attribute.
-     * @see #getInput()
-     * @generated
-     */
-    void setInput(String value);
-
     /**
      * Returns the value of the '<em><b>Visible</b></em>' attribute.
      * The default value is <code>"true"</code>.
@@ -191,12 +166,4 @@ public interface Textbox extends Animation {
      */
     void setBorder_color(String value);
 
-    /**
-     * 
-     * @param svgDoc
-     * @param elementId
-     * @param textValue
-     */
-    void applyAnimation(SVGDocument svgDoc, String elementId, String textValue);
-    
 } // Textbox
