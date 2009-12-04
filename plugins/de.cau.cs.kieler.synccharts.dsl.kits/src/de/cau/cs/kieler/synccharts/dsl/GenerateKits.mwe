@@ -55,7 +55,11 @@
 			<!-- @modified(oba) AntlrParser -->
 		    <fragment class="de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment">
 		    	<options backtrack="true"/>
-		    </fragment> 			
+		    </fragment> 
+		    <!-- @modified(oba) project wizard fragment -->
+			<fragment class="org.eclipse.xtext.ui.generator.projectWizard.SimpleProjectWizardFragment"
+				generatorProjectName="${projectName}.generator"
+				modelFileExtension="kits"/>			
 		</language>
 	</component>
 </workflow>
