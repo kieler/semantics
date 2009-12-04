@@ -110,6 +110,133 @@
 			type="kits">
 		</parser>
 	</extension>
+<!-- merged from plugin.xml_gen due to suggestions in the newsgroup to create the new project wizard-->
+    <extension 
+            point="org.eclipse.ui.editors">
+        <editor 
+            class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.XtextEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            default="true"
+            extensions="kits"
+            id="de.cau.cs.kieler.synccharts.dsl.Kits"
+            name="Kits Editor">
+        </editor>
+    </extension>
+    <extension 
+        point="org.eclipse.ui.handlers">
+        <handler 
+            class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:org.eclipse.xtext.ui.common.editor.hyperlinking.OpenDeclarationHandler"
+            commandId="org.eclipse.xtext.ui.common.editor.hyperlinking.OpenDeclaration">
+            <activeWhen>
+                <reference 
+                    definitionId="de.cau.cs.kieler.synccharts.dsl.Kits.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+        <handler
+            class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.handler.ValidateActionHandler"
+            commandId="de.cau.cs.kieler.synccharts.dsl.Kits.validate">
+         <activeWhen>
+            <reference 
+                    definitionId="de.cau.cs.kieler.synccharts.dsl.Kits.Editor.opened">
+            </reference>
+         </activeWhen> 
+      </handler>
+    </extension>
+    <extension point="org.eclipse.core.expressions.definitions">
+        <definition id="de.cau.cs.kieler.synccharts.dsl.Kits.Editor.opened">
+            <and> 
+                <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
+                <with variable="activeEditor">
+                    <test property="org.eclipse.xtext.ui.core.editor.XtextEditor.languageName" 
+                        value="de.cau.cs.kieler.synccharts.dsl.Kits" 
+                        forcePluginActivation="true"/>
+                </with>        
+            </and> 
+        </definition>
+    </extension>
+    <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+            class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:org.eclipse.xtext.ui.core.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.synccharts.dsl.Kits"
+            name="Kits" 
+            category="org.eclipse.xtext.languages">
+            <keywordReference id="de.cau.cs.kieler.synccharts.dsl.ui.keyword_Kits"/> 
+        </page>
+        <page
+            category="de.cau.cs.kieler.synccharts.dsl.Kits"
+            class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:org.eclipse.xtext.ui.common.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="de.cau.cs.kieler.synccharts.dsl.Kits.coloring"
+            name="Syntax Coloring">
+            <keywordReference id="de.cau.cs.kieler.synccharts.dsl.ui.keyword_Kits"/>
+        </page>
+        <page
+            category="de.cau.cs.kieler.synccharts.dsl.Kits"
+            class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:org.eclipse.xtext.ui.common.editor.templates.XtextTemplatePreferencePage"
+            id="de.cau.cs.kieler.synccharts.dsl.Kits.templates"
+            name="Templates">
+            <keywordReference id="de.cau.cs.kieler.synccharts.dsl.ui.keyword_Kits"/>
+        </page>
+    </extension>
+    <extension
+        point="org.eclipse.ui.keywords">
+        <keyword
+            id="de.cau.cs.kieler.synccharts.dsl.ui.keyword_Kits"
+            label="Kits"/>
+    </extension>
+    <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Trigger expensive validation"
+            id="de.cau.cs.kieler.synccharts.dsl.Kits.validate"
+            name="Validate">
+      </command>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.open">
+             <command 
+                 commandId="de.cau.cs.kieler.synccharts.dsl.Kits.validate"
+                 style="push"
+                 tooltip="Trigger expensive validation">
+            <visibleWhen checkEnabled="false">
+                <reference
+                    definitionId="de.cau.cs.kieler.synccharts.dsl.Kits.Editor.opened">
+                </reference>
+            </visibleWhen>
+         </command>  
+         </menuContribution>
+    </extension>
+    	<extension  
+         point="org.eclipse.xtext.ui.core.languageBuilder">
+      <languageBuilder
+            class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:org.eclipse.xtext.ui.core.builder.ILanguageBuilder">
+      </languageBuilder>
+   </extension>
+
+<!-- adding resource factories -->
+
+	<extension 
+		point="org.eclipse.emf.ecore.extension_parser">
+		<parser 
+			class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:org.eclipse.xtext.resource.XtextResourceFactory"
+			type="kits">
+		</parser>
+	</extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:de.cau.cs.kieler.synccharts.dsl.ui.wizard.KitsNewProjectWizard"
+            finalPerspective="de.cau.cs.kieler.Modeling"
+            icon="icons/kiel.ico"
+            id="de.cau.cs.kieler.synccharts.dsl.ui.wizard.KitsNewProjectWizard"
+            name="Kits ABRO"
+            project="true">
+      </wizard>
+   </extension>
+
 
 
 

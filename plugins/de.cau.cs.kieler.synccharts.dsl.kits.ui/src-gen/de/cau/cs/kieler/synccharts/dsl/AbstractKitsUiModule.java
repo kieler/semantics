@@ -192,5 +192,10 @@ public abstract class AbstractKitsUiModule extends KitsRuntimeModule {
 		binder.bind(org.eclipse.xtext.ui.common.editor.contentassist.antlr.internal.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.core.LexerUIBindings.CONTENT_ASSIST)).to(de.cau.cs.kieler.synccharts.dsl.contentassist.antlr.internal.InternalKitsLexer.class);
 	}
 
+	// contributed by org.eclipse.xtext.ui.generator.projectWizard.SimpleProjectWizardFragment
+	public Class<? extends org.eclipse.xtext.ui.core.wizard.IProjectCreator> bindIProjectCreator() {
+		return de.cau.cs.kieler.synccharts.dsl.ui.wizard.KitsProjectCreator.class;
+	}
+
 
 }

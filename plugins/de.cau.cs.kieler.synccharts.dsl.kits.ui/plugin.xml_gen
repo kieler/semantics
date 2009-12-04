@@ -120,4 +120,16 @@
 
 
 
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.xtext.projectwiz"
+            class="de.cau.cs.kieler.synccharts.dsl.KitsExecutableExtensionFactory:de.cau.cs.kieler.synccharts.dsl.ui.wizard.KitsNewProjectWizard"
+            icon="icons/editor.gif"
+            id="de.cau.cs.kieler.synccharts.dsl.ui.wizard.KitsNewProjectWizard"
+            name="Kits Project"
+            project="true">
+      </wizard>
+   </extension>
+
 </plugin>
