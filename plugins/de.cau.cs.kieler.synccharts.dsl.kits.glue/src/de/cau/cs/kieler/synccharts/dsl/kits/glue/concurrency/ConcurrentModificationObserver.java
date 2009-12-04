@@ -77,7 +77,7 @@ public class ConcurrentModificationObserver implements IPartListener,
 	private final Transformer transformer;
 
 	/**
-	 * public constructor for our listener
+	 * public constructor for the concurrent modification listener
 	 * 
 	 * @param activePage
 	 *            the currently active page
@@ -130,7 +130,6 @@ public class ConcurrentModificationObserver implements IPartListener,
 			TransactionalEditingDomain editingDomain = ((DiagramEditor) part)
 					.getEditingDomain();
 			editingDomain.addResourceSetListener(this);
-			// run layout
 			manualLayoutTrigger(part);
 		}
 		if (part instanceof XtextEditor) {
