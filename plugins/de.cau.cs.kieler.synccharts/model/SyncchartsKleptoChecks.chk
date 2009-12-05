@@ -34,15 +34,13 @@ context Region WARNING "KLEPTO: Variables are not supported in the simulation!" 
 //context Transition WARNING "KLEPTO: Output signals that also occur within a trigger are not supported in the simulation!" : 
 //  (((SignalReference)trigger).signal == null) || ((SignalReference)trigger).signal.isOutput == false;
 
-//since 01.12. not a warning any more
 //FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
-//context Emission WARNING "KLEPTO: Input signals ("+signal.name+") that are also emitted are not supported in the simulation!" :
-//  signal.isInput == false;
+context Emission WARNING "KLEPTO: Input signals ("+signal.name+") that are also emitted are not supported in the simulation!" :
+  signal.isInput == false;
 
-//since 01.12. not a warning any more
 //FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
-//context SignalReference WARNING "KLEPTO: Output signals ("+signal.name+") that also occur within a trigger are not supported in the simulation!" :
-//  signal.isOutput == false;
+context SignalReference WARNING "KLEPTO: Output signals ("+signal.name+") that also occur within a trigger are not supported in the simulation!" :
+  signal.isOutput == false;
   
 //since 28.11. not a warning any more
 //FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
