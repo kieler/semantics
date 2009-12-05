@@ -621,10 +621,12 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
    	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
   	//consider output signals that may be used in triggers 
-    outputSignalTransformation(mainRegion.innerStates.get(0)) ->  	
+  	//REMOVED SINCE ONLY EXPERIMENTAL YET
+//    outputSignalTransformation(mainRegion.innerStates.get(0)) ->  	
   	
   	//consider input signals that may be used in triggers 
-    inputSignalTransformation(mainRegion.innerStates.get(0)) ->  	
+  	//REMOVED SINCE ONLY EXPERIMENTAL YET
+//    inputSignalTransformation(mainRegion.innerStates.get(0)) ->  	
 
   	//normal termination preprocessing
     n2wRegion(mainRegion.innerStates) ->
