@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Compile de.cau.cs.kieler.xkev.feature" default="main">
+	<target name="main">
+		<ant antfile="build.xml" dir="../../../share/trunk/plugins/de.cau.cs.kieler.sim.kiem" target="build.jars"/>
+	</target>
+</project>
