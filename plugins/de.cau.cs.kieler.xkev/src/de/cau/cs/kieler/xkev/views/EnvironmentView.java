@@ -16,6 +16,7 @@ package de.cau.cs.kieler.xkev.views;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 
 import org.apache.batik.swing.JSVGCanvas;
 import org.eclipse.jface.action.Action; //import org.eclipse.jface.action.ControlContribution;
@@ -50,13 +51,12 @@ public class EnvironmentView extends ViewPart {
      * ID declares the name of the KEV-View. 
      */
     public static final String ID = "de.cau.cs.kieler.xkev.views.EnvironmentView";
-    
+
     
     /**
      * The constructor.
      */
     public EnvironmentView() {
-
     }
 
     /**
@@ -65,15 +65,7 @@ public class EnvironmentView extends ViewPart {
     public void createPartControl(Composite parent) {
         parent.setLayout(new FillLayout());
 
-        if (EnvironmentComposite.getInstance() == null) {
-            while (!EnvironmentComposite.createSingleInstance(parent, SWT.NONE, false)) {
-              //Do nothing until the single instance is successfully created
-            }
-        }
-        //Get the single instance of the EclipseJSVGCanvas
-        svg = EnvironmentComposite.getInstance();
-        
-        //svg = new EnvironmentComposite(parent, SWT.NONE, false);
+        svg = new EnvironmentComposite(parent, SWT.NONE, false);
         
          // animationManager = new AnimationManager(this);
         getViewSite().getPage().addSelectionListener(svg);

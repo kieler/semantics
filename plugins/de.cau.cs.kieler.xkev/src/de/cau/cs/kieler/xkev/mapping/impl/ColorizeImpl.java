@@ -8,27 +8,22 @@ package de.cau.cs.kieler.xkev.mapping.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.Colorize;
 import de.cau.cs.kieler.xkev.mapping.MappingPackage;
 
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.ui.statushandlers.StatusManager;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
-import de.cau.cs.kieler.sim.kiem.json.JSONArray;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 
 /**
@@ -152,26 +147,34 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
     private void colorizeAnimation(String svgElementID, String jsonValue) {
         MapAnimations mapAnimation = new MapAnimations();
         SVGDocument svgDoc = mapAnimation.getSVGDocument();
-
-        Element e = svgDoc.getElementById(svgElementID);
-        if (e != null) {
-            String oldStr, newStr, s;
-            int start, end;
-
-            s = e.getAttribute("style");
-            if (s != null && !s.isEmpty()) {
-                start = s.indexOf("fill:");// +"fill:".length();
-                //todo: if fill does not exists, insert new style-tag
-                end = s.substring(start).indexOf(";") + 1;
-                oldStr = s.substring(start, start + end);
-                newStr = "fill:" + jsonValue + ";";
-                e.setAttribute("style", s.replace(oldStr, newStr));
-            } else {
-                Activator.reportErrorMessage("\"style\"-tag doesn't exists in "+svgDoc.getURL());
-            }
-        } else {
-            Activator.reportErrorMessage("SVGElement with ID: "+svgElementID+" doesn't exists in "+svgDoc.getURL()); 
+        if (svgDoc == null) {
+            //Do nothing, if the document doesn't exists anymore (eq viewpart is closed)
+            return;
         }
+        try {
+            Element e = svgDoc.getElementById(svgElementID);
+            if (e != null) {
+                String oldStr, newStr, s;
+                int start, end;
+                s = e.getAttribute("style");
+                if (s != null && !s.isEmpty()) {
+                    start = s.indexOf("fill:");// +"fill:".length();
+                    //todo: if fill does not exists, insert new style-tag
+                    end = s.substring(start).indexOf(";") + 1;
+                    oldStr = s.substring(start, start + end);
+                    newStr = "fill:" + jsonValue + ";";
+    
+                    e.setAttribute("style", s.replace(oldStr, newStr));
+                } else {
+                    Activator.reportErrorMessage("\"style\"-tag doesn't exists in "+svgDoc.getURL());
+                }
+            } else {
+                Activator.reportErrorMessage("SVGElement with ID: "+svgElementID+" doesn't exists in "+svgDoc.getURL()); 
+            }
+        } catch (DOMException e1) {
+            Activator.reportDebugMessage("Something went wrong, setting an DOM element.");
+        }
+
 
     }
     
@@ -415,15 +418,6 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
         result.append(style);
         result.append(')');
         return result.toString();
-    }
-
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.xkev.mapping.Colorize#apply(de.cau.cs.kieler.sim.kiem.json.JSONObject, java.lang.String)
-     */
-    @Override
-    public void apply(JSONObject jsonObject, String svgElementId) {
-        // TODO Auto-generated method stub
-        
     }
 
 

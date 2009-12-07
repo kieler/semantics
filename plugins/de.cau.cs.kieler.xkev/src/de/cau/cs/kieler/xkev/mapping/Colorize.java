@@ -82,11 +82,5 @@ public interface Colorize extends Animation {
      */
     void setStyle(String value);
 
-    /**
-     * This function applies the Animation to the SVG-Document.
-     * @param jsonObject
-     * @param svgElementId
-     */
-    void apply(JSONObject jsonObject, String svgElementId);
 
 } // Colorize

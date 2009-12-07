@@ -22,6 +22,8 @@ import org.apache.batik.swing.svg.SVGDocumentLoaderListener;
 import org.apache.batik.swing.svg.SVGUserAgent;
 import org.apache.batik.util.ParsedURL;
 
+import de.cau.cs.kieler.xkev.mapping.animations.SVGLoadingStatusListener;
+
 
 /**
  * Modifies the regular JSVGCanvas in such a way that the EclipseDocumentLoader class gets used
@@ -30,10 +32,14 @@ import org.apache.batik.util.ParsedURL;
  */
 public class EclipseJSVGCanvas extends JSVGCanvas {
 
-//    /**
-//     * The single instace of the EclipseJSVGCanvas.
-//     */
-//    private static EclipseJSVGCanvas INSTANCE = null;
+    /**
+     * The single instace of the EclipseJSVGCanvas.
+     */
+    private static EclipseJSVGCanvas INSTANCE = null;
+    /**
+     * This one is a single loadingStatusListener so we can keep an eye on the svg document loading status.
+     */
+    private final SVGLoadingStatusListener loadingStatusListener = new SVGLoadingStatusListener();
     
     /**
      * This method needs to be private in order to create only one single instance.
@@ -41,35 +47,54 @@ public class EclipseJSVGCanvas extends JSVGCanvas {
      * @param b1
      * @param b2
      */
-    public EclipseJSVGCanvas(SVGUserAgent userAgent, boolean b1, boolean b2) {
+    private EclipseJSVGCanvas(SVGUserAgent userAgent, boolean b1, boolean b2) {
         super(userAgent, b1, b2);
+        //Add the loadingStatusListener to the single instance
+        this.addSVGDocumentLoaderListener(loadingStatusListener);
     }
 
-//    /**
-//     * This method creates a single Instance of the EclipseJSVGCanvas.
-//     * 
-//     * @param userAgent
-//     * @param b1
-//     * @param b2
-//     * @return
-//     */
-//    public static synchronized boolean createInstance(SVGUserAgent userAgent, boolean b1, boolean b2) {
-//        if (INSTANCE == null) {
-//            INSTANCE = new EclipseJSVGCanvas(userAgent, b1, b2);
-//            return true;
-//        }
-//        return false;
-//    }
-//    
-//    /**
-//     * Returns the single instance of the EclipseJSVGCanvas.
-//     * @return INSTANCE
-//     */
-//    public static EclipseJSVGCanvas getInstance() {
-//        return INSTANCE;
-//    }
+    /**
+     * This method creates a single Instance of the EclipseJSVGCanvas.
+     * 
+     * @param userAgent
+     * @param b1
+     * @param b2
+     * @return
+     */
+    public static synchronized boolean createSingleInstance(SVGUserAgent userAgent, boolean b1, boolean b2) {
+        if (INSTANCE == null) {
+            INSTANCE = new EclipseJSVGCanvas(userAgent, b1, b2);
+            System.out.println("Single instance of JSVGCanvas was successfully created!");
+            return true;
+        }
+        System.out.println("The single instance of JSVGCanvas already exists!");
+        return false;
+    }
     
+    /**
+     * Returns the single instance of the EclipseJSVGCanvas.
+     * @return INSTANCE
+     */
+    public static EclipseJSVGCanvas getInstance() {
+        return INSTANCE;
+    }
     
+    /**
+     * Returns the SVGLoadingStatusLister for the single svgCanvas instance. 
+     * So we only need one for whole xKEV.
+     * @return loadingStatusListener
+     */
+    public SVGLoadingStatusListener getSVGLoadingStatusListener() {
+        return loadingStatusListener;
+    }
+    
+    //Should not be called, because the simulation can't continue otherwise
+    public void dispose() {
+        //Remove the loadingStatuslisterener before disposing
+        this.removeSVGDocumentLoaderListener(loadingStatusListener);
+        INSTANCE = null;
+        super.dispose();
+    }
     
     
     public void loadSVGDocument(String url) {

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 
@@ -394,19 +395,20 @@ public class TextboxImpl extends AnimationImpl implements Textbox {
          SVGDocument svgDoc = mapAnimation.getSVGDocument();
          
          if (svgDoc != null) {
-             Element e = svgDoc.getElementById(elementID);
-             //We need to read the first child, to get the textcontent of the tag
-             if (e.getChildNodes() != null) {
-                 e.getChildNodes().item(0).setNodeValue(jsonValue);
-             }
+             try {
+                Element e = svgDoc.getElementById(elementID);
+                 //We need to read the first child, to get the textcontent of the tag
+                 if (e.getChildNodes() != null) {
+                     e.getChildNodes().item(0).setNodeValue(jsonValue);
+                 }
+            } catch (DOMException e) {
+                Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e);
+            }
          }
      }
      
      
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.xkev.mapping.Animation#applyAnimation(de.cau.cs.kieler.sim.kiem.json.JSONObject, java.lang.String)
-     */
-    @Override
+
     public void applyAnimation(JSONObject jsonObject, String svgElementID) {
         MapAnimations mapAnimation = new MapAnimations();
         String jsonValue = getActualJSONValue(jsonObject, svgElementID);
@@ -426,11 +428,11 @@ public class TextboxImpl extends AnimationImpl implements Textbox {
                         value = jsonObject.optString(value.substring(1));
                         if (value != null) { 
                             textboxAnimation(svgElementID, value);
-                            System.out.println("SVGElementID: "+svgElementID+ " Value: "+value);
+//                            System.out.println("SVGElementID: "+svgElementID+ " Value: "+value);
                         }
                     } else {
                         textboxAnimation(svgElementID, hashMap.get(jsonValue));
-                        System.out.println("ElementID: "+svgElementID+ " JSONValue: "+jsonValue+" MappedValue: "+hashMap.get(jsonValue));
+//                        System.out.println("ElementID: "+svgElementID+ " JSONValue: "+jsonValue+" MappedValue: "+hashMap.get(jsonValue));
                     }
                 }
                 

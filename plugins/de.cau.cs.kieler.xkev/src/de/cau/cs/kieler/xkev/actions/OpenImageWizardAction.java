@@ -21,8 +21,18 @@ import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.Messages;
 import de.cau.cs.kieler.xkev.ui.OpenImageWizard;
 
-public class OpenImageWizardAction extends Action {
+/**
+ * Implements the action for the OpenImageWizard window. 
+ * 
+ * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
+ *
+ */
 
+public class OpenImageWizardAction extends Action {
+    
+    /**
+     * The constructor.
+     */
     public OpenImageWizardAction() {
         this.setText(Messages.ActionOpenFileWizard);
         this.setToolTipText(Messages.ActionHintOpenFileWizard);

@@ -19,6 +19,7 @@ import de.cau.cs.kieler.sim.kiem.extension.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
+import de.cau.cs.kieler.xkev.mapping.animations.SVGLoadingStatusListener;
 
 /**
  * A simple Example the Watertank.svg.
@@ -35,7 +36,7 @@ public class Example_04 extends JSONObjectDataComponent implements IJSONObjectDa
         // TODO Auto-generated method stu
     }
 
-    @Override
+
     public JSONObject step(JSONObject JSONobject) throws KiemExecutionException {
         // TODO The new JSON Data must be connected with
         // the old SVG-Graphic and updated afterwards
@@ -61,25 +62,25 @@ public class Example_04 extends JSONObjectDataComponent implements IJSONObjectDa
         return null;// Because it's only an Observer right now
     }
 
-    @Override
+
     public void initialize() throws KiemInitializationException {
         // TODO Auto-generated method stub
-        mapAnimation = new MapAnimations("Watertank.mapping", true);       
+        mapAnimation = new MapAnimations("Watertank.mapping", true);
     }
 
-    @Override
+
     public boolean isObserver() {
         // TODO Auto-generated method stub
         return true;
     }
 
-    @Override
+
     public boolean isProducer() {
         // TODO Auto-generated method stub
         return false;
     }
 
-    @Override
+
     public void wrapup() throws KiemInitializationException {
         // TODO Auto-generated method stub
         counter = 0;

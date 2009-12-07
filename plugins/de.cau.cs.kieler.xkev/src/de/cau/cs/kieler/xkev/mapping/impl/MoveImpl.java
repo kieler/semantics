@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 
@@ -151,6 +152,9 @@ public class MoveImpl extends AnimationImpl implements Move {
         MapAnimations mapAnimation = new MapAnimations();
         SVGDocument svgDoc = mapAnimation.getSVGDocument();
 //        System.out.println("xRange: "+xValue+" yRange:"+yValue);
+        if (svgDoc == null) {
+            return;
+        }
         
         Element e = svgDoc.getElementById(svgElementId);
         //Test whether the svg element exists or not
@@ -174,6 +178,8 @@ public class MoveImpl extends AnimationImpl implements Move {
                 }
             } catch (NumberFormatException  e1) {
                 Activator.reportErrorMessage("Attribute in "+svgDoc.getURL()+" has a wrong NumberFormat!", e1);
+            } catch (DOMException e2) {
+                Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e2);
             }
         } else {
             Activator.reportErrorMessage("SVGElement with ID: "+svgElementId+" doesn't exists in "+svgDoc.getURL());

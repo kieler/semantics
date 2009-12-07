@@ -36,7 +36,6 @@ public class Example_03 extends JSONObjectDataComponent implements IJSONObjectDa
         // TODO Auto-generated method stu
     }
 
-    @Override
     public JSONObject step(JSONObject JSONobject) throws KiemExecutionException {
         // TODO The new JSON Data must be connected with
         // the old SVG-Graphic and updated afterwards
@@ -85,31 +84,26 @@ public class Example_03 extends JSONObjectDataComponent implements IJSONObjectDa
         return null;// Because it's only an Observer right now
     }
 
-    @Override
     public void initialize() throws KiemInitializationException {
         // TODO Auto-generated method stub
         mapAnimation = new MapAnimations("Trafficlight.mapping", true);
     }
 
-    @Override
     public boolean isObserver() {
         // TODO Auto-generated method stub
         return true;
     }
 
-    @Override
     public boolean isProducer() {
         // TODO Auto-generated method stub
         return false;
     }
 
-    @Override
     public void wrapup() throws KiemInitializationException {
         // TODO Auto-generated method stub
         counter = 0;
     }
 
-    // @Override
     // public boolean isMaster() {
     // return true;
     // }

@@ -10,9 +10,9 @@
     <animation xsi:type="mapping:Colorize" input="on;off" color="green; #626262" key="cLight" accessID="2"/>
   </svgElement>
   <svgElement id="pRed">
-    <animation xsi:type="mapping:Colorize" input="[on,off,an,aus]" color="[red,  #626262]" key="pLight" accessID="0"/>
+    <animation xsi:type="mapping:Colorize" input="[on,off]" color="[red,  #626262]" key="cLight" accessID="2"/>
   </svgElement>
   <svgElement id="pGreen">
-    <animation xsi:type="mapping:Colorize" input="off;on" color="#626262;green;  [none  ,  black]" key="pLight" accessID="1"/>
+    <animation xsi:type="mapping:Colorize" input="on;off" color="#626262;green;  [none  ,  black]" key="cLight" accessID="2"/>
   </svgElement>
 </mapping:SVGFile>

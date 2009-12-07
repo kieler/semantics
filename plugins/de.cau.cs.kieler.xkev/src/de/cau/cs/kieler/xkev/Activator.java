@@ -29,10 +29,14 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
-    // The plug-in ID
+    /**
+     * The plug-in ID.
+     */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.xkev";
 
-    // The shared instance
+    /**
+     *  The shared instance.
+     */
     private static Activator plugin;
 
     /**
@@ -77,36 +81,46 @@ public class Activator extends AbstractUIPlugin {
      *            the path
      * @return the image descriptor
      */
-    public ImageDescriptor getImageDescriptor(String path) {
+    public ImageDescriptor getImageDescriptor(final String path) {
         return imageDescriptorFromPlugin(PLUGIN_ID, path);
     }
     
     /**
      * Reports an error message to the eclipse Error Log.
-     * @param message
+     * @param message The message that describes the error.
      */
-    public static void reportErrorMessage(String message) {
+    public static void reportErrorMessage(final String message) {
         Status myStatus = new Status(IStatus.ERROR, PLUGIN_ID, message);
         StatusManager.getManager().handle(myStatus, StatusManager.LOG);
     }
     
     /**
-     * Reports an error message to the eclipse Error Log, with an exception e
-     * @param message
-     * @parame e
+     * Reports an error message to the eclipse Error Log, with an exception e.
+     * @param message The message that describes the error.
+     * @param e The exception which should be reported.
      */
-    public static void reportErrorMessage(String message, Exception e) {
+    public static void reportErrorMessage(final String message, final Exception e) {
         Status myStatus = new Status(IStatus.ERROR, PLUGIN_ID, message, e);
         StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
     }
+    
     /**
-     * Only logs messages for debugging. (use Eclipse -consoleLog) for displaying debug messages
-     * @param message
+     * Only logs messages for debugging. (use Eclipse -consoleLog) for displaying debug messages.
+     * @param message The message that describes the error.
      */
-    public static void reportDebugMessage(String message) {
+    public static void reportDebugMessage(final String message) {
         Status myStatus = new Status(IStatus.INFO, PLUGIN_ID, message);
         StatusManager.getManager().handle(myStatus, StatusManager.LOG);
     }
-    
+
+    /**
+     * Only logs messages for debugging. (use Eclipse -consoleLog) for displaying debug messages.
+     * @param message The message that describes the error.
+     */
+    public static void reportInfoMessage(final String message) {
+        Status myStatus = new Status(IStatus.INFO, PLUGIN_ID, message);
+        StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+        StatusManager.getManager().handle(myStatus, StatusManager.LOG);
+    }    
     
 }

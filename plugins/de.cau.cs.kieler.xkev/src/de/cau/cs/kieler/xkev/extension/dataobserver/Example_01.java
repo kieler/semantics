@@ -12,12 +12,6 @@
 
 package de.cau.cs.kieler.xkev.extension.dataobserver;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Scanner;
-
 import de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.extension.KiemExecutionException;
@@ -44,11 +38,10 @@ public class Example_01 extends JSONObjectDataComponent implements IJSONObjectDa
         // TODO Auto-generated method stu
     }
 
-    @Override
     public JSONObject step(JSONObject JSONobject) throws KiemExecutionException {
         // TODO The new JSON Data must be connected with
         // the old SVG-Graphic and updated afterwards
-        
+
         try {
             if (!((String) JSONobject.get("Ampelknopf")).isEmpty() && JSONobject.getBoolean("Ampelknopf")) {
                 flag = !flag;
@@ -91,31 +84,26 @@ public class Example_01 extends JSONObjectDataComponent implements IJSONObjectDa
         return null;// Because it's only an Observer right now
     }
 
-    @Override
     public void initialize() throws KiemInitializationException {
         // TODO Auto-generated method stub
         mapAnimation = new MapAnimations("Trafficlight_array.mapping", true);
     }
 
-    @Override
     public boolean isObserver() {
         // TODO Auto-generated method stub
         return true;
     }
 
-    @Override
     public boolean isProducer() {
         // TODO Auto-generated method stub
         return false;
     }
 
-    @Override
     public void wrapup() throws KiemInitializationException {
         // TODO Auto-generated method stub
         counter = 0;
     }
 
-    // @Override
     // public boolean isMaster() {
     // return true;
     // }

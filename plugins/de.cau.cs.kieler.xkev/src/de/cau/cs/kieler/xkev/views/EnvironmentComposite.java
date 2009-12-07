@@ -35,6 +35,10 @@ import org.apache.batik.bridge.ExternalResourceSecurity;
 import org.apache.batik.bridge.NoLoadExternalResourceSecurity;
 import org.apache.batik.bridge.NoLoadScriptSecurity;
 import org.apache.batik.bridge.ScriptSecurity;
+import org.apache.batik.bridge.UpdateManager;
+import org.apache.batik.bridge.UpdateManagerAdapter;
+import org.apache.batik.bridge.UpdateManagerEvent;
+import org.apache.batik.bridge.UpdateManagerListener;
 import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.swing.gvt.GVTTreeRendererAdapter;
 import org.apache.batik.swing.gvt.GVTTreeRendererEvent;
@@ -77,6 +81,7 @@ import org.w3c.dom.Element;
 
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.helpers.Tools;
+import de.cau.cs.kieler.xkev.mapping.animations.SVGLoadingStatusListener;
 
 public class EnvironmentComposite extends Composite implements ISelectionListener {
 
@@ -94,39 +99,27 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
 
     private MyUserAgent userAgent;
     
+    
     /**
-     * Create a single instance of EnvironmentComposite
+     * This one is a single loadingStatusListener so we can keep an eye on the svg document loading status.
      */
-    private static EnvironmentComposite INSTANCE = null;
-    private static boolean loadingComplete = false;
+    private final SVGLoadingStatusListener loadingStatusListener = new SVGLoadingStatusListener();
 
     public MyUserAgent getUserAgent() {
         return userAgent;
     }
     
-    public static synchronized boolean createSingleInstance(Composite parent, int style, boolean showScrollbars) {
-        if (INSTANCE == null) {
-            INSTANCE = new EnvironmentComposite(parent, style, showScrollbars);
-            return true;
-        }
-        return false;
+    /**
+     * Returns the SVGLoadingStatusLister for the single svgCanvas instance. 
+     * So we only need one for whole xKEV.
+     * @return loadingStatusListener
+     */
+    public SVGLoadingStatusListener getSVGLoadingStatusListener() {
+        return loadingStatusListener;
     }
     
-    public static EnvironmentComposite getInstance() {
-        return INSTANCE;
-    }    
     
-    
-    public boolean SVGDocumentLoadingSuccessful() {
-        if (loadingComplete) {
-            loadingComplete = false;
-            return true;
-        } else {
-            return false;        
-        }
-    }
-    
-    private EnvironmentComposite(Composite parent, int style, boolean showScrollbars) {
+    public EnvironmentComposite(Composite parent, int style, boolean showScrollbars) {
         super(parent, SWT.EMBEDDED);
 
         shell = parent.getShell();
@@ -153,14 +146,14 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
         try {
             userAgent = new MyUserAgent();
 
-//            if (EclipseJSVGCanvas.getInstance() == null) {
-//                while (!EclipseJSVGCanvas.createInstance(userAgent, true, true)) {
-//                  //Do nothing until the single instance is successfully created
-//                }
-//            }
-//            //Get the single instance of the EclipseJSVGCanvas
-//            svgCanvas = EclipseJSVGCanvas.getInstance();
-            svgCanvas = new EclipseJSVGCanvas(userAgent, true, true);
+            if (EclipseJSVGCanvas.getInstance() == null) {
+                while (!EclipseJSVGCanvas.createSingleInstance(userAgent, true, true)) {
+                  //Do nothing until the single instance is successfully created
+                }
+            }
+            //Get the single instance of the EclipseJSVGCanvas
+            svgCanvas = EclipseJSVGCanvas.getInstance();
+//            svgCanvas = new EclipseJSVGCanvas(userAgent, true, true);
             svgCanvas.setLayout(new BorderLayout());
 
             // taken from original modelgui
@@ -171,26 +164,26 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
             // this.canvas.setAnimationLimitingCPU(0.5f);
             // svgCanvas.setDoubleBuffered(true);
 
-            // Set the JSVGCanvas listeners.
-            svgCanvas.addSVGDocumentLoaderListener(new SVGDocumentLoaderAdapter() {
-                public void documentLoadingStarted(SVGDocumentLoaderEvent e) {
-                    System.out.println("Loading svg file...");
-                }
-
-                public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
-                    System.out.println("Loading svg file... complete!");
-                    loadingComplete = true;
-                }
-                
-                public void documentLoadingCancelled(SVGDocumentLoaderEvent e) {
-                    System.out.println("Loading svg file... cancelled!");
-
-                }
-                
-                public void documentLoadingFailed(SVGDocumentLoaderEvent e) {
-                    System.out.println("Loading svg file... failed!");
-                }                
-            });
+            // Set the JSVGCanvas listeners. (NOT USED HERE ANYMORE @see de.cau.cs.kieler.xkev.mapping.animations#SVGLoadingStatusListener)
+//            svgCanvas.addSVGDocumentLoaderListener(loadingStatusListener);
+//            svgCanvas.addSVGDocumentLoaderListener(new SVGDocumentLoaderAdapter() {
+//                public void documentLoadingStarted(SVGDocumentLoaderEvent e) {
+//                    System.out.println("Loading svg file...");
+//                }
+//
+//                public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
+//                    System.out.println("Loading svg file... complete!");
+//                }
+//                
+//                public void documentLoadingCancelled(SVGDocumentLoaderEvent e) {
+//                    System.out.println("Loading svg file... cancelled!");
+//
+//                }
+//                
+//                public void documentLoadingFailed(SVGDocumentLoaderEvent e) {
+//                    System.out.println("Loading svg file... failed!");
+//                }                
+//            });
 
             svgCanvas.addGVTTreeBuilderListener(new GVTTreeBuilderAdapter() {
                 public void gvtBuildStarted(GVTTreeBuilderEvent e) {
@@ -205,6 +198,8 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
                 }
 
                 public void gvtRenderingCompleted(GVTTreeRendererEvent e) {
+                    //Here we can receive the updatemanager
+                    //updateManager = svgCanvas.getUpdateManager();
                 }
             });
 
@@ -247,8 +242,8 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
 
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         workspace.removeResourceChangeListener(updater);
-
-        svgCanvas.dispose();
+        //Don't dispose svgCanvas, could be used later on (simulation can run in background without showing the canvas)
+        //svgCanvas.dispose();
         frame.dispose();
         super.dispose();
     }
@@ -299,6 +294,7 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
             } else if (svgURI != null) {
                 // Tools.setStatusLine("loading image...");
                 svgCanvas.loadSVGDocument(svgURI.toURL().toExternalForm());
+            } else {
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
