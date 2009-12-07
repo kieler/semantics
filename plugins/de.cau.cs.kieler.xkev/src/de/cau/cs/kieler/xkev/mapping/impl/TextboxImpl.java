@@ -397,10 +397,12 @@ public class TextboxImpl extends AnimationImpl implements Textbox {
          if (svgDoc != null) {
              try {
                 Element e = svgDoc.getElementById(elementID);
-                 //We need to read the first child, to get the textcontent of the tag
-                 if (e.getChildNodes() != null) {
-                     e.getChildNodes().item(0).setNodeValue(jsonValue);
-                 }
+                if (e != null) { 
+	                //We need to read the first child, to get the textcontent of the tag
+	                if (e.getChildNodes() != null) {
+	                    e.getChildNodes().item(0).setNodeValue(jsonValue);
+	                }
+                }
             } catch (DOMException e) {
                 Activator.reportErrorMessage("Something went wrong, setting an DOM element.", e);
             }
