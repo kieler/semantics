@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.xkev.feature"
-      label="xKEV Feature"
+      id="de.cau.cs.kieler.xkev"
+      label="KIELER xKEV Feature"
       version="0.1.0.qualifier"
       provider-name="Christian-Albrechts-University of Kiel">
 
