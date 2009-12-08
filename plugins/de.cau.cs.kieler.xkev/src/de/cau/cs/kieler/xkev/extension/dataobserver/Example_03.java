@@ -99,6 +99,18 @@ public class Example_03 extends JSONObjectDataComponent implements IJSONObjectDa
         return false;
     }
 
+    @Override
+    public JSONObject provideInitialVariables()
+    		throws KiemInitializationException {
+    	JSONObject initialVars = new JSONObject();
+    	try {
+			initialVars.put("Ampelknopf", "false");
+		} catch (JSONException e) {
+			// FIXME: handle exception properly!!
+		}
+    	return initialVars;
+    }
+    
     public void wrapup() throws KiemInitializationException {
         // TODO Auto-generated method stub
         counter = 0;
