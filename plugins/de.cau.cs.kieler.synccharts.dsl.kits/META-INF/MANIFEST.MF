@@ -11,7 +11,6 @@ Require-Bundle: org.eclipse.xtext;bundle-version="0.8.0",
  de.itemis.xtext.antlr;bundle-version="0.8.0";resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
- org.eclipse.xtext.log4j;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe.core;resolution:=optional,
  com.ibm.icu;resolution:=optional,
@@ -23,9 +22,11 @@ Require-Bundle: org.eclipse.xtext;bundle-version="0.8.0",
  org.eclipse.xtend,
  de.cau.cs.kieler.synccharts.diagram.custom;bundle-version="0.1.0",
  de.cau.cs.kieler.synccharts.custom;bundle-version="0.1.0",
- de.cau.cs.kieler.synccharts.model;bundle-version="0.1.0",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.1",
- de.cau.cs.kieler.synccharts;bundle-version="0.1.0"
+ de.cau.cs.kieler.synccharts;bundle-version="0.1.0",
+ de.cau.cs.kieler.synccharts.labelparser;bundle-version="0.1.0",
+ de.cau.cs.kieler.synccharts.labelparser.bridge;bundle-version="0.1.0",
+ org.apache.log4j;bundle-version="1.2.15"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.dsl,
  de.cau.cs.kieler.synccharts.dsl.services,
@@ -33,7 +34,4 @@ Export-Package: de.cau.cs.kieler.synccharts.dsl,
  de.cau.cs.kieler.synccharts.dsl.parser.antlr,
  de.cau.cs.kieler.synccharts.dsl.validation,
  de.cau.cs.kieler.synccharts.dsl.parser.antlr.internal
-Import-Package: de.cau.cs.kieler.synccharts.formatting,
- de.cau.cs.kieler.synccharts.labelparser.bridge,
- org.apache.log4j,
- org.eclipse.ui
+Import-Package: org.apache.log4j
