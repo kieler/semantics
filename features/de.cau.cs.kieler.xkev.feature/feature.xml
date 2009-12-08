@@ -222,7 +222,7 @@ litigation.
          id="org.eclipse.ui"
          download-size="0"
          install-size="0"
-         version="3.5.1.M20090902-1000"
+         version="3.5.0.I20090604-2000"
          unpack="false"/>
 
    <plugin
@@ -236,7 +236,7 @@ litigation.
          id="org.eclipse.core.resources"
          download-size="0"
          install-size="0"
-         version="3.5.1.R35x_v20090826-0451"
+         version="3.5.0.v20090512"
          unpack="false"/>
 
    <plugin
