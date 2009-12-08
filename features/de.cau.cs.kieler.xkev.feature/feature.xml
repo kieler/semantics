@@ -218,40 +218,23 @@ litigation.
       <update label="KIELER nightly builds Update Site" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/"/>
    </url>
 
-   <plugin
-         id="org.eclipse.ui"
-         download-size="0"
-         install-size="0"
-         version="3.5.0.I20090604-2000"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecore"
-         download-size="0"
-         install-size="0"
-         version="2.5.0.v200906151043"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.core.resources"
-         download-size="0"
-         install-size="0"
-         version="3.5.0.v20090512"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.core.runtime"
-         download-size="0"
-         install-size="0"
-         version="3.5.0.v20090525"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.batik.bridge"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.v200805290154"
-         unpack="false"/>
+   <requires>
+      <import plugin="org.apache.batik.ext.awt"/>
+      <import plugin="org.apache.batik.util.gui"/>
+      <import plugin="org.apache.batik.xml"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.emf.ecore" version="2.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.resources" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.apache.batik.bridge" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.batik.dom.svg" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.batik.util" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.w3c.dom.svg" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.xerces" version="2.9.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.sim.kiem"/>
+      <import plugin="org.apache.batik.dom" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.ecore.xmi"/>
+   </requires>
 
    <plugin
          id="org.apache.batik.swing"
@@ -261,45 +244,10 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.apache.batik.dom"
+         id="de.cau.cs.kieler.xkev"
          download-size="0"
          install-size="0"
-         version="1.6.0.v200805290154"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.batik.dom.svg"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.v200805290154"
-         unpack="false"/>
-
-   <plugin
-         id="org.w3c.dom.svg"
-         download-size="0"
-         install-size="0"
-         version="1.1.0.v200806040011"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.xerces"
-         download-size="0"
-         install-size="0"
-         version="2.9.0.v200909240008"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.kiem"
-         download-size="0"
-         install-size="0"
-         version="0.1.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.batik.util"
-         download-size="0"
-         install-size="0"
-         version="1.6.0.v200805290154"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
