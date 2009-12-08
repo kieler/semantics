@@ -28,5 +28,6 @@ Export-Package: de.cau.cs.kieler.krep.editors.klp,
  de.cau.cs.kieler.krep.editors.klp.klp.util,
  de.cau.cs.kieler.krep.editors.klp.parseTreeConstruction,
  de.cau.cs.kieler.krep.editors.klp.parser.antlr,
- de.cau.cs.kieler.krep.editors.klp.validation
-
+ de.cau.cs.kieler.krep.editors.klp.validation,
+ de.cau.cs.kieler.krep.editors.klp.parser.antlr.internal
+Import-Package: org.apache.log4j

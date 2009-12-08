@@ -4,7 +4,7 @@
 package de.cau.cs.kieler.krep.editors.klp.parser.antlr;
 
 import org.antlr.runtime.ANTLRInputStream;
-import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
+import org.antlr.runtime.TokenSource;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.parser.ParseException;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
@@ -15,20 +15,16 @@ import de.cau.cs.kieler.krep.editors.klp.services.KlpGrammarAccess;
 
 public class KlpParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
 	
-	@Inject 
-    protected ITokenDefProvider antlrTokenDefProvider;
-	
 	@Inject
 	private KlpGrammarAccess grammarAccess;
 	
 	@Override
 	protected IParseResult parse(String ruleName, ANTLRInputStream in) {
-		de.cau.cs.kieler.krep.editors.klp.parser.antlr.internal.InternalKlpLexer lexer = new de.cau.cs.kieler.krep.editors.klp.parser.antlr.internal.InternalKlpLexer(in);
-		XtextTokenStream stream = new XtextTokenStream(lexer, antlrTokenDefProvider);
-		stream.setInitialHiddenTokens("RULE_COMMENT", "RULE_WS");
-		de.cau.cs.kieler.krep.editors.klp.parser.antlr.internal.InternalKlpParser parser = new de.cau.cs.kieler.krep.editors.klp.parser.antlr.internal.InternalKlpParser(
-				stream, getElementFactory(), grammarAccess);
-		parser.setTokenTypeMap(antlrTokenDefProvider.getTokenDefMap());
+		TokenSource tokenSource = createLexer(in);
+		XtextTokenStream tokenStream = createTokenStream(tokenSource);
+		tokenStream.setInitialHiddenTokens("RULE_COMMENT", "RULE_WS");
+		de.cau.cs.kieler.krep.editors.klp.parser.antlr.internal.InternalKlpParser parser = createParser(tokenStream);
+		parser.setTokenTypeMap(getTokenDefProvider().getTokenDefMap());
 		try {
 			if(ruleName != null)
 				return parser.parse(ruleName);
@@ -36,6 +32,10 @@ public class KlpParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 		} catch (Exception re) {
 			throw new ParseException(re.getMessage(),re);
 		}
+	}
+	
+	protected de.cau.cs.kieler.krep.editors.klp.parser.antlr.internal.InternalKlpParser createParser(XtextTokenStream stream) {
+		return new de.cau.cs.kieler.krep.editors.klp.parser.antlr.internal.InternalKlpParser(stream, getElementFactory(), getGrammarAccess());
 	}
 	
 	@Override 
@@ -50,4 +50,5 @@ public class KlpParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 	public void setGrammarAccess(KlpGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
+	
 }

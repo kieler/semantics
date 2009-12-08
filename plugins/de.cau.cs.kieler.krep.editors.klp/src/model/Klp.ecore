@@ -25,33 +25,34 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Decl" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" eType="#//Scope"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SetClk" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="clk" eType="#//Reg" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SetPC" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="label" eType="#//Label"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Prio" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="prio" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Done" eSuperTypes="#//Instruction">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="pc" eType="#//Label"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pc" eType="#//Label" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Binop" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="#//Operator"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg1" eType="#//Read" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg2" eType="#//Read" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="val" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="#//Reg"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="#//Reg" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Jmp" eSuperTypes="#//Instruction">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="label" eType="#//Label"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="label" eType="#//Label"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CJmp" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cond" eType="#//JumpKind"/>
@@ -63,7 +64,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//MoveKind"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="#//Read" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="val" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="#//Reg"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="#//Reg" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Reg">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -118,6 +119,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Read">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reg" eType="#//Reg" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

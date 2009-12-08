@@ -8,16 +8,16 @@ import com.google.inject.Singleton;
 import com.google.inject.Inject;
 
 import org.eclipse.xtext.*;
-
 import org.eclipse.xtext.service.GrammarProvider;
+import org.eclipse.xtext.service.AbstractElementFinder.*;
 
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 
 @Singleton
-public class KlpGrammarAccess implements IGrammarAccess {
+public class KlpGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
-	public class KLPElements implements IParserRuleAccess {
+	public class KLPElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "KLP");
 		private final Assignment cInstructionsAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cInstructionsLineParserRuleCall_0 = (RuleCall)cInstructionsAssignment.eContents().get(0);
@@ -33,7 +33,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getInstructionsLineParserRuleCall_0() { return cInstructionsLineParserRuleCall_0; }
 	}
 
-	public class LineElements implements IParserRuleAccess {
+	public class LineElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Line");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
@@ -69,7 +69,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getInstructionInstructionParserRuleCall_1_0() { return cInstructionInstructionParserRuleCall_1_0; }
 	}
 
-	public class InstructionElements implements IParserRuleAccess {
+	public class InstructionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Instruction");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cDeclParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
@@ -117,7 +117,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getMoveParserRuleCall_8() { return cMoveParserRuleCall_8; }
 	}
 
-	public class DeclElements implements IParserRuleAccess {
+	public class DeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Decl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cScopeAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -145,7 +145,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getRegRegParserRuleCall_1_0() { return cRegRegParserRuleCall_1_0; }
 	}
 
-	public class SetClkElements implements IParserRuleAccess {
+	public class SetClkElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SetClk");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cSETCLKKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -177,7 +177,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getClkRegParserRuleCall_2_0() { return cClkRegParserRuleCall_2_0; }
 	}
 
-	public class SetPCElements implements IParserRuleAccess {
+	public class SetPCElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SetPC");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cSETPCKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -209,7 +209,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getLabelLabelParserRuleCall_2_0() { return cLabelLabelParserRuleCall_2_0; }
 	}
 
-	public class PrioElements implements IParserRuleAccess {
+	public class PrioElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Prio");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cPRIOKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -241,7 +241,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getPrioINTTerminalRuleCall_2_0() { return cPrioINTTerminalRuleCall_2_0; }
 	}
 
-	public class DoneElements implements IParserRuleAccess {
+	public class DoneElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Done");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cDONEKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -265,7 +265,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getPcLabelParserRuleCall_1_0() { return cPcLabelParserRuleCall_1_0; }
 	}
 
-	public class BinopElements implements IParserRuleAccess {
+	public class BinopElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Binop");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cOpAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -321,7 +321,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getValINTTerminalRuleCall_3_1_0() { return cValINTTerminalRuleCall_3_1_0; }
 	}
 
-	public class JmpElements implements IParserRuleAccess {
+	public class JmpElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Jmp");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cJMPKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -345,7 +345,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getLabelLabelParserRuleCall_1_0() { return cLabelLabelParserRuleCall_1_0; }
 	}
 
-	public class CJmpElements implements IParserRuleAccess {
+	public class CJmpElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CJmp");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cCondAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -381,7 +381,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getLabelLabelParserRuleCall_2_0() { return cLabelLabelParserRuleCall_2_0; }
 	}
 
-	public class MoveElements implements IParserRuleAccess {
+	public class MoveElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Move");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -429,7 +429,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getValINTTerminalRuleCall_2_1_0() { return cValINTTerminalRuleCall_2_1_0; }
 	}
 
-	public class LabelElements implements IParserRuleAccess {
+	public class LabelElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Label");
 		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
@@ -445,7 +445,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getNameIDTerminalRuleCall_0() { return cNameIDTerminalRuleCall_0; }
 	}
 
-	public class RegElements implements IParserRuleAccess {
+	public class RegElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Reg");
 		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
@@ -461,7 +461,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public RuleCall getNameIDTerminalRuleCall_0() { return cNameIDTerminalRuleCall_0; }
 	}
 
-	public class ReadElements implements IParserRuleAccess {
+	public class ReadElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Read");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
@@ -528,7 +528,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 	}
 	
 	
-	public class ScopeElements implements IEnumRuleAccess {
+	public class ScopeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "Scope");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cInputEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -564,7 +564,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public Keyword getLocalLOCALKeyword_2_0() { return cLocalLOCALKeyword_2_0; }
 	}
 
-	public class OperatorElements implements IEnumRuleAccess {
+	public class OperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "Operator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cAddEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -790,7 +790,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public Keyword getIneqINEQKeyword_25_0() { return cIneqINEQKeyword_25_0; }
 	}
 
-	public class JumpKindElements implements IEnumRuleAccess {
+	public class JumpKindElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "JumpKind");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cJtEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
@@ -834,7 +834,7 @@ public class KlpGrammarAccess implements IGrammarAccess {
 		public Keyword getJnzJNZKeyword_3_0() { return cJnzJNZKeyword_3_0; }
 	}
 
-	public class MoveKindElements implements IEnumRuleAccess {
+	public class MoveKindElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "MoveKind");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cCmovEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
