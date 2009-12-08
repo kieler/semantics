@@ -19,8 +19,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.ui.statushandlers.StatusManager;
+
+import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
-import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
+
 
 /**
  * Connection that uses sockets from <code>java.net</code>.
@@ -54,8 +59,8 @@ public class SocketConnection extends ConnectionProtocol {
             socket.close();
         } catch (IOException e) {
             // Ignore silently
-
-            MessageView.print(e.getMessage());
+            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error closing socket", e);
+            StatusManager.getManager().handle(myStatus, StatusManager.LOG);
         }
     }
 

@@ -20,8 +20,8 @@ import java.util.LinkedList;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 
 /**
- * One tick in a trace. contains input and output signals with their values, as
- * well as output signals that were saved at a given time.
+ * One tick in a trace. contains input and output signals with their values, as well as output
+ * signals that were saved at a given time.
  * 
  * @author ctr
  * 
@@ -73,7 +73,11 @@ public class Tick {
      */
     public Tick(final LinkedList<Signal> ins, final LinkedList<Signal> outs) {
         this.inputs = ins;
-        this.outputs = outs;
+        if (outs == null) {
+            this.outputs = new LinkedList<Signal>();
+        } else {
+            this.outputs = outs;
+        }
     }
 
     /**
@@ -104,8 +108,7 @@ public class Tick {
      * print part of the tick.
      * 
      * @param io
-     *            indicate whether input, output or reference outputs are
-     *            printed
+     *            indicate whether input, output or reference outputs are printed
      * @return String representation
      */
     public String toString(final IO io) {
@@ -155,15 +158,18 @@ public class Tick {
 
     public void snapshot() {
         savedOutputs = new LinkedList<Signal>();
-        for (Signal s : outputs) {
-            savedOutputs.add(new Signal(s));
-            s.setPresent(false);
-            if (s.isValued()) {
-                s.setValue(0);
+        if (outputs != null) {
+            for (Signal s : outputs) {
+                savedOutputs.add(new Signal(s));
+                s.setPresent(false);
+                if (s.isValued()) {
+                    s.setValue(0);
+                }
             }
+            outputs.clear();
+
         }
         Collections.sort(savedOutputs);
-        outputs.clear();
     }
 
     /**
@@ -199,7 +205,8 @@ public class Tick {
     /**
      * copy all outputs from Tick t.
      * 
-     * @param t the tick that defines the outputs
+     * @param t
+     *            the tick that defines the outputs
      */
     public void setOutput(final Tick t) {
         if (t != null) {
@@ -213,7 +220,7 @@ public class Tick {
     }
 
     /**
-     * return the reaction time to compute this tick.
+     * set the reaction time to compute this tick.
      * 
      * @param reactionTime
      *            reaction time
@@ -223,7 +230,7 @@ public class Tick {
     }
 
     /**
-     * @return reacion time to compute the tick
+     * @return reaction time to compute the tick
      */
     public int getRT() {
         return rt;

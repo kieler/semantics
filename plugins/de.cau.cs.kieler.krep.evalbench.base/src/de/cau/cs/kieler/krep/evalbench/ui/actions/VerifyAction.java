@@ -15,8 +15,8 @@ package de.cau.cs.kieler.krep.evalbench.ui.actions;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader; //import java.text.ParseException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
@@ -25,12 +25,15 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
@@ -43,7 +46,6 @@ import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
 import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
 import de.cau.cs.kieler.krep.evalbench.ui.VerifyPreferencePage;
-import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
 /**
  * Action that runs the current program. The plugin activator and the common layer are used to
@@ -91,7 +93,7 @@ public class VerifyAction extends Action {
      */
     @Override
     public void run() {
-        Activator.getDefault().commonLayer.getTargetInfo();
+        // Activator.getDefault().commonLayer.getTargetInfo();
         Tools.tic();
         final Display display = Display.findDisplay(Thread.currentThread());
 
@@ -99,11 +101,14 @@ public class VerifyAction extends Action {
 
         File dir = new File(preferenceStore.getString(VerifyPreferencePage.BENCHMARK_PATH));
 
+        // File dir = new File("/home/ctr/code/benchmarks_wcrt");
+
         final boolean ignoreInvalid = preferenceStore
                 .getBoolean(VerifyPreferencePage.IGNORE_INVALID);
 
         data = new LinkedList<String[]>();
         final LinkedList<File> files = new LinkedList<File>();
+
         for (File f : dir.listFiles()) {
             if (f.isDirectory()
                     && f.getName().matches(
@@ -133,7 +138,7 @@ public class VerifyAction extends Action {
                     File f = i.next();
                     String[] s = j.next();
                     try {
-                        MessageView.print("verify: " + f.getName());
+                        // MessageView.print("verify: " + f.getName());
                         monitor.subTask(f.getName());
                         IAssembler asm = parse(f);
 
@@ -143,6 +148,10 @@ public class VerifyAction extends Action {
                         if (traces == null || !traces.hasNext()) {
                             s[rowComment] = "no trace found";
                         } else {
+                            Activator.getDefault().commonLayer.connect();
+                            // Activator.getDefault().commonLayer.connect(CommonLayer.JNI_CON,
+                            // ICommunicationProtocol.P_KEP, "", "", 0);
+
                             Activator.getDefault().commonLayer.reset();
                             Activator.getDefault().commonLayer.loadProgram(asm, null);
 
@@ -208,20 +217,24 @@ public class VerifyAction extends Action {
                         out.newLine();
                         out.flush();
                     } catch (IOException e) {
-                        MessageView.print("cannot log to file " + logFile);
+                        Status myStatus = new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+                                "Cannot write verify results to Log-File", e);
+                        StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                     } finally {
                         if (out != null) {
                             try {
                                 out.close();
                             } catch (IOException e) {
-                                // silently ignore
-
-                                MessageView.print(e.getMessage());
+                                Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                                        "Cannot write verify results to Log-File", e);
+                                StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                             }
                         }
                     }
                 }
-                MessageView.print("test done:" + Tools.showTime());
+                Status myStatus = new Status(IStatus.INFO, Activator.PLUGIN_ID,
+                        "Verification done: " + Tools.showTime(), null);
+                StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
             }
         });
     }
@@ -245,7 +258,7 @@ public class VerifyAction extends Action {
                     throw new ParseException("No assembler found in " + path);
                 }
             }
-            res.assemble(file.getName(), new FileReader(file));
+            res.assemble(file.getName(), new FileInputStream(file));
             return res;
         } catch (FileNotFoundException e1) {
             // e1.printStackTrace();

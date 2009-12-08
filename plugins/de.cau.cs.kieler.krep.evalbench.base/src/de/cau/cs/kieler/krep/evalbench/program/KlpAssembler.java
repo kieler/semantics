@@ -13,10 +13,12 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program;
 
-import java.io.Reader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import de.cau.cs.kieler.krep.editors.klp.KlpRuntimeModule;
 import de.cau.cs.kieler.krep.editors.klp.klp.Binop;
 import de.cau.cs.kieler.krep.editors.klp.klp.CJmp;
 import de.cau.cs.kieler.krep.editors.klp.klp.Decl;
@@ -94,9 +96,9 @@ public class KlpAssembler implements IAssembler {
         HashMap<String, Integer> regs = new HashMap<String, Integer>();
         regs.put("tick", 0);
         int iIndex = 0;
-        int lineNumber=0;
+        int lineNumber = 0;
         for (Line l : model.getInstructions()) {
-            
+
             if (l.getLabels() != null) {
                 for (String s : l.getLabels()) {
                     label2addr.put(s, iIndex);
@@ -115,7 +117,7 @@ public class KlpAssembler implements IAssembler {
             lineNumber++;
             rows.put(iIndex, lineNumber);
         }
-        
+
         for (Line l : model.getInstructions()) {
             initialize(l.getInstruction(), label2addr, regs);
         }
@@ -598,7 +600,7 @@ public class KlpAssembler implements IAssembler {
         if (model != null) {
             for (final Line l : model.getInstructions()) {
                 Instruction i = l.getInstruction();
-                if (i != null && i.getOpcode0()!=0) {
+                if (i != null && i.getOpcode0() != 0) {
                     final String t = "" + padByte(i.getOpcode0()) + padByte(i.getOpcode1())
                             + padByte(i.getOpcode2()) + padByte(i.getOpcode3());
                     if (t != null) {
@@ -647,17 +649,16 @@ public class KlpAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public void assemble(final String n, final String p) throws ParseException {
-        // TODO Auto-generated method stub
+    public void assemble(final String n, final InputStream p) throws ParseException {
+        try {
+            KLP m = KlpRuntimeModule.parse(p);
+            assemble(n, m);
+        } catch (Exception e) {
+            throw new ParseException("Parse error: " + e.getMessage());
+        }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void assemble(final String n, final Reader p) throws ParseException {
-    }
-
-    private void setOpcode(Instruction i, int op0, int op1, int op2, int op3) {
+    private void setOpcode(Instruction i, int op0, int op1, int op2, final int op3) {
         i.setOpcode0(op0);
         i.setOpcode1(op1);
         i.setOpcode2(op2);
@@ -668,8 +669,16 @@ public class KlpAssembler implements IAssembler {
      * {@inheritDoc}
      */
     public int getTickLen() {
-       
+
         return Integer.MAX_VALUE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void assemble(String name, String program) throws ParseException {
+        assemble(name, new ByteArrayInputStream(program.getBytes()));
+
     }
 
 }

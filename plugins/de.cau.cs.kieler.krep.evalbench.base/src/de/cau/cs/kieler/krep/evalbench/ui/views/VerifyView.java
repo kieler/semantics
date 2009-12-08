@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.ViewPart;
 
+import de.cau.cs.kieler.krep.evalbench.ui.actions.ConnectAction;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.VerifyAction;
 
 /**
@@ -47,13 +48,9 @@ public class VerifyView extends ViewPart {
     /** The reset action. */
     private IAction verifyAction = null;
 
+    
     private static final int ROW_CAUSE = 3;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
-     */
     @Override
     public void createPartControl(final Composite parent) {
         // create table
@@ -93,13 +90,9 @@ public class VerifyView extends ViewPart {
         verifyAction = new VerifyAction(statusLineManager, viewer);
         toolBarManager.add(verifyAction);
         verifyAction.setEnabled(true);
+     
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
-     */
     @Override
     public void setFocus() {
         viewer.getControl().setFocus();

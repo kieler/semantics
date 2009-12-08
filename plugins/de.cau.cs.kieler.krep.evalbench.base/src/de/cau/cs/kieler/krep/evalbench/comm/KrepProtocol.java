@@ -25,6 +25,7 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KrepConfig;
+import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
 import de.cau.cs.kieler.krep.evalbench.ui.views.TargetView;
 
 /**
@@ -82,6 +83,7 @@ public class KrepProtocol extends CommunicationProtocol {
 
     private void send(final byte data) throws CommunicationException {
         connection.send(data);
+        ConnectionView.log("-> " + data);
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 notifySend(Integer.toHexString(data));
@@ -91,6 +93,7 @@ public class KrepProtocol extends CommunicationProtocol {
 
     private void send(final byte[] data) throws CommunicationException {
         connection.send(data);
+        ConnectionView.log("-> " + data);
         String t = "";
         for (byte b : data) {
             t += Integer.toHexString(b);
@@ -114,6 +117,7 @@ public class KrepProtocol extends CommunicationProtocol {
                 notifyReceive(t);
             }
         });
+        ConnectionView.log("<- " + res);
         return res;
     }
 
@@ -141,7 +145,7 @@ public class KrepProtocol extends CommunicationProtocol {
      * 
      */
     public int[] getExecutionTrace() throws CommunicationException {
-
+        ConnectionView.log("getTrace");
         ArrayList<Integer> trace = new ArrayList<Integer>();
         int bytes = (krp.getIrom()) / BYTE_LENGTH;
         sendCmd(TRACE_COMMAND);
@@ -170,6 +174,7 @@ public class KrepProtocol extends CommunicationProtocol {
      * 
      */
     public String getTargetInfo() throws CommunicationException {
+        ConnectionView.log("get target information");
         sendCmd(INFO_COMMAND);
         // construct info message from received string
         LinkedList<Integer> msg = receiveByte(INFO_DESC.length);
@@ -192,7 +197,10 @@ public class KrepProtocol extends CommunicationProtocol {
         int nROM = 1 << i.next();
 
         krp = new KrepConfig(nCores, nIO, nReg, nROM);
-        TargetView.getDefault().show(stringBuffer.toString());
+        TargetView tv = TargetView.getDefault();
+        if (tv != null) {
+            tv.show(stringBuffer.toString());
+        }
 
         return stringBuffer.toString();
     }
@@ -202,7 +210,7 @@ public class KrepProtocol extends CommunicationProtocol {
      */
     public boolean loadProgram(final IAssembler program, final IProgressMonitor monitor)
             throws CommunicationException, LoadException {
-
+        ConnectionView.log("load program");
         if (krp == null) {
             getTargetInfo();
         }
@@ -242,6 +250,7 @@ public class KrepProtocol extends CommunicationProtocol {
      * 
      */
     public void resetStatus() throws CommunicationException {
+        ConnectionView.log("reset");
         sendCmd(RESET_COMMAND);
         sendCmd(TICK_COMMAND); // Initialize
         receiveByte(1);
@@ -261,7 +270,7 @@ public class KrepProtocol extends CommunicationProtocol {
      */
     public int tick(final int maxSignals, final LinkedList<Signal> inputs,
             final LinkedList<Signal> outputs) throws CommunicationException {
-
+        ConnectionView.log("tick");
         int rt = 0;
         // send inputs
         byte i = 0;
@@ -329,6 +338,7 @@ public class KrepProtocol extends CommunicationProtocol {
      * {@inheritDoc}
      */
     public String verifyCommunication() throws CommunicationException {
+        ConnectionView.log("verifiy");
         sendCmd(VERIFY_COMMAND);
         String reply = connection.receive(VERIFICATION_STRING.length());
         if (reply.equals(VERIFICATION_STRING)) {

@@ -13,9 +13,11 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Stack;
@@ -23,7 +25,11 @@ import java.util.Stack;
 import org.antlr.runtime.ANTLRReaderStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.comm.Signal;
 import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.kep.AddrInstruction;
@@ -34,7 +40,6 @@ import de.cau.cs.kieler.krep.evalbench.program.kep.Label;
 import de.cau.cs.kieler.krep.evalbench.program.kep.Watcher;
 import de.cau.cs.kieler.krep.evalbench.program.kep.parser.kepLexer;
 import de.cau.cs.kieler.krep.evalbench.program.kep.parser.kepParser;
-import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
 /**
  * @author ctr
@@ -94,14 +99,15 @@ public class KepAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public void assemble(final String progName, final Reader program) throws ParseException {
+    public void assemble(final String progName, final InputStream program) throws ParseException {
         this.name = progName;
+        Reader p = new InputStreamReader(program);
         boolean error = false;
         String errorMsg;
         // clear();
 
         try {
-            final kepLexer lex = new kepLexer(new ANTLRReaderStream(program));
+            final kepLexer lex = new kepLexer(new ANTLRReaderStream(p));
             final CommonTokenStream tokens = new CommonTokenStream(lex);
 
             final kepParser parser = new kepParser(tokens);
@@ -116,7 +122,8 @@ public class KepAssembler implements IAssembler {
             error = parser.getError();
             errorMsg = parser.getErrorMsg();
             if (error) {
-                MessageView.print(errorMsg);
+                Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, errorMsg, null);
+                StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
             }
         } catch (final IOException e) {
             throw new ParseException(e.getMessage());
@@ -166,8 +173,8 @@ public class KepAssembler implements IAssembler {
      * {@inheritDoc}
      */
     public void assemble(final String progName, final String program) throws ParseException {
-        final StringReader in = new StringReader(program);
-        assemble(progName, in);
+        // final StringReader in = new StringReader(program);
+        assemble(progName, new ByteArrayInputStream(program.getBytes()));
     }
 
     /**

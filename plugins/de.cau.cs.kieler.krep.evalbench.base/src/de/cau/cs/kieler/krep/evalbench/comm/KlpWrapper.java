@@ -20,12 +20,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
 import de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage;
-import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
 /**
  * Wrapper to software simulation of the Kiel Lustre Processor.
@@ -54,9 +56,9 @@ public class KlpWrapper implements IKrepWrapper {
         super();
         final String msg = "";
         klp_reset(msg);
-        if (msg.length() > 0) {
-            MessageView.print(msg);
-        }
+        // if (msg.length() > 0) {
+        // MessageView.print(msg);
+        // }
 
         final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
@@ -96,15 +98,15 @@ public class KlpWrapper implements IKrepWrapper {
         String msg = "";
         String io = ";";
         byte c = klp_step(msg);
-        if (msg.length() > 0) {
-            MessageView.print(msg);
-        }
+        // if (msg.length() > 0) {
+        // MessageView.print(msg);
+        // }
         if (c != 0) {
             msg = "";
             c = klp_recv(msg);
-            if (msg.length() > 0) {
-                MessageView.print(msg);
-            }
+            // if (msg.length() > 0) {
+            // MessageView.print(msg);
+            // }
             io += " %OUTPUT: TX(0x" + Integer.toHexString(c & MASK_BYTE) + ")";
             output.offer(c);
         }
@@ -122,9 +124,9 @@ public class KlpWrapper implements IKrepWrapper {
         step();
         esi.write("RX(0x" + Integer.toHexString(b & MASK_BYTE) + ")");
         klp_send(b, msg);
-        if (msg.length() > 0) {
-            MessageView.print(msg);
-        }
+        // if (msg.length() > 0) {
+        // MessageView.print(msg);
+        // }
         step();
 
     }
@@ -147,15 +149,17 @@ public class KlpWrapper implements IKrepWrapper {
             out = new BufferedWriter(new FileWriter(f));
             out.write(esi.toString());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    "Error saving esi log file: " + esiFile, e);
+            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         } finally {
             if (out != null) {
                 try {
                     out.close();
                 } catch (IOException e) {
-                    // silently ignore
-                    MessageView.print(e.getMessage());
+                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                            "Error saving esi log file: " + esiFile, e);
+                    StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                 }
             }
         }

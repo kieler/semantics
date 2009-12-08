@@ -17,6 +17,12 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
@@ -116,6 +122,29 @@ public class ConnectionView extends ViewPart implements ICommunicationListener {
     public void setActionsEnabled(final boolean enabled) {
         loadProgramAction.setEnabled(true);
         // loadProgramAction.setEnabled(enabled);
+    }
+
+    public static boolean log(final String msg) {
+
+        IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+
+        if (window == null) {
+            return false;
+        }
+        IViewPart connectionView = window.getActivePage().findView(ConnectionView.VIEW_ID);
+        if (connectionView == null) {
+            return false;
+        }
+        ((ConnectionView) connectionView).getViewer().append(msg + "\n");
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void comment(final String comment) {
+        log(comment);
+
     }
 
 }

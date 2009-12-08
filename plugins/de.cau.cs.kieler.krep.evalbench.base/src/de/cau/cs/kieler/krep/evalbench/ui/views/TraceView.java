@@ -26,6 +26,7 @@ import org.eclipse.ui.part.ViewPart;
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.trace.ITraceListener;
 import de.cau.cs.kieler.krep.evalbench.trace.TraceList;
+import de.cau.cs.kieler.krep.evalbench.ui.actions.ConnectAction;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.ResetAction;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.RunAction;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.StepTraceAction;
@@ -67,7 +68,8 @@ public class TraceView extends ViewPart implements ITraceListener {
 
     /** The stop action. */
     private IAction stopAction = null;
-
+    
+    private IAction connectAction = null;
     /*
      * (non-Javadoc)
      * 
@@ -120,6 +122,11 @@ public class TraceView extends ViewPart implements ITraceListener {
 
         IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
         IStatusLineManager statusLineManager = getViewSite().getActionBars().getStatusLineManager();
+        
+        connectAction = new ConnectAction();
+        toolBarManager.add(connectAction);
+        connectAction.setEnabled(true);
+        
         // create reset action
         resetAction = new ResetAction(statusLineManager, Activator.getDefault().getTraces());
         toolBarManager.add(resetAction);

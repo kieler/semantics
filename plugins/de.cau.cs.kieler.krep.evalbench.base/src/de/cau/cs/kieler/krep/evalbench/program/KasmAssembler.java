@@ -15,6 +15,8 @@ package de.cau.cs.kieler.krep.evalbench.program;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
@@ -195,10 +197,11 @@ public final class KasmAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public void assemble(final String progName, final Reader program) throws ParseException {
+    public void assemble(final String progName, final InputStream program) throws ParseException {
         String s = "";
+        Reader p = new InputStreamReader(program);
         try {
-            while (program.ready()) {
+            while (p.ready()) {
                 s += (char) (program.read());
             }
         } catch (IOException e) {

@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Display;
 
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
+import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
 
 /**
  * Implementation of the communication protocol interface that uses the KEP protocol.
@@ -106,7 +107,6 @@ public class KepProtocol extends CommunicationProtocol {
     /** Length of information items for target information. */
     private static final int[] INFO_LENGTH = { 0, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4, 2 };
 
-    
     /**
      * Constructs a new instance of the KEP protocol.
      * 
@@ -267,20 +267,12 @@ public class KepProtocol extends CommunicationProtocol {
 
     private void send(final String data) throws CommunicationException {
         connection.send(data);
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                notifySend(data);
-            }
-        });
+        notifySend(data);
     }
 
     private String receive(final char x) throws CommunicationException {
         final String res = connection.receive(x);
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                notifyReceive(res);
-            }
-        });
+        notifyReceive(res);
         return res;
     }
 
@@ -296,6 +288,7 @@ public class KepProtocol extends CommunicationProtocol {
      * {@inheritDoc}
      */
     public int[] getExecutionTrace() throws CommunicationException {
+        notifyComment("get trace");
         send(TRACE_COMMAND);
         String reply = receive(END_REPLY);
         // extract list of addresses from received string
@@ -312,6 +305,7 @@ public class KepProtocol extends CommunicationProtocol {
      * 
      */
     public String getTargetInfo() throws CommunicationException {
+        notifyComment("get Target info");
         final int typeID = 3;
         send(INFO_COMMAND);
         String reply = receive(END_REPLY);
@@ -337,6 +331,7 @@ public class KepProtocol extends CommunicationProtocol {
     }
 
     private int getTickLength() throws CommunicationException {
+        notifyComment("get ticklength");
         send(TICK_LENGTH_COMMAND);
         String reply = receive(END_REPLY);
         return parseIntRev(reply, 0, WORD_LEN);
@@ -348,6 +343,7 @@ public class KepProtocol extends CommunicationProtocol {
      */
     public boolean loadProgram(final IAssembler program, final IProgressMonitor monitor)
             throws CommunicationException {
+        notifyComment("Load program");
         String[] prog = program.getObj(null);
         send(LOAD_COMMAND);
         int n = prog.length;
@@ -361,7 +357,7 @@ public class KepProtocol extends CommunicationProtocol {
             // sleep to make sure the communication word
             // TODO: implement acknowledgment into KEP protocol
             try {
-                Thread.sleep(prog.length);
+                Thread.sleep(50); // prog.length);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -411,6 +407,7 @@ public class KepProtocol extends CommunicationProtocol {
     public int tick(final int maxSignals, final LinkedList<Signal> inputs,
             final LinkedList<Signal> outputs) throws CommunicationException {
         // construct and send input message
+        notifyComment("tick");
         LinkedList<Signal> valuedInputs = new LinkedList<Signal>();
         send(INPUT_COMMAND);
         // int n = inputs.size() + outputs.size();
@@ -463,7 +460,10 @@ public class KepProtocol extends CommunicationProtocol {
         while (iterator.hasNext()) {
             Signal s = iterator.next();
             int index = s.getIndex() - 1;
-            s.setPresent(((outputStatus[index / BYTE_LEN] >> (index % BYTE_LEN)) & 1) == 1);
+            int b = index / BYTE_LEN;
+            if (b < outputStatus.length) {
+                s.setPresent(((outputStatus[b] >> (index % BYTE_LEN)) & 1) == 1);
+            }
             if (s.isValued()) {
                 valuedOutputs.add(s);
             }
@@ -486,9 +486,9 @@ public class KepProtocol extends CommunicationProtocol {
 
         int len = getTickLength();
 
-        //if (maxTicklen > 0 && len > maxTicklen) {
-        //    outputs.getLast().setPresent(true);
-        //}
+        // if (maxTicklen > 0 && len > maxTicklen) {
+        // outputs.getLast().setPresent(true);
+        // }
 
         return len;
     }

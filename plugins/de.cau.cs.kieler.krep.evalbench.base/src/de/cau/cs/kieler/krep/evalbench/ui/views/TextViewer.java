@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.krep.evalbench.ui.views;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
@@ -25,6 +27,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.statushandlers.StatusManager;
+
+import de.cau.cs.kieler.krep.evalbench.Activator;
 
 /**
  * A Viewer for displaying some sort of text content.
@@ -51,8 +56,7 @@ public class TextViewer extends ContentViewer {
         super();
         text = new Text(parent, SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
         text.setEditable(false);
-        text.setFont(new Font(Display.getCurrent(), FONT_NAME, FONT_SIZE,
-                SWT.NORMAL));
+        text.setFont(new Font(Display.getCurrent(), FONT_NAME, FONT_SIZE, SWT.NORMAL));
     }
 
     /*
@@ -73,8 +77,8 @@ public class TextViewer extends ContentViewer {
     @Override
     public ISelection getSelection() {
         Point selection = text.getSelection();
-        return new TextSelection(new Document(text.getText()), selection.x,
-                selection.y - selection.x);
+        return new TextSelection(new Document(text.getText()), selection.x, selection.y
+                - selection.x);
     }
 
     /*
@@ -90,22 +94,22 @@ public class TextViewer extends ContentViewer {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.jface.viewers.Viewer#setSelection(org.eclipse.jface.viewers
-     * .ISelection, boolean)
+     * @see org.eclipse.jface.viewers.Viewer#setSelection(org.eclipse.jface.viewers .ISelection,
+     * boolean)
      */
     @Override
     public void setSelection(final ISelection selection, final boolean reveal) {
         try {
             if (selection instanceof ITextSelection) {
                 ITextSelection textSelection = (ITextSelection) selection;
-                text.setSelection(textSelection.getOffset(), textSelection
-                        .getOffset()
+                text.setSelection(textSelection.getOffset(), textSelection.getOffset()
                         + textSelection.getLength());
             }
         } catch (ClassCastException e) {
             // Ignore silently
-            MessageView.print(e.getMessage());
+            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    "Current selection is not text.", e);
+            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
     }
 

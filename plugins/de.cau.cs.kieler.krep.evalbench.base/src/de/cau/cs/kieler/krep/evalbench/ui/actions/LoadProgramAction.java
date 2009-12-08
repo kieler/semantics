@@ -14,19 +14,21 @@
 package de.cau.cs.kieler.krep.evalbench.ui.actions;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.helpers.Tools;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
-import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
 /**
- * Action that loads a program to the current target. The plugin activator and
- * the common layer are used to access all relevant data.
+ * Action that loads a program to the current target. The plugin activator and the common layer are
+ * used to access all relevant data.
  * 
  * @author msp
  */
@@ -45,8 +47,7 @@ public class LoadProgramAction extends Action {
         setId(ACTION_ID);
         setText("Load Program");
         setToolTipText("Load program to the current target");
-        setImageDescriptor(Activator.imageDescriptorFromPlugin(
-                Activator.PLUGIN_ID, ICON_PATH));
+        setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, ICON_PATH));
     }
 
     /*
@@ -56,42 +57,27 @@ public class LoadProgramAction extends Action {
      */
     @Override
     public void run() {
-        // IWorkbenchWindow dw = PlatformUI.getWorkbench()
-        // .getActiveWorkbenchWindow();
-        // IWorkbenchPage page = dw.getActivePage();
-
-        // try {
-        // page.showView(TargetView.VIEW_ID);
-        //
-        // System.out.println(page.getActivePart().getTitle());
-        // } catch (PartInitException e) {
-        // System.out.println(page.getActivePart().getTitle());
-        //
-        // // DialogUtil.openError(dw.getShell(), ResourceMessages.getString(
-        // // "DataFileResource.errorMessage"),e.getMessage(),e);
-        // }
-
         Tools.runWithProgress(new IRunnableWithProgress() {
             public void run(final IProgressMonitor monitor) {
-                monitor.beginTask("Load program",
-                        Activator.getDefault().commonLayer
-                                .getActiveAssemblerEditor().getAssembler()
-                                .size());
+                monitor.beginTask("Load program", Activator.getDefault().commonLayer
+                        .getActiveAssemblerEditor().getAssembler().size());
                 try {
                     Activator.getDefault().commonLayer.loadProgram(monitor);
-
                 } catch (CommunicationException e) {
-                    MessageView.print(e.getMessage());
-                    // e.printStackTrace();
+                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                            "Communication error while loading program", e);
+                    StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                 } catch (LoadException e) {
-                    MessageView.print(e.getMessage());
-                    // e.printStackTrace();
+                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                            "Cannot Load program", e);
+                    StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+
                 }
                 monitor.done();
             }
         });
-        IAssembler asm = Activator.getDefault().commonLayer
-                .getActiveAssemblerEditor().getAssembler();
+        IAssembler asm = Activator.getDefault().commonLayer.getActiveAssemblerEditor()
+                .getAssembler();
         Activator.getDefault().getViewer().setAssembler(asm);
     }
 

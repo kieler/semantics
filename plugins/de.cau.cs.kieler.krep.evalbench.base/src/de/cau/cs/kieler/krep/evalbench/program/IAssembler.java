@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program;
 
-import java.io.Reader;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -59,7 +59,7 @@ public interface IAssembler {
      * @throws ParseException
      *             when the input string has an invalid format
      */
-    void assemble(String name, Reader program) throws ParseException;
+    void assemble(String name, InputStream program) throws ParseException;
 
     /**
      * After a program has been assembled, a list of input signals can be

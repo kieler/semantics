@@ -20,10 +20,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
@@ -31,7 +34,6 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.ParseException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.trace.esi.esiParser;
 import de.cau.cs.kieler.krep.evalbench.trace.rif.rifParser;
-import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
 /**
  * @author ctr
@@ -47,7 +49,7 @@ public class TraceList implements IPartListener {
 
     private ListIterator<Trace> iterator;
 
-    LinkedList<Trace> traces;
+    private LinkedList<Trace> traces;
 
     private Trace current;
 
@@ -88,8 +90,9 @@ public class TraceList implements IPartListener {
             e.printStackTrace();
         } catch (ParseException e) {
             traces.clear();
-            MessageView.print(e.getMessage());
-            e.printStackTrace();
+            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    "Parse Error in trace file", e);
+            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
         for (Trace trace : traces) {
             size += trace.size() + 1;
@@ -310,9 +313,9 @@ public class TraceList implements IPartListener {
                 final int davg = avg;
                 final int dsize = size;
 
-                /** update display each steps*/
+                /** update display each steps */
                 final int updateEach = 128;
-                
+
                 if (!hasNext() || pos % updateEach == 0) {
                     Display.getDefault().asyncExec(new Runnable() {
                         public void run() {

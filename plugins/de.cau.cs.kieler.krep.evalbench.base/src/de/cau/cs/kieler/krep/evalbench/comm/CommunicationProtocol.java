@@ -17,6 +17,8 @@ package de.cau.cs.kieler.krep.evalbench.comm;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.eclipse.swt.widgets.Display;
+
 /**
  * Abstract class, implements common protocol features.
  * 
@@ -34,8 +36,8 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
      * Constructs a new instance of the KEP protocol.
      * 
      * @param connectionProtocol
-     *            underlying connection protocol to be used; this protocol
-     *            instance is expected to be already initialized
+     *            underlying connection protocol to be used; this protocol instance is expected to
+     *            be already initialized
      */
     protected CommunicationProtocol(final IConnectionProtocol connectionProtocol) {
         // create list of communication listeners
@@ -51,11 +53,14 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
      *            data that was sent
      */
     protected void notifySend(final String data) {
-        Iterator<ICommunicationListener> iterator = communicationListeners
-                .iterator();
-        while (iterator.hasNext()) {
-            iterator.next().dataSent(data);
-        }
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                Iterator<ICommunicationListener> iterator = communicationListeners.iterator();
+                while (iterator.hasNext()) {
+                    iterator.next().dataSent(data);
+                }
+            }
+        });
     }
 
     /**
@@ -65,13 +70,34 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
      *            data that was received
      */
     protected void notifyReceive(final String data) {
-        Iterator<ICommunicationListener> iterator = communicationListeners
-                .iterator();
-        while (iterator.hasNext()) {
-            iterator.next().dataReceived(data);
-        }
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                Iterator<ICommunicationListener> iterator = communicationListeners.iterator();
+                while (iterator.hasNext()) {
+                    iterator.next().dataReceived(data);
+                }
+            }
+        });
     }
 
+    /**
+     * Notifies all registered communication listeners about a comment.
+     * 
+     * @param comment
+     *           comment about the next transaction
+     */
+    protected void notifyComment(final String comment) {
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                Iterator<ICommunicationListener> iterator = communicationListeners.iterator();
+                while (iterator.hasNext()) {
+                    iterator.next().comment(comment);
+                }
+            }
+        });
+    }
+    
+    
     /**
      * {@inheritDoc}
      */
@@ -89,8 +115,7 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
     /**
      * {@inheritDoc}
      */
-    public void removeCommunicationListener(
-            final ICommunicationListener listener) {
+    public void removeCommunicationListener(final ICommunicationListener listener) {
         communicationListeners.remove(listener);
     }
 

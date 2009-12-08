@@ -14,9 +14,11 @@
 package de.cau.cs.kieler.krep.evalbench.program;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -68,12 +70,14 @@ public class KitAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public void assemble(final String name, final Reader program) throws ParseException {
+    public void assemble(final String name, final InputStream program) throws ParseException {
         String s = "";
         char c;
+
+        Reader p = new InputStreamReader(program);
         try {
-            while (program.ready()) {
-                c = (char) (program.read());
+            while (p.ready()) {
+                c = (char) (p.read());
                 s += c;
             }
         } catch (final IOException e) {
@@ -122,8 +126,8 @@ public class KitAssembler implements IAssembler {
             // get the created listing file
             kasmFile = new File(kitFile.getParentFile(), filePrefix + ".kasm");
             kasmFile.deleteOnExit();
-            final FileReader reader = new FileReader(kasmFile);
-            kasm.assemble(name, reader);
+          //  final FileReader reader = new FileReader(kasmFile);
+            kasm.assemble(name, new FileInputStream(kasmFile));
             try {
                 lines = Tracer.trace(kitFile.getAbsolutePath(), kasmFile.getAbsolutePath());
             } catch (Exception e) {

@@ -51,11 +51,6 @@
    </extension>
    <extension
          point="org.eclipse.ui.views">
-      <category
-            id="de.cau.cs.kieler.krep.evalbench.ui.categories.evalBench"
-            name="Evaluation Bench"
-            parentCategory="de.cau.cs.kieler">
-      </category>
       <view
             allowMultiple="false"
             category="de.cau.cs.kieler"
@@ -89,13 +84,6 @@
             restorable="true">
       </view>
       <view
-            allowMultiple="false"
-            category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.krep.evalbench.ui.views.MessageView"
-            id="de.cau.cs.kieler.krep.evalbench.ui.views.message"
-            name="Message">
-      </view>
-      <view
             category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView"
             icon="icons/krep.gif"
@@ -107,6 +95,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
+            category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage"
             id="de.cau.cs.kieler.krep.evalbench.ui.preferences.evalbench"
             name="Evaluation Bench">

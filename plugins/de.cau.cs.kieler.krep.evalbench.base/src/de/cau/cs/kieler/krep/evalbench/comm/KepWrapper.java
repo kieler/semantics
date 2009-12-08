@@ -25,7 +25,6 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.helpers.EsiLogger;
 import de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage;
-import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 
 /**
  * JNI wrapper for the Kiel Esterel Processor.
@@ -53,9 +52,9 @@ public class KepWrapper implements IKrepWrapper {
         super();
         final String msg = "";
         kep_reset(msg);
-        if (msg.length() > 0) {
+        /*if (msg.length() > 0) {
             MessageView.print(msg);
-        }
+        }*/
 
         final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
@@ -93,15 +92,15 @@ public class KepWrapper implements IKrepWrapper {
         String msg = "";
         String io = ";";
         byte c = kep_step(msg);
-        if (msg.length() != 0) {
+        /*if (msg.length() != 0) {
             MessageView.print(msg);
             msg = "";
-        }
+        }*/
         if (c != 0) {
             c = kep_recv(msg);
-            if (msg.length() > 0) {
+           /* if (msg.length() > 0) {
                 MessageView.print(msg);
-            }
+            }*/
             io += " %OUTPUT: TX(0x" + Integer.toHexString(c & MASK_BYTE) + ")";
             output.offer(c);
         }
@@ -117,9 +116,9 @@ public class KepWrapper implements IKrepWrapper {
         step();
         esi.write("RX(0x" + Integer.toHexString(b & MASK_BYTE) + ")");
         kep_send(b, msg);
-        if (msg.length() > 0) {
+        /*if (msg.length() > 0) {
             MessageView.print(msg);
-        }
+        }*/
         step();
 
     }
@@ -154,7 +153,6 @@ public class KepWrapper implements IKrepWrapper {
                 }
             }
         }
-
     }
 
     /**

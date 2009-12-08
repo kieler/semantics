@@ -31,8 +31,17 @@ public interface ICommunicationListener {
     /**
      * Executed when data is received from the target.
      * 
-     * @param data that is received
+     * @param data
+     *            that is received
      */
     void dataReceived(String data);
+
+    /**
+     * Write optional comment about the next transaction.
+     * 
+     * @param comment
+     *            that is received
+     */
+    void comment(String comment);
 
 }

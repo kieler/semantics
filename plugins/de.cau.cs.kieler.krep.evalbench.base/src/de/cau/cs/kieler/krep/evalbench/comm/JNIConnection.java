@@ -89,6 +89,7 @@ public class JNIConnection implements IConnectionProtocol {
                 .getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
         return initialize(currentProtocolType);
     }
+    
 
     /**
      * {@inheritDoc}

@@ -19,7 +19,9 @@ import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPartListener;
@@ -29,6 +31,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.krep.evalbench.Activator;
 import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
@@ -41,12 +44,10 @@ import de.cau.cs.kieler.krep.evalbench.ui.ConnectionPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.ui.EvalBenchPreferencePage;
 import de.cau.cs.kieler.krep.evalbench.ui.editors.AssemblerEditor;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
-import de.cau.cs.kieler.krep.evalbench.ui.views.MessageView;
 import de.cau.cs.kieler.krep.evalbench.ui.views.TargetView;
 
 /**
- * Data layer common to all interface parts; connects the UI to specific
- * protocols.
+ * Data layer common to all interface parts; connects the UI to specific protocols.
  * 
  * @author msp
  */
@@ -114,42 +115,42 @@ public class CommonLayer implements IPartListener {
      * @param exception
      *            exception that caused the error box to be displayed
      */
+    //TODO: remove function
     private static void displayError(final String title, final String message,
             final Exception exception) {
-        MessageView.print(title + ": " + message);
-    }
+        Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                "message", exception);
+        StatusManager.getManager().handle(myStatus, StatusManager.SHOW);  
+  }
 
     /**
-     * Displays a message in the connection view, if available. If no connection
-     * view is available and <code>errorTitle</code> is not <code>null</code>,
-     * an error message box is displayed.
+     * Displays a message in the connection view, if available. If no connection view is available
+     * and <code>errorTitle</code> is not <code>null</code>, an error message box is displayed.
      * 
      * @param errorTitle
-     *            title to use for the error message box, or <code>null</code>
-     *            if no message box should be shown
+     *            title to use for the error message box, or <code>null</code> if no message box
+     *            should be shown
      * @param message
      *            message to display
      * @param exception
      *            exception to display in the error message box
      * @return the connection view, or <code>null</code> if none is available
      */
-    private static ConnectionView logConnection(final String errorTitle,
-            final String message, final Exception exception) {
+    private static ConnectionView logConnection(final String errorTitle, final String message,
+            final Exception exception) {
         IWorkbench workbench = PlatformUI.getWorkbench();
         IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
         if (window == null) {
             return null;
         }
         IWorkbenchPage workbenchPage = window.getActivePage();
-        IViewPart connectionView = workbenchPage
-                .findView(ConnectionView.VIEW_ID);
+        IViewPart connectionView = workbenchPage.findView(ConnectionView.VIEW_ID);
         if (connectionView != null) {
             if (exception != null) {
                 ((ConnectionView) connectionView).getViewer().append(
                         message + ":\n" + exception.getMessage() + "\n");
             } else {
-                ((ConnectionView) connectionView).getViewer().append(
-                        message + "\n");
+                ((ConnectionView) connectionView).getViewer().append(message + "\n");
             }
         } else if (errorTitle != null) {
             displayError("Connection Failure", message, exception);
@@ -165,9 +166,85 @@ public class CommonLayer implements IPartListener {
         signalListeners = new LinkedList<ISignalListener>();
     }
 
+    public final void connect(String connectionType, String protocolType, String portName,
+            String hostName, int portNumber) {
+        // close the previous connection
+        if (currentConnection != null) {
+            currentConnection.dispose();
+            currentConnection = null;
+        }
+
+        // select the proper connection type
+        String message = "";
+        boolean error = false;
+
+        if (connectionType.equals(SERIAL_CON)) {
+            try {
+                currentConnection = new RxtxSerialConnection();
+                String initResult = currentConnection.initialize(portName, 0);
+                // show initialization result in connection view
+                message = "Initialized serial connection:\n" + initResult;
+            } catch (CommunicationException e) {
+                logConnection("Initialization Error",
+                        "Initialization of serial connection failed.", e);
+                error = true;
+            }
+        } else if (connectionType.equals(TCPIP_CON)) {
+            try {
+                currentConnection = new SocketConnection();
+                String initResult = currentConnection.initialize(hostName, portNumber);
+                // show initialization result in connection view
+                message = "Initialized TCP/IP connection:\n" + initResult;
+            } catch (CommunicationException e) {
+                logConnection("Initialization Error",
+                        "Initialization of TCP/IP connection failed.", e);
+                error = true;
+            }
+        } else if (connectionType.equals(JNI_CON)) {
+            try {
+                JNIConnection jni = new JNIConnection();
+                currentConnection = jni;
+                String initResult = jni.initialize(protocolType);
+                // show initialization result in connection view
+                message = "Initialized JNI connection:\n" + initResult;
+            } catch (Exception e) {
+                logConnection("Initialization Error", "Initialization of JNI connection failed.", e);
+                error = true;
+            }
+        } else {
+            displayError("Error in loaded preferences",
+                    "The loaded preferences contained an invalid connection type identifier.", null);
+            error = true;
+        }
+
+        if (error) {
+            currentConnection = null;
+        } else {
+            // create communication protocol instances
+            kepProtocol = new KepProtocol(currentConnection);
+            krepProtocol = new KrepProtocol(currentConnection);
+            // select proper protocol
+
+            if (protocolType.equals(ICommunicationProtocol.P_KEP)) {
+                currentProtocol = kepProtocol;
+            } else if (protocolType.equals(ICommunicationProtocol.P_KREP)) {
+                currentProtocol = krepProtocol;
+            } else {
+                currentProtocol = null;
+            }
+            // send message to connection view
+            ConnectionView connectionView = logConnection(null, message, null);
+            if (connectionView != null) {
+                kepProtocol.addCommunicationListener(connectionView);
+                krepProtocol.addCommunicationListener(connectionView);
+            }
+            // reset tick counter
+            tickCount = 0;
+        }
+    }
+
     /**
-     * Reads connection settings from the preference store and connects to the
-     * set up device.
+     * Reads connection settings from the preference store and connects to the set up device.
      */
     public final void connect() {
         // close the previous connection
@@ -176,11 +253,9 @@ public class CommonLayer implements IPartListener {
             currentConnection = null;
         }
 
-        IPreferenceStore preferenceStore = Activator.getDefault()
-                .getPreferenceStore();
+        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
         // select the proper connection type
-        String connectionType = preferenceStore
-                .getString(ConnectionPreferencePage.CONNECTION_TYPE);
+        String connectionType = preferenceStore.getString(ConnectionPreferencePage.CONNECTION_TYPE);
         String message = "";
         boolean error = false;
 
@@ -200,12 +275,9 @@ public class CommonLayer implements IPartListener {
         } else if (connectionType.equals(TCPIP_CON)) {
             try {
                 currentConnection = new SocketConnection();
-                String hostName = preferenceStore
-                        .getString(ConnectionPreferencePage.HOST_NAME);
-                int portNumber = preferenceStore
-                        .getInt(ConnectionPreferencePage.PORT_NUMBER);
-                String initResult = currentConnection.initialize(hostName,
-                        portNumber);
+                String hostName = preferenceStore.getString(ConnectionPreferencePage.HOST_NAME);
+                int portNumber = preferenceStore.getInt(ConnectionPreferencePage.PORT_NUMBER);
+                String initResult = currentConnection.initialize(hostName, portNumber);
                 // show initialization result in connection view
                 message = "Initialized TCP/IP connection:\n" + initResult;
             } catch (CommunicationException e) {
@@ -220,15 +292,12 @@ public class CommonLayer implements IPartListener {
                 // show initialization result in connection view
                 message = "Initialized JNI connection:\n" + initResult;
             } catch (Exception e) {
-                logConnection("Initialization Error",
-                        "Initialization of JNI connection failed.", e);
+                logConnection("Initialization Error", "Initialization of JNI connection failed.", e);
                 error = true;
             }
         } else {
-            displayError(
-                    "Error in loaded preferences",
-                    "The loaded preferences contained an invalid connection type identifier.",
-                    null);
+            displayError("Error in loaded preferences",
+                    "The loaded preferences contained an invalid connection type identifier.", null);
             error = true;
         }
 
@@ -245,8 +314,7 @@ public class CommonLayer implements IPartListener {
             }
             if (currentProtocolType.equals(ICommunicationProtocol.P_KEP)) {
                 currentProtocol = kepProtocol;
-            } else if (currentProtocolType
-                    .equals(ICommunicationProtocol.P_KREP)) {
+            } else if (currentProtocolType.equals(ICommunicationProtocol.P_KREP)) {
                 currentProtocol = krepProtocol;
             } else {
                 currentProtocol = null;
@@ -270,29 +338,22 @@ public class CommonLayer implements IPartListener {
         serialPorts = RxtxSerialConnection.getSerialPorts();
 
         // set up plugin preferences
-        IPreferenceStore preferenceStore = Activator.getDefault()
-                .getPreferenceStore();
+        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
         preferenceStore.setDefault(EvalBenchPreferencePage.PROTOCOL_TYPE,
                 ICommunicationProtocol.P_KEP);
-        preferenceStore.setDefault(EvalBenchPreferencePage.KEP_TYPE,
-                KasmAssembler.S_KEPE);
+        preferenceStore.setDefault(EvalBenchPreferencePage.KEP_TYPE, KasmAssembler.S_KEPE);
         preferenceStore.setDefault(EvalBenchPreferencePage.EXTERNAL_ASSEMBLER,
                 KasmAssembler.KASM2KLST);
-        preferenceStore.setDefault(ConnectionPreferencePage.CONNECTION_TYPE,
-                JNI_CON);
+        preferenceStore.setDefault(ConnectionPreferencePage.CONNECTION_TYPE, JNI_CON);
         if (serialPorts.length != 0) {
-            preferenceStore.setDefault(
-                    ConnectionPreferencePage.SERIAL_PORT_NAME, serialPorts[0]);
+            preferenceStore.setDefault(ConnectionPreferencePage.SERIAL_PORT_NAME, serialPorts[0]);
         }
-        preferenceStore.setDefault(ConnectionPreferencePage.HOST_NAME,
-                DEFAULT_HOST);
-        preferenceStore.setDefault(ConnectionPreferencePage.PORT_NUMBER,
-                DEFAULT_PORT);
+        preferenceStore.setDefault(ConnectionPreferencePage.HOST_NAME, DEFAULT_HOST);
+        preferenceStore.setDefault(ConnectionPreferencePage.PORT_NUMBER, DEFAULT_PORT);
 
         // look for extensions of the tick manager extension point
-        IConfigurationElement[] configElements = Platform
-                .getExtensionRegistry().getConfigurationElementsFor(
-                        AbstractTickManager.EXTENSION_ID);
+        IConfigurationElement[] configElements = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor(AbstractTickManager.EXTENSION_ID);
         for (int i = 0; i < configElements.length; i++) {
             try {
                 // create a new instance of the implementing class
@@ -301,12 +362,10 @@ public class CommonLayer implements IPartListener {
                 // add manager to the list of signal listeners
                 addSignalListener(manager);
             } catch (Exception e) {
-                displayError(
-                        "Error initializing extension",
-                        "The configuration element "
-                                + configElements[i].getName()
-                                + " could not be initialized for the extension point "
-                                + AbstractTickManager.EXTENSION_ID, e);
+                displayError("Error initializing extension", "The configuration element "
+                        + configElements[i].getName()
+                        + " could not be initialized for the extension point "
+                        + AbstractTickManager.EXTENSION_ID, e);
             }
         }
     }
@@ -341,8 +400,7 @@ public class CommonLayer implements IPartListener {
     }
 
     /**
-     * Execute the <i>verify communication</i> command and display results in
-     * the connection view.
+     * Execute the <i>verify communication</i> command and display results in the connection view.
      */
     public void checkConnection() {
         // runWithProgress(new IRunnableWithProgress() {
@@ -352,11 +410,9 @@ public class CommonLayer implements IPartListener {
             String result = currentProtocol.verifyCommunication();
             logConnection(null, result, null);
         } catch (CommunicationException e) {
-            logConnection("Connection Failure",
-                    "Error in received return string", e);
+            logConnection("Connection Failure", "Error in received return string", e);
         } catch (NullPointerException e) {
-            logConnection("No Connection",
-                    "Connection was not initialized yet", e);
+            logConnection("No Connection", "Connection was not initialized yet", e);
         }
         // monitor.done();
         // }
@@ -372,20 +428,18 @@ public class CommonLayer implements IPartListener {
         // monitor.beginTask("Get target information",
         // IProgressMonitor.UNKNOWN);
         // find active target view
-        IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow().getActivePage();
+        IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getActivePage();
         IViewPart targetView = workbenchPage.findView(TargetView.VIEW_ID);
         String targetMessage;
         try {
             // get target info through the current communication protocol
             targetMessage = currentProtocol.getTargetInfo();
         } catch (CommunicationException e) {
-            logConnection("Connection Failure",
-                    "Error in received return string", e);
+            logConnection("Connection Failure", "Error in received return string", e);
             targetMessage = "Could not get target information, see Connection View.";
         } catch (NullPointerException e) {
-            logConnection("No Connection",
-                    "Connection was not initialized yet", e);
+            logConnection("No Connection", "Connection was not initialized yet", e);
             targetMessage = "Could not get target information, see Connection View.";
         }
         // send target information to target view
@@ -409,9 +463,8 @@ public class CommonLayer implements IPartListener {
      * @throws LoadException
      *             thrown when program can not be loaded onto the processor
      */
-    public void loadProgram(final IAssembler program,
-            final IProgressMonitor monitor) throws CommunicationException,
-            LoadException {
+    public void loadProgram(final IAssembler program, final IProgressMonitor monitor)
+            throws CommunicationException, LoadException {
         try {
             currentProtocol.comment("load  " + program.getName());
             currentProgram = program;
@@ -424,19 +477,16 @@ public class CommonLayer implements IPartListener {
                 throw new CommunicationException("download failed");
             }
         } catch (CommunicationException e) {
-            logConnection("Connection Failure", "Load program command failed",
-                    e);
+            logConnection("Connection Failure", "Load program command failed", e);
             throw new CommunicationException(e.getMessage());
         } catch (NullPointerException e) {
-            logConnection("No Connection",
-                    "Connection was not initialized yet", e);
+            logConnection("No Connection", "Connection was not initialized yet", e);
             throw new CommunicationException("no connection");
         }
     }
 
     /**
-     * Load currently displayed program onto target and synchronize with that
-     * program.
+     * Load currently displayed program onto target and synchronize with that program.
      * 
      * @param monitor
      *            process monitor to show how the download proceeds or null
@@ -445,8 +495,8 @@ public class CommonLayer implements IPartListener {
      * @throws LoadException
      *             thrown when processor cannot execute this program
      */
-    public void loadProgram(final IProgressMonitor monitor)
-            throws CommunicationException, LoadException {
+    public void loadProgram(final IProgressMonitor monitor) throws CommunicationException,
+            LoadException {
         loadProgram(currentEditor.getAssembler(), monitor);
     }
 
@@ -462,8 +512,7 @@ public class CommonLayer implements IPartListener {
             statusMessage = "Program reset performed";
             tickCount = 0;
         } catch (NullPointerException e) {
-            logConnection("No Connection",
-                    "Connection was not initialized yet", e);
+            logConnection("No Connection", "Connection was not initialized yet", e);
             throw new CommunicationException("No Connection");
         }
     }
@@ -487,8 +536,7 @@ public class CommonLayer implements IPartListener {
             }
             outputs = currentProgram.getOutputs();
             // perform tick and exchange signal status
-            int n = currentProgram.getInputs().size()
-                    + currentProgram.getOutputs().size();
+            int n = currentProgram.getInputs().size() + currentProgram.getOutputs().size();
             int tickLength = currentProtocol.tick(n, inputs, outputs);
             for (Signal s : outputs) {
                 if (s.getPresent()) {
@@ -512,16 +560,14 @@ public class CommonLayer implements IPartListener {
                 });
             }
             // update status message
-            statusMessage = "Program tick " + tickCount + " performed, length "
-                    + tickLength;
+            statusMessage = "Program tick " + tickCount + " performed, length " + tickLength;
             // increase internal tick counter
             tickCount++;
         } catch (CommunicationException e) {
             logConnection("Connection Failure", "Tick command failed", e);
             out = null;
         } catch (NullPointerException e) {
-            logConnection("No Connection",
-                    "Connection was not initialized yet", e);
+            logConnection("No Connection", "Connection was not initialized yet", e);
             out = null;
         }
         return out;
@@ -535,11 +581,9 @@ public class CommonLayer implements IPartListener {
             currentProtocol.continuousRun();
             statusMessage = "Continuous run mode activated";
         } catch (CommunicationException e) {
-            logConnection("Connection Failure",
-                    "Continuous run command failed", e);
+            logConnection("Connection Failure", "Continuous run command failed", e);
         } catch (NullPointerException e) {
-            logConnection("No Connection",
-                    "Connection was not initialized yet", e);
+            logConnection("No Connection", "Connection was not initialized yet", e);
         }
     }
 
@@ -551,11 +595,9 @@ public class CommonLayer implements IPartListener {
             currentProtocol.stopContinuous();
             statusMessage = "Continuous run mode stopped";
         } catch (CommunicationException e) {
-            logConnection("Connection Failure",
-                    "Stop continuous command failed", e);
+            logConnection("Connection Failure", "Stop continuous command failed", e);
         } catch (NullPointerException e) {
-            logConnection("No Connection",
-                    "Connection was not initialized yet", e);
+            logConnection("No Connection", "Connection was not initialized yet", e);
         }
     }
 
@@ -589,40 +631,37 @@ public class CommonLayer implements IPartListener {
     /**
      * Updates the signal views of the evaluation bench.
      */
-//    public void updateSignalViews() {
-//        if (currentEditor != null) {
-//            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
-//                    .getActiveWorkbenchWindow().getActivePage();
-//            // find and update input view
-//            IViewPart inputView = workbenchPage.findView(InputView.VIEW_ID);
-//            if (inputView != null) {
-//                ((InputView) inputView).setInput(currentEditor.getInputs());
-//            }
-//            // find and update output view
-//            IViewPart outputView = workbenchPage.findView(OutputView.VIEW_ID);
-//            if (outputView != null) {
-//                ((OutputView) outputView).setInput(currentEditor.getOutputs());
-//            }
-//        }
-//    }
+    // public void updateSignalViews() {
+    // if (currentEditor != null) {
+    // IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
+    // .getActiveWorkbenchWindow().getActivePage();
+    // // find and update input view
+    // IViewPart inputView = workbenchPage.findView(InputView.VIEW_ID);
+    // if (inputView != null) {
+    // ((InputView) inputView).setInput(currentEditor.getInputs());
+    // }
+    // // find and update output view
+    // IViewPart outputView = workbenchPage.findView(OutputView.VIEW_ID);
+    // if (outputView != null) {
+    // ((OutputView) outputView).setInput(currentEditor.getOutputs());
+    // }
+    // }
+    // }
 
     /**
      * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.ui.IPartListener#partBroughtToTop(org.eclipse.ui.IWorkbenchPart
-     * )
+     * @see org.eclipse.ui.IPartListener#partBroughtToTop(org.eclipse.ui.IWorkbenchPart )
      */
-        public void partBroughtToTop(final IWorkbenchPart part) {
+    public void partBroughtToTop(final IWorkbenchPart part) {
         if (part instanceof AssemblerEditor) {
             // set current editor to the activated editor part
             currentEditor = (AssemblerEditor) part;
-              // select proper protocol
+            // select proper protocol
             currentProtocolType = currentEditor.getProtocolType();
             if (currentProtocolType.equals(ICommunicationProtocol.P_KEP)) {
                 currentProtocol = kepProtocol;
-            } else if (currentProtocolType
-                    .equals(ICommunicationProtocol.P_KREP)) {
+            } else if (currentProtocolType.equals(ICommunicationProtocol.P_KREP)) {
                 currentProtocol = krepProtocol;
             }
         }
@@ -631,45 +670,43 @@ public class CommonLayer implements IPartListener {
     /**
      * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.ui.IPartListener#partOpened(org.eclipse.ui.IWorkbenchPart)
+     * @see org.eclipse.ui.IPartListener#partOpened(org.eclipse.ui.IWorkbenchPart)
      */
     public void partOpened(final IWorkbenchPart part) {
-//        if (part instanceof AssemblerEditor) {
-//            // activate editor specific actions
-//            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
-//                    .getActiveWorkbenchWindow().getActivePage();
-//            IViewPart inputView = workbenchPage.findView(InputView.VIEW_ID);
-//            if (inputView != null) {
-//                ((InputView) inputView).setActionsEnabled(true);
-//            }
-//            IViewPart connectionView = workbenchPage
-//                    .findView(ConnectionView.VIEW_ID);
-//            if (connectionView != null) {
-//                ((ConnectionView) connectionView).setActionsEnabled(true);
-//            }
-//        } else if (part instanceof ConnectionView) {
-//            if (kepProtocol != null) {
-//                kepProtocol.addCommunicationListener((ConnectionView) part);
-//            }
-//            if (krepProtocol != null) {
-//                krepProtocol.addCommunicationListener((ConnectionView) part);
-//            }
-//        } else if (part instanceof OutputView) {
-//            addSignalListener((OutputView) part);
-//            if (currentEditor != null) {
-//                ((OutputView) part).setInput(currentEditor.getOutputs());
-//            }
-//        } else if (part instanceof InputView && currentEditor != null) {
-//            ((InputView) part).setInput(currentEditor.getInputs());
-//        }
+        // if (part instanceof AssemblerEditor) {
+        // // activate editor specific actions
+        // IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
+        // .getActiveWorkbenchWindow().getActivePage();
+        // IViewPart inputView = workbenchPage.findView(InputView.VIEW_ID);
+        // if (inputView != null) {
+        // ((InputView) inputView).setActionsEnabled(true);
+        // }
+        // IViewPart connectionView = workbenchPage
+        // .findView(ConnectionView.VIEW_ID);
+        // if (connectionView != null) {
+        // ((ConnectionView) connectionView).setActionsEnabled(true);
+        // }
+        // } else if (part instanceof ConnectionView) {
+        // if (kepProtocol != null) {
+        // kepProtocol.addCommunicationListener((ConnectionView) part);
+        // }
+        // if (krepProtocol != null) {
+        // krepProtocol.addCommunicationListener((ConnectionView) part);
+        // }
+        // } else if (part instanceof OutputView) {
+        // addSignalListener((OutputView) part);
+        // if (currentEditor != null) {
+        // ((OutputView) part).setInput(currentEditor.getOutputs());
+        // }
+        // } else if (part instanceof InputView && currentEditor != null) {
+        // ((InputView) part).setInput(currentEditor.getInputs());
+        // }
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.ui.IPartListener#partClosed(org.eclipse.ui.IWorkbenchPart)
+     * @see org.eclipse.ui.IPartListener#partClosed(org.eclipse.ui.IWorkbenchPart)
      */
     public void partClosed(final IWorkbenchPart part) {
         if (part instanceof AssemblerEditor) {
@@ -677,25 +714,21 @@ public class CommonLayer implements IPartListener {
                 // remove reference to the closed editor part
                 currentEditor = null;
                 // refresh input, output and connection views
-                IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
-                        .getActiveWorkbenchWindow().getActivePage();
+                IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                        .getActivePage();
                 if (workbenchPage != null) {
-                     IViewPart connectionView = workbenchPage
-                            .findView(ConnectionView.VIEW_ID);
+                    IViewPart connectionView = workbenchPage.findView(ConnectionView.VIEW_ID);
                     if (connectionView != null) {
-                        ((ConnectionView) connectionView)
-                                .setActionsEnabled(false);
+                        ((ConnectionView) connectionView).setActionsEnabled(false);
                     }
                 }
                 // select default protocol
-                IPreferenceStore preferenceStore = Activator.getDefault()
-                        .getPreferenceStore();
+                IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
                 currentProtocolType = preferenceStore
                         .getString(EvalBenchPreferencePage.PROTOCOL_TYPE);
                 if (currentProtocolType.equals(ICommunicationProtocol.P_KEP)) {
                     currentProtocol = kepProtocol;
-                } else if (currentProtocolType
-                        .equals(ICommunicationProtocol.P_KREP)) {
+                } else if (currentProtocolType.equals(ICommunicationProtocol.P_KREP)) {
                     currentProtocol = krepProtocol;
                 }
             }
@@ -706,14 +739,13 @@ public class CommonLayer implements IPartListener {
             if (krepProtocol != null) {
                 krepProtocol.removeCommunicationListener((ConnectionView) part);
             }
-        } 
+        }
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.ui.IPartListener#partActivated(org.eclipse.ui.IWorkbenchPart)
+     * @see org.eclipse.ui.IPartListener#partActivated(org.eclipse.ui.IWorkbenchPart)
      */
     public void partActivated(final IWorkbenchPart part) {
         // Nothing to do
@@ -722,9 +754,7 @@ public class CommonLayer implements IPartListener {
     /**
      * {@inheritDoc}
      * 
-     * @see
-     * org.eclipse.ui.IPartListener#partDeactivated(org.eclipse.ui.IWorkbenchPart
-     * )
+     * @see org.eclipse.ui.IPartListener#partDeactivated(org.eclipse.ui.IWorkbenchPart )
      */
     public void partDeactivated(final IWorkbenchPart part) {
         // Nothing to do
