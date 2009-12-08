@@ -3,9 +3,30 @@
  */
 package de.cau.cs.kieler.krep.editors.klp;
 
+
+import java.io.InputStream;
+
+import org.eclipse.xtext.parser.IParseResult;
+import org.eclipse.xtext.parser.antlr.IAntlrParser;
+
+import com.google.inject.Injector;
+
+import de.cau.cs.kieler.krep.editors.klp.klp.KLP;
+
 /**
  * Use this class to register components to be used within the IDE.
  */
 public class KlpRuntimeModule extends de.cau.cs.kieler.krep.editors.klp.AbstractKlpRuntimeModule {
 
+    public static KLP parse(InputStream in) throws Exception{
+        Injector injector = new KlpStandaloneSetup().createInjectorAndDoEMFRegistration();
+        IAntlrParser parser = injector.getInstance(IAntlrParser.class);
+        IParseResult parseResult = parser.parse(in);
+        if (!parseResult.getParseErrors().isEmpty()) {
+            throw new Exception(parseResult.getParseErrors().toString());
+        }
+       return (KLP) parseResult.getRootASTElement();
+    }
+    
 }
+
