@@ -45,7 +45,7 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="de.cau.cs.kieler.synccharts.RegisterCheckValidator">
+            class="de.cau.cs.kieler.synccharts.custom.RegisterCheckValidator">
       </startup>
    </extension>
 

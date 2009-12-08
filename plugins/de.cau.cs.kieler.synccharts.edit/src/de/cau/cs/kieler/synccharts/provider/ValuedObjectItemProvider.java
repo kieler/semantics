@@ -44,190 +44,190 @@ public class ValuedObjectItemProvider
         IItemLabelProvider,
         IItemPropertySource {
     /**
-     * This constructs an instance from a factory and a notifier.
-     * <!-- begin-user-doc -->
+	 * This constructs an instance from a factory and a notifier.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ValuedObjectItemProvider(AdapterFactory adapterFactory) {
-        super(adapterFactory);
-    }
+		super(adapterFactory);
+	}
 
     /**
-     * This returns the property descriptors for the adapted class.
-     * <!-- begin-user-doc -->
+	 * This returns the property descriptors for the adapted class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-        if (itemPropertyDescriptors == null) {
-            super.getPropertyDescriptors(object);
+		if (itemPropertyDescriptors == null) {
+			super.getPropertyDescriptors(object);
 
-            addNamePropertyDescriptor(object);
-            addTypePropertyDescriptor(object);
-            addInitialValuePropertyDescriptor(object);
-            addHostTypePropertyDescriptor(object);
-        }
-        return itemPropertyDescriptors;
-    }
+			addNamePropertyDescriptor(object);
+			addTypePropertyDescriptor(object);
+			addInitialValuePropertyDescriptor(object);
+			addHostTypePropertyDescriptor(object);
+		}
+		return itemPropertyDescriptors;
+	}
 
     /**
-     * This adds a property descriptor for the Name feature.
-     * <!-- begin-user-doc -->
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_name_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_name_feature", "_UI_ValuedObject_type"),
-                 SyncchartsPackage.Literals.VALUED_OBJECT__NAME,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ValuedObject_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_name_feature", "_UI_ValuedObject_type"),
+				 SyncchartsPackage.Literals.VALUED_OBJECT__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
 
     /**
-     * This adds a property descriptor for the Type feature.
-     * <!-- begin-user-doc -->
+	 * This adds a property descriptor for the Type feature.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected void addTypePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_type_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_type_feature", "_UI_ValuedObject_type"),
-                 SyncchartsPackage.Literals.VALUED_OBJECT__TYPE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ValuedObject_type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_type_feature", "_UI_ValuedObject_type"),
+				 SyncchartsPackage.Literals.VALUED_OBJECT__TYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
 
     /**
-     * This adds a property descriptor for the Initial Value feature.
-     * <!-- begin-user-doc -->
+	 * This adds a property descriptor for the Initial Value feature.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected void addInitialValuePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_initialValue_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_initialValue_feature", "_UI_ValuedObject_type"),
-                 SyncchartsPackage.Literals.VALUED_OBJECT__INITIAL_VALUE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ValuedObject_initialValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_initialValue_feature", "_UI_ValuedObject_type"),
+				 SyncchartsPackage.Literals.VALUED_OBJECT__INITIAL_VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
 
     /**
-     * This adds a property descriptor for the Host Type feature.
-     * <!-- begin-user-doc -->
+	 * This adds a property descriptor for the Host Type feature.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected void addHostTypePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_hostType_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_hostType_feature", "_UI_ValuedObject_type"),
-                 SyncchartsPackage.Literals.VALUED_OBJECT__HOST_TYPE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ValuedObject_hostType_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_hostType_feature", "_UI_ValuedObject_type"),
+				 SyncchartsPackage.Literals.VALUED_OBJECT__HOST_TYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
 
     /**
-     * This returns ValuedObject.gif.
-     * <!-- begin-user-doc -->
+	 * This returns ValuedObject.gif.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ValuedObject"));
-    }
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ValuedObject"));
+	}
 
     /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
+	 * This returns the label text for the adapted class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String getText(Object object) {
-        String label = ((ValuedObject)object).getName();
-        return label == null || label.length() == 0 ?
-            getString("_UI_ValuedObject_type") :
-            getString("_UI_ValuedObject_type") + " " + label;
-    }
+		String label = ((ValuedObject)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_ValuedObject_type") :
+			getString("_UI_ValuedObject_type") + " " + label;
+	}
 
     /**
-     * This handles model notifications by calling {@link #updateChildren} to update any cached
-     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-     * <!-- begin-user-doc -->
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void notifyChanged(Notification notification) {
-        updateChildren(notification);
+		updateChildren(notification);
 
-        switch (notification.getFeatureID(ValuedObject.class)) {
-            case SyncchartsPackage.VALUED_OBJECT__NAME:
-            case SyncchartsPackage.VALUED_OBJECT__TYPE:
-            case SyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
-            case SyncchartsPackage.VALUED_OBJECT__HOST_TYPE:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-                return;
-        }
-        super.notifyChanged(notification);
-    }
+		switch (notification.getFeatureID(ValuedObject.class)) {
+			case SyncchartsPackage.VALUED_OBJECT__NAME:
+			case SyncchartsPackage.VALUED_OBJECT__TYPE:
+			case SyncchartsPackage.VALUED_OBJECT__INITIAL_VALUE:
+			case SyncchartsPackage.VALUED_OBJECT__HOST_TYPE:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+		}
+		super.notifyChanged(notification);
+	}
 
     /**
-     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-     * that can be created under this object.
-     * <!-- begin-user-doc -->
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-        super.collectNewChildDescriptors(newChildDescriptors, object);
-    }
+		super.collectNewChildDescriptors(newChildDescriptors, object);
+	}
 
     /**
-     * Return the resource locator for this item provider's resources.
-     * <!-- begin-user-doc -->
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public ResourceLocator getResourceLocator() {
-        return SyncchartsEditPlugin.INSTANCE;
-    }
+		return SyncchartsEditPlugin.INSTANCE;
+	}
 
 }

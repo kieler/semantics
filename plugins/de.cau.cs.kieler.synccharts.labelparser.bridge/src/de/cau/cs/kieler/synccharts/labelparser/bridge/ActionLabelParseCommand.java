@@ -45,8 +45,8 @@ import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
-import de.cau.cs.kieler.synccharts.scoping.ActionLabelDeclarativeScopeProvider;
-import de.cau.cs.kieler.synccharts.scoping.ActionLabelScopeProvider;
+import de.cau.cs.kieler.synccharts.labelparser.scoping.ActionLabelDeclarativeScopeProvider;
+import de.cau.cs.kieler.synccharts.labelparser.scoping.ActionLabelScopeProvider;
 
 /**
  * Wrapper of the parsing operation into a GMF AbstractTransactionalCommand. Hence parsing of an

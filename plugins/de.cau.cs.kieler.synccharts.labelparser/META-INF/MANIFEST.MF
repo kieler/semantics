@@ -6,8 +6,8 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.labelparser; singleton:=true
 Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext,
- org.eclipse.xtext.generator;resolution:=optional,
+Require-Bundle: org.eclipse.xtext;bundle-version="0.8.0",
+ org.eclipse.xtext.generator;bundle-version="0.8.0";resolution:=optional,
  de.itemis.xtext.antlr;resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
@@ -20,12 +20,14 @@ Require-Bundle: org.eclipse.xtext,
  org.antlr.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
- de.cau.cs.kieler.synccharts.model;bundle-version="0.1.0"
+ de.cau.cs.kieler.synccharts;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.synccharts,
- de.cau.cs.kieler.synccharts.formatting,
- de.cau.cs.kieler.synccharts.parseTreeConstruction,
- de.cau.cs.kieler.synccharts.parser.antlr,
- de.cau.cs.kieler.synccharts.scoping,
- de.cau.cs.kieler.synccharts.services,
- de.cau.cs.kieler.synccharts.validation
+Export-Package: de.cau.cs.kieler.synccharts.labelparser,
+ de.cau.cs.kieler.synccharts.labelparser.formatting,
+ de.cau.cs.kieler.synccharts.labelparser.parseTreeConstruction,
+ de.cau.cs.kieler.synccharts.labelparser.parser.antlr,
+ de.cau.cs.kieler.synccharts.labelparser.parser.antlr.internal,
+ de.cau.cs.kieler.synccharts.labelparser.scoping,
+ de.cau.cs.kieler.synccharts.labelparser.services,
+ de.cau.cs.kieler.synccharts.labelparser.validation
+Import-Package: org.apache.log4j

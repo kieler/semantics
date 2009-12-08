@@ -27,7 +27,7 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
-import de.cau.cs.kieler.synccharts.ActionLabelStandaloneSetup;
+import de.cau.cs.kieler.synccharts.labelparser.ActionLabelStandaloneSetup;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;

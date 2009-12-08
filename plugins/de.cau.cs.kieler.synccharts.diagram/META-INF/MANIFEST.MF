@@ -36,12 +36,12 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide,
  org.eclipse.draw2d;visibility:=reexport,
  de.cau.cs.kieler.synccharts.custom;visibility:=reexport,
- de.cau.cs.kieler.synccharts.model;visibility:=reexport,
  de.cau.cs.kieler.synccharts.edit;visibility:=reexport,
  org.eclipse.ocl.ecore;visibility:=reexport,
  org.eclipse.emf.validation;visibility:=reexport,
  org.eclipse.gef;visibility:=reexport,
- de.cau.cs.kieler.synccharts.labelparser.bridge;bundle-version="0.1.0"
+ de.cau.cs.kieler.synccharts.labelparser.bridge;bundle-version="0.1.0",
+ de.cau.cs.kieler.synccharts;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Eclipse-LazyStart: true

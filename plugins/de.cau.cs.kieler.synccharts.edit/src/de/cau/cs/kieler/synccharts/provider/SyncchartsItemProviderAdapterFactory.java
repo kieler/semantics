@@ -38,598 +38,598 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  */
 public class SyncchartsItemProviderAdapterFactory extends SyncchartsAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
     /**
-     * This keeps track of the root adapter factory that delegates to this adapter factory.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the root adapter factory that delegates to this adapter factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ComposedAdapterFactory parentAdapterFactory;
 
     /**
-     * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
-     * <!-- begin-user-doc -->
+	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
     /**
-     * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
-     * <!-- begin-user-doc -->
+	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
     /**
-     * This constructs an instance.
-     * <!-- begin-user-doc -->
+	 * This constructs an instance.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public SyncchartsItemProviderAdapterFactory() {
-        supportedTypes.add(IEditingDomainItemProvider.class);
-        supportedTypes.add(IStructuredItemContentProvider.class);
-        supportedTypes.add(ITreeItemContentProvider.class);
-        supportedTypes.add(IItemLabelProvider.class);
-        supportedTypes.add(IItemPropertySource.class);
-    }
+		supportedTypes.add(IEditingDomainItemProvider.class);
+		supportedTypes.add(IStructuredItemContentProvider.class);
+		supportedTypes.add(ITreeItemContentProvider.class);
+		supportedTypes.add(IItemLabelProvider.class);
+		supportedTypes.add(IItemPropertySource.class);
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Action} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Action} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ActionItemProvider actionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Action}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Action}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createActionAdapter() {
-        if (actionItemProvider == null) {
-            actionItemProvider = new ActionItemProvider(this);
-        }
+		if (actionItemProvider == null) {
+			actionItemProvider = new ActionItemProvider(this);
+		}
 
-        return actionItemProvider;
-    }
+		return actionItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Assignment} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Assignment} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected AssignmentItemProvider assignmentItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Assignment}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Assignment}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createAssignmentAdapter() {
-        if (assignmentItemProvider == null) {
-            assignmentItemProvider = new AssignmentItemProvider(this);
-        }
+		if (assignmentItemProvider == null) {
+			assignmentItemProvider = new AssignmentItemProvider(this);
+		}
 
-        return assignmentItemProvider;
-    }
+		return assignmentItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.ComplexExpression} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.ComplexExpression} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ComplexExpressionItemProvider complexExpressionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.ComplexExpression}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.ComplexExpression}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createComplexExpressionAdapter() {
-        if (complexExpressionItemProvider == null) {
-            complexExpressionItemProvider = new ComplexExpressionItemProvider(this);
-        }
+		if (complexExpressionItemProvider == null) {
+			complexExpressionItemProvider = new ComplexExpressionItemProvider(this);
+		}
 
-        return complexExpressionItemProvider;
-    }
+		return complexExpressionItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Emission} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Emission} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected EmissionItemProvider emissionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Emission}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Emission}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createEmissionAdapter() {
-        if (emissionItemProvider == null) {
-            emissionItemProvider = new EmissionItemProvider(this);
-        }
+		if (emissionItemProvider == null) {
+			emissionItemProvider = new EmissionItemProvider(this);
+		}
 
-        return emissionItemProvider;
-    }
+		return emissionItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Expression} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Expression} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ExpressionItemProvider expressionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Expression}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Expression}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createExpressionAdapter() {
-        if (expressionItemProvider == null) {
-            expressionItemProvider = new ExpressionItemProvider(this);
-        }
+		if (expressionItemProvider == null) {
+			expressionItemProvider = new ExpressionItemProvider(this);
+		}
 
-        return expressionItemProvider;
-    }
+		return expressionItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.HostCode} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.HostCode} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected HostCodeItemProvider hostCodeItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.HostCode}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.HostCode}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createHostCodeAdapter() {
-        if (hostCodeItemProvider == null) {
-            hostCodeItemProvider = new HostCodeItemProvider(this);
-        }
+		if (hostCodeItemProvider == null) {
+			hostCodeItemProvider = new HostCodeItemProvider(this);
+		}
 
-        return hostCodeItemProvider;
-    }
+		return hostCodeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Region} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Region} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected RegionItemProvider regionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Region}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Region}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createRegionAdapter() {
-        if (regionItemProvider == null) {
-            regionItemProvider = new RegionItemProvider(this);
-        }
+		if (regionItemProvider == null) {
+			regionItemProvider = new RegionItemProvider(this);
+		}
 
-        return regionItemProvider;
-    }
+		return regionItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Signal} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Signal} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected SignalItemProvider signalItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Signal}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Signal}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createSignalAdapter() {
-        if (signalItemProvider == null) {
-            signalItemProvider = new SignalItemProvider(this);
-        }
+		if (signalItemProvider == null) {
+			signalItemProvider = new SignalItemProvider(this);
+		}
 
-        return signalItemProvider;
-    }
+		return signalItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.SignalReference} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.SignalReference} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected SignalReferenceItemProvider signalReferenceItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.SignalReference}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.SignalReference}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createSignalReferenceAdapter() {
-        if (signalReferenceItemProvider == null) {
-            signalReferenceItemProvider = new SignalReferenceItemProvider(this);
-        }
+		if (signalReferenceItemProvider == null) {
+			signalReferenceItemProvider = new SignalReferenceItemProvider(this);
+		}
 
-        return signalReferenceItemProvider;
-    }
+		return signalReferenceItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Renaming} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Renaming} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected RenamingItemProvider renamingItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Renaming}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Renaming}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createRenamingAdapter() {
-        if (renamingItemProvider == null) {
-            renamingItemProvider = new RenamingItemProvider(this);
-        }
+		if (renamingItemProvider == null) {
+			renamingItemProvider = new RenamingItemProvider(this);
+		}
 
-        return renamingItemProvider;
-    }
+		return renamingItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.State} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.State} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected StateItemProvider stateItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.State}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.State}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createStateAdapter() {
-        if (stateItemProvider == null) {
-            stateItemProvider = new StateItemProvider(this);
-        }
+		if (stateItemProvider == null) {
+			stateItemProvider = new StateItemProvider(this);
+		}
 
-        return stateItemProvider;
-    }
+		return stateItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Transition} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Transition} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected TransitionItemProvider transitionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Transition}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Transition}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createTransitionAdapter() {
-        if (transitionItemProvider == null) {
-            transitionItemProvider = new TransitionItemProvider(this);
-        }
+		if (transitionItemProvider == null) {
+			transitionItemProvider = new TransitionItemProvider(this);
+		}
 
-        return transitionItemProvider;
-    }
+		return transitionItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.ValuedObject} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.ValuedObject} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ValuedObjectItemProvider valuedObjectItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.ValuedObject}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.ValuedObject}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createValuedObjectAdapter() {
-        if (valuedObjectItemProvider == null) {
-            valuedObjectItemProvider = new ValuedObjectItemProvider(this);
-        }
+		if (valuedObjectItemProvider == null) {
+			valuedObjectItemProvider = new ValuedObjectItemProvider(this);
+		}
 
-        return valuedObjectItemProvider;
-    }
+		return valuedObjectItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Variable} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Variable} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected VariableItemProvider variableItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Variable}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Variable}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createVariableAdapter() {
-        if (variableItemProvider == null) {
-            variableItemProvider = new VariableItemProvider(this);
-        }
+		if (variableItemProvider == null) {
+			variableItemProvider = new VariableItemProvider(this);
+		}
 
-        return variableItemProvider;
-    }
+		return variableItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.VariableReference} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.VariableReference} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected VariableReferenceItemProvider variableReferenceItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.VariableReference}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.VariableReference}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createVariableReferenceAdapter() {
-        if (variableReferenceItemProvider == null) {
-            variableReferenceItemProvider = new VariableReferenceItemProvider(this);
-        }
+		if (variableReferenceItemProvider == null) {
+			variableReferenceItemProvider = new VariableReferenceItemProvider(this);
+		}
 
-        return variableReferenceItemProvider;
-    }
+		return variableReferenceItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Value} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.Value} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ValueItemProvider valueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Value}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.Value}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createValueAdapter() {
-        if (valueItemProvider == null) {
-            valueItemProvider = new ValueItemProvider(this);
-        }
+		if (valueItemProvider == null) {
+			valueItemProvider = new ValueItemProvider(this);
+		}
 
-        return valueItemProvider;
-    }
+		return valueItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.IntValue} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.IntValue} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected IntValueItemProvider intValueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.IntValue}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.IntValue}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createIntValueAdapter() {
-        if (intValueItemProvider == null) {
-            intValueItemProvider = new IntValueItemProvider(this);
-        }
+		if (intValueItemProvider == null) {
+			intValueItemProvider = new IntValueItemProvider(this);
+		}
 
-        return intValueItemProvider;
-    }
+		return intValueItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.FloatValue} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.FloatValue} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected FloatValueItemProvider floatValueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.FloatValue}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.FloatValue}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createFloatValueAdapter() {
-        if (floatValueItemProvider == null) {
-            floatValueItemProvider = new FloatValueItemProvider(this);
-        }
+		if (floatValueItemProvider == null) {
+			floatValueItemProvider = new FloatValueItemProvider(this);
+		}
 
-        return floatValueItemProvider;
-    }
+		return floatValueItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.BooleanValue} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.BooleanValue} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected BooleanValueItemProvider booleanValueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.BooleanValue}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.BooleanValue}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createBooleanValueAdapter() {
-        if (booleanValueItemProvider == null) {
-            booleanValueItemProvider = new BooleanValueItemProvider(this);
-        }
+		if (booleanValueItemProvider == null) {
+			booleanValueItemProvider = new BooleanValueItemProvider(this);
+		}
 
-        return booleanValueItemProvider;
-    }
+		return booleanValueItemProvider;
+	}
 
     /**
-     * This returns the root adapter factory that contains this factory.
-     * <!-- begin-user-doc -->
+	 * This returns the root adapter factory that contains this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ComposeableAdapterFactory getRootAdapterFactory() {
-        return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
-    }
+		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
+	}
 
     /**
-     * This sets the composed adapter factory that contains this factory.
-     * <!-- begin-user-doc -->
+	 * This sets the composed adapter factory that contains this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
-        this.parentAdapterFactory = parentAdapterFactory;
-    }
+		this.parentAdapterFactory = parentAdapterFactory;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean isFactoryForType(Object type) {
-        return supportedTypes.contains(type) || super.isFactoryForType(type);
-    }
+		return supportedTypes.contains(type) || super.isFactoryForType(type);
+	}
 
     /**
-     * This implementation substitutes the factory itself as the key for the adapter.
-     * <!-- begin-user-doc -->
+	 * This implementation substitutes the factory itself as the key for the adapter.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter adapt(Notifier notifier, Object type) {
-        return super.adapt(notifier, this);
-    }
+		return super.adapt(notifier, this);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object adapt(Object object, Object type) {
-        if (isFactoryForType(type)) {
-            Object adapter = super.adapt(object, type);
-            if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
-                return adapter;
-            }
-        }
+		if (isFactoryForType(type)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
+				return adapter;
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * This adds a listener.
-     * <!-- begin-user-doc -->
+	 * This adds a listener.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void addListener(INotifyChangedListener notifyChangedListener) {
-        changeNotifier.addListener(notifyChangedListener);
-    }
+		changeNotifier.addListener(notifyChangedListener);
+	}
 
     /**
-     * This removes a listener.
-     * <!-- begin-user-doc -->
+	 * This removes a listener.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void removeListener(INotifyChangedListener notifyChangedListener) {
-        changeNotifier.removeListener(notifyChangedListener);
-    }
+		changeNotifier.removeListener(notifyChangedListener);
+	}
 
     /**
-     * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
-     * <!-- begin-user-doc -->
+	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void fireNotifyChanged(Notification notification) {
-        changeNotifier.fireNotifyChanged(notification);
+		changeNotifier.fireNotifyChanged(notification);
 
-        if (parentAdapterFactory != null) {
-            parentAdapterFactory.fireNotifyChanged(notification);
-        }
-    }
+		if (parentAdapterFactory != null) {
+			parentAdapterFactory.fireNotifyChanged(notification);
+		}
+	}
 
     /**
-     * This disposes all of the item providers created by this factory. 
-     * <!-- begin-user-doc -->
+	 * This disposes all of the item providers created by this factory. 
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void dispose() {
-        if (actionItemProvider != null) actionItemProvider.dispose();
-        if (assignmentItemProvider != null) assignmentItemProvider.dispose();
-        if (complexExpressionItemProvider != null) complexExpressionItemProvider.dispose();
-        if (emissionItemProvider != null) emissionItemProvider.dispose();
-        if (expressionItemProvider != null) expressionItemProvider.dispose();
-        if (hostCodeItemProvider != null) hostCodeItemProvider.dispose();
-        if (regionItemProvider != null) regionItemProvider.dispose();
-        if (signalItemProvider != null) signalItemProvider.dispose();
-        if (signalReferenceItemProvider != null) signalReferenceItemProvider.dispose();
-        if (renamingItemProvider != null) renamingItemProvider.dispose();
-        if (stateItemProvider != null) stateItemProvider.dispose();
-        if (transitionItemProvider != null) transitionItemProvider.dispose();
-        if (valuedObjectItemProvider != null) valuedObjectItemProvider.dispose();
-        if (variableItemProvider != null) variableItemProvider.dispose();
-        if (variableReferenceItemProvider != null) variableReferenceItemProvider.dispose();
-        if (valueItemProvider != null) valueItemProvider.dispose();
-        if (intValueItemProvider != null) intValueItemProvider.dispose();
-        if (floatValueItemProvider != null) floatValueItemProvider.dispose();
-        if (booleanValueItemProvider != null) booleanValueItemProvider.dispose();
-    }
+		if (actionItemProvider != null) actionItemProvider.dispose();
+		if (assignmentItemProvider != null) assignmentItemProvider.dispose();
+		if (complexExpressionItemProvider != null) complexExpressionItemProvider.dispose();
+		if (emissionItemProvider != null) emissionItemProvider.dispose();
+		if (expressionItemProvider != null) expressionItemProvider.dispose();
+		if (hostCodeItemProvider != null) hostCodeItemProvider.dispose();
+		if (regionItemProvider != null) regionItemProvider.dispose();
+		if (signalItemProvider != null) signalItemProvider.dispose();
+		if (signalReferenceItemProvider != null) signalReferenceItemProvider.dispose();
+		if (renamingItemProvider != null) renamingItemProvider.dispose();
+		if (stateItemProvider != null) stateItemProvider.dispose();
+		if (transitionItemProvider != null) transitionItemProvider.dispose();
+		if (valuedObjectItemProvider != null) valuedObjectItemProvider.dispose();
+		if (variableItemProvider != null) variableItemProvider.dispose();
+		if (variableReferenceItemProvider != null) variableReferenceItemProvider.dispose();
+		if (valueItemProvider != null) valueItemProvider.dispose();
+		if (intValueItemProvider != null) intValueItemProvider.dispose();
+		if (floatValueItemProvider != null) floatValueItemProvider.dispose();
+		if (booleanValueItemProvider != null) booleanValueItemProvider.dispose();
+	}
 
 }
