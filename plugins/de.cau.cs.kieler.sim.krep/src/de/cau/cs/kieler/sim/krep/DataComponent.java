@@ -45,6 +45,7 @@ import de.cau.cs.kieler.krep.compiler.main.Ec2klp;
 import de.cau.cs.kieler.krep.editors.klp.KlpStandaloneSetup;
 import de.cau.cs.kieler.krep.editors.klp.klp.KLP;
 import de.cau.cs.kieler.krep.evalbench.comm.CommunicationProtocol;
+import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationListener;
 import de.cau.cs.kieler.krep.evalbench.comm.ICommunicationProtocol;
 import de.cau.cs.kieler.krep.evalbench.comm.JNIConnection;
 import de.cau.cs.kieler.krep.evalbench.comm.KepProtocol;
@@ -57,6 +58,8 @@ import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KepAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KlpAssembler;
 import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
+import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
+import de.cau.cs.kieler.krep.evalbench.ui.views.TargetView;
 import de.cau.cs.kieler.sim.kiem.data.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.data.KiemPropertyTypeFile;
@@ -76,13 +79,14 @@ import de.cau.cs.kieler.dataflow.codegen.LustreGenerator;
  * @author ctr
  * 
  */
-public final class DataComponent extends JSONObjectDataComponent {
+public final class DataComponent extends JSONObjectDataComponent implements ICommunicationListener{
 
     private JNIConnection connection = null;
     private CommunicationProtocol protocol = null;
     private IAssembler assembler = null;
 
     private AssemblerView viewer = null;
+    private TargetView target = null;
 
     // private final int propertyConnection = 0;
     // private final int propertyPort = 1;
@@ -167,7 +171,9 @@ public final class DataComponent extends JSONObjectDataComponent {
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        connection.dispose();
+        if (connection != null) {
+            connection.dispose();
+        }
         connection = null;
         assembler = null;
         protocol = null;
@@ -208,8 +214,15 @@ public final class DataComponent extends JSONObjectDataComponent {
             throw new KiemInitializationException("Cannot show assembler view", true, e);
         }
 
+        try {
+            target = (TargetView) (page.showView(TargetView.VIEW_ID, null,
+                    IWorkbenchPage.VIEW_VISIBLE));
+        } catch (PartInitException e) {
+            throw new KiemInitializationException("Cannot show target view", true, e);
+        }
         JSONObject signals = new JSONObject();
         connection = new JNIConnection();
+        
         connection.setLogFile(getProperties()[propertyLog].getValue());
         try {
             IEditorPart editor = page.getActiveEditor();
@@ -240,9 +253,13 @@ public final class DataComponent extends JSONObjectDataComponent {
             throw new KiemInitializationException("Core exception", true, e);
         }
         if (assembler != null) {
+            protocol.addCommunicationListener(this);
             try {
                 if (viewer != null) {
                     viewer.setAssembler(assembler);
+                }
+                if (target != null) {
+                    target.show(protocol.getTargetInfo());
                 }
                 connection.comment("Download Program");
                 protocol.loadProgram(assembler, null);
@@ -369,8 +386,8 @@ public final class DataComponent extends JSONObjectDataComponent {
         KepAssembler kep = new KepAssembler();
         assembler = kep;
         InputStream in = file.getContents();
-        Reader reader = new BufferedReader(new InputStreamReader(in));
-        kep.assemble(name, reader);
+        //Reader reader = new BufferedReader(new InputStreamReader(in));
+        kep.assemble(name, in);
     }
 
     /**
@@ -386,6 +403,8 @@ public final class DataComponent extends JSONObjectDataComponent {
         InputStream strl = file.getContents();
         Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
 
+        InputStream kasm = null;
+
         if (fragments.length != 1) {
             throw new KiemInitializationException("strl2kasm compiler not found", false, null);
         }
@@ -400,76 +419,102 @@ public final class DataComponent extends JSONObjectDataComponent {
         InputStream stderr = p.getErrorStream();
         OutputStream stdin = p.getOutputStream();
 
+        System.out.println("===========================Esterel==================================");
         while (strl.available() > 0) {
-            stdin.write(strl.read());
-        }
-        stdin.close();
-
-        checkErrors(stderr);
-
-        // expand modules
-        p = Runtime.getRuntime().exec(path + "cec-expandmodules");
-        InputStream exp = p.getInputStream();
-        stdin = p.getOutputStream();
-        stderr = p.getErrorStream();
-        while (xml.available() > 0) {
-            int r = xml.read();
+            int r = strl.read();
             stdin.write(r);
-            // System.out.print(Character.toChars(r));
+            System.out.print(Character.toChars(r));
         }
         stdin.close();
-        checkErrors(stderr);
+        try {
+            p.waitFor();
+            if (p.exitValue() != 0) {
+                checkErrors(stderr);
+            }
+            System.out.println("===========================XML==================================");
 
-        // dismantle
-        String kepdismantle = path + "cec-kepdismantle";
-        // String[] cmds = new String[] { kepdismantle, "-d ALL" };
+            // expand modules
+            p = Runtime.getRuntime().exec(path + "cec-expandmodules");
+            InputStream exp = p.getInputStream();
+            stdin = p.getOutputStream();
+            stderr = p.getErrorStream();
+            while (xml.available() > 0) {
+                int r = xml.read();
+                stdin.write(r);
+                System.out.print(Character.toChars(r));
+            }
+            stdin.close();
+            p.waitFor();
+            if (p.exitValue() != 0) {
+                checkErrors(stderr);
+            }
 
-        p = Runtime.getRuntime().exec(kepdismantle);
-        InputStream dis = p.getInputStream();
-        stdin = p.getOutputStream();
-        stderr = p.getErrorStream();
+            // dismantle
+            p = Runtime.getRuntime().exec(new String[] { path + "cec-kepdismantle" }); // , "-d ALL"
+            // });
+            InputStream dis = p.getInputStream();
+            stdin = p.getOutputStream();
+            stderr = p.getErrorStream();
+            System.out.println("===========================EXP==================================");
 
-        while (exp.available() > 0) {
-            int r = exp.read();
-            stdin.write(r);
-            // System.out.print(Character.toChars(r));
+            while (exp.available() > 0) {
+                int r = exp.read();
+                stdin.write(r);
+                System.out.print(Character.toChars(r));
+            }
+            stdin.close();
+            p.waitFor();
+            if (p.exitValue() != 0) {
+                checkErrors(stderr);
+            }
+
+            // to KEP
+            p = Runtime.getRuntime().exec(new String[] { path + "cec-astkep", "-o" });
+            // TODO: add -o for optimizations. Oops, must be independent of OS.
+            InputStream k = p.getInputStream();
+            stdin = p.getOutputStream();
+            stderr = p.getErrorStream();
+            System.out.println("===========================DIS==================================");
+
+            while (dis.available() > 0) {
+                int r = dis.read();
+                stdin.write(r);
+                System.out.print(Character.toChars(r));
+            }
+            stdin.close();
+            p.waitFor();
+            if (p.exitValue() != 0) {
+                checkErrors(stderr);
+            }
+
+            System.out.println("===========================kep==================================");
+
+            // to kasm
+            p = Runtime.getRuntime().exec(path + "cec-xmlkasm");
+            kasm = p.getInputStream();
+            stdin = p.getOutputStream();
+            stderr = p.getErrorStream();
+            while (k.available() > 0) {
+                stdin.write(k.read());
+            }
+            stdin.close();
+            p.waitFor();
+            if (p.exitValue() != 0) {
+                checkErrors(stderr);
+            }
+
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        stdin.close();
-        checkErrors(stderr);
-
-        // to KEP
-        p = Runtime.getRuntime().exec(new String[] { path + "cec-astkep", "-o" });
-        InputStream k = p.getInputStream();
-        stdin = p.getOutputStream();
-        stderr = p.getErrorStream();
-
-        while (dis.available() > 0) {
-            int r = dis.read();
-            stdin.write(r);
-            // System.out.print(Character.toChars(r));
-        }
-        stdin.close();
-        checkErrors(stderr);
-
-        // to kasm
-        p = Runtime.getRuntime().exec(path + "cec-xmlkasm");
-        InputStream kasm = p.getInputStream();
-        stdin = p.getOutputStream();
-        stderr = p.getErrorStream();
-        while (k.available() > 0) {
-            stdin.write(k.read());
-        }
-        stdin.close();
-        checkErrors(stderr);
-
         connection.initialize(ICommunicationProtocol.P_KEP);
         protocol = new KepProtocol(connection);
 
         KepAssembler kep = new KepAssembler();
         assembler = kep;
 
-        Reader reader = new BufferedReader(new InputStreamReader(kasm));
-        kep.assemble(name, reader);
+        //Reader reader = new BufferedReader(new InputStreamReader(kasm));
+        kep.assemble(name, kasm);
     }
 
     /**
@@ -486,5 +531,26 @@ public final class DataComponent extends JSONObjectDataComponent {
             }
             throw new KiemInitializationException("Parse Error: " + s.toString(), false, null);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dataReceived(final String data) {
+       ConnectionView.log("-> " + data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dataSent(final String data) {
+        ConnectionView.log("<- " + data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void comment(final String comment) {
+        ConnectionView.log(comment);
     }
 }
