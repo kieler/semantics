@@ -6,7 +6,7 @@ package de.cau.cs.kieler.synccharts;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 
-import de.cau.cs.kieler.synccharts.formatting.TransitionLabelTransientValueService;
+import de.cau.cs.kieler.synccharts.formatting.ActionLabelTransientValueService;
 import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
 
 /**
@@ -19,7 +19,7 @@ public class ActionLabelRuntimeModule extends AbstractActionLabelRuntimeModule {
      */
     @Override
     public Class<? extends ITransientValueService> bindITransientValueService() {
-        return TransitionLabelTransientValueService.class; 
+        return ActionLabelTransientValueService.class; 
     }
     
     /* (non-Javadoc)
@@ -29,7 +29,5 @@ public class ActionLabelRuntimeModule extends AbstractActionLabelRuntimeModule {
     public Class<? extends IValueConverterService> bindIValueConverterService() {
         return ActionLabelValueConverter.class;
     }
-    
-    
     
 }

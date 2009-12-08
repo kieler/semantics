@@ -33,6 +33,7 @@ import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.parser.antlr.IAntlrParser;
 import org.eclipse.xtext.resource.XtextResource;
@@ -44,6 +45,7 @@ import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
+import de.cau.cs.kieler.synccharts.scoping.ActionLabelDeclarativeScopeProvider;
 import de.cau.cs.kieler.synccharts.scoping.ActionLabelScopeProvider;
 
 /**
@@ -256,7 +258,7 @@ public class ActionLabelParseCommand extends AbstractTransactionalCommand {
          * 
          * }
          */
-
+        
         copyActionContents(newAction, action);
     }
 
