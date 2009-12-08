@@ -108,13 +108,23 @@ public abstract class AbstractEsiUiModule extends EsiRuntimeModule {
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
-	public Class<? extends org.eclipse.xtext.ui.core.editor.utils.ValidationJob.Factory> bindValidationJob$Factory() {
-		return org.eclipse.xtext.ui.core.editor.utils.DefaultValidationJobFactory.class;
+	public Class<? extends org.eclipse.xtext.ui.core.editor.validation.IXtextResourceChecker> bindIXtextResourceChecker() {
+		return org.eclipse.xtext.ui.core.editor.validation.DefaultXtextResourceChecker.class;
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
-	public Class<? extends org.eclipse.xtext.ui.core.editor.IXtextResourceChecker> bindIXtextResourceChecker() {
-		return org.eclipse.xtext.ui.core.editor.DefaultXtextResourceChecker.class;
+	public Class<? extends com.google.inject.Provider<org.eclipse.xtext.index.IXtextIndex>> provideIXtextIndex() {
+		return org.eclipse.xtext.ui.core.index.IndexProvider.class;
+	}
+
+	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
+	public Class<? extends org.eclipse.xtext.ui.core.builder.ILanguageBuilder> bindILanguageBuilder() {
+		return org.eclipse.xtext.ui.core.builder.impl.SimpleProjectLanguageBuilder.class;
+	}
+
+	// contributed by org.eclipse.xtext.ui.generator.ImplicitUiFragment
+	public Class<? extends org.eclipse.xtext.ui.core.editor.model.XtextDocumentProvider> bindXtextDocumentProvider() {
+		return org.eclipse.xtext.ui.core.editor.model.ResourceAwareXtextDocumentProvider.class;
 	}
 
 	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
@@ -130,6 +140,16 @@ public abstract class AbstractEsiUiModule extends EsiRuntimeModule {
 	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
 	public Class<? extends org.eclipse.xtext.ui.core.editor.IDamagerRepairer> bindIDamagerRepairer() {
 		return org.eclipse.xtext.ui.core.editor.XtextDamagerRepairer.class;
+	}
+
+	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
+	public void configureHighlightingLexer(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.parser.antlr.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.core.LexerUIBindings.HIGHLIGHTING)).to(de.cau.cs.kieler.sim.esi.parser.antlr.internal.InternalEsiLexer.class);
+	}
+
+	// contributed by de.itemis.xtext.antlr.XtextAntlrGeneratorFragment
+	public void configureHighlightingTokenDefProvider(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.parser.antlr.ITokenDefProvider.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.core.LexerUIBindings.HIGHLIGHTING)).to(org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class);
 	}
 
 	// contributed by org.eclipse.xtext.ui.generator.labeling.LabelProviderFragment
@@ -160,6 +180,16 @@ public abstract class AbstractEsiUiModule extends EsiRuntimeModule {
 	// contributed by de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment
 	public Class<? extends org.eclipse.xtext.ui.common.editor.contentassist.antlr.IContentAssistParser> bindIContentAssistParser() {
 		return de.cau.cs.kieler.sim.esi.contentassist.antlr.EsiParser.class;
+	}
+
+	// contributed by de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment
+	public void configureContentAssistLexerProvider(com.google.inject.Binder binder) {
+		binder.bind(de.cau.cs.kieler.sim.esi.contentassist.antlr.internal.InternalEsiLexer.class).toProvider(org.eclipse.xtext.parser.antlr.LexerProvider.create(de.cau.cs.kieler.sim.esi.contentassist.antlr.internal.InternalEsiLexer.class));
+	}
+
+	// contributed by de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment
+	public void configureContentAssistLexer(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.ui.common.editor.contentassist.antlr.internal.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.core.LexerUIBindings.CONTENT_ASSIST)).to(de.cau.cs.kieler.sim.esi.contentassist.antlr.internal.InternalEsiLexer.class);
 	}
 
 

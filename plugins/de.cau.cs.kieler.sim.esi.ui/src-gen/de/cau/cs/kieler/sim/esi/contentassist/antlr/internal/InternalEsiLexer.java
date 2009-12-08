@@ -10,7 +10,6 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
-/** @generated */
 public class InternalEsiLexer extends Lexer {
     public static final int RULE_ID=4;
     public static final int T10=10;

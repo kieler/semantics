@@ -4,7 +4,7 @@
 package de.cau.cs.kieler.sim.esi.parser.antlr;
 
 import org.antlr.runtime.ANTLRInputStream;
-import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
+import org.antlr.runtime.TokenSource;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.parser.ParseException;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
@@ -13,23 +13,18 @@ import com.google.inject.Inject;
 
 import de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess;
 
-/** @generated */
 public class EsiParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
-	@Inject 
-    protected ITokenDefProvider antlrTokenDefProvider;
 	
 	@Inject
 	private EsiGrammarAccess grammarAccess;
 	
 	@Override
 	protected IParseResult parse(String ruleName, ANTLRInputStream in) {
-		de.cau.cs.kieler.sim.esi.parser.antlr.internal.InternalEsiLexer lexer = new de.cau.cs.kieler.sim.esi.parser.antlr.internal.InternalEsiLexer(in);
-		XtextTokenStream stream = new XtextTokenStream(lexer, antlrTokenDefProvider);
-		stream.setInitialHiddenTokens("RULE_WS", "RULE_COMMENT");
-		de.cau.cs.kieler.sim.esi.parser.antlr.internal.InternalEsiParser parser = new de.cau.cs.kieler.sim.esi.parser.antlr.internal.InternalEsiParser(
-				stream, getElementFactory(), grammarAccess);
-		parser.setTokenTypeMap(antlrTokenDefProvider.getTokenDefMap());
+		TokenSource tokenSource = createLexer(in);
+		XtextTokenStream tokenStream = createTokenStream(tokenSource);
+		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_COMMENT");
+		de.cau.cs.kieler.sim.esi.parser.antlr.internal.InternalEsiParser parser = createParser(tokenStream);
+		parser.setTokenTypeMap(getTokenDefProvider().getTokenDefMap());
 		try {
 			if(ruleName != null)
 				return parser.parse(ruleName);
@@ -37,6 +32,10 @@ public class EsiParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 		} catch (Exception re) {
 			throw new ParseException(re.getMessage(),re);
 		}
+	}
+	
+	protected de.cau.cs.kieler.sim.esi.parser.antlr.internal.InternalEsiParser createParser(XtextTokenStream stream) {
+		return new de.cau.cs.kieler.sim.esi.parser.antlr.internal.InternalEsiParser(stream, getElementFactory(), getGrammarAccess());
 	}
 	
 	@Override 
@@ -51,4 +50,5 @@ public class EsiParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 	public void setGrammarAccess(EsiGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
+	
 }

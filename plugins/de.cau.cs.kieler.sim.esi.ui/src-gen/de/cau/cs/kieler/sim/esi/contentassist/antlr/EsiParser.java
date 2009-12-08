@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.antlr.runtime.CharStream;
 import org.antlr.runtime.RecognitionException;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.ui.common.editor.contentassist.antlr.AbstractContentAssistParser;
@@ -18,18 +17,12 @@ import com.google.inject.Inject;
 
 import de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess;
 
-/** @generated */
 public class EsiParser extends AbstractContentAssistParser {
 	
 	@Inject
 	private EsiGrammarAccess grammarAccess;
 	
 	private Map<AbstractElement, String> nameMappings;
-	
-	@Override
-	protected de.cau.cs.kieler.sim.esi.contentassist.antlr.internal.InternalEsiLexer createLexer(CharStream stream) {
-		return new de.cau.cs.kieler.sim.esi.contentassist.antlr.internal.InternalEsiLexer(stream);
-	}
 	
 	@Override
 	protected de.cau.cs.kieler.sim.esi.contentassist.antlr.internal.InternalEsiParser createParser() {
@@ -42,6 +35,7 @@ public class EsiParser extends AbstractContentAssistParser {
 	protected String getRuleName(AbstractElement element) {
 		if (nameMappings == null) {
 			nameMappings = new HashMap<AbstractElement, String>() {
+				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getTracelistAccess().getGroup(), "rule__Tracelist__Group__0");
 					put(grammarAccess.getTracelistAccess().getGroup_1(), "rule__Tracelist__Group_1__0");

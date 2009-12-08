@@ -8,16 +8,15 @@ import com.google.inject.Singleton;
 import com.google.inject.Inject;
 
 import org.eclipse.xtext.*;
-
 import org.eclipse.xtext.service.GrammarProvider;
+import org.eclipse.xtext.service.AbstractElementFinder.*;
 
 
-/** @generated */
 @Singleton
-public class EsiGrammarAccess implements IGrammarAccess {
+public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
-	public class TracelistElements implements IParserRuleAccess {
+	public class TracelistElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "tracelist");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cTracesAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -61,7 +60,7 @@ public class EsiGrammarAccess implements IGrammarAccess {
 		public RuleCall getTracesTraceParserRuleCall_1_3_0() { return cTracesTraceParserRuleCall_1_3_0; }
 	}
 
-	public class TraceElements implements IParserRuleAccess {
+	public class TraceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "trace");
 		private final Assignment cTicksAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cTicksTickParserRuleCall_0 = (RuleCall)cTicksAssignment.eContents().get(0);
@@ -77,7 +76,7 @@ public class EsiGrammarAccess implements IGrammarAccess {
 		public RuleCall getTicksTickParserRuleCall_0() { return cTicksTickParserRuleCall_0; }
 	}
 
-	public class TickElements implements IParserRuleAccess {
+	public class TickElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "tick");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cInputAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -129,7 +128,7 @@ public class EsiGrammarAccess implements IGrammarAccess {
 		public Keyword getNSemicolonKeyword_2_0() { return cNSemicolonKeyword_2_0; }
 	}
 
-	public class SignalElements implements IParserRuleAccess {
+	public class SignalElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "signal");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);

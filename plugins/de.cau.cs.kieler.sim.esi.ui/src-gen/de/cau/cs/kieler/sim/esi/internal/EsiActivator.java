@@ -4,6 +4,7 @@
  */
 package de.cau.cs.kieler.sim.esi.internal;
 
+import org.apache.log4j.Logger;
 import org.eclipse.xtext.ui.common.service.UIPluginModule;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -31,12 +32,17 @@ public class EsiActivator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		INSTANCE = this;
-		
-		injectors.put("de.cau.cs.kieler.sim.esi.Esi", Guice.createInjector(
-			new de.cau.cs.kieler.sim.esi.EsiUiModule(),
-			createUIPluginModule()
-		));
-		
+		try {
+			
+			injectors.put("de.cau.cs.kieler.sim.esi.Esi", Guice.createInjector(
+				new de.cau.cs.kieler.sim.esi.EsiUiModule(),
+				createUIPluginModule()
+			));
+			
+		} catch (Exception e) {
+			Logger.getLogger(getClass()).error(e.getMessage(), e);
+			throw e;
+		}
 	}
 	
 	public static EsiActivator getInstance() {
