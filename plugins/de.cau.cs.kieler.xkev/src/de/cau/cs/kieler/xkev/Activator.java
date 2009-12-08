@@ -21,6 +21,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
+import de.cau.cs.kieler.xkev.views.KevView;
+
 /**
  * The activator class controls the plug-in life cycle.
  *  
@@ -38,6 +41,19 @@ public class Activator extends AbstractUIPlugin {
      *  The shared instance.
      */
     private static Activator plugin;
+    
+    /**
+     * Single instance of the KevView
+     */
+    private static KevView kevViewInstance = null;
+    
+    /**
+     * Indicates the visibility status of the KEVview instance. 
+     */
+    private static boolean executionManagerStatus = false;
+    
+    
+    private static MapAnimations currentMapAnimation = null;
 
     /**
      * The constructor.
@@ -74,6 +90,56 @@ public class Activator extends AbstractUIPlugin {
         return plugin;
     }
 
+    /**
+     * Return the name of the current mapanimation.
+     * @return
+     */
+    public final static MapAnimations getCurrentMapAnimation() {
+        return currentMapAnimation;
+    }
+    
+    /**
+     * Setting the currently active mapanimation.
+     * @param mappingFile
+     */
+    public final static void setCurrentMapAnimation(MapAnimations mapAnimation) {
+        currentMapAnimation = mapAnimation;
+    }
+    
+    
+    /**
+     * Set the current visibility status of the Kev view instance.
+     * @param isVisible
+     */
+    public final static void setExecutionManagerStatus(boolean isRunning) {
+         executionManagerStatus = isRunning;
+    }
+    
+    /**
+     * Indicate whether the Kev view instance is visible or not.
+     * @return
+     */
+    public final static boolean isExecutionManagerRunning() {
+        return executionManagerStatus;
+    }
+    
+    /**
+     * Setting the single instance of KevView
+     * @param kevView
+     */
+    
+    public static void setKevView(KevView kevView) {
+        kevViewInstance = kevView;
+    }
+    /**
+     * Return the single instance of the KevView
+     * @return
+     */
+    public static KevView getKevView() {
+        return kevViewInstance;
+    }
+    
+    
     /**
      * Returns an image descriptor for the image file at the given plug-in relative path.
      * 

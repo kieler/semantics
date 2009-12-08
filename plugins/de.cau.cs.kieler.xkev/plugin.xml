@@ -10,9 +10,9 @@
       <view
             allowMultiple="false"
             category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.xkev.views.EnvironmentView"
+            class="de.cau.cs.kieler.xkev.views.KevView"
             icon="icons/view/kieler.png"
-            id="de.cau.cs.kieler.xkev.views.EnvironmentView"
+            id="de.cau.cs.kieler.xkev.views.KevView"
             name="KEV View"
             restorable="true">
       </view>
@@ -20,25 +20,9 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.xkev.extension.dataobserver.Example_03"
-            id="de.cau.cs.kieler.xkev.extension.DataOberserver03"
-            name="First EMF Example">
-      </content>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
-      <content
-            class="de.cau.cs.kieler.xkev.extension.dataobserver.Example_04"
-            id="de.cau.cs.kieler.xkev.extension.DataOberserver04"
-            name="Watertank (Move Demo)">
-      </content>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
-      <content
-            class="de.cau.cs.kieler.xkev.extension.dataobserver.Example_01"
-            id="de.cau.cs.kieler.xkev.extension.DataOberserver01"
-            name="Trafficlight with JSONArray">
+            class="de.cau.cs.kieler.xkev.extension.dataobserver.XKevDataObserver"
+            id="de.cau.cs.kieler.xkev.extension.DataObserver"
+            name="xKEV-Observer">
       </content>
    </extension>
 

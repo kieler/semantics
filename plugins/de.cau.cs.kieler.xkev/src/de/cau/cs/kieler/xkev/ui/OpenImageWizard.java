@@ -52,7 +52,9 @@ import org.osgi.framework.Bundle;
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.Messages;
 import de.cau.cs.kieler.xkev.helpers.Tools;
-import de.cau.cs.kieler.xkev.views.EnvironmentView;
+import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
+import de.cau.cs.kieler.xkev.views.EclipseJSVGCanvas;
+import de.cau.cs.kieler.xkev.views.KevView;
 
 public class OpenImageWizard extends Wizard {
 
@@ -62,8 +64,7 @@ public class OpenImageWizard extends Wizard {
     private Map<String, URL> imageUrlMap;
     /** Text field for the file url. */
     private Text resourceNameField;
-    /** Checkbox to remember the file. */
-    private Button rememberCheckbox;
+
     /**
      * Parent dialog to have access to window controls, e.g. closing the dialog (by double click in
      * List for example
@@ -82,40 +83,23 @@ public class OpenImageWizard extends Wizard {
     @Override
     public boolean performFinish() {
         // search for the KEV view
-        IViewReference[] views = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage().getViewReferences();
-        boolean viewFlag = false;
-        for (int i = 0; i < views.length; i++) {
-            IViewPart view = views[i].getView(false);
-            try {
-                if (view != null && view.getViewSite().getId().equals(EnvironmentView.ID)) {
-                    viewFlag = true;
-                    if (resourceNameField.getText().isEmpty()) {
-                        page.setErrorMessage("The textfield must not be empty");
-                        return false;
-                    }
-                    // now try to load the selected image resource
-                    URL url;
-                    try {
-                        url = new URL(resourceNameField.getText());
-                        ((EnvironmentView) view).getComposite().setSVGFile(url);
-                        savePreferences();
-                        return true;
-                    } catch (MalformedURLException e) {
-                        page.setErrorMessage("The selected file URL is not valid: "
-                                + e.getMessage());
-                    }
-                }
-            } catch (Exception e) {/*
-                                    * nothing, something wrong with actual view, so proceed with
-                                    * loop
-                                    */
-            }
+        if (resourceNameField.getText().isEmpty()) {
+            page.setErrorMessage("The textfield must not be empty");
+            return false;
         }
-        // Print error only if KEV view couldn't be found
-        if (!viewFlag) {
-            page.setErrorMessage("Could not find KEV view...");
+        if (!resourceNameField.getText().contains(".mapping")) {
+            page.setErrorMessage("Please enter a valid mapping file (*.mapping).");
+            return false;
         }
+        if (resourceNameField.getText().contains("bundleentry://")) {
+            //Load the SVG file from bundle resources specified in the mapping file
+            String filename = resourceNameField.getText().substring(resourceNameField.getText().lastIndexOf("/")+1);
+            Activator.setCurrentMapAnimation(new MapAnimations(filename, true));
+        } else {
+          //Load the SVG file from filesystem
+            Activator.setCurrentMapAnimation(new MapAnimations(resourceNameField.getText(), false));
+        }
+        savePreferences();
         return false;
     }
 
@@ -138,7 +122,6 @@ public class OpenImageWizard extends Wizard {
     private void savePreferences() {
         IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
         preferenceStore.setValue(OpenImageWizard.DEFAULT_IMAGE, resourceNameField.getText());
-        preferenceStore.setValue(LOAD_STARTUP, rememberCheckbox.getSelection());
     }
 
     private class OpenImageWizardPage extends WizardPage implements SelectionListener,
@@ -147,8 +130,7 @@ public class OpenImageWizard extends Wizard {
             super(pageName);
             this.setDescription(Messages.DiscriptionOpenImageWizard);
             // this.setErrorMessage("ErrorMessage");
-            this
-                    .setImageDescriptor(Activator.getDefault().getImageDescriptor(
+            this.setImageDescriptor(Activator.getDefault().getImageDescriptor(
                             "icons/svg-logo.png"));
             this.setMessage(Messages.MessageOpenImageWizard);
             this.setTitle(Messages.TitleOpenImageWizard);
@@ -180,7 +162,7 @@ public class OpenImageWizard extends Wizard {
 
             // Load images from Plugin "example" Folder
             Bundle b = Platform.getBundle(Activator.PLUGIN_ID);
-            Enumeration e = b.findEntries("examples", "*.svg", false);
+            Enumeration e = b.findEntries("examples", "*.mapping", false);
             while (e.hasMoreElements()) {
                 URL url = (URL) e.nextElement();
                 imageUrlMap.put(url.toString(), url);
@@ -225,15 +207,6 @@ public class OpenImageWizard extends Wizard {
             Layout checkboxLayout = new GridLayout(2, false);
             checkboxComposite.setLayout(checkboxLayout);
 
-            Label checkboxLabel = new Label(checkboxComposite, SWT.NONE);
-            checkboxLabel.setText(Messages.CheckboxRememberLastFile);
-            rememberCheckbox = new Button(checkboxComposite, SWT.CHECK);
-
-            // guess the last state of the checkbox
-            if (preferences.getBoolean(LOAD_STARTUP)) {
-                rememberCheckbox.setSelection(true);
-            }
-
             this.setControl(composite);
         }
 
@@ -269,7 +242,7 @@ public class OpenImageWizard extends Wizard {
         public URL openFileDialog() {
             FileDialog dialog = new FileDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                     .getShell());
-            String[] extensions = {"*.svg"};
+            String[] extensions = {"*.mapping"};
             dialog.setFilterExtensions(extensions);
             dialog.open();
             String path = dialog.getFilterPath() + File.separator + dialog.getFileName();

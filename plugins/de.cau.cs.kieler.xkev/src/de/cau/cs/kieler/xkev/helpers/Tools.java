@@ -45,7 +45,7 @@ import org.xml.sax.SAXException;
 
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.ui.AbortErrorDialog;
-import de.cau.cs.kieler.xkev.views.EnvironmentView;
+import de.cau.cs.kieler.xkev.views.KevView;
 
 //import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 //import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
@@ -132,7 +132,7 @@ public class Tools {
             IViewReference[] views = wbp.getViewReferences();
             for (int i = 0; i < views.length; i++) {
                 IViewPart view = views[i].getView(false);
-                if (view.getViewSite().getId().equals(EnvironmentView.ID)) {
+                if (view.getViewSite().getId().equals(KevView.ID)) {
                     return view.getViewSite().getActionBars().getStatusLineManager();
                 }
             }

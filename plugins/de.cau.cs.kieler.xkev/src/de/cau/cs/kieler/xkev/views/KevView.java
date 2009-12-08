@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
 
+import de.cau.cs.kieler.sim.kiem.extension.JSONObjectDataComponent;
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.Messages;
 import de.cau.cs.kieler.xkev.actions.OpenFileAction;
@@ -38,25 +39,26 @@ import de.cau.cs.kieler.xkev.actions.OpenImageWizardAction; //import de.cau.cs.k
 import de.cau.cs.kieler.xkev.ui.OpenImageWizard;
 import de.cau.cs.kieler.xkev.helpers.Tools;
 
-public class EnvironmentView extends ViewPart {
+public class KevView extends ViewPart {
 
     private Action openWizardAction;
     private Action openAction;
     private Action refreshAction;
 
-    private EnvironmentComposite svg;
+    private KevComposite svg;
     // private AnimationManager animationManager;
 
     /**
      * ID declares the name of the KEV-View. 
      */
-    public static final String ID = "de.cau.cs.kieler.xkev.views.EnvironmentView";
+    public static final String ID = "de.cau.cs.kieler.xkev.views.KevView";
 
     
     /**
      * The constructor.
      */
-    public EnvironmentView() {
+    public KevView() {
+        Activator.setKevView(this);
     }
 
     /**
@@ -65,7 +67,7 @@ public class EnvironmentView extends ViewPart {
     public void createPartControl(Composite parent) {
         parent.setLayout(new FillLayout());
 
-        svg = new EnvironmentComposite(parent, SWT.NONE, false);
+        svg = new KevComposite(parent, SWT.NONE, false);
         
          // animationManager = new AnimationManager(this);
         getViewSite().getPage().addSelectionListener(svg);
@@ -98,13 +100,13 @@ public class EnvironmentView extends ViewPart {
 
     private void fillLocalPullDown(IMenuManager manager) {
         manager.add(openWizardAction);
-        manager.add(openAction);
+        //manager.add(openAction);
         manager.add(refreshAction);
     }
 
     private void fillLocalToolBar(IToolBarManager manager) {
         manager.add(openWizardAction);
-        manager.add(openAction);
+        //manager.add(openAction);
         manager.add(refreshAction);
     }
 
@@ -120,23 +122,43 @@ public class EnvironmentView extends ViewPart {
                 "icons/view/refresh.gif"));
 
         openWizardAction = new OpenImageWizardAction();
-        openAction = new OpenFileAction();
+        //If the execution manager is running, disable the openWizardAction otherwise enable it
+        openWizardAction.setEnabled(!Activator.isExecutionManagerRunning());
+        //openAction = new OpenFileAction();
 
         // printAction = new PrintAction(svg);
         // printAction.setImageDescriptor(BatikUIPlugin.getDefault().getImageDescriptor(BatikUIPlugin.IMG_PRINT));
     }
 
+    /**
+     * Enable the openWizardAction.
+     * @param action
+     */
+    public void enableButton() {
+        openWizardAction.setEnabled(true);
+    }
+
+    /**
+     * Disable the openWizardAction.
+     * @param action
+     */
+    public void disableButton() {
+        openWizardAction.setEnabled(false);
+    }
+    
     public void setFocus() {
         svg.setFocus();
     }
 
     public void dispose() {
         getViewSite().getPage().removeSelectionListener(svg);
+        //Set the single KevView instance to null because the view gets closed
+        Activator.setKevView(null);        
         svg.dispose();
         super.dispose();
     }
 
-    public EnvironmentComposite getComposite() {
+    public KevComposite getComposite() {
         return svg;
     }
 

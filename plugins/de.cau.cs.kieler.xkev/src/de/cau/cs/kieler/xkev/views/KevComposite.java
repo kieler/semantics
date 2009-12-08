@@ -83,7 +83,7 @@ import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.helpers.Tools;
 import de.cau.cs.kieler.xkev.mapping.animations.SVGLoadingStatusListener;
 
-public class EnvironmentComposite extends Composite implements ISelectionListener {
+public class KevComposite extends Composite implements ISelectionListener {
 
     private JSVGCanvas svgCanvas = null;
 
@@ -119,7 +119,7 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
     }
     
     
-    public EnvironmentComposite(Composite parent, int style, boolean showScrollbars) {
+    public KevComposite(Composite parent, int style, boolean showScrollbars) {
         super(parent, SWT.EMBEDDED);
 
         shell = parent.getShell();
@@ -247,6 +247,10 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
         frame.dispose();
         super.dispose();
     }
+    
+    public void setSVGURI(URI svgURI) {
+        this.svgURI = svgURI;
+    }
 
     public void setSVGPath(IPath path) {
         try {
@@ -295,6 +299,7 @@ public class EnvironmentComposite extends Composite implements ISelectionListene
                 // Tools.setStatusLine("loading image...");
                 svgCanvas.loadSVGDocument(svgURI.toURL().toExternalForm());
             } else {
+                System.out.println("No document URI set!");
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();

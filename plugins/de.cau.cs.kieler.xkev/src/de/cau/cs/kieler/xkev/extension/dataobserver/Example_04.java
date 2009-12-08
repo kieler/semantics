@@ -50,7 +50,7 @@ public class Example_04 extends JSONObjectDataComponent implements IJSONObjectDa
            
            
            mapAnimation.doAnimations(JSONobject);
-            
+           
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -59,8 +59,16 @@ public class Example_04 extends JSONObjectDataComponent implements IJSONObjectDa
         if (counter<58) counter++;
         else counter = 0;
 
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return null;// Because it's only an Observer right now
     }
+    
+    
 
 
     public void initialize() throws KiemInitializationException {

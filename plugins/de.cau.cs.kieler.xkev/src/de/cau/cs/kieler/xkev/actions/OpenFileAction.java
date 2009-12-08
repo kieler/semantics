@@ -26,7 +26,7 @@ import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.Messages;
 import de.cau.cs.kieler.xkev.helpers.Tools;
 import de.cau.cs.kieler.xkev.views.EclipseJSVGCanvas;
-import de.cau.cs.kieler.xkev.views.EnvironmentComposite;
+import de.cau.cs.kieler.xkev.views.KevComposite;
 
 /**
  * Implements the OpenFileDialog window.
