@@ -16,5 +16,5 @@ Require-Bundle: de.cau.cs.kieler.sim.esi;visibility:=reexport,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.sim.esi.contentassist,
  de.cau.cs.kieler.sim.esi.contentassist.antlr
-Bundle-Activator: de.cau.cs.kieler.internal.EsiActivator
+Bundle-Activator: de.cau.cs.kieler.sim.esi.internal.EsiActivator
 Import-Package: org.apache.log4j
