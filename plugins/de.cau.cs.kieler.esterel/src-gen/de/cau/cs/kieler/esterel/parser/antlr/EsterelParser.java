@@ -4,7 +4,7 @@
 package de.cau.cs.kieler.esterel.parser.antlr;
 
 import org.antlr.runtime.ANTLRInputStream;
-import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
+import org.antlr.runtime.TokenSource;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.parser.ParseException;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
@@ -15,20 +15,16 @@ import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
 
 public class EsterelParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
 	
-	@Inject 
-    protected ITokenDefProvider antlrTokenDefProvider;
-	
 	@Inject
 	private EsterelGrammarAccess grammarAccess;
 	
 	@Override
 	protected IParseResult parse(String ruleName, ANTLRInputStream in) {
-		de.cau.cs.kieler.esterel.parser.antlr.internal.InternalEsterelLexer lexer = new de.cau.cs.kieler.esterel.parser.antlr.internal.InternalEsterelLexer(in);
-		XtextTokenStream stream = new XtextTokenStream(lexer, antlrTokenDefProvider);
-		stream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
-		de.cau.cs.kieler.esterel.parser.antlr.internal.InternalEsterelParser parser = new de.cau.cs.kieler.esterel.parser.antlr.internal.InternalEsterelParser(
-				stream, getElementFactory(), grammarAccess);
-		parser.setTokenTypeMap(antlrTokenDefProvider.getTokenDefMap());
+		TokenSource tokenSource = createLexer(in);
+		XtextTokenStream tokenStream = createTokenStream(tokenSource);
+		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
+		de.cau.cs.kieler.esterel.parser.antlr.internal.InternalEsterelParser parser = createParser(tokenStream);
+		parser.setTokenTypeMap(getTokenDefProvider().getTokenDefMap());
 		try {
 			if(ruleName != null)
 				return parser.parse(ruleName);
@@ -36,6 +32,10 @@ public class EsterelParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrP
 		} catch (Exception re) {
 			throw new ParseException(re.getMessage(),re);
 		}
+	}
+	
+	protected de.cau.cs.kieler.esterel.parser.antlr.internal.InternalEsterelParser createParser(XtextTokenStream stream) {
+		return new de.cau.cs.kieler.esterel.parser.antlr.internal.InternalEsterelParser(stream, getElementFactory(), getGrammarAccess());
 	}
 	
 	@Override 
@@ -50,4 +50,5 @@ public class EsterelParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrP
 	public void setGrammarAccess(EsterelGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
+	
 }

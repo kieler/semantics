@@ -8,16 +8,16 @@ import com.google.inject.Singleton;
 import com.google.inject.Inject;
 
 import org.eclipse.xtext.*;
-
 import org.eclipse.xtext.service.GrammarProvider;
+import org.eclipse.xtext.service.AbstractElementFinder.*;
 
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 
 @Singleton
-public class EsterelGrammarAccess implements IGrammarAccess {
+public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
-	public class ProgramElements implements IParserRuleAccess {
+	public class ProgramElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Program");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cModuleAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -51,7 +51,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getModuleModuleParserRuleCall_1_0() { return cModuleModuleParserRuleCall_1_0; }
 	}
 
-	public class ModuleElements implements IParserRuleAccess {
+	public class ModuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Module");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cModuleKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -99,7 +99,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getEndModuleParserRuleCall_5() { return cEndModuleParserRuleCall_5; }
 	}
 
-	public class EndModuleElements implements IParserRuleAccess {
+	public class EndModuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EndModule");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
@@ -139,7 +139,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getFullStopKeyword_1() { return cFullStopKeyword_1; }
 	}
 
-	public class ModuleBodyElements implements IParserRuleAccess {
+	public class ModuleBodyElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ModuleBody");
 		private final Assignment cStatementAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cStatementStatementParserRuleCall_0 = (RuleCall)cStatementAssignment.eContents().get(0);
@@ -157,7 +157,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getStatementStatementParserRuleCall_0() { return cStatementStatementParserRuleCall_0; }
 	}
 
-	public class ModuleInterfaceElements implements IParserRuleAccess {
+	public class ModuleInterfaceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ModuleInterface");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Assignment cIntSignalDeclAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
@@ -244,7 +244,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getIntProcedureDeclProcedureDeclParserRuleCall_6_0() { return cIntProcedureDeclProcedureDeclParserRuleCall_6_0; }
 	}
 
-	public class SignalDeclElements implements IParserRuleAccess {
+	public class SignalDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SignalDecl");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
@@ -454,7 +454,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getSemicolonKeyword_3_4() { return cSemicolonKeyword_3_4; }
 	}
 
-	public class SensorDeclElements implements IParserRuleAccess {
+	public class SensorDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SensorDecl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cSensorKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -508,7 +508,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 
-	public class RelationDeclElements implements IParserRuleAccess {
+	public class RelationDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "RelationDecl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cRelationAction_0 = (Action)cGroup.eContents().get(0);
@@ -558,7 +558,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
 
-	public class RelationTypeElements implements IParserRuleAccess {
+	public class RelationTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "RelationType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cRelationImplicationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
@@ -578,7 +578,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getRelationIncompatibilityParserRuleCall_1() { return cRelationIncompatibilityParserRuleCall_1; }
 	}
 
-	public class RelationImplicationElements implements IParserRuleAccess {
+	public class RelationImplicationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "RelationImplication");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cFirstAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -622,7 +622,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getSecondSignalEsterelIDTerminalRuleCall_2_0_1() { return cSecondSignalEsterelIDTerminalRuleCall_2_0_1; }
 	}
 
-	public class RelationIncompatibilityElements implements IParserRuleAccess {
+	public class RelationIncompatibilityElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "RelationIncompatibility");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cIncompAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -693,7 +693,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getIncompSignalEsterelIDTerminalRuleCall_3_1_0_1() { return cIncompSignalEsterelIDTerminalRuleCall_3_1_0_1; }
 	}
 
-	public class TypeDeclElements implements IParserRuleAccess {
+	public class TypeDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeDecl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cTypeKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -739,7 +739,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 
-	public class TypeElements implements IParserRuleAccess {
+	public class TypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Type");
 		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cNameEsterelIDTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
@@ -761,7 +761,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getNameEsterelIDTerminalRuleCall_0() { return cNameEsterelIDTerminalRuleCall_0; }
 	}
 
-	public class ConstantDeclElements implements IParserRuleAccess {
+	public class ConstantDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ConstantDecl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cConstantKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -808,7 +808,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 
-	public class OneTypeConstantDeclElements implements IParserRuleAccess {
+	public class OneTypeConstantDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "OneTypeConstantDecl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cConstantAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -868,7 +868,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getTypeBaseTypeTerminalRuleCall_3_1_0() { return cTypeBaseTypeTerminalRuleCall_3_1_0; }
 	}
 
-	public class ConstantElements implements IParserRuleAccess {
+	public class ConstantElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Constant");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -904,7 +904,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getValueConstantValueParserRuleCall_1_1_0() { return cValueConstantValueParserRuleCall_1_1_0; }
 	}
 
-	public class ConstantValueElements implements IParserRuleAccess {
+	public class ConstantValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ConstantValue");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cEsterelIDTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
@@ -962,7 +962,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getBooleanTerminalRuleCall_4() { return cBooleanTerminalRuleCall_4; }
 	}
 
-	public class FunctionDeclElements implements IParserRuleAccess {
+	public class FunctionDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FunctionDecl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cFunctionKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -1008,7 +1008,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 
-	public class FunctionElements implements IParserRuleAccess {
+	public class FunctionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Function");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -1111,7 +1111,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getTypeBaseTypeTerminalRuleCall_5_1_0() { return cTypeBaseTypeTerminalRuleCall_5_1_0; }
 	}
 
-	public class ProcedureDeclElements implements IParserRuleAccess {
+	public class ProcedureDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ProcedureDecl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cProcedureKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -1157,7 +1157,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 
-	public class ProcedureElements implements IParserRuleAccess {
+	public class ProcedureElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Procedure");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -1292,7 +1292,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getRightParenthesisKeyword_6() { return cRightParenthesisKeyword_6; }
 	}
 
-	public class StatementElements implements IParserRuleAccess {
+	public class StatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Statement");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cSequenceParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
@@ -1332,7 +1332,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getRightSequenceParserRuleCall_1_2_0() { return cRightSequenceParserRuleCall_1_2_0; }
 	}
 
-	public class AtomicStatementElements implements IParserRuleAccess {
+	public class AtomicStatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AtomicStatement");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cAbortParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
@@ -1486,7 +1486,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getWeakAbortParserRuleCall_21() { return cWeakAbortParserRuleCall_21; }
 	}
 
-	public class SequenceElements implements IParserRuleAccess {
+	public class SequenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Sequence");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cAtomicStatementParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
@@ -1528,7 +1528,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
 	}
 
-	public class BlockElements implements IParserRuleAccess {
+	public class BlockElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Block");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cLeftSquareBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -1556,7 +1556,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getRightSquareBracketKeyword_2() { return cRightSquareBracketKeyword_2; }
 	}
 
-	public class AssignmentElements implements IParserRuleAccess {
+	public class AssignmentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Assignment");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cVariableAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -1593,7 +1593,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getExprDataExprParserRuleCall_2_0() { return cExprDataExprParserRuleCall_2_0; }
 	}
 
-	public class AbortElements implements IParserRuleAccess {
+	public class AbortElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Abort");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cAbortKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -1636,7 +1636,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getBodyAbortBodyParserRuleCall_3_0() { return cBodyAbortBodyParserRuleCall_3_0; }
 	}
 
-	public class AbortBodyElements implements IParserRuleAccess {
+	public class AbortBodyElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AbortBody");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cAbortInstanceParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
@@ -1662,7 +1662,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getAbortCaseParserRuleCall_1() { return cAbortCaseParserRuleCall_1; }
 	}
 
-	public class AbortEndElements implements IParserRuleAccess {
+	public class AbortEndElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AbortEnd");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cEndKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -1682,7 +1682,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getAbortKeyword_1() { return cAbortKeyword_1; }
 	}
 
-	public class AbortInstanceElements implements IParserRuleAccess {
+	public class AbortInstanceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AbortInstance");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cDelayAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -1726,7 +1726,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getEndAbortEndParserRuleCall_1_2_0() { return cEndAbortEndParserRuleCall_1_2_0; }
 	}
 
-	public class AbortCaseElements implements IParserRuleAccess {
+	public class AbortCaseElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AbortCase");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cCasesAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -1762,7 +1762,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getEndAbortEndParserRuleCall_2_0() { return cEndAbortEndParserRuleCall_2_0; }
 	}
 
-	public class AbortCaseSingleElements implements IParserRuleAccess {
+	public class AbortCaseSingleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AbortCaseSingle");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cCaseKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -1807,7 +1807,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getStatementStatementParserRuleCall_2_1_0() { return cStatementStatementParserRuleCall_2_1_0; }
 	}
 
-	public class AwaitElements implements IParserRuleAccess {
+	public class AwaitElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Await");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cAwaitKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -1833,7 +1833,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getBodyAwaitBodyParserRuleCall_1_0() { return cBodyAwaitBodyParserRuleCall_1_0; }
 	}
 
-	public class AwaitBodyElements implements IParserRuleAccess {
+	public class AwaitBodyElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AwaitBody");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cAwaitInstanceParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
@@ -1853,7 +1853,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getAwaitCaseParserRuleCall_1() { return cAwaitCaseParserRuleCall_1; }
 	}
 
-	public class AwaitEndElements implements IParserRuleAccess {
+	public class AwaitEndElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AwaitEnd");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cEndKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -1873,7 +1873,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getAwaitKeyword_1() { return cAwaitKeyword_1; }
 	}
 
-	public class AwaitInstanceElements implements IParserRuleAccess {
+	public class AwaitInstanceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AwaitInstance");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cDelayExprParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
@@ -1913,7 +1913,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getEndAwaitEndParserRuleCall_1_2_0() { return cEndAwaitEndParserRuleCall_1_2_0; }
 	}
 
-	public class AwaitCaseElements implements IParserRuleAccess {
+	public class AwaitCaseElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AwaitCase");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cCasesAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -1955,7 +1955,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getEndAwaitEndParserRuleCall_2_0() { return cEndAwaitEndParserRuleCall_2_0; }
 	}
 
-	public class DoElements implements IParserRuleAccess {
+	public class DoElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Do");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cDoKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2002,7 +2002,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getEndDoWatchingParserRuleCall_2_1_0() { return cEndDoWatchingParserRuleCall_2_1_0; }
 	}
 
-	public class DoUptoElements implements IParserRuleAccess {
+	public class DoUptoElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DoUpto");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cUptoKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2026,7 +2026,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getExprDelayExprParserRuleCall_1_0() { return cExprDelayExprParserRuleCall_1_0; }
 	}
 
-	public class DoWatchingElements implements IParserRuleAccess {
+	public class DoWatchingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DoWatching");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cWatchingKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2058,7 +2058,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getEndDoWatchingEndParserRuleCall_2_0() { return cEndDoWatchingEndParserRuleCall_2_0; }
 	}
 
-	public class DoWatchingEndElements implements IParserRuleAccess {
+	public class DoWatchingEndElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DoWatchingEnd");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cTimeoutKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2095,7 +2095,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getTimeoutKeyword_3() { return cTimeoutKeyword_3; }
 	}
 
-	public class EmitElements implements IParserRuleAccess {
+	public class EmitElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Emit");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cEmitKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2162,7 +2162,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 	}
 
-	public class EveryDoElements implements IParserRuleAccess {
+	public class EveryDoElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EveryDo");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cEveryKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2212,7 +2212,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getEveryKeyword_5() { return cEveryKeyword_5; }
 	}
 
-	public class ExitElements implements IParserRuleAccess {
+	public class ExitElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Exit");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cExitKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2266,7 +2266,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 	}
 
-	public class HaltElements implements IParserRuleAccess {
+	public class HaltElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Halt");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cHaltKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2292,7 +2292,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Action getHaltAction_1() { return cHaltAction_1; }
 	}
 
-	public class IfTestElements implements IParserRuleAccess {
+	public class IfTestElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IfTest");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cIfKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2350,7 +2350,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getIfKeyword_6() { return cIfKeyword_6; }
 	}
 
-	public class ElsIfPartElements implements IParserRuleAccess {
+	public class ElsIfPartElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ElsIfPart");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cElsifAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -2378,7 +2378,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getElsifElsIfParserRuleCall_1_0() { return cElsifElsIfParserRuleCall_1_0; }
 	}
 
-	public class ElsIfElements implements IParserRuleAccess {
+	public class ElsIfElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ElsIf");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cElsifKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2410,7 +2410,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getThenThenPartParserRuleCall_2_0() { return cThenThenPartParserRuleCall_2_0; }
 	}
 
-	public class ThenPartElements implements IParserRuleAccess {
+	public class ThenPartElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ThenPart");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cThenKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2434,7 +2434,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getStatementStatementParserRuleCall_1_0() { return cStatementStatementParserRuleCall_1_0; }
 	}
 
-	public class ElsePartElements implements IParserRuleAccess {
+	public class ElsePartElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ElsePart");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cElseKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2464,7 +2464,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getStatementStatementParserRuleCall_1_0() { return cStatementStatementParserRuleCall_1_0; }
 	}
 
-	public class LoopElements implements IParserRuleAccess {
+	public class LoopElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Loop");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cLoopKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2507,7 +2507,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getEndLoopEachParserRuleCall_2_1_0() { return cEndLoopEachParserRuleCall_2_1_0; }
 	}
 
-	public class EndLoopElements implements IParserRuleAccess {
+	public class EndLoopElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EndLoop");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cEndKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2527,7 +2527,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getLoopKeyword_1() { return cLoopKeyword_1; }
 	}
 
-	public class LoopEachElements implements IParserRuleAccess {
+	public class LoopEachElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LoopEach");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cEachKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2547,7 +2547,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getLoopDelayParserRuleCall_1() { return cLoopDelayParserRuleCall_1; }
 	}
 
-	public class LoopDelayElements implements IParserRuleAccess {
+	public class LoopDelayElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LoopDelay");
 		private final Assignment cDelayAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cDelayDelayExprParserRuleCall_0 = (RuleCall)cDelayAssignment.eContents().get(0);
@@ -2563,7 +2563,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getDelayDelayExprParserRuleCall_0() { return cDelayDelayExprParserRuleCall_0; }
 	}
 
-	public class LoopBodyElements implements IParserRuleAccess {
+	public class LoopBodyElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LoopBody");
 		private final Assignment cStatementAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cStatementStatementParserRuleCall_0 = (RuleCall)cStatementAssignment.eContents().get(0);
@@ -2584,7 +2584,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getStatementStatementParserRuleCall_0() { return cStatementStatementParserRuleCall_0; }
 	}
 
-	public class NothingElements implements IParserRuleAccess {
+	public class NothingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Nothing");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cNothingKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2610,7 +2610,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Action getNothingAction_1() { return cNothingAction_1; }
 	}
 
-	public class PauseElements implements IParserRuleAccess {
+	public class PauseElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Pause");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cPauseKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2636,7 +2636,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Action getPauseAction_1() { return cPauseAction_1; }
 	}
 
-	public class PresentElements implements IParserRuleAccess {
+	public class PresentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Present");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cPresentKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2678,7 +2678,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getPresentKeyword_4() { return cPresentKeyword_4; }
 	}
 
-	public class PresentBodyElements implements IParserRuleAccess {
+	public class PresentBodyElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PresentBody");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cPresentEventBodyParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
@@ -2698,7 +2698,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getPresentCaseListParserRuleCall_1() { return cPresentCaseListParserRuleCall_1; }
 	}
 
-	public class PresentEventBodyElements implements IParserRuleAccess {
+	public class PresentEventBodyElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PresentEventBody");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cEventAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -2726,7 +2726,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getThenPartThenPartParserRuleCall_1_0() { return cThenPartThenPartParserRuleCall_1_0; }
 	}
 
-	public class PresentCaseListElements implements IParserRuleAccess {
+	public class PresentCaseListElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PresentCaseList");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cCaseAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -2754,7 +2754,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getCasePresentCaseParserRuleCall_1_0() { return cCasePresentCaseParserRuleCall_1_0; }
 	}
 
-	public class PresentCaseElements implements IParserRuleAccess {
+	public class PresentCaseElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PresentCase");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cCaseKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -2794,7 +2794,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getStatementStatementParserRuleCall_2_1_0() { return cStatementStatementParserRuleCall_2_1_0; }
 	}
 
-	public class PresentEventElements implements IParserRuleAccess {
+	public class PresentEventElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PresentEvent");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Assignment cExpressionAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
@@ -2846,7 +2846,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
 	}
 
-	public class RepeatElements implements IParserRuleAccess {
+	public class RepeatElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Repeat");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cPositiveAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -2905,7 +2905,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getRepeatKeyword_6() { return cRepeatKeyword_6; }
 	}
 
-	public class RunElements implements IParserRuleAccess {
+	public class RunElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Run");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
@@ -3001,7 +3001,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getRightSquareBracketKeyword_1_2_2() { return cRightSquareBracketKeyword_1_2_2; }
 	}
 
-	public class ModuleRenamingElements implements IParserRuleAccess {
+	public class ModuleRenamingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ModuleRenaming");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cModuleAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -3045,7 +3045,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getNewNameEsterelIDTerminalRuleCall_1_1_0() { return cNewNameEsterelIDTerminalRuleCall_1_1_0; }
 	}
 
-	public class RenamingListElements implements IParserRuleAccess {
+	public class RenamingListElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "RenamingList");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cListAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -3081,7 +3081,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getListRenamingParserRuleCall_1_1_0() { return cListRenamingParserRuleCall_1_1_0; }
 	}
 
-	public class RenamingElements implements IParserRuleAccess {
+	public class RenamingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Renaming");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
@@ -3227,7 +3227,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getRenamingSignalRenamingParserRuleCall_3_2_1_0() { return cRenamingSignalRenamingParserRuleCall_3_2_1_0; }
 	}
 
-	public class TypeRenamingElements implements IParserRuleAccess {
+	public class TypeRenamingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeRenaming");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNewNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -3267,7 +3267,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getOldNameTypeEsterelIDTerminalRuleCall_2_0_1() { return cOldNameTypeEsterelIDTerminalRuleCall_2_0_1; }
 	}
 
-	public class ConstantRenamingElements implements IParserRuleAccess {
+	public class ConstantRenamingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ConstantRenaming");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cValueAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -3299,7 +3299,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getNewNameEsterelIDTerminalRuleCall_2_0() { return cNewNameEsterelIDTerminalRuleCall_2_0; }
 	}
 
-	public class FunctionRenamingElements implements IParserRuleAccess {
+	public class FunctionRenamingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FunctionRenaming");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNewNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -3339,7 +3339,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getOldNameFunctionEsterelIDTerminalRuleCall_2_0_1() { return cOldNameFunctionEsterelIDTerminalRuleCall_2_0_1; }
 	}
 
-	public class ProcedureRenamingElements implements IParserRuleAccess {
+	public class ProcedureRenamingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ProcedureRenaming");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNewNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -3379,7 +3379,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getOldNameProcedureEsterelIDTerminalRuleCall_2_0_1() { return cOldNameProcedureEsterelIDTerminalRuleCall_2_0_1; }
 	}
 
-	public class SignalRenamingElements implements IParserRuleAccess {
+	public class SignalRenamingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SignalRenaming");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNewNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -3424,7 +3424,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getOldNameSignalEsterelIDTerminalRuleCall_2_0_1() { return cOldNameSignalEsterelIDTerminalRuleCall_2_0_1; }
 	}
 
-	public class LocalSignalDeclElements implements IParserRuleAccess {
+	public class LocalSignalDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalSignalDecl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cSignalKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -3470,7 +3470,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getSignalKeyword_5() { return cSignalKeyword_5; }
 	}
 
-	public class LocalSignalListElements implements IParserRuleAccess {
+	public class LocalSignalListElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalSignalList");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cLocalSignalAction_0 = (Action)cGroup.eContents().get(0);
@@ -3516,7 +3516,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getSignalSignalParserRuleCall_2_1_0() { return cSignalSignalParserRuleCall_2_1_0; }
 	}
 
-	public class SuspendElements implements IParserRuleAccess {
+	public class SuspendElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Suspend");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cSuspendKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -3558,7 +3558,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getDelayDelayExprParserRuleCall_3_0() { return cDelayDelayExprParserRuleCall_3_0; }
 	}
 
-	public class SustainElements implements IParserRuleAccess {
+	public class SustainElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Sustain");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cSustainKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -3624,7 +3624,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 	}
 
-	public class TrapElements implements IParserRuleAccess {
+	public class TrapElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Trap");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cTrapKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -3680,7 +3680,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getTrapKeyword_6() { return cTrapKeyword_6; }
 	}
 
-	public class TrapDeclListElements implements IParserRuleAccess {
+	public class TrapDeclListElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TrapDeclList");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cTrapDeclAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -3716,7 +3716,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getTrapDeclTrapDeclParserRuleCall_1_1_0() { return cTrapDeclTrapDeclParserRuleCall_1_1_0; }
 	}
 
-	public class TrapDeclElements implements IParserRuleAccess {
+	public class TrapDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TrapDecl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -3744,7 +3744,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getChannelDescChannelDescriptionParserRuleCall_1_0() { return cChannelDescChannelDescriptionParserRuleCall_1_0; }
 	}
 
-	public class TrapHandlerListElements implements IParserRuleAccess {
+	public class TrapHandlerListElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TrapHandlerList");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cTrapHandlerAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -3772,7 +3772,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getTrapHandlerTrapHandlerParserRuleCall_1_0() { return cTrapHandlerTrapHandlerParserRuleCall_1_0; }
 	}
 
-	public class TrapHandlerElements implements IParserRuleAccess {
+	public class TrapHandlerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TrapHandler");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cHandleKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -3813,7 +3813,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getStatementStatementParserRuleCall_3_0() { return cStatementStatementParserRuleCall_3_0; }
 	}
 
-	public class VariableElements implements IParserRuleAccess {
+	public class VariableElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Variable");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cVarKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -3859,7 +3859,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getVarKeyword_5() { return cVarKeyword_5; }
 	}
 
-	public class VariableDeclElements implements IParserRuleAccess {
+	public class VariableDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableDecl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cVarListAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -3950,7 +3950,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getTypeBaseTypeTerminalRuleCall_3_4_1_0() { return cTypeBaseTypeTerminalRuleCall_3_4_1_0; }
 	}
 
-	public class VariableListElements implements IParserRuleAccess {
+	public class VariableListElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableList");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cVariableAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -4030,7 +4030,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getExpressionDataExprParserRuleCall_2_3_1_0() { return cExpressionDataExprParserRuleCall_2_3_1_0; }
 	}
 
-	public class WeakAbortElements implements IParserRuleAccess {
+	public class WeakAbortElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "WeakAbort");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cWeakKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -4072,7 +4072,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getWeakAbortBodyWeakAbortBodyParserRuleCall_4_0() { return cWeakAbortBodyWeakAbortBodyParserRuleCall_4_0; }
 	}
 
-	public class WeakAbortBodyElements implements IParserRuleAccess {
+	public class WeakAbortBodyElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "WeakAbortBody");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cWeakAbortInstanceParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
@@ -4092,7 +4092,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getWeakAbortCaseParserRuleCall_1() { return cWeakAbortCaseParserRuleCall_1; }
 	}
 
-	public class WeakAbortEndElements implements IParserRuleAccess {
+	public class WeakAbortEndElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "WeakAbortEnd");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cEndKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -4120,7 +4120,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getAbortKeyword_1_1() { return cAbortKeyword_1_1; }
 	}
 
-	public class WeakAbortInstanceElements implements IParserRuleAccess {
+	public class WeakAbortInstanceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "WeakAbortInstance");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cDelayAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -4164,7 +4164,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getEndWeakAbortEndParserRuleCall_1_2_0() { return cEndWeakAbortEndParserRuleCall_1_2_0; }
 	}
 
-	public class WeakAbortCaseElements implements IParserRuleAccess {
+	public class WeakAbortCaseElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "WeakAbortCase");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cCasesAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -4210,7 +4210,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getEndWeakAbortEndParserRuleCall_2_0() { return cEndWeakAbortEndParserRuleCall_2_0; }
 	}
 
-	public class DataExprElements implements IParserRuleAccess {
+	public class DataExprElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataExpr");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
@@ -4290,7 +4290,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getExprDataExprParserRuleCall_1_1_0() { return cExprDataExprParserRuleCall_1_1_0; }
 	}
 
-	public class DataOpElements implements IParserRuleAccess {
+	public class DataOpElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataOp");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Keyword cAndKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
@@ -4358,7 +4358,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getModKeyword_13() { return cModKeyword_13; }
 	}
 
-	public class DataUnaryExprElements implements IParserRuleAccess {
+	public class DataUnaryExprElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataUnaryExpr");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cDataValueFloatParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
@@ -4412,7 +4412,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getDataFunctionParserRuleCall_9() { return cDataFunctionParserRuleCall_9; }
 	}
 
-	public class DataValueIDElements implements IParserRuleAccess {
+	public class DataValueIDElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataValueID");
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueEsterelIDTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
@@ -4428,7 +4428,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getValueEsterelIDTerminalRuleCall_0() { return cValueEsterelIDTerminalRuleCall_0; }
 	}
 
-	public class DataValueFloatElements implements IParserRuleAccess {
+	public class DataValueFloatElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataValueFloat");
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueFloatTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
@@ -4444,7 +4444,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getValueFloatTerminalRuleCall_0() { return cValueFloatTerminalRuleCall_0; }
 	}
 
-	public class DataValueBooleanElements implements IParserRuleAccess {
+	public class DataValueBooleanElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataValueBoolean");
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueBooleanTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
@@ -4460,7 +4460,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getValueBooleanTerminalRuleCall_0() { return cValueBooleanTerminalRuleCall_0; }
 	}
 
-	public class DataValueIntElements implements IParserRuleAccess {
+	public class DataValueIntElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataValueInt");
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueINTTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
@@ -4476,7 +4476,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getValueINTTerminalRuleCall_0() { return cValueINTTerminalRuleCall_0; }
 	}
 
-	public class DataValueStringElements implements IParserRuleAccess {
+	public class DataValueStringElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataValueString");
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueSTRINGTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
@@ -4492,7 +4492,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getValueSTRINGTerminalRuleCall_0() { return cValueSTRINGTerminalRuleCall_0; }
 	}
 
-	public class DataBlockElements implements IParserRuleAccess {
+	public class DataBlockElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataBlock");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -4520,7 +4520,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
 	}
 
-	public class DataCurrentElements implements IParserRuleAccess {
+	public class DataCurrentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataCurrent");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cQuestionMarkKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -4560,7 +4560,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getTickTickParserRuleCall_1_1_0() { return cTickTickParserRuleCall_1_1_0; }
 	}
 
-	public class DataPreElements implements IParserRuleAccess {
+	public class DataPreElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataPre");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cPreKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -4612,7 +4612,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 	}
 
-	public class DataTrapElements implements IParserRuleAccess {
+	public class DataTrapElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataTrap");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cQuestionMarkQuestionMarkKeyword_0 = (Keyword)cGroup.eContents().get(0);
@@ -4640,7 +4640,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getTrapTrapDeclEsterelIDTerminalRuleCall_1_0_1() { return cTrapTrapDeclEsterelIDTerminalRuleCall_1_0_1; }
 	}
 
-	public class DataFunctionElements implements IParserRuleAccess {
+	public class DataFunctionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataFunction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cFunctionAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -4702,7 +4702,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 	}
 
-	public class TrapExprElements implements IParserRuleAccess {
+	public class TrapExprElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TrapExpr");
 		private final RuleCall cSigExprParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
@@ -4717,7 +4717,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getSigExprParserRuleCall() { return cSigExprParserRuleCall; }
 	}
 
-	public class SigExprElements implements IParserRuleAccess {
+	public class SigExprElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SigExpr");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAndExprAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -4753,7 +4753,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getAndExprSigExprANDParserRuleCall_1_1_0() { return cAndExprSigExprANDParserRuleCall_1_1_0; }
 	}
 
-	public class SigExprANDElements implements IParserRuleAccess {
+	public class SigExprANDElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SigExprAND");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cUnaExprAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -4789,7 +4789,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getUnaExprSigExprUnaryParserRuleCall_1_1_0() { return cUnaExprSigExprUnaryParserRuleCall_1_1_0; }
 	}
 
-	public class SigExprUnaryElements implements IParserRuleAccess {
+	public class SigExprUnaryElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SigExprUnary");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Assignment cExprAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
@@ -4859,7 +4859,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getSigExprSigExprUnaryParserRuleCall_2_1_0() { return cSigExprSigExprUnaryParserRuleCall_2_1_0; }
 	}
 
-	public class DelayExprElements implements IParserRuleAccess {
+	public class DelayExprElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DelayExpr");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Assignment cEventAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
@@ -4903,7 +4903,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getEventDelayEventParserRuleCall_1_1_0() { return cEventDelayEventParserRuleCall_1_1_0; }
 	}
 
-	public class DelayEventElements implements IParserRuleAccess {
+	public class DelayEventElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DelayEvent");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Alternatives cAlternatives_0 = (Alternatives)cAlternatives.eContents().get(0);
@@ -5003,7 +5003,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
 	}
 
-	public class ChannelDescriptionElements implements IParserRuleAccess {
+	public class ChannelDescriptionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ChannelDescription");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
@@ -5135,7 +5135,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getTypeBaseTypeTerminalRuleCall_2_3_1_0() { return cTypeBaseTypeTerminalRuleCall_2_3_1_0; }
 	}
 
-	public class SignalElements implements IParserRuleAccess {
+	public class SignalElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
@@ -5163,7 +5163,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public RuleCall getChannelChannelDescriptionParserRuleCall_1_0() { return cChannelChannelDescriptionParserRuleCall_1_0; }
 	}
 
-	public class TickElements implements IParserRuleAccess {
+	public class TickElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Tick");
 		private final Keyword cTickKeyword = (Keyword)rule.eContents().get(1);
 		
@@ -5175,7 +5175,7 @@ public class EsterelGrammarAccess implements IGrammarAccess {
 		public Keyword getTickKeyword() { return cTickKeyword; }
 	}
 
-	public class SensorElements implements IParserRuleAccess {
+	public class SensorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Sensor");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);

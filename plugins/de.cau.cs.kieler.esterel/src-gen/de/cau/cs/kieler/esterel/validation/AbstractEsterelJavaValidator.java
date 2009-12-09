@@ -11,7 +11,7 @@ import org.eclipse.xtext.validation.ComposedChecks;
 public class AbstractEsterelJavaValidator extends AbstractDeclarativeValidator {
 
     @Override
-    protected List<? extends EPackage> getEPackages() {
+    protected List<EPackage> getEPackages() {
         List<EPackage> result = new ArrayList<EPackage>();
         result.add(de.cau.cs.kieler.esterel.esterel.EsterelPackage.eINSTANCE);
         return result;

@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.antlr.runtime.CharStream;
 import org.antlr.runtime.RecognitionException;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.ui.common.editor.contentassist.antlr.AbstractContentAssistParser;
@@ -26,11 +25,6 @@ public class EsterelParser extends AbstractContentAssistParser {
 	private Map<AbstractElement, String> nameMappings;
 	
 	@Override
-	protected de.cau.cs.kieler.esterel.contentassist.antlr.internal.InternalEsterelLexer createLexer(CharStream stream) {
-		return new de.cau.cs.kieler.esterel.contentassist.antlr.internal.InternalEsterelLexer(stream);
-	}
-	
-	@Override
 	protected de.cau.cs.kieler.esterel.contentassist.antlr.internal.InternalEsterelParser createParser() {
 		de.cau.cs.kieler.esterel.contentassist.antlr.internal.InternalEsterelParser result = new de.cau.cs.kieler.esterel.contentassist.antlr.internal.InternalEsterelParser(null);
 		result.setGrammarAccess(grammarAccess);
@@ -41,6 +35,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 	protected String getRuleName(AbstractElement element) {
 		if (nameMappings == null) {
 			nameMappings = new HashMap<AbstractElement, String>() {
+				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getEndModuleAccess().getAlternatives(), "rule__EndModule__Alternatives");
 					put(grammarAccess.getModuleInterfaceAccess().getAlternatives(), "rule__ModuleInterface__Alternatives");
