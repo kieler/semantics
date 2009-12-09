@@ -128,12 +128,10 @@ public class ValuedObjectScope implements IScope {
 	}
 
 	
-	@Override
 	public IScopedElement getContentByEObject(EObject object) {
 		return null;
 	}
 
-	@Override
 	public IScopedElement getContentByName(String name) {
 		Iterable<IScopedElement> scopedElements =  this.getAllContents();
 		for(IScopedElement item : scopedElements){
