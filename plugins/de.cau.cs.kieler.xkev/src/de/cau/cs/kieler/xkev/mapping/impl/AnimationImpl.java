@@ -218,7 +218,7 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
                     JSONArray jsonArray = jsonObject.optJSONArray(getKey());
                     
                     //check, whether the value is in a valid array-range
-                    if (pos < 0 || pos >= jsonArray.length()) {
+                    if (jsonArray == null || pos < 0 || pos >= jsonArray.length()) {
                         Activator.reportErrorMessage("Value out of Range: The value of the \"accessID\" attribute is not in the valid array-range! [SVGElement:"+svgElementID+"]");
                         return null;
                     }

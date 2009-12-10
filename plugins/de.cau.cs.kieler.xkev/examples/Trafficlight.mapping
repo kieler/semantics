@@ -9,15 +9,15 @@
     <animation xsi:type="mapping:Colorize" input="off" color="#626262"/>
   </svgElement>
   <svgElement id="cGreen">
-    <animation xsi:type="mapping:Colorize" input="on" color="lime"/>
-    <animation xsi:type="mapping:Colorize" input="off" color="#626262"/>
-  </svgElement>
-  <svgElement id="pRed">
     <animation xsi:type="mapping:Colorize" input="on" color="red"/>
     <animation xsi:type="mapping:Colorize" input="off" color="#626262"/>
   </svgElement>
+  <svgElement id="pRed">
+    <animation xsi:type="mapping:Colorize" key="Pred.present" input="true" color="red"/>
+    <animation xsi:type="mapping:Colorize" key="Pred.present" input="false" color="#626262"/>
+  </svgElement>
   <svgElement id="pGreen">
-    <animation xsi:type="mapping:Colorize" input="on" color="lime"/>
-    <animation xsi:type="mapping:Colorize" input="off" color="#626262"/>
+    <animation xsi:type="mapping:Colorize" key="pGreen.value" input="on" color="$color.value"/>
+    <animation xsi:type="mapping:Colorize" key="pGreen.value" input="off" color="#626262"/>
   </svgElement>
 </mapping:SVGFile>

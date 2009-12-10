@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.w3c.dom.svg.SVGDocument;
 
+import de.cau.cs.kieler.sim.kiem.json.JSONException;
 import de.cau.cs.kieler.sim.kiem.json.JSONObject;
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.mapping.Animation;
@@ -72,7 +73,7 @@ public class MapAnimations {
         }
 
     }
-
+    
     /**
      * Creates the MapAnimation instance and loads an mapping file either from Resource (examples/*)
      * isResource=true or from anywhere on the harddisk (isResource=false).
@@ -288,14 +289,18 @@ public class MapAnimations {
             System.out.println("HashMap is not initialized!");
             return;
         }
-        // Get all JSON-Key-Names from the JSON object
-        String[] names = JSONObject.getNames(jsonObject);
-        for (String name : names) {
-            // Now we need to check for each JSON-Key if there exists a SVGElement-Tag in the
-            // Mapping-HashMap
-            if (this.svgElementsHashMap.containsKey(name)) {
+        
+        try {
+//            System.out.println(jsonObject.toString());
+            //Now we have to make the JSONobject flat, so that we can address all key by "." notation.
+            JSONObject flatJSONObject = makeItFlat(jsonObject);
+//            System.out.println(flatJSONObject.toString());
+            //For each svg element id we need to check if all any animation can be applied. 
+            Iterator<String> svgElementIDIterator = svgElementsHashMap.keySet().iterator();
+            while (svgElementIDIterator.hasNext()) {
+                String svgElementID = svgElementIDIterator.next();
                 // Get all animations for each SVG element
-                Iterator<Animation> animationIterator = svgElementsHashMap.get(name).iterator();
+                Iterator<Animation> animationIterator = svgElementsHashMap.get(svgElementID).iterator();
 
                 Animation animation;
                 while (animationIterator.hasNext()) {
@@ -304,13 +309,13 @@ public class MapAnimations {
                     // We need to apply all animations for each SVG element
                     if (animation instanceof Colorize) {
                         Colorize colorizeAnimation = (Colorize) animation;
-                        colorizeAnimation.applyAnimation(jsonObject, name);
+                        colorizeAnimation.applyAnimation(flatJSONObject, svgElementID);
                     } else if (animation instanceof Move) {
                         Move moveAnimation = (Move) animation;
-                        moveAnimation.applyAnimation(jsonObject, name);
+                        moveAnimation.applyAnimation(flatJSONObject, svgElementID);
                     } else if (animation instanceof Textbox) {
                         Textbox textboxAnimation = (Textbox) animation;
-                        textboxAnimation.applyAnimation(jsonObject, name);
+                        textboxAnimation.applyAnimation(flatJSONObject, svgElementID);
                     } else {
                         System.out.println("Animation " + animation.getClass().getSimpleName()
                                 + " does not exists!");
@@ -318,11 +323,70 @@ public class MapAnimations {
 
                 }
             }
+            // Now we still need to apply all animations to the SVG document
+            updateSVGGraphik();
+        } catch (JSONException e) {
+            //Something went wrong with the JSONObject.
         }
-        // Now we still need to apply all animations to the SVG document
-        updateSVGGraphik();
     }
-
+    
+    //OLD VERSION DOES ONLY ANIMATIONS IF THE JSON KEY EQUALS THE SVG ELEMENT ID
+    //------------------------------------------------------------------------------------------
+//    /**
+//     * Applies the Animations for all JSON-Keys which exists in the mapping file.
+//     * 
+//     * @param jsonObject
+//     */
+//    public void doAnimations(JSONObject jsonObject) {
+//        // Check whether the HashMap has been created
+//        if (this.svgElementsHashMap == null) {
+//            System.out.println("HashMap is not initialized!");
+//            return;
+//        }
+//        
+//        try {
+//            System.out.println(jsonObject.toString());
+//            //Now we have to make the JSONobject flat, so that we can address all key by "." notation.
+//            JSONObject flatJSONObject = makeItFlat(jsonObject);
+//            System.out.println(flatJSONObject.toString());
+//            // Get all JSON-Key-Names from the flatJSONobject
+//            String[] keys = JSONObject.getNames(flatJSONObject);
+//            for (String key : keys) {
+//                // Now we need to check for each JSON-Key if there exists a SVGElement-Tag in the
+//                // Mapping-HashMap
+//                if (this.svgElementsHashMap.containsKey(key)) {
+//                    // Get all animations for each SVG element
+//                    Iterator<Animation> animationIterator = svgElementsHashMap.get(key).iterator();
+//    
+//                    Animation animation;
+//                    while (animationIterator.hasNext()) {
+//                        animation = animationIterator.next();
+//    
+//                        // We need to apply all animations for each SVG element
+//                        if (animation instanceof Colorize) {
+//                            Colorize colorizeAnimation = (Colorize) animation;
+//                            colorizeAnimation.applyAnimation(flatJSONObject, key);
+//                        } else if (animation instanceof Move) {
+//                            Move moveAnimation = (Move) animation;
+//                            moveAnimation.applyAnimation(flatJSONObject, key);
+//                        } else if (animation instanceof Textbox) {
+//                            Textbox textboxAnimation = (Textbox) animation;
+//                            textboxAnimation.applyAnimation(flatJSONObject, key);
+//                        } else {
+//                            System.out.println("Animation " + animation.getClass().getSimpleName()
+//                                    + " does not exists!");
+//                        }
+//    
+//                    }
+//                }
+//            }
+//            // Now we still need to apply all animations to the SVG document
+//            updateSVGGraphik();
+//        } catch (JSONException e) {
+//            //Something went wrong with the JSONObject.
+//        }
+//    }
+// --------------------------------------------------------------------------------------------------
     /**
      * This function is intensively used by the mapInputToOutput() method. It simply creates an
      * ArrayList with no duplicates of the inputstring.
@@ -337,8 +401,8 @@ public class MapAnimations {
             // Allow only valid integer values.
             pattern = "[-]?[\\d]+";
         } else {
-            // Allow all chars, except these ".,;[]"
-            pattern = "[^.,;\\[\\]]+";
+            // Allow all chars, except these ",;[]"
+            pattern = "[^,;\\[\\]]+";
         }
 
         if (Pattern.matches("\\[([^,\\[\\]]+[,])*[^,\\[\\]]+\\]", input)) {
@@ -399,23 +463,23 @@ public class MapAnimations {
                         // The input can be everything now
                         if (inputSet.add(token)) {
                             inputArray.add(token);
-                            // System.out.println("Genau ein Wert: "+token);
+//                            System.out.println("Genau ein Wert: "+token);
                         }
                     } else {
                         // Error - wrong Syntax, was not accepted!
-                        // System.out.println("Falsche Syntax: "+token);
+//                        System.out.println("Falsche Syntax: "+token);
                     }
                 }
             }
         } else if (Pattern.matches(pattern, input)) {
             // Valid value (exactly one)
-            // System.out.println("Genau ein Wert: "+input);
+//            System.out.println("Genau ein Wert: "+input);
             if (inputSet.add(input)) {
                 inputArray.add(input);
             }// Else, the input is already in the Array
         } else {
             // Error - wrong Syntax, was not accepted!
-            // System.out.println("Falsche Syntax: "+input);
+//            System.out.println("Falsche Syntax: "+input);
         }
         // for (int i=0; i<inputArray.size(); i++) System.out.print(inputArray.get(i)+",");
         // System.out.println();
@@ -548,4 +612,60 @@ public class MapAnimations {
         svgCanvas.setSVGDocument(svgCanvas.getSVGDocument());
     }
 
+    
+    // ----------------------------------------------------------------------------------------------
+    //Should be put later on to the JSON package
+
+    /**
+     * Make the input jsonobject flat if there exists a hirachie. This one should be called instead
+     * of the other version of makeItFlat, which has some initial value parameters for recursive
+     * computation.
+     * 
+     * @param inputObject
+     * @return
+     * @throws JSONException
+     */
+    public final JSONObject makeItFlat(JSONObject inputObject) throws JSONException {
+        return makeItFlat(new JSONObject(), "", inputObject);
+    }
+
+    /**
+     * Computes the flat JSONObject. Is just a helper function.
+     * 
+     * @param flatOne
+     * @param adressKey
+     * @param inputObject
+     * @return
+     * @throws JSONException
+     */
+
+    private static JSONObject makeItFlat(JSONObject flatOne, String adressKey,
+            JSONObject inputObject) throws JSONException {
+        String[] keys = JSONObject.getNames(inputObject);
+        if (keys == null) {
+            //If there exists no key try it must be an empty json object
+            if (!adressKey.isEmpty()) {
+                flatOne.put(adressKey, new JSONObject());
+            }
+        } else {
+            for (String key : keys) {
+                if (inputObject.optJSONObject(key) == null) {
+                    if (adressKey.isEmpty()) {
+                        flatOne.put(key, inputObject.optString(key));
+                    } else {
+                        flatOne.put(adressKey + "." + key, inputObject.optString(key));
+                    }
+                } else {
+                    if (adressKey.isEmpty()) {
+                        makeItFlat(flatOne, key, inputObject.optJSONObject(key));
+                        //Add the toplevel objects to the result object (that are the svgelement id's)
+                        //flatOne.put(key, JSONObject.NULL);
+                    } else {
+                        makeItFlat(flatOne, adressKey + "." + key, inputObject.optJSONObject(key));
+                    }
+                }
+            }
+        }
+        return flatOne;
+    }
 }

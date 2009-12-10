@@ -188,15 +188,26 @@ public class ColorizeImpl extends AnimationImpl implements Colorize {
         String jsonValue = getActualJSONValue(jsonObject, svgElementID);
         ArrayList<HashMap<String,String>> hashMapArray;
         HashMap<String,String> hashMap;
-        
+
         if (jsonValue != null) {
             hashMapArray = mapAnimation.mapInputToOutput(getInput(), getColor());
             for (int i = 0; i < hashMapArray.size(); i++) {
                 hashMap = hashMapArray.get(i);
                 //If the value is in the hashMap, we can apply the animation
                 if (hashMap.containsKey(jsonValue)) {
-                    colorizeAnimation(svgElementID, hashMap.get(jsonValue));
-//                    System.out.println("ElementID: "+svgElementID+ " JSONValue: "+jsonValue+" MappedValue: "+hashMap.get(jsonValue));
+                    String value = hashMap.get(jsonValue);
+                    //Check if the value is a JSON Key (indicated by "$")
+                    if (value.indexOf("$") == 0) {
+                        //Now we need to load the JSON value from object
+                        value = jsonObject.optString(value.substring(1));
+                        if (value != null) { 
+                            colorizeAnimation(svgElementID, value);
+//                            System.out.println("SVGElementID: "+svgElementID+ " Value: "+value);
+                        }
+                    } else {
+                        colorizeAnimation(svgElementID, hashMap.get(jsonValue));
+                        //System.out.println("ElementID: "+svgElementID+ " JSONValue: "+jsonValue+" MappedValue: "+hashMap.get(jsonValue));
+                    }
                 }
                 
             }
