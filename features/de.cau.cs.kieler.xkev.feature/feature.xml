@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="de.cau.cs.kieler.xkev"
-      label="KIELER xKEV Feature"
+      label="KIELER Environment Visualization"
       version="0.1.0.qualifier"
       provider-name="Christian-Albrechts-University of Kiel">
 
    <description>
-      This feature contains the xKEV view which kann be used for visualization of simulation data, provided by
-the execution manager de.cau.cs.sim.kiem
+      This feature contains the KIELER Environment Visualization (KEV)
+view which kann be used for visualization
+of simulation data, provided by
+the execution manager (KIEM)
    </description>
 
    <copyright>
