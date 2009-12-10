@@ -10,7 +10,7 @@ import org.eclipse.xtext.resource.IFragmentProvider;
 import de.cau.cs.kieler.synccharts.dsl.kits.resource.KitsFragmentProvider;
 import de.cau.cs.kieler.synccharts.dsl.kits.serialization.KitsTransientValueService;
 import de.cau.cs.kieler.synccharts.dsl.scoping.KitsScopeProvider;
-import de.cau.cs.kieler.synccharts.formatting.ActionLabelValueConverter;
+import de.cau.cs.kieler.synccharts.labelparser.formatting.ActionLabelValueConverter;
 
 /**
  * This class is the injector created also to setup the standalone Kits
