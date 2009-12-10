@@ -202,9 +202,6 @@ public class JNIConnection implements IConnectionProtocol {
         }
     }
 
-    /**
-     * @param s
-     */
     private void log(final String s) {
         if (esi != null) {
             esi.write(s + "\n");

@@ -148,14 +148,14 @@ public class VerifyAction extends Action {
                         if (traces == null || !traces.hasNext()) {
                             s[rowComment] = "no trace found";
                         } else {
-                            Activator.getDefault().commonLayer.connect();
+                            Activator.getDefault().getCommonLayer().connect();
                             // Activator.getDefault().commonLayer.connect(CommonLayer.JNI_CON,
                             // ICommunicationProtocol.P_KEP, "", "", 0);
 
-                            Activator.getDefault().commonLayer.reset();
-                            Activator.getDefault().commonLayer.loadProgram(asm, null);
+                            Activator.getDefault().getCommonLayer().reset();
+                            Activator.getDefault().getCommonLayer().loadProgram(asm, null);
 
-                            Activator.getDefault().commonLayer.reset();
+                            Activator.getDefault().getCommonLayer().reset();
 
                             boolean valid = true;
                             while (traces.hasNext() && (valid || ignoreInvalid)) {

@@ -20,25 +20,15 @@ package de.cau.cs.kieler.krep.evalbench.exceptions;
  */
 public class ParseException extends Exception {
 
-    private String cause;
-
     /**
-     * @param tCause
+     * @param cause
      *            detailed cause for the exception
      */
-    public ParseException(final String tCause) {
-        super();
-        this.cause = tCause;
+    public ParseException(final String cause) {
+        super("Parser: " + cause);
     }
 
-    @Override
-    public String getMessage() {
-        return "Parser: " + cause;
-    }
-
-    /**
-     * 
-     */
+    /** The serial version UID. */
     private static final long serialVersionUID = 1L;
 
 }

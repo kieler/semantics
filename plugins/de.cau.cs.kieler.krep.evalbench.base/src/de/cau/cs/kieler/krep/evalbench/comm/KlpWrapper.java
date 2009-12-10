@@ -56,9 +56,6 @@ public class KlpWrapper implements IKrepWrapper {
         super();
         final String msg = "";
         klp_reset(msg);
-        // if (msg.length() > 0) {
-        // MessageView.print(msg);
-        // }
 
         final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
@@ -73,7 +70,7 @@ public class KlpWrapper implements IKrepWrapper {
      * {@inheritDoc}
      */
     public void terminate() {
-        // TODO Auto-generated method stub
+        // nothing to do
     }
 
     /**

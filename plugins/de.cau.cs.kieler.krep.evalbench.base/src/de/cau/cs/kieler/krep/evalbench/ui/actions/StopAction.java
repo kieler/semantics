@@ -56,8 +56,8 @@ public class StopAction extends Action {
      */
     @Override
     public void run() {
-        Activator.getDefault().commonLayer.stopContinuous();
-        statusLineManager.setMessage(Activator.getDefault().commonLayer
+        Activator.getDefault().getCommonLayer().stopContinuous();
+        statusLineManager.setMessage(Activator.getDefault().getCommonLayer()
                 .getStatusMessage());
     }
 

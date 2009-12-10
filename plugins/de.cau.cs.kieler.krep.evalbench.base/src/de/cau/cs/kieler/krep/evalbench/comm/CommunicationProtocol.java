@@ -27,10 +27,10 @@ import org.eclipse.swt.widgets.Display;
 public abstract class CommunicationProtocol implements ICommunicationProtocol {
 
     /** List of communication listeners. */
-    protected LinkedList<ICommunicationListener> communicationListeners;
+    private LinkedList<ICommunicationListener> communicationListeners;
 
     /** The currently active connection protocol. */
-    protected IConnectionProtocol connection;
+    private IConnectionProtocol connection;
 
     /**
      * Constructs a new instance of the KEP protocol.
@@ -41,9 +41,9 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
      */
     protected CommunicationProtocol(final IConnectionProtocol connectionProtocol) {
         // create list of communication listeners
-        communicationListeners = new LinkedList<ICommunicationListener>();
+        setCommunicationListeners(new LinkedList<ICommunicationListener>());
         // store instance of connection protocol
-        this.connection = connectionProtocol;
+        this.setConnection(connectionProtocol);
     }
 
     /**
@@ -55,7 +55,7 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
     protected void notifySend(final String data) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                Iterator<ICommunicationListener> iterator = communicationListeners.iterator();
+                Iterator<ICommunicationListener> iterator = getCommunicationListeners().iterator();
                 while (iterator.hasNext()) {
                     iterator.next().dataSent(data);
                 }
@@ -72,7 +72,7 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
     protected void notifyReceive(final String data) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                Iterator<ICommunicationListener> iterator = communicationListeners.iterator();
+                Iterator<ICommunicationListener> iterator = getCommunicationListeners().iterator();
                 while (iterator.hasNext()) {
                     iterator.next().dataReceived(data);
                 }
@@ -84,39 +84,69 @@ public abstract class CommunicationProtocol implements ICommunicationProtocol {
      * Notifies all registered communication listeners about a comment.
      * 
      * @param comment
-     *           comment about the next transaction
+     *            comment about the next transaction
      */
     protected void notifyComment(final String comment) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                Iterator<ICommunicationListener> iterator = communicationListeners.iterator();
+                Iterator<ICommunicationListener> iterator = getCommunicationListeners().iterator();
                 while (iterator.hasNext()) {
                     iterator.next().comment(comment);
                 }
             }
         });
     }
-    
-    
+
     /**
      * {@inheritDoc}
      */
     public void comment(final String comment) {
-        connection.comment(comment);
+        getConnection().comment(comment);
     }
 
     /**
      * {@inheritDoc}
      */
     public void addCommunicationListener(final ICommunicationListener listener) {
-        communicationListeners.add(listener);
+        getCommunicationListeners().add(listener);
     }
 
     /**
      * {@inheritDoc}
      */
     public void removeCommunicationListener(final ICommunicationListener listener) {
-        communicationListeners.remove(listener);
+        getCommunicationListeners().remove(listener);
+    }
+
+    /**
+     * @param theCommunicationListeners
+     *            the communicationListeners to set
+     */
+    protected void setCommunicationListeners(
+            final LinkedList<ICommunicationListener> theCommunicationListeners) {
+        this.communicationListeners = theCommunicationListeners;
+    }
+
+    /**
+     * @return the communicationListeners
+     */
+    protected LinkedList<ICommunicationListener> getCommunicationListeners() {
+        return communicationListeners;
+    }
+
+    /**
+     * @param theConnection
+     *            the connection to set
+     */
+    protected void setConnection(final IConnectionProtocol theConnection) {
+        this.connection = theConnection;
+    }
+
+    /**
+     * @return the connection
+     */
+    protected IConnectionProtocol getConnection() {
+        return connection;
     }
 
 }

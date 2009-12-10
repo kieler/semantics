@@ -27,7 +27,7 @@ import java.io.IOException;
  */
 public class EsiLogger {
 
-    BufferedWriter esi = null;
+    private BufferedWriter esi = null;
 
     /**
      * 

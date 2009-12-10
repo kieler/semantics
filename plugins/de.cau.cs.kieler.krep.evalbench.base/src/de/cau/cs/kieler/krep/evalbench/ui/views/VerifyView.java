@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.ViewPart;
 
-import de.cau.cs.kieler.krep.evalbench.ui.actions.ConnectAction;
 import de.cau.cs.kieler.krep.evalbench.ui.actions.VerifyAction;
 
 /**

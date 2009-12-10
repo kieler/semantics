@@ -48,7 +48,7 @@ public class DisconnectAction extends Action {
      */
     @Override
     public void run() {
-        Activator.getDefault().commonLayer.dispose();
+        Activator.getDefault().getCommonLayer().dispose();
     }
 
 }

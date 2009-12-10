@@ -20,7 +20,9 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.CommunicationException;
 /**
  * Interface for connection protocol layers like TCP/IP and RS-232.
  * 
- * @author msp
+ * @kieler.rating 2009-12-10 proposed yellow ctr
+ * 
+ * @author msp, ctr
  */
 public interface IConnectionProtocol {
 
@@ -73,8 +75,8 @@ public interface IConnectionProtocol {
     void send(byte[] data) throws CommunicationException;
 
     /**
-     * Tries to receive a sequence of characters until an exit character is
-     * read. The exit character is included in the returned string.
+     * Tries to receive a sequence of characters until an exit character is read. The exit character
+     * is included in the returned string.
      * 
      * @param exit
      *            the exit character
@@ -118,8 +120,7 @@ public interface IConnectionProtocol {
     String hark(int n) throws CommunicationException;
 
     /**
-     * Comment on the current communication. This information is used for log
-     * Files.
+     * Comment on the current communication. This information is used for log Files.
      * 
      * @param comment
      *            the comment to add to the log File

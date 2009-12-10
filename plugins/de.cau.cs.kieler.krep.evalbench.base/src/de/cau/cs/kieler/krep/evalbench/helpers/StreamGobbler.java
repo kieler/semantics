@@ -27,9 +27,9 @@ import java.io.InputStreamReader;
  *         program.
  */
 public class StreamGobbler extends Thread {
-    InputStream is;
+    private InputStream is;
 
-    String type;
+    private String type;
 
     /**
      * @param input

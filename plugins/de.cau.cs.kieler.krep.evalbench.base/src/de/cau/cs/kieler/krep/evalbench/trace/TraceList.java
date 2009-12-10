@@ -295,11 +295,11 @@ public class TraceList implements IPartListener {
         if (hasNext()) {
             Tick tick = next();
             if (tick == null) {
-                Activator.getDefault().commonLayer.reset();
+                Activator.getDefault().getCommonLayer().reset();
                 notifyListeners(false);
                 return true;
             } else {
-                Tick output = Activator.getDefault().commonLayer.step(tick);
+                Tick output = Activator.getDefault().getCommonLayer().step(tick);
                 setOutput(output);
                 boolean valid = validateCurrent();
 

@@ -48,7 +48,7 @@ public class TargetInfoAction extends Action {
      */
     @Override
     public void run() {
-        Activator.getDefault().commonLayer.getTargetInfo();
+        Activator.getDefault().getCommonLayer().getTargetInfo();
     }
 
 }

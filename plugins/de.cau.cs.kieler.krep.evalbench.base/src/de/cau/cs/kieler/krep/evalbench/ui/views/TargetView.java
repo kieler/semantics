@@ -22,7 +22,8 @@ import de.cau.cs.kieler.krep.evalbench.ui.actions.TargetInfoAction;
 /**
  * A View for displaying target information.
  * 
- * @author msp
+ * @kieler.rating 2009-12-10 proposed yellow ctr
+ * @author msp, ctr
  */
 public class TargetView extends ViewPart {
 
@@ -31,9 +32,6 @@ public class TargetView extends ViewPart {
 
     /** The viewer used to display target info. */
     private TextViewer viewer = null;
-
-    private static TargetView instance = null;;
-
 
     /**
      * {@inheritDoc}
@@ -45,7 +43,6 @@ public class TargetView extends ViewPart {
         // create actions
         IToolBarManager manager = getViewSite().getActionBars().getToolBarManager();
         manager.add(new TargetInfoAction());
-        // instance = this;
     }
 
     @Override
@@ -63,19 +60,8 @@ public class TargetView extends ViewPart {
     }
 
     /**
-     * @return unique instance of the TargetView
-     */
-    public static TargetView getDefault() {
-        if (instance == null) {
-            instance = new TargetView();
-            // TODO open Target view
-            // Activator.getDefault().getWorkbench().openWorkbenchWindow(perspectiveId, input)
-        }
-        return instance;
-    }
-
-    /**
-     * @param string target information to show.
+     * @param string
+     *            target information to show.
      */
     public void show(final String string) {
         if (viewer != null) {

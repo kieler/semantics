@@ -71,8 +71,8 @@ public class RunAction extends Action {
     @Override
     public void run() {
         if (traces == null) {
-            Activator.getDefault().commonLayer.continuousRun();
-            statusLineManager.setMessage(Activator.getDefault().commonLayer
+            Activator.getDefault().getCommonLayer().continuousRun();
+            statusLineManager.setMessage(Activator.getDefault().getCommonLayer()
                     .getStatusMessage());
         } else {
             Tools.runWithProgress(new IRunnableWithProgress() {

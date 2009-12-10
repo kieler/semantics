@@ -59,10 +59,10 @@ public class LoadProgramAction extends Action {
     public void run() {
         Tools.runWithProgress(new IRunnableWithProgress() {
             public void run(final IProgressMonitor monitor) {
-                monitor.beginTask("Load program", Activator.getDefault().commonLayer
+                monitor.beginTask("Load program", Activator.getDefault().getCommonLayer()
                         .getActiveAssemblerEditor().getAssembler().size());
                 try {
-                    Activator.getDefault().commonLayer.loadProgram(monitor);
+                    Activator.getDefault().getCommonLayer().loadProgram(monitor);
                 } catch (CommunicationException e) {
                     Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                             "Communication error while loading program", e);
@@ -76,7 +76,7 @@ public class LoadProgramAction extends Action {
                 monitor.done();
             }
         });
-        IAssembler asm = Activator.getDefault().commonLayer.getActiveAssemblerEditor()
+        IAssembler asm = Activator.getDefault().getCommonLayer().getActiveAssemblerEditor()
                 .getAssembler();
         Activator.getDefault().getViewer().setAssembler(asm);
     }

@@ -14,7 +14,9 @@
 package de.cau.cs.kieler.krep.evalbench.comm;
 
 /**
- * Generic interface for the processors.
+ * Generic interface for the processors when connected via JNI.
+ * 
+ * @kieler.rating 2009-12-10 proposed yellow msp
  * 
  * @author ctr
  * 
@@ -41,26 +43,26 @@ public interface IKrepWrapper {
      */
     void step();
 
-    
     /**
-     * @param b byte to send to the processor
+     * @param b
+     *            byte to send to the processor
      */
     void send(byte b);
 
-    
     /**
      * Tell the processor to log the communication into a log-File in esi Format.
      * 
-     * @param esiFile name of the log File
+     * @param esiFile
+     *            name of the log File
      */
     void saveEsi(String esiFile);
 
     /**
-     * @param comment comment to send to the processor (used for logging)
+     * @param comment
+     *            comment to send to the processor (used for logging)
      */
     void comment(String comment);
 
-    
     /**
      * @return retrieve the name of the connected processor
      */

@@ -20,23 +20,14 @@ package de.cau.cs.kieler.krep.evalbench.exceptions;
  */
 public class LoadException extends Exception {
 
-    /**
-     * 
-     */
+    /** The serial version UID. */
     private static final long serialVersionUID = 6075808941855187075L;
-    private final String cause;
 
     /**
-     * @param c
-     *            specific explanaition, while the download failed
+     * @param cause
+     *            specific explanation, while the download failed
      */
-    public LoadException(final String c) {
-        this.cause = c;
+    public LoadException(final String cause) {
+        super("Load: " + cause);
     }
-
-    @Override
-    public String getMessage() {
-        return "Load: " + cause;
-    }
-
 }

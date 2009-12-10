@@ -38,7 +38,7 @@ public final class Activator extends AbstractUIPlugin implements IPageListener {
     private static Activator plugin;
 
     /** The common layer for data exchange. */
-    public CommonLayer commonLayer = new CommonLayer();
+    private CommonLayer commonLayer = new CommonLayer();
 
     /** The viewer to show the current program. */
     private AssemblerView viewer = null;
@@ -84,34 +84,20 @@ public final class Activator extends AbstractUIPlugin implements IPageListener {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
-     * )
-     */
     @Override
     public void start(final BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
         // initialize the common layer
-        commonLayer.initialize();
+        getCommonLayer().initialize();
         // register as page listener
-        PlatformUI.getWorkbench().getActiveWorkbenchWindow().addPageListener(
-                this);
+        PlatformUI.getWorkbench().getActiveWorkbenchWindow().addPageListener(this);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
-     * )
-     */
     @Override
     public void stop(final BundleContext context) throws Exception {
         // dispose the common layer
-        commonLayer.dispose();
+        getCommonLayer().dispose();
         plugin = null;
         super.stop(context);
     }
@@ -127,19 +113,13 @@ public final class Activator extends AbstractUIPlugin implements IPageListener {
 
     /**
      * {@inheritDoc}
-
-     * @see
-     * org.eclipse.ui.IPageListener#pageActivated(org.eclipse.ui.IWorkbenchPage)
      */
     public void pageActivated(final IWorkbenchPage page) {
-        page.addPartListener(commonLayer);
+        page.addPartListener(getCommonLayer());
     }
 
     /**
      * {@inheritDoc}
-     *
-     * @see
-     * org.eclipse.ui.IPageListener#pageClosed(org.eclipse.ui.IWorkbenchPage)
      */
     public void pageClosed(final IWorkbenchPage page) {
         // Nothing to do
@@ -147,12 +127,26 @@ public final class Activator extends AbstractUIPlugin implements IPageListener {
 
     /**
      * {@inheritDoc}
-     *
-     * @see
-     * org.eclipse.ui.IPageListener#pageOpened(org.eclipse.ui.IWorkbenchPage)
+     * 
+     * @see org.eclipse.ui.IPageListener#pageOpened(org.eclipse.ui.IWorkbenchPage)
      */
     public void pageOpened(final IWorkbenchPage page) {
         // Nothing to do
+    }
+
+    /**
+     * @param theCommonLayer
+     *            the commonLayer to set
+     */
+    public void setCommonLayer(final CommonLayer theCommonLayer) {
+        this.commonLayer = theCommonLayer;
+    }
+
+    /**
+     * @return the commonLayer
+     */
+    public CommonLayer getCommonLayer() {
+        return commonLayer;
     }
 
 }

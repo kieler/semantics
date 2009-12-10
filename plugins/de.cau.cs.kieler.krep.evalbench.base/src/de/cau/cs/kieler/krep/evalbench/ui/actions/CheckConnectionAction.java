@@ -49,7 +49,7 @@ public class CheckConnectionAction extends Action {
      */
     @Override
     public void run() {
-        Activator.getDefault().commonLayer.checkConnection();
+        Activator.getDefault().getCommonLayer().checkConnection();
     }
 
 }

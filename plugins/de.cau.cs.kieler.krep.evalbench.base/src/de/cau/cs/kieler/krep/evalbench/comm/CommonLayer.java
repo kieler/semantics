@@ -14,13 +14,10 @@
 
 package de.cau.cs.kieler.krep.evalbench.comm;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Display;
@@ -88,9 +85,7 @@ public class CommonLayer implements IPartListener {
     /** The currently used connection protocol. */
     private IConnectionProtocol currentConnection;
 
-    /** List of signal listeners. */
-    private LinkedList<ISignalListener> signalListeners;
-
+   
     /** The currently synchronized assembler editor. */
     private AssemblerEditor currentEditor = null;
 
@@ -115,13 +110,12 @@ public class CommonLayer implements IPartListener {
      * @param exception
      *            exception that caused the error box to be displayed
      */
-    //TODO: remove function
+    // TODO: remove function
     private static void displayError(final String title, final String message,
             final Exception exception) {
-        Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                "message", exception);
-        StatusManager.getManager().handle(myStatus, StatusManager.SHOW);  
-  }
+        Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "message", exception);
+        StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+    }
 
     /**
      * Displays a message in the connection view, if available. If no connection view is available
@@ -161,13 +155,25 @@ public class CommonLayer implements IPartListener {
     /**
      * Builds up the common layer.
      */
-    public CommonLayer() {
-        // create list of signal listeners
+    /*public CommonLayer() {
+    // create list of signal listeners
         signalListeners = new LinkedList<ISignalListener>();
-    }
+    }*/
 
-    public final void connect(String connectionType, String protocolType, String portName,
-            String hostName, int portNumber) {
+    /**
+     * Establish connection to a a reactive processor.
+     * 
+     * @param connectionType
+     *            the type of the connection: JNI, TCPIP or RS232
+     * @param protocolType
+     *            protocol of the reactive processor: KEP or KLP. For JNI, this also defines which
+     *            processor to start.
+     * @param portName name of the serial port for RS232 connection
+     * @param hostName name of the host for TCP/IP connection
+     * @param portNumber number of the port for TCP/IP connection 
+     */
+    public final void connect(final String connectionType, final String protocolType,
+            final String portName, final String hostName, final int portNumber) {
         // close the previous connection
         if (currentConnection != null) {
             currentConnection.dispose();
@@ -352,22 +358,17 @@ public class CommonLayer implements IPartListener {
         preferenceStore.setDefault(ConnectionPreferencePage.PORT_NUMBER, DEFAULT_PORT);
 
         // look for extensions of the tick manager extension point
-        IConfigurationElement[] configElements = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor(AbstractTickManager.EXTENSION_ID);
-        for (int i = 0; i < configElements.length; i++) {
-            try {
-                // create a new instance of the implementing class
-                AbstractTickManager manager = (AbstractTickManager) configElements[i]
-                        .createExecutableExtension("class");
-                // add manager to the list of signal listeners
-                addSignalListener(manager);
-            } catch (Exception e) {
-                displayError("Error initializing extension", "The configuration element "
-                        + configElements[i].getName()
-                        + " could not be initialized for the extension point "
-                        + AbstractTickManager.EXTENSION_ID, e);
-            }
-        }
+        /*
+         * IConfigurationElement[] configElements = Platform.getExtensionRegistry()
+         * .getConfigurationElementsFor(AbstractTickManager.EXTENSION_ID); for (int i = 0; i <
+         * configElements.length; i++) { try { // create a new instance of the implementing class
+         * AbstractTickManager manager = (AbstractTickManager) configElements[i]
+         * .createExecutableExtension("class"); // add manager to the list of signal listeners
+         * addSignalListener(manager); } catch (Exception e) {
+         * displayError("Error initializing extension", "The configuration element " +
+         * configElements[i].getName() + " could not be initialized for the extension point " +
+         * AbstractTickManager.EXTENSION_ID, e); } }
+         */
     }
 
     /**
@@ -385,9 +386,9 @@ public class CommonLayer implements IPartListener {
      * @param listener
      *            listener to be added
      */
-    public final void addSignalListener(final ISignalListener listener) {
+    /*public final void addSignalListener(final ISignalListener listener) {
         signalListeners.add(listener);
-    }
+    }*/
 
     /**
      * Removes a given signal listener.
@@ -395,9 +396,9 @@ public class CommonLayer implements IPartListener {
      * @param listener
      *            listener to be removed
      */
-    public void removeSignalListener(final ISignalListener listener) {
+    /*public void removeSignalListener(final ISignalListener listener) {
         signalListeners.remove(listener);
-    }
+    }*/
 
     /**
      * Execute the <i>verify communication</i> command and display results in the connection view.
@@ -545,10 +546,10 @@ public class CommonLayer implements IPartListener {
             }
             out.setRT(tickLength);
             // notify signal listeners
-            Iterator<ISignalListener> iterator = signalListeners.iterator();
-            while (iterator.hasNext()) {
-                iterator.next().tickPerformed(inputs, outputs);
-            }
+            //Iterator<ISignalListener> iterator = signalListeners.iterator();
+            //while (iterator.hasNext()) {
+             //   iterator.next().tickPerformed(inputs, outputs);
+            //}
             // get execution trace
             final int[] addresses = currentProtocol.getExecutionTrace();
             // show the executed instructions in the assembler editor

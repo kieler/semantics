@@ -26,7 +26,6 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 import de.cau.cs.kieler.krep.evalbench.program.KrepConfig;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
-import de.cau.cs.kieler.krep.evalbench.ui.views.TargetView;
 
 /**
  * Implementation of the communication protocol interface that uses the KREP protocol.
@@ -73,7 +72,7 @@ public class KrepProtocol extends CommunicationProtocol {
     private static final int BYTE_LENGTH = 8;
 
     private void sendCmd(final byte data) throws CommunicationException {
-        connection.send(data);
+        getConnection().send(data);
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 notifySend(Integer.toHexString(data) + "(" + String.valueOf((char) data) + ")");
@@ -82,7 +81,7 @@ public class KrepProtocol extends CommunicationProtocol {
     }
 
     private void send(final byte data) throws CommunicationException {
-        connection.send(data);
+        getConnection().send(data);
         ConnectionView.log("-> " + data);
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
@@ -92,7 +91,7 @@ public class KrepProtocol extends CommunicationProtocol {
     }
 
     private void send(final byte[] data) throws CommunicationException {
-        connection.send(data);
+        getConnection().send(data);
         ConnectionView.log("-> " + data);
         String t = "";
         for (byte b : data) {
@@ -108,7 +107,7 @@ public class KrepProtocol extends CommunicationProtocol {
     }
 
     private LinkedList<Integer> receiveByte(final int n) throws CommunicationException {
-        final LinkedList<Integer> res = connection.receiveByte(n);
+        final LinkedList<Integer> res = getConnection().receiveByte(n);
         String s = "";
 
         final String t = s;
@@ -174,7 +173,7 @@ public class KrepProtocol extends CommunicationProtocol {
      * 
      */
     public String getTargetInfo() throws CommunicationException {
-        ConnectionView.log("get target information");
+        notifyComment("get target information");
         sendCmd(INFO_COMMAND);
         // construct info message from received string
         LinkedList<Integer> msg = receiveByte(INFO_DESC.length);
@@ -196,12 +195,7 @@ public class KrepProtocol extends CommunicationProtocol {
         int nReg = i.next();
         int nROM = 1 << i.next();
 
-        krp = new KrepConfig(nCores, nIO, nReg, nROM);
-        TargetView tv = TargetView.getDefault();
-        if (tv != null) {
-            tv.show(stringBuffer.toString());
-        }
-
+        krp = new KrepConfig(nCores, nIO, nReg, nROM);      
         return stringBuffer.toString();
     }
 
@@ -297,7 +291,7 @@ public class KrepProtocol extends CommunicationProtocol {
         }
 
         // perform tick
-        connection.send(TICK_COMMAND);
+        getConnection().send(TICK_COMMAND);
         rt = receiveByte(1).getFirst();
         // receive outputs
         i = 0;
@@ -340,7 +334,7 @@ public class KrepProtocol extends CommunicationProtocol {
     public String verifyCommunication() throws CommunicationException {
         ConnectionView.log("verifiy");
         sendCmd(VERIFY_COMMAND);
-        String reply = connection.receive(VERIFICATION_STRING.length());
+        String reply = getConnection().receive(VERIFICATION_STRING.length());
         if (reply.equals(VERIFICATION_STRING)) {
             return "Return string is valid.";
         } else {

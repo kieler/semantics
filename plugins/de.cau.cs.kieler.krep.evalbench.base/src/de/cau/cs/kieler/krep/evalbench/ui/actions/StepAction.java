@@ -58,12 +58,12 @@ public class StepAction extends Action {
      */
     @Override
     public void run() {
-        AssemblerEditor editor = Activator.getDefault().commonLayer
+        AssemblerEditor editor = Activator.getDefault().getCommonLayer()
                 .getActiveAssemblerEditor();
         Tick tick = new Tick(editor.getInputs(), editor.getOutputs());
 
-        Activator.getDefault().commonLayer.step(tick);
-        statusLineManager.setMessage(Activator.getDefault().commonLayer
+        Activator.getDefault().getCommonLayer().step(tick);
+        statusLineManager.setMessage(Activator.getDefault().getCommonLayer()
                 .getStatusMessage());
     }
 

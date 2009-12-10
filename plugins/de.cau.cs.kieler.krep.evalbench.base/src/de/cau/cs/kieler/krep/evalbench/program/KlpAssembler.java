@@ -129,11 +129,11 @@ public class KlpAssembler implements IAssembler {
 
         if (instruction == null || instruction instanceof Done || instruction == null) {
             Done i = null;
-            if (instruction == null) {
-                i = new de.cau.cs.kieler.krep.editors.klp.klp.impl.DoneImpl();
-            } else {
-                i = (Done) instruction;
-            }
+            // if (instruction == null) {
+            // i = new de.cau.cs.kieler.krep.editors.klp.klp.impl.DoneImpl();
+            // } else {
+            i = (Done) instruction;
+            // }
             i.setOpcode0(Opcode.DONE.getCode());
             if (i.getPc() != null) {
                 i.getPc().setAddr(label2addr.get(i.getPc().getName()));
@@ -485,14 +485,7 @@ public class KlpAssembler implements IAssembler {
                 }
                 res.add(new String[] { num, label, i, opcode });
             }
-        } /*
-           * else {
-           * 
-           * for (final Instruction i : instructions) { String opcode = i.writeObj(); String num =
-           * ""; if (opcode == null) { opcode = ""; } else { rows.put(j, k); num =
-           * String.valueOf(j++); } String label = i.getLabel(); String instr = i.toString(); k++;
-           * res.add(new String[] { num, label, instr, opcode }); } }
-           */
+        }
         return res.toArray(new String[0][0]);
     }
 
@@ -658,7 +651,8 @@ public class KlpAssembler implements IAssembler {
         }
     }
 
-    private void setOpcode(Instruction i, int op0, int op1, int op2, final int op3) {
+    private void setOpcode(final Instruction i, final int op0, final int op1, final int op2,
+            final int op3) {
         i.setOpcode0(op0);
         i.setOpcode1(op1);
         i.setOpcode2(op2);
@@ -676,8 +670,8 @@ public class KlpAssembler implements IAssembler {
     /**
      * {@inheritDoc}
      */
-    public void assemble(String name, String program) throws ParseException {
-        assemble(name, new ByteArrayInputStream(program.getBytes()));
+    public void assemble(final String n, final String program) throws ParseException {
+        assemble(n, new ByteArrayInputStream(program.getBytes()));
 
     }
 

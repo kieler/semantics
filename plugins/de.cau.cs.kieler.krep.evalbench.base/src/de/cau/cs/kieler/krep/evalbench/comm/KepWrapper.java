@@ -52,9 +52,6 @@ public class KepWrapper implements IKrepWrapper {
         super();
         final String msg = "";
         kep_reset(msg);
-        /*if (msg.length() > 0) {
-            MessageView.print(msg);
-        }*/
 
         final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 

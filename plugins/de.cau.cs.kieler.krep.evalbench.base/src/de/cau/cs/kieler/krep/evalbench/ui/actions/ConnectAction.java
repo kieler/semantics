@@ -48,7 +48,7 @@ public class ConnectAction extends Action {
      */
     @Override
     public void run() {
-        Activator.getDefault().commonLayer.connect();
+        Activator.getDefault().getCommonLayer().connect();
     }
 
 }

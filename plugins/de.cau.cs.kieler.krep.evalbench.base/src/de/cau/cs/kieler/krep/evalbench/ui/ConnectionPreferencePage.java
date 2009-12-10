@@ -31,7 +31,7 @@ import de.cau.cs.kieler.krep.evalbench.comm.CommonLayer;
 /**
  * Preference page for connections.
  * 
- * @author msp
+ * @author msp, ctr
  */
 public class ConnectionPreferencePage extends FieldEditorPreferencePage implements
         IWorkbenchPreferencePage {
@@ -89,7 +89,7 @@ public class ConnectionPreferencePage extends FieldEditorPreferencePage implemen
         addField(fieldEditor);
 
         // create field editor for serial port name
-        String[] serialPorts = Activator.getDefault().commonLayer.getSerialPorts();
+        String[] serialPorts = Activator.getDefault().getCommonLayer().getSerialPorts();
         labels = new String[serialPorts.length][2];
         for (int i = 0; i < serialPorts.length; i++) {
             labels[i] = new String[] { serialPorts[i], serialPorts[i] };

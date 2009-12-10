@@ -40,7 +40,7 @@ public interface ICommunicationListener {
      * Write optional comment about the next transaction.
      * 
      * @param comment
-     *            that is received
+     *            that describes the next transaction in the protocol.
      */
     void comment(String comment);
 

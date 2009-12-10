@@ -22,10 +22,11 @@ import de.cau.cs.kieler.krep.evalbench.exceptions.LoadException;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 
 /**
- * Interface for communication protocol layers used between the common layer and
- * connection protocols.
+ * Interface for communication protocol layers used between the common layer and connection
+ * protocols.
  * 
- * @author msp
+ * @kieler.rating 2009-12-10 proposed yellow ctr
+ * @author msp, ctr
  */
 public interface ICommunicationProtocol {
 
@@ -51,8 +52,7 @@ public interface ICommunicationProtocol {
     void removeCommunicationListener(ICommunicationListener listener);
 
     /**
-     * Verifies communication by sending a command and receiving a return
-     * string.
+     * Verifies communication by sending a command and receiving a return string.
      * 
      * @return readable text describing verification result
      * @throws CommunicationException
@@ -61,8 +61,7 @@ public interface ICommunicationProtocol {
     String verifyCommunication() throws CommunicationException;
 
     /**
-     * Requests target information from the target and translates the received
-     * return string.
+     * Requests target information from the target and translates the received return string.
      * 
      * @return readable target information
      * @throws CommunicationException
@@ -95,8 +94,8 @@ public interface ICommunicationProtocol {
     void resetStatus() throws CommunicationException;
 
     /**
-     * Performs a program tick by sending the global input signal status,
-     * executing the tick command and reading the global output signal status.
+     * Performs a program tick by sending the global input signal status, executing the tick command
+     * and reading the global output signal status.
      * 
      * @param maxSignals
      *            number of signals in the current program. This is need
@@ -108,8 +107,8 @@ public interface ICommunicationProtocol {
      * @throws CommunicationException
      *             when an invalid reply was received
      */
-    int tick(int maxSignals, LinkedList<Signal> inputs,
-            LinkedList<Signal> outputs) throws CommunicationException;
+    int tick(int maxSignals, LinkedList<Signal> inputs, LinkedList<Signal> outputs)
+            throws CommunicationException;
 
     /**
      * Requests an execution trace for the last tick command.
@@ -121,8 +120,8 @@ public interface ICommunicationProtocol {
     int[] getExecutionTrace() throws CommunicationException;
 
     /**
-     * When executed the target is set to continuous mode. Only external inputs
-     * and outputs are used in this mode.
+     * When executed the target is set to continuous mode. Only external inputs and outputs are used
+     * in this mode.
      * 
      * @throws CommunicationException
      *             when an exception occurs while sending the command
@@ -138,8 +137,8 @@ public interface ICommunicationProtocol {
     void stopContinuous() throws CommunicationException;
 
     /**
-     * add a comment to the communication trace. This is useful, if an esi-File
-     * is automatically generated
+     * add a comment to the communication trace. This is useful, if an esi-File is automatically
+     * generated
      * 
      * @param string
      *            comment to the next operation

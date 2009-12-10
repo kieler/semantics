@@ -16,7 +16,9 @@ package de.cau.cs.kieler.krep.evalbench.exceptions;
 /**
  * Exception used by the communication protocols.
  * 
- * @author msp
+ * @kieler.rating 2009-12-10 proposed yellow ctr
+ * 
+ * @author msp, ctr
  */
 public class CommunicationException extends Exception {
 

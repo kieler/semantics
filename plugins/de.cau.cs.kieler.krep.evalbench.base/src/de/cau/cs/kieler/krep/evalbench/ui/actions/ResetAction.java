@@ -68,12 +68,12 @@ public class ResetAction extends Action {
         }
 
         try {
-            Activator.getDefault().commonLayer.reset();
+            Activator.getDefault().getCommonLayer().reset();
         } catch (CommunicationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        statusLineManager.setMessage(Activator.getDefault().commonLayer.getStatusMessage());
+        statusLineManager.setMessage(Activator.getDefault().getCommonLayer().getStatusMessage());
     }
 
 }
