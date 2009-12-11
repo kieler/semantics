@@ -20,6 +20,7 @@ import de.cau.cs.kieler.core.IKielerPreferenceStore;
 /**
  * Wrapper class for Eclipse preference stores.
  * 
+ * @kieler.rating 2009-12-11 proposed yellow msp
  * @author <a href="mailto:msp@informatik.uni-kiel.de">Miro Sp&ouml;nemann</a>
  */
 public class KielerPreferenceStore implements IKielerPreferenceStore {

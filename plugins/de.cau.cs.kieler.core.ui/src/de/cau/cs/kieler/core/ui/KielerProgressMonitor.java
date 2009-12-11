@@ -20,6 +20,7 @@ import de.cau.cs.kieler.core.alg.BasicProgressMonitor;
 /**
  * Wrapper class for Eclipse progress monitors.
  * 
+ * @kieler.rating 2009-12-11 proposed yellow msp
  * @author <a href="mailto:msp@informatik.uni-kiel.de">Miro Sp&ouml;nemann</a>
  */
 public class KielerProgressMonitor extends BasicProgressMonitor {

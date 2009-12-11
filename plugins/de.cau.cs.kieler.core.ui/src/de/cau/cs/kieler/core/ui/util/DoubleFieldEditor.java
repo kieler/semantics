@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Text;
 /**
  * Field editor for input of double values.
  * 
+ * @kieler.rating 2009-12-11 proposed yellow msp
  * @author ???
  */
 public class DoubleFieldEditor extends StringFieldEditor {
