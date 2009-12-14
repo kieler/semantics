@@ -31,7 +31,7 @@ import org.eclipse.gef.EditPart;
  * diagram clearer.
  * 
  * @author schm
- * @contribution haf
+ * @author haf
  *
  */
 //public class AttributeAwareRegionFigure extends AttributeAwareFigure {

@@ -26,6 +26,8 @@ import org.eclipse.draw2d.geometry.Rectangle;
  */
 public class DoubleRoundedRectangle extends RoundedRectangle {
 
+    public static final int BORDER_WIDTH = 3;
+    
     int actualCornerWidth  = 0;
     int actualCornerHeight = 0;
     
@@ -53,10 +55,10 @@ public class DoubleRoundedRectangle extends RoundedRectangle {
         
         graphics.drawRoundRectangle(f, actualCornerWidth, actualCornerHeight);
         // Draw the second rectangle inside the first one
-        f.x += 3;
-        f.y += 3;
-        f.width -= 6;
-        f.height -= 6;
+        f.x += BORDER_WIDTH;
+        f.y += BORDER_WIDTH;
+        f.width -=  2 * BORDER_WIDTH;
+        f.height -= 2 * BORDER_WIDTH;
         graphics.drawRoundRectangle(f, actualCornerWidth-6, actualCornerHeight-6);
     }
 }
