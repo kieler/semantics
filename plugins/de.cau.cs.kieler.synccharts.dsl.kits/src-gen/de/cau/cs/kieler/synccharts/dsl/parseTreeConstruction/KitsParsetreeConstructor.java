@@ -90,7 +90,6 @@ protected class ThisRootNode extends RootToken {
  *   
  *   
  *  
- * 
  *  // GMF does not like empty models so avoid them:
  *    // IO Declarations --- come before state declarations #2009-11-26
  *    // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
@@ -369,7 +368,6 @@ protected class Region_InnerStatesAssignment_4 extends AssignmentToken  {
  *   Action)* ("oninner" innerActions+=Action)* ("onexit" exitActions+=Action)* (
  *   "suspension" suspensionTrigger=Action)? ("{" regions+=Region ("||" regions+=Region)*
  *   "}")? outgoingTransitions+=Transition*; 
- * 
  *  // GMF does not like empty models so avoid them:
  *    // IO Declarations --- come before state declarations #2009-11-26
  *    // There are no region signals as in thinkccharts --- outtake: (variables+=Variable|signals+=Signal)*#2009-11-26 
