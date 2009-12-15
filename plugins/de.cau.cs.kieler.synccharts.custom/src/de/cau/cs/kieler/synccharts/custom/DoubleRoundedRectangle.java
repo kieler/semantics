@@ -22,27 +22,25 @@ import org.eclipse.draw2d.geometry.Rectangle;
  * A rounded rectangle with a double border.
  * 
  * @author schm
- * 
  */
 public class DoubleRoundedRectangle extends RoundedRectangle {
 
+    /** width of the double rectangle border. */
     public static final int BORDER_WIDTH = 3;
-    
-    int actualCornerWidth  = 0;
-    int actualCornerHeight = 0;
     
     /**
      * The constructor.
      */
-    // A class that draws two rectangles instead of only one
     public DoubleRoundedRectangle() {
         super();
     }
 
     /**
      * Draw the outline twice.
+     * 
+     * @param graphics the graphics object
      */
-    protected void outlineShape(Graphics graphics) {
+    protected void outlineShape(final Graphics graphics) {
         Rectangle f = Rectangle.SINGLETON;
         Rectangle r = getBounds();
         f.x = r.x + lineWidth / 2;
@@ -50,8 +48,8 @@ public class DoubleRoundedRectangle extends RoundedRectangle {
         f.width = r.width - lineWidth;
         f.height = r.height - lineWidth;
         // calculate corners according to current dimensions
-        actualCornerWidth = Math.min(corner.width, r.width);
-        actualCornerHeight = Math.min(corner.height, r.height);
+        int actualCornerWidth = Math.min(corner.width, r.width);
+        int actualCornerHeight = Math.min(corner.height, r.height);
         
         graphics.drawRoundRectangle(f, actualCornerWidth, actualCornerHeight);
         // Draw the second rectangle inside the first one
@@ -59,6 +57,7 @@ public class DoubleRoundedRectangle extends RoundedRectangle {
         f.y += BORDER_WIDTH;
         f.width -=  2 * BORDER_WIDTH;
         f.height -= 2 * BORDER_WIDTH;
-        graphics.drawRoundRectangle(f, actualCornerWidth-6, actualCornerHeight-6);
+        graphics.drawRoundRectangle(f, actualCornerWidth - 2 * BORDER_WIDTH,
+                actualCornerHeight - 2 * BORDER_WIDTH);
     }
 }

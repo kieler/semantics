@@ -16,32 +16,20 @@ package de.cau.cs.kieler.synccharts.custom;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Ellipse;
-import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.Graphics;
-import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.widgets.Display;
 
 /**
- * A grey filled circle with a 'P' inside.
+ * A filled circle with a 'C' inside.
  * 
  * @author schm
- * 
  */
 public class ConditionalStateFigure extends Ellipse {
-
-    static final Font CONDITIONALFIGURE_FONT = new Font(Display.getCurrent(), "Sans", 12,
-            SWT.NORMAL);
 
     /**
      * The constructor.
      */
-    // A class that draws a 'C' inside of an ellipse
     public ConditionalStateFigure() {
         super();
         this.setFill(true);
@@ -50,44 +38,47 @@ public class ConditionalStateFigure extends Ellipse {
         this.setBackgroundColor(ColorConstants.black);
     }
 
-    /*
+    /**
      * Overriding BackgroundColor because otherwise also conditional states will be set a background
-     * color automatically to the default background color set in the preferences...
+     * color automatically to the default background color set in the preferences.
      * 
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.draw2d.Figure#getLocalBackgroundColor()
+     * @return the local background Color
      */
     @Override
     public Color getLocalBackgroundColor() {
         return ColorConstants.black;
     }
 
+    private static final int C_SIZE_QUOT = 3;
+    private static final int C_ARC_OFFSET = 45;
+    private static final int C_ARC_LENGTH = 270;
+    
     /**
      * Draw the outline of the circle and a 'C' inside.
+     * 
+     * @param graphics the graphics object
      */
     @Override
-    protected void outlineShape(Graphics graphics) {
+    protected void outlineShape(final Graphics graphics) {
         Rectangle t = Rectangle.SINGLETON;
         t.setBounds(getBounds());
         t.width--;
         t.height--;
         t.shrink((lineWidth - 1) / 2, (lineWidth - 1) / 2);
-        graphics.setBackgroundColor(this.getBackgroundColor());
+        graphics.setBackgroundColor(getBackgroundColor());
         graphics.drawOval(t);
-        // graphics.fillOval(t);
 
         // Calculate the bounds of the "C"
         Rectangle f = Rectangle.SINGLETON;
         Rectangle r = getBounds();
-        f.x = r.x + (r.width / 3);
-        f.y = r.y + (r.height / 3);
-        f.width = r.width / 3;
-        f.height = r.height / 3;
+        f.width = r.width / C_SIZE_QUOT;
+        f.height = r.height / C_SIZE_QUOT;
+        f.x = r.x + f.width;
+        f.y = r.y + f.height;
 
-        //Draw the "C" 
+        // Draw the "C"
         graphics.setForegroundColor(ColorConstants.white);
-        graphics.drawArc(f, 45, 270);
+        graphics.drawArc(f, C_ARC_OFFSET, C_ARC_LENGTH);
     }
 
 }

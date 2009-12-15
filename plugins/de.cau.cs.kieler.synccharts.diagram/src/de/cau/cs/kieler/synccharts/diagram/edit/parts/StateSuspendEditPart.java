@@ -14,7 +14,7 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.notation.View;
 
-import de.cau.cs.kieler.synccharts.custom.CustomCompartmentLayout;
+import de.cau.cs.kieler.synccharts.custom.ListCompartmentLayout;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.StateSuspendCanonicalEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.StateSuspendItemSemanticEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.part.Messages;
@@ -58,7 +58,7 @@ public class StateSuspendEditPart extends ShapeCompartmentEditPart {
         }
         result.setBorder(null);
 
-        result.getContentPane().setLayoutManager(new CustomCompartmentLayout());
+        result.getContentPane().setLayoutManager(new ListCompartmentLayout());
 
         WrappingLabel title = new WrappingLabel();
         title.setText(result.getCompartmentTitle() + " ");

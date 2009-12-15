@@ -154,7 +154,7 @@ public class StateLayout extends AbstractHintLayout {
      * @param parent the state figure
      * @parem state the state model object
      */
-    private void complexLayout(final IFigure parent, State state) {
+    private void complexLayout(final IFigure parent, final State state) {
         @SuppressWarnings("unchecked")
         List<IFigure> children = parent.getChildren();
         Rectangle clientArea = parent.getClientArea();
@@ -316,7 +316,7 @@ public class StateLayout extends AbstractHintLayout {
      * @param parent the state figure
      * @param state the state model object
      */
-    private void simpleLayout(final IFigure parent, State state) {
+    private void simpleLayout(final IFigure parent, final State state) {
         @SuppressWarnings("unchecked")
         List<IFigure> children = parent.getChildren();
         Rectangle clientArea = parent.getClientArea();

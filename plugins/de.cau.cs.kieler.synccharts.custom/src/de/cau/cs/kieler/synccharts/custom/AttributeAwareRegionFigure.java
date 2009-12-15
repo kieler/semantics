@@ -16,47 +16,48 @@ package de.cau.cs.kieler.synccharts.custom;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
-import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.gef.EditPart;
 
 /**
- * This class represents the attribute aware region figures, which are grey 
+ * This class represents the attribute aware region figures, which are grey
  * dashed boxes.
  * <p>
  * It is not really an AttributeAwareFigure, but only provides the same
  * constructor to be able to be used the same way from the GMF templates.
  * <p>
- * Instead, it extends NeighborAwareOpenRectangleFigure in order
- * to reduce the number of border lines that have to be drawn and make the
- * diagram clearer.
+ * Instead, it extends NeighborAwareOpenRectangleFigure in order to reduce the
+ * number of border lines that have to be drawn and make the diagram clearer.
  * 
  * @author schm
  * @author haf
- *
+ * 
  */
-//public class AttributeAwareRegionFigure extends AttributeAwareFigure {
-    public class AttributeAwareRegionFigure extends NeighborAwareOpenRectangleFigure {
+public class AttributeAwareRegionFigure extends NeighborAwareOpenRectangleFigure {
+
+    private static final int DASH_BLACK = 10;
+    private static final int DASH_WHITE = 5;
+    private static final int NO_DRAW_MARGIN = 10;
     
     /**
-     * The constructor. 
+     * The constructor. Actually the figures for regions do not need to be
+     * attribute aware, but if they were not, the code templates would not work
+     * since we cannot distinguish different classes in code templates
+     * (at least I can't).
+     * 
      * @param e The edit part the figure is supposed to watch.
      */
-	// The figure for regions; actually they do not need to be attribute aware,
-	// but if they were not, the code templates would not work since we cannot
-	// distinguish different classes in code templates (at least I can't)
-	public AttributeAwareRegionFigure(EditPart e) {
-		super();
-		//this.setModelElementAndRegisterFromEditPart(e);
-		
-		this.setFill(false);
-		this.setLineWidth(1);
-		//this.setLineStyle(Graphics.LINE_DASH);
-		this.setLineStyle(Graphics.LINE_CUSTOM);
-		float[] fs = {10,5};
-		this.setLineDash(fs);
-		this.setForegroundColor(ColorConstants.gray);
-		
-		this.setNoDrawMargin(10);
-		this.setSiblingLevel(2);
-	}
+    public AttributeAwareRegionFigure(final EditPart e) {
+        super();
+
+        this.setFill(false);
+        this.setLineWidth(1);
+        this.setLineStyle(Graphics.LINE_CUSTOM);
+        float[] fs = {DASH_BLACK, DASH_WHITE};
+        this.setLineDash(fs);
+        this.setForegroundColor(ColorConstants.gray);
+
+        this.setNoDrawMargin(NO_DRAW_MARGIN);
+        this.setSiblingLevel(2);
+    }
+    
 }

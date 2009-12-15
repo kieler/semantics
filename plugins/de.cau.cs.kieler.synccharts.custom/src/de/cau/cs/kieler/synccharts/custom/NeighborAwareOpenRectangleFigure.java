@@ -16,7 +16,6 @@ package de.cau.cs.kieler.synccharts.custom;
 
 import java.util.List;
 
-import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.diagram.ui.figures.ShapeCompartmentFigure;
@@ -34,26 +33,25 @@ import org.eclipse.gmf.runtime.diagram.ui.figures.ShapeCompartmentFigure;
  * get clear bounds if the children are laid out sparsely.
  * 
  * @author haf
- * 
  */
 public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
 
-    /**
-     * Determine on which hierarchy level siblings are expected.
-     */
+    private static final int DEF_MARGIN = 10;
+    
+    /** Determine on which hierarchy level siblings are expected. */
     private int siblingLevel = 1;
-
-    private int margin = 10;
+    /** Margin size for rectangle lines. */
+    private int margin = DEF_MARGIN;
 
     /**
      * Iterate your siblings and determine if they are neighbors and on what
      * sides and how far away. Configure your side drawing accordingly.
      */
     public void checkNeighbors() {
-        this.north = false;
-        this.east = false;
-        this.south = false;
-        this.west = false;
+        this.setNorth(false);
+        this.setEast(false);
+        this.setSouth(false);
+        this.setWest(false);
 
         IFigure parent = this;
         for (int i = siblingLevel; i > 0; i--) {
@@ -61,7 +59,7 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
         }
 
         if (parent != null) {
-            List siblings = parent.getChildren();
+            List<?> siblings = parent.getChildren();
             Rectangle myBounds = this.getBounds();
             Rectangle herBounds = null;
             int northDistance = Integer.MAX_VALUE;
@@ -71,51 +69,62 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
             for (Object sibling : siblings) {
                 if (sibling != this && sibling instanceof IFigure) {
                     herBounds = ((IFigure) sibling).getBounds();
-                    // check if the sibling is east or south and only then draw
-                    // the border
-                    if (myBounds.getTopRight().x <= herBounds.getTopLeft().x)
-                        this.east = true;
-                    if (myBounds.getBottomLeft().y <= herBounds.getTopLeft().y)
-                        this.south = true;
+                    // check if the sibling is east or south and only then draw the border
+                    if (myBounds.getTopRight().x <= herBounds.getTopLeft().x) {
+                        this.setEast(true);
+                    }
+                    if (myBounds.getBottomLeft().y <= herBounds.getTopLeft().y) {
+                        this.setSouth(true);
+                    }
                     // check if there is also something west or north. Then
                     // we check if it is too far away so it would make sense
                     // to draw the border
                     int dist = myBounds.getTopLeft().x
                             - herBounds.getTopRight().x;
-                    if (dist >= 0 && westDistance > dist)
+                    if (dist >= 0 && westDistance > dist) {
                         westDistance = dist;
+                    }
                     dist = myBounds.getTopLeft().y
                             - herBounds.getBottomRight().y;
-                    if (dist >= 0 && northDistance > dist)
+                    if (dist >= 0 && northDistance > dist) {
                         northDistance = dist;
+                    }
                     // check how far we are from the border
                     dist = myBounds.getTopLeft().x;
-                    if (dist >= 0 && westDistance > dist)
+                    if (dist >= 0 && westDistance > dist) {
                         westDistance = dist;
+                    }
                     dist = myBounds.getTopLeft().y;
-                    if (dist >= 0 && northDistance > dist)
+                    if (dist >= 0 && northDistance > dist) {
                         northDistance = dist;
+                    }
                     dist = parent.getClientArea().getBottomRight().x
                             - myBounds.getBottomRight().x;
-                    if (dist >= 0 && eastDistance > dist)
+                    if (dist >= 0 && eastDistance > dist) {
                         eastDistance = dist;
+                    }
                     dist = parent.getClientArea().getBottomRight().y
                             - myBounds.getBottomRight().y;
-                    if (dist >= 0 && southDistance > dist)
+                    if (dist >= 0 && southDistance > dist) {
                         southDistance = dist;
+                    }
                 }
             }
             // don't draw if we are too near (either parent border or neighbor)
-            if (westDistance < Integer.MAX_VALUE && westDistance > this.margin)
-                this.west = true;
+            if (westDistance < Integer.MAX_VALUE && westDistance > this.margin) {
+                this.setWest(true);
+            }
             if (northDistance < Integer.MAX_VALUE
-                    && northDistance > this.margin)
-                this.north = true;
-            if (eastDistance < Integer.MAX_VALUE && eastDistance > this.margin)
-                this.east = true;
+                    && northDistance > this.margin) {
+                this.setNorth(true);
+            }
+            if (eastDistance < Integer.MAX_VALUE && eastDistance > this.margin) {
+                this.setEast(true);
+            }
             if (southDistance < Integer.MAX_VALUE
-                    && southDistance > this.margin)
-                this.south = true;
+                    && southDistance > this.margin) {
+                this.setSouth(true);
+            }
         }
     }
 
@@ -131,18 +140,20 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
         }
         if (parent != null) {
 
-            List siblings = parent.getChildren();
+            List<?> siblings = parent.getChildren();
             for (Object sibling : siblings) {
                 if (sibling instanceof IFigure) {
-                    List children = ((IFigure) sibling).getChildren();
+                    List<?> children = ((IFigure) sibling).getChildren();
                     for (int i = siblingLevel - 1; i > 0; i--) {
                         if (children.size() >= 1) {
                             Object child = children.get(0);
-                            if (child instanceof IFigure)
+                            if (child instanceof IFigure) {
                                 children = ((IFigure) child).getChildren();
-                            if (child instanceof NeighborAwareOpenRectangleFigure)
+                            }
+                            if (child instanceof NeighborAwareOpenRectangleFigure) {
                                 ((NeighborAwareOpenRectangleFigure) child)
                                         .checkNeighbors();
+                            }
                         }
                     }
                 }
@@ -163,13 +174,15 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
     /**
      * Overriding shouldRepaint to test whether the sides must be checked again.
      * Will return true either if this bounds have changed or the bounds of the
-     * "real" parent
+     * "real" parent.
+     * 
+     * @return true if the figure should repaint
      */
     @Override
     public boolean shouldRepaint() {
         Rectangle r = Rectangle.SINGLETON.setBounds(getBounds());
-        if (preBounds == null || !r.equals(preBounds)) {
-            preBounds = r.getCopy();
+        if (getPreBounds() == null || !r.equals(getPreBounds())) {
+            setPreBounds(r.getCopy());
             return true;
         } else {
             // find the "real" parent and not only the plate on which the
@@ -181,9 +194,9 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
             }
             if (myParent != null) {
                 Rectangle parentBounds = myParent.getBounds();
-                if (preParentBounds == null
-                        || !parentBounds.equals(preParentBounds)) {
-                    preParentBounds = parentBounds.getCopy();
+                if (getPreParentBounds() == null
+                        || !parentBounds.equals(getPreParentBounds())) {
+                    setPreParentBounds(parentBounds.getCopy());
                     return true;
                 }
             }
@@ -233,7 +246,7 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
      *            the hierarchy level which shall be used to find sibling
      *            elements.
      */
-    public void setSiblingLevel(int level) {
+    public void setSiblingLevel(final int level) {
         this.siblingLevel = level;
     }
 
@@ -243,10 +256,9 @@ public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
      * clarify a nodes bounds if it is too far away from its neighbors or the
      * parent bounds.
      * 
-     * @param margin
-     *            the desired margin.
+     * @param themargin the desired margin.
      */
-    public void setNoDrawMargin(int margin) {
-        this.margin = margin;
+    public void setNoDrawMargin(final int themargin) {
+        this.margin = themargin;
     }
 }
