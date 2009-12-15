@@ -43,12 +43,13 @@ public class Activator extends AbstractUIPlugin {
     private static Activator plugin;
     
     /**
-     * Single instance of the KevView
+     * Single instance of the KEV-View.
      */
     private static KevView kevViewInstance = null;
     
     /**
-     * Indicates the visibility status of the KEVview instance. 
+     * Indicates the whether the ExecutionManager is running or not.
+     * It is used by the KEV-View for changing the status of the KEV-View icons. 
      */
     private static boolean executionManagerStatus = false;
     
@@ -61,22 +62,31 @@ public class Activator extends AbstractUIPlugin {
     public Activator() {
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Starts the bundle.
      * 
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+     * @param context
+     *          The bundlecontext.
+     * @throws Exception
+     *          A general exception.
      */
-    public void start(BundleContext context) throws Exception {
+    @Override
+    public void start(final BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Stops the bundle.
      * 
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+     * @param context
+     *          The bundlecontext.
+     * @throws Exception
+     *          A general exception.
      */
-    public void stop(BundleContext context) throws Exception {
+    public void stop(final BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
     }
@@ -91,54 +101,68 @@ public class Activator extends AbstractUIPlugin {
     }
 
     /**
-     * Return the name of the current mapanimation.
+     * Returns the current MapAnimation object.
+     * 
+     * @see MapAnimation
      * @return
+     *          Returns the current MapAnimations object.
      */
-    public final static MapAnimations getCurrentMapAnimation() {
+    public static final MapAnimations getCurrentMapAnimation() {
         return currentMapAnimation;
     }
     
     /**
-     * Setting the currently active mapanimation.
-     * @param mappingFile
+     * Setting the new MapAnimation object.
+     * 
+     * @see MapAnimation
+     * @param mapAnimation
+     *          The new MapAnimation object.
      */
-    public final static void setCurrentMapAnimation(MapAnimations mapAnimation) {
+    public static final void setCurrentMapAnimation(final MapAnimations mapAnimation) {
         currentMapAnimation = mapAnimation;
     }
     
     
     /**
-     * Set the current visibility status of the Kev view instance.
-     * @param isVisible
+     * Set the current visibility status of the KEV-View instance.
+     * 
+     * @param isRunning
+     *          The boolean value for the executionManagerStatus variable.
      */
-    public final static void setExecutionManagerStatus(boolean isRunning) {
+    public static final void setExecutionManagerStatus(final boolean isRunning) {
          executionManagerStatus = isRunning;
     }
     
     /**
-     * Indicate whether the Kev view instance is visible or not.
-     * @return
+     * Indicates whether the KEV-View instance is visible or not.
+     * 
+     * @return executionManagerStatus
+     *          The current status of the executionManager. 
+     *          True means the ExecutionManager is still running, false otherwise.
+     * @see ExecutionManager
      */
-    public final static boolean isExecutionManagerRunning() {
+    public static final boolean isExecutionManagerRunning() {
         return executionManagerStatus;
     }
     
     /**
-     * Setting the single instance of KevView
+     * Setting the single instance of KEV-View.
      * @param kevView
+     *          The new KEV-View object. This object is the current KEV-View instance.
      */
-    
-    public static void setKevView(KevView kevView) {
+    public static final void setKevView(final KevView kevView) {
         kevViewInstance = kevView;
     }
+    
     /**
-     * Return the single instance of the KevView
-     * @return
+     * Return the single instance of the KEV-View.
+     * @return kevViewInstance
+     *          The current KEV-View object.
+     *          
      */
-    public static KevView getKevView() {
+    public static final KevView getKevView() {
         return kevViewInstance;
     }
-    
     
     /**
      * Returns an image descriptor for the image file at the given plug-in relative path.

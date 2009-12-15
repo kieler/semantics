@@ -44,19 +44,21 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IViewReference;
+
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.Messages;
-import de.cau.cs.kieler.xkev.helpers.Tools;
 import de.cau.cs.kieler.xkev.mapping.animations.MapAnimations;
-import de.cau.cs.kieler.xkev.views.EclipseJSVGCanvas;
-import de.cau.cs.kieler.xkev.views.KevView;
 
-public class OpenImageWizard extends Wizard {
+/**
+ * 
+ * 
+ * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
+ *
+ */
+public class OpenWizard extends Wizard {
 
     /** The actual wizard page that will be shown. */
     private OpenImageWizardPage page;
@@ -75,7 +77,7 @@ public class OpenImageWizard extends Wizard {
     public static final String DEFAULT_IMAGE = "image";
     public static final String LOAD_STARTUP = "load_startup";
 
-    public OpenImageWizard() {
+    public OpenWizard() {
         page = new OpenImageWizardPage("Open Image");
         this.addPage(page);
     }
@@ -95,6 +97,7 @@ public class OpenImageWizard extends Wizard {
             //Load the SVG file from bundle resources specified in the mapping file
             String filename = resourceNameField.getText().substring(resourceNameField.getText().lastIndexOf("/")+1);
             Activator.setCurrentMapAnimation(new MapAnimations(filename, true));
+            return true;
         } else {
           //Load the SVG file from filesystem
             Activator.setCurrentMapAnimation(new MapAnimations(resourceNameField.getText(), false));
@@ -121,7 +124,7 @@ public class OpenImageWizard extends Wizard {
 
     private void savePreferences() {
         IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-        preferenceStore.setValue(OpenImageWizard.DEFAULT_IMAGE, resourceNameField.getText());
+        preferenceStore.setValue(OpenWizard.DEFAULT_IMAGE, resourceNameField.getText());
     }
 
     private class OpenImageWizardPage extends WizardPage implements SelectionListener,
@@ -233,7 +236,7 @@ public class OpenImageWizard extends Wizard {
                     }
                     images.put(name, url);
                 } catch (Exception e) {
-                    Tools.showDialog(e);
+                    Activator.reportErrorMessage("Exception",e);
                 }
             }
             return images;
@@ -252,7 +255,7 @@ public class OpenImageWizard extends Wizard {
                     URL url = file.toURI().toURL();
                     return url;
                 } catch (MalformedURLException e) {
-                    Tools.showDialog("Invalid file: " + path, e);
+                    Activator.reportErrorMessage("Invalid file: " + path, e);
                 }
             }
             return null;

@@ -14,7 +14,7 @@
 
 /**
  * The DataobserverPackage contains examples for the comunication between
- * KEV-Plugin and KIEM-Execution-Manager
+ * KEV-Plugin and KIEM-Execution-Manager.
  *  
  */
 package de.cau.cs.kieler.xkev.extension.dataobserver;

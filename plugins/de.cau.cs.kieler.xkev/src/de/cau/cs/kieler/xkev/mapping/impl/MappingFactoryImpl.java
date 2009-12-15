@@ -64,7 +64,7 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
             case MappingPackage.SVG_ELEMENT: return createSVGElement();
             case MappingPackage.MOVE: return createMove();
             case MappingPackage.COLORIZE: return createColorize();
-            case MappingPackage.TEXTBOX: return createTextbox();
+            case MappingPackage.TEXT: return createText();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -115,9 +115,9 @@ public class MappingFactoryImpl extends EFactoryImpl implements MappingFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Textbox createTextbox() {
-        TextboxImpl textbox = new TextboxImpl();
-        return textbox;
+    public Text createText() {
+        TextImpl text = new TextImpl();
+        return text;
     }
 
     /**

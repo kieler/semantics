@@ -99,16 +99,9 @@ public class MappingSwitch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case MappingPackage.IANIMATION: {
-                IAnimation iAnimation = (IAnimation)theEObject;
-                T result = caseIAnimation(iAnimation);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case MappingPackage.ANIMATION: {
                 Animation animation = (Animation)theEObject;
                 T result = caseAnimation(animation);
-                if (result == null) result = caseIAnimation(animation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -116,7 +109,6 @@ public class MappingSwitch<T> {
                 Move move = (Move)theEObject;
                 T result = caseMove(move);
                 if (result == null) result = caseAnimation(move);
-                if (result == null) result = caseIAnimation(move);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -124,15 +116,13 @@ public class MappingSwitch<T> {
                 Colorize colorize = (Colorize)theEObject;
                 T result = caseColorize(colorize);
                 if (result == null) result = caseAnimation(colorize);
-                if (result == null) result = caseIAnimation(colorize);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case MappingPackage.TEXTBOX: {
-                Textbox textbox = (Textbox)theEObject;
-                T result = caseTextbox(textbox);
-                if (result == null) result = caseAnimation(textbox);
-                if (result == null) result = caseIAnimation(textbox);
+            case MappingPackage.TEXT: {
+                Text text = (Text)theEObject;
+                T result = caseText(text);
+                if (result == null) result = caseAnimation(text);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -167,21 +157,6 @@ public class MappingSwitch<T> {
      * @generated
      */
     public T caseSVGElement(SVGElement object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>IAnimation</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>IAnimation</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseIAnimation(IAnimation object) {
         return null;
     }
 
@@ -231,17 +206,17 @@ public class MappingSwitch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Textbox</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Text</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Textbox</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Text</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseTextbox(Textbox object) {
+    public T caseText(Text object) {
         return null;
     }
 

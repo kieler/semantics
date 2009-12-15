@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.xkev.mapping.animations;
 
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,10 +59,19 @@ public class MapAnimations {
      */
     private SVGFile mappingFile;
     
+    /**
+     * The single instance of the EclipseJSVGCanvas.
+     */
     private final EclipseJSVGCanvas svgCanvas = EclipseJSVGCanvas.getInstance();
 
+    /**
+     * The HashMap with SVG element id's as the keys and a list of animations as values.
+     */
     private Map<String, EList<Animation>> svgElementsHashMap = null;
 
+    /**
+     * The default constructor.
+     */
     public MapAnimations() {
         // We must make sure that the svgCanvas has already been created (xKEV-View must have been
         // initialized first)
@@ -79,10 +87,12 @@ public class MapAnimations {
      * isResource=true or from anywhere on the harddisk (isResource=false).
      * 
      * @param filename
+     *          The name of the file which should be loaded.
      * @param isResource
+     *          True, if the resource is loaded from the KEV-plugin itself.
+     *          False, if the the resource is a file on the local filesystem. 
      */
-
-    public MapAnimations(String filename, boolean isResource) {
+    public MapAnimations(final String filename, final boolean isResource) {
         // We must make sure that the svgCanvas has already been created (xKEV-View must have been
         // initialized first)
         if (svgCanvas == null) {
@@ -119,8 +129,8 @@ public class MapAnimations {
 
     
     /**
-     * Return the current mapping file of this mapanimation.
-     * @return
+     * Return the current mapping file of this MapAnimations.
+     * @return mappingFile the current mapping fil
      */
     public final SVGFile getMappingFile() {
         return mappingFile;
@@ -133,8 +143,7 @@ public class MapAnimations {
      * @param filename
      * @return svgFile which is the mapping file
      */
-    // return wird eigenetlich nicht mehr benötigt -> besser als void implementieren?
-    public final SVGFile loadFromResource(String filename) {
+    public final SVGFile loadFromResource(final String filename) {
         // Initialize the model
         MappingPackage.eINSTANCE.eClass();
         
@@ -151,6 +160,7 @@ public class MapAnimations {
         SVGFile svgFile = null;
         try {
             // Get the resource from examples folder
+            System.out.println(filename);
             resource = resSet.getResource(URI.createPlatformPluginURI(Activator.PLUGIN_ID+"/examples/"+filename, true), true);
             // Get the first model element and cast it to the right type, in my
             // example everything is hierarchical included in this first node
@@ -171,13 +181,13 @@ public class MapAnimations {
     }
 
     /**
-     * Loads an .mapping file from disk
+     * Loads an mapping file from disk.
      * 
      * @param filename
      * @return
      */
 
-    public final SVGFile loadFromFile(String filename) {
+    public final SVGFile loadFromFile(final String filename) {
         // Initialize the model
         MappingPackage.eINSTANCE.eClass();
 
@@ -223,7 +233,7 @@ public class MapAnimations {
         return svgFile;
     }
 
-    private void loadSpecifiedSVGFile(String filename) {
+    private void loadSpecifiedSVGFile(final String filename) {
         SVGLoadingStatusListener loadingStatusListener = svgCanvas.getSVGLoadingStatusListener();
 
         if (filename.indexOf("resource:") == 0) {
@@ -268,7 +278,7 @@ public class MapAnimations {
      * This Method creates a HashMap of SVGElements of the actual Mapping file.
      * 
      */
-    private synchronized void createHashMap(SVGFile mappingFile) {
+    private synchronized void createHashMap(final SVGFile mappingFile) {
         this.svgElementsHashMap = new HashMap<String, EList<Animation>>();
         Iterator<SVGElement> elementIterator = mappingFile.getSvgElement().iterator();
         SVGElement svgElement;
@@ -283,7 +293,7 @@ public class MapAnimations {
      * 
      * @param jsonObject
      */
-    public void doAnimations(JSONObject jsonObject) {
+    public void doAnimations(final JSONObject jsonObject) {
         // Check whether the HashMap has been created
         if (this.svgElementsHashMap == null) {
             System.out.println("HashMap is not initialized!");
@@ -392,7 +402,8 @@ public class MapAnimations {
      * ArrayList with no duplicates of the inputstring.
      * 
      */
-    private ArrayList<String> generateArrayListFromInput(String input, boolean integerOnly) {
+    private ArrayList<String> generateArrayListFromInput(final String input,
+            final boolean integerOnly) {
         ArrayList<String> inputArray = new ArrayList<String>();
         HashSet<String> inputSet = new HashSet<String>();
         // Now we begin with the input tokens
@@ -488,8 +499,11 @@ public class MapAnimations {
 
     /**
      * The short version for the normal case that all values are excepted.
+     * @param input
+     * @param output
+     * @return
      */
-    public ArrayList<HashMap<String, String>> mapInputToOutput(String input, String output) {
+    public ArrayList<HashMap<String, String>> mapInputToOutput(final String input, final String output) {
         return mapInputToOutput(input, output, false);
     }
 
@@ -503,8 +517,8 @@ public class MapAnimations {
      * output=x_range="[200..215,220,225,230,235,240];[1..3];200" PROBLEME MIT DEM PARSEN DES
      * OUTPUTS HIER NOCHMAL SCHAUEN!
      */
-    public ArrayList<HashMap<String, String>> mapInputToOutput(String input, String output,
-            boolean outputIntegerOnly) {
+    public ArrayList<HashMap<String, String>> mapInputToOutput(final String input,
+            final String output, final boolean outputIntegerOnly) {
         // First of all, we delete any space in the input an output strings
         String in, out;
         in = input.replace(" ", "");
@@ -593,7 +607,7 @@ public class MapAnimations {
      * @param inputValue
      * @return
      */
-    public String[] parseValueString(String inputValue) {
+    public String[] parseValueString(final String inputValue) {
         // First we need to seperate each value pairs (symbolized by ";")
         // First of all delete all whitespace of inputValue
         ArrayList<String> arrayList = new ArrayList<String>();
@@ -617,15 +631,15 @@ public class MapAnimations {
     //Should be put later on to the JSON package
 
     /**
-     * Make the input jsonobject flat if there exists a hirachie. This one should be called instead
+     * Make the input JSONObject flat if there exists a hierarchy. This one should be called instead
      * of the other version of makeItFlat, which has some initial value parameters for recursive
      * computation.
      * 
-     * @param inputObject
-     * @return
-     * @throws JSONException
+     * @param inputObject the input JSONObject, which may not be flat
+     * @return A JSONObject which has a flat hierarchy 
+     * @throws JSONException, is thrown if a conversion fails
      */
-    public final JSONObject makeItFlat(JSONObject inputObject) throws JSONException {
+    public final JSONObject makeItFlat(final JSONObject inputObject) throws JSONException {
         return makeItFlat(new JSONObject(), "", inputObject);
     }
 
@@ -638,7 +652,6 @@ public class MapAnimations {
      * @return
      * @throws JSONException
      */
-
     private static JSONObject makeItFlat(JSONObject flatOne, String adressKey,
             JSONObject inputObject) throws JSONException {
         String[] keys = JSONObject.getNames(inputObject);

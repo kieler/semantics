@@ -80,10 +80,6 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
                 return createSVGElementAdapter();
             }
             @Override
-            public Adapter caseIAnimation(IAnimation object) {
-                return createIAnimationAdapter();
-            }
-            @Override
             public Adapter caseAnimation(Animation object) {
                 return createAnimationAdapter();
             }
@@ -96,8 +92,8 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
                 return createColorizeAdapter();
             }
             @Override
-            public Adapter caseTextbox(Textbox object) {
-                return createTextboxAdapter();
+            public Adapter caseText(Text object) {
+                return createTextAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -148,20 +144,6 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.xkev.mapping.IAnimation <em>IAnimation</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.xkev.mapping.IAnimation
-     * @generated
-     */
-    public Adapter createIAnimationAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.xkev.mapping.Animation <em>Animation</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -204,16 +186,16 @@ public class MappingAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.xkev.mapping.Textbox <em>Textbox</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.xkev.mapping.Text <em>Text</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.xkev.mapping.Textbox
+     * @see de.cau.cs.kieler.xkev.mapping.Text
      * @generated
      */
-    public Adapter createTextboxAdapter() {
+    public Adapter createTextAdapter() {
         return null;
     }
 

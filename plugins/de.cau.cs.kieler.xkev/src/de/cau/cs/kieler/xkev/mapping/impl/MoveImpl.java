@@ -145,7 +145,92 @@ public class MoveImpl extends AnimationImpl implements Move {
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.MOVE__YRANGE, oldY_range, y_range));
     }
-    
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case MappingPackage.MOVE__XRANGE:
+                return getX_range();
+            case MappingPackage.MOVE__YRANGE:
+                return getY_range();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case MappingPackage.MOVE__XRANGE:
+                setX_range((String)newValue);
+                return;
+            case MappingPackage.MOVE__YRANGE:
+                setY_range((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case MappingPackage.MOVE__XRANGE:
+                setX_range(XRANGE_EDEFAULT);
+                return;
+            case MappingPackage.MOVE__YRANGE:
+                setY_range(YRANGE_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case MappingPackage.MOVE__XRANGE:
+                return XRANGE_EDEFAULT == null ? x_range != null : !XRANGE_EDEFAULT.equals(x_range);
+            case MappingPackage.MOVE__YRANGE:
+                return YRANGE_EDEFAULT == null ? y_range != null : !YRANGE_EDEFAULT.equals(y_range);
+        }
+        return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (x_range: ");
+        result.append(x_range);
+        result.append(", y_range: ");
+        result.append(y_range);
+        result.append(')');
+        return result.toString();
+    }
     
     private void moveAnimation(String svgElementId, String xValue, String yValue) {
         //Create a new Instance of MapAnimations for Method access and SVGDocument-Reference
@@ -243,93 +328,6 @@ public class MoveImpl extends AnimationImpl implements Move {
                 }
             }
         }
-    }
-     
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case MappingPackage.MOVE__XRANGE:
-                return getX_range();
-            case MappingPackage.MOVE__YRANGE:
-                return getY_range();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case MappingPackage.MOVE__XRANGE:
-                setX_range((String)newValue);
-                return;
-            case MappingPackage.MOVE__YRANGE:
-                setY_range((String)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void eUnset(int featureID) {
-        switch (featureID) {
-            case MappingPackage.MOVE__XRANGE:
-                setX_range(XRANGE_EDEFAULT);
-                return;
-            case MappingPackage.MOVE__YRANGE:
-                setY_range(YRANGE_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case MappingPackage.MOVE__XRANGE:
-                return XRANGE_EDEFAULT == null ? x_range != null : !XRANGE_EDEFAULT.equals(x_range);
-            case MappingPackage.MOVE__YRANGE:
-                return YRANGE_EDEFAULT == null ? y_range != null : !YRANGE_EDEFAULT.equals(y_range);
-        }
-        return super.eIsSet(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String toString() {
-        if (eIsProxy()) return super.toString();
-
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (x_range: ");
-        result.append(x_range);
-        result.append(", y_range: ");
-        result.append(y_range);
-        result.append(')');
-        return result.toString();
     }
 
 } //MoveImpl

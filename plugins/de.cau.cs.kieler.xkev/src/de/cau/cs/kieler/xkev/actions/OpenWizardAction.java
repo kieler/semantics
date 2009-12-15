@@ -19,21 +19,21 @@ import org.eclipse.jface.wizard.WizardDialog;
 
 import de.cau.cs.kieler.xkev.Activator;
 import de.cau.cs.kieler.xkev.Messages;
-import de.cau.cs.kieler.xkev.ui.OpenImageWizard;
+import de.cau.cs.kieler.xkev.ui.OpenWizard;
 
 /**
- * Implements the action for the OpenImageWizard window. 
+ * Implements the action for the OpenWizard window. 
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
  *
  */
 
-public class OpenImageWizardAction extends Action {
+public class OpenWizardAction extends Action {
     
     /**
      * The constructor.
      */
-    public OpenImageWizardAction() {
+    public OpenWizardAction() {
         this.setText(Messages.ActionOpenFileWizard);
         this.setToolTipText(Messages.ActionHintOpenFileWizard);
         this.setImageDescriptor(Activator.getDefault()
@@ -42,7 +42,7 @@ public class OpenImageWizardAction extends Action {
 
     @Override
     public void run() {
-        OpenImageWizard wizard = new OpenImageWizard();
+        OpenWizard wizard = new OpenWizard();
         WizardDialog dialog = new WizardDialog(null, wizard);
         wizard.setParentDialog(dialog);
         dialog.open();

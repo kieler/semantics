@@ -13,7 +13,7 @@
  */
 
 /**
- * This class holds the User-Actions which the user can trigger from within the Kev-View.
+ * This class holds the user-actions which the user can trigger from within the KEV-view.
  *  
  */
 package de.cau.cs.kieler.xkev.actions;

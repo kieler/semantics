@@ -134,52 +134,6 @@ public interface MappingPackage extends EPackage {
     int SVG_ELEMENT_FEATURE_COUNT = 2;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.IAnimation <em>IAnimation</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.xkev.mapping.IAnimation
-     * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getIAnimation()
-     * @generated
-     */
-    int IANIMATION = 2;
-
-    /**
-     * The feature id for the '<em><b>Input</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IANIMATION__INPUT = 0;
-
-    /**
-     * The feature id for the '<em><b>Access ID</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IANIMATION__ACCESS_ID = 1;
-
-    /**
-     * The feature id for the '<em><b>Key</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IANIMATION__KEY = 2;
-
-    /**
-     * The number of structural features of the '<em>IAnimation</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IANIMATION_FEATURE_COUNT = 3;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl <em>Animation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -187,7 +141,7 @@ public interface MappingPackage extends EPackage {
      * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getAnimation()
      * @generated
      */
-    int ANIMATION = 3;
+    int ANIMATION = 2;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -196,7 +150,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ANIMATION__INPUT = IANIMATION__INPUT;
+    int ANIMATION__INPUT = 0;
 
     /**
      * The feature id for the '<em><b>Access ID</b></em>' attribute.
@@ -205,7 +159,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ANIMATION__ACCESS_ID = IANIMATION__ACCESS_ID;
+    int ANIMATION__ACCESS_ID = 1;
 
     /**
      * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -214,7 +168,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ANIMATION__KEY = IANIMATION__KEY;
+    int ANIMATION__KEY = 2;
 
     /**
      * The number of structural features of the '<em>Animation</em>' class.
@@ -223,7 +177,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ANIMATION_FEATURE_COUNT = IANIMATION_FEATURE_COUNT + 0;
+    int ANIMATION_FEATURE_COUNT = 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.MoveImpl <em>Move</em>}' class.
@@ -233,7 +187,7 @@ public interface MappingPackage extends EPackage {
      * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getMove()
      * @generated
      */
-    int MOVE = 4;
+    int MOVE = 3;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -297,7 +251,7 @@ public interface MappingPackage extends EPackage {
      * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getColorize()
      * @generated
      */
-    int COLORIZE = 5;
+    int COLORIZE = 4;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -354,14 +308,14 @@ public interface MappingPackage extends EPackage {
     int COLORIZE_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 2;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.TextboxImpl <em>Textbox</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.xkev.mapping.impl.TextImpl <em>Text</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.xkev.mapping.impl.TextboxImpl
-     * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getTextbox()
+     * @see de.cau.cs.kieler.xkev.mapping.impl.TextImpl
+     * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getText()
      * @generated
      */
-    int TEXTBOX = 6;
+    int TEXT = 5;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -370,7 +324,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXTBOX__INPUT = ANIMATION__INPUT;
+    int TEXT__INPUT = ANIMATION__INPUT;
 
     /**
      * The feature id for the '<em><b>Access ID</b></em>' attribute.
@@ -379,7 +333,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXTBOX__ACCESS_ID = ANIMATION__ACCESS_ID;
+    int TEXT__ACCESS_ID = ANIMATION__ACCESS_ID;
 
     /**
      * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -388,61 +342,61 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXTBOX__KEY = ANIMATION__KEY;
+    int TEXT__KEY = ANIMATION__KEY;
 
     /**
-     * The feature id for the '<em><b>Visible</b></em>' attribute.
+     * The feature id for the '<em><b>Text value</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXTBOX__VISIBLE = ANIMATION_FEATURE_COUNT + 0;
+    int TEXT__TEXT_VALUE = ANIMATION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Value</b></em>' attribute.
+     * The feature id for the '<em><b>Font color</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXTBOX__VALUE = ANIMATION_FEATURE_COUNT + 1;
+    int TEXT__FONT_COLOR = ANIMATION_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Border</b></em>' attribute.
+     * The feature id for the '<em><b>Font size</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXTBOX__BORDER = ANIMATION_FEATURE_COUNT + 2;
+    int TEXT__FONT_SIZE = ANIMATION_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Border style</b></em>' attribute.
+     * The feature id for the '<em><b>Font family</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXTBOX__BORDER_STYLE = ANIMATION_FEATURE_COUNT + 3;
+    int TEXT__FONT_FAMILY = ANIMATION_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Border color</b></em>' attribute.
+     * The feature id for the '<em><b>Font opacity</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXTBOX__BORDER_COLOR = ANIMATION_FEATURE_COUNT + 4;
+    int TEXT__FONT_OPACITY = ANIMATION_FEATURE_COUNT + 4;
 
     /**
-     * The number of structural features of the '<em>Textbox</em>' class.
+     * The number of structural features of the '<em>Text</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXTBOX_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 5;
+    int TEXT_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 5;
 
 
     /**
@@ -510,49 +464,6 @@ public interface MappingPackage extends EPackage {
     EAttribute getSVGElement_Id();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.IAnimation <em>IAnimation</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>IAnimation</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.IAnimation
-     * @generated
-     */
-    EClass getIAnimation();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.IAnimation#getInput <em>Input</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Input</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.IAnimation#getInput()
-     * @see #getIAnimation()
-     * @generated
-     */
-    EAttribute getIAnimation_Input();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.IAnimation#getAccessID <em>Access ID</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Access ID</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.IAnimation#getAccessID()
-     * @see #getIAnimation()
-     * @generated
-     */
-    EAttribute getIAnimation_AccessID();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.IAnimation#getKey <em>Key</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Key</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.IAnimation#getKey()
-     * @see #getIAnimation()
-     * @generated
-     */
-    EAttribute getIAnimation_Key();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Animation <em>Animation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -561,6 +472,39 @@ public interface MappingPackage extends EPackage {
      * @generated
      */
     EClass getAnimation();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Animation#getInput <em>Input</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Input</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Animation#getInput()
+     * @see #getAnimation()
+     * @generated
+     */
+    EAttribute getAnimation_Input();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Animation#getAccessID <em>Access ID</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Access ID</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Animation#getAccessID()
+     * @see #getAnimation()
+     * @generated
+     */
+    EAttribute getAnimation_AccessID();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Animation#getKey <em>Key</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Key</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Animation#getKey()
+     * @see #getAnimation()
+     * @generated
+     */
+    EAttribute getAnimation_Key();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Move <em>Move</em>}'.
@@ -627,69 +571,69 @@ public interface MappingPackage extends EPackage {
     EAttribute getColorize_Style();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Textbox <em>Textbox</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.xkev.mapping.Text <em>Text</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Textbox</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.Textbox
+     * @return the meta object for class '<em>Text</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Text
      * @generated
      */
-    EClass getTextbox();
+    EClass getText();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Textbox#isVisible <em>Visible</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Text#getText_value <em>Text value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Visible</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.Textbox#isVisible()
-     * @see #getTextbox()
+     * @return the meta object for the attribute '<em>Text value</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Text#getText_value()
+     * @see #getText()
      * @generated
      */
-    EAttribute getTextbox_Visible();
+    EAttribute getText_Text_value();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Textbox#getValue <em>Value</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Text#getFont_color <em>Font color</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Value</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.Textbox#getValue()
-     * @see #getTextbox()
+     * @return the meta object for the attribute '<em>Font color</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Text#getFont_color()
+     * @see #getText()
      * @generated
      */
-    EAttribute getTextbox_Value();
+    EAttribute getText_Font_color();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Textbox#getBorder <em>Border</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Text#getFont_size <em>Font size</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Border</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.Textbox#getBorder()
-     * @see #getTextbox()
+     * @return the meta object for the attribute '<em>Font size</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Text#getFont_size()
+     * @see #getText()
      * @generated
      */
-    EAttribute getTextbox_Border();
+    EAttribute getText_Font_size();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Textbox#getBorder_style <em>Border style</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Text#getFont_family <em>Font family</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Border style</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.Textbox#getBorder_style()
-     * @see #getTextbox()
+     * @return the meta object for the attribute '<em>Font family</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Text#getFont_family()
+     * @see #getText()
      * @generated
      */
-    EAttribute getTextbox_Border_style();
+    EAttribute getText_Font_family();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Textbox#getBorder_color <em>Border color</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.xkev.mapping.Text#getFont_opacity <em>Font opacity</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Border color</em>'.
-     * @see de.cau.cs.kieler.xkev.mapping.Textbox#getBorder_color()
-     * @see #getTextbox()
+     * @return the meta object for the attribute '<em>Font opacity</em>'.
+     * @see de.cau.cs.kieler.xkev.mapping.Text#getFont_opacity()
+     * @see #getText()
      * @generated
      */
-    EAttribute getTextbox_Border_color();
+    EAttribute getText_Font_opacity();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -766,40 +710,6 @@ public interface MappingPackage extends EPackage {
         EAttribute SVG_ELEMENT__ID = eINSTANCE.getSVGElement_Id();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.IAnimation <em>IAnimation</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.xkev.mapping.IAnimation
-         * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getIAnimation()
-         * @generated
-         */
-        EClass IANIMATION = eINSTANCE.getIAnimation();
-
-        /**
-         * The meta object literal for the '<em><b>Input</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute IANIMATION__INPUT = eINSTANCE.getIAnimation_Input();
-
-        /**
-         * The meta object literal for the '<em><b>Access ID</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute IANIMATION__ACCESS_ID = eINSTANCE.getIAnimation_AccessID();
-
-        /**
-         * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute IANIMATION__KEY = eINSTANCE.getIAnimation_Key();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.AnimationImpl <em>Animation</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -808,6 +718,30 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EClass ANIMATION = eINSTANCE.getAnimation();
+
+        /**
+         * The meta object literal for the '<em><b>Input</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ANIMATION__INPUT = eINSTANCE.getAnimation_Input();
+
+        /**
+         * The meta object literal for the '<em><b>Access ID</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ANIMATION__ACCESS_ID = eINSTANCE.getAnimation_AccessID();
+
+        /**
+         * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ANIMATION__KEY = eINSTANCE.getAnimation_Key();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.MoveImpl <em>Move</em>}' class.
@@ -862,54 +796,54 @@ public interface MappingPackage extends EPackage {
         EAttribute COLORIZE__STYLE = eINSTANCE.getColorize_Style();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.TextboxImpl <em>Textbox</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.xkev.mapping.impl.TextImpl <em>Text</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.xkev.mapping.impl.TextboxImpl
-         * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getTextbox()
+         * @see de.cau.cs.kieler.xkev.mapping.impl.TextImpl
+         * @see de.cau.cs.kieler.xkev.mapping.impl.MappingPackageImpl#getText()
          * @generated
          */
-        EClass TEXTBOX = eINSTANCE.getTextbox();
+        EClass TEXT = eINSTANCE.getText();
 
         /**
-         * The meta object literal for the '<em><b>Visible</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Text value</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute TEXTBOX__VISIBLE = eINSTANCE.getTextbox_Visible();
+        EAttribute TEXT__TEXT_VALUE = eINSTANCE.getText_Text_value();
 
         /**
-         * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Font color</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute TEXTBOX__VALUE = eINSTANCE.getTextbox_Value();
+        EAttribute TEXT__FONT_COLOR = eINSTANCE.getText_Font_color();
 
         /**
-         * The meta object literal for the '<em><b>Border</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Font size</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute TEXTBOX__BORDER = eINSTANCE.getTextbox_Border();
+        EAttribute TEXT__FONT_SIZE = eINSTANCE.getText_Font_size();
 
         /**
-         * The meta object literal for the '<em><b>Border style</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Font family</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute TEXTBOX__BORDER_STYLE = eINSTANCE.getTextbox_Border_style();
+        EAttribute TEXT__FONT_FAMILY = eINSTANCE.getText_Font_family();
 
         /**
-         * The meta object literal for the '<em><b>Border color</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Font opacity</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute TEXTBOX__BORDER_COLOR = eINSTANCE.getTextbox_Border_color();
+        EAttribute TEXT__FONT_OPACITY = eINSTANCE.getText_Font_opacity();
 
     }
 

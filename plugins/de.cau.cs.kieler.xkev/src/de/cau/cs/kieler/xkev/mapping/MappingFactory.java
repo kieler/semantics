@@ -62,13 +62,13 @@ public interface MappingFactory extends EFactory {
     Colorize createColorize();
 
     /**
-     * Returns a new object of class '<em>Textbox</em>'.
+     * Returns a new object of class '<em>Text</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Textbox</em>'.
+     * @return a new object of class '<em>Text</em>'.
      * @generated
      */
-    Textbox createTextbox();
+    Text createText();
 
     /**
      * Returns the package supported by this factory.

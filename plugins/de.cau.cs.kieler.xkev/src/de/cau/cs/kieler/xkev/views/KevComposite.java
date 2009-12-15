@@ -80,7 +80,6 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.w3c.dom.Element;
 
 import de.cau.cs.kieler.xkev.Activator;
-import de.cau.cs.kieler.xkev.helpers.Tools;
 import de.cau.cs.kieler.xkev.mapping.animations.SVGLoadingStatusListener;
 
 public class KevComposite extends Composite implements ISelectionListener {
@@ -273,7 +272,7 @@ public class KevComposite extends Composite implements ISelectionListener {
         try {
             svgURI = url.toURI();
         } catch (URISyntaxException e) {
-            Tools.showDialog("Error converting URL " + url
+            Activator.reportErrorMessage("Error converting URL " + url
                     + " to URI when trying to load svg file.", e);
         }
         try {
@@ -285,7 +284,7 @@ public class KevComposite extends Composite implements ISelectionListener {
                 svgCanvas.loadSVGDocument(url.toExternalForm());
             }
         } catch (Exception e) {
-            Tools.showDialog("Failed to load svg image: " + url, e);
+            Activator.reportErrorMessage("Failed to load svg image: " + url, e);
         }
 
     }
@@ -376,7 +375,7 @@ public class KevComposite extends Composite implements ISelectionListener {
                     docDelta.accept(visitor);
                 } catch (CoreException e) {
                     // BatikUIPlugin.getDefault().getLog().log(e.getStatus());
-                    Tools.showDialog(e);
+                    Activator.reportErrorMessage("CoreException",e);
 
                     // open error dialog with syncExec or print to plugin log file
                 }
@@ -479,7 +478,7 @@ public class KevComposite extends Composite implements ISelectionListener {
             final String fMessage = message;
             shell.getDisplay().syncExec(new Runnable() {
                 public void run() {
-                    Tools.showDialog(fMessage);
+                    Activator.reportErrorMessage(fMessage);
                     //MessageDialog.openWarning(shell, Messages.getString("SVGView.40"), fMessage); //$NON-NLS-1$
                 }
             });

@@ -15,24 +15,36 @@ package de.cau.cs.kieler.xkev;
 
 import org.eclipse.osgi.util.NLS;
 
-
+/**
+ * A data storage class for messages used by the KEV-plugin. 
+ * 
+ * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
+ * 
+ */
 public final class Messages extends NLS {
-    private static final String BUNDLE_NAME = "de.cau.cs.kieler.xkev.messages"; //$NON-NLS-1$
+    
+    /**
+     * The name of the this package.
+     */
+    public static final String BUNDLE_NAME = "de.cau.cs.kieler.xkev.messages"; //$NON-NLS-1$
+    
+    /** ID of the extension point. */
     public static String extensionPointID;
+    /** The name of the view. */
     public static String ViewTitle;
 
     // Actions
+    /** The name of the open file wizard action. */
     public static String ActionOpenFileWizard;
+    /** The hint for the open file wizard. */
     public static String ActionHintOpenFileWizard;
-    public static String ActionOpenFile;
-    public static String ActionHintOpenFile;
+    /** The name of the refresh action. */
     public static String ActionRefresh;
+    /** The hint displayed for the refresh action. */
     public static String ActionHintRefresh;
 
-    // Checkboxes
-    public static String CheckboxRememberLastFile;
-
     // Discriptions
+    /** The discription for the open image wizard. */
     public static String DiscriptionOpenImageWizard;
 
     // Messages

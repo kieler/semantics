@@ -48,7 +48,6 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
      * @ordered
      */
     protected static final String INPUT_EDEFAULT = null;
-
     /**
      * The cached value of the '{@link #getInput() <em>Input</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -58,7 +57,6 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
      * @ordered
      */
     protected String input = INPUT_EDEFAULT;
-
     /**
      * The default value of the '{@link #getAccessID() <em>Access ID</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -68,7 +66,6 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
      * @ordered
      */
     protected static final String ACCESS_ID_EDEFAULT = "";
-
     /**
      * The cached value of the '{@link #getAccessID() <em>Access ID</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -78,7 +75,6 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
      * @ordered
      */
     protected String accessID = ACCESS_ID_EDEFAULT;
-
     /**
      * The default value of the '{@link #getKey() <em>Key</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -88,7 +84,6 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
      * @ordered
      */
     protected static final String KEY_EDEFAULT = "";
-
     /**
      * The cached value of the '{@link #getKey() <em>Key</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -181,13 +176,12 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
             eNotify(new ENotificationImpl(this, Notification.SET, MappingPackage.ANIMATION__KEY, oldKey, key));
     }
 
-    
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getActualJSONValue() {
+    public String getActualJSONValue(Object jsonObject, String svgElementID) {
         // TODO: implement this method
         // Ensure that you remove @generated or mark it @generated NOT
         throw new UnsupportedOperationException();
@@ -195,60 +189,13 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
 
     /**
      * <!-- begin-user-doc -->
-     * This abstract method is equal for all animations.
-     * It just returns the jsonValue from the jsonObject, if exists.
      * <!-- end-user-doc -->
+     * @generated
      */
-    public String getActualJSONValue(JSONObject jsonObject, String svgElementID) {
-        String jsonValue = null;
-         
-        //if the input-tag exists and if it's not empty than do use it, otherwise ignore it
-        if (getInput() != null && !getInput().isEmpty()) {
-            //check whether the value contains an id or not
-            
-            //Wenn der Key leer ist, setzt ihn per default auf die svgElementId
-            if (getKey() == null || getKey().isEmpty()) {
-                setKey(svgElementID);
-            }
-            
-            //If we have an accessID, the jsonValue must be an JSONArray
-            if (getAccessID() != null && !getAccessID().isEmpty()) {
-                try {
-                    int pos = Integer.parseInt(getAccessID());
-                    JSONArray jsonArray = jsonObject.optJSONArray(getKey());
-                    
-                    //check, whether the value is in a valid array-range
-                    if (jsonArray == null || pos < 0 || pos >= jsonArray.length()) {
-                        Activator.reportErrorMessage("Value out of Range: The value of the \"accessID\" attribute is not in the valid array-range! [SVGElement:"+svgElementID+"]");
-                        return null;
-                    }
-
-                    if (jsonArray != null) {
-                        jsonValue = jsonArray.optString(pos);
-                    } else {
-                        //It makes no sense to go on without an array here, so return
-                        return null;
-                    }
-                } catch (NumberFormatException e) {
-                    // TODO Auto-generated catch block
-                    Activator.reportErrorMessage("NumberFormatException: The value of the \"accessID\" attribute is not a valid integer value! [SVGElement:"+svgElementID+"]");
-                }
-            } else {
-                //If the accessID is either empty or null, we treat the JSONValue as a normal value instead of an JSONArray
-                jsonValue = jsonObject.optString(getKey());
-            }
-        }
-        return jsonValue;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * This method should be implemented by each animation.
-     * It should contain the special animation-code, which is different for each animation.
-     * <!-- end-user-doc -->
-     */
-    public void applyAnimation() {
-
+    public void applyAnimation(Object jsonObject, String svgElementID) {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -347,6 +294,58 @@ public abstract class AnimationImpl extends EObjectImpl implements Animation {
         result.append(key);
         result.append(')');
         return result.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * This abstract method is equal for all animations.
+     * It just returns the jsonValue from the jsonObject, if exists.
+     * <!-- end-user-doc -->
+     */
+    public String getActualJSONValue(JSONObject jsonObject, String svgElementID) {
+        String jsonValue = null;
+         
+        //if the input-tag exists and if it's not empty than do use it, otherwise ignore it
+        if (getInput() != null && !getInput().isEmpty()) {
+            //check whether the value contains an id or not
+            
+            //Wenn der Key leer ist, setzt ihn per default auf die svgElementId
+            if (getKey() == null || getKey().isEmpty()) {
+                setKey(svgElementID);
+            }
+            
+            //If we have an accessID, the jsonValue must be an JSONArray
+            if (getAccessID() != null && !getAccessID().isEmpty()) {
+                try {
+                    int pos = Integer.parseInt(getAccessID());
+                    JSONArray jsonArray = jsonObject.optJSONArray(getKey());
+                    
+                    //check, whether the value is in a valid array-range
+                    if (jsonArray == null || pos < 0 || pos >= jsonArray.length()) {
+                        Activator.reportErrorMessage("Value out of Range: The value of the \"accessID\" attribute is not in the valid array-range! [SVGElement:"+svgElementID+"]");
+                        return null;
+                    }
+                    jsonValue = jsonArray.optString(pos);
+                } catch (NumberFormatException e) {
+                    // TODO Auto-generated catch block
+                    Activator.reportErrorMessage("NumberFormatException: The value of the \"accessID\" attribute is not a valid integer value! [SVGElement:"+svgElementID+"]");
+                }
+            } else {
+                //If the accessID is either empty or null, we treat the JSONValue as a normal value instead of an JSONArray
+                jsonValue = jsonObject.optString(getKey());
+            }
+        }
+        return jsonValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * This method should be implemented by each animation.
+     * It should contain the special animation-code, which is different for each animation.
+     * <!-- end-user-doc -->
+     */
+    public void applyAnimation() {
+
     }
 
 
