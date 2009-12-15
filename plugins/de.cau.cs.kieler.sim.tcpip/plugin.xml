@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.sim.tcpip.DataObserver"
+            class="de.cau.cs.kieler.sim.tcpip.DataComponent"
             id="de.cau.cs.kieler.sim.tcpip.content3"
             name="de.cau.cs.kieler.sim.tcpip.content3">
       </content>

@@ -26,7 +26,7 @@ import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
-public class DataObserver extends JSONObjectDataComponent {
+public class DataComponent extends JSONObjectDataComponent {
 
     JSONClient client = null;
     WorkflowGenerator wf = null;
@@ -35,37 +35,37 @@ public class DataObserver extends JSONObjectDataComponent {
     public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
         JSONObject out = null;
         try {
-            System.out.println(jSONObject.toString());
+            jSONObject.remove("state");
+            System.out.println("jSONObject: " + jSONObject.toString());
             client.sndMessage(jSONObject.toString());
             String receivedMessage = client.rcvMessage();
             System.out.println("rcv from server: " + receivedMessage);
-//            out.getString(client.rcvMessage());
             out = new JSONObject(receivedMessage);
-            System.out.println("out is: " + out.toString());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             System.err.println(e.getMessage());
+            process.destroy();
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            process.destroy();
         }
+        
         try {
             JSONArray stateArray = out.getJSONArray("state");
             String allStates = "";
 
             for (int i = 0; i < stateArray.length(); i++) {
-                if (!(allStates.contains(stateArray.opt(i).toString()))) {
-                    allStates += stateArray.opt(i) + ",";
-                }
+                allStates += stateArray.opt(i) + ",";
             }
             allStates = allStates.substring(0, allStates.length() - 1);
-            System.out.println(allStates);
             out.remove("state");
             out.put("state", allStates);
+            System.out.println("out:" + out);
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             System.err.println(e.getMessage());
-        }
+            process.destroy();
+        } 
+        
         return out;
     }
 
@@ -76,7 +76,7 @@ public class DataObserver extends JSONObjectDataComponent {
 
         // building path to bundle
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
-        
+
         URL url = null;
         try {
             url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("simulation"), null));
@@ -102,21 +102,16 @@ public class DataObserver extends JSONObjectDataComponent {
         } while (findNewPort);
 
         String compile = "gcc " + wf.getOutPath() + "sim.c " + wf.getOutPath() + "sim_data.c "
-                + bundleLocation + "cJSON.c " + bundleLocation + "tcpip.c "
-                + "-I " + bundleLocation + " " + "-o " + wf.getOutPath()
-                + "simulation -lm";
-        System.out.println(compile);
+                + bundleLocation + "cJSON.c " + bundleLocation + "tcpip.c " + "-I "
+                + bundleLocation + " " + "-o " + wf.getOutPath() + "simulation -lm";
         String executable = wf.getOutPath() + "simulation " + port;
-        System.out.println(executable);
+        System.out.println("start: " + executable);
 
         try {
             // compile and start the c server
             process = Runtime.getRuntime().exec(compile);
             process.waitFor();
-
-            System.out.println("compiling ready");
             process = Runtime.getRuntime().exec(executable);
-            System.out.println("server startet");
             // start client
             int clientConnectionTrails = 10;
             // client = new JSONClient(Integer.parseInt(getProperties()[0].getValue()));
@@ -127,7 +122,7 @@ public class DataObserver extends JSONObjectDataComponent {
                     clientConnectionTrails = 0;
                 } else {
                     if (clientConnectionTrails == 1) {
-                        System.out.println("Fehler");
+                        System.out.println("error while trying to connect");
                     } else {
                         Thread.sleep(500);
                     }
@@ -169,10 +164,10 @@ public class DataObserver extends JSONObjectDataComponent {
             process.destroy();
             // delete temp folder
             File folder = new File(wf.getOutPath());
-            if (folder.getAbsolutePath().contains("tmp")){
+            if (folder.getAbsolutePath().contains("tmp")) {
                 boolean folderDeleted = deleteFolder(folder);
                 if (folderDeleted) {
-                    System.out.println("temp folder" + folder + "successfully deleted");
+                    System.out.println("temp folder " + folder + "successfully deleted");
                 } else {
                     System.err.println("error while deleting temp folder: " + folder);
                 }
@@ -183,12 +178,6 @@ public class DataObserver extends JSONObjectDataComponent {
         }
     }
 
-//    public KiemProperty[] provideProperties() {
-//        KiemProperty[] properties = new KiemProperty[1];
-//        properties[0] = new KiemProperty("port", "12345");
-//        return properties;
-//    }
-    
     @Override
     public JSONObject provideInitialVariables() {
         JSONObject returnObj = new JSONObject();
